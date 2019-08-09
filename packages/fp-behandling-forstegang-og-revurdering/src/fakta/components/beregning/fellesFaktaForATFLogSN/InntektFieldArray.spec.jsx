@@ -326,16 +326,4 @@ describe('<InntektFieldArray>', () => {
     const iv = InntektFieldArray.buildInitialValues([], getKodeverknavn, {});
     expect(iv).to.be.empty;
   });
-
-  it('skal ikkje kunne endre aktivitet om status dagpenger', () => {
-    const andel = {
-      andelsnr: 1,
-      aktivitetStatus: { kode: 'DP' },
-      inntektskategori: { kode: 'DAGPENGER' },
-      lagtTilAvSaksbehandler: true,
-    };
-    const iv = InntektFieldArray.buildInitialValues([andel], getKodeverknavn, {});
-    expect(iv.length).to.equal(1);
-    expect(iv[0].skalKunneEndreAktivitet).to.equal(false);
-  });
 });

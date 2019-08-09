@@ -52,9 +52,8 @@ const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag, getK
   if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
     return !values[besteberegningField];
   }
-  return beregningsgrunnlag.beregningsgrunnlagPeriode[0]
-    .beregningsgrunnlagPrStatusOgAndel
-    .map(andel => mapAndelToField(andel, getKodeverknavn, faktaOmBeregning))
+  return faktaOmBeregning.andelerForFaktaOmBeregning
+    .map(andel => mapAndelToField(andel, getKodeverknavn))
     .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
 };
 
@@ -174,24 +173,24 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (beregningsgrunnlag, getKodeverknavn, aksjonspunkter, faktaOmBeregning) => {
-  if (!beregningsgrunnlag) {
+VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning, getKodeverknavn) => {
+  if (!faktaOmBeregning) {
     return {};
   }
-  const andeler = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel;
+  const andeler = faktaOmBeregning.andelerForFaktaOmBeregning;
   if (andeler.length === 0) {
     return {};
   }
   return {
-    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn, faktaOmBeregning),
+    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };
 
 
-VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
+VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregningsgrunnlag) => {
   const errors = {};
-  if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn)) {
+  if (harVurdert(tilfeller, values, faktaOmBeregning) && skalFastsetteInntekt(values, faktaOmBeregning, beregningsgrunnlag)) {
     errors[INNTEKT_FIELD_ARRAY_NAME] = InntektFieldArray.validate(values[INNTEKT_FIELD_ARRAY_NAME], false,
       skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag));
   }
