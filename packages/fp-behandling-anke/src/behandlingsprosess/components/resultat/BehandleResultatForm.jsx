@@ -17,7 +17,7 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
 import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
-import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
+import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 
 const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
@@ -205,7 +205,7 @@ const transformValues = (values, aksjonspunktCode) => ({
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 const formatId = b => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,

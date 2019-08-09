@@ -6,7 +6,7 @@ import classnames from 'classnames/bind';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
-import { getBehandlingAnkeVurderingResultat } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './ankebehandling/BehandleAnkeForm';
 import BehandleMerknaderForm from './merknader/BehandleMerknaderForm';
@@ -100,7 +100,7 @@ const mapStateToProps = state => ({
   isApSolvable: behandlingspunktAnkeSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
   readOnlySubmitButton: behandlingspunktAnkeSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktAnkeSelectors.getNotAcceptedByBeslutter(state),
-  innstilling: getBehandlingAnkeVurderingResultat(state),
+  innstilling: behandlingSelectors.getBehandlingAnkeVurderingResultat(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktAnkeInfoPanel);

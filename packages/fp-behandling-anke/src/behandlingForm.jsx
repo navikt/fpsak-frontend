@@ -9,7 +9,7 @@ import {
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingVersjon } from './selectors/ankeBehandlingSelectors';
+import behandlingSelectors from './selectors/ankeBehandlingSelectors';
 import { getSelectedBehandlingId } from './duckAnke';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
@@ -51,7 +51,7 @@ export const behandlingForm = (config = {}) => (WrappedComponent) => {
 
   const mapStateToProps = state => ({
     selectedBehandlingId: getSelectedBehandlingId(state),
-    selectedBehandlingVersjon: getBehandlingVersjon(state),
+    selectedBehandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   });
 
   const mergeProps = (stateProps, dispatchProps, ownProps) => ({
@@ -64,7 +64,8 @@ export const behandlingForm = (config = {}) => (WrappedComponent) => {
   return connect(mapStateToProps, null, mergeProps)(requireProps(['selectedBehandlingId'], <LoadingPanel />)(WithBehandlingForm));
 };
 
-const getFormName = formName => createSelector([getSelectedBehandlingId, getBehandlingVersjon], (selectedBehandlingId, selectedBehandlingVersjon) => {
+const getFormName = formName => createSelector([getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon],
+  (selectedBehandlingId, selectedBehandlingVersjon) => {
   if (!selectedBehandlingId || !selectedBehandlingVersjon) {
     return {};
   }
@@ -80,7 +81,7 @@ export const getBehandlingFormInitialValues = formName => state => getFormInitia
 
 const getFormState = state => state.form;
 export const getBehandlingFormRegisteredFields = formName => createSelector(
-  [getSelectedBehandlingId, getBehandlingVersjon, getFormState],
+  [getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon, getFormState],
   (behandlingId, behandlingVersjon, formState = {}) => {
     const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     return (formState[behandlingFormId] && formState[behandlingFormId][formName]

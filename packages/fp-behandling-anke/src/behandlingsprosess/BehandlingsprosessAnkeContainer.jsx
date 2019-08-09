@@ -6,9 +6,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckAnke';
-import {
-  getBehandlingVersjon, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
-} from '../selectors/ankeBehandlingSelectors';
+import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
 import {
   resolveProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewAnkeBrev, getResolveProsessAksjonspunkterSuccess,
 } from './duckBpAnke';
@@ -45,14 +43,14 @@ BehandlingsprosessAnkeContainer.propTypes = {
 
 const mapStateToProps = state => ({
   fagsakYtelseType: getFagsakYtelseType(state),
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   behandlingspunkter: behandlingspunktAnkeSelectors.getBehandlingspunkter(state),
   selectedBehandlingspunkt: behandlingspunktAnkeSelectors.getSelectedBehandlingspunkt(state),
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingsresultat: getBehandlingsresultat(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   getBehandlingspunkterStatus: behandlingspunktAnkeSelectors.getBehandlingspunkterStatus,
   getBehandlingspunkterTitleCodes: behandlingspunktAnkeSelectors.getBehandlingspunkterTitleCodes,
   getAksjonspunkterOpenStatus: behandlingspunktAnkeSelectors.getAksjonspunkterOpenStatus,

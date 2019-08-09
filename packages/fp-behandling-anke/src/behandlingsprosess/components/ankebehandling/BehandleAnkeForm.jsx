@@ -25,7 +25,7 @@ import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { getBehandlingSprak, getBehandlingAnkeVurderingResultat } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
@@ -310,7 +310,7 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd
-export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -366,7 +366,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'erSubsidiartRealitetsbehandles',
       'ankeOmgjoerArsak',
       'ankeVurderingOmgjoer'),
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     behandlinger: getBehandlinger(state),
     onSubmit,
   });

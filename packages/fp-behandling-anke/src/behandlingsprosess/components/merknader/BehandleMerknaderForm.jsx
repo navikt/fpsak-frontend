@@ -19,8 +19,7 @@ import {
   behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingForm';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
-import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
-
+import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 
 const AnkeMerknader = ({
   readOnly,
@@ -107,7 +106,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,

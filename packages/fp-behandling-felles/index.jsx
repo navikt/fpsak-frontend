@@ -17,3 +17,5 @@ export { default as withDefaultToggling } from './src/fakta/withDefaultToggling'
 export { default as getFaktaRedux } from './src/fakta/faktaCommonDuck';
 export { default as findStatusIcon } from './src/behandlingsprosess/statusIconHelper';
 export { default as getCommonBehandlingsprosessSelectors } from './src/behandlingsprosess/selectors/behandlingsprosessSelectors';
+export { default as getCommonBehandlingSelectors } from './src/selectors/commonBehandlingSelectors';
+export { default as CommonBehandlingResolver } from './src/CommonBehandlingResolver';

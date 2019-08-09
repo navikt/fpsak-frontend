@@ -3,17 +3,15 @@ import { createSelector } from 'reselect';
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat, getBehandlingIsOnHold, getAllMerknaderFraBeslutter,
-  hasReadOnlyBehandling, isBehandlingStatusReadOnly,
-} from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpAnke';
 import { getFagsakYtelseType } from '../../duckAnke';
 import createForeldrepengerAnkeBpDefinition from '../definition/createForeldrepengerAnkeBpDefinition';
 
 // Kun eksport for test. Ikke bruk direkte!!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getAksjonspunkter, getBehandlingsresultat, getBehandlingVilkar],
+  [getFagsakYtelseType, behandlingSelectors.getBehandlingType, behandlingSelectors.getAksjonspunkter, behandlingSelectors.getBehandlingsresultat,
+    behandlingSelectors.getBehandlingVilkar],
   (fagsakYtelseType, behandlingType, aksjonspunkter, behandlingsresultat, vilkar = []) => {
     if (!behandlingType) {
       return undefined;
@@ -32,11 +30,11 @@ export const getBehandlingspunkterProps = createSelector(
 
 const behandlingspunktAnkeSelectors = getCommonBehandlingsprosessSelectors(
   getBehandlingspunkterProps,
-  getAksjonspunkter,
-  getBehandlingIsOnHold,
-  getAllMerknaderFraBeslutter,
-  hasReadOnlyBehandling,
-  isBehandlingStatusReadOnly,
+  behandlingSelectors.getAksjonspunkter,
+  behandlingSelectors.getBehandlingIsOnHold,
+  behandlingSelectors.getAllMerknaderFraBeslutter,
+  behandlingSelectors.hasReadOnlyBehandling,
+  behandlingSelectors.isBehandlingStatusReadOnly,
   getSelectedBehandlingspunktNavn,
   getOverrideBehandlingspunkter,
   getRettigheter,

@@ -6,19 +6,16 @@ import { destroy } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingGrid, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingGrid, sakOperations, CommonBehandlingResolver } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
-import FpAnkeBehandlingResolver from './FpAnkeBehandlingResolver';
+import behandlingSelectors from './selectors/ankeBehandlingSelectors';
 import BehandlingsprosessAnkeContainer from './behandlingsprosess/BehandlingsprosessAnkeContainer';
 import FaktaAnkeContainer from './fakta/FaktaAnkeContainer';
 import {
-  getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold, hasBehandlingManualPaVent,
-} from './selectors/ankeBehandlingSelectors';
-import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
+  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
 } from './duckAnke';
 import { getBehandlingFormPrefix } from './behandlingForm';
 import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
@@ -89,12 +86,19 @@ export class BehandlingAnkeIndex extends Component {
       ventearsaker,
       behandlingIdentifier,
       behandlingerVersjonMappedById,
+      isInSync,
+      fetchBehandling,
     } = this.props;
     if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
       return <LoadingPanel />;
     }
     return (
-      <FpAnkeBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
+      <CommonBehandlingResolver
+        isInSync={isInSync}
+        fetchBehandling={fetchBehandling}
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+      >
         <FpAnkeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessAnkeContainer />}
@@ -114,7 +118,7 @@ export class BehandlingAnkeIndex extends Component {
           />
           )
         }
-      </FpAnkeBehandlingResolver>
+      </CommonBehandlingResolver>
     );
   }
 }
@@ -158,6 +162,8 @@ BehandlingAnkeIndex.propTypes = {
     }).isRequired,
     avsluttet: PropTypes.string,
   })).isRequired,
+  isInSync: PropTypes.bool.isRequired,
+  fetchBehandling: PropTypes.func.isRequired,
 };
 
 BehandlingAnkeIndex.defaultProps = {
@@ -171,13 +177,14 @@ BehandlingAnkeIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state),
-  venteArsakKode: getBehandlingVenteArsakKode(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+  venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
+  hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  hasManualPaVent: hasBehandlingManualPaVent(state),
   ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+  isInSync: behandlingSelectors.isBehandlingInSync(state),
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
@@ -186,6 +193,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setBehandlingInfo,
   resetBehandlingFpsakContext,
   destroyReduxForms: destroy,
+  fetchBehandling: fetchBehandlingActionCreator,
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

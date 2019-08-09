@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingVersjon } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingAnke/src/duckAnke';
 import { getOpenInfoPanels, resetFakta } from './duckFaktaAnke';
 import FaktaAnkePanel from './components/FaktaAnkePanel';
@@ -29,7 +29,7 @@ FaktaAnkeContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
 });
