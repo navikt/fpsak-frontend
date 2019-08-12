@@ -7,6 +7,9 @@ const reducerName = 'ankeBehandling';
 
 const behandlingRedux = getBehandlingRedux(reducerName, ankeBehandlingApi, AnkeBehandlingApiKeys);
 
+// Eksportert kun for test
+export const { reducer } = behandlingRedux;
+
 reducerRegistry.register(reducerName, behandlingRedux.reducer);
 
 export const {

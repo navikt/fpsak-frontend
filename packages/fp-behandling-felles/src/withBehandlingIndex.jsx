@@ -15,7 +15,7 @@ import { getBehandlingFormPrefix } from './behandlingForm';
  * HOC-komponent som er rot for for den delen av hovedvinduet som har innhold for en valgt behandling, og styrer livssyklusen til de mekanismene som er
  * relatert til den valgte behandlingen.
  */
-const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehandlingUpdater) => (WrappedComponent) => {
+export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehandlingUpdater) => (WrappedComponent) => {
   class BehandlingIndex extends Component {
     componentDidMount = () => {
       const {

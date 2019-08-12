@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-export class CommonBehandlingResolver extends Component {
+class CommonBehandlingResolver extends Component {
   static propTypes = {
     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
