@@ -25,7 +25,7 @@ import {
   getBehandlingVersjon,
   getMerknaderFraBeslutter,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckTilbake';
 import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
@@ -309,8 +309,11 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
   };
 });
 
-const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker], feilutbetalingArsaker => feilutbetalingArsaker
-  .sort((a1, a2) => a1.årsak.localeCompare(a2.årsak)));
+const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker, getFagsakYtelseType], (feilutbetalingArsaker, fagsakYtelseType) => {
+  const arsaker = feilutbetalingArsaker.find(a => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
+  return arsaker
+  .sort((a1, a2) => a1.årsak.localeCompare(a2.årsak));
+});
 
 const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
