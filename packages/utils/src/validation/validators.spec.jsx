@@ -8,6 +8,7 @@ import {
   dateBeforeToday, dateBeforeOrEqualToToday, dateAfterToday, dateAfterOrEqualToToday,
   hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidText, hasValidName,
   hasValidSaksnummerOrFodselsnummerFormat, hasValidPeriod, isWithinOpptjeningsperiode,
+  dateIsBefore,
 } from './validators';
 
 const today = moment();
@@ -488,6 +489,27 @@ describe('Validators', () => {
       const result = isWithinOpptjeningsperiode(opptjeningFom, opptjeningTom)('2017-02-01', '2018-03-01');
       expect(result).has.length(1);
       expect(result[0]).is.eql({ id: 'ValidationMessage.InvalidPeriodRange' });
+    });
+  });
+
+  describe('dateIsBefore', () => {
+    const errorMessageFunction = dato => ([{ id: 'ErrorMsg.Msg' }, { dato }]);
+    const dateToCheckAgainst = '2019-08-05';
+    it('skal ikke feile når input datoene er før datoen som blir sjekket mot', () => {
+      const result = dateIsBefore(dateToCheckAgainst, errorMessageFunction)('2019-08-04');
+      expect(result).is.null;
+    });
+    it('skal feile når input datoene er lik datoen som blir sjekket mot', () => {
+      const result = dateIsBefore(dateToCheckAgainst, errorMessageFunction)('2019-08-05');
+      expect(result).has.length(2);
+      expect(result[0]).is.eql({ id: 'ErrorMsg.Msg' });
+      expect(result[1]).is.eql({ dato: '05.08.2019' });
+    });
+    it('skal feile når input datoene er etter datoen som blir sjekket mot', () => {
+      const result = dateIsBefore(dateToCheckAgainst, errorMessageFunction)('2019-08-06');
+      expect(result).has.length(2);
+      expect(result[0]).is.eql({ id: 'ErrorMsg.Msg' });
+      expect(result[1]).is.eql({ dato: '05.08.2019' });
     });
   });
 });
