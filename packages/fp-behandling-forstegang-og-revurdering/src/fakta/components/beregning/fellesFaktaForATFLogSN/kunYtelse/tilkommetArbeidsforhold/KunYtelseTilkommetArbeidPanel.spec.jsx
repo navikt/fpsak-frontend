@@ -151,7 +151,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     expect(endringPeriodeInitialValues[0].nyAndel).to.equal(false);
     expect(endringPeriodeInitialValues[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(endringPeriodeInitialValues[0].inntektskategori).to.equal('');
-    expect(endringPeriodeInitialValues[0].arbeidsforholdId).to.equal('');
+    expect(endringPeriodeInitialValues[0].arbeidsforholdId).to.equal(null);
     expect(endringPeriodeInitialValues[0].arbeidsperiodeFom).to.equal('');
     expect(endringPeriodeInitialValues[0].arbeidsperiodeTom).to.equal('');
     expect(endringPeriodeInitialValues[0].refusjonskrav).to.equal('0');
@@ -218,7 +218,7 @@ describe('<KunYtelseTilkommetArbeidsforholdPanel>', () => {
     expect(endringPeriodeInitialValues[0].nyAndel).to.equal(false);
     expect(endringPeriodeInitialValues[0].lagtTilAvSaksbehandler).to.equal(false);
     expect(endringPeriodeInitialValues[0].inntektskategori).to.equal('');
-    expect(endringPeriodeInitialValues[0].arbeidsforholdId).to.equal('');
+    expect(endringPeriodeInitialValues[0].arbeidsforholdId).to.equal(null);
     expect(endringPeriodeInitialValues[0].arbeidsperiodeFom).to.equal('');
     expect(endringPeriodeInitialValues[0].arbeidsperiodeTom).to.equal('');
     expect(endringPeriodeInitialValues[0].refusjonskrav).to.equal('0');

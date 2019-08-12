@@ -3,12 +3,12 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
   import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import {
   getFaktaOmBeregning,
   getBeregningsgrunnlag,
@@ -37,17 +37,6 @@ export const settAndelIArbeid = (andelerIArbeid) => {
 
 const preutfyllInntektskategori = andel => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
-
-
-const createAndelnavn = (andel, getKodeverknavn) => {
-  if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
-    return '';
-  }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
-    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
-  }
-  return getKodeverknavn(andel.aktivitetStatus);
-};
 
 const finnFastsattPrMnd = (beregnetPrMnd,
   fastsattForrige, fastsattAvSaksbehandler) => {
@@ -81,22 +70,29 @@ export const settReadOnlyBelop = (snittIBeregningsperiodenPrMnd, belopFraInntekt
 };
 
 export const setArbeidsforholdInitialValues = andel => ({
-  arbeidsgiverNavn: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverNavn !== 0 ? andel.arbeidsforhold.arbeidsgiverNavn : '',
-  arbeidsgiverId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverId !== 0 ? andel.arbeidsforhold.arbeidsgiverId : '',
-  arbeidsforholdId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',
+  arbeidsgiverId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverId : null,
+  arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : null,
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
-  arbeidsperiodeTom: andel.arbeidsforhold && andel.arbeidsforhold.opphoersdato !== null
-    ? andel.arbeidsforhold.opphoersdato : '',
-  arbeidsforholdType: andel.arbeidsforholdType,
+  arbeidsperiodeTom: andel.arbeidsforhold ? andel.arbeidsforhold.opphoersdato : '',
 });
 
+const createAndelnavn = (andel, getKodeverknavn) => {
+  if (!andel.aktivitetStatus || andel.aktivitetStatus.kode === aktivitetStatus.UDEFINERT) {
+    return '';
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.arbeidsforhold) {
+    return createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn);
+  }
+  return getKodeverknavn(andel.aktivitetStatus);
+};
+
 export const setGenerellAndelsinfo = (andel, getKodeverknavn) => ({
-  andel: createAndelnavn(andel, getKodeverknavn),
+  andel: andel.visningsnavn || createAndelnavn(andel, getKodeverknavn),
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
   nyAndel: false,
-  lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: preutfyllInntektskategori(andel),
+  lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
 });
 
 
@@ -291,40 +287,18 @@ export const skalFastsetteForATUavhengigAvATFLSammeOrg = (values,
 
 export const skalFastsetteForFLUavhengigAvATFLSammeOrg = values => (frilansMottarYtelse(values) || values[erNyoppstartetFLField]);
 
-const mapToFastsattBelop = (andel) => {
-  if (andel.fastsattAvSaksbehandler) {
-    if (andel.besteberegningPrAar || andel.besteberegningPrAar === 0) {
-      return formatCurrencyNoKr(andel.besteberegningPrAar / 12);
-    }
-    if (andel.beregnetPrAar || andel.beregnetPrAar === 0) {
-      return formatCurrencyNoKr(andel.beregnetPrAar / 12);
-    }
-  }
-  return '';
-};
-
-const mapToReadOnlyBelop = (bgAndel, faktaOmBeregning) => {
-    if (erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(bgAndel, faktaOmBeregning)) {
-      return '';
-    }
-    if (andelErStatusFLOgHarATISammeOrg(bgAndel, faktaOmBeregning)) {
-      return '';
-    }
-    if (bgAndel.arbeidsforhold && (bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd || bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd === 0)) {
-      return formatCurrencyNoKr(bgAndel.arbeidsforhold.belopFraInntektsmeldingPrMnd);
-    }
-    if (bgAndel.belopPrMndEtterAOrdningen || bgAndel.belopPrMndEtterAOrdningen === 0) {
-      return formatCurrencyNoKr(bgAndel.belopPrMndEtterAOrdningen);
-    }
-    return bgAndel.belopFraMeldekortPrMnd || bgAndel.belopFraMeldekortPrMnd === 0 ? formatCurrencyNoKr(bgAndel.belopFraMeldekortPrMnd) : '';
-};
-
-export const mapAndelToField = (andel, getKodeverknavn, faktaOmBeregning) => ({
+export const mapAndelToField = (andel, getKodeverknavn) => ({
   ...setGenerellAndelsinfo(andel, getKodeverknavn),
   ...setArbeidsforholdInitialValues(andel),
-  skalKunneEndreAktivitet: andel.lagtTilAvSaksbehandler && andel.aktivitetStatus.kode !== aktivitetStatus.DAGPENGER,
-  fastsattBelop: mapToFastsattBelop(andel),
-  belopReadOnly: mapToReadOnlyBelop(andel, faktaOmBeregning),
-  refusjonskrav: andel.arbeidsforhold && andel.arbeidsforhold.refusjonPrAar !== null
-  && andel.arbeidsforhold.refusjonPrAar !== undefined ? formatCurrencyNoKr(andel.arbeidsforhold.refusjonPrAar / 12) : '',
+  skalKunneEndreAktivitet: andel.skalKunneEndreAktivitet,
+  fastsattBelop: andel.fastsattBelop || andel.fastsattBelop === 0 ? formatCurrencyNoKr(andel.fastsattBelop) : '',
+  belopReadOnly: andel.belopReadOnly || andel.belopReadOnly === 0 ? formatCurrencyNoKr(andel.belopReadOnly) : '',
+  refusjonskrav: andel.refusjonskrav || andel.refusjonskrav === 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
+  arbeidsperiodeFom: andel.arbeidsperiodeFom,
+  arbeidsperiodeTom: andel.arbeidsperiodeTom,
+  andel: andel.visningsnavn,
+  aktivitetStatus: andel.aktivitetStatus.kode,
+  andelsnr: andel.andelsnr,
+  nyAndel: false,
+  inntektskategori: preutfyllInntektskategori(andel),
 });

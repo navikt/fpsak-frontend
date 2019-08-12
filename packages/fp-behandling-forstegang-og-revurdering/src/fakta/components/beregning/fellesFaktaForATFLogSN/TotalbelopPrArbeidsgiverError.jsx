@@ -2,13 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { FormattedMessage } from 'react-intl';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 
-export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn) => {
+export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotRapportert, skalValidereInntektMotRefusjon) => {
   const totalInntektArbeidsforholdList = [];
   values.forEach((andel) => {
     if (skalValidereMotRapportert(andel) || skalValidereInntektMotRefusjon(andel)) {
-      const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
+      const navn = andel.andel;
       if (andel.arbeidsgiverId) {
         const arbforhold = totalInntektArbeidsforholdList.find(({ key }) => key === navn);
         if (arbforhold !== undefined) {

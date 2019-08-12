@@ -154,9 +154,9 @@ export const validateFastsattBelopEqualOrBelowRefusjon = (fastsattBelop, refusjo
 };
 
 export const validateAgainstRegisterInntektsmeldingOrRefusjon = (andelFieldValues, totalInntektArbeidsforholdList,
-  skalValidereMotRapportert, getKodeverknavn) => {
+  skalValidereMotRapportert) => {
   const arbeidsforholdBelopValues = totalInntektArbeidsforholdList
-    .find(({ key }) => key === createVisningsnavnForAktivitet(andelFieldValues, getKodeverknavn));
+    .find(({ key }) => key === andelFieldValues.andel);
   if (arbeidsforholdBelopValues) {
     const arbeidsforholdTotalFastsatt = arbeidsforholdBelopValues.fastsattBelop;
     if (skalValidereMotRapportert(andelFieldValues)) {
@@ -177,10 +177,10 @@ export const validateAgainstRegisterInntektsmeldingOrRefusjon = (andelFieldValue
   return null;
 };
 
-export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert, getKodeverknavn) => {
+export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert) => {
   const fastsattBelopError = required(andelFieldValues.fastsattBelop);
   if (!fastsattBelopError) {
-    return validateAgainstRegisterInntektsmeldingOrRefusjon(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert, getKodeverknavn);
+    return validateAgainstRegisterInntektsmeldingOrRefusjon(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert);
   }
   return fastsattBelopError;
 };
@@ -189,27 +189,27 @@ export const hasFieldErrors = fieldErrors => (fieldErrors.refusjonskrav || field
   || fieldErrors.fastsattBelop || fieldErrors.inntektskategori);
 
 
-export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert, getKodeverknavn) => {
+export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert) => {
   const {
     refusjonskrav, skalKunneEndreRefusjon,
     andel, inntektskategori,
   } = andelFieldValues;
   const fieldErrors = {};
   fieldErrors.refusjonskrav = validateRefusjonsbelop(refusjonskrav, skalKunneEndreRefusjon);
-  fieldErrors.fastsattBelop = validateFastsattBelop(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert, getKodeverknavn);
+  fieldErrors.fastsattBelop = validateFastsattBelop(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotRapportert);
   fieldErrors.andel = required(andel);
   fieldErrors.inntektskategori = required(inntektskategori);
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
 
 
-export const validateAndeler = (values, skalRedigereInntekt, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn) => {
-  const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotRapportert, skalValidereInntektMotRefusjon, getKodeverknavn);
+export const validateAndeler = (values, skalRedigereInntekt, skalValidereMotRapportert, skalValidereInntektMotRefusjon) => {
+  const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotRapportert, skalValidereInntektMotRefusjon);
   const arrayErrors = values.map((andelFieldValues) => {
     if (!skalRedigereInntekt(andelFieldValues)) {
         return null;
     }
-    return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotRapportert, getKodeverknavn);
+    return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotRapportert);
   });
   if (arrayErrors.some(errors => errors !== null)) {
     if (arrayErrors.some(errors => errors && errors.fastsattBelop && errors.fastsattBelop[0].id === tomErrorMessage()[0].id)) {

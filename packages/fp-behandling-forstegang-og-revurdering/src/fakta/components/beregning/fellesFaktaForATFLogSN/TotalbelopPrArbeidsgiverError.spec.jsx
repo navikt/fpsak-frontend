@@ -2,7 +2,8 @@ import { expect } from 'chai';
 import { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
 const arbeidsgiver1 = {
- arbeidsgiverNavn: 'Statoil AS',
+andel: 'Statoil AS (123456789)',
+arbeidsgiverNavn: 'Statoil AS',
 arbeidsgiverId: '123456789',
 arbeidsperiodeFom: '2017-01-01',
 registerInntekt: '20 000',
@@ -12,7 +13,8 @@ belopFraInntektsmelding: 20000,
 const arbeidsgiver1Key = 'Statoil AS (123456789)';
 
 const arbeidsgiver2 = {
- arbeidsgiverNavn: 'Sopra Steria AS',
+andel: 'Sopra Steria AS (9987432724)',
+arbeidsgiverNavn: 'Sopra Steria AS',
 arbeidsgiverId: '9987432724',
 arbeidsperiodeFom: '2019-01-01',
 registerInntekt: '30 000',
@@ -22,6 +24,7 @@ belopFraInntektsmelding: null,
 const arbeidsgiver2Key = 'Sopra Steria AS (9987432724)';
 
 const arbeidsgiver3 = {
+  andel: 'NAV AS (4364634634)',
   arbeidsgiverNavn: 'NAV AS',
  arbeidsgiverId: '4364634634',
  arbeidsperiodeFom: '2019-01-01',
@@ -33,6 +36,7 @@ const arbeidsgiver3 = {
  const arbeidsgiver3Key = 'NAV AS (4364634634)';
 
 const frilanser = {
+  andel: 'Frilans',
  arbeidsgiverNavn: '',
 arbeidsgiverId: '',
 arbeidsforholdType: { kode: 'FRILANS' },
@@ -78,16 +82,9 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
      },
     ];
 
-    const getKodeverknavn = (kodeverk) => {
-      if (kodeverk.kode === 'FRILANS') {
-        return 'Frilans';
-      }
-      return '';
-    };
-
     const skalValidereMotRefusjon = andel => andel.arbeidsgiverId === '4364634634';
 
-    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, skalValidereMotRefusjon, getKodeverknavn);
+    const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, skalValidereMotRefusjon);
     expect(inntektPrArbeidsforholdList.length).to.equal(4);
     const inntektForArbeidsgiver1 = inntektPrArbeidsforholdList.find(({ key }) => key === arbeidsgiver1Key);
     expect(inntektForArbeidsgiver1.fastsattBelop).to.equal(30000);

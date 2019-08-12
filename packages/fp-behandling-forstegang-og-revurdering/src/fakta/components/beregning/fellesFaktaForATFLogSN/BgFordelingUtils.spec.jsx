@@ -62,14 +62,17 @@ describe('<BgFordelingUtils>', () => {
   const dagpengerAndel = {
     aktivitetStatus: { kode: aktivitetStatuser.DAGPENGER, navn: 'Dagpenger' },
     andelsnr: 1,
+    skalKunneEndreAktivitet: false,
     lagtTilAvSaksbehandler: true,
     inntektskategori: { kode: 'DAGPENGER' },
     fastsattAvSaksbehandler: true,
     beregnetPrAar: 240000,
+    fastsattBelop: 20000,
+    belopReadOnly: 0,
     belopFraMeldekortPrMnd: 0,
   };
 
-  const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined, {});
+  const dagpengeField = mapAndelToField(dagpengerAndel, () => undefined);
 
 
   it('skal mappe dagpengerandel til feltverdier', () => {
@@ -89,13 +92,16 @@ describe('<BgFordelingUtils>', () => {
     const AAPAndel = {
       aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER, navn: 'Arbeidsavklaringspenger' },
       andelsnr: 1,
+      skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AAP' },
       fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
+      fastsattBelop: null,
+      belopReadOnly: 10000,
       belopFraMeldekortPrMnd: 10000,
     };
-    const aapField = mapAndelToField(AAPAndel, () => undefined, {});
+    const aapField = mapAndelToField(AAPAndel, () => undefined);
     expect(aapField.aktivitetStatus).to.equal('AAP');
     expect(aapField.andelsnr).to.equal(1);
     expect(aapField.nyAndel).to.equal(false);
@@ -109,19 +115,17 @@ describe('<BgFordelingUtils>', () => {
 
 
   it('skal mappe AT uten inntektsmelding med FL i samme org til feltverdier', () => {
-    const faktaOmBeregning = {
-      arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ andelsnr: 1, inntektPrMnd: null }],
-    };
     const ATAndel = {
       aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
       andelsnr: 1,
+      skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AT' },
       fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
     };
-    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    const atField = mapAndelToField(ATAndel, () => undefined);
     expect(atField.aktivitetStatus).to.equal('AT');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -134,19 +138,17 @@ describe('<BgFordelingUtils>', () => {
   });
 
   it('skal mappe FL med AT i samme org til feltverdier', () => {
-    const faktaOmBeregning = {
-      arbeidstakerOgFrilanserISammeOrganisasjonListe: [{ andelsnr: 2, inntektPrMnd: null }],
-    };
     const ATAndel = {
       aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
       andelsnr: 1,
+      skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'FL' },
       fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
     };
-    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    const atField = mapAndelToField(ATAndel, () => undefined);
     expect(atField.aktivitetStatus).to.equal('FL');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -159,18 +161,20 @@ describe('<BgFordelingUtils>', () => {
   });
 
   it('skal mappe AT med inntektsmelding til feltverdier', () => {
-    const faktaOmBeregning = {};
     const ATAndel = {
       aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
       andelsnr: 1,
+      skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AT' },
       fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
+      fastsattBelop: null,
+      belopReadOnly: 20000,
       arbeidsforhold: { belopFraInntektsmeldingPrMnd: 20000 },
     };
-    const atField = mapAndelToField(ATAndel, () => undefined, faktaOmBeregning);
+    const atField = mapAndelToField(ATAndel, () => undefined);
     expect(atField.aktivitetStatus).to.equal('AT');
     expect(atField.andelsnr).to.equal(1);
     expect(atField.nyAndel).to.equal(false);
@@ -284,7 +288,7 @@ describe('<BgFordelingUtils>', () => {
       inntektskategori: { kode: 'SN' },
     };
     const arbeidsforholdIV = setArbeidsforholdInitialValues(andelValueFromState);
-    expect(arbeidsforholdIV.arbeidsforholdId).to.equal('');
+    expect(arbeidsforholdIV.arbeidsforholdId).to.equal(null);
     expect(arbeidsforholdIV.arbeidsperiodeFom).to.equal('');
     expect(arbeidsforholdIV.arbeidsperiodeTom).to.equal('');
   });

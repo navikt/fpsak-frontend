@@ -525,7 +525,7 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal gi error om total beløp for arbeidsforhold overstiger rapportert beløp', () => {
     const values = [{
-      andel: 'Arbeidsgiver 1',
+      andel: 'Arbeidsgiver 1 (2342353525) ...hr43',
       fastsattBelop: '10 000',
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
@@ -535,7 +535,7 @@ describe('<ValidateAndelerUtils>', () => {
       inntektskategori: 'ARBEIDSTAKER',
     },
     {
-      andel: 'Arbeidsgiver 1',
+      andel: 'Arbeidsgiver 1 (2342353525) ...hr43',
       fastsattBelop: '20 000',
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
@@ -559,7 +559,7 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal validere mot refusjonskrav for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
     const andelValue = {
-      andel: 'Arbeidsgiver 1',
+      andel: 'Arbeidsgiver 1 (2342353525) ...hr43',
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
@@ -579,7 +579,7 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal validere mot registerinntekt for arbeidsforhold som tilkommer før skjæringstidspunktet', () => {
     const andelValue = {
-      andel: 'Arbeidsgiver 1',
+      andel: 'Arbeidsgiver 1 (2342353525) ...hr43',
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
@@ -597,7 +597,7 @@ describe('<ValidateAndelerUtils>', () => {
 
   it('skal validere mot beløp fra inntektsmelding for arbeidsforhold som tilkommer etter skjæringstidspunktet', () => {
     const andelValue = {
-      andel: 'Arbeidsgiver 1',
+      andel: 'Arbeidsgiver 1 (2342353525) ...hr43',
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
