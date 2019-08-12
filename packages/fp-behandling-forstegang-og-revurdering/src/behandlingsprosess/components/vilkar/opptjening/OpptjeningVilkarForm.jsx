@@ -1,0 +1,62 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { getSelectedBehandlingspunktAksjonspunkter }
+from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { FadingPanel } from '@fpsak-frontend/shared-components';
+import OpptjeningVilkarView from './OpptjeningVilkarView';
+import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
+
+const FORM_NAME = 'OpptjeningVilkarForm';
+
+/**
+ * OpptjeningVilkarForm
+ *
+ * Presentasjonskomponent. Viser resultatet av opptjeningsvilkåret.
+ */
+export const OpptjeningVilkarFormImpl = ({
+  isAksjonspunktOpen,
+  hasAksjonspunkt,
+  readOnlySubmitButton,
+  readOnly,
+  ...formProps
+}) => {
+  if (hasAksjonspunkt) {
+    return (
+      <OpptjeningVilkarAksjonspunktPanel
+        isAksjonspunktOpen={isAksjonspunktOpen}
+        readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        formName={FORM_NAME}
+        formProps={formProps}
+      />
+    );
+  }
+  return (
+    <FadingPanel withoutTopMargin>
+      <OpptjeningVilkarView />
+    </FadingPanel>
+  );
+};
+
+OpptjeningVilkarFormImpl.propTypes = {
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
+  hasAksjonspunkt: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
+};
+
+
+const mapStateToPropsFactory = (initialState) => {
+  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  return () => ({
+    hasAksjonspunkt: aksjonspunkter.length > 0,
+  });
+};
+
+const OpptjeningVilkarForm = connect(mapStateToPropsFactory)(OpptjeningVilkarFormImpl);
+
+OpptjeningVilkarForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.OPPTJENING;
+
+export default OpptjeningVilkarForm;

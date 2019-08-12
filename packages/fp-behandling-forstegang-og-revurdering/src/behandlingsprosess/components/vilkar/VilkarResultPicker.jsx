@@ -104,7 +104,7 @@ VilkarResultPickerImpl.propTypes = {
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,
-  })).isRequired,
+  })),
   customVilkarIkkeOppfyltText: PropTypes.shape({
     id: PropTypes.string.isRequired,
     values: PropTypes.shape(),
@@ -124,6 +124,7 @@ VilkarResultPickerImpl.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
   behandlingspunkt: undefined,
+  avslagsarsaker: undefined,
 };
 
 const VilkarResultPicker = injectIntl(VilkarResultPickerImpl);

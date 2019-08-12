@@ -4,17 +4,13 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
-
-import { getSelectedBehandlingspunktStatus } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import VilkarResultPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPanel';
 import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
   getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, FadingPanel, PeriodLabel } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
+
 
 /**
  * OpptjeningVilkarView
@@ -26,25 +22,17 @@ export const OpptjeningVilkarViewImpl = ({
   monthsAndDays,
   opptjeningFomDate,
   opptjeningTomDate,
-  isAksjonspunktOpen,
-  status,
-  ...formProps
 }) => (
-  <FadingPanel withoutTopMargin>
-    <form onSubmit={formProps.handleSubmit}>
-      {isAksjonspunktOpen
-        && <VilkarResultPanel status={status} />
-      }
-      <VerticalSpacer fourPx />
-      <FormattedMessage
-        id="OpptjeningVilkarView.MonthsAndDays"
-        values={{ months: monthsAndDays.months, days: monthsAndDays.days }}
-      />
-      <Normaltekst>
-        <PeriodLabel dateStringFom={opptjeningFomDate} dateStringTom={opptjeningTomDate} />
-      </Normaltekst>
-      <VerticalSpacer fourPx />
-      { fastsattOpptjeningActivities.length > 0
+  <React.Fragment>
+    <FormattedMessage
+      id="OpptjeningVilkarView.MonthsAndDays"
+      values={{ months: monthsAndDays.months, days: monthsAndDays.days }}
+    />
+    <Normaltekst>
+      <PeriodLabel dateStringFom={opptjeningFomDate} dateStringTom={opptjeningTomDate} />
+    </Normaltekst>
+    <VerticalSpacer fourPx />
+    { fastsattOpptjeningActivities.length > 0
       && (
       <OpptjeningTimeLineLight
         opptjeningPeriods={fastsattOpptjeningActivities}
@@ -53,8 +41,7 @@ export const OpptjeningVilkarViewImpl = ({
       />
       )
       }
-    </form>
-  </FadingPanel>
+  </React.Fragment>
 );
 
 OpptjeningVilkarViewImpl.propTypes = {
@@ -62,8 +49,6 @@ OpptjeningVilkarViewImpl.propTypes = {
   monthsAndDays: PropTypes.shape().isRequired,
   opptjeningFomDate: PropTypes.string.isRequired,
   opptjeningTomDate: PropTypes.string.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
-  status: PropTypes.string.isRequired,
 };
 
 OpptjeningVilkarViewImpl.defaultProps = {
@@ -76,17 +61,12 @@ const monthsAndDays = createSelector(
 );
 
 const mapStateToProps = state => ({
-  status: getSelectedBehandlingspunktStatus(state),
-  monthsAndDays: monthsAndDays(state),
-  fastsattOpptjeningActivities: getBehandlingFastsattOpptjeningActivities(state),
-  opptjeningFomDate: getBehandlingFastsattOpptjeningFomDate(state),
-  opptjeningTomDate: getBehandlingFastsattOpptjeningTomDate(state),
+    monthsAndDays: monthsAndDays(state),
+    fastsattOpptjeningActivities: getBehandlingFastsattOpptjeningActivities(state),
+    opptjeningFomDate: getBehandlingFastsattOpptjeningFomDate(state),
+    opptjeningTomDate: getBehandlingFastsattOpptjeningTomDate(state),
 });
 
-const OpptjeningVilkarView = connect(mapStateToProps)(behandlingForm({
-  form: 'OpptjeningVilkarForm',
-})(OpptjeningVilkarViewImpl));
-
-OpptjeningVilkarView.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.OPPTJENING;
+const OpptjeningVilkarView = connect(mapStateToProps)(OpptjeningVilkarViewImpl);
 
 export default OpptjeningVilkarView;

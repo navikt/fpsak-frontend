@@ -12,7 +12,7 @@ import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysnin
 import FodselVilkarForm from './fodsel/FodselVilkarForm';
 import SvangerskapVilkarForm from './svangerskap/SvangerskapVilkarForm';
 import AdopsjonVilkarForm from './adopsjon/AdopsjonVilkarForm';
-import OpptjeningVilkarView from './opptjening/OpptjeningVilkarView';
+import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 
 /*
@@ -104,12 +104,13 @@ export const VilkarPanels = ({
       />
       )
     }
-    {OpptjeningVilkarView.supports(behandlingspunkt)
+    {OpptjeningVilkarForm.supports(behandlingspunkt)
       && (
-      <OpptjeningVilkarView
+      <OpptjeningVilkarForm
         submitCallback={submitCallback}
         readOnly={readOnly}
         isAksjonspunktOpen={isAksjonspunktOpen}
+        readOnlySubmitButton={readOnlySubmitButton}
       />
       )
     }

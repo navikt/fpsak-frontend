@@ -108,7 +108,8 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.OVERSTYR_MEDLEMSKAPSVILKAR),
   new BehandlingspunktProperties.Builder(bpc.OPPTJENING, 'Opptjeningsvilkaret')
     .withVilkarTypes(vt.OPPTJENINGSPERIODE, vt.OPPTJENINGSVILKARET)
-    .withAksjonspunktCodes(ac.OVERSTYRING_AV_OPPTJENINGSVILKARET),
+    .withAksjonspunktCodes(ac.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+      ac.VURDER_OPPTJENINGSVILKARET),
   new BehandlingspunktProperties.Builder(bpc.BEREGNINGSGRUNNLAG, 'Beregning')
     .withVilkarTypes(vt.BEREGNINGSGRUNNLAGVILKARET)
     .withAksjonspunktCodes(

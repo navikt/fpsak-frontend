@@ -93,7 +93,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
       {isOverstyrt
       && (
       <div>
-        <OverstyrConfirmationForm isBeregningConfirmation formProps={formProps} />
+        <OverstyrConfirmationForm isBeregningConfirmation />
         <OverstyrConfirmVilkarButton submitting={formProps.submitting} pristine={formProps.pristine} />
       </div>
       )
