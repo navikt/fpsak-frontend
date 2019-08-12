@@ -21,14 +21,20 @@ import { getBehandlingType } from 'behandling/duck';
 
 import styles from './shelveBehandlingModal.less';
 
+const maxLength1500 = maxLength(1500);
+
+const previewHenleggBehandlingDoc = (previewHenleggBehandling, behandlingId) => (e) => {
+  // TODO Denne verdien burde ikkje vera hardkoda. Er dette eit kodeverk?
+  previewHenleggBehandling(behandlingId, 'HENLEG');
+  e.preventDefault();
+};
+
 /**
  * ShelveBehandlingModal
  *
  * Presentasjonskomponent. Denne modalen vises når saksbehandler valger 'Henlegg behandling og avslutt'.
  * Ved å angi årsak og begrunnelse og trykke på 'Henlegg behandling' blir behandlingen henlagt og avsluttet.
  */
-const maxLength1500 = maxLength(1500);
-
 export const ShelveBehandlingModalImpl = ({
   showModal,
   handleSubmit,
@@ -36,96 +42,72 @@ export const ShelveBehandlingModalImpl = ({
   previewHenleggBehandling,
   behandlingId,
   henleggArsaker,
-  behandlingsType,
   intl,
   årsakKode,
   begrunnelse,
-}) => {
-  const previewHenleggBehandlingDoc = (e) => {
-    // TODO Denne verdien burde ikkje vera hardkoda. Er dette eit kodeverk?
-    previewHenleggBehandling(behandlingId, 'HENLEG');
-    e.preventDefault();
-  };
-
-  const selectOptions = (type) => {
-    if (type.kode === behandlingType.REVURDERING) {
-      return henleggArsaker
-        .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD
-          && valg.kode !== behandlingResultatType.MANGLER_BEREGNINGSREGLER)
-        .map((valg, cIndex) => (
-          <option value={valg.kode} key={`valg${cIndex + 1}`}>{intl.formatMessage({ id: valg.kode })}</option>
-        ));
-    }
-    return henleggArsaker
-      .filter(valg => valg.kode !== behandlingResultatType.HENLAGT_BRUKER_DOD)
-      .map((valg, cIndex) => (
-        <option value={valg.kode} key={`valg${cIndex + 1}`}>{intl.formatMessage({ id: valg.kode })}</option>
-      ));
-  };
-
-  return (
-    <Modal
-      className={styles.modal}
-      isOpen={showModal}
-      closeButton={false}
-      contentLabel={intl.formatMessage({ id: 'ShelveBehandlingModal.ModalDescription' })}
-      onRequestClose={cancelEvent}
-      shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
-    >
-      <form onSubmit={handleSubmit}>
-        <div>
-          <Fieldset legend={intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandling' })}>
-            <Row>
-              <Column xs="5">
-                <SelectField
-                  name="årsakKode"
-                  label={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakField' })}
-                  validate={[required]}
-                  placeholder={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakFieldDefaultValue' })}
-                  selectValues={selectOptions(behandlingsType)}
-                />
-              </Column>
-            </Row>
-            <Row>
-              <Column xs="8">
-                <TextAreaField
-                  name="begrunnelse"
-                  label={intl.formatMessage({ id: 'ShelveBehandlingModal.BegrunnelseField' })}
-                  validate={[required, maxLength1500, hasValidText]}
-                  maxLength={1500}
-                />
-              </Column>
-            </Row>
-            <Row>
-              <Column xs="6">
-                <div>
-                  <Hovedknapp
-                    mini
-                    className={styles.button}
-                    disabled={!(årsakKode && begrunnelse)}
-                  >
-                    {intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandlingSubmit' })}
-                  </Hovedknapp>
-                  <Knapp
-                    htmlType="button"
-                    mini
-                    onClick={cancelEvent}
-                  >
-                    {intl.formatMessage({ id: 'ShelveBehandlingModal.Avbryt' })}
-                  </Knapp>
-                </div>
-              </Column>
-              <Column xs="4">
-                { [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+}) => (
+  <Modal
+    className={styles.modal}
+    isOpen={showModal}
+    closeButton={false}
+    contentLabel={intl.formatMessage({ id: 'ShelveBehandlingModal.ModalDescription' })}
+    onRequestClose={cancelEvent}
+    shouldCloseOnOverlayClick={false}
+    ariaHideApp={false}
+  >
+    <form onSubmit={handleSubmit}>
+      <div>
+        <Fieldset legend={intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandling' })}>
+          <Row>
+            <Column xs="5">
+              <SelectField
+                name="årsakKode"
+                label={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakField' })}
+                validate={[required]}
+                placeholder={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakFieldDefaultValue' })}
+                selectValues={henleggArsaker.map(arsak => <option value={arsak.kode} key={arsak.kode}>{intl.formatMessage({ id: arsak.kode })}</option>)}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column xs="8">
+              <TextAreaField
+                name="begrunnelse"
+                label={intl.formatMessage({ id: 'ShelveBehandlingModal.BegrunnelseField' })}
+                validate={[required, maxLength1500, hasValidText]}
+                maxLength={1500}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Column xs="6">
+              <div>
+                <Hovedknapp
+                  mini
+                  className={styles.button}
+                  disabled={!(årsakKode && begrunnelse)}
+                >
+                  {intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandlingSubmit' })}
+                </Hovedknapp>
+                <Knapp
+                  htmlType="button"
+                  mini
+                  onClick={cancelEvent}
+                >
+                  {intl.formatMessage({ id: 'ShelveBehandlingModal.Avbryt' })}
+                </Knapp>
+              </div>
+            </Column>
+            <Column xs="4">
+              { [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
                   behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(årsakKode)
                 && (
                   <div className={styles.forhandsvis}>
                     <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
                     <a
                       href=""
-                      onClick={previewHenleggBehandlingDoc}
-                      onKeyDown={previewHenleggBehandlingDoc}
+                      onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
+                      onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
                       className="lenke lenke--frittstaende"
                     >
                       {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
@@ -133,14 +115,13 @@ export const ShelveBehandlingModalImpl = ({
                   </div>
                 )
               }
-              </Column>
-            </Row>
-          </Fieldset>
-        </div>
-      </form>
-    </Modal>
-  );
-};
+            </Column>
+          </Row>
+        </Fieldset>
+      </div>
+    </form>
+  </Modal>
+);
 
 ShelveBehandlingModalImpl.propTypes = {
   intl: intlShape.isRequired,
@@ -149,10 +130,6 @@ ShelveBehandlingModalImpl.propTypes = {
   cancelEvent: PropTypes.func.isRequired,
   previewHenleggBehandling: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
-  behandlingsType: PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  }).isRequired,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
@@ -172,26 +149,28 @@ ShelveBehandlingModalImpl.defaultProps = {
 const henleggArsakerPerBehandlingType = {
   [behandlingType.KLAGE]: [behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.DOKUMENTINNSYN]: [behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
-  OTHER: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET, behandlingResultatType.HENLAGT_BRUKER_DOD,
+  [behandlingType.TILBAKEKREVING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET],
+  [behandlingType.REVURDERING]: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    behandlingResultatType.HENLAGT_SOKNAD_MANGLER],
+  OTHER: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
     behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER],
 };
 
-const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_RESULTAT_TYPE), getBehandlingType],
+export const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_RESULTAT_TYPE), getBehandlingType],
   (behandlingResultatTyper, bType) => {
     const typerForBehandlingType = henleggArsakerPerBehandlingType[bType.kode];
     const typer = typerForBehandlingType || henleggArsakerPerBehandlingType.OTHER;
     return typer.map(type => behandlingResultatTyper.find(brt => brt.kode === type));
   });
 
-const ShelveBehandlingModal = reduxForm({
-  form: 'ShelveBehandlingModal',
-})(ShelveBehandlingModalImpl);
-
 const mapStateToProps = state => ({
   årsakKode: formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('ShelveBehandlingModal')(state, 'begrunnelse'),
-  behandlingsType: getBehandlingType(state),
   henleggArsaker: getHenleggArsaker(state),
 });
+
+const ShelveBehandlingModal = reduxForm({
+  form: 'ShelveBehandlingModal',
+})(ShelveBehandlingModalImpl);
 
 export default connect(mapStateToProps)(injectIntl(ShelveBehandlingModal));
