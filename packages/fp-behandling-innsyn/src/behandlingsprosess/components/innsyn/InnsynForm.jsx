@@ -21,15 +21,12 @@ import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatTy
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
-} from 'behandlingInnsyn/src/behandlingForm';
-import {
-  getBehandlingOnHoldDate, getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
-  getBehandlingInnsynVedtaksdokumentasjon, getBehandlingInnsynDokumenter,
-} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormInnsyn, behandlingFormValueSelector,
+} from 'behandlingInnsyn/src/behandlingFormInnsyn';
+import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer, getAllDocuments,
-} from 'behandlingInnsyn/src/duckInnsyn';
+} from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
 
@@ -163,8 +160,8 @@ const hentDokumenterMedNavnOgFikkInnsyn = dokumenter => dokumenter.reduce((acc, 
 }, {});
 
 const buildInitialValues = createSelector(
-  [getBehandlingInnsynMottattDato, getBehandlingInnsynResultatType,
-    getBehandlingOnHoldDate, getBehandlingInnsynDokumenter, getSelectedBehandlingspunktAksjonspunkter],
+  [behandlingSelectors.getBehandlingInnsynMottattDato, behandlingSelectors.getBehandlingInnsynResultatType,
+    behandlingSelectors.getBehandlingOnHoldDate, behandlingSelectors.getBehandlingInnsynDokumenter, getSelectedBehandlingspunktAksjonspunkter],
   (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => ({
     mottattDato: innsynMottattDato,
     innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
@@ -202,7 +199,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     documents: getFilteredReceivedDocuments(state),
     saksNr: getSelectedSaksnummer(state),
-    vedtaksdokumenter: getBehandlingInnsynVedtaksdokumentasjon(state),
+    vedtaksdokumenter: behandlingSelectors.getBehandlingInnsynVedtaksdokumentasjon(state),
     innsynResultatTyper: getKodeverk(kodeverkTyper.INNSYN_RESULTAT_TYPE)(state),
     behandlingTypes: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state),
     isApOpen: isAksjonspunktOpen(getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
@@ -213,7 +210,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const InnsynForm = connect(mapStateToPropsFactory)(behandlingForm({
+const InnsynForm = connect(mapStateToPropsFactory)(behandlingFormInnsyn({
   form: formName,
 })(InnsynFormImpl));
 

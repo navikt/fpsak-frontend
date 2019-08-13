@@ -18,7 +18,7 @@ import {
 }
   from './behandlingsprosessInnsynSelectors';
 
-describe('behandlingsprosessSelectors', () => {
+describe('behandlingsprosessInnsynSelectors', () => {
   it('skal lage behandlingspunkter for engangsstønad', () => {
     const fagsakYtelseType = {
       kode: fyt.ENGANGSSTONAD,

@@ -76,6 +76,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
 
   // VILKÅR
   const getBehandlingVilkar = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.vilkar);
+  const getBehandlingVilkarCodes = createSelector([getBehandlingVilkar], (vilkar = []) => vilkar.map(v => v.vilkarType.kode));
 
   //----------------------------------------------------------------------------------------------------------------------------
 
@@ -98,6 +99,10 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     }
     return merknader;
   });
+
+  const getMerknaderFraBeslutter = aksjonspunktCode => createSelector(getAllMerknaderFraBeslutter, allMerknaderFraBeslutter => (
+    allMerknaderFraBeslutter[aksjonspunktCode] || {}
+  ));
 
   return {
     getSelectedBehandling,
@@ -129,8 +134,10 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     getSoknad,
     getBehandlingHasSoknad,
     getBehandlingVilkar,
+    getBehandlingVilkarCodes,
     isBehandlingStatusReadOnly,
     getAllMerknaderFraBeslutter,
+    getMerknaderFraBeslutter,
   };
 };
 

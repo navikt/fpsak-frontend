@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingVersjon } from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingInnsyn/src/duckInnsyn';
+import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import { resetFakta, getOpenInfoPanels } from './duckFaktaInnsyn';
 
 import FaktaInnsynPanel from './components/FaktaInnsynPanel';
@@ -30,7 +30,7 @@ FaktaInnsynContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
 });

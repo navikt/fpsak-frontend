@@ -1,9 +1,21 @@
 import { expect } from 'chai';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
-import { getFilteredReceivedDocuments } from './duckInnsyn';
+import { reducer, getFilteredReceivedDocuments } from './duckBehandlingInnsyn';
 
-describe('getFilteredReceivedDocuments', () => {
+describe('Innsyn-behandling-reducer', () => {
+  it('skal returnere initial state', () => {
+    expect(reducer(undefined, {})).to.eql({
+      behandlingId: undefined,
+      fagsakSaksnummer: undefined,
+      hasShownBehandlingPaVent: false,
+      featureToggles: {},
+      kodeverk: {},
+      fagsak: {},
+      allDocuments: [],
+    });
+  });
+
   it('skal filtrere ut duplikate dokumenter', () => {
     const documents = [{
       dokumentId: 1,

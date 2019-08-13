@@ -10,7 +10,7 @@ import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/pr
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
-} from 'behandlingInnsyn/src/duckInnsyn';
+} from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/statusIconHelper';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
@@ -18,9 +18,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
-import {
-  getBehandlingStatus, getBehandlingsresultat, getAksjonspunkter, getBehandlingType, getBehandlingVersjon, getBehandlingHenlagt,
-} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -211,18 +209,18 @@ BehandlingsprosessInnsynIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   fagsakYtelseType: getFagsakYtelseType(state),
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  behandlingType: getBehandlingType(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingsresultat: getBehandlingsresultat(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
 });
 
 const mapDispatchToProps = dispatch => ({
