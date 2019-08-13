@@ -20,16 +20,16 @@ export const OpptjeningVilkarFormImpl = ({
   hasAksjonspunkt,
   readOnlySubmitButton,
   readOnly,
-  ...formProps
+  submitCallback,
 }) => {
   if (hasAksjonspunkt) {
     return (
       <OpptjeningVilkarAksjonspunktPanel
+        submitCallback={submitCallback}
         isAksjonspunktOpen={isAksjonspunktOpen}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         formName={FORM_NAME}
-        formProps={formProps}
       />
     );
   }
@@ -45,6 +45,7 @@ OpptjeningVilkarFormImpl.propTypes = {
   hasAksjonspunkt: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  submitCallback: PropTypes.func.isRequired,
 };
 
 
