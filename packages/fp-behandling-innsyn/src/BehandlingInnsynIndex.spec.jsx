@@ -9,7 +9,11 @@ import { BehandlingInnsynIndex } from './BehandlingInnsynIndex';
 
 describe('BehandlingInnsynIndex', () => {
   it('skal rendre komponent uten feil', () => {
-    const wrapper = shallow(<BehandlingInnsynIndex setBehandlingInfoHolder={sinon.spy()} />);
+    const wrapper = shallow(
+      <BehandlingInnsynIndex
+        setBehandlingInfoHolder={sinon.spy()}
+      />,
+    );
     expect(wrapper.find(FpInnsynBehandlingInfoSetter)).to.have.length(1);
     expect(wrapper.find(BehandlingGrid)).to.have.length(1);
   });

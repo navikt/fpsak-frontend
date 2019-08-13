@@ -13,7 +13,7 @@ import CommonBehandlingResolver from './CommonBehandlingResolver';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('BehandlingForstegangOgRevurderingIndex', () => {
+describe('withBehandlingIndex', () => {
   // eslint-disable-next-line no-console
   // console.log(global.Date.now());
   // process.exit(1);
@@ -65,7 +65,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
   it('skal vise paneler for behandlingsprosess og fakta', () => {
     const wrapper = shallow(<BehandlingComp
       store={mockStore({ router: { location: { path: 'test' } } })}
-      saksnummer={2}
       behandlingId={1}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
@@ -79,14 +78,18 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
-      fagsak={fagsak}
       appContextUpdater={{}}
-      featureToggles={{}}
       filteredReceivedDocuments={[]}
-      kodeverk={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
+      fagsakInfo={{
+        fagsakSaksnummer: 2,
+        behandlingId: 1,
+        featureToggles: {},
+        kodeverk: {},
+        fagsak,
+      }}
     />);
 
     expect(wrapper.dive().find(CommonBehandlingResolver)).has.length(1);
@@ -96,7 +99,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
   it('skal kunne vise modal så lenge en ikke allerede har satt på vent', () => {
     const wrapper = shallow(<BehandlingComp
       store={mockStore({ router: { location: { path: 'test' } } })}
-      saksnummer={2}
       behandlingId={1}
       hasShownBehandlingPaVent={false}
       closeBehandlingOnHoldModal={sinon.spy()}
@@ -111,14 +113,18 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
-      fagsak={fagsak}
       appContextUpdater={{}}
-      featureToggles={{}}
       filteredReceivedDocuments={[]}
-      kodeverk={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
+      fagsakInfo={{
+        fagsakSaksnummer: 2,
+        behandlingId: 1,
+        featureToggles: {},
+        kodeverk: {},
+        fagsak,
+      }}
     />);
 
     const modal = wrapper.dive().find(BehandlingErPaVentModal);
@@ -134,7 +140,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     const wrapper = shallow(<BehandlingComp
       store={mockStore({ router: { location: { path: 'test' } } })}
-      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       hasShownBehandlingPaVent={false}
@@ -150,14 +155,18 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
-      fagsak={fagsak}
       appContextUpdater={{}}
-      featureToggles={{}}
       filteredReceivedDocuments={[]}
-      kodeverk={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
+      fagsakInfo={{
+        fagsakSaksnummer: 2,
+        behandlingId: 1,
+        featureToggles: {},
+        kodeverk: {},
+        fagsak,
+      }}
     />);
 
     wrapper.dive().setProps({ behandlingVersjon: 3 });
@@ -181,7 +190,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     const wrapper = shallow(<BehandlingComp
       store={mockStore({ router: { location: { path: 'test' } } })}
-      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       hasShownBehandlingPaVent={false}
@@ -197,14 +205,18 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
-      fagsak={fagsak}
       appContextUpdater={{}}
-      featureToggles={{}}
       filteredReceivedDocuments={[]}
-      kodeverk={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
+      fagsakInfo={{
+        fagsakSaksnummer: 2,
+        behandlingId: 1,
+        featureToggles: {},
+        kodeverk: {},
+        fagsak,
+      }}
     />);
 
     wrapper.dive().setProps({ behandlingsprosessEnabled: false });
@@ -221,7 +233,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
 
     const wrapper = shallow(<BehandlingComp
       store={mockStore({ router: { location: { path: 'test' } } })}
-      saksnummer={2}
       behandlingId={1}
       behandlingVersjon={2}
       hasShownBehandlingPaVent={false}
@@ -237,14 +248,18 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
       updateFagsakInfo={sinon.spy()}
-      fagsak={fagsak}
       appContextUpdater={{}}
-      featureToggles={{}}
       filteredReceivedDocuments={[]}
-      kodeverk={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
+      fagsakInfo={{
+        fagsakSaksnummer: 2,
+        behandlingId: 1,
+        featureToggles: {},
+        kodeverk: {},
+        fagsak,
+      }}
     />);
 
     wrapper.dive().unmount();
