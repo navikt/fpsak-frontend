@@ -5,8 +5,8 @@ import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
-import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
+import VilkarresultatMedBegrunnelse from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarresultatMedBegrunnelse';
 import { VilkarresultatMedOverstyringFormImpl } from './VilkarresultatMedOverstyringForm';
 
 describe('<VilkarresultatMedOverstyringForm>', () => {
@@ -22,6 +22,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       avslagsarsaker={[{ kode: 'test1', navn: 'test' }, { kode: 'test2', navn: 'test' }]}
       lovReferanse="§23"
       hasAksjonspunkt
+      behandlingspunkt="foedsel"
     />);
 
     const undertittel = wrapper.find('Undertittel');
@@ -36,15 +37,10 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     expect(checker).to.have.length(1);
     expect(checker.prop('aksjonspunktCode')).is.eql('5011');
 
-    const selector = wrapper.find(VilkarResultPicker);
-    expect(selector).to.have.length(1);
-    expect(selector.prop('avslagsarsaker')).is.eql([{ kode: 'test1', navn: 'test' }, { kode: 'test2', navn: 'test' }]);
-    expect(selector.prop('erVilkarOk')).is.true;
-    expect(selector.prop('readOnly')).is.true;
-    expect(selector.prop('hasAksjonspunkt')).is.true;
+    VilkarresultatMedBegrunnelse;
 
-    const form = wrapper.find(OverstyrConfirmationForm);
-    expect(form).to.have.length(1);
+    const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
+    expect(vilkarResultatMedBegrunnelse).to.have.length(1);
   });
 
   it('skal rendre form uten knapp når vilkåret ikke er overstyrt', () => {
@@ -59,6 +55,7 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       avslagsarsaker={[{ kode: 'test1', navn: 'test' }, { kode: 'test2', navn: 'test' }]}
       lovReferanse="§23"
       hasAksjonspunkt
+      behandlingspunkt="foedsel"
     />);
 
     const form = wrapper.find(OverstyrConfirmationForm);

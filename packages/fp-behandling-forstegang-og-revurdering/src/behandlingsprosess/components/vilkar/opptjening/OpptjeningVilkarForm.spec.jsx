@@ -1,9 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-
+import sinon from 'sinon';
 import { shallow } from 'enzyme';
-
-
 import { OpptjeningVilkarFormImpl } from './OpptjeningVilkarForm';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
@@ -15,6 +13,7 @@ describe('<OpptjeningVilkarView>', () => {
       readOnly
       isAksjonspunktOpen
       hasAksjonspunkt
+      submitCallback={sinon.spy()}
     />);
 
     const aksjonspunktPanel = wrapper.find(OpptjeningVilkarAksjonspunktPanel);
@@ -27,6 +26,7 @@ describe('<OpptjeningVilkarView>', () => {
       readOnly
       isAksjonspunktOpen={false}
       hasAksjonspunkt={false}
+      submitCallback={sinon.spy()}
     />);
     const vilkarView = wrapper.find(OpptjeningVilkarView);
     expect(vilkarView).to.have.length(1);

@@ -1,24 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import {
-    getSelectedBehandlingspunktAksjonspunkter,
-    getSelectedBehandlingspunkt,
-    isSelectedBehandlingspunktOverrideReadOnly,
-  } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import VilkarBegrunnelse from '../VilkarBegrunnelse';
 import { getApCode } from './BehandlingspunktToAksjonspunkt';
 
-
-const getRelevanteAvslagsarsaker = (vilkarTypeKode, state) => {
-  const vilkartypeAvslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarTypeKode];
-  if (vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR) {
-      return getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state), vilkartypeAvslagsarsaker);
-  }
-  return vilkartypeAvslagsarsaker;
-};
 
 /**
  * VIlkarresultatMedBegrunnelse
@@ -54,10 +39,10 @@ export const VilkarresultatMedBegrunnelse = ({
 
 
 VilkarresultatMedBegrunnelse.propTypes = {
-  erVilkarOk: PropTypes.bool,
-  readOnly: PropTypes.bool,
-  behandlingspunkt: PropTypes.shape(),
-  hasAksjonspunkt: PropTypes.bool,
+  erVilkarOk: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  behandlingspunkt: PropTypes.string.isRequired,
+  hasAksjonspunkt: PropTypes.bool.isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,
@@ -74,12 +59,8 @@ VilkarresultatMedBegrunnelse.propTypes = {
 };
 
 VilkarresultatMedBegrunnelse.defaultProps = {
-  behandlingspunkt: undefined,
-  erVilkarOk: undefined,
-  readOnly: false,
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
-  hasAksjonspunkt: false,
   skalViseBegrunnelse: true,
 };
 
@@ -95,25 +76,4 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonsp
 
 VilkarresultatMedBegrunnelse.validate = values => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
-
-const mapStateToPropsFactory = (initialState) => {
-  const behandlingspunkt = getSelectedBehandlingspunkt(initialState);
-
-  return (state) => {
-    const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
-    const vilkar = getVilkar(state);
-
-    return {
-      behandlingspunkt,
-      customVilkarIkkeOppfyltText,
-      customVilkarOppfyltText,
-      hasAksjonspunkt: aksjonspunkt !== undefined,
-      avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
-      isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
-    };
-  };
-};
-
-
-export default connect(mapStateToPropsFactory)(VilkarresultatMedBegrunnelse);
+export default VilkarresultatMedBegrunnelse;
