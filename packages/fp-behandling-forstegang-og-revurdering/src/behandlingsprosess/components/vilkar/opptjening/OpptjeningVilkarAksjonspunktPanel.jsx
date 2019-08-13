@@ -51,9 +51,9 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     <OpptjeningVilkarView />
     <VerticalSpacer twentyPx />
   </BpPanelTemplate>
-    );
+);
 
-    OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
+OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

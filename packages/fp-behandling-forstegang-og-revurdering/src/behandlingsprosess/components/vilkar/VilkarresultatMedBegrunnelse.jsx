@@ -84,8 +84,8 @@ VilkarresultatMedBegrunnelse.defaultProps = {
 };
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status,
-  behandlingspunkt, isForeldrepenger, allVilkar) => {
-    const apCode = getApCode(behandlingspunkt, isForeldrepenger, allVilkar);
+  behandlingspunkt, ytelseType, allVilkar) => {
+    const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
     return {
       ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),

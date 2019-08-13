@@ -11,7 +11,7 @@ import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import {
   getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
@@ -28,7 +28,6 @@ import styles from './vilkarresultatMedOverstyringForm.less';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import { getApCode, getAllApCodes } from './BehandlingspunktToAksjonspunkt';
 
-// TODO (TOR) Refaktorer komponent!
 
 const behandlingpunktToVilkar = {
   [behandlingspunktCodes.OPPTJENING]: vilkarType.OPPTJENINGSVILKARET,
@@ -116,14 +115,14 @@ VilkarresultatMedOverstyringFormImpl.defaultProps = {
 
 const buildInitialValues = createSelector(
   [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus, getSelectedBehandlingspunkt,
-    isForeldrepengerFagsak, getSelectedBehandlingspunktVilkar],
-  (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, isForeldrepenger, allVilkar) => {
-    const apCode = getApCode(behandlingspunkt, isForeldrepenger, allVilkar);
+    getFagsakYtelseType, getSelectedBehandlingspunktVilkar],
+  (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, ytelseType, allVilkar) => {
+    const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
     return {
       isOverstyrt: aksjonspunkt !== undefined,
       ...VilkarresultatMedBegrunnelse.buildInitialValues(behandlingsresultat, aksjonspunkter,
-        status, behandlingspunkt, isForeldrepenger, allVilkar),
+        status, behandlingspunkt, ytelseType, allVilkar),
     };
   },
 );

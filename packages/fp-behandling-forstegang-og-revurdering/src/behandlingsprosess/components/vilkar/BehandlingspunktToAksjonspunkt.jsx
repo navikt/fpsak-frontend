@@ -1,5 +1,6 @@
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { isObject } from '@fpsak-frontend/utils';
 
@@ -23,10 +24,24 @@ const behandlingspunktToAksjonspunktForeldrepenger = {
   [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
 };
 
-export const getApCode = (behandlingspunkt, isForeldrepenger, allVilkar) => {
-  const apCode = isForeldrepenger
-    ? behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt]
-    : behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
+const behandlingspunktToAksjonspunktSvangerskapspenger = {
+  [behandlingspunktCodes.FOEDSEL]: aksjonspunktCode.OVERSTYR_FODSELSVILKAR,
+  [behandlingspunktCodes.MEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
+  [behandlingspunktCodes.FORTSATTMEDLEMSKAP]: aksjonspunktCode.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR,
+  [behandlingspunktCodes.SOEKNADSFRIST]: aksjonspunktCode.OVERSTYR_SOKNADSFRISTVILKAR,
+  [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
+};
+
+
+export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
+  let apCode = null;
+  if (ytelseType === fagsakYtelseType.FORELDREPENGER) {
+    apCode = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
+  } else if (ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) {
+    apCode = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
+  } else {
+    apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
+  }
   return isObject(apCode)
     ? apCode[allVilkar.map(v => v.vilkarType.kode).find(v => apCode[v])]
     : apCode;
@@ -37,10 +52,15 @@ export const getAllApCodes = (behandlingspunkt) => {
   const apCodes = esAp ? [esAp] : [];
   const fpAps = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
   if (isObject(fpAps)) {
-    return apCodes.concat(Object.values(fpAps));
+    apCodes.concat(Object.values(fpAps));
+  } else if (fpAps) {
+    apCodes.concat([fpAps]);
   }
-  if (fpAps) {
-    return apCodes.concat([fpAps]);
+  const spAps = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
+  if (isObject(spAps)) {
+    apCodes.concat(Object.values(spAps));
+  } else if (spAps) {
+    apCodes.concat([spAps]);
   }
   return apCodes;
 };
