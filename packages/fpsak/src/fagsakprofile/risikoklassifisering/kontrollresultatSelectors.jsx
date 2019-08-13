@@ -12,8 +12,11 @@ export const getRisikoaksjonspunkt = createSelector([getAksjonspunkter], aksjons
 export const getReadOnly = createSelector([getRettigheter, getNavAnsatt, getBehandlingAnsvarligSaksbehandler],
      (rettigheter, navAnsatt, ansvarligSaksbehandler) => {
     const { brukernavn, kanSaksbehandle } = navAnsatt;
-    return (brukernavn !== ansvarligSaksbehandler || !kanSaksbehandle || !rettigheter.writeAccess.isEnabled);
-    });
+    if (ansvarligSaksbehandler) {
+        return brukernavn !== ansvarligSaksbehandler || !kanSaksbehandle || !rettigheter.writeAccess.isEnabled;
+    }
+    return !kanSaksbehandle || !rettigheter.writeAccess.isEnabled;
+});
 
 export const getKontrollresultat = createSelector([fpsakApi.KONTROLLRESULTAT.getRestApiData()],
     (kontrollresultat = {}) => (kontrollresultat || undefined));
