@@ -70,6 +70,8 @@ const totrinnskontrollaksjonspunktTextCodes = {
 
   [aksjonspunktCodes.VURDER_FARESIGNALER]: 'ToTrinnsForm.Faresignaler.Vurder',
 
+  [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
+
 };
 
 export default totrinnskontrollaksjonspunktTextCodes;

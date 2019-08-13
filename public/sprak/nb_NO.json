@@ -1441,6 +1441,8 @@
   "ToTrinnsForm.Uttak.Overstyrt": "Uttaksperioder er overstyrt.",
   "ToTrinnsForm.TilkjentYtelse.Tilbaketrekk": "Det er vurdert om det skal utføres tilbakekreving fra søker.",
   "ToTrinnsForm.Faresignaler.Vurder": "Det er vurdert om faresignalene påvirket behandlingen",
+  "ToTrinnsForm.Opptjening.VurderPerioderMedOpptjening": "Perioder med opptjening har blitt vurdert.",
+  "ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret": "Opptjeningsvilkåret har blitt manuelt vurdert.",
 
   "ToTrinnsForm.Klage.OmgjortTilGunst": "Omgjort til gunst",
   "ToTrinnsForm.Klage.StadfesteYtelsesVedtak": "Stadfest ytelsesvedtak",

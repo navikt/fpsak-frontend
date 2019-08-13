@@ -6,7 +6,7 @@ import { OpptjeningVilkarFormImpl } from './OpptjeningVilkarForm';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
-describe('<OpptjeningVilkarView>', () => {
+describe('<OpptjeningVilkarForm>', () => {
   it('skal vise OpptjeningVilkarAksjonspunktPanel når en har aksjonspunkt', () => {
     const wrapper = shallow(<OpptjeningVilkarFormImpl
       readOnlySubmitButton
