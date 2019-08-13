@@ -98,7 +98,7 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
     ileggRenter: aktsomhet.skalDetTilleggesRenter,
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
-    tilbakekrevesBelop: removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves),
+    tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
     ...parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves),
