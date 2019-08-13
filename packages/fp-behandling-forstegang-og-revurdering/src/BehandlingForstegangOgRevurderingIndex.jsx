@@ -13,7 +13,7 @@ import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/f
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
-import FaktaIndex from './fakta/FaktaIndex';
+import FaktaContainer from './fakta/FaktaContainer';
 import {
   getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
   hasBehandlingManualPaVent,
@@ -101,7 +101,7 @@ export class BehandlingForstegangOgRevurderingIndex extends Component {
         <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessIndex />}
-          faktaContent={<FaktaIndex />}
+          faktaContent={<FaktaContainer />}
         />
         {!hasSubmittedPaVentForm
           && (

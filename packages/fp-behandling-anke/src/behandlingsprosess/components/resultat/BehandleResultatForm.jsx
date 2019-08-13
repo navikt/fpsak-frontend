@@ -14,10 +14,10 @@ import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
-import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
+import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 
 const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
@@ -205,7 +205,7 @@ const transformValues = (values, aksjonspunktCode) => ({
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 const formatId = b => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -226,7 +226,7 @@ const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], 
 const formName = 'ankeResultatForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
@@ -236,7 +236,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: formName,
 })(AnkeResultatForm));
 

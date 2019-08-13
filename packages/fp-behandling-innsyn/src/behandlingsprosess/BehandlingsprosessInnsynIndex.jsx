@@ -15,7 +15,6 @@ import findBehandlingsprosessIcon from 'behandlingInnsyn/src/behandlingsprosess/
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingspunktInnsynInfoPanel from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingInnsyn/src/fakta/duckFaktaInnsyn';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
@@ -139,7 +138,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
   render() {
     const {
       behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType, behandlingIdentifier,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
+      resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, aksjonspunkter, behandlingType,
     } = this.props;
     return (
       <React.Fragment>
@@ -165,7 +164,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
           behandlingsresultat={behandlingsresultat}
           behandlingStatusKode={behandlingStatus.kode}
           fagsakYtelseType={fagsakYtelseType}
-          resolveFaktaAksjonspunkterSuccess={resolveFaktaAksjonspunkterSuccess}
+          resolveFaktaAksjonspunkterSuccess
           resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
         />
         {behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
@@ -200,7 +199,6 @@ BehandlingsprosessInnsynIndex.propTypes = {
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
@@ -225,7 +223,6 @@ const mapStateToProps = state => ({
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   behandlingStatus: getBehandlingStatus(state),
   behandlingsresultat: getBehandlingsresultat(state),
-  resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
 });
 
 const mapDispatchToProps = dispatch => ({

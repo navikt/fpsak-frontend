@@ -13,6 +13,7 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
+    "connected-react-router": "^5.0.1",
     "nav-frontend-chevron": "1.0.9",
     "nav-frontend-chevron-style": "0.3.4",
     "nav-frontend-core": "4.0.9",
@@ -34,9 +35,18 @@
     "react-collapse": "^4.0.3",
     "react-intl": "^2.8.0",
     "react-motion": "^0.5.2",
-    "react-redux": "^5.1.1"
+    "react-redux": "^5.1.1",
+    "react-router-dom": "^4.3.1",
+    "redux-form": "^7.4.2",
+    "redux-thunk": "^2.3.0",
+    "redux": "^4.0.1",
+    "reselect": "^4.0.0"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "axios-mock-adapter": "^1.16.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.10.0",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^7.3.2"
   }
 }

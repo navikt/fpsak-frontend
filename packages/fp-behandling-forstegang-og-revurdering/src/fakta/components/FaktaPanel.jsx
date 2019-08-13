@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+
 import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingVilkarCodes,
@@ -11,9 +14,8 @@ import {
   hasReadOnlyBehandling,
   getBehandlingYtelseFordeling,
 }
-  from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duck';
+from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { setOpenInfoPanels, getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duck';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
@@ -265,16 +267,16 @@ FaktaPanel.defaultProps = {
 const mapStateToProps = (state) => {
   const rettigheter = getRettigheter(state);
   return {
-  aksjonspunkter: getAksjonspunkter(state),
-  vilkarCodes: getBehandlingVilkarCodes(state),
-  ytelsesType: getFagsakYtelseType(state),
-  openInfoPanels: getOpenInfoPanels(state),
-  readOnly: !rettigheter.writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
-  personopplysninger: getPersonopplysning(state) || null,
-  ytelsefordeling: getBehandlingYtelseFordeling(state),
-  erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
-  fagsakPerson: getFagsakPerson(state),
-};
+    aksjonspunkter: getAksjonspunkter(state),
+    vilkarCodes: getBehandlingVilkarCodes(state),
+    ytelsesType: getFagsakYtelseType(state),
+    openInfoPanels: getOpenInfoPanels(state),
+    readOnly: !rettigheter.writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
+    personopplysninger: getPersonopplysning(state) || null,
+    ytelsefordeling: getBehandlingYtelseFordeling(state),
+    erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
+    fagsakPerson: getFagsakPerson(state),
+  };
 };
 
-export default connect(mapStateToProps)(FaktaPanel);
+export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(FaktaPanel));

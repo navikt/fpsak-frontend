@@ -78,7 +78,7 @@ describe('BehandlingKlageIndex', () => {
       .contain('BehandlingsprosessKlageIndex');
     expect(grid.prop('faktaContent').type.displayName)
       .to
-      .contain('FaktaKlageIndex');
+      .contain('FaktaKlageContainer');
 
     expect(grid.find(BehandlingErPaVentModal))
       .to

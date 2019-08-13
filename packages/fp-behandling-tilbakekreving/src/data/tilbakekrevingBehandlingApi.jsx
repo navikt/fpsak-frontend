@@ -39,7 +39,7 @@ const endpoints = new RestApiConfigBuilder()
 
 const reducerName = 'dataContextTilbakekrevingBehandling';
 
-const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
+export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
   .withContextPath('fptilbake')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())

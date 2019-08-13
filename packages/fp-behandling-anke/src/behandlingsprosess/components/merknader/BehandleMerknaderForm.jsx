@@ -14,13 +14,12 @@ import {
 import { required } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
-import { getBehandlingAnkeVurderingResultat } from '../../../selectors/ankeBehandlingSelectors';
-
+import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 
 const AnkeMerknader = ({
   readOnly,
@@ -107,14 +106,14 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
@@ -124,7 +123,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: ankeMerknaderFormName,
 })(AnkeMerknader));
 

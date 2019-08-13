@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingsprosessTilbakeIndex from './behandlingsprosess/BehandlingsprosessTilbakeIndex';
-import FaktaTilbakeIndex from './fakta/FaktaTilbakeIndex';
+import FaktaTilbakeContainer from './fakta/FaktaTilbakeContainer';
 import FpTilbakeBehandlingResolver from './FpTilbakeBehandlingResolver';
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
@@ -101,7 +101,7 @@ export class BehandlingTilbakekrevingIndex extends Component {
         <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessTilbakeIndex />}
-          faktaContent={<FaktaTilbakeIndex />}
+          faktaContent={<FaktaTilbakeContainer />}
         />
         {!hasSubmittedPaVentForm
           && (

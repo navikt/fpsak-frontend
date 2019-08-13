@@ -1,5 +1,5 @@
 import ankeBehandlingApi from './data/ankeBehandlingApi';
-import { updateBehandling, resetBehandling } from './duckAnke';
+import { updateBehandling, resetBehandling } from './duckBehandlingAnke';
 
 class FpSakBehandlingUpdater {
     updateBehandling = () => updateBehandling;

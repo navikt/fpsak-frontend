@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
@@ -9,7 +10,9 @@ import { getRettigheter } from 'navAnsatt/duck';
 import {
   getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
 } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getOpenInfoPanels } from '../duckFaktaTilbake';
+import {
+  setOpenInfoPanels, getOpenInfoPanels,
+} from '../duckFaktaTilbake';
 import { getFagsakPerson } from '../../duckTilbake';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 
@@ -21,7 +24,7 @@ import styles from './tilbakekrevingFaktaPanel.less';
  * Presentasjonskomponent. Har ansvar for visningen av de ulike faktapanelene. Dette gjøres
  * ved å gå gjennom aksjonspunktene og en gjør så en mapping mellom aksjonspunktene og panelene.
  */
-export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
+export const TilbakekrevingFaktaPanel = ({
   aksjonspunkter,
   submitCallback,
   openInfoPanels,
@@ -34,8 +37,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
   <>
     <div className={styles.personContainer}>
       <PersonIndex medPanel person={fagsakPerson} />
-      {feilutbetaling
-      && (
+      {feilutbetaling && (
         <FeilutbetalingInfoPanel
           aksjonspunkter={aksjonspunkter}
           submitCallback={submitCallback}
@@ -44,8 +46,7 @@ export const TilbakekrevingFaktaPanel = ({ // NOSONAR Kompleksitet er høg, men 
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
     </div>
     <div className={styles.container} />
   </>
@@ -77,4 +78,4 @@ const mapStateToProps = state => ({
   fagsakPerson: getFagsakPerson(state),
 });
 
-export default connect(mapStateToProps)(TilbakekrevingFaktaPanel);
+export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(TilbakekrevingFaktaPanel));

@@ -5,6 +5,7 @@ import sinon from 'sinon';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
+
 import { BehandlingForstegangOgRevurderingIndex } from './BehandlingForstegangOgRevurderingIndex';
 
 describe('BehandlingForstegangOgRevurderingIndex', () => {
@@ -80,7 +81,7 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
       .contain('BehandlingsprosessIndex');
     expect(grid.prop('faktaContent').type.displayName)
       .to
-      .contain('FaktaIndex');
+      .contain('FaktaContainer');
 
     expect(grid.find(BehandlingErPaVentModal))
       .to
