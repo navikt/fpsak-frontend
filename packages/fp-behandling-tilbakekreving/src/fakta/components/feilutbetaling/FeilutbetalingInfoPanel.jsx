@@ -311,8 +311,15 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
 
 const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker, getFagsakYtelseType], (feilutbetalingArsaker, fagsakYtelseType) => {
   const arsaker = feilutbetalingArsaker.find(a => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
-  return arsaker
-  .sort((a1, a2) => a1.årsak.localeCompare(a2.årsak));
+  return arsaker.sort((a1, a2) => {
+    const arsak1 = a1.årsak;
+    const arsak2 = a2.årsak;
+    const arsak1ErParagraf = arsak1.startsWith('§');
+    const arsak2ErParagraf = arsak2.startsWith('§');
+    const a1v = arsak1ErParagraf ? arsak1.replace(/\D/g, '') : arsak1;
+    const a2v = arsak2ErParagraf ? arsak2.replace(/\D/g, '') : arsak2;
+    return arsak1ErParagraf && arsak2ErParagraf ? a1v - a2v : a1v.localeCompare(a2v);
+  });
 });
 
 const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
