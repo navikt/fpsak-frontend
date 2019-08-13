@@ -42,7 +42,6 @@ describe('<ArbeidsforholdDetailForm>', () => {
       jordmorTilretteleggingFraDato="2019-04-04"
       tilretteleggingDatoer={[]}
     />);
-
     expect(wrapper.find(DatepickerField)).has.length(1);
     expect(wrapper.find(TilretteleggingFaktaPanel)).has.length(1);
     expect(wrapper.find(FaktaSubmitButton)).has.length(0);
@@ -57,7 +56,6 @@ describe('<ArbeidsforholdDetailForm>', () => {
       jordmorTilretteleggingFraDato="2019-04-04"
       tilretteleggingDatoer={[]}
     />);
-
     expect(wrapper.find(DatepickerField)).has.length(1);
     expect(wrapper.find(TilretteleggingFaktaPanel)).has.length(1);
     expect(wrapper.find(FaktaSubmitButton)).has.length(1);
