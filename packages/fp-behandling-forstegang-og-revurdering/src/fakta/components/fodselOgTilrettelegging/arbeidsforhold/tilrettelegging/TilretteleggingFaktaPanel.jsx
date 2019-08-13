@@ -108,6 +108,7 @@ export class TilretteleggingFaktaPanel extends Component {
           settValgtTilrettelegging={this.setSelectedTilrettelegging}
           valgtTilrettelegging={selectedTilrettelegging}
           slettTilrettelegging={this.slettTilrettelegging}
+          readOnly={readOnly}
         />
         {(selectedTilrettelegging || tilretteleggingDatoer.length === 0) && (
           <TilretteleggingDetailForm
@@ -124,6 +125,7 @@ export class TilretteleggingFaktaPanel extends Component {
           <Knapp
             htmlType="button"
             mini
+            disabled={readOnly}
             onClick={this.createTilrettelegging}
           >
             <FormattedMessage id="ArbeidsforholdInnhold.LeggTilPeriode" />
