@@ -23,6 +23,7 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFeatureToggles } from 'app/duck';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
+import VurderMilitaer from './vurderMilitaer/VurderMilitaer';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
   setFaktaPanelForKunYtelse,
@@ -133,6 +134,17 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
         </ElementWrapper>,
       );
     }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          <VurderMilitaer
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+        </ElementWrapper>,
+      );
+    }
   });
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
   faktaPanels.push(
@@ -197,11 +209,20 @@ const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values
   };
 };
 
+const vurderMilitaerSiviltjenesteTransform = (vurderFaktaValues, values) => {
+  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE);
+  return ({
+    ...vurderFaktaValues,
+    ...VurderMilitaer.transformValues(values),
+  });
+};
+
 export const transformValues = (
   aktivePaneler,
   nyIArbTransform,
   kortvarigTransform,
   etterlonnTransform,
+  militaerTransform,
 ) => (vurderFaktaValues, values) => {
   let transformed = { ...vurderFaktaValues };
   aktivePaneler.forEach((kode) => {
@@ -213,6 +234,9 @@ export const transformValues = (
     }
     if (kode === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
       transformed = etterlonnTransform(transformed, values);
+    }
+    if (kode === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
+      transformed = militaerTransform(transformed, values);
     }
   });
   return transformed;
@@ -236,7 +260,8 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
     fakta: transformValues(aktivePaneler,
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
-      etterlonnSluttpakkeTransform(aktivePaneler))(vurderFaktaValues.fakta, values),
+      etterlonnSluttpakkeTransform(aktivePaneler),
+      vurderMilitaerSiviltjenesteTransform)(vurderFaktaValues.fakta, values),
     overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
   });
 };
@@ -249,15 +274,16 @@ export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
       faktaOmBeregning,
       beregningsgrunnlag,
     } = values;
-   return setValuesForVurderFakta(tilfeller, values, endringBGPerioder, kortvarigeArbeidsforhold,
-    faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
-};
+    return setValuesForVurderFakta(tilfeller, values, endringBGPerioder, kortvarigeArbeidsforhold,
+      faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
+  };
 
 const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
 const buildInitialValuesForTilfeller = props => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
+  ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
   ...FastsettEndretBeregningsgrunnlag.buildInitialValues(props.endringBGPerioder, props.tilfeller,
      props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper), props.featureToggles),
