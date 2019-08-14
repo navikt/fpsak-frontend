@@ -19,7 +19,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
+import behandlingspunktInnsynSelectors from 'behandlingInnsyn/src/behandlingsprosess/selectors/behandlingsprosessInnsynSelectors';
 import {
   isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormInnsyn, behandlingFormValueSelector,
 } from 'behandlingInnsyn/src/behandlingFormInnsyn';
@@ -161,7 +161,8 @@ const hentDokumenterMedNavnOgFikkInnsyn = dokumenter => dokumenter.reduce((acc, 
 
 const buildInitialValues = createSelector(
   [behandlingSelectors.getBehandlingInnsynMottattDato, behandlingSelectors.getBehandlingInnsynResultatType,
-    behandlingSelectors.getBehandlingOnHoldDate, behandlingSelectors.getBehandlingInnsynDokumenter, getSelectedBehandlingspunktAksjonspunkter],
+    behandlingSelectors.getBehandlingOnHoldDate, behandlingSelectors.getBehandlingInnsynDokumenter,
+    behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter],
   (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => ({
     mottattDato: innsynMottattDato,
     innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
@@ -202,7 +203,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     vedtaksdokumenter: behandlingSelectors.getBehandlingInnsynVedtaksdokumentasjon(state),
     innsynResultatTyper: getKodeverk(kodeverkTyper.INNSYN_RESULTAT_TYPE)(state),
     behandlingTypes: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state),
-    isApOpen: isAksjonspunktOpen(getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
+    isApOpen: isAksjonspunktOpen(behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
     innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
     sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
     initialValues: buildInitialValues(state),

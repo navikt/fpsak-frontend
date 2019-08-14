@@ -11,7 +11,7 @@ import { resetFakta, getOpenInfoPanels } from './duckFaktaInnsyn';
 import FaktaInnsynPanel from './components/FaktaInnsynPanel';
 
 /**
- * FaktaAnkeContainer
+ * FaktaInnsynContainer
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Innsyn.
  */

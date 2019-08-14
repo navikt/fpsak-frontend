@@ -8,7 +8,7 @@ import { BehandlingGrid, withBehandlingIndex } from '@fpsak-frontend/fp-behandli
 
 import behandlingSelectors from './selectors/innsynBehandlingSelectors';
 import FpInnsynBehandlingInfoSetter from './FpInnsynBehandlingInfoSetter';
-import BehandlingsprosessInnsynIndex from './behandlingsprosess/BehandlingsprosessInnsynIndex';
+import BehandlingsprosessInnsynContainer from './behandlingsprosess/BehandlingsprosessInnsynContainer';
 import FaktaInnsynContainer from './fakta/FaktaInnsynContainer';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
@@ -27,7 +27,7 @@ export const BehandlingInnsynIndex = ({
   <>
     <FpInnsynBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
-      behandlingsprosessContent={<BehandlingsprosessInnsynIndex />}
+      behandlingsprosessContent={<BehandlingsprosessInnsynContainer />}
       faktaContent={<FaktaInnsynContainer />}
     />
   </>
@@ -37,7 +37,7 @@ BehandlingInnsynIndex.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
 };
 
-// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker anke-spesifikke selectors og funksjoner)
+// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker innsyn-spesifikke selectors og funksjoner)
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const fagsakInfo = {
     fagsakSaksnummer: ownProps.saksnummer,

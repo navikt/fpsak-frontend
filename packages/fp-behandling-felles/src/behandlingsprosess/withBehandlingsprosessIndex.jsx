@@ -4,9 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
@@ -14,6 +15,7 @@ import {
 import findStatusIcon from './statusIconHelper';
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from './components/vedtak/IverksetterVedtakStatusModal';
+import FatterVedtakStatusModal from './components/vedtak/FatterVedtakStatusModal';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -78,7 +80,8 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo) => {
       const {
         resolveProsessAksjonspunkter: resolveAksjonspunkter,
-        behandlingIdentifier, behandlingVersjon,
+        behandlingIdentifier,
+        behandlingVersjon,
       } = this.props;
 
       const models = aksjonspunktModels.map(ap => ({
@@ -100,7 +103,8 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
       const {
         behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType,
         resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, getBehandlingspunkterStatus,
-        getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
+        getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
+        aksjonspunkter, behandlingType,
       } = this.props;
 
       return (
@@ -131,6 +135,18 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
             resolveFaktaAksjonspunkterSuccess
             resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
           />
+          {!doNotUseFatterVedtakModal && behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+            <FatterVedtakStatusModal
+              closeEvent={this.goToSearchPage}
+              selectedBehandlingId={behandlingIdentifier.behandlingId}
+              fagsakYtelseType={fagsakYtelseType}
+              isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+              behandlingStatus={behandlingStatus}
+              behandlingsresultat={behandlingsresultat}
+              aksjonspunkter={aksjonspunkter}
+              behandlingType={behandlingType}
+            />
+          )}
         </React.Fragment>
       );
     }
@@ -154,12 +170,16 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     getBehandlingspunkterStatus: PropTypes.func.isRequired,
     getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
     getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
+    behandlingType: kodeverkObjektPropType.isRequired,
+    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+    doNotUseFatterVedtakModal: PropTypes.bool,
   };
 
   BehandlingsprosessIndex.defaultProps = {
     behandlingspunkter: undefined,
     selectedBehandlingspunkt: undefined,
     behandlingsresultat: undefined,
+    doNotUseFatterVedtakModal: false,
   };
 
   const mapDispatchToProps = (dispatch, ownProps) => ({

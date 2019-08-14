@@ -18,7 +18,7 @@ import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfo
 /**
  * BehandlingsprosessAnkeIndex
  *
- * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
+ * Har ansvar for behandlingsprosessdelen av hovedvinduet når behandlingstypen er Anke.
  */
 export class BehandlingsprosessAnkeIndex extends Component {
   constructor(props) {

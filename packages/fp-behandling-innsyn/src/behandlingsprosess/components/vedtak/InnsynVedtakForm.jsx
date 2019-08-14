@@ -31,7 +31,12 @@ const minLength3 = minLength(3);
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    previewCallback('', 'INSSKR', begrunnelse || ' ');
+    const data = {
+      fritekst: begrunnelse || ' ',
+      mottaker: '',
+      brevmalkode: 'INSSKR',
+    };
+    previewCallback(data);
   } else {
     formProps.submit();
   }
