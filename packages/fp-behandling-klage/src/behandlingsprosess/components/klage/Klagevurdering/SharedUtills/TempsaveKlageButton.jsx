@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 
 const isEqual = (lastSavedVersionValues, formValues) => {
   const formvaluesBegrunnelse = formValues.begrunnelse === '' ? null : formValues.begrunnelse;
@@ -78,7 +78,7 @@ const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspun
 
 const mapStateToProps = state => ({
   lastSavedVersionValues: getMellomLagringFormData(state),
-  aksjonspunktCode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
+  aksjonspunktCode: behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   spinner: behandlingSelectors.getMellomlagringSpinner(state),
   hasForeslaVedtakAp: getForeslaVedtakAp(state),
 });

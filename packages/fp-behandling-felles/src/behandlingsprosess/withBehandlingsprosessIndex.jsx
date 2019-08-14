@@ -8,6 +8,7 @@ import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
@@ -18,6 +19,10 @@ import IverksetterVedtakStatusModal from './components/vedtak/IverksetterVedtakS
 import FatterVedtakStatusModal from './components/vedtak/FatterVedtakStatusModal';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
+
+const hasOverstyringAp = aksjonspunkter => (
+  aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
+);
 
 /**
  * withBehandlingsprosessIndex
@@ -80,14 +85,30 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo) => {
       const {
         resolveProsessAksjonspunkter: resolveAksjonspunkter,
+        overrideProsessAksjonspunkter: overrideAksjonspunkter,
         behandlingIdentifier,
         behandlingVersjon,
+        aksjonspunkter,
       } = this.props;
 
       const models = aksjonspunktModels.map(ap => ({
         '@type': ap.kode,
         ...ap,
       }));
+
+      if (overrideAksjonspunkter) {
+        const apCodes = aksjonspunktModels.map(ap => ap.kode);
+        const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
+        if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
+          const params = {
+            ...behandlingIdentifier.toJson(),
+            behandlingVersjon,
+            overstyrteAksjonspunktDtoer: models,
+          };
+          return overrideAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
+            .then(afterSubmitCallback);
+        }
+      }
 
       const params = {
         ...behandlingIdentifier.toJson(),
@@ -104,7 +125,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
         behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType,
         resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, getBehandlingspunkterStatus,
         getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
-        aksjonspunkter, behandlingType,
+        aksjonspunkter, behandlingType, isKlageWithKA,
       } = this.props;
 
       return (
@@ -145,6 +166,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
               behandlingsresultat={behandlingsresultat}
               aksjonspunkter={aksjonspunkter}
               behandlingType={behandlingType}
+              isKlageWithKA={isKlageWithKA}
             />
           )}
         </React.Fragment>
@@ -162,6 +184,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     location: PropTypes.shape().isRequired,
     push: PropTypes.func.isRequired,
     resolveProsessAksjonspunkter: PropTypes.func.isRequired,
+    overrideProsessAksjonspunkter: PropTypes.func,
     fetchPreview: PropTypes.func.isRequired,
     fagsakYtelseType: kodeverkObjektPropType.isRequired,
     behandlingStatus: kodeverkObjektPropType.isRequired,
@@ -173,6 +196,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     behandlingType: kodeverkObjektPropType.isRequired,
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
     doNotUseFatterVedtakModal: PropTypes.bool,
+    isKlageWithKA: PropTypes.bool,
   };
 
   BehandlingsprosessIndex.defaultProps = {
@@ -180,6 +204,8 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     selectedBehandlingspunkt: undefined,
     behandlingsresultat: undefined,
     doNotUseFatterVedtakModal: false,
+    overrideProsessAksjonspunkter: undefined,
+    isKlageWithKA: false,
   };
 
   const mapDispatchToProps = (dispatch, ownProps) => ({

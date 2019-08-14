@@ -8,7 +8,7 @@ import { BehandlingGrid, withBehandlingIndex } from '@fpsak-frontend/fp-behandli
 
 import behandlingSelectors from './selectors/klageBehandlingSelectors';
 import FpKlageBehandlingInfoSetter from './FpKlageBehandlingInfoSetter';
-import BehandlingsprosessKlageIndex from './behandlingsprosess/BehandlingsprosessKlageIndex';
+import BehandlingsprosessKlageContainer from './behandlingsprosess/BehandlingsprosessKlageContainer';
 import FaktaKlageContainer from './fakta/FaktaKlageContainer';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
@@ -27,7 +27,7 @@ export const BehandlingKlageIndex = ({
   <>
     <FpKlageBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
-      behandlingsprosessContent={<BehandlingsprosessKlageIndex />}
+      behandlingsprosessContent={<BehandlingsprosessKlageContainer />}
       faktaContent={<FaktaKlageContainer />}
     />
   </>

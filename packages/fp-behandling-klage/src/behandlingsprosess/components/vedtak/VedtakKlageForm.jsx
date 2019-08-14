@@ -10,7 +10,7 @@ import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/sha
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { behandlingFormKlage, behandlingFormValueSelector } from 'behandlingKlage/src/behandlingFormKlage';
 import VedtakKlageSubmitPanel from './VedtakKlageSubmitPanel';
@@ -214,7 +214,7 @@ export const getFritekstTilBrev = createSelector(
 );
 
 export const buildInitialValues = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter],
+  [behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter],
   (aksjonspunkter) => {
     const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
     return {
