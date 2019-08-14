@@ -17,12 +17,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal, IverksetterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 
-import {
- getBehandlingKlageVurderingResultatNK,
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingStatus, getBehandlingsresultat, getBehandlingHenlagt,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckKlage';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckBehandlingKlage';
 import KlageBehandlingModal from 'behandlingKlage/src/behandlingsprosess/components/klage/KlageBehandlingModal';
 import BehandlingspunktKlageInfoPanel from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
 import findBehandlingsprosessIcon from 'behandlingKlage/src/behandlingsprosess/statusIconHelper';
@@ -297,19 +293,19 @@ BehandlingsprosessKlageIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   fagsakYtelseType: getFagsakYtelseType(state),
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  behandlingType: getBehandlingType(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
   location: state.router.location,
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  isKlageWithKA: getBehandlingKlageVurderingResultatNK(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  isKlageWithKA: behandlingSelectors.getBehandlingKlageVurderingResultatNK(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -5,8 +5,8 @@ import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
-import { getBehandlingKlageFormkravResultatNFP, isKlageBehandlingInKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { behandlingForm } from 'behandlingKlage/src/behandlingForm';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { behandlingFormKlage } from 'behandlingKlage/src/behandlingFormKlage';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 
@@ -57,7 +57,7 @@ const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'FormkravKlageFormNfp';
 
 const buildInitialValues = createSelector(
-  [getBehandlingKlageFormkravResultatNFP],
+  [behandlingSelectors.getBehandlingKlageFormkravResultatNFP],
   (klageFormkavResultatNFP) => {
     const klageFormkavResultatNfp = klageFormkavResultatNFP || null;
     return {
@@ -77,12 +77,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
-    readOnly: ownProps.readOnly || isKlageBehandlingInKA(state),
+    readOnly: ownProps.readOnly || behandlingSelectors.isKlageBehandlingInKA(state),
     onSubmit,
   });
 };
 
-const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
+const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingFormKlage({
   form: formName,
 })(FormkravKlageFormNfpImpl));
 

@@ -8,11 +8,7 @@ import { createSelector } from 'reselect';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
-import {
-  getMellomlagringData,
-  getMellomlagringSpinner,
-  getOpenAksjonspunkter,
-} from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
 
 const isEqual = (lastSavedVersionValues, formValues) => {
@@ -69,7 +65,7 @@ export const TempsaveKlageButtonImpl = ({
   );
 };
 
-const getMellomLagringFormData = createSelector([getMellomlagringData], mellomlagringData => ({
+const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomlagringData], mellomlagringData => ({
   begrunnelse: mellomlagringData.begrunnelse || null,
   fritekstTilBrev: mellomlagringData.fritekstTilBrev || null,
   klageVurdering: mellomlagringData.klageVurdering || null,
@@ -77,13 +73,13 @@ const getMellomLagringFormData = createSelector([getMellomlagringData], mellomla
   klageMedholdArsak: mellomlagringData.klageMedholdArsak || null,
 }));
 
-const getForeslaVedtakAp = createSelector([getOpenAksjonspunkter], openAksjonspunkter => openAksjonspunkter
+const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], openAksjonspunkter => openAksjonspunkter
   .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
 
 const mapStateToProps = state => ({
   lastSavedVersionValues: getMellomLagringFormData(state),
   aksjonspunktCode: getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
-  spinner: getMellomlagringSpinner(state),
+  spinner: behandlingSelectors.getMellomlagringSpinner(state),
   hasForeslaVedtakAp: getForeslaVedtakAp(state),
 });
 

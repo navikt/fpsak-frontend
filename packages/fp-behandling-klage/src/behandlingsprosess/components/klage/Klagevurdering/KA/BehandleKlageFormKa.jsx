@@ -13,10 +13,10 @@ import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-fell
 import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
-import { getBehandlingKlageVurderingResultatNK, getBehandlingSprak } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingKlage/src/behandlingForm';
+  behandlingFormKlage, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingKlage/src/behandlingFormKlage';
 import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
@@ -112,7 +112,7 @@ BehandleKlageFormKaImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
   klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
   klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
   klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -140,12 +140,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak'),
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     onSubmit,
   });
 };
 
-const BehandleKlageFormKa = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleKlageFormKa = connect(mapStateToPropsFactory)(behandlingFormKlage({
   form: formName,
 })(BehandleKlageFormKaImpl));
 

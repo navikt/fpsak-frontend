@@ -4,8 +4,8 @@ import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
-import { behandlingForm } from 'behandlingKlage/src/behandlingForm';
-import { getBehandlingKlageFormkravResultatKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { behandlingFormKlage } from 'behandlingKlage/src/behandlingFormKlage';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { createSelector } from 'reselect';
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
@@ -57,7 +57,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'FormkravKlageFormKa';
 
 const buildInitialValues = createSelector(
-  [getBehandlingKlageFormkravResultatKA],
+  [behandlingSelectors.getBehandlingKlageFormkravResultatKA],
   (klageFormkavResultatKA) => {
     const klageFormkavResultatKa = klageFormkavResultatKA || null;
     return {
@@ -81,7 +81,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const FormkravKlageFormKa = connect(mapStateToPropsFactory)(behandlingForm({
+const FormkravKlageFormKa = connect(mapStateToPropsFactory)(behandlingFormKlage({
   form: formName,
 })(FormkravKlageFormKaImpl));
 
