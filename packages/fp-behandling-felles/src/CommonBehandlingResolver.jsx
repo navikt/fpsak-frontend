@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { isBehandlingInSync } from './selectors/ankeBehandlingSelectors';
-import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duckAnke';
 
-export class FpAnkeBehandlingResolver extends Component {
+class CommonBehandlingResolver extends Component {
   static propTypes = {
     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
@@ -39,13 +35,4 @@ export class FpAnkeBehandlingResolver extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  isInSync: isBehandlingInSync(state),
-  behandlingIdentifier: getBehandlingIdentifier(state),
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-  fetchBehandling: fetchBehandlingActionCreator,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(FpAnkeBehandlingResolver);
+export default CommonBehandlingResolver;

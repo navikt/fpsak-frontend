@@ -40,7 +40,7 @@ const findStatusImageSrc = (isHovering, images, isSelected, isAksjonspunktOpen, 
   return returnImage[isAksjonspunktOpen] ? returnImage[isAksjonspunktOpen] : returnImage;
 };
 
-const findAnkeIcon = (behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt) => (isHovering) => {
+const findStatusIcon = (behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt) => (isHovering) => {
   const bpImages = behandlingspunktImages[behandlingspunkt];
   const newStatus = bpImages && isSelectedBehandlingHenlagt ? vilkarUtfallType.IKKE_VURDERT : status;
   const images = bpImages || vilkarImages;
@@ -48,4 +48,4 @@ const findAnkeIcon = (behandlingspunkt, status, isSelectedBehandlingspunkt, isSe
   return findStatusImageSrc(isHovering, images, isSelectedBehandlingspunkt, hasOpenAksjonspunkt, newStatus);
 };
 
-export default findAnkeIcon;
+export default findStatusIcon;

@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import BehandlingsprosessInnsynIndex from './behandlingsprosess/BehandlingsprosessInnsynIndex';
-import FaktaInnsynIndex from './fakta/FaktaInnsynIndex';
+import FaktaInnsynContainer from './fakta/FaktaInnsynContainer';
 import FpInnsynBehandlingResolver from './FpInnsynBehandlingResolver';
 import FpInnsynBehandlingInfoSetter from './FpInnsynBehandlingInfoSetter';
 import { getBehandlingFormPrefix } from './behandlingForm';
@@ -102,7 +102,7 @@ export class BehandlingInnsynIndex extends Component {
         <FpInnsynBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
         <BehandlingGrid
           behandlingsprosessContent={<BehandlingsprosessInnsynIndex />}
-          faktaContent={<FaktaInnsynIndex />}
+          faktaContent={<FaktaInnsynContainer />}
         />
         {!hasSubmittedPaVentForm
           && (

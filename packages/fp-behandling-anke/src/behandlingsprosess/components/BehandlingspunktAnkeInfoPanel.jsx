@@ -5,13 +5,8 @@ import classnames from 'classnames/bind';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
-import {
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-  isSelectedBehandlingspunktReadOnly,
-  getNotAcceptedByBeslutter,
-} from 'behandlingAnke/src/behandlingsprosess/BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import styles from './behandlingspunktAnkeInfoPanel.less';
 import BehandleAnkeForm from './ankebehandling/BehandleAnkeForm';
 import BehandleMerknaderForm from './merknader/BehandleMerknaderForm';
@@ -100,11 +95,12 @@ BehandlingspunktAnkeInfoPanel.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
+  openAksjonspunkt: behandlingspunktAnkeSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingspunktAnkeSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingspunktAnkeSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  readOnlySubmitButton: behandlingspunktAnkeSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  notAcceptedByBeslutter: behandlingspunktAnkeSelectors.getNotAcceptedByBeslutter(state),
+  innstilling: behandlingSelectors.getBehandlingAnkeVurderingResultat(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktAnkeInfoPanel);

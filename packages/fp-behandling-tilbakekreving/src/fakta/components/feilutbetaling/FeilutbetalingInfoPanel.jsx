@@ -311,45 +311,47 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
 
 const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker, getFagsakYtelseType], (feilutbetalingArsaker, fagsakYtelseType) => {
   const arsaker = feilutbetalingArsaker.find(a => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
-  return arsaker
-  .sort((a1, a2) => a1.årsak.localeCompare(a2.årsak));
+  return arsaker.sort((a1, a2) => {
+    const arsak1 = a1.årsak;
+    const arsak2 = a2.årsak;
+    const arsak1ErParagraf = arsak1.startsWith('§');
+    const arsak2ErParagraf = arsak2.startsWith('§');
+    const a1v = arsak1ErParagraf ? arsak1.replace(/\D/g, '') : arsak1;
+    const a2v = arsak2ErParagraf ? arsak2.replace(/\D/g, '') : arsak2;
+    return arsak1ErParagraf && arsak2ErParagraf ? a1v - a2v : a1v.localeCompare(a2v);
+  });
 });
 
-const transformValues = (values, aksjonspunkter, årsaker, initialPerioder) => {
+const transformValues = (values, aksjonspunkter, årsaker) => {
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
-  const checkUnderÅrsak = underÅrsaker => (underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null);
-  const checkPeriodeUnderÅrsak = periode => (periode[periode.årsak] ? periode[periode.årsak].underÅrsak : null);
-  const underÅrsakNotEqual = (periode, underÅrsaker) => checkPeriodeUnderÅrsak(periode) !== checkUnderÅrsak(underÅrsaker);
-  const hendelseEndringer = values.perioder.some((periode, index) => {
-    const feilutbetalingÅrsak = initialPerioder[index].feilutbetalingÅrsakDto;
-    return !feilutbetalingÅrsak || periode.årsak !== feilutbetalingÅrsak.årsakKode || underÅrsakNotEqual(periode, feilutbetalingÅrsak.underÅrsaker);
+
+  const feilutbetalingFakta = values.perioder.map((periode) => {
+    const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
+    const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
+    const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
+
+    return {
+      fom: periode.fom,
+      tom: periode.tom,
+      årsak: {
+        årsakKode: periode.årsak,
+        årsak: feilutbetalingÅrsak.årsak,
+        kodeverk: feilutbetalingÅrsak.kodeverk,
+        underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
+      },
+    };
   });
 
   return [{
     kode: apCode.definisjon.kode,
     begrunnelse: values.begrunnelse,
-    feilutbetalingFakta: hendelseEndringer ? values.perioder.map((periode) => {
-      const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
-      const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
-      const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
-
-      return {
-        fom: periode.fom,
-        tom: periode.tom,
-        årsak: {
-          årsakKode: periode.årsak,
-          årsak: feilutbetalingÅrsak.årsak,
-          kodeverk: feilutbetalingÅrsak.kodeverk,
-          underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
-        },
-      };
-    }) : [],
+    feilutbetalingFakta,
   }];
 };
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const feilutbetaling = getFeilutbetalingFakta(initialState).behandlingFakta;
   const årsaker = getSortedFeilutbetalingArsaker(initialState);
-  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker, feilutbetaling.perioder));
+  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker));
   return state => ({
     feilutbetaling,
     årsaker,

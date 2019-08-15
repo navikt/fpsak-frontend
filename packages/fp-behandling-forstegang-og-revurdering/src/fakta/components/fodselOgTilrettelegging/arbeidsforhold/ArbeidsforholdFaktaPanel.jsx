@@ -39,6 +39,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
       redusertArbeid: !!selectedArbeidsforhold.delvisTilretteleggingFom,
       redusertArbeidDato: selectedArbeidsforhold.delvisTilretteleggingFom,
       redusertArbeidStillingsprosent: selectedArbeidsforhold.stillingsprosent,
+      tilretteleggingDatoer: selectedArbeidsforhold.tilretteleggingDatoer,
     };
     this.initializeArbforholdForm(initialValues);
     this.toggleArbeidsforhold(selectedArbeidsforhold);

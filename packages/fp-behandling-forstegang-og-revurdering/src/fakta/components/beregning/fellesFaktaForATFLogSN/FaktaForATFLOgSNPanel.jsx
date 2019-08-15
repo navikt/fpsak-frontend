@@ -47,7 +47,7 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], alleKodeverk => (values, erOverstyring) => {
+export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], alleKodeverk => (values) => {
   if (!values) {
     return {};
   }
@@ -68,8 +68,7 @@ export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], a
     ...getKunYtelseValidation(values, kunYtelse, endringBGPerioder, tilfeller),
     ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, tilfeller),
-    ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag,
-      getKodeverknavnFn(alleKodeverk, kodeverkTyper), erOverstyring),
+    ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
   });
 });
 
@@ -270,8 +269,7 @@ const buildInitialValuesForTilfeller = props => ({
   ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
-  ...VurderOgFastsettATFL.buildInitialValues(props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper),
-    props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({

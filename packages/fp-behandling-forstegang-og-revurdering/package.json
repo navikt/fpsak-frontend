@@ -57,6 +57,9 @@
     "vis": "^4.21.0"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@fpsak-frontend/utils-test": "1.0.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.10.0",
+    "sinon": "^7.3.2"
   }
 }

@@ -48,6 +48,7 @@ class TilretteleggingTable extends Component {
       tilretteleggingDatoer,
       valgtTilrettelegging,
       slettTilrettelegging,
+      readOnly,
     } = this.props;
 
     if (tilretteleggingDatoer.length === 0) {
@@ -79,15 +80,17 @@ class TilretteleggingTable extends Component {
               <Normaltekst>{t.stillingsprosent ? `${t.stillingsprosent}%` : ''}</Normaltekst>
             </TableColumn>
             <TableColumn>
-              <div ref={(node) => { this.nodes.push(node); }}>
-                <Image
-                  src={removeIcon}
-                  className={styles.removeImage}
-                  onMouseDown={() => slettTilrettelegging(t)}
-                  onKeyDown={() => slettTilrettelegging(t)}
-                  tabIndex="0"
-                />
-              </div>
+              {!readOnly && (
+                <div ref={(node) => { this.nodes.push(node); }}>
+                  <Image
+                    src={removeIcon}
+                    className={styles.removeImage}
+                    onMouseDown={() => slettTilrettelegging(t)}
+                    onKeyDown={() => slettTilrettelegging(t)}
+                    tabIndex="0"
+                  />
+                </div>
+              )}
             </TableColumn>
           </TableRow>
         ))}
@@ -101,6 +104,7 @@ TilretteleggingTable.propTypes = {
   settValgtTilrettelegging: PropTypes.func.isRequired,
   slettTilrettelegging: PropTypes.func.isRequired,
   valgtTilrettelegging: PropTypes.shape(),
+  readOnly: PropTypes.bool.isRequired,
 };
 
 TilretteleggingTable.defaultProps = {

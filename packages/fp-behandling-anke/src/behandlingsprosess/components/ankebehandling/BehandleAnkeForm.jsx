@@ -25,14 +25,14 @@ import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { getBehandlingSprak, getBehandlingAnkeVurderingResultat } from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingForm';
+  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingAnke/src/behandlingFormAnke';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
-import { getSelectedBehandlingspunktAksjonspunkter } from '../../BehandlingsprosessAnkeSelectors';
+import behandlingspunktAnkeSelectors from '../../selectors/behandlingsprosessAnkeSelectors';
 import TempsaveAnkeButton from './TempsaveAnkeButton';
 
 import styles from './behandleAnkeForm.less';
@@ -310,7 +310,7 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd
-export const buildInitialValues = createSelector([getBehandlingAnkeVurderingResultat], resultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -353,7 +353,7 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
@@ -366,13 +366,13 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'erSubsidiartRealitetsbehandles',
       'ankeOmgjoerArsak',
       'ankeVurderingOmgjoer'),
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     behandlinger: getBehandlinger(state),
     onSubmit,
   });
 };
 
-const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: formName,
 })(BehandleAnkeFormImpl));
 
