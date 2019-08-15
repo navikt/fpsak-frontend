@@ -11,8 +11,9 @@ import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
+  getSimuleringResultat, getTilbakekrevingValg,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -410,7 +411,7 @@ export const transformValues = (values, ap) => [{
 }];
 
 const buildInitialValues = createSelector(
-  [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
+  [getTilbakekrevingValg, behandlingSelectors.getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
     const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     if (!aksjonspunkt || !tilbakekrevingValg) {
       return undefined;
@@ -439,8 +440,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     simuleringResultat: getSimuleringResultat(state),
     initialValues: buildInitialValues(state),
     ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-    sprakkode: getBehandlingSprak(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
     saksnummer: getSelectedSaksnummer(state),
     isForeldrepenger: isForeldrepengerFagsak(state),

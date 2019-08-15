@@ -16,9 +16,9 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getBehandlingResultatstruktur, getBehandlingStatus,
-  isBehandlingStatusReadOnly, getBehandlingsresultat, getBehandlingArsakTyper, getBehandlingSprak, getBehandlingVersjon,
+  getBehandlingResultatstruktur, getBehandlingArsakTyper,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
@@ -215,8 +215,8 @@ VedtakRevurderingFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [getBehandlingResultatstruktur, getBehandlingStatus, getSelectedBehandlingspunktAksjonspunkter, getFagsakYtelseType,
-    getBehandlingsresultat, getBehandlingSprak],
+  [getBehandlingResultatstruktur, behandlingSelectors.getBehandlingStatus, getSelectedBehandlingspunktAksjonspunkter, getFagsakYtelseType,
+    behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
   (beregningResultat, behandlingstatus, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
@@ -285,7 +285,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktKoder,
     revurderingsAarsakString,
     initialValues: buildInitialValues(state),
-    isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
+    isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
     ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME)(
       state,
       'antallBarn',
@@ -296,12 +296,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'brødtekst',
     ),
     behandlingId: getSelectedBehandlingId(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    behandlingStatusKode: getBehandlingStatus(state).kode,
-    behandlingsresultat: getBehandlingsresultat(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+    behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
+    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
     aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter(state),
     ytelseType: getFagsakYtelseType(state).kode,
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
   });
 };

@@ -16,8 +16,9 @@ import {
   withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning, getAksjonspunkter,
+  getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import BostedFaktaView from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/OmsorgFaktaForm';
@@ -99,7 +100,7 @@ OmsorgInfoPanelImpl.defaultProps = {
   omsorg: undefined,
 };
 
-const buildInitialValues = createSelector([getBehandlingYtelseFordeling, getAksjonspunkter], (ytelsefordeling, aksjonspunkter) => {
+const buildInitialValues = createSelector([getBehandlingYtelseFordeling, behandlingSelectors.getAksjonspunkter], (ytelsefordeling, aksjonspunkter) => {
   const omsorgAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG
     || ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG);
   return {

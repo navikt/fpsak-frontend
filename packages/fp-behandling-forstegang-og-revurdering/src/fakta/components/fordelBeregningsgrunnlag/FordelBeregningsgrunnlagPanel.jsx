@@ -15,9 +15,9 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 
 import {
- getBehandlingIsOnHold, getEndringBeregningsgrunnlagPerioder,
-  getBeregningsgrunnlag, getAksjonspunkter, getBeregningsgrunnlagPerioder,
+ getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getBeregningsgrunnlagPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import FordelingHelpText from './FordelingHelpText';
 
@@ -137,7 +137,7 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
 };
 
 export const transformValuesFordelBeregning = createSelector(
-  [getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
+  [behandlingSelectors.getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
   (aksjonspunkter, endringBGPerioder, bgPerioder) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
@@ -153,7 +153,7 @@ export const transformValuesFordelBeregning = createSelector(
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getAlleKodeverk, getAksjonspunkter],
+  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getAlleKodeverk, behandlingSelectors.getAksjonspunkter],
   (endringBGPerioder, beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
@@ -170,7 +170,7 @@ export const mapStateToValidationProps = createStructuredSelector({
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
-export const getValidationFordelBeregning = createSelector([mapStateToValidationProps, getAlleKodeverk, getAksjonspunkter],
+export const getValidationFordelBeregning = createSelector([mapStateToValidationProps, getAlleKodeverk, behandlingSelectors.getAksjonspunkter],
   (props, alleKodeverk, aksjonspunkter) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {
@@ -185,8 +185,8 @@ export const getValidationFordelBeregning = createSelector([mapStateToValidation
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialState)(values));
   return (state) => {
-    const isOnHold = getBehandlingIsOnHold(state);
-    const alleAp = getAksjonspunkter(state);
+    const isOnHold = behandlingSelectors.getBehandlingIsOnHold(state);
+    const alleAp = behandlingSelectors.getAksjonspunkter(state);
     const relevantAp = alleAp.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
     const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
     const initialValues = buildInitialValuesFordelBeregning(state);

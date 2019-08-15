@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { isBehandlingInSync } from './behandlingSelectors';
+
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { fetchBehandling as fetchBehandlingActionCreator, getBehandlingIdentifier } from './duck';
 
 export class FpSakBehandlingResolver extends Component {
@@ -40,7 +41,7 @@ export class FpSakBehandlingResolver extends Component {
 }
 
 const mapStateToProps = state => ({
-  isInSync: isBehandlingInSync(state),
+  isInSync: behandlingSelectors.isBehandlingInSync(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
 });
 

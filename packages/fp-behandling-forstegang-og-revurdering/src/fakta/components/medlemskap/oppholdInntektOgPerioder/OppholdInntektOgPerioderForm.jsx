@@ -10,9 +10,9 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getBehandlingMedlem, getPersonopplysning,
-  getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
+  getBehandlingMedlem, getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -101,7 +101,8 @@ const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLA
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD];
 
 const buildInitialValues = createSelector(
-  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
+  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, behandlingSelectors.getSoknad, behandlingSelectors.getAksjonspunkter,
+    getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
   (person, medlem, personopplysning, soknad, allAksjonspunkter, gjeldendeFom, alleKodeverk) => {
     const aksjonspunkter = allAksjonspunkter
       .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))

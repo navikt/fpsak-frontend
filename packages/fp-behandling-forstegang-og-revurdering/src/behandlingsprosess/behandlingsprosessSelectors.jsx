@@ -8,10 +8,9 @@ import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { getRettigheter } from 'navAnsatt/duck';
 import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-  getBehandlingResultatstruktur, getStonadskontoer, hasReadOnlyBehandling, isBehandlingStatusReadOnly,
-  getUttaksresultatPerioder, getSimuleringResultat,
+  getBehandlingResultatstruktur, getStonadskontoer, getUttaksresultatPerioder, getSimuleringResultat,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
@@ -20,8 +19,9 @@ import { getFeatureToggles, getFagsakYtelseType } from '../duck';
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getBehandlingsresultat,
-    getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles, getUttaksresultatPerioder, getSimuleringResultat],
+  [getFagsakYtelseType, behandlingSelectors.getBehandlingType, behandlingSelectors.getBehandlingVilkar, behandlingSelectors.getAksjonspunkter,
+    behandlingSelectors.getBehandlingsresultat, getBehandlingResultatstruktur, getStonadskontoer, getFeatureToggles, getUttaksresultatPerioder,
+    getSimuleringResultat],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, behandlingsresultat,
     resultatstruktur, stonadskontoer, featureToggles, uttaksresultat, simuleringResultat) => {
     if (!behandlingType) {
@@ -66,7 +66,7 @@ const getBehandlingspunkterVilkar = createSelector(
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunktAksjonspunkter = createSelector(
-  [getAksjonspunkter, getBehandlingspunktAksjonspunkterNames],
+  [behandlingSelectors.getAksjonspunkter, getBehandlingspunktAksjonspunkterNames],
   (aksjonspunkter = [], behandlingspunktAksjonspunkterNames = {}) => {
     const valueFunction = bp => behandlingspunktAksjonspunkterNames[bp]
       .map(apCode => aksjonspunkter.find(ap => ap.definisjon.kode === apCode))
@@ -133,7 +133,7 @@ export const getSelectedBehandlingspunktVilkar = createSelector(
 );
 
 export const getNotAcceptedByBeslutter = createSelector(
-  [getSelectedBehandlingspunkt, getBehandlingspunktAksjonspunkterNames, getAllMerknaderFraBeslutter],
+  [getSelectedBehandlingspunkt, getBehandlingspunktAksjonspunkterNames, behandlingSelectors.getAllMerknaderFraBeslutter],
   (selectedBehandlingspunkt, aksjonspunkter = {}, merknaderFraBeslutter = {}) => {
     const ap = aksjonspunkter[selectedBehandlingspunkt];
     return ap !== undefined
@@ -160,13 +160,13 @@ export const hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar = createSelector(
 );
 
 export const isSelectedBehandlingspunktReadOnly = createSelector(
-  [getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
+  [getRettigheter, behandlingSelectors.getBehandlingIsOnHold, behandlingSelectors.hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
   (rettigheter, behandlingIsOnHold, isBehandlingReadOnly, hasNonActivOrNonOverstyrbar) => !rettigheter.writeAccess.isEnabled
     || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
 );
 
 export const isSelectedBehandlingspunktOverrideReadOnly = createSelector(
-  [getRettigheter, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar, isBehandlingStatusReadOnly],
+  [getRettigheter, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar, behandlingSelectors.isBehandlingStatusReadOnly],
   (rettigheter, hasNonActivOrNonOverstyrbar, isStatusReadOnly) => !rettigheter.kanOverstyreAccess.isEnabled || isStatusReadOnly || hasNonActivOrNonOverstyrbar,
 );
 

@@ -23,9 +23,8 @@ import {
 } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  getEditedStatus, getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getEditedStatus, getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 import styles from './termindatoFaktaForm.less';
 
@@ -141,7 +140,9 @@ TermindatoFaktaForm.defaultProps = {
   isOverridden: false,
 };
 
-export const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter], (soknad, familiehendelse, aksjonspunkter) => {
+export const buildInitialValues = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter], (
+  soknad, familiehendelse, aksjonspunkter,
+) => {
   const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;
   return {
     utstedtdato: familiehendelse.utstedtdato ? familiehendelse.utstedtdato : soknad.utstedtdato,

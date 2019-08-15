@@ -28,9 +28,8 @@ import {
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getInntektsmeldinger, getBehandlingVersjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
@@ -539,7 +538,7 @@ const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, '
 const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'faktaUttakManuellOverstyring') || false;
 
 const mapStateToProps = (state) => {
-  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
   return {
     behandlingFormPrefix,
     isManuellOverstyring: manuellOverstyring(state),

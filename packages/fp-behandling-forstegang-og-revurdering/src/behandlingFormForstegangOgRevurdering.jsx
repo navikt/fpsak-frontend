@@ -1,6 +1,6 @@
 import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getBehandlingVersjon } from './behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from './duck';
 
 /**
@@ -10,10 +10,10 @@ import { getSelectedBehandlingId } from './duck';
  * @see BehandlingIndex
  */
 export const behandlingFormForstegangOgRevurdering = (config = {}) => WrappedComponent => getBehandlingForm(
-  config, WrappedComponent, getSelectedBehandlingId, getBehandlingVersjon,
+  config, WrappedComponent, getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon,
 );
 
-const selectors = getBehandlingFormSelectors(getSelectedBehandlingId, getBehandlingVersjon);
+const selectors = getBehandlingFormSelectors(getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon);
 
 export const {
   behandlingFormValueSelector,

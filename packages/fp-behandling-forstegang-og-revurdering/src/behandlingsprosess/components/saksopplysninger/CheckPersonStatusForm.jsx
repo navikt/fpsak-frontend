@@ -12,8 +12,9 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
+  getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -126,7 +127,7 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
+  [behandlingSelectors.getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
   (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;

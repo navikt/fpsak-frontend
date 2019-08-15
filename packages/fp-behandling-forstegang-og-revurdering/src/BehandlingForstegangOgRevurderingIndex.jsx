@@ -11,14 +11,11 @@ import {
 } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import FpSakBehandlingResolver from './FpSakBehandlingResolver';
 import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
 import FaktaContainer from './fakta/FaktaContainer';
-import {
-  getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
-  hasBehandlingManualPaVent,
-} from './behandlingSelectors';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
   getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
@@ -167,12 +164,12 @@ BehandlingForstegangOgRevurderingIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state),
-  venteArsakKode: getBehandlingVenteArsakKode(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+  venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  hasManualPaVent: hasBehandlingManualPaVent(state),
+  hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
   ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
 });
 

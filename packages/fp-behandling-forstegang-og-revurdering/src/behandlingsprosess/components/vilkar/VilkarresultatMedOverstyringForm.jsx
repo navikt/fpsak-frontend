@@ -8,8 +8,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
+import { isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -127,7 +128,7 @@ VilkarresultatMedOverstyringFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus, getSelectedBehandlingspunkt,
+  [behandlingSelectors.getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus, getSelectedBehandlingspunkt,
     getFagsakYtelseType, getSelectedBehandlingspunktVilkar],
   (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, ytelseType, allVilkar) => {
     const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);

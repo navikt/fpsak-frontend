@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, getOpenInfoPanels,
@@ -37,7 +37,7 @@ FaktaContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
   resolveFaktaAksjonspunkter,

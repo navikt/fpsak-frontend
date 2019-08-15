@@ -17,7 +17,7 @@ import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArb
 import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
 
 import { getKodeverk, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable/PersonArbeidsforholdTable';
@@ -380,7 +380,7 @@ const mapStateToProps = (state) => {
   const arbeidsforhold = sortArbeidsforhold(behandlingFormValueSelector('ArbeidsforholdInfoPanel')(state, 'arbeidsforhold'));
   return {
     arbeidsforhold,
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     fagsystemer: getKodeverk(kodeverkTyper.FAGSYSTEM)(state),
     aktivtArbeidsforholdTillatUtenIM: erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM(arbeidsforhold),
   };

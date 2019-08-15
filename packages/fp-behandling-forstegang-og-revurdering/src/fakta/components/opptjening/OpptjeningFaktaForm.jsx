@@ -16,8 +16,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 import {
-  getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate,
+  getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
@@ -299,7 +300,7 @@ OpptjeningFaktaFormImpl.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   opptjeningAktivitetTypes: getKodeverk(kodeverkTyper.OPPTJENING_AKTIVITET_TYPE)(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
   opptjeningFomDato: getBehandlingFastsattOpptjeningFomDate(state),
   opptjeningTomDato: getBehandlingFastsattOpptjeningTomDate(state),
   opptjeningActivities: sortByFomDate(behandlingFormValueSelector(props.formName)(state, 'opptjeningActivities')),

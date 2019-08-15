@@ -8,10 +8,8 @@ import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRev
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  getAksjonspunkter,
-  getBeregningsgrunnlag,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
   getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
@@ -153,7 +151,7 @@ export const transformValuesVurderFaktaBeregning = (values) => {
 };
 
 export const buildInitialValuesVurderFaktaBeregning = createSelector(
-  [getAksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
+  [behandlingSelectors.getAksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
       ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
@@ -175,7 +173,7 @@ export const getValidationVurderFaktaBeregning = createSelector(
 );
 
 export const getIsAksjonspunktClosed = createSelector(
-  [getAksjonspunkter], (alleAp) => {
+  [behandlingSelectors.getAksjonspunkter], (alleAp) => {
     const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
       || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG);
     return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
@@ -192,7 +190,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     validate,
     onSubmit,
     isAksjonspunktClosed: getIsAksjonspunktClosed(state),
-    aksjonspunkter: getAksjonspunkter(state),
+    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
     beregningsgrunnlag: getBeregningsgrunnlag(state),
     helpText: getHelpTextsFaktaForATFLOgSN(state),
     verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),

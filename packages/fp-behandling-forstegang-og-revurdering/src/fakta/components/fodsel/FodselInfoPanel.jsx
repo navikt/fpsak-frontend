@@ -12,7 +12,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/TermindatoFaktaForm';
@@ -164,7 +164,7 @@ FodselInfoPanelImpl.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  formPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  formPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
 });
 
 const ConnectedComponent = connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));

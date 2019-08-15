@@ -14,9 +14,7 @@ import { omit } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getBehandlingVersjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import TilretteleggingTable from './TilretteleggingTable';
 import TilretteleggingDetailForm, { TILRETTELEGGING_DETAIL_FORM_NAME } from './TilretteleggingDetailForm';
 
@@ -157,7 +155,7 @@ const mapStateToProps = (state, ownProps) => {
   tilretteleggingDatoer.sort((a, b) => a.fom.localeCompare(b.fom));
   return {
     tilretteleggingDatoer,
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
   };
 };
 

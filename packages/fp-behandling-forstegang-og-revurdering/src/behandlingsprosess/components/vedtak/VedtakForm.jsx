@@ -18,12 +18,8 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 
-import {
-  getAksjonspunkter, getBehandlingResultatstruktur,
-  isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
-  getBehandlingsresultat, getBehandlingVersjon, getBehandlingSprak,
-  erArsakTypeBehandlingEtterKlage,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingResultatstruktur, erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
@@ -268,8 +264,8 @@ VedtakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingStatus, getBehandlingResultatstruktur, getSelectedBehandlingspunktAksjonspunkter, getFagsakYtelseType, getBehandlingsresultat,
-    getBehandlingSprak],
+  [behandlingSelectors.getBehandlingStatus, getBehandlingResultatstruktur, getSelectedBehandlingspunktAksjonspunkter,
+    getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
   (status, beregningResultat, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseType ? ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD : false,
@@ -302,7 +298,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues(state),
-    isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
+    isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
     ...behandlingFormValueSelector(formName)(
       state,
       'antallBarn',
@@ -313,12 +309,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'brødtekst',
     ),
     behandlingId: getSelectedBehandlingId(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    behandlingStatusKode: getBehandlingStatus(state).kode,
-    aksjonspunkter: getAksjonspunkter(state),
-    behandlingsresultat: getBehandlingsresultat(state),
-    behandlingPaaVent: getBehandlingIsOnHold(state),
-    sprakkode: getBehandlingSprak(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+    behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
+    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     aksjonspunktKoder: getAksjonspunktKoder(state),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,

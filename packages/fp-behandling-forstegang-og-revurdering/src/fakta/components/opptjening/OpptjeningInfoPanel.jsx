@@ -6,8 +6,9 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {
-  getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities, getAksjonspunkter,
+  getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -97,7 +98,7 @@ const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => 
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingOpptjeningActivities, getBehandlingFastsattOpptjening, getAksjonspunkter],
+  [getBehandlingOpptjeningActivities, getBehandlingFastsattOpptjening, behandlingSelectors.getAksjonspunkter],
   (opptjeningActivities, fastsattOpptjening, aksjonspunkter) => fastsattOpptjening
     && ({
       opptjeningActivities: opptjeningActivities

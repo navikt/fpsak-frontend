@@ -9,7 +9,8 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -122,7 +123,7 @@ BeregningsresultatEngangsstonadFormImpl.defaultProps = {
   isReadOnly: false,
 };
 
-const buildInitialValues = createSelector([getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
+const buildInitialValues = createSelector([behandlingSelectors.getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
   return {
     beregningResultat,

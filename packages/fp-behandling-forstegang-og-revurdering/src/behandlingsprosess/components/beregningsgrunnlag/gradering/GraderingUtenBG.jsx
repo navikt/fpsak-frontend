@@ -24,7 +24,8 @@ import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   behandlingFormForstegangOgRevurdering, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAndelerMedGraderingUtenBG } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 import styles from './graderingUtenBG.less';
 
@@ -165,7 +166,7 @@ export const transformValues = (values) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getAksjonspunkter, getBehandlingVenteArsakKode],
+  [behandlingSelectors.getAksjonspunkter, behandlingSelectors.getBehandlingVenteArsakKode],
   (aksjonspunkter, venteKode) => {
     const vurderGraderingUtenBGAP = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
     const settPaaVentAap = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
@@ -196,7 +197,8 @@ export const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const andelerMedGraderingUtenBG = getAndelerMedGraderingUtenBG(initialState);
-  const aksjonspunkt = getAksjonspunkter(initialState).find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+  const aksjonspunkt = behandlingSelectors.getAksjonspunkter(initialState)
+    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
   const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
   return (state) => {
     const initialValues = buildInitialValues(state);

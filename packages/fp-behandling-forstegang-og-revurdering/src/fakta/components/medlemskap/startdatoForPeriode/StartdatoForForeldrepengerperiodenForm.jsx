@@ -10,12 +10,10 @@ import { FieldArray, formPropTypes } from 'redux-form';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import {
-  getAksjonspunkter,
-  getBehandlingIsOnHold,
   getInntektsmeldinger,
   getBehandlingStartDatoForPermisjon,
-  hasReadOnlyBehandling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -125,7 +123,7 @@ StartdatoForForeldrepengerperiodenForm.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [getAksjonspunkter, getBehandlingStartDatoForPermisjon, getInntektsmeldinger],
+  [behandlingSelectors.getAksjonspunkter, getBehandlingStartDatoForPermisjon, getInntektsmeldinger],
   (aksjonspunkter, startdatoForPermisjon, inntektsmeldinger) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const overstyringAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
@@ -154,7 +152,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
-    overstyringDisabled: getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
+    overstyringDisabled: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     initialValues: buildInitialValues(state),
     onSubmit,
   });

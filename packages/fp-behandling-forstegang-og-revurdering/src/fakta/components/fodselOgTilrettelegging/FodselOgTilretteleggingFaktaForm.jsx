@@ -13,7 +13,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getTilrettelegging, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getTilrettelegging } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './arbeidsforhold/ArbeidsforholdFaktaPanel';
 
 import styles from './fodselOgTilretteleggingFaktaForm.less';
@@ -116,7 +117,7 @@ const transformValues = values => ([{
 }]);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = getAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingSelectors.getAksjonspunkter(initialState);
   const tilrettelegging = getTilrettelegging(initialState);
   const fødselsdato = tilrettelegging ? tilrettelegging.fødselsdato : '';
   const initialValues = {

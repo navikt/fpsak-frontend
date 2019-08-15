@@ -17,12 +17,12 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
-  getAksjonspunkter,
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,
   getFaktaOmBeregning,
   getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { skalFastsetteForATUavhengigAvATFLSammeOrg, skalFastsetteForFLUavhengigAvATFLSammeOrg } from '../BgFordelingUtils';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 
@@ -137,7 +137,7 @@ const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
 };
 
 export const getHelpTextsEndringBG = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, getAksjonspunkter, getAlleKodeverk],
+  [getFaktaOmBeregningTilfellerKoder, getEndredeArbeidsforhold, behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (aktivertePaneler, endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter))
     && (skalViseHelptextForEndretBg(aktivertePaneler)
       ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),

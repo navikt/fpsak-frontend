@@ -9,7 +9,8 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getBehandlingIsOnHold, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
 
@@ -99,7 +100,7 @@ BeregningInfoPanelImpl.propTypes = {
 const mapStateToProps = state => ({
   erOverstyrer: erOverstyrerSelector(state),
   harBeregningsgrunnlag: !!getBeregningsgrunnlag(state),
-  isOnHold: getBehandlingIsOnHold(state),
+  isOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
 });
 
 const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,

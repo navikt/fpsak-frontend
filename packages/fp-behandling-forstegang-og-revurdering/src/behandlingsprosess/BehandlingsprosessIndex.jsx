@@ -13,9 +13,7 @@ import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-fronten
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconHelper';
-import {
-  getAksjonspunkter, getBehandlingVersjon, getBehandlingType, getBehandlingsresultat, getBehandlingHenlagt, getBehandlingStatus,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
 } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -352,16 +350,16 @@ BehandlingsprosessIndex.defaultProps = {
 const mapStateToProps = state => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  behandlingType: getBehandlingType(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
   location: state.router.location,
-  behandlingsresultat: getBehandlingsresultat(state),
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
-  behandlingStatus: getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
 });
 
 const mapDispatchToProps = dispatch => ({

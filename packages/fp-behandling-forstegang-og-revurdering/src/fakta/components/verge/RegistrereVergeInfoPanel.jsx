@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingVerge, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingVerge } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   faktaPanelCodes,
@@ -95,7 +96,7 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
   submittable: true,
 };
 
-const buildInitialValues = createSelector([getBehandlingVerge, getAksjonspunkter], (verge, aksjonspunkter) => ({
+const buildInitialValues = createSelector([getBehandlingVerge, behandlingSelectors.getAksjonspunkter], (verge, aksjonspunkter) => ({
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
   ...RegistrereVergeFaktaForm.buildInitialValues(verge),
 }));

@@ -14,9 +14,9 @@ import { getKodeverk, getFeatureToggles } from 'behandlingForstegangOgRevurderin
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
-  getBehandlingSprak,
   getPersonopplysning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
@@ -182,7 +182,7 @@ const mapStateToPropsFactory = (initialState) => {
     personopplysninger: getPersonopplysning(state),
     relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
     relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
   });
 };
 

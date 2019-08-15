@@ -14,7 +14,8 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
-import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import {
@@ -256,7 +257,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktStatus: aksjonspunkt.status.kode,
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
-    languageCode: getBehandlingLanguageCode(state),
+    languageCode: behandlingSelectors.getBehandlingLanguageCode(state),
     ...behandlingFormValueSelector(formName)(state, 'sendVarsel', 'fritekst', 'frist', 'ventearsak'),
     originalVentearsak: ownProps.ventearsak,
     originalFrist: ownProps.frist,

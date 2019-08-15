@@ -14,10 +14,8 @@ import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-fro
 
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getAksjonspunkter,
-  getEndringBeregningsgrunnlag,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getEndringBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
@@ -151,7 +149,7 @@ const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
 };
 
 const getHelpTextsEndringBG = createSelector(
-  [getEndredeArbeidsforhold, getAksjonspunkter, getAlleKodeverk],
+  [getEndredeArbeidsforhold, behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
       ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
 );

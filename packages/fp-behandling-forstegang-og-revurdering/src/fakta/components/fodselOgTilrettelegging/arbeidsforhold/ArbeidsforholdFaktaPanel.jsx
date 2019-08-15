@@ -8,9 +8,7 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getBehandlingVersjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';
 import ArbeidsforholdDetailForm, { ARBEIDSFORHOLD_DETAIL_FORM_NAME } from './ArbeidsforholdDetailForm';
@@ -120,7 +118,7 @@ const mapStateToProps = (state, props) => {
   arbeidsforhold.sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
   return {
     arbeidsforhold,
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
   };
 };
 

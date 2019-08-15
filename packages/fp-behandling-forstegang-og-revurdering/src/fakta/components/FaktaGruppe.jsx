@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
-import { getMerknaderFraBeslutter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 const Wrapper = ({
   withoutBorder, error, children, className,
@@ -56,7 +57,7 @@ FaktaGruppeImpl.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  error: !!(props.aksjonspunktCode && getMerknaderFraBeslutter(props.aksjonspunktCode)(state).notAccepted),
+  error: !!(props.aksjonspunktCode && behandlingSelectors.getMerknaderFraBeslutter(props.aksjonspunktCode)(state).notAccepted),
 });
 
 const FaktaGruppe = connect(mapStateToProps)(FaktaGruppeImpl);

@@ -17,9 +17,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import {
-  getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
-  getAksjonspunkter,
+  getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
@@ -93,7 +93,8 @@ OmsorgOgForeldreansvarInfoPanelImpl.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder, getAksjonspunkter, getAlleKodeverk],
+  [behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
+    behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (soknad, familiehendelse, personopplysning, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, aksjonspunkter, alleKodeverk) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGSOVERTAKELSE
       || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR);

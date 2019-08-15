@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getBehandlingsresultat } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
@@ -85,7 +85,7 @@ ErOmsorgVilkaarOppfyltFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus],
+  [behandlingSelectors.getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),

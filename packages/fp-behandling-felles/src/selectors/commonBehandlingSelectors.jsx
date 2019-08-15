@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes, {
   isInnhentSaksopplysningerAksjonspunkt,
 } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -21,7 +22,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   const hasReadOnlyBehandling = createSelector(
     [behandlingApi.BEHANDLING.getRestApiError(), getSelectedBehandling], (behandlingFetchError, selectedBehandling = {}) => (!!behandlingFetchError
       || (selectedBehandling.taskStatus && selectedBehandling.taskStatus.readOnly ? selectedBehandling.taskStatus.readOnly : false)),
-);
+  );
 
   const getBehandlingVersjon = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.versjon);
   const getBehandlingStatus = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.status);
@@ -69,6 +70,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
 
   // SPRÅK
   const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
+  const getBehandlingLanguageCode = createSelector([getBehandlingSprak], (sprakkode = {}) => getLanguageCodeFromSprakkode(sprakkode));
 
   // SØKNAD
   const getSoknad = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.soknad);
@@ -89,6 +91,10 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   const isBehandlingStatusReadOnly = createSelector(
     [getBehandlingIsOnHold, hasReadOnlyBehandling, hasBehandlingLukketStatus],
     (behandlingPaaVent, isBehandlingReadOnly, hasLukketStatus) => hasLukketStatus || behandlingPaaVent || isBehandlingReadOnly,
+  );
+
+  const hasBehandlingUtredesStatus = createSelector(
+    [getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.BEHANDLING_UTREDES,
   );
 
   const getAllMerknaderFraBeslutter = createSelector([getBehandlingStatus, getAksjonspunkter], (status, aksjonspunkter = []) => {
@@ -131,10 +137,12 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     isKontrollerRevurderingAksjonspunkOpen,
     hasBehandlingManualPaVent,
     getBehandlingSprak,
+    getBehandlingLanguageCode,
     getSoknad,
     getBehandlingHasSoknad,
     getBehandlingVilkar,
     getBehandlingVilkarCodes,
+    hasBehandlingUtredesStatus,
     isBehandlingStatusReadOnly,
     getAllMerknaderFraBeslutter,
     getMerknaderFraBeslutter,

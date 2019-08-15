@@ -4,9 +4,8 @@ import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
 import { intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
-import {
-  getAksjonspunkter, getBehandlingResultatstruktur, getBehandlingSprak,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
@@ -98,8 +97,8 @@ VedtakInnvilgetPanelImpl.defaultProps = {
 const mapStateToProps = state => ({
   ytelseType: getFagsakYtelseType(state).kode,
   beregningResultat: getBehandlingResultatstruktur(state),
-  aksjonspunkter: getAksjonspunkter(state),
-  sprakKode: getBehandlingSprak(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  sprakKode: behandlingSelectors.getBehandlingSprak(state),
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 

@@ -8,7 +8,7 @@ import { change as reduxChange } from 'redux-form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getBehandlingFormName } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 
 const findAllNames = children => (children ? React.Children
@@ -82,7 +82,7 @@ BehandlingFormFieldCleaner.defaultProps = {
 };
 
 const getCompleteFormName = formName => createSelector(
-  [getSelectedBehandlingId, getBehandlingVersjon], (behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formName),
+  [getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon], (behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formName),
 );
 
 const mapStateToProps = (state, ownProps) => ({

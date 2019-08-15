@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -56,7 +56,7 @@ TilleggsopplysningerInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([getSoknad], soknad => ({
+const buildInitialValues = createSelector([behandlingSelectors.getSoknad], soknad => ({
   ...TilleggsopplysningerFaktaForm.buildInitialValues(soknad),
 }));
 

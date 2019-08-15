@@ -22,11 +22,10 @@ import { guid } from '@fpsak-frontend/utils';
 
 import {
   getBehandlingMedlemNew,
-  getSoknad,
   getBehandlingRevurderingAvFortsattMedlemskapFom,
-  getBehandlingVersjon, isBehandlingRevurderingFortsattMedlemskap,
-}
-from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+  isBehandlingRevurderingFortsattMedlemskap,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -250,7 +249,8 @@ const transformValues = (values, aksjonspunkter) => {
 };
 
 
-const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
+const buildInitalValues = createSelector([behandlingSelectors.getSoknad, getFagsakPerson,
+  getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
 (soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
   soknad,
   person,
@@ -269,7 +269,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const perioder = [];
 
   return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
     return {
       behandlingFormPrefix,
       onSubmit,

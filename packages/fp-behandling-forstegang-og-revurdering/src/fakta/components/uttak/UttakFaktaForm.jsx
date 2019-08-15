@@ -11,10 +11,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  getBehandlingVersjon,
   getUttakPerioder,
   getBehandlingYtelseFordeling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakPerioder from './UttakPerioder';
 import {
@@ -208,7 +208,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
 
   return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
     const hasRevurderingOvertyringAp = !!initialOwnProps.aksjonspunkter.includes(
       ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
     );

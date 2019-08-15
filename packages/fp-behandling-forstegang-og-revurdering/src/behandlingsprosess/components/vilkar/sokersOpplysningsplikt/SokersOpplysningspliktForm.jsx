@@ -10,7 +10,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getBehandlingsresultat, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -176,11 +176,11 @@ SokersOpplysningspliktFormImpl.defaultProps = {
   inntektsmeldingerSomIkkeKommer: {},
 };
 
-export const getSortedManglendeVedlegg = createSelector([getSoknad], soknad => (soknad && soknad.manglendeVedlegg
+export const getSortedManglendeVedlegg = createSelector([behandlingSelectors.getSoknad], soknad => (soknad && soknad.manglendeVedlegg
   ? soknad.manglendeVedlegg.slice().sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
   : []));
 
-const hasSoknad = createSelector([getSoknad], soknad => soknad !== null && isObject(soknad));
+const hasSoknad = createSelector([behandlingSelectors.getSoknad], soknad => soknad !== null && isObject(soknad));
 
 export const buildInitialValues = createSelector(
   [getSortedManglendeVedlegg, hasSoknad, getSelectedBehandlingspunktStatus, getSelectedBehandlingspunktAksjonspunkter],
@@ -221,7 +221,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     hasSoknad: hasSoknad(state),
-    behandlingsresultat: getBehandlingsresultat(state),
+    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
     dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
     manglendeVedlegg: getSortedManglendeVedlegg(state),
     initialValues: buildInitialValues(state),

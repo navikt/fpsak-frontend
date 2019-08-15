@@ -9,9 +9,10 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import {
-  getBehandlingHasSoknad, getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
+  getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
   getSoknadFodselsdatoer, getFamiliehendelseTermindato,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
@@ -78,7 +79,7 @@ export const getTerminFodselLabel = createSelector(
 );
 
 export const getTerminOrFodselDate = createSelector(
-  [getBehandlingHasSoknad, getSoknadTermindato, getSoknadFodselsdatoer, getFamiliehendelseTermindato],
+  [behandlingSelectors.getBehandlingHasSoknad, getSoknadTermindato, getSoknadFodselsdatoer, getFamiliehendelseTermindato],
   (hasSoknad, termindatoSoknad, fødselsdatoerSoknad, termindato) => {
     if (termindato) {
       return formatDate(termindato);

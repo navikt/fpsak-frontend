@@ -15,7 +15,8 @@ import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   AksjonspunktHelpText, FadingPanel, VerticalSpacer, ArrowBox,
@@ -144,7 +145,7 @@ VurderSoknadsfristForeldrepengerFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, getSoknad],
+  [getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, behandlingSelectors.getSoknad],
   (aksjonspunkter, uttaksperiodegrense, soknad) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== soknad.mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
@@ -169,7 +170,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
       onSubmit,
       initialValues: buildInitialValues(state),
-      soknad: getSoknad(state),
+      soknad: behandlingSelectors.getSoknad(state),
       gyldigSenFremsetting: behandlingFormValueSelector('VurderSoknadsfristForeldrepengerForm')(state, 'gyldigSenFremsetting'),
       antallDagerSoknadLevertForSent: uttaksperiodegrense ? uttaksperiodegrense.antallDagerLevertForSent : {},
       soknadsperiodeStart: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeStart : {},
