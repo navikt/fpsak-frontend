@@ -11,7 +11,7 @@ import {
 import { TextAreaField } from '@fpsak-frontend/form';
 import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
 
-import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 

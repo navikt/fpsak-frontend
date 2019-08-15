@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import PerioderControler from './PerioderControler';
 import PeriodSummary from './PeriodSummary';
 import styles from './bpTimelineData.less';

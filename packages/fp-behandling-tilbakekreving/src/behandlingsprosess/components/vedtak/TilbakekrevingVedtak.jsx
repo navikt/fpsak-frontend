@@ -10,9 +10,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getAlleTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import { getBeregningsresultat } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
 
@@ -55,7 +55,7 @@ TilbakekrevingVedtakImpl.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-  const beregningsresultat = getBeregningsresultat(state);
+  const beregningsresultat = behandlingSelectors.getBeregningsresultat(state);
   return {
     perioder: beregningsresultat.beregningResultatPerioder,
     resultat: beregningsresultat.vedtakResultatType,

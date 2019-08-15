@@ -7,7 +7,7 @@ import moment from 'moment';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { BehandlingspunktSubmitButton, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton, FaktaGruppe, getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
@@ -16,13 +16,11 @@ import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
+  behandlingFormTilbakekreving, behandlingFormValueSelector, isBehandlingFormDirty,
   hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingTilbakekreving/src/behandlingForm';
-import {
-  getBehandlingVersjon, getForeldelsePerioder, getMerknaderFraBeslutter,
-} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckTilbake';
+} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import { addClassNameGroupIdToPerioder } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
 import BpTimelinePanel from '../felles/behandlingspunktTimelineSkjema/BpTimelinePanel';
 import ForeldelseForm from './ForeldelseForm';
@@ -161,11 +159,11 @@ export const buildInitialValues = foreldelsePerioder => ({
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
   return state => ({
-    initialValues: buildInitialValues(getForeldelsePerioder(state).perioder),
+    initialValues: buildInitialValues(behandlingSelectors.getForeldelsePerioder(state).perioder),
     foreldelsesresultatActivity: behandlingFormValueSelector(formName)(state, ACTIVITY_PANEL_NAME),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-    merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE)(state),
+    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE)(state),
     onSubmit: submitCallback,
   });
 };
@@ -177,7 +175,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const ForeldelsePanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelsePanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
   form: formName,
 })(ForeldelsePanelImpl)));
 

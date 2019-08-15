@@ -6,20 +6,18 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { behandlingspunktCodes, DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getBehandlingIsOnHold, getAllMerknaderFraBeslutter, getBehandlingType, getBehandlingVilkar, getAksjonspunkter,
-  hasReadOnlyBehandling, isBehandlingStatusReadOnly, getForeldelsePerioder, getBeregningsresultat,
-} from '../selectors/tilbakekrevingBehandlingSelectors';
+import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from './definition/tilbakekrevingBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duckBpTilbake';
 import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
-import { getFagsakYtelseType } from '../duckTilbake';
+import { getFagsakYtelseType } from '../duckBehandlingTilbakekreving';
 
 // TODO (TOR) Refaktorer: veldig mykje av dette er felles med andre behandlingstypar.
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(
-  [getFagsakYtelseType, getBehandlingType, getBehandlingVilkar, getAksjonspunkter, getForeldelsePerioder, getBeregningsresultat],
+  [getFagsakYtelseType, behandlingSelectors.getBehandlingType, behandlingSelectors.getBehandlingVilkar,
+    behandlingSelectors.getAksjonspunkter, behandlingSelectors.getForeldelsePerioder, behandlingSelectors.getBeregningsresultat],
   (fagsakYtelseType, behandlingType, vilkar = [], aksjonspunkter, foreldelseResultat, beregningsresultat) => {
     if (!behandlingType) {
       return undefined;
@@ -57,7 +55,7 @@ const getBehandlingspunkterVilkar = createSelector(
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunktAksjonspunkter = createSelector(
-  [getAksjonspunkter, getBehandlingspunktAksjonspunkterNames],
+  [behandlingSelectors.getAksjonspunkter, getBehandlingspunktAksjonspunkterNames],
   (aksjonspunkter = [], behandlingspunktAksjonspunkterNames = {}) => {
     const valueFunction = bp => behandlingspunktAksjonspunkterNames[bp]
       .map(apCode => aksjonspunkter.find(ap => ap.definisjon.kode === apCode))
@@ -124,7 +122,7 @@ export const getSelectedBehandlingspunktVilkar = createSelector(
 );
 
 export const getNotAcceptedByBeslutter = createSelector(
-  [getSelectedBehandlingspunkt, getBehandlingspunktAksjonspunkterNames, getAllMerknaderFraBeslutter],
+  [getSelectedBehandlingspunkt, getBehandlingspunktAksjonspunkterNames, behandlingSelectors.getAllMerknaderFraBeslutter],
   (selectedBehandlingspunkt, aksjonspunkter = {}, merknaderFraBeslutter = {}) => {
     const ap = aksjonspunkter[selectedBehandlingspunkt];
     return ap !== undefined
@@ -151,13 +149,13 @@ export const hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar = createSelector(
 );
 
 export const isSelectedBehandlingspunktReadOnly = createSelector(
-  [getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
+  [getRettigheter, behandlingSelectors.getBehandlingIsOnHold, behandlingSelectors.hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
   (rettigheter, behandlingIsOnHold, isBehandlingReadOnly, hasNonActivOrNonOverstyrbar) => !rettigheter.writeAccess.isEnabled
     || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
 );
 
 export const isSelectedBehandlingspunktOverrideReadOnly = createSelector(
-  [getRettigheter, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar, isBehandlingStatusReadOnly],
+  [getRettigheter, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar, behandlingSelectors.isBehandlingStatusReadOnly],
   (rettigheter, hasNonActivOrNonOverstyrbar, isStatusReadOnly) => !rettigheter.kanOverstyreAccess.isEnabled || isStatusReadOnly || hasNonActivOrNonOverstyrbar,
 );
 

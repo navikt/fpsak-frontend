@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingVersjon } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import {
   resetFakta, resolveFaktaAksjonspunkter, getOpenInfoPanels,
 } from './duckFaktaTilbake';
@@ -32,7 +32,7 @@ FaktaTilbakeContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
   resolveFaktaAksjonspunkter,

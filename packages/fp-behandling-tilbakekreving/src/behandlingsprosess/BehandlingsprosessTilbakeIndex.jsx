@@ -18,11 +18,9 @@ import FatterTilbakekrevingVedtakStatusModal from './components/FatterTilbakekre
 import {
   setSelectedBehandlingspunktNavn, resolveProsessAksjonspunkter, resetBehandlingspunkter, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
-import {
-  getBehandlingVersjon, getBehandlingHenlagt,
-} from '../selectors/tilbakekrevingBehandlingSelectors';
+import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
 import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
-import { getBehandlingIdentifier } from '../duckTilbake';
+import { getBehandlingIdentifier } from '../duckBehandlingTilbakekreving';
 import {
   getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
   getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
@@ -167,8 +165,8 @@ BehandlingsprosessTilbakeIndex.defaultProps = {
 
 const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
-  isSelectedBehandlingHenlagt: getBehandlingHenlagt(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   behandlingspunkter: getBehandlingspunkter(state),
   defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
   selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
