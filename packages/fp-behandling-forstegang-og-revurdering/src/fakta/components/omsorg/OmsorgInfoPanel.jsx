@@ -5,7 +5,9 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { aksjonspunktPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -135,7 +137,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
 
-const OmsorgInfoPanel = withDefaultToggling(OMSORG_IP, omsorgAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+const OmsorgInfoPanel = withDefaultToggling(OMSORG_IP, omsorgAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'OmsorgInfoPanel',
   validate: IkkeOmsorgPeriodeField.validate,
 })(injectIntl(OmsorgInfoPanelImpl))));

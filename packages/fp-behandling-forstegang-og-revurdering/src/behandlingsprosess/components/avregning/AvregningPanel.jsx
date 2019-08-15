@@ -9,10 +9,13 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
 import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
 } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -451,7 +454,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: true,
 })(AvregningPanelImpl)));

@@ -10,7 +10,9 @@ import {
   getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { getBehandlingsresultat } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getFagsakYtelseType, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -123,7 +125,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     });
 };
 
-const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   validate,
 })(ErForeldreansvar2LeddVilkaarOppfyltFormImpl)));

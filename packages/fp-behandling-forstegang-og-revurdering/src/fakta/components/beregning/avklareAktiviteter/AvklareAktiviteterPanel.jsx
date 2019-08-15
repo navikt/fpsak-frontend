@@ -5,32 +5,29 @@ import { initialize as reduxFormInitialize, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { Element } from 'nav-frontend-typografi';
 import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';
+
 import { getRettigheter } from 'navAnsatt/duck';
-import { getBehandlingFormPrefix, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   getBehandlingVersjon,
-
   getAksjonspunkter,
   getAvklarAktiviteter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-
-
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-
-
 import { getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, formNameAvklarAktiviteter } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
-
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
+
 import styles from './avklareAktiviteterPanel.less';
 
 
@@ -329,6 +326,6 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
   form: formNameAvklarAktiviteter,
 })(AvklareAktiviteterPanelImpl));

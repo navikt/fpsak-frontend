@@ -17,7 +17,9 @@ import PropTypes from 'prop-types';
 import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -264,7 +266,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: true,
 })(VarselOmRevurderingFormImpl)));

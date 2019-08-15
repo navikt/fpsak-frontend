@@ -13,7 +13,7 @@ import {
   getBehandlingMedlem, getPersonopplysning,
   getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
@@ -160,6 +160,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'OppholdInntektOgPerioderForm',
 })(OppholdInntektOgPerioderForm));

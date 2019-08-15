@@ -11,7 +11,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes, injectKodeverk } from '@fpsak-frontend/fp-felles';
@@ -227,7 +229,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const SokersOpplysningspliktForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const SokersOpplysningspliktForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
 

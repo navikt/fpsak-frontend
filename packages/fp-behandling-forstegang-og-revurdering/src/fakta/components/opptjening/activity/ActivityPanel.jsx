@@ -11,7 +11,9 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import moment from 'moment';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
@@ -277,7 +279,7 @@ const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: activityPanelName,
   validate: validateForm,
   enableReinitialize: true,

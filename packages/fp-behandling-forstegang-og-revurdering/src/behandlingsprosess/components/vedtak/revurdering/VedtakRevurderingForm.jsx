@@ -8,6 +8,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import { isInnvilget, isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -19,7 +20,9 @@ import {
   getBehandlingResultatstruktur, getBehandlingStatus,
   isBehandlingStatusReadOnly, getBehandlingsresultat, getBehandlingArsakTyper, getBehandlingSprak, getBehandlingVersjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import {
  getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk,
@@ -310,7 +313,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const VedtakRevurderingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const VedtakRevurderingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: VEDTAK_REVURDERING_FORM_NAME,
 })(VedtakRevurderingFormImpl)));
 

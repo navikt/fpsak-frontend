@@ -33,8 +33,8 @@ import {
   getBehandlingsresultat, getBehandlingVilkar, getSoknad, getFamiliehendelseGjeldende,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
@@ -238,7 +238,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(ErSoknadsfristVilkaretOppfyltFormImpl))));
 

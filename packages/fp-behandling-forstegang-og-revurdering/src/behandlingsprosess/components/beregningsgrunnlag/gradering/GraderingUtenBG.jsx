@@ -22,8 +22,8 @@ import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
-  behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 import styles from './graderingUtenBG.less';
@@ -210,4 +210,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 };
 
 
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(injectKodeverk(getAlleKodeverk)(GraderingUtenBG)));
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(injectKodeverk(getAlleKodeverk)(GraderingUtenBG)));

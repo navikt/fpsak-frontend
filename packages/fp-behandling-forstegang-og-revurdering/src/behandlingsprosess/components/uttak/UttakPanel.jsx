@@ -10,7 +10,9 @@ import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-type
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   FadingPanel, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -355,7 +357,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: false,
 })(UttakPanelImpl)));

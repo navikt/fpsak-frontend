@@ -25,7 +25,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBeregningsgrunnlagPerioder, getGjeldendeBeregningAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getBehandlingFormValues } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import NaturalytelsePanel from './NaturalytelsePanel';
 
 import styles from './FastsettInntektTidsbegrenset.less';

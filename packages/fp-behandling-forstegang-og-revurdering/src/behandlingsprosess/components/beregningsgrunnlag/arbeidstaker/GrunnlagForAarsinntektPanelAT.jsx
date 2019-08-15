@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { InputField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createSelector, createStructuredSelector } from 'reselect';
 import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -207,7 +207,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 const FordelBeregningsgrunnlagPanel = withDefaultToggling(faktaPanelCodes.FORDELING,
   faktaOmFordelingAksjonspunkter)(
     connect(mapStateToPropsFactory)(
-      behandlingForm({ form: FORM_NAME_FORDEL_BEREGNING })(
+      behandlingFormForstegangOgRevurdering({ form: FORM_NAME_FORDEL_BEREGNING })(
           injectIntl(FordelBeregningsgrunnlagPanelImpl),
           ),
     ),

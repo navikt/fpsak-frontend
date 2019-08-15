@@ -13,7 +13,9 @@ import {
 import {
   FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
@@ -168,7 +170,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

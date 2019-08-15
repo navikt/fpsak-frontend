@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { PersonIndex, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -70,7 +70,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'PersonIndexPanel',
 })(PersonIndexPanelImpl));
 

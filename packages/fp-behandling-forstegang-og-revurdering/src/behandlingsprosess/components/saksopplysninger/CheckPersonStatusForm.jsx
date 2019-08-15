@@ -15,8 +15,8 @@ import {
   getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -168,7 +168,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(CheckPersonStatusFormImpl)));
 

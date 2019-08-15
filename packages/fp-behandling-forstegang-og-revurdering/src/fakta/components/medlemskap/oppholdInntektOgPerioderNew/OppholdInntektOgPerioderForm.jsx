@@ -8,24 +8,29 @@ import {
   formPropTypes,
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { bindActionCreators } from 'redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
 import {
   AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { guid } from '@fpsak-frontend/utils';
+
 import {
   getBehandlingMedlemNew,
   getSoknad,
   getBehandlingRevurderingAvFortsattMedlemskapFom,
   getBehandlingVersjon, isBehandlingRevurderingFortsattMedlemskap,
 }
-  from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { bindActionCreators } from 'redux';
+from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
-import { guid } from '@fpsak-frontend/utils';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 
@@ -283,7 +288,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
   form: 'OppholdInntektOgPerioderForm',
   enableReinitialize: true,
 })(injectIntl(OppholdInntektOgPerioderFormNew)));

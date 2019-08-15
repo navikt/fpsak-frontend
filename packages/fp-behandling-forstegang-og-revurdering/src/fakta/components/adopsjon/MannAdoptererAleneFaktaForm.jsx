@@ -13,7 +13,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 
 import styles from './mannAdoptererAleneFaktaForm.less';

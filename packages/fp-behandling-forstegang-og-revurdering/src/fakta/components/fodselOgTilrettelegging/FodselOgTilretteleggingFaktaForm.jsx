@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { getTilrettelegging, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import ArbeidsforholdFaktaPanel from './arbeidsforhold/ArbeidsforholdFaktaPanel';
@@ -134,6 +134,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: FODSEL_TILRETTELEGGING_FORM,
 })(FodselOgTilretteleggingFaktaForm));

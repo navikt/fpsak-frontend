@@ -6,7 +6,9 @@ import { connect } from 'react-redux';
 
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import { getBehandlingsresultat } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
@@ -103,7 +105,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const AdopsjonVilkarForm = connect(mapStateToPropsFactory)(behandlingForm({
+const AdopsjonVilkarForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
   validate,
 })(AdopsjonVilkarFormImpl));

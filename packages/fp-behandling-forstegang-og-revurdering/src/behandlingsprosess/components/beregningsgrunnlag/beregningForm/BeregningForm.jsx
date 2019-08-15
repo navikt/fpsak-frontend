@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -243,6 +243,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BeregningForm = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(BeregningFormImpl));
+const BeregningForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(BeregningFormImpl));
 
 export default BeregningForm;

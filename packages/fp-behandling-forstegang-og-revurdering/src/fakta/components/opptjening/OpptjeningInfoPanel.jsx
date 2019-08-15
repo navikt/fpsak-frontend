@@ -8,7 +8,7 @@ import moment from 'moment';
 import {
   getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities, getAksjonspunkter,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -151,9 +151,11 @@ const transformValues = values => ({
 
 const opptjeningAksjonspunkter = [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING];
 
-const OpptjeningInfoPanel = withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+const OpptjeningInfoPanel = withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
-})(injectIntl(OpptjeningInfoPanelImpl))));
+})(injectIntl(OpptjeningInfoPanelImpl))),
+);
 
 OpptjeningInfoPanel.supports = vilkarCodes => vilkarCodes.some(code => code === vilkarType.OPPTJENINGSVILKARET);
 

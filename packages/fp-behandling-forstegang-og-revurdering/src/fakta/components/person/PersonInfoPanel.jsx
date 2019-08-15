@@ -17,7 +17,7 @@ import {
   getBehandlingSprak,
   getPersonopplysning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import utlandSakstypeKode from './panelBody/utland/utlandSakstypeKode';
@@ -186,7 +186,7 @@ const mapStateToPropsFactory = (initialState) => {
   });
 };
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));

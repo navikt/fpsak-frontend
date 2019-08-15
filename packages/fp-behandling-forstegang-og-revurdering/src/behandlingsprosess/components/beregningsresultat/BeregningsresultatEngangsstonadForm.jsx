@@ -10,7 +10,9 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   VerticalSpacer, FadingPanel, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
@@ -147,7 +149,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(BeregningsresultatEngangsstonadFormImpl)));
 

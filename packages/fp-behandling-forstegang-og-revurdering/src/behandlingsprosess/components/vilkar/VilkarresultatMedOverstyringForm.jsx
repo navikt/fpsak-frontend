@@ -10,7 +10,9 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -200,7 +202,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
+const form = behandlingFormForstegangOgRevurdering({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
 const VilkarresultatMedOverstyringForm = injectIntl(connect(mapStateToPropsFactory)(form));
 
 VilkarresultatMedOverstyringForm.supports = (apCodes, behandlingspunkt) => {

@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingVerge, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   faktaPanelCodes,
 } from '@fpsak-frontend/fp-felles';
@@ -117,9 +117,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
-const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'RegistrereVergeInfoPanel',
-})(injectIntl(RegistrereVergeInfoPanelImpl))));
+})(injectIntl(RegistrereVergeInfoPanelImpl))),
+);
 
 RegistrereVergeInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === vergeAksjonspunkter[0]);
 

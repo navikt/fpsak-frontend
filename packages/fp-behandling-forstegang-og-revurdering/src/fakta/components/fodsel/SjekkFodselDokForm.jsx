@@ -13,7 +13,9 @@ import {
 import {
   getEditedStatus, getFamiliehendelseGjeldende, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required,
@@ -178,6 +180,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: sjekkFodselDokForm,
 })(SjekkFodselDokForm));

@@ -32,7 +32,9 @@ import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
 import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 
@@ -455,7 +457,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'nyPeriodeForm',
   validate: values => validateNyPeriodeForm(values),
   enableReinitialize: true,

@@ -14,7 +14,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getBehandlingIsOnHold, hasReadOnlyBehandling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandEndretModal } from './UtlandEndretModal';

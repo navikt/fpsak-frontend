@@ -14,14 +14,9 @@ import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import { CheckboxField } from '@fpsak-frontend/form';
-import { getBehandlingFormPrefix, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getInntektsmeldinger, getBehandlingVersjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import {
   ariaCheck, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
@@ -30,6 +25,13 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 import {
   VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
+
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getRettigheter } from 'navAnsatt/duck';
+import {
+  getInntektsmeldinger, getBehandlingVersjon,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

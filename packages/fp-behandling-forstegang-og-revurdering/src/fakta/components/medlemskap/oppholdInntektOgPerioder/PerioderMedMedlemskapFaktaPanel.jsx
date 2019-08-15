@@ -6,7 +6,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 

@@ -5,7 +5,7 @@ import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArb
 import {
   behandlingFormValueSelector,
   isBehandlingFormDirty,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
  minLength, maxLength, required, hasValidText,
 } from '@fpsak-frontend/utils';

@@ -11,7 +11,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   DateLabel, VerticalSpacer, ElementWrapper,
 } from '@fpsak-frontend/shared-components';
@@ -181,6 +183,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: termindatoFaktaFormName,
 })(TermindatoFaktaForm));

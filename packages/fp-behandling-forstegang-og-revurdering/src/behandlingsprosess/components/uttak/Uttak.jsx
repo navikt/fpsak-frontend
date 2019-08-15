@@ -16,6 +16,7 @@ import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
@@ -26,7 +27,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   getBehandlingVersjon,
   getSoknad,

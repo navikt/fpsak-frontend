@@ -16,7 +16,7 @@ import {
   getBehandlingStartDatoForPermisjon,
   hasReadOnlyBehandling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
  hasValidDate, hasValidText, maxLength, minLength, required,
@@ -181,7 +181,7 @@ const validateDates = (values) => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'StartdatoForForeldrepengerperiodenForm',
   validate: validateDates,
 })(StartdatoForForeldrepengerperiodenForm));

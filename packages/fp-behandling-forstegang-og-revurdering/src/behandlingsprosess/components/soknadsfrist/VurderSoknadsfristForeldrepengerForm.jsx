@@ -12,8 +12,8 @@ import {
 import Panel from 'nav-frontend-paneler';
 
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
@@ -180,7 +180,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     });
 };
 
-const VurderSoknadsfristForeldrepengerForm = connect(mapStateToPropsFactory)(behandlingForm({
+const VurderSoknadsfristForeldrepengerForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(VurderSoknadsfristForeldrepengerFormImpl));
 

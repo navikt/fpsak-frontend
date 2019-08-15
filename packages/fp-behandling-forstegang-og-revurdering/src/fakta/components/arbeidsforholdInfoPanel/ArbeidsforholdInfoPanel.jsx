@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   faktaPanelCodes,
 } from '@fpsak-frontend/fp-felles';
@@ -130,7 +130,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     onSubmit,
   });
 };
-const connectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
+const connectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(ArbeidsforholdInfoPanelImpl));
 const ArbeidsforholdInfoPanel = withDefaultToggling(faktaPanelCodes.ARBEIDSFORHOLD, relevanteAksjonspunkter)(connectedComponent);
 
 export default ArbeidsforholdInfoPanel;
