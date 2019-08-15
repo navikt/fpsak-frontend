@@ -165,6 +165,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'OPPHOLDSRETT_IKKE_EOS',
     feltId: 'HistorikkEndretFelt.LovligOpphold',
   },
+  OPPTJENINGSVILKARET: {
+    kode: 'OPPTJENINGSVILKARET',
+    feltId: 'HistorikkEndretFelt.Opptjeningsvilkaret',
+  },
   OVERSTYRT_BEREGNING: {
     kode: 'OVERSTYRT_BEREGNING',
     feltId: 'Historikk.Template.7.OverstyrtBeregning',

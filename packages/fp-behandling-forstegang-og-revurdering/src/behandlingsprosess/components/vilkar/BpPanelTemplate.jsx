@@ -34,12 +34,12 @@ const BpPanelTemplate = ({
   <FadingPanel>
     <form onSubmit={handleSubmit}>
       <Undertittel>{intl.formatMessage({ id: titleCode })}</Undertittel>
-      <VerticalSpacer twentyPx />
+      <VerticalSpacer eightPx />
       {lovReferanse
         && (
         <ElementWrapper>
           <Normaltekst>{lovReferanse}</Normaltekst>
-          <VerticalSpacer sixteenPx />
+          <VerticalSpacer eightPx />
         </ElementWrapper>
         )
       }
@@ -47,7 +47,7 @@ const BpPanelTemplate = ({
         && (
         <ElementWrapper>
           <VilkarResultPanel status={bpStatus} />
-          <VerticalSpacer sixteenPx />
+          <VerticalSpacer eightPx />
         </ElementWrapper>
         )
       }
