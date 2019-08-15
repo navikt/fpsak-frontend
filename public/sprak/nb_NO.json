@@ -2041,6 +2041,7 @@
   "HistorikkEndretFelt.InntektFraArbeidsforhold": "Inntekt fra {value}",
   "HistorikkEndretFelt.LovligOpphold": "Lovlig opphold",
   "HistorikkEndretFelt.Oppholdsrett": "Oppholdsrett",
+  "HistorikkEndretFelt.Opptjeningsvilkaret": "Opptjeningsvilkåret",
   "HistorikkEndretFelt.Soknadsfristvilkaret": "Søknadsfristvilkåret",
   "HistorikkEndretFelt.Personstatus": "Personstatus",
   "HistorikkEndretFelt.StartdatoFraSoknad": "Startdato fra søknad",

@@ -49,18 +49,18 @@ export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
 
 export const getAllApCodes = (behandlingspunkt) => {
   const esAp = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
-  const apCodes = esAp ? [esAp] : [];
+  let apCodes = esAp ? [esAp] : [];
   const fpAps = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
   if (isObject(fpAps)) {
-    apCodes.concat(Object.values(fpAps));
+    apCodes = apCodes.concat(Object.values(fpAps));
   } else if (fpAps) {
-    apCodes.concat([fpAps]);
+    apCodes = apCodes.concat([fpAps]);
   }
   const spAps = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
   if (isObject(spAps)) {
-    apCodes.concat(Object.values(spAps));
+    apCodes = apCodes.concat(Object.values(spAps));
   } else if (spAps) {
-    apCodes.concat([spAps]);
+    apCodes = apCodes.concat([spAps]);
   }
   return apCodes;
 };
