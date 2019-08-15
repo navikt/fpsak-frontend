@@ -9,7 +9,7 @@ import { BehandlingGrid, withBehandlingIndex } from '@fpsak-frontend/fp-behandli
 import behandlingSelectors from './selectors/tilbakekrevingBehandlingSelectors';
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import TilbakekrevingDataResolver from './TilbakekrevingDataResolver';
-import BehandlingsprosessTilbakeIndex from './behandlingsprosess/BehandlingsprosessTilbakeIndex';
+import BehandlingsprosessTilbakekrevingContainer from './behandlingsprosess/BehandlingsprosessTilbakekrevingContainer';
 import FaktaTilbakeContainer from './fakta/FaktaTilbakeContainer';
 import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
@@ -28,7 +28,7 @@ export const BehandlingTilbakekrevingIndex = ({
   <TilbakekrevingDataResolver>
     <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
-      behandlingsprosessContent={<BehandlingsprosessTilbakeIndex />}
+      behandlingsprosessContent={<BehandlingsprosessTilbakekrevingContainer />}
       faktaContent={<FaktaTilbakeContainer />}
     />
   </TilbakekrevingDataResolver>
