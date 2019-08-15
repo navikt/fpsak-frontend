@@ -2,7 +2,6 @@ import {
   RestApiConfigBuilder, ReduxRestApiBuilder, ReduxEvents,
 } from '@fpsak-frontend/rest-api-redux';
 import errorHandler from '@fpsak-frontend/error-api-redux';
-
 import { reducerRegistry, setRequestPollingMessage } from '@fpsak-frontend/fp-felles';
 
 export const PapirsoknadApiKeys = {

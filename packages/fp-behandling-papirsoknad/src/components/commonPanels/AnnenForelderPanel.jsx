@@ -14,7 +14,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-import { getKodeverk } from 'papirsoknad/src/duck';
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 

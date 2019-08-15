@@ -20,8 +20,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
 import SoknadData from 'papirsoknad/src/SoknadData';
-import { getKodeverk, getFagsakYtelseType } from 'papirsoknad/src/duck';
-import { getBehandlingType } from '../selectors/papirsoknadSelectors';
+import { getKodeverk, getFagsakYtelseType } from 'papirsoknad/src/duckPapirsoknad';
+import behandlingSelectors from 'papirsoknad/src/selectors/papirsoknadSelectors';
 
 import styles from './soknadTypePickerForm.less';
 
@@ -132,7 +132,8 @@ SoknadTypePickerForm.defaultProps = {
 };
 
 const getSakstype = createSelector(
-  [getFagsakYtelseType, getBehandlingType], (sakstype, bt) => (bt.kode === behandlingType.REVURDERING && sakstype.kode === fagsakYtelseType.FORELDREPENGER
+  [getFagsakYtelseType, behandlingSelectors.getBehandlingType], (sakstype, bt) => (
+    bt.kode === behandlingType.REVURDERING && sakstype.kode === fagsakYtelseType.FORELDREPENGER
     ? fagsakYtelseType.ENDRING_FORELDREPENGER : sakstype.kode),
 );
 

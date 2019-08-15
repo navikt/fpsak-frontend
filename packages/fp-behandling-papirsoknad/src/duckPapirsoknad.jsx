@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+
 import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
 
 const reducerName = 'papirsoknad';

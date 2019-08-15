@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import {
   papirsoknadReducer, resetRegistrering, setSoknadData, getRegisteredFields, getSoknadData,
-} from './duck';
+} from './duckPapirsoknad';
 
 describe('Papirsoknad-reducer', () => {
   const expectedInitialState = {

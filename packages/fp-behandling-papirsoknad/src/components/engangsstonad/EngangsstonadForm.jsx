@@ -5,10 +5,11 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { isEqual, omit } from '@fpsak-frontend/utils';
-import { getRegisteredFields, getFagsakPerson } from 'papirsoknad/src/duck';
+import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
+
+import { getRegisteredFields, getFagsakPerson } from 'papirsoknad/src/duckPapirsoknad';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import SoknadData from 'papirsoknad/src/SoknadData';
-import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import LagreSoknadPanel from 'papirsoknad/src/components/commonPanels/LagreSoknadPanel';
 import { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
