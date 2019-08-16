@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
-import {
-  getBehandlingspunktAksjonspunkterCodes,
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-  isSelectedBehandlingspunktReadOnly,
-  getNotAcceptedByBeslutter,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import AvregningPanel from './avregning/AvregningPanel';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
@@ -158,12 +151,12 @@ BehandlingspunktInfoPanel.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
+  openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  readOnlySubmitButton: behandlingsprosessSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  notAcceptedByBeslutter: behandlingsprosessSelectors.getNotAcceptedByBeslutter(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInfoPanel);

@@ -20,12 +20,12 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 
 import { getBehandlingResultatstruktur, erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
+import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
@@ -264,7 +264,7 @@ VedtakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingStatus, getBehandlingResultatstruktur, getSelectedBehandlingspunktAksjonspunkter,
+  [behandlingSelectors.getBehandlingStatus, getBehandlingResultatstruktur, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
     getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
   (status, beregningResultat, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => ({
     sprakkode,
@@ -279,7 +279,7 @@ export const buildInitialValues = createSelector(
 );
 
 export const getAksjonspunktKoder = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
 );
 
 const transformValues = values => values.aksjonspunktKoder.map(apCode => ({

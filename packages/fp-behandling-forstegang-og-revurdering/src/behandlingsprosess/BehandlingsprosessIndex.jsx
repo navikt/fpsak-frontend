@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
+
 // TODO: remove this when UTTAK will be visible in SVP
 import fagsakYtType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
@@ -11,6 +12,12 @@ import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/pr
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { BehandlingsprosessPanel, FatterVedtakStatusModal } from '@fpsak-frontend/fp-behandling-felles';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
+} from '@fpsak-frontend/fp-felles';
 
 import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconHelper';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -19,12 +26,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import BehandlingspunktInfoPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
-import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
-} from '@fpsak-frontend/fp-felles';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
   setSelectedBehandlingspunktNavn,
   resolveProsessAksjonspunkter,
@@ -34,11 +36,8 @@ import {
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
   getSelectedBehandlingspunktNavn,
   fetchVedtaksbrevPreview,
-} from './duck';
-import {
-  getBehandlingspunkter, getSelectedBehandlingspunkt, getDefaultBehandlingspunkt,
-  getBehandlingspunkterStatus, getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
-} from './behandlingsprosessSelectors';
+} from './duckBpForstegangOgRev';
+
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -283,9 +282,9 @@ export class BehandlingsprosessIndex extends Component {
           selectBehandlingspunktCallback={this.goToBehandlingspunkt}
           isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
           findBehandlingsprosessIcon={findBehandlingsprosessIcon}
-          getBehandlingspunkterStatus={getBehandlingspunkterStatus}
-          getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
-          getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
+          getBehandlingspunkterStatus={behandlingsprosessSelectors.getBehandlingspunkterStatus}
+          getBehandlingspunkterTitleCodes={behandlingsprosessSelectors.getBehandlingspunkterTitleCodes}
+          getAksjonspunkterOpenStatus={behandlingsprosessSelectors.getAksjonspunkterOpenStatus}
         >
           <BehandlingspunktInfoPanel
             submitCallback={this.submitVilkar}
@@ -352,9 +351,9 @@ const mapStateToProps = state => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  behandlingspunkter: getBehandlingspunkter(state),
-  defaultBehandlingspunkt: getDefaultBehandlingspunkt(state),
-  selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
+  behandlingspunkter: behandlingsprosessSelectors.getBehandlingspunkter(state),
+  defaultBehandlingspunkt: behandlingsprosessSelectors.getDefaultBehandlingspunkt(state),
+  selectedBehandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
   behandlingType: behandlingSelectors.getBehandlingType(state),
   location: state.router.location,
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),

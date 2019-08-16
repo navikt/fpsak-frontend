@@ -11,8 +11,12 @@ import { getBehandlingspunkterProps } from './behandlingsprosessInnsynSelectors'
 
 describe('behandlingsprosessInnsynSelectors', () => {
   it('skal opprette behandlingspunkter for innsyn når en har aksjonspunkt vurdere innsyn og det er en engangsstønad', () => {
-    const fagsakYtelseType = FagsakYtelseType.ENGANGSSTONAD;
-    const behandlingType = BehandlingType.FORSTEGANGSSOKNAD;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.ENGANGSSTONAD,
+    };
+    const behandlingType = {
+      kode: BehandlingType.DOKUMENTINNSYN,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.VURDER_INNSYN,
@@ -44,8 +48,12 @@ describe('behandlingsprosessInnsynSelectors', () => {
   });
 
   it('skal opprette behandlingspunkter for innsyn når en har aksjonspunkt vurdere innsyn og det er en foreldrepengersøknad', () => {
-    const fagsakYtelseType = FagsakYtelseType.FORELDREPENGER;
-    const behandlingType = BehandlingType.FORSTEGANGSSOKNAD;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.FORELDREPENGER,
+    };
+    const behandlingType = {
+      kode: BehandlingType.DOKUMENTINNSYN,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.VURDER_INNSYN,

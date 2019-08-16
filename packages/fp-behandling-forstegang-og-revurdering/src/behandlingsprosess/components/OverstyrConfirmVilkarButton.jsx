@@ -5,7 +5,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const OverstyrConfirmVilkarButtonImpl = ({
@@ -39,7 +39,7 @@ OverstyrConfirmVilkarButtonImpl.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+  isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
 });
 
 const OverstyrConfirmVilkarButton = connect(mapStateToProps)(OverstyrConfirmVilkarButtonImpl);

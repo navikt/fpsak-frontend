@@ -9,7 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom,
@@ -127,7 +127,7 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
+  [behandlingSelectors.getBehandlingHenlagt, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
   (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
@@ -158,7 +158,8 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'CheckPersonStatusForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, getSelectedBehandlingspunktAksjonspunkter(initialState))]);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values,
+    behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState))]);
   const personStatuser = getFilteredKodeverk(initialState);
   return state => ({
     initialValues: buildInitialValues(state),

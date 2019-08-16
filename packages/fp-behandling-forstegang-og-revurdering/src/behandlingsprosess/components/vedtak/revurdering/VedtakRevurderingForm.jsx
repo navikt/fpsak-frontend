@@ -23,11 +23,11 @@ import {
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
  getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
+import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
@@ -215,8 +215,8 @@ VedtakRevurderingFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [getBehandlingResultatstruktur, behandlingSelectors.getBehandlingStatus, getSelectedBehandlingspunktAksjonspunkter, getFagsakYtelseType,
-    behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
+  [getBehandlingResultatstruktur, behandlingSelectors.getBehandlingStatus, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
+    getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
   (beregningResultat, behandlingstatus, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter(ap => ap.erAktivt)
@@ -277,7 +277,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
-  const aksjonspunktKoder = getSelectedBehandlingspunktAksjonspunkter(initialState).map(ap => ap.definisjon.kode);
+  const aksjonspunktKoder = getSelectedBehandlingspunktAksjonspunkter.getSelectedBehandlingspunktAksjonspunkter(initialState).map(ap => ap.definisjon.kode);
   const revurderingsAarsakString = createAarsakString(getBehandlingArsakTyper(initialState), getKodeverknavnFn(getAlleKodeverk(initialState), kodeverkTyper));
 
   return state => ({
@@ -299,7 +299,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
     behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter(state),
+    aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter.getSelectedBehandlingspunktAksjonspunkter(state),
     ytelseType: getFagsakYtelseType(state).kode,
     sprakkode: behandlingSelectors.getBehandlingSprak(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,

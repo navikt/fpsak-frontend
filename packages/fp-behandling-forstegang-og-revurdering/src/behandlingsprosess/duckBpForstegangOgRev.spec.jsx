@@ -2,19 +2,20 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
+import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
+
 import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
-import {
-  behandlingsprosessReducer, resetBehandlingspunkter, setSelectedBehandlingspunktNavn,
-  resolveProsessAksjonspunkter, overrideProsessAksjonspunkter,
-} from './duck';
+import { resolveProsessAksjonspunkter, overrideProsessAksjonspunkter } from './duckBpForstegangOgRev';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-describe('Behandlingsprosess-reducer', () => {
+const behandlingsprosessRedux = getBehandlingsprosessRedux('forstegangOgRevurderingBehandlingsprosess');
+
+describe('Behandlingsprosess-forstegang-og-revurdering-reducer', () => {
   let mockAxios;
 
   before(() => {
@@ -27,42 +28,6 @@ describe('Behandlingsprosess-reducer', () => {
 
   after(() => {
     mockAxios.restore();
-  });
-
-  it('skal returnere initial state', () => {
-    expect(behandlingsprosessReducer(undefined, {})).to.eql({
-      overrideBehandlingspunkter: [],
-      selectedBehandlingspunktNavn: undefined,
-      resolveProsessAksjonspunkterStarted: false,
-      resolveProsessAksjonspunkterSuccess: false,
-    });
-  });
-
-  it('skal resette behandlingspunkter til opprinnelig state, men ikke selectedBehandlingspunktNavn', () => {
-    const manipulertState = {
-      overrideBehandlingspunkter: [{ test: 'test' }],
-      selectedBehandlingspunktNavn: 'askjlhd',
-      resolveProsessAksjonspunkterStarted: true,
-      resolveProsessAksjonspunkterSuccess: true,
-    };
-
-    expect(behandlingsprosessReducer(manipulertState, resetBehandlingspunkter())).to.eql({
-      overrideBehandlingspunkter: [],
-      selectedBehandlingspunktNavn: 'askjlhd',
-      resolveProsessAksjonspunkterStarted: false,
-      resolveProsessAksjonspunkterSuccess: false,
-    });
-  });
-
-  it('skal sette valgt behandlingspunkt-navn', () => {
-    const behandlingspunkt = setSelectedBehandlingspunktNavn('test');
-
-    expect(behandlingsprosessReducer(undefined, behandlingspunkt)).to.eql({
-      overrideBehandlingspunkter: [],
-      selectedBehandlingspunktNavn: 'test',
-      resolveProsessAksjonspunkterStarted: false,
-      resolveProsessAksjonspunkterSuccess: false,
-    });
   });
 
   it('skal avklare aksjonspunkter', () => {
@@ -88,7 +53,7 @@ describe('Behandlingsprosess-reducer', () => {
         const actions = withoutRestActions(store.getActions());
         expect(actions).to.have.length(3);
 
-        const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
+        const stateAfterFetchStarted = behandlingsprosessRedux.reducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -96,7 +61,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
+        const stateAfterFetchFinished = behandlingsprosessRedux.reducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -129,7 +94,7 @@ describe('Behandlingsprosess-reducer', () => {
         const actions = withoutRestActions(store.getActions());
         expect(actions).to.have.length(3);
 
-        const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
+        const stateAfterFetchStarted = behandlingsprosessRedux.reducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -137,7 +102,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
+        const stateAfterFetchFinished = behandlingsprosessRedux.reducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -170,7 +135,7 @@ describe('Behandlingsprosess-reducer', () => {
         const actions = withoutRestActions(store.getActions());
         expect(actions).to.have.length(3);
 
-        const stateAfterFetchStarted = behandlingsprosessReducer(undefined, actions[0]);
+        const stateAfterFetchStarted = behandlingsprosessRedux.reducer(undefined, actions[0]);
         expect(stateAfterFetchStarted).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,
@@ -178,7 +143,7 @@ describe('Behandlingsprosess-reducer', () => {
           resolveProsessAksjonspunkterSuccess: false,
         });
 
-        const stateAfterFetchFinished = behandlingsprosessReducer(undefined, actions[2]);
+        const stateAfterFetchFinished = behandlingsprosessRedux.reducer(undefined, actions[2]);
         expect(stateAfterFetchFinished).to.eql({
           overrideBehandlingspunkter: [],
           selectedBehandlingspunktNavn: undefined,

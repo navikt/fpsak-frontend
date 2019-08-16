@@ -14,7 +14,7 @@ import Panel from 'nav-frontend-paneler';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
@@ -145,7 +145,7 @@ VurderSoknadsfristForeldrepengerFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, behandlingSelectors.getSoknad],
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, behandlingSelectors.getSoknad],
   (aksjonspunkter, uttaksperiodegrense, soknad) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== soknad.mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
@@ -164,7 +164,7 @@ const formName = 'VurderSoknadsfristForeldrepengerForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const uttaksperiodegrense = getBehandlingUttaksperiodegrense(initialState);
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
   return state => ({

@@ -12,8 +12,12 @@ import { getBehandlingspunkterProps } from './behandlingsprosessTilbakeSelectors
 
 describe('behandlingsprosessTilbakeSelectors', () => {
   it('skal opprette behandlingspunkter for foreldelse, tilbakekreving og vedtak når en har desse aksjonspunktene', () => {
-    const fagsakYtelseType = FagsakYtelseType.FORELDREPENGER;
-    const behandlingType = BehandlingType.TILBAKEKREVING;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.FORELDREPENGER,
+    };
+    const behandlingType = {
+      kode: BehandlingType.TILBAKEKREVING,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.VURDER_FORELDELSE,

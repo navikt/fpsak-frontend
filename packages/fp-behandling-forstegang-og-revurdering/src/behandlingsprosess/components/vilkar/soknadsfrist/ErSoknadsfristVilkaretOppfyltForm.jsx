@@ -26,9 +26,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import {
-  getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
@@ -183,7 +181,7 @@ ErSoknadsfristVilkaretOppfyltFormImpl.defaultProps = {
 
 
 export const buildInitialValues = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus],
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
   (aksjonspunkter, status) => ({
     erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -218,7 +216,7 @@ const findTextCode = createSelector([behandlingSelectors.getSoknad, getFamiliehe
 const formName = 'ErSoknadsfristVilkaretOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const vilkarCodes = aksjonspunkter.map(a => a.vilkarType.kode);
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
   const antallDagerSoknadLevertForSent = behandlingSelectors.getBehandlingVilkar(initialState)

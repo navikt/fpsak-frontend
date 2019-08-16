@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import { getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -238,7 +238,7 @@ VarselOmRevurderingFormImpl.defaultProps = {
   ventearsaker: [],
 };
 
-export const buildInitialValues = createSelector([getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
+export const buildInitialValues = createSelector([behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
   kode: aksjonspunkter[0].definisjon.kode,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
@@ -249,7 +249,7 @@ const formName = 'VarselOmRevurderingForm';
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback([values]);
   const erAutomatiskRevurdering = getBehandlingArsaker(initialState).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
-  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
+  const aksjonspunkt = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
   const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
 
   return state => ({

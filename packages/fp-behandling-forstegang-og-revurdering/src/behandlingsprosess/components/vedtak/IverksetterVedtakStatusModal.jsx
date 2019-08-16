@@ -13,7 +13,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image } from '@fpsak-frontend/shared-components';
 
 import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
 import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';

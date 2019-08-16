@@ -11,8 +11,12 @@ import { getBehandlingspunkterProps } from './behandlingsprosessKlageSelectors';
 
 describe('behandlingsprosessKlageSelectors', () => {
   it('skal opprette behandlingspunkter for klage når en har aksjonspunkt vurdere klage og det er en engangsstønad', () => {
-    const fagsakYtelseType = FagsakYtelseType.ENGANGSSTONAD;
-    const behandlingType = BehandlingType.FORSTEGANGSSOKNAD;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.ENGANGSSTONAD,
+    };
+    const behandlingType = {
+      kode: BehandlingType.KLAGE,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.VURDERING_AV_FORMKRAV_KLAGE_NFP,
@@ -44,8 +48,12 @@ describe('behandlingsprosessKlageSelectors', () => {
   });
 
   it('skal opprette behandlingspunkter for klage når en har aksjonspunkt vurdere innsyn og det er en foreldrepengersøknad', () => {
-    const fagsakYtelseType = FagsakYtelseType.FORELDREPENGER;
-    const behandlingType = BehandlingType.FORSTEGANGSSOKNAD;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.FORELDREPENGER,
+    };
+    const behandlingType = {
+      kode: BehandlingType.KLAGE,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.VURDERING_AV_FORMKRAV_KLAGE_KA,
