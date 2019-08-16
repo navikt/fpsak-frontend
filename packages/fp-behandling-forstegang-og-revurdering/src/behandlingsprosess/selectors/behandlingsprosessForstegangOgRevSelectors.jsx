@@ -10,6 +10,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerBpDefinition';
+import createSvangerskapspengerBpProps from '../definition/svangerskapspengerBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpForstegangOgRev';
 import { getFeatureToggles, getFagsakYtelseType } from '../../duckBehandlingForstegangOgRev';
 
@@ -37,8 +38,12 @@ export const getBehandlingspunkterProps = createSelector(
       fagsakYtelseType,
     };
 
-    return fagsakYtelseType.kode === fyt.ENGANGSSTONAD
-      ? createEngangsstonadBpProps(builderData) : createForeldrepengerBpProps(builderData);
+    if (fagsakYtelseType.kode === fyt.ENGANGSSTONAD) {
+      return createEngangsstonadBpProps(builderData);
+    } if (fagsakYtelseType.kode === fyt.SVANGERSKAPSPENGER) {
+      return createSvangerskapspengerBpProps(builderData);
+    }
+    return createForeldrepengerBpProps(builderData);
   },
 );
 
