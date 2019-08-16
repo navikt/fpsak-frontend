@@ -68,7 +68,7 @@ const mapStateToProps = state => ({
   readOnlySubmitButton: behandlingsprosessSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: behandlingsprosessSelectors.behandlingsprosessSelectorsisBehandlingspunktAksjonspunkterSolvable(state),
+  isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
 });
 

@@ -185,7 +185,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     push: PropTypes.func.isRequired,
     resolveProsessAksjonspunkter: PropTypes.func.isRequired,
     overrideProsessAksjonspunkter: PropTypes.func,
-    fetchPreview: PropTypes.func.isRequired,
+    fetchPreview: PropTypes.func,
     fagsakYtelseType: kodeverkObjektPropType.isRequired,
     behandlingStatus: kodeverkObjektPropType.isRequired,
     resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
@@ -206,6 +206,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     doNotUseFatterVedtakModal: false,
     overrideProsessAksjonspunkter: undefined,
     isKlageWithKA: false,
+    fetchPreview: undefined,
   };
 
   const mapDispatchToProps = (dispatch, ownProps) => ({

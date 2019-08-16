@@ -127,7 +127,7 @@ const mapStateToProps = state => ({
   behandlingResultatstruktur: getBehandlingResultatstruktur(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   behandlingType: behandlingSelectors.getBehandlingType(state),
-  behandlingHasSoknad: behandlingSelectors.behandlingSelectorsgetBehandlingHasSoknad(state),
+  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
   behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
   isBehandlingInInnhentSoknadsinfoSteg: behandlingSelectors.isBehandlingInInnhentSoknadsopplysningerSteg(state),
   behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
