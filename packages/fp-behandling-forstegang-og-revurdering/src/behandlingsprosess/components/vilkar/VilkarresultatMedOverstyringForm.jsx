@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -124,7 +125,7 @@ VilkarresultatMedOverstyringFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, 
+  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
     behandlingsprosessSelectors.getSelectedBehandlingspunktStatus, behandlingsprosessSelectors.getSelectedBehandlingspunkt,
     getFagsakYtelseType, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar],
   (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, ytelseType, allVilkar) => {

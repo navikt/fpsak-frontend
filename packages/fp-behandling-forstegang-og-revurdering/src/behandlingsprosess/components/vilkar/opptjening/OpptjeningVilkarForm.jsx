@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getSelectedBehandlingspunktAksjonspunkter }
-from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
+
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
@@ -50,7 +51,7 @@ OpptjeningVilkarFormImpl.propTypes = {
 
 
 const mapStateToPropsFactory = (initialState) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   return () => ({
     hasAksjonspunkt: aksjonspunkter.length > 0,
   });

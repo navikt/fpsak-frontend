@@ -146,6 +146,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
               selectedBehandlingspunkt={selectedBehandlingspunkt}
               goToSearchPage={this.goToSearchPage}
               goToDefaultPage={this.goToBehandlingWithDefaultPunktAndFakta}
+              resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
             />
           </BehandlingsprosessPanel>
           {!doNotUseIverksetterVedtakModal && (
