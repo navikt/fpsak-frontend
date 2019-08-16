@@ -21,16 +21,6 @@ import {
 
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
 
-const {
-  VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
-} = faktaOmBeregningTilfelle;
-
-const tilfellerSomHandtererAllInntekt = [VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-
-export const harTilfelleSomHandtererInntekt = tilfeller => (tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle)));
-
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');
 

@@ -3,7 +3,6 @@ const faktaOmBeregningTilfelle = {
   VURDER_SN_NY_I_ARBEIDSLIVET: 'VURDER_SN_NY_I_ARBEIDSLIVET',
   VURDER_NYOPPSTARTET_FL: 'VURDER_NYOPPSTARTET_FL',
   FASTSETT_MAANEDSINNTEKT_FL: 'FASTSETT_MAANEDSINNTEKT_FL',
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG: 'FASTSETT_ENDRET_BEREGNINGSGRUNNLAG',
   VURDER_LONNSENDRING: 'VURDER_LØNNSENDRING',
   FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING: 'FASTSETT_MÅNEDSLØNN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING',
   VURDER_AT_OG_FL_I_SAMME_ORGANISASJON: 'VURDER_AT_OG_FL_I_SAMME_ORGANISASJON',
@@ -53,8 +52,6 @@ export const erATFLSpesialtilfelleEllerVurderMottarYtelse = tilfeller => erATFLS
 || harVurderMottarYtelse(tilfeller);
 
 export const harIkkeATFLSameOrg = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
-
-export const harFastsettATFLInntektTilfelle = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle));
 
 export const harFastsettATFLInntektTilfelleUtenomBesteberegning = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle)
   && !besteberegningTilfeller.includes(tilfelle));

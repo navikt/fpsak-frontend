@@ -15,7 +15,6 @@ import InntektstabellPanel from '../InntektstabellPanel';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
 import { transformValuesKunstigArbeidsforhold, harKunstigArbeidsforhold } from './forms/KunstigArbeidsforhold';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
-import FastsettEndretBeregningsgrunnlag from '../endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
  skalRedigereInntektForAndel, mapAndelToField, erOverstyring, getSkalRedigereInntekt, INNTEKT_FIELD_ARRAY_NAME, skalFastsetteInntektForSN,
@@ -48,14 +47,9 @@ const harVurdert = (tilfeller, values, faktaOmBeregning) => (
     && besteberegningErVurdertEllerIkkjeTilstede(tilfeller, values)
 );
 
-const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => {
-  if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    return !values[besteberegningField];
-  }
-  return faktaOmBeregning.andelerForFaktaOmBeregning
+const skalFastsetteInntekt = (values, faktaOmBeregning, beregningsgrunnlag, getKodeverknavn) => faktaOmBeregning.andelerForFaktaOmBeregning
     .map(andel => mapAndelToField(andel, getKodeverknavn))
     .find(skalRedigereInntektForAndel(values, faktaOmBeregning, beregningsgrunnlag)) !== undefined;
-};
 
 
 export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid) => {
@@ -78,27 +72,14 @@ export const findInstruksjonForFastsetting = (skalHaBesteberegning, skalFastsett
 };
 
 
-const finnInntektstabell = (tilfeller, readOnly, isAksjonspunktClosed) => {
-  if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    // For visning av saker med tilfelle FASTSETT_ENDRET_BEREGNINGSGRUNNLAG
-    // Opprettelse av FASTSETT_ENDRET_BEREGNINGSGRUNNLAG er fjernet og håndteres nå i aksjonspunkt FORDEL_BEREGNINGSGRUNNLAG
-    // Migrer data til nytt aksjonspunkt før sletting
-    return (
-      <FastsettEndretBeregningsgrunnlag
-        readOnly={readOnly}
-        isAksjonspunktClosed={isAksjonspunktClosed}
-      />
-    );
-  }
-  return (
-    <FieldArray
-      name={INNTEKT_FIELD_ARRAY_NAME}
-      component={InntektFieldArray}
-      readOnly={readOnly}
-      skalKunneLeggeTilAndel={false}
-    />
-  );
-};
+const finnInntektstabell = readOnly => (
+  <FieldArray
+    name={INNTEKT_FIELD_ARRAY_NAME}
+    component={InntektFieldArray}
+    readOnly={readOnly}
+    skalKunneLeggeTilAndel={false}
+  />
+);
 
 /**
  * VurderOgFastsettATFL
@@ -123,7 +104,7 @@ const VurderOgFastsettATFL = ({
   <div>
     <InntektstabellPanel
       key="inntektstabell"
-      tabell={finnInntektstabell(tilfeller, readOnly, isAksjonspunktClosed)}
+      tabell={finnInntektstabell(readOnly)}
       skalViseTabell={skalViseTabell}
       hjelpeTekstId={findInstruksjonForFastsetting(skalHaBesteberegning, skalFastsetteFL, skalFastsetteAT, harKunstigArbeid)}
       readOnly={readOnly}
@@ -173,7 +154,7 @@ const VurderOgFastsettATFL = ({
   </div>
 );
 
-VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning, getKodeverknavn) => {
+VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning) => {
   if (!faktaOmBeregning) {
     return {};
   }
@@ -182,7 +163,7 @@ VurderOgFastsettATFL.buildInitialValues = (aksjonspunkter, faktaOmBeregning, get
     return {};
   }
   return {
-    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler, getKodeverknavn),
+    [INNTEKT_FIELD_ARRAY_NAME]: InntektFieldArray.buildInitialValues(andeler),
     ...InntektstabellPanel.buildInitialValues(aksjonspunkter),
   };
 };
@@ -196,11 +177,6 @@ VurderOgFastsettATFL.validate = (values, tilfeller, faktaOmBeregning, beregnings
   }
   return errors;
 };
-
-const endretBGTransform = endringBGPerioder => values => ({
-  faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG],
-  ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder),
-});
 
 const concatTilfeller = (transformed, newTransformedValues) => ({
   ...transformed,
@@ -233,18 +209,13 @@ const transformValuesForOverstyring = (values, transformed, inntektVerdier, fast
 };
 
 const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsnr, faktaOmBeregning, beregningsgrunnlag) => {
-  let allInntektErFastsatt = false;
   const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller
   ? faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode) : [];
   let transformed = { faktaOmBeregningTilfeller: [] };
   if (tilfeller.length > 0) {
-    if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-      allInntektErFastsatt = true;
-      transformed = endretBGTransform(faktaOmBeregning.endringBeregningsgrunnlag.endringBeregningsgrunnlagPerioder)(values);
-    }
     // Besteberegning
-    transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, allInntektErFastsatt ? null : inntektVerdier));
-    allInntektErFastsatt = allInntektErFastsatt || values[besteberegningField] === true;
+    transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, inntektVerdier));
+    const allInntektErFastsatt = values[besteberegningField] === true;
     // Nyoppstartet FL
     transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));

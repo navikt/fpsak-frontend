@@ -12,7 +12,7 @@ import { getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/beh
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaForATFLOgSNPanel, {
   transformValuesFaktaForATFLOgSN,
-  getBuildInitialValuesFaktaForATFLOgSN, getValidationFaktaForATFLOgSN,
+  getBuildInitialValuesFaktaForATFLOgSN, validationForVurderFakta,
   getHelpTextsFaktaForATFLOgSN,
 } from './FaktaForATFLOgSNPanel';
 import { erAvklartAktivitetEndret } from '../avklareAktiviteter/AvklareAktiviteterPanel';
@@ -159,18 +159,15 @@ export const buildInitialValuesVurderFaktaBeregning = createSelector(
     }),
 );
 
-export const getValidationVurderFaktaBeregning = createSelector(
-  [getValidationFaktaForATFLOgSN],
-  validationForVurderFakta => (values) => {
-    const { aksjonspunkter } = values;
-    if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
-      return {
-        ...validationForVurderFakta(values),
-      };
-    }
-    return null;
-  },
-);
+export const validateVurderFaktaBeregning = (values) => {
+  const { aksjonspunkter } = values;
+  if (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && values) {
+    return {
+      ...validationForVurderFakta(values),
+    };
+  }
+  return null;
+};
 
 export const getIsAksjonspunktClosed = createSelector(
   [behandlingSelectors.getAksjonspunkter], (alleAp) => {
@@ -182,13 +179,13 @@ export const getIsAksjonspunktClosed = createSelector(
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
   const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
-  const validate = getValidationVurderFaktaBeregning(initialState);
+  const validate = values => validateVurderFaktaBeregning(values);
   return (state) => {
     const initialValues = buildInitialValuesVurderFaktaBeregning(state);
     return ({
     initialValues,
-    validate,
     onSubmit,
+    validate,
     isAksjonspunktClosed: getIsAksjonspunktClosed(state),
     aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
     beregningsgrunnlag: getBeregningsgrunnlag(state),
