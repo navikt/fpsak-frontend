@@ -13,7 +13,7 @@ import { omit } from '@fpsak-frontend/utils';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import TilretteleggingTable from './TilretteleggingTable';
 import TilretteleggingDetailForm, { TILRETTELEGGING_DETAIL_FORM_NAME } from './TilretteleggingDetailForm';

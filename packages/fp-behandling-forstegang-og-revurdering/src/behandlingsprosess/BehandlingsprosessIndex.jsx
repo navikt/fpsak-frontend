@@ -16,7 +16,7 @@ import findBehandlingsprosessIcon from 'behandlingForstegangOgRevurdering/src/be
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingIdentifier, getFagsakYtelseType,
-} from 'behandlingForstegangOgRevurdering/src/duck';
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import BehandlingspunktInfoPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';

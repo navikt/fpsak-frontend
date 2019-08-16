@@ -18,7 +18,7 @@ import {
   withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';

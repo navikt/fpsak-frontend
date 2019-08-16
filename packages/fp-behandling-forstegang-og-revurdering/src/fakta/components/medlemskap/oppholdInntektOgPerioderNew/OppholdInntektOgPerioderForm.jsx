@@ -29,7 +29,7 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 

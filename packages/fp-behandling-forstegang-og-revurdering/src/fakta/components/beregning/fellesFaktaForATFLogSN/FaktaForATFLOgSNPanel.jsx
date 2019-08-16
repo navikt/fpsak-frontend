@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { createSelector, createStructuredSelector } from 'reselect';
 import {
   getBeregningsgrunnlag,

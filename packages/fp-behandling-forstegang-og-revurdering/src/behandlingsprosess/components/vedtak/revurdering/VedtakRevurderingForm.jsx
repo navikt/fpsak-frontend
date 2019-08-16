@@ -26,7 +26,7 @@ import {
 import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
 import {
  getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk,
-} from 'behandlingForstegangOgRevurdering/src/duck';
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';

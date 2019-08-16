@@ -9,7 +9,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import featureToggle from '@fpsak-frontend/fp-felles/src/featureToggle';
 import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
 import { createEndringHeadingForDate, renderDateHeading } from './EndretBeregningsgrunnlagUtils';

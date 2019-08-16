@@ -14,8 +14,8 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle, { harFastsettATFLInntektTilfelle } from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   getEndringBeregningsgrunnlag,
   getFaktaOmBeregningTilfellerKoder,

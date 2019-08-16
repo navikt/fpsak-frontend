@@ -1,7 +1,7 @@
 import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
 import forstegangOgRevBehandlingApi from '../data/fpsakBehandlingApi';
-import { getSelectedBehandlingId } from '../duck';
+import { getSelectedBehandlingId } from '../duckBehandlingForstegangOgRev';
 
 const commonBehandlingSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, forstegangOgRevBehandlingApi);
 

@@ -15,7 +15,7 @@ import {
 import createEngangsstonadBpProps from './definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from './definition/foreldrepengerBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from './duck';
-import { getFeatureToggles, getFagsakYtelseType } from '../duck';
+import { getFeatureToggles, getFagsakYtelseType } from '../duckBehandlingForstegangOgRev';
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(

@@ -7,7 +7,7 @@ import { NavFieldGroup } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, removeSpacesFromNumber, required, formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';

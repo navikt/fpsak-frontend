@@ -15,7 +15,7 @@ import {
   getBehandlingYtelseFordeling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,

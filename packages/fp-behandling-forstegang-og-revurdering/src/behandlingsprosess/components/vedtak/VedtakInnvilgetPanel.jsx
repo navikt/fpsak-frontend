@@ -7,7 +7,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';

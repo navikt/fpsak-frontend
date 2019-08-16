@@ -35,8 +35,8 @@ import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegan
 import {
   behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
-import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakNyPeriode.less';
 

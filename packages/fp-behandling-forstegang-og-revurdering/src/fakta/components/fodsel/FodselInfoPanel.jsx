@@ -13,7 +13,7 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/TermindatoFaktaForm';
 import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/SjekkFodselDokForm';

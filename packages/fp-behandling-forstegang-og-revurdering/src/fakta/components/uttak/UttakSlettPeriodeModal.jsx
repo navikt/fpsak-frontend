@@ -18,7 +18,7 @@ import {
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakSlettPeriodeModal.less';
 

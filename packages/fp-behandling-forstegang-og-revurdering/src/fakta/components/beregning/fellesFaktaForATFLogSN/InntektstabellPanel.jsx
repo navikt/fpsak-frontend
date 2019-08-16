@@ -10,7 +10,7 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PropTypes from 'prop-types';

@@ -8,7 +8,7 @@ import { withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-hel
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
-import { resolveFaktaAksjonspunkter } from './duck';
+import { resolveFaktaAksjonspunkter } from './duckFaktaForstegangOgRev';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

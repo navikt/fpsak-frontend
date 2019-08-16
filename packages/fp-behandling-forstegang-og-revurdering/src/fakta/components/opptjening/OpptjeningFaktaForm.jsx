@@ -19,7 +19,7 @@ import {
   getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';

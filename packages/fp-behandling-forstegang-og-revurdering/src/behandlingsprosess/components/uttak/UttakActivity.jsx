@@ -41,7 +41,7 @@ import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 

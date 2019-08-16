@@ -10,7 +10,7 @@ import {
  minLength, maxLength, required, hasValidText,
 } from '@fpsak-frontend/utils';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
-import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/BehandlingFormFieldCleaner';
+import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/components/BehandlingFormFieldCleaner';
 
 /**
  * ArbeidsforholdBegrunnelse er ansvarlig for å vise begrunnelsesfeltet.

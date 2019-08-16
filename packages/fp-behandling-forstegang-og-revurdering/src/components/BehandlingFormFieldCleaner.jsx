@@ -9,7 +9,7 @@ import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getBehandlingFormName } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 const findAllNames = children => (children ? React.Children
   .map(children, (child) => {

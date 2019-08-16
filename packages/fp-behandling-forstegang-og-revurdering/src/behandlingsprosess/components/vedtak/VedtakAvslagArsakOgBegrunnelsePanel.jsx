@@ -13,7 +13,7 @@ import {
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
 
 import styles from './vedtakAvslagPanel.less';

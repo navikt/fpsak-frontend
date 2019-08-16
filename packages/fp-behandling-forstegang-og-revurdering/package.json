@@ -60,6 +60,7 @@
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
     "enzyme": "^3.10.0",
+    "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2"
   }
 }

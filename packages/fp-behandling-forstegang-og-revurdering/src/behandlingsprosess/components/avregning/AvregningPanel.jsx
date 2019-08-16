@@ -19,7 +19,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
-} from 'behandlingForstegangOgRevurdering/src/duck';
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,

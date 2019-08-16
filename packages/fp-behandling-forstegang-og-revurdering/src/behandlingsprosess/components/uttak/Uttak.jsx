@@ -40,7 +40,7 @@ import {
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';

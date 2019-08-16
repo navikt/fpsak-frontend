@@ -10,8 +10,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
 import commonBehandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
-import isFieldEdited from './isFieldEdited';
-import { getFagsakYtelseType } from './duck';
+import isFieldEdited from './util/isFieldEdited';
+import { getFagsakYtelseType } from './duckBehandlingForstegangOgRev';
 
 // TODO (TOR) Flytt og grupper alle selectors i filer under ./selectors
 

@@ -7,7 +7,7 @@ import { bindActionCreators } from 'redux';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import ArbeidsforholdTable from './ArbeidsforholdTable';

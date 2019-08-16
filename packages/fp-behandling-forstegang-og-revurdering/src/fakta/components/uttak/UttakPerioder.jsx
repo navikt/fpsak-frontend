@@ -30,7 +30,7 @@ import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/s
 import { getRettigheter } from 'navAnsatt/duck';
 import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
