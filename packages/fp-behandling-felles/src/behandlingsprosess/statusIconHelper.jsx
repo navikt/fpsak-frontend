@@ -30,22 +30,25 @@ const vilkarImages = {
   },
 };
 
-const behandlingspunktImages = {
-  [behandlingspunktCodes.VEDTAK]: vedtakImages,
-};
-
 const findStatusImageSrc = (isHovering, images, isSelected, isAksjonspunktOpen, status) => {
   const imageSrc = isSelected ? images.selectImageMap[status] : images.imageMap[status];
   const returnImage = isHovering && !isSelected ? images.hooverImageMap[status] : imageSrc;
   return returnImage[isAksjonspunktOpen] ? returnImage[isAksjonspunktOpen] : returnImage;
 };
 
-const findStatusIcon = (behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt) => (isHovering) => {
-  const bpImages = behandlingspunktImages[behandlingspunkt];
-  const newStatus = bpImages && isSelectedBehandlingHenlagt ? vilkarUtfallType.IKKE_VURDERT : status;
-  const images = bpImages || vilkarImages;
+const findStatusIcon = (additionalBehandlingspunktImages) => {
+  const allBehandlingspunktImages = {
+    [behandlingspunktCodes.VEDTAK]: vedtakImages,
+    ...additionalBehandlingspunktImages,
+  };
 
-  return findStatusImageSrc(isHovering, images, isSelectedBehandlingspunkt, hasOpenAksjonspunkt, newStatus);
+  return (behandlingspunkt, status, isSelectedBehandlingspunkt, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt) => (isHovering) => {
+    const bpImages = allBehandlingspunktImages[behandlingspunkt];
+    const newStatus = bpImages && isSelectedBehandlingHenlagt ? vilkarUtfallType.IKKE_VURDERT : status;
+    const images = bpImages || vilkarImages;
+
+    return findStatusImageSrc(isHovering, images, isSelectedBehandlingspunkt, hasOpenAksjonspunkt, newStatus);
+  };
 };
 
 export default findStatusIcon;

@@ -52,7 +52,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       <VedtakPanels
         behandlingspunkt={selectedBehandlingspunkt}
         readOnly={readOnly}
-        previewCallback={previewCallback}
         previewVedtakCallback={previewVedtakCallback}
         previewManueltBrevCallback={previewManueltBrevCallback}
         submitCallback={submitCallback}

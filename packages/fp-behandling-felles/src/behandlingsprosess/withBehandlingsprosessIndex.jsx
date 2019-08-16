@@ -125,7 +125,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
         behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType,
         resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, getBehandlingspunkterStatus,
         getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
-        aksjonspunkter, behandlingType, isKlageWithKA,
+        aksjonspunkter, behandlingType, isKlageWithKA, doNotUseIverksetterVedtakModal, additionalBehandlingspunktImages,
       } = this.props;
 
       return (
@@ -135,7 +135,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
             selectedBehandlingspunkt={selectedBehandlingspunkt}
             selectBehandlingspunktCallback={this.goToBehandlingspunkt}
             isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-            findBehandlingsprosessIcon={findStatusIcon}
+            findBehandlingsprosessIcon={findStatusIcon(additionalBehandlingspunktImages)}
             getBehandlingspunkterStatus={getBehandlingspunkterStatus}
             getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
             getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
@@ -148,14 +148,16 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
               goToDefaultPage={this.goToBehandlingWithDefaultPunktAndFakta}
             />
           </BehandlingsprosessPanel>
-          <IverksetterVedtakStatusModal
-            closeEvent={this.goToSearchPage}
-            behandlingsresultat={behandlingsresultat}
-            behandlingStatusKode={behandlingStatus.kode}
-            fagsakYtelseType={fagsakYtelseType}
-            resolveFaktaAksjonspunkterSuccess
-            resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
-          />
+          {!doNotUseIverksetterVedtakModal && (
+            <IverksetterVedtakStatusModal
+              closeEvent={this.goToSearchPage}
+              behandlingsresultat={behandlingsresultat}
+              behandlingStatusKode={behandlingStatus.kode}
+              fagsakYtelseType={fagsakYtelseType}
+              resolveFaktaAksjonspunkterSuccess
+              resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+            />
+          )}
           {!doNotUseFatterVedtakModal && behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
             <FatterVedtakStatusModal
               closeEvent={this.goToSearchPage}
@@ -196,7 +198,9 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     behandlingType: kodeverkObjektPropType.isRequired,
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
     doNotUseFatterVedtakModal: PropTypes.bool,
+    doNotUseIverksetterVedtakModal: PropTypes.bool,
     isKlageWithKA: PropTypes.bool,
+    additionalBehandlingspunktImages: PropTypes.shape(),
   };
 
   BehandlingsprosessIndex.defaultProps = {
@@ -204,9 +208,11 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     selectedBehandlingspunkt: undefined,
     behandlingsresultat: undefined,
     doNotUseFatterVedtakModal: false,
+    doNotUseIverksetterVedtakModal: false,
     overrideProsessAksjonspunkter: undefined,
     isKlageWithKA: false,
     fetchPreview: undefined,
+    additionalBehandlingspunktImages: {},
   };
 
   const mapDispatchToProps = (dispatch, ownProps) => ({

@@ -47,7 +47,7 @@ export const getBehandlingspunkterProps = createSelector(
   },
 );
 
-const behandlingspunktAnkeSelectors = getCommonBehandlingsprosessSelectors(
+const behandlingspunktForstegangOgRevSelectors = getCommonBehandlingsprosessSelectors(
   getBehandlingspunkterProps,
   behandlingSelectors.getAksjonspunkter,
   behandlingSelectors.getBehandlingIsOnHold,
@@ -59,4 +59,4 @@ const behandlingspunktAnkeSelectors = getCommonBehandlingsprosessSelectors(
   getRettigheter,
 );
 
-export default behandlingspunktAnkeSelectors;
+export default behandlingspunktForstegangOgRevSelectors;

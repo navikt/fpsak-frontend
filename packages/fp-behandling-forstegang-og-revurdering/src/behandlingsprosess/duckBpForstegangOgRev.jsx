@@ -34,7 +34,6 @@ export const tempUpdateStonadskontoer = params => dispatch => dispatch(fpsakBeha
 
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 export const fetchFptilbakePreviewBrev = fptilbakeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
-
 export const fetchVedtaksbrevPreview = data => dispatch => dispatch(fpsakBehandlingApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
 
 export const { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter, getResolveProsessAksjonspunkterSuccess } = behandlingsprosessRedux.selectors;

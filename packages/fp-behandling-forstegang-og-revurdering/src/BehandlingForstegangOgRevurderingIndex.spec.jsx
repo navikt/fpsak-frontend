@@ -7,7 +7,7 @@ import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import { BehandlingForstegangOgRevurderingIndex } from './BehandlingForstegangOgRevurderingIndex';
 
-describe('BehandlingAnkeIndex', () => {
+describe('BehandlingForstegangOgRevurderingIndex', () => {
   it('skal rendre komponent uten feil', () => {
     const wrapper = shallow(
       <BehandlingForstegangOgRevurderingIndex
