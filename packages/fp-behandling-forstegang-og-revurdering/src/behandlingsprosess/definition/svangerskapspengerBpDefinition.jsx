@@ -36,30 +36,6 @@ const svangerskapspengerBuilders = [
     .withAksjonspunktCodes(
       ac.SVANGERSKAPSVILKARET,
     ),
-  new BehandlingspunktProperties.Builder(bpc.FOEDSEL, 'Fodselsvilkaret')
-    .withVilkarTypes(vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR)
-    .withAksjonspunktCodes(
-      ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-      ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-    ),
-  new BehandlingspunktProperties.Builder(bpc.ADOPSJON, 'Adopsjonsvilkaret')
-    .withVilkarTypes(vt.ADOPSJONSVILKARET_FORELDREPENGER)
-    .withAksjonspunktCodes(
-      ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-      ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-    ),
-  new BehandlingspunktProperties.Builder(bpc.OMSORG, 'Omsorgsvilkaret')
-    .withVilkarTypes(vt.OMSORGSVILKARET)
-    .withAksjonspunktCodes(
-      ac.MANUELL_VURDERING_AV_OMSORGSVILKARET, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
-      ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-    ),
-  new BehandlingspunktProperties.Builder(bpc.FORELDREANSVAR, 'Foreldreansvar')
-    .withVilkarTypes(vt.FORELDREANSVARSVILKARET_2_LEDD, vt.FORELDREANSVARSVILKARET_4_LEDD)
-    .withAksjonspunktCodes(
-      ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD, ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
-      ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
-    ),
   new BehandlingspunktProperties.Builder(bpc.MEDLEMSKAP, 'Medlemskapsvilkaret')
     .withVilkarTypes(vt.MEDLEMSKAPSVILKARET)
     .withAksjonspunktCodes(ac.OVERSTYR_MEDLEMSKAPSVILKAR),
@@ -77,12 +53,10 @@ const svangerskapspengerBuilders = [
     .withVilkarIsOptional(),
   new BehandlingspunktProperties.Builder(bpc.SOEKNADSFRIST, 'Soknadsfristvilkaret')
     .withAksjonspunktCodes(ac.VURDER_SOKNADSFRIST_FORELDREPENGER),
-
   new BehandlingspunktProperties.Builder(bpc.FORTSATTMEDLEMSKAP, 'FortsattMedlemskap')
     .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
     .withAksjonspunktCodes(ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR)
     .withVisibilityWhen(behandlingTypeEquals(bt.REVURDERING), hasLøpendeMedlemskapOn),
-
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
