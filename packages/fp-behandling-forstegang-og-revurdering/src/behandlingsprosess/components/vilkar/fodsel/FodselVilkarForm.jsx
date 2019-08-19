@@ -105,7 +105,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     avslagsarsaker: filtrerteAvslagsarsaker,
-    status: getSelectedBehandlingspunktStatus(state),
+    status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
     lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
