@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { DEFAULT_BEHANDLINGSPROSESS, featureToggle } from '@fpsak-frontend/fp-felles';
+import { DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 import as from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -20,7 +20,6 @@ import {
 
 describe('behandlingsprosessSelectors', () => {
   const featureToggles = {
-    [featureToggle.SIMULER_OPPDRAG]: false,
   };
 
   it('skal lage behandlingspunkter for engangsstønad', () => {
@@ -47,11 +46,12 @@ describe('behandlingsprosessSelectors', () => {
       behandlingsresultat, innsynResultatType, resultatstruktur, stonadskontoer, featureToggles,
     );
 
-    expect(props).has.length(3);
+    expect(props).has.length(4);
     expect(props[0].code).is.eql('omsorg');
     expect(props[0].vilkarene).is.eql(vilkar);
     expect(props[1].code).is.eql('beregning');
-    expect(props[2].code).is.eql('vedtak');
+    expect(props[2].code).is.eql('simulering');
+    expect(props[3].code).is.eql('vedtak');
   });
 
   it('skal hente behandlingspunkt IDer', () => {

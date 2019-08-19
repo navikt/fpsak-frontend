@@ -34,6 +34,13 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     vilkarene: [],
   }, {
     apCodes: [],
+    code: behandlingspunktCodes.SIMULERING,
+    isVisible: true,
+    status: vilkarUtfallType.IKKE_VURDERT,
+    titleCode: 'Behandlingspunkt.Avregning',
+    vilkarene: [],
+  }, {
+    apCodes: [],
     code: behandlingspunktCodes.VEDTAK,
     isVisible: true,
     status: vilkarUtfallType.IKKE_VURDERT,
@@ -61,7 +68,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
 
   const featureToggles = {
     [featureToggle.LØPENDE_MEDLESMKAP]: false,
-    [featureToggle.SIMULER_OPPDRAG]: false,
   };
 
   it('skal alltid vise behandlingspunktene for beregning, uttak, tilkjent-ytelse og vedtak når det finnes minst ett annet behandlingspunkt', () => {
@@ -184,7 +190,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       status: vilkarUtfallType.OPPFYLT,
       titleCode: 'Behandlingspunkt.Opplysningsplikt',
       vilkarene: [builderData.vilkar[0]],
-    }, defaultBehandlingspunkter[0], defaultBehandlingspunkter[1], defaultBehandlingspunkter[2], {
+    }, defaultBehandlingspunkter[0], defaultBehandlingspunkter[1], defaultBehandlingspunkter[2], defaultBehandlingspunkter[3], {
       apCodes: [],
       code: behandlingspunktCodes.VEDTAK,
       isVisible: true,
@@ -223,7 +229,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       status: vilkarUtfallType.OPPFYLT,
       titleCode: 'Behandlingspunkt.Uttak',
       vilkarene: [],
-    }, defaultBehandlingspunkter[2], defaultBehandlingspunkter[3]]);
+    }, defaultBehandlingspunkter[2], defaultBehandlingspunkter[3], defaultBehandlingspunkter[4]]);
   });
 
   it('skal vise status oppfylt for behandlingspunktet tilkjent ytelse når det finnes perioder i resultatstrukturen og en har stønadskontoer', () => {
@@ -270,7 +276,7 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       status: vilkarUtfallType.OPPFYLT,
       titleCode: 'Behandlingspunkt.TilkjentYtelse',
       vilkarene: [],
-    }, defaultBehandlingspunkter[3]]);
+    }, defaultBehandlingspunkter[3], defaultBehandlingspunkter[4]]);
   });
 
   it('skal ikke vise behandlingspunkt for søkers opplysningsplikt når behandling er revurdering og manuelt aksjonspunkt ikke er opprettet', () => {

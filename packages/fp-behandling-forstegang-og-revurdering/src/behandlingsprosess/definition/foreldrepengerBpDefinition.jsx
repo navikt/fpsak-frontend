@@ -6,7 +6,7 @@ import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
+import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
 const faktaUttakAp = [
@@ -147,7 +147,7 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
