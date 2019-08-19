@@ -7,7 +7,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap }
+import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
