@@ -277,7 +277,7 @@ const createAarsakString = (revurderingAarsaker, getKodeverknavn) => {
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback(transformValues(values));
-  const aksjonspunktKoder = getSelectedBehandlingspunktAksjonspunkter.getSelectedBehandlingspunktAksjonspunkter(initialState).map(ap => ap.definisjon.kode);
+  const aksjonspunktKoder = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState).map(ap => ap.definisjon.kode);
   const revurderingsAarsakString = createAarsakString(getBehandlingArsakTyper(initialState), getKodeverknavnFn(getAlleKodeverk(initialState), kodeverkTyper));
 
   return state => ({
@@ -299,7 +299,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
     behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter.getSelectedBehandlingspunktAksjonspunkter(state),
+    aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
     ytelseType: getFagsakYtelseType(state).kode,
     sprakkode: behandlingSelectors.getBehandlingSprak(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
