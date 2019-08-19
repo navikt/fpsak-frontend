@@ -28,6 +28,13 @@ const hasRevurderingAp = apModels => (
  * Har ansvar for behandlingsprosessdelen av hovedvinduet når behandlingstypen er Førstegangsbehandling eller Revurdering.
  */
 export class BehandlingsprosessForstegangOgRevIndex extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showIverksetterVedtakModal: false,
+    };
+  }
+
   previewFptilbakeCallback = (mottaker, brevmalkode, fritekst, saksnummer) => {
     const { behandlingIdentifier, fetchFptilbakePreview: fetchBrevPreview } = this.props;
     const data = {
@@ -66,7 +73,10 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
     const shouldUpdateInfo = !submitIsRevurdering;
 
     const afterAksjonspunktSubmit = () => {
-      if (submitIsRevurdering) {
+      const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+      if (showModal) {
+        this.setState(prevState => ({ ...prevState, showIverksetterVedtakModal: true }));
+      } else if (submitIsRevurdering) {
         goToSearchPage();
       } else {
         goToDefaultPage();
@@ -82,8 +92,10 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       selectedBehandlingspunkt,
       goToSearchPage,
       dispatchSubmitFailed: submitFailedDispatch,
-      resolveProsessAksjonspunkterSuccess,
     } = this.props;
+    const {
+      showIverksetterVedtakModal,
+    } = this.state;
 
     return (
       <>
@@ -98,7 +110,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
         />
         <IverksetterVedtakStatusModal
           closeEvent={goToSearchPage}
-          isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+          isVedtakSubmission={showIverksetterVedtakModal}
         />
       </>
     );
@@ -115,7 +127,6 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   dispatchSubmitFailed: PropTypes.func.isRequired,
   fetchFptilbakePreview: PropTypes.func.isRequired,
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
-  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({

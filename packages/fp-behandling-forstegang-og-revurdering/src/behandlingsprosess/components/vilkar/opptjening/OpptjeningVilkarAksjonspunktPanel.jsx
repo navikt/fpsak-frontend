@@ -79,7 +79,7 @@ const transformValues = (values, aksjonspunkter) => ({
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
   return state => ({
