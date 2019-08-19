@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { featureToggle, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -17,6 +17,13 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
     vilkarene: [],
   }, {
     apCodes: [],
+    code: behandlingspunktCodes.SIMULERING,
+    isVisible: true,
+    status: vilkarUtfallType.IKKE_VURDERT,
+    titleCode: 'Behandlingspunkt.Avregning',
+    vilkarene: [],
+  }, {
+    apCodes: [],
     code: behandlingspunktCodes.VEDTAK,
     isVisible: true,
     status: vilkarUtfallType.IKKE_VURDERT,
@@ -25,7 +32,6 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
   }];
 
   const featureToggles = {
-    [featureToggle.SIMULER_OPPDRAG]: false,
   };
 
   it('skal alltid vise behandlingspunktene for beregning og vedtak når det finnes minst ett annet behandlingspunkt', () => {
@@ -119,6 +125,6 @@ describe('Definisjon av behandlingspunkter - Engangsstønad', () => {
       status: vilkarUtfallType.OPPFYLT,
       titleCode: 'Behandlingspunkt.Beregning',
       vilkarene: [],
-    }, defaultBehandlingspunkter[1]]);
+    }, defaultBehandlingspunkter[1], defaultBehandlingspunkter[2]]);
   });
 });
