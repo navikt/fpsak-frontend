@@ -3,7 +3,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
+import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
 const getStatusFromBeregningsresultat = ({ resultatstruktur }) => (resultatstruktur ? vut.OPPFYLT : vut.IKKE_VURDERT);
@@ -51,7 +51,7 @@ const engangsstonadBuilders = [
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withStatus(getStatusFromBeregningsresultat),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
