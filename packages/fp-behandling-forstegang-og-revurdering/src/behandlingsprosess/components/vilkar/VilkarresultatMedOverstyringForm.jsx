@@ -23,6 +23,7 @@ import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/beha
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getFodselVilkarAvslagsarsaker } from './fodsel/FodselVilkarForm';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import { getApCode, getAllApCodes } from './BehandlingspunktToAksjonspunkt';
