@@ -45,6 +45,7 @@ export const ShelveBehandlingModalImpl = ({
   intl,
   årsakKode,
   begrunnelse,
+  showLink,
 }) => (
   <Modal
     className={styles.modal}
@@ -99,22 +100,19 @@ export const ShelveBehandlingModalImpl = ({
               </div>
             </Column>
             <Column xs="4">
-              { [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
-                  behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(årsakKode)
-                && (
-                  <div className={styles.forhandsvis}>
-                    <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
-                    <a
-                      href=""
-                      onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
-                      onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
-                      className="lenke lenke--frittstaende"
-                    >
-                      {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
-                    </a>
-                  </div>
-                )
-              }
+              {showLink && (
+                <div className={styles.forhandsvis}>
+                  <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
+                  <a
+                    href=""
+                    onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
+                    onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
+                    className="lenke lenke--frittstaende"
+                  >
+                    {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
+                  </a>
+                </div>
+              )}
             </Column>
           </Row>
         </Fieldset>
@@ -130,6 +128,7 @@ ShelveBehandlingModalImpl.propTypes = {
   cancelEvent: PropTypes.func.isRequired,
   previewHenleggBehandling: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
+  showLink: PropTypes.bool.isRequired,
   henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
@@ -163,10 +162,22 @@ export const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHAN
     return typer.map(type => behandlingResultatTyper.find(brt => brt.kode === type));
   });
 
+const getShowLink = createSelector([
+  state => formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'), getBehandlingType],
+  (arsakKode, type) => {
+    if (type.kode === behandlingType.TILBAKEKREVING) {
+      return behandlingResultatType.HENLAGT_FEILOPPRETTET === arsakKode;
+    }
+    return [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+      behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(arsakKode);
+  });
+
+
 const mapStateToProps = state => ({
   årsakKode: formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('ShelveBehandlingModal')(state, 'begrunnelse'),
   henleggArsaker: getHenleggArsaker(state),
+  showLink: getShowLink(state),
 });
 
 const ShelveBehandlingModal = reduxForm({

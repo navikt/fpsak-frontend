@@ -37,6 +37,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink={false}
     />);
 
     const modal = wrapper.find(Modal);
@@ -66,6 +67,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const modal = wrapper.find(Modal);
@@ -85,6 +87,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const selectField = wrapper.find('SelectField');
@@ -154,6 +157,7 @@ describe('<ShelveBehandlingModal>', () => {
       behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       intl={intlMock}
+      showLink
     />);
 
     const button = wrapper.find('Hovedknapp');
@@ -174,6 +178,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const form = wrapper.find('form');
@@ -195,6 +200,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const avbrytKnapp = wrapper.find('Knapp');
@@ -220,6 +226,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const previewLink = wrapper.find('a');
