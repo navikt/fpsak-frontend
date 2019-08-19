@@ -2,9 +2,12 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
+
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+
+import { ShelveBehandlingModalImpl, getHenleggArsaker } from './ShelveBehandlingModal';
 
 describe('<ShelveBehandlingModal>', () => {
   const henleggArsaker = [{
@@ -34,6 +37,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink={false}
     />);
 
     const modal = wrapper.find(Modal);
@@ -63,6 +67,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const modal = wrapper.find(Modal);
@@ -82,6 +87,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const selectField = wrapper.find('SelectField');
@@ -94,28 +100,50 @@ describe('<ShelveBehandlingModal>', () => {
     expect(values).to.have.length(3);
   });
 
-  it('skal vise nedtrekksliste med behandlingsresultat-typer', () => {
-    const wrapper = shallowWithIntl(<ShelveBehandlingModalImpl
-      showModal
-      handleSubmit={sinon.spy()}
-      cancelEvent={sinon.spy()}
-      previewHenleggBehandling={sinon.spy()}
-      behandlingId={0}
-      henleggArsaker={henleggArsaker}
-      behandlingsType={{ kode: 'BT-004' }}
-      henleggArsakerResultReceived
-      årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
-      begrunnelse="Dette er en begrunnelse"
-      intl={intlMock}
-    />);
+  const behandlingResultatTyper = [{
+    kode: behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+  }, {
+    kode: behandlingResultatType.HENLAGT_FEILOPPRETTET,
+  }, {
+    kode: behandlingResultatType.HENLAGT_INNSYN_TRUKKET,
+  }, {
+    kode: behandlingResultatType.HENLAGT_SOKNAD_TRUKKET,
+  }, {
+    kode: behandlingResultatType.HENLAGT_SOKNAD_MANGLER,
+  }, {
+    kode: behandlingResultatType.MANGLER_BEREGNINGSREGLER,
+  }];
 
-    const selectField = wrapper.find('SelectField');
-    expect(selectField).to.have.length(1);
-    expect(selectField.prop('placeholder')).is.eql('Velg årsak til henleggelse');
-    const values = selectField.prop('selectValues');
-    expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
-    expect(values[1].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
-    expect(values).to.have.length(2);
+  it('skal bruke behandlingsresultat-typer for klage', () => {
+    const behandlingsType = { kode: behandlingType.KLAGE };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+  });
+
+  it('skal bruke behandlingsresultat-typer for innsyn', () => {
+    const behandlingsType = { kode: behandlingType.DOKUMENTINNSYN };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+  });
+
+  it('skal bruke behandlingsresultat-typer for tilbakekreving', () => {
+    const behandlingsType = { kode: behandlingType.TILBAKEKREVING };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+  });
+
+  it('skal bruke behandlingsresultat-typer for revudering', () => {
+    const behandlingsType = { kode: behandlingType.REVURDERING };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+      behandlingResultatType.HENLAGT_SOKNAD_MANGLER]);
+  });
+
+  it('skal bruke behandlingsresultat-typer for førstegangsbehandling', () => {
+    const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD };
+    const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
+    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+      behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER]);
   });
 
   it('skal disable knapp for lagring når behandlingsresultat-type og begrunnnelse ikke er valgt', () => {
@@ -129,6 +157,7 @@ describe('<ShelveBehandlingModal>', () => {
       behandlingsType={behandlingstype}
       henleggArsakerResultReceived
       intl={intlMock}
+      showLink
     />);
 
     const button = wrapper.find('Hovedknapp');
@@ -149,6 +178,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const form = wrapper.find('form');
@@ -170,6 +200,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const avbrytKnapp = wrapper.find('Knapp');
@@ -195,6 +226,7 @@ describe('<ShelveBehandlingModal>', () => {
       årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
+      showLink
     />);
 
     const previewLink = wrapper.find('a');
