@@ -34,6 +34,7 @@ describe('BehandlingsprosessForstegangOgRevContainer', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       },
       aksjonspunkter: [],
+      overrideProsessAksjonspunkter: sinon.spy(),
     };
 
     const wrapper = shallow(<BehandlingsprosessForstegangOgRevContainer {...props} />);

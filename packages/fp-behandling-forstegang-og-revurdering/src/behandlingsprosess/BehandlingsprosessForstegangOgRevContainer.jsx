@@ -11,7 +11,7 @@ import statusIconsUttak from 'behandlingForstegangOgRevurdering/src/behandlingsp
 import statusIconsAvregning from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsAvregning';
 import behandlingSelectors from '../selectors/forsteOgRevBehandlingSelectors';
 import {
-  resolveProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewBrev, getResolveProsessAksjonspunkterSuccess,
+  resolveProsessAksjonspunkter, overrideProsessAksjonspunkter, resetBehandlingspunkter, fetchPreviewBrev, getResolveProsessAksjonspunkterSuccess,
 } from './duckBpForstegangOgRev';
 import behandlingspunktSelectors from './selectors/behandlingsprosessForstegangOgRevSelectors';
 import BehandlingsprosessForstegangOgRevIndex from './BehandlingsprosessForstegangOgRevIndex';
@@ -52,6 +52,7 @@ BehandlingsprosessForstegangOgRevContainer.propTypes = {
   location: PropTypes.shape().isRequired,
   fetchPreviewBrev: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
+  overrideProsessAksjonspunkter: PropTypes.func.isRequired,
   resetBehandlingspunkter: PropTypes.func.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
@@ -75,6 +76,7 @@ const mapStateToProps = state => ({
   location: state.router.location,
   fetchPreviewBrev,
   resolveProsessAksjonspunkter,
+  overrideProsessAksjonspunkter,
   resetBehandlingspunkter,
 });
 

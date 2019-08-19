@@ -216,14 +216,29 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     additionalBehandlingspunktImages: {},
   };
 
-  const mapDispatchToProps = (dispatch, ownProps) => ({
-    ...bindActionCreators({
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    const defaultFunc = {
       push,
       fetchPreview: ownProps.fetchPreviewBrev,
       resolveProsessAksjonspunkter: ownProps.resolveProsessAksjonspunkter,
       resetBehandlingspunkter: ownProps.resetBehandlingspunkter,
-    }, dispatch),
-  });
+    };
+
+    if (ownProps.overrideProsessAksjonspunkter) {
+      return {
+        ...bindActionCreators({
+          ...defaultFunc,
+          overrideProsessAksjonspunkter: ownProps.overrideProsessAksjonspunkter,
+        }, dispatch),
+      };
+    }
+
+    return {
+      ...bindActionCreators({
+        ...defaultFunc,
+      }, dispatch),
+    };
+  };
 
   const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(BehandlingsprosessIndex);
   const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({
