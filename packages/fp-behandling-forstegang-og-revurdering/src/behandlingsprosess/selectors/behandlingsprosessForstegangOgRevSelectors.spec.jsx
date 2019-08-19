@@ -52,6 +52,13 @@ describe('behandlingsprosessForstegangOgRevSelectors', () => {
       vilkarene: [],
     }, {
       apCodes: [],
+      code: bpc.SIMULERING,
+      isVisible: true,
+      status: vilkarUtfallType.OPPFYLT,
+      titleCode: 'Behandlingspunkt.Avregning',
+      vilkarene: [],
+    }, {
+      apCodes: [],
       code: bpc.VEDTAK,
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
@@ -115,6 +122,13 @@ describe('behandlingsprosessForstegangOgRevSelectors', () => {
       isVisible: true,
       status: vilkarUtfallType.IKKE_VURDERT,
       titleCode: 'Behandlingspunkt.TilkjentYtelse',
+      vilkarene: [],
+    }, {
+      apCodes: [],
+      code: bpc.SIMULERING,
+      isVisible: true,
+      status: vilkarUtfallType.OPPFYLT,
+      titleCode: 'Behandlingspunkt.Avregning',
       vilkarene: [],
     }, {
       apCodes: [],

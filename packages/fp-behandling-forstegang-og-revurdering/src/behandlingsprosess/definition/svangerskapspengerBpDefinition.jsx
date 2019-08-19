@@ -5,7 +5,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
+import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
 const getStatusFromResultatstruktur = ({ resultatstruktur }) => (resultatstruktur && resultatstruktur.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT);
@@ -62,7 +62,7 @@ const svangerskapspengerBuilders = [
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')

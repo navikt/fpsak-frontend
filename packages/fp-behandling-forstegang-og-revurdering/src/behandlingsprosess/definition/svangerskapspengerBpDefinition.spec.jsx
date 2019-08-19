@@ -9,7 +9,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import createSvangerskapspengerBpProps from './svangerskapspengerBpDefinition';
 
-describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
+describe('Definisjon av behandlingspunkter - Svangerskapspenger', () => {
   const defaultBehandlingspunkter = [{
     apCodes: [],
     code: behandlingspunktCodes.BEREGNINGSGRUNNLAG,
@@ -23,6 +23,13 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     isVisible: true,
     status: vilkarUtfallType.IKKE_VURDERT,
     titleCode: 'Behandlingspunkt.TilkjentYtelse',
+    vilkarene: [],
+  }, {
+    apCodes: [],
+    code: behandlingspunktCodes.SIMULERING,
+    isVisible: true,
+    status: vilkarUtfallType.IKKE_VURDERT,
+    titleCode: 'Behandlingspunkt.Avregning',
     vilkarene: [],
   }, {
     apCodes: [],
