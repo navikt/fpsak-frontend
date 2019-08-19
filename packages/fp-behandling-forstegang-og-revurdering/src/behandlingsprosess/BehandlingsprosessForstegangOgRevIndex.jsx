@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
