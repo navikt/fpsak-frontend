@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import { TilbakekrevingBehandlingspunktInfoPanel } from './TilbakekrevingBehandlingspunktInfoPanel';
-import ForeldelsePanel from './foreldelse/ForeldelsePanel';
+import ForeldelseForm from './foreldelse/ForeldelseForm';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 import tilbakekrevingAksjonspunktCodes from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
@@ -22,7 +22,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       isBehandlingHenlagt={false}
     />);
 
-    expect(wrapper.find(ForeldelsePanel)).to.have.length(1);
+    expect(wrapper.find(ForeldelseForm)).to.have.length(1);
     expect(wrapper.find(TilbakekrevingForm)).to.have.length(0);
   });
 
@@ -38,7 +38,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       isBehandlingHenlagt={false}
     />);
 
-    expect(wrapper.find(ForeldelsePanel)).to.have.length(0);
+    expect(wrapper.find(ForeldelseForm)).to.have.length(0);
     expect(wrapper.find(TilbakekrevingForm)).to.have.length(1);
   });
 });

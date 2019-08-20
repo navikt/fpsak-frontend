@@ -26,7 +26,7 @@ import {
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 
@@ -102,8 +102,7 @@ export class TilbakekrevingFormImpl extends Component {
   componentDidUpdate(prevProps) {
     const { vilkarsVurdertePerioder } = this.props;
     if (!prevProps.vilkarsVurdertePerioder && vilkarsVurdertePerioder) {
-      const test = vilkarsVurdertePerioder.find(harApentAksjonspunkt);
-      this.setPeriode(test);
+      this.setPeriode(vilkarsVurdertePerioder.find(harApentAksjonspunkt));
     }
   }
 
