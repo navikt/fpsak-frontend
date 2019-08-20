@@ -449,6 +449,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'FARESIGNALER',
     feltId: 'HistorikkEndretFelt.Faresignaler',
   },
+  MILITÆR_ELLER_SIVIL: {
+    kode: 'MILITÆR_ELLER_SIVIL',
+    feltId: 'HistorikkEndretFelt.MilitærEllerSiviltjeneste',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

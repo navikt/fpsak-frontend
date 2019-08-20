@@ -1322,6 +1322,8 @@
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
 
+  "BeregningInfoPanel.VurderMilitaer.HarSøkerMilitærinntekt": "Har søker vært i militær- eller sivilforsvarstjeneste i opptjeningsperioden?",
+
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
 
@@ -1375,6 +1377,7 @@
   "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
   "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
+  "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
@@ -2181,6 +2184,7 @@
   "HistorikkEndretFelt.ErAnkefristOverholdt": "Er ankefrist overholdt",
   "HistorikkEndretFelt.ErAnkenSignert": "Er anken signer",
   "HistorikkEndretFelt.Faresignaler": "Resultat",
+  "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
