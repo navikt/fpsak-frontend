@@ -7,7 +7,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
-
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
@@ -156,7 +155,7 @@ class TilbakekrevingTimeline extends Component {
       selectedPeriod,
       selectPeriodCallback,
       toggleDetaljevindu,
-      HjelpetekstKomponent,
+      hjelpetekstKomponent,
       kjonn,
     } = this.props;
 
@@ -179,8 +178,8 @@ class TilbakekrevingTimeline extends Component {
               <Image
                 className={styles.iconMedsoker}
                 src={isKvinne(kjonn) ? urlKvinne : urlMann}
-                altCode="Person.ImageText"
-                titleCode={isKvinne(kjonn) ? 'Person.Woman' : 'Person.Man'}
+                altCode="TilbakekrevingTimeline.ImageText"
+                titleCode={isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man'}
               />
             </Row>
           </Column>
@@ -209,7 +208,7 @@ class TilbakekrevingTimeline extends Component {
               openPeriodInfo={toggleDetaljevindu}
               selectedPeriod={selectedPeriod}
             >
-              <HjelpetekstKomponent />
+              {hjelpetekstKomponent}
             </TilbakekrevingTimelineController>
           </Column>
         </Row>
@@ -234,7 +233,7 @@ TilbakekrevingTimeline.propTypes = {
     isGodkjent: PropTypes.bool.isRequired,
   }),
   selectPeriodCallback: PropTypes.func.isRequired,
-  HjelpetekstKomponent: PropTypes.func.isRequired,
+  hjelpetekstKomponent: PropTypes.node.isRequired,
   kjonn: PropTypes.string.isRequired,
 };
 

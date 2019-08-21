@@ -207,7 +207,7 @@ export class ForeldelseFormImpl extends Component {
                   valgtPeriode={valgtPeriodeFormatertForTidslinje}
                   setPeriode={this.setPeriode}
                   toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={ForeldelseTidslinjeHjelpetekster}
+                  hjelpetekstKomponent={<ForeldelseTidslinjeHjelpetekster />}
                   kjonn={kjonn}
                 />
                 {valgtPeriode && (

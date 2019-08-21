@@ -222,7 +222,7 @@ export class TilbakekrevingFormImpl extends Component {
                   valgtPeriode={valgtPeriodeFormatertForTidslinje}
                   setPeriode={this.setPeriode}
                   toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={TilbakekrevingTidslinjeHjelpetekster}
+                  hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
                   kjonn={kjonn}
                 />
                 {valgtPeriode && (
