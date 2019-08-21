@@ -22,9 +22,9 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
-import { behandlingForm } from '../../../behandlingForm';
+import { behandlingFormTilbakekreving } from '../../../behandlingFormTilbakekreving';
 import TilbakekrevingTimelineData from '../felles/splittePerioder/TilbakekrevingTimelineData';
 
 import styles from './foreldelsePeriodeForm.less';
@@ -164,7 +164,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ForeldelsePeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelsePeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
   form: FORELDELSE_PERIODE_FORM_NAME,
   enableReinitialize: true,
 })(ForeldelsePeriodeFormImpl)));
