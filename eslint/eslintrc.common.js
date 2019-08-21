@@ -1,6 +1,7 @@
 const OFF = 0;
 const ON = 1;
 const ERROR = 2;
+const { resolve } = require('path');
 
 const config = {
   env: {
@@ -30,7 +31,13 @@ const config = {
       impliedStrict: true,
     },
   },
-
+  settings: {
+    'import/resolver': {
+      webpack: {
+        config: resolve(__dirname, '../webpack/webpack.common.dev_and_prod.js'),
+      },
+    },
+  },
   rules: {
     'linebreak-style': OFF,
     'import/no-named-as-default': OFF,
@@ -50,14 +57,12 @@ const config = {
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
   },
-
   overrides: [
     {
       files: ['*.spec.jsx'],
       rules: {
-        'no-unused-expressions': 'off',
+        'no-unused-expressions': OFF,
       },
-    },
-  ],
+    }],
 };
 module.exports = config;

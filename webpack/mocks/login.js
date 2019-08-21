@@ -1,6 +1,6 @@
 const axios = require('axios');
 const qs = require('querystring');
-const vtpAccessTokenUrl = 'http://localhost:8060/isso/oauth2/access_token';
+const vtpAccessTokenUrl = 'http://localhost:8060/rest/isso/oauth2/access_token';
 /**
  *
  * @param Express.app
