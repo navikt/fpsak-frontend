@@ -14,11 +14,13 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import {
-  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty, getBehandlingFormValues,
-} from 'behandlingTilbakekreving/src/behandlingForm';
+  behandlingFormTilbakekreving, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty, getBehandlingFormValues,
+} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import vedtaksbrevAvsnittPropType from 'behandlingTilbakekreving/src/proptypes/vedtaksbrevAvsnittPropType';
-import { fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator, getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckTilbake';
-import { getVedtaksbrevAvsnitt } from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import {
+  fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator, getBehandlingIdentifier,
+} from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
 import styles from './tilbakekrevingVedtakForm.less';
@@ -104,7 +106,7 @@ const transformValues = values => [{
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const submitCallback = values => ownProps.submitCallback(transformValues(values));
-  const vedtaksbrevAvsnitt = getVedtaksbrevAvsnitt(initialState);
+  const vedtaksbrevAvsnitt = behandlingSelectors.getVedtaksbrevAvsnitt(initialState);
   return state => ({
     initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt),
     onSubmit: submitCallback,
@@ -120,7 +122,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+const TilbakekrevingVedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormTilbakekreving({
   form: formName,
 })(TilbakekrevingVedtakFormImpl));
 

@@ -1,16 +1,11 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
-import {
-  getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getAksjonspunkter,
-  getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
-  getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
-  getBehandlingIsOnHold, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getSoknad,
-} from './selectors/papirsoknadSelectors';
 
+import behandlingSelectors from './selectors/papirsoknadSelectors';
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export class PapirsoknadInfoSetter extends Component {
@@ -91,20 +86,20 @@ PapirsoknadInfoSetter.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingSprak: getBehandlingSprak(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  brevMaler: getBrevMaler(state),
-  aksjonspunkter: getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  behandlingType: getBehandlingType(state),
-  behandlingHasSoknad: getBehandlingHasSoknad(state),
-  behandlingIsOnHold: getBehandlingIsOnHold(state),
-  behandlingIsQueued: getBehandlingIsQueued(state),
-  behandlingBehandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
-  behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  soknad: getSoknad(state),
+  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  brevMaler: behandlingSelectors.getBrevMaler(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
+  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
+  behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
+  behandlingBehandlendeEnhetId: behandlingSelectors.getBehandlingBehandlendeEnhetId(state),
+  behandlingBehandlendeEnhetNavn: behandlingSelectors.getBehandlingBehandlendeEnhetNavn(state),
+  soknad: behandlingSelectors.getSoknad(state),
 });
 
 export default connect(mapStateToProps)(PapirsoknadInfoSetter);

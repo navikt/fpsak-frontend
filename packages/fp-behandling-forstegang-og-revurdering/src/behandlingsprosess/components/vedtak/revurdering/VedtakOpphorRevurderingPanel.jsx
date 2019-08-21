@@ -6,10 +6,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import {
-  getOpphoersdatoFraUttak, getAksjonspunkter, getBehandlingSprak,
-  getBehandlingMedlem, getBehandlingsresultat,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getOpphoersdatoFraUttak, getBehandlingMedlem } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
@@ -78,7 +76,7 @@ VedtakOpphorRevurderingPanelImpl.defaultProps = {
 };
 
 const getOpphorsdato = createSelector(
-  [getOpphoersdatoFraUttak, getBehandlingMedlem, getBehandlingsresultat],
+  [getOpphoersdatoFraUttak, getBehandlingMedlem, behandlingSelectors.getBehandlingsresultat],
   (datoFraUttak, medlemskap, behandlingsresultat) => {
     if (datoFraUttak) {
       return datoFraUttak;
@@ -93,9 +91,9 @@ const getOpphorsdato = createSelector(
 
 const mapStateToProps = state => ({
   opphoersdato: getOpphorsdato(state),
-  sprakKode: getBehandlingSprak(state),
-  aksjonspunkter: getAksjonspunkter(state),
-  behandlingsresultat: getBehandlingsresultat(state),
+  sprakKode: behandlingSelectors.getBehandlingSprak(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakOpphorRevurderingPanelImpl));

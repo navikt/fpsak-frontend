@@ -5,9 +5,9 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 import {
-  getBehandlingResultatstruktur, getHaveSentVarsel,
-  getAksjonspunkter, getBehandlingStatus, erArsakTypeBehandlingEtterKlage,
+  getBehandlingResultatstruktur, getHaveSentVarsel, erArsakTypeBehandlingEtterKlage,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -61,7 +61,7 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
 };
 
 export const getSubmitKnappTekst = createSelector(
-  [getAksjonspunkter],
+  [behandlingSelectors.getAksjonspunkter],
   aksjonspunkter => (aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true
     && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
 );
@@ -150,7 +150,7 @@ const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   haveSentVarsel: getHaveSentVarsel(state),
-  behandlingStatusKode: getBehandlingStatus(state).kode,
+  behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
 });
 

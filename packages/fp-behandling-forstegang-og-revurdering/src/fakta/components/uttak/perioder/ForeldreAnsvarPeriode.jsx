@@ -28,7 +28,9 @@ import {
   hasValidText,
 } from '@fpsak-frontend/utils';
 
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, getBehandlingFormSyncErrors,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 
@@ -228,7 +230,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 
 
 export default connect(mapStateToPropsFactory)(
-  behandlingForm({
+  behandlingFormForstegangOgRevurdering({
     enableReinitialize: true,
     validate: values => validateForeldreAnsvarForm(values),
   })(ForeldreAnsvarPeriode),

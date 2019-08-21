@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl, intlShape } from 'react-intl';
 
-import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
-import { getSelectedBehandlingspunkt, getSelectedBehandlingspunktAksjonspunkter, isSelectedBehandlingspunktOverrideReadOnly }
-  from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { getRettigheter } from 'navAnsatt/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { CheckboxField } from '@fpsak-frontend/form';
@@ -82,9 +81,9 @@ OverstyrVurderingChecker.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  aksjonspunkter: getSelectedBehandlingspunktAksjonspunkter(state),
-  selectedBehandlingspunkt: getSelectedBehandlingspunkt(state),
-  isBehandlingReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+  aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  selectedBehandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
+  isBehandlingReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
   kanOverstyreAccess: getRettigheter(state).kanOverstyreAccess,
 });
 

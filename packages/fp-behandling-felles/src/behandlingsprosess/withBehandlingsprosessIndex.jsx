@@ -4,9 +4,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import {
   trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
@@ -14,8 +16,13 @@ import {
 import findStatusIcon from './statusIconHelper';
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from './components/vedtak/IverksetterVedtakStatusModal';
+import FatterVedtakStatusModal from './components/vedtak/FatterVedtakStatusModal';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
+
+const hasOverstyringAp = aksjonspunkter => (
+  aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
+);
 
 /**
  * withBehandlingsprosessIndex
@@ -78,13 +85,30 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo) => {
       const {
         resolveProsessAksjonspunkter: resolveAksjonspunkter,
-        behandlingIdentifier, behandlingVersjon,
+        overrideProsessAksjonspunkter: overrideAksjonspunkter,
+        behandlingIdentifier,
+        behandlingVersjon,
+        aksjonspunkter,
       } = this.props;
 
       const models = aksjonspunktModels.map(ap => ({
         '@type': ap.kode,
         ...ap,
       }));
+
+      if (overrideAksjonspunkter) {
+        const apCodes = aksjonspunktModels.map(ap => ap.kode);
+        const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
+        if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
+          const params = {
+            ...behandlingIdentifier.toJson(),
+            behandlingVersjon,
+            overstyrteAksjonspunktDtoer: models,
+          };
+          return overrideAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
+            .then(afterSubmitCallback);
+        }
+      }
 
       const params = {
         ...behandlingIdentifier.toJson(),
@@ -100,7 +124,8 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
       const {
         behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType,
         resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, getBehandlingspunkterStatus,
-        getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus,
+        getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
+        aksjonspunkter, behandlingType, isKlageWithKA, doNotUseIverksetterVedtakModal, additionalBehandlingspunktImages,
       } = this.props;
 
       return (
@@ -110,7 +135,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
             selectedBehandlingspunkt={selectedBehandlingspunkt}
             selectBehandlingspunktCallback={this.goToBehandlingspunkt}
             isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-            findBehandlingsprosessIcon={findStatusIcon}
+            findBehandlingsprosessIcon={findStatusIcon(additionalBehandlingspunktImages)}
             getBehandlingspunkterStatus={getBehandlingspunkterStatus}
             getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
             getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
@@ -121,16 +146,32 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
               selectedBehandlingspunkt={selectedBehandlingspunkt}
               goToSearchPage={this.goToSearchPage}
               goToDefaultPage={this.goToBehandlingWithDefaultPunktAndFakta}
+              resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
             />
           </BehandlingsprosessPanel>
-          <IverksetterVedtakStatusModal
-            closeEvent={this.goToSearchPage}
-            behandlingsresultat={behandlingsresultat}
-            behandlingStatusKode={behandlingStatus.kode}
-            fagsakYtelseType={fagsakYtelseType}
-            resolveFaktaAksjonspunkterSuccess
-            resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
-          />
+          {!doNotUseIverksetterVedtakModal && (
+            <IverksetterVedtakStatusModal
+              closeEvent={this.goToSearchPage}
+              behandlingsresultat={behandlingsresultat}
+              behandlingStatusKode={behandlingStatus.kode}
+              fagsakYtelseType={fagsakYtelseType}
+              resolveFaktaAksjonspunkterSuccess
+              resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+            />
+          )}
+          {!doNotUseFatterVedtakModal && behandlingStatus.kode === BehandlingStatus.FATTER_VEDTAK && (
+            <FatterVedtakStatusModal
+              closeEvent={this.goToSearchPage}
+              selectedBehandlingId={behandlingIdentifier.behandlingId}
+              fagsakYtelseType={fagsakYtelseType}
+              isVedtakSubmission={resolveProsessAksjonspunkterSuccess}
+              behandlingStatus={behandlingStatus}
+              behandlingsresultat={behandlingsresultat}
+              aksjonspunkter={aksjonspunkter}
+              behandlingType={behandlingType}
+              isKlageWithKA={isKlageWithKA}
+            />
+          )}
         </React.Fragment>
       );
     }
@@ -146,7 +187,8 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     location: PropTypes.shape().isRequired,
     push: PropTypes.func.isRequired,
     resolveProsessAksjonspunkter: PropTypes.func.isRequired,
-    fetchPreview: PropTypes.func.isRequired,
+    overrideProsessAksjonspunkter: PropTypes.func,
+    fetchPreview: PropTypes.func,
     fagsakYtelseType: kodeverkObjektPropType.isRequired,
     behandlingStatus: kodeverkObjektPropType.isRequired,
     resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
@@ -154,22 +196,49 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     getBehandlingspunkterStatus: PropTypes.func.isRequired,
     getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
     getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
+    behandlingType: kodeverkObjektPropType.isRequired,
+    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+    doNotUseFatterVedtakModal: PropTypes.bool,
+    doNotUseIverksetterVedtakModal: PropTypes.bool,
+    isKlageWithKA: PropTypes.bool,
+    additionalBehandlingspunktImages: PropTypes.shape(),
   };
 
   BehandlingsprosessIndex.defaultProps = {
     behandlingspunkter: undefined,
     selectedBehandlingspunkt: undefined,
     behandlingsresultat: undefined,
+    doNotUseFatterVedtakModal: false,
+    doNotUseIverksetterVedtakModal: false,
+    overrideProsessAksjonspunkter: undefined,
+    isKlageWithKA: false,
+    fetchPreview: undefined,
+    additionalBehandlingspunktImages: {},
   };
 
-  const mapDispatchToProps = (dispatch, ownProps) => ({
-    ...bindActionCreators({
+  const mapDispatchToProps = (dispatch, ownProps) => {
+    const defaultFunc = {
       push,
       fetchPreview: ownProps.fetchPreviewBrev,
       resolveProsessAksjonspunkter: ownProps.resolveProsessAksjonspunkter,
       resetBehandlingspunkter: ownProps.resetBehandlingspunkter,
-    }, dispatch),
-  });
+    };
+
+    if (ownProps.overrideProsessAksjonspunkter) {
+      return {
+        ...bindActionCreators({
+          ...defaultFunc,
+          overrideProsessAksjonspunkter: ownProps.overrideProsessAksjonspunkter,
+        }, dispatch),
+      };
+    }
+
+    return {
+      ...bindActionCreators({
+        ...defaultFunc,
+      }, dispatch),
+    };
+  };
 
   const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(BehandlingsprosessIndex);
   const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({

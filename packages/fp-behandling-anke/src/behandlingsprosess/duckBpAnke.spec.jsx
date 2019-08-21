@@ -2,10 +2,11 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
-import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
+import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+
 import ankeBehandlingApi, { reduxRestApi } from '../data/ankeBehandlingApi';
 import { resolveProsessAksjonspunkter } from './duckBpAnke';
 

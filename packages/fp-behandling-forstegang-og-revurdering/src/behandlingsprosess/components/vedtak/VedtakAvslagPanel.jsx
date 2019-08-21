@@ -10,8 +10,8 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { getBehandlingVilkar, getBehandlingSprak } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getFagsakYtelseType, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getFagsakYtelseType, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
   hasIkkeOppfyltSoknadsfristvilkar,
@@ -99,8 +99,8 @@ VedtakAvslagPanelImpl.defaultProps = {
 
 const mapStateToProps = state => ({
   ytelseType: getFagsakYtelseType(state).kode,
-  vilkar: getBehandlingVilkar(state),
-  sprakkode: getBehandlingSprak(state),
+  vilkar: behandlingSelectors.getBehandlingVilkar(state),
+  sprakkode: behandlingSelectors.getBehandlingSprak(state),
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 

@@ -1,20 +1,22 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import {
-  DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
-} from '@fpsak-frontend/utils';
-
-import { DatepickerField } from '@fpsak-frontend/form';
-import Modal from 'nav-frontend-modal';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
+import Modal from 'nav-frontend-modal';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
+import {
+  DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
+} from '@fpsak-frontend/utils';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
-import { behandlingForm } from '../../../../behandlingForm';
+
+import { behandlingFormTilbakekreving } from '../../../../behandlingFormTilbakekreving';
+
 import styles from './delOppPeriodeModal.less';
 
 export const DelOppPeriodeModalImpl = ({
@@ -125,7 +127,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 };
 
 
-const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormTilbakekreving({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

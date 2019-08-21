@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
-import { behandlingForm, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import moment from 'moment';
+
+import { guid, dateFormat } from '@fpsak-frontend/utils';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  getBehandlingVersjon,
   getUttakPerioder,
   getBehandlingYtelseFordeling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
-import { guid, dateFormat } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import moment from 'moment';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkOmfaktaOmUttakAksjonspunkt,
@@ -205,7 +208,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
 
   return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
     const hasRevurderingOvertyringAp = !!initialOwnProps.aksjonspunkter.includes(
       ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
     );
@@ -220,7 +223,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'UttakFaktaForm',
   enableReinitialize: true,
 })(UttakFaktaForm));

@@ -7,11 +7,12 @@ import { Fieldset } from 'nav-frontend-skjema';
 import { Row, Column } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import { ElementWrapper, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'papirsoknad/src/duck';
+
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
 import styles from './andreYtelserPanel.less';

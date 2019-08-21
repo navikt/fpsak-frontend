@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import Modal from 'nav-frontend-modal';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
@@ -72,6 +72,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingForm({
+export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   enableReinitialize: true,
 })(injectIntl(UtlandEndretModalImpl)));

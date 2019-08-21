@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 /**
@@ -30,7 +31,7 @@ OverstyrConfirmationFormImpl.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+  isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
 });
 
 const OverstyrConfirmationForm = connect(mapStateToProps)(OverstyrConfirmationFormImpl);

@@ -8,16 +8,10 @@ import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
-} from 'behandlingInnsyn/src/behandlingForm';
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormInnsyn, behandlingFormValueSelector,
+} from 'behandlingInnsyn/src/behandlingFormInnsyn';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import {
-  getAksjonspunkter,
-  getBehandlingInnsynDokumenter,
-  getBehandlingInnsynMottattDato,
-  getBehandlingInnsynResultatType,
-  getBehandlingSprak,
-} from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
   FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -26,7 +20,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
 } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duckInnsyn';
+import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
@@ -37,7 +31,12 @@ const minLength3 = minLength(3);
 
 const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    previewCallback('', 'INSSKR', begrunnelse || ' ');
+    const data = {
+      fritekst: begrunnelse || ' ',
+      mottaker: '',
+      brevmalkode: 'INSSKR',
+    };
+    previewCallback(data);
   } else {
     formProps.submit();
   }
@@ -180,7 +179,7 @@ const transformValues = values => ({
 });
 
 const getDocumenterMedFikkInnsynVerdi = createSelector(
-  [getFilteredReceivedDocuments, getBehandlingInnsynDokumenter],
+  [getFilteredReceivedDocuments, behandlingSelectors.getBehandlingInnsynDokumenter],
   (alleDokumenter, valgteDokumenter) => alleDokumenter
     .filter(dokAlle => valgteDokumenter.find(dokValgte => dokValgte.dokumentId === dokAlle.dokumentId))
     .map(dokAlle => ({
@@ -194,21 +193,21 @@ const formName = 'InnsynVedtakForm';
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
   return (state) => {
-    const aksjonspunkter = getAksjonspunkter(state);
+    const aksjonspunkter = behandlingSelectors.getAksjonspunkter(state);
     return {
       saksNr: getSelectedSaksnummer(state),
       documents: getDocumenterMedFikkInnsynVerdi(state),
-      sprakkode: getBehandlingSprak(state),
-      initialValues: buildInitialValues(getBehandlingInnsynMottattDato(state), aksjonspunkter),
+      sprakkode: behandlingSelectors.getBehandlingSprak(state),
+      initialValues: buildInitialValues(behandlingSelectors.getBehandlingInnsynMottattDato(state), aksjonspunkter),
       apBegrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
       begrunnelse: behandlingFormValueSelector(formName)(state, 'begrunnelse'),
-      resultat: getBehandlingInnsynResultatType(state).kode,
+      resultat: behandlingSelectors.getBehandlingInnsynResultatType(state).kode,
       onSubmit,
     };
   };
 };
 
-const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormInnsyn({
   form: formName,
 })(InnsynVedtakFormImpl)));
 

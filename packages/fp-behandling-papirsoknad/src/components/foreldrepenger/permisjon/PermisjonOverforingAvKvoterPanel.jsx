@@ -4,17 +4,20 @@ import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
-import SoknadData from 'papirsoknad/src/SoknadData';
+
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
   FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, CheckboxField, SelectField } from '@fpsak-frontend/form';
 import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
+
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import SoknadData from 'papirsoknad/src/SoknadData';
+
 import styles from './permisjonPanel.less';
 
 const getText = (intl, kode, navn) => {

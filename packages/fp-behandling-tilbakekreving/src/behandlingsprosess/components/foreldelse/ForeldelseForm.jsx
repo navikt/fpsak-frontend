@@ -22,10 +22,10 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
-import { behandlingForm } from '../../../behandlingForm';
+import { behandlingFormTilbakekreving } from '../../../behandlingFormTilbakekreving';
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -153,7 +153,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ForeldelseForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const ForeldelseForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
   form: 'foreldelsesresultatActivity',
   enableReinitialize: true,
 })(ForeldelseFormImpl)));

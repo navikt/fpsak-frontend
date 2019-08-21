@@ -37,9 +37,11 @@ import {
   ArrowBox, ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 
@@ -514,7 +516,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: uttakActivityForm,
   enableReinitialize: true,
 })(UttakActivity)));

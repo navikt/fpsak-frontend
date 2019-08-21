@@ -5,10 +5,9 @@ import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { createSelector, createStructuredSelector } from 'reselect';
 import {
-  getAksjonspunkter,
   getBeregningsgrunnlag,
   getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregning,
@@ -19,6 +18,7 @@ import {
   getVurderMottarYtelse,
   getVurderBesteberegning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { getFeatureToggles } from 'app/duck';
@@ -82,7 +82,7 @@ export const lagHelpTextsForFakta = (aktivertePaneler) => {
 };
 
 export const getHelpTextsFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getAksjonspunkter, getHelpTextsEndringBG],
+  [getFaktaOmBeregningTilfellerKoder, behandlingSelectors.getAksjonspunkter, getHelpTextsEndringBG],
   (aktivertePaneler, aksjonspunkter, helpTextEndringBG) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
     ? helpTextEndringBG.concat(lagHelpTextsForFakta(aktivertePaneler))
     : []),
@@ -278,7 +278,7 @@ export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
       faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
   };
 
-const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
+const getVurderFaktaAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
 const buildInitialValuesForTilfeller = props => ({
@@ -309,7 +309,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   vurderMottarYtelse: getVurderMottarYtelse,
   vurderBesteberegning: getVurderBesteberegning,
   alleKodeverk: getAlleKodeverk,
-  aksjonspunkter: getAksjonspunkter,
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter,
   faktaOmBeregning: getFaktaOmBeregning,
   featureToggles: getFeatureToggles,
 });

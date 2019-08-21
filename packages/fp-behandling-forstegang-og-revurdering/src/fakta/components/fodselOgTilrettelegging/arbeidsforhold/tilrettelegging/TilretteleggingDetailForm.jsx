@@ -14,7 +14,7 @@ import {
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import TilretteleggingsvalgPanel from './TilretteleggingsvalgPanel';
 
 export const TILRETTELEGGING_DETAIL_FORM_NAME = 'TilretteleggingDetailForm';
@@ -101,7 +101,7 @@ TilretteleggingDetailFormImpl.defaultProps = {
   warning: {},
 };
 
-const TilretteleggingDetailForm = injectIntl(behandlingForm({
+const TilretteleggingDetailForm = injectIntl(behandlingFormForstegangOgRevurdering({
   form: TILRETTELEGGING_DETAIL_FORM_NAME,
   enableReinitialize: true,
 })(TilretteleggingDetailFormImpl));

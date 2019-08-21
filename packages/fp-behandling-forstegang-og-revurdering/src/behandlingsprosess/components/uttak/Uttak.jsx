@@ -16,6 +16,7 @@ import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
 } from '@fpsak-frontend/utils';
@@ -26,22 +27,20 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  getBehandlingVersjon,
-  getSoknad,
   getBehandlingYtelseFordeling,
   getFamiliehendelseGjeldende,
   getBehandlingIsRevurdering,
   getPersonopplysning,
   getUttaksresultatPerioder,
-  getBehandlingStatus,
   getBehandlingUttaksperiodegrense,
   getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getRettigheter } from 'navAnsatt/duck';
-import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
 import UttakTimeLine from './UttakTimeLine';
@@ -651,7 +650,7 @@ const lagUttaksresultatActivity = createSelector(
 );
 
 const getFodselTerminDato = createSelector(
-  [getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
+  [behandlingSelectors.getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
     if (familiehendelse && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0) {
       return familiehendelse.avklartBarn[0].fodselsdato;
     }
@@ -696,14 +695,14 @@ const addClassNameGroupIdToPerioder = (hovedsokerPerioder, uttakResultatPerioder
   };
 
 const addClassNameGroupIdToPerioderHovedsoker = createSelector(
-  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, behandlingSelectors.getBehandlingStatus, getAlleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, true,
 ),
 );
 
 const addClassNameGroupIdToPerioderAnnenForelder = createSelector(
-  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, getBehandlingStatus, getAlleKodeverk],
+  [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, behandlingSelectors.getBehandlingStatus, getAlleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, false,
 ),
@@ -715,7 +714,7 @@ const slaSammenHovedsokerOgAnnenForelder = createSelector(
 );
 
 const mapStateToProps = (state, props) => {
-  const soknad = getSoknad(state);
+  const soknad = behandlingSelectors.getSoknad(state);
   const person = getPersonopplysning(state);
   const periodeGrenseMottatDato = getBehandlingUttaksperiodegrense(state).mottattDato;
   const hovedsokerKjonnKode = person ? person.navBrukerKjonn.kode : undefined;
@@ -746,7 +745,7 @@ const mapStateToProps = (state, props) => {
     endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
     soknadsType: soknad.soknadType.kode,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,

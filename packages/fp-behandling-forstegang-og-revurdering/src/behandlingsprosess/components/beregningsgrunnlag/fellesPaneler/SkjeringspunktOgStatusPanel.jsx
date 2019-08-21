@@ -21,7 +21,7 @@ import {
   getSkjæringstidspunktBeregning,
   getGjeldendeDekningsgrad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './skjeringspunktOgStatusPanel.less';
 

@@ -10,14 +10,14 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { getKodeverk, getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   getBehandlingRelatertTilgrensendeYtelserForAnnenForelder,
   getBehandlingRelatertTilgrensendeYtelserForSoker,
-  getBehandlingSprak,
   getPersonopplysning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './panelBody/FullPersonInfo';
 import utlandSakstypeKode from './panelBody/utland/utlandSakstypeKode';
@@ -182,11 +182,11 @@ const mapStateToPropsFactory = (initialState) => {
     personopplysninger: getPersonopplysning(state),
     relatertTilgrensendeYtelserForSoker: getBehandlingRelatertTilgrensendeYtelserForSoker(state),
     relatertTilgrensendeYtelserForAnnenForelder: getBehandlingRelatertTilgrensendeYtelserForAnnenForelder(state),
-    sprakkode: getBehandlingSprak(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
   });
 };
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
 PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));

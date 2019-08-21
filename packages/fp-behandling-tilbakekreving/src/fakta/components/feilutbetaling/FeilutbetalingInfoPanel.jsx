@@ -11,22 +11,18 @@ import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import { FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe, getBehandlingFormPrefix,
+} from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
  DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
 } from '@fpsak-frontend/utils';
 
-import {
-  getAksjonspunkter,
-  getFeilutbetalingFakta,
-  getFeilutbetalingAarsaker,
-  getBehandlingVersjon,
-  getMerknaderFraBeslutter,
-} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckTilbake';
-import { behandlingForm, getBehandlingFormPrefix } from 'behandlingTilbakekreving/src/behandlingForm';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import { behandlingFormTilbakekreving } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
@@ -276,7 +272,9 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspunkter], (feilutbetalingFakta, aksjonspunkter) => {
+const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetalingFakta, behandlingSelectors.getAksjonspunkter], (
+  feilutbetalingFakta, aksjonspunkter,
+) => {
   const { perioder } = feilutbetalingFakta.behandlingFakta;
   const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   return {
@@ -309,7 +307,9 @@ const buildInitialValues = createSelector([getFeilutbetalingFakta, getAksjonspun
   };
 });
 
-const getSortedFeilutbetalingArsaker = createSelector([getFeilutbetalingAarsaker, getFagsakYtelseType], (feilutbetalingArsaker, fagsakYtelseType) => {
+const getSortedFeilutbetalingArsaker = createSelector([behandlingSelectors.getFeilutbetalingAarsaker, getFagsakYtelseType], (
+  feilutbetalingArsaker, fagsakYtelseType,
+) => {
   const arsaker = feilutbetalingArsaker.find(a => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
   return arsaker.sort((a1, a2) => {
     const arsak1 = a1.årsak;
@@ -349,15 +349,15 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
   }];
 };
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const feilutbetaling = getFeilutbetalingFakta(initialState).behandlingFakta;
+  const feilutbetaling = behandlingSelectors.getFeilutbetalingFakta(initialState).behandlingFakta;
   const årsaker = getSortedFeilutbetalingArsaker(initialState);
   const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker));
   return state => ({
     feilutbetaling,
     årsaker,
     initialValues: buildInitialValues(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING)(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING)(state),
     onSubmit: submitCallback,
   });
 };
@@ -368,7 +368,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const feilutbetalingForm = injectIntl(behandlingForm({
+const feilutbetalingForm = injectIntl(behandlingFormTilbakekreving({
   form: formName,
 })(FeilutbetalingInfoPanelImpl));
 

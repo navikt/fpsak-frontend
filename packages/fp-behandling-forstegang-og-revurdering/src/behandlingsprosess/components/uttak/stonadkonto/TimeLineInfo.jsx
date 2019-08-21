@@ -11,7 +11,7 @@ import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import moment from 'moment';
 
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import TimeLineTab from './TimeLineTab';
 import styles from './timeLineInfo.less';
 

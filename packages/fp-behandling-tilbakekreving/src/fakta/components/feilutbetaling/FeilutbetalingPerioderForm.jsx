@@ -7,7 +7,7 @@ import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { SelectField } from '@fpsak-frontend/form';
 
-import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 
 import styles from './feilutbetalingPerioderTable.less';
 

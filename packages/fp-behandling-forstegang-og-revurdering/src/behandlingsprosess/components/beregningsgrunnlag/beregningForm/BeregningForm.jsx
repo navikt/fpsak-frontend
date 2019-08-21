@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Undertittel } from 'nav-frontend-typografi';
 import { VerticalSpacer, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   getAlleAndelerIForstePeriode,
@@ -111,7 +111,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
 };
 
 const buildInitialValues = createSelector(
-  [getAlleAndelerIForstePeriode, getSelectedBehandlingspunktAksjonspunkter, getGjeldendeBeregningAksjonspunkter,
+  [getAlleAndelerIForstePeriode, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getGjeldendeBeregningAksjonspunkter,
     getBeregningsgrunnlagPerioder, getGjeldendeDekningsgrad],
   (alleAndelerIForstePeriode, aksjonspunkter, gjeldendeAksjonspunkter, allePerioder, gjeldendeDekningsgrad) => {
     const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
@@ -243,6 +243,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const BeregningForm = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(BeregningFormImpl));
+const BeregningForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(BeregningFormImpl));
 
 export default BeregningForm;

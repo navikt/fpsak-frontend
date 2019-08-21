@@ -5,6 +5,7 @@ import { formValueSelector } from 'redux-form';
 import { FormattedMessage, intlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+
 import {
   RadioGroupField, RadioOption, SelectField, InputField, DatepickerField,
 } from '@fpsak-frontend/form';
@@ -12,8 +13,9 @@ import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   required, hasValidInteger, validPeriodeFomTom, hasValidDate, dateBeforeOrEqualToToday, hasValidOrgNumber,
 } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 
 const countrySelectValues = countryCodes => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);

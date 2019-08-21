@@ -7,7 +7,7 @@ import VilkarResultPanel from 'behandlingForstegangOgRevurdering/src/behandlings
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
 } from '@fpsak-frontend/shared-components';

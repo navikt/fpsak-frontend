@@ -9,8 +9,10 @@ import { formPropTypes } from 'redux-form';
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   FadingPanel, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -338,7 +340,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const uttaksresultat = getUttaksresultatPerioder(initialState);
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const stonadskonto = getStonadskontoer(initialState);
 
   const validate = values => validateUttakPanelForm(values);
@@ -355,7 +357,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: false,
 })(UttakPanelImpl)));

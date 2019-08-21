@@ -7,11 +7,8 @@ import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-be
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import {
-  getBehandlingIsManuellRevurdering,
-  hasBehandlingUtredesStatus,
-  getBehandlingIsOnHold,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingIsManuellRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -102,8 +99,8 @@ UttakInfoPanelImpl.propTypes = {
 
 const mapStateToProps = state => ({
   isRevurdering: getBehandlingIsManuellRevurdering(state),
-  hasStatusUtredes: hasBehandlingUtredesStatus(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state) || false,
+  hasStatusUtredes: behandlingSelectors.hasBehandlingUtredesStatus(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state) || false,
 });
 
 const ConnectedComponent = injectIntl(UttakInfoPanelImpl);

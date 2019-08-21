@@ -3,10 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import {
-  getBehandlingResultatstruktur,
-  getBehandlingVilkar, getBehandlingSprak,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
@@ -93,8 +91,8 @@ VedtakAvslagRevurderingPanelImpl.defaultProps = {
 const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
-  vilkar: getBehandlingVilkar(state),
-  sprakkode: getBehandlingSprak(state),
+  vilkar: behandlingSelectors.getBehandlingVilkar(state),
+  sprakkode: behandlingSelectors.getBehandlingSprak(state),
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 

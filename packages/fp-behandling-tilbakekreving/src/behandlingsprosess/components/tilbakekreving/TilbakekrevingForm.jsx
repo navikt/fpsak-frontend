@@ -10,7 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaGruppe, BehandlingspunktSubmitButton, getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
@@ -20,14 +20,11 @@ import { omit } from '@fpsak-frontend/utils';
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import {
-  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, isBehandlingFormDirty,
+  behandlingFormTilbakekreving, behandlingFormValueSelector, isBehandlingFormDirty,
   hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, getBehandlingFormValues,
-} from 'behandlingTilbakekreving/src/behandlingForm';
-import {
-  getBehandlingVersjon, getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurderingsRettsgebyr, getBehandlingVilkarsvurdering,
-  getMerknaderFraBeslutter, getForeldelsePerioder,
-} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getFagsakPerson, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakPerson, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
@@ -304,8 +301,9 @@ const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
   });
 
 
-export const slaSammenOriginaleOgLagredePeriode = createSelector([getBehandlingVilkarsvurderingsperioder, getBehandlingVilkarsvurdering,
-  getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
+export const slaSammenOriginaleOgLagredePeriode = createSelector([
+  behandlingSelectors.getBehandlingVilkarsvurderingsperioder, behandlingSelectors.getBehandlingVilkarsvurdering,
+  behandlingSelectors.getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
   const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
@@ -330,7 +328,7 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector([getBehandlingV
   };
 });
 
-export const buildInitialValues = createSelector([slaSammenOriginaleOgLagredePeriode, getForeldelsePerioder],
+export const buildInitialValues = createSelector([slaSammenOriginaleOgLagredePeriode, behandlingSelectors.getForeldelsePerioder],
   (perioder, foreldelsePerioder) => ({
     vilkarsVurdertePerioder: perioder.perioder.map(p => ({
       ...TilbakekrevingPeriodeForm.buildInitialValues(p, foreldelsePerioder),
@@ -375,11 +373,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       initialValues: buildInitialValues(state),
       dataForDetailForm: settOppPeriodeDataForDetailForm(state),
       vilkarsVurdertePerioder: behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder'),
-      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
       kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
       readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
       antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
-      merknaderFraBeslutter: getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING)(state),
+      merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING)(state),
       onSubmit: submitCallback,
     };
   };
@@ -417,7 +415,7 @@ const validateForm = (values) => {
   return errors;
 };
 
-const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
   form: TILBAKEKREVING_FORM_NAME,
   validate: validateForm,
 })(TilbakekrevingFormImpl)));

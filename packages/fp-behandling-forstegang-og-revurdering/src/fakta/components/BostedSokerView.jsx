@@ -7,7 +7,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
 import { kodeverkPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getAddresses } from '@fpsak-frontend/utils';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';

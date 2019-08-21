@@ -5,7 +5,7 @@ import {
   Table, TableRow, TableColumn, DateLabel,
 } from '@fpsak-frontend/shared-components';
 import { injectIntl } from 'react-intl';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 
 const headerTextCodes = [
   'MedlemskapEndringerTabell.GjeldeneFom',

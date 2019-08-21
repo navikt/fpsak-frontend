@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import { reducer } from './duckBehandlingAnke';
 
-describe('Anke-reducer', () => {
+describe('Anke-behandling-reducer', () => {
   it('skal returnere initial state', () => {
     expect(reducer(undefined, {})).to.eql({
       behandlingId: undefined,

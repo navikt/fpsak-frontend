@@ -9,7 +9,8 @@ import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components'
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad, getBehandlingType } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
@@ -123,7 +124,7 @@ FodselSammenligningPanel.defaultProps = {
 const mapStateToProps = state => ({
   antallBarn: getBarnFraTpsRelatertTilSoknad(state),
   nrOfDodfodteBarn: getAntallDodfodteBarn(state),
-  behandlingsTypeKode: getBehandlingType(state).kode,
+  behandlingsTypeKode: behandlingSelectors.getBehandlingType(state).kode,
 });
 
 export default connect(mapStateToProps)(injectIntl(FodselSammenligningPanel));

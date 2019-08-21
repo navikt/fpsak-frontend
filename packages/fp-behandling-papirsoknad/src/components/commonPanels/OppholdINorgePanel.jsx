@@ -13,7 +13,7 @@ import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
-import { getKodeverk } from 'papirsoknad/src/duck';
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import SoknadData from '../../SoknadData';
 import UtenlandsOppholdField from './UtenlandsOppholdField';
 

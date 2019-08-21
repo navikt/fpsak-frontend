@@ -1,5 +1,5 @@
 import fpsakBehandlingApi from './data/fpsakBehandlingApi';
-import { updateBehandling, resetBehandling } from './duck';
+import { updateBehandling, resetBehandling } from './duckBehandlingForstegangOgRev';
 
 class FpSakBehandlingUpdater {
     updateBehandling = () => updateBehandling;

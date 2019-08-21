@@ -2,12 +2,14 @@ import React from 'react';
 import { reduxForm, FormSection, formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
-import PropTypes from 'prop-types';
-import { getRegisteredFields } from 'papirsoknad/src/duck';
+import { Undertittel } from 'nav-frontend-typografi';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import { getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
 import VirksomhetIdentifikasjonPanel from './VirksomhetIdentifikasjonPanel';
 import VirksomhetRegnskapPanel from './VirksomhetRegnskapPanel';
 import VirksomhetStartetEndretPanel from './VirksomhetStartetEndretPanel';

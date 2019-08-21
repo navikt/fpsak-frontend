@@ -5,28 +5,24 @@ import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import { aksjonspunktPropType, rettighetPropType } from '@fpsak-frontend/prop-types';
 import {
   PersonIndex, requireProps, BehandlingIdentifier, ErrorTypes,
 } from '@fpsak-frontend/fp-felles';
+
 import { getRettigheter } from 'navAnsatt/duck';
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
-import {
-  getBehandlingVersjon, getBehandlingIsOnHold, getAksjonspunkter,
-} from './selectors/papirsoknadSelectors';
+import behandlingSelectors from './selectors/papirsoknadSelectors';
 import {
   resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData, getBehandlingIdentifier,
   getFagsakPerson,
-} from './duck';
+} from './duckPapirsoknad';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';
 
-// TODO (TOR) Slå saman med BehandlingPapirsoknadIndex?
-
 /**
- * RegistreringIndex
+ * PapirsoknadIndex
  *
  * Container komponent. Har ansvar for registrering-delen av hovedvinduet. Denne bruker valgt
  * fagsak og behandling for å generere korrekt registreringsskjema.
@@ -140,10 +136,10 @@ const mapStateToProps = state => ({
   submitRegistreringSuccess: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
   || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
-  aksjonspunkter: getAksjonspunkter(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
   fagsakPerson: getFagsakPerson(state),
   ...getRettigheter(state),
 });

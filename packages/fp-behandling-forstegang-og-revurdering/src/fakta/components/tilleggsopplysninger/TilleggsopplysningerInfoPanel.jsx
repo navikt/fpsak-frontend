@@ -5,8 +5,8 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -56,7 +56,7 @@ TilleggsopplysningerInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([getSoknad], soknad => ({
+const buildInitialValues = createSelector([behandlingSelectors.getSoknad], soknad => ({
   ...TilleggsopplysningerFaktaForm.buildInitialValues(soknad),
 }));
 
@@ -73,7 +73,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const tilleggsopplysningerAksjonspunkter = [aksjonspunktCodes.TILLEGGSOPPLYSNINGER];
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'TilleggsopplysningerInfoPanel',
 })(injectIntl(TilleggsopplysningerInfoPanelImpl)));
 const TilleggsopplysningerInfoPanel = withDefaultToggling(faktaPanelCodes.TILLEGGSOPPLYSNINGER, tilleggsopplysningerAksjonspunkter)(ConnectedComponent);

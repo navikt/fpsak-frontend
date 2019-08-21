@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingVerge, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getBehandlingVerge } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   faktaPanelCodes,
 } from '@fpsak-frontend/fp-felles';
@@ -17,7 +18,7 @@ import {
   withDefaultToggling,
 } from '@fpsak-frontend/fp-behandling-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
@@ -95,7 +96,7 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
   submittable: true,
 };
 
-const buildInitialValues = createSelector([getBehandlingVerge, getAksjonspunkter], (verge, aksjonspunkter) => ({
+const buildInitialValues = createSelector([getBehandlingVerge, behandlingSelectors.getAksjonspunkter], (verge, aksjonspunkter) => ({
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
   ...RegistrereVergeFaktaForm.buildInitialValues(verge),
 }));
@@ -117,9 +118,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
-const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'RegistrereVergeInfoPanel',
-})(injectIntl(RegistrereVergeInfoPanelImpl))));
+})(injectIntl(RegistrereVergeInfoPanelImpl))),
+);
 
 RegistrereVergeInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === vergeAksjonspunkter[0]);
 

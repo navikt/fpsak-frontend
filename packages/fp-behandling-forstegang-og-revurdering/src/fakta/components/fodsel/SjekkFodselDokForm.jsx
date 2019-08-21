@@ -11,9 +11,12 @@ import {
   ElementWrapper, VerticalSpacer, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import {
-  getEditedStatus, getFamiliehendelseGjeldende, getBarnFraTpsRelatertTilSoknad, getAksjonspunkter, getSoknadAntallBarn,
+  getEditedStatus, getFamiliehendelseGjeldende, getBarnFraTpsRelatertTilSoknad, getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormValueSelector, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import {
   required,
@@ -132,7 +135,7 @@ const allaBarn = (avklarteBarn) => {
   return komplettBarn;
 };
 
-export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, getAksjonspunkter, getSoknadAntallBarn],
+export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter, getSoknadAntallBarn],
   (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
     dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
       ? familiehendelse.dokumentasjonForeligger : undefined,
@@ -178,6 +181,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: sjekkFodselDokForm,
 })(SjekkFodselDokForm));

@@ -9,7 +9,11 @@ import { BehandlingAnkeIndex } from './BehandlingAnkeIndex';
 
 describe('BehandlingAnkeIndex', () => {
   it('skal rendre komponent uten feil', () => {
-    const wrapper = shallow(<BehandlingAnkeIndex setBehandlingInfoHolder={sinon.spy()} />);
+    const wrapper = shallow(
+      <BehandlingAnkeIndex
+        setBehandlingInfoHolder={sinon.spy()}
+      />,
+    );
     expect(wrapper.find(FpAnkeBehandlingInfoSetter)).to.have.length(1);
     expect(wrapper.find(BehandlingGrid)).to.have.length(1);
   });

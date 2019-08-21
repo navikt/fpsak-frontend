@@ -7,7 +7,8 @@ import { FieldArray } from 'redux-form';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { getBehandlingYtelseFordeling, getSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -141,8 +142,8 @@ OmsorgFaktaForm.transformOmsorgValues = values => ({
 const mapStateToProps = state => ({
   aleneomsorgIsEdited: !!getBehandlingYtelseFordeling(state).aleneOmsorgPerioder,
   omsorgIsEdited: !!getBehandlingYtelseFordeling(state).ikkeOmsorgPerioder,
-  oppgittOmsorgSoknad: getSoknad(state).oppgittRettighet.omsorgForBarnet,
-  oppgittAleneomsorgSoknad: getSoknad(state).oppgittRettighet.aleneomsorgForBarnet,
+  oppgittOmsorgSoknad: behandlingSelectors.getSoknad(state).oppgittRettighet.omsorgForBarnet,
+  oppgittAleneomsorgSoknad: behandlingSelectors.getSoknad(state).oppgittRettighet.aleneomsorgForBarnet,
 });
 
 export default connect(mapStateToProps)(OmsorgFaktaForm);

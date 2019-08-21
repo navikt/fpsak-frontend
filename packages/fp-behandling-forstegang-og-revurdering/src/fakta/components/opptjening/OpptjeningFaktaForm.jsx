@@ -8,16 +8,19 @@ import moment from 'moment';
 import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import {
-  getBehandlingVersjon, getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import {
   VerticalSpacer, ElementWrapper, AksjonspunktHelpText, DateLabel, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
+
+import {
+  getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getSelectedBehandlingId, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
 import TimeLineNavigation from './timeline/TimeLineNavigation';
@@ -297,7 +300,7 @@ OpptjeningFaktaFormImpl.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   opptjeningAktivitetTypes: getKodeverk(kodeverkTyper.OPPTJENING_AKTIVITET_TYPE)(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
   opptjeningFomDato: getBehandlingFastsattOpptjeningFomDate(state),
   opptjeningTomDato: getBehandlingFastsattOpptjeningTomDate(state),
   opptjeningActivities: sortByFomDate(behandlingFormValueSelector(props.formName)(state, 'opptjeningActivities')),

@@ -5,15 +5,15 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getSelectedBehandlingspunktVilkar, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getBehandlingsresultat } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import { getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -76,7 +76,8 @@ FodselVilkarFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus],
+  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
+    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -96,7 +97,7 @@ export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagsko
   : fodselsvilkarAvslagskoder);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FODSELSVILKARET_MOR];
   const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(initialState), avslagsarsaker);
@@ -104,15 +105,15 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     avslagsarsaker: filtrerteAvslagsarsaker,
-    status: getSelectedBehandlingspunktStatus(state),
+    status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    lovReferanse: getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
+    lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
     hasAksjonspunkt: aksjonspunkter.length > 0,
   });
 };
 
-const FodselVilkarForm = connect(mapStateToPropsFactory)(behandlingForm({
+const FodselVilkarForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
   validate,
 })(FodselVilkarFormImpl));

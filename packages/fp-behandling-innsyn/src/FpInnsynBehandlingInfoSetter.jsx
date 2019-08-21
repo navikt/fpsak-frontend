@@ -1,15 +1,11 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
-import {
-  getBehandlingSprak, getBehandlingVersjon, getAksjonspunkter, getBehandlingAnsvarligSaksbehandler, getBehandlingStatus,
-  getBehandlingsresultat, getBehandlingType, getBehandlingHasSoknad,
-  getBehandlingIsOnHold, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getSoknad,
-} from './selectors/innsynBehandlingSelectors';
 
+import behandlingSelectors from './selectors/innsynBehandlingSelectors';
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export class FpInnsynBehandlingInfoSetter extends Component {
@@ -79,18 +75,18 @@ FpInnsynBehandlingInfoSetter.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingSprak: getBehandlingSprak(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkter: getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  behandlingType: getBehandlingType(state),
-  behandlingHasSoknad: getBehandlingHasSoknad(state),
-  behandlingIsOnHold: getBehandlingIsOnHold(state),
-  behandlingBehandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
-  behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  soknad: getSoknad(state),
+  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
+  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
+  behandlingBehandlendeEnhetId: behandlingSelectors.getBehandlingBehandlendeEnhetId(state),
+  behandlingBehandlendeEnhetNavn: behandlingSelectors.getBehandlingBehandlendeEnhetNavn(state),
+  soknad: behandlingSelectors.getSoknad(state),
 });
 
 export default connect(mapStateToProps)(FpInnsynBehandlingInfoSetter);

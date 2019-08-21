@@ -12,14 +12,11 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image } from '@fpsak-frontend/shared-components';
 
-import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/fakta/duck';
-import {
-  getBehandlingResultatstruktur,
-  getBehandlingsresultat,
-  getBehandlingType,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
+import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
@@ -132,7 +129,7 @@ const erSammeResultatForForeldrepenger = (behandlingsresultat) => {
 };
 
 const getIsSameResultAsOriginalBehandling = createSelector(
-  [getBehandlingType, getBehandlingsresultat, getBehandlingResultatstruktur,
+  [behandlingSelectors.getBehandlingType, behandlingSelectors.getBehandlingsresultat, getBehandlingResultatstruktur,
     getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling, getFagsakYtelseType],
   (type, behandlingsresultat, resultatstruktur, originalBehandlingsresultat, originaltBeregningResultat, ytelseType) => {
     if (type !== behandlingType.REVURDERING) {
@@ -150,7 +147,7 @@ const getIsSameResultAsOriginalBehandling = createSelector(
 
 
 const getModalTextId = createSelector(
-  [getFagsakYtelseType, getBehandlingsresultat, getIsSameResultAsOriginalBehandling],
+  [getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, getIsSameResultAsOriginalBehandling],
   (ytelseType, behandlingsresultat, isSameResultAsOriginalBehandling) => {
     if (isSameResultAsOriginalBehandling) {
       return 'IverksetterVedtakStatusModal.UendretUtfall';
@@ -165,7 +162,7 @@ const getModalTextId = createSelector(
 );
 
 const mapStateToProps = state => ({
-  behandlingsresultat: getBehandlingsresultat(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),
   modalTextId: getModalTextId(state),

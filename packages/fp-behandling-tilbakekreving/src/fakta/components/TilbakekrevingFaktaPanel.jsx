@@ -7,13 +7,11 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getBehandlingIsOnHold, getAksjonspunkter, hasReadOnlyBehandling, getFeilutbetalingFakta,
-} from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import {
   setOpenInfoPanels, getOpenInfoPanels,
 } from '../duckFaktaTilbake';
-import { getFagsakPerson } from '../../duckTilbake';
+import { getFagsakPerson } from '../../duckBehandlingTilbakekreving';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 
 import styles from './tilbakekrevingFaktaPanel.less';
@@ -71,10 +69,11 @@ TilbakekrevingFaktaPanel.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  aksjonspunkter: getAksjonspunkter(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   openInfoPanels: getOpenInfoPanels(state),
-  readOnly: !getRettigheter(state).writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
-  feilutbetaling: getFeilutbetalingFakta(state),
+  readOnly: !getRettigheter(state).writeAccess.isEnabled
+    || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
+  feilutbetaling: behandlingSelectors.getFeilutbetalingFakta(state),
   fagsakPerson: getFagsakPerson(state),
 });
 

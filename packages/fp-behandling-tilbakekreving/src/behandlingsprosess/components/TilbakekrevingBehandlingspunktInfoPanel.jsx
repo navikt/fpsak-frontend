@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import {
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isSelectedBehandlingspunktReadOnly,
-  getBehandlingspunktAksjonspunkterCodes,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-} from '../behandlingsprosessTilbakeSelectors';
+import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 import TilbakekrevingVedtak from './vedtak/TilbakekrevingVedtak';
@@ -71,11 +65,11 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
+  readOnlySubmitButton: behandlingsprosessSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingBehandlingspunktInfoPanel);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getBehandlingType } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import VedtakForm from './VedtakForm';
@@ -54,7 +54,7 @@ VedtakPanels.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  behandlingTypeKode: getBehandlingType(state).kode,
+  behandlingTypeKode: behandlingSelectors.getBehandlingType(state).kode,
 });
 
 export default connect(mapStateToProps)(VedtakPanels);

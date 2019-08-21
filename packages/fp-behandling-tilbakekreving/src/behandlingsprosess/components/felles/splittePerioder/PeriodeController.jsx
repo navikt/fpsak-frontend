@@ -15,7 +15,7 @@ import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 
 import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './periodeController.less';

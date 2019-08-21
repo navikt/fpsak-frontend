@@ -9,16 +9,17 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom, getBehandlingHenlagt,
+  getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -126,7 +127,7 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingHenlagt, getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
+  [behandlingSelectors.getBehandlingHenlagt, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
   (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
@@ -157,7 +158,8 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'CheckPersonStatusForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, getSelectedBehandlingspunktAksjonspunkter(initialState))]);
+  const onSubmit = values => ownProps.submitCallback([transformValues(values,
+    behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState))]);
   const personStatuser = getFilteredKodeverk(initialState);
   return state => ({
     initialValues: buildInitialValues(state),
@@ -168,7 +170,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(CheckPersonStatusFormImpl)));
 

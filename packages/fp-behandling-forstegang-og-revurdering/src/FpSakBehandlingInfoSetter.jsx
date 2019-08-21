@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import {
-  isKontrollerRevurderingAksjonspunkOpen, getBehandlingSprak, getBehandlingVersjon, getBrevMaler, getAksjonspunkter,
-  getBehandlingAnsvarligSaksbehandler, getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerUtenUdefinert,
-  getTotrinnskontrollArsakerReadOnly, getTotrinnskontrollArsaker, getBehandlingsresultat, getBehandlingType,
-  getBehandlingHasSoknad, getBehandlingIsOnHold, isBehandlingInInnhentSoknadsopplysningerSteg, getBehandlingIsQueued,
-  getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn, getSoknad, getBehandlingResultatstruktur,
-} from './behandlingSelectors';
+import { getBehandlingResultatstruktur } from './behandlingSelectors';
+import behandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
 import { getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling } from './selectors/originalBehandlingSelectors';
 
 
@@ -118,27 +113,27 @@ FpSakBehandlingInfoSetter.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  isKontrollerRevurderingApOpen: isKontrollerRevurderingAksjonspunkOpen(state),
-  behandlingSprak: getBehandlingSprak(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  brevMaler: getBrevMaler(state),
-  aksjonspunkter: getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-  behandlingStatus: getBehandlingStatus(state),
-  behandlingToTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
-  totrinnskontrollArsakerUtenUdefinert: getTotrinnskontrollArsakerUtenUdefinert(state),
-  totrinnskontrollArsakerReadOnly: getTotrinnskontrollArsakerReadOnly(state),
-  totrinnskontrollArsaker: getTotrinnskontrollArsaker(state),
+  isKontrollerRevurderingApOpen: behandlingSelectors.isKontrollerRevurderingAksjonspunkOpen(state),
+  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  brevMaler: behandlingSelectors.getBrevMaler(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingToTrinnsBehandling: behandlingSelectors.getBehandlingToTrinnsBehandling(state),
+  totrinnskontrollArsakerUtenUdefinert: behandlingSelectors.getTotrinnskontrollArsakerUtenUdefinert(state),
+  totrinnskontrollArsakerReadOnly: behandlingSelectors.getTotrinnskontrollArsakerReadOnly(state),
+  totrinnskontrollArsaker: behandlingSelectors.getTotrinnskontrollArsaker(state),
   behandlingResultatstruktur: getBehandlingResultatstruktur(state),
-  behandlingsresultat: getBehandlingsresultat(state),
-  behandlingType: getBehandlingType(state),
-  behandlingHasSoknad: getBehandlingHasSoknad(state),
-  behandlingIsOnHold: getBehandlingIsOnHold(state),
-  isBehandlingInInnhentSoknadsinfoSteg: isBehandlingInInnhentSoknadsopplysningerSteg(state),
-  behandlingIsQueued: getBehandlingIsQueued(state),
-  behandlingBehandlendeEnhetId: getBehandlingBehandlendeEnhetId(state),
-  behandlingBehandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
-  soknad: getSoknad(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
+  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
+  isBehandlingInInnhentSoknadsinfoSteg: behandlingSelectors.isBehandlingInInnhentSoknadsopplysningerSteg(state),
+  behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
+  behandlingBehandlendeEnhetId: behandlingSelectors.getBehandlingBehandlendeEnhetId(state),
+  behandlingBehandlendeEnhetNavn: behandlingSelectors.getBehandlingBehandlendeEnhetNavn(state),
+  soknad: behandlingSelectors.getSoknad(state),
   behandlingsresultatFraOriginalBehandling: getBehandlingsresultatFraOriginalBehandling(state),
   resultatstrukturFraOriginalBehandling: getResultatstrukturFraOriginalBehandling(state),
 });

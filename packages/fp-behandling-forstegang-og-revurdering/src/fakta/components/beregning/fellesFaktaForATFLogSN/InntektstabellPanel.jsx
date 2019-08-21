@@ -10,8 +10,8 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import PropTypes from 'prop-types';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
@@ -93,7 +93,7 @@ InntektstabellPanelImpl.defaultProps = {
   skalViseTabell: true,
 };
 
-const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter, getFeatureToggles],
+const getSkalKunneOverstyre = createSelector([getRettigheter, behandlingSelectors.getAksjonspunkter, getFeatureToggles],
   (rettigheter, aksjonspunkter, toggles) => rettigheter.kanOverstyreAccess.isEnabled
   && !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);
@@ -101,7 +101,7 @@ const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter,
 const mapStateToProps = state => ({
     erOverstyrt: getFormValuesForBeregning(state)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],
     kanOverstyre: getSkalKunneOverstyre(state),
-    aksjonspunkter: getAksjonspunkter(state),
+    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
 });
 
 export default connect(mapStateToProps)(InntektstabellPanelImpl);

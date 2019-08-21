@@ -15,8 +15,8 @@ import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingKlage/src/behandlingForm';
-import { getAlleKlageKodeverk, getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckKlage';
+} from 'behandlingKlage/src/behandlingFormKlage';
+import { getAlleKodeverk, getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckBehandlingKlage';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 // TODO komponent skal ha eiga less-fil
@@ -169,4 +169,4 @@ const mapStateToProps = state => ({
   avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
 });
 
-export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKlageKodeverk)(FormkravKlageForm)));
+export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKodeverk)(FormkravKlageForm)));

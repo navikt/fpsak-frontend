@@ -8,24 +8,28 @@ import {
   formPropTypes,
 } from 'redux-form';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { bindActionCreators } from 'redux';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
 import {
   AksjonspunktHelpText, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { guid } from '@fpsak-frontend/utils';
+
 import {
   getBehandlingMedlemNew,
-  getSoknad,
   getBehandlingRevurderingAvFortsattMedlemskapFom,
-  getBehandlingVersjon, isBehandlingRevurderingFortsattMedlemskap,
-}
-  from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { bindActionCreators } from 'redux';
-import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
-import { guid } from '@fpsak-frontend/utils';
+  isBehandlingRevurderingFortsattMedlemskap,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 
@@ -245,7 +249,8 @@ const transformValues = (values, aksjonspunkter) => {
 };
 
 
-const buildInitalValues = createSelector([getSoknad, getFagsakPerson, getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
+const buildInitalValues = createSelector([behandlingSelectors.getSoknad, getFagsakPerson,
+  getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
 (soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
   soknad,
   person,
@@ -264,7 +269,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const perioder = [];
 
   return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state));
+    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
     return {
       behandlingFormPrefix,
       onSubmit,
@@ -283,7 +288,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
   form: 'OppholdInntektOgPerioderForm',
   enableReinitialize: true,
 })(injectIntl(OppholdInntektOgPerioderFormNew)));

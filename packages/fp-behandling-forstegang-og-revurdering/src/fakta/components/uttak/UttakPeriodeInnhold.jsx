@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getBehandlingStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
@@ -231,7 +231,7 @@ UttakPeriodeInnhold.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  behandlingStatusKode: getBehandlingStatus(state).kode,
+  behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
 });
 
 export default connect(mapStateToProps)(UttakPeriodeInnhold);

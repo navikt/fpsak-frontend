@@ -7,8 +7,8 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
-  behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   VerticalSpacer, Image, FlexContainer, FlexRow, FlexColumn,
@@ -142,4 +142,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(Tilbaketrekkpanel));
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(Tilbaketrekkpanel));

@@ -6,8 +6,9 @@ import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
-import { getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import DokumentasjonFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/DokumentasjonFaktaForm';
 import MannAdoptererAleneFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
 import EktefelleFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/EktefelleFaktaForm';
@@ -126,7 +127,9 @@ AdopsjonInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([getSoknad, getFamiliehendelseGjeldende, getAksjonspunkter], (soknad, familiehendelse, allAksjonspunkter) => {
+const buildInitialValues = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter], (
+  soknad, familiehendelse, allAksjonspunkter,
+) => {
   const aksjonspunkter = allAksjonspunkter.filter(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode));
 
   let mannAdoptererAleneValues = {};
@@ -169,9 +172,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'AdopsjonInfoPanel',
-})(injectIntl(AdopsjonInfoPanelImpl))));
+})(injectIntl(AdopsjonInfoPanelImpl))),
+);
 
 AdopsjonInfoPanel.supports = (vilkarCodes, aksjonspunkter) => aksjonspunkter.some(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
   || vilkarCodes.some(code => adopsjonsvilkarene.includes(code));

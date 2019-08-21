@@ -5,32 +5,26 @@ import { initialize as reduxFormInitialize, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
+
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { Element } from 'nav-frontend-typografi';
 import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';
+
 import { getRettigheter } from 'navAnsatt/duck';
-import { getBehandlingFormPrefix, behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getBehandlingVersjon,
-
-  getAksjonspunkter,
-  getAvklarAktiviteter,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-
-
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getAvklarAktiviteter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-
-
 import { getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, formNameAvklarAktiviteter } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
-
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
+
 import styles from './avklareAktiviteterPanel.less';
 
 
@@ -48,7 +42,7 @@ const findAksjonspunktMedBegrunnelse = (aksjonspunkter, kode) => aksjonspunkter
 
 
 export const erAvklartAktivitetEndret = createSelector(
-  [getAksjonspunkter, getAvklarAktiviteter, getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter],
+  [behandlingSelectors.getAksjonspunkter, getAvklarAktiviteter, getFormValuesForAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter],
   (aksjonspunkter, avklarAktiviteter, values, initialValues) => {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && (!values || !values[MANUELL_OVERSTYRING_FIELD])) {
       return false;
@@ -68,7 +62,7 @@ export const erAvklartAktivitetEndret = createSelector(
 );
 
 export const getHelpTextsAvklarAktiviteter = createSelector(
-  [getAksjonspunkter],
+  [behandlingSelectors.getAksjonspunkter],
   aksjonspunkter => (hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
     ? [<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter" />]
     : []),
@@ -285,13 +279,14 @@ export const transformValues = (values) => {
 };
 
 
-export const buildInitialValuesAvklarAktiviteter = createSelector([getAksjonspunkter, getAvklarAktiviteter, getAlleKodeverk], buildInitialValues);
+export const buildInitialValuesAvklarAktiviteter = createSelector([behandlingSelectors.getAksjonspunkter, getAvklarAktiviteter,
+  getAlleKodeverk], buildInitialValues);
 
 const skalKunneOverstyre = (rettigheter, aksjonspunkter) => rettigheter.kanOverstyreAccess.isEnabled && !hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
 
-const getSkalKunneOverstyre = createSelector([getRettigheter, getAksjonspunkter], skalKunneOverstyre);
+const getSkalKunneOverstyre = createSelector([getRettigheter, behandlingSelectors.getAksjonspunkter], skalKunneOverstyre);
 
-const getIsAksjonspunktClosed = createSelector([getAksjonspunkter],
+const getIsAksjonspunktClosed = createSelector([behandlingSelectors.getAksjonspunkter],
 (alleAp) => {
   const relevantOpenAps = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_AKTIVITETER
     || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER)
@@ -310,10 +305,10 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       values,
       onSubmit,
       alleKodeverk,
-      aksjonspunkter: getAksjonspunkter(state),
+      aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
       kanOverstyre: getSkalKunneOverstyre(state),
       helpText: getHelpTextsAvklarAktiviteter(state),
-      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
       isAksjonspunktClosed: getIsAksjonspunktClosed(state),
       avklarAktiviteter: getAvklarAktiviteter(state),
       hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME],
@@ -329,6 +324,6 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
   form: formNameAvklarAktiviteter,
 })(AvklareAktiviteterPanelImpl));

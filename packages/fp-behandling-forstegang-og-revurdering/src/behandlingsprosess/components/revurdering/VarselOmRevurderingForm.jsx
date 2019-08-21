@@ -14,10 +14,13 @@ import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText, ArrowBox,
 } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
-import { getBehandlingLanguageCode, getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -51,7 +54,12 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       valid, pristine, fritekst, submit,
     } = this.props;
     if (valid || pristine) {
-      previewCallback('', 'REVURD', fritekst || ' ');
+      const data = {
+        mottaker: '',
+        brevmalkode: 'REVURD',
+        fritekst: fritekst || ' ',
+      };
+      previewCallback(data);
     } else {
       submit();
     }
@@ -235,7 +243,7 @@ VarselOmRevurderingFormImpl.defaultProps = {
   ventearsaker: [],
 };
 
-export const buildInitialValues = createSelector([getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
+export const buildInitialValues = createSelector([behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
   kode: aksjonspunkter[0].definisjon.kode,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
@@ -246,7 +254,7 @@ const formName = 'VarselOmRevurderingForm';
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback([values]);
   const erAutomatiskRevurdering = getBehandlingArsaker(initialState).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
-  const aksjonspunkt = getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
+  const aksjonspunkt = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
   const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
 
   return state => ({
@@ -254,7 +262,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktStatus: aksjonspunkt.status.kode,
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
-    languageCode: getBehandlingLanguageCode(state),
+    languageCode: behandlingSelectors.getBehandlingLanguageCode(state),
     ...behandlingFormValueSelector(formName)(state, 'sendVarsel', 'fritekst', 'frist', 'ventearsak'),
     originalVentearsak: ownProps.ventearsak,
     originalFrist: ownProps.frist,
@@ -264,7 +272,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: true,
 })(VarselOmRevurderingFormImpl)));

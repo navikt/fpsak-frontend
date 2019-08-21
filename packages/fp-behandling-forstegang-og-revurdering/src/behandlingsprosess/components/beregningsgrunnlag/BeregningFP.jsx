@@ -16,7 +16,7 @@ import {
   getGjeldendeBeregningAksjonspunkter,
   getBeregningGraderingAksjonspunkt,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getSelectedBehandlingspunktVilkar } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
@@ -178,7 +178,7 @@ const getBeregnetAarsinntekt = createSelector(
 );
 
 const buildProps = createSelector(
-  [getBeregningsgrunnlag, getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
+  [getBeregningsgrunnlag, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
     getGjeldendeBeregningAksjonspunkter, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
   (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkter, beregnetAarsinntekt, graderingAP) => {
     if (!berGr || !relevanteStatuser) {

@@ -7,7 +7,6 @@ import { FieldArray, formValueSelector } from 'redux-form';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -21,6 +20,7 @@ import {
 } from '@fpsak-frontend/utils';
 import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
 
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
 import styles from './permisjonPanel.less';
 

@@ -7,8 +7,8 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { required, hasValidDate } from '@fpsak-frontend/utils';

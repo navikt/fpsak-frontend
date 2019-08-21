@@ -5,14 +5,7 @@ import classnames from 'classnames/bind';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
-import {
-  getBehandlingspunktAksjonspunkterCodes,
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-  isSelectedBehandlingspunktReadOnly,
-  getNotAcceptedByBeslutter,
-} from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
+import behandlingspunktKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 import VedtakKlageFormNy from './vedtak/VedtakKlageForm';
 import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
 import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
@@ -34,7 +27,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
   saveTempKlage,
   submitCallback,
   previewCallback,
-  previewCallbackKlage,
   openAksjonspunkt,
   readOnly,
   isApSolvable,
@@ -48,7 +40,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
        && (
        <VedtakKlageFormNy
          submitCallback={submitCallback}
-         previewVedtakCallback={previewCallbackKlage}
+         previewVedtakCallback={previewCallback}
          readOnly={readOnly}
        />
        )
@@ -60,7 +52,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         saveKlage={saveTempKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        previewCallback={previewCallbackKlage}
+        previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
       )
@@ -71,7 +63,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         saveKlage={saveTempKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        previewCallback={previewCallbackKlage}
+        previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
       )
@@ -81,7 +73,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         <FormkravKlageFormNfp
           submitCallback={submitCallback}
           readOnly={readOnly}
-          previewCallback={previewCallback}
           readOnlySubmitButton={readOnlySubmitButton}
         />
       )
@@ -91,7 +82,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         <FormkravKlageFormKa
           submitCallback={submitCallback}
           readOnly={readOnly}
-          previewCallback={previewCallback}
           readOnlySubmitButton={readOnlySubmitButton}
         />
       )
@@ -106,7 +96,6 @@ BehandlingspunktKlageInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  previewCallbackKlage: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
@@ -119,12 +108,12 @@ BehandlingspunktKlageInfoPanel.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
+  openAksjonspunkt: behandlingspunktKlageSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingspunktKlageSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingspunktKlageSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: behandlingspunktKlageSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  readOnlySubmitButton: behandlingspunktKlageSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  notAcceptedByBeslutter: behandlingspunktKlageSelectors.getNotAcceptedByBeslutter(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktKlageInfoPanel);

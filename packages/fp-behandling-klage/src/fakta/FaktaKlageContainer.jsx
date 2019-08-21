@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingVersjon } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingKlage/src/duckKlage';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingKlage/src/duckBehandlingKlage';
 import { resetFakta, getOpenInfoPanels } from './duckFaktaKlage';
-
 import FaktaKlagePanel from './components/FaktaKlagePanel';
 
 /**
- * FaktaAnkeContainer
+ * FaktaKlageContainer
  *
- * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Innsyn.
+ * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er klage.
  */
 export const FaktaKlageContainer = props => (
   <FaktaKlagePanel {...props} />
@@ -30,7 +29,7 @@ FaktaKlageContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
 });

@@ -1,5 +1,5 @@
 import tilbakekrevingBehandlingApi from './data/tilbakekrevingBehandlingApi';
-import { updateBehandling, resetBehandling } from './duckTilbake';
+import { updateBehandling, resetBehandling } from './duckBehandlingTilbakekreving';
 
 class FpTilbakeBehandlingUpdater {
     updateBehandling = () => updateBehandling;

@@ -4,7 +4,9 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { isRequiredMessage, ariaCheck } from '@fpsak-frontend/utils';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 

@@ -7,15 +7,14 @@ import { bindActionCreators } from 'redux';
 import { Knapp } from 'nav-frontend-knapper';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import { omit } from '@fpsak-frontend/utils';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getBehandlingVersjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import TilretteleggingTable from './TilretteleggingTable';
 import TilretteleggingDetailForm, { TILRETTELEGGING_DETAIL_FORM_NAME } from './TilretteleggingDetailForm';
 
@@ -156,7 +155,7 @@ const mapStateToProps = (state, ownProps) => {
   tilretteleggingDatoer.sort((a, b) => a.fom.localeCompare(b.fom));
   return {
     tilretteleggingDatoer,
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
   };
 };
 

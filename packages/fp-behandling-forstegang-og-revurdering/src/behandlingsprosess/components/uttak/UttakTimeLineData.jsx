@@ -17,7 +17,7 @@ import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 

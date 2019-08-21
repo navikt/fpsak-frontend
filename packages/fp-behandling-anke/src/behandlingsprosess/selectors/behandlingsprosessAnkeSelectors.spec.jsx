@@ -11,8 +11,12 @@ import { getBehandlingspunkterProps } from './behandlingsprosessAnkeSelectors';
 
 describe('behandlingsprosessAnkeSelectors', () => {
   it('skal opprette behandlingspunkter for ankebehandling og ankemerknader når en har aksjonspunkt for vurdering av anke', () => {
-    const fagsakYtelseType = FagsakYtelseType.FORELDREPENGER;
-    const behandlingType = BehandlingType.ANKE;
+    const fagsakYtelseType = {
+      kode: FagsakYtelseType.FORELDREPENGER,
+    };
+    const behandlingType = {
+      kode: BehandlingType.ANKE,
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: ac.MANUELL_VURDERING_AV_ANKE,
