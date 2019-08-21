@@ -8,9 +8,9 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, BorderBox, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { getBehandlingFormPrefix, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';

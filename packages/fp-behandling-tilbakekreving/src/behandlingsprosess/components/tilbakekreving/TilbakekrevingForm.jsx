@@ -10,11 +10,11 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { FaktaGruppe, BehandlingspunktSubmitButton, getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
