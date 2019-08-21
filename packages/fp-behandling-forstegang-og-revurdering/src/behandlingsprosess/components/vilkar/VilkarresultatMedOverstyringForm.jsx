@@ -18,6 +18,7 @@ import {
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
