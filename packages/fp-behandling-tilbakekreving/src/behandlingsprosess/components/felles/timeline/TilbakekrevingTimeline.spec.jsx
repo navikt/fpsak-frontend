@@ -12,20 +12,20 @@ import TilbakekrevingTimelineController from './TilbakekrevingTimelineController
 describe('<TilbakekrevingTimeline>', () => {
   it('skal rendre tidslinje korrekt', () => {
     const perioder = [{
-      id: '1',
+      id: 1,
       fom: '2019-10-10',
       tom: '2019-11-10',
       isAksjonspunktOpen: true,
       isGodkjent: true,
     }, {
-      id: '2',
+      id: 2,
       fom: '2019-11-11',
       tom: '2019-12-10',
       isAksjonspunktOpen: false,
       isGodkjent: true,
     }];
     const valgtPeriode = {
-      id: '1',
+      id: 1,
       fom: '2019-10-10',
       tom: '2019-11-10',
       isAksjonspunktOpen: true,
@@ -48,5 +48,7 @@ describe('<TilbakekrevingTimeline>', () => {
     const tidslinje = wrapper.find(Timeline);
     expect(tidslinje.prop('options').min.format(ISO_DATE_FORMAT)).is.eql('2019-09-12');
     expect(tidslinje.prop('options').max.format(ISO_DATE_FORMAT)).is.eql('2023-10-10');
+
+    expect(tidslinje.prop('groups')).is.eql([{ id: 1, content: '' }]);
   });
 });

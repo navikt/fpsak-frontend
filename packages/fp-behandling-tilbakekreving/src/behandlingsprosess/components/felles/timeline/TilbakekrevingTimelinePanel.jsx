@@ -62,6 +62,7 @@ class TilbakekrevingTimelinePanel extends Component {
 
 TilbakekrevingTimelinePanel.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,

@@ -8,6 +8,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
   RadioOption, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
@@ -33,10 +34,6 @@ const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
 export const FORELDELSE_PERIODE_FORM_NAME = 'foreldelsesresultatActivity';
-
-const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
-const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
-  : oldForeldetValue(selectedItemData.foreldelseVurderingType));
 
 export class ForeldelsePeriodeFormImpl extends Component {
   constructor() {
@@ -128,18 +125,17 @@ ForeldelsePeriodeFormImpl.propTypes = {
   periode: PropTypes.shape().isRequired,
   behandlingFormPrefix: PropTypes.string.isRequired,
   skjulPeriode: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  foreldelseVurderingTyper: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
+  setNestePeriode: PropTypes.func.isRequired,
+  setForrigePeriode: PropTypes.func.isRequired,
+  oppdaterSplittedePerioder: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
-const transformValues = (periode, values) => {
-  const { foreldet, begrunnelse } = values;
-
-  return {
-    ...periode,
-    begrunnelse,
-    foreldet,
-  };
-};
+const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
+const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
+  : oldForeldetValue(selectedItemData.foreldelseVurderingType));
 
 const buildInitalValues = periode => ({
   ...periode,
@@ -154,7 +150,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const initialValues = buildInitalValues(ownProps.periode);
-  const onSubmit = values => ownProps.oppdaterPeriode(transformValues(ownProps.periode, values));
+  const onSubmit = values => ownProps.oppdaterPeriode(values);
   const foreldelseVurderingTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING)(initialState)
     .filter(fv => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
   return () => ({

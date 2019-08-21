@@ -42,16 +42,16 @@ const getApTekst = apCode => (apCode
   ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
   : []);
 
-const harApentAksjonspunkt = periode => periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT;
-
+const harApentAksjonspunkt = periode => ((!periode.foreldelseVurderingType || periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT)
+  && (periode.begrunnelse === undefined || periode.erSplittet));
 
 const formaterPerioderForTidslinje = (perioder = []) => perioder
   .map((periode, index) => ({
     fom: periode.fom,
     tom: periode.tom,
     isAksjonspunktOpen: periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT,
-    isGodkjent: foreldelseVurderingType.FORELDET !== periode.foreldelseVurderingType.kode,
-    id: `${index}`,
+    isGodkjent: foreldelseVurderingType.FORELDET !== periode.foreldet,
+    id: index,
   }));
 
 export class ForeldelseFormImpl extends Component {
@@ -152,7 +152,6 @@ export class ForeldelseFormImpl extends Component {
       foreldelsesresultatActivity,
       behandlingFormPrefix,
       kjonn,
-      isApOpen,
       apCodes,
       readOnlySubmitButton,
       readOnly,
@@ -164,6 +163,7 @@ export class ForeldelseFormImpl extends Component {
     } = this.state;
 
     const perioderFormatertForTidslinje = formaterPerioderForTidslinje(foreldelsesresultatActivity);
+    const isApOpen = perioderFormatertForTidslinje.some(harApentAksjonspunkt);
     const valgtPeriodeFormatertForTidslinje = valgtPeriode
     ? perioderFormatertForTidslinje.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)
     : undefined;
@@ -247,19 +247,17 @@ ForeldelseFormImpl.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   kjonn: PropTypes.string.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool.isRequired,
-  }),
+  }).isRequired,
 };
 
 ForeldelseFormImpl.defaultProps = {
   foreldelsesresultatActivity: undefined,
-  apCodes: undefined,
-  merknaderFraBeslutter: undefined,
+  apCodes: [],
 };
 
 export const transformValues = (values, apCode) => {
@@ -269,11 +267,10 @@ export const transformValues = (values, apCode) => {
     begrunnelse: period.begrunnelse,
     foreldelseVurderingType: period.foreldet,
   }));
-  return [
-    {
-      foreldelsePerioder,
-      kode: apCode,
-    }];
+  return [{
+    foreldelsePerioder,
+    kode: apCode,
+  }];
 };
 export const buildInitialValues = foreldelsePerioder => ({
   foreldelsesresultatActivity: foreldelsePerioder.map(p => ({

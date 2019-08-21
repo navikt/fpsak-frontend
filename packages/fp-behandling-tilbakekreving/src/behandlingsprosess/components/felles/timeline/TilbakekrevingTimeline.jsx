@@ -219,6 +219,7 @@ class TilbakekrevingTimeline extends Component {
 
 TilbakekrevingTimeline.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,
@@ -226,7 +227,7 @@ TilbakekrevingTimeline.propTypes = {
   })).isRequired,
   toggleDetaljevindu: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,

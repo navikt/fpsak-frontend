@@ -271,7 +271,6 @@ TilbakekrevingFormImpl.propTypes = {
   vilkarsVurdertePerioder: PropTypes.arrayOf(PropTypes.shape()),
   dataForDetailForm: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   kjonn: PropTypes.string.isRequired,

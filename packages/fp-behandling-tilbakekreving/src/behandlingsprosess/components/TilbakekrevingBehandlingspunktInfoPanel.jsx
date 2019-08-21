@@ -33,7 +33,6 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
     {ForeldelseForm.supports(selectedBehandlingspunkt, apCodes) && (
       <ForeldelseForm
         submitCallback={submitCallback}
-        isApOpen={openAksjonspunkt}
         apCodes={apCodes}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
@@ -43,7 +42,6 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       <TilbakekrevingForm
         submitCallback={submitCallback}
         readOnly={readOnly}
-        isApOpen={openAksjonspunkt}
         readOnlySubmitButton={readOnlySubmitButton}
       />
     )}
