@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  buildInitialValuesVurderFaktaBeregning, getValidationVurderFaktaBeregning, transformValuesVurderFaktaBeregning,
+  buildInitialValuesVurderFaktaBeregning, transformValuesVurderFaktaBeregning,
   BEGRUNNELSE_FAKTA_TILFELLER_NAME, harIkkeEndringerIAvklarMedFlereAksjonspunkter,
 } from './VurderFaktaBeregningPanel';
 
@@ -38,19 +38,6 @@ describe('<VurderFaktaBeregningPanel>', () => {
     const initialValuesFelles = () => ({ test: 'test' });
     const initialValues = buildInitialValuesVurderFaktaBeregning.resultFunc(aksjonspunkter, initialValuesFelles);
     expect(initialValues.test).to.equal('test');
-  });
-
-  it('skal ikkje validere om man ikkje har aksjonspunkt', () => {
-    const validate = () => ('validate');
-    const validation = getValidationVurderFaktaBeregning.resultFunc(validate)({ aksjonspunkter: [] });
-    expect(validation).to.equal(null);
-  });
-
-  it('skal validere om man har aksjonspunkt', () => {
-    const validate = () => ({ test: 'validate' });
-    const values = { aksjonspunkter };
-    const validation = getValidationVurderFaktaBeregning.resultFunc(validate)(values);
-    expect(validation.test).to.equal('validate');
   });
 
   it('skal ikkje transformValues uten aksjonspunkt', () => {

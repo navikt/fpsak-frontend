@@ -173,11 +173,7 @@ export const getSkjæringstidspunktBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.skjaeringstidspunktBeregning : undefined),
 );
 export const getEndringBeregningsgrunnlag = createSelector(
-  [getFaktaOmBeregning, getFaktaOmFordeling], (faktaOmBeregning = {},
-    faktaOmFordeling = {}) => {
-      if (faktaOmBeregning && faktaOmBeregning.endringBeregningsgrunnlag) {
-        return faktaOmBeregning.endringBeregningsgrunnlag;
-      }
+  [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
       if (faktaOmFordeling && faktaOmFordeling.endringBeregningsgrunnlag) {
         return faktaOmFordeling.endringBeregningsgrunnlag;
       }

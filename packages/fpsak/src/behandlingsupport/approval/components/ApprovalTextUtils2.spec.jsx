@@ -138,15 +138,6 @@ describe('<ApprovalTextUtils2>', () => {
     const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
     expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold');
   });
-  it('skal vise korrekt tekst for aksjonspunkt 5058 fastsett endret beregningsgrunnlag', () => {
-    const beregningDto = { faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG }] };
-    const aksjonspunkt = lagAksjonspunkt(
-      aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN, undefined,
-      beregningDto, 'begrunnelse', false, undefined, 'status', undefined,
-    );
-    const message = getAksjonspunktText.resultFunc(true, null, null, null, null)(aksjonspunkt);
-    expect(message[0].props.id).to.eql('ToTrinnsForm.Beregning.FastsettEndretBeregningsgrunnlag');
-  });
   it('skal vise korrekt tekst for aksjonspunkt 5058 ATFL i samme org', () => {
     const beregningDto = { faktaOmBeregningTilfeller: [{ kode: faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON }] };
     const aksjonspunkt = lagAksjonspunkt(

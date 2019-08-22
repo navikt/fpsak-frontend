@@ -3,14 +3,28 @@ import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier'
 import KunYtelsePanel, { brukersAndelFieldArrayName } from './KunYtelsePanel';
 import { besteberegningField } from './KunYtelseBesteberegningPanel';
 
-describe('<KunYtelsePanel>', () => {
-  const getKodeverknavn = (kodeverk) => {
-    if (kodeverk.kode === 'BA') {
-      return 'Brukers andel';
-    }
-    return '';
-  };
 
+const faktaOmBeregningAndel1 = {
+  andelsnr: 1,
+  fastsattBelopPrMnd: null,
+  lagtTilAvSaksbehandler: false,
+  inntektskategori: { kode: inntektskategorier.UDEFINERT },
+  aktivitetStatus: { kode: 'BA' },
+  visningsnavn: 'Brukers andel',
+};
+
+const faktaOmBeregningAndel2 = {
+  andelsnr: 2,
+  fastsattBelopPrMnd: 10000,
+  lagtTilAvSaksbehandler: true,
+  inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
+  aktivitetStatus: { kode: 'BA' },
+  visningsnavn: 'Brukers andel',
+};
+
+const faktaOmBeregningAndeler = [faktaOmBeregningAndel1, faktaOmBeregningAndel2];
+
+describe('<KunYtelsePanel>', () => {
   it('skal transform values riktig', () => {
     const kunYtelse = { fodendeKvinneMedDP: false };
     const andel1 = {
@@ -57,7 +71,7 @@ describe('<KunYtelsePanel>', () => {
       andeler: [andel1, andel2],
     };
 
-    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
+    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
     const andeler = initialValues[`${brukersAndelFieldArrayName}`];
     expect(andeler).to.have.length(2);
     expect(andeler[0].andelsnr).to.equal(1);
@@ -97,7 +111,7 @@ describe('<KunYtelsePanel>', () => {
       fodendeKvinneMedDP: true,
       erBesteberegning: true,
     };
-    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
+    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
     const andeler = initialValues[`${brukersAndelFieldArrayName}`];
     expect(andeler).to.have.length(2);
     expect(andeler[0].andelsnr).to.equal(1);
@@ -140,7 +154,7 @@ describe('<KunYtelsePanel>', () => {
       fodendeKvinneMedDP: true,
       erBesteberegning: false,
     };
-    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
+    const initialValues = KunYtelsePanel.buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
     const andeler = initialValues[`${brukersAndelFieldArrayName}`];
     expect(andeler).to.have.length(2);
     expect(andeler[0].andelsnr).to.equal(1);

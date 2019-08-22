@@ -60,12 +60,9 @@ VurderEtterlonnSluttpakkeForm.propTypes = {
   harEtterlonnSluttpakke: PropTypes.bool.isRequired,
 };
 
-const {
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG, FASTSETT_BESTEBEREGNING_FODENDE_KVINNE,
-} = faktaOmBeregningTilfelle;
+const { FASTSETT_BESTEBEREGNING_FODENDE_KVINNE } = faktaOmBeregningTilfelle;
 
-const tilfellerSomHandtererAllInntekt = [FASTSETT_BESTEBEREGNING_FODENDE_KVINNE,
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
+const tilfellerSomHandtererAllInntekt = [FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
 
 const harIkkeTilfelleSomHandtererInntekt = tilfeller => !tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle));
 

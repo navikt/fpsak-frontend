@@ -4,13 +4,6 @@ import {
   getEndringBeregningsgrunnlagPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
-export const createArbeidsperiodeString = (arbeidsforhold) => {
-  if (arbeidsforhold.opphoersdato) {
-    return `${arbeidsforhold.startdato} - ${arbeidsforhold.opphoersdato}`;
-  }
-  return `${arbeidsforhold.startdato} - `;
-};
-
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
     return arbeidsgiverList.map(({ arbeidsgiverId }) => (arbeidsgiverId)).includes(arbeidsforhold.arbeidsgiverId);

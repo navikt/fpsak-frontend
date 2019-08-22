@@ -2,7 +2,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 
 const vurderFaktaOmBeregningTotrinnText = {
   [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD]: 'ToTrinnsForm.Beregning.VurderTidsbegrensetArbeidsforhold',
-  [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.FastsettEndretBeregningsgrunnlag',
   [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL]: 'ToTrinnsForm.Beregning.NyoppstartetFrilanser',
   [faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET]: 'ToTrinnsForm.Beregning.SNNyIArbeidslivet',
   [faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE]: 'ToTrinnsForm.Beregning.Besteberegning',

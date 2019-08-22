@@ -128,8 +128,3 @@ export const mapToBelop = (andel) => {
   }
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };
-
-export const skalFastsetteForATUavhengigAvATFLSammeOrg = (values,
-  faktaOmBeregning) => (skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse) || values[lonnsendringField]);
-
-export const skalFastsetteForFLUavhengigAvATFLSammeOrg = values => (frilansMottarYtelse(values) || values[erNyoppstartetFLField]);

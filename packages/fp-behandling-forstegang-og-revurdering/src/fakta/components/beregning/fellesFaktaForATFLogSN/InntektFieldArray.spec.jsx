@@ -320,10 +320,8 @@ describe('<InntektFieldArray>', () => {
     expect(errors[0].andel[0].id).to.equal(isRequiredMessage()[0].id);
   });
 
-  const getKodeverknavn = () => undefined;
-
   it('skal ikkje bygge initial values om ingen andeler', () => {
-    const iv = InntektFieldArray.buildInitialValues([], getKodeverknavn, {});
+    const iv = InntektFieldArray.buildInitialValues([]);
     expect(iv).to.be.empty;
   });
 });
