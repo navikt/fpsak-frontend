@@ -20,16 +20,19 @@ import FagsakProfile from './components/FagsakProfile';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import styles from './fagsakProfileIndex.less';
 
-export const getSkalViseRisikoklassifisering = createSelector(
+export const getSelectedBehandling = createSelector(
   [getSelectedBehandlingId, getBehandlinger],
   (selectedBehandlingId, behandlinger = []) => {
     if (!selectedBehandlingId || behandlinger.length < 1) {
-      return false;
+      return undefined;
     }
-    const selectedBehandling = behandlinger.find(beh => beh.id === selectedBehandlingId);
-    return selectedBehandling && selectedBehandling.type ? selectedBehandling.type.kode === behandlingType.FORSTEGANGSSOKNAD : false;
+    return behandlinger.find(beh => beh.id === selectedBehandlingId);
   },
 );
+
+const skalViseRisikoklassifisering = selectedBehandling => (selectedBehandling && selectedBehandling.type
+  ? selectedBehandling.type.kode === behandlingType.FORSTEGANGSSOKNAD
+  : false);
 
 
 export class FagsakProfileIndex extends Component {
@@ -48,7 +51,7 @@ export class FagsakProfileIndex extends Component {
   render() {
     const {
       sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger,
-      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, skalViseRisikoklassifisering,
+      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, selectedBehandling,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -63,8 +66,12 @@ export class FagsakProfileIndex extends Component {
           showAll={showAll}
           toggleShowAll={toggleShowAll}
         />
-        {skalViseRisikoklassifisering
-          && <RisikoklassifiseringIndex />
+        {skalViseRisikoklassifisering(selectedBehandling)
+          && (
+          <RisikoklassifiseringIndex
+            selectedBehandling={selectedBehandling}
+          />
+)
         }
 
 
@@ -83,12 +90,13 @@ FagsakProfileIndex.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  skalViseRisikoklassifisering: PropTypes.bool.isRequired,
+  selectedBehandling: PropTypes.shape(),
   annenPartLink: PropTypes.shape(),
 };
 
 FagsakProfileIndex.defaultProps = {
   selectedBehandlingId: null,
+  selectedBehandling: null,
   annenPartLink: {},
 };
 
@@ -104,7 +112,7 @@ const mapStateToProps = (state) => {
     behandlinger: getBehandlinger(state),
     noExistingBehandlinger: getNoExistingBehandlinger(state),
     showAll: getShowAllBehandlinger(state),
-    skalViseRisikoklassifisering: getSkalViseRisikoklassifisering(state),
+    selectedBehandling: getSelectedBehandling(state),
   };
 };
 

@@ -7,7 +7,13 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import RisikoklassfiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import FagsakProfile from './components/FagsakProfile';
-import { FagsakProfileIndex, getSkalViseRisikoklassifisering } from './FagsakProfileIndex';
+import { FagsakProfileIndex, getSelectedBehandling } from './FagsakProfileIndex';
+
+const lagBehandlingAvType = kode => ({
+    type: {
+      kode,
+    },
+});
 
 
 describe('<FagsakProfileIndex>', () => {
@@ -22,7 +28,7 @@ describe('<FagsakProfileIndex>', () => {
       showAll={false}
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
-      skalViseRisikoklassifisering={false}
+      selectedBehandling={lagBehandlingAvType('BT-004')}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
     expect(wrapper.find(FagsakProfile)).has.length(1);
@@ -41,7 +47,7 @@ describe('<FagsakProfileIndex>', () => {
       showAll
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
-      skalViseRisikoklassifisering={false}
+      selectedBehandling={lagBehandlingAvType('BT-004')}
     />);
 
     expect(showAllCallback.getCalls()).has.length(0);
@@ -59,7 +65,7 @@ describe('<FagsakProfileIndex>', () => {
       showAll
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
-      skalViseRisikoklassifisering={false}
+      selectedBehandling={lagBehandlingAvType('BT-004')}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
     wrapper.unmount();
@@ -79,7 +85,7 @@ describe('<FagsakProfileIndex>', () => {
       showAll
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
-      skalViseRisikoklassifisering
+      selectedBehandling={lagBehandlingAvType('BT-002')}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(1);
     wrapper.unmount();
@@ -87,7 +93,7 @@ describe('<FagsakProfileIndex>', () => {
     expect(resetCallback.getCalls()).has.length(1);
   });
 
-  it('skal teste at risikoklassifisering vises kun får det er førstegangsbehandling', () => {
+  it('skal teste at vi finner korrekt valgt behandling', () => {
     const behandlinger = [
       {
         id: 312,
@@ -102,32 +108,7 @@ describe('<FagsakProfileIndex>', () => {
         },
       },
     ];
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(123, behandlinger);
-    expect(skalViseRisikoklassifisering).is.true;
-  });
-
-  it('skal teste at risikoklassifisering ikke vises kun får det mangler førstegangsbehandling', () => {
-    const behandlinger = [
-      {
-        id: 312,
-        type: {
-          kode: 'BT-005',
-        },
-      },
-      {
-        id: 123,
-        type: {
-          kode: 'BT-002',
-        },
-      },
-      {
-        id: 789,
-        type: {
-          kode: 'BT-007',
-        },
-      },
-    ];
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(789, behandlinger);
-    expect(skalViseRisikoklassifisering).is.false;
+    const selectedBehandling = getSelectedBehandling.resultFunc(123, behandlinger);
+    expect(selectedBehandling.type.kode).to.eql('BT-002');
   });
 });
