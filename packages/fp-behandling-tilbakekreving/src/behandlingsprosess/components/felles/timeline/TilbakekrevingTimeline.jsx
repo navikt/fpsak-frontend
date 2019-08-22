@@ -19,30 +19,37 @@ export const AVVIST_CLASSNAME = 'avvistPeriode';
 
 const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 
-const getOptions = tilbakekrevingPeriod => ({
-  height: '104px',
-  width: '100%',
-  zoomMin: 1000 * 60 * 60 * 24 * 30,
-  zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-  zoomable: true,
-  moveable: true,
-  min: moment(tilbakekrevingPeriod.fom)
-    .subtract(4, 'weeks'),
-  max: moment(tilbakekrevingPeriod.fom)
-    .add(4, 'years'),
-  margin: {
-    item: 14,
-  },
-  orientation: { axis: 'top' },
-  stack: false,
-  verticalScroll: false,
-  showCurrentTime: false,
-  locale: moment.locale('nb'),
-  tooltip: {
-    followMouse: true,
-  },
-  moment,
-});
+const getOptions = (sortedPeriods) => {
+  const firstPeriod = sortedPeriods[0];
+  const lastPeriod = sortedPeriods[sortedPeriods.length - 1];
+
+  return {
+    height: '104px',
+    width: '100%',
+    zoomMin: 1000 * 60 * 60 * 24 * 30,
+    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+    zoomable: true,
+    moveable: true,
+    min: moment(firstPeriod.fom)
+      .subtract(4, 'weeks'),
+    max: moment(firstPeriod.fom)
+      .add(4, 'years'),
+    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    end: moment(lastPeriod.tom).add(2, 'days'),
+    margin: {
+      item: 14,
+    },
+    orientation: { axis: 'top' },
+    stack: false,
+    verticalScroll: false,
+    showCurrentTime: false,
+    locale: moment.locale('nb'),
+    tooltip: {
+      followMouse: true,
+    },
+    moment,
+  };
+};
 
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
   .toDate();
@@ -100,11 +107,13 @@ class TilbakekrevingTimeline extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
-    this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
   }
 
   componentDidMount() {
-    this.redrawTimeLineBackup(this);
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    if (document.getElementsByClassName('vis-timeline')[0]) {
+      document.getElementsByClassName('vis-timeline')[0].style = '';
+    }
   }
 
   zoomIn() {
@@ -137,16 +146,6 @@ class TilbakekrevingTimeline extends Component {
     };
 
     timeline.setWindow(newWindowTimes);
-  }
-
-  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
-    setTimeout(() => {
-      const timeLineNode = document.getElementsByClassName('vis-timeline');
-      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
-        const timeline = that.timelineRef.$el;
-        timeline.redraw();
-      }
-    }, 2000);
   }
 
   render() {
@@ -187,7 +186,7 @@ class TilbakekrevingTimeline extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(newPerioder.sort(sortByDate)[0])}
+                  options={getOptions(newPerioder.sort(sortByDate))}
                   items={items}
                   groups={groups}
                   selectHandler={selectPeriodCallback}
