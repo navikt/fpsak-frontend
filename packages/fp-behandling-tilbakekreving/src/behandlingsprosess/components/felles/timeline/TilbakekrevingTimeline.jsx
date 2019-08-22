@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -107,12 +108,16 @@ class TilbakekrevingTimeline extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
+
+    this.timelineRef = React.createRef();
   }
 
   componentDidMount() {
     // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
-    if (document.getElementsByClassName('vis-timeline')[0]) {
-      document.getElementsByClassName('vis-timeline')[0].style = '';
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
     }
   }
 
@@ -186,11 +191,11 @@ class TilbakekrevingTimeline extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
+                  ref={this.timelineRef}
                   options={getOptions(newPerioder.sort(sortByDate))}
                   items={items}
                   groups={groups}
                   selectHandler={selectPeriodCallback}
-                  ref={el => (this.timelineRef = el /* eslint no-return-assign: 2 */)}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />
               </div>
