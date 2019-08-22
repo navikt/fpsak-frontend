@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -66,10 +67,10 @@ const options = (opptjeningFomDate, opptjeningTomDate) => {
     width: '100%',
     zoomable: false,
     moveable: false,
-    min: moment(opptjeningFomDate)
-      .startOf('month'),
-    max: moment(opptjeningTomDate)
-      .endOf('month'),
+    min: moment(opptjeningFomDate).startOf('month'),
+    max: moment(opptjeningTomDate).endOf('month'),
+    start: moment(opptjeningFomDate).startOf('month'),
+    end: moment(opptjeningTomDate).endOf('month'),
     margin: {
       item: 10,
     },
@@ -96,6 +97,8 @@ class OpptjeningTimeLineLight extends Component {
     this.openPeriodInfo = this.openPeriodInfo.bind(this);
     this.selectNextPeriod = this.selectNextPeriod.bind(this);
     this.selectPrevPeriod = this.selectPrevPeriod.bind(this);
+
+    this.timelineRef = React.createRef();
   }
 
   componentWillMount() {
@@ -103,6 +106,15 @@ class OpptjeningTimeLineLight extends Component {
     const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
     const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);
     this.setState({ items });
+  }
+
+  componentDidMount() {
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
+    }
   }
 
   selectHandler(eventProps) {
@@ -172,11 +184,11 @@ class OpptjeningTimeLineLight extends Component {
                 <div className={styles.timeLineWrapper}>
                   <div className={styles.timeLine}>
                     <Timeline
+                      ref={this.timelineRef}
                       options={options(opptjeningFomDate, opptjeningTomDate)}
                       items={items}
                       customTimes={{ currentDate: new Date(opptjeningTomDate) }}
                       selectHandler={this.selectHandler}
-                      ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                       selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                     />
                   </div>

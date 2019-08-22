@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -17,22 +18,29 @@ import styles from './tilkjentYtelse.less';
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
   .toDate();
 
-const getOptions = () => ({
-  moment,
-  width: '100%',
-  zoomMin: 1000 * 60 * 60 * 24 * 30,
-  zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-  margin: {
-    item: 10,
-  },
-  orientation: { axis: 'top' },
-  stack: false,
-  showCurrentTime: false,
-  locale: moment.locale('nb'),
-  tooltip: {
-    followMouse: true,
-  },
-});
+const getOptions = (nyePerioder) => {
+  const firstPeriod = nyePerioder[0];
+  const lastPeriod = nyePerioder[nyePerioder.length - 1];
+
+  return {
+    moment,
+    width: '100%',
+    zoomMin: 1000 * 60 * 60 * 24 * 30,
+    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+    margin: {
+      item: 10,
+    },
+    orientation: { axis: 'top' },
+    stack: false,
+    showCurrentTime: false,
+    locale: moment.locale('nb'),
+    tooltip: {
+      followMouse: true,
+    },
+    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    end: moment(lastPeriod.tom).add(2, 'days'),
+  };
+};
 
 const gradertKlassenavn = 'gradert';
 const innvilgetKlassenavn = 'innvilget';
@@ -132,11 +140,17 @@ export class TilkjentYtelse extends Component {
     this.nextPeriod = this.nextPeriod.bind(this);
     this.prevPeriod = this.prevPeriod.bind(this);
     this.openPeriodInfo = this.openPeriodInfo.bind(this);
-    this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
+
+    this.timelineRef = React.createRef();
   }
 
   componentDidMount() {
-    this.redrawTimeLineBackup(this);
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
+    }
   }
 
   openPeriodInfo() {
@@ -183,17 +197,17 @@ export class TilkjentYtelse extends Component {
   }
 
   zoomIn() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomIn(0.5);
   }
 
   zoomOut() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomOut(0.5);
   }
 
   goForward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
@@ -204,7 +218,7 @@ export class TilkjentYtelse extends Component {
   }
 
   goBackward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
@@ -212,16 +226,6 @@ export class TilkjentYtelse extends Component {
     };
 
     timeline.setWindow(newWindowTimes);
-  }
-
-  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
-    setTimeout(() => {
-      const timeLineNode = document.getElementsByClassName('vis-timeline');
-      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
-        const timeline = that.timelineRef.$el;
-        timeline.redraw();
-      }
-    }, 2000);
   }
 
   render() {
@@ -263,12 +267,12 @@ export class TilkjentYtelse extends Component {
           <Column xs="11">
             <div className={styles.timeLineWrapper}>
               <Timeline
-                options={getOptions()}
+                ref={this.timelineRef}
+                options={getOptions(nyePerioder)}
                 items={nyePerioder}
                 groups={groups}
                 customTimes={customTimes}
                 selectHandler={selectHandler}
-                ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                 selection={[selectedItem ? selectedItem.id : null]}
               />
             </div>

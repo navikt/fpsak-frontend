@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -83,10 +84,10 @@ const options = (opptjeningFomDato, opptjeningTomDato) => {
     width: '100%',
     zoomable: false,
     moveable: false,
-    min: moment(opptjeningFomDato)
-      .startOf('month'),
-    max: moment(opptjeningTomDato)
-      .endOf('month'),
+    min: moment(opptjeningFomDato).startOf('month'),
+    max: moment(opptjeningTomDato).endOf('month'),
+    start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
+    end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
     margin: {
       item: 10,
     },
@@ -115,6 +116,7 @@ class OpptjeningTimeLine extends Component {
       items: undefined,
     };
     this.selectHandler = this.selectHandler.bind(this);
+    this.timelineRef = React.createRef();
   }
 
   componentWillMount() {
@@ -127,6 +129,15 @@ class OpptjeningTimeLine extends Component {
       groups,
       items,
     });
+  }
+
+  componentDidMount() {
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -167,11 +178,11 @@ class OpptjeningTimeLine extends Component {
               <div className={styles.timeLineWrapper}>
                 <div className={styles.timeLine}>
                   <Timeline
+                    ref={this.timelineRef}
                     options={options(opptjeningFomDato, opptjeningTomDato)}
                     items={items}
                     customTimes={{ currentDate: new Date(opptjeningTomDato) }}
                     selectHandler={this.selectHandler}
-                    ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                     groups={groups}
                     selection={[selectedPeriod ? selectedPeriod.id : undefined]}
                   />

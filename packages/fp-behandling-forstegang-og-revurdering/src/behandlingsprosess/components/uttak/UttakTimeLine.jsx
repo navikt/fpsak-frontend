@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -15,15 +16,17 @@ const getStartDateForTimeLine = (uttakPeriod, customTimes) => (moment(customTime
 const getEndDateForTimeLine = customTimes => moment(customTimes.fodsel).add(4, 'years');
 
 
-const getOptions = (customTimes, uttakPeriod, medsoker) => ({
+const getOptions = (customTimes, sortedUttakPeriods, medsoker) => ({
   height: medsoker ? '140px' : '104px',
   width: '100%',
   zoomMin: 1000 * 60 * 60 * 24 * 30,
   zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
   zoomable: true,
   moveable: true,
-  min: getStartDateForTimeLine(uttakPeriod, customTimes),
+  min: getStartDateForTimeLine(sortedUttakPeriods[0], customTimes),
   max: getEndDateForTimeLine(customTimes),
+  start: moment(sortedUttakPeriods[0].fom).subtract(1, 'days'),
+  end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
   margin: {
     item: 14,
   },
@@ -92,25 +95,31 @@ class UttakTimeLine extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
-    this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
+
+    this.timelineRef = React.createRef();
   }
 
   componentDidMount() {
-    this.redrawTimeLineBackup(this);
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
+    }
   }
 
   zoomIn() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomIn(0.5);
   }
 
   zoomOut() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomOut(0.5);
   }
 
   goForward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
@@ -121,7 +130,7 @@ class UttakTimeLine extends Component {
   }
 
   goBackward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
@@ -130,17 +139,6 @@ class UttakTimeLine extends Component {
 
     timeline.setWindow(newWindowTimes);
   }
-
-  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
-    setTimeout(() => {
-      const timeLineNode = document.getElementsByClassName('vis-timeline');
-      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
-        const timeline = that.timelineRef.$el;
-        timeline.redraw();
-      }
-    }, 2000);
-  }
-
 
   render() {
     const {
@@ -178,12 +176,12 @@ class UttakTimeLine extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(customTimes, uttakPerioder.sort(sortByDate)[0], medsokerKjonnKode)}
+                  ref={this.timelineRef}
+                  options={getOptions(customTimes, uttakPerioder.sort(sortByDate), medsokerKjonnKode)}
                   items={items}
                   groups={groups}
                   customTimes={customTimes}
                   selectHandler={selectPeriodCallback}
-                  ref={el => (this.timelineRef = el /* eslint-disable-line no-return-assign */)}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />
               </div>
