@@ -9,8 +9,6 @@ import { trackRouteParam, getRiskPanelLocationCreator } from '@fpsak-frontend/fp
 import {
  getBehandlingIdentifier, getBehandlingVersjon,
 } from 'behandling/duck';
-import { getRettigheter, getNavAnsatt } from 'navAnsatt/duck';
-
 
 import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -23,21 +21,13 @@ import {
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
-import { getRisikoaksjonspunkt, getKontrollresultat } from './kontrollresultatSelectors';
+import { getRisikoaksjonspunkt, getKontrollresultat, getReadOnly } from './kontrollresultatSelectors';
 
 const harResultatkode = (risikoklassifisering, resultatkode) => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
     return false;
   }
   return risikoklassifisering.kontrollresultat.kode === resultatkode;
-};
-
-export const erReadOnly = (selectedBehandling, rettigheter, navAnsatt) => {
-  if (selectedBehandling.erPaaVent === true) {
-    return true;
-  }
-  const { kanSaksbehandle } = navAnsatt;
-  return !kanSaksbehandle || !rettigheter.writeAccess.isEnabled;
 };
 
   /**
@@ -127,11 +117,8 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
     risikoklassifisering,
     harHentetKontrollresultat,
     isPanelOpen,
-    selectedBehandling,
-    rettigheter,
-    navAnsatt,
+    readOnly,
     } = this.props;
-  const readOnly = erReadOnly(selectedBehandling, rettigheter, navAnsatt);
   if (!harHentetKontrollresultat) {
     return <ManglendeKlassifiseringPanel />;
   }
@@ -166,9 +153,7 @@ RisikoklassifiseringIndexImpl.propTypes = {
   location: PropTypes.shape().isRequired,
   isPanelOpen: PropTypes.bool.isRequired,
   setRiskPanelOpen: PropTypes.func.isRequired,
-  selectedBehandling: PropTypes.shape().isRequired,
-  rettigheter: PropTypes.shape().isRequired,
-  navAnsatt: PropTypes.shape().isRequired,
+  readOnly: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
   risikoklassifisering: PropTypes.shape(),
@@ -190,8 +175,7 @@ const mapStateToProps = state => ({
   aksjonspunkt: getRisikoaksjonspunkt(state),
   risikoklassifisering: getKontrollresultat(state),
   isPanelOpen: isRiskPanelOpen(state),
-  rettigheter: getRettigheter(state),
-  navAnsatt: getNavAnsatt(state),
+  readOnly: getReadOnly(state),
 });
 
 const mapDispatchToProps = dispatch => ({

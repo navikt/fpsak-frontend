@@ -37,19 +37,19 @@ describe('<kontrollresultatSelectors>', () => {
     expect(res).is.deep.equal(undefined);
   });
 
-  it('skal returnere readOnly når saksbehandler ikke er ansvarlig saksbehandler', () => {
+  it('skal returnere readOnly når saken er på vent', () => {
     const rettigheter = {
         writeAccess: {
             isEnabled: true,
         },
     };
     const navAnsatt = {
-        brukernavn: 'Jonas',
         kanSaksbehandle: true,
     };
-    const ansvarligSaksbehandler = 'Jens';
-
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, ansvarligSaksbehandler);
+    const erPaaVentMap = {
+        123: true,
+    };
+    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, erPaaVentMap, 123);
     expect(res).is.eql(true);
   });
 
@@ -60,12 +60,12 @@ describe('<kontrollresultatSelectors>', () => {
         },
     };
     const navAnsatt = {
-        brukernavn: 'Jonas',
         kanSaksbehandle: false,
     };
-    const ansvarligSaksbehandler = 'Jonas';
-
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, ansvarligSaksbehandler);
+    const erPaaVentMap = {
+        123: false,
+    };
+    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, erPaaVentMap, 123);
     expect(res).is.eql(true);
   });
 
@@ -76,54 +76,29 @@ describe('<kontrollresultatSelectors>', () => {
         },
     };
     const navAnsatt = {
-        brukernavn: 'Jonas',
         kanSaksbehandle: true,
     };
-    const ansvarligSaksbehandler = 'Jonas';
-
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, ansvarligSaksbehandler);
+    const erPaaVentMap = {
+        123: false,
+    };
+    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, erPaaVentMap, 123);
     expect(res).is.eql(true);
   });
 
-  it('skal returnere readOnly når write access er enabled, saksbehandler ikke kan saksbehandle og det ikke er valgt en ansvarlig saksbehandler', () => {
+  it('skal ikke returnere readOnly når korrekt sak ikke er på vent men andre er', () => {
     const rettigheter = {
         writeAccess: {
             isEnabled: true,
         },
     };
     const navAnsatt = {
-        brukernavn: 'Jonas',
-        kanSaksbehandle: false,
-    };
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, undefined);
-    expect(res).is.eql(true);
-  });
-
-  it('skal returnere readOnly når write access er disabled og saksbehandler kan redigere og det ikke er valgt en ansvarlig saksbehandler', () => {
-    const rettigheter = {
-        writeAccess: {
-            isEnabled: false,
-        },
-    };
-    const navAnsatt = {
-        brukernavn: 'Jonas',
         kanSaksbehandle: true,
     };
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, undefined);
-    expect(res).is.eql(true);
-  });
-
-  it('skal returnere ikke readOnly når write access er enabled, saksbehandler kan redigere og det ikke er valgt en ansvarlig saksbehandler', () => {
-    const rettigheter = {
-        writeAccess: {
-            isEnabled: true,
-        },
+    const erPaaVentMap = {
+        123: false,
+        321: true,
     };
-    const navAnsatt = {
-        brukernavn: 'Jonas',
-        kanSaksbehandle: true,
-    };
-    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, undefined);
+    const res = getReadOnly.resultFunc(rettigheter, navAnsatt, erPaaVentMap, 123);
     expect(res).is.eql(false);
   });
 });
