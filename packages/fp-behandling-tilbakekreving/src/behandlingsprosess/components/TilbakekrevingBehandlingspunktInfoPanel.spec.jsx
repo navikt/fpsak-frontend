@@ -19,6 +19,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       selectedBehandlingspunkt={behandlingspunktCodes.FORELDELSE}
       apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE]}
       readOnlySubmitButton={false}
+      isBehandlingHenlagt={false}
     />);
 
     expect(wrapper.find(ForeldelsePanel)).to.have.length(1);
@@ -34,6 +35,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       selectedBehandlingspunkt={behandlingspunktCodes.TILBAKEKREVING}
       apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING]}
       readOnlySubmitButton={false}
+      isBehandlingHenlagt={false}
     />);
 
     expect(wrapper.find(ForeldelsePanel)).to.have.length(0);

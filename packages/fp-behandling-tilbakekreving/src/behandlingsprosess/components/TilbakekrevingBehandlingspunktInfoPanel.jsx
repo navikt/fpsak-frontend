@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
 import ForeldelsePanel from './foreldelse/ForeldelsePanel';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
@@ -26,6 +27,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
   selectedBehandlingspunkt,
   apCodes,
   readOnlySubmitButton,
+  isBehandlingHenlagt,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes) && (
@@ -45,10 +47,11 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
         readOnlySubmitButton={readOnlySubmitButton}
       />
     )}
-    {TilbakekrevingVedtak.supports(apCodes) && (
+    {TilbakekrevingVedtak.supports(apCodes, isBehandlingHenlagt) && (
       <TilbakekrevingVedtak
         submitCallback={submitCallback}
         readOnly={readOnly}
+        isBehandlingHenlagt={isBehandlingHenlagt}
       />
     )}
   </div>
@@ -62,6 +65,7 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   selectedBehandlingspunkt: PropTypes.string.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  isBehandlingHenlagt: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -70,6 +74,7 @@ const mapStateToProps = state => ({
   readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingBehandlingspunktInfoPanel);
