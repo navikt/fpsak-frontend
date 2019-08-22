@@ -109,29 +109,28 @@ VurderRefusjonFormImpl.propTypes = {
 export const transformValues = createSelector(
   [behandlingSelectors.getAksjonspunkter, getArbeidsgiverInfoForRefusjonskravSomKommerForSent],
   (aksjonspunkter, arbeidsgiverListe) => (values) => {
-    const aps = aksjonspunkter;
-    if (hasAksjonspunkt(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT, aps) && arbeidsgiverListe.length !== 0) {
-      const beg = values[BEGRUNNELSE_SEN_REFUSJON_NAME];
-      return [{
-        kode: VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
-        begrunnelse: beg === undefined ? null : beg,
-        refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverId, arbeidsgiverVisningsnavn }) => ({
-          arbeidsgiverId,
-          skalUtvideGyldighet: values[lagFieldName(arbeidsgiverVisningsnavn)],
-        })),
-      }];
+    if (!hasAksjonspunkt(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT, aksjonspunkter) || arbeidsgiverListe.length === 0) {
+      return [{}];
     }
-    return [{}];
+    const begrunnelse = values[BEGRUNNELSE_SEN_REFUSJON_NAME];
+    return [{
+      begrunnelse,
+      kode: VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
+      refusjonskravGyldighet: arbeidsgiverListe.map(({ arbeidsgiverId, arbeidsgiverVisningsnavn }) => ({
+        arbeidsgiverId,
+        skalUtvideGyldighet: values[lagFieldName(arbeidsgiverVisningsnavn)],
+      })),
+    }];
   },
 );
 
 export const buildInitialValues = createSelector(
   [behandlingSelectors.getAksjonspunkter, getArbeidsgiverInfoForRefusjonskravSomKommerForSent],
   (aksjonspunkter, arbeidsgiverListe) => {
-    if (!hasAksjonspunkt(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT, aksjonspunkter) || arbeidsgiverListe.length === 0) {
-      return {};
-    }
     const initialValues = {};
+    if (!hasAksjonspunkt(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT, aksjonspunkter) || arbeidsgiverListe.length === 0) {
+      return initialValues;
+    }
     arbeidsgiverListe.forEach(({ arbeidsgiverVisningsnavn, erRefusjonskravGyldig }) => {
       initialValues[lagFieldName(arbeidsgiverVisningsnavn)] = erRefusjonskravGyldig;
     });

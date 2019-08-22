@@ -1396,6 +1396,7 @@
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
   "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
   "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
+  "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
