@@ -109,7 +109,7 @@ export class MessagesIndex extends Component {
     } = this.props;
     const data = {
       behandlingUuid,
-      ytelseType: fagsakYtelseType.kode,
+      ytelseType: fagsakYtelseType,
       fritekst: fritekst || ' ',
       arsakskode: aarsakskode || null,
       mottaker,

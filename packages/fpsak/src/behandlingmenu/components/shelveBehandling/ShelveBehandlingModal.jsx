@@ -30,7 +30,7 @@ const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandlin
   // TODO Hardkoda verdiar. Er dette eit kodeverk?
   const data = {
     behandlingUuid,
-    ytelseType: fagsakYtelseType.kode,
+    ytelseType: fagsakYtelseType,
     dokumentMal: 'HENLEG',
     fritekst: ' ',
     mottaker: 'Søker',

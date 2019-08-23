@@ -87,7 +87,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
       const brevData = {
         ...data,
         behandlingUuid,
-        ytelseType: fagsakYtelseType.kode,
+        ytelseType: fagsakYtelseType,
       };
       fetchBrevPreview(brevData);
     };
