@@ -56,30 +56,14 @@ const TilbakekrevingTimelineController = ({
         {children}
       </div>
     </span>
-    {!selectedPeriod
-        && (
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          imageSrcFunction={findOpenPeriodImage}
-          altCode="Timeline.openData"
-          onMouseDown={openPeriodInfo}
-          onKeyDown={openPeriodInfo}
-        />
-        )
-        }
-    {selectedPeriod
-        && (
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButtonInverted}
-          imageSrcFunction={findOpenPeriodImage}
-          altCode="Timeline.openData"
-          onMouseDown={openPeriodInfo}
-          onKeyDown={openPeriodInfo}
-        />
-        )
-        }
+    <Image
+      tabIndex="0"
+      className={selectedPeriod ? styles.timeLineButtonInverted : styles.timeLineButton}
+      imageSrcFunction={findOpenPeriodImage}
+      altCode="Timeline.openData"
+      onMouseDown={openPeriodInfo}
+      onKeyDown={openPeriodInfo}
+    />
     <span className={styles.buttonSpacing}>
       <Image
         tabIndex="0"

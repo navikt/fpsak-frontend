@@ -12,9 +12,9 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe, getBehandlingFormPrefix,
+  FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe,
 } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
  DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,

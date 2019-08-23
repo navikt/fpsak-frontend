@@ -1,4 +1,4 @@
-import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import { getSelectedBehandlingId } from './duckBehandlingInnsyn';

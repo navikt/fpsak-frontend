@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { Normaltekst } from 'nav-frontend-typografi';
-import { behandlingForm } from 'behandling/behandlingForm';
+import { behandlingFormFpsak } from 'behandling/behandlingFormFpsak';
 import {
   FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -124,4 +124,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(AvklarFaresignalerForm));
+export default connect(mapStateToPropsFactory)(behandlingFormFpsak({ form: formName })(AvklarFaresignalerForm));

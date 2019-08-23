@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
@@ -7,7 +8,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
-
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
@@ -20,30 +20,37 @@ export const AVVIST_CLASSNAME = 'avvistPeriode';
 
 const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
 
-const getOptions = tilbakekrevingPeriod => ({
-  height: '104px',
-  width: '100%',
-  zoomMin: 1000 * 60 * 60 * 24 * 30,
-  zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-  zoomable: true,
-  moveable: true,
-  min: moment(tilbakekrevingPeriod.fom)
-    .subtract(4, 'weeks'),
-  max: moment(tilbakekrevingPeriod.fom)
-    .add(4, 'years'),
-  margin: {
-    item: 14,
-  },
-  orientation: { axis: 'top' },
-  stack: false,
-  verticalScroll: false,
-  showCurrentTime: false,
-  locale: moment.locale('nb'),
-  tooltip: {
-    followMouse: true,
-  },
-  moment,
-});
+const getOptions = (sortedPeriods) => {
+  const firstPeriod = sortedPeriods[0];
+  const lastPeriod = sortedPeriods[sortedPeriods.length - 1];
+
+  return {
+    height: '104px',
+    width: '100%',
+    zoomMin: 1000 * 60 * 60 * 24 * 30,
+    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+    zoomable: true,
+    moveable: true,
+    min: moment(firstPeriod.fom)
+      .subtract(4, 'weeks'),
+    max: moment(firstPeriod.fom)
+      .add(4, 'years'),
+    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    end: moment(lastPeriod.tom).add(2, 'days'),
+    margin: {
+      item: 14,
+    },
+    orientation: { axis: 'top' },
+    stack: false,
+    verticalScroll: false,
+    showCurrentTime: false,
+    locale: moment.locale('nb'),
+    tooltip: {
+      followMouse: true,
+    },
+    moment,
+  };
+};
 
 const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
   .toDate();
@@ -101,11 +108,17 @@ class TilbakekrevingTimeline extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
-    this.redrawTimeLineBackup = this.redrawTimeLineBackup.bind(this);
+
+    this.timelineRef = React.createRef();
   }
 
   componentDidMount() {
-    this.redrawTimeLineBackup(this);
+    // TODO Fjern når denne er retta: https://github.com/Lighthouse-io/react-visjs-timeline/issues/40
+    // eslint-disable-next-line react/no-find-dom-node
+    const node = ReactDOM.findDOMNode(this.timelineRef.current);
+    if (node) {
+      node.children[0].style.visibility = 'visible';
+    }
   }
 
   zoomIn() {
@@ -140,23 +153,13 @@ class TilbakekrevingTimeline extends Component {
     timeline.setWindow(newWindowTimes);
   }
 
-  redrawTimeLineBackup(that) { // eslint-disable-line class-methods-use-this
-    setTimeout(() => {
-      const timeLineNode = document.getElementsByClassName('vis-timeline');
-      if (that.timelineRef && timeLineNode.length > 0 && (timeLineNode[0].style.visibility && (timeLineNode[0].style.visibility !== 'visible'))) {
-        const timeline = that.timelineRef.$el;
-        timeline.redraw();
-      }
-    }, 2000);
-  }
-
   render() {
     const {
       perioder,
       selectedPeriod,
       selectPeriodCallback,
       toggleDetaljevindu,
-      HjelpetekstKomponent,
+      hjelpetekstKomponent,
       kjonn,
     } = this.props;
 
@@ -179,8 +182,8 @@ class TilbakekrevingTimeline extends Component {
               <Image
                 className={styles.iconMedsoker}
                 src={isKvinne(kjonn) ? urlKvinne : urlMann}
-                altCode="Person.ImageText"
-                titleCode={isKvinne(kjonn) ? 'Person.Woman' : 'Person.Man'}
+                altCode="TilbakekrevingTimeline.ImageText"
+                titleCode={isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man'}
               />
             </Row>
           </Column>
@@ -188,11 +191,11 @@ class TilbakekrevingTimeline extends Component {
             <div className={styles.timeLineWrapper}>
               <div className="uttakTimeline">
                 <Timeline
-                  options={getOptions(newPerioder.sort(sortByDate)[0])}
+                  ref={this.timelineRef}
+                  options={getOptions(newPerioder.sort(sortByDate))}
                   items={items}
                   groups={groups}
                   selectHandler={selectPeriodCallback}
-                  ref={el => (this.timelineRef = el /* eslint no-return-assign: 2 */)}
                   selection={[selectedPeriod ? selectedPeriod.id : null]}
                 />
               </div>
@@ -209,7 +212,7 @@ class TilbakekrevingTimeline extends Component {
               openPeriodInfo={toggleDetaljevindu}
               selectedPeriod={selectedPeriod}
             >
-              <HjelpetekstKomponent />
+              {hjelpetekstKomponent}
             </TilbakekrevingTimelineController>
           </Column>
         </Row>
@@ -220,6 +223,7 @@ class TilbakekrevingTimeline extends Component {
 
 TilbakekrevingTimeline.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,
@@ -227,14 +231,14 @@ TilbakekrevingTimeline.propTypes = {
   })).isRequired,
   toggleDetaljevindu: PropTypes.func.isRequired,
   selectedPeriod: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,
     isGodkjent: PropTypes.bool.isRequired,
   }),
   selectPeriodCallback: PropTypes.func.isRequired,
-  HjelpetekstKomponent: PropTypes.func.isRequired,
+  hjelpetekstKomponent: PropTypes.node.isRequired,
   kjonn: PropTypes.string.isRequired,
 };
 

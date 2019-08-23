@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
 import sakOperations from './SakOperations';
 import CommonBehandlingResolver from './CommonBehandlingResolver';
-import { getBehandlingFormPrefix } from './behandlingForm';
 
 /**
  * withBehandlingIndex
