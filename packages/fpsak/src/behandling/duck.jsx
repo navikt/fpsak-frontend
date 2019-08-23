@@ -1,12 +1,14 @@
 import { createSelector } from 'reselect';
 
 import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getNavAnsatt } from 'app/duck';
 import {
   getSelectedFagsakStatus, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd, getFagsakYtelseType,
 } from 'fagsak/fagsakSelectors';
 import { getSelectedSaksnummer } from 'fagsak/duck';
+import fpsakApi from 'data/fpsakApi';
 
 const reducerName = 'behandling';
 
@@ -29,6 +31,13 @@ export const setBehandlingInfoHolder = (behandlingInfoHolder) => ({
 export const resetBehandlingContext = () => ({
   type: RESET_BEHANDLING_CONTEXT,
 });
+
+
+/* Action creators */
+export const previewMessage = (behandlingTypeKode, data) => (dispatch) => {
+  const api = BehandlingType.TILBAKEKREVING === behandlingTypeKode ? fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING : fpsakApi.PREVIEW_MESSAGE_FORMIDLING;
+  return dispatch(api.makeRestApiRequest()(data));
+};
 
 /* Reducer */
 const initialState = {

@@ -36,7 +36,8 @@ export const FpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',
   BREVMALER: 'BREVMALER',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
+  PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
 };
 
 
@@ -98,7 +99,8 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
 
   /* fpformidling/api/brev */
-  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+  .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
 
   /* /sprak */
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

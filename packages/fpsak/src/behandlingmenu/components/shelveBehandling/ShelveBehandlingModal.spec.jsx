@@ -21,10 +21,6 @@ describe('<ShelveBehandlingModal>', () => {
   },
   ];
 
-  const behandlingstype = {
-    kode: 'BT-002',
-  };
-
   it('skal rendre åpen modal', () => {
     const wrapper = shallowWithIntl(<ShelveBehandlingModalImpl
       showModal
@@ -33,7 +29,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -67,7 +63,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -91,7 +87,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -167,7 +163,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       intl={intlMock}
       showLink
@@ -190,7 +186,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -216,7 +212,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={sinon.spy()}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_FEILOPPRETTET}
       begrunnelse="Dette er en begrunnelse"
@@ -246,7 +242,7 @@ describe('<ShelveBehandlingModal>', () => {
       previewHenleggBehandling={previewEventCallback}
       behandlingId={0}
       henleggArsaker={henleggArsaker}
-      behandlingsType={behandlingstype}
+      behandlingTypeKode="BT-002"
       henleggArsakerResultReceived
       årsakKode={behandlingResultatType.HENLAGT_SOKNAD_TRUKKET}
       begrunnelse="Dette er en begrunnelse"

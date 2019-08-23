@@ -14,10 +14,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
+import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from 'kodeverk/duck';
-import { getBehandlingSprak, getBehandlingVersjon, getBehandlingIdentifier } from 'behandling/duck';
-import fpsakApi from 'data/fpsakApi';
+import {
+  getBehandlingSprak,
+  getBehandlingVersjon,
+  getBehandlingIdentifier,
+} from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
@@ -101,7 +104,9 @@ export class MessagesIndex extends Component {
   }
 
   previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
-    const { behandlingUuid, fagsakYtelseType, fetchPreview } = this.props;
+    const {
+      behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode,
+    } = this.props;
     const data = {
       behandlingUuid,
       ytelseType: fagsakYtelseType.kode,
@@ -110,7 +115,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(data);
+    fetchPreview(behandlingTypeKode, data);
   }
 
   afterSubmit() {
@@ -200,6 +205,7 @@ MessagesIndex.propTypes = {
   })),
   fetchBrevmaler: PropTypes.func.isRequired,
   loadingBrevmaler: PropTypes.bool.isRequired,
+  behandlingTypeKode: PropTypes.string.isRequired,
 };
 
 MessagesIndex.defaultProps = {
@@ -220,6 +226,7 @@ const mapStateToProps = (state) => ({
   selectedBehandlingSprak: getBehandlingSprak(state),
   ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
+  behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 

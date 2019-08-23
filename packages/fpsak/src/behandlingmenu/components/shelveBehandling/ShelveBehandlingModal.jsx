@@ -26,7 +26,7 @@ import styles from './shelveBehandlingModal.less';
 
 const maxLength1500 = maxLength(1500);
 
-const previewHenleggBehandlingDoc = (previewHenleggBehandling, behandlingUuid, fagsakYtelseType) => (e) => {
+const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandling, behandlingUuid, fagsakYtelseType) => (e) => {
   // TODO Hardkoda verdiar. Er dette eit kodeverk?
   const data = {
     behandlingUuid,
@@ -35,7 +35,7 @@ const previewHenleggBehandlingDoc = (previewHenleggBehandling, behandlingUuid, f
     fritekst: ' ',
     mottaker: 'Søker',
   };
-  previewHenleggBehandling(data);
+  previewHenleggBehandling(behandlingTypeKode, data);
   e.preventDefault();
 };
 
@@ -57,6 +57,7 @@ export const ShelveBehandlingModalImpl = ({
   årsakKode,
   begrunnelse,
   showLink,
+  behandlingTypeKode,
 }) => (
   <Modal
     className={styles.modal}
@@ -116,8 +117,8 @@ export const ShelveBehandlingModalImpl = ({
                   <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
                   <a
                     href=""
-                    onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
-                    onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
+                    onClick={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
+                    onKeyDown={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
                     className="lenke lenke--frittstaende"
                   >
                     {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
@@ -147,6 +148,7 @@ ShelveBehandlingModalImpl.propTypes = {
    */
   årsakKode: PropTypes.string,
   begrunnelse: PropTypes.string,
+  behandlingTypeKode: PropTypes.string.isRequired,
 };
 
 ShelveBehandlingModalImpl.defaultProps = {
@@ -188,6 +190,7 @@ const mapStateToProps = (state, ownProps) => ({
   henleggArsaker: getHenleggArsaker(state),
   showLink: getShowLink(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[ownProps.behandlingId],
+  behandlingTypeKode: getBehandlingType(state).kode,
   fagsakYtelseType: getFagsakYtelseType(state),
 });
 
