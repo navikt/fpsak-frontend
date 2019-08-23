@@ -9,7 +9,7 @@ import moment from 'moment';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import arbeidsforholdKilder from '@fpsak-frontend/kodeverk/src/arbeidsforholdKilder';

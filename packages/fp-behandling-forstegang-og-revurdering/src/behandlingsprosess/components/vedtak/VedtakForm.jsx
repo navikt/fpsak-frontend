@@ -14,7 +14,7 @@ import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
 import { getBehandlingResultatstruktur, erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';

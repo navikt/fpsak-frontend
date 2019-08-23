@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
 import { guid, dateFormat } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';

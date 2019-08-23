@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';

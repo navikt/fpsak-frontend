@@ -29,7 +29,7 @@ const isEdited = false;
 export class PeriodeControllerImpl extends Component {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
-    beregnBeløp: PropTypes.func.isRequired,
+    beregnBelop: PropTypes.func.isRequired,
     oppdaterSplittedePerioder: PropTypes.func.isRequired,
     callbackForward: PropTypes.func.isRequired,
     callbackBackward: PropTypes.func.isRequired,
@@ -65,7 +65,7 @@ export class PeriodeControllerImpl extends Component {
   splitPeriod(formValues) {
     const {
       periode,
-      beregnBeløp: callBeregnBeløp,
+      beregnBelop: callBeregnBelop,
       behandlingId: selectedBehandlingId,
       oppdaterSplittedePerioder,
     } = this.props;
@@ -88,7 +88,7 @@ export class PeriodeControllerImpl extends Component {
       perioder: [forstePeriode, andrePeriode],
     };
 
-    callBeregnBeløp(params).then((response) => {
+    callBeregnBelop(params).then((response) => {
       const forstePeriodeMedBeløp = {
         fom: forstePeriode.fom,
         tom: forstePeriode.tom,
@@ -118,7 +118,7 @@ export class PeriodeControllerImpl extends Component {
       <Row>
         <Column xs="3">
           <Element>
-            <FormattedMessage id="UttakTimeLineData.PeriodeData.Detaljer" />
+            <FormattedMessage id="PeriodeController.Detaljer" />
             {isEdited && <EditedIcon />}
           </Element>
         </Column>
@@ -130,12 +130,12 @@ export class PeriodeControllerImpl extends Component {
                 tabIndex="0"
                 className={styles.splitPeriodImage}
                 imageSrcFunction={splitPeriodImg}
-                altCode="UttakTimeLineData.PeriodeData.DelOppPerioden"
+                altCode="PeriodeController.DelOppPerioden"
                 onMouseDown={this.showModal}
                 onKeyDown={e => (e.keyCode === 13 ? this.showModal(e) : null)}
               />
 
-              <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
+              <FormattedMessage id="PeriodeController.DelOppPerioden" />
             </span>
           )
           }
@@ -156,7 +156,7 @@ export class PeriodeControllerImpl extends Component {
               tabIndex="0"
               className={styles.timeLineButton}
               imageSrcFunction={findArrowLeftImg}
-              altCode="Timeline.prevPeriod"
+              altCode="PeriodeController.ForrigePeriode"
               onMouseDown={callbackBackward}
               onKeyDown={callbackBackward}
             />
@@ -164,7 +164,7 @@ export class PeriodeControllerImpl extends Component {
               tabIndex="0"
               className={styles.timeLineButton}
               imageSrcFunction={findArrowRightImg}
-              altCode="Timeline.nextPeriod"
+              altCode="PeriodeController.NestePeriode"
               onMouseDown={callbackForward}
               onKeyDown={callbackForward}
             />
@@ -181,7 +181,7 @@ const mapStateToPros = state => ({
 
 const mapDispatchToProps = dispatch => ({
   ...bindActionCreators({
-    beregnBeløp,
+    beregnBelop: beregnBeløp,
   }, dispatch),
 });
 
