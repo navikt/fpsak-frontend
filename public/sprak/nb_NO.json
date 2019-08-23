@@ -2204,6 +2204,7 @@
   "HistorikkEndretFelt.ErAnkenSignert": "Er anken signer",
   "HistorikkEndretFelt.Faresignaler": "Resultat",
   "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
+  "HistorikkEndretFelt.NyRefusjonsfrist": "Utvidelse av frist for fremsatt refusjonskrav for {value}",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",

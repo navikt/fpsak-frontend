@@ -91,10 +91,10 @@ export const transformValuesFordelBeregning = createSelector(
   (aksjonspunkter, endringBGPerioder, bgPerioder) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
-      const beg = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
+      const begrunnelse = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
       return [{
+        begrunnelse,
         kode: FORDEL_BEREGNINGSGRUNNLAG,
-        begrunnelse: beg === undefined ? null : beg,
         ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder, bgPerioder),
       }];
     }
