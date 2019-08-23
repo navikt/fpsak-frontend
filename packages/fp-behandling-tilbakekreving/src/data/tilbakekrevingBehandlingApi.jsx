@@ -7,36 +7,30 @@ export const TilbakekrevingBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING)
-  .withPost('/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/fptilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING)
+  .withPost('/fptilbake/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/api/behandling/aksjonspunkt', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', TilbakekrevingBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-
-  /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPostAndOpenBlob('/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
+  .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt/overstyr', TilbakekrevingBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
 
   /* /api/foreldelse */
-  .withPost('/api/foreldelse/belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
+  .withPost('/fptilbake/api/foreldelse/belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
 
   /* /api/kodeverk */
-  .withGet('/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
+  .withGet('/fptilbake/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
 
   .build();
 
 const reducerName = 'dataContextTilbakekrevingBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withContextPath('fptilbake')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
     .withPollingMessageActionCreator(setRequestPollingMessage))

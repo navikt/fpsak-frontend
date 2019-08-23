@@ -7,8 +7,6 @@ class FpSakBehandlingUpdater {
     resetBehandling = () => resetBehandling;
 
     setBehandlingResult = () => ankeBehandlingApi.BEHANDLING.setDataRestApi();
-
-    previewMessage = () => ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 }
 
 export default new FpSakBehandlingUpdater();

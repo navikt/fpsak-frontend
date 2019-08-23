@@ -3,7 +3,8 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
@@ -38,6 +39,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const modal = wrapper.find(Modal);
@@ -68,6 +73,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const modal = wrapper.find(Modal);
@@ -88,6 +97,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const selectField = wrapper.find('SelectField');
@@ -158,6 +171,10 @@ describe('<ShelveBehandlingModal>', () => {
       henleggArsakerResultReceived
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const button = wrapper.find('Hovedknapp');
@@ -179,6 +196,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const form = wrapper.find('form');
@@ -201,6 +222,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const avbrytKnapp = wrapper.find('Knapp');
@@ -227,6 +252,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const previewLink = wrapper.find('a');

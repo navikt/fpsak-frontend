@@ -27,9 +27,9 @@ const getBrevData = (klageVurdering, aksjonspunktCode, fritekstTilBrev) => {
   const data = {
     fritekst: fritekstTilBrev || '',
     mottaker: '',
-    brevmalkode: getBrevKode(klageVurdering, klageVurdertAv === 'NK'),
+    dokumentMal: getBrevKode(klageVurdering, klageVurdertAv === 'NK'),
     klageVurdertAv,
-    erOpphevet: klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
+    erOpphevetKlage: klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
   };
   return data;
 };

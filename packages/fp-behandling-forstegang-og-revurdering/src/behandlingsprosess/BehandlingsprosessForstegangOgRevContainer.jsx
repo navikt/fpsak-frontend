@@ -41,6 +41,7 @@ export const BehandlingsprosessForstegangOgRevContainer = (props) => (
 BehandlingsprosessForstegangOgRevContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   behandlingspunkterStatus: PropTypes.shape(),
@@ -60,7 +61,8 @@ BehandlingsprosessForstegangOgRevContainer.propTypes = {
   selectedBehandlingspunkt: PropTypes.string,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

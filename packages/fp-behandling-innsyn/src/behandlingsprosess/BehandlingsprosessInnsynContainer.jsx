@@ -27,6 +27,7 @@ export const BehandlingsprosessInnsynContainer = (props) => (
 
 BehandlingsprosessInnsynContainer.propTypes = {
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -48,6 +49,7 @@ BehandlingsprosessInnsynContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

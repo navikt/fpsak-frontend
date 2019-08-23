@@ -11,14 +11,17 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from 'kodeverk/duck';
 import { getBehandlingSprak, getBehandlingVersjon, getBehandlingIdentifier } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
-  resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator,
+  resetSubmitMessageActionCreator, previewMessage, submitMessageActionCreator,
 } from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';
@@ -97,14 +100,15 @@ export class MessagesIndex extends Component {
     pushLocation('/');
   }
 
-  previewCallback(mottaker, brevmalkode, fritekst, aarsakskode) {
-    const { behandlingIdentifier, fetchPreview } = this.props;
+  previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
+    const { behandlingUuid, fagsakYtelseType, fetchPreview } = this.props;
     const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingUuid,
+      ytelseType: fagsakYtelseType.kode,
       fritekst: fritekst || ' ',
-      årsakskode: aarsakskode || null,
+      arsakskode: aarsakskode || null,
       mottaker,
-      brevmalkode,
+      dokumentMal,
     };
     fetchPreview(data);
   }
@@ -174,6 +178,8 @@ export class MessagesIndex extends Component {
 MessagesIndex.propTypes = {
   submitFinished: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
+  behandlingUuid: PropTypes.string.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
   selectedBehandlingVersjon: PropTypes.number,
   selectedBehandlingSprak: PropTypes.shape(),
   recipients: PropTypes.arrayOf(PropTypes.string),
@@ -213,6 +219,8 @@ const mapStateToProps = (state) => ({
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
   ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+  behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
+  fagsakYtelseType: getFagsakYtelseType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -220,7 +228,7 @@ const mapDispatchToProps = (dispatch) => ({
     push,
     resetReduxForm,
     setBehandlingOnHold,
-    fetchPreview: previewMessageActionCreator,
+    fetchPreview: previewMessage,
     submitMessage: submitMessageActionCreator,
     resetSubmitMessage: resetSubmitMessageActionCreator,
     fetchBrevmaler: fpsakApi.BREVMALER.makeRestApiRequest(),

@@ -34,6 +34,7 @@ describe('BehandlingsprosessAnkeContainer', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       },
       aksjonspunkter: [],
+      behandlingUuid: '123',
     };
 
     const wrapper = shallow(<BehandlingsprosessAnkeContainer {...props} />);

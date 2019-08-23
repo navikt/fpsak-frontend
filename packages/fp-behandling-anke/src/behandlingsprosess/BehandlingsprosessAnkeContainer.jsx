@@ -25,6 +25,7 @@ export const BehandlingsprosessAnkeContainer = (props) => (
 BehandlingsprosessAnkeContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   behandlingspunkterStatus: PropTypes.shape(),
@@ -45,6 +46,7 @@ BehandlingsprosessAnkeContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

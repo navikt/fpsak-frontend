@@ -10,22 +10,32 @@ import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { getKodeverk } from 'kodeverk/duck';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
+import { getKodeverk } from 'kodeverk/duck';
 import { getBehandlingType } from 'behandling/duck';
 
 import styles from './shelveBehandlingModal.less';
 
 const maxLength1500 = maxLength(1500);
 
-const previewHenleggBehandlingDoc = (previewHenleggBehandling, behandlingId) => (e) => {
-  // TODO Denne verdien burde ikkje vera hardkoda. Er dette eit kodeverk?
-  previewHenleggBehandling(behandlingId, 'HENLEG');
+const previewHenleggBehandlingDoc = (previewHenleggBehandling, behandlingUuid, fagsakYtelseType) => (e) => {
+  // TODO Hardkoda verdiar. Er dette eit kodeverk?
+  const data = {
+    behandlingUuid,
+    ytelseType: fagsakYtelseType.kode,
+    dokumentMal: 'HENLEG',
+    fritekst: ' ',
+    mottaker: 'Søker',
+  };
+  previewHenleggBehandling(data);
   e.preventDefault();
 };
 
@@ -40,7 +50,8 @@ export const ShelveBehandlingModalImpl = ({
   handleSubmit,
   cancelEvent,
   previewHenleggBehandling,
-  behandlingId,
+  behandlingUuid,
+  fagsakYtelseType,
   henleggArsaker,
   intl,
   årsakKode,
@@ -105,8 +116,8 @@ export const ShelveBehandlingModalImpl = ({
                   <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
                   <a
                     href=""
-                    onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
-                    onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingId)}
+                    onClick={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
+                    onKeyDown={previewHenleggBehandlingDoc(previewHenleggBehandling, behandlingUuid, fagsakYtelseType)}
                     className="lenke lenke--frittstaende"
                   >
                     {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
@@ -127,12 +138,10 @@ ShelveBehandlingModalImpl.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
   previewHenleggBehandling: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
   showLink: PropTypes.bool.isRequired,
-  henleggArsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  })).isRequired,
+  henleggArsaker: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
   /**
    * Valgt behandlingsresultat-type
    */
@@ -173,11 +182,13 @@ const getShowLink = createSelector([
 });
 
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, ownProps) => ({
   årsakKode: formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('ShelveBehandlingModal')(state, 'begrunnelse'),
   henleggArsaker: getHenleggArsaker(state),
   showLink: getShowLink(state),
+  behandlingUuid: getBehandlingerUuidsMappedById(state)[ownProps.behandlingId],
+  fagsakYtelseType: getFagsakYtelseType(state),
 });
 
 const ShelveBehandlingModal = reduxForm({

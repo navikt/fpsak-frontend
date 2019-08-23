@@ -7,8 +7,6 @@ class PapirsoknadUpdater {
     resetBehandling = () => resetBehandling;
 
     setBehandlingResult = () => papirsoknadApi.BEHANDLING.setDataRestApi();
-
-    previewMessage = () => papirsoknadApi.PREVIEW_MESSAGE.makeRestApiRequest();
 }
 
 export default new PapirsoknadUpdater();

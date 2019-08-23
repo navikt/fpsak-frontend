@@ -7,8 +7,6 @@ class FpTilbakeBehandlingUpdater {
     resetBehandling = () => resetBehandling;
 
     setBehandlingResult = () => tilbakekrevingBehandlingApi.BEHANDLING.setDataRestApi();
-
-    previewMessage = () => tilbakekrevingBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 }
 
 export default new FpTilbakeBehandlingUpdater();

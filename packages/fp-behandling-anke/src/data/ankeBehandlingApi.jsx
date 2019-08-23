@@ -17,20 +17,20 @@ const endpoints = new RestApiConfigBuilder()
 /* /api */
 
   /* /api/behandlinger */
-  .withAsyncPost('/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING)
-  .withPost('/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/fpsak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING)
+  .withPost('/fpsak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT)
 
   /* /api/anke */
-  .withAsyncPost('/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
-  .withAsyncPost('/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING)
-  .withGet('/api/behandling/anke/anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
+  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
+  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING)
+  .withGet('/fpsak/api/behandling/anke/anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPostAndOpenBlob('/api/brev/forhandsvis-anke', AnkeBehandlingApiKeys.PREVIEW_MESSAGE_ANKE)
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/fpsak/api/brev/forhandsvis-anke', AnkeBehandlingApiKeys.PREVIEW_MESSAGE_ANKE)
 
 /* /api/brev */
   .build();
@@ -38,7 +38,6 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextAnkeBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withContextPath('fpsak')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
     .withPollingMessageActionCreator(setRequestPollingMessage))

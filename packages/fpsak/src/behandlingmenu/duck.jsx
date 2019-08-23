@@ -80,12 +80,7 @@ export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispa
   .then((response) => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }))
   .then(() => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer)));
 
-export const previewHenleggBehandling = (behandlingId, brevmalkode) => (dispatch) => behandlingUpdater.previewMessage(dispatch, {
-  behandlingId,
-  brevmalkode,
-  fritekst: ' ',
-  mottaker: 'Søker',
-});
+export const previewHenleggBehandling = () => fpsakApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
 /* Reducer */
 const initialState = {

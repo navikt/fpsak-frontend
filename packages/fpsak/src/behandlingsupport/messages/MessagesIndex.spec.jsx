@@ -3,7 +3,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+
 import MessagesModal from './components/MessagesModal';
 import { MessagesIndex } from './MessagesIndex';
 import Messages from './components/Messages';
@@ -37,6 +39,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const messages = wrapper.find(Messages);
@@ -62,6 +68,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const previewCallback = wrapper.find(Messages).prop('previewCallback');
@@ -88,6 +98,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
     wrapper.setState({ showMessagesModal: true });
 
@@ -118,6 +132,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const message = {
@@ -157,6 +175,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const message = {
@@ -199,6 +221,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const message = {
@@ -241,6 +267,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const message = {
@@ -283,6 +313,10 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
 
     const message = {
@@ -326,6 +360,10 @@ describe('<MessagesIndex>', () => {
       push={pushCallback}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
     />);
     wrapper.setState({ showSettPaVentModal: true });
 

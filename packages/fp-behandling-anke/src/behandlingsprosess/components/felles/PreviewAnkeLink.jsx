@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -29,9 +28,7 @@ const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
   const data = {
     fritekst: fritekstTilBrev || '',
     mottaker: '',
-    brevmalkode: getBrevKode(ankeVurdering, ankeVurdertAv === 'NK'),
-    klageVurdertAv: ankeVurdertAv,
-    erOpphevet: ankeVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK,
+    dokumentMal: getBrevKode(ankeVurdering, ankeVurdertAv === 'NK'),
   };
   return data;
 };
