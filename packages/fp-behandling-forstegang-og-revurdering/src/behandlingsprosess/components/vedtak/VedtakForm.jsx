@@ -12,8 +12,6 @@ import { Row, Column } from 'nav-frontend-grid';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
@@ -93,14 +91,6 @@ const getPreviewAutomatiskBrevCallback = formProps => (e) => {
   };
   formProps.fetchVedtaksbrevPreview(formValues);
   e.preventDefault();
-};
-
-const faresginalerTrengerAvklaring = (aksjonspunkter) => {
-  if (!aksjonspunkter) {
-    return false;
-  }
-  const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
-  return faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
 };
 
 export class VedtakFormImpl extends Component {
@@ -211,7 +201,7 @@ export class VedtakFormImpl extends Component {
                     mini
                     className={styles.mainButton}
                     onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting || faresginalerTrengerAvklaring(aksjonspunkter)}
+                    disabled={behandlingPaaVent || formProps.submitting}
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}

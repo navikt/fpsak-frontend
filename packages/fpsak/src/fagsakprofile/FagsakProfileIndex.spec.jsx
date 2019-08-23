@@ -9,7 +9,6 @@ import RisikoklassfiseringIndex from './risikoklassifisering/Risikoklassifiserin
 import FagsakProfile from './components/FagsakProfile';
 import { FagsakProfileIndex, getSkalViseRisikoklassifisering } from './FagsakProfileIndex';
 
-
 describe('<FagsakProfileIndex>', () => {
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
     const showAllCallback = sinon.spy();
@@ -87,47 +86,23 @@ describe('<FagsakProfileIndex>', () => {
     expect(resetCallback.getCalls()).has.length(1);
   });
 
-  it('skal teste at risikoklassifisering vises kun får det er førstegangsbehandling', () => {
-    const behandlinger = [
-      {
-        id: 312,
-        type: {
-          kode: 'BT-005',
-        },
-      },
-      {
-        id: 123,
-        type: {
-          kode: 'BT-002',
-        },
-      },
-    ];
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(123, behandlinger);
-    expect(skalViseRisikoklassifisering).is.true;
+  it('skal teste at vi viser risikoklassifisering dersom valgt behandling er en førstegangsbehandling', () => {
+    const typeMap = {
+      9999999: 'BT-002',
+      7777777: 'BT-004',
+      5555555: 'BT-007',
+    };
+    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(9999999, typeMap);
+    expect(skalViseRisikoklassifisering).to.eql(true);
   });
 
-  it('skal teste at risikoklassifisering ikke vises kun får det mangler førstegangsbehandling', () => {
-    const behandlinger = [
-      {
-        id: 312,
-        type: {
-          kode: 'BT-005',
-        },
-      },
-      {
-        id: 123,
-        type: {
-          kode: 'BT-002',
-        },
-      },
-      {
-        id: 789,
-        type: {
-          kode: 'BT-007',
-        },
-      },
-    ];
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(789, behandlinger);
-    expect(skalViseRisikoklassifisering).is.false;
+  it('skal teste at vi ikke viser risikoklassifisering dersom valgt behandling er en førstegangsbehandling', () => {
+    const typeMap = {
+      9999999: 'BT-002',
+      7777777: 'BT-004',
+      5555555: 'BT-007',
+    };
+    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(5555555, typeMap);
+    expect(skalViseRisikoklassifisering).to.eql(false);
   });
 });

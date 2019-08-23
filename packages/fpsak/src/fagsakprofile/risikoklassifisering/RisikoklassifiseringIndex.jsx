@@ -10,7 +10,6 @@ import {
  getBehandlingIdentifier, getBehandlingVersjon,
 } from 'behandling/duck';
 
-
 import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
@@ -22,7 +21,7 @@ import {
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
-import { getRisikoaksjonspunkt, getReadOnly, getKontrollresultat } from './kontrollresultatSelectors';
+import { getRisikoaksjonspunkt, getKontrollresultat, getReadOnly } from './kontrollresultatSelectors';
 
 const harResultatkode = (risikoklassifisering, resultatkode) => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
