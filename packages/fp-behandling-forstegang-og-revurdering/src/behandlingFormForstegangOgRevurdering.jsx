@@ -1,4 +1,4 @@
-import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from './duckBehandlingForstegangOgRev';

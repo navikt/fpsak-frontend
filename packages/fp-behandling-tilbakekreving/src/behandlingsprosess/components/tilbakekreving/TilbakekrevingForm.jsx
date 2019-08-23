@@ -10,11 +10,11 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import { FaktaGruppe, BehandlingspunktSubmitButton, getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaGruppe, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   FadingPanel, VerticalSpacer, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
@@ -26,7 +26,7 @@ import {
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getSelectedBehandlingId, getFagsakPerson, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 
@@ -102,8 +102,7 @@ export class TilbakekrevingFormImpl extends Component {
   componentDidUpdate(prevProps) {
     const { vilkarsVurdertePerioder } = this.props;
     if (!prevProps.vilkarsVurdertePerioder && vilkarsVurdertePerioder) {
-      const test = vilkarsVurdertePerioder.find(harApentAksjonspunkt);
-      this.setPeriode(test);
+      this.setPeriode(vilkarsVurdertePerioder.find(harApentAksjonspunkt));
     }
   }
 
@@ -223,7 +222,7 @@ export class TilbakekrevingFormImpl extends Component {
                   valgtPeriode={valgtPeriodeFormatertForTidslinje}
                   setPeriode={this.setPeriode}
                   toggleDetaljevindu={this.togglePeriode}
-                  hjelpetekstKomponent={TilbakekrevingTidslinjeHjelpetekster}
+                  hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
                   kjonn={kjonn}
                 />
                 {valgtPeriode && (
@@ -272,7 +271,6 @@ TilbakekrevingFormImpl.propTypes = {
   vilkarsVurdertePerioder: PropTypes.arrayOf(PropTypes.shape()),
   dataForDetailForm: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   kjonn: PropTypes.string.isRequired,

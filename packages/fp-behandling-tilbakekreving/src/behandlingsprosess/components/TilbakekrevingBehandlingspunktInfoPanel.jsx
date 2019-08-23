@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
-import ForeldelsePanel from './foreldelse/ForeldelsePanel';
+import ForeldelseForm from './foreldelse/ForeldelseForm';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 import TilbakekrevingVedtak from './vedtak/TilbakekrevingVedtak';
 
@@ -30,10 +30,9 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
   isBehandlingHenlagt,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes) && (
-      <ForeldelsePanel
+    {ForeldelseForm.supports(selectedBehandlingspunkt, apCodes) && (
+      <ForeldelseForm
         submitCallback={submitCallback}
-        isApOpen={openAksjonspunkt}
         apCodes={apCodes}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
@@ -43,7 +42,6 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       <TilbakekrevingForm
         submitCallback={submitCallback}
         readOnly={readOnly}
-        isApOpen={openAksjonspunkt}
         readOnlySubmitButton={readOnlySubmitButton}
       />
     )}

@@ -475,8 +475,10 @@
   "Search.SearchFagsakOrPerson": "Søk på sak eller person",
   "Search.SaksnummerOrPersonId": "Saksnummer eller fødselsnummer/D-nummer",
   "Search.Search": "Søk",
+
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
+
   "TermindatoFaktaForm.ApplicationInformation": "Opplysninger om termin oppgitt i søknaden",
   "TermindatoFaktaForm.UtstedtDato": "Utstedt dato",
   "TermindatoFaktaForm.Termindato": "Termindato",
@@ -487,6 +489,10 @@
   "TermindatoFaktaForm.FodselsdatoTps": "Fødselsdato",
   "TermindatoFaktaForm.AntallBarnTps": "Antall barn",
   "TermindatoFaktaForm.AdvarselForTidligUtstedtdato": "Terminbekreftelsen utstedt før 22. svangerskapsuke. Kontakt søker for en nyere terminbekreftelse og sett saken på vent. Fortsett dersom ny bekreftelse ikke skal hentes inn. Behandlingen vil avslås på grunn av manglende dokumentasjon",
+
+  "TilbakekrevingTimeline.ImageText": "Personinformasjon",
+  "TilbakekrevingTimeline.Woman": "Kvinne",
+  "TilbakekrevingTimeline.Man": "Mann",
 
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Fakta om opptjening",
@@ -1120,6 +1126,13 @@
   "Avregning.SVPREF.differanse": "Svangerskapspenger avvik",
   "Avregning.HjelpetekstForeldrepenger": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta foreldrepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt foreldrenger for perioden du har jobbet.",
   "Avregning.HjelpetekstEngangsstonad": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV.",
+
+  "PeriodeInformasjon.Feilutbetaling": "Feilutbetaling",
+
+  "PeriodeController.Detaljer": "Detaljer for valgt periode",
+  "PeriodeController.DelOppPerioden": "Del opp perioden",
+  "PeriodeController.ForrigePeriode": "Forrige periode",
+  "PeriodeController.NestePeriode": "Neste periode",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",

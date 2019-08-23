@@ -1,161 +1,308 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { clearFields, formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import { Undertekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import moment from 'moment';
+import { injectIntl, FormattedMessage } from 'react-intl';
+import { Undertittel } from 'nav-frontend-typografi';
 
+import { omit, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { BehandlingspunktSubmitButton, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  RadioOption, RadioGroupField, TextAreaField,
-} from '@fpsak-frontend/form';
-import {
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
-} from '@fpsak-frontend/utils';
-import {
-  VerticalSpacer, FlexRow, FlexColumn,
+  FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
 } from '@fpsak-frontend/shared-components';
+import { behandlingspunktCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
-import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
-import { getStatusPeriode } from '../felles/behandlingspunktTimelineSkjema/BpTimelineHelper';
-import { behandlingFormTilbakekreving } from '../../../behandlingFormTilbakekreving';
+import {
+  behandlingFormTilbakekreving, behandlingFormValueSelector, isBehandlingFormDirty,
+  hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
+import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
+import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
+import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
+import styles from './foreldelseForm.less';
 
-const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
-const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
-  : oldForeldetValue(selectedItemData.foreldelseVurderingType));
+const FORELDELSE_FORM_NAME = 'ForeldelseForm';
+const foreldelseAksjonspunkter = [
+  tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE,
+];
+
+const sortPeriods = (periode1, periode2) => new Date(periode1.fom) - new Date(periode2.fom);
+
+const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);
+const getApTekst = apCode => (apCode
+  ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
+  : []);
+
+const harApentAksjonspunkt = periode => ((!periode.foreldelseVurderingType || periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT)
+  && (periode.begrunnelse === undefined || periode.erSplittet));
+
+const formaterPerioderForTidslinje = (perioder = []) => perioder
+  .map((periode, index) => ({
+    fom: periode.fom,
+    tom: periode.tom,
+    isAksjonspunktOpen: periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT,
+    isGodkjent: foreldelseVurderingType.FORELDET !== periode.foreldet,
+    id: index,
+  }));
 
 export class ForeldelseFormImpl extends Component {
-  constructor() {
-    super();
-    this.resetFields = this.resetFields.bind(this);
+  constructor(props) {
+    super(props);
+    this.state = {
+      valgtPeriode: null,
+    };
   }
 
-  resetFields() {
+  componentDidMount() {
+    const { foreldelsesresultatActivity } = this.props;
+    if (foreldelsesresultatActivity) {
+      this.setPeriode(foreldelsesresultatActivity.find(harApentAksjonspunkt));
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const { foreldelsesresultatActivity } = this.props;
+    if (!prevProps.foreldelsesresultatActivity && foreldelsesresultatActivity) {
+      this.setPeriode(foreldelsesresultatActivity.find(harApentAksjonspunkt));
+    }
+  }
+
+  setPeriode = (periode) => {
+    const { foreldelsesresultatActivity } = this.props;
+    const valgt = periode ? foreldelsesresultatActivity.find(p => p.fom === periode.fom && p.tom === periode.tom) : undefined;
+    this.setState(state => ({ ...state, valgtPeriode: valgt }));
+    this.initializeValgtPeriodeForm(valgt);
+  }
+
+  togglePeriode = () => {
+    const { foreldelsesresultatActivity } = this.props;
+    const { valgtPeriode } = this.state;
+    const periode = valgtPeriode ? undefined : foreldelsesresultatActivity[0];
+    this.setPeriode(periode);
+  }
+
+  setNestePeriode = () => {
+    const { foreldelsesresultatActivity } = this.props;
+    const { valgtPeriode } = this.state;
+    const index = foreldelsesresultatActivity.findIndex(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom);
+    this.setPeriode(foreldelsesresultatActivity[index + 1]);
+  }
+
+  setForrigePeriode = () => {
+    const { foreldelsesresultatActivity } = this.props;
+    const { valgtPeriode } = this.state;
+    const index = foreldelsesresultatActivity.findIndex(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom);
+    this.setPeriode(foreldelsesresultatActivity[index - 1]);
+  }
+
+  oppdaterPeriode = (values) => {
     const {
-      behandlingFormPrefix, activityPanelName, clearFields: clearFormFields, oppfylt,
+      foreldelsesresultatActivity, reduxFormChange: formChange, behandlingFormPrefix,
     } = this.props;
-    const fields = [oppfylt];
-    clearFormFields(`${behandlingFormPrefix}.${activityPanelName}`, false, false, ...fields);
+    const { ...verdier } = omit(values, 'erSplittet');
+
+    const otherThanUpdated = foreldelsesresultatActivity.filter(o => o.fom !== verdier.fom && o.tom !== verdier.tom);
+    const sortedActivities = otherThanUpdated.concat(verdier).sort(sortPeriods);
+    formChange(`${behandlingFormPrefix}.${FORELDELSE_FORM_NAME}`, 'foreldelsesresultatActivity', sortedActivities);
+    this.togglePeriode();
+
+    const periodeMedApenAksjonspunkt = sortedActivities.find(harApentAksjonspunkt);
+    if (periodeMedApenAksjonspunkt) {
+      this.setPeriode(periodeMedApenAksjonspunkt);
+    }
+  }
+
+  initializeValgtPeriodeForm = (valgtPeriode) => {
+    const { reduxFormInitialize: formInitialize, behandlingFormPrefix } = this.props;
+    formInitialize(`${behandlingFormPrefix}.${FORELDELSE_PERIODE_FORM_NAME}`, valgtPeriode);
+  }
+
+  oppdaterSplittedePerioder = (perioder) => {
+    const {
+      foreldelsesresultatActivity, reduxFormChange: formChange, behandlingFormPrefix,
+    } = this.props;
+    const { valgtPeriode } = this.state;
+
+    const periode = foreldelsesresultatActivity.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom);
+    const nyePerioder = perioder.map(p => ({
+      ...periode,
+      ...p,
+      erSplittet: true,
+    }));
+
+    const otherThanUpdated = foreldelsesresultatActivity.filter(o => o.fom !== valgtPeriode.fom && o.tom !== valgtPeriode.tom);
+    const sortedActivities = otherThanUpdated.concat(nyePerioder).sort(sortPeriods);
+
+    this.togglePeriode();
+    formChange(`${behandlingFormPrefix}.${FORELDELSE_FORM_NAME}`, 'foreldelsesresultatActivity', sortedActivities);
+    this.setPeriode(nyePerioder[0]);
   }
 
   render() {
     const {
-      cancelSelectedActivity,
+      foreldelsesresultatActivity,
+      behandlingFormPrefix,
+      kjonn,
+      apCodes,
+      readOnlySubmitButton,
       readOnly,
-      foreldelseVurderingTyper,
+      merknaderFraBeslutter,
       ...formProps
     } = this.props;
+    const {
+      valgtPeriode,
+    } = this.state;
+
+    const perioderFormatertForTidslinje = formaterPerioderForTidslinje(foreldelsesresultatActivity);
+    const isApOpen = perioderFormatertForTidslinje.some(harApentAksjonspunkt);
+    const valgtPeriodeFormatertForTidslinje = valgtPeriode
+    ? perioderFormatertForTidslinje.find(p => p.fom === valgtPeriode.fom && p.tom === valgtPeriode.tom)
+    : undefined;
 
     return (
-      <>
-        <VerticalSpacer twentyPx />
-        <Row>
-          <Column md="6">
-            <TextAreaField
-              name="begrunnelse"
-              label={{ id: 'Foreldelse.Vurdering' }}
-              validate={[required, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              id="foreldelseVurdering"
-            />
-          </Column>
-          <Column md="6">
-            <Undertekst><FormattedMessage id="Foreldelse.RadioGroup.Foreldet" /></Undertekst>
-            <VerticalSpacer eightPx />
-            <RadioGroupField
-              validate={[required]}
-              name="foreldet"
-              direction="vertical"
-              readOnly={readOnly}
-              onChange={this.resetFields}
-            >
-              {foreldelseVurderingTyper.map(type => <RadioOption key={type.kode} label={type.navn} value={type.kode} />)}
-            </RadioGroupField>
-          </Column>
-        </Row>
-        <VerticalSpacer twentyPx />
-        <FlexRow>
-          <FlexColumn>
-            <Hovedknapp
-              mini
-              htmlType="button"
-              onClick={formProps.handleSubmit || formProps.submitting}
-              disabled={formProps.pristine}
-              readOnly={readOnly}
-              spinner={formProps.submitting}
-            >
-              <FormattedMessage id="UttakActivity.Oppdater" />
-            </Hovedknapp>
-          </FlexColumn>
-          <FlexColumn>
-            <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
-              <FormattedMessage id="UttakActivity.Avbryt" />
-            </Knapp>
-          </FlexColumn>
-        </FlexRow>
-      </>
+      <form onSubmit={formProps.handleSubmit}>
+        <FadingPanel>
+          <FaktaGruppe
+            aksjonspunktCode={tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE}
+            merknaderFraBeslutter={merknaderFraBeslutter}
+            withoutBorder
+          >
+            <Undertittel>
+              <FormattedMessage id="Behandlingspunkt.Foreldelse" />
+            </Undertittel>
+            <VerticalSpacer twentyPx />
+            {!apCodes[0] && (
+              <div className={styles.bold}>
+                <FlexRow>
+                  <FlexColumn>
+                    <FormattedMessage id="Foreldelse.Foreldelsesloven" />
+                  </FlexColumn>
+                </FlexRow>
+                <VerticalSpacer eightPx />
+                <FlexRow>
+                  <FlexColumn>
+                    <FormattedMessage id="Foreldelse.AutomatiskVurdert" />
+                  </FlexColumn>
+                </FlexRow>
+              </div>
+            )
+            }
+            {foreldelsesresultatActivity && apCodes[0] && (
+              <>
+                <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+                  { getApTekst(apCodes[0]) }
+                </AksjonspunktHelpText>
+                <VerticalSpacer twentyPx />
+                <TilbakekrevingTimelinePanel
+                  perioder={perioderFormatertForTidslinje}
+                  valgtPeriode={valgtPeriodeFormatertForTidslinje}
+                  setPeriode={this.setPeriode}
+                  toggleDetaljevindu={this.togglePeriode}
+                  hjelpetekstKomponent={<ForeldelseTidslinjeHjelpetekster />}
+                  kjonn={kjonn}
+                />
+                {valgtPeriode && (
+                  <ForeldelsePeriodeForm
+                    periode={valgtPeriode}
+                    behandlingFormPrefix={behandlingFormPrefix}
+                    setNestePeriode={this.setNestePeriode}
+                    setForrigePeriode={this.setForrigePeriode}
+                    oppdaterPeriode={this.oppdaterPeriode}
+                    oppdaterSplittedePerioder={this.oppdaterSplittedePerioder}
+                    skjulPeriode={this.togglePeriode}
+                    readOnly={readOnly}
+                  />
+                )}
+                <VerticalSpacer twentyPx />
+                <BehandlingspunktSubmitButton
+                  formName={FORELDELSE_FORM_NAME}
+                  isReadOnly={readOnly}
+                  isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
+                  isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
+                  isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                  isBehandlingFormDirty={isBehandlingFormDirty}
+                  hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+                />
+              </>
+            )}
+          </FaktaGruppe>
+        </FadingPanel>
+      </form>
     );
   }
 }
 
 ForeldelseFormImpl.propTypes = {
-  selectedItemData: PropTypes.shape().isRequired,
+  foreldelsesresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
-  cancelSelectedActivity: PropTypes.func.isRequired,
-  formName: PropTypes.string.isRequired,
-  activityPanelName: PropTypes.string.isRequired,
-  updateActivity: PropTypes.func.isRequired,
-  ...formPropTypes,
+  reduxFormChange: PropTypes.func.isRequired,
+  reduxFormInitialize: PropTypes.func.isRequired,
+  kjonn: PropTypes.string.isRequired,
+  apCodes: PropTypes.arrayOf(PropTypes.string),
+  readOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
+  merknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
-const transformValues = (selectedItemData, values) => {
-  const { foreldet, begrunnelse } = values;
-
-  return {
-    ...selectedItemData,
-    begrunnelse,
-    foreldet,
-    className: getStatusPeriode(foreldet),
-  };
+ForeldelseFormImpl.defaultProps = {
+  foreldelsesresultatActivity: undefined,
+  apCodes: [],
 };
 
-const buildInitalValues = selectedItemData => ({
-  ...selectedItemData,
-  foreldet: checkForeldetValue(selectedItemData),
-});
-
-const mapDispatchToProps = dispatch => ({
-  ...bindActionCreators({
-    clearFields,
-  }, dispatch),
+export const transformValues = (values, apCode) => {
+  const foreldelsePerioder = values.foreldelsesresultatActivity.map(period => ({
+    fraDato: period.fom,
+    tilDato: period.tom,
+    begrunnelse: period.begrunnelse,
+    foreldelseVurderingType: period.foreldet,
+  }));
+  return [{
+    foreldelsePerioder,
+    kode: apCode,
+  }];
+};
+export const buildInitialValues = foreldelsePerioder => ({
+  foreldelsesresultatActivity: foreldelsePerioder.map(p => ({
+      ...p,
+      feilutbetaling: p.belop,
+      foreldet: p.foreldelseVurderingType.kode,
+    })),
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const initialValues = buildInitalValues(ownProps.selectedItemData);
-  const onSubmit = values => ownProps.updateActivity(transformValues(ownProps.selectedItemData, values));
-  const foreldelseVurderingTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING)(initialState)
-    .filter(fv => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
-  return () => ({
-    initialValues,
-    onSubmit,
-    foreldelseVurderingTyper,
+  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return state => ({
+    initialValues: buildInitialValues(behandlingSelectors.getForeldelsePerioder(state).perioder),
+    foreldelsesresultatActivity: behandlingFormValueSelector(FORELDELSE_FORM_NAME)(state, 'foreldelsesresultatActivity'),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+    kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE)(state),
+    onSubmit: submitCallback,
   });
 };
 
+const mapDispatchToProps = dispatch => ({
+  ...bindActionCreators({
+    reduxFormChange,
+    reduxFormInitialize,
+  }, dispatch),
+});
+
 const ForeldelseForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
-  form: 'foreldelsesresultatActivity',
-  enableReinitialize: true,
+  form: FORELDELSE_FORM_NAME,
 })(ForeldelseFormImpl)));
+
+ForeldelseForm.supports = (bp, apCodes) => bp === behandlingspunktCodes.FORELDELSE || foreldelseAksjonspunkter.some(ap => apCodes.includes(ap));
 
 export default ForeldelseForm;

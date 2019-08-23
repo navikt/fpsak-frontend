@@ -42,3 +42,6 @@ export {
   setRequestPollingMessage,
   getRequestPollingMessage,
 } from './src/pollingMessageDuck';
+export {
+  getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
+ } from './src/behandlingForm';

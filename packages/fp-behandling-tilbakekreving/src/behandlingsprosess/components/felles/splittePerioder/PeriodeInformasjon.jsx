@@ -17,53 +17,57 @@ import styles from './periodeInformasjon.less';
  * Presentationskomponent
  */
 const PeriodeInformasjon = ({
-  fom, tom, feilutbetaling, arsak,
-}) => (
-  <Row>
-    <Column md="8">
-      <div className={styles.infoSummary}>
-        <Row>
-          <Column xs="6">
-            <Element>
-              { moment(fom).format(DDMMYYYY_DATE_FORMAT)}
-              {' '}
-              -
-              {' '}
-              { moment(tom).format(DDMMYYYY_DATE_FORMAT)}
-            </Element>
-          </Column>
-          <Column xs="6">
-            <Normaltekst>
-              <FormattedMessage
-                id={calcDaysAndWeeks(moment(fom.toString()), moment(tom.toString())).id}
-                values={{
-                  weeks: calcDaysAndWeeks(moment(fom.toString()), moment(tom.toString())).weeks,
-                  days: calcDaysAndWeeks(moment(fom.toString()), moment(tom.toString())).days,
-                }}
-              />
-            </Normaltekst>
-          </Column>
-        </Row>
-        <div className={styles.resultSum}>
-          <Row className={styles.redNumbers}>
+  fom,
+  tom,
+  feilutbetaling,
+  arsak,
+}) => {
+  const daysAndWeeks = calcDaysAndWeeks(moment(fom.toString()), moment(tom.toString()));
+  return (
+    <Row>
+      <Column md="8">
+        <div className={styles.infoSummary}>
+          <Row>
             <Column xs="6">
-              <Normaltekst className={styles.resultName}>
-                <FormattedMessage id="Avregning.tilbakekreving" />
-                :
-                <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
-              </Normaltekst>
+              <Element>
+                { `${moment(fom).format(DDMMYYYY_DATE_FORMAT)} - ${moment(tom).format(DDMMYYYY_DATE_FORMAT)}` }
+              </Element>
             </Column>
             <Column xs="6">
-              <Normaltekst className={styles.resultName}>
-                {arsak.årsak}
+              <Normaltekst>
+                <FormattedMessage
+                  id={daysAndWeeks.id}
+                  values={{
+                    weeks: daysAndWeeks.weeks,
+                    days: daysAndWeeks.days,
+                  }}
+                />
               </Normaltekst>
             </Column>
           </Row>
+          <div className={styles.resultSum}>
+            <Row className={styles.redNumbers}>
+              <Column xs="6">
+                <Normaltekst className={styles.resultName}>
+                  <FormattedMessage id="PeriodeInformasjon.Feilutbetaling" />
+                  :
+                  <span className={feilutbetaling ? styles.redNumber : styles.positivNumber}>{ formatCurrencyNoKr(feilutbetaling) }</span>
+                </Normaltekst>
+              </Column>
+              <Column xs="6">
+                {arsak && (
+                  <Normaltekst className={styles.resultName}>
+                    {arsak.årsak}
+                  </Normaltekst>
+                )}
+              </Column>
+            </Row>
+          </div>
         </div>
-      </div>
-    </Column>
-  </Row>
-);
+      </Column>
+    </Row>
+  );
+};
 
 PeriodeInformasjon.propTypes = {
   fom: PropTypes.string.isRequired,
@@ -71,7 +75,11 @@ PeriodeInformasjon.propTypes = {
   feilutbetaling: PropTypes.number.isRequired,
   arsak: PropTypes.shape({
     årsak: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
+};
+
+PeriodeInformasjon.defaultProsp = {
+  arsak: undefined,
 };
 
 export default PeriodeInformasjon;

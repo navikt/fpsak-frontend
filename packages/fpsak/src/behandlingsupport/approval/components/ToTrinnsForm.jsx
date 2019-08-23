@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandling/behandlingForm';
+import { behandlingFormFpsak, behandlingFormValueSelector } from 'behandling/behandlingFormFpsak';
 import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
 import { erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
@@ -145,7 +145,7 @@ const mapStateToProps = state => ({
   klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
 });
-const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
+const ToTrinnsForm = behandlingFormFpsak({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 
 ToTrinnsForm.formName = formName;
 

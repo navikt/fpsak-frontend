@@ -6,7 +6,7 @@ import { bindActionCreators } from 'redux';
 import { change as reduxChange } from 'redux-form';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { getBehandlingFormName } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingFormName } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';

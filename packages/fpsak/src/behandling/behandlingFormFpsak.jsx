@@ -1,19 +1,18 @@
 import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-felles';
 
-import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import { getSelectedBehandlingId } from './duckBehandlingInnsyn';
+import { getSelectedBehandlingId, getBehandlingVersjon } from './duck';
 
 /**
- * behandlingFormInnsyn
+ * behandlingFormFpsak
  *
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const behandlingFormInnsyn = (config = {}) => WrappedComponent => getBehandlingForm(
-  config, WrappedComponent, getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon,
+export const behandlingFormFpsak = (config = {}) => WrappedComponent => getBehandlingForm(
+  config, WrappedComponent, getSelectedBehandlingId, getBehandlingVersjon,
 );
 
-const selectors = getBehandlingFormSelectors(getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon);
+const selectors = getBehandlingFormSelectors(getSelectedBehandlingId, getBehandlingVersjon);
 
 export const {
   behandlingFormValueSelector,

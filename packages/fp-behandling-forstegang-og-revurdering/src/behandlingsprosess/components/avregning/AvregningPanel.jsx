@@ -8,8 +8,7 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
-import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-behandling-felles';
+import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import {
   getSimuleringResultat, getTilbakekrevingValg,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';

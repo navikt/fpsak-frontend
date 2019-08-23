@@ -7,7 +7,8 @@ import {
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { requireProps } from '@fpsak-frontend/fp-felles';
+
+import requireProps from './requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
 export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => `${getBehandlingFormPrefix(behandlingId, behandlingVersjon)}.${form}`;

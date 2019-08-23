@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 
-export class TilbakekrevingTimelinePanel extends Component {
+// TODO (TOR) Slå saman med TilbakekrevingTimeline.jsx
+
+class TilbakekrevingTimelinePanel extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,28 +36,6 @@ export class TilbakekrevingTimelinePanel extends Component {
     eventProps.event.preventDefault();
   }
 
-  nextPeriod = (event) => {
-    const { perioder, setPeriode } = this.props;
-    const { valgtPeriode } = this.state;
-    const newIndex = perioder.findIndex(periode => periode.fom === valgtPeriode.fom && periode.tom === valgtPeriode.tom) + 1;
-    if (newIndex < perioder.length) {
-      setPeriode(perioder[newIndex]);
-      this.setState({ valgtPeriode: perioder[newIndex] });
-    }
-    event.preventDefault();
-  }
-
-  prevPeriod = (event) => {
-    const { perioder, setPeriode } = this.props;
-    const { valgtPeriode } = this.state;
-    const newIndex = resultatActivity.findIndex(periode => periode.fom === valgtPeriode.fom && periode.tom === valgtPeriode.tom) - 1;
-    if (newIndex >= 0) {
-      setPeriode(perioder[newIndex]);
-      this.setState({ valgtPeriode: perioder[newIndex] });
-    }
-    event.preventDefault();
-  }
-
   render() {
     const {
       perioder,
@@ -73,7 +53,7 @@ export class TilbakekrevingTimelinePanel extends Component {
         selectedPeriod={valgtPeriode}
         selectPeriodCallback={this.selectHandler}
         toggleDetaljevindu={toggleDetaljevindu}
-        HjelpetekstKomponent={hjelpetekstKomponent}
+        hjelpetekstKomponent={hjelpetekstKomponent}
         kjonn={kjonn}
       />
     );
@@ -82,6 +62,7 @@ export class TilbakekrevingTimelinePanel extends Component {
 
 TilbakekrevingTimelinePanel.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     isAksjonspunktOpen: PropTypes.bool.isRequired,
@@ -96,7 +77,7 @@ TilbakekrevingTimelinePanel.propTypes = {
   setPeriode: PropTypes.func.isRequired,
   toggleDetaljevindu: PropTypes.func.isRequired,
   kjonn: PropTypes.string.isRequired,
-  hjelpetekstKomponent: PropTypes.func.isRequired,
+  hjelpetekstKomponent: PropTypes.node.isRequired,
 };
 
 TilbakekrevingTimelinePanel.defaultProps = {
