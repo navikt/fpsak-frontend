@@ -4,8 +4,8 @@ require('dotenv')
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const config = require('./webpack.dev');
-const vtpLogin = require('./login/vtp');
-
+const vtpLogin = require('./mocks/login');
+const sentryMock = require('./mocks/sentry');
 if (process.argv.includes('--no-fix')) {
   console.warn('Setting eslint-loader option \'fix\' to false');
   config.module.rules.find(rules => rules.loader === 'eslint-loader').options.fix = false;
@@ -18,6 +18,7 @@ const options = {
   watchContentBase: true,
   before: function (app, server) {
     vtpLogin(app);
+    sentryMock(app);
   },
   proxy: {
     '/fpoppdrag/**': {
@@ -58,6 +59,7 @@ wds.listen(9000, 'localhost', function (err) {
   if (err) {
     return console.log(err); // NOSONAR
   }
-
   console.log('Listening at http://localhost:9000/');
+
+  console.log('If running agains VTP you can login or change user here: http://localhost:9000/login-with-vtp');
 });

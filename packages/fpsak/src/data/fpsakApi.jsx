@@ -90,7 +90,7 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
-  .withPost('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
+  .withGet('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)
 
   .build();
 

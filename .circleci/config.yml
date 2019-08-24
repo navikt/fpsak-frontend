@@ -33,7 +33,6 @@ jobs:
     docker:
       - image: circleci/node:latest
     working_directory: ~/repo
-    resource_class: large
     steps:
       - attach_workspace:
           at: /tmp/workspace

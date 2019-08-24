@@ -2,7 +2,7 @@
 const merge = require('webpack-merge');
 const common = require('./webpack.common.js');
 const path = require('path');
-const PACKAGES_DIR = path.join(__dirname, '../packages');
+const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 
 const config = {
   devtool: 'eval',
