@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
-import { getBehandlinger, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+import { getBehandlinger, getNoExistingBehandlinger, getBehandlingerTypesMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
@@ -21,16 +21,14 @@ import RisikoklassifiseringIndex from './risikoklassifisering/Risikoklassifiseri
 import styles from './fagsakProfileIndex.less';
 
 export const getSkalViseRisikoklassifisering = createSelector(
-  [getSelectedBehandlingId, getBehandlinger],
-  (selectedBehandlingId, behandlinger = []) => {
-    if (!selectedBehandlingId || behandlinger.length < 1) {
+  [getSelectedBehandlingId, getBehandlingerTypesMappedById],
+  (selectedBehandlingId, behandlingTypeMap) => {
+    if (!selectedBehandlingId || !behandlingTypeMap) {
       return false;
     }
-    const selectedBehandling = behandlinger.find(beh => beh.id === selectedBehandlingId);
-    return selectedBehandling && selectedBehandling.type ? selectedBehandling.type.kode === behandlingType.FORSTEGANGSSOKNAD : false;
+    return behandlingTypeMap[selectedBehandlingId] === behandlingType.FORSTEGANGSSOKNAD;
   },
 );
-
 
 export class FagsakProfileIndex extends Component {
   componentDidMount() {
@@ -64,7 +62,9 @@ export class FagsakProfileIndex extends Component {
           toggleShowAll={toggleShowAll}
         />
         {skalViseRisikoklassifisering
-          && <RisikoklassifiseringIndex />
+          && (
+          <RisikoklassifiseringIndex />
+)
         }
 
 

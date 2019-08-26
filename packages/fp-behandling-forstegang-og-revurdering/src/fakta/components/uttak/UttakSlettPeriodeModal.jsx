@@ -17,8 +17,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakSlettPeriodeModal.less';
 
@@ -127,7 +127,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const UttakSlettPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
+const UttakSlettPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   enableReinitialize: true,
 })(injectIntl(UttakSlettPeriodeModalImpl)));
 

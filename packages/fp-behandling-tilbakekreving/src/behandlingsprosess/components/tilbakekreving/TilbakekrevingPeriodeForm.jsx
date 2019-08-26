@@ -23,12 +23,12 @@ import {
   VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
 } from '@fpsak-frontend/shared-components';
 
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingForm';
+import { behandlingFormTilbakekreving, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckTilbake';
+import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import BelopetMottattIGodTroFormPanel from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
@@ -346,7 +346,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
   enableReinitialize: true,
 })(TilbakekrevingPeriodeFormImpl)));

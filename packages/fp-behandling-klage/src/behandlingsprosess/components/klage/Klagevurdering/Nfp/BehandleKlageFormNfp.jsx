@@ -12,11 +12,11 @@ import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingKlage/src/behandlingsprosess/behandlingsprosessKlageSelectors';
-import { getBehandlingKlageVurderingResultatNFP, getBehandlingSprak, isKlageBehandlingInKA } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingForm, behandlingFormValueSelector,
-} from 'behandlingKlage/src/behandlingForm';
+  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormKlage, behandlingFormValueSelector,
+} from 'behandlingKlage/src/behandlingFormKlage';
 import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
 import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
@@ -116,7 +116,7 @@ BehandleKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([getBehandlingKlageVurderingResultatNFP], klageVurderingResultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNFP], klageVurderingResultat => ({
   klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
   klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
   klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -138,19 +138,19 @@ export const transformValues = (values, aksjonspunktCode) => ({
 const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
+  const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
   return state => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
-    readOnly: isKlageBehandlingInKA(state) || ownProps.readOnly,
-    sprakkode: getBehandlingSprak(state),
+    readOnly: behandlingSelectors.isKlageBehandlingInKA(state) || ownProps.readOnly,
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     onSubmit,
   });
 };
 
-const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
+const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingFormKlage({
   form: formName,
 })(BehandleKlageFormNfpImpl));
 

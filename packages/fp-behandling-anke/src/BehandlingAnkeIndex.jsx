@@ -37,18 +37,28 @@ BehandlingAnkeIndex.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
 };
 
-// Definerer mapStateToProps og mapDispatchToProps her og send inn til HOC (Bruker anke-spesifikke selectors og funksjoner)
-const mapStateToProps = state => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-  fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
-  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
-  venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
-  hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
-  hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
-  isInSync: behandlingSelectors.isBehandlingInSync(state),
-});
+// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker anke-spesifikke selectors og funksjoner)
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const fagsakInfo = {
+    fagsakSaksnummer: ownProps.saksnummer,
+    behandlingId: ownProps.behandlingId,
+    featureToggles: ownProps.featureToggles,
+    kodeverk: ownProps.kodeverk,
+    fagsak: ownProps.fagsak,
+  };
+  return state => ({
+    behandlingIdentifier: getBehandlingIdentifier(state),
+    behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+    fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
+    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+    venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
+    hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
+    hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
+    ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+    isInSync: behandlingSelectors.isBehandlingInSync(state),
+    fagsakInfo,
+  });
+};
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
@@ -59,4 +69,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   fetchBehandling: fetchBehandlingActionCreator,
 }, dispatch);
 
-export default withBehandlingIndex(mapStateToProps, mapDispatchToProps, fpAnkeBehandlingUpdater)(BehandlingAnkeIndex);
+export default withBehandlingIndex(mapStateToPropsFactory, mapDispatchToProps, fpAnkeBehandlingUpdater)(BehandlingAnkeIndex);

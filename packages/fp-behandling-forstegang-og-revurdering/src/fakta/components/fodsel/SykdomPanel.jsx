@@ -4,7 +4,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
@@ -63,6 +63,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 export const sykdomPanelName = 'SykdomPanel';
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: sykdomPanelName,
 })(SykdomPanel));

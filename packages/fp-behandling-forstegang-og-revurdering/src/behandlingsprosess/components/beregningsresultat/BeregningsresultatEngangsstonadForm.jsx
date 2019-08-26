@@ -7,10 +7,13 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import { isSelectedBehandlingspunktOverrideReadOnly } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { getAksjonspunkter, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   VerticalSpacer, FadingPanel, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
@@ -120,7 +123,7 @@ BeregningsresultatEngangsstonadFormImpl.defaultProps = {
   isReadOnly: false,
 };
 
-const buildInitialValues = createSelector([getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
+const buildInitialValues = createSelector([behandlingSelectors.getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
   const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
   return {
     beregningResultat,
@@ -142,12 +145,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues(state),
-    isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
+    isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
     ...behandlingFormValueSelector(formName)(state, 'beregningResultat', 'isOverstyrt'),
   });
 };
 
-const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
+const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(BeregningsresultatEngangsstonadFormImpl)));
 

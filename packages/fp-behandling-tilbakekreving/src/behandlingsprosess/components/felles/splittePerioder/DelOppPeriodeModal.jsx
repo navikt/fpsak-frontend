@@ -1,19 +1,21 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
-import {
-  DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
-} from '@fpsak-frontend/utils';
-
-import { DatepickerField } from '@fpsak-frontend/form';
-import Modal from 'nav-frontend-modal';
-import { Column, Row } from 'nav-frontend-grid';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import moment from 'moment/moment';
-import { behandlingForm } from '../../../../behandlingForm';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import Modal from 'nav-frontend-modal';
+import { Column, Row } from 'nav-frontend-grid';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
+import {
+  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
+} from '@fpsak-frontend/utils';
+import { DatepickerField } from '@fpsak-frontend/form';
+
+import { behandlingFormTilbakekreving } from '../../../../behandlingFormTilbakekreving';
+
 import styles from './delOppPeriodeModal.less';
 
 export const DelOppPeriodeModalImpl = ({
@@ -38,10 +40,7 @@ export const DelOppPeriodeModalImpl = ({
     <div className={styles.marginTop}>
       <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.Periode" /></Undertekst>
       <Normaltekst>
-        {moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)}
-        {' '}
--
-        {moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}
+        {`${moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)} - ${moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}`}
       </Normaltekst>
     </div>
     <div className={styles.marginTop}>
@@ -105,7 +104,7 @@ const transformValues = (values, periodeData) => {
     tom: values.ForstePeriodeTomDato,
   };
   const andrePeriode = {
-    fom: moment(addDay.toString()).format('YYYY-MM-DD'),
+    fom: addDay.format(ISO_DATE_FORMAT),
     tom: periodeData.tom,
   };
   return {
@@ -114,7 +113,7 @@ const transformValues = (values, periodeData) => {
   };
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+export const mapStateToPropsFactory = (initialState, ownProps) => {
   const validate = values => validateForm(values, ownProps.periodeData);
   const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
   return () => ({
@@ -123,8 +122,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-
-const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormTilbakekreving({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

@@ -5,13 +5,13 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
   Table, TableRow, TableColumn, VerticalSpacer, Image,
 } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';

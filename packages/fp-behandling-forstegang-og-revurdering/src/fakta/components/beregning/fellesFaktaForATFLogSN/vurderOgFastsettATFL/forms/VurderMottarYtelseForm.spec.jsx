@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import VurderMottarYtelseForm, {
   VurderMottarYtelseFormImpl, frilansUtenAndreFrilanstilfeller, frilansMedAndreFrilanstilfeller, mottarYtelseForArbeidMsg,
 } from './VurderMottarYtelseForm';

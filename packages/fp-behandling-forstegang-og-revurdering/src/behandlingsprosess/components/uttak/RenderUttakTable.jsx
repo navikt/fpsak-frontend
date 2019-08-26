@@ -12,7 +12,7 @@ import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidT
 import {
   minValue, maxValue, hasValidInteger, maxLength, required, hasValidDecimal, notDash,
 } from '@fpsak-frontend/utils';
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import styles from './renderUttakTable.less';
 
 /**

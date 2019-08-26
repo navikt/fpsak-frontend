@@ -1,180 +1,64 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { destroy } from 'redux-form';
 
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import {
-  BehandlingGrid, sakOperations,
-} from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingGrid, withBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
+
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
-import FpSakBehandlingResolver from './FpSakBehandlingResolver';
-import BehandlingsprosessIndex from './behandlingsprosess/BehandlingsprosessIndex';
+import BehandlingsprosessForstegangOgRevContainer from './behandlingsprosess/BehandlingsprosessForstegangOgRevContainer';
 import FaktaContainer from './fakta/FaktaContainer';
 import {
-  getBehandlingVersjon, getBehandlingOnHoldDate, getBehandlingVenteArsakKode, getBehandlingIsOnHold,
-  hasBehandlingManualPaVent,
-} from './behandlingSelectors';
-import {
   setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk,
-} from './duck';
-import { getBehandlingFormPrefix } from './behandlingForm';
-import fpSakBehandlingUpdater from './FpSakBehandlingUpdater';
+  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+} from './duckBehandlingForstegangOgRev';
+import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 
 /**
  * BehandlingForstegangOgRevurderingIndex
  *
- * Container-komponent. Er rot for for den delen av hovedvinduet som har innhold for en valgt behandling, og styrer livssyklusen til de mekanismene som er
- * relatert til den valgte behandlingen.
- *
- * Komponenten har ansvar å legge valgt behandlingId fra URL-en i staten.
+ * Bruker HOC withBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
  */
-export class BehandlingForstegangOgRevurderingIndex extends Component {
-  constructor() {
-    super();
-    this.didGetNewBehandlingVersion = this.didGetNewBehandlingVersion.bind(this);
-    this.cleanUp = this.cleanUp.bind(this);
-  }
-
-  componentDidMount() {
-    const {
-      setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-      featureToggles, kodeverk, fagsak,
-    } = this.props;
-    setInfo({
-      behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
-    });
-
-    behandlingUpdater.setUpdater(fpSakBehandlingUpdater);
-    sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (this.didGetNewBehandlingVersion(prevProps)) {
-      this.cleanUp(prevProps.behandlingId, prevProps.behandlingVersjon);
-    }
-  }
-
-  componentWillUnmount() {
-    const { behandlingId, behandlingVersjon, resetBehandlingFpsakContext: resetBehandling } = this.props;
-    resetBehandling();
-    this.cleanUp(behandlingId, behandlingVersjon);
-  }
-
-  didGetNewBehandlingVersion(prevProps) {
-    const { behandlingVersjon } = this.props;
-    return prevProps.behandlingVersjon !== behandlingVersjon;
-  }
-
-  cleanUp(behandlingId, behandlingVersjon) {
-    const { destroyReduxForms: destroyForms } = this.props;
-    const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
-    setTimeout(() => destroyForms(behandlingFormPrefix), 1000); // Delay destruction to after potentially expensive transition
-  }
-
-  render() {
-    const {
-      hasShownBehandlingPaVent,
-      behandlingId,
-      behandlingPaaVent,
-      fristBehandlingPaaVent,
-      venteArsakKode,
-      closeBehandlingOnHoldModal,
-      handleOnHoldSubmit,
-      hasSubmittedPaVentForm,
-      hasManualPaVent,
-      behandlingerVersjonMappedById,
-      setBehandlingInfoHolder,
-      ventearsaker,
-      behandlingIdentifier,
-    } = this.props;
-    if (!behandlingIdentifier || behandlingIdentifier.behandlingId !== behandlingId) {
-      return <LoadingPanel />;
-    }
-
-    return (
-      <FpSakBehandlingResolver behandlingerVersjonMappedById={behandlingerVersjonMappedById}>
-        <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
-        <BehandlingGrid
-          behandlingsprosessContent={<BehandlingsprosessIndex />}
-          faktaContent={<FaktaContainer />}
-        />
-        {!hasSubmittedPaVentForm
-          && (
-          <BehandlingErPaVentModal
-            showModal={!hasShownBehandlingPaVent && behandlingPaaVent}
-            closeEvent={closeBehandlingOnHoldModal}
-            behandlingId={behandlingId}
-            fristBehandlingPaaVent={fristBehandlingPaaVent}
-            venteArsakKode={venteArsakKode}
-            handleOnHoldSubmit={handleOnHoldSubmit}
-            hasManualPaVent={hasManualPaVent}
-            ventearsaker={ventearsaker}
-          />
-          )
-        }
-      </FpSakBehandlingResolver>
-    );
-  }
-}
+export const BehandlingForstegangOgRevurderingIndex = ({
+  setBehandlingInfoHolder,
+}) => (
+  <>
+    <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
+    <BehandlingGrid
+      behandlingsprosessContent={<BehandlingsprosessForstegangOgRevContainer />}
+      faktaContent={<FaktaContainer />}
+    />
+  </>
+);
 
 BehandlingForstegangOgRevurderingIndex.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number,
-  fristBehandlingPaaVent: PropTypes.string,
-  behandlingPaaVent: PropTypes.bool,
-  venteArsakKode: PropTypes.string,
-  hasShownBehandlingPaVent: PropTypes.bool.isRequired,
-  closeBehandlingOnHoldModal: PropTypes.func.isRequired,
-  handleOnHoldSubmit: PropTypes.func.isRequired,
-  destroyReduxForms: PropTypes.func.isRequired,
-  hasSubmittedPaVentForm: PropTypes.bool.isRequired,
-  hasManualPaVent: PropTypes.bool.isRequired,
-  setBehandlingInfo: PropTypes.func.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
-  behandlingUpdater: PropTypes.shape().isRequired,
-  resetBehandlingFpsakContext: PropTypes.func.isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
-  featureToggles: PropTypes.shape().isRequired,
-  kodeverk: PropTypes.shape().isRequired,
-  fagsak: PropTypes.shape({
-    fagsakStatus: PropTypes.shape().isRequired,
-    fagsakPerson: PropTypes.shape().isRequired,
-    fagsakYtelseType: PropTypes.shape().isRequired,
-    isForeldrepengerFagsak: PropTypes.bool.isRequired,
-  }).isRequired,
-  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  })),
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
 };
 
-BehandlingForstegangOgRevurderingIndex.defaultProps = {
-  fristBehandlingPaaVent: undefined,
-  behandlingPaaVent: false,
-  behandlingVersjon: undefined,
-  venteArsakKode: undefined,
-  ventearsaker: [],
-  behandlingIdentifier: undefined,
+// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker førstegang-og-rev-spesifikke selectors og funksjoner)
+const mapStateToPropsFactory = (initialState, ownProps) => {
+  const fagsakInfo = {
+    fagsakSaksnummer: ownProps.saksnummer,
+    behandlingId: ownProps.behandlingId,
+    featureToggles: ownProps.featureToggles,
+    kodeverk: ownProps.kodeverk,
+    fagsak: ownProps.fagsak,
+  };
+  return state => ({
+    behandlingIdentifier: getBehandlingIdentifier(state),
+    behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+    fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
+    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+    venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
+    hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
+    hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
+    ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+    isInSync: behandlingSelectors.isBehandlingInSync(state),
+    fagsakInfo,
+  });
 };
-
-const mapStateToProps = state => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
-  fristBehandlingPaaVent: getBehandlingOnHoldDate(state),
-  behandlingPaaVent: getBehandlingIsOnHold(state),
-  venteArsakKode: getBehandlingVenteArsakKode(state),
-  hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  hasManualPaVent: hasBehandlingManualPaVent(state),
-  ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
-});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
   setHasShownBehandlingPaVent,
@@ -182,21 +66,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   setBehandlingInfo,
   resetBehandlingFpsakContext,
   destroyReduxForms: destroy,
+  fetchBehandling: fetchBehandlingActionCreator,
 }, dispatch);
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...stateProps,
-  ...dispatchProps,
-  ...ownProps,
-  handleOnHoldSubmit: (formData) => {
-    const { behandlingId } = ownProps;
-    const { behandlingIdentifier, behandlingVersjon } = stateProps;
-    return dispatchProps.updateOnHold({ ...formData, behandlingId, behandlingVersjon }, behandlingIdentifier)
-      .then(() => {
-        dispatchProps.setHasShownBehandlingPaVent();
-      });
-  },
-  closeBehandlingOnHoldModal: () => dispatchProps.setHasShownBehandlingPaVent(),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingForstegangOgRevurderingIndex);
+export default withBehandlingIndex(mapStateToPropsFactory, mapDispatchToProps, FpSakBehandlingUpdater)(BehandlingForstegangOgRevurderingIndex);

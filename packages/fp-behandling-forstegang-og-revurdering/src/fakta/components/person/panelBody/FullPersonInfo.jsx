@@ -9,7 +9,7 @@ import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/pe
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { Utland } from './utland/Utland';
 
 const findPersonStatus = (personopplysning) => {

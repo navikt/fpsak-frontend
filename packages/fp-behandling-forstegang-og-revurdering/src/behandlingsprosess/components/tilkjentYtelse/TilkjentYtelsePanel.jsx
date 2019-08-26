@@ -12,11 +12,10 @@ import { FadingPanel } from '@fpsak-frontend/shared-components';
 import {
   getPersonopplysning,
   getBehandlingResultatstruktur,
-  getSoknad,
   getFamiliehendelseGjeldende,
-  getAksjonspunkter,
   getIsFagsakTypeSVP,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -124,7 +123,7 @@ const getCurrentFamiliehendelseDato = (
   return endredomsorgsOvertagelseDato ? parseDateString(endredomsorgsOvertagelseDato) : parseDateString(omsorgsOvertagelseDato);
 };
 
-const finnTilbaketrekkAksjonspunkt = createSelector([getAksjonspunkter], (alleAksjonspunkter) => {
+const finnTilbaketrekkAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], (alleAksjonspunkter) => {
   if (alleAksjonspunkter) {
     return alleAksjonspunkter.find(ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK);
   }
@@ -135,7 +134,7 @@ const mapStateToProps = (state) => {
   const person = getPersonopplysning(state);
   const familiehendelse = getFamiliehendelseGjeldende(state);
   const beregningsresultat = getBehandlingResultatstruktur(state);
-  const soknad = getSoknad(state);
+  const soknad = behandlingSelectors.getSoknad(state);
   const isSVP = getIsFagsakTypeSVP(state);
   return {
     hovedsokerKjonn: person ? person.navBrukerKjonn.kode : undefined,

@@ -6,6 +6,7 @@ import sinon from 'sinon';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import BehandlingsprosessAnkeIndex from './BehandlingsprosessAnkeIndex';
 import { BehandlingsprosessAnkeContainer } from './BehandlingsprosessAnkeContainer';
@@ -29,6 +30,10 @@ describe('BehandlingsprosessAnkeContainer', () => {
       fetchPreviewBrev: sinon.spy(),
       resolveProsessAksjonspunkter: sinon.spy(),
       resetBehandlingspunkter: sinon.spy(),
+      behandlingType: {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      },
+      aksjonspunkter: [],
     };
 
     const wrapper = shallow(<BehandlingsprosessAnkeContainer {...props} />);

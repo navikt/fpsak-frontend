@@ -6,17 +6,10 @@ import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import { getRettigheter } from 'navAnsatt/duck';
-import {
-  getBehandlingVilkarCodes,
-  getPersonopplysning,
-  getBehandlingIsOnHold,
-  getAksjonspunkter,
-  hasReadOnlyBehandling,
-  getBehandlingYtelseFordeling,
-}
-from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { setOpenInfoPanels, getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duck';
-import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { setOpenInfoPanels, getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
+import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
@@ -267,11 +260,11 @@ FaktaPanel.defaultProps = {
 const mapStateToProps = (state) => {
   const rettigheter = getRettigheter(state);
   return {
-    aksjonspunkter: getAksjonspunkter(state),
-    vilkarCodes: getBehandlingVilkarCodes(state),
+    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+    vilkarCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
     ytelsesType: getFagsakYtelseType(state),
     openInfoPanels: getOpenInfoPanels(state),
-    readOnly: !rettigheter.writeAccess.isEnabled || getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
+    readOnly: !rettigheter.writeAccess.isEnabled || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     personopplysninger: getPersonopplysning(state) || null,
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,

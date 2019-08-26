@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
@@ -8,9 +9,9 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import { CheckboxField } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import naringsvirksomhetType from '@fpsak-frontend/kodeverk/src/naringsvirksomhetType';
-import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import PropTypes from 'prop-types';
+
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 
 const naringsvirksomhetTypeOrder = {
   [naringsvirksomhetType.DAGMAMMA]: 1,

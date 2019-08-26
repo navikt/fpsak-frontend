@@ -10,14 +10,14 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getBehandlingMedlem, getPersonopplysning,
-  getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom,
+  getBehandlingMedlem, getPersonopplysning, getBehandlingRevurderingAvFortsattMedlemskapFom,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { getKodeverk, getFagsakPerson, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk, getFagsakPerson, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
@@ -101,7 +101,8 @@ const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLA
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD];
 
 const buildInitialValues = createSelector(
-  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, getSoknad, getAksjonspunkter, getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
+  [getFagsakPerson, getBehandlingMedlem, getPersonopplysning, behandlingSelectors.getSoknad, behandlingSelectors.getAksjonspunkter,
+    getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
   (person, medlem, personopplysning, soknad, allAksjonspunkter, gjeldendeFom, alleKodeverk) => {
     const aksjonspunkter = allAksjonspunkter
       .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
@@ -160,6 +161,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'OppholdInntektOgPerioderForm',
 })(OppholdInntektOgPerioderForm));

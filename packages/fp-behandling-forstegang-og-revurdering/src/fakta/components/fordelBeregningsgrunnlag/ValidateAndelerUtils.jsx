@@ -4,7 +4,7 @@ import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/akt
 import {
   required, formatCurrencyNoKr, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { mapToBelop, erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver, GRADERING_RANGE_DENOMINATOR } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 

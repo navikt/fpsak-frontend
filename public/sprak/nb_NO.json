@@ -476,8 +476,10 @@
   "Search.SearchFagsakOrPerson": "Søk på sak eller person",
   "Search.SaksnummerOrPersonId": "Saksnummer eller fødselsnummer/D-nummer",
   "Search.Search": "Søk",
+
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
+
   "TermindatoFaktaForm.ApplicationInformation": "Opplysninger om termin oppgitt i søknaden",
   "TermindatoFaktaForm.UtstedtDato": "Utstedt dato",
   "TermindatoFaktaForm.Termindato": "Termindato",
@@ -488,6 +490,10 @@
   "TermindatoFaktaForm.FodselsdatoTps": "Fødselsdato",
   "TermindatoFaktaForm.AntallBarnTps": "Antall barn",
   "TermindatoFaktaForm.AdvarselForTidligUtstedtdato": "Terminbekreftelsen utstedt før 22. svangerskapsuke. Kontakt søker for en nyere terminbekreftelse og sett saken på vent. Fortsett dersom ny bekreftelse ikke skal hentes inn. Behandlingen vil avslås på grunn av manglende dokumentasjon",
+
+  "TilbakekrevingTimeline.ImageText": "Personinformasjon",
+  "TilbakekrevingTimeline.Woman": "Kvinne",
+  "TilbakekrevingTimeline.Man": "Mann",
 
   "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Fakta om opptjening",
@@ -1093,7 +1099,7 @@
   "Avregning.ingenPerioder": "Ingen periode med avvik",
   "Avregning.AksjonspunktHelpText.5084": "Vurder videre behandling av tilbakekreving",
   "Avregning.AksjonspunktHelpText.5085": "Vurder om inntrekk kan gjøres etter § 22-15",
-  "Avregning.vurdering": "Vurdering",
+  "Avregning.vurdering": "Begrunnelse",
   "Avregning.videreBehandling": "Fastsett videre behandling",
   "Avregning.gjennomfør": "Opprett tilbakekreving",
   "Avregning.avvent": "Avvent samordning, ingen tilbakekreving",
@@ -1121,6 +1127,13 @@
   "Avregning.SVPREF.differanse": "Svangerskapspenger avvik",
   "Avregning.HjelpetekstForeldrepenger": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta foreldrepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt foreldrenger for perioden du har jobbet.",
   "Avregning.HjelpetekstEngangsstonad": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV.",
+
+  "PeriodeInformasjon.Feilutbetaling": "Feilutbetaling",
+
+  "PeriodeController.Detaljer": "Detaljer for valgt periode",
+  "PeriodeController.DelOppPerioden": "Del opp perioden",
+  "PeriodeController.ForrigePeriode": "Forrige periode",
+  "PeriodeController.NestePeriode": "Neste periode",
 
   "Beregningsgrunnlag.Info": "Fakta for beregningsgrunnlag",
   "Beregningsgrunnlag.Title": "Beregning",
@@ -1248,7 +1261,6 @@
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Dagpenger": "Dagpenger",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet": "Finn regneark på navet",
   "BeregningInfoPanel.FastsettBBFodendeKvinne.Sum": "Sum",
-  "BeregningInfoPanel.FastsettBBFodendeKvinne.ErIkkeStottet": "Denne funksjonaliteten er ikke støttet enda.",
   "BeregningInfoPanel.TilstøtendeYtelseForm.TilstøtendeYtelse": "Tilstøtende ytelse: {ytelse}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.BruttoBeregningsgrunnlag": "Brutto beregningsgrunnlag: {bruttoBG}",
   "BeregningInfoPanel.TilstøtendeYtelseForm.Dekningsgrad": "Dekningsgrad: {dekningsgrad}%",
@@ -1323,6 +1335,8 @@
   "BeregningInfoPanel.EtterlønnSluttpakke.HarSøkerInntekt": "Har søker etterlønn eller sluttpakke?",
   "BeregningInfoPanel.EtterlønnSluttpakke.Månedsinntekt": "Månedsinntekt",
 
+  "BeregningInfoPanel.VurderMilitaer.HarSøkerMilitærinntekt": "Har søker vært i militær- eller sivilforsvarstjeneste i opptjeningsperioden?",
+
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
 
@@ -1376,6 +1390,7 @@
   "ToTrinnsForm.Beregning.FrilansinntektFastsatt": "Frilansinntekt er fastsatt",
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
   "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
+  "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
@@ -2182,6 +2197,7 @@
   "HistorikkEndretFelt.ErAnkefristOverholdt": "Er ankefrist overholdt",
   "HistorikkEndretFelt.ErAnkenSignert": "Er anken signer",
   "HistorikkEndretFelt.Faresignaler": "Resultat",
+  "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",
@@ -2470,6 +2486,7 @@
 
   "TilbakekrevingVedtak.Resultat": "Resultat",
   "TilbakekrevingVedtak.Vedtaksbrev": "Vedtaksbrev",
+  "TilbakekrevingVedtak.ErHenlagt": "Behandlingen er henlagt",
 
   "TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst": "Legg til utdypende tekst",
   "TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst": "Utdypende tekst",

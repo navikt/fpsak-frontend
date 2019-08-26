@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Row, Column } from 'nav-frontend-grid';
 
-import { getKodeverk } from 'papirsoknad/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import { maxLength } from '@fpsak-frontend/utils';
@@ -13,6 +12,8 @@ import {
 import {
   InputField, DatepickerField, SelectField,
 } from '@fpsak-frontend/form';
+
+import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 

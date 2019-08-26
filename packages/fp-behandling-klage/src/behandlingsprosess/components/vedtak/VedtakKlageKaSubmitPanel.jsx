@@ -9,7 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 
-import { getBehandlingIsOnHold } from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
+import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 
 import styles from './vedtakKlageSubmitPanel.less';
 
@@ -123,7 +123,7 @@ VedtakKlageKaSubmitPanelImpl.defaultProps = {
 
 
 const mapStateToProps = state => ({
-  behandlingPaaVent: getBehandlingIsOnHold(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakKlageKaSubmitPanelImpl));

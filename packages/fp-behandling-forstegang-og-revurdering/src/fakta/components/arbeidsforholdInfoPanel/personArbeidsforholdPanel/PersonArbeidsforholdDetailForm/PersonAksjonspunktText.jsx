@@ -8,7 +8,7 @@ import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-com
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);

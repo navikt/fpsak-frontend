@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckBehandlingAnke';
 import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
@@ -19,7 +19,7 @@ import BehandlingsprosessAnkeIndex from './BehandlingsprosessAnkeIndex';
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
  */
 export const BehandlingsprosessAnkeContainer = props => (
-  <BehandlingsprosessAnkeIndex {...props} />
+  <BehandlingsprosessAnkeIndex {...props} doNotUseFatterVedtakModal />
 );
 
 BehandlingsprosessAnkeContainer.propTypes = {
@@ -39,6 +39,8 @@ BehandlingsprosessAnkeContainer.propTypes = {
   fetchPreviewBrev: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   resetBehandlingspunkter: PropTypes.func.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -51,6 +53,8 @@ const mapStateToProps = state => ({
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   getBehandlingspunkterStatus: behandlingspunktAnkeSelectors.getBehandlingspunkterStatus,
   getBehandlingspunkterTitleCodes: behandlingspunktAnkeSelectors.getBehandlingspunkterTitleCodes,
   getAksjonspunkterOpenStatus: behandlingspunktAnkeSelectors.getAksjonspunkterOpenStatus,

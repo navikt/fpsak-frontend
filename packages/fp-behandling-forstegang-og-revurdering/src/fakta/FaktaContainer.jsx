@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { getBehandlingVersjon } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duck';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, getOpenInfoPanels,
-} from './duck';
+} from './duckFaktaForstegangOgRev';
 import FaktaPanel from './components/FaktaPanel';
 
 const overstyringApCodes = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_STARTDATO, ac.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
@@ -37,7 +37,7 @@ FaktaContainer.propTypes = {
 const mapStateToProps = state => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
-  behandlingVersjon: getBehandlingVersjon(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
   resetFakta,
   resolveFaktaAksjonspunkter,

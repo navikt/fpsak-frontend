@@ -18,7 +18,9 @@ import {
 } from '@fpsak-frontend/utils';
 
 import { getFamiliehendelseGjeldende, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, getBehandlingFormSyncErrors,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 
@@ -228,6 +230,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   enableReinitialize: true,
 })(SykdomOgSkadePeriode));

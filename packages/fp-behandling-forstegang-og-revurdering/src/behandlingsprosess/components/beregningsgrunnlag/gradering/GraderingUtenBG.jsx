@@ -12,7 +12,7 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import {
   required, minLength, maxLength, hasValidText,
 } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -20,11 +20,12 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
-  behandlingForm, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getAksjonspunkter, getBehandlingVenteArsakKode, getAndelerMedGraderingUtenBG } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+  behandlingFormForstegangOgRevurdering, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getAndelerMedGraderingUtenBG } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 import styles from './graderingUtenBG.less';
 
@@ -165,7 +166,7 @@ export const transformValues = (values) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getAksjonspunkter, getBehandlingVenteArsakKode],
+  [behandlingSelectors.getAksjonspunkter, behandlingSelectors.getBehandlingVenteArsakKode],
   (aksjonspunkter, venteKode) => {
     const vurderGraderingUtenBGAP = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
     const settPaaVentAap = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
@@ -196,7 +197,8 @@ export const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const andelerMedGraderingUtenBG = getAndelerMedGraderingUtenBG(initialState);
-  const aksjonspunkt = getAksjonspunkter(initialState).find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+  const aksjonspunkt = behandlingSelectors.getAksjonspunkter(initialState)
+    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
   const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
   return (state) => {
     const initialValues = buildInitialValues(state);
@@ -210,4 +212,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 };
 
 
-export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(injectKodeverk(getAlleKodeverk)(GraderingUtenBG)));
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(injectKodeverk(getAlleKodeverk)(GraderingUtenBG)));

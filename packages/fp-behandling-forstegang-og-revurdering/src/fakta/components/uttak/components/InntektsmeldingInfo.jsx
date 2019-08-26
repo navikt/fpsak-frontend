@@ -13,7 +13,7 @@ import {
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from '../uttakPeriode.less';
 

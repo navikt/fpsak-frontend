@@ -3,14 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import {
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isSelectedBehandlingspunktReadOnly,
-  getBehandlingspunktAksjonspunkterCodes,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-} from '../behandlingsprosessTilbakeSelectors';
-import ForeldelsePanel from './foreldelse/ForeldelsePanel';
+import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
+import ForeldelseForm from './foreldelse/ForeldelseForm';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 import TilbakekrevingVedtak from './vedtak/TilbakekrevingVedtak';
 
@@ -32,12 +27,12 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
   selectedBehandlingspunkt,
   apCodes,
   readOnlySubmitButton,
+  isBehandlingHenlagt,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    {ForeldelsePanel.supports(selectedBehandlingspunkt, apCodes) && (
-      <ForeldelsePanel
+    {ForeldelseForm.supports(selectedBehandlingspunkt, apCodes) && (
+      <ForeldelseForm
         submitCallback={submitCallback}
-        isApOpen={openAksjonspunkt}
         apCodes={apCodes}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
@@ -47,14 +42,14 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       <TilbakekrevingForm
         submitCallback={submitCallback}
         readOnly={readOnly}
-        isApOpen={openAksjonspunkt}
         readOnlySubmitButton={readOnlySubmitButton}
       />
     )}
-    {TilbakekrevingVedtak.supports(apCodes) && (
+    {TilbakekrevingVedtak.supports(apCodes, isBehandlingHenlagt) && (
       <TilbakekrevingVedtak
         submitCallback={submitCallback}
         readOnly={readOnly}
+        isBehandlingHenlagt={isBehandlingHenlagt}
       />
     )}
   </div>
@@ -68,14 +63,16 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   selectedBehandlingspunkt: PropTypes.string.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  isBehandlingHenlagt: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
+  readOnlySubmitButton: behandlingsprosessSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingBehandlingspunktInfoPanel);

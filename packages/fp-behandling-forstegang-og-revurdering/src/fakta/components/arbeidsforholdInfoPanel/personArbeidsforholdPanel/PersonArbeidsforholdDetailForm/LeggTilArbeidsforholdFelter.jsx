@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/BehandlingFormFieldCleaner';
+import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/components/BehandlingFormFieldCleaner';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidDate, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';

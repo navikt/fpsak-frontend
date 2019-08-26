@@ -3,30 +3,29 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
+import { bindActionCreators } from 'redux';
 import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Row, Column } from 'nav-frontend-grid';
+
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import {
-  getAksjonspunkter, getBehandlingResultatstruktur,
-  isBehandlingStatusReadOnly, getBehandlingIsOnHold, getBehandlingStatus,
-  getBehandlingsresultat, getBehandlingVersjon, getBehandlingSprak,
-  erArsakTypeBehandlingEtterKlage,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { bindActionCreators } from 'redux';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duck';
-import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duck';
 import { isInnvilget, isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+
+import { getBehandlingResultatstruktur, erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import classNames from 'classnames';
-import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -92,14 +91,6 @@ const getPreviewAutomatiskBrevCallback = formProps => (e) => {
   };
   formProps.fetchVedtaksbrevPreview(formValues);
   e.preventDefault();
-};
-
-const faresginalerTrengerAvklaring = (aksjonspunkter) => {
-  if (!aksjonspunkter) {
-    return false;
-  }
-  const faresignalAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER);
-  return faresignalAksjonspunkt ? faresignalAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET : false;
 };
 
 export class VedtakFormImpl extends Component {
@@ -210,7 +201,7 @@ export class VedtakFormImpl extends Component {
                     mini
                     className={styles.mainButton}
                     onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting || faresginalerTrengerAvklaring(aksjonspunkter)}
+                    disabled={behandlingPaaVent || formProps.submitting}
                     spinner={formProps.submitting}
                   >
                     {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
@@ -263,8 +254,8 @@ VedtakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingStatus, getBehandlingResultatstruktur, getSelectedBehandlingspunktAksjonspunkter, getFagsakYtelseType, getBehandlingsresultat,
-    getBehandlingSprak],
+  [behandlingSelectors.getBehandlingStatus, getBehandlingResultatstruktur, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
+    getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
   (status, beregningResultat, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseType ? ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD : false,
@@ -278,7 +269,7 @@ export const buildInitialValues = createSelector(
 );
 
 export const getAksjonspunktKoder = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
 );
 
 const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
@@ -297,7 +288,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   return state => ({
     onSubmit,
     initialValues: buildInitialValues(state),
-    isBehandlingReadOnly: isBehandlingStatusReadOnly(state),
+    isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
     ...behandlingFormValueSelector(formName)(
       state,
       'antallBarn',
@@ -308,12 +299,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'brødtekst',
     ),
     behandlingId: getSelectedBehandlingId(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
-    behandlingStatusKode: getBehandlingStatus(state).kode,
-    aksjonspunkter: getAksjonspunkter(state),
-    behandlingsresultat: getBehandlingsresultat(state),
-    behandlingPaaVent: getBehandlingIsOnHold(state),
-    sprakkode: getBehandlingSprak(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+    behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
+    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
     aksjonspunktKoder: getAksjonspunktKoder(state),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
@@ -327,7 +318,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const VedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const VedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(VedtakFormImpl)));
 

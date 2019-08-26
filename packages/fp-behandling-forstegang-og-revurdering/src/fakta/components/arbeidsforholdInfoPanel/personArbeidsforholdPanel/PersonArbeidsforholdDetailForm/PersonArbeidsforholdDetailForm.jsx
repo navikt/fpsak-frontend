@@ -9,9 +9,9 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import {
-  behandlingForm,
+  behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -160,7 +160,7 @@ const validateForm = values => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
   validate: values => validateForm(values),
   enableReinitialize: true,

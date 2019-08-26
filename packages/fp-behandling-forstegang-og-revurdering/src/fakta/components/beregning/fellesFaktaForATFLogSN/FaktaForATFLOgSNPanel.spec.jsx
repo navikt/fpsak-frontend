@@ -51,31 +51,14 @@ const lagBeregningsgrunnlag = andeler => ({
 
 describe('<FaktaForATFLOgSNPanel>', () => {
   it('skal lage helptext', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD, faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET,
-      faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL,
-      faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aktivertePaneler, aksjonspunkter, [], []);
+    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aksjonspunkter);
     expect(helpText).to.have.length(1);
     expect(helpText[0].props.id).to.equal('BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning');
   });
 
-  it('skal lage helptext for fastsetting av ATFL inntekt sammen men refusjon og gradering', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-      faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aktivertePaneler, aksjonspunkter, [], []);
-    expect(helpText).to.have.length(1);
-  });
-
   it('skal lage helptext for fastsetting av ATFL inntekt uten refusjon og gradering', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aktivertePaneler, aksjonspunkter, [], []);
+    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aksjonspunkter);
     expect(helpText).to.have.length(1);
-  });
-
-  it('skal ikkje lage helptext for kun refusjon og gradering', () => {
-    const aktivertePaneler = [faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-    const helpText = getHelpTextsFaktaForATFLOgSN.resultFunc(aktivertePaneler, aksjonspunkter, [], []);
-    expect(helpText).to.have.length(0);
   });
 
   it('skal vise TidsbegrensetArbeidsforholdForm', () => {

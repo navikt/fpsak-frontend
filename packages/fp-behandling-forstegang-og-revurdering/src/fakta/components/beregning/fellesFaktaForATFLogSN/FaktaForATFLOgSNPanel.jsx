@@ -2,27 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { createSelector, createStructuredSelector } from 'reselect';
 import {
-  getAksjonspunkter,
   getBeregningsgrunnlag,
-  getEndringBeregningsgrunnlagPerioder,
   getFaktaOmBeregning,
   getFaktaOmBeregningTilfellerKoder,
   getKortvarigeArbeidsforhold,
   getKunYtelse,
-  getBehandlingIsRevurdering,
   getVurderMottarYtelse,
   getVurderBesteberegning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getFeatureToggles } from 'app/duck';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
+import VurderMilitaer from './vurderMilitaer/VurderMilitaer';
 import NyoppstartetFLForm from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import {
   setFaktaPanelForKunYtelse,
@@ -30,11 +26,6 @@ import {
   getKunYtelseValidation,
   buildInitialValuesKunYtelse,
 } from './kunYtelse/FastsettBgKunYtelse';
-import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
-import {
-  getHelpTextsEndringBG,
-  skalViseHelptextForEndretBg,
-} from './endringBeregningsgrunnlag/EndretBeregningsgrunnlagUtils';
 import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
@@ -47,7 +38,7 @@ const {
   VURDER_FAKTA_FOR_ATFL_SN,
 } = aksjonspunktCodes;
 
-export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], alleKodeverk => (values) => {
+export const validationForVurderFakta = (values) => {
   if (!values) {
     return {};
   }
@@ -55,7 +46,6 @@ export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], a
     faktaOmBeregning,
     beregningsgrunnlag,
     tilfeller,
-    endringBGPerioder,
     kunYtelse,
     vurderMottarYtelse,
 } = values;
@@ -63,27 +53,23 @@ export const getValidationFaktaForATFLOgSN = createSelector([getAlleKodeverk], a
     return {};
   }
   return ({
-    ...FastsettEndretBeregningsgrunnlag.validate(values, endringBGPerioder, tilfeller, faktaOmBeregning,
-      beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
-    ...getKunYtelseValidation(values, kunYtelse, endringBGPerioder, tilfeller),
+    ...getKunYtelseValidation(values, kunYtelse, tilfeller),
     ...VurderMottarYtelseForm.validate(values, vurderMottarYtelse),
     ...VurderBesteberegningForm.validate(values, tilfeller),
-    ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+    ...VurderOgFastsettATFL.validate(values, tilfeller, faktaOmBeregning, beregningsgrunnlag),
   });
-});
+};
 
-export const lagHelpTextsForFakta = (aktivertePaneler) => {
+export const lagHelpTextsForFakta = () => {
   const helpTexts = [];
-  if (!skalViseHelptextForEndretBg(aktivertePaneler)) {
-    helpTexts.push(<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />);
-  }
+  helpTexts.push(<FormattedMessage key="VurderFaktaForBeregningen" id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning" />);
   return helpTexts;
 };
 
 export const getHelpTextsFaktaForATFLOgSN = createSelector(
-  [getFaktaOmBeregningTilfellerKoder, getAksjonspunkter, getHelpTextsEndringBG],
-  (aktivertePaneler, aksjonspunkter, helpTextEndringBG) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
-    ? helpTextEndringBG.concat(lagHelpTextsForFakta(aktivertePaneler))
+  [behandlingSelectors.getAksjonspunkter],
+  aksjonspunkter => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
+    ? lagHelpTextsForFakta()
     : []),
 );
 
@@ -133,6 +119,17 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
         </ElementWrapper>,
       );
     }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          <VurderMilitaer
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+        </ElementWrapper>,
+      );
+    }
   });
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
   faktaPanels.push(
@@ -169,8 +166,8 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
 };
 
-const kunYtelseTransform = (faktaOmBeregning, endringBGPerioder, aktivePaneler) => values => transformValuesForKunYtelse(values,
-  faktaOmBeregning.kunYtelse, endringBGPerioder, aktivePaneler);
+const kunYtelseTransform = (faktaOmBeregning, aktivePaneler) => values => transformValuesForKunYtelse(values,
+  faktaOmBeregning.kunYtelse, aktivePaneler);
 
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_SN_NY_I_ARBEIDSLIVET);
@@ -197,11 +194,20 @@ const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values
   };
 };
 
+const vurderMilitaerSiviltjenesteTransform = (vurderFaktaValues, values) => {
+  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE);
+  return ({
+    ...vurderFaktaValues,
+    ...VurderMilitaer.transformValues(values),
+  });
+};
+
 export const transformValues = (
   aktivePaneler,
   nyIArbTransform,
   kortvarigTransform,
   etterlonnTransform,
+  militaerTransform,
 ) => (vurderFaktaValues, values) => {
   let transformed = { ...vurderFaktaValues };
   aktivePaneler.forEach((kode) => {
@@ -213,6 +219,9 @@ export const transformValues = (
     }
     if (kode === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
       transformed = etterlonnTransform(transformed, values);
+    }
+    if (kode === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
+      transformed = militaerTransform(transformed, values);
     }
   });
   return transformed;
@@ -226,17 +235,18 @@ export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform,
   return { ...vurderOgFastsettATFLTransform(values, erOverstyrt) };
 };
 
-const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag, erOverstyrt) => {
+const setValuesForVurderFakta = (aktivePaneler, values, kortvarigeArbeidsforhold, faktaOmBeregning, beregningsgrunnlag, erOverstyrt) => {
   const vurderFaktaValues = setInntektValues(
     aktivePaneler,
-    kunYtelseTransform(faktaOmBeregning, endringBGPerioder, aktivePaneler),
+    kunYtelseTransform(faktaOmBeregning, aktivePaneler),
     VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag), erOverstyrt,
   )(values);
   return ({
     fakta: transformValues(aktivePaneler,
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
-      etterlonnSluttpakkeTransform(aktivePaneler))(vurderFaktaValues.fakta, values),
+      etterlonnSluttpakkeTransform(aktivePaneler),
+      vurderMilitaerSiviltjenesteTransform)(vurderFaktaValues.fakta, values),
     overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
   });
 };
@@ -244,54 +254,47 @@ const setValuesForVurderFakta = (aktivePaneler, values, endringBGPerioder, kortv
 export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
   const {
       tilfeller,
-      endringBGPerioder,
       kortvarigeArbeidsforhold,
       faktaOmBeregning,
       beregningsgrunnlag,
     } = values;
-   return setValuesForVurderFakta(tilfeller, values, endringBGPerioder, kortvarigeArbeidsforhold,
+   return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold,
     faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
 };
 
-const getVurderFaktaAksjonspunkt = createSelector([getAksjonspunkter], aksjonspunkter => (aksjonspunkter
+const getVurderFaktaAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], aksjonspunkter => (aksjonspunkter
   ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
 const buildInitialValuesForTilfeller = props => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
+  ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
-  ...FastsettEndretBeregningsgrunnlag.buildInitialValues(props.endringBGPerioder, props.tilfeller,
-     props.beregningsgrunnlag, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper), props.featureToggles),
   ...LonnsendringForm.buildInitialValues(props.beregningsgrunnlag),
   ...NyoppstartetFLForm.buildInitialValues(props.beregningsgrunnlag),
-  ...buildInitialValuesKunYtelse(props.kunYtelse, props.endringBGPerioder, props.isRevurdering, props.tilfeller,
-    getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
+  ...buildInitialValuesKunYtelse(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
   ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
-  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning, getKodeverknavnFn(props.alleKodeverk, kodeverkTyper)),
+  ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
-  endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
   beregningsgrunnlag: getBeregningsgrunnlag,
   kortvarigeArbeidsforhold: getKortvarigeArbeidsforhold,
   vurderFaktaAP: getVurderFaktaAksjonspunkt,
   kunYtelse: getKunYtelse,
   tilfeller: getFaktaOmBeregningTilfellerKoder,
-  isRevurdering: getBehandlingIsRevurdering,
   vurderMottarYtelse: getVurderMottarYtelse,
   vurderBesteberegning: getVurderBesteberegning,
   alleKodeverk: getAlleKodeverk,
-  aksjonspunkter: getAksjonspunkter,
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter,
   faktaOmBeregning: getFaktaOmBeregning,
-  featureToggles: getFeatureToggles,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
   [mapStateToBuildInitialValuesProps], props => () => ({
       tilfeller: props.tilfeller,
-      endringBGPerioder: props.endringBGPerioder,
       kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
       faktaOmBeregning: props.faktaOmBeregning,
       beregningsgrunnlag: props.beregningsgrunnlag,

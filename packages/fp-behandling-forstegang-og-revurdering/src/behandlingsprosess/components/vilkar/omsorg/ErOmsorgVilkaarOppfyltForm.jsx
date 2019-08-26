@@ -5,16 +5,16 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import { getBehandlingsresultat } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
-  getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -83,7 +83,8 @@ ErOmsorgVilkaarOppfyltFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus],
+  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
+    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -99,7 +100,7 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
 const formName = 'ErOmsorgVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.OMSORGSVILKARET];
 
@@ -112,7 +113,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ErOmsorgVilkaarOppfyltForm = connect(mapStateToPropsFactory)(behandlingForm({
+const ErOmsorgVilkaarOppfyltForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
   validate,
 })(ErOmsorgVilkaarOppfyltFormImpl));

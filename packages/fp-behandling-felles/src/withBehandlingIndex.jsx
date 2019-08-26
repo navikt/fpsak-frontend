@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
 import sakOperations from './SakOperations';
 import CommonBehandlingResolver from './CommonBehandlingResolver';
-import { getBehandlingFormPrefix } from './behandlingForm';
 
 /**
  * withBehandlingIndex
@@ -15,17 +14,14 @@ import { getBehandlingFormPrefix } from './behandlingForm';
  * HOC-komponent som er rot for for den delen av hovedvinduet som har innhold for en valgt behandling, og styrer livssyklusen til de mekanismene som er
  * relatert til den valgte behandlingen.
  */
-export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehandlingUpdater) => (WrappedComponent) => {
+export const withBehandlingIndex = (mapStateToPropsFactory, mapDispatchToProps, fpBehandlingUpdater) => (WrappedComponent) => {
   class BehandlingIndex extends Component {
     componentDidMount = () => {
       const {
-        setBehandlingInfo: setInfo, saksnummer, behandlingId, behandlingUpdater, appContextUpdater,
-        featureToggles, kodeverk, fagsak,
+        setBehandlingInfo: setInfo, behandlingUpdater, appContextUpdater, fagsakInfo,
       } = this.props;
-      setInfo({
-        behandlingId, fagsakSaksnummer: saksnummer, featureToggles, kodeverk, fagsak,
-      });
 
+      setInfo(fagsakInfo);
       behandlingUpdater.setUpdater(fpBehandlingUpdater);
       sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
     }
@@ -102,11 +98,11 @@ export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehan
   }
 
   BehandlingIndex.propTypes = {
-    saksnummer: PropTypes.number.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingVersjon: PropTypes.number,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     fristBehandlingPaaVent: PropTypes.string,
+    setBehandlingInfo: PropTypes.func.isRequired,
     behandlingPaaVent: PropTypes.bool,
     venteArsakKode: PropTypes.string,
     hasShownBehandlingPaVent: PropTypes.bool.isRequired,
@@ -115,18 +111,9 @@ export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehan
     destroyReduxForms: PropTypes.func.isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
     hasManualPaVent: PropTypes.bool.isRequired,
-    setBehandlingInfo: PropTypes.func.isRequired,
     behandlingUpdater: PropTypes.shape().isRequired,
     resetBehandlingFpsakContext: PropTypes.func.isRequired,
     appContextUpdater: PropTypes.shape().isRequired,
-    featureToggles: PropTypes.shape().isRequired,
-    kodeverk: PropTypes.shape().isRequired,
-    fagsak: PropTypes.shape({
-      fagsakStatus: PropTypes.shape().isRequired,
-      fagsakPerson: PropTypes.shape().isRequired,
-      fagsakYtelseType: PropTypes.shape().isRequired,
-      isForeldrepengerFagsak: PropTypes.bool.isRequired,
-    }).isRequired,
     ventearsaker: PropTypes.arrayOf(PropTypes.shape({
       kode: PropTypes.string,
       navn: PropTypes.string,
@@ -135,6 +122,7 @@ export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehan
     isInSync: PropTypes.bool.isRequired,
     fetchBehandling: PropTypes.func.isRequired,
     setBehandlingInfoHolder: PropTypes.func.isRequired,
+    fagsakInfo: PropTypes.shape().isRequired,
   };
 
   BehandlingIndex.defaultProps = {
@@ -161,7 +149,7 @@ export const withBehandlingIndex = (mapStateToProps, mapDispatchToProps, fpBehan
     closeBehandlingOnHoldModal: () => dispatchProps.setHasShownBehandlingPaVent(),
   });
 
-  return connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingIndex);
+  return connect(mapStateToPropsFactory, mapDispatchToProps, mergeProps)(BehandlingIndex);
 };
 
 export default withBehandlingIndex;

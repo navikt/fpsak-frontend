@@ -10,6 +10,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
 import withBehandlingsprosessIndex from './withBehandlingsprosessIndex';
@@ -53,6 +54,10 @@ describe('<HOC: withBehandlingsprosessIndex>', () => {
           getBehandlingspunkterStatus={sinon.spy()}
           getBehandlingspunkterTitleCodes={sinon.spy()}
           getAksjonspunkterOpenStatus={sinon.spy()}
+          behandlingType={{
+            kode: behandlingType.FORSTEGANGSSOKNAD,
+          }}
+          aksjonspunkter={[]}
         />
       </Router>,
     ).dive() // TODO (TOR) Bør unngå deep dive

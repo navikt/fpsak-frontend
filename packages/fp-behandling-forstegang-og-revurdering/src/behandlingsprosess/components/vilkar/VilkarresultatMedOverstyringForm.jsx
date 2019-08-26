@@ -1,29 +1,31 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { getBehandlingsresultat, isBehandlingRevurderingFortsattMedlemskap }
+import { isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
   from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duck';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getSelectedBehandlingspunktTitleCode, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus,
-  getSelectedBehandlingspunkt, getIsSelectedBehandlingspunktOverridden, getSelectedBehandlingspunktVilkar,
-  isSelectedBehandlingspunktOverrideReadOnly,
-} from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+
 import { getFodselVilkarAvslagsarsaker } from './fodsel/FodselVilkarForm';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import { getApCode, getAllApCodes } from './BehandlingspunktToAksjonspunkt';
@@ -124,8 +126,9 @@ VilkarresultatMedOverstyringFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [getBehandlingsresultat, getSelectedBehandlingspunktAksjonspunkter, getSelectedBehandlingspunktStatus, getSelectedBehandlingspunkt,
-    getFagsakYtelseType, getSelectedBehandlingspunktVilkar],
+  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
+    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus, behandlingsprosessSelectors.getSelectedBehandlingspunkt,
+    getFagsakYtelseType, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar],
   (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, ytelseType, allVilkar) => {
     const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
@@ -146,7 +149,7 @@ const transformValues = (values, apCode) => ({
 const validate = values => VilkarresultatMedBegrunnelse.validate(values);
 
 const getVilkar = createSelector(
-  [getSelectedBehandlingspunkt, getSelectedBehandlingspunktVilkar],
+  [behandlingsprosessSelectors.getSelectedBehandlingspunkt, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar],
   (behandlingspunkt, allVilkar) => {
     const vtKode = behandlingpunktToVilkar[behandlingspunkt];
     return vtKode ? allVilkar.find(v => v.vilkarType.kode === vtKode) : allVilkar[0];
@@ -163,13 +166,13 @@ const getRelevanteAvslagsarsaker = (vilkarTypeKode, state) => {
 
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const behandlingspunkt = getSelectedBehandlingspunkt(initialState);
-  const apCode = getApCode(behandlingspunkt, getFagsakYtelseType(initialState), getSelectedBehandlingspunktVilkar(initialState));
+  const behandlingspunkt = behandlingsprosessSelectors.getSelectedBehandlingspunkt(initialState);
+  const apCode = getApCode(behandlingspunkt, getFagsakYtelseType(initialState), behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(initialState));
   const onSubmit = values => ownProps.submitCallback([transformValues(values, apCode)]);
   const validateFn = values => validate(values);
 
   return (state) => {
-    const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(state);
+    const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state);
     const formName = `VilkarresultatForm_${behandlingspunkt}`;
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
     const vilkar = getVilkar(state);
@@ -184,9 +187,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       customVilkarOppfyltText,
       customVilkarIkkeOppfyltText,
       lovReferanse: vilkar.lovReferanse,
-      isSolvable: getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
-      isReadOnly: isSelectedBehandlingspunktOverrideReadOnly(state),
-      behandlingspunktTitleCode: getSelectedBehandlingspunktTitleCode(state),
+      isSolvable: behandlingsprosessSelectors.getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
+      isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
+      behandlingspunktTitleCode: behandlingsprosessSelectors.getSelectedBehandlingspunktTitleCode(state),
       behandlingspunkt,
       hasAksjonspunkt: aksjonspunkt !== undefined,
       avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
@@ -199,7 +202,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
+const form = behandlingFormForstegangOgRevurdering({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
 const VilkarresultatMedOverstyringForm = injectIntl(connect(mapStateToPropsFactory)(form));
 
 VilkarresultatMedOverstyringForm.supports = (apCodes, behandlingspunkt) => {

@@ -9,7 +9,7 @@ import {
   isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -18,7 +18,7 @@ import {
   Image, Table, TableRow, TableColumn, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { getAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
@@ -234,7 +234,7 @@ export const getInntektskategorierAlfabetiskSortert = createSelector(
 );
 
 export const isBeregningAksjonspunktClosed = createSelector(
-  [getAksjonspunkter], (alleAp) => {
+  [behandlingSelectors.getAksjonspunkter], (alleAp) => {
     const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
     return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
   },

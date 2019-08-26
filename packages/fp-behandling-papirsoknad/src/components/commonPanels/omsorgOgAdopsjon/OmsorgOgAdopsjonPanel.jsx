@@ -12,10 +12,11 @@ import { VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
 import {
   InputField, DatepickerField, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
-import { isForeldrepengerFagsak } from 'papirsoknad/src/duck';
 import {
   hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday, isRequiredMessage,
 } from '@fpsak-frontend/utils';
+
+import { isForeldrepengerFagsak } from 'papirsoknad/src/duckPapirsoknad';
 import { rettighet } from '../rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEqual } from '@fpsak-frontend/utils';
 
-import { getRegisteredFields } from 'papirsoknad/src/duck';
+import { getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
 import SoknadData from 'papirsoknad/src/SoknadData';
 import LagreSoknadForm from 'papirsoknad/src/components/commonPanels/LagreSoknadPanel';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';

@@ -57,16 +57,19 @@ KunYtelsePanel.defaultProps = {
   skalViseInntektstabell: true,
 };
 
-KunYtelsePanel.buildInitialValues = (kunYtelse, getKodeverknavn) => {
+KunYtelsePanel.buildInitialValues = (kunYtelse, faktaOmBeregningAndeler) => {
   if (!kunYtelse || !kunYtelse.andeler || kunYtelse.andeler.length === 0) {
     return {};
   }
   const initialValues = {
-    [brukersAndelFieldArrayName]: kunYtelse.andeler.map(andel => ({
-      ...setGenerellAndelsinfo(andel, getKodeverknavn),
+    [brukersAndelFieldArrayName]: kunYtelse.andeler.map((andel) => {
+      const andelMedInfo = faktaOmBeregningAndeler.find(faktaAndel => faktaAndel.andelsnr === andel.andelsnr);
+      return ({
+      ...setGenerellAndelsinfo(andelMedInfo),
       fastsattBelop: andel.fastsattBelopPrMnd || andel.fastsattBelopPrMnd === 0
         ? formatCurrencyNoKr(andel.fastsattBelopPrMnd) : '',
-    })),
+    });
+    }),
   };
   if (kunYtelse.fodendeKvinneMedDP) {
     return {

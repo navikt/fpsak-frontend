@@ -12,10 +12,11 @@ import {
 import Panel from 'nav-frontend-paneler';
 
 import {
-  behandlingForm, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getSelectedBehandlingspunktAksjonspunkter } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/behandlingsprosessSelectors';
-import { getSoknad, getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import { getBehandlingUttaksperiodegrense } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   AksjonspunktHelpText, FadingPanel, VerticalSpacer, ArrowBox,
@@ -144,7 +145,7 @@ VurderSoknadsfristForeldrepengerFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, getSoknad],
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getBehandlingUttaksperiodegrense, behandlingSelectors.getSoknad],
   (aksjonspunkter, uttaksperiodegrense, soknad) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== soknad.mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
@@ -163,13 +164,13 @@ const formName = 'VurderSoknadsfristForeldrepengerForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const uttaksperiodegrense = getBehandlingUttaksperiodegrense(initialState);
-  const aksjonspunkter = getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
   return state => ({
       onSubmit,
       initialValues: buildInitialValues(state),
-      soknad: getSoknad(state),
+      soknad: behandlingSelectors.getSoknad(state),
       gyldigSenFremsetting: behandlingFormValueSelector('VurderSoknadsfristForeldrepengerForm')(state, 'gyldigSenFremsetting'),
       antallDagerSoknadLevertForSent: uttaksperiodegrense ? uttaksperiodegrense.antallDagerLevertForSent : {},
       soknadsperiodeStart: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeStart : {},
@@ -180,7 +181,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     });
 };
 
-const VurderSoknadsfristForeldrepengerForm = connect(mapStateToPropsFactory)(behandlingForm({
+const VurderSoknadsfristForeldrepengerForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(VurderSoknadsfristForeldrepengerFormImpl));
 

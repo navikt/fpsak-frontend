@@ -12,12 +12,9 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import {
-  getAksjonspunkter,
-  getBehandlingResultatstruktur, getBehandlingSprak,
-  getBehandlingsresultat,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText,
@@ -170,10 +167,10 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
 const mapStateToProps = state => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
-  konsekvenserForYtelsen: getBehandlingsresultat(state) !== undefined
-    ? getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
-  sprakKode: getBehandlingSprak(state),
-  aksjonspunkter: getAksjonspunkter(state),
+  konsekvenserForYtelsen: behandlingSelectors.getBehandlingsresultat(state) !== undefined
+    ? behandlingSelectors.getBehandlingsresultat(state).konsekvenserForYtelsen : undefined,
+  sprakKode: behandlingSelectors.getBehandlingSprak(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   tilbakekrevingText: findTilbakekrevingText(state),
 });
 

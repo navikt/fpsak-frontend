@@ -14,8 +14,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getBehandlingIsOnHold, hasReadOnlyBehandling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandEndretModal } from './UtlandEndretModal';
 
@@ -198,7 +198,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
 
   return state => ({
     utlandSakstype: behandlingFormValueSelector('PersonInfoPanel')(state, 'utlandSakstype'),
-    readOnly: getBehandlingIsOnHold(state) || hasReadOnlyBehandling(state),
+    readOnly: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     onSubmit,
   });
 };

@@ -1,5 +1,5 @@
 import innsynBehandlingApi from './data/innsynBehandlingApi';
-import { updateBehandling, resetBehandling } from './duckInnsyn';
+import { updateBehandling, resetBehandling } from './duckBehandlingInnsyn';
 
 class FpInnsynBehandlingResolver {
     updateBehandling = () => updateBehandling;

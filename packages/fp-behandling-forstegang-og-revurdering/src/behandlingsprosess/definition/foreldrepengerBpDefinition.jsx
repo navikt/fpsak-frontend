@@ -4,9 +4,8 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
-import { hasSimuleringOn, getStatusFromSimulering } from './simuleringStatusUtleder';
+import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
 const faktaUttakAp = [
@@ -33,13 +32,8 @@ const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
   return vut.IKKE_OPPFYLT;
 };
 
-const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat, fagsakYtelseType }) => {
+const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    // "Hack" for å vise tilkjent ytelse også i SVP fordi SVP ikke har samme uttakstruktur som FP.
-    // TODO: SVP burde ha sin egen BPDefinition
-    if (fagsakYtelseType.kode === fyt.SVANGERSKAPSPENGER) {
-      return vut.OPPFYLT;
-    }
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
       const oppfylt = uttaksresultat.perioderSøker.some(p => (
         p.periodeResultatType.kode !== prt.AVSLATT
@@ -74,11 +68,6 @@ const foreldrepengerBuilders = [
     .withVilkarTypes(vt.SOKERSOPPLYSNINGSPLIKT)
     .withAksjonspunktCodes(ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU)
     .withDefaultVisibilityWhenCustomFnReturnsTrue(isNotRevurderingAndManualOpplysningspliktAp),
-  new BehandlingspunktProperties.Builder(bpc.SVANGERSKAP, 'Svangerskapsvilkaret')
-    .withVilkarTypes(vt.SVANGERSKAPVILKARET)
-    .withAksjonspunktCodes(
-      ac.SVANGERSKAPSVILKARET,
-    ),
   new BehandlingspunktProperties.Builder(bpc.FOEDSEL, 'Fodselsvilkaret')
     .withVilkarTypes(vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR)
     .withAksjonspunktCodes(
@@ -147,7 +136,7 @@ const foreldrepengerBuilders = [
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt, hasSimuleringOn)
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')

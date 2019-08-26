@@ -6,7 +6,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import TilbakekrevingTimelinePanel from '../felles/timelineV2/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import { TilbakekrevingFormImpl, slaSammenOriginaleOgLagredePeriode } from './TilbakekrevingForm';
 import TilbakekrevingPeriodeForm from './TilbakekrevingPeriodeForm';
 

@@ -2,7 +2,7 @@ import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 
 const nullOrUndefined = value => value === null || value === undefined;
 
@@ -128,8 +128,3 @@ export const mapToBelop = (andel) => {
   }
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };
-
-export const skalFastsetteForATUavhengigAvATFLSammeOrg = (values,
-  faktaOmBeregning) => (skalFastsetteInntektATUtenInntektsmelding(values, faktaOmBeregning.vurderMottarYtelse) || values[lonnsendringField]);
-
-export const skalFastsetteForFLUavhengigAvATFLSammeOrg = values => (frilansMottarYtelse(values) || values[erNyoppstartetFLField]);

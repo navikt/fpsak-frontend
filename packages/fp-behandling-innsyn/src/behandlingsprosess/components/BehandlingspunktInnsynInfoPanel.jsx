@@ -2,15 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
-import {
-  getBehandlingspunktAksjonspunkterCodes,
-  hasBehandlingspunktAtLeastOneOpenAksjonspunkt,
-  isBehandlingspunktAksjonspunkterSolvable,
-  isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt,
-  isSelectedBehandlingspunktReadOnly,
-  getNotAcceptedByBeslutter,
-} from 'behandlingInnsyn/src/behandlingsprosess/behandlingsprosessInnsynSelectors';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import behandlingspunktInnsynSelectors from '../selectors/behandlingsprosessInnsynSelectors';
 import InnsynVedtakForm from './vedtak/InnsynVedtakForm';
 import InnsynForm from './innsyn/InnsynForm';
 
@@ -71,12 +64,12 @@ BehandlingspunktInnsynInfoPanel.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  openAksjonspunkt: hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: isBehandlingspunktAksjonspunkterSolvable(state),
-  apCodes: getBehandlingspunktAksjonspunkterCodes(state),
-  readOnlySubmitButton: isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
-  notAcceptedByBeslutter: getNotAcceptedByBeslutter(state),
+  openAksjonspunkt: behandlingspunktInnsynSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
+  readOnly: behandlingspunktInnsynSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingspunktInnsynSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  apCodes: behandlingspunktInnsynSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  readOnlySubmitButton: behandlingspunktInnsynSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
+  notAcceptedByBeslutter: behandlingspunktInnsynSelectors.getNotAcceptedByBeslutter(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInnsynInfoPanel);

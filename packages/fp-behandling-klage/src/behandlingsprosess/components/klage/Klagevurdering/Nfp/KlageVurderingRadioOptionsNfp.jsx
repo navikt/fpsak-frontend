@@ -8,7 +8,7 @@ import {
   RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
 import PropTypes from 'prop-types';
-import { getKodeverk } from 'behandlingKlage/src/duckKlage';
+import { getKodeverk } from 'behandlingKlage/src/duckBehandlingKlage';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import styles from '../SharedUtills/behandleKlageForm.less';

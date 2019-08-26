@@ -7,7 +7,7 @@ import { NavFieldGroup } from '@fpsak-frontend/form';
 import {
   isArrayEmpty, removeSpacesFromNumber, required, formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -232,11 +232,11 @@ InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
   return null;
 };
 
-InntektFieldArray.buildInitialValues = (andeler, getKodeverknavn) => {
+InntektFieldArray.buildInitialValues = (andeler) => {
   if (!andeler || andeler.length === 0) {
     return {};
   }
-  return andeler.map(a => mapAndelToField(a, getKodeverknavn));
+  return andeler.map(a => mapAndelToField(a));
 };
 
 const finnDagpengeAndelLagtTilIForrige = (bg) => {

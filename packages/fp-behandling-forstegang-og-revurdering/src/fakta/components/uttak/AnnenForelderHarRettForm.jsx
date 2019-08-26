@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import {
   getBehandlingYtelseFordeling,
@@ -117,7 +117,7 @@ AnnenForelderHarRettForm.defaultProps = {
   aksjonspunkter: [],
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'AnnenForelderHarRettForm',
   enableReinitialize: true,
 })(AnnenForelderHarRettForm));

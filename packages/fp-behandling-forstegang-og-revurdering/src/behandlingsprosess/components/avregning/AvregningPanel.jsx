@@ -8,14 +8,17 @@ import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
 
-import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import {
-  getSimuleringResultat, getTilbakekrevingValg, getAksjonspunkter, getBehandlingVersjon, getBehandlingSprak,
+  getSimuleringResultat, getTilbakekrevingValg,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
-} from 'behandlingForstegangOgRevurdering/src/duck';
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
   VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
@@ -407,7 +410,7 @@ export const transformValues = (values, ap) => [{
 }];
 
 const buildInitialValues = createSelector(
-  [getTilbakekrevingValg, getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
+  [getTilbakekrevingValg, behandlingSelectors.getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
     const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     if (!aksjonspunkt || !tilbakekrevingValg) {
       return undefined;
@@ -436,8 +439,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     simuleringResultat: getSimuleringResultat(state),
     initialValues: buildInitialValues(state),
     ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-    sprakkode: getBehandlingSprak(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), getBehandlingVersjon(state)),
+    sprakkode: behandlingSelectors.getBehandlingSprak(state),
+    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
     saksnummer: getSelectedSaksnummer(state),
     isForeldrepenger: isForeldrepengerFagsak(state),
@@ -451,7 +454,7 @@ const mapDispatchToProps = dispatch => ({
   }, dispatch),
 });
 
-const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: true,
 })(AvregningPanelImpl)));

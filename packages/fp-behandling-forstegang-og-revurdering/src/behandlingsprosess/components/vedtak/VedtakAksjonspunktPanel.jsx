@@ -4,7 +4,7 @@ import { injectIntl, intlShape } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
-import { getBehandlingHenlagt } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -55,7 +55,7 @@ VedtakAksjonspunktPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = state => ({
-  isBehandlingHenlagt: getBehandlingHenlagt(state),
+  isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAksjonspunktPanelImpl));

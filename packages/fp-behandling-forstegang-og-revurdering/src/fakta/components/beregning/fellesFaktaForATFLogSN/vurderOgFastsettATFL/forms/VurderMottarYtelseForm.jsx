@@ -11,25 +11,15 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import {
   utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding, frilansMottarYtelse, andelsnrMottarYtelseMap,
 } from './VurderMottarYtelseUtils';
 
 
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];
-
-const {
-  VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG,
-} = faktaOmBeregningTilfelle;
-
-const tilfellerSomHandtererAllInntekt = [VURDER_AT_OG_FL_I_SAMME_ORGANISASJON,
-  FASTSETT_ENDRET_BEREGNINGSGRUNNLAG];
-
-export const harTilfelleSomHandtererInntekt = tilfeller => (tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle)));
 
 
 export const mottarYtelseForArbeidMsg = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid');

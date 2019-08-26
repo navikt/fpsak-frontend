@@ -77,9 +77,6 @@ VurderBesteberegningPanelImpl.buildInitialValues = (vurderBesteberegning, faktaO
   };
 };
 
-const erIkkeStottet = () => ([{ id: 'BeregningInfoPanel.FastsettBBFodendeKvinne.ErIkkeStottet' }]);
-
-
 VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
   if (!values || !(aktivertePaneler.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
   || aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
@@ -87,11 +84,6 @@ VurderBesteberegningPanelImpl.validate = (values, aktivertePaneler) => {
   }
   const errors = {};
   errors[besteberegningField] = required(values[besteberegningField]);
-  if (!errors[besteberegningField]) {
-    if (aktivertePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_ENDRET_BEREGNINGSGRUNNLAG) && values[besteberegningField]) {
-      errors[besteberegningField] = erIkkeStottet();
-    }
-  }
   return errors;
 };
 

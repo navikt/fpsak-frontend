@@ -17,11 +17,11 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import {
-  getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
-  getAksjonspunkter,
+  getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingForm } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
-import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 /**
@@ -93,7 +93,8 @@ OmsorgOgForeldreansvarInfoPanelImpl.propTypes = {
 };
 
 const buildInitialValues = createSelector(
-  [getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder, getAksjonspunkter, getAlleKodeverk],
+  [behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
+    behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (soknad, familiehendelse, personopplysning, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, aksjonspunkter, alleKodeverk) => {
     const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGSOVERTAKELSE
       || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR);
@@ -127,7 +128,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'OmsorgOgForeldreansvarInfoPanel',
   validate: OmsorgOgForeldreansvarFaktaForm.validate,
 })(injectIntl(OmsorgOgForeldreansvarInfoPanelImpl)));

@@ -5,18 +5,18 @@ import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingForm';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import {
   Table, TableRow, TableColumn, DateLabel, PeriodLabel, VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
 } from '@fpsak-frontend/shared-components';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',

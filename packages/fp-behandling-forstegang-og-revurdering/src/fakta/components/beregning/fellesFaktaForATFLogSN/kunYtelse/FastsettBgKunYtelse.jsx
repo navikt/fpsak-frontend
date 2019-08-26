@@ -2,16 +2,11 @@ import React from 'react';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import KunYtelsePanel from './KunYtelsePanel';
-import KunYtelseTilkommetArbeidPanel from './tilkommetArbeidsforhold/KunYtelseTilkommetArbeidPanel';
 
-const { FASTSETT_BG_KUN_YTELSE, FASTSETT_ENDRET_BEREGNINGSGRUNNLAG } = faktaOmBeregningTilfelle;
-
-const harKunYtelseOgEndretBeregningsgrunnlag = aktivertePaneler => (aktivertePaneler && aktivertePaneler.length === 2
-  && aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)
-  && aktivertePaneler.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG));
+const { FASTSETT_BG_KUN_YTELSE } = faktaOmBeregningTilfelle;
 
 export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, isAksjonspunktClosed) => {
-  if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE) && !tilfeller.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
+  if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     faktaPanels.push(
       <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
         <KunYtelsePanel
@@ -20,24 +15,10 @@ export const setFaktaPanelForKunYtelse = (faktaPanels, tilfeller, readOnly, isAk
         />
       </ElementWrapper>,
     );
-  } else if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE) && tilfeller.includes(FASTSETT_ENDRET_BEREGNINGSGRUNNLAG)) {
-    faktaPanels.push(
-      <ElementWrapper key="FASTSETT_BG_KUN_YTELSE">
-        <KunYtelseTilkommetArbeidPanel
-          readOnly={readOnly}
-          isAksjonspunktClosed={isAksjonspunktClosed}
-        />
-      </ElementWrapper>,
-    );
   }
 };
 
-export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder, tilfeller) => {
-  if (harKunYtelseOgEndretBeregningsgrunnlag(tilfeller)) {
-    return {
-      ...KunYtelseTilkommetArbeidPanel.transformValues(values, kunYtelse, endringBGPerioder),
-    };
-  }
+export const transformValuesForKunYtelse = (values, kunYtelse, tilfeller) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     return {
       faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
@@ -47,10 +28,7 @@ export const transformValuesForKunYtelse = (values, kunYtelse, endringBGPerioder
   return {};
 };
 
-export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, aktivertePaneler, getKodeverknavn) => {
-  if (harKunYtelseOgEndretBeregningsgrunnlag(aktivertePaneler)) {
-    return KunYtelseTilkommetArbeidPanel.validate(values, aktivertePaneler, kunYtelse, endringBgPerioder, getKodeverknavn);
-  }
+export const getKunYtelseValidation = (values, kunYtelse, aktivertePaneler) => {
   if (aktivertePaneler.includes(FASTSETT_BG_KUN_YTELSE)) {
     return KunYtelsePanel.validate(values, aktivertePaneler, kunYtelse);
   }
@@ -58,12 +36,9 @@ export const getKunYtelseValidation = (values, kunYtelse, endringBgPerioder, akt
 };
 
 
-export const buildInitialValuesKunYtelse = (kunYtelse, endringBgPerioder, isRevurdering, tilfeller, getKodeverknavn) => {
-  if (harKunYtelseOgEndretBeregningsgrunnlag(tilfeller)) {
-    return KunYtelseTilkommetArbeidPanel.buildInitialValues(kunYtelse, endringBgPerioder, isRevurdering, tilfeller, getKodeverknavn);
-  }
+export const buildInitialValuesKunYtelse = (kunYtelse, tilfeller, faktaOmBeregningAndeler) => {
   if (tilfeller && tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
-    return KunYtelsePanel.buildInitialValues(kunYtelse, getKodeverknavn);
+    return KunYtelsePanel.buildInitialValues(kunYtelse, faktaOmBeregningAndeler);
   }
   return {};
 };

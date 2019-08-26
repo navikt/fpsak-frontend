@@ -16,8 +16,8 @@ import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duck';
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/visningsnavnHelper';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = prosent => `${prosent}%`;

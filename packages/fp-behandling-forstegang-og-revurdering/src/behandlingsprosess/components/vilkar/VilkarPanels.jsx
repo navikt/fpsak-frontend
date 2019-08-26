@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getBehandlingVilkarCodes } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import ErOmsorgVilkaarOppfyltForm from './omsorg/ErOmsorgVilkaarOppfyltForm';
 import ErSoknadsfristVilkaretOppfyltForm from './soknadsfrist/ErSoknadsfristVilkaretOppfyltForm';
@@ -128,7 +128,7 @@ VilkarPanels.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  vilkarTypeCodes: getBehandlingVilkarCodes(state),
+  vilkarTypeCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
 });
 
 export default connect(mapStateToProps)(VilkarPanels);
