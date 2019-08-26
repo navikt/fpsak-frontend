@@ -58,6 +58,7 @@ describe('RestDuck (async)', () => {
   const ressursEndpoint = '/api/ressurs';
   const ressursEndpointIncludingContextPath = `/fpsak${ressursEndpoint}`;
 
+  const resultKeyActionCreators = undefined;
 
   it('skal returnere resultatet direkte og så sette flagg for started og finished og legge ressurs i state', () => {
     mockAxios
@@ -70,7 +71,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -127,7 +128,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -212,7 +213,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, { maxPollingLimit: 200 }).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -356,7 +357,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, { fetchLinkDataAutomatically: true }).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -419,7 +420,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
 
@@ -437,7 +438,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -494,7 +495,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))
@@ -579,7 +580,7 @@ describe('RestDuck (async)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, config).withGetAsyncMethod();
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const asyncGetRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(asyncGetRessursDuck.actionCreators.execRequest(params))

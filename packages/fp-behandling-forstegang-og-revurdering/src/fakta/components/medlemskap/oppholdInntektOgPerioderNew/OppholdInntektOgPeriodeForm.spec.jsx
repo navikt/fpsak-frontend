@@ -12,7 +12,6 @@ import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPan
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
 import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
-import FortsattMedlemskapFaktaPanel from './FortsattMedlemskapFaktaPanel';
 
 const valgtPeriode = {
   aksjonspunkter: [],
@@ -201,48 +200,6 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
     />);
 
     expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
-  });
-
-
-  xit('skal avklare fortsatt medlemskap når en har dette aksjonspunktet', () => {
-    const fortsattMedlemskapAksjonspunkt = {
-      id: 1,
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-        navn: 'ap1',
-      },
-      status: {
-        kode: 's1',
-        navn: 's1',
-      },
-      toTrinnsBehandling: true,
-      toTrinnsBehandlingGodkjent: false,
-      kanLoses: true,
-      erAktivt: true,
-    };
-
-    const valgtPeriodeMedFortsattmedlemskapAksjonspunkt = {
-      aksjonspunkter: [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP],
-      id: '123',
-    };
-
-    const wrapper = shallowWithIntl(<OppholdInntektOgPeriodeForm
-      {...reduxFormPropsMock}
-      initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkter={[fortsattMedlemskapAksjonspunkt]}
-      updateOppholdInntektPeriode={sinon.spy()}
-      periodeResetCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      valgtPeriode={valgtPeriodeMedFortsattmedlemskapAksjonspunkt}
-      isRevurdering={false}
-    />);
-
-    expect(wrapper.find(FortsattMedlemskapFaktaPanel)).has.length(1);
     expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
     expect(wrapper.find(Hovedknapp).prop('disabled')).is.false;
   });
