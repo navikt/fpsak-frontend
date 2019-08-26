@@ -21,7 +21,7 @@ const config = {
   output: {
     path: ROOT_DIR,
     publicPath: '/',
-    filename: 'bundle.js',
+    filename: '[name].js',
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -36,6 +36,9 @@ const config = {
   ],
   optimization: {
     namedModules: true,
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   devServer: {
     historyApiFallback: true,

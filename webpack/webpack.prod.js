@@ -18,7 +18,7 @@ const config = {
     APP_DIR + '/index.jsx',
   ],
   output: {
-    filename: 'bundle-[hash].js',
+    filename: '[name]-[hash].js',
     path: path.resolve(__dirname, '../dist/public'),
     publicPath: '/fpsak/public',
   },
@@ -34,6 +34,9 @@ const config = {
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
+    splitChunks: {
+      chunks: 'all',
+    },
   },
   stats: {
     children: false,
