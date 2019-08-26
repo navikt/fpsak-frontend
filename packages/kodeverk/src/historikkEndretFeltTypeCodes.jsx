@@ -453,6 +453,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'MILITÆR_ELLER_SIVIL',
     feltId: 'HistorikkEndretFelt.MilitærEllerSiviltjeneste',
   },
+  NY_REFUSJONSFRIST: {
+    kode: 'NY_REFUSJONSFRIST',
+    feltId: 'HistorikkEndretFelt.NyRefusjonsfrist',
+  },
 };
 
 export default historikkEndretFeltTypeCodes;

@@ -199,6 +199,16 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 );
 
 
+// Refusjonskrav som kommer for sent
+export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
+  [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
+      if (faktaOmFordeling && faktaOmFordeling.refusjonskravSomKommerForSentListe) {
+        return faktaOmFordeling.refusjonskravSomKommerForSentListe;
+      }
+      return [];
+    },
+  );
+
 // Risikoklassifisering
 export const getRisikoklassifisering = createSelector(
   [commonBehandlingSelectors.getSelectedBehandling], (selectedBehandling = {}) => (
