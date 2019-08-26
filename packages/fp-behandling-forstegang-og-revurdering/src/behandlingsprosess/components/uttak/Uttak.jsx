@@ -38,7 +38,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
-import { getRettigheter } from 'navAnsatt/duck';
 import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
@@ -742,7 +741,7 @@ const mapStateToProps = (state, props) => {
     dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
     soknadsType: soknad.soknadType.kode,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
     endredFodselsDato: familiehendelse.fodselsdato,

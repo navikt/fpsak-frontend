@@ -18,7 +18,6 @@ const config = {
       person: path.join(APP_DIR, 'person'),
       fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
       kodeverk: path.join(APP_DIR, 'kodeverk'),
-      navAnsatt: path.join(APP_DIR, 'navAnsatt'),
       data: path.join(APP_DIR, 'data'),
 
       //Andre pakker

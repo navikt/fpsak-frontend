@@ -3,7 +3,6 @@ import { createSelector } from 'reselect';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingResultatstruktur, getStonadskontoer, getUttaksresultatPerioder, getSimuleringResultat,
@@ -56,7 +55,7 @@ const behandlingspunktForstegangOgRevSelectors = getCommonBehandlingsprosessSele
   behandlingSelectors.isBehandlingStatusReadOnly,
   getSelectedBehandlingspunktNavn,
   getOverrideBehandlingspunkter,
-  getRettigheter,
+  behandlingSelectors.getRettigheter,
 );
 
 export default behandlingspunktForstegangOgRevSelectors;

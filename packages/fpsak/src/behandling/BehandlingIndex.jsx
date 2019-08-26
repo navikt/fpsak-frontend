@@ -11,15 +11,16 @@ import BehandlingForstegangOgRevurderingIndex from '@fpsak-frontend/fp-behandlin
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-anke';
+import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import { getAlleKodeverk } from 'kodeverk/duck';
 import { getAllDocuments } from 'behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
 import {
   getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson,
-  getFagsakYtelseType, isForeldrepengerFagsak,
+  getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
 } from 'fagsak/fagsakSelectors';
-import { getFeatureToggles } from 'app/duck';
+import { getNavAnsatt, getFeatureToggles } from 'app/duck';
 import { reduxRestApi } from 'data/fpsakApi';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
@@ -64,6 +65,8 @@ export class BehandlingIndex extends Component {
       fagsakPerson: PropTypes.shape().isRequired,
       fagsakYtelseType: PropTypes.shape().isRequired,
       isForeldrepengerFagsak: PropTypes.bool.isRequired,
+      kanRevurderingOpprettes: PropTypes.bool.isRequired,
+      skalBehandlesAvInfotrygd: PropTypes.bool.isRequired,
     }).isRequired,
     avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
@@ -78,6 +81,7 @@ export class BehandlingIndex extends Component {
       requestPayload: PropTypes.any,
       type: PropTypes.string.isRequired,
     })).isRequired,
+    navAnsatt: navAnsattPropType.isRequired,
   };
 
   static defaultProps = {
@@ -116,6 +120,7 @@ export class BehandlingIndex extends Component {
       kodeverk,
       fagsak,
       avsluttedeBehandlinger,
+      navAnsatt,
     } = this.props;
     if (erAktivPapirsoknad) {
       return (
@@ -131,6 +136,7 @@ export class BehandlingIndex extends Component {
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
           kodeverk={kodeverk}
           fagsak={fagsak}
+          navAnsatt={navAnsatt}
         />
       );
     }
@@ -148,6 +154,7 @@ export class BehandlingIndex extends Component {
           appContextUpdater={appContextUpdater}
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
           fagsak={fagsak}
+          navAnsatt={navAnsatt}
         />
       );
     }
@@ -168,6 +175,7 @@ export class BehandlingIndex extends Component {
           allDocuments={allDocuments}
           kodeverk={kodeverk}
           fagsak={fagsak}
+          navAnsatt={navAnsatt}
         />
       );
     }
@@ -189,6 +197,7 @@ export class BehandlingIndex extends Component {
           kodeverk={kodeverk}
           fagsak={fagsak}
           avsluttedeBehandlinger={avsluttedeBehandlinger}
+          navAnsatt={navAnsatt}
         />
       );
     }
@@ -209,6 +218,7 @@ export class BehandlingIndex extends Component {
           allDocuments={allDocuments}
           kodeverk={kodeverk}
           fagsak={fagsak}
+          navAnsatt={navAnsatt}
         />
       );
     }
@@ -227,6 +237,7 @@ export class BehandlingIndex extends Component {
         hasSubmittedPaVentForm={hasSubmittedPaVentForm}
         kodeverk={kodeverk}
         fagsak={fagsak}
+        navAnsatt={navAnsatt}
       />
     );
   }
@@ -238,6 +249,8 @@ const mapStateToPropsFactory = (initialState) => {
     fagsakPerson: getFagsakPerson(initialState),
     fagsakYtelseType: getFagsakYtelseType(initialState),
     isForeldrepengerFagsak: isForeldrepengerFagsak(initialState),
+    kanRevurderingOpprettes: getKanRevurderingOpprettes(initialState),
+    skalBehandlesAvInfotrygd: getSkalBehandlesAvInfotrygd(initialState),
   };
   return (state) => {
     const behandlingId = getSelectedBehandlingId(state);
@@ -254,6 +267,7 @@ const mapStateToPropsFactory = (initialState) => {
       allDocuments: getAllDocuments(state),
       avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
       behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
+      navAnsatt: getNavAnsatt(state),
       fagsak,
     };
   };

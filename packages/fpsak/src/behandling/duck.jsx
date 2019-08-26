@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect';
 
+import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
+
+import { getNavAnsatt } from 'app/duck';
+import {
+  getSelectedFagsakStatus, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd, getFagsakYtelseType,
+} from 'fagsak/fagsakSelectors';
 import { getSelectedSaksnummer } from 'fagsak/duck';
-import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'behandling';
 
@@ -85,10 +90,25 @@ export const getBehandlingHasSoknad = createSelector([getBehandlingInfoHolder], 
 export const getBehandlingIsInnsyn = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsInnsyn);
 export const getBehandlingIsOnHold = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsOnHold);
 export const isBehandlingInInnhentSoknadsopplysningerSteg = createSelector([
-  getBehandlingInfoHolder], (data) => data.isBehandlingInInnhentSoknadsopplysningerSteg);
-export const getBehandlingIsQueued = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsQueued);
-export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfoHolder], (data) => data.behandlingBehandlendeEnhetId);
-export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], (data) => data.behandlingBehandlendeEnhetNavn);
-export const getSoknad = createSelector([getBehandlingInfoHolder], (data) => data.soknad);
-export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
-export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
+  getBehandlingInfoHolder], data => data.isBehandlingInInnhentSoknadsopplysningerSteg);
+export const getBehandlingIsQueued = createSelector([getBehandlingInfoHolder], data => data.behandlingIsQueued);
+export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetId);
+export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetNavn);
+export const getSoknad = createSelector([getBehandlingInfoHolder], data => data.soknad);
+export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.behandlingsresultatFraOriginalBehandling);
+export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.resultatstrukturFraOriginalBehandling);
+
+
+/* Skal ikkje fjernast */
+export const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  getBehandlingStatus,
+  getSoknad,
+  getAksjonspunkter,
+  getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);

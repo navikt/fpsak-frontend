@@ -26,9 +26,13 @@ export const {
 export const {
   getBehandlingIdentifier,
   getFagsakPerson,
+  getFagsakStatus,
   getFagsakYtelseType,
   getHasShownBehandlingPaVent,
   getSelectedBehandlingId,
+  getNavAnsatt,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;
 
 export const fetchPreviewVedtaksbrev = (vedtaksbrevdata) => (dispatch) => dispatch(

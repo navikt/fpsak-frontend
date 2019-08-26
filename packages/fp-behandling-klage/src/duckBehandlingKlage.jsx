@@ -30,12 +30,16 @@ export const {
 export const {
   getBehandlingIdentifier,
   getFagsakPerson,
+  getFagsakStatus,
   getFagsakYtelseType,
   getHasShownBehandlingPaVent,
   getKodeverk,
   getAlleKodeverk,
   getSelectedBehandlingId,
   getSelectedSaksnummer,
+  getNavAnsatt,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;
 
 export const getAvsluttedeBehandlinger = createSelector([behandlingRedux.selectors.getBehandlingContext],
