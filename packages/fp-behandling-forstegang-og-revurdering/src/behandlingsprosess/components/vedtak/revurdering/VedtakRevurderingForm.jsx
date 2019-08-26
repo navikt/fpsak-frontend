@@ -35,6 +35,7 @@ import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
 import VedtakInnvilgetRevurderingPanel from './VedtakInnvilgetRevurderingPanel';
 import VedtakAvslagRevurderingPanel from './VedtakAvslagRevurderingPanel';
 import VedtakOpphorRevurderingPanel from './VedtakOpphorRevurderingPanel';
+import VedtakFritekstbrevModal from '../svp/VedtakFritekstbrevModal';
 
 export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
@@ -105,84 +106,90 @@ export class VedtakRevurderingFormImpl extends Component {
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
-      <VedtakAksjonspunktPanel
-        behandlingStatusKode={behandlingStatusKode}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={readOnly}
-        isBehandlingReadOnly={isBehandlingReadOnly}
-      >
-        <VerticalSpacer eightPx />
-        <ElementWrapper>
-          {visOverstyringKnapp
-          && (
-            <VedtakOverstyrendeKnapp
-              toggleCallback={this.onToggleOverstyring}
-              readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
-              keyName="skalBrukeOverstyrendeFritekstBrev"
-              readOnlyHideEmpty={false}
-            />
-          )
-          }
+      <React.Fragment>
+        <VedtakFritekstbrevModal
+          readOnly={readOnly}
+          behandlingsresultat={behandlingsresultat}
+        />
+        <VedtakAksjonspunktPanel
+          behandlingStatusKode={behandlingStatusKode}
+          aksjonspunktKoder={aksjonspunktKoder}
+          readOnly={readOnly}
+          isBehandlingReadOnly={isBehandlingReadOnly}
+        >
+          <VerticalSpacer eightPx />
+          <ElementWrapper>
+            {visOverstyringKnapp
+            && (
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleOverstyring}
+                readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+                keyName="skalBrukeOverstyrendeFritekstBrev"
+                readOnlyHideEmpty={false}
+              />
+            )
+            }
 
-          {isInnvilget(behandlingsresultat.type.kode)
-          && (
-            <VedtakInnvilgetRevurderingPanel
-              antallBarn={antallBarn}
-              ytelseType={ytelseType}
-              aksjonspunktKoder={aksjonspunktKoder}
-              revurderingsAarsakString={revurderingsAarsakString}
-              behandlingsresultat={behandlingsresultat}
-              readOnly={readOnly}
-            />
-          )
-          }
-          {isAvslag(behandlingsresultat.type.kode)
-          && (
-            <VedtakAvslagRevurderingPanel
-              behandlingStatusKode={behandlingStatusKode}
-              aksjonspunkter={aksjonspunkter}
-              behandlingsresultat={behandlingsresultat}
-              readOnly={readOnly}
-              ytelseType={ytelseType}
-            />
-          )
-          }
-          {isOpphor(behandlingsresultat.type.kode)
-          && (
-            <VedtakOpphorRevurderingPanel
-              aksjonspunkter={aksjonspunkter}
-              revurderingsAarsakString={revurderingsAarsakString}
-              ytelseType={ytelseType}
-              readOnly={readOnly}
-            />
-          )
-          }
+            {isInnvilget(behandlingsresultat.type.kode)
+            && (
+              <VedtakInnvilgetRevurderingPanel
+                antallBarn={antallBarn}
+                ytelseType={ytelseType}
+                aksjonspunktKoder={aksjonspunktKoder}
+                revurderingsAarsakString={revurderingsAarsakString}
+                behandlingsresultat={behandlingsresultat}
+                readOnly={readOnly}
+              />
+            )
+            }
+            {isAvslag(behandlingsresultat.type.kode)
+            && (
+              <VedtakAvslagRevurderingPanel
+                behandlingStatusKode={behandlingStatusKode}
+                aksjonspunkter={aksjonspunkter}
+                behandlingsresultat={behandlingsresultat}
+                readOnly={readOnly}
+                ytelseType={ytelseType}
+              />
+            )
+            }
+            {isOpphor(behandlingsresultat.type.kode)
+            && (
+              <VedtakOpphorRevurderingPanel
+                aksjonspunkter={aksjonspunkter}
+                revurderingsAarsakString={revurderingsAarsakString}
+                ytelseType={ytelseType}
+                readOnly={readOnly}
+              />
+            )
+            }
 
-          {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD
-          && (
-            <FritekstBrevPanel
-              intl={intl}
-              readOnly={readOnly}
-              sprakkode={sprakkode}
-              previewBrev={previewAutomatiskBrev}
-            />
-          )
-          }
-          {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES
-          && (
-            <VedtakRevurderingSubmitPanel
-              begrunnelse={begrunnelse}
-              previewVedtakCallback={previewVedtakCallback}
-              previewManueltBrevCallback={previewManueltBrevCallback}
-              formProps={formProps}
-              readOnly={readOnly}
-              ytelseType={ytelseType}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-            />
-          )
-          }
-        </ElementWrapper>
-      </VedtakAksjonspunktPanel>
+            {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD
+            && (
+              <FritekstBrevPanel
+                intl={intl}
+                readOnly={readOnly}
+                sprakkode={sprakkode}
+                previewBrev={previewAutomatiskBrev}
+              />
+            )
+            }
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES
+            && (
+              <VedtakRevurderingSubmitPanel
+                begrunnelse={begrunnelse}
+                previewVedtakCallback={previewVedtakCallback}
+                previewManueltBrevCallback={previewManueltBrevCallback}
+                formProps={formProps}
+                readOnly={readOnly}
+                ytelseType={ytelseType}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              />
+            )
+            }
+          </ElementWrapper>
+        </VedtakAksjonspunktPanel>
+      </React.Fragment>
     );
   }
 }

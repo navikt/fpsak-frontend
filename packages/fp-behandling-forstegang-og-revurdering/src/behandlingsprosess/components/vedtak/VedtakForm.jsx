@@ -31,6 +31,7 @@ import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
 import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
+import VedtakFritekstbrevModal from './svp/VedtakFritekstbrevModal';
 
 const getPreviewManueltBrevCallback = (formProps, finnesAllerede, skalOverstyre, previewManueltBrevCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
@@ -140,89 +141,95 @@ export class VedtakFormImpl extends Component {
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
-      <VedtakAksjonspunktPanel
-        behandlingStatusKode={behandlingStatusKode}
-        aksjonspunktKoder={aksjonspunktKoder}
-        readOnly={readOnly}
-        isBehandlingReadOnly={isBehandlingReadOnly}
-      >
-        {visOverstyringKnapp
-          && (
-            <VedtakOverstyrendeKnapp
-              toggleCallback={this.onToggleOverstyring}
-              readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
-              keyName="skalBrukeOverstyrendeFritekstBrev"
-              readOnlyHideEmpty={false}
-            />
-          )
-          }
+      <React.Fragment>
+        <VedtakFritekstbrevModal
+          readOnly={readOnly}
+          behandlingsresultat={behandlingsresultat}
+        />
+        <VedtakAksjonspunktPanel
+          behandlingStatusKode={behandlingStatusKode}
+          aksjonspunktKoder={aksjonspunktKoder}
+          readOnly={readOnly}
+          isBehandlingReadOnly={isBehandlingReadOnly}
+        >
+          {visOverstyringKnapp
+            && (
+              <VedtakOverstyrendeKnapp
+                toggleCallback={this.onToggleOverstyring}
+                readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+                keyName="skalBrukeOverstyrendeFritekstBrev"
+                readOnlyHideEmpty={false}
+              />
+            )
+            }
 
-        {isInnvilget(behandlingsresultat.type.kode)
-          && (
-            <VedtakInnvilgetPanel
-              intl={intl}
-              antallBarn={antallBarn}
-              behandlingsresultat={behandlingsresultat}
-              readOnly={readOnly}
-              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-            />
-          )
-          }
+          {isInnvilget(behandlingsresultat.type.kode)
+            && (
+              <VedtakInnvilgetPanel
+                intl={intl}
+                antallBarn={antallBarn}
+                behandlingsresultat={behandlingsresultat}
+                readOnly={readOnly}
+                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              />
+            )
+            }
 
-        {isAvslag(behandlingsresultat.type.kode)
-          && (
-            <VedtakAvslagPanel
-              behandlingStatusKode={behandlingStatusKode}
-              aksjonspunkter={aksjonspunkter}
-              behandlingsresultat={behandlingsresultat}
-              readOnly={readOnly}
-            />
-          )
-          }
+          {isAvslag(behandlingsresultat.type.kode)
+            && (
+              <VedtakAvslagPanel
+                behandlingStatusKode={behandlingStatusKode}
+                aksjonspunkter={aksjonspunkter}
+                behandlingsresultat={behandlingsresultat}
+                readOnly={readOnly}
+              />
+            )
+            }
 
-        {skalBrukeOverstyrendeFritekstBrev && !isEngangsstonad
-          && (
-            <FritekstBrevPanel
-              intl={intl}
-              readOnly={readOnly}
-              sprakkode={sprakkode}
-              previewBrev={previewAutomatiskBrev}
-            />
-          )
-          }
+          {skalBrukeOverstyrendeFritekstBrev && !isEngangsstonad
+            && (
+              <FritekstBrevPanel
+                intl={intl}
+                readOnly={readOnly}
+                sprakkode={sprakkode}
+                previewBrev={previewAutomatiskBrev}
+              />
+            )
+            }
 
-        {kanSendesTilGodkjenning(behandlingStatusKode)
-          && (
-            <Row>
-              <Column xs="12">
-                {!readOnly
-                && (
-                  <Hovedknapp
-                    mini
-                    className={styles.mainButton}
-                    onClick={formProps.handleSubmit}
-                    disabled={behandlingPaaVent || formProps.submitting}
-                    spinner={formProps.submitting}
-                  >
-                    {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
-                  </Hovedknapp>
-                )
-                }
-                {skalBrukeOverstyrendeFritekstBrev && skalViseLink
-                && (
-                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                )
-                }
-                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage
-                && (
-                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-                )
-                }
-              </Column>
-            </Row>
-          )
-          }
-      </VedtakAksjonspunktPanel>
+          {kanSendesTilGodkjenning(behandlingStatusKode)
+            && (
+              <Row>
+                <Column xs="12">
+                  {!readOnly
+                  && (
+                    <Hovedknapp
+                      mini
+                      className={styles.mainButton}
+                      onClick={formProps.handleSubmit}
+                      disabled={behandlingPaaVent || formProps.submitting}
+                      spinner={formProps.submitting}
+                    >
+                      {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
+                    </Hovedknapp>
+                  )
+                  }
+                  {skalBrukeOverstyrendeFritekstBrev && skalViseLink
+                  && (
+                    <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+                  )
+                  }
+                  {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage
+                  && (
+                    <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+                  )
+                  }
+                </Column>
+              </Row>
+            )
+            }
+        </VedtakAksjonspunktPanel>
+      </React.Fragment>
     );
   }
 }
