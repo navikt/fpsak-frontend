@@ -97,6 +97,7 @@ export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingIn
 export const getSoknad = createSelector([getBehandlingInfoHolder], data => data.soknad);
 export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.behandlingsresultatFraOriginalBehandling);
 export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.resultatstrukturFraOriginalBehandling);
+export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], data => data.erArsakTypeBehandlingEtterKlage);
 
 
 /* Skal ikkje fjernast */
