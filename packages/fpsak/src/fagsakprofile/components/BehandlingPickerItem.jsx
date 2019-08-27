@@ -21,25 +21,31 @@ const getContentProps = (behandling, getKodeverknavn) => ({
   opprettetDato: behandling.opprettet,
   avsluttetDato: behandling.avsluttet,
   behandlingsstatus: getKodeverknavn(behandling.status),
+  erGjeldendeVedtak: behandling.gjeldendeVedtak,
 });
 
-const renderItemContent = (behandling, getKodeverknavn, withChevronDown = false, withChevronUp = false) => (
-  <BehandlingPickerItemContent withChevronDown={withChevronDown} withChevronUp={withChevronUp} {...getContentProps(behandling, getKodeverknavn)} />
+const renderItemContent = (behandling, getKodeverknavn, isSelected = false, withChevronDown = false, withChevronUp = false) => (
+  <BehandlingPickerItemContent
+    withChevronDown={withChevronDown}
+    withChevronUp={withChevronUp}
+    isSelected={isSelected}
+    {...getContentProps(behandling, getKodeverknavn)}
+  />
 );
 
-const renderToggleShowAllButton = (toggleShowAll, behandling, showAll, getKodeverknavn) => (
+const renderToggleShowAllButton = (toggleShowAll, behandling, isActive, showAll, getKodeverknavn) => (
   <button type="button" className={styles.toggleShowAllButton} onClick={toggleShowAll}>
-    {renderItemContent(behandling, getKodeverknavn, !showAll, showAll)}
+    {renderItemContent(behandling, getKodeverknavn, isActive, !showAll, showAll)}
   </button>
 );
 
-const renderLinkToBehandling = (saksnummer, behandling, toggleShowAll, getKodeverknavn) => (
+const renderLinkToBehandling = (saksnummer, behandling, isActive, toggleShowAll, showAll, getKodeverknavn) => (
   <NavLink
     className={styles.linkToBehandling}
     to={getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, behandling.id) })}
     onClick={toggleShowAll}
   >
-    {renderItemContent(behandling, getKodeverknavn)}
+    {renderItemContent(behandling, getKodeverknavn, isActive, false, showAll && isActive)}
   </NavLink>
 );
 
@@ -53,13 +59,13 @@ export const BehandlingPickerItem = ({
   getKodeverknavn,
 }) => {
   if (onlyOneBehandling && isActive) {
-    return renderItemContent(behandling, getKodeverknavn);
+    return renderItemContent(behandling, getKodeverknavn, isActive);
   }
   if (onlyOneBehandling || showAll) {
-    return renderLinkToBehandling(saksnummer, behandling, toggleShowAll, getKodeverknavn);
+    return renderLinkToBehandling(saksnummer, behandling, isActive, toggleShowAll, showAll, getKodeverknavn);
   }
   if (isActive) {
-    return renderToggleShowAllButton(toggleShowAll, behandling, showAll, getKodeverknavn);
+    return renderToggleShowAllButton(toggleShowAll, behandling, isActive, showAll, getKodeverknavn);
   }
   return null;
 };

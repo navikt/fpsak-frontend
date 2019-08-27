@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 
 import BehandlingPickerItem from './BehandlingPickerItem';
-import BehandlingPicker from './BehandlingPicker';
+import BehandlingPicker, { sortBehandlinger } from './BehandlingPicker';
 
 describe('<BehandlingPicker>', () => {
   const behandlingTemplate = {
@@ -35,6 +35,7 @@ describe('<BehandlingPicker>', () => {
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     },
+    gjeldendeVedtak: false,
   };
 
   it('skal vise forklarende tekst når det ikke finnes behandlinger', () => {
@@ -108,5 +109,33 @@ describe('<BehandlingPicker>', () => {
     expect(item.first().prop('behandling').id).is.eql(2);
     expect(item.at(1).prop('behandling').id).is.eql(1);
     expect(item.last().prop('behandling').id).is.eql(3);
+  });
+
+  it('skal sortere behandlingene gitt avsluttet og opprettet datoer', () => {
+    const behandlinger = [{
+      opprettet: '2019-08-13T13:32:57',
+      avsluttet: '2019-08-13T13:32:57',
+    }, {
+      opprettet: '2019-08-14T13:32:57',
+    }, {
+      opprettet: '2019-03-13T13:32:57',
+      avsluttet: '2019-09-13T13:32:57',
+    }, {
+      opprettet: '2019-08-13T13:32:57',
+    }];
+
+    const sorterteBehandlinger = sortBehandlinger(behandlinger);
+
+    expect(sorterteBehandlinger).is.eql([{
+      opprettet: '2019-08-14T13:32:57',
+    }, {
+      opprettet: '2019-08-13T13:32:57',
+    }, {
+      opprettet: '2019-03-13T13:32:57',
+      avsluttet: '2019-09-13T13:32:57',
+    }, {
+      opprettet: '2019-08-13T13:32:57',
+      avsluttet: '2019-08-13T13:32:57',
+    }]);
   });
 });

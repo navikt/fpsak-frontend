@@ -15,6 +15,8 @@ describe('<BehandlingPickerItemContent>', () => {
       behandlingId={1}
       opprettetDato="2018-01-01"
       behandlingsstatus="Opprettet"
+      erGjeldendeVedtak={false}
+      isSelected={false}
     />);
 
     expect(wrapper.find(BorderBox)).has.length(1);
@@ -31,7 +33,8 @@ describe('<BehandlingPickerItemContent>', () => {
       opprettetDato="2018-01-01"
       avsluttetDato="2018-05-01"
       behandlingsstatus="Opprettet"
-
+      erGjeldendeVedtak={false}
+      isSelected={false}
     />);
 
     const labels = wrapper.find(DateLabel);
@@ -58,7 +61,8 @@ describe('<BehandlingPickerItemContent>', () => {
       avsluttetDato="2018-05-01"
       behandlingsstatus="Opprettet"
       førsteÅrsak={førsteÅrsak}
-
+      erGjeldendeVedtak={false}
+      isSelected={false}
     />);
 
     const formattedMessages = wrapper.find('FormattedMessage');

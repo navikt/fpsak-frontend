@@ -3,20 +3,17 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
+
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, Image, BorderBox } from '@fpsak-frontend/shared-components';
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
+import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
 
 import styles from './behandlingPickerItemContent.less';
 
-const renderChevron = (chevron, messageId) => (
-  <FormattedMessage id={messageId}>
-    {altText => <Image className={styles.image} src={chevron} alt={altText} />}
-  </FormattedMessage>
-);
-
+// TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger
 const getÅrsak = (årsak) => {
   /* if (årsak.manueltOpprettet) {
@@ -86,6 +83,12 @@ const getÅrsak = (årsak) => {
   }
 };
 
+const renderChevron = (chevron, messageId) => (
+  <FormattedMessage id={messageId}>
+    {altText => <Image className={styles.image} src={chevron} alt={altText} />}
+  </FormattedMessage>
+);
+
 /**
  * BehandlingPickerItemContent
  *
@@ -103,11 +106,23 @@ const BehandlingPickerItemContent = ({
   behandlingTypeNavn,
   behandlingTypeKode,
   førsteÅrsak,
+  erGjeldendeVedtak,
+  isSelected,
 }) => (
-  <BorderBox className={styles.boxPadding}>
+  <BorderBox className={isSelected ? styles.boxPaddingWithSelected : styles.boxPadding}>
     <div>
-      {withChevronDown && renderChevron(chevronDown, 'BehandlingListItem.Open')}
-      {withChevronUp && renderChevron(chevronUp, 'BehandlingListItem.Close')}
+      <div className={styles.imgDiv}>
+        {erGjeldendeVedtak && (
+          <Image
+            className={styles.starImage}
+            src={stjerneImg}
+            tooltip={{ header: <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" /></Normaltekst> }}
+            tabIndex="0"
+          />
+        )}
+        {withChevronDown && renderChevron(chevronDown, 'BehandlingPickerItemContent.Open')}
+        {withChevronUp && renderChevron(chevronUp, 'BehandlingPickerItemContent.Close')}
+      </div>
       <div>
         <Element className={styles.smallMarginBottom}>
           {behandlingTypeNavn}
@@ -122,21 +137,21 @@ const BehandlingPickerItemContent = ({
     <div>
       <Row value={behandlingId}>
         <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Opprettet" /></Undertekst>
+          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Undertekst>
           <Normaltekst><DateLabel dateString={opprettetDato} /></Normaltekst>
         </Column>
         <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Avsluttet" /></Undertekst>
+          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Undertekst>
           {avsluttetDato && <Normaltekst><DateLabel dateString={avsluttetDato} /></Normaltekst>}
         </Column>
         <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Behandlingsstatus" /></Undertekst>
+          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Behandlingsstatus" /></Undertekst>
           <Normaltekst>{behandlingsstatus}</Normaltekst>
         </Column>
         <Column xs="3">
           {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak.behandlingArsakType && (
             <>
-              <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingListItem.Årsak" /></Undertekst>
+              <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Arsak" /></Undertekst>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
               </Normaltekst>
@@ -164,6 +179,8 @@ BehandlingPickerItemContent.propTypes = {
     erAutomatiskRevurdering: PropTypes.bool,
     manueltOpprettet: PropTypes.bool,
   }),
+  erGjeldendeVedtak: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired,
 };
 
 BehandlingPickerItemContent.defaultProps = {

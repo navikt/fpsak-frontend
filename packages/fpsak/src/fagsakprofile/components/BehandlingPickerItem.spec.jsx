@@ -35,6 +35,7 @@ describe('<BehandlingPickerItem>', () => {
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
     },
+    gjeldendeVedtak: false,
   };
 
   const getKodeverknavn = ({ kode }) => {

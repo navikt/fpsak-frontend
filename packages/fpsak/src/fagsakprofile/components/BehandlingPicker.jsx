@@ -9,16 +9,19 @@ import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';
 
-const sortBehandlinger = (behandlinger, selectedBehandlingId) => {
-  const selected = behandlinger.filter(b => b.id === selectedBehandlingId);
-  const other = behandlinger
-    .filter(b => b.id !== selectedBehandlingId)
-    .sort((b1, b2) => moment(b2.opprettet).diff(moment(b1.opprettet)));
-  return [...selected, ...other];
-};
+export const sortBehandlinger = behandlinger => behandlinger.sort((b1, b2) => {
+  if (b1.avsluttet && !b2.avsluttet) {
+    return 1;
+  } if (!b1.avsluttet && b2.avsluttet) {
+    return -1;
+  } if (b1.avsluttet && b2.avsluttet) {
+    return moment(b2.avsluttet).diff(moment(b1.avsluttet));
+  }
+  return moment(b2.opprettet).diff(moment(b1.opprettet));
+});
 
 const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll) => (
-  sortBehandlinger(behandlinger, behandlingId)
+  sortBehandlinger(behandlinger)
     .map(behandling => (
       <li key={behandling.id}>
         <BehandlingPickerItem
