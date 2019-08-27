@@ -43,8 +43,7 @@ export const PermisjonRettigheterPanel = ({
           <RadioOption label={intl.formatMessage({ id: 'Registrering.Permisjon.HarRettPaForeldrepenger.No' })} value={false} />
         </RadioGroupField>
       </div>
-    )
-    }
+    )}
   </ElementWrapper>
 );
 

@@ -67,7 +67,7 @@ describe('<VurderFaktaBeregningPanel>', () => {
     };
     const tilfeller = [];
     const values = {
-          [BEGRUNNELSE_FAKTA_TILFELLER_NAME]: 'begrunnelse', aksjonspunkter, faktaOmBeregning, tilfeller,
+      [BEGRUNNELSE_FAKTA_TILFELLER_NAME]: 'begrunnelse', aksjonspunkter, faktaOmBeregning, tilfeller,
     };
     const transformed = transformValuesVurderFaktaBeregning(values);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');

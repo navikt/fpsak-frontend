@@ -37,8 +37,7 @@ export const FrilansOppdragForFamiliePanelImpl = ({
         <VerticalSpacer space={2} />
         <FieldArray name="oppdragPerioder" component={FrilansOppdragForFamilieFieldArray} readOnly={readOnly} />
       </ArrowBox>
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -62,7 +61,7 @@ FrilansOppdragForFamiliePanel.buildInitialValues = () => ({
   oppdragPerioder: [defaultFrilansPeriode],
 });
 
-FrilansOppdragForFamiliePanel.validate = values => ({
+FrilansOppdragForFamiliePanel.validate = (values) => ({
   oppdragPerioder: FrilansOppdragForFamilieFieldArray.validate(values),
 });
 

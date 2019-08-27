@@ -97,18 +97,18 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector([getBehandlingVerge, behandlingSelectors.getAksjonspunkter], (verge, aksjonspunkter) => ({
-  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
+  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
   ...RegistrereVergeFaktaForm.buildInitialValues(verge),
 }));
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   ...RegistrereVergeFaktaForm.transformValues(values),
   ...{ begrunnelse: values.begrunnelse },
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],
     initialValues: buildInitialValues(state),
     vergetyper: getKodeverk(kodeverkTyper.VERGE_TYPE)(state),
@@ -120,10 +120,10 @@ const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
 const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
   connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
-  form: 'RegistrereVergeInfoPanel',
-})(injectIntl(RegistrereVergeInfoPanelImpl))),
+    form: 'RegistrereVergeInfoPanel',
+  })(injectIntl(RegistrereVergeInfoPanelImpl))),
 );
 
-RegistrereVergeInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === vergeAksjonspunkter[0]);
+RegistrereVergeInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === vergeAksjonspunkter[0]);
 
 export default RegistrereVergeInfoPanel;

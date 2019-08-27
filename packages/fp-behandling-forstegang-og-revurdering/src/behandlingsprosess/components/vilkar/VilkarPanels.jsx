@@ -31,8 +31,7 @@ export const VilkarPanels = ({
 }) => (
   <ElementWrapper>
     {VilkarresultatMedOverstyringForm.supports(aksjonspunktCodes, behandlingspunkt)
-      && <VilkarresultatMedOverstyringForm key={behandlingspunkt} submitCallback={submitCallback} />
-    }
+      && <VilkarresultatMedOverstyringForm key={behandlingspunkt} submitCallback={submitCallback} />}
     {SokersOpplysningspliktForm.supports(behandlingspunkt)
       && (
       <SokersOpplysningspliktForm
@@ -40,8 +39,7 @@ export const VilkarPanels = ({
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-    }
+      )}
     {ErSoknadsfristVilkaretOppfyltForm.supports(aksjonspunktCodes)
     && (
     <ErSoknadsfristVilkaretOppfyltForm
@@ -49,11 +47,9 @@ export const VilkarPanels = ({
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
     />
-    )
-     }
+    )}
     {ErOmsorgVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes)
-      && <ErOmsorgVilkaarOppfyltForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />
-    }
+      && <ErOmsorgVilkaarOppfyltForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />}
     {ErForeldreansvar2LeddVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes, vilkarTypeCodes)
       && (
       <ErForeldreansvar2LeddVilkaarOppfyltForm
@@ -61,8 +57,7 @@ export const VilkarPanels = ({
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-    }
+      )}
     {ErForeldreansvar4LeddVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes, vilkarTypeCodes)
       && (
       <ErForeldreansvar4LeddVilkaarOppfyltForm
@@ -71,8 +66,7 @@ export const VilkarPanels = ({
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-    }
+      )}
 
     {SvangerskapVilkarForm.supports(behandlingspunkt)
       && (
@@ -82,8 +76,7 @@ export const VilkarPanels = ({
         readOnlySubmitButton={readOnlySubmitButton}
         isAksjonspunktOpen={isAksjonspunktOpen}
       />
-      )
-    }
+      )}
     {FodselVilkarForm.supports(behandlingspunkt, aksjonspunktCodes)
       && (
       <FodselVilkarForm
@@ -92,8 +85,7 @@ export const VilkarPanels = ({
         readOnlySubmitButton={readOnlySubmitButton}
         isAksjonspunktOpen={isAksjonspunktOpen}
       />
-      )
-    }
+      )}
     {AdopsjonVilkarForm.supports(behandlingspunkt, aksjonspunktCodes)
       && (
       <AdopsjonVilkarForm
@@ -102,8 +94,7 @@ export const VilkarPanels = ({
         readOnlySubmitButton={readOnlySubmitButton}
         isAksjonspunktOpen={isAksjonspunktOpen}
       />
-      )
-    }
+      )}
     {OpptjeningVilkarForm.supports(behandlingspunkt)
       && (
       <OpptjeningVilkarForm
@@ -112,8 +103,7 @@ export const VilkarPanels = ({
         isAksjonspunktOpen={isAksjonspunktOpen}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -127,7 +117,7 @@ VilkarPanels.propTypes = {
   vilkarTypeCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   vilkarTypeCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
 });
 

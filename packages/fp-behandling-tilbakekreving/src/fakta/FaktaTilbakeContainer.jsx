@@ -16,7 +16,7 @@ import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
  *
  * Har ansvar for faktadelen av hovedvinduet for Tilbakekreving.
  */
-export const FaktaTilbakeContainer = props => (
+export const FaktaTilbakeContainer = (props) => (
   <TilbakekrevingFaktaPanel {...props} />
 );
 
@@ -29,7 +29,7 @@ FaktaTilbakeContainer.propTypes = {
   resolveFaktaAksjonspunkter: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

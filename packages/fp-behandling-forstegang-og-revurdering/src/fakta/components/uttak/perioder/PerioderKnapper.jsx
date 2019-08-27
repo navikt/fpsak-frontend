@@ -30,8 +30,7 @@ export const PerioderKnapper = ({
       >
         <FormattedMessage id="UttakInfoPanel.Nullstill" />
       </Knapp>
-      )
-    }
+      )}
     {(bekreftet || (!bekreftet && updated))
       && (
       <Knapp
@@ -44,8 +43,7 @@ export const PerioderKnapper = ({
       >
         <FormattedMessage id="UttakInfoPanel.Avbryt" />
       </Knapp>
-      )
-    }
+      )}
   </div>
   )
 );

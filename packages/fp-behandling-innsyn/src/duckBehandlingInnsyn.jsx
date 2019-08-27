@@ -39,12 +39,12 @@ export const {
 } = behandlingRedux.selectors;
 
 export const getAllDocuments = createSelector(
-  [behandlingRedux.selectors.getBehandlingContext], behandlingContext => behandlingContext.allDocuments,
+  [behandlingRedux.selectors.getBehandlingContext], (behandlingContext) => behandlingContext.allDocuments,
 );
 
 // Samme dokument kan ligge på flere behandlinger under samme fagsak.
 export const getFilteredReceivedDocuments = createSelector([getAllDocuments], (allDocuments) => {
-  const filteredDocuments = allDocuments.filter(doc => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
-  allDocuments.forEach(doc => !filteredDocuments.some(fd => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
+  const filteredDocuments = allDocuments.filter((doc) => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
+  allDocuments.forEach((doc) => !filteredDocuments.some((fd) => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
   return filteredDocuments;
 });

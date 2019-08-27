@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
-const isInfoPanelOpen = aksjonspunkter => aksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode)).length > 0;
+const isInfoPanelOpen = (aksjonspunkter) => aksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode)).length > 0;
 
-const checkIfAksjonspunkterIsSolveable = aksjonspunkter => aksjonspunkter.some(ap => ap.kanLoses);
+const checkIfAksjonspunkterIsSolveable = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.kanLoses);
 
-const isInactiv = aksjonspunkter => !aksjonspunkter.some(a => a.erAktivt);
+const isInactiv = (aksjonspunkter) => !aksjonspunkter.some((a) => a.erAktivt);
 
 const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre = false) => (WrappedComponent) => {
   class InfoPanel extends React.Component {
@@ -27,7 +27,7 @@ const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre 
 
     toggleOnDefault() {
       const { aksjonspunkter, shouldOpenDefaultInfoPanels, toggleInfoPanelCallback } = this.props;
-      const filteredAps = aksjonspunkter.filter(ap => aksjonspunktCodes.includes(ap.definisjon.kode));
+      const filteredAps = aksjonspunkter.filter((ap) => aksjonspunktCodes.includes(ap.definisjon.kode));
       if (shouldOpenDefaultInfoPanels
         && isInfoPanelOpen(filteredAps)
         && checkIfAksjonspunkterIsSolveable(filteredAps)) {
@@ -37,7 +37,7 @@ const withDefaultToggling = (infoPanelId, aksjonspunktCodes, skalKunneOverstyre 
 
     render() {
       const { aksjonspunkter, readOnly, erOverstyrer } = this.props;
-      const filteredAps = aksjonspunkter.filter(ap => aksjonspunktCodes.includes(ap.definisjon.kode));
+      const filteredAps = aksjonspunkter.filter((ap) => aksjonspunktCodes.includes(ap.definisjon.kode));
       const hasOpenAksjonspunkter = isInfoPanelOpen(filteredAps);
       const canSolveAksjonspunkter = checkIfAksjonspunkterIsSolveable(filteredAps);
 

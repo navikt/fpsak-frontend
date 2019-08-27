@@ -59,13 +59,12 @@ export const TempsaveAnkeButtonImpl = ({
         >
           <FormattedMessage id="Ankebehandling.TempSaveButton" />
         </Hovedknapp>
-      )
-      }
+      )}
     </div>
   );
 };
 
-const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomlagringData], mellomlagringData => ({
+const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomlagringData], (mellomlagringData) => ({
   begrunnelse: mellomlagringData.begrunnelse || null,
   fritekstTilBrev: mellomlagringData.fritekstTilBrev || null,
   klageVurdering: mellomlagringData.klageVurdering || null,
@@ -73,10 +72,10 @@ const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomla
   klageMedholdArsak: mellomlagringData.klageMedholdArsak || null,
 }));
 
-const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], openAksjonspunkter => openAksjonspunkter
-  .filter(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
+const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
+  .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   lastSavedVersionValues: getMellomLagringFormData(state),
   aksjonspunktCode: behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
   spinner: behandlingSelectors.getMellomlagringSpinner(state),

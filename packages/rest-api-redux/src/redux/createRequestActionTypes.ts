@@ -10,9 +10,9 @@ import { ActionTypes } from './ActionTypesTsType';
 const createActionType = (name, qualifier, restMethod = '', path = '') => `@@REST/${name} ${restMethod} ${path} ${qualifier}`;
 const createActionTypeWithoutPath = (name, qualifier) => `@@REST/${name} ${qualifier}`;
 
-const getName = requestRunner => requestRunner.getName();
-const getRestMethod = requestRunner => requestRunner.getRestMethodName();
-const getPath = requestRunner => requestRunner.getPath();
+const getName = (requestRunner) => requestRunner.getName();
+const getRestMethod = (requestRunner) => requestRunner.getRestMethodName();
+const getPath = (requestRunner) => requestRunner.getPath();
 
 const getActionTypes = (requestRunner: RequestRunner) => ({
   requestStarted: () => createActionType(getName(requestRunner), 'STARTED', getRestMethod(requestRunner), getPath(requestRunner)),

@@ -10,7 +10,7 @@ interface Options {
   keepData?: boolean;
 }
 
-const getActionCreators = actionTypes => ({
+const getActionCreators = (actionTypes) => ({
   copyDataStarted: (params: any, options: Options = {}) => ({
     type: actionTypes.copyDataStarted(),
     payload: { params, timestamp: moment().valueOf() },
@@ -31,29 +31,29 @@ const getActionCreators = actionTypes => ({
   pollingTimeout: () => ({ type: actionTypes.pollingTimeout() }),
 });
 
-const createSetDataActionCreator = actionCreators => (data: any, params: any, options: Options = {}) => (dispatch: Dispatch) => {
+const createSetDataActionCreator = (actionCreators) => (data: any, params: any, options: Options = {}) => (dispatch: Dispatch) => {
   dispatch(actionCreators.copyDataStarted(params, options));
   return dispatch(actionCreators.copyDataFinished(data));
 };
 
 const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKeyActionCreators) => (params: any,
-    options: Options = {}) => (dispatch: Dispatch) => {
+  options: Options = {}) => (dispatch: Dispatch) => {
   const notificationMapper = new NotificationMapper();
 
   if (resultKeyActionCreators) {
     notificationMapper.addRequestStartedEventHandler(() => dispatch(resultKeyActionCreators.requestStarted(params, options)));
-    notificationMapper.addRequestFinishedEventHandler(data => dispatch(resultKeyActionCreators.requestFinished(data)));
-    notificationMapper.addRequestErrorEventHandler(data => dispatch(resultKeyActionCreators.requestError(data)));
+    notificationMapper.addRequestFinishedEventHandler((data) => dispatch(resultKeyActionCreators.requestFinished(data)));
+    notificationMapper.addRequestErrorEventHandler((data) => dispatch(resultKeyActionCreators.requestError(data)));
   }
 
   notificationMapper.addRequestStartedEventHandler(() => dispatch(actionCreators.requestStarted(params, options)));
-  notificationMapper.addRequestFinishedEventHandler(data => dispatch(actionCreators.requestFinished(data)));
-  notificationMapper.addRequestErrorEventHandler(data => dispatch(actionCreators.requestError(data)));
-  notificationMapper.addHaltedOrDelayedEventHandler(data => dispatch(actionCreators.requestError(data)));
+  notificationMapper.addRequestFinishedEventHandler((data) => dispatch(actionCreators.requestFinished(data)));
+  notificationMapper.addRequestErrorEventHandler((data) => dispatch(actionCreators.requestError(data)));
+  notificationMapper.addHaltedOrDelayedEventHandler((data) => dispatch(actionCreators.requestError(data)));
 
   notificationMapper.addStatusRequestStartedEventHandler(() => dispatch(actionCreators.statusRequestStarted()));
   notificationMapper.addStatusRequestFinishedEventHandler(() => dispatch(actionCreators.statusRequestFinished()));
-  notificationMapper.addUpdatePollingMessageEventHandler(data => dispatch(actionCreators.updatePollingMessage(data)));
+  notificationMapper.addUpdatePollingMessageEventHandler((data) => dispatch(actionCreators.updatePollingMessage(data)));
   notificationMapper.addPollingTimeoutEventHandler(() => dispatch(actionCreators.pollingTimeout()));
 
   if (reduxEvents.getErrorMessageActionCreator()) {
@@ -63,7 +63,7 @@ const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKe
   }
 
   if (reduxEvents.getPollingMessageActionCreator()) {
-    notificationMapper.addUpdatePollingMessageEventHandler(data => dispatch(reduxEvents.getPollingMessageActionCreator()(data)));
+    notificationMapper.addUpdatePollingMessageEventHandler((data) => dispatch(reduxEvents.getPollingMessageActionCreator()(data)));
     notificationMapper.addRequestFinishedEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
     notificationMapper.addRequestErrorEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
   }

@@ -112,7 +112,7 @@ describe('<UttakPanel>', () => {
     expect(aksjonspunktHelpText).has.length(1);
 
     const form = wrapper.find('form');
-    form.simulate('submit', { preventDefault() {} });
+    form.simulate('submit', { preventDefault() { return undefined; } });
     expect(reduxFormPropsMock.handleSubmit).to.have.property('callCount', 1);
   });
 
@@ -154,8 +154,8 @@ describe('<UttakPanel>', () => {
     };
 
     const transformedValues = transformValues(values, ownProps.apCodes, aksjonspunkter);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER)).has.length(1);
-    expect(transformedValues.filter(ap => ap.perioder[0].aktiviteter[0].trekkdagerDesimaler === '29.0')).has.length(1);
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER)).has.length(1);
+    expect(transformedValues.filter((ap) => ap.perioder[0].aktiviteter[0].trekkdagerDesimaler === '29.0')).has.length(1);
   });
 
   it('transformValues gir korrekt trekkdager og manuell overstyring', () => {
@@ -195,8 +195,8 @@ describe('<UttakPanel>', () => {
     };
 
     const transformedValues = transformValues(values, ownProps.apCodes, aksjonspunkter);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER)).has.length(1);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER)).has.length(1);
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
       && ap.perioder[0].aktiviteter[0].trekkdagerDesimaler === '34.0')).has.length(1);
   });
 

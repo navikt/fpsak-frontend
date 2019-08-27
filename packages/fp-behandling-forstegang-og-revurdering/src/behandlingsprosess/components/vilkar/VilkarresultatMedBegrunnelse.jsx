@@ -21,10 +21,9 @@ export const VilkarresultatMedBegrunnelse = ({
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
 }) => (
-  <React.Fragment>
+  <>
     {skalViseBegrunnelse
-        && <VilkarBegrunnelse isReadOnly={readOnly} />
-    }
+        && <VilkarBegrunnelse isReadOnly={readOnly} />}
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -34,7 +33,7 @@ export const VilkarresultatMedBegrunnelse = ({
       hasAksjonspunkt={hasAksjonspunkt}
       behandlingspunkt={behandlingspunkt}
     />
-  </React.Fragment>
+  </>
 );
 
 
@@ -66,14 +65,14 @@ VilkarresultatMedBegrunnelse.defaultProps = {
 
 VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status,
   behandlingspunkt, ytelseType, allVilkar) => {
-    const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === apCode);
-    return {
-      ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
-      ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
-    };
+  const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
+  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === apCode);
+  return {
+    ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
+    ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
+  };
 };
 
-VilkarresultatMedBegrunnelse.validate = values => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
+VilkarresultatMedBegrunnelse.validate = (values) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
 export default VilkarresultatMedBegrunnelse;

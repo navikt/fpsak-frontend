@@ -9,7 +9,7 @@ class BehandlingspunktProperties {
     this.isVisible = isVisible;
     this.status = status;
     this.vilkarene = bpVilkar;
-    this.apCodes = bpAksjonspunkter ? bpAksjonspunkter.map(ap => ap.definisjon.kode) : [];
+    this.apCodes = bpAksjonspunkter ? bpAksjonspunkter.map((ap) => ap.definisjon.kode) : [];
   }
 
   static get Builder() {
@@ -84,15 +84,15 @@ class BehandlingspunktProperties {
       // Internal use only
       $$findStatus(bpVilkar, bpAksjonspunkter) { /* eslint-disable-line class-methods-use-this */
         if (bpVilkar.length > 0) {
-          const vilkarStatusCodes = bpVilkar.map(v => v.vilkarStatus.kode);
-          if (vilkarStatusCodes.some(vsc => vsc === vut.IKKE_VURDERT)) {
+          const vilkarStatusCodes = bpVilkar.map((v) => v.vilkarStatus.kode);
+          if (vilkarStatusCodes.some((vsc) => vsc === vut.IKKE_VURDERT)) {
             return vut.IKKE_VURDERT;
           }
-          return vilkarStatusCodes.every(vsc => vsc === vut.OPPFYLT) ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
+          return vilkarStatusCodes.every((vsc) => vsc === vut.OPPFYLT) ? vut.OPPFYLT : vut.IKKE_OPPFYLT;
         }
 
         if (bpAksjonspunkter.length > 0) {
-          return bpAksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode)) ? vut.IKKE_VURDERT : vut.OPPFYLT;
+          return bpAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) ? vut.IKKE_VURDERT : vut.OPPFYLT;
         }
         return vut.IKKE_VURDERT;
       }
@@ -108,12 +108,12 @@ class BehandlingspunktProperties {
       }
 
       build(builderData, bpLength) {
-        const bpVilkar = builderData.vilkar.filter(vilkar => this.vilkarTypes && this.vilkarTypes.includes(vilkar.vilkarType.kode));
-        const bpAksjonspunkter = builderData.aksjonspunkter.filter(ap => this.apCodes && this.apCodes.includes(ap.definisjon.kode));
+        const bpVilkar = builderData.vilkar.filter((vilkar) => this.vilkarTypes && this.vilkarTypes.includes(vilkar.vilkarType.kode));
+        const bpAksjonspunkter = builderData.aksjonspunkter.filter((ap) => this.apCodes && this.apCodes.includes(ap.definisjon.kode));
 
         let isVisible = false;
         if (this.visibilityFunctions) {
-          isVisible = this.visibilityFunctions.every(f => f(builderData, bpLength));
+          isVisible = this.visibilityFunctions.every((f) => f(builderData, bpLength));
           if (this.defaultVisibilityFallback) {
             isVisible = isVisible ? this.$$isVisible(bpVilkar, bpAksjonspunkter) : false;
           }

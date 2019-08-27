@@ -36,10 +36,10 @@ export const UttakInfoPanelImpl = ({
   behandlingPaaVent,
   submitCallback,
 }) => {
-  const avklarAnnenForelderRettAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
-  const uttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
-  const uttakApOpen = uttakAp.some(ap => isAksjonspunktOpen(ap.status.kode));
-  const overrideReadOnly = readOnly || (!uttakAp.length && !uttakAp.some(ap => ap.kanLoses));
+  const avklarAnnenForelderRettAp = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
+  const uttakAp = aksjonspunkter.filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT);
+  const uttakApOpen = uttakAp.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const overrideReadOnly = readOnly || (!uttakAp.length && !uttakAp.some((ap) => ap.kanLoses));
 
   return (
     <FaktaEkspandertpanel
@@ -53,7 +53,7 @@ export const UttakInfoPanelImpl = ({
     >
       {avklarAnnenForelderRettAp
       && (
-        <React.Fragment>
+        <>
           <AnnenForelderHarRettForm
             hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
             hasOpenUttakAksjonspunkter={uttakApOpen}
@@ -63,9 +63,8 @@ export const UttakInfoPanelImpl = ({
             submitCallback={submitCallback}
           />
           <VerticalSpacer twentyPx />
-        </React.Fragment>
-      )
-      }
+        </>
+      )}
 
       {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
       && (
@@ -76,8 +75,7 @@ export const UttakInfoPanelImpl = ({
         aksjonspunkter={uttakAp}
         submitCallback={submitCallback}
       />
-      )
-    }
+      )}
 
     </FaktaEkspandertpanel>
   );
@@ -97,7 +95,7 @@ UttakInfoPanelImpl.propTypes = {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isRevurdering: getBehandlingIsManuellRevurdering(state),
   hasStatusUtredes: behandlingSelectors.hasBehandlingUtredesStatus(state),
   behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state) || false,

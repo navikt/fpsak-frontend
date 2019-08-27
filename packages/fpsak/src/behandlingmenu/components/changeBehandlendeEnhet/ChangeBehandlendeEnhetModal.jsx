@@ -37,7 +37,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
   begrunnelse,
 }) => {
   const selectOptions = () => behandlendeEnheter
-    .filter(enhet => enhet.enhetId !== gjeldendeBehandlendeEnhetId)
+    .filter((enhet) => enhet.enhetId !== gjeldendeBehandlendeEnhetId)
     .map((enhet, index) => (
       <option value={`${index}`} key={enhet.enhetId}>
         {enhet.enhetId}
@@ -145,7 +145,7 @@ const ChangeBehandlendeEnhetModal = reduxForm({
   form: 'ChangeBehandlendeEnhetModal',
 })(ChangeBehandlendeEnhetModalImpl);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   nyEnhet: formValueSelector('ChangeBehandlendeEnhetModal')(state, 'nyEnhet'),
   begrunnelse: formValueSelector('ChangeBehandlendeEnhetModal')(state, 'begrunnelse'),
 });

@@ -12,7 +12,7 @@ import styles from './aldervisning.less';
  * Presentasjonskomponent. Definerer visning av personens alder. (Søker)
  */
 
-const renderDød = dodsdato => (
+const renderDød = (dodsdato) => (
   dodsdato ? <DateLabel dateString={dodsdato} /> : <FormattedMessage id="Person.ManglerDodsdato" />
 );
 

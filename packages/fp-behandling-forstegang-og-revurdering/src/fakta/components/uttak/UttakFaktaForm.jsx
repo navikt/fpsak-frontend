@@ -132,7 +132,7 @@ const buildInitialValues = createSelector(
       return {
         førsteUttaksdato: ytelseFordeling && ytelseFordeling.førsteUttaksdato ? ytelseFordeling.førsteUttaksdato : undefined,
         endringsdato: ytelseFordeling && ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
-        perioder: perioder.map(periode => ({
+        perioder: perioder.map((periode) => ({
           ...periode,
           id: guid(),
           openForm: periode.bekreftet === false,
@@ -161,20 +161,20 @@ const manueltEllerOverstyring = (manuellOverstyring, erManuellOverstyrApErOppret
 export const transformValues = (values, initialValues, aksjonspunkter) => { // NOSONAR
   const overstyringAp = [aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK, aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK];
   const erManuellOverstyrApErOpprettet = aksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK);
-  const aksjonspunktUtenOverstyr = aksjonspunkter.filter(ap => !overstyringAp.includes(ap.definisjon.kode));
+    .some((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK);
+  const aksjonspunktUtenOverstyr = aksjonspunkter.filter((ap) => !overstyringAp.includes(ap.definisjon.kode));
 
   const apCodes = aksjonspunktUtenOverstyr.length
-    ? aksjonspunktUtenOverstyr.map(ap => ap.definisjon.kode)
+    ? aksjonspunktUtenOverstyr.map((ap) => ap.definisjon.kode)
     : [manueltEllerOverstyring(values.faktaUttakManuellOverstyring, erManuellOverstyrApErOpprettet)];
-  return apCodes.map(ap => ({
+  return apCodes.map((ap) => ({
     kode: ap,
     bekreftedePerioder: values.perioder.map((periode) => {
       const {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         id, openForm, updated, kontoType, isFromSøknad, ...bekreftetPeriode // NOSONAR
       } = periode;
-      const origPeriode = initialValues.perioder.filter(p => p.id === id);
+      const origPeriode = initialValues.perioder.filter((p) => p.id === id);
       return {
         bekreftetPeriode,
         orginalFom: origPeriode[0] ? origPeriode[0].fom : null,
@@ -187,7 +187,7 @@ export const transformValues = (values, initialValues, aksjonspunkter) => { // N
     slettedePerioder: values.slettedePerioder
       ? values.slettedePerioder.map((periode) => {
         const { id, begrunnelse, ...slettetPeriode } = periode;
-        const origPeriode = initialValues.perioder.filter(p => p.id === id);
+        const origPeriode = initialValues.perioder.filter((p) => p.id === id);
 
         return {
           ...slettetPeriode,
@@ -203,14 +203,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const orginalePerioder = getUttakPerioder(initialState);
   const initialValues = buildInitialValues(initialState);
 
-  const validate = values => validateUttakForm(values, orginalePerioder, initialOwnProps.aksjonspunkter);
-  const warn = values => warningsUttakForm(values);
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
+  const validate = (values) => validateUttakForm(values, orginalePerioder, initialOwnProps.aksjonspunkter);
+  const warn = (values) => warningsUttakForm(values);
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
 
   return (state) => {
     const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
     const hasRevurderingOvertyringAp = !!initialOwnProps.aksjonspunkter.includes(
-      ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
+      (ap) => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
     );
     return {
       initialValues,

@@ -54,10 +54,10 @@ const dagsatsErSatt = (beregningsperioder) => {
   if (!beregningsperioder) {
     return false;
   }
-  return beregningsperioder.some(p => p.dagsats !== undefined && p.dagsats !== null);
+  return beregningsperioder.some((p) => p.dagsats !== undefined && p.dagsats !== null);
 };
 
-const vilkarErAvslaatt = vilkar => vilkar && vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
+const vilkarErAvslaatt = (vilkar) => vilkar && vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
 
 const beregningErFastsatt = (vilkar, beregningsperioder) => dagsatsErSatt(beregningsperioder) || vilkarErAvslaatt(vilkar);
 
@@ -109,16 +109,14 @@ export const BeregningFPImpl = ({
             ledetekstAvkortet={berGr.ledetekstAvkortet}
             ledetekstRedusert={berGr.ledetekstRedusert}
           />
-        )
-        }
+        )}
       {sokerHarGraderingPaaAndelUtenBG
           && (
           <GraderingUtenBG
             submitCallback={submitCallback}
             readOnly={readOnly}
           />
-          )
-        }
+          )}
     </FadingPanel>
   );
 };
@@ -146,7 +144,7 @@ BeregningFPImpl.defaultProps = {
   sokerHarGraderingPaaAndelUtenBG: false,
 };
 
-const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], aktivitetStatuser => (aktivitetStatuser ? ({
+const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], (aktivitetStatuser) => (aktivitetStatuser ? ({
   isArbeidstaker: aktivitetStatuser.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
   isFrilanser: aktivitetStatuser.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
   isSelvstendigNaeringsdrivende: aktivitetStatuser.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
@@ -170,7 +168,7 @@ const getBeregnetAarsinntekt = createSelector(
       if (gjelderBesteberegning) {
         return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
       }
-      const snAndel = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
+      const snAndel = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
       return snAndel.erNyIArbeidslivet ? undefined : snAndel.pgiSnitt;
     }
     return beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregnetPrAar;
@@ -200,10 +198,10 @@ const buildProps = createSelector(
   },
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...buildProps(state),
 });
 
 const BeregningFP = connect(mapStateToProps)(BeregningFPImpl);
-BeregningFP.supports = bp => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
+BeregningFP.supports = (bp) => bp === behandlingspunktCodes.BEREGNINGSGRUNNLAG;
 export default BeregningFP;

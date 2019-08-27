@@ -28,7 +28,7 @@ describe('<ApprovalIndex>', () => {
     toTrinnsBehandling: true,
   });
 
-  const getKodeverkSkjemalenkeTyper = aksjonspunkter => aksjonspunkter.map(ap => ({
+  const getKodeverkSkjemalenkeTyper = (aksjonspunkter) => aksjonspunkter.map((ap) => ({
     kode: ap.skjermlenkeType,
     navn: 'Dummy Tekst',
   }));
@@ -43,7 +43,7 @@ describe('<ApprovalIndex>', () => {
     }
   );
 
-  const createAksjonspunkt = aksjonspunktKode => (
+  const createAksjonspunkt = (aksjonspunktKode) => (
     {
       aksjonspunktKode,
       beregningDto: null,

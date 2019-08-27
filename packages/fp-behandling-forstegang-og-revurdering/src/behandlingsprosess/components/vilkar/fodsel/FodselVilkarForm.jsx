@@ -93,16 +93,16 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'FodselVilkarForm';
 
 export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
-  ? fodselsvilkarAvslagskoder.filter(arsak => !avslagsarsakerES.includes(arsak.kode))
+  ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FODSELSVILKARET_MOR];
   const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(initialState), avslagsarsaker);
 
-  return state => ({
+  return (state) => ({
     onSubmit,
     avslagsarsaker: filtrerteAvslagsarsaker,
     status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),

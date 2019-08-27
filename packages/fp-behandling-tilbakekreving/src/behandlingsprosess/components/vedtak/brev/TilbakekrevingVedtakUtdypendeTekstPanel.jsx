@@ -56,7 +56,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
               readOnly={readOnly}
             />
           </>
-      )}
+        )}
     </>
   );
 };

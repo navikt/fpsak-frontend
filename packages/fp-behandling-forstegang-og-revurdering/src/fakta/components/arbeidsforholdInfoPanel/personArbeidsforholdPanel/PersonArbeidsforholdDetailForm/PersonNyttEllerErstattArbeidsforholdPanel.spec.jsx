@@ -25,7 +25,7 @@ describe('<PersonNyttEllerErstattArbeidsforholdPanel>', () => {
 
     const select = wrapper.find(SelectField);
     expect(select).has.length(1);
-    expect(select.prop('selectValues').map(v => v.props.children)).to.eql(['Svendsen Eksos(123456789)...1232']);
+    expect(select.prop('selectValues').map((v) => v.props.children)).to.eql(['Svendsen Eksos(123456789)...1232']);
   });
 
   it('skal ikke vise dropdown når en ikke har valgt å erstatte gammelt med nytt', () => {

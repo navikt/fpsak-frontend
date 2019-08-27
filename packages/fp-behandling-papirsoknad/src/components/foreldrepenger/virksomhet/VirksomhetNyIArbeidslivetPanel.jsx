@@ -43,8 +43,7 @@ const VirksomhetNyIArbeidslivetPanel = ({
       </Row>
       <VerticalSpacer space={3} />
     </ElementWrapper>
-    )
-    }
+    )}
   </ElementWrapper>
 
 );

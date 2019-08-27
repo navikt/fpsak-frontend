@@ -130,7 +130,7 @@ AdopsjonInfoPanelImpl.propTypes = {
 const buildInitialValues = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter], (
   soknad, familiehendelse, allAksjonspunkter,
 ) => {
-  const aksjonspunkter = allAksjonspunkter.filter(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode));
+  const aksjonspunkter = allAksjonspunkter.filter((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode));
 
   let mannAdoptererAleneValues = {};
   if (hasAksjonspunkt(OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunkter)) {
@@ -158,15 +158,15 @@ const transformValues = (values, aksjonspunkter) => {
     aksjonspunkterArray.push(MannAdoptererAleneFaktaForm.transformValues(values));
   }
 
-  return aksjonspunkterArray.map(ap => ({
+  return aksjonspunkterArray.map((ap) => ({
     ...ap,
     begrunnelse: values.begrunnelse,
   }));
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+  return (state) => ({
     initialValues: buildInitialValues(state),
     onSubmit,
   });
@@ -174,11 +174,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(
   connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
-  form: 'AdopsjonInfoPanel',
-})(injectIntl(AdopsjonInfoPanelImpl))),
+    form: 'AdopsjonInfoPanel',
+  })(injectIntl(AdopsjonInfoPanelImpl))),
 );
 
-AdopsjonInfoPanel.supports = (vilkarCodes, aksjonspunkter) => aksjonspunkter.some(ap => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
-  || vilkarCodes.some(code => adopsjonsvilkarene.includes(code));
+AdopsjonInfoPanel.supports = (vilkarCodes, aksjonspunkter) => aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
+  || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code));
 
 export default AdopsjonInfoPanel;

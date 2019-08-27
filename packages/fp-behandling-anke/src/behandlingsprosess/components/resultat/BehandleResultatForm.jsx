@@ -20,11 +20,11 @@ import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess
 import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 
-const isVedtakUtenToTrinn = apCodes => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
-const isMedUnderskriver = apCodes => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
-const isFatterVedtak = apCodes => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
+const isVedtakUtenToTrinn = (apCodes) => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
+const isMedUnderskriver = (apCodes) => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
+const isFatterVedtak = (apCodes) => apCodes.includes(aksjonspunktCodes.FATTER_VEDTAK); // 5016
 
-const ResultatEnkel = resultat => (
+const ResultatEnkel = (resultat) => (
   <div>
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Stadfest" /></Undertekst>
     <VerticalSpacer sixteenPx />
@@ -33,31 +33,25 @@ const ResultatEnkel = resultat => (
   </div>
 );
 
-const ResultatAvvise = resultat => (
-  <React.Fragment>
+const ResultatAvvise = (resultat) => (
+  <>
     <Undertekst>
       {resultat.ankevurderingresultat.paAnketBehandlingId != null
-      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />)
-      }
+      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.Avvises" />)}
       {resultat.ankevurderingresultat.paAnketBehandlingId == null
-      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />)
-      }
+      && (<FormattedMessage id="Ankebehandling.Resultat.Innstilling.AvvisesUten" />)}
     </Undertekst>
     <VerticalSpacer sixteenPx />
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
     <ul>
       {resultat.ankevurderingresultat.erAnkerIkkePart
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkePart" /></li>)
-      }
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkePart" /></li>)}
       {resultat.ankevurderingresultat.erIkkeKonkret
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" /></li>)
-      }
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeKonkret" /></li>)}
       {resultat.ankevurderingresultat.erFristIkkeOverholdt
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" /></li>)
-      }
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeFrist" /></li>)}
       {resultat.ankevurderingresultat.erIkkeSignert
-      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" /></li>)
-      }
+      && (<li><FormattedMessage id="Ankebehandling.Avvisning.IkkeSignert" /></li>)}
     </ul>
     <Undertekst>
       <FormattedMessage id="Ankebehandling.Realitetsbehandles" />
@@ -67,7 +61,7 @@ const ResultatAvvise = resultat => (
     </Undertekst>
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
-  </React.Fragment>
+  </>
 );
 
 const hentSprakKode = (ankeOmgjoerArsak) => {
@@ -80,8 +74,8 @@ const hentSprakKode = (ankeOmgjoerArsak) => {
 };
 
 
-const ResultatOmgjores = resultat => (
-  <React.Fragment>
+const ResultatOmgjores = (resultat) => (
+  <>
     <Undertekst><FormattedMessage id={hentSprakKode(resultat.ankevurderingresultat.ankeVurderingOmgjoer)} /></Undertekst>
     <VerticalSpacer sixteenPx />
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Arsak" /></Undertekst>
@@ -89,7 +83,7 @@ const ResultatOmgjores = resultat => (
     <VerticalSpacer sixteenPx />
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
-  </React.Fragment>
+  </>
 );
 
 const AnkeResultat = (resultat) => {
@@ -203,9 +197,9 @@ const transformValues = (values, aksjonspunktCode) => ({
 });
 
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
-const formatId = b => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
+const formatId = (b) => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], (resultat) => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -227,8 +221,8 @@ const formName = 'ankeResultatForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'ankeVurdering', 'fritekstTilBrev', 'gjelderVedtak'),

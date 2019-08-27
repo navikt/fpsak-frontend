@@ -12,7 +12,7 @@ import {
  * TODO Ta i bruk fpsakApi
  */
 const DOCUMENT_SERVER_URL = '/fpsak/api/vedtak/hent-vedtaksdokument';
-const getLink = document => `${DOCUMENT_SERVER_URL}?behandlingId=${document.dokumentId}`;
+const getLink = (document) => `${DOCUMENT_SERVER_URL}?behandlingId=${document.dokumentId}`;
 
 /**
  * VedtakDocuments
@@ -30,7 +30,7 @@ class VedtakDocuments extends Component {
   }
 
   toggleDocuments(evt) {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       showDocuments: !prevState.showDocuments,
     }));
     evt.preventDefault();
@@ -51,21 +51,20 @@ class VedtakDocuments extends Component {
         && (
         <ElementWrapper>
           <VerticalSpacer fourPx />
-          {vedtaksdokumenter.map(document => (
+          {vedtaksdokumenter.map((document) => (
             <Row key={document.dokumentId}>
               <Column xs="2">
                 <DateLabel dateString={document.opprettetDato} />
               </Column>
               <Column xs="10">
                 <a href={getLink(document)} className="lenke lenke--frittstaende" target="_blank" rel="noopener noreferrer">
-                  {behandlingTypes.find(bt => bt.kode === document.tittel).navn}
+                  {behandlingTypes.find((bt) => bt.kode === document.tittel).navn}
                 </a>
               </Column>
             </Row>
           ))}
         </ElementWrapper>
-        )
-        }
+        )}
       </ElementWrapper>
     );
   }

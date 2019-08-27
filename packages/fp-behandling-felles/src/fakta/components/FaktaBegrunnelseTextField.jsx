@@ -36,8 +36,7 @@ const FaktaBegrunnelseTextField = ({
         readOnly={isReadOnly}
       />
     </div>
-    )
-      }
+    )}
   </ElementWrapper>
 );
 

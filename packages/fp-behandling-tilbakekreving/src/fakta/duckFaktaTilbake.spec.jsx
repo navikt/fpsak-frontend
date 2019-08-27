@@ -48,7 +48,7 @@ describe('Fakta-tilbakekreving-reducer', () => {
     const behandlingIdentifier = new BehandlingIdentifier('12345', '6789');
 
     return store.dispatch(resolveFaktaAksjonspunkter({ vilkarKode: 'FP_VK_5' }, behandlingIdentifier))
-      .catch(e => e) // Don't care if other APIs fail
+      .catch((e) => e) // Don't care if other APIs fail
       .then(() => {
         const actions = withoutRestActions(store.getActions());
         expect(actions).to.have.length(3);

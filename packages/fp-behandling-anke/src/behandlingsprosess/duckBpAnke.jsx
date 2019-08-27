@@ -20,18 +20,18 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, sho
 
 export const resolveAnkeTemp = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(ankeBehandlingApi.SAVE_REOPEN_ANKE_VURDERING.makeRestApiRequest()(params))
-    .then(response => dispatch(ankeBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
+    .then((response) => dispatch(ankeBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
     .then(ankeBehandlingApi.SAVE_ANKE_VURDERING.resetRestApi());
 };
 
-export const saveAnke = params => dispatch => (
+export const saveAnke = (params) => (dispatch) => (
   dispatch(ankeBehandlingApi.SAVE_ANKE_VURDERING.makeRestApiRequest()(params))
 );
 
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(ankeBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
 export const fetchPreviewBrev = ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

@@ -52,7 +52,7 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   }
   const aarsakerSomTilsierMuligEndringIDagsats = [periodeAarsak.NATURALYTELSE_BORTFALT,
     periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET, periodeAarsak.NATURALYTELSE_TILKOMMER];
-  return aarsaker.filter(aarsak => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
+  return aarsaker.filter((aarsak) => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
 const createBeregningTableData = createSelector([getBeregningsgrunnlagPerioder, getBeregningsgrunnlagLedetekster], ((allePerioder, ledetekster) => {
   const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
@@ -62,7 +62,7 @@ const createBeregningTableData = createSelector([getBeregningsgrunnlagPerioder, 
   const dagsatserRad = [];
   // Kun dersom periodeårsaken kan endre dagsatsen på beregningsresultatet er
   // vi interessert i å vise den tilhørende perioden i resultattabellen.
-  const perioderSomSkalVises = allePerioder.filter(periode => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
+  const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
 
   perioderSomSkalVises.forEach((periode) => {
     headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
@@ -100,8 +100,7 @@ const BeregningsresultatTable = ({
       <Table headerTextCodes={tableData.headers} allowFormattedHeader classNameTable={styles.beregningTable} noHover>
         {createTableRows(tableData.rows, tableData.dagsatser)}
       </Table>
-      )
-      }
+      )}
     { !isVilkarOppfylt
       && (
       <Normaltekst>
@@ -110,8 +109,7 @@ const BeregningsresultatTable = ({
           values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
         />
       </Normaltekst>
-      )
-      }
+      )}
   </BorderBox>
 );
 
@@ -126,7 +124,7 @@ BeregningsresultatTable.defaultProps = {
   halvGVerdi: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tableData: createBeregningTableData(state),
 });
 

@@ -45,7 +45,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
   );
   const getTotrinnskontrollArsakerUtenUdefinert = createSelector(
-    [getTotrinnskontrollArsaker], (aarsaker = []) => (aarsaker.filter(aarsak => aarsak.skjermlenkeType !== '-')),
+    [getTotrinnskontrollArsaker], (aarsaker = []) => (aarsaker.filter((aarsak) => aarsak.skjermlenkeType !== '-')),
   );
   const getTotrinnskontrollArsakerReadOnly = createSelector(
     [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
@@ -55,17 +55,17 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   // AKSJONSPUNKTER
   const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);
   const getOpenAksjonspunkter = createSelector(
-    [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode)),
+    [getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode)),
   );
   const isBehandlingInInnhentSoknadsopplysningerSteg = createSelector(
-    [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some(ap => isInnhentSaksopplysningerAksjonspunkt(ap.definisjon.kode)),
+    [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some((ap) => isInnhentSaksopplysningerAksjonspunkt(ap.definisjon.kode)),
   );
   const isKontrollerRevurderingAksjonspunkOpen = createSelector(
     [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-      .some(ap => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST),
+      .some((ap) => ap.definisjon.kode === aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST),
   );
   const hasBehandlingManualPaVent = createSelector(
-    [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
+    [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
   );
 
   // SPRÅK
@@ -74,11 +74,11 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
 
   // SØKNAD
   const getSoknad = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.soknad);
-  const getBehandlingHasSoknad = createSelector([getSoknad], soknad => !!soknad);
+  const getBehandlingHasSoknad = createSelector([getSoknad], (soknad) => !!soknad);
 
   // VILKÅR
   const getBehandlingVilkar = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.vilkar);
-  const getBehandlingVilkarCodes = createSelector([getBehandlingVilkar], (vilkar = []) => vilkar.map(v => v.vilkarType.kode));
+  const getBehandlingVilkarCodes = createSelector([getBehandlingVilkar], (vilkar = []) => vilkar.map((v) => v.vilkarType.kode));
 
   //----------------------------------------------------------------------------------------------------------------------------
 
@@ -106,7 +106,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     return merknader;
   });
 
-  const getMerknaderFraBeslutter = aksjonspunktCode => createSelector(getAllMerknaderFraBeslutter, allMerknaderFraBeslutter => (
+  const getMerknaderFraBeslutter = (aksjonspunktCode) => createSelector(getAllMerknaderFraBeslutter, (allMerknaderFraBeslutter) => (
     allMerknaderFraBeslutter[aksjonspunktCode] || {}
   ));
 

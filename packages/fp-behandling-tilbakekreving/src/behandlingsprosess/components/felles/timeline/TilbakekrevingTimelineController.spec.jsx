@@ -20,7 +20,7 @@ describe('<TilbakekrevingTimelineController>', () => {
       >
         <div>test</div>
       </TilbakekrevingTimelineController>,
-);
+    );
 
     expect(wrapper.find(Image)).has.length(6);
   });

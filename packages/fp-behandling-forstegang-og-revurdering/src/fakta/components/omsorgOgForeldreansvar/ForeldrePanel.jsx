@@ -13,7 +13,7 @@ import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
-const getParentHeader = erMor => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
+const getParentHeader = (erMor) => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
 
 /**
  * ForeldrePanel
@@ -34,16 +34,13 @@ export const ForeldrePanel = ({
           <div key={`${f.aktorId}`}>
             <Undertittel>{f.navn}</Undertittel>
             {shouldShowAdress
-              && <Element>{f.adresse}</Element>
-            }
+              && <Element>{f.adresse}</Element>}
             <VerticalSpacer eightPx />
             <Normaltekst><FormattedMessage id={parentHeader} /></Normaltekst>
             {f.dodsdato
-              && <Element><DateLabel dateString={f.dodsdato} /></Element>
-            }
+              && <Element><DateLabel dateString={f.dodsdato} /></Element>}
             {!f.dodsdato
-              && <Normaltekst> - </Normaltekst>
-            }
+              && <Normaltekst> - </Normaltekst>}
             <VerticalSpacer sixteenPx />
           </div>
         );
@@ -59,11 +56,9 @@ export const ForeldrePanel = ({
           <VerticalSpacer eightPx />
           <Normaltekst><FormattedMessage id="ForeldrePanel.Address" /></Normaltekst>
           {shouldShowAdress
-            && <Normaltekst>{f.adresse}</Normaltekst>
-          }
+            && <Normaltekst>{f.adresse}</Normaltekst>}
           {!shouldShowAdress
-            && <Normaltekst> - </Normaltekst>
-          }
+            && <Normaltekst> - </Normaltekst>}
           <VerticalSpacer sixteenPx />
         </div>
       );

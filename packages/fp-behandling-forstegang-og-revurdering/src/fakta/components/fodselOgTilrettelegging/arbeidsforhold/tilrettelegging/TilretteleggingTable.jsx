@@ -6,7 +6,7 @@ import { Normaltekst, Element } from 'nav-frontend-typografi';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
 import {
- Table, TableColumn, TableRow, DateLabel, Image, VerticalSpacer,
+  Table, TableColumn, TableRow, DateLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './tilretteleggingTable.less';
@@ -37,7 +37,7 @@ class TilretteleggingTable extends Component {
 
   settTilrettelegging = (event, id, selectedTilrettelegging) => {
     const { settValgtTilrettelegging } = this.props;
-    if (this.nodes.some(node => node && node.contains(event.target))) {
+    if (this.nodes.some((node) => node && node.contains(event.target))) {
       return;
     }
     settValgtTilrettelegging(selectedTilrettelegging);
@@ -52,17 +52,17 @@ class TilretteleggingTable extends Component {
     } = this.props;
 
     if (tilretteleggingDatoer.length === 0) {
-        return (
-          <>
-            <Element><FormattedMessage id="TilretteleggingTable.IngenTilretteleggingDatoer" /></Element>
-            <VerticalSpacer eightPx />
-          </>
-        );
+      return (
+        <>
+          <Element><FormattedMessage id="TilretteleggingTable.IngenTilretteleggingDatoer" /></Element>
+          <VerticalSpacer eightPx />
+        </>
+      );
     }
 
     return (
       <Table headerTextCodes={headerTextCodes}>
-        {tilretteleggingDatoer.map(t => (
+        {tilretteleggingDatoer.map((t) => (
           <TableRow
             key={t.fom}
             model={t}

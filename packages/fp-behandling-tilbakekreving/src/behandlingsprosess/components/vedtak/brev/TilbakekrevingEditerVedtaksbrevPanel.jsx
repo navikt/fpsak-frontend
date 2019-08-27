@@ -32,7 +32,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
             tag="h2"
             apen={false}
           >
-            {underavsnitter.map(underavsnitt => (
+            {underavsnitter.map((underavsnitt) => (
               <React.Fragment key={underavsnitt.underavsnittstype + avsnitt.fom}>
                 {underavsnitt.overskrift && (
                   <Element>
@@ -61,8 +61,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
           <VerticalSpacer eightPx />
         </React.Fragment>
       );
-    })
-  }
+    })}
   </div>
 );
 
@@ -72,12 +71,12 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
 };
 
-TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = vedtaksbrevAvsnitt => vedtaksbrevAvsnitt
-  .filter(avsnitt => avsnitt.underavsnittsliste.some(underavsnitt => underavsnitt.fritekst))
+TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt
+  .filter((avsnitt) => avsnitt.underavsnittsliste.some((underavsnitt) => underavsnitt.fritekst))
   .reduce((acc, avsnitt) => {
     const underavsnitter = avsnitt.underavsnittsliste;
     const friteksterForUnderavsnitt = underavsnitter
-      .filter(underavsnitt => underavsnitt.fritekst)
+      .filter((underavsnitt) => underavsnitt.fritekst)
       .reduce((underAcc, underavsnitt) => ({
         ...underAcc,
         [underavsnitt.underavsnittstype ? underavsnitt.underavsnittstype : avsnitt.avsnittstype]: underavsnitt.fritekst,

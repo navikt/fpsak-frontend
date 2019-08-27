@@ -8,7 +8,7 @@ import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_fi
 
 import styles from './timeLineNavigation.less';
 
-const findImage = isHovering => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
+const findImage = (isHovering) => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
 
 const TimeLineNavigation = ({
   openPeriodInfo,

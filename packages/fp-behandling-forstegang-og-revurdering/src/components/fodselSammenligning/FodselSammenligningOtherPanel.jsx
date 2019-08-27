@@ -15,7 +15,7 @@ import {
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 /**
  * FodselSammenligningOtherPanel
@@ -39,8 +39,7 @@ export const FodselSammenligningOtherPanel = ({
         <Column xs="4">
           <Normaltekst><FormattedMessage id="FodselsammenligningPanel.UstedtDato" /></Normaltekst>
         </Column>
-        )
-            }
+        )}
       <Column xs="4"><Normaltekst><FormattedMessage id={terminOrFodselLabel} /></Normaltekst></Column>
       <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.AntallBarn" /></Normaltekst></Column>
     </Row>
@@ -50,8 +49,7 @@ export const FodselSammenligningOtherPanel = ({
         <Column xs="4">
           <Normaltekst>{formatDate(utstedtdato)}</Normaltekst>
         </Column>
-        )
-            }
+        )}
       <Column xs="4"><Normaltekst>{terminOrFodselDate}</Normaltekst></Column>
       <Column xs="4"><Normaltekst>{antallBarnSoknad}</Normaltekst></Column>
     </Row>
@@ -74,7 +72,7 @@ FodselSammenligningOtherPanel.defaultProps = {
 };
 
 export const getTerminFodselLabel = createSelector(
-  [getSoknadFodselsdatoer], fodselsdatoer => (Object.keys(fodselsdatoer).length
+  [getSoknadFodselsdatoer], (fodselsdatoer) => (Object.keys(fodselsdatoer).length
   > 0 ? 'FodselsammenligningPanel.Fodselsdato' : 'FodselsammenligningPanel.Termindato'),
 );
 
@@ -94,12 +92,12 @@ export const getTerminOrFodselDate = createSelector(
   },
 );
 
-export const getAntallBarn = createSelector([getSoknadAntallBarn], antallBarnSoknad => (antallBarnSoknad));
+export const getAntallBarn = createSelector([getSoknadAntallBarn], (antallBarnSoknad) => (antallBarnSoknad));
 
-export const getTerminFodselHeader = createSelector([getSoknadFodselsdatoer], fodselsdatoer => (Object.keys(fodselsdatoer).length > 0
+export const getTerminFodselHeader = createSelector([getSoknadFodselsdatoer], (fodselsdatoer) => (Object.keys(fodselsdatoer).length > 0
   ? 'FodselSammenligningOtherPanel.OpplysningerISoknad' : 'FodselSammenligningOtherPanel.TerminISoknad'));
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   terminOrFodselLabel: getTerminFodselLabel(state),
   terminOrFodselDate: getTerminOrFodselDate(state),
   antallBarnSoknad: getAntallBarn(state),

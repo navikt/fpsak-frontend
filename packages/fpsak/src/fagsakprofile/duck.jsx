@@ -7,7 +7,7 @@ import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 const reducerName = 'fagsakProfile';
 
 /* Action types */
-const actionType = name => `${reducerName}/${name}`;
+const actionType = (name) => `${reducerName}/${name}`;
 const TOGGLE_DISPLAYED_BEHANDLINGER = actionType('TOGGLE_DISPLAYED_BEHANDLINGER');
 const RESET_FAGSAK_PROFILE = actionType('RESET_FAGSAK_PROFILE');
 
@@ -20,7 +20,7 @@ export const resetFagsakProfile = () => ({
   type: RESET_FAGSAK_PROFILE,
 });
 
-export const updateAnnenPartBehandling = saksnummer => dispatch => (
+export const updateAnnenPartBehandling = (saksnummer) => (dispatch) => (
   dispatch(fpsakApi.ANNEN_PART_BEHANDLING.makeRestApiRequest()({ saksnummer }, { keepData: true }))
 );
 
@@ -46,8 +46,8 @@ export const fagsakProfileReducer = (state = initialState, action = {}) => {
 reducerRegistry.register(reducerName, fagsakProfileReducer);
 
 /* Selectors */
-const getFagsakProfileContext = state => state.default[reducerName];
-export const getShowAllBehandlinger = state => getFagsakProfileContext(state).showAllBehandlinger;
+const getFagsakProfileContext = (state) => state.default[reducerName];
+export const getShowAllBehandlinger = (state) => getFagsakProfileContext(state).showAllBehandlinger;
 
 const getAnnenPartBehandlingData = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiData();
 const getAnnenPartBehandlingMeta = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiMeta();

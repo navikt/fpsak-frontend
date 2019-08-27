@@ -61,7 +61,7 @@ export class FodselInfoPanelImpl extends Component {
   getSubmitFunction(dispatch, formPrefix) {
     return (e) => {
       this.submittedAksjonspunkter = {};
-      formNames.forEach(formName => dispatch(reduxSubmit(`${formPrefix}.${formName}`)));
+      formNames.forEach((formName) => dispatch(reduxSubmit(`${formPrefix}.${formName}`)));
       e.preventDefault();
     };
   }
@@ -73,7 +73,7 @@ export class FodselInfoPanelImpl extends Component {
     };
     const { aksjonspunkter, submitCallback } = this.props;
 
-    return aksjonspunkter.every(ap => this.submittedAksjonspunkter[ap.definisjon.kode])
+    return aksjonspunkter.every((ap) => this.submittedAksjonspunkter[ap.definisjon.kode])
       ? submitCallback(Object.values(this.submittedAksjonspunkter))
       : undefined;
   }
@@ -105,11 +105,10 @@ export class FodselInfoPanelImpl extends Component {
             && (
             <SykdomPanel
               readOnly={readOnly}
-              aksjonspunkt={aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT)}
+              aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT)}
               submitHandler={this.submitHandler}
             />
-            )
-          }
+            )}
           {hasAksjonspunkt(TERMINBEKREFTELSE, aksjonspunkter)
             && (
             <TermindatoFaktaForm
@@ -118,8 +117,7 @@ export class FodselInfoPanelImpl extends Component {
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
             />
-            )
-          }
+            )}
           {hasAksjonspunkt(SJEKK_MANGLENDE_FODSEL, aksjonspunkter)
             && (
             <SjekkFodselDokForm
@@ -128,19 +126,16 @@ export class FodselInfoPanelImpl extends Component {
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
             />
-            )
-          }
+            )}
           {aksjonspunkter.length !== 0 && !readOnly
             && (
             <>
               <VerticalSpacer twentyPx />
               <FaktaSubmitButton formNames={formNames} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
             </>
-            )
-          }
+            )}
           {aksjonspunkter.length === 0
-            && <FodselSammenligningPanel />
-          }
+            && <FodselSammenligningPanel />}
         </form>
       </FaktaEkspandertpanel>
     );
@@ -163,7 +158,7 @@ FodselInfoPanelImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   formPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
 });
 
@@ -172,6 +167,6 @@ const FodselInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELSVILKARET, fod
 
 FodselInfoPanel.supports = (
   vilkarCodes, aksjonspunkter,
-) => aksjonspunkter.some(ap => fodselAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some(code => fodselsvilkarene.includes(code));
+) => aksjonspunkter.some((ap) => fodselAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some((code) => fodselsvilkarene.includes(code));
 
 export default FodselInfoPanel;

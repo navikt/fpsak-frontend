@@ -222,7 +222,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -236,8 +236,8 @@ describe('<VurderMottarYtelseForm>', () => {
     const transformed = VurderMottarYtelseForm.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     const fastsatteInntekter = transformed.fastsattUtenInntektsmelding.andelListe;
     expect(fastsatteAndelsnr.length).to.equal(2);
-    expect(fastsatteAndelsnr.find(nr => nr === andel.andelsnr) === undefined).to.equal(false);
-    expect(fastsatteAndelsnr.find(nr => nr === andel3.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find((nr) => nr === andel.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find((nr) => nr === andel3.andelsnr) === undefined).to.equal(false);
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
     expect(fastsatteInntekter[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
@@ -256,7 +256,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 0 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -270,8 +270,8 @@ describe('<VurderMottarYtelseForm>', () => {
     const transformed = VurderMottarYtelseForm.transformValues(values, inntektPrMnd, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr);
     const fastsatteInntekter = transformed.fastsattUtenInntektsmelding.andelListe;
     expect(fastsatteAndelsnr.length).to.equal(2);
-    expect(fastsatteAndelsnr.find(nr => nr === andel.andelsnr) === undefined).to.equal(false);
-    expect(fastsatteAndelsnr.find(nr => nr === andel3.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find((nr) => nr === andel.andelsnr) === undefined).to.equal(false);
+    expect(fastsatteAndelsnr.find((nr) => nr === andel3.andelsnr) === undefined).to.equal(false);
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
     expect(fastsatteInntekter[0].fastsatteVerdier.fastsattBeløp).to.equal(0);
@@ -289,7 +289,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],
@@ -318,7 +318,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM,
@@ -358,7 +358,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: andel3.andelsnr, fastsattBelop: 20000 },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: false,
         arbeidstakerAndelerUtenIM,
@@ -382,7 +382,7 @@ describe('<VurderMottarYtelseForm>', () => {
       { andelsnr: 4, fastsattBelop: 10000, aktivitetStatus: 'FL' },
     ];
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: tilfeller.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: tilfeller.map((kode) => ({ kode })),
       vurderMottarYtelse: {
         erFrilanser: true,
         arbeidstakerAndelerUtenIM: [],

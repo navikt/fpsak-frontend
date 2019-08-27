@@ -25,7 +25,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
-          value => (Number.isNaN(value)
+          (value) => (Number.isNaN(value)
             ? value
             : parseFloat(value).toFixed(2))
         }
@@ -43,7 +43,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
-          value => (Number.isNaN(value)
+          (value) => (Number.isNaN(value)
             ? value
             : parseFloat(value).toFixed(2))
         }
@@ -62,7 +62,7 @@ describe('<DecimalField>', () => {
       <DecimalField
         name="prosent"
         normalizeOnBlur={
-          value => (Number.isNaN(value)
+          (value) => (Number.isNaN(value)
             ? value
             : parseFloat(value).toFixed(2))
         }

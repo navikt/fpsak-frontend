@@ -37,12 +37,12 @@ import styles from './timeLineControl.less';
  * ```
  */
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const findZoomInImg = isHovering => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
-const findZoomOutImg = isHovering => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
-const findOpenPeriodImage = isHovering => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
-const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const findZoomInImg = (isHovering) => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
+const findZoomOutImg = (isHovering) => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
+const findOpenPeriodImage = (isHovering) => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
+const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
 const oppfyltImage = () => (oppfyltUrl);
 const ikkeOppfyltImage = () => (ikkeOppfyltUrl);
 const findFodselImage = () => (fodselUrl);
@@ -158,8 +158,7 @@ const TimeLineControl = ({
           onMouseDown={openPeriodInfo}
           onKeyDown={openPeriodInfo}
         />
-        )
-        }
+        )}
         {selectedPeriod
         && (
         <Image
@@ -170,8 +169,7 @@ const TimeLineControl = ({
           onMouseDown={openPeriodInfo}
           onKeyDown={openPeriodInfo}
         />
-        )
-        }
+        )}
         <span className={styles.buttonSpacing}>
           <Image
             tabIndex="0"

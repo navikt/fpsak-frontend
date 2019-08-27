@@ -39,4 +39,4 @@ export const {
 } = behandlingRedux.selectors;
 
 export const getAvsluttedeBehandlinger = createSelector([behandlingRedux.selectors.getBehandlingContext],
-  behandlingContext => behandlingContext.avsluttedeBehandlinger);
+  (behandlingContext) => behandlingContext.avsluttedeBehandlinger);

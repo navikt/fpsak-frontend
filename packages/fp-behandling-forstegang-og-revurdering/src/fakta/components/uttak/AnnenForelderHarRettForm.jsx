@@ -35,15 +35,14 @@ export const AnnenForelderHarRettForm = ({
     <form onSubmit={formProps.handleSubmit}>
       {!readOnly && (
       <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-        {aksjonspunkter.map(ap => (
+        {aksjonspunkter.map((ap) => (
           <FormattedMessage
             key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
             id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
           />
         ))}
       </AksjonspunktHelpText>
-      )
-      }
+      )}
       <VerticalSpacer twentyPx />
       <div className={styles.fauxColumn}>
         <RadioGroupField name="annenForelderHarRett" validate={[required]} readOnly={readOnly} isEdited={!hasOpenAksjonspunkter}>
@@ -78,7 +77,7 @@ export const AnnenForelderHarRettForm = ({
 );
 
 
-const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
+const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
   kode: ap.definisjon.kode,
   begrunnelse: values.begrunnelse,
   annenforelderHarRett: values.annenForelderHarRett,
@@ -98,9 +97,9 @@ const buildInitialValues = createSelector([getBehandlingYtelseFordeling], (ytels
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
 
-  return state => ({
+  return (state) => ({
     initialValues: buildInitialValues(state),
     onSubmit,
   });

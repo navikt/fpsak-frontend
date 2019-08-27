@@ -12,8 +12,8 @@ import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './bostedBarnView.less';
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-const getAgeFromDate = birthDate => moment().diff(moment(birthDate), 'years');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const getAgeFromDate = (birthDate) => moment().diff(moment(birthDate), 'years');
 
 const getAdresse = (adresser) => {
   const adresseListe = getAddresses(adresser);
@@ -52,7 +52,7 @@ const BostedBarnView = ({
       <Element><DateLabel dateString={barn.dodsdato} /></Element>
       <VerticalSpacer eightPx />
     </div>
-)}
+    )}
     <Undertekst>
       <FormattedMessage id="BostedBarnView.Adresse" />
     </Undertekst>

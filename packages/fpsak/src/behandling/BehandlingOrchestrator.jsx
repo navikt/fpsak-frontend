@@ -50,9 +50,9 @@ class BehandlingOrchestrator {
       this.notAvailableContextPaths = [];
     }
 
-    getEnabledContextPaths = () => this.allContextPaths.filter(as => !this.disabledContextPaths.some(ds => ds === as));
+    getEnabledContextPaths = () => this.allContextPaths.filter(as => !this.disabledContextPaths.some((ds) => ds === as));
 
-    getActiveContextPaths = () => this.getEnabledContextPaths().filter(as => !this.notAvailableContextPaths.some(ds => ds === as));
+    getActiveContextPaths = () => this.getEnabledContextPaths().filter(as => !this.notAvailableContextPaths.some((ds) => ds === as));
 
     fetchKodeverk = async (dispatch) => {
       const results = [];

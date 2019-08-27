@@ -51,8 +51,8 @@ const filterActivityType = (opptjeningAktivitetTypes, erManueltOpprettet, arbeid
     return opptjeningAktivitetTypes;
   }
 
-  const atCodes = arbeidTypes.map(at => at.kode);
-  return opptjeningAktivitetTypes.filter(oat => atCodes.includes(oat.kode)
+  const atCodes = arbeidTypes.map((at) => at.kode);
+  return opptjeningAktivitetTypes.filter((oat) => atCodes.includes(oat.kode)
     || erFraAvvikendeKode(atCodes, oat));
 };
 
@@ -63,9 +63,9 @@ const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
   return !initialValues.erManueltOpprettet && !!initialValues.erGodkjent && !initialValues.erEndret;
 };
 
-const hasMerknad = activity => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const hasMerknad = (activity) => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 
 const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
@@ -170,7 +170,7 @@ export const ActivityPanel = ({
           label={intl.formatMessage({ id: 'ActivityPanel.Activity' })}
           validate={[required]}
           placeholder={intl.formatMessage({ id: 'ActivityPanel.VelgAktivitet' })}
-          selectValues={opptjeningAktivitetTypes.map(oat => <option key={oat.kode} value={oat.kode}>{oat.navn}</option>)}
+          selectValues={opptjeningAktivitetTypes.map((oat) => <option key={oat.kode} value={oat.kode}>{oat.navn}</option>)}
           readOnly={readOnly || !initialValues.erManueltOpprettet}
         />
       </Column>
@@ -182,7 +182,7 @@ export const ActivityPanel = ({
       selectedActivityType={selectedActivityType}
     />
     { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
-      <React.Fragment>
+      <>
         <VerticalSpacer twentyPx />
         { (!initialValues.erManueltOpprettet) && (
           <RadioGroupField name="erGodkjent" validate={[required]} readOnly={readOnly} isEdited={initialValues.erEndret}>
@@ -190,9 +190,9 @@ export const ActivityPanel = ({
             <RadioOption value={false} label={<FormattedHTMLMessage id="ActivityPanel.IkkeGodkjent" />} />
           </RadioGroupField>
         )}
-      </React.Fragment>
+      </>
     )}
-    <React.Fragment>
+    <>
       <VerticalSpacer fourPx />
       <TextAreaField
         name="begrunnelse"
@@ -202,9 +202,9 @@ export const ActivityPanel = ({
         maxLength={1500}
         readOnly={readOnly || shouldDisablePeriodpicker(hasAksjonspunkt, initialValues)}
       />
-    </React.Fragment>
+    </>
     { !shouldDisablePeriodpicker(hasAksjonspunkt, initialValues) && (
-      <React.Fragment>
+      <>
         <FlexContainer fluid>
           <FlexRow>
             <FlexColumn>
@@ -221,7 +221,7 @@ export const ActivityPanel = ({
             </FlexColumn>
           </FlexRow>
         </FlexContainer>
-      </React.Fragment>
+      </>
     )}
   </FaktaGruppe>
 );
@@ -251,11 +251,11 @@ ActivityPanel.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.updateActivity(values);
+  const onSubmit = (values) => ownProps.updateActivity(values);
   const arbeidTyper = getKodeverk(kodeverkTyper.ARBEID_TYPE)(initialState);
   const opptjeningAktivitetTypes = filterActivityType(ownProps.opptjeningAktivitetTypes, ownProps.activity.erManueltOpprettet, arbeidTyper);
 
-  return state => ({
+  return (state) => ({
     onSubmit,
     opptjeningAktivitetTypes,
     initialValues: ownProps.activity,

@@ -34,7 +34,7 @@ const getDescriptionText = (vilkarCode) => {
   return <FormattedMessage id="OmsorgOgForeldreansvarFaktaForm.ChooseVilkarToSeeDescription" />;
 };
 
-const findAksjonspunktHelpTexts = erAksjonspunktForeldreansvar => (erAksjonspunktForeldreansvar
+const findAksjonspunktHelpTexts = (erAksjonspunktForeldreansvar) => (erAksjonspunktForeldreansvar
   ? [<FormattedMessage key="CheckInformation" id="OmsorgOgForeldreansvarFaktaForm.CheckInformationForeldreansvar" />]
   : [<FormattedMessage key="CheckInformation" id="OmsorgOgForeldreansvarFaktaForm.CheckInformation" />,
     <FormattedMessage key="ChooseVilkar" id="OmsorgOgForeldreansvarFaktaForm.ChooseVilkar" />]);
@@ -68,8 +68,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
         <Column xs="6">
           <RettighetFaktaPanel relatertYtelseTypes={relatertYtelseTypes} />
         </Column>
-        )
-      }
+        )}
     </Row>
     <Row>
       <Column xs="6">
@@ -92,32 +91,28 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
             validate={[required]}
             label=""
             placeholder={intl.formatMessage({ id: 'OmsorgOgForeldreansvarFaktaForm.SelectVIlkar' })}
-            selectValues={vilkarTypes.map(d => (<option key={d.kode} value={d.kode}>{d.navn}</option>))}
+            selectValues={vilkarTypes.map((d) => (<option key={d.kode} value={d.kode}>{d.navn}</option>))}
             bredde="xxl"
             readOnly={readOnly}
             disabled={readOnly}
           />
-          )
-        }
+          )}
         {(readOnly && vilkarType)
           && (
           <div className={styles.vilkarTypeReadOnly}>
             <Element tag="span">
-              {(vilkarTypes.find(d => d.kode === vilkarType) || {}).navn}
+              {(vilkarTypes.find((d) => d.kode === vilkarType) || {}).navn}
             </Element>
             {vilkarTypeIsEdited
-              && <EditedIcon />
-            }
+              && <EditedIcon />}
           </div>
-          )
-        }
+          )}
         <Normaltekst>
           {getDescriptionText(vilkarType)}
           {' '}
         </Normaltekst>
       </FaktaGruppe>
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -137,7 +132,7 @@ OmsorgOgForeldreansvarFaktaFormImpl.defaultProps = {
   vilkarTypeIsEdited: false,
 };
 
-const OmsorgOgForeldreansvarFaktaForm = connect(state => ({
+const OmsorgOgForeldreansvarFaktaForm = connect((state) => ({
   vilkarTypeIsEdited: getEditedStatus(state).vilkarType,
   ...behandlingFormValueSelector('OmsorgOgForeldreansvarInfoPanel')(state, 'antallBarn', 'vilkarType'),
 }))(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl));

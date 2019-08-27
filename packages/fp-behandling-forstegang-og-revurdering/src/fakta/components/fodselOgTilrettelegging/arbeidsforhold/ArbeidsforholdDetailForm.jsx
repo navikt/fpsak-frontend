@@ -8,7 +8,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { omit, required, hasValidDate } from '@fpsak-frontend/utils';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
- FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+  FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import {
@@ -102,8 +102,8 @@ ArbeidsforholdDetailForm.defaultProps = {
 
 const validateWarning = (values) => {
   const {
- redusertArbeidDato, kanGjennomforesDato, kanIkkeGjennomforesDato, redusertArbeid, kanGjennomfores, kanIkkeGjennomfores,
-} = values;
+    redusertArbeidDato, kanGjennomforesDato, kanIkkeGjennomforesDato, redusertArbeid, kanGjennomfores, kanIkkeGjennomfores,
+  } = values;
   let warnings = {};
 
   if ((redusertArbeid && kanGjennomfores && redusertArbeidDato && redusertArbeidDato === kanGjennomforesDato)
@@ -120,7 +120,7 @@ const validateWarning = (values) => {
 
 const validateErrors = (values) => {
   const errors = {};
-  if (values.tilretteleggingDatoer && values.tilretteleggingDatoer.some(td => moment(td.fom).isBefore(values.jordmorTilretteleggingFra))) {
+  if (values.tilretteleggingDatoer && values.tilretteleggingDatoer.some((td) => moment(td.fom).isBefore(values.jordmorTilretteleggingFra))) {
     errors.jordmorTilretteleggingFra = [{ id: 'TilretteleggingDetailForm.SenereEnnTilrettelegging' }];
   }
   return errors;
@@ -134,11 +134,11 @@ const transformValues = (values, selectedArbeidsforhold) => {
   transformvalue.delvisTilretteleggingFom = values.redusertArbeid ? values.redusertArbeidDato : null;
   transformvalue.stillingsprosent = values.redusertArbeid ? values.redusertArbeidStillingsprosent : null;
   transformvalue.begrunnelse = values.begrunnelse;
-  transformvalue.tilretteleggingDatoer = values.tilretteleggingDatoer.map(t => omit(t, 'id'));
+  transformvalue.tilretteleggingDatoer = values.tilretteleggingDatoer.map((t) => omit(t, 'id'));
   return transformvalue;
 };
 
-export const buildInitialValues = values => ({
+export const buildInitialValues = (values) => ({
   jordmorTilretteleggingFra: values.tilretteleggingBehovFom,
   begrunnelse: values.begrunnelse,
   kanGjennomfores: !!values.helTilretteleggingFom,
@@ -158,10 +158,10 @@ const EMPTY_ARRAY = [];
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const { selectedArbeidsforhold } = ownProps;
-  const onSubmit = values => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
-  const warn = values => validateWarning(values);
-  const validate = values => validateErrors(values);
-  return state => ({
+  const onSubmit = (values) => ownProps.updateArbeidsforholdCallback(transformValues(values, selectedArbeidsforhold));
+  const warn = (values) => validateWarning(values);
+  const validate = (values) => validateErrors(values);
+  return (state) => ({
     initialValues: buildInitialValues(selectedArbeidsforhold),
     jordmorTilretteleggingFraDato: behandlingFormValueSelector(ARBEIDSFORHOLD_DETAIL_FORM_NAME)(state, 'jordmorTilretteleggingFra'),
     tilretteleggingDatoer: behandlingFormValueSelector(ARBEIDSFORHOLD_DETAIL_FORM_NAME)(state, 'tilretteleggingDatoer') || EMPTY_ARRAY,

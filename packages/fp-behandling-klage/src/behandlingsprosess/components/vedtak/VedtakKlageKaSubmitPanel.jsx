@@ -13,7 +13,7 @@ import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSe
 
 import styles from './vedtakKlageSubmitPanel.less';
 
-const medholdIKlage = klageVurderingResultat => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
+const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE);
 
 export const isMedholdIKlage = (
   klageVurderingResultatNFP, klageVurderingResultatNK,
@@ -78,8 +78,7 @@ export const VedtakKlageKaSubmitPanelImpl = ({
         >
           {intl.formatMessage({ id: 'VedtakKlageForm.TilGodkjenningKa' })}
         </Hovedknapp>
-        )
-        }
+        )}
         {!readOnly
         && (
           <Hovedknapp
@@ -91,12 +90,11 @@ export const VedtakKlageKaSubmitPanelImpl = ({
           >
             {intl.formatMessage({ id: 'VedtakKlageForm.FerdigstillKlageKa' })}
           </Hovedknapp>
-        )
-        }
+        )}
         <a
           href=""
           onClick={previewBrev}
-          onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
+          onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
           className={classNames('lenke lenke--frittstaende')}
         >
           <FormattedMessage id="VedtakKlageForm.ForhandvisBrev" />
@@ -122,7 +120,7 @@ VedtakKlageKaSubmitPanelImpl.defaultProps = {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
 });
 

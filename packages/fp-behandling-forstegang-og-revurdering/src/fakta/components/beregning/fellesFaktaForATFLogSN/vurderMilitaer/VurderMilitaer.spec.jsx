@@ -4,7 +4,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 
 import VurderMilitaer, { vurderMilitaerField } from './VurderMilitaer';
 
-const mockBGMedStatus = mili => ({
+const mockBGMedStatus = (mili) => ({
   vurderMilitaer: {
     harMilitaer: mili,
   },

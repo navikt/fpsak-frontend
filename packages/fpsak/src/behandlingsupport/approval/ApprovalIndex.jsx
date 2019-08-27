@@ -30,7 +30,7 @@ import { approve, resetApproval, fetchApprovalVedtaksbrevPreview } from './duck'
 import styles from './ApprovalIndex.less';
 
 
-const getArsaker = approval => (
+const getArsaker = (approval) => (
   [
     {
       code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -49,8 +49,8 @@ const getArsaker = approval => (
       isSet: approval.annet,
     },
   ]
-    .filter(arsak => arsak.isSet)
-    .map(arsak => arsak.code)
+    .filter((arsak) => arsak.isSet)
+    .map((arsak) => arsak.code)
 );
 
 export const mapPropsToContext = (toTrinnsBehandling, nextProps, skjemalenkeTyper) => {
@@ -64,7 +64,7 @@ export const mapPropsToContext = (toTrinnsBehandling, nextProps, skjemalenkeType
     }
     if (skjermlenkeContext) {
       const totrinnsContext = skjermlenkeContext.map((context) => {
-        const skjermlenkeTypeKodeverk = skjemalenkeTyper.find(skjemalenkeType => skjemalenkeType.kode === context.skjermlenkeType);
+        const skjermlenkeTypeKodeverk = skjemalenkeTyper.find((skjemalenkeType) => skjemalenkeType.kode === context.skjermlenkeType);
         return {
           contextCode: context.skjermlenkeType,
           skjermlenke: createLocationForHistorikkItems(nextProps.location, context.skjermlenkeType),
@@ -125,11 +125,11 @@ export class ApprovalIndexImpl extends Component {
       erTilbakekreving,
     } = this.props;
     const aksjonspunkter = values.approvals
-      .map(context => context.aksjonspunkter)
+      .map((context) => context.aksjonspunkter)
       .reduce((a, b) => a.concat(b));
 
     const aksjonspunktGodkjenningDtos = aksjonspunkter
-      .map(toTrinnsAksjonspunkt => ({
+      .map((toTrinnsAksjonspunkt) => ({
         aksjonspunktKode: toTrinnsAksjonspunkt.aksjonspunktKode,
         godkjent: toTrinnsAksjonspunkt.totrinnskontrollGodkjent,
         begrunnelse: toTrinnsAksjonspunkt.besluttersBegrunnelse,
@@ -156,7 +156,7 @@ export class ApprovalIndexImpl extends Component {
 
   setAksjonspunktApproved(toTrinnsAksjonspunkter) {
     this.setState({
-      allAksjonspunktApproved: toTrinnsAksjonspunkter.every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true),
+      allAksjonspunktApproved: toTrinnsAksjonspunkter.every((ap) => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true),
     });
   }
 
@@ -218,12 +218,10 @@ export class ApprovalIndexImpl extends Component {
                       />
                     </div>
                   </div>
-                )
-              }
+                )}
             </div>
           )
-          : null
-        }
+          : null}
         <FatterVedtakApprovalModal
           showModal={showModalVedtakStatus}
           closeEvent={this.goToSearchPage}
@@ -282,7 +280,7 @@ const mapStateToPropsFactory = (initialState) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     approve,

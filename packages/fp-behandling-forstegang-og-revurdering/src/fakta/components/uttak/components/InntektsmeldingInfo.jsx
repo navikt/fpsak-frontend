@@ -104,16 +104,15 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
           </Undertekst>
           {isGradering
           && (
-          <React.Fragment>
+          <>
             <VerticalSpacer eightPx />
             <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
             <Undertekst className={classNames('avvik', { hasAvvik: isAvvikArbeidsprosent })}>
               {periode.arbeidsprosent}
 %
             </Undertekst>
-          </React.Fragment>
-          )
-        }
+          </>
+          )}
         </FlexColumn>
       </FlexRow>
     </React.Fragment>
@@ -133,14 +132,14 @@ const renderAvvik = (innmldInfo, getKodeverknavn) => {
     return [renderAvvikContentGraderingFraSøknad()];
   }
 
-  return inntektsmeldingInfoPerioder.map(periode => renderAvvikContent(periode, avvik, getKodeverknavn));
+  return inntektsmeldingInfoPerioder.map((periode) => renderAvvikContent(periode, avvik, getKodeverknavn));
 };
 
 const shouldRender = (inntektsmeldingInfo, getKodeverknavn) => {
-  const avvik = flatten(inntektsmeldingInfo.map(innmldInfo => (
+  const avvik = flatten(inntektsmeldingInfo.map((innmldInfo) => (
     renderAvvik(innmldInfo, getKodeverknavn)
   )));
-  const filteredAvvik = avvik.filter(av => av);
+  const filteredAvvik = avvik.filter((av) => av);
 
   return filteredAvvik.length > 0;
 };
@@ -152,13 +151,13 @@ export const InntektsmeldingInfo = ({
 }) => {
   const shouldRenderAvvik = shouldRender(inntektsmeldingInfo, getKodeverknavn);
   return (
-    <React.Fragment>
+    <>
       {shouldRenderAvvik && (
-      <React.Fragment>
+      <>
         <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
         <VerticalSpacer eightPx />
         {inntektsmeldingInfo.map((innmldInfo) => {
-          const renderContent = renderAvvik(innmldInfo, getKodeverknavn).filter(rc => rc);
+          const renderContent = renderAvvik(innmldInfo, getKodeverknavn).filter((rc) => rc);
           const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
           return (
             renderContent.length > 0 && (
@@ -171,9 +170,9 @@ export const InntektsmeldingInfo = ({
               </React.Fragment>
             ));
         })}
-      </React.Fragment>
+      </>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

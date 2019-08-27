@@ -55,7 +55,7 @@ const FatterTilbakekrevingVedtakStatusModal = ({
       </Column>
     </Row>
   </Modal>
-    );
+);
 
 FatterTilbakekrevingVedtakStatusModal.propTypes = {
   intl: intlShape.isRequired,

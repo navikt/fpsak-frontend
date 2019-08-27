@@ -46,8 +46,7 @@ export const FaktaSubmitButton = ({
       >
         <FormattedMessage id={buttonTextId} />
       </Hovedknapp>
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -69,12 +68,12 @@ FaktaSubmitButton.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
-  const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
+  const formNames = fNames.map((f) => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
-    isSubmitting: formNames.some(formName => isBehandlingFormSubmitting(formName)(state)),
-    isDirty: formNames.some(formName => isBehandlingFormDirty(formName)(state)),
+    isSubmitting: formNames.some((formName) => isBehandlingFormSubmitting(formName)(state)),
+    isDirty: formNames.some((formName) => isBehandlingFormDirty(formName)(state)),
     hasEmptyRequiredFields: ownProps.doNotCheckForRequiredFields
-      ? false : formNames.some(formName => hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
+      ? false : formNames.some((formName) => hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
   };
 };
 

@@ -35,15 +35,15 @@ export const VirksomhetTypeNaringPanel = ({
     <Undertekst><FormattedMessage id="Registrering.VirksomhetNaeringTypePanel.Title" /></Undertekst>
     <VerticalSpacer fourPx />
     {naringvirksomhetTyper.sort((a, b) => naringsvirksomhetTypeOrder[a.kode] > naringsvirksomhetTypeOrder[b.kode])
-      .map(nv => <CheckboxField name={nv.kode} key={nv.kode} label={nv.navn} readOnly={readOnly} />)}
+      .map((nv) => <CheckboxField name={nv.kode} key={nv.kode} label={nv.navn} readOnly={readOnly} />)}
   </ElementWrapper>
 );
 
 const getFilteredNaringsvirksomhetTypes = createSelector(
-  [getKodeverk(kodeverkTyper.VIRKSOMHET_TYPE)], (types = []) => types.filter(t => t.kode !== naringsvirksomhetType.FRILANSER),
+  [getKodeverk(kodeverkTyper.VIRKSOMHET_TYPE)], (types = []) => types.filter((t) => t.kode !== naringsvirksomhetType.FRILANSER),
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   naringvirksomhetTyper: getFilteredNaringsvirksomhetTypes(state),
 });
 

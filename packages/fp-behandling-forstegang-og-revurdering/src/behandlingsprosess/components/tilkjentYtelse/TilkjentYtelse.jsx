@@ -15,7 +15,7 @@ import TimeLineControl from './timeline/TimeLineControl';
 
 import styles from './tilkjentYtelse.less';
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
+const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT)
   .toDate();
 
 const getOptions = (nyePerioder) => {
@@ -46,7 +46,7 @@ const gradertKlassenavn = 'gradert';
 const innvilgetKlassenavn = 'innvilget';
 
 const getStatusForPeriode = (periode) => {
-  const graderteAndeler = periode.andeler.filter(andel => andel.uttak && andel.uttak.gradering === true);
+  const graderteAndeler = periode.andeler.filter((andel) => andel.uttak && andel.uttak.gradering === true);
   if (graderteAndeler.length === 0) {
     return innvilgetKlassenavn;
   }
@@ -56,22 +56,22 @@ const getStatusForPeriode = (periode) => {
 const createTooltipContent = (periodeType, intl, item) => (`
   <p>
     ${moment(item.fom)
-  .format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom)
-  .format(DDMMYY_DATE_FORMAT)}
+    .format(DDMMYY_DATE_FORMAT)} - ${moment(item.tom)
+    .format(DDMMYY_DATE_FORMAT)}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
      ${intl.formatMessage({ id: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).id },
-  {
-    weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
-    days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
-  })}
+    {
+      weeks: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).weeks,
+      days: calcDaysAndWeeks(moment(item.fom), moment(item.tom)).days,
+    })}
     </br>
     ${item.utsettelseType && item.utsettelseType.kode !== '-'
-  ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
+    ? intl.formatMessage({ id: 'Timeline.tooltip.utsettelsePeriode' }) : periodeType}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     ${intl.formatMessage({ id: 'Timeline.tooltip.dagsats' },
-  {
-    dagsats: item.dagsats,
-  })}
+    {
+      dagsats: item.dagsats,
+    })}
    </p>
 `);
 
@@ -99,7 +99,7 @@ const addClassNameGroupIdToPerioder = (perioder, intl) => {
   const perioderMedClassName = [];
   perioder.forEach((item) => {
     const status = getStatusForPeriode(item);
-    const copyOfItem = Object.assign({}, item);
+    const copyOfItem = { ...item };
     copyOfItem.className = status;
     copyOfItem.group = 1;
     copyOfItem.start = parseDateString(item.fom);
@@ -168,7 +168,7 @@ export class TilkjentYtelse extends Component {
 
   nextPeriod() {
     const { props: { items }, state: { selectedItem: currentSelectedItem } } = this;
-    const newIndex = items.findIndex(item => item.id === currentSelectedItem.id) + 1;
+    const newIndex = items.findIndex((item) => item.id === currentSelectedItem.id) + 1;
     if (newIndex < items.length) {
       const selectedItem = items[newIndex];
       this.setState({
@@ -179,7 +179,7 @@ export class TilkjentYtelse extends Component {
 
   prevPeriod() {
     const { props: { items }, state: { selectedItem: currentSelectedItem } } = this;
-    const newIndex = items.findIndex(item => item.id === currentSelectedItem.id) - 1;
+    const newIndex = items.findIndex((item) => item.id === currentSelectedItem.id) - 1;
     if (newIndex >= 0) {
       const selectedItem = items[newIndex];
       this.setState({
@@ -190,7 +190,7 @@ export class TilkjentYtelse extends Component {
 
   selectHandler(eventProps) {
     const { props: { items } } = this;
-    const selectedItem = items.find(item => item.id === eventProps.items[0]);
+    const selectedItem = items.find((item) => item.id === eventProps.items[0]);
     this.setState({
       selectedItem,
     });
@@ -299,8 +299,7 @@ export class TilkjentYtelse extends Component {
             callbackBackward={prevPeriod}
             isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
           />
-        )
-        }
+        )}
       </div>
     );
   }

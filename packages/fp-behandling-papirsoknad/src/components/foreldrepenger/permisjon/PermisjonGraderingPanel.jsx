@@ -64,12 +64,11 @@ export const PermisjonGraderingPanel = ({
       arbeidskategoriTyper={arbeidskategoriTyper}
       readOnly={readOnly}
     />
-    )
-    }
+    )}
   </div>
 );
 
-export const validateOtherErrors = values => values.map(({
+export const validateOtherErrors = (values) => values.map(({
   periodeForGradering, prosentandelArbeid, arbeidsgiverIdentifikator, erArbeidstaker, samtidigUttaksprosent, harSamtidigUttak,
 }) => {
   const periodeForGraderingError = required(periodeForGradering);
@@ -101,7 +100,7 @@ PermisjonGraderingPanel.validate = (values) => {
   return hasValidPeriodIncludingOtherErrors(values, otherErrors);
 };
 
-PermisjonGraderingPanel.transformValues = perioder => perioder.map((p) => {
+PermisjonGraderingPanel.transformValues = (perioder) => perioder.map((p) => {
   const { ...periode } = p;
   if (p.erArbeidstaker) {
     periode.erArbeidstaker = p.erArbeidstaker === arbeidskategori.ARBEIDSTAKER;

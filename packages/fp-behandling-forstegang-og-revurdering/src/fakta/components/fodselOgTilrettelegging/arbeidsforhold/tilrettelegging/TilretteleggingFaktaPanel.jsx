@@ -61,7 +61,7 @@ export class TilretteleggingFaktaPanel extends Component {
     const updatedTilrettelegging = values.type.kode === tilretteleggingType.DELVIS_TILRETTELEGGING
       ? values : omit(values, 'stillingsprosent');
 
-    const otherThanUpdated = tilretteleggingDatoer.filter(a => a.id !== values.id);
+    const otherThanUpdated = tilretteleggingDatoer.filter((a) => a.id !== values.id);
     const fieldValues = otherThanUpdated.concat(updatedTilrettelegging).sort((a, b) => a.fom.localeCompare(b.fom));
     formChange(`${behandlingFormPrefix}.${parentFormName}`, 'tilretteleggingDatoer', fieldValues);
     this.setSelected(undefined);
@@ -82,7 +82,7 @@ export class TilretteleggingFaktaPanel extends Component {
     const {
       reduxFormChange: formChange, behandlingFormPrefix, tilretteleggingDatoer, parentFormName,
     } = this.props;
-    const otherThanDeleted = tilretteleggingDatoer.filter(a => a.id !== selectedTilrettelegging.id);
+    const otherThanDeleted = tilretteleggingDatoer.filter((a) => a.id !== selectedTilrettelegging.id);
     formChange(`${behandlingFormPrefix}.${parentFormName}`, 'tilretteleggingDatoer', otherThanDeleted);
     if (otherThanDeleted.length === 0) {
       this.createTilrettelegging();
@@ -114,7 +114,7 @@ export class TilretteleggingFaktaPanel extends Component {
             readOnly={readOnly}
             initialValues={selectedTilrettelegging}
             onSubmit={this.updateTilrettelegging}
-            validate={values => TilretteleggingDetailForm.validate(values, tilretteleggingDatoer, jordmorTilretteleggingFraDato)}
+            validate={(values) => TilretteleggingDetailForm.validate(values, tilretteleggingDatoer, jordmorTilretteleggingFraDato)}
             cancelTilrettelegging={this.cancelTilrettelegging}
             submittable={submittable}
             harIngenTilretteleggingDatoer={tilretteleggingDatoer.length === 0}
@@ -159,7 +159,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,

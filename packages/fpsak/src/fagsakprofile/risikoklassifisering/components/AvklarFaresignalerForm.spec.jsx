@@ -22,7 +22,7 @@ const mockAksjonspunkt = (status, begrunnelse) => ({
   erAktivt: true,
 });
 
-const mockRisikoklassifisering = kode => ({
+const mockRisikoklassifisering = (kode) => ({
   kontrollresultat: {
     kode: 'HOY',
     kodeverk: 'Kontrollresultat',
@@ -67,7 +67,7 @@ describe('<AvklarFaresignalerForm>', () => {
       [radioFieldName]: true,
     };
     const actualValues = buildInitialValues.resultFunc(mockRisikoklassifisering(faresignalVurdering.INNVIRKNING),
-     mockAksjonspunkt('UTFO', 'Dette er en begrunnelse'));
+      mockAksjonspunkt('UTFO', 'Dette er en begrunnelse'));
 
     expect(actualValues).to.deep.equal(expectedInitialValues);
   });

@@ -15,32 +15,33 @@ import {
   dateRangesAreSequential, nameRegex, nameGyldigRegex, saksnummerOrFodselsnummerPattern,
 } from './validatorsHelper';
 
-export const maxLengthOrFodselsnr = length => text => (isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthOrFodselsnrMessage(length));
-export const required = value => (isEmpty(value) ? isRequiredMessage() : undefined);
-export const notDash = value => (value === '-' ? isRequiredMessage() : undefined);
+export const maxLengthOrFodselsnr = (length) => (text) => (isEmpty(text)
+  || text.toString().trim().length <= length ? null : maxLengthOrFodselsnrMessage(length));
+export const required = (value) => (isEmpty(value) ? isRequiredMessage() : undefined);
+export const notDash = (value) => (value === '-' ? isRequiredMessage() : undefined);
 export const requiredIfNotPristine = (value, allValues, props) => (props.pristine || !isEmpty(value) ? undefined : isRequiredMessage());
-export const requiredIfCustomFunctionIsTrue = isRequiredFunction => (value, allValues, props) => (isEmpty(value) && isRequiredFunction(allValues, props)
+export const requiredIfCustomFunctionIsTrue = (isRequiredFunction) => (value, allValues, props) => (isEmpty(value) && isRequiredFunction(allValues, props)
   ? isRequiredMessage() : undefined);
 
-export const minLength = length => text => (isEmpty(text) || text.toString().trim().length >= length ? null : minLengthMessage(length));
-export const maxLength = length => text => (isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length));
+export const minLength = (length) => (text) => (isEmpty(text) || text.toString().trim().length >= length ? null : minLengthMessage(length));
+export const maxLength = (length) => (text) => (isEmpty(text) || text.toString().trim().length <= length ? null : maxLengthMessage(length));
 
-export const minValue = length => number => (number >= length ? null : minValueMessage(length));
-export const maxValue = length => number => (number <= length ? null : maxValueMessage(length));
+export const minValue = (length) => number => (number >= length ? null : minValueMessage(length));
+export const maxValue = (length) => number => (number <= length ? null : maxValueMessage(length));
 
 export const hasValidOrgNumber = number => (number.toString().trim().length === 9 ? null : invalidOrgNumberMessage());
 
-const hasValidNumber = text => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
-const hasValidInt = text => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));
-const hasValidDec = text => (isEmpty(text) || decimalRegex.test(text) ? null : invalidDecimalMessage(text));
-export const hasValidInteger = text => (hasValidNumber(text) || hasValidInt(text));
-export const hasValidDecimal = text => (hasValidNumber(text) || hasValidDec(text));
+const hasValidNumber = (text) => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
+const hasValidInt = (text) => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));
+const hasValidDec = (text) => (isEmpty(text) || decimalRegex.test(text) ? null : invalidDecimalMessage(text));
+export const hasValidInteger = (text) => (hasValidNumber(text) || hasValidInt(text));
+export const hasValidDecimal = (text) => (hasValidNumber(text) || hasValidDec(text));
 
-export const hasValidSaksnummerOrFodselsnummerFormat = text => (isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text)
+export const hasValidSaksnummerOrFodselsnummerFormat = (text) => (isEmpty(text) || saksnummerOrFodselsnummerPattern.test(text)
   ? null : invalidSaksnummerOrFodselsnummerFormatMessage());
 
-export const hasValidDate = text => (isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage());
-export const dateBeforeOrEqual = latest => text => (
+export const hasValidDate = (text) => (isEmpty(text) || isoDateRegex.test(text) ? null : invalidDateMessage());
+export const dateBeforeOrEqual = (latest) => (text) => (
   (isEmpty(text) || moment(text).isSameOrBefore(moment(latest).startOf('day')))
     ? null
     : dateNotBeforeOrEqualMessage(moment(latest).format(DDMMYYYY_DATE_FORMAT))
@@ -49,27 +50,27 @@ const getErrorMessage = (earliest, customErrorMessage) => {
   const date = moment(earliest).format(DDMMYYYY_DATE_FORMAT);
   return customErrorMessage ? customErrorMessage(date) : dateNotAfterOrEqualMessage(date);
 };
-export const dateAfterOrEqual = (earliest, customErrorMessageFunction = undefined) => text => (
+export const dateAfterOrEqual = (earliest, customErrorMessageFunction = undefined) => (text) => (
   (isEmpty(text) || moment(text).isSameOrAfter(moment(earliest).startOf('day')))
     ? null
     : getErrorMessage(earliest, customErrorMessageFunction)
 );
-export const dateIsBefore = (dateToCheckAgainst, errorMessageFunction) => inputDate => (
+export const dateIsBefore = (dateToCheckAgainst, errorMessageFunction) => (inputDate) => (
   (isEmpty(inputDate) || moment(inputDate).isBefore(moment(dateToCheckAgainst).startOf('day')))
     ? null
     : errorMessageFunction(moment(dateToCheckAgainst).format(DDMMYYYY_DATE_FORMAT))
 );
 
-export const dateRangesNotOverlapping = ranges => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage());
-export const dateRangesNotOverlappingCrossTypes = ranges => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingBetweenPeriodTypesMessage());
+export const dateRangesNotOverlapping = (ranges) => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingMessage());
+export const dateRangesNotOverlappingCrossTypes = (ranges) => (dateRangesAreSequential(ranges) ? null : dateRangesOverlappingBetweenPeriodTypesMessage());
 
-export const dateBeforeToday = text => dateBeforeOrEqual(yesterday())(text);
-export const dateBeforeOrEqualToToday = text => dateBeforeOrEqual(moment().startOf('day'))(text);
-export const dateAfterToday = text => dateAfterOrEqual(tomorrow())(text);
-export const dateAfterOrEqualToToday = text => dateAfterOrEqual(moment().startOf('day'))(text);
+export const dateBeforeToday = (text) => dateBeforeOrEqual(yesterday())(text);
+export const dateBeforeOrEqualToToday = (text) => dateBeforeOrEqual(moment().startOf('day'))(text);
+export const dateAfterToday = (text) => dateAfterOrEqual(tomorrow())(text);
+export const dateAfterOrEqualToToday = (text) => dateAfterOrEqual(moment().startOf('day'))(text);
 
-export const hasValidFodselsnummerFormat = text => (!fodselsnummerPattern.test(text) ? invalidFodselsnummerFormatMessage() : null);
-export const hasValidFodselsnummer = text => (!isValidFodselsnummer(text) ? invalidFodselsnummerMessage() : null);
+export const hasValidFodselsnummerFormat = (text) => (!fodselsnummerPattern.test(text) ? invalidFodselsnummerFormatMessage() : null);
+export const hasValidFodselsnummer = (text) => (!isValidFodselsnummer(text) ? invalidFodselsnummerMessage() : null);
 
 export const hasValidText = (text) => {
   if (!textRegex.test(text)) {
@@ -87,8 +88,8 @@ export const hasValidName = (text) => {
   return null;
 };
 
-export const hasValidValue = value => invalidValue => (value === invalidValue ? invalidValueMessage(value) : null);
-export const arrayMinLength = length => value => (value && value.length >= length ? null : arrayMinLengthMessage(length));
+export const hasValidValue = (value) => (invalidValue) => (value === invalidValue ? invalidValueMessage(value) : null);
+export const arrayMinLength = (length) => (value) => (value && value.length >= length ? null : arrayMinLengthMessage(length));
 
 export const dateIsAfter = (date, checkAgainsDate) => moment(date).isAfter(checkAgainsDate);
 export const isDatesEqual = (date1, date2) => (date1 !== date2 ? datesNotEqual(moment(date2).format(DDMMYYYY_DATE_FORMAT)) : null);
@@ -131,7 +132,7 @@ export const hasValidPeriodIncludingOtherErrors = (values, otherErrors = [{}], o
     }
     return null;
   });
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   const overlapError = dateRangesNotOverlapping(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
@@ -202,7 +203,7 @@ export const isArbeidsProsentVidUtsettelse100 = (values, aktivitetArray) => {
   return null;
 };
 
-export const validateProsentandel = prosentandel => required(prosentandel) || hasValidDecimal(prosentandel) || hasValidNumber(prosentandel.replace('.', ''));
+export const validateProsentandel = (prosentandel) => required(prosentandel) || hasValidDecimal(prosentandel) || hasValidNumber(prosentandel.replace('.', ''));
 
 export const ariaCheck = () => {
   let errors = [];
@@ -223,6 +224,6 @@ export const ariaCheck = () => {
   }, 300);
 };
 
-export const isTrekkdagerMerEnnNullUtsettelse = value => (value > 0 ? trekkdagerErMerEnnNullUtsettelseMessage() : null);
+export const isTrekkdagerMerEnnNullUtsettelse = (value) => (value > 0 ? trekkdagerErMerEnnNullUtsettelseMessage() : null);
 
-export const isUtbetalingMerEnnNullUtsettelse = value => (value > 0 ? utbetalingMerEnnNullUtsettelseMessage() : null);
+export const isUtbetalingMerEnnNullUtsettelse = (value) => (value > 0 ? utbetalingMerEnnNullUtsettelseMessage() : null);

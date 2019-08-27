@@ -38,11 +38,11 @@ const mapStateToProps = (state) => {
   ];
 
   return {
-    isInSync: blockers.every(finished => finished),
+    isInSync: blockers.every((finished) => finished),
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchKodeverk: tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.makeRestApiRequest(),
 }, dispatch);
 

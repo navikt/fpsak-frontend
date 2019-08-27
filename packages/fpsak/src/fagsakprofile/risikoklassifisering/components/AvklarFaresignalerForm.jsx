@@ -109,14 +109,14 @@ export const buildInitialValues = createSelector([getKontrollresultat, getRisiko
   return undefined;
 });
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: aksjonspunktCodes.VURDER_FARESIGNALER,
   harInnvirketBehandlingen: values[radioFieldName],
   begrunnelse: values[begrunnelseFieldName],
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
   const initialValues = buildInitialValues(initialState);
   return () => ({
     initialValues,

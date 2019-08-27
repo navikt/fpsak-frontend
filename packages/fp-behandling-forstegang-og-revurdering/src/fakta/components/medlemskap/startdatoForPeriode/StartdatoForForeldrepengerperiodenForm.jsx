@@ -17,7 +17,7 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
- hasValidDate, hasValidText, maxLength, minLength, required,
+  hasValidDate, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
@@ -51,8 +51,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
         <AksjonspunktHelpText isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
           {[<FormattedMessage key="PeriodenAvviker" id="StartdatoForForeldrepengerperiodenForm.PeriodenAvviker" />]}
         </AksjonspunktHelpText>
-        )
-      }
+        )}
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN}
         titleCode="StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden"
@@ -99,15 +98,13 @@ export const StartdatoForForeldrepengerperiodenForm = ({
               <FormattedMessage id="StartdatoForForeldrepengerperiodenForm.Oppdater" />
             </Hovedknapp>
           </div>
-        )
-        }
+        )}
       </FaktaGruppe>
       <VerticalSpacer twentyPx />
       {hasOpenAksjonspunkt
         && (
         <FaktaSubmitButton formName={formProps.form} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkt} />
-        )
-      }
+        )}
     </form>
   </div>
 );
@@ -125,14 +122,14 @@ StartdatoForForeldrepengerperiodenForm.propTypes = {
 const buildInitialValues = createSelector(
   [behandlingSelectors.getAksjonspunkter, getBehandlingStartDatoForPermisjon, getInntektsmeldinger],
   (aksjonspunkter, startdatoForPermisjon, inntektsmeldinger) => {
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
-  const overstyringAp = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
+    const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    const overstyringAp = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
     return {
-    opprinneligDato: startdatoForPermisjon,
-    startdatoFraSoknad: startdatoForPermisjon,
-    arbeidsgivere: inntektsmeldinger,
-    begrunnelse: (overstyringAp && overstyringAp.begrunnelse) || (aksjonspunkt && aksjonspunkt.begrunnelse),
-  };
+      opprinneligDato: startdatoForPermisjon,
+      startdatoFraSoknad: startdatoForPermisjon,
+      arbeidsgivere: inntektsmeldinger,
+      begrunnelse: (overstyringAp && overstyringAp.begrunnelse) || (aksjonspunkt && aksjonspunkt.begrunnelse),
+    };
   },
 );
 
@@ -147,9 +144,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const hasAksjonspunkt = ownProps.aksjonspunkt !== undefined;
   const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(ownProps.aksjonspunkt.status.kode);
   const isOverstyring = !hasAksjonspunkt || ownProps.aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, isOverstyring)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, isOverstyring)]);
 
-  return state => ({
+  return (state) => ({
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     overstyringDisabled: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
@@ -158,7 +155,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const isBefore2019 = startdato => (
+const isBefore2019 = (startdato) => (
   moment(startdato).isBefore(moment('2019-01-01'))
 );
 
@@ -167,8 +164,8 @@ const validateDates = (values) => {
   const { arbeidsgivere, startdatoFraSoknad } = values;
 
   const isStartdatoEtterArbeidsgiverdato = arbeidsgivere && arbeidsgivere
-    .map(a => a.arbeidsgiverStartdato)
-    .some(datoFraInntektsmelding => moment(datoFraInntektsmelding).isBefore(moment(startdatoFraSoknad)));
+    .map((a) => a.arbeidsgiverStartdato)
+    .some((datoFraInntektsmelding) => moment(datoFraInntektsmelding).isBefore(moment(startdatoFraSoknad)));
 
   if (isStartdatoEtterArbeidsgiverdato) {
     errors.startdatoFraSoknad = [{ id: 'StartdatoForForeldrepengerperiodenForm.StartdatoEtterArbeidsgiverdato' }];

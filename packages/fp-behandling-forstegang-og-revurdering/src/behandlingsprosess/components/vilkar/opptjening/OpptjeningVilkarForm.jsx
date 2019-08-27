@@ -59,6 +59,6 @@ const mapStateToPropsFactory = (initialState) => {
 
 const OpptjeningVilkarForm = connect(mapStateToPropsFactory)(OpptjeningVilkarFormImpl);
 
-OpptjeningVilkarForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.OPPTJENING;
+OpptjeningVilkarForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.OPPTJENING;
 
 export default OpptjeningVilkarForm;

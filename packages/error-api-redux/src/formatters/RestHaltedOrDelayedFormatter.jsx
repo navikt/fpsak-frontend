@@ -11,7 +11,7 @@ const DELAYED_PROCESS_TASK_MESSAGE_CODE = 'Rest.ErrorMessage.DownTime';
 class RestHaltedOrDelayedFormatter {
   type = ErrorEventType.POLLING_HALTED_OR_DELAYED;
 
-  isOfType = type => type === this.type;
+  isOfType = (type) => type === this.type;
 
   format = (errorData) => {
     const { message, status, eta } = errorData;

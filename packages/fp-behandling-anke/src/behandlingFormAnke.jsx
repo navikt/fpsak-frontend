@@ -9,7 +9,7 @@ import { getSelectedBehandlingId } from './duckBehandlingAnke';
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const behandlingFormAnke = (config = {}) => WrappedComponent => getBehandlingForm(
+export const behandlingFormAnke = (config = {}) => (WrappedComponent) => getBehandlingForm(
   config, WrappedComponent, getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon,
 );
 

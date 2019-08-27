@@ -46,8 +46,8 @@ const sjekkOpphold = (opphold, intl) => (
   )
 );
 
-const lagOppholdIUtland = utlandsOpphold => (
-  utlandsOpphold && utlandsOpphold.map(u => (
+const lagOppholdIUtland = (utlandsOpphold) => (
+  utlandsOpphold && utlandsOpphold.map((u) => (
     <div key={`${u.landNavn}${u.fom}${u.tom}`}>
       <Row>
         <Column xs="4">
@@ -108,17 +108,14 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
       </Column>
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
-          {foreldre.map(f => (
+          {foreldre.map((f) => (
             <div key={f.personopplysning.navn}>
               {f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={f.personopplysning} />
-              }
+              && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={f.personopplysning} />}
               {!f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.Parent" />} soker={f.personopplysning} />
-              }
+              && <BostedSokerView typeSoker={<FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.Parent" />} soker={f.personopplysning} />}
             </div>
-          ))
-          }
+          ))}
         </FaktaGruppe>
         {hasAksjonspunkt
           && (
@@ -130,8 +127,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
                 </RadioGroupField>
               </ElementWrapper>
             </div>
-          )
-        }
+          )}
       </Column>
     </Row>
   </FaktaGruppe>
@@ -151,7 +147,7 @@ OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {
   foreldre: [],
 };
 
-const OppholdINorgeOgAdresserFaktaPanel = connect(state => ({
+const OppholdINorgeOgAdresserFaktaPanel = connect((state) => ({
   opphold: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'opphold'),
   foreldre: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'foreldre'),
   hasAksjonspunkt: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'hasBosattAksjonspunkt'),
@@ -182,18 +178,18 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, personopplysning
     parents.push(createParent(false, personopplysning.annenPart));
   }
 
-  const filteredAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT);
+  const filteredAp = aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT);
   return {
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
-    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isBosattAksjonspunktClosed: filteredAp.some((ap) => !isAksjonspunktOpen(ap.status.kode)),
     foreldre: parents,
     bosattVurdering: medlem.bosattVurdering || medlem.bosattVurdering === false
       ? medlem.bosattVurdering : undefined,
   };
 };
 
-OppholdINorgeOgAdresserFaktaPanel.transformValues = values => ({
+OppholdINorgeOgAdresserFaktaPanel.transformValues = (values) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
   bosattVurdering: values.bosattVurdering,
 });

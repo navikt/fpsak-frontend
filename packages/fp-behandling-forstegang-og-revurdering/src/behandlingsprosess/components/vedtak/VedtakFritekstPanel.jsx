@@ -42,8 +42,7 @@ const VedtakFritekstPanelImpl = ({
         />
       </Column>
     </Row>
-    )
-    }
+    )}
     {readOnly && behandlingsresultat.avslagsarsakFritekst !== null
     && (
     <span>
@@ -52,8 +51,7 @@ const VedtakFritekstPanelImpl = ({
       <VerticalSpacer eightPx />
       <div className={styles.fritekstItem}>{decodeHtmlEntity(behandlingsresultat.avslagsarsakFritekst)}</div>
     </span>
-    )
-    }
+    )}
   </ElementWrapper>
 );
 

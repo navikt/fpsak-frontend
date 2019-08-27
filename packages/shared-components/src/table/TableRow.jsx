@@ -6,9 +6,9 @@ import styles from './tableRow.less';
 
 const classNames = classnames.bind(styles);
 
-const createMouseDownHandler = (onMouseDown, id, model) => e => onMouseDown && onMouseDown(e, id, model);
+const createMouseDownHandler = (onMouseDown, id, model) => (e) => onMouseDown && onMouseDown(e, id, model);
 
-const findNearestRow = element => (element.tagName === 'TR' ? element : findNearestRow(element.parentElement));
+const findNearestRow = (element) => (element.tagName === 'TR' ? element : findNearestRow(element.parentElement));
 
 const setFocus = (e, isNext) => {
   const row = findNearestRow(e.target);

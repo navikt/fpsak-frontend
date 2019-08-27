@@ -42,8 +42,7 @@ const FaktaGruppe = ({
         <Element><FormattedMessage id={titleCode} /></Element>
         <VerticalSpacer twentyPx />
       </div>
-      )
-      }
+      )}
       {children}
     </Wrapper>
   );

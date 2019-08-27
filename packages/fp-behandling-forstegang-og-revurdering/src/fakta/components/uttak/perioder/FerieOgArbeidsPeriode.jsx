@@ -97,8 +97,7 @@ export const FerieOgArbeidsPeriode = ({
               <div className={styles.endreSoknadsperiode}>
                 <EndreSoknadsperiode oppholdArsak={oppholdArsak} withGradering={withGradering} førsteUttaksdato={førsteUttaksdato} />
               </div>
-            )
-            }
+            )}
             <VerticalSpacer twentyPx />
             <div className={styles.textAreaStyle}>
               <TextAreaField
@@ -136,8 +135,7 @@ export const FerieOgArbeidsPeriode = ({
         readOnly={readOnly}
       />
     </>
-    )
-}
+    )}
     </div>
   );
 };
@@ -190,26 +188,26 @@ const buildInitialValues = createSelector([
   (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`),
   (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
   (state, ownProps) => ownProps],
-  (begrunnelse, saksebehandlersBegrunnelse, oppholdArsak, initialResultat, ownProps) => {
-    let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
-    if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
-      initialResultatValue = undefined;
-    }
-    return {
-      begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
-      id: ownProps.id,
-      resultat: initialResultatValue,
-      nyTom: ownProps.tilDato,
-      nyFom: ownProps.fraDato,
-      nyArbeidstidsprosent: ownProps.arbeidstidprosent,
-      kontoType: ownProps.uttakPeriodeType.kode,
-      oppholdArsak: oppholdArsak ? oppholdArsak.kode : '',
-    };
-  });
+(begrunnelse, saksebehandlersBegrunnelse, oppholdArsak, initialResultat, ownProps) => {
+  let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
+  if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
+    initialResultatValue = undefined;
+  }
+  return {
+    begrunnelse: begrunnelse || saksebehandlersBegrunnelse,
+    id: ownProps.id,
+    resultat: initialResultatValue,
+    nyTom: ownProps.tilDato,
+    nyFom: ownProps.fraDato,
+    nyArbeidstidsprosent: ownProps.arbeidstidprosent,
+    kontoType: ownProps.uttakPeriodeType.kode,
+    oppholdArsak: oppholdArsak ? oppholdArsak.kode : '',
+  };
+});
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const formName = `arbeidOgFerieForm-${initialOwnProps.id}`;
-  const onSubmit = values => initialOwnProps.updatePeriode(values);
+  const onSubmit = (values) => initialOwnProps.updatePeriode(values);
 
   return (state, ownProps) => {
     const resultat = behandlingFormValueSelector(formName)(state, 'resultat');

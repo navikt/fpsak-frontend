@@ -49,7 +49,7 @@ import styles from './uttak.less';
 
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 const STONADSKONTOER_TEMP = 'stonadskonto';
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
 const godkjentKlassenavn = 'godkjentPeriode';
 const avvistKlassenavn = 'avvistPeriode';
 const endretClassnavn = 'endretPeriode';
@@ -130,7 +130,7 @@ const getCustomTimes = (
 ) => {
   // TODO: trumfa tps med avklartebarn fra lösningen - blir TPS-barn en del av dem?
   const dodeBarn = familiehendelse && !familiehendelse.brukAntallBarnFraTPS && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0
-    ? familiehendelse.avklartBarn.filter(barn => barn.dodsdato) : barnFraTps.filter(barn => barn.dodsdato);
+    ? familiehendelse.avklartBarn.filter((barn) => barn.dodsdato) : barnFraTps.filter((barn) => barn.dodsdato);
 
   const customTimesBuilder = {
     soknad: parseDateString(soknadDate),
@@ -147,7 +147,7 @@ const getCustomTimes = (
   return (customTimesBuilder);
 };
 
-const isInnvilget = uttaksresultatActivity => uttaksresultatActivity.periodeResultatType.kode === periodeResultatType.INNVILGET;
+const isInnvilget = (uttaksresultatActivity) => uttaksresultatActivity.periodeResultatType.kode === periodeResultatType.INNVILGET;
 
 /**
  * Uttak
@@ -197,8 +197,8 @@ export class UttakImpl extends Component {
   setSelectedDefaultPeriod() {
     const { selectedItem } = this.state;
     const { uttakPerioder } = this.props;
-    const defaultSelectedElement = uttakPerioder.find(period => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
-    const defaultSelectedElementIfNoAP = uttakPerioder.find(period => period.hovedsoker);
+    const defaultSelectedElement = uttakPerioder.find((period) => period.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
+    const defaultSelectedElementIfNoAP = uttakPerioder.find((period) => period.hovedsoker);
     if (!selectedItem) {
       this.setState({ selectedItem: defaultSelectedElement || defaultSelectedElementIfNoAP });
     }
@@ -274,12 +274,12 @@ export class UttakImpl extends Component {
       return aktivitet;
     });
 
-    const otherThanUpdated = uttakPerioder.filter(o => o.id !== verdier.id && o.hovedsoker);
+    const otherThanUpdated = uttakPerioder.filter((o) => o.id !== verdier.id && o.hovedsoker);
     const sortedActivities = otherThanUpdated.concat(verdier);
     sortedActivities.sort((a, b) => a.id - b.id);
     this.updateStonadskontoer(sortedActivities);
     this.setFormField(ACTIVITY_PANEL_NAME, sortedActivities);
-    const uttakActivity = otherThanUpdated.find(o => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
+    const uttakActivity = otherThanUpdated.find((o) => o.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING
       || (o.tilknyttetStortinget && !Object.prototype.hasOwnProperty.call(o, 'erOppfylt')));
     this.setSelectedUttakActivity(uttakActivity || undefined);
   }
@@ -295,7 +295,7 @@ export class UttakImpl extends Component {
     if (currentSelectedItem) {
       this.setSelectedUttakActivity(undefined);
     } else {
-      const activity = uttakPerioder.find(item => item.id === 1);
+      const activity = uttakPerioder.find((item) => item.id === 1);
       this.setSelectedUttakActivity(activity);
     }
     event.preventDefault();
@@ -304,7 +304,7 @@ export class UttakImpl extends Component {
   selectHandler(eventProps) {
     const { uttakPerioder } = this.props;
     const { selectedItem: currentSelectedItem } = this.state;
-    const selectedItem = uttakPerioder.find(item => item.id === eventProps.items[0]);
+    const selectedItem = uttakPerioder.find((item) => item.id === eventProps.items[0]);
     if (currentSelectedItem) {
       this.setState({ selectedItem: undefined });
       this.setSelectedUttakActivity(selectedItem);
@@ -317,7 +317,7 @@ export class UttakImpl extends Component {
   nextPeriod(event) {
     const { uttakPerioder } = this.props;
     const { selectedItem } = this.state;
-    const newIndex = uttakPerioder.findIndex(item => item.id === selectedItem.id) + 1;
+    const newIndex = uttakPerioder.findIndex((item) => item.id === selectedItem.id) + 1;
     if (newIndex < uttakPerioder.length) {
       this.setSelectedUttakActivity(uttakPerioder[newIndex]);
     }
@@ -327,7 +327,7 @@ export class UttakImpl extends Component {
   prevPeriod(event) {
     const { uttakPerioder } = this.props;
     const { selectedItem } = this.state;
-    const newIndex = uttakPerioder.findIndex(item => item.id === selectedItem.id) - 1;
+    const newIndex = uttakPerioder.findIndex((item) => item.id === selectedItem.id) - 1;
     if (newIndex >= 0) {
       this.setSelectedUttakActivity(uttakPerioder[newIndex]);
     }
@@ -343,7 +343,7 @@ export class UttakImpl extends Component {
       return !kunOverStyrAp;
     }
 
-    const activeUttakAp = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
+    const activeUttakAp = aksjonspunkter.filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
     return (activeUttakAp.length < 1 || (activeUttakAp[0].toTrinnsBehandlingGodkjent === true && activeUttakAp[0].status.kode === 'UTFO'))
       && !manuellOverstyring;
   }
@@ -354,7 +354,7 @@ export class UttakImpl extends Component {
     if (stonadskonto && stonadskonto.stonadskontoer) {
       const kontoer = stonadskonto.stonadskontoer;
       const myArray = Object.entries(kontoer);
-       // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       for (const [name, periode] of myArray) { // eslint-disable-line no-restricted-syntax
         if (!periode.gyldigForbruk) {
           validationError = true;
@@ -378,10 +378,10 @@ export class UttakImpl extends Component {
       return true;
     }
 
-    if (!(uttaksresultatActivity.some(ac => Object.prototype.hasOwnProperty.call(ac, 'erOppfylt')))) {
+    if (!(uttaksresultatActivity.some((ac) => Object.prototype.hasOwnProperty.call(ac, 'erOppfylt')))) {
       return true;
     }
-    const ikkeOppfylt = uttaksresultatActivity.some(ac => (!Object.prototype.hasOwnProperty.call(ac, 'erOppfylt') && ac.tilknyttetStortinget)
+    const ikkeOppfylt = uttaksresultatActivity.some((ac) => (!Object.prototype.hasOwnProperty.call(ac, 'erOppfylt') && ac.tilknyttetStortinget)
       || ac.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING);
 
     if (!isDirty || ikkeOppfylt) {
@@ -404,7 +404,7 @@ export class UttakImpl extends Component {
     const kunOverStyrAp = aksjonspunkter.length === 1
       && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
       && aksjonspunkter[0].status.kode === 'OPPR';
-    const apUtenOverstyre = aksjonspunkter.filter(a => a.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
+    const apUtenOverstyre = aksjonspunkter.filter((a) => a.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
     return apUtenOverstyre.length > 0 || kunOverStyrAp;
   }
 
@@ -466,8 +466,7 @@ export class UttakImpl extends Component {
           )}
         </Row>
         {this.testForReadOnly(aksjonspunkter, kanOverstyre)
-        && <FormattedMessage id="Uttak.Overstyrt" />
-        }
+        && <FormattedMessage id="Uttak.Overstyrt" />}
         <div>
           <Row>
             <TimeLineInfo
@@ -512,8 +511,7 @@ export class UttakImpl extends Component {
                   isApOpen={isApOpen}
                   stonadskonto={stonadskonto}
                 />
-              )
-              }
+              )}
               {!selectedItem.hovedsoker
               && (
                 <UttakMedsokerReadOnly
@@ -526,8 +524,7 @@ export class UttakImpl extends Component {
                   isApOpen={false}
                   harSoktOmFlerbarnsdager={annenForelderSoktOmFlerbarnsdager}
                 />
-              )
-              }
+              )}
             </>
           )}
           {(!readOnly && !(this.testForReadOnly(aksjonspunkter, kanOverstyre)))
@@ -613,38 +610,38 @@ const determineMottatDato = (soknadsDato, mottatDato) => {
 
 const lagUttakMedOpphold = createSelector(
   [(state, props) => behandlingFormValueSelector(props.formName)(state, ACTIVITY_PANEL_NAME)],
-    uttaksresultatActivity => uttaksresultatActivity.map((uttak) => {
-      const { ...uttakPerioder } = uttak;
+  (uttaksresultatActivity) => uttaksresultatActivity.map((uttak) => {
+    const { ...uttakPerioder } = uttak;
 
-      // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
-      if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
-        const aktivitetArray = uttakPerioder.aktiviteter;
-        aktivitetArray.forEach((item) => {
-          item.trekkdager = null; // eslint-disable-line no-param-reassign
-        });
-      }
-      // remove to here
-      if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
-        const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
-        const oppholdInfo = {
-          stønadskontoType: {
-            kode: stonadskonto,
-            kodeverk: uttak.oppholdÅrsak.kodeverk,
-            navn: uttakPeriodeNavn[stonadskonto],
-          },
-          trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
-          trekkdager: null,
-        };
-        uttakPerioder.aktiviteter = [oppholdInfo];
-      }
-      return uttakPerioder;
-    }),
+    // Setter trekkdager til null - brukes som lowkey feature-toggle - remove when everything works (06.05.19)
+    if (uttakPerioder && uttakPerioder.aktiviteter.length > 0) {
+      const aktivitetArray = uttakPerioder.aktiviteter;
+      aktivitetArray.forEach((item) => {
+        item.trekkdager = null; // eslint-disable-line no-param-reassign
+      });
+    }
+    // remove to here
+    if (uttak.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT) {
+      const stonadskonto = oppholdArsakMapper[uttak.oppholdÅrsak.kode];
+      const oppholdInfo = {
+        stønadskontoType: {
+          kode: stonadskonto,
+          kodeverk: uttak.oppholdÅrsak.kodeverk,
+          navn: uttakPeriodeNavn[stonadskonto],
+        },
+        trekkdagerDesimaler: calcDays(moment(uttak.fom.toString()), moment(uttak.tom.toString())),
+        trekkdager: null,
+      };
+      uttakPerioder.aktiviteter = [oppholdInfo];
+    }
+    return uttakPerioder;
+  }),
 );
 
 const lagUttaksresultatActivity = createSelector(
   [lagUttakMedOpphold, (state, props) => props], (uttakMedOpphold, props) => {
-    const tilknyttetStortinget = !!props.aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
-    return uttakMedOpphold.map(periode => ({ tilknyttetStortinget, ...periode }));
+    const tilknyttetStortinget = !!props.aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.TILKNYTTET_STORTINGET && props.isApOpen);
+    return uttakMedOpphold.map((periode) => ({ tilknyttetStortinget, ...periode }));
   },
 );
 
@@ -667,44 +664,44 @@ const getFodselTerminDato = createSelector(
 );
 
 const addClassNameGroupIdToPerioder = (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, hovedsoker) => {
-    const behandlingStatusKode = bStatus.kode;
-    const annenForelderPerioder = uttakResultatPerioder.perioderAnnenpart;
-    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-    const perioderMedClassName = [];
-    const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
+  const behandlingStatusKode = bStatus.kode;
+  const annenForelderPerioder = uttakResultatPerioder.perioderAnnenpart;
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  const perioderMedClassName = [];
+  const perioder = hovedsoker ? hovedsokerPerioder : annenForelderPerioder;
 
-    perioder.forEach((item, index) => {
-      const stonadskontoType = getCorrectPeriodName(item, getKodeverknavn);
-      const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
-      const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
-      const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
-      const copyOfItem = Object.assign({}, item);
-      const isEndret = item.begrunnelse
+  perioder.forEach((item, index) => {
+    const stonadskontoType = getCorrectPeriodName(item, getKodeverknavn);
+    const opphold = item.oppholdÅrsak.kode !== oppholdArsakType.UDEFINERT;
+    const status = hovedsoker ? getStatusPeriodeHoved(item) : getStatusPeriodeMed(item);
+    const gradert = (item.gradertAktivitet && item.graderingInnvilget) ? 'gradert' : '';
+    const copyOfItem = { ...item };
+    const isEndret = item.begrunnelse
       && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK ? endretClassnavn : '';
-      const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
-      copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
-      copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
-      copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
-      copyOfItem.hovedsoker = hovedsoker;
-      copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
-      copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
-      perioderMedClassName.push(copyOfItem);
-    });
-    return perioderMedClassName;
-  };
+    const oppholdStatus = status === 'undefined' ? 'opphold-manuell' : 'opphold';
+    copyOfItem.id = index + 1 + (hovedsoker ? 0 : hovedsokerPerioder.length);
+    copyOfItem.tomMoment = moment(item.tom).add(1, 'days');
+    copyOfItem.className = opphold ? oppholdStatus : `${status} ${isEndret} ${gradert}`;
+    copyOfItem.hovedsoker = hovedsoker;
+    copyOfItem.group = annenForelderPerioder.length > 0 && hovedsoker ? 2 : 1;
+    copyOfItem.title = createTooltipContent(stonadskontoType, intl, item);
+    perioderMedClassName.push(copyOfItem);
+  });
+  return perioderMedClassName;
+};
 
 const addClassNameGroupIdToPerioderHovedsoker = createSelector(
   [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, behandlingSelectors.getBehandlingStatus, getAlleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, true,
-),
+  ),
 );
 
 const addClassNameGroupIdToPerioderAnnenForelder = createSelector(
   [lagUttakMedOpphold, getUttaksresultatPerioder, (state, props) => props.intl, behandlingSelectors.getBehandlingStatus, getAlleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, false,
-),
+  ),
 );
 
 const slaSammenHovedsokerOgAnnenForelder = createSelector(
@@ -734,8 +731,8 @@ const mapStateToProps = (state, props) => {
   const hovedsokerPerioder = addClassNameGroupIdToPerioderHovedsoker(state, props);
   const annenForelderPerioder = addClassNameGroupIdToPerioderAnnenForelder(state, props);
   const uttakPerioder = slaSammenHovedsokerOgAnnenForelder(state, props);
-  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter(p => p.flerbarnsdager === true).length > 0;
-  const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter(p => p.flerbarnsdager === true).length > 0;
+  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter((p) => p.flerbarnsdager === true).length > 0;
+  const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter((p) => p.flerbarnsdager === true).length > 0;
 
   return {
     saksnummer: getSelectedSaksnummer(state),
@@ -763,7 +760,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,

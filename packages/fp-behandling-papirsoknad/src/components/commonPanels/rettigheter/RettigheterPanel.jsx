@@ -50,8 +50,7 @@ export const RettigheterPanel = ({
           label={{ id: 'Registrering.Rettigheter.MannAdoptererAlene' }}
           value={rettighet.MANN_ADOPTERER_ALENE}
         />
-        )
-        }
+        )}
         <RadioOption
           className={styles.breakLabelText}
           label={{ id: 'Registrering.Rettigheter.IkkeRelevant' }}

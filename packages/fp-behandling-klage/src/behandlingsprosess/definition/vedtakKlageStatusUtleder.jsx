@@ -7,8 +7,8 @@ const getVedtakStatus = ({
   aksjonspunkter, behandlingsresultat,
 }) => {
   const allAksjonspunkterIkkeUtfort = aksjonspunkter
-    .filter(ap => isKlageAksjonspunkt(ap.definisjon.kode))
-    .some(ak => ak.status.kode !== aksjonspunktStatus.UTFORT);
+    .filter((ap) => isKlageAksjonspunkt(ap.definisjon.kode))
+    .some((ak) => ak.status.kode !== aksjonspunktStatus.UTFORT);
   if (!allAksjonspunkterIkkeUtfort) {
     const resultatTypeCode = behandlingsresultat.type.kode;
     if (resultatTypeCode === behandlingResultatType.KLAGE_AVVIST || resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {

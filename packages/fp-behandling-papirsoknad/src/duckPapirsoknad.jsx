@@ -8,7 +8,7 @@ import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
 const reducerName = 'papirsoknad';
 
 /* Action types */
-const actionType = name => `${reducerName}/${name}`;
+const actionType = (name) => `${reducerName}/${name}`;
 export const RESET_REGISTRERING = actionType('RESET_REGISTRERING');
 export const SET_SOKNAD_DATA = actionType('SET_SOKNAD_DATA');
 const SET_BEHANDLING_INFO = actionType('SET_BEHANDLING_INFO');
@@ -19,12 +19,12 @@ export const resetRegistrering = () => ({
   type: RESET_REGISTRERING,
 });
 
-export const setSoknadData = soknadData => ({
+export const setSoknadData = (soknadData) => ({
   type: SET_SOKNAD_DATA,
   data: soknadData,
 });
 
-export const setBehandlingInfo = info => ({
+export const setBehandlingInfo = (info) => ({
   type: SET_BEHANDLING_INFO,
   data: info,
 });
@@ -40,7 +40,7 @@ export const resetRegistreringSuccess = papirsoknadApi.SAVE_AKSJONSPUNKT.resetRe
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
   behandlingIdentifier, behandlingerVersjonMappedById,
-) => dispatch => dispatch(papirsoknadApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
+) => (dispatch) => dispatch(papirsoknadApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
       dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
@@ -48,7 +48,7 @@ export const updateBehandling = (
     return Promise.resolve(response);
   });
 
-export const resetBehandling = dispatch => Promise.all([
+export const resetBehandling = (dispatch) => Promise.all([
   dispatch(papirsoknadApi.BEHANDLING.resetRestApi()()),
 ]);
 
@@ -57,10 +57,10 @@ export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispa
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const updateFagsakAndBehandling = behandlingIdentifier => dispatch => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
+const updateFagsakAndBehandling = (behandlingIdentifier) => (dispatch) => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
   .then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
-export const updateOnHold = (params, behandlingIdentifier) => dispatch => dispatch(papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
+export const updateOnHold = (params, behandlingIdentifier) => (dispatch) => dispatch(papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
 
 export const resetPapirsoknadContext = () => (dispatch) => {
@@ -108,25 +108,25 @@ export const papirsoknadReducer = (state = initialState, action = {}) => {
 reducerRegistry.register(reducerName, papirsoknadReducer);
 
 // Selectors (Kun de knyttet til reducer)
-const getPapirsoknadContext = state => state.default[reducerName];
+const getPapirsoknadContext = (state) => state.default[reducerName];
 
-export const getSelectedBehandlingId = createSelector([getPapirsoknadContext], papirsoknadContext => papirsoknadContext.behandlingId);
-export const getSelectedSaksnummer = createSelector([getPapirsoknadContext], papirsoknadContext => papirsoknadContext.fagsakSaksnummer);
+export const getSelectedBehandlingId = createSelector([getPapirsoknadContext], (papirsoknadContext) => papirsoknadContext.behandlingId);
+export const getSelectedSaksnummer = createSelector([getPapirsoknadContext], (papirsoknadContext) => papirsoknadContext.fagsakSaksnummer);
 export const getBehandlingIdentifier = createSelector(
   [getSelectedBehandlingId, getSelectedSaksnummer],
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
 
-export const getKodeverk = kodeverkType => createSelector(
-  [getPapirsoknadContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
+export const getKodeverk = (kodeverkType) => createSelector(
+  [getPapirsoknadContext], (behandlingContext) => behandlingContext.kodeverk[kodeverkType],
 );
-export const getHasShownBehandlingPaVent = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent);
+export const getHasShownBehandlingPaVent = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.hasShownBehandlingPaVent);
 
-export const getFagsakStatus = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakStatus);
-export const getFagsakPerson = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakPerson);
-export const getFagsakYtelseType = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.fagsakYtelseType);
-export const isForeldrepengerFagsak = createSelector([getPapirsoknadContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak);
+export const getFagsakStatus = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus);
+export const getFagsakPerson = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson);
+export const getFagsakYtelseType = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType);
+export const isForeldrepengerFagsak = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.isForeldrepengerFagsak);
 
 
 export const getSoknadData = createSelector(
@@ -134,8 +134,8 @@ export const getSoknadData = createSelector(
   (papirsoknadContext = {}) => papirsoknadContext.soknadData,
 );
 
-const getFormState = state => state.form;
-export const getRegisteredFields = formName => createSelector(
+const getFormState = (state) => state.form;
+export const getRegisteredFields = (formName) => createSelector(
   [getFormState],
   (formState = {}) => (formState[formName] ? formState[formName].registeredFields : {}),
 );

@@ -226,7 +226,7 @@ describe('BehandlingMenu-reducer', () => {
 
     const updater = {
       resetBehandling: () => () => Promise.resolve(sinon.spy()),
-      openBehandlingForChanges: () => () => params => Promise.resolve({ type: 'OPEN_BEHANDLING_FOR_CHANGES', data: params }),
+      openBehandlingForChanges: () => () => (params) => Promise.resolve({ type: 'OPEN_BEHANDLING_FOR_CHANGES', data: params }),
     };
     behandlingUpdater.setUpdater(updater);
 

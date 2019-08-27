@@ -32,8 +32,8 @@ export const getUniqueListOfArbeidsforholdFromAndeler = (andeler) => {
 const emptyList = [];
 
 export const getUniqueListOfArbeidsforhold = createSelector([getEndringBeregningsgrunnlagPerioder],
-  endringPerioder => getUniqueListOfArbeidsforholdFromAndeler(endringPerioder.length > 0
-  ? endringPerioder.flatMap(p => p.endringBeregningsgrunnlagAndeler) : emptyList));
+  (endringPerioder) => getUniqueListOfArbeidsforholdFromAndeler(endringPerioder.length > 0
+    ? endringPerioder.flatMap((p) => p.endringBeregningsgrunnlagAndeler) : emptyList));
 
 export const getUniqueListOfArbeidsforholdFields = (fields) => {
   const arbeidsgiverList = [];

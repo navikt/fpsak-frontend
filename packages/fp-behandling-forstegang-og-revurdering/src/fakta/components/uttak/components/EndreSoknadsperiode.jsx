@@ -18,7 +18,7 @@ const maxValue100 = maxValue(100);
 const minValue1 = minValue(1);
 
 const selectValues = () => Object.keys(stonadskontoType)
-  .map(key => (<option key={key} value={key}>{uttakPeriodeNavn[key]}</option>));
+  .map((key) => (<option key={key} value={key}>{uttakPeriodeNavn[key]}</option>));
 
 const gyldigeÅrsaker = [
   oppholdArsakType.UTTAK_MØDREKVOTE_ANNEN_FORELDER,
@@ -27,8 +27,8 @@ const gyldigeÅrsaker = [
   oppholdArsakType.UTTAK_FORELDREPENGER_ANNEN_FORELDER];
 
 const mapPeriodeTyper = () => Object.keys(oppholdArsakType)
-  .filter(key => gyldigeÅrsaker.includes(key))
-  .map(key => (<option key={key} value={key}>{oppholdArsakKontoNavn[key]}</option>));
+  .filter((key) => gyldigeÅrsaker.includes(key))
+  .map((key) => (<option key={key} value={key}>{oppholdArsakKontoNavn[key]}</option>));
 
 export const EndreSoknadsperiode = ({ withGradering, oppholdArsak, førsteUttaksdato }) => (
   <ArrowBox marginTop={10}>
@@ -50,8 +50,7 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak, førsteUttaks
           selectValues={selectValues()}
           label={{ id: 'UttakInfoPanel.StonadsKonto' }}
         />
-        )
-        }
+        )}
         {oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT
         && (
         <SelectField
@@ -60,25 +59,23 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak, førsteUttaks
           label={{ id: 'UttakInfoPanel.StonadsKonto' }}
           validate={[required]}
         />
-        )
-        }
+        )}
       </FlexColumn>
       {withGradering
         && (
-        <React.Fragment>
+        <>
           <FlexColumn>
             <DecimalField
               name="nyArbeidstidsprosent"
               label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
               bredde="XS"
               validate={[required, maxValue100, minValue1, hasValidDecimal]}
-              normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+              normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
             />
           </FlexColumn>
           <div className={styles.suffix}>%</div>
-        </React.Fragment>
-        )
-      }
+        </>
+        )}
     </FlexRow>
   </ArrowBox>
 );

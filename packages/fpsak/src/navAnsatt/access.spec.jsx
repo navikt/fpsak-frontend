@@ -18,9 +18,9 @@ import {
   writeAccess,
 } from './access';
 
-const forEachFagsakAndBehandlingStatus = callback => (
-  Object.values(fagsakStatusCode).forEach(fagsakStatus => Object.values(behandlingStatusCode)
-    .forEach(behandlingStatus => callback(fagsakStatus, behandlingStatus)))
+const forEachFagsakAndBehandlingStatus = (callback) => (
+  Object.values(fagsakStatusCode).forEach((fagsakStatus) => Object.values(behandlingStatusCode)
+    .forEach((behandlingStatus) => callback(fagsakStatus, behandlingStatus)))
 );
 
 const getTestName = (accessName, expected, fagsakStatus, behandlingStatus) => (

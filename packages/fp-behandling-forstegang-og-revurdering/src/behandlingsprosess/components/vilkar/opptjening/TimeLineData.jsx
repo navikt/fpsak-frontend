@@ -24,19 +24,19 @@ const isoToDdMmYyyy = (string) => {
   return parsedDate.isValid() ? parsedDate.format(DDMMYYYY_DATE_FORMAT) : string;
 };
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 
-const backgroundStyle = kode => (
+const backgroundStyle = (kode) => (
   (kode === MELLOMLIGGENDE_PERIODE
   || kode === opptjeningAktivitetKlassifisering.ANTATT_GODKJENT
   || kode === opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT) ? 'godkjent' : 'avvist'
 );
 
-const periodStatus = periodState => (periodState === opptjeningAktivitetKlassifisering.BEKREFTET_AVVIST
+const periodStatus = (periodState) => (periodState === opptjeningAktivitetKlassifisering.BEKREFTET_AVVIST
 || periodState === opptjeningAktivitetKlassifisering.ANTATT_AVVIST ? 'OpptjeningVilkarView.Avslatt' : 'OpptjeningVilkarView.Godkjent');
 
-const isPeriodGodkjent = period => (
+const isPeriodGodkjent = (period) => (
   !!(period.kode === opptjeningAktivitetKlassifisering.BEKREFTET_GODKJENT
     || period.kode === opptjeningAktivitetKlassifisering.ANTATT_GODKJENT
     || period.kode === MELLOMLIGGENDE_PERIODE)
@@ -75,8 +75,7 @@ const TimeLineData = ({
                   className={styles.image}
                 />
               </span>
-              )
-            }
+              )}
             {!isPeriodGodkjent(selectedPeriod.data.klasse)
             && (
             <span className={styles.image}>
@@ -85,8 +84,7 @@ const TimeLineData = ({
                 className={styles.image}
               />
             </span>
-            )
-            }
+            )}
             <FormattedMessage id={periodStatus(selectedPeriod.data.klasse.kode)} />
           </Column>
         </Row>

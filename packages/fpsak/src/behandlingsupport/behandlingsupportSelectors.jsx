@@ -21,7 +21,7 @@ const getReturnedIsRelevant = createSelector(
   [getTotrinnskontrollArsakerReadOnly, getBehandlingStatus],
   (toTrinnsAksjonspunkter = [], status = {}) => (
     toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
-      .some(ap => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES
+      .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES
   ),
 );
 

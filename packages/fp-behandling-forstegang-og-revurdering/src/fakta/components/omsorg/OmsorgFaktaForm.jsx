@@ -19,7 +19,7 @@ import styles from './omsorgFaktaForm.less';
 
 const { MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG } = aksjonspunktCodes;
 
-const getAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCode);
+const getAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 const OmsorgFaktaForm = ({
   aksjonspunkter,
@@ -38,16 +38,14 @@ const OmsorgFaktaForm = ({
         <Normaltekst className={styles.paddingBottom}>
           {oppgittAleneomsorgSoknad
             ? <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittAleneomsorg" />
-            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeAleneomsorg" />
-          }
+            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeAleneomsorg" />}
         </Normaltekst>
         <RadioGroupField name="aleneomsorg" readOnly={readOnly} validate={[required]} isEdited={aleneomsorgIsEdited}>
           <RadioOption label={{ id: 'OmsorgFaktaForm.HarAleneomsorg' }} value />
           <RadioOption label={<FormattedHTMLMessage id="OmsorgFaktaForm.HarIkkeAleneomsorg" />} value={false} />
         </RadioGroupField>
       </FaktaGruppe>
-      )
-    }
+      )}
     {hasAksjonspunkt(MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG, aksjonspunkter)
       && (
       <FaktaGruppe
@@ -58,8 +56,7 @@ const OmsorgFaktaForm = ({
         <Normaltekst className={styles.paddingBottom}>
           {oppgittOmsorgSoknad
             ? <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittOmsorg" />
-            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeOmsorg" />
-          }
+            : <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittIkkeOmsorg" />}
         </Normaltekst>
         <RadioGroupField name="omsorg" readOnly={readOnly} validate={[required]} isEdited={omsorgIsEdited}>
           <RadioOption label={{ id: 'OmsorgFaktaForm.HarOmsorg' }} value />
@@ -80,11 +77,9 @@ const OmsorgFaktaForm = ({
               </Column>
             </Row>
           )
-          : null
-        }
+          : null}
       </FaktaGruppe>
-      )
-    }
+      )}
   </div>
 );
 
@@ -127,19 +122,19 @@ OmsorgFaktaForm.buildInitialValues = (ytelsefordeling, aksjonspunkter) => {
   };
 };
 
-OmsorgFaktaForm.transformAleneomsorgValues = values => ({
+OmsorgFaktaForm.transformAleneomsorgValues = (values) => ({
   kode: MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG,
   aleneomsorg: values.aleneomsorg,
 });
 
-OmsorgFaktaForm.transformOmsorgValues = values => ({
+OmsorgFaktaForm.transformOmsorgValues = (values) => ({
   kode: MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG,
   omsorg: values.omsorg,
   ikkeOmsorgPerioder: values.ikkeOmsorgPerioder && values.ikkeOmsorgPerioder.length > 0 ? values.ikkeOmsorgPerioder : null,
 });
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   aleneomsorgIsEdited: !!getBehandlingYtelseFordeling(state).aleneOmsorgPerioder,
   omsorgIsEdited: !!getBehandlingYtelseFordeling(state).ikkeOmsorgPerioder,
   oppgittOmsorgSoknad: behandlingSelectors.getSoknad(state).oppgittRettighet.omsorgForBarnet,

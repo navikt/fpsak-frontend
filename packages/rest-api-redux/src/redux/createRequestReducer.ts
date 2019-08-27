@@ -45,65 +45,65 @@ interface Action {
    */
 const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state: State = initialState,
   action: Action = { type: '' }) => { // NOSONAR Switch brukes som standard i reducers
-    if (!action.type.includes(`@@REST/${name}`)) {
+  if (!action.type.includes(`@@REST/${name}`)) {
+    return state;
+  }
+  switch (action.type) {
+    case actionTypes.requestStarted():
+    case actionTypes.copyDataStarted(): {
+      return {
+        ...initialState,
+        data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
+        started: true,
+        meta: action.payload,
+      };
+    }
+    case actionTypes.statusRequestStarted():
+      return {
+        ...state,
+        statusRequestStarted: true,
+        statusRequestFinished: false,
+      };
+    case actionTypes.updatePollingMessage():
+      return {
+        ...state,
+        pollingMessage: action.payload,
+      };
+    case actionTypes.pollingTimeout():
+      return {
+        ...state,
+        pollingTimeout: true,
+      };
+    case actionTypes.statusRequestFinished():
+      return {
+        ...state,
+        statusRequestStarted: false,
+        statusRequestFinished: true,
+      };
+    case actionTypes.requestFinished():
+    case actionTypes.copyDataFinished():
+      return {
+        ...state,
+        started: false,
+        finished: true,
+        data: action.payload,
+        pollingMessage: undefined,
+      };
+    case actionTypes.requestError():
+      return {
+        ...state,
+        data: undefined,
+        started: false,
+        error: action.payload,
+        pollingMessage: undefined,
+      };
+    case actionTypes.reset():
+      return {
+        ...initialState,
+      };
+    default:
       return state;
-    }
-    switch (action.type) {
-      case actionTypes.requestStarted():
-      case actionTypes.copyDataStarted(): {
-        return {
-          ...initialState,
-          data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
-          started: true,
-          meta: action.payload,
-        };
-      }
-      case actionTypes.statusRequestStarted():
-        return {
-          ...state,
-          statusRequestStarted: true,
-          statusRequestFinished: false,
-        };
-      case actionTypes.updatePollingMessage():
-        return {
-          ...state,
-          pollingMessage: action.payload,
-        };
-      case actionTypes.pollingTimeout():
-        return {
-          ...state,
-          pollingTimeout: true,
-        };
-      case actionTypes.statusRequestFinished():
-        return {
-          ...state,
-          statusRequestStarted: false,
-          statusRequestFinished: true,
-        };
-      case actionTypes.requestFinished():
-      case actionTypes.copyDataFinished():
-        return {
-          ...state,
-          started: false,
-          finished: true,
-          data: action.payload,
-          pollingMessage: undefined,
-        };
-      case actionTypes.requestError():
-        return {
-          ...state,
-          data: undefined,
-          started: false,
-          error: action.payload,
-          pollingMessage: undefined,
-        };
-      case actionTypes.reset():
-        return {
-          ...initialState,
-        };
-      default:
-        return state;
-    }
-  };
+  }
+};
 
 export default createRequestReducer;

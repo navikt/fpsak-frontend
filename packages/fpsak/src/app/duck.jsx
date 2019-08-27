@@ -6,7 +6,7 @@ import fpsakApi from 'data/fpsakApi';
 export const reducerName = 'app';
 
 /* Action creators */
-export const fetchAllFeatureToggles = () => dispatch => (
+export const fetchAllFeatureToggles = () => (dispatch) => (
   dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()())
 );
 

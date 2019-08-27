@@ -20,9 +20,9 @@ import {
   required, hasValidDate, dateAfterOrEqual, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 
-const getParam = opplysning => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });
+const getParam = (opplysning) => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });
 
-const customErrorMessage = limit => ([{ id: 'FortsattMedlemskapFaktaPanel.DateNotAfterOrEqual' }, { limit }]);
+const customErrorMessage = (limit) => ([{ id: 'FortsattMedlemskapFaktaPanel.DateNotAfterOrEqual' }, { limit }]);
 
 /**
  * FortsattMedklemskapFaktaPanel
@@ -48,8 +48,7 @@ export const FortsattMedlemskapFaktaPanelImpl = ({
       </Column>
       <Column xs="6">
         {changedOpplysninger.length > 0
-          && <Normaltekst><FormattedMessage id="FortsattMedlemskapFaktaPanel.OpplysningerFraFolkeregisteret" /></Normaltekst>
-        }
+          && <Normaltekst><FormattedMessage id="FortsattMedlemskapFaktaPanel.OpplysningerFraFolkeregisteret" /></Normaltekst>}
         {changedOpplysninger.map((opplysning) => {
           if (opplysning.endretAttributt === 'Personstatus') {
             return <Normaltekst key={1}><FormattedMessage id="FortsattMedlemskapFaktaPanel.EndretPersonstatus" values={getParam(opplysning)} /></Normaltekst>;
@@ -80,18 +79,18 @@ FortsattMedlemskapFaktaPanelImpl.propTypes = {
 
 const getFirstDate = (date1, date2) => (moment(date1).isSameOrBefore(moment(date2)) ? date1 : date2);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   skjaringstidspunkt: getFirstDate(getBehandlingSkjaringstidspunkt(state), getBehandlingStartDatoForPermisjon(state)),
   changedOpplysninger: getBehandlingMedlemEndredeOpplysninger(state),
 });
 
 const FortsattMedlemskapFaktaPanel = connect(mapStateToProps)(FortsattMedlemskapFaktaPanelImpl);
 
-FortsattMedlemskapFaktaPanel.buildInitialValues = gjeldendeFom => ({
+FortsattMedlemskapFaktaPanel.buildInitialValues = (gjeldendeFom) => ({
   fom: gjeldendeFom || moment().format(ISO_DATE_FORMAT),
 });
 
-FortsattMedlemskapFaktaPanel.transformValues = values => ({
+FortsattMedlemskapFaktaPanel.transformValues = (values) => ({
   kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
   fomDato: values.fom,
 });

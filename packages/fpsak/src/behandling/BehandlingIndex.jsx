@@ -259,14 +259,14 @@ const mapStateToPropsFactory = (initialState) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   setHolder: setBehandlingInfoHolder,
   resetBehandlingContext: resetBehandlingContextActionCreator,
 }, dispatch);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
-  parse: saksnummerFromUrl => Number.parseInt(saksnummerFromUrl, 10),
+  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,

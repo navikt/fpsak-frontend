@@ -10,12 +10,12 @@ import getVedtakStatus from './vedtakStatusUtleder';
 
 const getStatusFromResultatstruktur = ({ resultatstruktur }) => (resultatstruktur && resultatstruktur.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT);
 
-const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);
+const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some((b) => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
 const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
   const isRevurdering = bt.REVURDERING === behandlingType.kode;
-  const hasAp = aksjonspunkter.some(ap => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
+  const hasAp = aksjonspunkter.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
   return !(isRevurdering && !hasAp);
 };
 
@@ -74,7 +74,7 @@ const svangerskapspengerBuilders = [
     .withStatus(getVedtakStatus),
 ];
 
-const createSvangerskapspengerBpProps = builderData => svangerskapspengerBuilders.reduce((currentFbs, fb) => {
+const createSvangerskapspengerBpProps = (builderData) => svangerskapspengerBuilders.reduce((currentFbs, fb) => {
   const res = fb.build(builderData, currentFbs.length);
   return res.isVisible ? currentFbs.concat([res]) : currentFbs;
 }, []);

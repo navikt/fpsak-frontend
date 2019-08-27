@@ -142,8 +142,8 @@ PersonArbeidsforholdDetailForm.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.updateArbeidsforhold(values);
-  return state => ({
+  const onSubmit = (values) => ownProps.updateArbeidsforhold(values);
+  return (state) => ({
     initialValues: ownProps.arbeidsforhold,
     readOnly: ownProps.readOnly || (!ownProps.arbeidsforhold.tilVurdering && !ownProps.arbeidsforhold.erEndret),
     hasReceivedInntektsmelding: !!behandlingFormValueSelector(PERSON_ARBEIDSFORHOLD_DETAIL_FORM)(state, 'mottattDatoInntektsmelding'),
@@ -156,12 +156,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 };
 
 
-const validateForm = values => ({
+const validateForm = (values) => ({
   ...LeggTilArbeidsforholdFelter.validate(values),
 });
 
 export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: PERSON_ARBEIDSFORHOLD_DETAIL_FORM,
-  validate: values => validateForm(values),
+  validate: (values) => validateForm(values),
   enableReinitialize: true,
 })(PersonArbeidsforholdDetailForm));

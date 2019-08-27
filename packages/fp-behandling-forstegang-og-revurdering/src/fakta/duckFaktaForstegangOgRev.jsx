@@ -17,13 +17,13 @@ const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (d
 export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(faktaRedux.actionCreators.resolveFaktaAksjonspunkterStarted());
   return dispatch(fpsakBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then((response) => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 export const resolveFaktaOverstyrAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(faktaRedux.actionCreators.resolveFaktaAksjonspunkterStarted());
   return dispatch(fpsakBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then((response) => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 reducerRegistry.register(reducerName, faktaRedux.reducer);

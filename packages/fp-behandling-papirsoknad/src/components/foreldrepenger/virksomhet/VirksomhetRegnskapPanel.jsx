@@ -53,8 +53,7 @@ export const VirksomhetRegnskapPanel = ({
       </Row>
       <VerticalSpacer sixteenPx />
     </ElementWrapper>
-    )
-    }
+    )}
   </ElementWrapper>
 
 );

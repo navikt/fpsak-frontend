@@ -11,7 +11,7 @@ import { getBehandlingFormName } from '@fpsak-frontend/fp-felles';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
-const findAllNames = children => (children ? React.Children
+const findAllNames = (children) => (children ? React.Children
   .map(children, (child) => {
     let all = [];
     if (child && child.props && child.props.children) {
@@ -42,8 +42,8 @@ export class BehandlingFormFieldCleaner extends Component {
     const oldNames = findAllNames(children);
     const newNames = findAllNames(nextProps.children);
 
-    const diff1 = oldNames.every(k => newNames.includes(k));
-    const diff2 = newNames.every(k => oldNames.includes(k));
+    const diff1 = oldNames.every((k) => newNames.includes(k));
+    const diff2 = newNames.every((k) => oldNames.includes(k));
     return !diff1 || !diff2;
   }
 
@@ -54,7 +54,7 @@ export class BehandlingFormFieldCleaner extends Component {
     const doNotRemoveFieldNames = findAllNames(children);
 
     fieldNames
-      .filter(fieldName => !doNotRemoveFieldNames.includes(fieldName))
+      .filter((fieldName) => !doNotRemoveFieldNames.includes(fieldName))
       .forEach((fieldName) => {
         reduxFieldChange(behandlingFormName, fieldName, null);
       });
@@ -81,7 +81,7 @@ BehandlingFormFieldCleaner.defaultProps = {
   children: [],
 };
 
-const getCompleteFormName = formName => createSelector(
+const getCompleteFormName = (formName) => createSelector(
   [getSelectedBehandlingId, behandlingSelectors.getBehandlingVersjon], (behandlingId, versjon) => getBehandlingFormName(behandlingId, versjon, formName),
 );
 
@@ -89,7 +89,7 @@ const mapStateToProps = (state, ownProps) => ({
   behandlingFormName: getCompleteFormName(ownProps.formName)(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxChange,
   }, dispatch),

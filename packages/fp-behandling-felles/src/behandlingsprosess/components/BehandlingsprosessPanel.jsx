@@ -24,7 +24,7 @@ const BehandlingsprosessPanel = ({
   children,
 }) => (
   <Panel className={styles.container}>
-    { behandlingspunkter.map(bp => (
+    { behandlingspunkter.map((bp) => (
       <BehandlingspunktIcon
         key={bp}
         behandlingspunkt={bp}
@@ -36,13 +36,11 @@ const BehandlingsprosessPanel = ({
         getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
         getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
       />
-    ))
-      }
-    <React.Fragment>
+    ))}
+    <>
       {selectedBehandlingspunkt
-          && children
-        }
-    </React.Fragment>
+          && children}
+    </>
   </Panel>
 );
 

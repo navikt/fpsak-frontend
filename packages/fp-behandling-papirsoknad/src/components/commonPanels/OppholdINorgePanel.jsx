@@ -43,8 +43,7 @@ export const OppholdINorgePanelImpl = ({
             {formatMessage({ id: 'Registrering.OppholdVedAdopsjon' })}
             {' '}
           </Undertekst>
-          )
-          }
+          )}
           {soknadData.getFamilieHendelseType() !== familieHendelseType.ADOPSJON
           && (
           <Undertekst>
@@ -52,8 +51,7 @@ export const OppholdINorgePanelImpl = ({
             {formatMessage({ id: 'Registrering.OppholdVedFodsel' })}
             {' '}
           </Undertekst>
-          )
-          }
+          )}
           <VerticalSpacer eightPx />
           <RadioGroupField name="oppholdINorge" readOnly={readOnly}>
             <RadioOption label={formatMessage({ id: 'Registrering.Opphold.Yes' })} value />
@@ -81,8 +79,7 @@ export const OppholdINorgePanelImpl = ({
                 />
               </ArrowBox>
             )
-            : null
-          }
+            : null}
         </NavFieldGroup>
         <NavFieldGroup>
           <Undertekst>
@@ -105,8 +102,7 @@ export const OppholdINorgePanelImpl = ({
                 />
               </ArrowBox>
             )
-            : null
-          }
+            : null}
         </NavFieldGroup>
       </Fieldset>
     </BorderBox>

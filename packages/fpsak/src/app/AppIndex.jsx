@@ -73,8 +73,8 @@ class AppIndex extends Component {
       error.toString(),
       info.componentStack
         .split('\n')
-        .map(line => line.trim())
-        .find(line => !!line),
+        .map((line) => line.trim())
+        .find((line) => !!line),
     ].join(' '));
   }
 
@@ -102,15 +102,14 @@ class AppIndex extends Component {
           />
           {!crashMessage && (
             <Home nrOfErrorMessages={queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessagesLength} />
-          )
-          }
+          )}
         </LanguageProvider>
       </AppConfigResolver>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   errorMessagesLength: errorHandler.getAllErrorMessages(state).length,
   crashMessage: errorHandler.getCrashMessage(state),
   navAnsattName: getNavAnsattName(state),
@@ -118,7 +117,7 @@ const mapStateToProps = state => ({
   showDetailedErrorMessages: getShowDetailedErrorMessages(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   showCrashMessage: errorHandler.getCrashMessageActionCreator(),
   removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);

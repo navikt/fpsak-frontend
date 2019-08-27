@@ -18,7 +18,7 @@ import BehandlingsprosessInnsynIndex from './BehandlingsprosessInnsynIndex';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Innsyn.
  */
-export const BehandlingsprosessInnsynContainer = props => (
+export const BehandlingsprosessInnsynContainer = (props) => (
   <BehandlingsprosessInnsynIndex {...props} />
 );
 
@@ -43,7 +43,7 @@ BehandlingsprosessInnsynContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

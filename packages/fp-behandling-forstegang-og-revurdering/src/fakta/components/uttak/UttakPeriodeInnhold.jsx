@@ -230,7 +230,7 @@ UttakPeriodeInnhold.defaultProps = {
   arbeidsgiver: {},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
 });
 

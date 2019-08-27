@@ -114,7 +114,7 @@ export const isKlageWithKA = (klageVurderingResultatNK) => {
 };
 
 const isBehandlingsresultatOpphor = createSelector(
-  [getBehandlingsresultat], behandlingsresultat => behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
+  [getBehandlingsresultat], (behandlingsresultat) => behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
 
 const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingIsKlage],
@@ -138,11 +138,11 @@ const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor,
   });
 
 const getAltImgTextCode = createSelector(
-  [getFagsakYtelseType], ytelseType => (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
+  [getFagsakYtelseType], (ytelseType) => (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
     ? 'FatterVedtakApprovalModal.InnvilgetES' : 'FatterVedtakApprovalModal.InnvilgetFP'),
 );
 
-const skalVurdereKonsekvensForYtelsen = behandlingsresultat => behandlingsresultat
+const skalVurdereKonsekvensForYtelsen = (behandlingsresultat) => behandlingsresultat
   && behandlingsresultat.konsekvenserForYtelsen;
 
 const isSameResultAsOriginalBehandling = (
@@ -207,7 +207,7 @@ const getInfoTextCode = createSelector(
   },
 );
 
-const isStatusFatterVedtak = createSelector([getBehandlingStatus], behandlingstatus => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK);
+const isStatusFatterVedtak = createSelector([getBehandlingStatus], (behandlingstatus) => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK);
 
 const mapStateToProps = (state, ownProps) => {
   const behandlingType = getBehandlingType(state);

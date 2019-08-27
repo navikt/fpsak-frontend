@@ -9,10 +9,10 @@ import { BarnPanelImpl as BarnPanel } from './BarnPanel';
 
 const getMockedFields = (fieldNames, children) => {
   const field = {
-    get: idx => children[idx],
+    get: (idx) => children[idx],
   };
   return {
-    map: callback => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
+    map: (callback) => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
   };
 };
 

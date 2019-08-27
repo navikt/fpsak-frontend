@@ -48,8 +48,8 @@ LonnsendringForm.propTypes = {
 };
 
 const buildInitialLonnsendring = (alleATAndeler) => {
-  const harSattLonnsendringTilTrue = alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === true) !== undefined;
-  const harSattLonnsendringTilFalse = alleATAndeler.find(andel => andel.lonnsendringIBeregningsperioden === false) !== undefined;
+  const harSattLonnsendringTilTrue = alleATAndeler.find((andel) => andel.lonnsendringIBeregningsperioden === true) !== undefined;
+  const harSattLonnsendringTilFalse = alleATAndeler.find((andel) => andel.lonnsendringIBeregningsperioden === false) !== undefined;
   return harSattLonnsendringTilTrue || (harSattLonnsendringTilFalse ? false : undefined);
 };
 
@@ -62,7 +62,7 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
   if (!alleAndeler || alleAndeler.length < 1) {
     return initialValues;
   }
-  const alleATAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const alleATAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
   if (!alleATAndeler || alleATAndeler.length < 1) {
     return initialValues;
   }
@@ -73,9 +73,9 @@ LonnsendringForm.buildInitialValues = (beregningsgrunnlag) => {
 };
 
 const findLonnsendringAndeler = (inntektVerdier, fastsatteAndelsnr, faktaOmBeregning) => inntektVerdier
-.filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
-.filter(field => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
-  .find(andel => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
+  .filter((field) => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
+  .filter((field) => faktaOmBeregning.arbeidsforholdMedLønnsendringUtenIM
+    .find((andel) => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
 
 LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
   if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
@@ -88,9 +88,9 @@ LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fa
     };
   }
   const andelerMedLonnsendringFields = values[lonnsendringField] ? findLonnsendringAndeler(inntektVerdier, fastsatteAndelsnr, faktaOmBeregning) : [];
-  andelerMedLonnsendringFields.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
+  andelerMedLonnsendringFields.forEach((field) => fastsatteAndelsnr.push(field.andelsnr));
   const lonnsendringInntekt = andelerMedLonnsendringFields
-    .map(field => ({
+    .map((field) => ({
       andelsnr: field.andelsnr,
       fastsatteVerdier: {
         fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),

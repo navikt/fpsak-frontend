@@ -60,11 +60,11 @@ const mapStateToProps = (state) => {
     fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiFinished()(state),
   ];
   return {
-    finishedLoadingBlockers: blockers.every(finished => finished),
+    finishedLoadingBlockers: blockers.every((finished) => finished),
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchNavAnsatt: fpsakApi.NAV_ANSATT.makeRestApiRequest(),
   fetchLanguageFile: fpsakApi.LANGUAGE_FILE.makeRestApiRequest(),
   fetchBehandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.makeRestApiRequest(),

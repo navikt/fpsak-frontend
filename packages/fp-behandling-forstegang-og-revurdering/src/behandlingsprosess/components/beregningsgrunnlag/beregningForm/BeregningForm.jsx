@@ -46,7 +46,7 @@ const {
 // ------------------------------------------------------------------------------------------ //
 
 const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter !== undefined && gjeldendeAksjonspunkter !== null
-  && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktKode);
+  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktKode);
 
 const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
   switch (gjeldendeAksjonspunkt.definisjon.kode) {
@@ -80,18 +80,18 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
     return undefined;
   }
-  const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
-  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter(ap => ap.definisjon.kode !== VURDER_DEKNINGSGRAD);
+  const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
+  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD);
   const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(andreAksjonspunkter);
-  const apneAksjonspunkt = sorterteAksjonspunkter.filter(ap => isAksjonspunktOpen(ap.status.kode));
+  const apneAksjonspunkt = sorterteAksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
-  const lukkedeAksjonspunkt = sorterteAksjonspunkter.filter(ap => !isAksjonspunktOpen(ap.status.kode));
+  const lukkedeAksjonspunkt = sorterteAksjonspunkter.filter((ap) => !isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttLukketAksjonspunkt = lukkedeAksjonspunkt.length > 0;
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
         <AksjonspunktHelpText isAksjonspunktOpen>
-          { apneAksjonspunkt.map(ap => (
+          { apneAksjonspunkt.map((ap) => (
             <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
           ))}
         </AksjonspunktHelpText>
@@ -100,7 +100,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
         <div>
           <VerticalSpacer sixteenPx />
           <AksjonspunktHelpText isAksjonspunktOpen={false}>
-            { lukkedeAksjonspunkt.map(ap => (
+            { lukkedeAksjonspunkt.map((ap) => (
               <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
             ))}
           </AksjonspunktHelpText>
@@ -114,9 +114,9 @@ const buildInitialValues = createSelector(
   [getAlleAndelerIForstePeriode, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getGjeldendeBeregningAksjonspunkter,
     getBeregningsgrunnlagPerioder, getGjeldendeDekningsgrad],
   (alleAndelerIForstePeriode, aksjonspunkter, gjeldendeAksjonspunkter, allePerioder, gjeldendeDekningsgrad) => {
-    const arbeidstakerAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
-    const frilanserAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
-    const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    const arbeidstakerAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+    const frilanserAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+    const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
     return {
       ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
       ...FastsettInntektTidsbegrenset.buildInitialValues(allePerioder),
@@ -234,10 +234,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const { gjeldendeAksjonspunkter, relevanteStatuser, submitCallback } = ownProps;
   const allePerioder = getBeregningsgrunnlagPerioder(initialState);
   const alleAndelerIForstePeriode = getAlleAndelerIForstePeriode(initialState);
-  const onSubmit = values => submitCallback(
+  const onSubmit = (values) => submitCallback(
     transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder),
   );
-  return state => ({
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state),
   });

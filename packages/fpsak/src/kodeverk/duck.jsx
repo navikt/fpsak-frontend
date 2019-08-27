@@ -3,15 +3,15 @@ import { createSelector } from 'reselect';
 import fpsakApi from 'data/fpsakApi';
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 
-export const fetchKodeverk = () => dispatch => behandlingOrchestrator.fetchKodeverk(dispatch);
+export const fetchKodeverk = () => (dispatch) => behandlingOrchestrator.fetchKodeverk(dispatch);
 
 /* Selectors */
-export const getKodeverk = kodeverkType => createSelector(
+export const getKodeverk = (kodeverkType) => createSelector(
   [fpsakApi.KODEVERK.getRestApiData()],
   (kodeverk = {}) => kodeverk[kodeverkType],
 );
 
-export const getFpTilbakeKodeverk = kodeverkType => createSelector(
+export const getFpTilbakeKodeverk = (kodeverkType) => createSelector(
   [fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()],
   (kodeverk = {}) => kodeverk[kodeverkType],
 );

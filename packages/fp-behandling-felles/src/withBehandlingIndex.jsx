@@ -90,8 +90,7 @@ export const withBehandlingIndex = (mapStateToPropsFactory, mapDispatchToProps, 
               hasManualPaVent={hasManualPaVent}
               ventearsaker={ventearsaker}
             />
-            )
-          }
+            )}
         </CommonBehandlingResolver>
       );
     }

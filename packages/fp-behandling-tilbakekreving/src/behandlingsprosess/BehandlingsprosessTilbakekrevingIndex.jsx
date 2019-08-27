@@ -7,7 +7,7 @@ import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import {
- setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn,
+  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
 import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
@@ -30,9 +30,9 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
     const { submitCallback, goToDefaultPage } = this.props;
 
     const afterAksjonspunktSubmit = () => {
-      const isFatterVedtakAp = aksjonspunktModels.some(ap => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
+      const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
-        this.setState(prevState => ({ ...prevState, showFatterVedtakModal: true }));
+        this.setState((prevState) => ({ ...prevState, showFatterVedtakModal: true }));
       } else {
         goToDefaultPage();
       }
@@ -71,7 +71,7 @@ BehandlingsprosessTilbakekrevingIndex.propTypes = {
 const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
   }, dispatch),

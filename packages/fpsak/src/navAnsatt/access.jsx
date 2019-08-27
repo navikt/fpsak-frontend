@@ -13,9 +13,9 @@ const kanVeilede = (navAnsatt = {}) => navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt = {}) => navAnsatt.kanSaksbehandle;
 const kanBeslutte = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanBeslutte;
 const kanOverstyre = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
-const isBehandlingAvTilbakekreving = type => (type ? type.kode === BehandlingType.TILBAKEKREVING : false);
+const isBehandlingAvTilbakekreving = (type) => (type ? type.kode === BehandlingType.TILBAKEKREVING : false);
 
-const accessibleFor = validNavAnsattPredicates => navAnsatt => validNavAnsattPredicates.some(predicate => predicate(navAnsatt));
+const accessibleFor = (validNavAnsattPredicates) => (navAnsatt) => validNavAnsattPredicates.some((predicate) => predicate(navAnsatt));
 
 const enabledFor = (validFagsakStauses, validBehandlingStatuses) => (fagsakStatus = {}, behandlingStatus = {}, isTilbakekrevingBehandling) => (
   (isTilbakekrevingBehandling || validFagsakStauses.includes(fagsakStatus.kode))
@@ -51,7 +51,7 @@ export const henleggBehandlingAccess = accessSelector(
 const settBehandlingPaVentAccessSelector = (navAnsatt, soknad, aksjonspunkter, type) => {
   const hasSoknad = isObject(soknad);
   const isInnhentSoknadopplysningerSteg = aksjonspunkter
-    ? aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode) && ap.definisjon.kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD) : false;
+    ? aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.definisjon.kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD) : false;
   const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
     ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN || type.kode === BehandlingType.TILBAKEKREVING
     : false;
@@ -98,12 +98,12 @@ export const opprettNyForstegangsBehandlingAccess = accessSelector(
   [fagsakStatusCode.AVSLUTTET],
   [behandlingStatusCode.AVSLUTTET],
 );
-const infotrygdSelector = selectedFagsak => ({
+const infotrygdSelector = (selectedFagsak) => ({
   employeeHasAccess: true,
   isEnabled: selectedFagsak && selectedFagsak.skalBehandlesAvInfotrygd,
 });
 
-export const sjekkOmSkalTilInfotrygdAccess = selectedFagsak => infotrygdSelector(selectedFagsak);
+export const sjekkOmSkalTilInfotrygdAccess = (selectedFagsak) => infotrygdSelector(selectedFagsak);
 
 export const gjenopptaBehandlingAccess = accessSelector(
   [kanSaksbehandle],

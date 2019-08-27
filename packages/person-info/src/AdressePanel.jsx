@@ -46,14 +46,13 @@ export const AdressePanel = ({
           >
             {region}
           </EtikettFokus>
-          )
-          }
+          )}
           <EtikettFokus
             type="fokus"
             typo="undertekst"
             title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
           >
-            {personstatusTypes.find(s => s.kode === personstatus.kode).navn}
+            {personstatusTypes.find((s) => s.kode === personstatus.kode).navn}
           </EtikettFokus>
           {sivilstandtype
           && (
@@ -62,10 +61,9 @@ export const AdressePanel = ({
             typo="undertekst"
             title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}
           >
-            {sivilstandTypes.find(s => s.kode === sivilstandtype.kode).navn}
+            {sivilstandTypes.find((s) => s.kode === sivilstandtype.kode).navn}
           </EtikettFokus>
-          )
-          }
+          )}
           {isPrimaryParent
           && (
           <EtikettFokus
@@ -75,8 +73,7 @@ export const AdressePanel = ({
           >
             {intl.formatMessage({ id: malformTekstKode })}
           </EtikettFokus>
-          )
-          }
+          )}
         </div>
       </Row>
       <Row>

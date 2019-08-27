@@ -41,18 +41,16 @@ const BpPanelTemplate = ({
           <Normaltekst>{lovReferanse}</Normaltekst>
           <VerticalSpacer eightPx />
         </ElementWrapper>
-        )
-      }
+        )}
       {bpStatus && isAksjonspunktOpen
         && (
         <ElementWrapper>
           <VilkarResultPanel status={bpStatus} />
           <VerticalSpacer eightPx />
         </ElementWrapper>
-        )
-      }
+        )}
       <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen && !readOnly}>
-        {aksjonspunktHelpTexts.map(aht => intl.formatMessage({ id: aht }))}
+        {aksjonspunktHelpTexts.map((aht) => intl.formatMessage({ id: aht }))}
       </AksjonspunktHelpText>
       <VerticalSpacer twentyPx />
       {children}

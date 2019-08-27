@@ -50,8 +50,7 @@ export const VirksomhetStartetEndretPanel = ({
               label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.GjeldendeFom" />}
             />
           </ArrowBox>
-          )
-          }
+          )}
           <CheckboxField name="erNyoppstartet" label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.ErNyoppstartet" />} />
           <CheckboxField name="erNyIArbeidslivet" label={<FormattedMessage id="Registrering.VirksomhetNyIArbeidslivetPanel.ErNyIArbeidslivet" />} />
           {erNyIArbeidslivet
@@ -64,8 +63,7 @@ export const VirksomhetStartetEndretPanel = ({
               label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.GjeldendeFom" />}
             />
           </ArrowBox>
-          )
-          }
+          )}
           <TextAreaField
             name="beskrivelseAvEndring"
             label={<FormattedMessage id="Registrering.VirksomhetStartetPanel.VirksomhetEndretBeskrivelse" />}
@@ -84,8 +82,7 @@ export const VirksomhetStartetEndretPanel = ({
         </ArrowBox>
       </Column>
     </Row>
-    )
-    }
+    )}
     <VerticalSpacer eightPx />
   </ElementWrapper>
 

@@ -18,7 +18,7 @@ import BehandlingsprosessKlageIndex from './BehandlingsprosessKlageIndex';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Klage.
  */
-export const BehandlingsprosessKlageContainer = props => (
+export const BehandlingsprosessKlageContainer = (props) => (
   <BehandlingsprosessKlageIndex {...props} />
 );
 
@@ -44,7 +44,7 @@ BehandlingsprosessKlageContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

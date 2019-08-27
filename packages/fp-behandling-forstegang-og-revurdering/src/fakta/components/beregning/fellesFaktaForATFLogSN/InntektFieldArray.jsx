@@ -15,7 +15,7 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
- mapAndelToField, skalHaBesteberegningSelector, skalFastsetteInntektForSN,
+  mapAndelToField, skalHaBesteberegningSelector, skalFastsetteInntektForSN,
 } from './BgFordelingUtils';
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
@@ -166,8 +166,7 @@ export const InntektFieldArrayImpl = ({
           erKunYtelse={erKunYtelse}
           fields={fields}
         />
-      )
-      }
+      )}
       <VerticalSpacer eightPx />
     </NavFieldGroup>
   );
@@ -194,8 +193,8 @@ InntektFieldArrayImpl.defaultProps = {
 
 const InntektFieldArray = injectIntl(InntektFieldArrayImpl);
 
-InntektFieldArray.transformValues = values => (values
-  ? values.filter(({ skalRedigereInntekt }) => skalRedigereInntekt).map(fieldValue => ({
+InntektFieldArray.transformValues = (values) => (values
+  ? values.filter(({ skalRedigereInntekt }) => skalRedigereInntekt).map((fieldValue) => ({
     andelsnr: fieldValue.andelsnr,
     fastsattBelop: removeSpacesFromNumber(fieldValue.fastsattBelop),
     inntektskategori: fieldValue.inntektskategori,
@@ -219,7 +218,7 @@ InntektFieldArray.validate = (values, erKunYtelse, skalRedigereInntekt) => {
       fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
       return fieldErrors.andel || fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
     });
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   if (isArrayEmpty(values)) {
@@ -236,13 +235,13 @@ InntektFieldArray.buildInitialValues = (andeler) => {
   if (!andeler || andeler.length === 0) {
     return {};
   }
-  return andeler.map(a => mapAndelToField(a));
+  return andeler.map((a) => mapAndelToField(a));
 };
 
 const finnDagpengeAndelLagtTilIForrige = (bg) => {
   const andelerLagtTil = bg.beregningsgrunnlagPeriode[0].andelerLagtTilManueltIForrige;
   return andelerLagtTil
-    ? andelerLagtTil.find(andel => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) : undefined;
+    ? andelerLagtTil.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) : undefined;
 };
 
 export const mapStateToProps = (state) => {

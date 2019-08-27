@@ -14,8 +14,8 @@ import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
 import styles from './uttakTimeLineData.less';
 import UttakActivity from './UttakActivity';
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 
 
 const UttakMedsokerReadOnly = ({

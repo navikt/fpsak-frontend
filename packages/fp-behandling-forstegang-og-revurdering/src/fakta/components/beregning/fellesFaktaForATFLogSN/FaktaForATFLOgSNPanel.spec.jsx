@@ -33,10 +33,10 @@ const aksjonspunkter = [{
 
 const showTableCallback = sinon.spy();
 
-const lagBeregningsgrunnlag = andeler => ({
+const lagBeregningsgrunnlag = (andeler) => ({
   beregningsgrunnlagPeriode: [
     {
-      beregningsgrunnlagPrStatusOgAndel: andeler.map(andel => (
+      beregningsgrunnlagPrStatusOgAndel: andeler.map((andel) => (
         {
           andelsnr: andel.andelsnr,
           aktivitetStatus: { kode: andel.aktivitetStatus },
@@ -102,7 +102,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const andel1 = { andelsnr: 1, aktivitetStatus: { kode: 'ATFL' } };
     const andel2 = { andelsnr: 2, aktivitetStatus: { kode: 'SN' } };
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: aktivePaneler.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: aktivePaneler.map((kode) => ({ kode })),
       besteberegningAndeler: [andel1, andel2],
       vurderBesteberegning: { andeler: [andel1, andel2] },
     };
@@ -189,7 +189,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     };
 
     const faktaOmBeregning = {
-      faktaOmBeregningTilfeller: aktivePaneler.map(kode => ({ kode })),
+      faktaOmBeregningTilfeller: aktivePaneler.map((kode) => ({ kode })),
       arbeidsforholdMedLønnsendringUtenIM: [forholdMedLonnsendringUtenIM],
       arbeidstakerOgFrilanserISammeOrganisasjonListe: [forholdMedAtOgFl],
       frilansAndel,

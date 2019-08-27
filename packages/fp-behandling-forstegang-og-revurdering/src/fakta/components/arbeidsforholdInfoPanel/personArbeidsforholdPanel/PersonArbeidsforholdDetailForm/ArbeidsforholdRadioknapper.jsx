@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/components/BehandlingFormFieldCleaner';
 import {
- dateAfterOrEqual, hasValidDate, required, dateIsBefore,
+  dateAfterOrEqual, hasValidDate, required, dateIsBefore,
 } from '@fpsak-frontend/utils';
 import DatepickerField from '@fpsak-frontend/form/src/DatepickerField';
 import moment from 'moment';
@@ -26,10 +26,10 @@ const AA_REGISTERET = 'aa-registeret';
 // METHODS
 // ----------------------------------------------------------------------------------
 
-const arbeidsforholdTomDatoPickerErrorMsg = dato => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
-const dateMustBeBeforeSkjaeringstidspunkt = dato => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeSkjaeringstidspunkt' }, { dato }]);
+const arbeidsforholdTomDatoPickerErrorMsg = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotAfterOrEqual' }, { dato }]);
+const dateMustBeBeforeSkjaeringstidspunkt = (dato) => ([{ id: 'PersonArbeidsforholdDetailForm.DateNotBeforeSkjaeringstidspunkt' }, { dato }]);
 
-const isKildeAaRegisteret = arbeidsforhold => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
+const isKildeAaRegisteret = (arbeidsforhold) => arbeidsforhold.kilde && arbeidsforhold.kilde.navn.toLowerCase() === AA_REGISTERET;
 
 const skalDisableOverstyrTom = (arbeidsforhold) => {
   const erTomDatoLikEllerEtterSkjaeringstidspunkt = moment(arbeidsforhold.tomDato).isSameOrAfter(arbeidsforhold.skjaeringstidspunkt);
@@ -47,7 +47,7 @@ const skalViseInntektIkkeMedTilBeregningsgrunnlagetValgmulighet = (arbeidsforhol
   return fomDatoFoerStp && tomDatoIkkeSattEllerEtterStp && !hasReceivedInntektsmelding;
 };
 
-const erFlerePermisjoner = arbeidsforhold => arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1;
+const erFlerePermisjoner = (arbeidsforhold) => arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1;
 
 const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (arbeidsforhold, hasReceivedInntektsmelding, arbeidsforholdHandlingVerdi, formName, readOnly) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
@@ -96,7 +96,7 @@ const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (arbeidsforhold, hasRec
   );
 };
 
-const utledAktivtArbeidsforholdLabel = arbeidsforhold => (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0
+const utledAktivtArbeidsforholdLabel = (arbeidsforhold) => (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0
   ? 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon'
   : 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt');
 
@@ -166,11 +166,11 @@ const ArbeidsforholdRadioknapper = ({
       </BehandlingFormFieldCleaner>
     </RadioOption>
     { utledRadioOptionForArbeidsforholdSomIkkeErAktive(
-        arbeidsforhold,
-        hasReceivedInntektsmelding,
-        arbeidsforholdHandlingVerdi,
-        formName,
-        readOnly,
+      arbeidsforhold,
+      hasReceivedInntektsmelding,
+      arbeidsforholdHandlingVerdi,
+      formName,
+      readOnly,
     )}
   </RadioGroupField>
 );

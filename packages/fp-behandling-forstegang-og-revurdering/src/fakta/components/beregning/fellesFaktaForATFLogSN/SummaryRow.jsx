@@ -20,15 +20,14 @@ const summerFordeling = (fields, skalRedigereInntekt) => {
 };
 
 const SummaryRow = ({
- skalVisePeriode, skalViseRefusjon, readOnly, sumFordeling,
+  skalVisePeriode, skalViseRefusjon, readOnly, sumFordeling,
 }) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
     </TableColumn>
     {skalVisePeriode
-          && <TableColumn />
-    }
+          && <TableColumn />}
     <TableColumn className={styles.rightAlign}>
       <div className={styles.readOnlyContainer}>
         <Normaltekst className={readOnly ? styles.readOnlyContent : ''}>
@@ -37,8 +36,7 @@ const SummaryRow = ({
       </div>
     </TableColumn>
     {skalViseRefusjon
-          && <TableColumn />
-    }
+          && <TableColumn />}
     <TableColumn />
   </TableRow>
 );

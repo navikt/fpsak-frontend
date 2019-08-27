@@ -64,8 +64,7 @@ const InntektOgYtelserFaktaPanelImpl = ({ inntekter, intl }) => {
               </TableColumn>
             </TableRow>
           );
-        })
-        }
+        })}
       </Table>
     </Ekspanderbartpanel>
   );
@@ -94,15 +93,15 @@ InntektOgYtelserFaktaPanel.buildInitialValues = (person, inntekt) => {
     return [];
   }
   const inntekter = inntekt
-    .map(i => ({
+    .map((i) => ({
       person: i.navn,
       employer: i.utbetaler,
       fom: i.fom,
       tom: i.tom,
       amount: i.belop,
     }));
-  const inntekterSoker = inntekter.filter(i => i.person === person.navn).sort(sortInntekter);
-  const inntekterOther = inntekter.filter(i => i.person !== person.navn).sort(sortInntekter);
+  const inntekterSoker = inntekter.filter((i) => i.person === person.navn).sort(sortInntekter);
+  const inntekterOther = inntekter.filter((i) => i.person !== person.navn).sort(sortInntekter);
 
   return {
     inntekter: inntekterSoker.concat(inntekterOther),

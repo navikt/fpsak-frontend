@@ -32,7 +32,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
       <FormattedMessage id="AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon" />
     </Undertekst>
     <VerticalSpacer eightPx />
-    {sarligGrunnTyper.map(sgt => (
+    {sarligGrunnTyper.map((sgt) => (
       <CheckboxField
         key={sgt.kode}
         name={sgt.kode}

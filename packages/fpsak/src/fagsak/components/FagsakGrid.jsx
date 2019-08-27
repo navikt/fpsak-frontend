@@ -13,7 +13,7 @@ const FagsakGrid = ({
   profileAndNavigationContent,
   supportContent,
 }) => (
-  <React.Fragment>
+  <>
     <div className={styles.fagsakContainer}>
       <div className={styles.gridContainer}>
         <div className={styles.leftColumn}>
@@ -27,7 +27,7 @@ const FagsakGrid = ({
         </div>
       </div>
     </div>
-  </React.Fragment>
+  </>
 );
 
 FagsakGrid.propTypes = {

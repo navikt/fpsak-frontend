@@ -23,9 +23,9 @@ import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './uttakTimeLineData.less';
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const splitPeriodImg = (isHovering) => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
 const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold, getKodeverknavn) => {
   const arbeidsForholdMedNullDagerIgjenArray = [];
@@ -137,17 +137,17 @@ export class UttakTimeLineData extends Component {
       periodeId, forstePeriode, andrePeriode, hovedsoker,
     } = formValues;
 
-    const periodeSomSkalSplittes = uttaksresultatActivity.find(o => o.id === periodeId);
-    const alleAndrePerioder = uttaksresultatActivity.filter(o => o.id !== periodeId);
+    const periodeSomSkalSplittes = uttaksresultatActivity.find((o) => o.id === periodeId);
+    const alleAndrePerioder = uttaksresultatActivity.filter((o) => o.id !== periodeId);
 
     const virkedagerForPeriode1 = calcDays(forstePeriode.fom, forstePeriode.tom);
     const virkedagerForPeriode2 = calcDays(andrePeriode.fom, andrePeriode.tom);
 
     const { samtidigUttak, samtidigUttaksprosent } = periodeSomSkalSplittes;
     const oppdaterteAktiviteterPeriode1 = periodeSomSkalSplittes.aktiviteter
-      .map(aktivitet => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode1) }));
+      .map((aktivitet) => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode1) }));
     const oppdaterteAktiviteterPeriode2 = periodeSomSkalSplittes.aktiviteter
-      .map(aktivitet => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode2) }));
+      .map((aktivitet) => ({ ...aktivitet, ...kalkulerTrekkdager(aktivitet, samtidigUttak, samtidigUttaksprosent, virkedagerForPeriode2) }));
 
     const nyPeriode1 = {
       ...periodeSomSkalSplittes,
@@ -210,13 +210,12 @@ export class UttakTimeLineData extends Component {
                       imageSrcFunction={splitPeriodImg}
                       altCode="UttakTimeLineData.PeriodeData.DelOppPerioden"
                       onMouseDown={this.showModal}
-                      onKeyDown={e => (e.keyCode === 13 ? this.showModal(e) : null)}
+                      onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
                     />
 
                     <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
                   </span>
-                )
-                }
+                )}
                 {showDelPeriodeModal
                 && (
                   <DelOppPeriodeModal
@@ -225,8 +224,7 @@ export class UttakTimeLineData extends Component {
                     periodeData={selectedItemData}
                     splitPeriod={this.splitPeriod}
                   />
-                )
-                }
+                )}
               </Column>
               <Column xs="2">
                 <span className={styles.navigationPosition}>
@@ -258,8 +256,7 @@ export class UttakTimeLineData extends Component {
               </AksjonspunktHelpText>
               <VerticalSpacer twentyPx />
             </ElementWrapper>
-            )
-    }
+            )}
             <UttakActivity
               cancelSelectedActivity={callbackCancelSelectedActivity}
               updateActivity={callbackUpdateActivity}

@@ -51,7 +51,7 @@ const classNameGenerator = (klasseKode) => {
 };
 
 const createItems = (opptjeningPeriods, opptjeningFomDate, opptjeningTomDate) => {
-  const items = opptjeningPeriods.map(ap => ({
+  const items = opptjeningPeriods.map((ap) => ({
     id: ap.id,
     start: moment(ap.fom),
     end: moment(ap.tom),
@@ -119,7 +119,7 @@ class OpptjeningTimeLineLight extends Component {
 
   selectHandler(eventProps) {
     const { items } = this.state;
-    const selectedItem = items.find(item => item.id === eventProps.items[0]);
+    const selectedItem = items.find((item) => item.id === eventProps.items[0]);
     if (selectedItem) {
       this.setState({
         selectedPeriod: selectedItem,
@@ -147,7 +147,7 @@ class OpptjeningTimeLineLight extends Component {
   selectNextPeriod(event) {
     const { selectedPeriod, items } = this.state;
     event.preventDefault();
-    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) + 1;
+    const newIndex = items.findIndex((oa) => oa.id === selectedPeriod.id) + 1;
     if (newIndex < items.length - 2) {
       this.setState({
         selectedPeriod: items[newIndex],
@@ -158,7 +158,7 @@ class OpptjeningTimeLineLight extends Component {
   selectPrevPeriod(event) {
     const { selectedPeriod, items } = this.state;
     event.preventDefault();
-    const newIndex = items.findIndex(oa => oa.id === selectedPeriod.id) - 1;
+    const newIndex = items.findIndex((oa) => oa.id === selectedPeriod.id) - 1;
     if (newIndex >= 0) {
       this.setState({
         selectedPeriod: items[newIndex],
@@ -202,8 +202,7 @@ class OpptjeningTimeLineLight extends Component {
                       selectNextPeriod={this.selectNextPeriod}
                       selectPrevPeriod={this.selectPrevPeriod}
                     />
-                  )
-                  }
+                  )}
                 </div>
               </div>
             </Column>

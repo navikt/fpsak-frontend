@@ -20,10 +20,10 @@ const defaultUtsettelsePeriode = {
   arsakForUtsettelse: '',
 };
 
-const mapTyper = typer => typer
+const mapTyper = (typer) => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapKvoter = typer => typer
+const mapKvoter = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 

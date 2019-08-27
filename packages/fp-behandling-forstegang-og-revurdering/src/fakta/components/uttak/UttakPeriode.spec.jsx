@@ -8,10 +8,10 @@ import UttakPeriodeInnhold from './UttakPeriodeInnhold';
 
 const getMockedFields = (fieldNames, perioder) => {
   const field = {
-    get: idx => perioder[idx],
+    get: (idx) => perioder[idx],
   };
   return {
-    map: callback => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
+    map: (callback) => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
   };
 };
 

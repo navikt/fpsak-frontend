@@ -153,9 +153,9 @@ const beregningAksjonspunkter = [
   aksjonspunktCodes.VURDER_DEKNINGSGRAD,
 ];
 
-const aksjonspunktIsOfType = validAksjonspunktCodes => aksjonspunktCode => validAksjonspunktCodes.includes(aksjonspunktCode);
+const aksjonspunktIsOfType = (validAksjonspunktCodes) => (aksjonspunktCode) => validAksjonspunktCodes.includes(aksjonspunktCode);
 
-export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
 export const isInnhentSaksopplysningerAksjonspunkt = aksjonspunktIsOfType(innhentSaksopplysningerAksjonspunkt);

@@ -485,7 +485,7 @@ describe('<RenderEndringBGFieldArray>', () => {
     };
     values.push(andel1);
     const errors = RenderEndringBGFieldArray.validate(values, 100000,
-    skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+      skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
     expect(errors).to.equal(null);
   });
 

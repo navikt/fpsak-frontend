@@ -30,7 +30,7 @@ const {
   AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP,
 } = aksjonspunktCodes;
 
-const shouldSubmitAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode && ap.erAktivt);
+const shouldSubmitAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode && ap.erAktivt);
 
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
@@ -68,14 +68,12 @@ export const OppholdInntektOgPerioderForm = ({
   <form onSubmit={formProps.handleSubmit}>
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter || !submittable}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
     { hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter)
-      && <FortsattMedlemskapFaktaPanel readOnly={readOnly} />
-    }
+      && <FortsattMedlemskapFaktaPanel readOnly={readOnly} />}
     <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} />
     <InntektOgYtelserFaktaPanel />
     <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} />
     { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, aksjonspunkter))
-      && <StatusForBorgerFaktaPanel readOnly={readOnly} />
-    }
+      && <StatusForBorgerFaktaPanel readOnly={readOnly} />}
     { aksjonspunkter && aksjonspunkter.length > 0
       && (
       <ElementWrapper>
@@ -84,8 +82,7 @@ export const OppholdInntektOgPerioderForm = ({
         <VerticalSpacer twentyPx />
         <FaktaSubmitButton formName={formProps.form} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
       </ElementWrapper>
-      )
-    }
+      )}
   </form>
 );
 
@@ -105,8 +102,8 @@ const buildInitialValues = createSelector(
     getBehandlingRevurderingAvFortsattMedlemskapFom, getAlleKodeverk],
   (person, medlem, personopplysning, soknad, allAksjonspunkter, gjeldendeFom, alleKodeverk) => {
     const aksjonspunkter = allAksjonspunkter
-      .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
-      .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+      .filter((ap) => medlemAksjonspunkter.includes(ap.definisjon.kode))
+      .filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
     let oppholdValues = {};
     let confirmValues = {};
     if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, aksjonspunkter)) {
@@ -143,7 +140,7 @@ const transformValues = (values, aksjonspunkter, state) => {
     aksjonspunkterArray.push(StatusForBorgerFaktaPanel.transformValues(values, aksjonspunkter));
   }
 
-  const aksjonspunkterMedBegrunnelse = aksjonspunkterArray.map(ap => ({
+  const aksjonspunkterMedBegrunnelse = aksjonspunkterArray.map((ap) => ({
     ...ap,
     ...{ begrunnelse: values.begrunnelse },
   }));
@@ -152,9 +149,9 @@ const transformValues = (values, aksjonspunkter, state) => {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, initialState));
-  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, initialState));
+  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  return (state) => ({
     initialValues: buildInitialValues(state),
     hasOpenAksjonspunkter,
     onSubmit,

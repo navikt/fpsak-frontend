@@ -55,8 +55,7 @@ const InntektsgivendeArbeidPanel = ({
           readOnly={readOnly}
         />
       </div>
-      )
-    }
+      )}
   </BorderBox>
 );
 

@@ -76,7 +76,7 @@ export const InnsynFormImpl = ({
         label={<FormattedMessage id="InnsynForm.Resultat" key="1" />}
         isEdited={!isApOpen}
       >
-        {innsynResultatTyper.map(irt => <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />)}
+        {innsynResultatTyper.map((irt) => <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />)}
       </RadioGroupField>
       {(innsynResultatType === innsynResultatTyperKV.INNVILGET || innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET)
       && (
@@ -105,8 +105,7 @@ export const InnsynFormImpl = ({
           )}
         </Row>
       </ArrowBox>
-      )
-    }
+      )}
       <VerticalSpacer sixteenPx />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
@@ -151,7 +150,7 @@ InnsynFormImpl.defaultProps = {
   sattPaVent: undefined,
 };
 
-const hentDokumenterMedNavnOgFikkInnsyn = dokumenter => dokumenter.reduce((acc, d) => {
+const hentDokumenterMedNavnOgFikkInnsyn = (dokumenter) => dokumenter.reduce((acc, d) => {
   const dokumentNavn = `dokument_${d.dokumentId}`;
   return {
     [dokumentNavn]: d.fikkInnsyn,
@@ -173,14 +172,14 @@ const buildInitialValues = createSelector(
   }),
 );
 
-const getDocumentsStatus = (values, documents) => documents.map(document => ({
+const getDocumentsStatus = (values, documents) => documents.map((document) => ({
   dokumentId: document.dokumentId,
   journalpostId: document.journalpostId,
   fikkInnsyn: !!values[`dokument_${document.dokumentId}`],
 }));
 
-const getFilteredValues = values => (Object.keys(values)
-  .filter(valueKey => !valueKey.startsWith('dokument_'))
+const getFilteredValues = (values) => (Object.keys(values)
+  .filter((valueKey) => !valueKey.startsWith('dokument_'))
   .reduce((acc, valueKey) => ({
     ...acc,
     [valueKey]: values[valueKey],
@@ -196,8 +195,8 @@ const transformValues = (values, documents) => ({
 const formName = 'InnsynForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, getAllDocuments(initialState))]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, getAllDocuments(initialState))]);
+  return (state) => ({
     documents: getFilteredReceivedDocuments(state),
     saksNr: getSelectedSaksnummer(state),
     vedtaksdokumenter: behandlingSelectors.getBehandlingInnsynVedtaksdokumentasjon(state),
@@ -215,7 +214,7 @@ const InnsynForm = connect(mapStateToPropsFactory)(behandlingFormInnsyn({
   form: formName,
 })(InnsynFormImpl));
 
-InnsynForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.VURDER_INNSYN);
+InnsynForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDER_INNSYN);
 
 InnsynForm.formName = formName;
 

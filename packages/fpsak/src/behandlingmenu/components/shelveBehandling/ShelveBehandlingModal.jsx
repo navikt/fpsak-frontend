@@ -66,7 +66,7 @@ export const ShelveBehandlingModalImpl = ({
                 label={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakField' })}
                 validate={[required]}
                 placeholder={intl.formatMessage({ id: 'ShelveBehandlingModal.ArsakFieldDefaultValue' })}
-                selectValues={henleggArsaker.map(arsak => <option value={arsak.kode} key={arsak.kode}>{intl.formatMessage({ id: arsak.kode })}</option>)}
+                selectValues={henleggArsaker.map((arsak) => <option value={arsak.kode} key={arsak.kode}>{intl.formatMessage({ id: arsak.kode })}</option>)}
               />
             </Column>
           </Row>
@@ -159,21 +159,21 @@ export const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHAN
   (behandlingResultatTyper, bType) => {
     const typerForBehandlingType = henleggArsakerPerBehandlingType[bType.kode];
     const typer = typerForBehandlingType || henleggArsakerPerBehandlingType.OTHER;
-    return typer.map(type => behandlingResultatTyper.find(brt => brt.kode === type));
+    return typer.map((type) => behandlingResultatTyper.find((brt) => brt.kode === type));
   });
 
 const getShowLink = createSelector([
-  state => formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'), getBehandlingType],
-  (arsakKode, type) => {
-    if (type.kode === behandlingType.TILBAKEKREVING) {
-      return behandlingResultatType.HENLAGT_FEILOPPRETTET === arsakKode;
-    }
-    return [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
-      behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(arsakKode);
-  });
+  (state) => formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'), getBehandlingType],
+(arsakKode, type) => {
+  if (type.kode === behandlingType.TILBAKEKREVING) {
+    return behandlingResultatType.HENLAGT_FEILOPPRETTET === arsakKode;
+  }
+  return [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
+    behandlingResultatType.HENLAGT_INNSYN_TRUKKET].includes(arsakKode);
+});
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   årsakKode: formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'),
   begrunnelse: formValueSelector('ShelveBehandlingModal')(state, 'begrunnelse'),
   henleggArsaker: getHenleggArsaker(state),

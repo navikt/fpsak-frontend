@@ -27,7 +27,7 @@ const {
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD,
 } = aksjonspunktCodes;
 
-const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap === aksjonspunktCode);
+const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap === aksjonspunktCode);
 
 
 export const OppholdInntektOgPeriodeForm = ({
@@ -44,8 +44,7 @@ export const OppholdInntektOgPeriodeForm = ({
     <InntektOgYtelserFaktaPanel id={valgtPeriode.id} />
     <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
     { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter))
-    && <StatusForBorgerFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
-    }
+    && <StatusForBorgerFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />}
     <VerticalSpacer twentyPx />
     { valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0
     && (
@@ -99,7 +98,7 @@ OppholdInntektOgPeriodeForm.defaultProps = {
   selectedId: undefined,
 };
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
   ...values,
 });
@@ -107,17 +106,17 @@ const transformValues = values => ({
 const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.valgtPeriode,
   (state, ownProps) => ownProps.aksjonspunkter,
-  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad'),
-  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person'),
-  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
-  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder'),
-  state => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom'),
+  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad'),
+  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person'),
+  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
+  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder'),
+  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom'),
   getAlleKodeverk,
 ],
-    (valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
+(valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
-      .filter(ap => valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
-      .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter((ap) => valgtPeriode.aksjonspunkter.includes(ap.definisjon.kode) || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)
+    .filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   let oppholdValues = {};
   let confirmValues = {};
   if (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) {
@@ -139,7 +138,7 @@ const buildInitialValues = createSelector([
 });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.updateOppholdInntektPeriode(transformValues(values));
+  const onSubmit = (values) => initialOwnProps.updateOppholdInntektPeriode(transformValues(values));
   return (state, ownProps) => {
     const { valgtPeriode, submittable } = ownProps;
     const formName = `OppholdInntektOgPeriodeForm-${valgtPeriode.id}`;

@@ -34,8 +34,7 @@ export const MannAdoptererAleneFaktaFormImpl = ({
       <Undertekst><FormattedMessage id="MannAdoptererAleneFaktaForm.Opplysninger" /></Undertekst>
       <VerticalSpacer fourPx />
       {farSokerType
-        && <Normaltekst>{getKodeverknavn(farSokerType)}</Normaltekst>
-      }
+        && <Normaltekst>{getKodeverknavn(farSokerType)}</Normaltekst>}
       <VerticalSpacer sixteenPx />
       <hr className={styles.hr} />
       <RadioGroupField name="mannAdoptererAlene" validate={[required]} bredde="XL" readOnly={readOnly} isEdited={mannAdoptererAleneIsEdited}>
@@ -58,7 +57,7 @@ MannAdoptererAleneFaktaFormImpl.defaultProps = {
   mannAdoptererAleneIsEdited: false,
 };
 
-const MannAdoptererAleneFaktaForm = connect(state => ({
+const MannAdoptererAleneFaktaForm = connect((state) => ({
   mannAdoptererAleneIsEdited: getEditedStatus(state).mannAdoptererAlene,
   ...behandlingFormValueSelector('AdopsjonInfoPanel')(state, 'farSokerType'),
 }))(injectKodeverk(getAlleKodeverk)(MannAdoptererAleneFaktaFormImpl));
@@ -68,7 +67,7 @@ MannAdoptererAleneFaktaForm.buildInitialValues = (soknad, familiehendelse) => ({
   farSokerType: soknad.farSokerType,
 });
 
-MannAdoptererAleneFaktaForm.transformValues = values => ({
+MannAdoptererAleneFaktaForm.transformValues = (values) => ({
   kode: aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE,
   mannAdoptererAlene: values.mannAdoptererAlene,
 });

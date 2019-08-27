@@ -30,7 +30,7 @@ export const PersonYtelserTable = ({
   ];
 
   const ytelseRows = ytelser && ytelser.map((ytelse) => {
-    const ytelseNavn = relatertYtelseTypes.filter(type => type.kode === ytelse.relatertYtelseType)[0].navn;
+    const ytelseNavn = relatertYtelseTypes.filter((type) => type.kode === ytelse.relatertYtelseType)[0].navn;
     if (ytelse.tilgrensendeYtelserListe.length === 0) {
       return ({
         navn: ytelseNavn,
@@ -44,7 +44,7 @@ export const PersonYtelserTable = ({
       const tilDato = formatDateToDDMMYYYY(ytelseInfo.periodeTilDato) || '';
       const fraDato = formatDateToDDMMYYYY(ytelseInfo.periodeFraDato) || '';
 
-      const statusNavn = relatertYtelseStatus.filter(status => status.kode === ytelseInfo.status)[0].navn;
+      const statusNavn = relatertYtelseStatus.filter((status) => status.kode === ytelseInfo.status)[0].navn;
 
       return {
         navn: innerIndex === 0 ? ytelseNavn : '',

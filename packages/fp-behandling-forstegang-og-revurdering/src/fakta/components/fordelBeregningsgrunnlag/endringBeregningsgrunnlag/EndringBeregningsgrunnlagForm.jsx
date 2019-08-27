@@ -16,7 +16,7 @@ const ElementWrapper = ({ children }) => children;
 
 const endringBGFieldArrayNamePrefix = 'endringBGPeriode';
 
-export const getFieldNameKey = index => (endringBGFieldArrayNamePrefix + index);
+export const getFieldNameKey = (index) => (endringBGFieldArrayNamePrefix + index);
 
 const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, endretPeriode, periodeList) => {
   const forrigeEndringPeriode = periodeList[periodeList.length - 1];
@@ -43,12 +43,12 @@ const oppdaterTomDatoForSistePeriode = (liste, periode) => {
   liste.push(forrigePeriode);
 };
 
-const sjekkOmPeriodeSkalLeggesTil = bgPerioder => (aggregatedPeriodList, periode) => {
+const sjekkOmPeriodeSkalLeggesTil = (bgPerioder) => (aggregatedPeriodList, periode) => {
   if (aggregatedPeriodList.length === 0) {
     aggregatedPeriodList.push({ ...periode });
     return aggregatedPeriodList;
   }
-  const matchendeBgPeriode = bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
+  const matchendeBgPeriode = bgPerioder.find((p) => p.beregningsgrunnlagPeriodeFom === periode.fom);
   if (matchendeBgPeriode) {
     if (harPeriodeSomKanKombineresMedForrige(matchendeBgPeriode, bgPerioder, periode, aggregatedPeriodList)) {
       oppdaterTomDatoForSistePeriode(aggregatedPeriodList, periode);
@@ -72,7 +72,7 @@ export class EndringBeregningsgrunnlagForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      openPanels: props.perioder.map(periode => periode.fom),
+      openPanels: props.perioder.map((periode) => periode.fom),
     };
     this.showPanel = this.showPanel.bind(this);
   }
@@ -80,7 +80,7 @@ export class EndringBeregningsgrunnlagForm extends Component {
   showPanel(fom) {
     const { openPanels } = this.state;
     if (openPanels.includes(fom)) {
-      this.setState({ openPanels: openPanels.filter(panel => panel !== fom) });
+      this.setState({ openPanels: openPanels.filter((panel) => panel !== fom) });
     } else {
       openPanels.push(fom);
       this.setState({ openPanels });
@@ -105,15 +105,14 @@ export class EndringBeregningsgrunnlagForm extends Component {
               endringBGFieldArrayName={getFieldNameKey(index)}
               fom={periode.fom}
               tom={periode.tom}
-              open={openPanels ? openPanels.filter(panel => panel === periode.fom).length > 0 : false}
+              open={openPanels ? openPanels.filter((panel) => panel === periode.fom).length > 0 : false}
               harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
             />
             <VerticalSpacer eightPx />
           </ElementWrapper>
-        ))
-        }
+        ))}
       </BorderBox>
     );
   }
@@ -127,14 +126,14 @@ EndringBeregningsgrunnlagForm.propTypes = {
 };
 
 export const finnSumIPeriode = (bgPerioder, fom) => {
-  const periode = bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === fom);
+  const periode = bgPerioder.find((p) => p.beregningsgrunnlagPeriodeFom === fom);
   return periode.bruttoPrAar;
 };
 
 EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn) => {
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
-    const skalValidereMotBeregningsgrunnlagPrAar = andel => skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
+    const skalValidereMotBeregningsgrunnlagPrAar = (andel) => skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
     for (let i = 0; i < endringBGPerioder.length; i += 1) {
       const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, endringBGPerioder[i].fom);
       const periode = values[getFieldNameKey(i)];
@@ -145,19 +144,19 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, beregningsg
   return errors;
 };
 
-const finnRiktigBgPeriode = (periode, bgPerioder) => bgPerioder.find(p => p.beregningsgrunnlagPeriodeFom === periode.fom);
+const finnRiktigBgPeriode = (periode, bgPerioder) => bgPerioder.find((p) => p.beregningsgrunnlagPeriodeFom === periode.fom);
 
 EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKodeverknavn) => {
   const initialValues = {};
   if (!endringBGPerioder) {
     return initialValues;
   }
-  const harKunYtelse = bg.aktivitetStatus.some(status => status.kode === aktivitetStatuser.KUN_YTELSE);
+  const harKunYtelse = bg.aktivitetStatus.some((status) => status.kode === aktivitetStatuser.KUN_YTELSE);
   const bgPerioder = bg.beregningsgrunnlagPeriode;
   endringBGPerioder.forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
     initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
-    .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn);
+      .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn);
   });
   return initialValues;
 };
@@ -176,7 +175,7 @@ export const mapTilFastsatteVerdier = (aktivitet, skalHaBesteberegning) => ({
   skalHaBesteberegning,
 });
 
-export const mapAndel = aktivitet => ({
+export const mapAndel = (aktivitet) => ({
   andel: aktivitet.andel,
   andelsnr: getAndelsnr(aktivitet),
   arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
@@ -185,12 +184,12 @@ export const mapAndel = aktivitet => ({
   fastsatteVerdier: mapTilFastsatteVerdier(aktivitet),
 });
 
-const inkludererPeriode = periode => p => moment(p.fom).isSameOrAfter(moment(periode.fom))
+const inkludererPeriode = (periode) => (p) => moment(p.fom).isSameOrAfter(moment(periode.fom))
 && (periode.tom === null || moment(p.tom).isSameOrBefore(moment(periode.tom)));
 
 export const lagPerioderForSubmit = (values, index, kombinertPeriode, endringBGPerioder) => endringBGPerioder
   .filter(inkludererPeriode(kombinertPeriode))
-  .map(p => ({
+  .map((p) => ({
     andeler: values[getFieldNameKey(index)].map(mapAndel),
     fom: p.fom,
     tom: p.tom,
@@ -203,14 +202,14 @@ export const transformPerioder = (endringBGPerioder, values, bgPerioder) => {
     const { harPeriodeAarsakGraderingEllerRefusjon } = kombinertePerioder[index];
     if (harPeriodeAarsakGraderingEllerRefusjon) {
       lagPerioderForSubmit(values, index, kombinertePerioder[index], endringBGPerioder)
-      .forEach(p => endringBeregningsgrunnlagPerioder.push(p));
+        .forEach((p) => endringBeregningsgrunnlagPerioder.push(p));
     }
   }
   return endringBeregningsgrunnlagPerioder;
 };
 
 EndringBeregningsgrunnlagForm.transformValues = (values, endringBGPerioder, bgPerioder) => ({
-    endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, bgPerioder),
+  endretBeregningsgrunnlagPerioder: transformPerioder(endringBGPerioder, values, bgPerioder),
 });
 
 export default EndringBeregningsgrunnlagForm;

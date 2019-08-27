@@ -52,7 +52,7 @@ export const frilansMedAndreFrilanstilfeller = () => ('BeregningInfoPanel.Vurder
 export const frilansUtenAndreFrilanstilfeller = () => ('BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans');
 
 const finnFrilansTekstKode = (tilfeller) => {
-  if (tilfeller.some(tilfelle => andreFrilansTilfeller.includes(tilfelle))) {
+  if (tilfeller.some((tilfelle) => andreFrilansTilfeller.includes(tilfelle))) {
     return frilansMedAndreFrilanstilfeller();
   }
   return frilansUtenAndreFrilanstilfeller();
@@ -92,9 +92,8 @@ export const VurderMottarYtelseFormImpl = ({
           <RadioOption label={<FormattedMessage id="BeregningInfoPanel.FormAlternativ.Nei" />} value={false} />
         </RadioGroupField>
       </div>
-      )
-    }
-    {arbeidsforholdUtenIM.map(andel => (
+      )}
+    {arbeidsforholdUtenIM.map((andel) => (
       mottarYtelseArbeidsforholdRadio(andel, readOnly, isAksjonspunktClosed, getKodeverknavn)
     ))}
   </div>
@@ -119,7 +118,7 @@ const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregn
     const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
     faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM.forEach((andel) => {
       if (mottarYtelseMap[andel.andelsnr] && !fastsatteAndelsnr.includes(andel.andelsnr)) {
-        const inntektUtenFormat = inntektVerdier.find(field => field.andelsnr === andel.andelsnr).fastsattBelop;
+        const inntektUtenFormat = inntektVerdier.find((field) => field.andelsnr === andel.andelsnr).fastsattBelop;
         listeMedFastsatteMaanedsinntekter.push({
           andelsnr: andel.andelsnr,
           fastsatteVerdier: {
@@ -148,9 +147,9 @@ const transformValuesFrilans = (values, inntektVerdier, beregningsgrunnlag, fast
   const skalFastsetteInntektFrilans = values[finnFrilansFieldName()];
   if (skalFastsetteInntektFrilans) {
     const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-      .find(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+      .find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
     if (!fastsatteAndelsnr.includes(frilansAndel.andelsnr) && frilansMottarYtelse(values)) {
-      const frilansInntekt = inntektVerdier.find(field => field.andelsnr === frilansAndel.andelsnr);
+      const frilansInntekt = inntektVerdier.find((field) => field.andelsnr === frilansAndel.andelsnr);
       fastsatteAndelsnr.push(frilansAndel.andelsnr);
       faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL);
       return {
@@ -169,7 +168,7 @@ const transformValuesMottarYtelse = (values, faktaOmBeregning, faktaOmBeregningT
   return {
     mottarYtelse: {
       frilansMottarYtelse: values[finnFrilansFieldName()],
-      arbeidstakerUtenIMMottarYtelse: ATAndelerUtenIM.map(andel => ({
+      arbeidstakerUtenIMMottarYtelse: ATAndelerUtenIM.map((andel) => ({
         andelsnr: andel.andelsnr,
         mottarYtelse: values[utledArbeidsforholdFieldName(andel)],
       })),

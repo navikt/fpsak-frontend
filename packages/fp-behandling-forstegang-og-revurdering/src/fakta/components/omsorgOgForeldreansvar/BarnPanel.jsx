@@ -17,7 +17,7 @@ import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './barnPanel.less';
 
-const calculateAgeFromDate = fodselsdato => moment().startOf('day').diff(moment(fodselsdato).startOf('day'), 'years');
+const calculateAgeFromDate = (fodselsdato) => moment().startOf('day').diff(moment(fodselsdato).startOf('day'), 'years');
 
 const adjustNumberOfFields = (fields, originalFields, antallBarn) => {
   if (fields.length < antallBarn) {
@@ -86,8 +86,7 @@ export class BarnPanelImpl extends Component {
                   <Element><DateLabel dateString={b.dodsdato} /></Element>
                   <VerticalSpacer eightPx />
                 </Normaltekst>
-)
-                    }
+                )}
 
                 <Normaltekst><FormattedMessage id="BarnPanel.Address" /></Normaltekst>
                 <Element>
@@ -114,8 +113,7 @@ export class BarnPanelImpl extends Component {
               <VerticalSpacer sixteenPx />
             </div>
           );
-        })
-        }
+        })}
       </FaktaGruppe>
     );
   }
@@ -133,19 +131,19 @@ BarnPanelImpl.defaultProps = {
   isFodselsdatoerEdited: {},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isFodselsdatoerEdited: getEditedStatus(state).fodselsdatoer,
 });
 
 const BarnPanel = connect(mapStateToProps)(BarnPanelImpl);
 
-const prepChildObj = child => ({
+const prepChildObj = (child) => ({
   isTps: child.opplysningsKilde && child.opplysningsKilde === opplysningsKilde.TPS,
   navn: child.navn,
   fdato: new Date(child.fodselsdato),
 });
 
-const sortChildren = children => children.sort((child1, child2) => {
+const sortChildren = (children) => children.sort((child1, child2) => {
   const a = prepChildObj(child1);
   const b = prepChildObj(child2);
   if (a.isTps && !b.isTps) { return -1; }
@@ -159,7 +157,7 @@ const sortChildren = children => children.sort((child1, child2) => {
 
 BarnPanel.buildInitialValues = (personopplysning, soknad) => {
   const confirmedChildren = personopplysning.barnSoktFor
-    ? personopplysning.barnSoktFor.map(b => ({
+    ? personopplysning.barnSoktFor.map((b) => ({
       aktorId: b.aktoerId,
       nummer: b.nummer,
       navn: b.navn,
@@ -171,13 +169,13 @@ BarnPanel.buildInitialValues = (personopplysning, soknad) => {
 
   const applicationChildren = soknad.soknadType.kode === soknadType.FODSEL
     ? Object.keys(soknad.fodselsdatoer)
-      .map(key => ({
+      .map((key) => ({
         nummer: parseInt(key, 10),
         fodselsdato: soknad.fodselsdatoer[key],
         opplysningsKilde: opplysningsKilde.SAKSBEHANDLER,
       }))
     : Object.keys(soknad.adopsjonFodelsedatoer)
-      .map(key => ({
+      .map((key) => ({
         nummer: parseInt(key, 10),
         fodselsdato: soknad.adopsjonFodelsedatoer[key],
         opplysningsKilde: opplysningsKilde.SAKSBEHANDLER,
@@ -185,7 +183,7 @@ BarnPanel.buildInitialValues = (personopplysning, soknad) => {
 
   const children = [...confirmedChildren];
   children.forEach((cc, indexCc) => {
-    const index = applicationChildren.findIndex(ac => (cc.nummer ? ac.nummer === cc.nummer : ac.fodselsdato === cc.fodselsdato));
+    const index = applicationChildren.findIndex((ac) => (cc.nummer ? ac.nummer === cc.nummer : ac.fodselsdato === cc.fodselsdato));
     if (index !== -1) {
     // Om barnet fra søknad finnes i TPS eller allerede er lagret av NAV-ansatt => fjern barnet i søknad.
       applicationChildren.splice(index, 1);

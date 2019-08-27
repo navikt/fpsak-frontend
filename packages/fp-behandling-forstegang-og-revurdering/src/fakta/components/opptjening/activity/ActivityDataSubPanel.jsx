@@ -18,12 +18,12 @@ const ytelseTypes = [OAType.SYKEPENGER, OAType.FORELDREPENGER, OAType.PLEIEPENGE
 
 const isOfType = (selectedActivityType, ...opptjeningAktivitetType) => selectedActivityType && opptjeningAktivitetType.includes(selectedActivityType.kode);
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const minValue0 = minValue(0);
 const maxValue200 = maxValue(200);
 
-const getOppdragsgiverMessageId = selectedActivityType => (isOfType(selectedActivityType, OAType.FRILANS)
+const getOppdragsgiverMessageId = (selectedActivityType) => (isOfType(selectedActivityType, OAType.FRILANS)
   ? 'ActivityPanel.Oppdragsgiver' : 'ActivityPanel.Arbeidsgiver');
 
 const getArbeidsgiverText = (initialValues) => {
@@ -70,8 +70,7 @@ const ActivityDataSubPanel = ({
             <Normaltekst>{getArbeidsgiverText(initialValues)}</Normaltekst>
           </div>
         </ElementWrapper>
-        )
-        }
+        )}
         { isManuallyAddedAndNotUtenlandskArbeidsforhold(isManuallyAdded, selectedActivityType)
         && (
         <InputField
@@ -81,8 +80,7 @@ const ActivityDataSubPanel = ({
           readOnly={readOnly}
           bredde="S"
         />
-        )
-        }
+        )}
         { isManuallyAddedAndUtenlandskArbeidsforhold(isManuallyAdded, selectedActivityType)
         && (
         <InputField
@@ -92,8 +90,7 @@ const ActivityDataSubPanel = ({
           readOnly={readOnly}
           bredde="XL"
         />
-        )
-        }
+        )}
       </Column>
       {isOfType(selectedActivityType, OAType.ARBEID)
         && (
@@ -104,15 +101,13 @@ const ActivityDataSubPanel = ({
             validate={[required, minValue0, maxValue200, hasValidDecimal]}
             readOnly={readOnly || !isManuallyAdded}
             bredde="S"
-            format={value => (readOnly || !isManuallyAdded ? `${value} %` : value)}
-            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+            format={(value) => (readOnly || !isManuallyAdded ? `${value} %` : value)}
+            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         </Column>
-        )
-      }
+        )}
     </Row>
-    )
-    }
+    )}
     <VerticalSpacer eightPx />
     {isOfType(selectedActivityType, OAType.NARING)
     && (
@@ -125,8 +120,7 @@ const ActivityDataSubPanel = ({
         />
       </Column>
     </Row>
-    )
-    }
+    )}
   </ElementWrapper>
 );
 

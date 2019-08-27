@@ -112,7 +112,7 @@ FpSakBehandlingInfoSetter.defaultProps = {
   resultatstrukturFraOriginalBehandling: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isKontrollerRevurderingApOpen: behandlingSelectors.isKontrollerRevurderingAksjonspunkOpen(state),
   behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

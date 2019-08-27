@@ -6,12 +6,12 @@ export const reducerName = 'aktoer';
 export const SET_SELECTED_AKTOER_ID = `${reducerName}/SET_SELECTED_AKTOER_ID`;
 export const AKTOER_LOADED = `${reducerName}/AKTOER_LOADED`;
 
-export const setSelectedAktoerId = aktoerId => ({
+export const setSelectedAktoerId = (aktoerId) => ({
   type: SET_SELECTED_AKTOER_ID,
   data: aktoerId,
 });
 
-export const setAktoerLoaded = status => ({
+export const setAktoerLoaded = (status) => ({
   type: AKTOER_LOADED,
   data: status,
 });
@@ -21,7 +21,7 @@ const initialState = {
   aktoerLoaded: false,
 };
 
-export const updateAktoer = aktoerId => (dispatch) => {
+export const updateAktoer = (aktoerId) => (dispatch) => {
   dispatch(fpsakApi.AKTOER_INFO.makeRestApiRequest()({ aktoerId }, { keepData: true }));
 };
 

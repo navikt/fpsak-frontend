@@ -9,7 +9,7 @@ import { Row, Column } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import {
- CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
+  CheckboxField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
@@ -84,8 +84,8 @@ const formatBehandlingStatus = (status) => {
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 
 const canPreview = (begrunnelse, fritekstTilBrev) => (begrunnelse && begrunnelse.length > 0) && (fritekstTilBrev && fritekstTilBrev.length > 0);
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-const formatBehandling = b => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatBehandling = (b) => `${formatDate(b.opprettet)} - ${formatBehandlingType(b.type.kode)} - ${formatBehandlingStatus(b.status.kode)}`;
 const formatId = (b) => {
   if (b === null) {
     return IKKE_PAA_ANKET_BEHANDLING_ID;
@@ -118,7 +118,7 @@ const SKAL_REALITETSBEHANDLES = {
   NEI: false,
 };
 
-const filtrerKlage = (behandlinger = []) => behandlinger.filter(b => b.type.kode === behandlingType.KLAGE);
+const filtrerKlage = (behandlinger = []) => behandlinger.filter((b) => b.type.kode === behandlingType.KLAGE);
 
 /**
  * Presentasjonskomponent. Setter opp aksjonspunktet for behandling.
@@ -149,7 +149,7 @@ const BehandleAnkeFormImpl = ({
           <SelectField
             readOnly={readOnly}
             name="vedtak"
-            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map(b => buildOption(b, intl))}
+            selectValues={leggTilUkjent(filtrerKlage(behandlinger)).map((b) => buildOption(b, intl))}
             className={readOnly ? styles.selectReadOnly : null}
             label={intl.formatMessage({ id: 'Ankebehandling.Resultat.Vedtak' })}
             validate={[required]}
@@ -227,7 +227,7 @@ const BehandleAnkeFormImpl = ({
               <SelectField
                 readOnly={readOnly}
                 name="ankeOmgjoerArsak"
-                selectValues={omgjorArsakValues.map(arsak => <option key={arsak.kode} value={arsak.kode}>{intl.formatMessage({ id: arsak.navn })}</option>)}
+                selectValues={omgjorArsakValues.map((arsak) => <option key={arsak.kode} value={arsak.kode}>{intl.formatMessage({ id: arsak.navn })}</option>)}
                 className={readOnly ? styles.selectReadOnly : null}
                 label={intl.formatMessage({ id: 'Ankebehandling.OmgjoeringArsak' })}
                 validate={[required]}
@@ -310,7 +310,7 @@ BehandleAnkeFormImpl.defaultProps = {
 };
 
 // TODO (TOR) Her ligg det masse som ikkje er felt i forma! Rydd
-export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], (resultat) => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -354,8 +354,8 @@ const formName = 'BehandleAnkeForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state,
@@ -376,7 +376,7 @@ const BehandleAnkeForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
   form: formName,
 })(BehandleAnkeFormImpl));
 
-BehandleAnkeForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
+BehandleAnkeForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE);
 
 
 export default injectIntl(BehandleAnkeForm);

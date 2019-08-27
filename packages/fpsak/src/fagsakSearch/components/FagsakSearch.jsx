@@ -33,18 +33,15 @@ const FagsakSearch = ({
     />
 
     {searchResultReceived && fagsaker.length === 0
-      && <Normaltekst className={styles.label}><FormattedMessage id="FagsakSearch.ZeroSearchResults" /></Normaltekst>
-    }
+      && <Normaltekst className={styles.label}><FormattedMessage id="FagsakSearch.ZeroSearchResults" /></Normaltekst>}
 
     {fagsaker.length > 1
-    && <PersonIndex person={fagsaker[0].person} />
-    }
+    && <PersonIndex person={fagsaker[0].person} />}
 
     <VerticalSpacer eightPx />
 
     {fagsaker.length > 1
-    && <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} />
-    }
+    && <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} />}
   </div>
 );
 

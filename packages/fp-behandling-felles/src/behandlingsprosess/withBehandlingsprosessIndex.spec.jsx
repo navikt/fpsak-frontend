@@ -61,13 +61,13 @@ describe('<HOC: withBehandlingsprosessIndex>', () => {
         />
       </Router>,
     ).dive() // TODO (TOR) Bør unngå deep dive
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive();
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive();
 
     expect(wrapper.find(BehandlingsprosessPanel)).to.have.length(1);
     const panel = wrapper.find(BehandlingspunktPanel);

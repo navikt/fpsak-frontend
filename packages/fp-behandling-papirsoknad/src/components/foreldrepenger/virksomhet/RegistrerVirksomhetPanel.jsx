@@ -166,15 +166,14 @@ export class RegistrerVirksomhetPanel extends Component {
               </ElementWrapper>
             ))}
           </ElementWrapper>
-          )
-          }
+          )}
           {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
           }
           <div
             id="addbutton"
             className={styles.addVirksomhet}
             onClick={() => this.showRegistrerVirksomhetModal()}
-            onKeyDown={e => (e.nativeEvent.code === 'Space' ? this.showRegistrerVirksomhetModal() : false)}
+            onKeyDown={(e) => (e.nativeEvent.code === 'Space' ? this.showRegistrerVirksomhetModal() : false)}
             role="button"
             tabIndex="0"
           >
@@ -222,7 +221,7 @@ const mapStateToProps = (state, initialProps) => ({
     ? formValueSelector(initialProps.form)(state, initialProps.namePrefix).virksomheter : null,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchArrayPush,
     dispatchArraySplice,

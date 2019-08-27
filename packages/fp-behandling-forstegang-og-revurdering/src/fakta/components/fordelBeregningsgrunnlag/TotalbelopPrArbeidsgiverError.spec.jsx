@@ -13,21 +13,21 @@ const getKodeverknavn = (kodeverk) => {
 describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal lage liste for to arbeidsforhold for samme arbeidsgiver', () => {
     const andeler = [
-    {
-      arbeidsgiverNavn: 'Sopra Steria',
-      arbeidsgiverId: '33334444234123',
-      arbeidsforholdId: null,
-      fastsattBelop: '10 000',
-      beregningsgrunnlagPrAar: '20 000',
-      inntektskategori: 'ARBEIDSTAKER',
-    },
-    {
-      arbeidsgiverNavn: 'Sopra Steria',
-      arbeidsgiverId: '33334444234123',
-      arbeidsforholdId: null,
-      fastsattBelop: '20 000',
-      inntektskategori: 'ARBEIDSTAKER',
-    },
+      {
+        arbeidsgiverNavn: 'Sopra Steria',
+        arbeidsgiverId: '33334444234123',
+        arbeidsforholdId: null,
+        fastsattBelop: '10 000',
+        beregningsgrunnlagPrAar: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+      },
+      {
+        arbeidsgiverNavn: 'Sopra Steria',
+        arbeidsgiverId: '33334444234123',
+        arbeidsforholdId: null,
+        fastsattBelop: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+      },
     ];
     const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => true, () => false, getKodeverknavn);
     expect(fellesGrunnlag.length).to.equal(1);
@@ -40,20 +40,20 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
 
   it('skal lage liste for AAP og arbeidsgiver som søker refusjon som overstiger beregningsgrunnlag', () => {
     const andeler = [
-    {
-      arbeidsforholdType: { kode: 'AAP' },
-      fastsattBelop: '10 000',
-      beregningsgrunnlagPrAar: '20 000',
-      inntektskategori: 'ARBEIDSAVKLARINGSPENGER',
-    },
-    {
-      arbeidsgiverNavn: 'Sopra Steria',
-      arbeidsgiverId: '33334444234123',
-      arbeidsforholdId: null,
-      fastsattBelop: '20 000',
-      beregningsgrunnlagPrAar: '30 000',
-      inntektskategori: 'ARBEIDSTAKER',
-    },
+      {
+        arbeidsforholdType: { kode: 'AAP' },
+        fastsattBelop: '10 000',
+        beregningsgrunnlagPrAar: '20 000',
+        inntektskategori: 'ARBEIDSAVKLARINGSPENGER',
+      },
+      {
+        arbeidsgiverNavn: 'Sopra Steria',
+        arbeidsgiverId: '33334444234123',
+        arbeidsforholdId: null,
+        fastsattBelop: '20 000',
+        beregningsgrunnlagPrAar: '30 000',
+        inntektskategori: 'ARBEIDSTAKER',
+      },
     ];
     const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => false, () => true, getKodeverknavn);
     expect(fellesGrunnlag.length).to.equal(3);
@@ -75,23 +75,23 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
 
   it('skal ikkje lage liste for nytt arbeidsforhold', () => {
     const andeler = [
-    {
-      arbeidsgiverNavn: 'Sopra Steria',
-      arbeidsgiverId: '33334444234123',
-      arbeidsforholdId: null,
-      fastsattBelop: '10 000',
-      beregningsgrunnlagPrAar: '20 000',
-      inntektskategori: 'ARBEIDSTAKER',
-      nyttArbeidsforhold: true,
-    },
-    {
-      arbeidsgiverNavn: 'Sopra Steria',
-      arbeidsgiverId: '33334444234123',
-      arbeidsforholdId: null,
-      fastsattBelop: '20 000',
-      inntektskategori: 'ARBEIDSTAKER',
-      nyttArbeidsforhold: true,
-    },
+      {
+        arbeidsgiverNavn: 'Sopra Steria',
+        arbeidsgiverId: '33334444234123',
+        arbeidsforholdId: null,
+        fastsattBelop: '10 000',
+        beregningsgrunnlagPrAar: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+        nyttArbeidsforhold: true,
+      },
+      {
+        arbeidsgiverNavn: 'Sopra Steria',
+        arbeidsgiverId: '33334444234123',
+        arbeidsforholdId: null,
+        fastsattBelop: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+        nyttArbeidsforhold: true,
+      },
     ];
     const fellesGrunnlag = lagTotalInntektArbeidsforholdList(andeler, () => true, () => false, getKodeverknavn);
     expect(fellesGrunnlag.length).to.equal(0);

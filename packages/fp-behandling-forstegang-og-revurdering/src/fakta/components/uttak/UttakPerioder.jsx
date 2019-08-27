@@ -35,8 +35,8 @@ import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
 
 const createNewPerioder = (perioder, id, values) => {
-  const updatedIndex = perioder.findIndex(p => p.id === id);
-  const updatedPeriode = perioder.find(p => p.id === id);
+  const updatedIndex = perioder.findIndex((p) => p.id === id);
+  const updatedPeriode = perioder.find((p) => p.id === id);
 
   return [
     ...perioder.slice(0, updatedIndex),
@@ -64,20 +64,20 @@ const overlappingDates = (inntektsmelding, innmldPeriode, soknadsPeriode) => {
 const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   const relevant = inntektsmeldinger.map((inntektsmelding) => {
     const { graderingPerioder, utsettelsePerioder } = inntektsmelding;
-    const gjeldeneGraderingPerioder = graderingPerioder.filter(graderingPeriode => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
-    const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter(utsettelsePeriode => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
+    const gjeldeneGraderingPerioder = graderingPerioder.filter((graderingPeriode) => overlappingDates(inntektsmelding, graderingPeriode, soknadsPeriode));
+    const gjeldeneUtsettelsePerioder = utsettelsePerioder.filter((utsettelsePeriode) => overlappingDates(inntektsmelding, utsettelsePeriode, soknadsPeriode));
     const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
 
     const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
-    const isAvvikPeriode = inntektsmeldingInfoPerioder.some(periode => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
+    const isAvvikPeriode = inntektsmeldingInfoPerioder.some((periode) => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
     const isAvvikArbeidsgiver = soknadsPeriode.utsettelseÅrsak.kode === '-'
     && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
     const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
-      .some(graderingPeriode => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
+      .some((graderingPeriode) => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
     const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
-      .some(utsettelsePeriode => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+      .some((utsettelsePeriode) => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
 
-      // hvis utsettelse er det ingen behov for arbeidsgiver
+    // hvis utsettelse er det ingen behov for arbeidsgiver
     const isManglendeSøktGraderingEllerUtsettelse = !!(isAvvikArbeidsgiver && !isAvvikPeriode);
 
     let isManglendeInntektsmelding = false;
@@ -104,7 +104,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   });
 
   const gyldigeInntektsmeldinger = relevant
-    .filter(inntektsmelding => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+    .filter((inntektsmelding) => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
     || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
     || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
   if (gyldigeInntektsmeldinger.length) {
@@ -129,7 +129,7 @@ export class UttakPerioder extends PureComponent {
       isNyPeriodeFormOpen: false,
       showModalSlettPeriode: false,
       periodeSlett: {},
-      inntektsmeldingInfo: perioder.map(periode => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
+      inntektsmeldingInfo: perioder.map((periode) => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
     };
 
     this.newPeriodeCallback = this.newPeriodeCallback.bind(this);
@@ -157,7 +157,7 @@ export class UttakPerioder extends PureComponent {
     if (
       [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES,
         uttakPeriodeVurdering.PERIODE_OK,
-      ].some(type => type === resultat)
+      ].some((type) => type === resultat)
     ) {
       return resultat;
     }
@@ -183,14 +183,14 @@ export class UttakPerioder extends PureComponent {
 
     this.setState({
       isNyPeriodeFormOpen: !isNyPeriodeFormOpen,
-      inntektsmeldingInfo: newPerioder.map(periode => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
+      inntektsmeldingInfo: newPerioder.map((periode) => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
     });
   }
 
   openSlettPeriodeModalCallback(id) {
     const { showModalSlettPeriode } = this.state;
     const { perioder } = this.props;
-    const periodeSlett = perioder.filter(periode => periode.id === id);
+    const periodeSlett = perioder.filter((periode) => periode.id === id);
     this.setState({
       showModalSlettPeriode: !showModalSlettPeriode,
       periodeSlett: periodeSlett[0],
@@ -208,7 +208,7 @@ export class UttakPerioder extends PureComponent {
     } = this.props;
     const { periodeSlett } = this.state;
 
-    const hasOriginalPeriode = initialValues.perioder.find(p => p.id === periodeSlett.id);
+    const hasOriginalPeriode = initialValues.perioder.find((p) => p.id === periodeSlett.id);
 
     if (hasOriginalPeriode) {
       formChange(
@@ -221,12 +221,12 @@ export class UttakPerioder extends PureComponent {
       );
     }
 
-    const newPerioder = perioder.filter(periode => periode.id !== periodeSlett.id);
+    const newPerioder = perioder.filter((periode) => periode.id !== periodeSlett.id);
 
     formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder);
 
     this.setState({
-      inntektsmeldingInfo: newPerioder.map(periode => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
+      inntektsmeldingInfo: newPerioder.map((periode) => findRelevantInntektsmeldingInfo(inntektsmeldinger, periode)),
     });
 
     this.hideModal();
@@ -285,8 +285,8 @@ export class UttakPerioder extends PureComponent {
     const {
       resultat, dokumentertePerioder, id, kontoType, nyFom, nyTom, nyArbeidstidsprosent, oppholdArsak,
     } = values;
-    const updatedPeriode = perioder.find(p => p.id === id);
-    const updatedPeriodeIndex = perioder.findIndex(p => p.id === id);
+    const updatedPeriode = perioder.find((p) => p.id === id);
+    const updatedPeriodeIndex = perioder.findIndex((p) => p.id === id);
     const tom = nyTom || updatedPeriode.tom;
     const fom = nyFom || updatedPeriode.fom;
     const newPeriodeObject = {
@@ -294,7 +294,7 @@ export class UttakPerioder extends PureComponent {
       tom,
       fom,
       kontoType,
-      resultat: uttakPeriodeVurderingTyper.find(type => type.kode === this.overrideResultat(resultat)),
+      resultat: uttakPeriodeVurderingTyper.find((type) => type.kode === this.overrideResultat(resultat)),
       begrunnelse: values.begrunnelse,
       dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
@@ -348,7 +348,7 @@ export class UttakPerioder extends PureComponent {
   isAnyFormOpen() {
     const { perioder } = this.props;
 
-    return perioder.some(p => p.openForm);
+    return perioder.some((p) => p.openForm);
   }
 
   addNewPeriod() {
@@ -384,7 +384,7 @@ export class UttakPerioder extends PureComponent {
     const farSøkerFør6Uker = (perioder[0] || []).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
             && moment((perioder[0] || []).fom).isBefore(moment(førsteUttaksdato).add(6, 'weeks'));
     return (
-      <React.Fragment>
+      <>
         {!readOnly && (
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
           {aksjonspunkter.map((ap) => {
@@ -403,8 +403,7 @@ export class UttakPerioder extends PureComponent {
             );
           })}
         </AksjonspunktHelpText>
-        )
-        }
+        )}
         <VerticalSpacer twentyPx />
 
         <FlexContainer>
@@ -422,8 +421,7 @@ export class UttakPerioder extends PureComponent {
                     onClick={() => this.manuellOverstyringResetCallback()}
                   />
                 </FlexColumn>
-                )
-                }
+                )}
           </FlexRow>
         </FlexContainer>
 
@@ -489,7 +487,7 @@ export class UttakPerioder extends PureComponent {
           closeEvent={this.removePeriode}
         />
 
-      </React.Fragment>
+      </>
 
     );
   }
@@ -530,11 +528,11 @@ UttakPerioder.defaultProps = {
   perioder: [],
 };
 
-const getFørsteUttaksdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
-const getEndringsdato = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
-const slettedePerioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder');
-const perioder = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder');
-const manuellOverstyring = state => behandlingFormValueSelector('UttakFaktaForm')(state, 'faktaUttakManuellOverstyring') || false;
+const getFørsteUttaksdato = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
+const getEndringsdato = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
+const slettedePerioder = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder');
+const perioder = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder');
+const manuellOverstyring = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'faktaUttakManuellOverstyring') || false;
 
 const mapStateToProps = (state) => {
   const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
@@ -542,7 +540,7 @@ const mapStateToProps = (state) => {
     behandlingFormPrefix,
     isManuellOverstyring: manuellOverstyring(state),
     kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
-    openForms: !!perioder(state).find(periode => periode.openForm === true),
+    openForms: !!perioder(state).find((periode) => periode.openForm === true),
     førsteUttaksdato: getFørsteUttaksdato(state),
     endringsdato: getEndringsdato(state),
     uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
@@ -553,7 +551,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormReset,

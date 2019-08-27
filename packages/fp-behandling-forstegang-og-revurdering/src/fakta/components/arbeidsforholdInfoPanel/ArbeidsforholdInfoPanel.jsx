@@ -32,7 +32,7 @@ const relevanteAksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 // METHODS
 // ----------------------------------------------------------------------------
 
-export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold => arbeidsforhold.map((a) => {
+export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = (arbeidsforhold) => arbeidsforhold.map((a) => {
   if (a.lagtTilAvSaksbehandler === true) {
     return {
       ...a,
@@ -42,7 +42,7 @@ export const fjernIdFraArbeidsforholdLagtTilAvSaksbehandler = arbeidsforhold => 
   return a;
 });
 
-const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 /**
  * ArbeidsforholdInfoPanelImpl:
@@ -91,7 +91,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
       </form>
     </div>
   </FaktaEkspandertpanel>
-  );
+);
 
 ArbeidsforholdInfoPanelImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
@@ -104,7 +104,7 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
 
 const buildInitialValues = createSelector(
   [getBehandlingArbeidsforhold],
-  arbeidsforhold => ({
+  (arbeidsforhold) => ({
     ...PersonArbeidsforholdPanel.buildInitialValues(arbeidsforhold),
   }),
 );
@@ -112,7 +112,7 @@ const buildInitialValues = createSelector(
 const transformValues = (values) => {
   const arbeidsforhold = fjernIdFraArbeidsforholdLagtTilAvSaksbehandler(values.arbeidsforhold);
   return {
-    arbeidsforhold: arbeidsforhold.map(a => omit(a,
+    arbeidsforhold: arbeidsforhold.map((a) => omit(a,
       'erEndret',
       'replaceOptions',
       'originalFomDato',
@@ -123,8 +123,8 @@ const transformValues = (values) => {
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
     initialValues: buildInitialValues(state),
     onSubmit,

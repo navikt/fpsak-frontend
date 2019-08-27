@@ -23,7 +23,7 @@ const maxLength1500 = maxLength(1500);
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 
-const getAksjonspunkt = aksjonspunkter => aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
+const getAksjonspunkt = (aksjonspunkter) => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
 /**
  * Svangerskapspenger
@@ -110,7 +110,7 @@ FodselOgTilretteleggingFaktaForm.defaultProps = {
   fødselsdato: '',
 };
 
-const transformValues = values => ([{
+const transformValues = (values) => ([{
   kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
   ...values,
   bekreftetSvpArbeidsforholdList: values.arbeidsforhold,
@@ -126,7 +126,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     fødselsdato,
     begrunnelse: getAksjonspunkt(aksjonspunkter),
   };
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
 
   return ({
     initialValues,

@@ -14,7 +14,7 @@ import FaktaKlagePanel from './components/FaktaKlagePanel';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er klage.
  */
-export const FaktaKlageContainer = props => (
+export const FaktaKlageContainer = (props) => (
   <FaktaKlagePanel {...props} />
 );
 
@@ -26,7 +26,7 @@ FaktaKlageContainer.propTypes = {
   resetFakta: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

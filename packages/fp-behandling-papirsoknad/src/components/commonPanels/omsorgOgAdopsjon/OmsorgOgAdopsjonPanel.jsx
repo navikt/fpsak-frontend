@@ -121,8 +121,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
               </RadioGroupField>
             </Column>
           </Row>
-          )
-        }
+          )}
           <Row>
             <Column xs="6" className={styles.inputMinimumWidth}>
               <DatepickerField
@@ -147,8 +146,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
                   validate={[hasValidDate]}
                 />
               </Column>
-              )
-            }
+              )}
             <Column xs="6">
               <InputField
                 name="antallBarn"
@@ -204,22 +202,22 @@ const validateFoedselsdato = (foedselsDato, rettigheter) => {
     if (!foedselsDato || !foedselsDato.length) {
       return { _errors: isRequiredMessage() };
     }
-    const foedselsDatoError = foedselsDato.map(dato => required(dato) || hasValidDate(dato) || dateBeforeOrEqualToToday(dato));
-    if (foedselsDatoError.some(error => error !== null)) {
+    const foedselsDatoError = foedselsDato.map((dato) => required(dato) || hasValidDate(dato) || dateBeforeOrEqualToToday(dato));
+    if (foedselsDatoError.some((error) => error !== null)) {
       return foedselsDatoError;
     }
     return undefined;
   }
   if (foedselsDato) {
-    const foedselsDatoError = foedselsDato.map(dato => hasValidDate(dato) || dateBeforeOrEqualToToday(dato));
-    if (foedselsDatoError.some(error => error !== null)) {
+    const foedselsDatoError = foedselsDato.map((dato) => hasValidDate(dato) || dateBeforeOrEqualToToday(dato));
+    if (foedselsDatoError.some((error) => error !== null)) {
       return foedselsDatoError;
     }
   }
   return undefined;
 };
 
-const validateIncludingRequired = antallBarn => required(antallBarn)
+const validateIncludingRequired = (antallBarn) => required(antallBarn)
 || hasValidInteger(antallBarn) || minValue(MIN_ANTALL_BARN)(antallBarn) || maxValue(MAX_ANTALL_BARN)(antallBarn);
 
 const validateExcludingRequired = (antallBarn) => {

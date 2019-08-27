@@ -136,8 +136,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                 <FodselSammenligningPanel />
                 <VerticalSpacer sixteenPx />
               </div>
-              )
-            }
+              )}
               <RadioGroupField name="sendVarsel" validate={[required]}>
                 <RadioOption label={{ id: 'VarselOmRevurderingForm.SendVarsel' }} value />
                 <RadioOption label={{ id: 'VarselOmRevurderingForm.IkkeSendVarsel' }} value={false} />
@@ -180,16 +179,14 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                 </Hovedknapp>
               </div>
             </div>
-            )
-          }
+            )}
           {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
               <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
               <Normaltekst>{begrunnelse}</Normaltekst>
             </div>
-            )
-          }
+            )}
           <SettBehandlingPaVentModal
             showModal={showSettPaVentModal}
             aksjonspunktKode={aksjonspunktKode}
@@ -243,7 +240,7 @@ VarselOmRevurderingFormImpl.defaultProps = {
   ventearsaker: [],
 };
 
-export const buildInitialValues = createSelector([behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => ({
+export const buildInitialValues = createSelector([behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], (aksjonspunkter) => ({
   kode: aksjonspunkter[0].definisjon.kode,
   frist: moment().add(28, 'days').format(ISO_DATE_FORMAT),
   ventearsak: null,
@@ -252,12 +249,12 @@ export const buildInitialValues = createSelector([behandlingsprosessSelectors.ge
 const formName = 'VarselOmRevurderingForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([values]);
+  const onSubmit = (values) => ownProps.submitCallback([values]);
   const erAutomatiskRevurdering = getBehandlingArsaker(initialState).reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
   const aksjonspunkt = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0];
   const ventearsaker = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
 
-  return state => ({
+  return (state) => ({
     initialValues: buildInitialValues(state),
     aksjonspunktStatus: aksjonspunkt.status.kode,
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
@@ -277,7 +274,7 @@ const VarselOmRevurderingForm = connect(mapStateToPropsFactory)(injectIntl(behan
   enableReinitialize: true,
 })(VarselOmRevurderingFormImpl)));
 
-VarselOmRevurderingForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.VARSEL_REVURDERING_MANUELL)
+VarselOmRevurderingForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VARSEL_REVURDERING_MANUELL)
   || apCodes.includes(aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL);
 
 export default VarselOmRevurderingForm;

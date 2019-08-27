@@ -92,7 +92,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
               readOnly={readOnly}
               onChange={this.resetFields}
             >
-              {foreldelseVurderingTyper.map(type => <RadioOption key={type.kode} label={type.navn} value={type.kode} />)}
+              {foreldelseVurderingTyper.map((type) => <RadioOption key={type.kode} label={type.navn} value={type.kode} />)}
             </RadioGroupField>
           </Column>
         </Row>
@@ -133,16 +133,16 @@ ForeldelsePeriodeFormImpl.propTypes = {
   ...formPropTypes,
 };
 
-const oldForeldetValue = fvType => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
-const checkForeldetValue = selectedItemData => (selectedItemData.foreldet ? selectedItemData.foreldet
+const oldForeldetValue = (fvType) => (fvType.kode !== foreldelseVurderingType.UDEFINERT ? fvType.kode : null);
+const checkForeldetValue = (selectedItemData) => (selectedItemData.foreldet ? selectedItemData.foreldet
   : oldForeldetValue(selectedItemData.foreldelseVurderingType));
 
-const buildInitalValues = periode => ({
+const buildInitalValues = (periode) => ({
   ...periode,
   foreldet: checkForeldetValue(periode),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
   }, dispatch),
@@ -150,9 +150,9 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const initialValues = buildInitalValues(ownProps.periode);
-  const onSubmit = values => ownProps.oppdaterPeriode(values);
+  const onSubmit = (values) => ownProps.oppdaterPeriode(values);
   const foreldelseVurderingTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING)(initialState)
-    .filter(fv => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
+    .filter((fv) => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
   return () => ({
     initialValues,
     onSubmit,

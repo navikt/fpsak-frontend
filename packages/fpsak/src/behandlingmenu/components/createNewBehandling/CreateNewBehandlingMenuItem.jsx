@@ -65,8 +65,7 @@ class CreateNewBehandlingMenuItem extends Component {
           hasEnabledCreateNewBehandling={opprettNyForstegangsBehandlingEnabled}
           hasEnabledCreateRevurdering={opprettRevurderingEnabled}
         />
-        )
-        }
+        )}
       </div>
     );
   }

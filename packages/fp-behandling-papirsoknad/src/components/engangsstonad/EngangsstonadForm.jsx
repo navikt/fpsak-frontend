@@ -46,7 +46,7 @@ export class EngangsstonadForm extends Component {
     const changedPropsList = Object.entries(this.props)
       .filter(([key, val]) => nextProps[key] !== val)
       .map(([key]) => key);
-    return changedPropsList.some(changedProp => !notRerenderIfChangedProps.includes(changedProp));
+    return changedPropsList.some((changedProp) => !notRerenderIfChangedProps.includes(changedProp));
   }
 
   render() {
@@ -65,8 +65,7 @@ export class EngangsstonadForm extends Component {
             readOnly={readOnly}
             form={form}
           />
-          )
-        }
+          )}
         {(soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON)
           && (
           <RegistreringAdopsjonOgOmsorgGrid
@@ -75,8 +74,7 @@ export class EngangsstonadForm extends Component {
             readOnly={readOnly}
             form={form}
           />
-          )
-        }
+          )}
         <LagreSoknadPanel readOnly={readOnly} submitting={submitting} form={form} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} />
       </form>
     );
@@ -98,10 +96,10 @@ EngangsstonadForm.defaultProps = {
 
 const getValidation = (soknadData, sokerPersonnummer) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
-    return values => RegistreringFodselGrid.validate(values, sokerPersonnummer);
+    return (values) => RegistreringFodselGrid.validate(values, sokerPersonnummer);
   }
   if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
-    return values => RegistreringAdopsjonOgOmsorgGrid.validate(values, sokerPersonnummer);
+    return (values) => RegistreringAdopsjonOgOmsorgGrid.validate(values, sokerPersonnummer);
   }
   return null;
 };
@@ -124,7 +122,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const validate = getValidation(ownProps.soknadData, sokerPersonnummer);
   return (state) => {
     const registeredFields = getRegisteredFields(ENGANGSSTONAD_FORM_NAME)(state);
-    const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
+    const registeredFieldNames = Object.values(registeredFields).map((rf) => rf.name);
     const valuesForRegisteredFieldsOnly = registeredFieldNames.length
       ? transformRootValues(state, registeredFieldNames)
       : {};

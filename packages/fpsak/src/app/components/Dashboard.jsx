@@ -25,12 +25,11 @@ export class Dashboard extends Component {
   render() {
     const { integrationStatusList, showIntegrationStatus } = this.props;
     return (
-      <React.Fragment>
+      <>
         {showIntegrationStatus && integrationStatusList.length > 0
-          && <IntegrationStatusPanel integrationStatusList={integrationStatusList} />
-        }
+          && <IntegrationStatusPanel integrationStatusList={integrationStatusList} />}
         <FagsakSearchIndex />
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -52,12 +51,12 @@ Dashboard.defaultProps = {
   integrationStatusList: [],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   showIntegrationStatus: getShowDetailedErrorMessages(state),
   integrationStatusList: getIntegrationStatusList(state),
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchIntegrationStatus: fpsakApi.INTEGRATION_STATUS.makeRestApiRequest(),
 }, dispatch);
 

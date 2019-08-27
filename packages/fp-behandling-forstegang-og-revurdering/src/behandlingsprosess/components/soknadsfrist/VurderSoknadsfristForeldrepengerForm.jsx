@@ -80,8 +80,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
           <Column xs="6">
             <Undertekst><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.SoknadMottatt" /></Undertekst>
             {soknad.mottattDato
-              && <Normaltekst>{moment(soknad.mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>
-            }
+              && <Normaltekst>{moment(soknad.mottattDato).format(DDMMYYYY_DATE_FORMAT)}</Normaltekst>}
           </Column>
           <Column xs="6">
             <Undertekst><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.SoknadPeriode" /></Undertekst>
@@ -115,8 +114,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
                 </ArrowBox>
               </Column>
             </Row>
-          )
-        }
+          )}
         <VerticalSpacer twentyPx />
         <BehandlingspunktSubmitButton
           formName={formProps.form}
@@ -165,26 +163,26 @@ const formName = 'VurderSoknadsfristForeldrepengerForm';
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const uttaksperiodegrense = getBehandlingUttaksperiodegrense(initialState);
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
-  return state => ({
-      onSubmit,
-      initialValues: buildInitialValues(state),
-      soknad: behandlingSelectors.getSoknad(state),
-      gyldigSenFremsetting: behandlingFormValueSelector('VurderSoknadsfristForeldrepengerForm')(state, 'gyldigSenFremsetting'),
-      antallDagerSoknadLevertForSent: uttaksperiodegrense ? uttaksperiodegrense.antallDagerLevertForSent : {},
-      soknadsperiodeStart: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeStart : {},
-      soknadsperiodeSlutt: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeSlutt : {},
-      soknadsfristdato: uttaksperiodegrense ? uttaksperiodegrense.soknadsfristForForsteUttaksdato : {},
-      hasAksjonspunkt: aksjonspunkter.length > 0,
-      ...behandlingFormValueSelector(formName)(state, 'gyldigSenFremsetting'),
-    });
+  return (state) => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    soknad: behandlingSelectors.getSoknad(state),
+    gyldigSenFremsetting: behandlingFormValueSelector('VurderSoknadsfristForeldrepengerForm')(state, 'gyldigSenFremsetting'),
+    antallDagerSoknadLevertForSent: uttaksperiodegrense ? uttaksperiodegrense.antallDagerLevertForSent : {},
+    soknadsperiodeStart: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeStart : {},
+    soknadsperiodeSlutt: uttaksperiodegrense ? uttaksperiodegrense.soknadsperiodeSlutt : {},
+    soknadsfristdato: uttaksperiodegrense ? uttaksperiodegrense.soknadsfristForForsteUttaksdato : {},
+    hasAksjonspunkt: aksjonspunkter.length > 0,
+    ...behandlingFormValueSelector(formName)(state, 'gyldigSenFremsetting'),
+  });
 };
 
 const VurderSoknadsfristForeldrepengerForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(VurderSoknadsfristForeldrepengerFormImpl));
 
-VurderSoknadsfristForeldrepengerForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER);
+VurderSoknadsfristForeldrepengerForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER);
 
 export default VurderSoknadsfristForeldrepengerForm;

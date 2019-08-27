@@ -7,7 +7,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import {
- VurderRefusjonFormImpl, buildInitialValues, lagFieldName, transformValues, BEGRUNNELSE_SEN_REFUSJON_NAME,
+  VurderRefusjonFormImpl, buildInitialValues, lagFieldName, transformValues, BEGRUNNELSE_SEN_REFUSJON_NAME,
 } from './VurderRefusjonForm';
 
 

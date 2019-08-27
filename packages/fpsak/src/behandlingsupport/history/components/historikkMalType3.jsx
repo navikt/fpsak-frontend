@@ -135,19 +135,18 @@ const HistorikkMalType3 = ({
           </div>
         )}
         {historikkinnslagDel.skjermlenke
-           ? (
-             <Element>
-               <NavLink
-                 to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
-                 onClick={scrollUp}
-               >
-                 {getKodeverknavn(historikkinnslagDel.skjermlenke)}
-               </NavLink>
-             </Element>
-           )
-           : null
-        }
-        {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map(aksjonspunkt => (
+          ? (
+            <Element>
+              <NavLink
+                to={createLocationForHistorikkItems(behandlingLocation, historikkinnslagDel.skjermlenke.kode)}
+                onClick={scrollUp}
+              >
+                {getKodeverknavn(historikkinnslagDel.skjermlenke)}
+              </NavLink>
+            </Element>
+          )
+          : null}
+        {historikkinnslagDel.aksjonspunkter && historikkinnslagDel.aksjonspunkter.map((aksjonspunkt) => (
           <div key={aksjonspunkt.aksjonspunktKode}>
             {formaterAksjonspunkt(aksjonspunkt, intl)}
             <VerticalSpacer fourPx />
@@ -156,7 +155,7 @@ const HistorikkMalType3 = ({
       </div>
     ))}
   </div>
- );
+);
 
 HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,

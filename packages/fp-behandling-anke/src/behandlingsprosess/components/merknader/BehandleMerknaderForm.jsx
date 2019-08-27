@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
- RadioGroupField, RadioOption, TextAreaField,
+  RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
@@ -106,7 +106,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], resultat => ({
+const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], (resultat) => ({
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,
@@ -114,8 +114,8 @@ const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnke
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(ankeMerknaderFormName)(state, 'ankeVurdering', 'fritekstTilBrev'),

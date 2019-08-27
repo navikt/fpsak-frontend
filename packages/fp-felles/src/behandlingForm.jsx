@@ -45,7 +45,7 @@ export const getBehandlingForm = (config, WrappedComponent, getSelectedBehandlin
     behandlingFormName: PropTypes.string.isRequired,
   };
 
-  const mapStateToProps = state => ({
+  const mapStateToProps = (state) => ({
     selectedBehandlingId: getSelectedBehandlingId(state),
     selectedBehandlingVersjon: getBehandlingVersjon(state),
   });
@@ -62,23 +62,23 @@ export const getBehandlingForm = (config, WrappedComponent, getSelectedBehandlin
 
 
 export const getBehandlingFormSelectors = (getSelectedBehandlingId, getBehandlingVersjon) => {
-  const getFormName = formName => createSelector([getSelectedBehandlingId, getBehandlingVersjon],
+  const getFormName = (formName) => createSelector([getSelectedBehandlingId, getBehandlingVersjon],
     (selectedBehandlingId, selectedBehandlingVersjon) => {
-    if (!selectedBehandlingId || !selectedBehandlingVersjon) {
-      return {};
-    }
-    return getBehandlingFormName(selectedBehandlingId, selectedBehandlingVersjon, formName);
-  });
+      if (!selectedBehandlingId || !selectedBehandlingVersjon) {
+        return {};
+      }
+      return getBehandlingFormName(selectedBehandlingId, selectedBehandlingVersjon, formName);
+    });
 
-  const behandlingFormValueSelector = formName => (state, ...fieldNames) => formValueSelector(getFormName(formName)(state))(state, ...fieldNames);
-  const getBehandlingFormSyncErrors = formName => state => getFormSyncErrors(getFormName(formName)(state))(state);
-  const isBehandlingFormDirty = formName => state => isDirty(getFormName(formName)(state))(state);
-  const isBehandlingFormSubmitting = formName => state => isSubmitting(getFormName(formName)(state))(state);
-  const getBehandlingFormValues = formName => state => getFormValues(getFormName(formName)(state))(state);
-  const getBehandlingFormInitialValues = formName => state => getFormInitialValues(getFormName(formName)(state))(state);
+  const behandlingFormValueSelector = (formName) => (state, ...fieldNames) => formValueSelector(getFormName(formName)(state))(state, ...fieldNames);
+  const getBehandlingFormSyncErrors = (formName) => (state) => getFormSyncErrors(getFormName(formName)(state))(state);
+  const isBehandlingFormDirty = (formName) => (state) => isDirty(getFormName(formName)(state))(state);
+  const isBehandlingFormSubmitting = (formName) => (state) => isSubmitting(getFormName(formName)(state))(state);
+  const getBehandlingFormValues = (formName) => (state) => getFormValues(getFormName(formName)(state))(state);
+  const getBehandlingFormInitialValues = (formName) => (state) => getFormInitialValues(getFormName(formName)(state))(state);
 
-  const getFormState = state => state.form;
-  const getBehandlingFormRegisteredFields = formName => createSelector(
+  const getFormState = (state) => state.form;
+  const getBehandlingFormRegisteredFields = (formName) => createSelector(
     [getSelectedBehandlingId, getBehandlingVersjon, getFormState],
     (behandlingId, behandlingVersjon, formState = {}) => {
       const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
@@ -92,14 +92,14 @@ export const getBehandlingFormSelectors = (getSelectedBehandlingId, getBehandlin
   const hasBehandlingFormErrorsOfType = (formName, errorMsg) => createSelector(
     [getBehandlingFormRegisteredFields(formName), getBehandlingFormSyncErrors(formName)],
     (registeredFields = {}, errors = {}) => {
-      const shownFieldIds = Object.keys(registeredFields).filter(rf => registeredFields[rf].count > 0);
+      const shownFieldIds = Object.keys(registeredFields).filter((rf) => registeredFields[rf].count > 0);
 
       return shownFieldIds.some((id) => {
-        const idParts = id.split(/[.|\[|\]]/).filter(parts => parts && parts !== ''); /* eslint-disable-line no-useless-escape */
+        const idParts = id.split(/[.|\[|\]]/).filter((parts) => parts && parts !== ''); /* eslint-disable-line no-useless-escape */
         return Object.keys(errors)
           .some((errorKey) => {
             const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
-            return Array.isArray(value) ? value.some(eo => eo && eo.id === errorMsg[0].id) : false;
+            return Array.isArray(value) ? value.some((eo) => eo && eo.id === errorMsg[0].id) : false;
           });
       });
     },

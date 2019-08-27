@@ -14,7 +14,7 @@ import { getAllDocuments } from '../behandlingsupportSelectors';
 // TODO (hb) lag linker, ikke callback
 // TODO (hb) Kan implementeres med spesialisert selector som genererer hrefs til bruk i mapStateToProps
 
-const selectDocument = saksNr => (e, id, document) => {
+const selectDocument = (saksNr) => (e, id, document) => {
   window.open(`/fpsak/api/dokument/hent-dokument?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`, '_blank');
 };
 
@@ -49,19 +49,19 @@ DocumentIndex.defaultProps = {
   behandlingId: undefined,
 };
 
-const getSortedDocuments = createSelector([getAllDocuments], alleDokumenter => (alleDokumenter || [])
-.sort((a, b) => {
-  if (!a.tidspunkt) {
-    return +1;
-  }
+const getSortedDocuments = createSelector([getAllDocuments], (alleDokumenter) => (alleDokumenter || [])
+  .sort((a, b) => {
+    if (!a.tidspunkt) {
+      return +1;
+    }
 
-  if (!b.tidspunkt) {
-    return -1;
-  }
-  return b.tidspunkt.localeCompare(a.tidspunkt);
-}));
+    if (!b.tidspunkt) {
+      return -1;
+    }
+    return b.tidspunkt.localeCompare(a.tidspunkt);
+  }));
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   saksNr: getSelectedSaksnummer(state),
   documents: getSortedDocuments(state),
   behandlingId: getSelectedBehandlingId(state),

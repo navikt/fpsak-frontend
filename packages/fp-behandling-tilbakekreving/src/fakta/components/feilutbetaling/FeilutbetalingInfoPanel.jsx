@@ -17,7 +17,7 @@ import {
 import { getBehandlingFormPrefix, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
- DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
+  DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
 } from '@fpsak-frontend/utils';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
@@ -276,7 +276,7 @@ const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetaling
   feilutbetalingFakta, aksjonspunkter,
 ) => {
   const { perioder } = feilutbetalingFakta.behandlingFakta;
-  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   return {
     begrunnelse: apCode ? apCode.begrunnelse : null,
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
@@ -310,7 +310,7 @@ const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetaling
 const getSortedFeilutbetalingArsaker = createSelector([behandlingSelectors.getFeilutbetalingAarsaker, getFagsakYtelseType], (
   feilutbetalingArsaker, fagsakYtelseType,
 ) => {
-  const arsaker = feilutbetalingArsaker.find(a => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
+  const arsaker = feilutbetalingArsaker.find((a) => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
   return arsaker.sort((a1, a2) => {
     const arsak1 = a1.årsak;
     const arsak2 = a2.årsak;
@@ -323,11 +323,11 @@ const getSortedFeilutbetalingArsaker = createSelector([behandlingSelectors.getFe
 });
 
 const transformValues = (values, aksjonspunkter, årsaker) => {
-  const apCode = aksjonspunkter.find(ap => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
 
   const feilutbetalingFakta = values.perioder.map((periode) => {
-    const feilutbetalingÅrsak = årsaker.find(el => el.årsakKode === periode.årsak);
-    const findUnderÅrsakObjekt = underÅrsak => feilutbetalingÅrsak.underÅrsaker.find(el => el.underÅrsakKode === underÅrsak);
+    const feilutbetalingÅrsak = årsaker.find((el) => el.årsakKode === periode.årsak);
+    const findUnderÅrsakObjekt = (underÅrsak) => feilutbetalingÅrsak.underÅrsaker.find((el) => el.underÅrsakKode === underÅrsak);
     const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
 
     return {
@@ -351,8 +351,8 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const feilutbetaling = behandlingSelectors.getFeilutbetalingFakta(initialState).behandlingFakta;
   const årsaker = getSortedFeilutbetalingArsaker(initialState);
-  const submitCallback = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker));
-  return state => ({
+  const submitCallback = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker));
+  return (state) => ({
     feilutbetaling,
     årsaker,
     initialValues: buildInitialValues(state),
@@ -362,7 +362,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
   }, dispatch),

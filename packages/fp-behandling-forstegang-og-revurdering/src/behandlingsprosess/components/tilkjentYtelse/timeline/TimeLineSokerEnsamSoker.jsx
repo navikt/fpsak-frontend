@@ -15,7 +15,7 @@ import styles from './timeLineSokerEnsamSoker.less';
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
 
-const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
+const isKvinne = (kode) => kode === navBrukerKjonn.KVINNE;
 
 const TimeLineSokerEnsamSoker = ({
   hovedsokerKjonnKode,

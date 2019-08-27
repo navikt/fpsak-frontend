@@ -19,8 +19,8 @@ import styles from './fagsakProfile.less';
  *
  * Presentasjonskomponent. Viser fagsakinformasjon og knapper for å endre status eller lukke sak.
  */
-const hasLink = link => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
-const createLink = link => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
+const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
+const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
 
 export const FagsakProfile = ({
   saksnummer,
@@ -58,8 +58,7 @@ export const FagsakProfile = ({
                 </NavLink>
               </Element>
             </div>
-            )
-          }
+            )}
         </div>
       </Column>
     </Row>

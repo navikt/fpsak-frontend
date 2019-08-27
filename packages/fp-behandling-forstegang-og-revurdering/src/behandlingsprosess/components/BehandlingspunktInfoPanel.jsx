@@ -58,11 +58,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       />
 
       {BeregningsresultatEngangsstonadForm.supports(selectedBehandlingspunkt)
-      && <BeregningsresultatEngangsstonadForm submitCallback={submitCallback} />
-      }
+      && <BeregningsresultatEngangsstonadForm submitCallback={submitCallback} />}
       {CheckPersonStatusForm.supports(apCodes)
-      && <CheckPersonStatusForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />
-      }
+      && <CheckPersonStatusForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />}
       {VarselOmRevurderingForm.supports(apCodes)
       && (
       <VarselOmRevurderingForm
@@ -71,8 +69,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         dispatchSubmitFailed={dispatchSubmitFailed}
         readOnly={readOnly}
       />
-      )
-      }
+      )}
       {BeregningFP.supports(selectedBehandlingspunkt)
       && (
       <BeregningFP
@@ -81,8 +78,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         apCodes={apCodes}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-      }
+      )}
       {TilkjentYtelsePanel.supports(selectedBehandlingspunkt)
       && (
       <TilkjentYtelsePanel
@@ -90,8 +86,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         submitCallback={submitCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-      }
+      )}
       {UttakPanel.supports(selectedBehandlingspunkt, apCodes)
       && (
       <UttakPanel
@@ -101,8 +96,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         apCodes={apCodes}
         isApOpen={openAksjonspunkt}
       />
-      )
-      }
+      )}
       {AvregningPanel.supports(selectedBehandlingspunkt, apCodes)
       && (
         <AvregningPanel
@@ -113,8 +107,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
           isApOpen={openAksjonspunkt}
           previewCallback={previewFptilbakeCallback}
         />
-      )
-      }
+      )}
       {VurderSoknadsfristForeldrepengerForm.supports(apCodes)
       && (
       <VurderSoknadsfristForeldrepengerForm
@@ -123,8 +116,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         readOnlySubmitButton={readOnlySubmitButton}
         isApOpen={openAksjonspunkt}
       />
-      )
-      }
+      )}
     </div>
   </div>
 );
@@ -149,7 +141,7 @@ BehandlingspunktInfoPanel.defaultProps = {
   notAcceptedByBeslutter: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),

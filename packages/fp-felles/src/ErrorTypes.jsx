@@ -11,5 +11,5 @@ export const ErrorTypes = {
   GENERELL_FEIL: 'GENERELL_FEIL',
 };
 
-export const getErrorResponseData = error => (error && error.response && error.response.data ? error.response.data : error);
+export const getErrorResponseData = (error) => (error && error.response && error.response.data ? error.response.data : error);
 export const errorOfType = (error, errorType) => error && (getErrorResponseData(error).type === errorType);

@@ -96,7 +96,7 @@ const buildInitialValues = createSelector(
   [behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, getPersonopplysning, getInnvilgetRelatertTilgrensendeYtelserForAnnenForelder,
     behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (soknad, familiehendelse, personopplysning, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, aksjonspunkter, alleKodeverk) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.OMSORGSOVERTAKELSE
+    const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OMSORGSOVERTAKELSE
       || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR);
     return {
       ...OmsorgOgForeldreansvarFaktaForm.buildInitialValues(soknad, familiehendelse, personopplysning,
@@ -112,12 +112,12 @@ const transformValues = (values, aksjonspunkt) => ({
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, ownProps.aksjonspunkter[0])]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, ownProps.aksjonspunkter[0])]);
   const erAksjonspunktForeldreansvar = ownProps.aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR;
   const vilkarTypes = getKodeverk(kodeverkTyper.OMSORGSOVERTAKELSE_VILKAR_TYPE)(initialState);
   const relatertYtelseTypes = getKodeverk(kodeverkTyper.RELATERT_YTELSE_TYPE)(initialState);
 
-  return state => ({
+  return (state) => ({
     initialValues: buildInitialValues(state),
     vilkarTypes,
     relatertYtelseTypes,
@@ -134,6 +134,6 @@ const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForsteg
 })(injectIntl(OmsorgOgForeldreansvarInfoPanelImpl)));
 const OmsorgOgForeldreansvarInfoPanel = withDefaultToggling(faktaPanelCodes.OMSORGSVILKARET, omsorgOgForeldreansvarAksjonspunkter)(ConnectedComponent);
 
-OmsorgOgForeldreansvarInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode));
+OmsorgOgForeldreansvarInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode));
 
 export default OmsorgOgForeldreansvarInfoPanel;

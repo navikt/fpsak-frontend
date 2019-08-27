@@ -21,20 +21,20 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, sho
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(fpsakBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
 export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(fpsakBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
-export const tempUpdateStonadskontoer = params => dispatch => dispatch(fpsakBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params))
-  .then(response => response.payload);
+export const tempUpdateStonadskontoer = (params) => (dispatch) => dispatch(fpsakBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params))
+  .then((response) => response.payload);
 
 export const fetchPreviewBrev = fpsakBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 export const fetchFptilbakePreviewBrev = fptilbakeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
-export const fetchVedtaksbrevPreview = data => dispatch => dispatch(fpsakBehandlingApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
+export const fetchVedtaksbrevPreview = (data) => (dispatch) => dispatch(fpsakBehandlingApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
 
 export const { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter, getResolveProsessAksjonspunkterSuccess } = behandlingsprosessRedux.selectors;
 export const { resetBehandlingspunkter, setSelectedBehandlingspunktNavn, toggleBehandlingspunktOverstyring } = behandlingsprosessRedux.actionCreators;

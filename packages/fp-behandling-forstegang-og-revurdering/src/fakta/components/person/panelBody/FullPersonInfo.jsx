@@ -19,7 +19,7 @@ const findPersonStatus = (personopplysning) => {
   return personopplysning.personstatus ? personopplysning.personstatus : undefined;
 };
 
-export const getBarnFraTPS = (barneListe = []) => barneListe.filter(barn => barn.opplysningsKilde.kode === opplysningsKilde.TPS);
+export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => barn.opplysningsKilde.kode === opplysningsKilde.TPS);
 
 /**
  * FullPersonInfo
@@ -28,18 +28,18 @@ export const getBarnFraTPS = (barneListe = []) => barneListe.filter(barn => barn
  * når NAV-ansatt utvider nedtrekksfanen med personopplysninger.
  */
 export const FullPersonInfoImpl = ({
-                                     sprakkode,
-                                     personopplysning,
-                                     ytelser,
-                                     relatertYtelseTypes,
-                                     relatertYtelseStatus,
-                                     utlandSakstype,
-                                     submitCallback,
-                                     isPrimaryParent,
-                                     personstatusTypes,
-                                     sivilstandTypes,
-                                     getKodeverknavn,
-                                   }) => {
+  sprakkode,
+  personopplysning,
+  ytelser,
+  relatertYtelseTypes,
+  relatertYtelseStatus,
+  utlandSakstype,
+  submitCallback,
+  isPrimaryParent,
+  personstatusTypes,
+  sivilstandTypes,
+  getKodeverknavn,
+}) => {
   if (!personopplysning) {
     return null;
   }

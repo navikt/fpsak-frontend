@@ -8,8 +8,8 @@ import {
   trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 
-const notEmptyParam = p => p !== null && p !== undefined && p !== '';
-const notDefaultParam = p => p !== DEFAULT_FAKTA;
+const notEmptyParam = (p) => p !== null && p !== undefined && p !== '';
+const notDefaultParam = (p) => p !== DEFAULT_FAKTA;
 const formatFaktaParam = (openInfoPanels = []) => openInfoPanels.filter(notEmptyParam).filter(notDefaultParam).join(',');
 const parseFaktaParam = (openInfoPanels = '') => openInfoPanels.split(',').filter(notEmptyParam);
 const paramsAreEqual = (a = [], b = []) => ((a.length === b.length) && a.every((param, index) => param === b[index]));
@@ -46,7 +46,7 @@ const withFaktaIndex = (setOpenInfoPanels, getOpenInfoPanels) => (WrappedCompone
         overstyringApCodes,
       } = this.props;
 
-      const model = aksjonspunkter.map(ap => ({
+      const model = aksjonspunkter.map((ap) => ({
         '@type': ap.kode,
         ...ap,
       }));
@@ -80,7 +80,7 @@ const withFaktaIndex = (setOpenInfoPanels, getOpenInfoPanels) => (WrappedCompone
       const { openInfoPanels } = this.props;
       let infoPanels;
       if (openInfoPanels.includes(infoPanelToToggleId)) {
-        infoPanels = openInfoPanels.filter(infoPanelId => infoPanelId !== infoPanelToToggleId);
+        infoPanels = openInfoPanels.filter((infoPanelId) => infoPanelId !== infoPanelToToggleId);
       } else {
         infoPanels = [...openInfoPanels, infoPanelToToggleId];
       }

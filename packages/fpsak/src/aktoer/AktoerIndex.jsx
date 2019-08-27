@@ -34,7 +34,7 @@ AktoerIndex.defaultProps = {
   selectedAktoer: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   aktoerId: getSelectedAktoerId(state),
   requestPendingMessage: getRequestPollingMessage(state),
   selectedAktoer: getSelectedAktoer(state),
@@ -43,7 +43,7 @@ const mapStateToProps = state => ({
 
 export default trackRouteParam({
   paramName: 'aktoerId',
-  parse: aktoerIdFromUrl => Number.parseInt(aktoerIdFromUrl, 10),
+  parse: (aktoerIdFromUrl) => Number.parseInt(aktoerIdFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setSelectedAktoerId,
   getParamFromStore: getSelectedAktoerId,

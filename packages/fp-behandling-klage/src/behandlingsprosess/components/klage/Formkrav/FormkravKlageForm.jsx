@@ -24,20 +24,20 @@ import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
 
 export const IKKE_PA_KLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
-export const getPaKlagdVedtak = klageFormkavResultat => (
+export const getPaKlagdVedtak = (klageFormkavResultat) => (
   klageFormkavResultat.paKlagdBehandlingId ? `${klageFormkavResultat.paKlagdBehandlingId}` : IKKE_PA_KLAGD_VEDTAK
 );
 
 const getKlagBareVedtak = (avsluttedeBehandlinger, intl, getKodeverknavn) => {
   const klagBareVedtak = [<option key="formkrav" value={IKKE_PA_KLAGD_VEDTAK}>{intl.formatMessage({ id: 'Klage.Formkrav.IkkePåklagdVedtak' })}</option>];
-  return klagBareVedtak.concat(avsluttedeBehandlinger.map(behandling => (
+  return klagBareVedtak.concat(avsluttedeBehandlinger.map((behandling) => (
     <option key={behandling.id} value={`${behandling.id}`}>
       {`${getKodeverknavn(behandling.type)} ${moment(behandling.avsluttet).format(DDMMYYYY_DATE_FORMAT)}`}
     </option>
   )));
 };
 
-const getLovHjemmeler = aksjonspunktCode => (
+const getLovHjemmeler = (aksjonspunktCode) => (
   aksjonspunktCode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP ? 'Klage.LovhjemmelNFP' : 'Klage.LovhjemmelKA'
 );
 
@@ -165,7 +165,7 @@ FormkravKlageForm.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
 });
 

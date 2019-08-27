@@ -22,21 +22,21 @@ const scrollUp = () => {
 };
 
 const finnFomOpplysning = (opplysninger) => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
+  const found = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode);
   return found.tilVerdi;
 };
 
 const finnTomOpplysning = (opplysninger) => {
-  const found = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
+  const found = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode);
   return found.tilVerdi;
 };
 
 const buildEndretFeltText = (endredeFelter) => {
-  const årsakFelt = endredeFelter.filter(felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode)[0];
-  const underÅrsakFelt = endredeFelter.filter(felt => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode)[0];
+  const årsakFelt = endredeFelter.filter((felt) => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode)[0];
+  const underÅrsakFelt = endredeFelter.filter((felt) => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode)[0];
   const underÅrsakFraVerdi = underÅrsakFelt ? underÅrsakFelt.fraVerdi : null;
   const underÅrsakTilVerdi = underÅrsakFelt ? underÅrsakFelt.tilVerdi : null;
-  const endret = endredeFelter.filter(felt => felt.fraVerdi !== null).length > 0;
+  const endret = endredeFelter.filter((felt) => felt.fraVerdi !== null).length > 0;
 
   if (endret) {
     const årsakFraVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
@@ -76,8 +76,7 @@ const HistorikkMalTypeFeilutbetaling = ({
         </Normaltekst>
         <VerticalSpacer eightPx />
       </div>
-    ) : null))
-    }
+    ) : null))}
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].begrunnelseFritekst && (
       <BubbleText
         bodyText={historikkinnslagDeler[0].begrunnelseFritekst}

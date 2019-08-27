@@ -30,17 +30,17 @@ OverstyrConfirmationFormImpl.defaultProps = {
   isBeregningConfirmation: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
 });
 
 const OverstyrConfirmationForm = connect(mapStateToProps)(OverstyrConfirmationFormImpl);
 
-OverstyrConfirmationForm.buildInitialValues = aksjonspunkt => ({
+OverstyrConfirmationForm.buildInitialValues = (aksjonspunkt) => ({
   begrunnelse: VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
 });
 
-OverstyrConfirmationForm.transformValues = values => ({
+OverstyrConfirmationForm.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });
 

@@ -21,8 +21,8 @@ const headerTextCodes = [
   'DocumentList.DateTime',
 ];
 
-const isTextMoreThan25char = text => text && text.length > 25;
-const trimText = text => `${text.substring(0, 24)}...`;
+const isTextMoreThan25char = (text) => text && text.length > 25;
+const trimText = (text) => `${text.substring(0, 24)}...`;
 
 const getDirectionImage = (document) => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
@@ -92,8 +92,7 @@ const DocumentList = ({
                 tooltip={{ header: <Normaltekst><FormattedMessage id="DocumentList.IBruk" /></Normaltekst> }}
                 tabIndex="0"
               />
-              )
-            }
+              )}
             </TableColumn>
             <TableColumn>
               {isTextMoreThan25char(document.gjelderFor)
@@ -101,11 +100,9 @@ const DocumentList = ({
                 <Tooltip header={<Normaltekst>{document.gjelderFor}</Normaltekst>}>
                   {trimText(document.gjelderFor)}
                 </Tooltip>
-              )
-            }
+              )}
               {!isTextMoreThan25char(document.gjelderFor)
-            && document.gjelderFor
-            }
+            && document.gjelderFor}
             </TableColumn>
             <TableColumn>
               {document.tidspunkt
@@ -114,8 +111,7 @@ const DocumentList = ({
             </TableColumn>
           </TableRow>
         );
-      })
-      }
+      })}
     </Table>
   );
 };

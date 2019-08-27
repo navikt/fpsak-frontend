@@ -80,7 +80,7 @@ FpTilbakeBehandlingInfoSetter.defaultProps = {
   soknad: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),

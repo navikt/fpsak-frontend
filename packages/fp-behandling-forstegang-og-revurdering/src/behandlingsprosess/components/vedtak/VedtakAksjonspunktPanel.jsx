@@ -9,7 +9,7 @@ import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 
-export const getTextCode = behandlingStatus => (behandlingStatus === behandlingStatusCode.AVSLUTTET
+export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlingStatusCode.AVSLUTTET
 || behandlingStatus === behandlingStatusCode.IVERKSETTER_VEDTAK ? 'VedtakForm.vedtak' : 'VedtakForm.ForslagTilVedtak');
 
 export const VedtakAksjonspunktPanelImpl = ({
@@ -54,7 +54,7 @@ VedtakAksjonspunktPanelImpl.defaultProps = {
   children: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
 });
 

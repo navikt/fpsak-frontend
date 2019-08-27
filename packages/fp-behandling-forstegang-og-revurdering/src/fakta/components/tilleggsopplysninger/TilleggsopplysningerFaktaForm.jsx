@@ -32,8 +32,7 @@ const TilleggsopplysningerFaktaFormImpl = ({
         <FormattedMessage id="TilleggsopplysningerFaktaForm.Confirmed" />
       </Hovedknapp>
     </ElementWrapper>
-    )
-    }
+    )}
   </ElementWrapper>
 );
 
@@ -47,18 +46,18 @@ TilleggsopplysningerFaktaFormImpl.defaultProps = {
   tilleggsopplysninger: '',
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tilleggsopplysninger: behandlingFormValueSelector('TilleggsopplysningerInfoPanel')(state, 'tilleggsopplysninger'),
 });
 
 const TilleggsopplysningerFaktaForm = connect(mapStateToProps)(TilleggsopplysningerFaktaFormImpl);
 
-TilleggsopplysningerFaktaForm.buildInitialValues = soknad => ({
+TilleggsopplysningerFaktaForm.buildInitialValues = (soknad) => ({
   tilleggsopplysninger: soknad.tilleggsopplysninger,
   aksjonspunktCode: aksjonspunktCodes.TILLEGGSOPPLYSNINGER,
 });
 
-TilleggsopplysningerFaktaForm.transformValues = values => ({
+TilleggsopplysningerFaktaForm.transformValues = (values) => ({
   tilleggsopplysninger: values.tilleggsopplysninger,
   kode: aksjonspunktCodes.TILLEGGSOPPLYSNINGER,
 });

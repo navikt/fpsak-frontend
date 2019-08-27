@@ -49,8 +49,7 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
           />
         </div>
       </TableColumn>
-      )
-      }
+      )}
       { harAksjonspunkt && isAksjonspunktClosed && readOnly
       && (
       <TableColumn>
@@ -59,8 +58,7 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
           titleCode="Behandling.EditedField"
         />
       </TableColumn>
-      )
-      }
+      )}
     </TableRow>
   ));
 
@@ -73,12 +71,10 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
     <TableColumn>
       <Element>{formatCurrencyNoKr(bruttoFastsattInntekt)}</Element>
     </TableColumn>
-    )
-    }
+    )}
       { harAksjonspunkt && isAksjonspunktClosed && readOnly
       // For å matche den ekstra kolonnen som kommer på for "endret av saksbehandler" ikonet
-      && <TableColumn />
-    }
+      && <TableColumn />}
     </TableRow>
   );
   rows.push(summaryRow);
@@ -86,8 +82,8 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
   return rows;
 };
 
-const harFastsettBgAtFlAksjonspunkt = aksjonspunkter => aksjonspunkter !== undefined && aksjonspunkter !== null
-  && aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+const harFastsettBgAtFlAksjonspunkt = (aksjonspunkter) => aksjonspunkter !== undefined && aksjonspunkter !== null
+  && aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
 
 /**
  * GrunnlagForAarsinntektPanelAT
@@ -107,9 +103,9 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   getKodeverknavn,
 }) => {
   const headers = ['Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver', 'Beregningsgrunnlag.AarsinntektPanel.Inntekt'];
-  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
   const perioderMedBortfaltNaturalytelse = allePerioder
-    .filter(periode => periode.periodeAarsaker !== null && (periode.periodeAarsaker
+    .filter((periode) => periode.periodeAarsaker !== null && (periode.periodeAarsaker
       .map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT)));
   const harAksjonspunkt = harFastsettBgAtFlAksjonspunkt(aksjonspunkter);
   if (harAksjonspunkt) {
@@ -123,15 +119,13 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
         <Element><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidstaker" /></Element>
         <VerticalSpacer eightPx />
       </div>
-      )
-      }
+      )}
       <Table headerTextCodes={headers} noHover classNameTable={styles.inntektTable}>
         {createTableRows(relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
       </Table>
 
       { perioderMedBortfaltNaturalytelse.length > 0
-      && <NaturalytelsePanel />
-      }
+      && <NaturalytelsePanel />}
 
     </div>
   );
@@ -155,9 +149,9 @@ GrunnlagForAarsinntektPanelATImpl.defaultProps = {
 
 const mapStateToProps = (state, initialProps) => {
   const { alleAndeler, aksjonspunkter } = initialProps;
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
   const closedAps = aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
-  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
   const overstyrteInntekter = relevanteAndeler.map((inntekt, index) => {
     const overstyrtInntekt = behandlingFormValueSelector(formName)(state, `inntekt${index}`);
     return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
@@ -183,7 +177,7 @@ GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alle
   let inntektPrAndelList = null;
   let frilansInntekt = null;
   if (relevanteStatuser.isArbeidstaker) {
-    inntektPrAndelList = alleAndelerIForstePeriode.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+    inntektPrAndelList = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
       .map(({ andelsnr }, index) => {
         const overstyrtInntekt = values[`inntekt${index}`];
         return {

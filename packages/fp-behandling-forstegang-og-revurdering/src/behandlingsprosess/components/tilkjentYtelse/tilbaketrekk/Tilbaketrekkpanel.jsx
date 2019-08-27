@@ -135,8 +135,8 @@ export const buildInitialValues = createSelector([(state, ownProps) => ownProps.
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state, ownProps),
   });

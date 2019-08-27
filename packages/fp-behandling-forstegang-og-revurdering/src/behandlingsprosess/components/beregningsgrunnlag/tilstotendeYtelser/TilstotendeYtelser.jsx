@@ -79,7 +79,7 @@ const TilstotendeYtelser = ({
   isKombinasjonsstatus,
   skalViseOppjustertGrunnlag,
 }) => {
-  const relevanteAndeler = alleAndeler.filter(andel => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
+  const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   return (
     <div>
       {isKombinasjonsstatus
@@ -90,8 +90,7 @@ const TilstotendeYtelser = ({
         </Element>
         <VerticalSpacer fourPx />
       </div>
-      )
-      }
+      )}
       {relevanteAndeler.map((andel, index) => (
         <div key={andel.aktivitetStatus.kode.concat('_'.concat(index))}>
           <Row>
@@ -111,8 +110,7 @@ const TilstotendeYtelser = ({
                 />
               </Normaltekst>
             </Column>
-            )
-            }
+            )}
           </Row>
           {skalViseOppjustertGrunnlag
             && (
@@ -124,8 +122,7 @@ const TilstotendeYtelser = ({
                   <Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst>
                 </Column>
               </Row>
-            )
-            }
+            )}
           {!skalViseOppjustertGrunnlag
           && (
             <Row>
@@ -133,8 +130,7 @@ const TilstotendeYtelser = ({
                 <Element>{formatCurrencyNoKr(andel.beregnetPrAar)}</Element>
               </Column>
             </Row>
-          )
-          }
+          )}
           <VerticalSpacer eightPx />
         </div>
       ))}

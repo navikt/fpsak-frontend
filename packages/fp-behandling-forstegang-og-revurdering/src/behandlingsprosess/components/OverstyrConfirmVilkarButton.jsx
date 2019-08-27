@@ -38,7 +38,7 @@ OverstyrConfirmVilkarButtonImpl.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
 });
 

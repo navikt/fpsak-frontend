@@ -21,7 +21,7 @@ export const KlageVurderingRadioOptionsKaImpl = ({
   klageVurdering,
   intl,
 }) => {
-  const medholdOptions = medholdReasons.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
+  const medholdOptions = medholdReasons.map((mo) => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
   return (
     <div>
       <BehandlingspunktBegrunnelseTextField
@@ -79,8 +79,7 @@ export const KlageVurderingRadioOptionsKaImpl = ({
           <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.DelvisOmgjort' }} />
         </RadioGroupField>
       </ArrowBox>
-    )
-    }
+    )}
       {(klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK)
       && (
         <ArrowBox marginLeft={380}>
@@ -94,8 +93,7 @@ export const KlageVurderingRadioOptionsKaImpl = ({
             bredde="xl"
           />
         </ArrowBox>
-      )
-      }
+      )}
     </div>
   );
 };
@@ -109,7 +107,7 @@ KlageVurderingRadioOptionsKaImpl.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   medholdReasons: getKodeverk(kodeverkTyper.KLAGE_MEDHOLD_ARSAK)(state),
 });
 

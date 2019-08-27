@@ -40,8 +40,8 @@ export const MedlemskapInfoPanelImpl = ({
   skalBrukeNyeMedlemskap,
   isForeldrepenger,
 }) => {
-  const avklarStartdatoAksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
-  const avklarStartdatoOverstyring = aksjonspunkter.find(ap => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+  const avklarStartdatoOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
   return (
     <FaktaEkspandertpanel
       title={intl.formatMessage({ id: 'MedlemskapInfoPanel.Medlemskap' })}
@@ -60,8 +60,7 @@ export const MedlemskapInfoPanelImpl = ({
           submittable={submittable}
           hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
         />
-        )
-      }
+        )}
       { (skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
         && (
         <OppholdInntektOgPerioderFormNew
@@ -70,8 +69,7 @@ export const MedlemskapInfoPanelImpl = ({
           submittable={submittable}
           aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
-        )
-      }
+        )}
       { (!skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
       && (
         <OppholdInntektOgPerioderForm
@@ -80,8 +78,7 @@ export const MedlemskapInfoPanelImpl = ({
           submittable={submittable}
           aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
-      )
-      }
+      )}
     </FaktaEkspandertpanel>
   );
 };
@@ -109,8 +106,8 @@ MedlemskapInfoPanelImpl.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter(ap => !avklarStartdatoAp.includes(ap.definisjon.kode));
-  return state => ({
+  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode));
+  return (state) => ({
     skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
     isForeldrepenger: isForeldrepengerFagsak(state),
     aksjonspunkterMinusAvklarStartDato,
@@ -124,6 +121,6 @@ const ConnectedComponent = connect(mapStateToPropsFactory)(injectIntl(Medlemskap
 
 const MedlemskapInfoPanel = withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, medlemAksjonspunkter)(ConnectedComponent);
 
-MedlemskapInfoPanel.supports = personopplysninger => personopplysninger !== null && personopplysninger !== undefined;
+MedlemskapInfoPanel.supports = (personopplysninger) => personopplysninger !== null && personopplysninger !== undefined;
 
 export default MedlemskapInfoPanel;

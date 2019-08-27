@@ -50,7 +50,7 @@ export const findHendelseText = (hendelse, getKodeverknavn) => {
   return `${getKodeverknavn(hendelse.navn)} ${hendelse.verdi}`;
 };
 
-const convertToBoolean = verdi => (verdi === true ? 'Ja' : 'Nei');
+const convertToBoolean = (verdi) => (verdi === true ? 'Ja' : 'Nei');
 
 export const findEndretFeltVerdi = (endretFelt, verdi, intl) => {
   if (verdi === null) {

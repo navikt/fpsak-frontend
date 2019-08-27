@@ -28,7 +28,7 @@ FaktaKlagePanel.propTypes = {
   fagsakPerson: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakPerson: getFagsakPerson(state),
 });
 

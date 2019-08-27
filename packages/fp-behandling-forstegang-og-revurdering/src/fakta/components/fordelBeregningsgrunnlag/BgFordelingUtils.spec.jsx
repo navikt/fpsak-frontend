@@ -144,10 +144,10 @@ describe('<BgFordelingUtils>', () => {
     const bg = {
       beregningsgrunnlagPeriode: [
         {
- beregningsgrunnlagPrStatusOgAndel: [
-          { aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER } },
-        ],
-},
+          beregningsgrunnlagPrStatusOgAndel: [
+            { aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSAVKLARINGSPENGER } },
+          ],
+        },
       ],
     };
     const skalValidereMotBg = skalValidereMotBeregningsgrunnlag(bg)(andelFieldValue);
@@ -163,10 +163,10 @@ describe('<BgFordelingUtils>', () => {
     const bg = {
       beregningsgrunnlagPeriode: [
         {
- beregningsgrunnlagPrStatusOgAndel: [
-          { aktivitetStatus: { kode: aktivitetStatuser.FRILANSER } },
-        ],
-},
+          beregningsgrunnlagPrStatusOgAndel: [
+            { aktivitetStatus: { kode: aktivitetStatuser.FRILANSER } },
+          ],
+        },
       ],
     };
     const skalValidereMotBg = skalValidereMotBeregningsgrunnlag(bg)(andelFieldValue);

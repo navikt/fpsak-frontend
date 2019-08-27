@@ -51,12 +51,12 @@ describe('Fagsak-reducer', () => {
     store.dispatch(resetFagsakContext());
 
     const allRestApisToReset = Object.values(FpsakApiKeys)
-      .filter(value => !doNotResetWhitelist.includes(value))
-      .map(api => (`@@REST/${api} RESET`));
-    const types = store.getActions().map(action => action.type);
+      .filter((value) => !doNotResetWhitelist.includes(value))
+      .map((api) => (`@@REST/${api} RESET`));
+    const types = store.getActions().map((action) => action.type);
 
     expect(types).to.includes(RESET_FAGSAKER);
-    expect(types.filter(type => type !== RESET_FAGSAKER)).to.include.members(allRestApisToReset);
+    expect(types.filter((type) => type !== RESET_FAGSAKER)).to.include.members(allRestApisToReset);
   });
 
   it('skal oppdatere fagsak-context', () => {

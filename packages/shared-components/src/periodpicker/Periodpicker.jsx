@@ -9,9 +9,9 @@ import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 import styles from './periodpicker.less';
 
-const getStartDateInput = props => haystack(props, props.names[0]).input;
-const getEndDateInput = props => haystack(props, props.names[1]).input;
-const isValidDate = date => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
+const getStartDateInput = (props) => haystack(props, props.names[0]).input;
+const getEndDateInput = (props) => haystack(props, props.names[1]).input;
+const isValidDate = (date) => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
 const createPeriod = (startDay, endDay) => `${moment(startDay).format(DDMMYYYY_DATE_FORMAT)} - ${moment(endDay).format(DDMMYYYY_DATE_FORMAT)}`;
 
 class Periodpicker extends Component {
@@ -181,8 +181,7 @@ class Periodpicker extends Component {
           onClose={this.hideCalendar}
           disabledDays={disabledDays}
         />
-        )
-        }
+        )}
       </>
     );
   }

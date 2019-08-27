@@ -34,11 +34,11 @@ const TilbakekrevingAktivitetTabell = ({
               <Normaltekst>{formatCurrencyNoKr(y.belop)}</Normaltekst>
             </TableColumn>
           </TableRow>
-      );
-    })}
+        );
+      })}
     </Table>
   );
-    };
+};
 
 TilbakekrevingAktivitetTabell.propTypes = {
   ytelser: PropTypes.arrayOf(PropTypes.shape({

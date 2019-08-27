@@ -18,7 +18,7 @@ import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderin
 
 import styles from './fodselSammenligningPanel.less';
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 /**
  * FodselSammenlingningPanel
  *
@@ -33,11 +33,9 @@ export const FodselSammenligningPanel = ({
   <div className={styles.panelWrapper}>
     <Panel className={styles.panel}>
       {behandlingsTypeKode !== behandlingType.REVURDERING
-        && <FodselSammenligningOtherPanel />
-      }
+        && <FodselSammenligningOtherPanel />}
       {behandlingsTypeKode === behandlingType.REVURDERING
-        && <FodselSammenligningRevurderingPanel />
-      }
+        && <FodselSammenligningRevurderingPanel />}
     </Panel>
     <Panel className={styles.panel} name="tpsFodseldato">
       <Row>
@@ -51,8 +49,7 @@ export const FodselSammenligningPanel = ({
               <FormattedMessage id="FodselsammenligningPanel.Dodfodt" />
             </EtikettInfo>
           </Column>
-          )
-        }
+          )}
       </Row>
       <Row>
         <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.Fodselsdato" /></Normaltekst></Column>
@@ -63,35 +60,32 @@ export const FodselSammenligningPanel = ({
         && (
         <Table>
           {antallBarn.map((barn) => {
-          const key = barn.fodselsdato + barn.dodsdato;
-          return (
-            <TableRow key={key} id={key}>
-              <TableColumn>
-                <Normaltekst>
-                  {formatDate(barn.fodselsdato)}
-                </Normaltekst>
-              </TableColumn>
-              <TableColumn>
-                <Normaltekst>
-                  {formatDate(barn.dodsdato)}
-                </Normaltekst>
-              </TableColumn>
-              <TableColumn>
-                {barn.dodsdato
+            const key = barn.fodselsdato + barn.dodsdato;
+            return (
+              <TableRow key={key} id={key}>
+                <TableColumn>
+                  <Normaltekst>
+                    {formatDate(barn.fodselsdato)}
+                  </Normaltekst>
+                </TableColumn>
+                <TableColumn>
+                  <Normaltekst>
+                    {formatDate(barn.dodsdato)}
+                  </Normaltekst>
+                </TableColumn>
+                <TableColumn>
+                  {barn.dodsdato
                 && (
                 <EtikettInfo className={styles.dodMerke} typo="undertekst" title={intl.formatMessage({ id: 'FodselsammenligningPanel.Dod' })}>
                   <FormattedMessage id="FodselsammenligningPanel.Dod" />
                 </EtikettInfo>
-)
-              }
-              </TableColumn>
-            </TableRow>
-          );
-        })
-        }
+                )}
+                </TableColumn>
+              </TableRow>
+            );
+          })}
         </Table>
-)
-      }
+        )}
         {' '}
         {!antallBarn.length > 0
       && (
@@ -102,9 +96,7 @@ export const FodselSammenligningPanel = ({
           </Normaltekst>
         </Column>
       </Row>
-)
-
-      }
+      )}
       </Row>
     </Panel>
   </div>
@@ -121,7 +113,7 @@ FodselSammenligningPanel.defaultProps = {
   antallBarn: [],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   antallBarn: getBarnFraTpsRelatertTilSoknad(state),
   nrOfDodfodteBarn: getAntallDodfodteBarn(state),
   behandlingsTypeKode: behandlingSelectors.getBehandlingType(state).kode,

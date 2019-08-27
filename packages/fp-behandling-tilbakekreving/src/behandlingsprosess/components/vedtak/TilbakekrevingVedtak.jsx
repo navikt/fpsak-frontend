@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import {
- Systemtittel, Undertittel, Undertekst, Normaltekst,
+  Systemtittel, Undertittel, Undertekst, Normaltekst,
 } from 'nav-frontend-typografi';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
@@ -75,6 +75,6 @@ const mapStateToProps = (state) => {
 
 const TilbakekrevingVedtak = connect(mapStateToProps)(injectKodeverk(getAlleTilbakekrevingKodeverk)(TilbakekrevingVedtakImpl));
 
-TilbakekrevingVedtak.supports = (apCodes, isBehandlingHenlagt) => isBehandlingHenlagt || vedtakAksjonspunkter.some(ap => apCodes.includes(ap));
+TilbakekrevingVedtak.supports = (apCodes, isBehandlingHenlagt) => isBehandlingHenlagt || vedtakAksjonspunkter.some((ap) => apCodes.includes(ap));
 
 export default TilbakekrevingVedtak;

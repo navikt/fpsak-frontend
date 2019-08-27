@@ -46,8 +46,7 @@ export const PermisjonOppholdPanel = ({
         oppholdsReasons={oppholdsReasons}
         readOnly={readOnly}
       />
-    )
-    }
+    )}
   </div>
 );
 

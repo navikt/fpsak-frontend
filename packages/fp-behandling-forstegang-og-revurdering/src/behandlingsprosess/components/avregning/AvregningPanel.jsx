@@ -17,7 +17,7 @@ import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
- getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -73,17 +73,17 @@ const tooltipContentReduksjon = (
   </span>
 );
 
-const createHelptextTooltip = isForeldrepenger => ({
-    header: (
-      <Normaltekst>
-        <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
-      </Normaltekst>),
-  });
-const getApTekst = apCode => (apCode ? [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />] : []);
-const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
-const tooltipContent = type => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
+const createHelptextTooltip = (isForeldrepenger) => ({
+  header: (
+    <Normaltekst>
+      <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
+    </Normaltekst>),
+});
+const getApTekst = (apCode) => (apCode ? [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />] : []);
+const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
+const tooltipContent = (type) => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
 
-const radioGroupLabel = contentType => (
+const radioGroupLabel = (contentType) => (
   <span>
     <FormattedMessage id={`Avregning.RadioGroup.${contentType}`} />
     <Image
@@ -129,7 +129,7 @@ export class AvregningPanelImpl extends Component {
 
   toggleDetails(id) {
     const { showDetails } = this.state;
-    const tableIndex = showDetails.findIndex(table => table.id === id);
+    const tableIndex = showDetails.findIndex((table) => table.id === id);
     let newShowDetailsArray = [];
 
     if (tableIndex !== -1) {
@@ -221,12 +221,10 @@ export class AvregningPanelImpl extends Component {
               </Column>
             </Row>
           </div>
-          )
-        }
+          )}
         { !simuleringResultat && (
           <FormattedMessage id="Avregning.ingenData" />
-        )
-        }
+        )}
         { apCodes[0]
         && (
           <div>
@@ -303,11 +301,9 @@ export class AvregningPanelImpl extends Component {
                               </a>
                             </ArrowBox>
                           </div>
-                        )
-                        }
+                        )}
                       </Column>
-                    )
-                    }
+                    )}
                     { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
                     && (
                       <Column sm="6">
@@ -344,12 +340,10 @@ export class AvregningPanelImpl extends Component {
                                     </RadioGroupField>
                                   </ArrowBox>
                                 </div>
-                              )
-                              }
+                              )}
                             </ArrowBox>
                           </div>
-                        )
-                        }
+                        )}
                         { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
                         && (
                           <div className={styles.marginBottom20}>
@@ -360,11 +354,9 @@ export class AvregningPanelImpl extends Component {
                               </RadioGroupField>
                             </ArrowBox>
                           </div>
-                        )
-                        }
+                        )}
                       </Column>
-                    )
-                    }
+                    )}
                   </Row>
                   <Row>
                     <Column xs="6">
@@ -384,8 +376,7 @@ export class AvregningPanelImpl extends Component {
               </Column>
             </Row>
           </div>
-        )
-        }
+        )}
       </FadingPanel>
     );
   }
@@ -411,7 +402,7 @@ export const transformValues = (values, ap) => [{
 
 const buildInitialValues = createSelector(
   [getTilbakekrevingValg, behandlingSelectors.getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
-    const aksjonspunkt = aksjonspunkter.find(ap => simuleringAksjonspunkter.includes(ap.definisjon.kode));
+    const aksjonspunkt = aksjonspunkter.find((ap) => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     if (!aksjonspunkt || !tilbakekrevingValg) {
       return undefined;
     }
@@ -434,8 +425,8 @@ const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return (state) => ({
     simuleringResultat: getSimuleringResultat(state),
     initialValues: buildInitialValues(state),
     ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
@@ -448,7 +439,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
   }, dispatch),
@@ -459,6 +450,6 @@ const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injec
   enableReinitialize: true,
 })(AvregningPanelImpl)));
 
-AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some(ap => apCodes.includes(ap));
+AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some((ap) => apCodes.includes(ap));
 
 export default AvregningPanel;

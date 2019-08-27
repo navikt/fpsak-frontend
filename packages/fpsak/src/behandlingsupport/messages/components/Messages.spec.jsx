@@ -56,11 +56,11 @@ describe('<Messages>', () => {
     const selectFields = form.find('SelectField');
     expect(selectFields).to.have.length(2);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    const recipientSelect = selectFields.findWhere((selectField) => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).to.have.length(1);
     expect(recipientSelect.prop('selectValues')).to.have.length(2);
 
-    const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
+    const templateSelect = selectFields.findWhere((selectField) => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).to.have.length(1);
     expect(templateSelect.prop('selectValues')).to.have.length(3);
   });
@@ -105,11 +105,11 @@ describe('<Messages>', () => {
     const selectFields = form.find('SelectField');
     expect(selectFields).to.have.length(3);
 
-    const recipientSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'mottaker');
+    const recipientSelect = selectFields.findWhere((selectField) => selectField.prop('name') === 'mottaker');
     expect(recipientSelect).to.have.length(1);
     expect(recipientSelect.prop('selectValues')).to.have.length(2);
 
-    const templateSelect = selectFields.findWhere(selectField => selectField.prop('name') === 'brevmalkode');
+    const templateSelect = selectFields.findWhere((selectField) => selectField.prop('name') === 'brevmalkode');
     expect(templateSelect).to.have.length(1);
     expect(templateSelect.prop('selectValues')).to.have.length(3);
   });

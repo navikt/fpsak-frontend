@@ -114,8 +114,8 @@ const transformValues = (values, periodeData) => {
 };
 
 export const mapStateToPropsFactory = (initialState, ownProps) => {
-  const validate = values => validateForm(values, ownProps.periodeData);
-  const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
+  const validate = (values) => validateForm(values, ownProps.periodeData);
+  const onSubmit = (values) => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
   return () => ({
     validate,
     onSubmit,

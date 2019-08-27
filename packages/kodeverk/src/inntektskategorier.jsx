@@ -15,6 +15,6 @@ const inntektskategorier = {
 const SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKTSKATEGORIER = [inntektskategorier.SELVSTENDIG_NÆRINGSDRIVENDE,
   inntektskategorier.JORDBRUKER, inntektskategorier.DAGMAMMA, inntektskategorier.FISKER];
 
-export const isSelvstendigNæringsdrivende = inntektskategori => (SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKTSKATEGORIER.includes(inntektskategori));
+export const isSelvstendigNæringsdrivende = (inntektskategori) => (SELVSTENDIG_NÆRINGSDRIVENDE_INNTEKTSKATEGORIER.includes(inntektskategori));
 
 export default inntektskategorier;

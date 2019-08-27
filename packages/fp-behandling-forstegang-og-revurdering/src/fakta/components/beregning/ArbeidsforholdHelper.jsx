@@ -11,7 +11,7 @@ export const sortArbeidsforholdList = (arbeidsforhold) => {
 };
 
 export const getSortedKortvarigeArbeidsforholdList = createSelector([getFaktaOmBeregning],
-  faktaOmBeregning => sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold));
+  (faktaOmBeregning) => sortArbeidsforholdList(faktaOmBeregning.kortvarigeArbeidsforhold));
 
 
 export const arbeidsforholdProptype = PropTypes.shape({

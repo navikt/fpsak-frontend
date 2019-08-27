@@ -25,7 +25,7 @@ import styles from './messages.less';
 const maxLength4000 = maxLength(4000);
 const minLength3 = minLength(3);
 
-const getFritekstMessage = brevmalkode => (brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst');
+const getFritekstMessage = (brevmalkode) => (brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst');
 
 const showFritekst = (brevmalkode, arsakskode) => (brevmalkode === dokumentMalType.INNHENT_DOK
     || (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET));
@@ -72,7 +72,7 @@ export const MessagesImpl = ({
         label={intl.formatMessage({ id: 'Messages.Recipient' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseRecipient' })}
-        selectValues={recipients.map(recipient => <option key={recipient} value={recipient}>{recipient}</option>)}
+        selectValues={recipients.map((recipient) => <option key={recipient} value={recipient}>{recipient}</option>)}
         bredde="xxl"
       />
       <SelectField
@@ -80,7 +80,7 @@ export const MessagesImpl = ({
         label={intl.formatMessage({ id: 'Messages.Template' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.ChooseTemplate' })}
-        selectValues={templates.map(template => <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>{template.navn}</option>)}
+        selectValues={templates.map((template) => <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>{template.navn}</option>)}
         bredde="xxl"
       />
       {brevmalkode === dokumentMalType.REVURDERING_DOK
@@ -90,7 +90,7 @@ export const MessagesImpl = ({
         label={intl.formatMessage({ id: 'Messages.Årsak' })}
         validate={[required]}
         placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-        selectValues={causes.map(cause => <option key={cause.kode} value={cause.kode}>{cause.navn}</option>)}
+        selectValues={causes.map((cause) => <option key={cause.kode} value={cause.kode}>{cause.navn}</option>)}
         bredde="xxl"
       />
       )}
@@ -113,7 +113,7 @@ export const MessagesImpl = ({
         <a
           href=""
           onClick={previewMessage}
-          onKeyDown={e => (e.keyCode === 13 ? previewMessage(e) : null)}
+          onKeyDown={(e) => (e.keyCode === 13 ? previewMessage(e) : null)}
           className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
         >
           {intl.formatMessage({ id: 'Messages.Preview' })}
@@ -161,12 +161,12 @@ const transformValues = (values) => {
 };
 const getfilteredCauses = createSelector(
   [getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)],
-  causes => causes.filter(cause => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
+  (causes) => causes.filter((cause) => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
+  return (state) => ({
     ...behandlingFormValueSelector(formName)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
     causes: getfilteredCauses(state),
     initialValues: buildInitalValues(isKontrollerRevurderingAksjonspunkOpen(state), ownProps),

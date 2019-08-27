@@ -20,7 +20,7 @@ const overstyringApCodes = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_S
  *
  * Har ansvar for faktadelen av hovedvinduet.
  */
-export const FaktaContainer = props => (
+export const FaktaContainer = (props) => (
   <FaktaPanel {...props} overstyringApCodes={overstyringApCodes} />
 );
 
@@ -34,7 +34,7 @@ FaktaContainer.propTypes = {
   resolveFaktaOverstyrAksjonspunkter: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

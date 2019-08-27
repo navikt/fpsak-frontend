@@ -62,8 +62,7 @@ const KunYtelseBesteberegningImpl = ({
                 <FormattedMessage id="BeregningInfoPanel.FastsettBBFodendeKvinne.RegnarkNavet" />
               </a>
             </Column>
-          )
-          }
+          )}
         </Row>
         {skalViseInntektstabell
         && (
@@ -76,11 +75,9 @@ const KunYtelseBesteberegningImpl = ({
             />
           </Column>
         </Row>
-)
-        }
+        )}
       </ArrowBox>
-    )
-  }
+    )}
   </div>
 );
 
@@ -97,7 +94,7 @@ KunYtelseBesteberegningImpl.defaultProps = {
   skalViseInntektstabell: true,
 };
 
-KunYtelseBesteberegningImpl.buildInitialValues = kunYtelse => ({ [besteberegningField]: kunYtelse.erBesteberegning });
+KunYtelseBesteberegningImpl.buildInitialValues = (kunYtelse) => ({ [besteberegningField]: kunYtelse.erBesteberegning });
 
 KunYtelseBesteberegningImpl.validate = (values) => {
   const errors = {};
@@ -105,9 +102,9 @@ KunYtelseBesteberegningImpl.validate = (values) => {
   return errors;
 };
 
-KunYtelseBesteberegningImpl.transformValues = values => (values[besteberegningField]);
+KunYtelseBesteberegningImpl.transformValues = (values) => (values[besteberegningField]);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erBesteberegning: getFormValuesForBeregning(state)[besteberegningField],
 });
 

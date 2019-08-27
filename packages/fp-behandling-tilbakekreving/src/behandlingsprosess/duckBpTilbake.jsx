@@ -17,11 +17,11 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => 
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(tilbakekrevingBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
-export const beregnBeløp = params => dispatch => dispatch(tilbakekrevingBehandlingApi.BEREGNE_BELØP.makeRestApiRequest()(params))
-  .then(response => response.payload);
+export const beregnBeløp = (params) => (dispatch) => dispatch(tilbakekrevingBehandlingApi.BEREGNE_BELØP.makeRestApiRequest()(params))
+  .then((response) => response.payload);
 
 export const { resetBehandlingspunkter, setSelectedBehandlingspunktNavn } = behandlingsprosessRedux.actionCreators;
 export const { getSelectedBehandlingspunktNavn, getResolveProsessAksjonspunkterSuccess, getOverrideBehandlingspunkter } = behandlingsprosessRedux.selectors;

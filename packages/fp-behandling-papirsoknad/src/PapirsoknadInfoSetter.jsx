@@ -85,7 +85,7 @@ PapirsoknadInfoSetter.defaultProps = {
   soknad: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   brevMaler: behandlingSelectors.getBrevMaler(state),

@@ -31,7 +31,7 @@ const getUtlandSakstype = (aksjonspunkter) => {
     return utlandSakstypeKode.EØS_BOSATT_NORGE;
   }
   if (hasAksjonspunkt(MANUELL_MARKERING_AV_UTLAND_SAKSTYPE, aksjonspunkter)) {
-    return aksjonspunkter.find(ap => ap.definisjon.kode === MANUELL_MARKERING_AV_UTLAND_SAKSTYPE).begrunnelse;
+    return aksjonspunkter.find((ap) => ap.definisjon.kode === MANUELL_MARKERING_AV_UTLAND_SAKSTYPE).begrunnelse;
   }
   return utlandSakstypeKode.NASJONAL;
 };
@@ -134,8 +134,7 @@ export class PersonInfoPanelImpl extends Component {
           />
           <VerticalSpacer eightPx />
         </form>
-        )
-        }
+        )}
       </EkspanderbartPersonPanel>
     );
   }
@@ -173,7 +172,7 @@ const mapStateToPropsFactory = (initialState) => {
     ...getKodeverk(kodeverkTyper.RELATERT_YTELSE_TILSTAND)(initialState),
   ];
 
-  return state => ({
+  return (state) => ({
     sivilstandTypes,
     personstatusTypes,
     relatertYtelseStatus,
@@ -189,6 +188,6 @@ const mapStateToPropsFactory = (initialState) => {
 const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: 'PersonInfoPanel' })(PersonInfoPanelImpl));
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 const PersonInfoPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
-PersonInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => personAksjonspunkter.includes(ap.definisjon.kode));
+PersonInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => personAksjonspunkter.includes(ap.definisjon.kode));
 
 export default PersonInfoPanel;

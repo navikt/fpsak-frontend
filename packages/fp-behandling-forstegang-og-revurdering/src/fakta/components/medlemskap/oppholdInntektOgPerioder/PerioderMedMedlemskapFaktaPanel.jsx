@@ -72,20 +72,18 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
               </TableColumn>
             </TableRow>
           );
-        })
-        }
+        })}
       </Table>
       {hasPeriodeAksjonspunkt
       && (
       <Row>
         <Column xs="12">
           <RadioGroupField name="manuellVurderingType.kode" validate={[required]} readOnly={readOnly} isEdited={isPeriodAksjonspunktClosed}>
-            {vurderingTypes.map(type => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
+            {vurderingTypes.map((type) => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
           </RadioGroupField>
         </Column>
       </Row>
-      )
-      }
+      )}
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="8" />
@@ -96,24 +94,21 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
             id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
             values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
           {termindato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Termindato"
             values={{ dato: moment(termindato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
           {omsorgsovertakelseDato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse"
             values={{ dato: moment(omsorgsovertakelseDato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
         </Column>
       </Row>
     </FaktaGruppe>
@@ -138,7 +133,7 @@ PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
   periods: [],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ...behandlingFormValueSelector('OppholdInntektOgPerioderForm')(
     state, 'periods', 'fodselsdato', 'termindato',
     'omsorgsovertakelseDato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed',
@@ -154,7 +149,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (medlem, soknad, aksjonspun
   }
 
   const periods = medlem.medlemskapPerioder
-    .map(i => ({
+    .map((i) => ({
       fom: i.fom,
       tom: i.tom,
       dekning: getKodeverknavn(i.dekningType),
@@ -163,7 +158,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (medlem, soknad, aksjonspun
     }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
 
-  const filteredAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE);
+  const filteredAp = aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE);
   return {
     periods,
     manuellVurderingType: medlem.medlemskapManuellVurderingType,
@@ -171,13 +166,13 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (medlem, soknad, aksjonspun
     termindato: soknad.termindato,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
-    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isPeriodAksjonspunktClosed: filteredAp.some((ap) => !isAksjonspunktOpen(ap.status.kode)),
   };
 };
 
 PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  manuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.manuellVurderingType.kode),
+  manuellVurderingType: manuellVurderingTyper.find((m) => m.kode === values.manuellVurderingType.kode),
 });
 
 export default PerioderMedMedlemskapFaktaPanel;

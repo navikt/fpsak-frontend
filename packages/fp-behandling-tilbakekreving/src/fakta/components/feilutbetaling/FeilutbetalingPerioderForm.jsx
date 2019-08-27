@@ -12,7 +12,7 @@ import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behand
 import styles from './feilutbetalingPerioderTable.less';
 
 const getSubÅrsaker = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find(a => a.årsakKode === årsakNavn);
+  const årsak = årsaker.find((a) => a.årsakKode === årsakNavn);
   return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
 };
 
@@ -31,7 +31,7 @@ export const FeilutbetalingPerioderFormImpl = ({
       <TableColumn>
         <SelectField
           name={`perioder.${elementId}.årsak`}
-          selectValues={årsaker.map(a => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
+          selectValues={årsaker.map((a) => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
           validate={[required]}
           disabled={readOnly}
           onChange={() => resetFields(elementId, årsak)}
@@ -42,14 +42,13 @@ export const FeilutbetalingPerioderFormImpl = ({
         && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
-            selectValues={subÅrsaker.map(a => <option key={a.underÅrsak} value={a.underÅrsakKode}>{a.underÅrsak}</option>)}
+            selectValues={subÅrsaker.map((a) => <option key={a.underÅrsak} value={a.underÅrsakKode}>{a.underÅrsak}</option>)}
             validate={[required]}
             disabled={readOnly}
             bredde="m"
             label=""
           />
-        )
-        }
+        )}
       </TableColumn>
       <TableColumn className={styles.redText}>
         {periode.belop}

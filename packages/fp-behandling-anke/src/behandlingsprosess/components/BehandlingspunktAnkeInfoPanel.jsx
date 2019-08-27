@@ -45,8 +45,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
         readOnlySubmitButton={readOnlySubmitButton}
         innstilling={innstilling}
       />
-    )
-    }
+    )}
     {behandlingspunktCodes.ANKE_MERKNADER === selectedBehandlingspunkt
     && (
       <BehandleMerknaderForm
@@ -57,8 +56,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
         previewVedtakCallback={previewCallbackAnke}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-    )
-    }
+    )}
     {behandlingspunktCodes.ANKE_RESULTAT === selectedBehandlingspunkt
     && (
       <BehandleResultatForm
@@ -70,8 +68,7 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
         previewVedtakCallback={previewCallbackAnke}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-    )
-    }
+    )}
   </div>
 );
 
@@ -94,7 +91,7 @@ BehandlingspunktAnkeInfoPanel.defaultProps = {
   innstilling: {},
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   openAksjonspunkt: behandlingspunktAnkeSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingspunktAnkeSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingspunktAnkeSelectors.isBehandlingspunktAksjonspunkterSolvable(state),

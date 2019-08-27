@@ -134,7 +134,7 @@ describe('<SoknadTypePickerForm>', () => {
     expect(radioOptionForeldretype.prop('disabled')).is.equal(true);
 
     const form = wrapper.find('form');
-    form.simulate('submit', { preventDefault() {} });
+    form.simulate('submit', { preventDefault() { return undefined; } });
 
     expect(submitEvent).to.have.property('callCount', 1);
   });

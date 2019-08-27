@@ -104,12 +104,10 @@ export const InnsynVedtakFormImpl = ({
             />
           </Column>
         </Row>
-        )
-      }
+        )}
         <VerticalSpacer twentyPx />
         {resultat !== innsynResultatType.AVVIST
-        && <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter(document => document.fikkInnsyn === true)} readOnly={readOnly} />
-      }
+        && <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />}
         <VerticalSpacer twentyPx />
         <Row>
           {!readOnly
@@ -129,7 +127,7 @@ export const InnsynVedtakFormImpl = ({
           <Column xs="4">
             <a
               onClick={previewBrev}
-              onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
+              onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
               className="lenke lenke--frittstaende"
               target="_blank"
               rel="noopener noreferrer"
@@ -170,10 +168,10 @@ InnsynVedtakFormImpl.defaultProps = {
 
 const buildInitialValues = (innsynMottattDato, aksjonspunkter) => ({
   mottattDato: innsynMottattDato,
-  begrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
+  begrunnelse: aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).begrunnelse,
 });
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: aksjonspunktCodes.FORESLA_VEDTAK,
   ...values,
 });
@@ -181,17 +179,17 @@ const transformValues = values => ({
 const getDocumenterMedFikkInnsynVerdi = createSelector(
   [getFilteredReceivedDocuments, behandlingSelectors.getBehandlingInnsynDokumenter],
   (alleDokumenter, valgteDokumenter) => alleDokumenter
-    .filter(dokAlle => valgteDokumenter.find(dokValgte => dokValgte.dokumentId === dokAlle.dokumentId))
-    .map(dokAlle => ({
+    .filter((dokAlle) => valgteDokumenter.find((dokValgte) => dokValgte.dokumentId === dokAlle.dokumentId))
+    .map((dokAlle) => ({
       ...dokAlle,
-      fikkInnsyn: valgteDokumenter.find(dokValgte => dokValgte.dokumentId === dokAlle.dokumentId).fikkInnsyn,
+      fikkInnsyn: valgteDokumenter.find((dokValgte) => dokValgte.dokumentId === dokAlle.dokumentId).fikkInnsyn,
     })),
 );
 
 const formName = 'InnsynVedtakForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
   return (state) => {
     const aksjonspunkter = behandlingSelectors.getAksjonspunkter(state);
     return {
@@ -199,7 +197,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       documents: getDocumenterMedFikkInnsynVerdi(state),
       sprakkode: behandlingSelectors.getBehandlingSprak(state),
       initialValues: buildInitialValues(behandlingSelectors.getBehandlingInnsynMottattDato(state), aksjonspunkter),
-      apBegrunnelse: aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
+      apBegrunnelse: aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
       begrunnelse: behandlingFormValueSelector(formName)(state, 'begrunnelse'),
       resultat: behandlingSelectors.getBehandlingInnsynResultatType(state).kode,
       onSubmit,

@@ -27,12 +27,12 @@ const {
 } = aksjonspunktCodes;
 
 const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => {
-  if (aksjonspunkter.some(ap => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
+  if (aksjonspunkter.some((ap) => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG)) {
     return aksjonspunkter
-    .find(ap => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
+      .find((ap) => ap.definisjon.kode === OVERSTYRING_AV_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
   }
   return aksjonspunkter
-  .find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.begrunnelse !== null);
+    .find((ap) => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN && ap.begrunnelse !== null);
 };
 
 export const BEGRUNNELSE_FAKTA_TILFELLER_NAME = 'begrunnelseFaktaTilfeller';
@@ -44,7 +44,7 @@ export const harIkkeEndringerIAvklarMedFlereAksjonspunkter = (verdiForAvklarAkti
   return true;
 };
 
-const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some(ap => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
+const hasOpenAksjonspunkt = (kode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === kode && isAksjonspunktOpen(ap.status.kode));
 
 /**
  * VurderFaktaBeregningPanel
@@ -91,8 +91,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         <form onSubmit={formProps.handleSubmit}>
           {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
             <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>
-            )
-            }
+          )}
           <VerticalSpacer twentyPx />
           <FaktaForATFLOgSNPanel
             readOnly={readOnly}
@@ -100,7 +99,7 @@ export class VurderFaktaBeregningPanelImpl extends Component {
           />
           <VerticalSpacer twentyPx />
           {(hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) || erOverstyrt) && (
-            <React.Fragment>
+            <>
               <FaktaBegrunnelseTextField
                 name={BEGRUNNELSE_FAKTA_TILFELLER_NAME}
                 isDirty={formProps.dirty}
@@ -115,14 +114,13 @@ export class VurderFaktaBeregningPanelImpl extends Component {
                 isReadOnly={readOnly}
                 hasOpenAksjonspunkter={!isAksjonspunktClosed}
               />
-            </React.Fragment>
-            )
-            }
+            </>
+          )}
         </form>
         )}
       </ElementWrapper>
-);
-}
+    );
+  }
 }
 
 VurderFaktaBeregningPanelImpl.propTypes = {
@@ -154,9 +152,9 @@ export const buildInitialValuesVurderFaktaBeregning = createSelector(
   [behandlingSelectors.getAksjonspunkter, getBuildInitialValuesFaktaForATFLOgSN],
   (aksjonspunkter, buildInitialValuesTilfeller) => ({
     aksjonspunkter,
-      ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
+    ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FAKTA_TILFELLER_NAME),
     ...buildInitialValuesTilfeller(),
-    }),
+  }),
 );
 
 export const validateVurderFaktaBeregning = (values) => {
@@ -171,30 +169,30 @@ export const validateVurderFaktaBeregning = (values) => {
 
 export const getIsAksjonspunktClosed = createSelector(
   [behandlingSelectors.getAksjonspunkter], (alleAp) => {
-    const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
+    const relevantAp = alleAp.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
       || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG);
-    return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+    return relevantAp.length === 0 ? false : relevantAp.some((ap) => !isAksjonspunktOpen(ap.status.kode));
   },
 );
 
 const mapStateToPropsFactory = (initialState, initialProps) => {
-  const onSubmit = values => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
-  const validate = values => validateVurderFaktaBeregning(values);
+  const onSubmit = (values) => initialProps.submitCallback(transformValuesVurderFaktaBeregning(values));
+  const validate = (values) => validateVurderFaktaBeregning(values);
   return (state) => {
     const initialValues = buildInitialValuesVurderFaktaBeregning(state);
     return ({
-    initialValues,
-    onSubmit,
-    validate,
-    isAksjonspunktClosed: getIsAksjonspunktClosed(state),
-    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-    beregningsgrunnlag: getBeregningsgrunnlag(state),
-    helpText: getHelpTextsFaktaForATFLOgSN(state),
-    verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
-    erOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
-    hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME],
-  });
-};
+      initialValues,
+      onSubmit,
+      validate,
+      isAksjonspunktClosed: getIsAksjonspunktClosed(state),
+      aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+      beregningsgrunnlag: getBeregningsgrunnlag(state),
+      helpText: getHelpTextsFaktaForATFLOgSN(state),
+      verdiForAvklarAktivitetErEndret: erAvklartAktivitetEndret(state),
+      erOverstyrt: erOverstyringAvBeregningsgrunnlag(state),
+      hasBegrunnelse: initialValues && !!initialValues[BEGRUNNELSE_FAKTA_TILFELLER_NAME],
+    });
+  };
 };
 
 export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({

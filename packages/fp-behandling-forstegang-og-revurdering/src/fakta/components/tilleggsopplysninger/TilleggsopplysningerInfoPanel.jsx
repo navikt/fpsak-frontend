@@ -56,15 +56,15 @@ TilleggsopplysningerInfoPanelImpl.propTypes = {
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([behandlingSelectors.getSoknad], soknad => ({
+const buildInitialValues = createSelector([behandlingSelectors.getSoknad], (soknad) => ({
   ...TilleggsopplysningerFaktaForm.buildInitialValues(soknad),
 }));
 
-const transformValues = values => TilleggsopplysningerFaktaForm.transformValues(values);
+const transformValues = (values) => TilleggsopplysningerFaktaForm.transformValues(values);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state),
     dirty: !ownProps.notSubmittable && ownProps.dirty,
@@ -78,6 +78,6 @@ const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForsteg
 })(injectIntl(TilleggsopplysningerInfoPanelImpl)));
 const TilleggsopplysningerInfoPanel = withDefaultToggling(faktaPanelCodes.TILLEGGSOPPLYSNINGER, tilleggsopplysningerAksjonspunkter)(ConnectedComponent);
 
-TilleggsopplysningerInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === tilleggsopplysningerAksjonspunkter[0]);
+TilleggsopplysningerInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === tilleggsopplysningerAksjonspunkter[0]);
 
 export default TilleggsopplysningerInfoPanel;

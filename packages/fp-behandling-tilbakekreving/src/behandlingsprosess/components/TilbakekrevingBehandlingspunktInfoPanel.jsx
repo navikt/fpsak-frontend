@@ -66,7 +66,7 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   isBehandlingHenlagt: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   readOnlySubmitButton: behandlingsprosessSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),

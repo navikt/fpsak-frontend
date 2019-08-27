@@ -51,7 +51,7 @@ FastsettEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
     return initialValues;
   }
   const relevanteAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel)
+    .flatMap((periode) => periode.beregningsgrunnlagPrStatusOgAndel)
     .filter(({ arbeidsforhold }) => arbeidsforhold
   && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE);
   if (relevanteAndeler.length > 0) {
@@ -63,7 +63,7 @@ FastsettEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag) => {
   return initialValues;
 };
 
-FastsettEtterlonnSluttpakkeForm.transformValues = values => ({
+FastsettEtterlonnSluttpakkeForm.transformValues = (values) => ({
   fastsettEtterlønnSluttpakke: { fastsattPrMnd: removeSpacesFromNumber(values[etterlonnSluttpakkeFieldname]) },
 });
 

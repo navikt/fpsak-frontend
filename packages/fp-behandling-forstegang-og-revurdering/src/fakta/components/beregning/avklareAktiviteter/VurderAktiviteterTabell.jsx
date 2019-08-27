@@ -6,10 +6,10 @@ import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import opptjeningAktivitetTyper from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import {
- RadioGroupField, RadioOption,
+  RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import {
- Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
+  Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
@@ -80,11 +80,9 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn,
       && (
       <TableColumn>
         {skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)
-          && <EditedIcon />
-        }
+          && <EditedIcon />}
       </TableColumn>
-)
-    }
+      )}
   </TableRow>
 );
 
@@ -93,7 +91,7 @@ const getHeaderTextCodes = () => ([
   'VurderAktiviteterTabell.Header.Periode',
   'VurderAktiviteterTabell.Header.Benytt',
   'VurderAktiviteterTabell.Header.IkkeBenytt',
-  ]
+]
 );
 
 const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
@@ -103,10 +101,10 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
         id="VurderAktiviteterTabell.Overstyrt.Overskrift"
         values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
       />
-);
+    );
   }
-  const harAAP = aktiviteter.some(aktivitet => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
-  const harVentelonnVartpenger = aktiviteter.some(aktivitet => aktivitet.arbeidsforholdType
+  const harAAP = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.AAP);
+  const harVentelonnVartpenger = aktiviteter.some((aktivitet) => aktivitet.arbeidsforholdType
     && aktivitet.arbeidsforholdType.kode === opptjeningAktivitetTyper.VENTELØNN_VARTPENGER);
   if (harAAP) {
     return (
@@ -114,7 +112,7 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
         id="VurderAktiviteterTabell.FullAAPKombinert.Overskrift"
         values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
       />
-);
+    );
   }
   if (harVentelonnVartpenger) {
     return (
@@ -122,7 +120,7 @@ const finnHeading = (aktiviteter, erOverstyrt, skjaeringstidspunkt) => {
         id="VurderAktiviteterTabell.VentelonnVartpenger.Overskrift"
         values={{ skjaeringstidspunkt: moment(skjaeringstidspunkt).format(DDMMYYYY_DATE_FORMAT) }}
       />
-);
+    );
   }
   return null;
 };
@@ -141,17 +139,16 @@ export const VurderAktiviteterTabellImpl = ({
   erOverstyrt,
   harAksjonspunkt,
 }) => (
-  <React.Fragment>
+  <>
     <Element>
       {finnHeading(aktiviteter, erOverstyrt, skjaeringstidspunkt)}
     </Element>
     <Table headerTextCodes={getHeaderTextCodes()} noHover>
-      {aktiviteter.map(aktivitet => (
+      {aktiviteter.map((aktivitet) => (
         lagTableRow(readOnly, isAksjonspunktClosed, aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt)
-      ))
-      }
+      ))}
     </Table>
-  </React.Fragment>
+  </>
 );
 
 VurderAktiviteterTabellImpl.propTypes = {
@@ -167,16 +164,16 @@ VurderAktiviteterTabellImpl.propTypes = {
 const VurderAktiviteterTabell = injectKodeverk(getAlleKodeverk)(VurderAktiviteterTabellImpl);
 
 VurderAktiviteterTabell.transformValues = (values, aktiviteter) => aktiviteter
-    .filter(aktivitet => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
-    .map(aktivitet => ({
-      oppdragsgiverOrg: aktivitet.aktørId ? null : aktivitet.arbeidsgiverId,
-      arbeidsforholdRef: aktivitet.arbeidsforholdId,
-      fom: aktivitet.fom,
-      tom: aktivitet.tom,
-      opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
-      arbeidsgiverIdentifikator: aktivitet.aktørId ? aktivitet.aktørId.aktørId : null,
-      skalBrukes: false,
-    }));
+  .filter((aktivitet) => values[lagAktivitetFieldId(aktivitet)].skalBrukes === false)
+  .map((aktivitet) => ({
+    oppdragsgiverOrg: aktivitet.aktørId ? null : aktivitet.arbeidsgiverId,
+    arbeidsforholdRef: aktivitet.arbeidsforholdId,
+    fom: aktivitet.fom,
+    tom: aktivitet.tom,
+    opptjeningAktivitetType: aktivitet.arbeidsforholdType ? aktivitet.arbeidsforholdType.kode : null,
+    arbeidsgiverIdentifikator: aktivitet.aktørId ? aktivitet.aktørId.aktørId : null,
+    skalBrukes: false,
+  }));
 
 VurderAktiviteterTabell.hasValueChangedFromInitial = (aktiviteter, values, initialValues) => {
   const changedAktiviteter = aktiviteter.map(lagAktivitetFieldId).find((fieldId) => {
@@ -198,11 +195,11 @@ const skalBrukesPretufylling = (aktivitet, erOverstyrt, harAksjonspunkt) => {
 };
 
 const mapToInitialValues = (aktivitet, getKodeverknavn, erOverstyrt, harAksjonspunkt) => ({
-    beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, getKodeverknavn),
-    fom: aktivitet.fom,
-    tom: aktivitet.tom,
-    skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAksjonspunkt),
-  });
+  beregningAktivitetNavn: createVisningsnavnForAktivitet(aktivitet, getKodeverknavn),
+  fom: aktivitet.fom,
+  tom: aktivitet.tom,
+  skalBrukes: skalBrukesPretufylling(aktivitet, erOverstyrt, harAksjonspunkt),
+});
 
 VurderAktiviteterTabell.buildInitialValues = (aktiviteter, getKodeverknavn, erOverstyrt, harAksjonspunkt) => {
   if (!aktiviteter) {

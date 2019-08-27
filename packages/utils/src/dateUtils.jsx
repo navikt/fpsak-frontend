@@ -102,9 +102,9 @@ export const splitWeeksAndDays = (weeks, days) => {
   return returnArray;
 };
 
-export const dateFormat = date => moment(date).format(DDMMYYYY_DATE_FORMAT);
+export const dateFormat = (date) => moment(date).format(DDMMYYYY_DATE_FORMAT);
 
-export const timeFormat = date => moment(date).format(HHMM_TIME_FORMAT);
+export const timeFormat = (date) => moment(date).format(HHMM_TIME_FORMAT);
 
 // Skal ikke legge til dag når dato er tidenes ende
 export const addDaysToDate = (dateString, nrOfDays) => (dateString === TIDENES_ENDE

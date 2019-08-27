@@ -88,7 +88,7 @@ VedtakAvslagRevurderingPanelImpl.defaultProps = {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   vilkar: behandlingSelectors.getBehandlingVilkar(state),

@@ -22,7 +22,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const createAksjonspunktHelptTexts = (intl, aksjonspunkter, isEngangsstonad) => {
   const helpTexts = [];
-  const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   if (apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD)) {
     if (isEngangsstonad) {
       helpTexts.push('ErForeldreansvar2LeddVilkaarOppfyltForm.ParagrafEngangsStonad');
@@ -100,7 +100,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
+const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
   ...VilkarResultPicker.transformValues(values),
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
   ...{ kode: ap.definisjon.kode },
@@ -110,18 +110,18 @@ const formName = 'ErForeldreansvar2LeddVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingspunktSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, aksjonspunkter));
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FORELDREANSVARSVILKARET_2_LEDD];
   const isEngangsstonad = getFagsakYtelseType(initialState).kode === fagsakYtelseType.ENGANGSSTONAD;
 
-  return state => ({
-      initialValues: buildInitialValues(state),
-      erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-      avslagsarsaker,
-      isEngangsstonad,
-      aksjonspunkter,
-      onSubmit,
-    });
+  return (state) => ({
+    initialValues: buildInitialValues(state),
+    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
+    avslagsarsaker,
+    isEngangsstonad,
+    aksjonspunkter,
+    onSubmit,
+  });
 };
 
 const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
@@ -129,7 +129,7 @@ const ErForeldreansvar2LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(
   validate,
 })(ErForeldreansvar2LeddVilkaarOppfyltFormImpl)));
 
-const hasAksjonspunktCode = apCodes => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD)
+const hasAksjonspunktCode = (apCodes) => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD)
   || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
   || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN);
 

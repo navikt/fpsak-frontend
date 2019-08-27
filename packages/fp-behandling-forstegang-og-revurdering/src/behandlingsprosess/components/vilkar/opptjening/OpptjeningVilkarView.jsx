@@ -23,7 +23,7 @@ export const OpptjeningVilkarViewImpl = ({
   opptjeningFomDate,
   opptjeningTomDate,
 }) => (
-  <React.Fragment>
+  <>
     <FormattedMessage
       id="OpptjeningVilkarView.MonthsAndDays"
       values={{ months: monthsAndDays.months, days: monthsAndDays.days }}
@@ -39,9 +39,8 @@ export const OpptjeningVilkarViewImpl = ({
         opptjeningFomDate={opptjeningFomDate}
         opptjeningTomDate={opptjeningTomDate}
       />
-      )
-      }
-  </React.Fragment>
+      )}
+  </>
 );
 
 OpptjeningVilkarViewImpl.propTypes = {
@@ -60,11 +59,11 @@ const monthsAndDays = createSelector(
   (opptjeningperiodeMnder, opptjeningperiodeDager) => ({ months: opptjeningperiodeMnder, days: opptjeningperiodeDager }),
 );
 
-const mapStateToProps = state => ({
-    monthsAndDays: monthsAndDays(state),
-    fastsattOpptjeningActivities: getBehandlingFastsattOpptjeningActivities(state),
-    opptjeningFomDate: getBehandlingFastsattOpptjeningFomDate(state),
-    opptjeningTomDate: getBehandlingFastsattOpptjeningTomDate(state),
+const mapStateToProps = (state) => ({
+  monthsAndDays: monthsAndDays(state),
+  fastsattOpptjeningActivities: getBehandlingFastsattOpptjeningActivities(state),
+  opptjeningFomDate: getBehandlingFastsattOpptjeningFomDate(state),
+  opptjeningTomDate: getBehandlingFastsattOpptjeningTomDate(state),
 });
 
 const OpptjeningVilkarView = connect(mapStateToProps)(OpptjeningVilkarViewImpl);

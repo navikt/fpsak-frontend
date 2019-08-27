@@ -117,7 +117,7 @@ describe('<OpptjeningInfoPanel>', () => {
       opptjeningTom: '2018-10-01',
     };
     const aksjonspunkter = [{ definisjon: { kode: '5051' }, erAktivt: true, toTrinnsBehandling: false },
-    { definisjon: { kode: '5080' }, erAktivt: true, toTrinnsBehandling: false }];
+      { definisjon: { kode: '5080' }, erAktivt: true, toTrinnsBehandling: false }];
 
     const initialValues = buildInitialValues.resultFunc(opptjeningActivities, fastsattOpptjening, aksjonspunkter);
     expect(initialValues).is.eql({

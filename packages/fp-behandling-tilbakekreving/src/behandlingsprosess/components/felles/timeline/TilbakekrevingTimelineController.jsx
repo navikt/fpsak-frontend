@@ -20,12 +20,12 @@ import { Image } from '@fpsak-frontend/shared-components';
 
 import styles from './tilbakekrevingTimelineController.less';
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const findZoomInImg = isHovering => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
-const findZoomOutImg = isHovering => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
-const findOpenPeriodImage = isHovering => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
-const findQuestionImage = isHovering => (isHovering ? questionHoverUrl : questionNormalUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const findZoomInImg = (isHovering) => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
+const findZoomOutImg = (isHovering) => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
+const findOpenPeriodImage = (isHovering) => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
+const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
 
 /*
  * TilbakekrevingTimelineController

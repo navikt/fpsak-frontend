@@ -37,11 +37,11 @@ export const gyldigArbeidskategori = [
 
 const maxValue100 = maxValue(100);
 
-const mapKvoter = typer => typer
+const mapKvoter = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapArbeidskategori = typer => typer
+const mapArbeidskategori = (typer) => typer
   .filter(({ kode }) => gyldigArbeidskategori.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
@@ -107,7 +107,7 @@ export const RenderGraderingPeriodeFieldArray = ({
                     validate={[hasValidDecimal,
                       maxValue100,
                     ]}
-                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                    normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                   />
                 </FlexColumn>
                 <FlexColumn>
@@ -169,10 +169,9 @@ export const RenderGraderingPeriodeFieldArray = ({
                       bredde="S"
                       validate={[hasValidDecimal, maxValue100]}
                       label={{ id: 'Registrering.Permisjon.SamtidigUttaksprosent' }}
-                      normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                      normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                     />
-                  )
-                  }
+                  )}
                 </FlexColumn>
                 <FlexColumn className={styles.placeRemoveButton}>
                   {getRemoveButton()}
@@ -188,14 +187,12 @@ export const RenderGraderingPeriodeFieldArray = ({
                   </FlexRow>
                   <VerticalSpacer eightPx />
                 </div>
-              )
-              }
+              )}
             </FlexContainer>
           </Column>
         </Row>
       );
-    }
-    }
+    }}
   </PeriodFieldArray>
 );
 

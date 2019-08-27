@@ -32,7 +32,7 @@ const FritekstBrevPanelImpl = ({
           <a
             href=""
             onClick={previewBrev}
-            onKeyDown={e => (e.keyCode === 13 ? previewBrev(e) : null)}
+            onKeyDown={(e) => (e.keyCode === 13 ? previewBrev(e) : null)}
             className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
           >
             <FormattedMessage id="VedtakForm.AutomatiskBrev.Lenke" />

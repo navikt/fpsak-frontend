@@ -7,7 +7,7 @@ import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import { trackRouteParam, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
 import {
- getBehandlingIdentifier, getBehandlingVersjon,
+  getBehandlingIdentifier, getBehandlingVersjon,
 } from 'behandling/duck';
 
 import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
@@ -30,7 +30,7 @@ const harResultatkode = (risikoklassifisering, resultatkode) => {
   return risikoklassifisering.kontrollresultat.kode === resultatkode;
 };
 
-  /**
+/**
  * RisikoklassifiseringIndex
  *
  * Container komponent. Har ansvar for å vise risikoklassifisering for valgt behandling
@@ -75,9 +75,9 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
     if (aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
       if (!isPanelOpen) {
         this.toggleRiskPanel();
+      }
     }
   }
-}
 
   submitAksjonspunkter = (aksjonspunkter) => {
     const {
@@ -85,9 +85,9 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
       behandlingVersjon,
       resolveAksjonspunkter: resolveAp,
     } = this.props;
-    const model = aksjonspunkter.map(ap => ({
+    const model = aksjonspunkter.map((ap) => ({
       '@type': ap.kode,
-    ...ap,
+      ...ap,
     }));
 
     const params = {
@@ -97,8 +97,8 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
     };
 
     return resolveAp(
-        params,
-        behandlingIdentifier,
+      params,
+      behandlingIdentifier,
     );
   }
 
@@ -113,34 +113,34 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
 
   render() {
     const {
-    aksjonspunkt,
-    risikoklassifisering,
-    harHentetKontrollresultat,
-    isPanelOpen,
-    readOnly,
+      aksjonspunkt,
+      risikoklassifisering,
+      harHentetKontrollresultat,
+      isPanelOpen,
+      readOnly,
     } = this.props;
-  if (!harHentetKontrollresultat) {
-    return <ManglendeKlassifiseringPanel />;
-  }
-  if (harResultatkode(risikoklassifisering, kontrollresultatKode.IKKE_HOY)) {
+    if (!harHentetKontrollresultat) {
+      return <ManglendeKlassifiseringPanel />;
+    }
+    if (harResultatkode(risikoklassifisering, kontrollresultatKode.IKKE_HOY)) {
+      return (
+        <IngenRisikoPanel />
+      );
+    }
+    if (harResultatkode(risikoklassifisering, kontrollresultatKode.HOY)) {
+      return (
+        <HoyRisikoTittel
+          risikoklassifisering={risikoklassifisering}
+          aksjonspunkt={aksjonspunkt}
+          readOnly={readOnly}
+          submitCallback={this.submitAksjonspunkter}
+          isRiskPanelOpen={isPanelOpen}
+          toggleRiskPanel={this.toggleRiskPanel}
+        />
+      );
+    }
     return (
-      <IngenRisikoPanel />
-    );
-  }
-  if (harResultatkode(risikoklassifisering, kontrollresultatKode.HOY)) {
-    return (
-      <HoyRisikoTittel
-        risikoklassifisering={risikoklassifisering}
-        aksjonspunkt={aksjonspunkt}
-        readOnly={readOnly}
-        submitCallback={this.submitAksjonspunkter}
-        isRiskPanelOpen={isPanelOpen}
-        toggleRiskPanel={this.toggleRiskPanel}
-      />
-    );
-  }
-  return (
-    <ManglendeKlassifiseringPanel />
+      <ManglendeKlassifiseringPanel />
     );
   }
 }
@@ -167,7 +167,7 @@ RisikoklassifiseringIndexImpl.defaultProps = {
   behandlingIdentifier: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   harHentetKontrollresultat: fpsakApi.KONTROLLRESULTAT.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
@@ -178,7 +178,7 @@ const mapStateToProps = state => ({
   readOnly: getReadOnly(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     hentKontrollresultat,
@@ -190,7 +190,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default trackRouteParam({
   paramName: 'risiko',
-  parse: isOpen => isOpen === 'true',
+  parse: (isOpen) => isOpen === 'true',
   paramPropType: PropTypes.bool,
   storeParam: setRiskPanelOpen,
   getParamFromStore: isRiskPanelOpen,

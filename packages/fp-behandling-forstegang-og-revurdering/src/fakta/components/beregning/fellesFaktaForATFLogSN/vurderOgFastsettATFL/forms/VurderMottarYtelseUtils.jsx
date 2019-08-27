@@ -3,17 +3,17 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 export const mottarYtelseFieldPrefix = 'mottarYtelseField';
 export const frilansSuffix = '_frilans';
-export const utledArbeidsforholdFieldName = andel => mottarYtelseFieldPrefix + andel.andelsnr;
+export const utledArbeidsforholdFieldName = (andel) => mottarYtelseFieldPrefix + andel.andelsnr;
 export const finnFrilansFieldName = () => (mottarYtelseFieldPrefix + frilansSuffix);
 
 
 export const skalFastsetteInntektATUtenInntektsmelding = (values, vurderMottarYtelse) => {
   const atAndelerUtenIM = vurderMottarYtelse && vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
-  return atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
-    .find(mottarYtelse => mottarYtelse) !== undefined;
+  return atAndelerUtenIM.map((andel) => values[utledArbeidsforholdFieldName(andel)])
+    .find((mottarYtelse) => mottarYtelse) !== undefined;
 };
 
-export const frilansMottarYtelse = values => (values[finnFrilansFieldName()]);
+export const frilansMottarYtelse = (values) => (values[finnFrilansFieldName()]);
 
 export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse, beregningsgrunnlag) => {
   if (!vurderMottarYtelse) {
@@ -30,7 +30,7 @@ export const andelsnrMottarYtelseMap = (values, vurderMottarYtelse, beregningsgr
   }
   const frilansAndel = beregningsgrunnlag.beregningsgrunnlagPeriode[0]
     .beregningsgrunnlagPrStatusOgAndel
-    .find(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+    .find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   if (frilansAndel) {
     mottarYtelseMap[frilansAndel.andelsnr] = frilansMottarYtelse(values);
   }
@@ -46,8 +46,8 @@ export const harVurdertMottarYtelse = (values, vurderMottarYtelse) => {
   }
   const atAndelerUtenIM = vurderMottarYtelse.arbeidstakerAndelerUtenIM ? vurderMottarYtelse.arbeidstakerAndelerUtenIM : [];
   if (atAndelerUtenIM.length > 0) {
-    const harAndelSomIkkeErVurdert = atAndelerUtenIM.map(andel => values[utledArbeidsforholdFieldName(andel)])
-      .some(mottarYtelse => mottarYtelse === undefined || mottarYtelse === null);
+    const harAndelSomIkkeErVurdert = atAndelerUtenIM.map((andel) => values[utledArbeidsforholdFieldName(andel)])
+      .some((mottarYtelse) => mottarYtelse === undefined || mottarYtelse === null);
     if (harAndelSomIkkeErVurdert) {
       return false;
     }

@@ -13,7 +13,7 @@ import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 
 import styles from './errorMessageDetailsModal.less';
 
-const capitalizeFirstLetters = key => key.charAt(0).toUpperCase() + key.substr(1);
+const capitalizeFirstLetters = (key) => key.charAt(0).toUpperCase() + key.substr(1);
 
 /**
  * ErrorMessageDetailsModal
@@ -48,7 +48,7 @@ const ErrorMessageDetailsModal = ({
     <Row>
       <Column xs="1" />
       <Column xs="11">
-        {Object.keys(errorDetails).map(edKey => (
+        {Object.keys(errorDetails).map((edKey) => (
           <ElementWrapper key={edKey}>
             <Undertekst>{`${capitalizeFirstLetters(edKey)}:`}</Undertekst>
             <div className={styles.detail}>

@@ -99,7 +99,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     } = this.props;
 
     if (antallPerioderMedAksjonspunkt > 1 && data.erTotalBelopUnder4Rettsgebyr && tilbakekrevSelvOmBeloepErUnder4Rettsgebyr === false) {
-      this.setState(state => ({ ...state, showModal: !showModal }));
+      this.setState((state) => ({ ...state, showModal: !showModal }));
     } else {
       formProps.handleSubmit();
     }
@@ -111,7 +111,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       ...formProps
     } = this.props;
 
-    this.setState(state => ({ ...state, showModal: !showModal }));
+    this.setState((state) => ({ ...state, showModal: !showModal }));
     formProps.handleSubmit();
   }
 
@@ -145,7 +145,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
           readOnly={readOnly}
         />
         <VerticalSpacer twentyPx />
-        {reduserteBelop.map(belop => (
+        {reduserteBelop.map((belop) => (
           <>
             <Normaltekst>
               <FormattedHTMLMessage
@@ -189,7 +189,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     readOnly={readOnly}
                     onChange={this.resetFields}
                   >
-                    {vilkarResultatTyper.map(vrt => (
+                    {vilkarResultatTyper.map((vrt) => (
                       <RadioOption
                         key={vrt.kode}
                         label={vrt.navn}
@@ -198,7 +198,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                     ))}
                   </RadioGroupField>
                 </Column>
-                )}
+              )}
             </Row>
           </Column>
           <Column md="6">
@@ -264,14 +264,13 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
           </FlexColumn>
         </FlexRow>
         { showModal
-          && <AdvarselModal textCode="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr" showModal submit={this.saveForm} />
-        }
+          && <AdvarselModal textCode="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr" showModal submit={this.saveForm} />}
       </div>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
   }, dispatch),
@@ -282,14 +281,14 @@ const validate = (values, sarligGrunnTyper, data) => {
   const vilkarResultatInfo = values[values.valgtVilkarResultatType];
   if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
     const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];
-    if (aktsomhetInfo && !sarligGrunnTyper.some(type => aktsomhetInfo[type.kode])) {
-       errors = {
-         [values.valgtVilkarResultatType]: {
-           [vilkarResultatInfo.handletUaktsomhetGrad]: {
-             [sarligGrunn.ANNET]: [{ id: 'TilbakekrevingPeriodeForm.MaVelgeSarligGrunn' }],
-           },
+    if (aktsomhetInfo && !sarligGrunnTyper.some((type) => aktsomhetInfo[type.kode])) {
+      errors = {
+        [values.valgtVilkarResultatType]: {
+          [vilkarResultatInfo.handletUaktsomhetGrad]: {
+            [sarligGrunn.ANNET]: [{ id: 'TilbakekrevingPeriodeForm.MaVelgeSarligGrunn' }],
           },
-        };
+        },
+      };
     }
     if (aktsomhetInfo && aktsomhetInfo.belopSomSkalTilbakekreves && aktsomhetInfo.belopSomSkalTilbakekreves >= data.feilutbetaling) {
       errors = {
@@ -307,8 +306,8 @@ const validate = (values, sarligGrunnTyper, data) => {
       ...errors,
       [values.valgtVilkarResultatType]: {
         tilbakekrevdBelop: [{ id: 'TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen' }],
-       },
-     };
+      },
+    };
   }
 
   return errors;
@@ -318,8 +317,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
   const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
   const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
-  const submitCallback = values => ownProps.oppdaterPeriode(values);
-  const validateForm = values => validate(values, sarligGrunnTyper, ownProps.data);
+  const submitCallback = (values) => ownProps.oppdaterPeriode(values);
+  const validateForm = (values) => validate(values, sarligGrunnTyper, ownProps.data);
   return (state, oProps) => {
     const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
     const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
@@ -358,7 +357,7 @@ TilbakekrevingPeriodeForm.buildInitialValues = (periode, foreldelsePerioder) => 
   let foreldetData = { erForeldet: false };
   const erForeldet = periode.erForeldet ? periode.erForeldet : periode.foreldet;
   if (erForeldet) {
-    const foreldelsePeriode = foreldelsePerioder.perioder.find(p => p.fom === periode.fom && p.tom === periode.tom);
+    const foreldelsePeriode = foreldelsePerioder.perioder.find((p) => p.fom === periode.fom && p.tom === periode.tom);
     foreldetData = {
       erForeldet,
       periodenErForeldet: true,

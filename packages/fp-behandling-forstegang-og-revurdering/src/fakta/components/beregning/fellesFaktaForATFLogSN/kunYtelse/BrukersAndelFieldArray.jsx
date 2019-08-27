@@ -24,7 +24,7 @@ import styles from './brukersAndelFieldArray.less';
 import { validateUlikeAndelerWithGroupingFunction } from '../ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../../BeregningFormUtils';
 
-const defaultBGFordeling = aktivitetStatuser => ({
+const defaultBGFordeling = (aktivitetStatuser) => ({
   andel: aktivitetStatuser.filter(({ kode }) => kode === aktivitetStatus.BRUKERS_ANDEL)[0].navn,
   fastsattBelop: '',
   inntektskategori: '',
@@ -32,7 +32,7 @@ const defaultBGFordeling = aktivitetStatuser => ({
   lagtTilAvSaksbehandler: true,
 });
 
-const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
+const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
   <option value={ik.kode} key={ik.kode}>
     {ik.navn}
   </option>
@@ -99,12 +99,11 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           }}
           title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
         />
-      )
-      }
+      )}
       </TableColumn>
     </TableRow>
 ));
-const createBruttoBGSummaryRow = sumFordeling => (
+const createBruttoBGSummaryRow = (sumFordeling) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
       <FormattedMessage id="BeregningInfoPanel.FordelingBG.Sum" />
@@ -178,8 +177,7 @@ export const BrukersAndelFieldArrayImpl = ({
             </div>
           </Column>
         </Row>
-      )
-      }
+      )}
       <VerticalSpacer eightPx />
     </NavFieldGroup>
   );
@@ -215,7 +213,7 @@ BrukersAndelFieldArray.validate = (values) => {
     fieldErrors.inntektskategori = required(andelFieldValues.inntektskategori);
     return fieldErrors.fastsattBelop || fieldErrors.inntektskategori ? fieldErrors : null;
   });
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   if (isArrayEmpty(values)) {
@@ -230,13 +228,13 @@ BrukersAndelFieldArray.validate = (values) => {
 
 export const getInntektskategorierAlfabetiskSortert = createSelector(
   [getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)],
-  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+  (kodeverkListe) => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
 );
 
 export const isBeregningAksjonspunktClosed = createSelector(
   [behandlingSelectors.getAksjonspunkter], (alleAp) => {
-    const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
-    return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+    const relevantAp = alleAp.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN);
+    return relevantAp.length === 0 ? false : relevantAp.some((ap) => !isAksjonspunktOpen(ap.status.kode));
   },
 );
 

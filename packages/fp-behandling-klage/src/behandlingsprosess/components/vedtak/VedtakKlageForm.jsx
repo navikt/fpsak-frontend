@@ -52,11 +52,10 @@ export const VedtakKlageFormImpl = ({
       && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
-          { avvistArsaker.map(arsak => <Normaltekst key={arsak.navn}>{arsak.navn}</Normaltekst>) }
+          { avvistArsaker.map((arsak) => <Normaltekst key={arsak.navn}>{arsak.navn}</Normaltekst>) }
           <VerticalSpacer sixteenPx />
         </div>
-      )
-      }
+      )}
       { isOmgjort
       && (
         <div>
@@ -82,8 +81,7 @@ export const VedtakKlageFormImpl = ({
           formProps={formProps}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       { klageVurdering.klageVurdertAv === 'NFP'
       && (
         <VedtakKlageSubmitPanel
@@ -93,8 +91,7 @@ export const VedtakKlageFormImpl = ({
           formProps={formProps}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
     </ElementWrapper>
   </FadingPanel>
 );
@@ -120,7 +117,7 @@ VedtakKlageFormImpl.defaultProps = {
   fritekstTilBrev: undefined,
 };
 
-const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
+const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
   kode: apCode,
   begrunnelse: values.fritekstTilBrev,
 }));
@@ -148,7 +145,7 @@ const omgjoerTekstMap = {
 
 const getKlageResultat = createSelector(
   [behandlingSelectors.getBehandlingKlageVurdering],
-  behandlingKlageVurdering => (behandlingKlageVurdering.klageVurderingResultatNK
+  (behandlingKlageVurdering) => (behandlingKlageVurdering.klageVurderingResultatNK
     ? behandlingKlageVurdering.klageVurderingResultatNK : behandlingKlageVurdering.klageVurderingResultatNFP),
 );
 
@@ -191,17 +188,17 @@ const getOmgjortAarsak = createSelector(
 
 const getIsOmgjort = createSelector(
   [behandlingSelectors.getBehandlingsresultat],
-  behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
+  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_MEDHOLD,
 );
 
 export const getIsAvvist = createSelector(
   [behandlingSelectors.getBehandlingsresultat],
-  behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_AVVIST,
+  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_AVVIST,
 );
 
 export const getIsOpphevOgHjemsend = createSelector(
   [behandlingSelectors.getBehandlingsresultat],
-  behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
+  (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET,
 );
 
 export const getFritekstTilBrev = createSelector(
@@ -216,7 +213,7 @@ export const getFritekstTilBrev = createSelector(
 export const buildInitialValues = createSelector(
   [behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter],
   (aksjonspunkter) => {
-    const behandlingAksjonspunktCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+    const behandlingAksjonspunktCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
     return {
       aksjonspunktKoder: behandlingAksjonspunktCodes,
     };
@@ -224,8 +221,8 @@ export const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state),
     isAvvist: getIsAvvist(state),

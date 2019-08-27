@@ -45,7 +45,7 @@ class NotificationMapper {
 
   getNotificationEmitter = () => (eventType: keyof typeof EventType, data?: any, isAsync?: boolean) => {
     const eventHandlers = this.eventTypes[eventType];
-    eventHandlers.forEach(handler => handler(data, eventType, isAsync));
+    eventHandlers.forEach((handler) => handler(data, eventType, isAsync));
   }
 }
 

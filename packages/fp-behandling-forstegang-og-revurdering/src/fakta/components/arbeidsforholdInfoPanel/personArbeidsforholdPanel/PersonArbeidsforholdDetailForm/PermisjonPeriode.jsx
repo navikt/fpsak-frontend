@@ -17,7 +17,7 @@ const utledPeriodeLabelKey = (id, index) => id + index;
 const PermisjonPeriode = ({
   arbeidsforhold,
 }) => (
-  <React.Fragment>
+  <>
     { arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0 && (
       <div>
         <VerticalSpacer sixteenPx />
@@ -35,7 +35,7 @@ const PermisjonPeriode = ({
         <VerticalSpacer sixteenPx />
       </div>
     )}
-  </React.Fragment>
+  </>
 );
 
 PermisjonPeriode.propTypes = {

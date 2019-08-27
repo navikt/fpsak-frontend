@@ -116,7 +116,7 @@ UttakSlettPeriodeModalImpl.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.closeEvent(values);
+  const onSubmit = (values) => ownProps.closeEvent(values);
 
   return () => {
     const formName = `slettPeriodeForm-${ownProps.periode.id}`;

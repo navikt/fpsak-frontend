@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
- TableColumn, TableRow, DateLabel, Image,
+  TableColumn, TableRow, DateLabel, Image,
 } from '@fpsak-frontend/shared-components';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 

@@ -219,18 +219,18 @@ describe('RestDuck (sync)', () => {
       });
     const store = createStore();
 
-    const getApiContext = state => state.dataContext;
+    const getApiContext = (state) => state.dataContext;
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
     const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext, reduxEvents);
 
     // Unpack to named selectors
-    const getRessursData = state => getRessursDuck.stateSelector(state).data;
-    const getRessursMeta = state => getRessursDuck.stateSelector(state).meta;
-    const getRessursError = state => getRessursDuck.stateSelector(state).error;
-    const getRessursStarted = state => getRessursDuck.stateSelector(state).started;
-    const getRessursFinished = state => getRessursDuck.stateSelector(state).finished;
+    const getRessursData = (state) => getRessursDuck.stateSelector(state).data;
+    const getRessursMeta = (state) => getRessursDuck.stateSelector(state).meta;
+    const getRessursError = (state) => getRessursDuck.stateSelector(state).error;
+    const getRessursStarted = (state) => getRessursDuck.stateSelector(state).started;
+    const getRessursFinished = (state) => getRessursDuck.stateSelector(state).finished;
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))

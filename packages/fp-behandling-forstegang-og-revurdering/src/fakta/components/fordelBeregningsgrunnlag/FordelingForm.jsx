@@ -29,8 +29,8 @@ const {
 const FORM_NAME_FORDEL_BEREGNING = 'fordelBeregningsgrunnlagForm';
 
 
-const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
-  .find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
+const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => aksjonspunkter
+  .find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG && ap.begrunnelse !== null);
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -64,7 +64,7 @@ const FordelingFormImpl = ({
       isReadOnly={readOnly}
       hasBegrunnelse={hasBegrunnelse}
     />
-    <React.Fragment>
+    <>
       <VerticalSpacer twentyPx />
       <FaktaSubmitButton
         formName={formProps.form}
@@ -72,7 +72,7 @@ const FordelingFormImpl = ({
         isReadOnly={readOnly}
         hasOpenAksjonspunkter={!isAksjonspunktClosed}
       />
-    </React.Fragment>
+    </>
   </form>
 );
 
@@ -133,11 +133,11 @@ export const getValidationFordelBeregning = createSelector([mapStateToValidation
 
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialState)(values));
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValuesFordelBeregning(initialState)(values));
   return (state) => {
     const isOnHold = behandlingSelectors.getBehandlingIsOnHold(state);
     const alleAp = behandlingSelectors.getAksjonspunkter(state);
-    const relevantAp = alleAp.find(ap => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
+    const relevantAp = alleAp.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG);
     const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
     const initialValues = buildInitialValuesFordelBeregning(state);
     const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_FORDELING_NAME];

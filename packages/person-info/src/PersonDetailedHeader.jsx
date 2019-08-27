@@ -15,7 +15,7 @@ import MerkePanel from './Merkepanel';
 
 import styles from './personDetailedHeader.less';
 
-const getAgeFromDate = birthDate => moment().diff(moment(birthDate), 'years');
+const getAgeFromDate = (birthDate) => moment().diff(moment(birthDate), 'years');
 
 const getPersonImage = (navBrukerKjonnKode) => {
   if (navBrukerKjonnKode === nbKjonn.KVINNE) {
@@ -81,8 +81,7 @@ const PersonDetailedHeader = ({
                 <FormattedMessage id="Person.HarIkkeNorskFnrEllerDnr" />
               </Undertekst>
             </>
-            )
-          }
+            )}
           {hasAktorId
             && (
             <>
@@ -93,8 +92,7 @@ const PersonDetailedHeader = ({
                   {' '}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Undertittel>
-                )
-              }
+                )}
               {!isPrimaryParent
                 && (
                 <Element>
@@ -102,14 +100,12 @@ const PersonDetailedHeader = ({
                   {' '}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Element>
-                )
-              }
+                )}
               <Undertekst>
                 {fnr}
               </Undertekst>
             </>
-            )
-          }
+            )}
         </div>
         <MerkePanel erDod={isDod} erVerge={harVerge} diskresjonskode={diskresjonskode ? diskresjonskode.kode : null} />
       </div>

@@ -18,7 +18,7 @@ const headerTextCodes = [
   'FagsakList.Status',
   'FagsakList.BarnFodt',
 ];
-const lagFagsakSortObj = fagsak => ({
+const lagFagsakSortObj = (fagsak) => ({
   avsluttet: fagsak.status.kode === fagsakStatus.AVSLUTTET,
   endret: fagsak.endret ? fagsak.endret : fagsak.opprettet,
 });
@@ -44,15 +44,14 @@ export const FagsakList = ({
 
   return (
     <Table headerTextCodes={headerTextCodes} classNameTable={styles.table}>
-      {sortedFagsaker.map(fagsak => (
+      {sortedFagsaker.map((fagsak) => (
         <TableRow key={fagsak.saksnummer} id={fagsak.saksnummer} model={document} onMouseDown={selectFagsakCallback} onKeyDown={selectFagsakCallback}>
           <TableColumn>{fagsak.saksnummer}</TableColumn>
           <TableColumn>{getKodeverknavn(fagsak.sakstype)}</TableColumn>
           <TableColumn>{getKodeverknavn(fagsak.status)}</TableColumn>
           <TableColumn>{fagsak.barnFodt ? <DateLabel dateString={fagsak.barnFodt} /> : null}</TableColumn>
         </TableRow>
-      ))
-      }
+      ))}
     </Table>
   );
 };

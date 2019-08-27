@@ -83,8 +83,7 @@ const DocumentListInnsyn = ({
                   </TableColumn>
                 </TableRow>
               );
-            })
-            }
+            })}
           </Table>
         </Column>
       </Row>

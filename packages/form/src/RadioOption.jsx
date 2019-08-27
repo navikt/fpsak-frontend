@@ -33,8 +33,7 @@ export const RadioOption = ({
         disabled={disabled || groupDisabled}
         onChange={() => onChange(value)}
       />
-      {(checked || manualHideChildren) && children
-      }
+      {(checked || manualHideChildren) && children}
     </div>
   );
 };

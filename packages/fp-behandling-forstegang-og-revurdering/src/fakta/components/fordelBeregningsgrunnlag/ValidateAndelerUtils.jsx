@@ -24,7 +24,7 @@ const mapAndelToSortedObject = (value, andelList) => {
   } = value;
   if (nyAndel) {
     if (!Number.isNaN(Number(andel))) {
-      const matchendeAndelFraListe = andelList.filter(andelValue => andelValue.andelsnr === parseFloat(andel));
+      const matchendeAndelFraListe = andelList.filter((andelValue) => andelValue.andelsnr === parseFloat(andel));
       if (matchendeAndelFraListe.length > 0) {
         return { andelsinfo: matchendeAndelFraListe[0].andel, inntektskategori };
       }
@@ -46,7 +46,7 @@ export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.Endrin
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
 
 export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) => {
-  const mappedAndeler = andelList.map(value => (mapToSort(value, andelList)));
+  const mappedAndeler = andelList.map((value) => (mapToSort(value, andelList)));
   const sortedAndeler = mappedAndeler.slice().sort((andel1, andel2) => compareAndeler(andel1, andel2));
   for (let i = 0; i < sortedAndeler.length - 1; i += 1) {
     if (erAndelerLike(sortedAndeler[i], sortedAndeler[i + 1])) {
@@ -57,11 +57,11 @@ export const validateUlikeAndelerWithGroupingFunction = (andelList, mapToSort) =
 };
 
 
-export const validateUlikeAndeler = andelList => validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
+export const validateUlikeAndeler = (andelList) => validateUlikeAndelerWithGroupingFunction(andelList, mapAndelToSortedObject);
 
 
 const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
-  const andelerMedArbeidsforhold = andelList.filter(andel => andel.arbeidsforholdId !== '');
+  const andelerMedArbeidsforhold = andelList.filter((andel) => andel.arbeidsforholdId !== '');
   const arbeidsforholdRefusjonsbelop = [];
   andelerMedArbeidsforhold.forEach((andel) => {
     const infoIndex = arbeidsforholdRefusjonsbelop
@@ -95,14 +95,14 @@ const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
   return arbeidsforholdRefusjonsbelop;
 };
 
-export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = arbeidsgiver => (
+export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = (arbeidsgiver) => (
   [{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
     { arbeidsgiver }]);
 
 export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn) => {
   const arbeidsforholdRefusjonsinfo = finnArbeidsforholdRefusjonsinfoListe(andelList);
   const arbeidsforholdMedForHogRefusjon = arbeidsforholdRefusjonsinfo
-    .filter(refusjonsInfo => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding);
+    .filter((refusjonsInfo) => refusjonsInfo.totalRefusjon > refusjonsInfo.refusjonskravFraInntektsmelding);
   if (arbeidsforholdMedForHogRefusjon.length > 0) {
     const arbeidsgiverString = createVisningsnavnForAktivitet(arbeidsforholdMedForHogRefusjon[0], getKodeverknavn);
     return skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding(arbeidsgiverString);
@@ -111,10 +111,10 @@ export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn
 };
 
 const skalIkkjeVereHogareEnn = (
-    value, registerInntekt, errorMessage,
+  value, registerInntekt, errorMessage,
 ) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
-export const skalVereLikFordelingMessage = fordeling => (
+export const skalVereLikFordelingMessage = (fordeling) => (
   [{ id: 'BeregningInfoPanel.EndringBG.Validation.LikFordeling' },
     { fordeling }]);
 
@@ -148,7 +148,7 @@ const validateFordelingForGradertAndel = (andel) => {
     }
   }
   const arbeidsprosenter = andel.andelIArbeid.split(GRADERING_RANGE_DENOMINATOR);
-  const arbeidsprosenterOverNull = arbeidsprosenter.filter(val => val > 0);
+  const arbeidsprosenterOverNull = arbeidsprosenter.filter((val) => val > 0);
   if (arbeidsprosenterOverNull.length > 0 && Number(andel.fastsattBelop) === 0) {
     return kanIkkjeHaNullBeregningsgrunnlagError();
   }
@@ -158,7 +158,7 @@ const validateFordelingForGradertAndel = (andel) => {
 export const validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar = (fastsattBelop, beregningsgrunnlagPrAar) => {
   if (beregningsgrunnlagPrAar !== null && beregningsgrunnlagPrAar !== undefined) {
     return skalIkkjeVereHogareEnn(Number(fastsattBelop),
-    beregningsgrunnlagPrAar, tomErrorMessage);
+      beregningsgrunnlagPrAar, tomErrorMessage);
   }
   return null;
 };
@@ -166,7 +166,7 @@ export const validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar = (fastsat
 export const validateFastsattBelopEqualOrBelowRefusjon = (fastsattBelop, refusjon) => {
   if (refusjon !== null && refusjon !== undefined) {
     return skalIkkjeVereHogareEnn(Number(fastsattBelop),
-    refusjon, tomErrorMessage);
+      refusjon, tomErrorMessage);
   }
   return null;
 };
@@ -178,7 +178,7 @@ export const validateAgainstBeregningsgrunnlag = (andelFieldValues, totalInntekt
   if (arbeidsforholdBelopValues) {
     const arbeidsforholdTotalFastsatt = arbeidsforholdBelopValues.fastsattBelop;
     if (skalValidereMotBeregningsgrunnlagPrAar(andelFieldValues)) {
-        return validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar(arbeidsforholdTotalFastsatt, arbeidsforholdBelopValues.beregningsgrunnlagPrAar);
+      return validateFastsattBelopEqualOrBelowBeregningsgrunnlagPrAar(arbeidsforholdTotalFastsatt, arbeidsforholdBelopValues.beregningsgrunnlagPrAar);
     }
   }
   return null;
@@ -193,7 +193,7 @@ export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforho
       totalInntektArbeidsforholdList,
       skalValidereMotBeregningsgrunnlagPrAar,
       getKodeverknavn,
-);
+    );
   }
   if (!fastsattBelopError) {
     fastsattBelopError = validateFordelingForGradertAndel(andelFieldValues);
@@ -201,7 +201,7 @@ export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforho
   return fastsattBelopError;
 };
 
-export const hasFieldErrors = fieldErrors => (fieldErrors.refusjonskrav || fieldErrors.andel
+export const hasFieldErrors = (fieldErrors) => (fieldErrors.refusjonskrav || fieldErrors.andel
   || fieldErrors.fastsattBelop || fieldErrors.inntektskategori);
 
 
@@ -220,17 +220,17 @@ export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforhold
 
 
 export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
-  const skalValidereMellomAAPOgArbeidsgiver = andel => erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver(andel, values);
+  const skalValidereMellomAAPOgArbeidsgiver = (andel) => erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver(andel, values);
   const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotBeregningsgrunnlagPrAar,
     skalValidereMellomAAPOgArbeidsgiver, getKodeverknavn);
   const arrayErrors = values.map((andelFieldValues) => {
     if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
-        return null;
+      return null;
     }
     return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
   });
-  if (arrayErrors.some(errors => errors !== null)) {
-    if (arrayErrors.some(errors => errors && errors.fastsattBelop && errors.fastsattBelop[0].id === tomErrorMessage()[0].id)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
+    if (arrayErrors.some((errors) => errors && errors.fastsattBelop && errors.fastsattBelop[0].id === tomErrorMessage()[0].id)) {
       return {
         ...arrayErrors,
         _error: <TotalbelopPrArbeidsgiverError totalInntektPrArbeidsforhold={totalInntektPrArbeidsforhold} />,

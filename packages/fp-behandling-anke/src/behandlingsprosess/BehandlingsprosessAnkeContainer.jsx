@@ -18,7 +18,7 @@ import BehandlingsprosessAnkeIndex from './BehandlingsprosessAnkeIndex';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
  */
-export const BehandlingsprosessAnkeContainer = props => (
+export const BehandlingsprosessAnkeContainer = (props) => (
   <BehandlingsprosessAnkeIndex {...props} doNotUseFatterVedtakModal />
 );
 
@@ -43,7 +43,7 @@ BehandlingsprosessAnkeContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

@@ -7,7 +7,7 @@ import {
   isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
- minLength, maxLength, required, hasValidText,
+  minLength, maxLength, required, hasValidText,
 } from '@fpsak-frontend/utils';
 import TextAreaField from '@fpsak-frontend/form/src/TextAreaField';
 import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/components/BehandlingFormFieldCleaner';
@@ -22,7 +22,7 @@ export const ArbeidsforholdBegrunnelse = ({
   harBegrunnelse,
   skalAvslaaYtelse,
 }) => (
-  <React.Fragment>
+  <>
     <BehandlingFormFieldCleaner formName={formName} fieldNames={['begrunnelse']}>
       { (isDirty || harBegrunnelse) && !skalAvslaaYtelse && (
         <TextAreaField
@@ -34,7 +34,7 @@ export const ArbeidsforholdBegrunnelse = ({
         />
       )}
     </BehandlingFormFieldCleaner>
-  </React.Fragment>
+  </>
 );
 
 ArbeidsforholdBegrunnelse.propTypes = {

@@ -5,7 +5,7 @@ import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBeregning, bg, fastsatteAndelsnr) => {
   if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
-  .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
+    .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
     return {};
   }
   if (inntektVerdier === null) {
@@ -13,26 +13,26 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
   }
 
   const kunstigeArbeidsforhold = inntektVerdier
-    .filter(field => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
-    .filter(field => bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-      .find(andel => (andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef)
+    .filter((field) => !fastsatteAndelsnr.includes(field.andelsnr) && !fastsatteAndelsnr.includes(field.andelsnrRef))
+    .filter((field) => bg.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+      .find((andel) => (andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef)
       && andel.arbeidsforhold
       && andel.arbeidsforhold.organisasjonstype
       && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG));
-      kunstigeArbeidsforhold.forEach(field => fastsatteAndelsnr.push(field.andelsnr));
+  kunstigeArbeidsforhold.forEach((field) => fastsatteAndelsnr.push(field.andelsnr));
   const fastsattInntekt = kunstigeArbeidsforhold
-    .map(field => ({
+    .map((field) => ({
       andelsnr: field.andelsnr,
       fastsatteVerdier: {
         fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
         inntektskategori: field.inntektskategori,
       },
-  }));
+    }));
   if (fastsattInntekt.length > 0) {
     return ({
-        faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
-        fastsattUtenInntektsmelding: { andelListe: fastsattInntekt },
-      });
+      faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
+      fastsattUtenInntektsmelding: { andelListe: fastsattInntekt },
+    });
   }
   return {};
 };
@@ -40,7 +40,7 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
 export const harKunstigArbeidsforhold = (tilfeller, beregningsgrunnlag) => {
   if (tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
     return beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
-    .find(andel => andel.arbeidsforhold
+      .find((andel) => andel.arbeidsforhold
       && andel.arbeidsforhold.organisasjonstype
       && andel.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG) !== undefined;
   }

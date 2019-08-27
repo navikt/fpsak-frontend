@@ -20,8 +20,8 @@ import styles from './behandlingMenu.less';
 
 const classNames = classnames.bind(styles);
 
-const getMenuButtonText = menuVisible => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
-const getImage = menuVisible => (menuVisible ? openImage : closedImage);
+const getMenuButtonText = (menuVisible) => (menuVisible ? 'Behandlingsmeny.Close' : 'Behandlingsmeny.Open');
+const getImage = (menuVisible) => (menuVisible ? openImage : closedImage);
 
 /**
  * BehandlingMenu
@@ -154,14 +154,13 @@ export class BehandlingMenu extends Component {
         >
           <FormattedMessage id="Behandlingsmeny.Behandlingsmeny" />
           <FormattedMessage id={getMenuButtonText(menuVisible)}>
-            {altText => (
+            {(altText) => (
               <Image
                 className={styles.image}
                 src={getImage(menuVisible)}
                 alt={altText}
               />
-            )
-            }
+            )}
           </FormattedMessage>
         </Knapp>
         <div className={classNames('containerMenu', { hide: !menuVisible })}>
@@ -175,8 +174,7 @@ export class BehandlingMenu extends Component {
                 resumeBehandling={this.resumeBehandling}
                 gjenopptaBehandlingEnabled={gjenopptaBehandlingAccess.isEnabled}
               />
-            )
-            }
+            )}
             {this.isPauseBehandlingEnabled()
             && (
               <PauseBehandlingMenuItem
@@ -186,8 +184,7 @@ export class BehandlingMenu extends Component {
                 setBehandlingOnHold={setBehandlingOnHold}
                 settBehandlingPaVentEnabled={settBehandlingPaVentAccess.isEnabled}
               />
-            )
-            }
+            )}
             {this.isShelveBehandlingEnebled()
             && (
               <ShelveBehandlingMenuItem
@@ -199,8 +196,7 @@ export class BehandlingMenu extends Component {
                 push={push}
                 henleggBehandlingEnabled={henleggBehandlingAccess.isEnabled}
               />
-            )
-            }
+            )}
             {this.hasEnabledOpenBehandlingForChangesAccess()
             && (
               <OpenBehandlingForChangesMenuItem
@@ -209,8 +205,7 @@ export class BehandlingMenu extends Component {
                 openBehandlingForChanges={openBehandlingForChanges}
                 behandlingVersjon={selectedBehandlingVersjon}
               />
-            )
-            }
+            )}
             {this.isChangeBehandlendeEnhetEnabled()
             && (
               <ChangeBehandlendeEnhetMenuItem
@@ -223,8 +218,7 @@ export class BehandlingMenu extends Component {
                 nyBehandlendeEnhet={nyBehandlendeEnhet}
                 byttBehandlendeEnhetEnabled={byttBehandlendeEnhetAccess.isEnabled}
               />
-            )
-            }
+            )}
             {!this.isBehandlingQueued()
             && (
               <CreateNewBehandlingMenuItem
@@ -237,8 +231,7 @@ export class BehandlingMenu extends Component {
                 opprettRevurderingEnabled={this.hasEnabledNewRevurdering()}
                 ikkeVisOpprettNyBehandling={ikkeVisOpprettNyBehandling.isEnabled}
               />
-            )
-            }
+            )}
           </div>
         </div>
       </div>

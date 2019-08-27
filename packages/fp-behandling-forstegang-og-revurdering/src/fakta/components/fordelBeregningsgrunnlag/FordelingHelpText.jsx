@@ -27,7 +27,7 @@ export const textCase = {
   PERMISJON: 'PERMISJON',
 };
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const getEndredeArbeidsforhold = createSelector(
   [getEndringBeregningsgrunnlag],
@@ -125,7 +125,7 @@ const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeid
   return text;
 };
 
-const harGraderingEllerRefusjon = perioderMedGraderingEllerRefusjon => perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true)
+const harGraderingEllerRefusjon = (perioderMedGraderingEllerRefusjon) => perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true)
     || perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true);
 
 const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
@@ -151,7 +151,7 @@ const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
 const getHelpTextsEndringBG = createSelector(
   [getEndredeArbeidsforhold, behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
-      ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
+    ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
 );
 
 export const FordelingHelpTextImpl = ({
@@ -166,8 +166,8 @@ FordelingHelpTextImpl.propTypes = {
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-const mapStateToProps = state => ({
-    helpText: getHelpTextsEndringBG(state),
+const mapStateToProps = (state) => ({
+  helpText: getHelpTextsEndringBG(state),
 });
 
 export default connect(mapStateToProps)(FordelingHelpTextImpl);

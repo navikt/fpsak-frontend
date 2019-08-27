@@ -34,7 +34,7 @@ BekreftOgForsettKnappImpl.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isBekreftButtonReadOnly: PersonArbeidsforholdPanel.isReadOnly(state),
 });
 

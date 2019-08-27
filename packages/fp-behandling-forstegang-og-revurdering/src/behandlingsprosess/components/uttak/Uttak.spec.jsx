@@ -298,11 +298,11 @@ describe('<Uttak>', () => {
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 
-    uttakTimeLineData.prop('callbackForward')({ preventDefault() {} });
+    uttakTimeLineData.prop('callbackForward')({ preventDefault() { return undefined; } });
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[1]);
 
-    uttakTimeLineData.prop('callbackBackward')({ preventDefault() {} });
+    uttakTimeLineData.prop('callbackBackward')({ preventDefault() { return undefined; } });
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
 

@@ -20,8 +20,9 @@ import FatterVedtakStatusModal from './components/vedtak/FatterVedtakStatusModal
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
-const hasOverstyringAp = aksjonspunkter => (
-  aksjonspunkter.some(ap => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
+const hasOverstyringAp = (aksjonspunkter) => (
+  aksjonspunkter
+    .some((ap) => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
 );
 
 /**
@@ -91,14 +92,14 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
         aksjonspunkter,
       } = this.props;
 
-      const models = aksjonspunktModels.map(ap => ({
+      const models = aksjonspunktModels.map((ap) => ({
         '@type': ap.kode,
         ...ap,
       }));
 
       if (overrideAksjonspunkter) {
-        const apCodes = aksjonspunktModels.map(ap => ap.kode);
-        const aktuelleAksjonspunkter = aksjonspunkter.filter(ap => apCodes.includes(ap.definisjon.kode));
+        const apCodes = aksjonspunktModels.map((ap) => ap.kode);
+        const aktuelleAksjonspunkter = aksjonspunkter.filter((ap) => apCodes.includes(ap.definisjon.kode));
         if (aktuelleAksjonspunkter.length === 0 || hasOverstyringAp(aktuelleAksjonspunkter)) {
           const params = {
             ...behandlingIdentifier.toJson(),
@@ -129,7 +130,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
       } = this.props;
 
       return (
-        <React.Fragment>
+        <>
           <BehandlingsprosessPanel
             behandlingspunkter={behandlingspunkter}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -172,7 +173,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
               isKlageWithKA={isKlageWithKA}
             />
           )}
-        </React.Fragment>
+        </>
       );
     }
   }

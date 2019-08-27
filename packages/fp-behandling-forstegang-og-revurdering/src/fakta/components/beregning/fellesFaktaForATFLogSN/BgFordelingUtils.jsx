@@ -4,7 +4,7 @@ import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
-  import { erNyoppstartetFLField }
+import { erNyoppstartetFLField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import {
@@ -20,17 +20,17 @@ import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPa
 export const INNTEKT_FIELD_ARRAY_NAME = 'inntektFieldArray';
 
 
-const preutfyllInntektskategori = andel => (andel.inntektskategori
+const preutfyllInntektskategori = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
-export const setArbeidsforholdInitialValues = andel => ({
+export const setArbeidsforholdInitialValues = (andel) => ({
   arbeidsgiverId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsgiverId : null,
   arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : null,
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold ? andel.arbeidsforhold.opphoersdato : '',
 });
 
-export const setGenerellAndelsinfo = andel => ({
+export const setGenerellAndelsinfo = (andel) => ({
   andel: andel.visningsnavn,
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,
@@ -40,7 +40,7 @@ export const setGenerellAndelsinfo = andel => ({
 });
 
 
-const listeInneholderAndel = (liste, field) => (liste ? liste.find(element => element.andelsnr === field.andelsnr
+const listeInneholderAndel = (liste, field) => (liste ? liste.find((element) => element.andelsnr === field.andelsnr
 || element.andelsnr === field.andelsnrRef) : undefined);
 
 const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, faktaOmBeregning) => {
@@ -51,10 +51,10 @@ const erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon = (field, fak
 
 // Aktivitetstatus
 
-const erArbeidstaker = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER
+const erArbeidstaker = (field) => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.ARBEIDSTAKER
   || field.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER));
 
-const erFrilanser = field => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.FRILANSER
+const erFrilanser = (field) => (field.aktivitetStatus && (field.aktivitetStatus === aktivitetStatus.FRILANSER
   || field.aktivitetStatus.kode === aktivitetStatus.FRILANSER));
 
 // Nyoppstartet frilanser
@@ -63,7 +63,7 @@ const erNyoppstartetFrilanser = (field, values) => erFrilanser(field) && values[
 
 // Besteberegning
 
-const skalHaBesteberegning = values => values[besteberegningField];
+const skalHaBesteberegning = (values) => values[besteberegningField];
 
 export const skalHaBesteberegningSelector = createSelector([getFormValuesForBeregning], skalHaBesteberegning);
 
@@ -94,7 +94,7 @@ const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgr
 // Manuelt registrert med handlingstype LAGT_TIL_AV_BRUKER
 const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   const firstBgPeriod = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
-  const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find(a => a.arbeidsforhold
+  const lagtTilAvBruker = firstBgPeriod.beregningsgrunnlagPrStatusOgAndel.find((a) => a.arbeidsforhold
   && a.arbeidsforhold.arbeidsgiverId === andel.arbeidsgiverId
   && a.arbeidsforhold.organisasjonstype
   && a.arbeidsforhold.organisasjonstype.kode === organisasjonstyper.KUNSTIG);
@@ -102,8 +102,8 @@ const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
 };
 
 // Kun Ytelse
-const harKunYtelse = faktaOmBeregning => !!faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller
-.find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
+const harKunYtelse = (faktaOmBeregning) => !!faktaOmBeregning.faktaOmBeregningTilfeller && faktaOmBeregning.faktaOmBeregningTilfeller
+  .find(({ kode }) => kode === faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE) !== undefined;
 
 const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => {
   if (skalHaBesteberegning(values)) {
@@ -140,12 +140,12 @@ const skalKunneEndreTotaltBeregningsgrunnlag = (values, faktaOmBeregning, beregn
 
 // Overstyring
 
-export const erOverstyring = values => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
+export const erOverstyring = (values) => !!values && values[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD] === true;
 
 export const erOverstyringAvBeregningsgrunnlag = createSelector([
   getFormValuesForBeregning], erOverstyring);
 
-  export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => andel => erOverstyring(values)
+export const skalRedigereInntektForAndel = (values, faktaOmBeregning, beregningsgrunnlag) => (andel) => erOverstyring(values)
 || skalKunneEndreTotaltBeregningsgrunnlag(values, faktaOmBeregning, beregningsgrunnlag)(andel)
 || harKunYtelse(faktaOmBeregning);
 
@@ -153,15 +153,15 @@ export const getSkalRedigereInntekt = createSelector([getFormValuesForBeregning,
 
 // Skal redigere inntekt
 export const skalFastsetteInntektForSN = createSelector([
-    getFormValuesForBeregning,
-    getSkalRedigereInntekt],
-  (values, skalFastsette) => {
-    const fields = values[INNTEKT_FIELD_ARRAY_NAME];
-    if (!fields) {
-      return false;
-    }
-    return fields.filter(field => field.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE).map(skalFastsette).includes(true);
-  });
+  getFormValuesForBeregning,
+  getSkalRedigereInntekt],
+(values, skalFastsette) => {
+  const fields = values[INNTEKT_FIELD_ARRAY_NAME];
+  if (!fields) {
+    return false;
+  }
+  return fields.filter((field) => field.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE).map(skalFastsette).includes(true);
+});
 
 // Skal redigere inntektskategori
 
@@ -177,7 +177,7 @@ export const skalRedigereInntektskategoriForAndel = (values, beregningsgrunnlag)
 
 export const getSkalRedigereInntektskategori = createSelector([getFormValuesForBeregning, getBeregningsgrunnlag], skalRedigereInntektskategoriForAndel);
 
-export const mapToBelop = skalRedigereInntekt => (andel) => {
+export const mapToBelop = (skalRedigereInntekt) => (andel) => {
   const { fastsattBelop, readOnlyBelop } = andel;
   if (!skalRedigereInntekt || skalRedigereInntekt(andel)) {
     return fastsattBelop ? removeSpacesFromNumber(fastsattBelop) : 0;
@@ -185,7 +185,7 @@ export const mapToBelop = skalRedigereInntekt => (andel) => {
   return readOnlyBelop ? removeSpacesFromNumber(readOnlyBelop) : 0;
 };
 
-export const mapAndelToField = andel => ({
+export const mapAndelToField = (andel) => ({
   ...setGenerellAndelsinfo(andel),
   ...setArbeidsforholdInitialValues(andel),
   skalKunneEndreAktivitet: andel.skalKunneEndreAktivitet,

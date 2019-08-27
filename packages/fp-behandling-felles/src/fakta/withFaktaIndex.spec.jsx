@@ -44,13 +44,13 @@ describe('<HOC: withFaktaIndex>', () => {
         />
       </Router>,
     ).dive() // TODO (TOR) Bør unngå deep dive
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive();
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive();
 
     const panel = wrapper.find(FaktaPanel);
     expect(panel).to.have.length(1);
@@ -94,13 +94,13 @@ describe('<HOC: withFaktaIndex>', () => {
         />
       </Router>,
     ).dive() // TODO (TOR) Bør unngå deep dive
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive()
-    .dive();
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive()
+      .dive();
 
     const panel = wrapper.find(FaktaPanel);
     expect(panel).to.have.length(1);

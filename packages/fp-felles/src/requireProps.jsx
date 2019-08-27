@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  */
 
 const propsWithValue = (propNames, value) => propNames
-  .map(propName => ({ [propName]: value }))
+  .map((propName) => ({ [propName]: value }))
   .reduce((a, b) => ({ ...a, ...b }));
 
 const requireProps = (requiredPropNames, alternative) => (WrappedComponent) => {
@@ -21,8 +21,8 @@ const requireProps = (requiredPropNames, alternative) => (WrappedComponent) => {
     missingRequirements() {
       const { props } = this;
       return requiredPropNames
-        .map(key => props[key])
-        .some(prop => prop === null || prop === undefined);
+        .map((key) => props[key])
+        .some((prop) => prop === null || prop === undefined);
     }
 
     render() {

@@ -26,7 +26,7 @@ const andelMedAlt = {
   arbeidsforholdId: '999888777',
 };
 
-const getKodeverknavn = kodeverk => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
+const getKodeverknavn = (kodeverk) => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
 
 describe('visningsnavnHelper', () => {
   it('skal lage visningsnavn når vi mangler navn på bedrift', () => {

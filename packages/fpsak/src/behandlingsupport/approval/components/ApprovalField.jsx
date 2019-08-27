@@ -65,8 +65,7 @@ export const ApprovalFieldImpl = ({
           godkjentHosKA={erKlageKA}
           showOnlyBegrunnelse={showOnlyBegrunnelse}
         />
-        )
-        }
+        )}
       </NavFieldGroup>
     </div>
   );
@@ -92,6 +91,6 @@ ApprovalFieldImpl.defaultProps = {
   klageKA: false,
 };
 
-const mapStateToProps = state => ({ getAksjonspunktText: getAksjonspunktTextSelector(state) });
+const mapStateToProps = (state) => ({ getAksjonspunktText: getAksjonspunktTextSelector(state) });
 
 export default connect(mapStateToProps)(injectIntl(ApprovalFieldImpl));

@@ -27,7 +27,7 @@ LanguageProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   nbMessages: fpsakApi.LANGUAGE_FILE.getRestApiData()(state),
 });
 

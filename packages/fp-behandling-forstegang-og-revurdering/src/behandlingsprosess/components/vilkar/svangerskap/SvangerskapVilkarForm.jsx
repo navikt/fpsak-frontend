@@ -44,8 +44,7 @@ export const SvangerskapVilkarFormImpl = ({
   >
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     {erVilkarOk === false
-      && <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    }
+      && <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />}
   </BpPanelTemplate>
 );
 
@@ -90,8 +89,8 @@ const formName = 'SvangerskapVilkarForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => initialOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
-  return state => ({
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  return (state) => ({
     status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
     initialValues: buildInitialValues(state),
     erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
@@ -107,6 +106,6 @@ const SvangerskapVilkarForm = connect(mapStateToPropsFactory)(injectIntl(behandl
   validate,
 })(SvangerskapVilkarFormImpl)));
 
- SvangerskapVilkarForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.SVANGERSKAP;
+SvangerskapVilkarForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.SVANGERSKAP;
 
 export default SvangerskapVilkarForm;

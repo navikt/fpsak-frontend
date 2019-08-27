@@ -201,21 +201,21 @@ const buildInitialValues = createSelector([
   (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
   (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`),
   (state, ownProps) => ownProps.id],
-  (begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
-    begrunnelse,
-    id,
-    resultat: initialResultat ? initialResultat.kode : undefined,
-    dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
-  }));
+(begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
+  begrunnelse,
+  id,
+  resultat: initialResultat ? initialResultat.kode : undefined,
+  dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
+}));
 
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const formName = `sykdomOgSkadeForm-${initialOwnProps.id}`;
   const familiehendelse = getFamiliehendelseGjeldende(initialState);
   const vilkarForSykdomExists = doesVilkarForSykdomOppfyltExist(initialState);
-  const validate = values => validateSykdomOgSkadeForm(values, familiehendelse, initialOwnProps.utsettelseArsak,
+  const validate = (values) => validateSykdomOgSkadeForm(values, familiehendelse, initialOwnProps.utsettelseArsak,
     initialOwnProps.overforingArsak, vilkarForSykdomExists);
-  const onSubmit = values => initialOwnProps.updatePeriode((values));
+  const onSubmit = (values) => initialOwnProps.updatePeriode((values));
 
   return (state, ownProps) => ({
     onSubmit,

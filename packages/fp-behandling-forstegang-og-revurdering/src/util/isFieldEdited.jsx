@@ -1,7 +1,7 @@
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { diff } from '@fpsak-frontend/utils';
 
-const hasValue = value => value !== null && value !== undefined;
+const hasValue = (value) => value !== null && value !== undefined;
 
 const isNotEqual = (soknadValue, familiehendelseValue) => hasValue(familiehendelseValue) && soknadValue !== familiehendelseValue;
 
@@ -11,7 +11,7 @@ const getIsTerminDatoEdited = (soknad, familiehendelse) => isNotEqual(soknad.ter
 
 const getIsAntallBarnEdited = (soknad, familiehendelse) => isNotEqual(soknad.antallBarn, familiehendelse.antallBarnTermin);
 
-const getIsVilkarTypeEdited = familiehendelse => hasValue(familiehendelse.vilkarType);
+const getIsVilkarTypeEdited = (familiehendelse) => hasValue(familiehendelse.vilkarType);
 
 const getIsAdopsjonFodelsedatoerEdited = (soknad, familiehendelse) => diff(soknad.adopsjonFodelsedatoer, familiehendelse.adopsjonFodelsedatoer);
 
@@ -31,19 +31,19 @@ const getIsFodselsdatoerEdited = (soknad, personopplysning) => {
   const barn = personopplysning.barnSoktFor;
 
   const fodselsdatoerEdited = Object.keys(soknadFodselsdatoer)
-    .filter(nummer => barn.some(b => `${b.nummer}` === nummer))
-    .map(nummer => [nummer, barn.find(b => `${b.nummer}` === nummer)])
+    .filter((nummer) => barn.some((b) => `${b.nummer}` === nummer))
+    .map((nummer) => [nummer, barn.find((b) => `${b.nummer}` === nummer)])
     .map(([nummer, funnetBarn]) => ({ [nummer]: funnetBarn.fodselsdato !== soknadFodselsdatoer[nummer] }))
     .reduce((a, b) => ({ ...a, ...b }), {});
 
   return fodselsdatoerEdited;
 };
 
-const getIsEktefellesBarnEdited = familiehendelse => hasValue(familiehendelse.ektefellesBarn);
+const getIsEktefellesBarnEdited = (familiehendelse) => hasValue(familiehendelse.ektefellesBarn);
 
-const getIsMannAdoptererAleneEdited = familiehendelse => hasValue(familiehendelse.mannAdoptererAlene);
+const getIsMannAdoptererAleneEdited = (familiehendelse) => hasValue(familiehendelse.mannAdoptererAlene);
 
-const getIsDokumentasjonForeliggerEdited = familiehendelse => hasValue(familiehendelse.dokumentasjonForeligger);
+const getIsDokumentasjonForeliggerEdited = (familiehendelse) => hasValue(familiehendelse.dokumentasjonForeligger);
 
 const isFieldEdited = (soknad = {}, familiehendelse = {}, personopplysning = {}) => ({
   termindato: getIsTerminDatoEdited(soknad, familiehendelse),

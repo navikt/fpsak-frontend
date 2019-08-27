@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
- formatCurrencyNoKr,
+  formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
 import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
@@ -19,7 +19,7 @@ import styles from './endringBeregningsgrunnlagPeriodePanel.less';
 
 const classNames = classnames.bind(styles);
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const renderDateHeading = (fom, tom) => {
   if (!tom) {
@@ -94,7 +94,7 @@ EndringBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValid
   getKodeverknavn) => RenderEndringBGFieldArray
   .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn);
 
-const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find(a => a.andelsnr === andel.andelsnr);
+const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find((a) => a.andelsnr === andel.andelsnr);
 
 const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
@@ -115,26 +115,26 @@ EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, 
   }
   return (
     periode.endringBeregningsgrunnlagAndeler
-    .map((andel) => {
-      const bgAndel = finnRiktigAndel(andel, bgPeriode);
-      return ({
-      ...setGenerellAndelsinfo(andel, harKunYtelse, getKodeverknavn),
-      ...setArbeidsforholdInitialValues(andel),
-      andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
-      fordelingForrigeBehandling: andel.fordelingForrigeBehandlingPrAar || andel.fordelingForrigeBehandlingPrAar === 0
-        ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar) : '',
-      fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
-      readOnlyBelop: finnBeregningsgrunnlagPrAar(bgAndel),
-      refusjonskrav: andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonskravPrAar) : '',
-      skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
+      .map((andel) => {
+        const bgAndel = finnRiktigAndel(andel, bgPeriode);
+        return ({
+          ...setGenerellAndelsinfo(andel, harKunYtelse, getKodeverknavn),
+          ...setArbeidsforholdInitialValues(andel),
+          andelIArbeid: settAndelIArbeid(andel.andelIArbeid),
+          fordelingForrigeBehandling: andel.fordelingForrigeBehandlingPrAar || andel.fordelingForrigeBehandlingPrAar === 0
+            ? formatCurrencyNoKr(andel.fordelingForrigeBehandlingPrAar) : '',
+          fastsattBelop: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+          readOnlyBelop: finnBeregningsgrunnlagPrAar(bgAndel),
+          refusjonskrav: andel.refusjonskravPrAar !== null && andel.refusjonskravPrAar !== undefined ? formatCurrencyNoKr(andel.refusjonskravPrAar) : '',
+          skalKunneEndreRefusjon: periode.skalKunneEndreRefusjon && !andel.lagtTilAvSaksbehandler
       && andel.refusjonskravFraInntektsmeldingPrAar ? periode.skalKunneEndreRefusjon : false,
-      belopFraInntektsmelding: andel.belopFraInntektsmeldingPrAar,
-      harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
-      refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
-      nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
-      beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
-    });
-})
+          belopFraInntektsmelding: andel.belopFraInntektsmeldingPrAar,
+          harPeriodeAarsakGraderingEllerRefusjon: periode.harPeriodeAarsakGraderingEllerRefusjon,
+          refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
+          nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
+          beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
+        });
+      })
   );
 };
 

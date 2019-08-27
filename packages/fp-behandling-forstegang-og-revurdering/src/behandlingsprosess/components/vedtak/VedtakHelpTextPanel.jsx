@@ -42,8 +42,7 @@ export const VedtakHelpTextPanelImpl = ({
         <Element className={styles.inline}>
           <FormattedMessage id="VedtakForm.HelpText0" />
         </Element>
-        )
-        }
+        )}
         <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText1" /></Normaltekst>
         <Element className={styles.inline}><FormattedMessage id="VedtakForm.TilGodkjenning" /></Element>
         <Normaltekst className={styles.inline}><FormattedMessage id="VedtakForm.HelpText2" /></Normaltekst>

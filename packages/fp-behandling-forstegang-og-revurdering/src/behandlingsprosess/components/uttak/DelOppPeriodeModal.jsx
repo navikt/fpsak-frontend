@@ -84,13 +84,13 @@ export const DelOppPeriodeModalImpl = ({
                 <FormattedMessage
                   id={numberOfDaysAndWeeks.id.toString()}
                   values={{
-              weeks: numberOfDaysAndWeeks.weeks.toString(),
-              days: numberOfDaysAndWeeks.days.toString(),
-            }}
+                    weeks: numberOfDaysAndWeeks.weeks.toString(),
+                    days: numberOfDaysAndWeeks.days.toString(),
+                  }}
                 />
 
               </FlexColumn>
-        )}
+              )}
             </FlexRow>
           </FlexColumn>
         </FlexRow>
@@ -117,7 +117,7 @@ export const DelOppPeriodeModalImpl = ({
         </FlexRow>
       </FlexContainer>
     </Modal>
-);
+  );
 };
 
 DelOppPeriodeModalImpl.propTypes = {
@@ -161,9 +161,9 @@ const transformValues = (values, periodeData) => {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const validate = values => validateForm(values, ownProps.periodeData);
-  const onSubmit = values => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
-  return state => ({
+  const validate = (values) => validateForm(values, ownProps.periodeData);
+  const onSubmit = (values) => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
+  return (state) => ({
     førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode')(state, 'ForstePeriodeTomDato'),
     validate,
     onSubmit,

@@ -82,7 +82,7 @@ export const RegistrereVergeFaktaForm = ({
             label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             placeholder={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             validate={[required]}
-            selectValues={vergetyper.map(vt => <option key={vt.kode} value={vt.kode}>{vt.navn}</option>)}
+            selectValues={vergetyper.map((vt) => <option key={vt.kode} value={vt.kode}>{vt.navn}</option>)}
             bredde="xxl"
             readOnly={readOnly}
           />
@@ -125,7 +125,7 @@ export const RegistrereVergeFaktaForm = ({
   </FaktaGruppe>
 );
 
-RegistrereVergeFaktaForm.buildInitialValues = verge => ({
+RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
   navn: verge.navn,
   gyldigFom: verge.gyldigFom,
   gyldigTom: verge.gyldigTom,
@@ -137,7 +137,7 @@ RegistrereVergeFaktaForm.buildInitialValues = verge => ({
   vergeType: verge.vergeType ? verge.vergeType.kode : undefined,
 });
 
-RegistrereVergeFaktaForm.transformValues = values => ({
+RegistrereVergeFaktaForm.transformValues = (values) => ({
   vergeType: values.vergeType,
   navn: values.navn,
   fnr: values.fnr,

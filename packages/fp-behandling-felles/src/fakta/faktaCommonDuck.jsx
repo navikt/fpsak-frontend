@@ -28,7 +28,7 @@ const getFaktaReducer = (initialState, actionTypes) => (state = initialState, ac
 };
 
 const getFaktaRedux = (reducerName) => {
-  const actionType = name => `${reducerName}/${name}`;
+  const actionType = (name) => `${reducerName}/${name}`;
   const actionTypes = {
     SET_OPEN_INFO_PANELS: actionType('SET_OPEN_INFO_PANELS'),
     RESET_FAKTA: actionType('RESET_FAKTA'),
@@ -37,7 +37,7 @@ const getFaktaRedux = (reducerName) => {
   };
 
   const actionCreators = {
-    setOpenInfoPanels: openInfoPanels => ({
+    setOpenInfoPanels: (openInfoPanels) => ({
       type: actionTypes.SET_OPEN_INFO_PANELS,
       data: openInfoPanels,
     }),
@@ -59,10 +59,10 @@ const getFaktaRedux = (reducerName) => {
   };
 
   /* Selectors */
-  const getFaktaContext = state => state.default[reducerName];
+  const getFaktaContext = (state) => state.default[reducerName];
   const selectors = {
-    getOpenInfoPanels: createSelector([getFaktaContext], ctx => ctx.openInfoPanels),
-    getResolveFaktaAksjonspunkterSuccess: createSelector([getFaktaContext], ctx => ctx.resolveFaktaAksjonspunkterSuccess),
+    getOpenInfoPanels: createSelector([getFaktaContext], (ctx) => ctx.openInfoPanels),
+    getResolveFaktaAksjonspunkterSuccess: createSelector([getFaktaContext], (ctx) => ctx.resolveFaktaAksjonspunkterSuccess),
   };
 
   return {
