@@ -51,7 +51,7 @@ spec:
     enabled: true # Optional. If set to true fetch secrets from Secret Service and inject into the pods. todo link to doc.
   env:
     - name: APP_VERSION
-      value: {{version}}
+      value: "{{version}}"
     - name: APP_NAME
       value: fpsak-frontend
     - name: REDIS_HOST
