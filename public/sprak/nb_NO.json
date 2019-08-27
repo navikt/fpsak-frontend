@@ -1013,6 +1013,10 @@
   "VedtakForm.Innhold": "Innhold i brev til søker",
   "VedtakForm.AutomatiskBrev": "Innhold fra det automatisk genererte brevet kan kopieres ut og limes inn i det manuelle brevet",
   "VedtakForm.AutomatiskBrev.Lenke": "Forhåndsvis automatisk brev",
+  "VedtakForm.SvpFritektsBrevModal.Ok": "Ok",
+  "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrev": "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
+  "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImageAltCode": "Ingen automatisk vedtaksbrev.",
+  "VedtakForm.SvpFritektsBrevModal.ModalDescription": "Informasjonsboks om ingen automatisk vedtaksbrev. Fritekstbrev er nødvendig.",
   "VedtakKlageForm.ArsakTilAvslag": "Årsak til avslag",
   "VedtakKlageForm.ResultatOpprettholdVedtak": "Vedtaket er stadfestet",
   "VedtakKlageForm.ResultatKlageMedhold": "Vedtaket er omgjort",
@@ -1339,6 +1343,8 @@
 
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
+  "VurderRefusjonForm.ErRefusjonskravGyldig": "{arbeidsgiverVisningsnavn} har minst ett refusjonskrav som har kommet for sent. Skal refusjonskrav som ikke har kommet innen fristen tas med i beregning?",
+  "VurderRefusjonForm.AksjonspunktHelpText": "En eller flere arbeidsgivere har fremsatt refusjonskrav etter fristen. Vurder om disse skal tas med i beregning.",
 
 
   "VilkarResultPicker.SelectArsak": "Velg årsak",
@@ -1391,6 +1397,7 @@
   "ToTrinnsForm.Beregning.GraderingUtenBG": "Det er vurdert at fordeling av inntektsgrunnlag ved gradering er riktig",
   "ToTrinnsForm.Beregning.VurderBesteberegning": "Det er vurdert om beregningsgrunnlaget skal fordeles etter besteberegning.",
   "ToTrinnsForm.Beregning.VurderMilitærSiviltjeneste": "Det er vurdert om søker har hatt militær -eller siviltjeneste i opptjeningsperioden",
+  "ToTrinnsForm.Beregning.VurderRefusjonskrav": "Det er vurdert om refusjonskrav om er fremsatt etter fristen skal tas med i beregning.",
 
   "ToTrinnsForm.Opptjening.Endring": "Perioden {aktivitetType}{arbeidsInfoText} er endret.",
   "ToTrinnsForm.Opptjening.Underkjenning": "Aktivitet {aktivitetType}{arbeidsInfoText} er <b>ikke</b> godkjent.",
@@ -2198,6 +2205,7 @@
   "HistorikkEndretFelt.ErAnkenSignert": "Er anken signer",
   "HistorikkEndretFelt.Faresignaler": "Resultat",
   "HistorikkEndretFelt.MilitærEllerSiviltjeneste": "Har søker militær- eller siviltjeneste i opptjeningsperioden",
+  "HistorikkEndretFelt.NyRefusjonsfrist": "Utvidelse av frist for fremsatt refusjonskrav for {value}",
 
   "HistorikkEndretFeltVerdiType.AdoptererAlene": "adopterer alene",
   "HistorikkEndretFeltVerdiType.AdoptererIkkeAlene": "adopterer ikke alene",

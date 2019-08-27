@@ -9,7 +9,7 @@ import Tooltip from './Tooltip';
  *
  * Presentasjonskomponent. Komponent som har ansvar for visning av bilder.
  */
-export class Image extends Component {
+class Image extends Component {
   constructor() {
     super();
 
