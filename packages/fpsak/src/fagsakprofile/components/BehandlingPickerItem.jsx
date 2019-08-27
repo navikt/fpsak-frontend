@@ -21,7 +21,7 @@ const getContentProps = (behandling, getKodeverknavn) => ({
   opprettetDato: behandling.opprettet,
   avsluttetDato: behandling.avsluttet,
   behandlingsstatus: getKodeverknavn(behandling.status),
-  erGjeldendeVedtak: !behandling.gjeldendeVedtak,
+  erGjeldendeVedtak: behandling.gjeldendeVedtak,
 });
 
 const renderItemContent = (behandling, getKodeverknavn, isSelected = false, withChevronDown = false, withChevronUp = false) => (
