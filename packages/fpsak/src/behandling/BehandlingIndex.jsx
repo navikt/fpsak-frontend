@@ -1,4 +1,5 @@
 import React, { Component, Suspense } from 'react';
+import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -257,33 +258,34 @@ export class BehandlingIndex extends Component {
   }
 }
 
-const mapStateToPropsFactory = (initialState) => {
-  const fagsak = {
-    fagsakStatus: getSelectedFagsakStatus(initialState),
-    fagsakPerson: getFagsakPerson(initialState),
-    fagsakYtelseType: getFagsakYtelseType(initialState),
-    isForeldrepengerFagsak: isForeldrepengerFagsak(initialState),
-    kanRevurderingOpprettes: getKanRevurderingOpprettes(initialState),
-    skalBehandlesAvInfotrygd: getSkalBehandlesAvInfotrygd(initialState),
-  };
-  return (state) => {
-    const behandlingId = getSelectedBehandlingId(state);
-    return {
-      behandlingId,
-      saksnummer: getSelectedSaksnummer(state),
-      behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
-      behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
-      location: state.router.location,
-      erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
-      featureToggles: getFeatureToggles(state),
-      hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
-      kodeverk: getAlleKodeverk(state),
-      allDocuments: getAllDocuments(state),
-      avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
-      behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
-      navAnsatt: getNavAnsatt(state),
-      fagsak,
-    };
+export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
+    getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd], (fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger,
+      kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
+  fagsakStatus,
+  fagsakPerson,
+  fagsakYtelseType,
+  kanRevurderingOpprettes,
+  skalBehandlesAvInfotrygd,
+  isForeldrepengerFagsak: isForeldrepenger,
+}));
+
+const mapStateToProps = (state) => {
+  const behandlingId = getSelectedBehandlingId(state);
+  return {
+    behandlingId,
+    saksnummer: getSelectedSaksnummer(state),
+    behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
+    behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
+    location: state.router.location,
+    erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
+    featureToggles: getFeatureToggles(state),
+    hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
+    kodeverk: getAlleKodeverk(state),
+    allDocuments: getAllDocuments(state),
+    avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
+    behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
+    navAnsatt: getNavAnsatt(state),
+    fagsak: getFagsakInfo(state),
   };
 };
 
@@ -298,4 +300,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToPropsFactory, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
