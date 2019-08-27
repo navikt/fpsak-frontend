@@ -16,7 +16,6 @@ export const FpsakApiKeys = {
   NEW_BEHANDLING: 'NEW_BEHANDLING',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
-  FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
   HISTORY_FPTILBAKE: 'HISTORY_FPTILBAKE',
   SHOW_DETAILED_ERROR_MESSAGES: 'SHOW_DETAILED_ERROR_MESSAGES',
@@ -79,9 +78,6 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/historikk */
   .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
-
-  /* /api/dokumentbestiller */
-  .withPostAndOpenBlob('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev', FpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
 
   /* /api/kodeverk */
   .withGet('/fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)

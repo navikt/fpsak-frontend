@@ -229,6 +229,7 @@ describe('<ApprovalIndex>', () => {
       fetchBehandlinger={sinon.spy()}
       fetchForhandsvisBrev={sinon.spy()}
       behandlingIdentifier={new BehandlingIdentifier(12345, behandling.id)}
+      behandlingUuid="1"
       selectedBehandlingVersjon={behandling.versjon}
       ansvarligSaksbehandler={behandling.ansvarligSaksbehandler}
       status={behandling.status}
@@ -238,11 +239,11 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      previewMessage={sinon.spy()}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -278,11 +279,12 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       totrinnskontrollSkjermlenkeContext={undefined}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={[]}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -325,11 +327,12 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -367,11 +370,12 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
     />);
 
     const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
@@ -397,11 +401,12 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={resetApprovalFunction}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
     />);
 
     wrapper.unmount();

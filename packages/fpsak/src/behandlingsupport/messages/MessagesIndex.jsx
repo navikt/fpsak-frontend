@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -115,7 +116,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(behandlingTypeKode, data);
+    fetchPreview(BehandlingType.TILBAKEKREVING === behandlingTypeKode, data);
   }
 
   afterSubmit() {

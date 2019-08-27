@@ -4,37 +4,37 @@ import { createSelector } from 'reselect';
 import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import { erArsakTypeBehandlingEtterKlage, getBehandlingResultatstruktur, getHaveSentVarsel } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import {
+  getBehandlingResultatstruktur, getHaveSentVarsel, erArsakTypeBehandlingEtterKlage,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import styles from '../vedtakForm.less';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 
-const getPreviewCallback = (formProps, begrunnelse, previewVedtakCallback) => (e) => {
+import styles from '../vedtakForm.less';
+
+const getPreviewCallback = (formProps, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    previewVedtakCallback(begrunnelse || ' ');
+    previewCallback({});
   } else {
     formProps.submit();
   }
   e.preventDefault();
 };
 
-const getPreviewManueltBrevCallback = (formProps, behandlingIkkeAktiv, skalOverstyre, previewManueltBrevCallback) => (e) => {
+const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
     const {
       begrunnelse, brødtekst, overskrift,
     } = formProps;
-    const formValues = {
-      fritekst: begrunnelse,
-      skalBrukeOverstyrendeFritekstBrev: skalOverstyre,
-      fritekstBrev: brødtekst,
-      finnesAllerede: behandlingIkkeAktiv,
-      overskrift,
-      begrunnelse,
+    const data = {
+      fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      tittel: overskrift,
     };
-    previewManueltBrevCallback(formValues);
+    previewCallback(data);
   } else {
     formProps.submit();
   }
@@ -67,10 +67,7 @@ export const getSubmitKnappTekst = createSelector(
 export const VedtakRevurderingSubmitPanelImpl = ({
   intl,
   beregningResultat,
-  previewVedtakCallback,
-  previewManueltBrevCallback,
-  behandlingStatusKode,
-  begrunnelse,
+  previewCallback,
   formProps,
   haveSentVarsel,
   originaltBeregningResultat,
@@ -80,9 +77,8 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   erBehandlingEtterKlage,
   submitKnappTextId,
 }) => {
-  const behandlingIkkeAktiv = (behandlingStatusCode.BEHANDLING_UTREDES !== behandlingStatusKode);
-  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewVedtakCallback);
-  const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, behandlingIkkeAktiv, true, previewManueltBrevCallback);
+  const previewBrev = getPreviewCallback(formProps, previewCallback);
+  const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, true, previewCallback);
 
   return (
     <div>
@@ -120,10 +116,8 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 
 VedtakRevurderingSubmitPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
+  previewCallback: PropTypes.func.isRequired,
   beregningResultat: PropTypes.shape(),
-  begrunnelse: PropTypes.string,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   originaltBeregningResultat: PropTypes.shape(),
   haveSentVarsel: PropTypes.bool,
@@ -132,11 +126,9 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
   ytelseType: PropTypes.string.isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
 };
 
 VedtakRevurderingSubmitPanelImpl.defaultProps = {
-  begrunnelse: undefined,
   haveSentVarsel: false,
   beregningResultat: undefined,
   originaltBeregningResultat: undefined,
@@ -148,7 +140,6 @@ const mapStateToProps = (state) => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   haveSentVarsel: getHaveSentVarsel(state),
-  behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
 });
 

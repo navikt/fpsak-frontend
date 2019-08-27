@@ -29,8 +29,6 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   submitCallback,
   previewCallback,
   previewFptilbakeCallback,
-  previewManueltBrevCallback,
-  previewVedtakCallback,
   dispatchSubmitFailed,
   openAksjonspunkt,
   readOnly,
@@ -52,8 +50,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       <VedtakPanels
         behandlingspunkt={selectedBehandlingspunkt}
         readOnly={readOnly}
-        previewVedtakCallback={previewVedtakCallback}
-        previewManueltBrevCallback={previewManueltBrevCallback}
+        previewCallback={previewCallback}
         submitCallback={submitCallback}
       />
 
@@ -127,8 +124,6 @@ BehandlingspunktInfoPanel.propTypes = {
   openAksjonspunkt: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   previewFptilbakeCallback: PropTypes.func.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isApSolvable: PropTypes.bool.isRequired,

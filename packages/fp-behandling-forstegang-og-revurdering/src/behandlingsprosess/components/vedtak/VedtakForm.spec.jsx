@@ -30,7 +30,7 @@ describe('<VedtakForm>', () => {
     sprakkode,
   };
   it('skal vise at vedtak er innvilget, beløp og antall barn når en har et beregningsresultat', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -49,8 +49,7 @@ describe('<VedtakForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
@@ -74,7 +73,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise et element når en ikke har et beregningsresultat', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -111,8 +110,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -125,7 +123,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise Engangsstønad ikke innvilget når en ikke har et beregningsresultat', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -161,8 +159,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -178,7 +175,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise avslagsgrunn for søknadsfristvilkåret', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
       id: 1,
@@ -215,8 +212,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -232,7 +228,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å avslutt behandling då behandlingen er innvilget', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -266,8 +262,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -285,7 +280,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper for å avslutt behandling når behandlingen er avvist med årsakkode 1099', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const behandlingsresultat = {
       id: 1,
       type: {
@@ -319,8 +314,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -338,7 +332,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal vise knapper for å fatte vedtak og forhåndsvisning brev når foreslå avslag', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
       id: 1,
@@ -375,8 +369,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -394,7 +387,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper når status er avsluttet', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
       id: 1,
@@ -429,8 +422,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -472,7 +464,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
@@ -481,9 +473,8 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       erBehandlingEtterKlage={false}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -499,7 +490,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise knapper når status er fatter vedtak', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
 
     const behandlingsresultat = {
       id: 1,
@@ -534,8 +525,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -658,7 +648,7 @@ describe('<VedtakForm>', () => {
     });
   });
 
-  const forhandsvisVedtaksbrevFunc = sinon.spy();
+  const previewCallback = sinon.spy();
   const behandlingsresultat = {
     id: 1,
     type: {
@@ -695,8 +685,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly
       isBehandlingReadOnly
@@ -720,8 +709,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly
@@ -746,8 +734,7 @@ describe('<VedtakForm>', () => {
       behandlingsresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisVedtaksbrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={aksjonspunktKoder}
       readOnly={false}
       isBehandlingReadOnly

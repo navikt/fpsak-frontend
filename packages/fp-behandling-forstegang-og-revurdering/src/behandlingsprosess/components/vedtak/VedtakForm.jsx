@@ -23,8 +23,7 @@ import {
   behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
+import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -33,20 +32,16 @@ import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import VedtakFritekstbrevModal from './svp/VedtakFritekstbrevModal';
 
-const getPreviewManueltBrevCallback = (formProps, finnesAllerede, skalOverstyre, previewManueltBrevCallback) => (e) => {
+const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
     const {
       begrunnelse, brødtekst, overskrift,
     } = formProps;
-    const formValues = {
-      fritekst: begrunnelse,
-      skalBrukeOverstyrendeFritekstBrev: skalOverstyre,
-      fritekstBrev: brødtekst,
-      finnesAllerede,
-      overskrift,
-      begrunnelse,
+    const data = {
+      fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      tittel: overskrift,
     };
-    previewManueltBrevCallback(formValues);
+    previewCallback(data);
   } else {
     formProps.submit();
   }
@@ -77,20 +72,11 @@ function kanSendesTilGodkjenning(behandlingStatusKode) {
   return behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 }
 
-const getPreviewAutomatiskBrevCallback = (formProps) => (e) => {
-  const {
-    begrunnelse, brødtekst, behandlingId,
-  } = formProps;
+const getPreviewAutomatiskBrevCallback = (begrunnelse, previewCallback) => (e) => {
   const formValues = {
-    behandlingId,
     fritekst: begrunnelse,
-    skalBrukeOverstyrendeFritekstBrev: false,
-    fritekstBrev: brødtekst,
-    finnesAllerede: false,
-    overskrift: '',
-    begrunnelse: '',
   };
-  formProps.fetchVedtaksbrevPreview(formValues);
+  previewCallback(formValues);
   e.preventDefault();
 };
 
@@ -122,7 +108,8 @@ export class VedtakFormImpl extends Component {
       aksjonspunkter,
       behandlingPaaVent,
       antallBarn,
-      previewManueltBrevCallback,
+      previewCallback,
+      begrunnelse,
       aksjonspunktKoder,
       isBehandlingReadOnly,
       kanOverstyre,
@@ -133,10 +120,9 @@ export class VedtakFormImpl extends Component {
       initialValues,
       ...formProps
     } = this.props;
-    const finnesAllerede = (behandlingStatusCode.BEHANDLING_UTREDES !== behandlingStatusKode);
-    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
-    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, finnesAllerede, true, previewManueltBrevCallback);
-    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, false, previewManueltBrevCallback);
+    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
+    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, true, previewCallback);
+    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, previewCallback);
     const skalViseLink = (behandlingsresultat.avslagsarsak === null)
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
@@ -234,8 +220,7 @@ VedtakFormImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
+  previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isBehandlingReadOnly: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool,
@@ -313,7 +298,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
-    fetchVedtaksbrevPreview,
   }, dispatch),
 });
 

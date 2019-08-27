@@ -35,7 +35,7 @@ const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandlin
     fritekst: ' ',
     mottaker: 'Søker',
   };
-  previewHenleggBehandling(behandlingTypeKode, data);
+  previewHenleggBehandling(behandlingType.TILBAKEKREVING === behandlingTypeKode, data);
   e.preventDefault();
 };
 

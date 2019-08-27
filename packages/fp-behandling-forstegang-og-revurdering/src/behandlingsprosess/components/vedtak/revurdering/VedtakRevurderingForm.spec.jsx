@@ -88,8 +88,7 @@ const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPP
 
 describe('<VedtakRevurderingForm>', () => {
   it('skal vise result ved avslag, og submitpanel', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const forhandsvisManueltBrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
     revurdering.type = {
@@ -117,8 +116,7 @@ describe('<VedtakRevurderingForm>', () => {
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly={false}
@@ -132,8 +130,7 @@ describe('<VedtakRevurderingForm>', () => {
 
 
   it('Revurdering, skal vise resultat ved endret belop, hovedknappen for totrinnskontroll og link for å forhåndsvise brev', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const forhandsvisManueltBrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
 
     revurdering.behandlingsresultat = {
@@ -164,8 +161,7 @@ describe('<VedtakRevurderingForm>', () => {
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
       readOnly={false}
       ytelseType="ES"
@@ -179,8 +175,7 @@ describe('<VedtakRevurderingForm>', () => {
   });
 
   it('skal vise result ved ingen endring, hoved knappen og ikke vise link for forhandsvise brev', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const forhandsvisManueltBrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -197,8 +192,7 @@ describe('<VedtakRevurderingForm>', () => {
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
@@ -212,8 +206,7 @@ describe('<VedtakRevurderingForm>', () => {
 
 
   it('skal vise result ved ingen endring, og submitpanel', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const forhandsvisManueltBrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const revurdering = createBehandlingAvslag();
     revurdering.behandlingsresultat = {
       id: 1,
@@ -230,8 +223,7 @@ describe('<VedtakRevurderingForm>', () => {
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
       ytelseType="ES"
@@ -246,8 +238,7 @@ describe('<VedtakRevurderingForm>', () => {
 
 
   it('skal vise opphørspanel når behandlingsresultat er opphør', () => {
-    const forhandsvisVedtaksbrevFunc = sinon.spy();
-    const forhandsvisManueltBrevFunc = sinon.spy();
+    const previewCallback = sinon.spy();
     const revurdering = createBehandlingOpphor();
 
     const wrapper = shallow(<UnwrappedForm
@@ -257,8 +248,7 @@ describe('<VedtakRevurderingForm>', () => {
       behandlingsresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
       ytelseType="ES"

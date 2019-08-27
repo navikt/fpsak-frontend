@@ -12,7 +12,6 @@ import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
-  fetchVedtaksbrevPreview,
   getSelectedBehandlingspunktNavn,
   setSelectedBehandlingspunktNavn,
 } from './duckBpForstegangOgRev';
@@ -46,25 +45,6 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       mottaker,
       brevmalkode,
       saksnummer,
-    };
-    fetchBrevPreview(data);
-  }
-
-  previewVedtakCallback = (fritekst) => {
-    const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      fritekst: fritekst || '',
-      skalBrukeOverstyrendeFritekstBrev: false,
-    };
-    fetchBrevPreview(data);
-  }
-
-  previewManueltBrevCallback = (values) => {
-    const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      ...values,
     };
     fetchBrevPreview(data);
   }
@@ -105,8 +85,6 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
         <BehandlingspunktInfoPanel
           submitCallback={this.submit}
           previewCallback={previewCallback}
-          previewVedtakCallback={this.previewVedtakCallback}
-          previewManueltBrevCallback={this.previewManueltBrevCallback}
           previewFptilbakeCallback={this.previewFptilbakeCallback}
           dispatchSubmitFailed={submitFailedDispatch}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -129,7 +107,6 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   selectedBehandlingspunkt: PropTypes.string,
   dispatchSubmitFailed: PropTypes.func.isRequired,
   fetchFptilbakePreview: PropTypes.func.isRequired,
-  fetchVedtaksbrevPreview: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -139,7 +116,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
-    fetchVedtaksbrevPreview,
     fetchFptilbakePreview,
   }, dispatch),
 });

@@ -18,7 +18,6 @@ describe('BehandlingsprosessForstegangOgRevIndex', () => {
       goToSearchPage={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       fetchFptilbakePreview={sinon.spy()}
-      fetchVedtaksbrevPreview={sinon.spy()}
       resolveProsessAksjonspunkterSuccess
     />);
     expect(wrapper.find(BehandlingspunktInfoPanel)).to.have.length(1);
