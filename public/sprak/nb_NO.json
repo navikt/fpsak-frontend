@@ -20,6 +20,7 @@
   "BehandlingPickerItemContent.Open": "Åpne behandlingsliste",
   "BehandlingPickerItemContent.Close": "Lukk behandlingsliste",
   "BehandlingPickerItemContent.GjeldendeVedtak": "Gjeldende vedtak",
+  "BehandlingPickerItemContent.Arsak": "Årsak",
 
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
@@ -60,7 +61,6 @@
   "Behandlingspunkt.Avregning": "Simulering",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
   "Behandlingspunkt.Foreldelse": "Foreldelse",
-  "BehandlingListItem.Årsak": "Årsak",
   "Behandlingspunkt.Årsak.ManglerFødselsdato": "Mangler fødselsdato",
   "Behandlingspunkt.Årsak.AvvikAntallBarn": "Avvik antall barn",
   "Behandlingspunkt.Årsak.FeilLovanvendelse": "Feil lovanvendelse",

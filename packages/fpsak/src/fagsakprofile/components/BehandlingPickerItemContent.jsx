@@ -151,7 +151,7 @@ const BehandlingPickerItemContent = ({
         <Column xs="3">
           {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak.behandlingArsakType && (
             <>
-              <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Årsak" /></Undertekst>
+              <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Arsak" /></Undertekst>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
               </Normaltekst>
