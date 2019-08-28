@@ -122,6 +122,7 @@ describe('<VedtakRevurderingForm>', () => {
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly={false}
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -170,6 +171,7 @@ describe('<VedtakRevurderingForm>', () => {
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -202,6 +204,7 @@ describe('<VedtakRevurderingForm>', () => {
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -236,6 +239,7 @@ describe('<VedtakRevurderingForm>', () => {
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -263,6 +267,7 @@ describe('<VedtakRevurderingForm>', () => {
       readOnly={false}
       ytelseType="ES"
       isBehandlingReadOnly
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);

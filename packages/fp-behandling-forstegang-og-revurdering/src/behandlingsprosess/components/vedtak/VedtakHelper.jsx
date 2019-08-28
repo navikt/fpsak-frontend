@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -7,10 +8,11 @@ import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus'
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+
 import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
-const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === avregningCodes.TILBAKEKR_INFOTRYGD
+const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
@@ -18,8 +20,9 @@ export const findTilbakekrevingText = createSelector(
   (simuleringResultat, tilbakekrevingValg) => {
     if (tilbakekrevingValg) {
       if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
-        return `VedtakForm.${avregningCodes.TILBAKEKR_INFOTRYGD_OG_INNTREKK}`;
+        return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
+      // TODO Bør vel bruka kodeverk-navn her?
       return `VedtakForm.${tilbakekrevingValg.videreBehandling.kode}`;
     }
     return null;

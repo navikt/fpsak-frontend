@@ -64,6 +64,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   behandlingsresultat,
   tilbakekrevingText,
   getKodeverknavn,
+  hasOpenTilbakekrevingsbehandling,
 }) => (
   <ElementWrapper>
     {ytelseType === fagsakYtelseType.ENGANGSSTONAD
@@ -72,9 +73,8 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: resultTextES(beregningResultat, originaltBeregningResultat) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({
-          id: tilbakekrevingText,
-        })}`}
+        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
+        {hasOpenTilbakekrevingsbehandling && `. ${intl.formatMessage({ id: 'VedtakInnvilgetRevurderingPanel.EndringVilOppdatere' })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
       <Row>
@@ -146,6 +146,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   behandlingsresultat: PropTypes.shape().isRequired,
   tilbakekrevingText: PropTypes.string,
   getKodeverknavn: PropTypes.func.isRequired,
+  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {

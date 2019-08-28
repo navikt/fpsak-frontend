@@ -16,7 +16,7 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getBehandlingArsakTyper, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingArsakTyper, getBehandlingResultatstruktur, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
@@ -97,6 +97,7 @@ export class VedtakRevurderingFormImpl extends Component {
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
+      hasOpenTilbakekrevingsbehandling,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
@@ -134,6 +135,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 revurderingsAarsakString={revurderingsAarsakString}
                 behandlingsresultat={behandlingsresultat}
                 readOnly={readOnly}
+                hasOpenTilbakekrevingsbehandling={hasOpenTilbakekrevingsbehandling}
               />
             )}
             {isAvslag(behandlingsresultat.type.kode)
@@ -144,6 +146,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 behandlingsresultat={behandlingsresultat}
                 readOnly={readOnly}
                 ytelseType={ytelseType}
+                hasOpenTilbakekrevingsbehandling={hasOpenTilbakekrevingsbehandling}
               />
             )}
             {isOpphor(behandlingsresultat.type.kode)
@@ -153,6 +156,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 revurderingsAarsakString={revurderingsAarsakString}
                 ytelseType={ytelseType}
                 readOnly={readOnly}
+                hasOpenTilbakekrevingsbehandling={hasOpenTilbakekrevingsbehandling}
               />
             )}
 
@@ -199,6 +203,7 @@ VedtakRevurderingFormImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
+  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -299,6 +304,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     ytelseType: getFagsakYtelseType(state).kode,
     sprakkode: behandlingSelectors.getBehandlingSprak(state),
     kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    hasOpenTilbakekrevingsbehandling: getTilbakekrevingValg(state).videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
   });
 };
 

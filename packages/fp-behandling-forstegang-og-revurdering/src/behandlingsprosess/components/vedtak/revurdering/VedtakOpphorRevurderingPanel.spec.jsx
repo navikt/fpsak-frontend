@@ -40,6 +40,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       aksjonspunkter={[]}
       behandlingsresultat={behandlingsresultat}
       revurderingsAarsakString="Test"
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -82,6 +83,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       aksjonspunkter={[]}
       behandlingsresultat={behandlingsresultat}
       revurderingsAarsakString="Test"
+      hasOpenTilbakekrevingsbehandling={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
