@@ -439,19 +439,24 @@ const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
-  return (state) => ({
-    simuleringResultat: getSimuleringResultat(state),
-    initialValues: buildInitialValues(state),
-    ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-    sprakkode: behandlingSelectors.getBehandlingSprak(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
-    saksnummer: getSelectedSaksnummer(state),
-    isForeldrepenger: isForeldrepengerFagsak(state),
-    hasOpenTilbakekrevingsbehandling: getTilbakekrevingValg(state).videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-    onSubmit,
-  });
+  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  return (state) => {
+    const tilbakekrevingValg = getTilbakekrevingValg(state);
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg
+      && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+    return {
+      simuleringResultat: getSimuleringResultat(state),
+      initialValues: buildInitialValues(state),
+      ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
+      sprakkode: behandlingSelectors.getBehandlingSprak(state),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+      featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
+      saksnummer: getSelectedSaksnummer(state),
+      isForeldrepenger: isForeldrepengerFagsak(state),
+      hasOpenTilbakekrevingsbehandling,
+      onSubmit,
+    };
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({

@@ -281,31 +281,36 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktKoder = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState).map((ap) => ap.definisjon.kode);
   const revurderingsAarsakString = createAarsakString(getBehandlingArsakTyper(initialState), getKodeverknavnFn(getAlleKodeverk(initialState), kodeverkTyper));
 
-  return (state) => ({
-    onSubmit,
-    aksjonspunktKoder,
-    revurderingsAarsakString,
-    initialValues: buildInitialValues(state),
-    isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
-    ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME)(
-      state,
-      'antallBarn',
-      'begrunnelse',
-      'aksjonspunktKoder',
-      'skalBrukeOverstyrendeFritekstBrev',
-      'overskrift',
-      'brødtekst',
-    ),
-    behandlingId: getSelectedBehandlingId(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
-    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
-    ytelseType: getFagsakYtelseType(state).kode,
-    sprakkode: behandlingSelectors.getBehandlingSprak(state),
-    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
-    hasOpenTilbakekrevingsbehandling: getTilbakekrevingValg(state).videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-  });
+  return (state) => {
+    const tilbakekrevingValg = getTilbakekrevingValg(state);
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg
+      && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+      return {
+      onSubmit,
+      aksjonspunktKoder,
+      revurderingsAarsakString,
+      initialValues: buildInitialValues(state),
+      isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
+      ...behandlingFormValueSelector(VEDTAK_REVURDERING_FORM_NAME)(
+        state,
+        'antallBarn',
+        'begrunnelse',
+        'aksjonspunktKoder',
+        'skalBrukeOverstyrendeFritekstBrev',
+        'overskrift',
+        'brødtekst',
+      ),
+      behandlingId: getSelectedBehandlingId(state),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+      behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
+      behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+      aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+      ytelseType: getFagsakYtelseType(state).kode,
+      sprakkode: behandlingSelectors.getBehandlingSprak(state),
+      kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+      hasOpenTilbakekrevingsbehandling,
+    };
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
