@@ -13,6 +13,7 @@ import {
   getKunYtelse,
   getVurderMottarYtelse,
   getVurderBesteberegning,
+  getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -33,6 +34,7 @@ import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlon
 import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,
@@ -130,6 +132,17 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
         </ElementWrapper>,
       );
     }
+    if (tilfelle === faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT) {
+      hasShownPanel = true;
+      faktaPanels.push(
+        <ElementWrapper key={tilfelle}>
+          <VurderRefusjonForm
+            readOnly={readOnly}
+            isAksjonspunktClosed={isAksjonspunktClosed}
+          />
+        </ElementWrapper>,
+      );
+    }
   });
   setFaktaPanelForKunYtelse(faktaPanels, tilfeller, readOnly, isAksjonspunktClosed);
   faktaPanels.push(
@@ -202,12 +215,21 @@ const vurderMilitaerSiviltjenesteTransform = (vurderFaktaValues, values) => {
   });
 };
 
+const vurderRefusjonskravTransform = (faktaOmBeregning) => (vurderFaktaValues, values) => {
+  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT);
+  return ({
+    ...vurderFaktaValues,
+    ...VurderRefusjonForm.transformValues(faktaOmBeregning.refusjonskravSomKommerForSentListe)(values),
+  });
+};
+
 export const transformValues = (
   aktivePaneler,
   nyIArbTransform,
   kortvarigTransform,
   etterlonnTransform,
   militaerTransform,
+  vurderRefusjonTransform,
 ) => (vurderFaktaValues, values) => {
   let transformed = { ...vurderFaktaValues };
   aktivePaneler.forEach((kode) => {
@@ -222,6 +244,9 @@ export const transformValues = (
     }
     if (kode === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
       transformed = militaerTransform(transformed, values);
+    }
+    if (kode === faktaOmBeregningTilfelle.VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT) {
+      transformed = vurderRefusjonTransform(transformed, values);
     }
   });
   return transformed;
@@ -246,7 +271,8 @@ const setValuesForVurderFakta = (aktivePaneler, values, kortvarigeArbeidsforhold
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
       etterlonnSluttpakkeTransform(aktivePaneler),
-      vurderMilitaerSiviltjenesteTransform)(vurderFaktaValues.fakta, values),
+      vurderMilitaerSiviltjenesteTransform,
+      vurderRefusjonskravTransform(faktaOmBeregning))(vurderFaktaValues.fakta, values),
     overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
   });
 };
@@ -277,6 +303,7 @@ const buildInitialValuesForTilfeller = (props) => ({
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
   ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
+  ...VurderRefusjonForm.buildInitialValues(props.tilfeller, props.refusjonskravSomKommerForSentListe),
 });
 
 const mapStateToBuildInitialValuesProps = createStructuredSelector({
@@ -290,6 +317,7 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
   alleKodeverk: getAlleKodeverk,
   aksjonspunkter: behandlingSelectors.getAksjonspunkter,
   faktaOmBeregning: getFaktaOmBeregning,
+  refusjonskravSomKommerForSentListe: getArbeidsgiverInfoForRefusjonskravSomKommerForSent,
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
