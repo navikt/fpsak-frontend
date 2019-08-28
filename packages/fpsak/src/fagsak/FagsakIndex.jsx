@@ -21,7 +21,7 @@ import FagsakGrid from './components/FagsakGrid';
  * Container komponent. Er rot for for fagsakdelen av hovedvinduet, og har ansvar å legge valgt saksnummer fra URL-en i staten.
  */
 export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
-  <React.Fragment>
+  <>
     <FagsakResolver key={selectedSaksnummer}>
       <FagsakGrid
         behandlingContent={<Route strict path={behandlingerPath} component={BehandlingerIndex} />}
@@ -30,7 +30,7 @@ export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
       />
     </FagsakResolver>
     {requestPendingMessage && <DataFetchPendingModal pendingMessage={requestPendingMessage} />}
-  </React.Fragment>
+  </>
 );
 
 FagsakIndex.propTypes = {
@@ -42,14 +42,14 @@ FagsakIndex.defaultProps = {
   requestPendingMessage: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
   requestPendingMessage: getRequestPollingMessage(state),
 });
 
 export default trackRouteParam({
   paramName: 'saksnummer',
-  parse: saksnummerFromUrl => Number.parseInt(saksnummerFromUrl, 10),
+  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setSelectedSaksnummer,
   getParamFromStore: getSelectedSaksnummer,

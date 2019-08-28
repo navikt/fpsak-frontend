@@ -53,8 +53,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
             id="Historikk.Template.5.VerdiGjeldendeFra"
             values={{ dato: historikkinnslagDel.gjeldendeFra.fra }}
           />
-        )
-        }
+        )}
         {isGjeldendeFraUtenEndredeFelter(historikkinnslagDel)
         && (
           <div>
@@ -62,8 +61,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
               id="Historikk.Template.5.IngenEndring"
             />
           </div>
-        )
-        }
+        )}
       </ElementWrapper>
     );
   }
@@ -81,8 +79,7 @@ const lagGjeldendeFraInnslag = (historikkinnslagDel) => {
               id="Historikk.Template.5.IngenEndring"
             />
           </div>
-        )
-        }
+        )}
       </ElementWrapper>
     );
   }
@@ -147,7 +144,7 @@ const HistorikkMalType5 = ({
     return undefined;
   };
 
-  const lagSoeknadsperiode = soeknadsperiode => (soeknadsperiode.navnVerdi
+  const lagSoeknadsperiode = (soeknadsperiode) => (soeknadsperiode.navnVerdi
     ? (
       <FormattedHTMLMessage
         id={findIdForSoeknadsperiodeCode(soeknadsperiode)}
@@ -166,7 +163,8 @@ const HistorikkMalType5 = ({
 
   return (
     historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
-      <div key={`historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+      <div key={
+        `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
       }
       >
         {historikkinnslagDel.skjermlenke
@@ -179,11 +177,10 @@ const HistorikkMalType5 = ({
               {getKodeverknavn(historikkinnslagDel.skjermlenke)}
             </NavLink>
           </Element>
-        )
-        }
+        )}
 
         {lageElementInnhold(historikkinnslagDel)
-          .map(tekst => (
+          .map((tekst) => (
             <div key={tekst}><Element>{tekst}</Element></div>
           ))}
 
@@ -202,7 +199,7 @@ const HistorikkMalType5 = ({
           </div>
         ))}
 
-        {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger.map(opplysning => (
+        {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger.map((opplysning) => (
           <FormattedHTMLMessage
             id={findIdForOpplysningCode(opplysning)}
             values={{ antallBarn: opplysning.tilVerdi }}
@@ -214,7 +211,7 @@ const HistorikkMalType5 = ({
         {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
         {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
         <div>
-          {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+          {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
             <HistorikkDokumentLenke
               key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
               dokumentLenke={dokumentLenke}
@@ -224,8 +221,7 @@ const HistorikkMalType5 = ({
         </div>
 
         {historikkinnslagDelIndex < historikkinnslagDeler.length - 1
-        && <VerticalSpacer sixteenPx />
-        }
+        && <VerticalSpacer sixteenPx />}
       </div>
     )));
 };

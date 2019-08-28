@@ -21,7 +21,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const createAksjonspunktHelptTexts = (aksjonspunkter) => {
   const helpTexts = [];
-  const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   if (apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)) {
     helpTexts.push('ErOmsorgVilkaarOppfyltForm.Paragraf');
   }
@@ -91,7 +91,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
+const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
   ...VilkarResultPicker.transformValues(values),
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
   ...{ kode: ap.definisjon.kode },
@@ -101,10 +101,10 @@ const formName = 'ErOmsorgVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, aksjonspunkter));
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.OMSORGSVILKARET];
 
-  return state => ({
+  return (state) => ({
     aksjonspunkter,
     onSubmit,
     avslagsarsaker,

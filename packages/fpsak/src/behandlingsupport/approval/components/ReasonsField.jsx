@@ -28,7 +28,7 @@ const maxLength2000 = maxLength(2000);
 const ReasonsField = ({
   fieldName, godkjentHosKA, showOnlyBegrunnelse, intl,
 }) => (
-  <React.Fragment>
+  <>
     <ArrowBox
       alignOffset={godkjentHosKA ? 1 : 110}
     >
@@ -67,8 +67,7 @@ const ReasonsField = ({
             </NavFieldGroup>
           </FlexRow>
         </FlexContainer>
-        )
-      }
+        )}
       <TextAreaField
         name={`${fieldName}.besluttersBegrunnelse`}
         label={intl.formatMessage({ id: 'InfoPanel.Begrunnelse' })}
@@ -76,7 +75,7 @@ const ReasonsField = ({
       />
 
     </ArrowBox>
-  </React.Fragment>
+  </>
 );
 
 ReasonsField.propTypes = {

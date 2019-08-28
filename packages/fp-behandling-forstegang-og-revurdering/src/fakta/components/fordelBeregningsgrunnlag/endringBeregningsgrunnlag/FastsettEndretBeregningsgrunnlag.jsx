@@ -20,7 +20,7 @@ export const FastsettEndretBeregningsgrunnlagImpl = ({
 
 
 FastsettEndretBeregningsgrunnlagImpl.buildInitialValues = (endringBGPerioder, bg, getKodeverknavn) => (EndringBeregningsgrunnlagForm
-    .buildInitialValues(endringBGPerioder, bg, getKodeverknavn));
+  .buildInitialValues(endringBGPerioder, bg, getKodeverknavn));
 
 FastsettEndretBeregningsgrunnlagImpl.transformValues = (values, endringBGPerioder, bgPerioder) => EndringBeregningsgrunnlagForm.transformValues(values,
   endringBGPerioder, bgPerioder);

@@ -64,8 +64,7 @@ export class FagsakProfileIndex extends Component {
         {skalViseRisikoklassifisering
           && (
           <RisikoklassifiseringIndex />
-)
-        }
+          )}
 
 
       </Panel>
@@ -108,7 +107,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   toggleShowAll: toggleShowAllBehandlinger,
   reset: resetFagsakProfile,
 }, dispatch);

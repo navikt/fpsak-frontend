@@ -50,8 +50,7 @@ export const PermisjonPanel = ({
           <div role="alert" aria-live="assertive">
             <div className="skjemaelement__feilmelding"><FormattedMessage id={error.permisjonsError} /></div>
           </div>
-          )
-          }
+          )}
         <VerticalSpacer eightPx />
         <Element><FormattedMessage id="Registrering.Permisjon.FulltUttak" /></Element>
         <VerticalSpacer eightPx />
@@ -71,8 +70,7 @@ export const PermisjonPanel = ({
               sokerErMor={soknadData.getForeldreType() === foreldreType.MOR}
               readOnly={readOnly}
             />
-          )
-        }
+          )}
         <VerticalSpacer twentyPx />
         <PermisjonOverforingAvKvoterPanel
           visFeilMelding={visFeilMelding}
@@ -141,12 +139,12 @@ const overLappingError = (values) => {
     const oppholdPerioderValues = values.skalHaOpphold ? values[oppholdPeriodeFieldArrayName] : [];
     const overforingsperiodeValue = values.skalOvertaKvote ? values.overforingsperiode : {};
     const mappedOveforingsPeriodeValue = Object.keys(overforingsperiodeValue).length ? {
- periodeFom: overforingsperiodeValue.fomDato || null,
-     periodeTom: overforingsperiodeValue.tomDato || null,
-} : {};
+      periodeFom: overforingsperiodeValue.fomDato || null,
+      periodeTom: overforingsperiodeValue.tomDato || null,
+    } : {};
     const errorArrayRaw = allOverlappingErrors.concat(permisjonPeriodeValues, utsettelseperiodeValues, graderingperiodeValues, oppholdPerioderValues);
     if (Object.keys(overforingsperiodeValue).length) { errorArrayRaw.push(mappedOveforingsPeriodeValue); }
-    const errorArray = errorArrayRaw.filter(value => Object.keys(value).length !== 0);
+    const errorArray = errorArrayRaw.filter((value) => Object.keys(value).length !== 0);
     if (errorArray.length > 0 && PermisjonPanel.validateXrossPeriodTypes(errorArray)) {
       return true;
     }
@@ -183,13 +181,13 @@ PermisjonPanel.validate = (values, soknadData) => {
 };
 
 // Den her checken trengs för att ikke validerings skall slå till för tidligt
-PermisjonPanel.checkForFomTom = val => ('periodeTom' in val && val.periodeTom !== '' && 'periodeFom' in val && val.periodeFom !== '');
+PermisjonPanel.checkForFomTom = (val) => ('periodeTom' in val && val.periodeTom !== '' && 'periodeFom' in val && val.periodeFom !== '');
 
 PermisjonPanel.validateXrossPeriodTypes = (values) => {
   if (values.every(PermisjonPanel.checkForFomTom)) {
     const overlapError = dateRangesNotOverlappingCrossTypes(values.map(({ periodeFom, periodeTom }) => [periodeFom, periodeTom]));
     if (overlapError) {
-     return true;
+      return true;
     }
   }
   return false;

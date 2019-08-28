@@ -28,7 +28,7 @@ const getUtlandsadresse = (adresser) => {
   return utlandsAdresse || '-';
 };
 
-const getPersonstatus = personopplysning => (personopplysning.avklartPersonstatus && personopplysning.avklartPersonstatus.overstyrtPersonstatus
+const getPersonstatus = (personopplysning) => (personopplysning.avklartPersonstatus && personopplysning.avklartPersonstatus.overstyrtPersonstatus
   ? personopplysning.avklartPersonstatus.overstyrtPersonstatus
   : personopplysning.personstatus);
 
@@ -64,11 +64,10 @@ export const BostedSokerView = ({
               typo="undertekst"
               title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
             >
-              {personstatusTypes.find(s => s.kode === getPersonstatus(soker).kode).navn}
+              {personstatusTypes.find((s) => s.kode === getPersonstatus(soker).kode).navn}
             </Etikettfokus>
           </div>
-          )
-        }
+          )}
         {soker.sivilstand
           && (
           <div className={styles.etikettMargin}>
@@ -77,11 +76,10 @@ export const BostedSokerView = ({
               typo="undertekst"
               title={intl.formatMessage({ id: 'Sivilstand.Hjelpetekst' })}
             >
-              {sivilstandTypes.find(s => s.kode === soker.sivilstand.kode).navn}
+              {sivilstandTypes.find((s) => s.kode === soker.sivilstand.kode).navn}
             </Etikettfokus>
           </div>
-          )
-        }
+          )}
         {(soker.region && soker.region.kode !== Region.UDEFINERT)
           && (
           <div className={styles.etikettMargin}>
@@ -90,11 +88,10 @@ export const BostedSokerView = ({
               typo="undertekst"
               title={intl.formatMessage({ id: 'BostedSokerView.Region' })}
             >
-              {regionTypes.find(r => r.kode === soker.region.kode).navn}
+              {regionTypes.find((r) => r.kode === soker.region.kode).navn}
             </Etikettfokus>
           </div>
-          )
-        }
+          )}
       </Column>
     </Row>
   </div>
@@ -114,7 +111,7 @@ BostedSokerView.defaultProps = {
   className: styles.defaultBostedSoker,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   regionTypes: getKodeverk(kodeverkTyper.REGION)(state),
   sivilstandTypes: getKodeverk(kodeverkTyper.SIVILSTAND_TYPE)(state),
   personstatusTypes: getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)(state),

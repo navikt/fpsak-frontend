@@ -44,4 +44,4 @@ export {
 } from './src/pollingMessageDuck';
 export {
   getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
- } from './src/behandlingForm';
+} from './src/behandlingForm';

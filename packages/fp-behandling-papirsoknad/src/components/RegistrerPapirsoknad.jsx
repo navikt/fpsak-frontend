@@ -51,8 +51,7 @@ export const RegistrerPapirsoknad = ({
           readOnly={readOnly}
           soknadData={soknadData}
         />
-        )
-      }
+        )}
       {soknadData !== null && soknadData.getFagsakYtelseType() === fagsakYtelseType.FORELDREPENGER
         && (
         <ForeldrepengerForm
@@ -61,8 +60,7 @@ export const RegistrerPapirsoknad = ({
           readOnly={readOnly}
           soknadData={soknadData}
         />
-        )
-      }
+        )}
       {soknadData !== null && soknadData.getFagsakYtelseType() === fagsakYtelseType.ENDRING_FORELDREPENGER
         && (
         <EndringForeldrepengerForm
@@ -71,8 +69,7 @@ export const RegistrerPapirsoknad = ({
           readOnly={readOnly}
           soknadData={soknadData}
         />
-        )
-      }
+        )}
     </Container>
   </Panel>
 );

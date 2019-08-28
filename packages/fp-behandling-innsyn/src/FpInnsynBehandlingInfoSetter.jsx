@@ -9,6 +9,11 @@ import behandlingSelectors from './selectors/innsynBehandlingSelectors';
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export class FpInnsynBehandlingInfoSetter extends Component {
+  constructor(props) {
+    super(props);
+    this.setBehandlingInfo();
+  }
+
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
@@ -30,10 +35,6 @@ export class FpInnsynBehandlingInfoSetter extends Component {
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad));
-  }
-
-  componentWillMount = () => {
-    this.setBehandlingInfo();
   }
 
   componentDidUpdate = (prevProps) => {
@@ -74,7 +75,7 @@ FpInnsynBehandlingInfoSetter.defaultProps = {
   soknad: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),

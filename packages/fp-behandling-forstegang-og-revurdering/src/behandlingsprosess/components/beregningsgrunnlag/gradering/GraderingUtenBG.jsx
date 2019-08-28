@@ -51,7 +51,7 @@ const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
   if (andelerMedGraderingUtenBG.length === 1) {
     return bestemVisning(andelerMedGraderingUtenBG[0], getKodeverknavn);
   }
-  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map(andel => bestemVisning(andel, getKodeverknavn));
+  const arbeidsgiverVisningsnavn = andelerMedGraderingUtenBG.map((andel) => bestemVisning(andel, getKodeverknavn));
   const sisteNavn = arbeidsgiverVisningsnavn.splice(andelerMedGraderingUtenBG.length - 1);
   const tekst = arbeidsgiverVisningsnavn.join(', ');
   return `${tekst} og ${sisteNavn}`;
@@ -168,8 +168,8 @@ export const transformValues = (values) => {
 export const buildInitialValues = createSelector(
   [behandlingSelectors.getAksjonspunkter, behandlingSelectors.getBehandlingVenteArsakKode],
   (aksjonspunkter, venteKode) => {
-    const vurderGraderingUtenBGAP = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-    const settPaaVentAap = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+    const vurderGraderingUtenBGAP = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+    const settPaaVentAap = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
     if (!vurderGraderingUtenBGAP || vurderGraderingUtenBGAP.status.kode !== aksjonspunktStatus.UTFORT) {
       return undefined;
     }
@@ -198,17 +198,17 @@ export const buildInitialValues = createSelector(
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const andelerMedGraderingUtenBG = getAndelerMedGraderingUtenBG(initialState);
   const aksjonspunkt = behandlingSelectors.getAksjonspunkter(initialState)
-    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
+    .find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
   return (state) => {
     const initialValues = buildInitialValues(state);
     return ({
-    andelerMedGraderingUtenBG,
-    aksjonspunkt,
-    onSubmit,
-    initialValues,
+      andelerMedGraderingUtenBG,
+      aksjonspunkt,
+      onSubmit,
+      initialValues,
     });
-};
+  };
 };
 
 

@@ -45,12 +45,12 @@ AktoerResolver.propTypes = {
 AktoerResolver.defaultProps = {
   children: null,
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   aktoerId: getSelectedAktoerId(state),
   allAktoerInfoResolved: getAllAktoerInfoResolved(state),
 
 });
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateAktoer: updateAktoerCreator,
   removeErrorMessage: errorHandler.removeErrorMessage,
 }, dispatch);

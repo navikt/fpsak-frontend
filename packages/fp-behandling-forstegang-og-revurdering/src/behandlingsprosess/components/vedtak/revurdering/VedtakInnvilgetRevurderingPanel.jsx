@@ -46,7 +46,7 @@ const resultTextES = (beregningResultat, originaltBeregningResultat) => {
 export const lagKonsekvensForYtelsenTekst = (konsekvenser, getKodeverknavn) => {
   if (!konsekvenser || konsekvenser.length < 1) {
     return '';
-  } return konsekvenser.map(k => getKodeverknavn(k)).join(' og ');
+  } return konsekvenser.map((k) => getKodeverknavn(k)).join(' og ');
 };
 
 export const VedtakInnvilgetRevurderingPanelImpl = ({
@@ -83,20 +83,17 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
           <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
         </Column>
-        )
-        }
+        )}
         {antallBarn
         && (
         <Column xs="8">
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
           <Element>{antallBarn}</Element>
         </Column>
-        )
-        }
+        )}
       </Row>
     </div>
-    )
-    }
+    )}
     {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER)
       && (
       <div>
@@ -117,8 +114,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
             <Normaltekst>
               {revurderingsAarsakString}
             </Normaltekst>
-            )
-            }
+            )}
           </Column>
         </Row>
         {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType)
@@ -129,11 +125,9 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
           behandlingsresultat={behandlingsresultat}
           labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
         />
-        )
-        }
+        )}
       </div>
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -164,7 +158,7 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   tilbakekrevingText: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
   konsekvenserForYtelsen: behandlingSelectors.getBehandlingsresultat(state) !== undefined

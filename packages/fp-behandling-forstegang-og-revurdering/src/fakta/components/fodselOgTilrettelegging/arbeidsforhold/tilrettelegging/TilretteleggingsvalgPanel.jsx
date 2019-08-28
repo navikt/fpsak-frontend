@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
 import {
- FlexContainer, FlexColumn, FlexRow,
+  FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, DecimalField } from '@fpsak-frontend/form';
 import {
@@ -46,7 +46,7 @@ export const TilretteleggingsvalgPanel = ({
             validate={[required, minValue0, maxProsentValue100, hasValidDecimal]}
             readOnly={readOnly}
             bredde="XS"
-            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
           />
         </FlexColumn>
       )}

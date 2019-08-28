@@ -23,7 +23,7 @@ const {
 
 const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
-const erOverstyrerSelector = createSelector([getRettigheter], rettigheter => rettigheter.kanOverstyreAccess.isEnabled);
+const erOverstyrerSelector = createSelector([getRettigheter], (rettigheter) => rettigheter.kanOverstyreAccess.isEnabled);
 
 const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable, erOverstyrer) => (
   <div>
@@ -51,33 +51,33 @@ const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittab
  * når det finnes åpne aksjonspunkter.
  */
 export const BeregningInfoPanelImpl = ({
-        intl,
-        openInfoPanels,
-        toggleInfoPanelCallback,
-        hasOpenAksjonspunkter,
-        readOnly,
-        aksjonspunkter,
-        submittable,
-        isOnHold,
-        submitCallback,
-        harBeregningsgrunnlag,
-        erOverstyrer,
-    }) => {
-    if (isOnHold || !harBeregningsgrunnlag) {
-      return null;
-    }
-    return (
-      <FaktaEkspandertpanel
-        title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.BEREGNING)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        faktaId={faktaPanelCodes.BEREGNING}
-        readOnly={readOnly}
-      >
-        {createRelevantForms(readOnly, aksjonspunkter, submitCallback, submittable, erOverstyrer)}
-      </FaktaEkspandertpanel>
-    );
+  intl,
+  openInfoPanels,
+  toggleInfoPanelCallback,
+  hasOpenAksjonspunkter,
+  readOnly,
+  aksjonspunkter,
+  submittable,
+  isOnHold,
+  submitCallback,
+  harBeregningsgrunnlag,
+  erOverstyrer,
+}) => {
+  if (isOnHold || !harBeregningsgrunnlag) {
+    return null;
+  }
+  return (
+    <FaktaEkspandertpanel
+      title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
+      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.BEREGNING)}
+      toggleInfoPanelCallback={toggleInfoPanelCallback}
+      faktaId={faktaPanelCodes.BEREGNING}
+      readOnly={readOnly}
+    >
+      {createRelevantForms(readOnly, aksjonspunkter, submitCallback, submittable, erOverstyrer)}
+    </FaktaEkspandertpanel>
+  );
 };
 
 BeregningInfoPanelImpl.propTypes = {
@@ -97,7 +97,7 @@ BeregningInfoPanelImpl.propTypes = {
   erOverstyrer: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erOverstyrer: erOverstyrerSelector(state),
   harBeregningsgrunnlag: !!getBeregningsgrunnlag(state),
   isOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
@@ -106,6 +106,6 @@ const mapStateToProps = state => ({
 const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
   faktaOmBeregningAksjonspunkter, true)(connect(mapStateToProps)(injectIntl(BeregningInfoPanelImpl)));
 
-BeregningInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
+BeregningInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode));
 
 export default BeregningInfoPanel;

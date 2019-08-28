@@ -876,11 +876,11 @@ describe('<PersonArbeidsforholdPanel>', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
       permisjoner: [{
-          permisjonFom: '2012-01-01',
-          permisjonTom: undefined,
-          permisjonsprosent: 100,
-          permisjonsÅrsak: 'aarsak',
-        }],
+        permisjonFom: '2012-01-01',
+        permisjonTom: undefined,
+        permisjonsprosent: 100,
+        permisjonsÅrsak: 'aarsak',
+      }],
       brukPermisjon: true,
     };
     const initialValues = PersonArbeidsforholdPanel.buildInitialValues([newArbeidsforhold]);

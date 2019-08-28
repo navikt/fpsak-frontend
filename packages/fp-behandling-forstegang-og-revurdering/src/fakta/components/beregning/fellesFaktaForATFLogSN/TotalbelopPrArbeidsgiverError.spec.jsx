@@ -2,23 +2,23 @@ import { expect } from 'chai';
 import { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
 const arbeidsgiver1 = {
-andel: 'Statoil AS (123456789)',
-arbeidsgiverNavn: 'Statoil AS',
-arbeidsgiverId: '123456789',
-arbeidsperiodeFom: '2017-01-01',
-registerInntekt: '20 000',
-belopFraInntektsmelding: 20000,
+  andel: 'Statoil AS (123456789)',
+  arbeidsgiverNavn: 'Statoil AS',
+  arbeidsgiverId: '123456789',
+  arbeidsperiodeFom: '2017-01-01',
+  registerInntekt: '20 000',
+  belopFraInntektsmelding: 20000,
 };
 
 const arbeidsgiver1Key = 'Statoil AS (123456789)';
 
 const arbeidsgiver2 = {
-andel: 'Sopra Steria AS (9987432724)',
-arbeidsgiverNavn: 'Sopra Steria AS',
-arbeidsgiverId: '9987432724',
-arbeidsperiodeFom: '2019-01-01',
-registerInntekt: '30 000',
-belopFraInntektsmelding: null,
+  andel: 'Sopra Steria AS (9987432724)',
+  arbeidsgiverNavn: 'Sopra Steria AS',
+  arbeidsgiverId: '9987432724',
+  arbeidsperiodeFom: '2019-01-01',
+  registerInntekt: '30 000',
+  belopFraInntektsmelding: null,
 };
 
 const arbeidsgiver2Key = 'Sopra Steria AS (9987432724)';
@@ -26,23 +26,23 @@ const arbeidsgiver2Key = 'Sopra Steria AS (9987432724)';
 const arbeidsgiver3 = {
   andel: 'NAV AS (4364634634)',
   arbeidsgiverNavn: 'NAV AS',
- arbeidsgiverId: '4364634634',
- arbeidsperiodeFom: '2019-01-01',
- registerInntekt: '30 000',
- belopFraInntektsmelding: null,
- refusjonskravFraInntektsmelding: 20000,
- };
+  arbeidsgiverId: '4364634634',
+  arbeidsperiodeFom: '2019-01-01',
+  registerInntekt: '30 000',
+  belopFraInntektsmelding: null,
+  refusjonskravFraInntektsmelding: 20000,
+};
 
- const arbeidsgiver3Key = 'NAV AS (4364634634)';
+const arbeidsgiver3Key = 'NAV AS (4364634634)';
 
 const frilanser = {
   andel: 'Frilans',
- arbeidsgiverNavn: '',
-arbeidsgiverId: '',
-arbeidsforholdType: { kode: 'FRILANS' },
-arbeidsperiodeFom: '',
-registerInntekt: '30 000',
-belopFraInntektsmelding: null,
+  arbeidsgiverNavn: '',
+  arbeidsgiverId: '',
+  arbeidsforholdType: { kode: 'FRILANS' },
+  arbeidsperiodeFom: '',
+  registerInntekt: '30 000',
+  belopFraInntektsmelding: null,
 };
 
 const frilanserKey = 'Frilans';
@@ -51,38 +51,38 @@ describe('<TotalbelopPrArbeidsgiverError>', () => {
   it('skal vise children og skal vise tabell', () => {
     const values = [
       {
- ...arbeidsgiver1,
-      fastsattBelop: '10 000',
-      inntektskategori: 'ARBEIDSTAKER',
-      nyttArbeidsforhold: false,
-     },
-     {
- ...arbeidsgiver1,
-      fastsattBelop: '20 000',
-      inntektskategori: 'FRILANSER',
-      nyttArbeidsforhold: false,
-     },
-     {
- ...arbeidsgiver2,
-      fastsattBelop: '20 000',
-      inntektskategori: 'ARBEIDSTAKER',
-      nyttArbeidsforhold: true,
-     },
-     {
-     ...arbeidsgiver3,
-     fastsattBelop: '20 000',
-     inntektskategori: 'ARBEIDSTAKER',
-     nyttArbeidsforhold: false,
-    },
-     {
- ...frilanser,
-      fastsattBelop: '20 000',
-      inntektskategori: 'FRILANSER',
-      nyttArbeidsforhold: false,
-     },
+        ...arbeidsgiver1,
+        fastsattBelop: '10 000',
+        inntektskategori: 'ARBEIDSTAKER',
+        nyttArbeidsforhold: false,
+      },
+      {
+        ...arbeidsgiver1,
+        fastsattBelop: '20 000',
+        inntektskategori: 'FRILANSER',
+        nyttArbeidsforhold: false,
+      },
+      {
+        ...arbeidsgiver2,
+        fastsattBelop: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+        nyttArbeidsforhold: true,
+      },
+      {
+        ...arbeidsgiver3,
+        fastsattBelop: '20 000',
+        inntektskategori: 'ARBEIDSTAKER',
+        nyttArbeidsforhold: false,
+      },
+      {
+        ...frilanser,
+        fastsattBelop: '20 000',
+        inntektskategori: 'FRILANSER',
+        nyttArbeidsforhold: false,
+      },
     ];
 
-    const skalValidereMotRefusjon = andel => andel.arbeidsgiverId === '4364634634';
+    const skalValidereMotRefusjon = (andel) => andel.arbeidsgiverId === '4364634634';
 
     const inntektPrArbeidsforholdList = lagTotalInntektArbeidsforholdList(values, () => true, skalValidereMotRefusjon);
     expect(inntektPrArbeidsforholdList.length).to.equal(4);

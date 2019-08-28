@@ -63,7 +63,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                       name="andelSomTilbakekreves"
                       label=""
                       validate={[required]}
-                      selectValues={andeler.map(andel => <option key={andel} value={andel}>{andel}</option>)}
+                      selectValues={andeler.map((andel) => <option key={andel} value={andel}>{andel}</option>)}
                       bredde="s"
                     />
                   </FlexColumn>
@@ -99,7 +99,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
             <Undertekst>
               <FormattedMessage
                 id={harMerEnnEnYtelse ? 'AktsomhetReduksjonAvBelopFormPanel.BelopSomSkalTilbakekreves'
-                : 'AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves'}
+                  : 'AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves'}
               />
             </Undertekst>
             <Normaltekst className={styles.labelPadding}>{harMerEnnEnYtelse ? formatCurrencyNoKr(feilutbetalingBelop) : '100%'}</Normaltekst>

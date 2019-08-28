@@ -17,7 +17,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 
-const countrySelectValues = countryCodes => countryCodes
+const countrySelectValues = (countryCodes) => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 
@@ -68,8 +68,7 @@ export const VirksomhetIdentifikasjonPanel = ({
         </Row>
         <VerticalSpacer sixteenPx />
       </>
-      )
-    }
+      )}
       { !virksomhetRegistrertINorge && virksomhetRegistrertINorge !== undefined
       && (
         <>
@@ -106,8 +105,7 @@ export const VirksomhetIdentifikasjonPanel = ({
             </Row>
           </ArrowBox>
         </>
-      )
-      }
+      )}
     </>
   );
 };

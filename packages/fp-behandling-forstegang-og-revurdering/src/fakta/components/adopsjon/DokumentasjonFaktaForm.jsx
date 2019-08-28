@@ -19,13 +19,13 @@ import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import styles from './dokumentasjonFaktaForm.less';
 
 const findAntallBarnUnder15 = (fodselsdatoer, omsorgsovertakelseDato) => {
-  const nrOfNotNullFodselsdatoer = Object.keys(fodselsdatoer).filter(id => fodselsdatoer[id]).length;
+  const nrOfNotNullFodselsdatoer = Object.keys(fodselsdatoer).filter((id) => fodselsdatoer[id]).length;
   if (nrOfNotNullFodselsdatoer === 0 || !omsorgsovertakelseDato) {
     return '-';
   }
   const omsorgsdato = moment(omsorgsovertakelseDato).subtract(15, 'years');
   return Object.values(fodselsdatoer)
-    .map(fodselsdato => (moment(fodselsdato).isAfter(omsorgsdato) ? 1 : 0))
+    .map((fodselsdato) => (moment(fodselsdato).isAfter(omsorgsdato) ? 1 : 0))
     .reduce((a, b) => a + b, 0);
 };
 
@@ -71,8 +71,7 @@ const DokumentasjonFaktaFormImpl = ({
         readOnly={readOnly}
         isEdited={barnetsAnkomstTilNorgeDatoIsEdited}
       />
-      )
-      }
+      )}
       {Object.keys(fodselsdatoer).map((id, i) => (
         <div key={`div-${aksjonspunktCodes.ADOPSJONSDOKUMENTAJON}-${id}`}>
           <VerticalSpacer eightPx />
@@ -95,13 +94,11 @@ const DokumentasjonFaktaFormImpl = ({
                 titleCode="DokumentasjonFaktaForm.BarnErOver15Ar"
                 src={advarselImageUrl}
               />
-              )
-              }
+              )}
             </Column>
           </Row>
         </div>
-      ))
-      }
+      ))}
       <VerticalSpacer twentyPx />
       <Undertekst>{intl.formatMessage({ id: 'DokumentasjonFaktaForm.AntallBarnSomFyllerVilkaret' })}</Undertekst>
       <Normaltekst>{findAntallBarnUnder15(fodselsdatoer, omsorgsovertakelseDato)}</Normaltekst>
@@ -131,7 +128,7 @@ DokumentasjonFaktaFormImpl.defaultProps = {
   barnetsAnkomstTilNorgeDatoIsEdited: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erForeldrepengerFagsak: isForeldrepengerFagsak(state),
   adopsjonFodelsedatoerIsEdited: getEditedStatus(state).adopsjonFodelsedatoer,
   omsorgsovertakelseDatoIsEdited: getEditedStatus(state).omsorgsovertakelseDato,
@@ -149,7 +146,7 @@ DokumentasjonFaktaForm.buildInitialValues = (soknad, familiehendelse) => ({
   fodselsdatoer: familiehendelse && familiehendelse.adopsjonFodelsedatoer ? familiehendelse.adopsjonFodelsedatoer : soknad.adopsjonFodelsedatoer,
 });
 
-DokumentasjonFaktaForm.transformValues = values => ({
+DokumentasjonFaktaForm.transformValues = (values) => ({
   kode: aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
   omsorgsovertakelseDato: values.omsorgsovertakelseDato,
   barnetsAnkomstTilNorgeDato: values.barnetsAnkomstTilNorgeDato,

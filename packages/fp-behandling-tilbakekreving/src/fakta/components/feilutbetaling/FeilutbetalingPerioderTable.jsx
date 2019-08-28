@@ -32,8 +32,7 @@ const FeilutbetalingPerioderTable = ({
           resetFields={resetFields}
           key={`formIndex${index + 1}`}
         />
-      ))
-        }
+      ))}
     </Table>
   </div>
 );

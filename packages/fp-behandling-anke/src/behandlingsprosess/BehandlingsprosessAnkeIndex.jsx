@@ -9,7 +9,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
 import {
- setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke,
+  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke,
 } from './duckBpAnke';
 
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';
@@ -45,14 +45,14 @@ export class BehandlingsprosessAnkeIndex extends Component {
     const { submitCallback, goToDefaultPage } = this.props;
 
     const skalTilMedunderskriver = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+      .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
+      .some((apValue) => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
     const shouldUpdateInfo = !skalTilMedunderskriver;
 
     const afterAksjonspunktSubmit = () => {
       if (skalTilMedunderskriver || skalFerdigstilles) {
-        this.setState(state => ({ ...state, showModalAnkeBehandling: true }));
+        this.setState((state) => ({ ...state, showModalAnkeBehandling: true }));
       } else {
         goToDefaultPage();
       }
@@ -91,11 +91,11 @@ BehandlingsprosessAnkeIndex.propTypes = {
   selectedBehandlingspunkt: PropTypes.string,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     saveAnke,
     resolveAnkeTemp,

@@ -10,7 +10,7 @@ import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPa
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
 
-const lagRisikoklassifisering = kode => ({
+const lagRisikoklassifisering = (kode) => ({
   kontrollresultat: {
     kode,
     kodeverk: 'Kontrollresultat',

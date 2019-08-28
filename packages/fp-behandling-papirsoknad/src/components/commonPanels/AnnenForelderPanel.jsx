@@ -21,7 +21,7 @@ import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import SoknadData from '../../SoknadData';
 import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 
-const countrySelectValues = countryCodes => countryCodes
+const countrySelectValues = (countryCodes) => countryCodes
   .filter(({ kode }) => kode !== landkoder.NORGE)
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
@@ -43,7 +43,7 @@ export const KanIkkeOppgiBegrunnelsePanel = ({
     </RadioGroupField>
     {kanIkkeOppgiBegrunnelse.arsak === kanIkkeOppgiAnnenForelderArsaker.IKKE_NORSK_FNR
     && (
-    <React.Fragment>
+    <>
       <SelectField
         name="land"
         label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.Land' })}
@@ -57,9 +57,8 @@ export const KanIkkeOppgiBegrunnelsePanel = ({
         bredde="S"
         readOnly={readOnly}
       />
-    </React.Fragment>
-    )
-    }
+    </>
+    )}
   </NavFieldGroup>
 );
 
@@ -92,7 +91,7 @@ export const AnnenForelderPanelImpl = ({
           name="foedselsnummer"
           label={formatMessage({ id: 'Registrering.TheOtherParent.Fodselsnummer' })}
           bredde="S"
-          parse={value => (value ? value.replace(/\s/g, '') : value)}
+          parse={(value) => (value ? value.replace(/\s/g, '') : value)}
           readOnly={readOnly}
           disabled={kanIkkeOppgiAnnenForelder}
         />
@@ -113,11 +112,9 @@ export const AnnenForelderPanelImpl = ({
               />
             </FormSection>
           </ArrowBox>
-        )
-        }
+        )}
         {(isForeldrepenger && soknadData.getFagsakYtelseType() !== fagsakYtelseType.ENDRING_FORELDREPENGER)
-          && <PermisjonRettigheterPanel readOnly={readOnly} sokerHarAleneomsorg={sokerHarAleneomsorg} />
-        }
+          && <PermisjonRettigheterPanel readOnly={readOnly} sokerHarAleneomsorg={sokerHarAleneomsorg} />}
       </Fieldset>
     </BorderBox>
   );

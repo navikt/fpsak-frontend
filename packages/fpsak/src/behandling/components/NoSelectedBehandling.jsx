@@ -5,7 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import styles from './noSelectedBehandling.less';
 
-const getMessage = numBehandlinger => (numBehandlinger === 0 ? 'BehandlingList.ZeroBehandlinger' : 'FagsakGrid.PleaseSelectBehandling');
+const getMessage = (numBehandlinger) => (numBehandlinger === 0 ? 'BehandlingList.ZeroBehandlinger' : 'FagsakGrid.PleaseSelectBehandling');
 
 /**
  * NoSelectedBehandling

@@ -84,8 +84,7 @@ export const BehandleKlageFormNfpImpl = ({
                   klageVurdering={formValues.klageVurdering}
                   aksjonspunktCode={aksjonspunktCode}
                 />
-              )
-              }
+              )}
           </Column>
           <Column xs="2">
             <TempsaveKlageButton
@@ -116,7 +115,7 @@ BehandleKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNFP], klageVurderingResultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNFP], (klageVurderingResultat) => ({
   klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
   klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
   klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -139,8 +138,8 @@ const formName = 'BehandleKlageNfpForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
@@ -154,7 +153,7 @@ const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingFormKlage
   form: formName,
 })(BehandleKlageFormNfpImpl));
 
-BehandleKlageFormNfp.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP);
+BehandleKlageFormNfp.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP);
 
 
 export default injectIntl(BehandleKlageFormNfp);

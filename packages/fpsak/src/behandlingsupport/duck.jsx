@@ -5,12 +5,12 @@ import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 const reducerName = 'behandlingSupport';
 
 /* Action types */
-const actionType = name => `${reducerName}/${name}`;
+const actionType = (name) => `${reducerName}/${name}`;
 const SET_SELECTED_SUPPORT_PANEL = actionType('SET_SELECTED_SUPPORT_PANEL');
 const RESET_BEHANDLING_SUPPORT = actionType('RESET_BEHANDLING_SUPPORT');
 
 /* Action creators */
-export const setSelectedSupportPanel = panelName => ({
+export const setSelectedSupportPanel = (panelName) => ({
   type: SET_SELECTED_SUPPORT_PANEL,
   payload: panelName,
 });
@@ -19,7 +19,7 @@ export const resetBehandlingSupport = () => ({
   type: RESET_BEHANDLING_SUPPORT,
 });
 
-export const updateBehandlingsupportInfo = saksnummer => dispatch => (behandlingOrchestrator.fetchBehandlingSupportInfo(saksnummer, dispatch));
+export const updateBehandlingsupportInfo = (saksnummer) => (dispatch) => (behandlingOrchestrator.fetchBehandlingSupportInfo(saksnummer, dispatch));
 
 /* Reducer */
 const initialState = {
@@ -42,5 +42,5 @@ export const behandlingSupportReducer = (state = initialState, action = {}) => {
 
 reducerRegistry.register(reducerName, behandlingSupportReducer);
 
-const getBehandlingSupportContext = state => state.default[reducerName];
-export const getSelectedSupportPanel = state => getBehandlingSupportContext(state).selectedSupportPanel;
+const getBehandlingSupportContext = (state) => state.default[reducerName];
+export const getSelectedSupportPanel = (state) => getBehandlingSupportContext(state).selectedSupportPanel;

@@ -44,7 +44,7 @@ export class ForeldrepengerForm extends React.Component {
     const changedPropsList = Object.entries(this.props)
       .filter(([key, val]) => nextProps[key] !== val)
       .map(([key]) => key);
-    return changedPropsList.some(changedProp => !notRerenderIfChangedProps.includes(changedProp));
+    return changedPropsList.some((changedProp) => !notRerenderIfChangedProps.includes(changedProp));
   }
 
   render() {
@@ -74,8 +74,7 @@ export class ForeldrepengerForm extends React.Component {
         <AndreYtelserPanel readOnly={readOnly} form={form} />
         <DekningsgradPanel readOnly={readOnly} />
         {soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL
-          && <TerminFodselDatoPanel readOnly={readOnly} form={form} />
-        }
+          && <TerminFodselDatoPanel readOnly={readOnly} form={form} />}
         <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
         <FormSection name={OMSORG_FORM_NAME_PREFIX}>
           <OmsorgOgAdopsjonPanel
@@ -126,7 +125,7 @@ ForeldrepengerForm.defaultProps = {
 
 const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
   if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
-    return values => ({
+    return (values) => ({
       ...AndreYtelserPanel.validate(values, andreYtelser),
       ...InntektsgivendeArbeidPanel.validate(values),
       ...FrilansPanel.validate(values),
@@ -138,7 +137,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
     });
   }
   if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
-    return values => ({
+    return (values) => ({
       ...AndreYtelserPanel.validate(values, andreYtelser),
       ...InntektsgivendeArbeidPanel.validate(values),
       ...FrilansPanel.validate(values),
@@ -159,7 +158,7 @@ const transformRootValues = (state, registeredFieldNames) => {
   return values;
 };
 
-const buildInitialValues = createSelector([(state, ownProps) => ownProps], ownProps => ({
+const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownProps) => ({
   ...FrilansPanel.buildInitialValues(),
   ...AndreYtelserPanel.buildInitialValues(ownProps.andreYtelser),
   ...InntektsgivendeArbeidPanel.initialValues,
@@ -174,7 +173,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const validate = getValidation(ownProps.soknadData, andreYtelserObject.andreYtelser, sokerPersonnummer);
   return (state) => {
     const registeredFields = getRegisteredFields(FORELDREPENGER_FORM_NAME)(state);
-    const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
+    const registeredFieldNames = Object.values(registeredFields).map((rf) => rf.name);
 
     const valuesForRegisteredFieldsOnly = registeredFieldNames.length
       ? {

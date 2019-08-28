@@ -86,8 +86,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal vise VurderAktiviteterPanel panel', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
@@ -147,8 +147,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal vise overstyringsknapp', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
@@ -180,8 +180,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal ikkje vise AksjonspunktHelpText ved overstyring', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
 
@@ -213,11 +213,11 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal vise knapp inne i borderbox når man har andre aksjonspunkt i beregning', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } },
-    { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } }];
+      { definisjon: { kode: VURDER_FAKTA_FOR_ATFL_SN }, status: { kode: 'OPPR' } }];
 
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
@@ -249,8 +249,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal vise knapp inne i borderbox når man skal overstyre beregningsgrunnlag', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'UTFO' } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
@@ -283,8 +283,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal vise knapp inne i borderbox når man skal overstyre aktiviteter i beregningsgrunnlaget', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [];
 
@@ -318,8 +318,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal ikkje vise knapp inne i borderbox når man har åpent aksjonspunkt i avklar aktiviteter', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
@@ -352,8 +352,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal ikkje vise knapp inne i borderbox når man har åpent overstyr aksjonspunkt for aktiviteter', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aksjonspunkter = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
@@ -385,8 +385,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal teste at initial values blir bygget', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
 
     const initialValues = buildInitialValuesAvklarAktiviteter(lagStateMedAvklarAktitiveter(avklarAktiviteter));
@@ -397,8 +397,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal teste at initial values blir bygget uten aksjonspunkt', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     const aps = [];
@@ -411,8 +411,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal teste at initial values blir bygget med overstyrt aksjonspunkt', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
@@ -425,8 +425,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal transform values for avklar aktiviteter aksjonspunkt', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {
       avklarAktiviteter,
@@ -444,8 +444,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal transform values om for valgt overstyring', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const aps = [];
     const values = {
@@ -463,13 +463,13 @@ describe('<AvklareAktiviteterPanel>', () => {
     expect(transformed[0].beregningsaktivitetLagreDtoList[0].arbeidsgiverIdentifikator).to.equal(aktivitet3.aktørId.aktørId);
     expect(transformed[0].begrunnelse).to.equal('begrunnelse');
     expect(transformed[0].kode).to.equal(OVERSTYRING_AV_BEREGNINGSAKTIVITETER);
-});
+  });
 
   it('skal returnere true for endret begrunnelse', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -491,8 +491,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal returnere true for ikkje endret begrunnelse og endret verdi', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -515,8 +515,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal returnere true for endret begrunnelse og endret verdi', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     values[id1] = { skalBrukes: null };
@@ -538,8 +538,8 @@ describe('<AvklareAktiviteterPanel>', () => {
   it('skal returnere false for ikkje endret begrunnelse og ikkje endret verdi', () => {
     const avklarAktiviteter = {
       aktiviteterTomDatoMapping: [
-          { tom: '2019-02-02', aktiviteter },
-        ],
+        { tom: '2019-02-02', aktiviteter },
+      ],
     };
     const values = {};
     values[id1] = { skalBrukes: null };

@@ -36,8 +36,7 @@ export const BehandlingspunktSubmitButton = ({
       >
         <FormattedMessage id={textCode} />
       </Hovedknapp>
-      )
-    }
+      )}
   </ElementWrapper>
 );
 
@@ -56,11 +55,11 @@ BehandlingspunktSubmitButton.defaultProps = {
 
 const mapStateToProps = (state, ownProps) => {
   const fNames = ownProps.formNames ? ownProps.formNames : [ownProps.formName];
-  const formNames = fNames.map(f => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
+  const formNames = fNames.map((f) => (f.includes('.') ? f.substr(f.lastIndexOf('.') + 1) : f));
   return {
-    isSubmitting: formNames.some(formName => ownProps.isBehandlingFormSubmitting(formName)(state)),
-    isDirty: ownProps.isDirty !== undefined ? ownProps.isDirty : formNames.some(formName => ownProps.isBehandlingFormDirty(formName)(state)),
-    hasEmptyRequiredFields: formNames.some(formName => ownProps.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
+    isSubmitting: formNames.some((formName) => ownProps.isBehandlingFormSubmitting(formName)(state)),
+    isDirty: ownProps.isDirty !== undefined ? ownProps.isDirty : formNames.some((formName) => ownProps.isBehandlingFormDirty(formName)(state)),
+    hasEmptyRequiredFields: formNames.some((formName) => ownProps.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())(state)),
   };
 };
 

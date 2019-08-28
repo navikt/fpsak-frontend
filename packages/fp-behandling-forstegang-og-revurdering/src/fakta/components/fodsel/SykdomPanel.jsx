@@ -47,15 +47,15 @@ const buildInitialValues = (aksjonspunkt, familiehendelse) => ({
   erMorForSykVedFodsel: familiehendelse.morForSykVedFodsel,
 });
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
   begrunnelse: values.begrunnelseSykdom,
   erMorForSykVedFodsel: values.erMorForSykVedFodsel,
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitHandler(transformValues(values));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitHandler(transformValues(values));
+  return (state) => ({
     initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelseGjeldende(state)),
     onSubmit,
   });

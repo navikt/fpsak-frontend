@@ -68,7 +68,7 @@ TilbakekrevingFaktaPanel.defaultProps = {
   feilutbetaling: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   openInfoPanels: getOpenInfoPanels(state),
   readOnly: !getRettigheter(state).writeAccess.isEnabled

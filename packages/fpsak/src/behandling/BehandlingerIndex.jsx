@@ -30,7 +30,7 @@ BehandlingerIndex.propTypes = {
   person: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   numBehandlinger: getNumBehandlinger(state),
   person: getFagsakPerson(state),
 });

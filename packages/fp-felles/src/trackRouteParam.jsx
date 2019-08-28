@@ -8,7 +8,7 @@ import { parseQueryString } from '@fpsak-frontend/utils';
 
 const defaultConfig = {
   paramName: '',
-  parse: a => a,
+  parse: (a) => a,
   paramPropType: PropTypes.any,
   storeParam: () => undefined,
   getParamFromStore: () => undefined,
@@ -23,7 +23,7 @@ const defaultConfig = {
  * state whenever it changes.
  * @param config
  */
-const trackRouteParam = config => (WrappedComponent) => {
+const trackRouteParam = (config) => (WrappedComponent) => {
   class RouteParamTrackerImpl extends Component {
     constructor() {
       super();
@@ -74,8 +74,8 @@ const trackRouteParam = config => (WrappedComponent) => {
     paramFromStore: undefined,
   };
 
-  const mapStateToProps = state => ({ paramFromStore: trackingConfig.getParamFromStore(state) });
-  const mapDispatchToProps = dispatch => bindActionCreators({ storeParam: trackingConfig.storeParam }, dispatch);
+  const mapStateToProps = (state) => ({ paramFromStore: trackingConfig.getParamFromStore(state) });
+  const mapDispatchToProps = (dispatch) => bindActionCreators({ storeParam: trackingConfig.storeParam }, dispatch);
   const mapMatchToParam = (match, location) => {
     const params = trackingConfig.isQueryParam ? parseQueryString(location.search) : match.params;
     return trackingConfig.parse(params[trackingConfig.paramName]);

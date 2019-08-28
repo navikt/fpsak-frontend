@@ -11,13 +11,13 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
- setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, fetchVedtaksbrevPreview, fetchFptilbakePreviewBrev as fetchFptilbakePreview,
+  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, fetchVedtaksbrevPreview, fetchFptilbakePreviewBrev as fetchFptilbakePreview,
 } from './duckBpForstegangOgRev';
 
 import BehandlingspunktInfoPanel from './components/BehandlingspunktInfoPanel';
 
-const hasRevurderingAp = apModels => (
-  apModels.some(apValue => (
+const hasRevurderingAp = (apModels) => (
+  apModels.some((apValue) => (
     (apValue.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL || apValue.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) && apValue.sendVarsel
   ))
 );
@@ -75,7 +75,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
     const afterAksjonspunktSubmit = () => {
       const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
       if (showModal) {
-        this.setState(prevState => ({ ...prevState, showIverksetterVedtakModal: true }));
+        this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
         goToSearchPage();
       } else {
@@ -129,11 +129,11 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   fetchVedtaksbrevPreview: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
     fetchVedtaksbrevPreview,

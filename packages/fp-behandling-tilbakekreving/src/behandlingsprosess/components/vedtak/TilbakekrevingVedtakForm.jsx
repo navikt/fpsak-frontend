@@ -31,7 +31,7 @@ const formatVedtakData = (values) => {
   const perioder = omit(values, 'OPPSUMMERING');
   return {
     oppsummeringstekst: values.OPPSUMMERING,
-    perioderMedTekst: Object.keys(perioder).map(key => ({
+    perioderMedTekst: Object.keys(perioder).map((key) => ({
       fom: key.split('_')[0],
       tom: key.split('_')[1],
       faktaAvsnitt: perioder[key].FAKTA,
@@ -79,7 +79,7 @@ export const TilbakekrevingVedtakFormImpl = ({
             <a
               href=""
               onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)}
-              onKeyDown={e => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)(e) : null)}
+              onKeyDown={(e) => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingIdentifier, formVerdier)(e) : null)}
               className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
             >
               <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
@@ -99,15 +99,15 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   formVerdier: PropTypes.shape().isRequired,
 };
 
-const transformValues = values => [{
-    kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
-    ...formatVedtakData(values),
-  }];
+const transformValues = (values) => [{
+  kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
+  ...formatVedtakData(values),
+}];
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const submitCallback = values => ownProps.submitCallback(transformValues(values));
+  const submitCallback = (values) => ownProps.submitCallback(transformValues(values));
   const vedtaksbrevAvsnitt = behandlingSelectors.getVedtaksbrevAvsnitt(initialState);
-  return state => ({
+  return (state) => ({
     initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt),
     onSubmit: submitCallback,
     behandlingIdentifier: getBehandlingIdentifier(state),
@@ -116,7 +116,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     fetchPreviewVedtaksbrev: fetchPreviewVedtaksbrevActionCreator,
   }, dispatch),

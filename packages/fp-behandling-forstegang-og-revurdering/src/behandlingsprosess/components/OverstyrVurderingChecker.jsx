@@ -10,7 +10,7 @@ import { getRettigheter } from 'navAnsatt/duck';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { CheckboxField } from '@fpsak-frontend/form';
 
-const isOverridden = (aksjonspunkter, aksjonspunktCode) => aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+const isOverridden = (aksjonspunkter, aksjonspunktCode) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 const findLabel = (aksjonspunkter, aksjonspunktCode, isBeregningOverstyrer) => {
   const overridden = isOverridden(aksjonspunkter, aksjonspunktCode);
@@ -24,7 +24,7 @@ const isHidden = (kanOverstyre, aksjonspunkter, aksjonspunktCode) => !isOverridd
 
 const isDisabled = (kanOverstyre, aksjonspunkter, aksjonspunktCode, isBehandlingReadOnly) => !kanOverstyre
   || isBehandlingReadOnly
-  || aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCode);
+  || aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 /*
  * OverstyrVurderingChecker
@@ -80,14 +80,14 @@ OverstyrVurderingChecker.defaultProps = {
   isBeregningOverstyrer: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
   selectedBehandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
   isBehandlingReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
   kanOverstyreAccess: getRettigheter(state).kanOverstyreAccess,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     toggleBehandlingspunktOverstyring,
   }, dispatch),

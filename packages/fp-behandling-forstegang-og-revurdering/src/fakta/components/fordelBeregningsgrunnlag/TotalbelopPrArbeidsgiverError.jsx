@@ -29,7 +29,7 @@ const leggTilGrunnlagvalidering = (totalInntektArbeidsforholdList, andel, identi
       key: identifikator,
       fastsattBelop: removeSpacesFromNumber(andel.fastsattBelop || '0'),
       beregningsgrunnlagPrAar: andel.beregningsgrunnlagPrAar || andel.beregningsgrunnlagPrAar === 0
-      ? removeSpacesFromNumber(andel.beregningsgrunnlagPrAar) : null,
+        ? removeSpacesFromNumber(andel.beregningsgrunnlagPrAar) : null,
       arbeidsgiverNavn: finnArbeidsgiverNavn(andel, identifikator, getKodeverknavn),
     });
   }
@@ -52,7 +52,7 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregni
   return totalInntektArbeidsforholdList;
 };
 
-const aapOgRefusjonValidering = value => (
+const aapOgRefusjonValidering = (value) => (
   <div key={value.key}>
     <FormattedMessage
       id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
@@ -61,7 +61,7 @@ const aapOgRefusjonValidering = value => (
   </div>
 );
 
-const arbeidsforholdValidering = value => (
+const arbeidsforholdValidering = (value) => (
   <div key={value.key}>
     <FormattedMessage
       id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
@@ -82,8 +82,8 @@ const TotalbelopPrArbeidsgiverError = ({
   const valideringList = totalInntektPrArbeidsforhold.filter(({ fastsattBelop, beregningsgrunnlagPrAar }) => fastsattBelop > beregningsgrunnlagPrAar);
   return (
     <div>
-      {valideringList.map(v => (v.key === AAP_ARBEIDSGIVER_KEY
-      ? aapOgRefusjonValidering(v) : arbeidsforholdValidering(v)))}
+      {valideringList.map((v) => (v.key === AAP_ARBEIDSGIVER_KEY
+        ? aapOgRefusjonValidering(v) : arbeidsforholdValidering(v)))}
     </div>
   );
 };
@@ -91,13 +91,13 @@ const TotalbelopPrArbeidsgiverError = ({
 TotalbelopPrArbeidsgiverError.propTypes = {
   totalInntektPrArbeidsforhold: PropTypes.arrayOf(
     PropTypes.shape({
-    key: PropTypes.string,
-    fastsattBelop: PropTypes.number,
-    registerInntekt: PropTypes.number,
-    belopFraInntektsmelding: PropTypes.number,
-    notBeforeStp: PropTypes.bool,
-  }),
-).isRequired,
+      key: PropTypes.string,
+      fastsattBelop: PropTypes.number,
+      registerInntekt: PropTypes.number,
+      belopFraInntektsmelding: PropTypes.number,
+      notBeforeStp: PropTypes.bool,
+    }),
+  ).isRequired,
 };
 
 export default TotalbelopPrArbeidsgiverError;

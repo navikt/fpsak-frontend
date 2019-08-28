@@ -127,7 +127,7 @@ describe('<OpptjeningFaktaForm>', () => {
   });
 
   it('skal kunne lagre og legge til når ingen aktivitet er valgt og alle aksjonspunkter er avklart', () => {
-    const activities = opptjeningActivities.map(oa => ({
+    const activities = opptjeningActivities.map((oa) => ({
       ...oa,
       erGodkjent: true,
     }));

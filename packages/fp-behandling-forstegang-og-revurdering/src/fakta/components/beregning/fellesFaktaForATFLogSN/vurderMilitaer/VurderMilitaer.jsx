@@ -47,7 +47,7 @@ VurderMilitaer.buildInitialValues = (faktaOmBeregning) => {
   return initialValues;
 };
 
-VurderMilitaer.transformValues = values => ({
+VurderMilitaer.transformValues = (values) => ({
   vurderMilitaer: { harMilitaer: values[vurderMilitaerField] },
 });
 

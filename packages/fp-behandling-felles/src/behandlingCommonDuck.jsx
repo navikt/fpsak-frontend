@@ -4,9 +4,9 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import sakOperations from './SakOperations';
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo i resolver i staden?
-const getUpdateBehandling = behandlingApi => (
+const getUpdateBehandling = (behandlingApi) => (
   behandlingIdentifier, behandlingerVersjonMappedById,
-) => dispatch => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
+) => (dispatch) => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
   .then((response) => {
     if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
       dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
@@ -14,7 +14,7 @@ const getUpdateBehandling = behandlingApi => (
     return Promise.resolve(response);
   });
 
-const getResetBehandling = (behandlingApi, resetBehandlingContext) => dispatch => Promise.all([
+const getResetBehandling = (behandlingApi, resetBehandlingContext) => (dispatch) => Promise.all([
   dispatch(behandlingApi.BEHANDLING.resetRestApi()()),
   dispatch(resetBehandlingContext()),
 ]);
@@ -24,13 +24,13 @@ const getFetchBehandling = (behandlingApi, updateBehandling) => (behandlingIdent
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const getUpdateFagsakAndBehandling = updateBehandling => behandlingIdentifier => dispatch => dispatch(
+const getUpdateFagsakAndBehandling = (updateBehandling) => (behandlingIdentifier) => (dispatch) => dispatch(
   sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer),
 ).then(() => dispatch(updateBehandling(behandlingIdentifier)));
 
 const getUpdateOnHold = (behandlingApi, updateFagsakAndBehandling) => (
   params, behandlingIdentifier,
-) => dispatch => dispatch(behandlingApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
+) => (dispatch) => dispatch(behandlingApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));
 
 const getResetBehandlingFpsakContext = (behandlingApi, behandlingApiKeys, resetBehandlingContext) => () => (dispatch) => {
@@ -62,7 +62,7 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
 };
 
 const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, additionalInitalState = {}) => {
-  const actionType = name => `${reducerName}/${name}`;
+  const actionType = (name) => `${reducerName}/${name}`;
   const actionTypes = {
     SET_BEHANDLING_INFO: actionType('SET_BEHANDLING_INFO'),
     HAS_SHOWN_BEHANDLING_PA_VENT: actionType('HAS_SHOWN_BEHANDLING_PA_VENT'),
@@ -78,7 +78,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     resetBehandlingContext,
     updateBehandling,
     updateFagsakAndBehandling,
-    setBehandlingInfo: info => ({
+    setBehandlingInfo: (info) => ({
       type: actionTypes.SET_BEHANDLING_INFO,
       data: info,
     }),
@@ -102,9 +102,9 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
   };
 
   /* Selectors */
-  const getBehandlingContext = state => state.default[reducerName];
-  const getSelectedBehandlingId = createSelector([getBehandlingContext], behandlingContext => behandlingContext.behandlingId);
-  const getSelectedSaksnummer = createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsakSaksnummer);
+  const getBehandlingContext = (state) => state.default[reducerName];
+  const getSelectedBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingId);
+  const getSelectedSaksnummer = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsakSaksnummer);
   const selectors = {
     getBehandlingContext,
     getSelectedBehandlingId,
@@ -113,18 +113,18 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
       [getSelectedBehandlingId, getSelectedSaksnummer],
       (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined),
     ),
-    getFagsakStatus: createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakStatus),
-    getFagsakPerson: createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakPerson),
-    getFagsakYtelseType: createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.fagsakYtelseType),
-    isForeldrepengerFagsak: createSelector([getBehandlingContext], behandlingContext => behandlingContext.fagsak.isForeldrepengerFagsak),
-    getKodeverk: kodeverkType => createSelector(
-      [getBehandlingContext], behandlingContext => behandlingContext.kodeverk[kodeverkType],
+    getFagsakStatus: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus),
+    getFagsakPerson: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson),
+    getFagsakYtelseType: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType),
+    isForeldrepengerFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.isForeldrepengerFagsak),
+    getKodeverk: (kodeverkType) => createSelector(
+      [getBehandlingContext], (behandlingContext) => behandlingContext.kodeverk[kodeverkType],
     ),
     getAlleKodeverk: createSelector(
-      [getBehandlingContext], behandlingContext => behandlingContext.kodeverk,
+      [getBehandlingContext], (behandlingContext) => behandlingContext.kodeverk,
     ),
-    getFeatureToggles: createSelector([getBehandlingContext], behandlingContext => behandlingContext.featureToggles),
-    getHasShownBehandlingPaVent: createSelector([getBehandlingContext], behandlingContext => behandlingContext.hasShownBehandlingPaVent),
+    getFeatureToggles: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.featureToggles),
+    getHasShownBehandlingPaVent: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.hasShownBehandlingPaVent),
   };
 
   return {

@@ -89,13 +89,12 @@ export const SjekkFodselDokForm = ({
             </ArrowBox>
           </Column>
         </div>
-      )
-      }
+      )}
     </FaktaGruppe>
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
   </ElementWrapper>
-  );
+);
 
 SjekkFodselDokForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -142,8 +141,8 @@ export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, b
     brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
       ? familiehendelse.brukAntallBarnFraTps : undefined,
     avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
-    ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
-    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
+      ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
+    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
   }));
 
 
@@ -169,16 +168,16 @@ export const sjekkFodselDokForm = 'SjekkFodselDokForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const fodselInfo = getFamiliehendelseGjeldende(initialState).avklartBarn;
-  const onSubmit = values => ownProps.submitHandler(transformValues(values,
+  const onSubmit = (values) => ownProps.submitHandler(transformValues(values,
     getSoknadAntallBarn(initialState), getBarnFraTpsRelatertTilSoknad(initialState).length, fodselInfo));
-  return state => ({
-      onSubmit,
-      initialValues: buildInitialValues(state),
-      fodselInfo,
-      avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
-      dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
-      dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
-    });
+  return (state) => ({
+    onSubmit,
+    initialValues: buildInitialValues(state),
+    fodselInfo,
+    avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
+    dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
+    dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
+  });
 };
 
 export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({

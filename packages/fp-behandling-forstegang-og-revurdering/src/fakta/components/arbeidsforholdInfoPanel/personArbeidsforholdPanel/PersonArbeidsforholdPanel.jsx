@@ -29,7 +29,7 @@ import styles from './personArbeidsforholdPanel.less';
 // Methods
 // -------------------------------------------------------------------------------------------------------------
 
-const removeDeleted = arbeidsforhold => arbeidsforhold.filter(a => !a.erSlettet);
+const removeDeleted = (arbeidsforhold) => arbeidsforhold.filter((a) => !a.erSlettet);
 
 const cleanUpArbeidsforhold = (newValues, originalValues) => {
   if (!newValues.brukArbeidsforholdet) {
@@ -52,11 +52,11 @@ const cleanUpArbeidsforhold = (newValues, originalValues) => {
 const findFomDato = (arbeidsforhold, replacedArbeidsforhold) => (arbeidsforhold.erstatterArbeidsforholdId
   ? replacedArbeidsforhold.fomDato : arbeidsforhold.originalFomDato);
 
-const getUnresolvedArbeidsforhold = arbeidsforholdList => arbeidsforholdList.find(a => a.tilVurdering && !a.erEndret);
+const getUnresolvedArbeidsforhold = (arbeidsforholdList) => arbeidsforholdList.find((a) => a.tilVurdering && !a.erEndret);
 
-const hasArbeidsforholdAksjonspunkt = arbeidsforhold => arbeidsforhold && (arbeidsforhold.tilVurdering || arbeidsforhold.erEndret);
+const hasArbeidsforholdAksjonspunkt = (arbeidsforhold) => arbeidsforhold && (arbeidsforhold.tilVurdering || arbeidsforhold.erEndret);
 
-export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
+export const sortArbeidsforhold = (arbeidsforhold) => arbeidsforhold
   .sort((a1, a2) => {
     const i = a1.navn.localeCompare(a2.navn);
     if (i !== 0) {
@@ -77,10 +77,10 @@ export const sortArbeidsforhold = arbeidsforhold => arbeidsforhold
 
 export const erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM = (arbeidsforhold) => {
   let isAllowed = true;
-  const arbeidsforholdUtenInntektsmeldingTilVurdering = arbeidsforhold.filter(a => (a.tilVurdering || a.erEndret) && !a.mottattDatoInntektsmelding);
+  const arbeidsforholdUtenInntektsmeldingTilVurdering = arbeidsforhold.filter((a) => (a.tilVurdering || a.erEndret) && !a.mottattDatoInntektsmelding);
   arbeidsforholdUtenInntektsmeldingTilVurdering.forEach((a) => {
     const arbeidsforholdFraSammeArbeidsgiverMedInntekstmelding = arbeidsforhold
-      .filter(b => a.id !== b.id && a.arbeidsgiverIdentifikator === b.arbeidsgiverIdentifikator && b.mottattDatoInntektsmelding);
+      .filter((b) => a.id !== b.id && a.arbeidsgiverIdentifikator === b.arbeidsgiverIdentifikator && b.mottattDatoInntektsmelding);
     if (arbeidsforholdFraSammeArbeidsgiverMedInntekstmelding.length > 0) {
       isAllowed = false;
     }
@@ -88,10 +88,10 @@ export const erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM = (arbeidsfo
   return isAllowed;
 };
 
-const addReplaceableArbeidsforhold = arbeidsforholdList => arbeidsforholdList.map((a1) => {
-  const matches = arbeidsforholdList.filter(a2 => a2.arbeidsgiverIdentifikator === a1.arbeidsgiverIdentifikator
+const addReplaceableArbeidsforhold = (arbeidsforholdList) => arbeidsforholdList.map((a1) => {
+  const matches = arbeidsforholdList.filter((a2) => a2.arbeidsgiverIdentifikator === a1.arbeidsgiverIdentifikator
     && a2.arbeidsforholdId && a1.arbeidsforholdId && a2.arbeidsforholdId !== a1.arbeidsforholdId);
-  const hasSomeNewer = matches.some(m => moment(m.mottattDatoInntektsmelding).isAfter(a1.mottattDatoInntektsmelding));
+  const hasSomeNewer = matches.some((m) => moment(m.mottattDatoInntektsmelding).isAfter(a1.mottattDatoInntektsmelding));
   return {
     ...a1,
     replaceOptions: hasSomeNewer ? [] : matches,
@@ -154,7 +154,7 @@ const finnOverstyrtTom = (arbeidsforhold) => {
   return arbeidsforhold.brukMedJustertPeriode ? arbeidsforhold.tomDato : undefined;
 };
 
-const leggTilValuesForRendering = arbeidsforholdList => arbeidsforholdList.map((arbeidsforhold) => {
+const leggTilValuesForRendering = (arbeidsforholdList) => arbeidsforholdList.map((arbeidsforhold) => {
   const arbeidsforholdHandlingField = utledArbeidsforholdHandling(arbeidsforhold);
   const aktivtArbeidsforholdHandlingField = utledAktivtArbeidsforholdHandling(arbeidsforhold, arbeidsforholdHandlingField);
   return {
@@ -245,17 +245,17 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
 
-    let other = arbeidsforhold.filter(o => o.id !== cleanedValues.id);
-    const oldState = arbeidsforhold.find(a => a.id === cleanedValues.id);
+    let other = arbeidsforhold.filter((o) => o.id !== cleanedValues.id);
+    const oldState = arbeidsforhold.find((a) => a.id === cleanedValues.id);
     let { fomDato } = cleanedValues;
     if (oldState !== undefined && oldState !== null && cleanedValues.erstatterArbeidsforholdId !== oldState.erstatterArbeidsforholdId) {
       if (oldState.erstatterArbeidsforholdId) {
-        other = other.map(o => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
+        other = other.map((o) => (o.id === oldState.erstatterArbeidsforholdId ? { ...o, erSlettet: false } : o));
       }
       if (cleanedValues.erstatterArbeidsforholdId) {
-        other = other.map(o => (o.id === cleanedValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
+        other = other.map((o) => (o.id === cleanedValues.erstatterArbeidsforholdId ? { ...o, erSlettet: true } : o));
       }
-      fomDato = findFomDato(cleanedValues, arbeidsforhold.find(a => a.id === cleanedValues.erstatterArbeidsforholdId));
+      fomDato = findFomDato(cleanedValues, arbeidsforhold.find((a) => a.id === cleanedValues.erstatterArbeidsforholdId));
     }
 
     this.setFormField('arbeidsforhold', other.concat({
@@ -386,7 +386,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,
@@ -395,7 +395,7 @@ const mapDispatchToProps = dispatch => ({
 
 const PersonArbeidsforholdPanel = connect(mapStateToProps, mapDispatchToProps)(injectIntl(PersonArbeidsforholdPanelImpl));
 
-PersonArbeidsforholdPanel.buildInitialValues = arbeidsforhold => ({
+PersonArbeidsforholdPanel.buildInitialValues = (arbeidsforhold) => ({
   arbeidsforhold: leggTilValuesForRendering(addReplaceableArbeidsforhold(arbeidsforhold)),
 });
 

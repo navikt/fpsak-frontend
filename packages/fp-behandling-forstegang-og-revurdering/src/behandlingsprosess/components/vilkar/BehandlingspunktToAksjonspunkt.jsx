@@ -43,7 +43,7 @@ export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
     apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
   }
   return isObject(apCode)
-    ? apCode[allVilkar.map(v => v.vilkarType.kode).find(v => apCode[v])]
+    ? apCode[allVilkar.map((v) => v.vilkarType.kode).find((v) => apCode[v])]
     : apCode;
 };
 

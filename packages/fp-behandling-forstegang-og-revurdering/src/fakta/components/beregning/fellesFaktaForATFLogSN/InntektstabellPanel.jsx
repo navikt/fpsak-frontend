@@ -54,8 +54,7 @@ export const InntektstabellPanelImpl = ({
               readOnly={hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter) || readOnly}
             />
           </div>
-        )
-      }
+          )}
       {skalViseTabell
       && (
       <ElementWrapper>
@@ -67,8 +66,7 @@ export const InntektstabellPanelImpl = ({
         )}
         {tabell}
       </ElementWrapper>
-      )
-      }
+      )}
     </div>
   </ElementWrapper>
 );
@@ -84,7 +82,7 @@ InntektstabellPanelImpl.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
 };
 
-InntektstabellPanelImpl.buildInitialValues = aksjonspunkter => ({
+InntektstabellPanelImpl.buildInitialValues = (aksjonspunkter) => ({
   [MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD]: hasAksjonspunkt(OVERSTYRING_AV_BEREGNINGSGRUNNLAG, aksjonspunkter),
 });
 
@@ -95,13 +93,13 @@ InntektstabellPanelImpl.defaultProps = {
 
 const getSkalKunneOverstyre = createSelector([getRettigheter, behandlingSelectors.getAksjonspunkter, getFeatureToggles],
   (rettigheter, aksjonspunkter, toggles) => rettigheter.kanOverstyreAccess.isEnabled
-  && !aksjonspunkter.some(ap => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
+  && !aksjonspunkter.some((ap) => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);
 
-const mapStateToProps = state => ({
-    erOverstyrt: getFormValuesForBeregning(state)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],
-    kanOverstyre: getSkalKunneOverstyre(state),
-    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+const mapStateToProps = (state) => ({
+  erOverstyrt: getFormValuesForBeregning(state)[MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD],
+  kanOverstyre: getSkalKunneOverstyre(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
 });
 
 export default connect(mapStateToProps)(InntektstabellPanelImpl);

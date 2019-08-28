@@ -24,8 +24,7 @@ const BostedFaktaView = ({
         <Column xs="6">
           <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={personopplysning} />
           {ektefellePersonopplysning
-          && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.ForelderTo" />} soker={ektefellePersonopplysning} />
-        }
+          && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.ForelderTo" />} soker={ektefellePersonopplysning} />}
         </Column>
       </Row>
     </FaktaGruppe>

@@ -62,8 +62,7 @@ const SearchFormImpl = ({
         <FormattedHTMLMessage className={styles.feilmelding} id={searchResultAccessDenied.feilmelding} />
       </Column>
     </Row>
-    )
-    }
+    )}
   </form>
 );
 
@@ -92,7 +91,7 @@ const validate = (values) => {
 
 const selector = formValueSelector('SearchForm');
 
-const SearchForm = connect(state => ({
+const SearchForm = connect((state) => ({
   searchString: selector(state, 'searchString'),
 }))(reduxForm({ form: 'SearchForm', validate })(injectIntl(SearchFormImpl)));
 

@@ -119,7 +119,7 @@ describe('<UttakFaktaForm>', () => {
     };
 
     const transformedValues = transformValues(values, {}, [ap6070, ap5070]);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.AVKLAR_UTTAK)).has.length(1);
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.AVKLAR_UTTAK)).has.length(1);
   });
 
   it('skal sende 6013 hvis ingen andre aksjonspunkter og manuelloverstyrt', () => {
@@ -129,7 +129,7 @@ describe('<UttakFaktaForm>', () => {
     };
 
     const transformedValues = transformValues(values, {}, []);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK)).has.length(1);
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK)).has.length(1);
   });
 
   it('skal sende 6013 hvis 6013 er OPPR og ikke 5070', () => {
@@ -139,6 +139,6 @@ describe('<UttakFaktaForm>', () => {
     };
 
     const transformedValues = transformValues(values, {}, [ap6013]);
-    expect(transformedValues.filter(ap => ap.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK)).has.length(1);
+    expect(transformedValues.filter((ap) => ap.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK)).has.length(1);
   });
 });

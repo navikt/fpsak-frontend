@@ -38,7 +38,7 @@ VurderAktiviteterPanel.propTypes = {
 };
 
 VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping) => ({
-    beregningsaktivitetLagreDtoList: VurderAktiviteterTabell.transformValues(values, aktiviteterTomDatoMapping[0].aktiviteter),
+  beregningsaktivitetLagreDtoList: VurderAktiviteterTabell.transformValues(values, aktiviteterTomDatoMapping[0].aktiviteter),
 });
 
 

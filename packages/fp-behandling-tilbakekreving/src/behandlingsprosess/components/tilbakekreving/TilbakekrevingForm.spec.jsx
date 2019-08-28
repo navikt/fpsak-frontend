@@ -183,7 +183,7 @@ describe('<TilbakekrevingForm>', () => {
         erBelopetIBehold: true,
         tilbakekrevesBelop: 3434,
       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      erTotalBelopUnder4Rettsgebyr: false,
     });
   });
 
@@ -274,7 +274,7 @@ describe('<TilbakekrevingForm>', () => {
         erBelopetIBehold: true,
         tilbakekrevesBelop: 2312,
       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      erTotalBelopUnder4Rettsgebyr: false,
     });
     expect(resultat.perioder[1]).to.eql({
       feilutbetaling: 22000,
@@ -296,7 +296,7 @@ describe('<TilbakekrevingForm>', () => {
         erBelopetIBehold: true,
         tilbakekrevesBelop: 3434,
       },
-       erTotalBelopUnder4Rettsgebyr: false,
+      erTotalBelopUnder4Rettsgebyr: false,
     });
   });
 

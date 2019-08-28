@@ -42,8 +42,7 @@ const OmsorgsovertakelseFaktaPanelImpl = ({
             readOnly={readOnly}
           />
         </Column>
-        )
-      }
+        )}
       <Column xs="4">
         <InputField
           name="antallBarn"
@@ -73,7 +72,7 @@ OmsorgsovertakelseFaktaPanelImpl.defaultProps = {
   antallBarnIsEdited: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   omsorgsovertakelseDatoIsEdited: getEditedStatus(state).omsorgsovertakelseDato,
   antallBarnIsEdited: getEditedStatus(state).antallBarnOmsorgOgForeldreansvar,
 });

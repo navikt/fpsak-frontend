@@ -39,7 +39,7 @@ import styles from './renderEndringBGFieldArray.less';
 
 const ENTER_KEY_CODE = 13;
 
-const defaultBGFordeling = periodeUtenAarsak => ({
+const defaultBGFordeling = (periodeUtenAarsak) => ({
   nyAndel: true,
   fordelingForrigeBehandling: 0,
   fastsattBelop: formatCurrencyNoKr(0),
@@ -59,7 +59,7 @@ const fieldLabel = (index, labelId) => {
 
 
 const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) => (arbeidsforholdList
-  .map(arbeidsforhold => (
+  .map((arbeidsforhold) => (
     <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
       {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
     </option>
@@ -67,7 +67,7 @@ const arbeidsgiverSelectValues = (arbeidsforholdList, getKodeverknavn) => (arbei
 
 const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl, getKodeverknavn) => {
   const nedtrekksvalgListe = arbeidsforholdList
-    .map(arbeidsforhold => (
+    .map((arbeidsforhold) => (
       <option value={arbeidsforhold.andelsnr.toString()} key={arbeidsforhold.andelsnr}>
         {createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn)}
       </option>
@@ -80,7 +80,7 @@ const arbeidsgiverSelectValuesForKunYtelse = (arbeidsforholdList, intl, getKodev
   return nedtrekksvalgListe;
 };
 
-const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
+const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
   <option value={ik.kode} key={ik.kode}>
     {ik.navn}
   </option>
@@ -124,7 +124,7 @@ const summerBeregningsgrunnlagPrAar = (fields) => {
   return sum > 0 ? formatCurrencyNoKr(sum) : '';
 };
 
-const isSelvstendigOrFrilanser = fieldVal => (isSelvstendigNæringsdrivende(fieldVal.inntektskategori)
+const isSelvstendigOrFrilanser = (fieldVal) => (isSelvstendigNæringsdrivende(fieldVal.inntektskategori)
   || inntektskategorier.FRILANSER === fieldVal.inntektskategori);
 
 const renderMessage = (intl, error) => (error[0] && error[0].id ? intl.formatMessage(...error) : error);
@@ -140,7 +140,7 @@ const onKeyDown = (fields, periodeUtenAarsak) => ({ keyCode }) => {
 
 const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {
   const andelsnr = Number(val);
-  return arbeidsforholdListe.find(arbeidsforhold => arbeidsforhold.andelsnr === andelsnr);
+  return arbeidsforholdListe.find((arbeidsforhold) => arbeidsforhold.andelsnr === andelsnr);
 };
 
 const finnAktivitetStatus = (fields, val) => {
@@ -177,8 +177,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
         bredde="L"
         readOnly
       />
-      )
-      }
+      )}
     {fields.get(index).nyAndel
       && (
       <SelectField
@@ -187,10 +186,9 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
         label={fieldLabel(index, 'BeregningInfoPanel.EndringBG.Andel')}
         selectValues={selectVals}
         readOnly={isReadOnly}
-        onChange={event => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
+        onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
       />
-      )
-      }
+      )}
   </ElementWrapper>
 );
 
@@ -240,8 +238,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
             defaultValue={null}
             renderIfMissingDateOnReadOnly
           />
-        )
-        }
+        )}
       </TableColumn>
       {erRevurdering
       && (
@@ -253,8 +250,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
           parse={parseCurrencyInput}
         />
       </TableColumn>
-)
-        }
+      )}
       <TableColumn>
         <DecimalField
           name={`${andelElementFieldId}.andelIArbeid`}
@@ -266,7 +262,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
             }
             return '';
           }}
-          normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+          normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
         />
       </TableColumn>
       <TableColumn className={(readOnly || periodeUtenAarsak) || !fields.get(index).skalKunneEndreRefusjon ? undefined : styles.rightAlignInput}>
@@ -307,8 +303,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
               fields.remove(index);
             }}
           />
-        )
-        }
+        )}
       </TableColumn>
     </TableRow>
   ))
@@ -326,8 +321,7 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, s
         {sumFordelingForrigeBehandling}
       </Element>
     </TableColumn>
-)
-    }
+    )}
     <TableColumn />
     <TableColumn />
     <TableColumn>
@@ -423,8 +417,7 @@ export const RenderEndringBGFieldArrayImpl = ({
           </div>
         </Column>
       </Row>
-      )
-      }
+      )}
     </NavFieldGroup>
   );
 };
@@ -461,7 +454,7 @@ RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregn
   if (refusjonPrArbeidsforholdError) {
     return { _error: <FormattedMessage id={refusjonPrArbeidsforholdError[0].id} values={refusjonPrArbeidsforholdError[1]} /> };
   }
-  if (sumIPeriode !== undefined && sumIPeriode !== null && values.some(andel => andel.harPeriodeAarsakGraderingEllerRefusjon === true)) {
+  if (sumIPeriode !== undefined && sumIPeriode !== null && values.some((andel) => andel.harPeriodeAarsakGraderingEllerRefusjon === true)) {
     const fastsattBelopError = validateSumFastsattBelop(values, sumIPeriode);
     if (fastsattBelopError) {
       return { _error: <FormattedMessage id={fastsattBelopError[0].id} values={fastsattBelopError[1]} /> };
@@ -473,12 +466,12 @@ RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregn
 const mapStateToPropsFactory = (initialState) => {
   const erRevurdering = getBehandlingIsRevurdering(initialState);
   const inntektskategoriKoder = getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(initialState);
-  return state => ({
+  return (state) => ({
     erRevurdering,
     inntektskategoriKoder,
     arbeidsforholdList: getUniqueListOfArbeidsforhold(state),
     harKunYtelse: getBeregningsgrunnlag(state).aktivitetStatus
-    .some(status => status.kode === aktivitetStatuser.KUN_YTELSE),
+      .some((status) => status.kode === aktivitetStatuser.KUN_YTELSE),
   });
 };
 

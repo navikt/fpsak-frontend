@@ -17,7 +17,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 export const OppsummeringSN = ({
   alleAndeler,
 }) => {
-  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   let naeringsinntekt = 0;
   if (relevanteAndeler && relevanteAndeler[0] && relevanteAndeler[0].beregnetPrAar !== null) {
     naeringsinntekt = formatCurrencyNoKr(relevanteAndeler[0].beregnetPrAar);
@@ -42,8 +42,7 @@ export const OppsummeringSN = ({
           <Element>{naeringsinntekt}</Element>
         </Column>
       </Row>
-      )
-      }
+      )}
     </div>
   );
 };

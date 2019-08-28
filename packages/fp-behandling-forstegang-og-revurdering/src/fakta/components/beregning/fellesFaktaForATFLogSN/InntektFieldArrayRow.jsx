@@ -32,7 +32,7 @@ export const getHeaderTextCodes = (skalVisePeriode, skalViseRefusjon) => {
   return headerCodes;
 };
 
-const inntektskategoriSelectValues = kategorier => kategorier.map(ik => (
+const inntektskategoriSelectValues = (kategorier) => kategorier.map((ik) => (
   <option value={ik.kode} key={ik.kode}>
     {ik.navn}
   </option>
@@ -81,8 +81,7 @@ export const AndelRowImpl = ({
           renderIfMissingDateOnReadOnly
         />
       </TableColumn>
-      )
-    }
+      )}
       {skalRedigereInntekt
     && (
     <TableColumn className={styles.rightAlignInput}>
@@ -94,8 +93,7 @@ export const AndelRowImpl = ({
         isEdited={isAksjonspunktClosed}
       />
     </TableColumn>
-    )
-    }
+    )}
       {!skalRedigereInntekt
     && (
     <TableColumn className={styles.rightAlign}>
@@ -106,8 +104,7 @@ export const AndelRowImpl = ({
         readOnly
       />
     </TableColumn>
-    )
-    }
+    )}
       {skalViseRefusjon
           && (
           <TableColumn className={styles.rightAlign}>
@@ -118,8 +115,7 @@ export const AndelRowImpl = ({
               parse={parseCurrencyInput}
             />
           </TableColumn>
-          )
-    }
+          )}
       <TableColumn className={styles.rightAlign}>
         <SelectField
           label=""
@@ -140,11 +136,10 @@ export const AndelRowImpl = ({
         onClick={() => removeAndel()}
         title={intl.formatMessage({ id: 'BeregningInfoPanel.FordelingBG.FjernAndel' })}
       />
-    )
-    }
+    )}
       </TableColumn>
     </TableRow>
-);
+  );
 };
 
 AndelRowImpl.propTypes = {
@@ -165,15 +160,15 @@ AndelRowImpl.propTypes = {
 
 export const getIsAksjonspunktClosed = createSelector(
   [behandlingSelectors.getAksjonspunkter], (alleAp) => {
-    const relevantAp = alleAp.filter(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
+    const relevantAp = alleAp.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN
       || ap.definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG);
-    return relevantAp.length === 0 ? false : relevantAp.some(ap => !isAksjonspunktOpen(ap.status.kode));
+    return relevantAp.length === 0 ? false : relevantAp.some((ap) => !isAksjonspunktOpen(ap.status.kode));
   },
 );
 
 export const getInntektskategorierAlfabetiskSortert = createSelector(
   [getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)],
-  kodeverkListe => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
+  (kodeverkListe) => kodeverkListe.slice().sort((a, b) => a.navn.localeCompare(b.navn)),
 );
 
 

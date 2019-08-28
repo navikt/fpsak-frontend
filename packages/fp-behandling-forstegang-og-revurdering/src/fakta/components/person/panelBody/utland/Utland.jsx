@@ -115,8 +115,7 @@ export class UtlandImpl extends Component {
               />
             </div>
           </div>
-        )
-        }
+        )}
         {showEditUtland && (
           <div>
             <FlexContainer>
@@ -166,8 +165,7 @@ export class UtlandImpl extends Component {
               </Knapp>
             </div>
           </div>
-        )
-        }
+        )}
         <UtlandEndretModal
           showModal={showModalUtlandEndret}
           closeEvent={this.hideModal}
@@ -190,13 +188,13 @@ UtlandImpl.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback([{
+  const onSubmit = (values) => initialOwnProps.submitCallback([{
     kode: MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
     begrunnelse: values.nyVerdi,
     ...omit(values, 'nyVerdi'),
   }]);
 
-  return state => ({
+  return (state) => ({
     utlandSakstype: behandlingFormValueSelector('PersonInfoPanel')(state, 'utlandSakstype'),
     readOnly: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     onSubmit,

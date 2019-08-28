@@ -48,7 +48,7 @@ export const BehandlingSupportIndex = ({
   <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
     <div className={styles.marginBottom}>
       <LinkRow>
-        {acccessibleSupportPanels.map(supportPanel => (
+        {acccessibleSupportPanels.map((supportPanel) => (
           <SupportPanelLink
             key={supportPanel}
             supportPanel={supportPanel}
@@ -71,7 +71,7 @@ BehandlingSupportIndex.propTypes = {
 };
 
 const getDefaultSupportPanel = (hasKontrollerRevurderingAp, enabledSupportPanels) => (
-    hasKontrollerRevurderingAp && enabledSupportPanels.includes(supportPanels.MESSAGES)
+  hasKontrollerRevurderingAp && enabledSupportPanels.includes(supportPanels.MESSAGES)
     ? supportPanels.MESSAGES
     : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
 );

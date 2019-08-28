@@ -102,8 +102,7 @@ export const TermindatoFaktaForm = ({
           </Column>
         </Row>
       </FaktaGruppe>
-      )
-    }
+      )}
     <VerticalSpacer sixteenPx />
     <FaktaBegrunnelseTextField isDirty={dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
     {isForTidligTerminbekreftelse
@@ -113,8 +112,7 @@ export const TermindatoFaktaForm = ({
                   id="TermindatoFaktaForm.AdvarselForTidligUtstedtdato"
                 />
               </AlertStripe>
-            )
-          }
+            )}
   </ElementWrapper>
 );
 
@@ -148,14 +146,14 @@ export const buildInitialValues = createSelector([behandlingSelectors.getSoknad,
     utstedtdato: familiehendelse.utstedtdato ? familiehendelse.utstedtdato : soknad.utstedtdato,
     termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
     antallBarn: familiehendelse.antallBarnTermin ? familiehendelse.antallBarnTermin : antallBarn,
-    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.TERMINBEKREFTELSE)),
+    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.TERMINBEKREFTELSE)),
   };
 });
 
 const erTerminbekreftelseUtstedtForTidlig = (utstedtdato, termindato) => utstedtdato !== undefined && termindato !== undefined
 && !moment(utstedtdato).isAfter(moment(termindato).subtract(18, 'weeks').subtract(3, 'days'));
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: aksjonspunktCodes.TERMINBEKREFTELSE,
   utstedtdato: values.utstedtdato,
   termindato: values.termindato,
@@ -166,7 +164,7 @@ const transformValues = values => ({
 export const termindatoFaktaFormName = 'TermindatoFaktaForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitHandler(transformValues(values));
+  const onSubmit = (values) => ownProps.submitHandler(transformValues(values));
   return (state) => {
     const termindato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'termindato');
     const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'utstedtdato');

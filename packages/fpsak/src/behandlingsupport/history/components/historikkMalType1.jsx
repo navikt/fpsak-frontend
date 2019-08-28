@@ -15,8 +15,7 @@ const HistorikkMalType1 = ({
 }) => (
   <div>
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse
-      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>
-    }
+      && <Element className="snakkeboble-panel__tekst">{findHendelseText(historikkinnslagDeler[0].hendelse, getKodeverknavn)}</Element>}
 
     {historikkinnslagDeler[0].begrunnelse && (
       <BubbleText
@@ -28,7 +27,7 @@ const HistorikkMalType1 = ({
     {historikkinnslagDeler[0].begrunnelseFritekst
     && <BubbleText bodyText={historikkinnslagDeler[0].begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
     <div>
-      {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+      {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
         <HistorikkDokumentLenke
           key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
           dokumentLenke={dokumentLenke}

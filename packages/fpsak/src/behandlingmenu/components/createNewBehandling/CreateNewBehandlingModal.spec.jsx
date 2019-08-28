@@ -57,7 +57,7 @@ describe('<CreateNewBehandlingModal>', () => {
     />);
 
     const form = wrapper.find('form');
-    form.simulate('submit', { preventDefault() {} });
+    form.simulate('submit', { preventDefault() { return undefined; } });
     expect(submitEventCallback.called).is.true;
   });
 

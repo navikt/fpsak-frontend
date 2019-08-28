@@ -2,23 +2,23 @@ const throwError = (message) => {
   throw new Error(message);
 };
 
-export const notNull = value => (value === undefined || value === null ? throwError(`Value is ${value}`) : value);
+export const notNull = (value) => (value === undefined || value === null ? throwError(`Value is ${value}`) : value);
 
 export const isObjectEmpty = object => Object.keys(object).length === 0;
 
 export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
 
-export const isObject = variable => variable !== undefined && variable !== null && variable.constructor === Object;
+export const isObject = (variable) => variable !== undefined && variable !== null && variable.constructor === Object;
 
 export const isEqualToOneOf = (value, acceptedValues) => (!acceptedValues.includes(value) ? throwError(`${value} is not one of ${(acceptedValues)}`) : value);
 
 export const omit = (object, ...keysToOmit) => Object.keys(object)
-  .filter(key => !keysToOmit.includes(key))
-  .map(key => ({ [key]: object[key] }))
+  .filter((key) => !keysToOmit.includes(key))
+  .map((key) => ({ [key]: object[key] }))
   .reduce((a, b) => Object.assign(a, b), {});
 
-const isNullOrUndefined = obj => obj === null || typeof obj === 'undefined';
-const isNotNullAndObject = obj => obj !== null && typeof obj === 'object' && obj.constructor;
+const isNullOrUndefined = (obj) => obj === null || typeof obj === 'undefined';
+const isNotNullAndObject = (obj) => obj !== null && typeof obj === 'object' && obj.constructor;
 
 const redefineIfUndefined = (obj, otherObjOfType) => {
   if (isNullOrUndefined(obj) && isNotNullAndObject(otherObjOfType)) {
@@ -45,7 +45,7 @@ export const diff = (a, b) => {
     if (thing1 instanceof Array) {
       if (thing2 instanceof Array) {
         const length = Math.max(thing1.length, thing2.length);
-        return [...Array(length).keys()].map(i => diff(thing1[i], thing2[i]));
+        return [...Array(length).keys()].map((i) => diff(thing1[i], thing2[i]));
       }
       return true;
     }

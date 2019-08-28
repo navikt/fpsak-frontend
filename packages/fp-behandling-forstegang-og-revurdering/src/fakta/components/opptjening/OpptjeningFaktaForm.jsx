@@ -29,11 +29,11 @@ import styles from './opptjeningFaktaForm.less';
 
 const getAksjonspunktHelpTexts = (activities) => {
   const texts = [];
-  if (activities.some(a => a.stillingsandel === 0)) {
+  if (activities.some((a) => a.stillingsandel === 0)) {
     texts.push(<FormattedMessage id="OpptjeningFaktaForm.AktivitetenErTimeAvslonnet" key="AktivitetenErTimeAvslonnet" />);
   }
 
-  const aktivitetTypes = activities.filter(a => (a.erGodjent === undefined || a.beskrivelse) && a.stillingsandel !== 0);
+  const aktivitetTypes = activities.filter((a) => (a.erGodjent === undefined || a.beskrivelse) && a.stillingsandel !== 0);
   if (aktivitetTypes.length === 1) {
     texts.push(<FormattedMessage id="OpptjeningFaktaForm.EttArbeidKanGodkjennes" key="EttArbeidKanGodkjennes" />);
   } else if (aktivitetTypes.length > 1) {
@@ -42,9 +42,9 @@ const getAksjonspunktHelpTexts = (activities) => {
   return texts;
 };
 
-const findSkjaringstidspunkt = date => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
+const findSkjaringstidspunkt = (date) => moment(date).add(1, 'days').format(ISO_DATE_FORMAT);
 
-const sortByFomDate = opptjeningPeriods => opptjeningPeriods
+const sortByFomDate = (opptjeningPeriods) => opptjeningPeriods
   .sort((o1, o2) => {
     const isSame = moment(o2.opptjeningFom, ISO_DATE_FORMAT).isSame(moment(o1.opptjeningFom, ISO_DATE_FORMAT));
     return isSame
@@ -83,7 +83,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   componentWillMount() {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
-    const opptjeningActivityWithAp = opptjeningActivities.find(o => o.erGodkjent === null);
+    const opptjeningActivityWithAp = opptjeningActivities.find((o) => o.erGodkjent === null);
     const selected = selectedOpptjeningActivity || opptjeningActivityWithAp || opptjeningActivities[0];
     this.setSelectedOpptjeningActivity(selected, true);
   }
@@ -113,7 +113,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   addOpptjeningActivity() {
     const { opptjeningActivities } = this.props;
     const newOpptjeningActivity = {
-      id: opptjeningActivities.map(oa => oa.id).reduce((acc, value) => (acc < value ? value : acc), 0) + 1,
+      id: opptjeningActivities.map((oa) => oa.id).reduce((acc, value) => (acc < value ? value : acc), 0) + 1,
       erGodkjent: true,
       erManueltOpprettet: true,
     };
@@ -123,12 +123,12 @@ export class OpptjeningFaktaFormImpl extends Component {
 
   updateActivity(values) {
     const { opptjeningActivities } = this.props;
-    const otherThanUpdated = opptjeningActivities.filter(o => o.id !== values.id);
+    const otherThanUpdated = opptjeningActivities.filter((o) => o.id !== values.id);
     this.setFormField('opptjeningActivities', otherThanUpdated.concat({
       ...values,
       erEndret: true,
     }));
-    const opptjeningActivityWithAp = otherThanUpdated.find(o => o.erGodkjent === null);
+    const opptjeningActivityWithAp = otherThanUpdated.find((o) => o.erGodkjent === null);
     this.setSelectedOpptjeningActivity(opptjeningActivityWithAp || undefined);
   }
 
@@ -140,7 +140,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     if (currentSelectedItem) {
       this.setSelectedOpptjeningActivity(undefined);
     } else {
-      const selectedItem = opptjeningActivities.find(item => item.id === 1);
+      const selectedItem = opptjeningActivities.find((item) => item.id === 1);
       this.setSelectedOpptjeningActivity(selectedItem);
     }
   }
@@ -148,7 +148,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   selectNextPeriod(event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
-    const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) + 1;
+    const newIndex = opptjeningActivities.findIndex((oa) => oa.id === selectedOpptjeningActivity.id) + 1;
     if (newIndex < opptjeningActivities.length) {
       this.setSelectedOpptjeningActivity(opptjeningActivities[newIndex]);
     }
@@ -158,7 +158,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   selectPrevPeriod(event) {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
-    const newIndex = opptjeningActivities.findIndex(oa => oa.id === selectedOpptjeningActivity.id) - 1;
+    const newIndex = opptjeningActivities.findIndex((oa) => oa.id === selectedOpptjeningActivity.id) - 1;
     if (newIndex >= 0) {
       this.setSelectedOpptjeningActivity(opptjeningActivities[newIndex]);
     }
@@ -184,7 +184,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     return submitting
       || readOnly
       || this.isSelectedActivityAndButtonsEnabled()
-      || opptjeningActivities.some(ac => ac.erGodkjent === null);
+      || opptjeningActivities.some((ac) => ac.erGodkjent === null);
   }
 
   isAddButtonDisabled() {
@@ -213,8 +213,7 @@ export class OpptjeningFaktaFormImpl extends Component {
           </AksjonspunktHelpText>
           <VerticalSpacer twentyPx />
         </ElementWrapper>
-        )
-        }
+        )}
         <Undertekst><FormattedMessage id="OpptjeningFaktaForm.Skjaringstidspunkt" /></Undertekst>
         <Normaltekst><DateLabel dateString={findSkjaringstidspunkt(opptjeningTomDato)} /></Normaltekst>
         <VerticalSpacer twentyPx />
@@ -248,8 +247,7 @@ export class OpptjeningFaktaFormImpl extends Component {
             />
             <VerticalSpacer twentyPx />
           </ElementWrapper>
-          )
-        }
+          )}
         {hasAksjonspunkt
         && (
         <FlexContainer fluid>
@@ -275,8 +273,7 @@ export class OpptjeningFaktaFormImpl extends Component {
             </FlexColumn>
           </FlexRow>
         </FlexContainer>
-        )
-         }
+        )}
       </div>
     );
   }
@@ -306,7 +303,7 @@ const mapStateToProps = (state, props) => ({
   opptjeningActivities: sortByFomDate(behandlingFormValueSelector(props.formName)(state, 'opptjeningActivities')),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,

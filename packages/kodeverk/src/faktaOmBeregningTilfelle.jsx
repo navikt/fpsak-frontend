@@ -29,31 +29,31 @@ export const vurderOgFastsettATFLTilfeller = [faktaOmBeregningTilfelle.VURDER_AT
   faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING];
 
 
-export const fastsettATLIntersection = tilfeller => vurderOgFastsettATFLTilfeller.filter(tilfelle => tilfeller.includes(tilfelle));
+export const fastsettATLIntersection = (tilfeller) => vurderOgFastsettATFLTilfeller.filter((tilfelle) => tilfeller.includes(tilfelle));
 
-const harLonnsendringOgNyoppstartet = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+const harLonnsendringOgNyoppstartet = (tilfeller) => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL);
 
-const harIkkeLonnsendringEllerNyoppstartet = tilfeller => !(tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
+const harIkkeLonnsendringEllerNyoppstartet = (tilfeller) => !(tilfeller.includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)
 || tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL));
 
-export const harVurderMottarYtelse = tilfeller => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
+export const harVurderMottarYtelse = (tilfeller) => tilfeller.includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
 
-export const harKunATFLISammeOrg = tilfeller => (harIkkeLonnsendringEllerNyoppstartet(tilfeller)
+export const harKunATFLISammeOrg = (tilfeller) => (harIkkeLonnsendringEllerNyoppstartet(tilfeller)
   || harVurderMottarYtelse(tilfeller))
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-const harLonnsendringNyOppstartetFLOgATFLISammeOrg = tilfeller => harLonnsendringOgNyoppstartet(tilfeller)
+const harLonnsendringNyOppstartetFLOgATFLISammeOrg = (tilfeller) => harLonnsendringOgNyoppstartet(tilfeller)
   && tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-export const erATFLSpesialtilfelle = tilfeller => harLonnsendringNyOppstartetFLOgATFLISammeOrg(tilfeller);
+export const erATFLSpesialtilfelle = (tilfeller) => harLonnsendringNyOppstartetFLOgATFLISammeOrg(tilfeller);
 
-export const erATFLSpesialtilfelleEllerVurderMottarYtelse = tilfeller => erATFLSpesialtilfelle(tilfeller)
+export const erATFLSpesialtilfelleEllerVurderMottarYtelse = (tilfeller) => erATFLSpesialtilfelle(tilfeller)
 || harVurderMottarYtelse(tilfeller);
 
-export const harIkkeATFLSameOrg = tilfeller => !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
+export const harIkkeATFLSameOrg = (tilfeller) => !tilfeller.includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON);
 
-export const harFastsettATFLInntektTilfelleUtenomBesteberegning = tilfeller => tilfeller.some(tilfelle => vurderOgFastsettATFLTilfeller.includes(tilfelle)
+export const harFastsettATFLInntektTilfelleUtenomBesteberegning = (tilfeller) => tilfeller.some((tilfelle) => vurderOgFastsettATFLTilfeller.includes(tilfelle)
   && !besteberegningTilfeller.includes(tilfelle));
 
 export default faktaOmBeregningTilfelle;

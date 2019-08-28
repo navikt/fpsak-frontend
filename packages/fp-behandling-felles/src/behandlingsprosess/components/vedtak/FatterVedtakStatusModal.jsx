@@ -20,9 +20,9 @@ import styles from './fatterVedtakStatusModal.less';
 
 
 const hasOpenAksjonspunktForVedtakUtenTotrinnskontroll = (aksjonspunkter = []) => aksjonspunkter
-  .some(ap => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
+  .some((ap) => ap.definisjon.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
 
-const isBehandlingsresultatOpphor = behandlingsresultat => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
+const isBehandlingsresultatOpphor = (behandlingsresultat) => behandlingsresultat.type.kode === behandlingResultatType.OPPHOR;
 
 const getModalDescriptionTextCode = (behandlingsresultat, aksjonspunkter, ytelseType, behType, isKlageWithKA) => {
   if (isBehandlingsresultatOpphor(behandlingsresultat)) {
@@ -66,7 +66,7 @@ const getInfoTextCode = (bType, isKlageWithKA) => {
   return bType.kode === BehandlingType.KLAGE ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtBeslutter';
 };
 
-const isStatusFatterVedtak = behandlingstatus => behandlingstatus.kode === BehandlingStatus.FATTER_VEDTAK;
+const isStatusFatterVedtak = (behandlingstatus) => behandlingstatus.kode === BehandlingStatus.FATTER_VEDTAK;
 /**
  * FatterVedtakStatusModal
  *
@@ -95,8 +95,8 @@ export class FatterVedtakStatusModal extends Component {
     const infoTextCode = isFatterVedtak ? getInfoTextCode(behandlingType, isKlageWithKA) : '';
     const altImgTextCode = isFatterVedtak ? getAltImgTextCode(aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA) : '';
     const modalDescriptionTextCode = isFatterVedtak
-        ? getModalDescriptionTextCode(behandlingsresultat, aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA)
-        : 'FatterVedtakStatusModal.ModalDescription';
+      ? getModalDescriptionTextCode(behandlingsresultat, aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA)
+      : 'FatterVedtakStatusModal.ModalDescription';
 
     return (
       <Modal

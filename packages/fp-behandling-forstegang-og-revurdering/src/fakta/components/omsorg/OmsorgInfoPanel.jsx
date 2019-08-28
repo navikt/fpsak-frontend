@@ -32,8 +32,8 @@ const OMSORG_IP = 'omsorg';
 
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
-  const harAleneomsorgAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG);
-  const harOmsorgAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG);
+  const harAleneomsorgAp = aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG);
+  const harOmsorgAp = aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG);
   if (harAleneomsorgAp.length > 0) {
     helpTexts.push(<FormattedMessage key="VurderAleneomsorg" id="OmsorgInfoPanel.VurderAleneomsorg" />);
   }
@@ -69,8 +69,7 @@ export const OmsorgInfoPanelImpl = ({
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {getHelpTexts(aksjonspunkter)}
     </AksjonspunktHelpText>
-    )
-    }
+    )}
     <BostedFaktaView personopplysning={personopplysning} ektefellePersonopplysning={ektefellePersonopplysning} />
     <form onSubmit={formProps.handleSubmit}>
       <FaktaBegrunnelseTextField isDirty={formProps.dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse hasVurderingText />
@@ -101,7 +100,7 @@ OmsorgInfoPanelImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector([getBehandlingYtelseFordeling, behandlingSelectors.getAksjonspunkter], (ytelsefordeling, aksjonspunkter) => {
-  const omsorgAp = aksjonspunkter.filter(ap => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG
+  const omsorgAp = aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG
     || ap.definisjon.kode === aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG);
   return {
     ...OmsorgFaktaForm.buildInitialValues(ytelsefordeling, omsorgAp),
@@ -117,7 +116,7 @@ const transformValues = (values, submitCallback, aksjonspunkter) => {
   if (hasAksjonspunkt(MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG, aksjonspunkter)) {
     aksjonspunkterArray.push(OmsorgFaktaForm.transformOmsorgValues(values));
   }
-  const aksjonspunkterMedBegrunnelse = aksjonspunkterArray.map(ap => ({
+  const aksjonspunkterMedBegrunnelse = aksjonspunkterArray.map((ap) => ({
     ...ap,
     ...{ begrunnelse: values.begrunnelse },
   }));
@@ -126,8 +125,8 @@ const transformValues = (values, submitCallback, aksjonspunkter) => {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => transformValues(values, ownProps.submitCallback, ownProps.aksjonspunkter);
-  return state => ({
+  const onSubmit = (values) => transformValues(values, ownProps.submitCallback, ownProps.aksjonspunkter);
+  return (state) => ({
     initialValues: buildInitialValues(state),
     personopplysning: getPersonopplysning(state),
     ektefellePersonopplysning: getEktefellePersonopplysning(state),
@@ -143,6 +142,6 @@ const OmsorgInfoPanel = withDefaultToggling(OMSORG_IP, omsorgAksjonspunkter)(con
   validate: IkkeOmsorgPeriodeField.validate,
 })(injectIntl(OmsorgInfoPanelImpl))));
 
-OmsorgInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => omsorgAksjonspunkter.includes(ap.definisjon.kode));
+OmsorgInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode));
 
 export default OmsorgInfoPanel;

@@ -8,7 +8,7 @@ import { required } from '@fpsak-frontend/utils';
 import { ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
 import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-const getEndCharFromId = id => id.substring(id.length - 4, id.length);
+const getEndCharFromId = (id) => id.substring(id.length - 4, id.length);
 
 const PersonNyttEllerErstattArbeidsforholdPanel = ({
   intl,
@@ -42,7 +42,7 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
             label={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold' })}
             placeholder={intl.formatMessage({ id: 'PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold' })}
             validate={[required]}
-            selectValues={arbeidsforholdList.map(a => (
+            selectValues={arbeidsforholdList.map((a) => (
               <option key={a.arbeidsgiverIdentifikator + a.arbeidsforholdId} value={a.id}>
                 {`${a.navn}(${a.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(a.arbeidsforholdId)}`}
               </option>

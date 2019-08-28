@@ -87,13 +87,13 @@ const ArrowBox = ({
   marginLeft,
   hideBorder,
 }) => (
-  <React.Fragment>
+  <>
     <style dangerouslySetInnerHTML={{ // eslint-disable-line react/no-danger
       __html: getArrowBox(alignOffset, alignLeft, marginTop, marginLeft),
     }}
     />
     <div className={getClassName(alignOffset, alignLeft, hideBorder)}>{children}</div>
-  </React.Fragment>
+  </>
 );
 
 ArrowBox.propTypes = {

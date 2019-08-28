@@ -89,7 +89,7 @@ describe('<PeriodeController>', () => {
     }, {
       feilutbetaling: 600,
       fom: '2019-11-11',
-        tom: '2019-12-10',
+      tom: '2019-12-10',
     }]);
   });
 });

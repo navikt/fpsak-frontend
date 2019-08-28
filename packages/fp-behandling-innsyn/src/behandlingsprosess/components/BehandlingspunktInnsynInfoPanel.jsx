@@ -37,12 +37,10 @@ export const BehandlingspunktInnsynInfoPanel = ({
         previewCallback={previewCallback}
         readOnly={readOnly}
       />
-      )
-     }
+      )}
 
       {InnsynForm.supports(apCodes)
-      && <InnsynForm submitCallback={submitCallback} readOnly={readOnly} isSubmittable={readOnlySubmitButton} />
-      }
+      && <InnsynForm submitCallback={submitCallback} readOnly={readOnly} isSubmittable={readOnlySubmitButton} />}
     </div>
   </div>
 );
@@ -63,7 +61,7 @@ BehandlingspunktInnsynInfoPanel.defaultProps = {
   notAcceptedByBeslutter: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   openAksjonspunkt: behandlingspunktInnsynSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingspunktInnsynSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingspunktInnsynSelectors.isBehandlingspunktAksjonspunkterSolvable(state),

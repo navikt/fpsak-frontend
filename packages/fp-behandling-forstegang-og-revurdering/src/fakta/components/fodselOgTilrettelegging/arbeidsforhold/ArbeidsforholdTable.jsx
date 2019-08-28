@@ -27,7 +27,7 @@ const ArbeidsforholdTable = ({
   selectedArbeidsforhold,
 }) => (
   <Table headerTextCodes={headerTextCodes}>
-    {arbeidsforhold.map(a => (
+    {arbeidsforhold.map((a) => (
       <TableRow
         key={a.tilretteleggingId}
         id={a.tilretteleggingId}
@@ -48,7 +48,7 @@ const ArbeidsforholdTable = ({
             )
             </span>
 
-)}
+            )}
           </Normaltekst>
         </TableColumn>
         <TableColumn>

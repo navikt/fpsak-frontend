@@ -7,10 +7,10 @@ import ForeldrePanel from './ForeldrePanel';
 
 const getMockedFields = (fieldNames, children) => {
   const field = {
-    get: idx => children[idx],
+    get: (idx) => children[idx],
   };
   return {
-    map: callback => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
+    map: (callback) => fieldNames.map((fieldname, idx) => callback(fieldname, idx, field)),
   };
 };
 

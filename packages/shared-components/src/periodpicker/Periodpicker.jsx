@@ -9,15 +9,14 @@ import PeriodCalendarOverlay from './PeriodCalendarOverlay';
 
 import styles from './periodpicker.less';
 
-const getStartDateInput = props => haystack(props, props.names[0]).input;
-const getEndDateInput = props => haystack(props, props.names[1]).input;
-const isValidDate = date => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
+const getStartDateInput = (props) => haystack(props, props.names[0]).input;
+const getEndDateInput = (props) => haystack(props, props.names[1]).input;
+const isValidDate = (date) => moment(date, DDMMYYYY_DATE_FORMAT, true).isValid();
 const createPeriod = (startDay, endDay) => `${moment(startDay).format(DDMMYYYY_DATE_FORMAT)} - ${moment(endDay).format(DDMMYYYY_DATE_FORMAT)}`;
 
 class Periodpicker extends Component {
-  constructor() {
-    super();
-    this.state = { showCalendar: false, period: undefined };
+  constructor(props) {
+    super(props);
     this.handleInputRef = this.handleInputRef.bind(this);
     this.handleButtonRef = this.handleButtonRef.bind(this);
     this.handleUpdatedRefs = this.handleUpdatedRefs.bind(this);
@@ -28,16 +27,18 @@ class Periodpicker extends Component {
     this.onBlur = this.onBlur.bind(this);
     this.onChange = this.onChange.bind(this);
     this.parseToDate = this.parseToDate.bind(this);
-  }
 
-  componentWillMount() {
-    const startDate = getStartDateInput(this.props).value;
-    const endDate = getEndDateInput(this.props).value;
+    const startDate = getStartDateInput(props).value;
+    const endDate = getEndDateInput(props).value;
     let period = '';
     if (startDate) {
       period = endDate ? `${startDate} - ${endDate}` : startDate;
     }
-    this.setState({ period });
+
+    this.state = {
+      showCalendar: false,
+      period,
+    };
   }
 
   onBlur(e) {
@@ -181,8 +182,7 @@ class Periodpicker extends Component {
           onClose={this.hideCalendar}
           disabledDays={disabledDays}
         />
-        )
-        }
+        )}
       </>
     );
   }

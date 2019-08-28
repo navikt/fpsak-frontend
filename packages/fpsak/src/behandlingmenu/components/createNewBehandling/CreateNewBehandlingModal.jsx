@@ -88,7 +88,7 @@ export const CreateNewBehandlingModal = ({
             label=""
             placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingTypePlaceholder' })}
             validate={[required]}
-            selectValues={behandlingTyper.map(bt => createOptions(bt, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, intl))}
+            selectValues={behandlingTyper.map((bt) => createOptions(bt, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, intl))}
             bredde="l"
           />
           <VerticalSpacer eightPx />
@@ -98,8 +98,7 @@ export const CreateNewBehandlingModal = ({
             name="nyBehandlingEtterKlage"
             label={intl.formatMessage({ id: 'CreateNewBehandlingModal.NyBehandlingEtterKlage' })}
           />
-          )
-          }
+          )}
           { behandlingType === bType.REVURDERING
           && (
           <SelectField
@@ -107,10 +106,9 @@ export const CreateNewBehandlingModal = ({
             label=""
             placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder' })}
             validate={[required]}
-            selectValues={behandlingArsakTyper.map(b => <option key={b.kode} value={b.kode}>{b.navn}</option>)}
+            selectValues={behandlingArsakTyper.map((b) => <option key={b.kode} value={b.kode}>{b.navn}</option>)}
           />
-          )
-          }
+          )}
           <div className={styles.right}>
             <Hovedknapp
               mini
@@ -185,21 +183,21 @@ const manuelleRevurderingsArsakerSVP = [
 ];
 
 export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isSvangerskapFagsak, getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)],
-(isForeldrepenger, isSvangerskap, behandlingArsaker) => {
-  let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
-  if (isSvangerskap) {
-    manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
-  }
-  return behandlingArsaker
-    .filter(bat => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
-    .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
-});
+  (isForeldrepenger, isSvangerskap, behandlingArsaker) => {
+    let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
+    if (isSvangerskap) {
+      manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
+    }
+    return behandlingArsaker
+      .filter((bat) => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
+      .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
+  });
 
-const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE)], behandlingTyper => behandlingTyper
-  .filter(bt => bt.kode !== bType.SOKNAD && bt.kode !== bType.TILBAKEKREVING)
+const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE)], (behandlingTyper) => behandlingTyper
+  .filter((bt) => bt.kode !== bType.SOKNAD && bt.kode !== bType.TILBAKEKREVING)
   .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingTyper: getBehandlingTyper(state),
   behandlingArsakTyper: getBehandlingAarsaker(state),
   behandlingType: formValueSelector(formName)(state, 'behandlingType'),

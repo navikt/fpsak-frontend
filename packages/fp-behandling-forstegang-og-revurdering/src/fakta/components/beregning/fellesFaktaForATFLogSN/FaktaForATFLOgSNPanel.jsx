@@ -48,7 +48,7 @@ export const validationForVurderFakta = (values) => {
     tilfeller,
     kunYtelse,
     vurderMottarYtelse,
-} = values;
+  } = values;
   if (!faktaOmBeregning || !beregningsgrunnlag || !tilfeller) {
     return {};
   }
@@ -68,7 +68,7 @@ export const lagHelpTextsForFakta = () => {
 
 export const getHelpTextsFaktaForATFLOgSN = createSelector(
   [behandlingSelectors.getAksjonspunkter],
-  aksjonspunkter => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
+  (aksjonspunkter) => (hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter)
     ? lagHelpTextsForFakta()
     : []),
 );
@@ -156,7 +156,7 @@ export const FaktaForATFLOgSNPanelImpl = ({
   isAksjonspunktClosed,
 }) => (
   <div>
-    {getFaktaPanels(readOnly, aktivePaneler, isAksjonspunktClosed).map(panelOrSpacer => panelOrSpacer)}
+    {getFaktaPanels(readOnly, aktivePaneler, isAksjonspunktClosed).map((panelOrSpacer) => panelOrSpacer)}
   </div>
 );
 
@@ -166,7 +166,7 @@ FaktaForATFLOgSNPanelImpl.propTypes = {
   isAksjonspunktClosed: PropTypes.bool.isRequired,
 };
 
-const kunYtelseTransform = (faktaOmBeregning, aktivePaneler) => values => transformValuesForKunYtelse(values,
+const kunYtelseTransform = (faktaOmBeregning, aktivePaneler) => (values) => transformValuesForKunYtelse(values,
   faktaOmBeregning.kunYtelse, aktivePaneler);
 
 const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
@@ -177,7 +177,7 @@ const nyIArbeidslivetTransform = (vurderFaktaValues, values) => {
   });
 };
 
-const kortvarigeArbeidsforholdTransform = kortvarigeArbeidsforhold => (vurderFaktaValues, values) => {
+const kortvarigeArbeidsforholdTransform = (kortvarigeArbeidsforhold) => (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD);
   return ({
     ...vurderFaktaValues,
@@ -185,7 +185,7 @@ const kortvarigeArbeidsforholdTransform = kortvarigeArbeidsforhold => (vurderFak
   });
 };
 
-const etterlonnSluttpakkeTransform = aktivePaneler => (vurderFaktaValues, values) => {
+const etterlonnSluttpakkeTransform = (aktivePaneler) => (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE);
   return {
     ...vurderFaktaValues,
@@ -253,19 +253,19 @@ const setValuesForVurderFakta = (aktivePaneler, values, kortvarigeArbeidsforhold
 
 export const transformValuesFaktaForATFLOgSN = (values, erOverstyrt) => {
   const {
-      tilfeller,
-      kortvarigeArbeidsforhold,
-      faktaOmBeregning,
-      beregningsgrunnlag,
-    } = values;
-   return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold,
+    tilfeller,
+    kortvarigeArbeidsforhold,
+    faktaOmBeregning,
+    beregningsgrunnlag,
+  } = values;
+  return setValuesForVurderFakta(tilfeller, values, kortvarigeArbeidsforhold,
     faktaOmBeregning, beregningsgrunnlag, erOverstyrt);
 };
 
-const getVurderFaktaAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], aksjonspunkter => (aksjonspunkter
-  ? aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
+const getVurderFaktaAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], (aksjonspunkter) => (aksjonspunkter
+  ? aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_FAKTA_FOR_ATFL_SN) : undefined));
 
-const buildInitialValuesForTilfeller = props => ({
+const buildInitialValuesForTilfeller = (props) => ({
   ...TidsbegrensetArbeidsforholdForm.buildInitialValues(props.kortvarigeArbeidsforhold),
   ...VurderMilitaer.buildInitialValues(props.faktaOmBeregning, props.vurderFaktaAP),
   ...NyIArbeidslivetSNForm.buildInitialValues(props.beregningsgrunnlag),
@@ -293,13 +293,13 @@ const mapStateToBuildInitialValuesProps = createStructuredSelector({
 });
 
 export const getBuildInitialValuesFaktaForATFLOgSN = createSelector(
-  [mapStateToBuildInitialValuesProps], props => () => ({
-      tilfeller: props.tilfeller,
-      kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
-      faktaOmBeregning: props.faktaOmBeregning,
-      beregningsgrunnlag: props.beregningsgrunnlag,
-      vurderMottarYtelse: props.vurderMottarYtelse,
-      kunYtelse: props.kunYtelse,
+  [mapStateToBuildInitialValuesProps], (props) => () => ({
+    tilfeller: props.tilfeller,
+    kortvarigeArbeidsforhold: props.kortvarigeArbeidsforhold,
+    faktaOmBeregning: props.faktaOmBeregning,
+    beregningsgrunnlag: props.beregningsgrunnlag,
+    vurderMottarYtelse: props.vurderMottarYtelse,
+    kunYtelse: props.kunYtelse,
     ...buildInitialValuesForTilfeller(props),
   }),
 );

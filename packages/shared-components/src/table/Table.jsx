@@ -12,7 +12,7 @@ const classNames = classnames.bind(styles);
 
 const EMPTY_STRING = 'EMPTY';
 
-const isString = value => typeof value === 'string';
+const isString = (value) => typeof value === 'string';
 
 
 /**
@@ -37,18 +37,16 @@ const Table = ({
           return (
             <TableColumn key={headerElement.key ? headerElement.key : headerElement}>
               { allowFormattedHeader
-              && headerElement
-              }
+              && headerElement}
               { !allowFormattedHeader
-              && <FormattedHTMLMessage id={headerElement} />
-              }
+              && <FormattedHTMLMessage id={headerElement} />}
             </TableColumn>
           );
         })}
       </TableRow>
     </thead>
     <tbody>
-      {children.length ? children.map(child => React.cloneElement(child, { noHover })) : React.cloneElement(children, { noHover })}
+      {children.length ? children.map((child) => React.cloneElement(child, { noHover })) : React.cloneElement(children, { noHover })}
     </tbody>
   </table>
 );

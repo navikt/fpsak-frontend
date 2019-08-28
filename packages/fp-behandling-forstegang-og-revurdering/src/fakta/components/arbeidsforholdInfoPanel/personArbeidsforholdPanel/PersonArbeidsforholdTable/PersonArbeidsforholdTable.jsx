@@ -20,7 +20,7 @@ const headerTextCodes = [
   'EMPTY_2',
 ];
 
-const getEndCharFromId = id => id.substring(id.length - 4, id.length);
+const getEndCharFromId = (id) => id.substring(id.length - 4, id.length);
 
 const utledNavn = (arbeidsforhold) => {
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
@@ -67,8 +67,7 @@ const PersonArbeidsforholdTable = ({
             <TableColumn><Normaltekst>{stillingsprosent}</Normaltekst></TableColumn>
             <TableColumn>
               {a.mottattDatoInntektsmelding
-              && <Normaltekst><DateLabel dateString={a.mottattDatoInntektsmelding} /></Normaltekst>
-            }
+              && <Normaltekst><DateLabel dateString={a.mottattDatoInntektsmelding} /></Normaltekst>}
             </TableColumn>
             <TableColumn>
               { a.brukArbeidsforholdet
@@ -80,8 +79,7 @@ const PersonArbeidsforholdTable = ({
               tooltip={{ header: <Element><FormattedMessage id="PersonArbeidsforholdTable.ErIBruk" /></Element> }}
               tabIndex="0"
             />
-            )
-            }
+            )}
             </TableColumn>
           </TableRow>
         );

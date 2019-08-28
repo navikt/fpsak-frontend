@@ -49,8 +49,7 @@ const VurderEtterlonnSluttpakkeForm = ({
           </ArrowBox>
         </Column>
       </Row>
-    )
-    }
+    )}
   </div>
 );
 
@@ -64,7 +63,7 @@ const { FASTSETT_BESTEBEREGNING_FODENDE_KVINNE } = faktaOmBeregningTilfelle;
 
 const tilfellerSomHandtererAllInntekt = [FASTSETT_BESTEBEREGNING_FODENDE_KVINNE];
 
-const harIkkeTilfelleSomHandtererInntekt = tilfeller => !tilfeller.some(tilfelle => tilfellerSomHandtererAllInntekt.includes(tilfelle));
+const harIkkeTilfelleSomHandtererInntekt = (tilfeller) => !tilfeller.some((tilfelle) => tilfellerSomHandtererAllInntekt.includes(tilfelle));
 
 VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag, faktaAksjonspunkt) => {
   const initialValues = {};
@@ -73,7 +72,7 @@ VurderEtterlonnSluttpakkeForm.buildInitialValues = (beregningsgrunnlag, faktaAks
   }
   const apErTidligereLost = !isAksjonspunktOpen(faktaAksjonspunkt.status.kode);
   const relevanteAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .flatMap(periode => periode.beregningsgrunnlagPrStatusOgAndel)
+    .flatMap((periode) => periode.beregningsgrunnlagPrStatusOgAndel)
     .filter(({ arbeidsforhold }) => arbeidsforhold
   && arbeidsforhold.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE);
   if (relevanteAndeler.length > 0) {
@@ -107,11 +106,11 @@ VurderEtterlonnSluttpakkeForm.etterlonnSluttpakkeInntekt = (values, tilfeller, v
   };
 };
 
-VurderEtterlonnSluttpakkeForm.transformValues = values => ({
+VurderEtterlonnSluttpakkeForm.transformValues = (values) => ({
   vurderEtterlønnSluttpakke: { erEtterlønnSluttpakke: values[harEtterlonnSluttpakkeField] },
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   harEtterlonnSluttpakke: getFormValuesForBeregning(state)[harEtterlonnSluttpakkeField],
 });
 

@@ -11,11 +11,11 @@ reducerRegistry.register(reducerName, behandlingsprosessRedux.reducer);
 
 export const resolveKlageTemp = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(klageBehandlingApi.SAVE_REOPEN_KLAGE_VURDERING.makeRestApiRequest()(params))
-    .then(response => dispatch(klageBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
+    .then((response) => dispatch(klageBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })))
     .then(klageBehandlingApi.SAVE_KLAGE_VURDERING.resetRestApi());
 };
 
-export const saveKlage = params => dispatch => (
+export const saveKlage = (params) => (dispatch) => (
   dispatch(klageBehandlingApi.SAVE_KLAGE_VURDERING.makeRestApiRequest()(params))
 );
 
@@ -31,13 +31,13 @@ const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, sho
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(klageBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
 export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(klageBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
 export const fetchPreviewBrev = klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

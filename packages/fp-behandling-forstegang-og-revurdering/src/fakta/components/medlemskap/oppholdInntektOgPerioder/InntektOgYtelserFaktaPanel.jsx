@@ -59,8 +59,7 @@ const InntektOgYtelserFaktaPanelImpl = ({
               </TableColumn>
             </TableRow>
           );
-        })
-        }
+        })}
       </Table>
     </FaktaGruppe>
   );
@@ -74,7 +73,7 @@ InntektOgYtelserFaktaPanelImpl.defaultProps = {
   inntekter: [],
 };
 
-const InntektOgYtelserFaktaPanel = connect(state => ({
+const InntektOgYtelserFaktaPanel = connect((state) => ({
   inntekter: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
 }))(InntektOgYtelserFaktaPanelImpl);
 
@@ -88,15 +87,15 @@ InntektOgYtelserFaktaPanel.buildInitialValues = (person, medlem) => {
     return [];
   }
   const inntekter = medlem.inntekt
-    .map(i => ({
+    .map((i) => ({
       person: i.navn,
       employer: i.utbetaler,
       fom: i.fom,
       tom: i.tom,
       amount: i.belop,
     }));
-  const inntekterSoker = inntekter.filter(i => i.person === person.navn).sort(sortInntekter);
-  const inntekterOther = inntekter.filter(i => i.person !== person.navn).sort(sortInntekter);
+  const inntekterSoker = inntekter.filter((i) => i.person === person.navn).sort(sortInntekter);
+  const inntekterOther = inntekter.filter((i) => i.person !== person.navn).sort(sortInntekter);
 
   return {
     inntekter: inntekterSoker.concat(inntekterOther),

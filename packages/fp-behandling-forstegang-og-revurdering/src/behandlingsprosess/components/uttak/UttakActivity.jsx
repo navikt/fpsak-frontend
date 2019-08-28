@@ -68,9 +68,9 @@ function sortAlphabetically(a, b) {
 
 const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
   kodeverk.sort(sortAlphabetically);
-  const nyKodeArray = kodeverk.filter(kodeItem => kodeItem.gyldigTom >= starttidspunktForeldrepenger
+  const nyKodeArray = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
-    const filteredNyKodeArray = nyKodeArray.filter(item => (item.kode < 4096 || item.kode > 4099));
+  const filteredNyKodeArray = nyKodeArray.filter((item) => (item.kode < 4096 || item.kode > 4099));
   return (filteredNyKodeArray
     .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
 };
@@ -119,8 +119,7 @@ export const UttakActivity = ({
           />
         </Column>
       </Row>
-      )
-    }
+      )}
     <ElementWrapper>
       <div className={styles.marginBottom20}>
         <TextAreaField
@@ -189,11 +188,9 @@ export const UttakActivity = ({
                   )}
                 </ArrowBox>
               </div>
-            )
-            }
+            )}
           </div>
-          )
-          }
+          )}
           {formProps.error}
           {formProps.warning}
           <FlexContainer fluid>
@@ -216,8 +213,7 @@ export const UttakActivity = ({
             </FlexRow>
           </FlexContainer>
         </div>
-      )
-      }
+      )}
     </ElementWrapper>
   </div>
 );
@@ -375,9 +371,9 @@ const validateUttakActivity = (values) => {
 const transformValues = (values, avslagAarsakKoder, innvilgelseAarsakKoder, graderingAvslagAarsakKoder) => {
   const { ...transformvalue } = values.selectedItem;
   const { ...nyeVerdier } = omit(values, 'selectedItem');
-  const [avslagAarsakObject] = avslagAarsakKoder.filter(a => a.kode === values.avslagAarsak);
-  const [innvilgelseAarsakObject] = innvilgelseAarsakKoder.filter(a => a.kode === values.innvilgelseAarsak);
-  const [graderingAvslagAarsakObject] = graderingAvslagAarsakKoder.filter(a => a.kode === values.graderingAvslagAarsak);
+  const [avslagAarsakObject] = avslagAarsakKoder.filter((a) => a.kode === values.avslagAarsak);
+  const [innvilgelseAarsakObject] = innvilgelseAarsakKoder.filter((a) => a.kode === values.innvilgelseAarsak);
+  const [graderingAvslagAarsakObject] = graderingAvslagAarsakKoder.filter((a) => a.kode === values.graderingAvslagAarsak);
   if (values.oppholdArsak !== oppholdArsakType.UDEFINERT) {
     nyeVerdier.UttakFieldArray[0].stønadskontoType.kode = oppholdArsakMapper[values.oppholdArsak];
   }
@@ -421,7 +417,7 @@ const calculateCorrectWeeks = (aktivitet, item) => {
   if (aktivitet.trekkdagerDesimaler && aktivitet.trekkdagerDesimaler < 0) {
     return 0;
   }
-    return Math.floor(aktivitet.trekkdagerDesimaler / 5);
+  return Math.floor(aktivitet.trekkdagerDesimaler / 5);
 };
 
 const calculateCorrectDays = (aktivitet, item) => {
@@ -485,9 +481,9 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState);
   const oppholdArsakTyper = getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(initialState);
 
-  const validate = values => validateUttakActivity(values);
-  const warn = values => warningUttakActivity(values);
-  const onSubmit = values => initialOwnProps.updateActivity(transformValues(values, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
+  const validate = (values) => validateUttakActivity(values);
+  const warn = (values) => warningUttakActivity(values);
+  const onSubmit = (values) => initialOwnProps.updateActivity(transformValues(values, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
 
   return (state, ownProps) => {
     const erOppfylt = behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt');

@@ -4,7 +4,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 
-const nullOrUndefined = value => value === null || value === undefined;
+const nullOrUndefined = (value) => value === null || value === undefined;
 
 export const GRADERING_RANGE_DENOMINATOR = ' - ';
 
@@ -20,7 +20,7 @@ export const settAndelIArbeid = (andelerIArbeid) => {
   return `${minAndel}${GRADERING_RANGE_DENOMINATOR}${maxAndel}`;
 };
 
-const finnnInntektskategorikode = andel => (andel.inntektskategori
+const finnnInntektskategorikode = (andel) => (andel.inntektskategori
 && andel.inntektskategori.kode !== inntektskategorier.UDEFINERT ? andel.inntektskategori.kode : '');
 
 
@@ -55,7 +55,7 @@ export const settFastsattBelop = (fordeltPrAar,
   return '';
 };
 
-export const setArbeidsforholdInitialValues = andel => ({
+export const setArbeidsforholdInitialValues = (andel) => ({
   arbeidsgiverNavn: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverNavn !== 0 ? andel.arbeidsforhold.arbeidsgiverNavn : '',
   arbeidsgiverId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverId !== 0 ? andel.arbeidsforhold.arbeidsgiverId : '',
   arbeidsforholdId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',
@@ -81,15 +81,15 @@ export const starterPaaEllerEtterStp = (bgAndel,
 const skalFlytteBeregningsgrunnlagFraAAP = (andel, andeler) => {
   if (andel.refusjonskravFraInntektsmelding && andel.refusjonskravFraInntektsmelding > andel.belopFraInntektsmelding) {
     return andeler
-      .some(a => a.aktivitetStatus === aktivitetStatus.ARBEIDSAVKLARINGSPENGER);
+      .some((a) => a.aktivitetStatus === aktivitetStatus.ARBEIDSAVKLARINGSPENGER);
   }
   return false;
 };
 
 const harAAPOgRefusjonskravOverstigerInntektsmelding = (andel, beregningsgrunnlag) => {
   if (andel.refusjonskravFraInntektsmelding && andel.refusjonskravFraInntektsmelding > andel.belopFraInntektsmelding) {
-    return beregningsgrunnlag.beregningsgrunnlagPeriode.some(periode => periode.beregningsgrunnlagPrStatusOgAndel
-      .some(a => a.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER));
+    return beregningsgrunnlag.beregningsgrunnlagPeriode.some((periode) => periode.beregningsgrunnlagPrStatusOgAndel
+      .some((a) => a.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER));
   }
   return false;
 };
@@ -108,10 +108,10 @@ export const erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver = (andel,
   skalFlytteBeregningsgrunnlagFraAAP(andel, andeler) || erAAPOgSkalFlytteTilArbeidsgiverSomRefunderer(andel, andeler)
 );
 
-const erSNEllerFL = andel => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE
+const erSNEllerFL = (andel) => andel.aktivitetStatus === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE
 || andel.aktivitetStatus === aktivitetStatus.FRILANSER;
 
-export const skalValidereMotBeregningsgrunnlag = beregningsgrunnlag => (andel) => {
+export const skalValidereMotBeregningsgrunnlag = (beregningsgrunnlag) => (andel) => {
   if (harAAPOgRefusjonskravOverstigerInntektsmelding(andel, beregningsgrunnlag)) {
     return false;
   }

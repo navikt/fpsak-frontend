@@ -49,15 +49,15 @@ NyIArbeidslivetSNForm.buildInitialValues = (beregningsgrunnlag) => {
     return initialValues;
   }
   const alleAndeler = beregningsgrunnlag.beregningsgrunnlagPeriode
-    .map(periode => periode.beregningsgrunnlagPrStatusOgAndel);
-  const snAndeler = flatten(alleAndeler).filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    .map((periode) => periode.beregningsgrunnlagPrStatusOgAndel);
+  const snAndeler = flatten(alleAndeler).filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   if (snAndeler.length > 0) {
     initialValues[radioGroupFieldName] = snAndeler[0].erNyIArbeidslivet;
   }
   return initialValues;
 };
 
-NyIArbeidslivetSNForm.transformValues = values => ({
+NyIArbeidslivetSNForm.transformValues = (values) => ({
   vurderNyIArbeidslivet: { erNyIArbeidslivet: values[radioGroupFieldName] },
 });
 

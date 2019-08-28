@@ -21,7 +21,7 @@ export const ANDRE_YTELSER_FORM_NAME_PREFIX = 'andreYtelser';
 
 const ANDRE_YTELSER_PERIODE_SUFFIX = 'PERIODER';
 
-const removeArbeidstyper = andreYtelser => andreYtelser.filter(ay => ay.kode !== arbeidType.UTENLANDSK_ARBEIDSFORHOLD
+const removeArbeidstyper = (andreYtelser) => andreYtelser.filter((ay) => ay.kode !== arbeidType.UTENLANDSK_ARBEIDSFORHOLD
   && ay.kode !== arbeidType.FRILANSER && ay.kode !== arbeidType.LONN_UNDER_UTDANNING);
 
 /**
@@ -54,8 +54,7 @@ export const AndreYtelserPanelImpl = ({
               </ArrowBox>
             </Column>
           </Row>
-          )
-      }
+          )}
         </ElementWrapper>
       );
     });
@@ -103,7 +102,7 @@ AndreYtelserPanel.validate = (values, andreYtelser) => {
   const errors = {
     [ANDRE_YTELSER_FORM_NAME_PREFIX]: {},
   };
-  andreYtelser.filter(ay => ytelseValues && ytelseValues[ay.kode]).forEach((ay) => {
+  andreYtelser.filter((ay) => ytelseValues && ytelseValues[ay.kode]).forEach((ay) => {
     const ytelsePerioderFieldName = `${ay.kode}_${ANDRE_YTELSER_PERIODE_SUFFIX}`;
     errors[ANDRE_YTELSER_FORM_NAME_PREFIX][ytelsePerioderFieldName] = RenderAndreYtelserPerioderFieldArray.validate(ytelseValues[ytelsePerioderFieldName]);
   });
@@ -114,11 +113,11 @@ AndreYtelserPanel.transformValues = (values, andreYtelser) => {
   const ytelseValues = values[ANDRE_YTELSER_FORM_NAME_PREFIX];
   const newValues = [];
 
-  andreYtelser.filter(ay => ytelseValues && ytelseValues[ay.kode]).forEach((ay) => {
+  andreYtelser.filter((ay) => ytelseValues && ytelseValues[ay.kode]).forEach((ay) => {
     const ytelsePerioderFieldName = `${ay.kode}_${ANDRE_YTELSER_PERIODE_SUFFIX}`;
     const ytelsePerioder = ytelseValues[ytelsePerioderFieldName];
     if (ytelsePerioder) {
-      RenderAndreYtelserPerioderFieldArray.transformValues(ytelsePerioder, ay.kode).forEach(tv => newValues.push(tv));
+      RenderAndreYtelserPerioderFieldArray.transformValues(ytelsePerioder, ay.kode).forEach((tv) => newValues.push(tv));
     }
   });
 

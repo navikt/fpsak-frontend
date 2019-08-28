@@ -35,7 +35,7 @@ import {
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
-const findRadioButtonTextCode = erVilkarOk => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
+const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
 
 const findSoknadsfristDate = (mottattDato, antallDagerSoknadLevertForSent) => (
   moment(mottattDato)
@@ -130,8 +130,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
             </RadioGroupField>
           </Column>
         </Row>
-        )
-      }
+        )}
       {readOnly
         && (
         <ElementWrapper>
@@ -139,11 +138,9 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {showAvslagsarsak(erVilkarOk, behandlingsresultat.avslagsarsak)
-          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>
-          }
+          && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
         </ElementWrapper>
-        )
-      }
+        )}
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
@@ -217,12 +214,12 @@ const formName = 'ErSoknadsfristVilkaretOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const vilkarCodes = aksjonspunkter.map(a => a.vilkarType.kode);
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const vilkarCodes = aksjonspunkter.map((a) => a.vilkarType.kode);
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
   const antallDagerSoknadLevertForSent = behandlingSelectors.getBehandlingVilkar(initialState)
-        .find(v => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent;
+    .find((v) => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent;
 
-  return state => ({
+  return (state) => ({
     onSubmit,
     antallDagerSoknadLevertForSent,
     initialValues: buildInitialValues(state),
@@ -239,6 +236,6 @@ const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToPropsFactory)(inject
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(ErSoknadsfristVilkaretOppfyltFormImpl))));
 
-ErSoknadsfristVilkaretOppfyltForm.supports = apCodes => apCodes.includes(aksjonspunktCodes.SOKNADSFRISTVILKARET);
+ErSoknadsfristVilkaretOppfyltForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.SOKNADSFRISTVILKARET);
 
 export default ErSoknadsfristVilkaretOppfyltForm;

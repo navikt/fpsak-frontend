@@ -29,8 +29,7 @@ const RegistreringFodselGrid = ({
   <Row>
     <Column xs="6">
       { soknadData.getForeldreType() !== foreldreType.MOR
-        && <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />
-      }
+        && <RettigheterPanel readOnly={readOnly} soknadData={soknadData} />}
       <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
       <TilleggsopplysningerPanel readOnly={readOnly} />
     </Column>
@@ -45,8 +44,7 @@ const RegistreringFodselGrid = ({
             familieHendelseType={soknadData.getFamilieHendelseType()}
           />
         </FormSection>
-        )
-      }
+        )}
       <TerminFodselDatoPanel readOnly={readOnly} form={form} />
       <FormSection name={annenForelderFormNamePrefix}>
         <AnnenForelderPanel isForeldrepenger={false} soknadData={soknadData} namePrefix={annenForelderFormNamePrefix} form={form} readOnly={readOnly} />

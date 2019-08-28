@@ -24,7 +24,7 @@ const Faresignaler = ({
               <FlexColumn>
                 <Element><FormattedMessage id="Risikopanel.Panel.Medlemskap" /></Element>
                 <ul>
-                  {risikoklassifisering.medlFaresignaler.faresignaler.map(faresignal => (
+                  {risikoklassifisering.medlFaresignaler.faresignaler.map((faresignal) => (
                     <li key={faresignal}>
                       <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
                     </li>
@@ -33,8 +33,7 @@ const Faresignaler = ({
               </FlexColumn>
             </FlexRow>
           </div>
-          )
-      }
+          )}
     {risikoklassifisering.iayFaresignaler && risikoklassifisering.iayFaresignaler.faresignaler
           && (
           <div>
@@ -42,7 +41,7 @@ const Faresignaler = ({
               <FlexColumn>
                 <Element><FormattedMessage id="Risikopanel.Panel.ArbeidsforholdInntekt" /></Element>
                 <ul>
-                  {risikoklassifisering.iayFaresignaler.faresignaler.map(faresignal => (
+                  {risikoklassifisering.iayFaresignaler.faresignaler.map((faresignal) => (
                     <li key={faresignal}>
                       <Normaltekst>{decodeHtmlEntity(faresignal)}</Normaltekst>
                     </li>
@@ -51,8 +50,7 @@ const Faresignaler = ({
               </FlexColumn>
             </FlexRow>
           </div>
-          )
-        }
+          )}
   </FlexContainer>
 );
 Faresignaler.propTypes = {

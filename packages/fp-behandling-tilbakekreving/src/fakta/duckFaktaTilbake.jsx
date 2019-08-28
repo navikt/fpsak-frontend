@@ -17,7 +17,7 @@ const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (d
 export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(faktaRedux.actionCreators.resolveFaktaAksjonspunkterStarted());
   return dispatch(tilbakekrevingBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then(response => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then((response) => dispatch(resolveFaktaAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 reducerRegistry.register(reducerName, faktaRedux.reducer);

@@ -10,7 +10,7 @@ const commonBehandlingAnkeSelectors = getCommonBehandlingSelectors(getSelectedBe
 
 const getMellomlagringData = createSelector(
   [ankeBehandlingApi.SAVE_ANKE_VURDERING.getRestApiMeta()],
-  data => (data ? data.params : {}),
+  (data) => (data ? data.params : {}),
 );
 
 const getMellomlagringSpinner = createSelector(

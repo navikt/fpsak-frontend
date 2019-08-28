@@ -27,7 +27,7 @@ const StatusForBorgerFaktaPanelImpl = ({
     </RadioGroupField>
 
     {erEosBorger && (
-      <React.Fragment>
+      <>
         <ArrowBox>
           <Undertekst>
             <FormattedMessage id="StatusForBorgerFaktaPanel.Oppholdsrett" />
@@ -46,10 +46,10 @@ const StatusForBorgerFaktaPanelImpl = ({
             />
           </RadioGroupField>
         </ArrowBox>
-      </React.Fragment>
+      </>
     )}
     {erEosBorger === false && (
-      <React.Fragment>
+      <>
         <ArrowBox alignOffset={130}>
           <Undertekst>
             <FormattedMessage id="StatusForBorgerFaktaPanel.LovligOpphold" />
@@ -68,7 +68,7 @@ const StatusForBorgerFaktaPanelImpl = ({
             />
           </RadioGroupField>
         </ArrowBox>
-      </React.Fragment>
+      </>
     )}
   </FaktaGruppe>
 );
@@ -88,30 +88,30 @@ const StatusForBorgerFaktaPanel = connect((state, ownProps) => ({
   ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
 }))(StatusForBorgerFaktaPanelImpl);
 
-const getApKode = aksjonspunkter => aksjonspunkter
-  .map(ap => ap.definisjon.kode)
-  .filter(kode => kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)[0];
+const getApKode = (aksjonspunkter) => aksjonspunkter
+  .map((ap) => ap.definisjon.kode)
+  .filter((kode) => kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)[0];
 
 const getEosBorger = (periode, aksjonspunkter) => (periode.erEosBorger || periode.erEosBorger === false
   ? periode.erEosBorger
-  : aksjonspunkter.some(ap => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT));
+  : aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT));
 
-const getOppholdsrettVurdering = periode => (periode.oppholdsrettVurdering
+const getOppholdsrettVurdering = (periode) => (periode.oppholdsrettVurdering
 || periode.oppholdsrettVurdering === false ? periode.oppholdsrettVurdering : undefined);
 
-const getLovligOppholdVurdering = periode => (periode.lovligOppholdVurdering || periode.lovligOppholdVurdering === false
+const getLovligOppholdVurdering = (periode) => (periode.lovligOppholdVurdering || periode.lovligOppholdVurdering === false
   ? periode.lovligOppholdVurdering : undefined);
 
 StatusForBorgerFaktaPanel.buildInitialValues = (periode, aksjonspunkter) => {
   const erEosBorger = getEosBorger(periode, aksjonspunkter);
 
   const closedAp = aksjonspunkter
-    .filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
+    .filter((ap) => periode.aksjonspunkter.includes(ap.definisjon.kode)
       || (periode.aksjonspunkter.length > 0
-        && periode.aksjonspunkter.some(pap => pap === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT
+        && periode.aksjonspunkter.some((pap) => pap === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT
           || pap === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)
         && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP))
-    .filter(ap => !isAksjonspunktOpen(ap.status.kode));
+    .filter((ap) => !isAksjonspunktOpen(ap.status.kode));
 
   return {
     erEosBorger,

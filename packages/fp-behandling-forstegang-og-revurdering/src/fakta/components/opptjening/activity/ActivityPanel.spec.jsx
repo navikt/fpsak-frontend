@@ -5,7 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { FormattedMessage } from 'react-intl';
 import {
- PeriodpickerField, SelectField, RadioGroupField, TextAreaField,
+  PeriodpickerField, SelectField, RadioGroupField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -177,7 +177,7 @@ describe('<ActivityPanel>', () => {
 
     const select = wrapper.find(SelectField);
     expect(select).to.have.length(1);
-    expect(select.prop('selectValues').map(sv => sv.key)).is.eql([OAType.ARBEID, OAType.NARING]);
+    expect(select.prop('selectValues').map((sv) => sv.key)).is.eql([OAType.ARBEID, OAType.NARING]);
     expect(select.prop('readOnly')).is.false;
   });
 

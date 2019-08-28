@@ -80,7 +80,7 @@ FrilansOppdragForFamilieFieldArray.propTypes = {
 
 FrilansOppdragForFamilieFieldArray.validate = (values) => {
   const { oppdragPerioder, perioder } = values;
-  const sortedFomDates = perioder.map(p => p.periodeFom).filter(p => p && p !== '')
+  const sortedFomDates = perioder.map((p) => p.periodeFom).filter((p) => p && p !== '')
     .sort((periodeFom1, periodeFom2) => moment(periodeFom1, ISO_DATE_FORMAT).diff(moment(periodeFom2, ISO_DATE_FORMAT)));
 
   const arrayErrors = oppdragPerioder.map(({ fomDato, tomDato }) => {
@@ -104,7 +104,7 @@ FrilansOppdragForFamilieFieldArray.validate = (values) => {
     return null;
   });
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   return null;

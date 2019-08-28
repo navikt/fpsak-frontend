@@ -35,18 +35,18 @@ import styles from './sokersOpplysningspliktForm.less';
 const formName = 'SokersOpplysningspliktForm';
 
 const orgPrefix = 'org_';
-const findRadioButtonTextCode = erVilkarOk => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
-const getLabel = intl => (
+const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
+const getLabel = (intl) => (
   <div>
     <div><FormattedHTMLMessage id={findRadioButtonTextCode(false)} /></div>
     <div>{intl.formatMessage({ id: 'SokersOpplysningspliktForm.VilkarIkkeOppfyltMerInfo' })}</div>
   </div>
 );
-const capitalizeFirstLetters = navn => navn.toLowerCase().split(' ').map(w => w.charAt(0).toUpperCase() + w.substr(1)).join(' ');
-const formatArbeidsgiver = arbeidsgiver => (arbeidsgiver
+const capitalizeFirstLetters = (navn) => navn.toLowerCase().split(' ').map((w) => w.charAt(0).toUpperCase() + w.substr(1)).join(' ');
+const formatArbeidsgiver = (arbeidsgiver) => (arbeidsgiver
   ? `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`
   : '');
-const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some(vd => !vd);
+const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some((vd) => !vd);
 
 /**
  * SokersOpplysningspliktForm
@@ -87,25 +87,22 @@ export const SokersOpplysningspliktFormImpl = ({
         <Row>
           <Column xs="11">
             <Table noHover>
-              {manglendeVedlegg.map(vedlegg => (
+              {manglendeVedlegg.map((vedlegg) => (
                 <TableRow key={vedlegg.dokumentType.kode + (vedlegg.arbeidsgiver ? vedlegg.arbeidsgiver.organisasjonsnummer : '')}>
                   <TableColumn>
-                    {dokumentTypeIds.find(dti => dti.kode === vedlegg.dokumentType.kode).navn}
+                    {dokumentTypeIds.find((dti) => dti.kode === vedlegg.dokumentType.kode).navn}
                   </TableColumn>
                   <TableColumn>
                     {vedlegg.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING
-                    && formatArbeidsgiver(vedlegg.arbeidsgiver)
-                  }
+                    && formatArbeidsgiver(vedlegg.arbeidsgiver)}
                   </TableColumn>
                 </TableRow>
-              ))
-      }
+              ))}
             </Table>
           </Column>
         </Row>
       </ElementWrapper>
-      )
-    }
+      )}
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     {!readOnly
       && (
@@ -125,8 +122,7 @@ export const SokersOpplysningspliktFormImpl = ({
           </RadioGroupField>
         </Column>
       </Row>
-      )
-    }
+      )}
     {readOnly
       && (
       <ElementWrapper>
@@ -135,12 +131,10 @@ export const SokersOpplysningspliktFormImpl = ({
             {[<RadioOption key="dummy" label={<FormattedHTMLMessage id={findRadioButtonTextCode(erVilkarOk)} />} value="" />]}
           </RadioGroupField>
           {erVilkarOk === false && behandlingsresultat.avslagsarsak
-        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>
-      }
+        && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>}
         </div>
       </ElementWrapper>
-      )
-    }
+      )}
   </BpPanelTemplate>
 );
 
@@ -174,11 +168,11 @@ SokersOpplysningspliktFormImpl.defaultProps = {
   inntektsmeldingerSomIkkeKommer: {},
 };
 
-export const getSortedManglendeVedlegg = createSelector([behandlingSelectors.getSoknad], soknad => (soknad && soknad.manglendeVedlegg
-  ? soknad.manglendeVedlegg.slice().sort(mv1 => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
+export const getSortedManglendeVedlegg = createSelector([behandlingSelectors.getSoknad], (soknad) => (soknad && soknad.manglendeVedlegg
+  ? soknad.manglendeVedlegg.slice().sort((mv1) => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
   : []));
 
-const hasSoknad = createSelector([behandlingSelectors.getSoknad], soknad => soknad !== null && isObject(soknad));
+const hasSoknad = createSelector([behandlingSelectors.getSoknad], (soknad) => soknad !== null && isObject(soknad));
 
 export const buildInitialValues = createSelector(
   [getSortedManglendeVedlegg, hasSoknad, behandlingsprosessSelectors.getSelectedBehandlingspunktStatus,
@@ -189,7 +183,7 @@ export const buildInitialValues = createSelector(
     const isVilkarGodkjent = soknadExists && vilkarUtfallType.OPPFYLT === status;
 
     const inntektsmeldingerSomIkkeKommer = manglendeVedlegg
-      .filter(mv => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+      .filter((mv) => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
       .reduce((acc, mv) => ({
         ...acc,
         [`${orgPrefix}${mv.arbeidsgiver.organisasjonsnummer}`]: mv.brukerHarSagtAtIkkeKommer,
@@ -205,10 +199,10 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: values.aksjonspunktKode,
   erVilkarOk: values.erVilkarOk,
-  inntektsmeldingerSomIkkeKommer: Object.keys(values.inntektsmeldingerSomIkkeKommer).map(key => ({
+  inntektsmeldingerSomIkkeKommer: Object.keys(values.inntektsmeldingerSomIkkeKommer).map((key) => ({
     organisasjonsnummer: key.replace(orgPrefix, ''),
     brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[key],
   }), {}),
@@ -216,8 +210,8 @@ const transformValues = values => ({
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     onSubmit,
     hasSoknad: hasSoknad(state),
     behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
@@ -232,6 +226,6 @@ const SokersOpplysningspliktForm = connect(mapStateToPropsFactory)(injectIntl(be
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
 
-SokersOpplysningspliktForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT;
+SokersOpplysningspliktForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT;
 
 export default SokersOpplysningspliktForm;

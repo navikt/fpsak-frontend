@@ -42,7 +42,7 @@ const gyldigeUttakperioder = [
   uttakPeriodeType.MODREKVOTE,
   uttakPeriodeType.UDEFINERT];
 
-const mapPeriodeTyper = typer => typer
+const mapPeriodeTyper = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
@@ -57,7 +57,7 @@ const utsettelse = (erOppfylt, utsettelseType) => {
 
 const merEnNullMessage = () => ([{ id: 'ValidationMessage.MerEnNullUtaksprosent' }]);
 const noMoreThanZeroIfRejectedAndNotUtsettelse = (value, elmnt) => (utsettelse(elmnt.erOppfylt, elmnt.utsettelseType) && parseFloat(value) > 0
-    ? merEnNullMessage() : null);
+  ? merEnNullMessage() : null);
 
 const createTextStrings = (fields) => {
   const {
@@ -107,7 +107,8 @@ export const RenderUttakTableImpl = ({
                   label=""
                   readOnly={readOnly}
                   validate={
-                    checkForMonthsOrDays(uttakElementFieldId) ? [required, notDash] : []}
+                    checkForMonthsOrDays(uttakElementFieldId) ? [required, notDash] : []
+}
                 />
               </div>
             </TableColumn>
@@ -139,7 +140,7 @@ export const RenderUttakTableImpl = ({
                       readOnly={readOnly}
                       bredde="XS"
                       validate={[required, hasValidDecimal, maxLength3]}
-                      normalizeOnBlur={value => (parseFloat(value).toFixed(1))}
+                      normalizeOnBlur={(value) => (parseFloat(value).toFixed(1))}
                     />
                   </Column>
                 </div>
@@ -160,7 +161,7 @@ export const RenderUttakTableImpl = ({
                       }
                       return '';
                     }}
-                    normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                    normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                   />
                 </Column>
                 <Column xs="3">
@@ -169,8 +170,7 @@ export const RenderUttakTableImpl = ({
                     <span className={styles.verticalCharPlacementInTable}>
                       %
                     </span>
-                    )
-                  }
+                    )}
                 </Column>
               </Row>
             </TableColumn>
@@ -178,8 +178,7 @@ export const RenderUttakTableImpl = ({
         );
       })}
     </Table>
-    )
-    }
+    )}
   </div>
 );
 

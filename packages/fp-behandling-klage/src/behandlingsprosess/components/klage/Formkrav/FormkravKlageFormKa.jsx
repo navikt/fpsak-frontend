@@ -73,8 +73,8 @@ const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     onSubmit,
@@ -85,6 +85,6 @@ const FormkravKlageFormKa = connect(mapStateToPropsFactory)(behandlingFormKlage(
   form: formName,
 })(FormkravKlageFormKaImpl));
 
-FormkravKlageFormKa.supports = apCodes => apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA);
+FormkravKlageFormKa.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA);
 
 export default FormkravKlageFormKa;

@@ -66,7 +66,7 @@ UtlandEndretModalImpl.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.closeEvent(values);
+  const onSubmit = (values) => ownProps.closeEvent(values);
   return () => ({
     onSubmit,
   });

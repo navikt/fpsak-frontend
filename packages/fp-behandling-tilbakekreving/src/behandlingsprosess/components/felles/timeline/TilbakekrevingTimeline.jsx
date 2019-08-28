@@ -18,7 +18,7 @@ import styles from './tilbakekrevingTimeline.less';
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';
 export const AVVIST_CLASSNAME = 'avvistPeriode';
 
-const isKvinne = kode => kode === navBrukerKjonn.KVINNE;
+const isKvinne = (kode) => kode === navBrukerKjonn.KVINNE;
 
 const getOptions = (sortedPeriods) => {
   const firstPeriod = sortedPeriods[0];
@@ -52,7 +52,7 @@ const getOptions = (sortedPeriods) => {
   };
 };
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT)
+const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT)
   .toDate();
 
 function sortByDate(a, b) {
@@ -65,7 +65,7 @@ function sortByDate(a, b) {
   return 0;
 }
 
-const parseDates = item => ({
+const parseDates = (item) => ({
   ...item,
   start: parseDateString(item.fom),
   end: parseDateString(moment(item.tom)
@@ -84,11 +84,11 @@ const formatItems = (periodItems = []) => {
 
 const formatGroups = (periodItems = []) => {
   const duplicatesRemoved = periodItems.reduce((accPeriods, period) => {
-    const hasPeriod = accPeriods.some(p => p.group === period.group);
+    const hasPeriod = accPeriods.some((p) => p.group === period.group);
     if (!hasPeriod) accPeriods.push(period);
     return accPeriods;
   }, []);
-  return duplicatesRemoved.map(activity => ({
+  return duplicatesRemoved.map((activity) => ({
     id: activity.group,
     content: '',
   }));

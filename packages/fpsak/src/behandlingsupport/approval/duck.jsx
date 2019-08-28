@@ -1,13 +1,13 @@
 import fpsakApi from 'data/fpsakApi';
 import { getTotrinnskontrollArsaker } from 'behandling/duck';
 
-export const fetchApprovalVedtaksbrevPreview = data => dispatch => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
+export const fetchApprovalVedtaksbrevPreview = (data) => (dispatch) => dispatch(fpsakApi.FORHANDSVISNING_FORVED_BREV.makeRestApiRequest()(data));
 
-export const approve = (erTilbakekreving, params) => dispatch => (erTilbakekreving
-    ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.makeRestApiRequest()(params))
-    : dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params)));
+export const approve = (erTilbakekreving, params) => (dispatch) => (erTilbakekreving
+  ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.makeRestApiRequest()(params))
+  : dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params)));
 
-export const resetApproval = erTilbakekreving => dispatch => (erTilbakekreving
+export const resetApproval = (erTilbakekreving) => (dispatch) => (erTilbakekreving
   ? dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE.resetRestApi())
   : dispatch(fpsakApi.SAVE_AKSJONSPUNKT.resetRestApi()));
 

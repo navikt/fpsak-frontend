@@ -29,9 +29,9 @@ export const isKlageWithKA = (klageVurderingResultatNK) => {
   return meholdIKlageAvNK;
 };
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
-const buildVarigEndringBeregningText = beregningDto => (beregningDto.fastsattVarigEndringNaering ? (
+const buildVarigEndringBeregningText = (beregningDto) => (beregningDto.fastsattVarigEndringNaering ? (
   <FormattedMessage
     id="ToTrinnsForm.Beregning.VarigEndring"
   />
@@ -54,7 +54,7 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
       return formattedMessages;
     }
   }
-  const type = arbeidsforholdHandlingTyper.find(t => t.kode === kode);
+  const type = arbeidsforholdHandlingTyper.find((t) => t.kode === kode);
   const melding = type !== undefined && type !== null ? type.navn : '';
   formattedMessages.push(<FormattedHTMLMessage id="ToTrinnsForm.FaktaOmArbeidsforhold.Melding" values={{ melding }} />);
   return formattedMessages;
@@ -63,7 +63,7 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
 const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map((arbeidforholdDto) => {
   const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
   return (
-    <React.Fragment>
+    <>
       <FormattedHTMLMessage
         id="ToTrinnsForm.OpplysningerOmSøker.Arbeidsforhold"
         values={{
@@ -72,18 +72,18 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => a
           arbeidsforholdId: arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : '',
         }}
       />
-      { formattedMessages.map(formattedMessage => (
+      { formattedMessages.map((formattedMessage) => (
         <React.Fragment key={formattedMessage.props.id}>
           {' '}
           {formattedMessage}
           {' '}
         </React.Fragment>
       ))}
-    </React.Fragment>
+    </>
   );
 });
 
-const buildUttakText = aksjonspunkt => aksjonspunkt.uttakPerioder.map((uttakperiode) => {
+const buildUttakText = (aksjonspunkt) => aksjonspunkt.uttakPerioder.map((uttakperiode) => {
   const fom = formatDate(uttakperiode.fom);
   const tom = formatDate(uttakperiode.tom);
   let id;
@@ -114,7 +114,7 @@ const buildUttakText = aksjonspunkt => aksjonspunkt.uttakPerioder.map((uttakperi
   );
 });
 
-const buildOpptjeningText = aksjonspunkt => aksjonspunkt.opptjeningAktiviteter.map(aktivitet => (
+const buildOpptjeningText = (aksjonspunkt) => aksjonspunkt.opptjeningAktiviteter.map((aktivitet) => (
   <OpptjeningTotrinnText
     aktivitet={aktivitet}
   />
@@ -142,7 +142,7 @@ const getFaktaOmBeregningText = (beregningDto) => {
     return null;
   }
   const aksjonspunktTextIds = beregningDto.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
-  return aksjonspunktTextIds.map(aksjonspunktTextId => (aksjonspunktTextId ? (
+  return aksjonspunktTextIds.map((aksjonspunktTextId) => (aksjonspunktTextId ? (
     <FormattedMessage
       id={aksjonspunktTextId}
     />
@@ -199,7 +199,7 @@ const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
 
 const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
 
-const erKlageAksjonspunkt = aksjonspunkt => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
+const erKlageAksjonspunkt = (aksjonspunkt) => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;

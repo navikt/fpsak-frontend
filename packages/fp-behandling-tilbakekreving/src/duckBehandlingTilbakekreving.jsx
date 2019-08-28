@@ -31,11 +31,11 @@ export const {
   getSelectedBehandlingId,
 } = behandlingRedux.selectors;
 
-export const fetchPreviewVedtaksbrev = vedtaksbrevdata => dispatch => dispatch(
+export const fetchPreviewVedtaksbrev = (vedtaksbrevdata) => (dispatch) => dispatch(
   tilbakekrevingBehandlingApi.PREVIEW_VEDTAKSBREV.makeRestApiRequest()(vedtaksbrevdata),
 );
 
-export const getTilbakekrevingKodeverk = kodeverkType => createSelector(
+export const getTilbakekrevingKodeverk = (kodeverkType) => createSelector(
   [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk[kodeverkType],
 );
 export const getAlleTilbakekrevingKodeverk = createSelector(

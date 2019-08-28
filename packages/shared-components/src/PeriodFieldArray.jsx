@@ -36,7 +36,7 @@ const getRemoveButton = (index, fields) => (className) => {
   return undefined;
 };
 
-const showErrorMessage = meta => meta && meta.error && (meta.dirty || meta.submitFailed);
+const showErrorMessage = (meta) => meta && meta.error && (meta.dirty || meta.submitFailed);
 
 /**
  * PeriodFieldArray
@@ -79,8 +79,7 @@ const PeriodFieldArray = ({
               <FormattedMessage id={textCode} />
             </Undertekst>
           </div>
-          )
-        }
+          )}
         {createAddButtonInsteadOfImageLink && !readOnly && (
           <button
             type="button"
@@ -89,13 +88,11 @@ const PeriodFieldArray = ({
           >
             <FormattedMessage id={textCode} />
           </button>
-        )
-        }
+        )}
         <VerticalSpacer sixteenPx />
       </Column>
     </Row>
-    )
-    }
+    )}
   </NavFieldGroup>
 );
 

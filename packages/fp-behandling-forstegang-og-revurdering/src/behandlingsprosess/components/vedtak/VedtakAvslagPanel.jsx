@@ -21,7 +21,7 @@ import {
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 
 export const getAvslagArsak = (vilkar, aksjonspunkter, behandlingsresultat, getKodeverknavn) => {
-  const avslatteVilkar = vilkar.filter(v => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
+  const avslatteVilkar = vilkar.filter((v) => v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   if (avslatteVilkar.length === 0) {
     return <FormattedMessage id="VedtakForm.UttaksperioderIkkeGyldig" />;
   }
@@ -64,8 +64,7 @@ export const VedtakAvslagPanelImpl = ({
         </Normaltekst>
         <VerticalSpacer sixteenPx />
       </div>
-      )
-      }
+      )}
       {(fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || fritekstfeltForBeregningsgrunnlag)
       && (
       <VedtakFritekstPanel
@@ -74,8 +73,7 @@ export const VedtakAvslagPanelImpl = ({
         behandlingsresultat={behandlingsresultat}
         labelTextCode={textCode}
       />
-      )
-      }
+      )}
     </div>
   );
 };
@@ -97,7 +95,7 @@ VedtakAvslagPanelImpl.defaultProps = {
   tilbakekrevingText: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ytelseType: getFagsakYtelseType(state).kode,
   vilkar: behandlingSelectors.getBehandlingVilkar(state),
   sprakkode: behandlingSelectors.getBehandlingSprak(state),

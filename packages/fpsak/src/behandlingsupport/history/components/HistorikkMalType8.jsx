@@ -58,7 +58,8 @@ const HistorikkMalType8 = ({
     historikkinnslagDeler.map((
       historikkinnslagDel, historikkinnslagDelIndex,
     ) => (
-      <div key={`historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+      <div key={
+        `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
       }
       >
         <div>
@@ -71,21 +72,18 @@ const HistorikkMalType8 = ({
                 {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
               </NavLink>
             </Element>
-          )
-          }
+          )}
 
           {historikkinnslagDel.hendelse
-          && <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>
-          }
+          && <Element>{findHendelseText(historikkinnslagDel.hendelse, getKodeverknavn)}</Element>}
 
           {historikkinnslagDel.resultat
-          && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>
-          }
+          && <Element>{findResultatText(historikkinnslagDel.resultat, intl)}</Element>}
 
           {historikkinnslagDel.endredeFelter && historikkinnslagDel.endredeFelter
             .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
 
-          {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger.map(opplysning => (
+          {historikkinnslagDel.opplysninger && historikkinnslagDel.opplysninger.map((opplysning) => (
             <FormattedHTMLMessage
               id={findIdForOpplysningCode(opplysning)}
               values={{ antallBarn: opplysning.tilVerdi }}
@@ -96,7 +94,7 @@ const HistorikkMalType8 = ({
           {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
           {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
           <div>
-            {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+            {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
               <HistorikkDokumentLenke
                 key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
                 dokumentLenke={dokumentLenke}

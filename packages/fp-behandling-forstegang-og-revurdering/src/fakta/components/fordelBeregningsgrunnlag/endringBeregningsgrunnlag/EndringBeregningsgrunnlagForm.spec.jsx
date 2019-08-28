@@ -272,11 +272,11 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [andel1, andel2];
     const endringBGPerioder = [{ fom: '2018-01-01', tom: null }];
     const beregningsgrunnlag = {
- beregningsgrunnlagPeriode: [{
-      beregningsgrunnlagPeriodeFom: '2018-01-01',
-      beregningsgrunnlagPrStatusOgAndel: [],
-}],
-};
+      beregningsgrunnlagPeriode: [{
+        beregningsgrunnlagPeriodeFom: '2018-01-01',
+        beregningsgrunnlagPrStatusOgAndel: [],
+      }],
+    };
     const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
@@ -287,15 +287,15 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(1)] = [andel1, andel2];
     const endringBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
     const beregningsgrunnlag = {
- beregningsgrunnlagPeriode: [{
-      beregningsgrunnlagPeriodeFom: '2018-01-01',
-      beregningsgrunnlagPrStatusOgAndel: [],
-},
-{
-  beregningsgrunnlagPeriodeFom: '2018-07-02',
-  beregningsgrunnlagPrStatusOgAndel: [],
-}],
-};
+      beregningsgrunnlagPeriode: [{
+        beregningsgrunnlagPeriodeFom: '2018-01-01',
+        beregningsgrunnlagPrStatusOgAndel: [],
+      },
+      {
+        beregningsgrunnlagPeriodeFom: '2018-07-02',
+        beregningsgrunnlagPrStatusOgAndel: [],
+      }],
+    };
     const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
@@ -331,12 +331,12 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
   it('skal transforme perioder for submit', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
-beregningsgrunnlagPeriodeTom: '2018-06-01',
+      beregningsgrunnlagPeriodeTom: '2018-06-01',
       periodeAarsaker: [],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
-beregningsgrunnlagPeriodeTom: null,
+      beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     }];
     const endringBGPerioder = [
@@ -373,17 +373,17 @@ beregningsgrunnlagPeriodeTom: null,
   it('skal transforme perioder for submit når perioder er slått sammen', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
-beregningsgrunnlagPeriodeTom: '2018-06-01',
+      beregningsgrunnlagPeriodeTom: '2018-06-01',
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
-beregningsgrunnlagPeriodeTom: '2018-10-01',
+      beregningsgrunnlagPeriodeTom: '2018-10-01',
       periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
-beregningsgrunnlagPeriodeTom: null,
+      beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const endringBGPerioder = [
@@ -443,17 +443,17 @@ beregningsgrunnlagPeriodeTom: null,
   it('skal transforme perioder for submit når periode er slått sammen og inkluderer siste periode', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
-beregningsgrunnlagPeriodeTom: '2018-06-01',
+      beregningsgrunnlagPeriodeTom: '2018-06-01',
       periodeAarsaker: [],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
-beregningsgrunnlagPeriodeTom: '2018-10-01',
+      beregningsgrunnlagPeriodeTom: '2018-10-01',
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
-beregningsgrunnlagPeriodeTom: null,
+      beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     }];
     const endringBGPerioder = [
@@ -514,22 +514,22 @@ beregningsgrunnlagPeriodeTom: null,
   it('skal transforme perioder for submit når 2 perioder i midten er slått sammen, totalt 4 perioder', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '2018-01-01',
-beregningsgrunnlagPeriodeTom: '2018-06-01',
+      beregningsgrunnlagPeriodeTom: '2018-06-01',
       periodeAarsaker: [],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-06-02',
-beregningsgrunnlagPeriodeTom: '2018-10-01',
+      beregningsgrunnlagPeriodeTom: '2018-10-01',
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-10-02',
-beregningsgrunnlagPeriodeTom: '2018-11-01',
+      beregningsgrunnlagPeriodeTom: '2018-11-01',
       periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     },
     {
       beregningsgrunnlagPeriodeFom: '2018-11-02',
-beregningsgrunnlagPeriodeTom: null,
+      beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const endringBGPerioder = [

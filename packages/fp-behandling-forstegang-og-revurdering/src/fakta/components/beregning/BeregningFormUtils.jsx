@@ -10,18 +10,18 @@ export const formNameVurderFaktaBeregning = 'vurderFaktaBeregningForm';
 export const MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD = 'manuellOverstyringRapportertInntekt';
 
 export const getFormValuesForAvklarAktiviteter = createSelector([
-  getBehandlingFormValues(formNameAvklarAktiviteter)], values => values);
+  getBehandlingFormValues(formNameAvklarAktiviteter)], (values) => values);
 
 export const getFormInitialValuesForAvklarAktiviteter = createSelector([
-  getBehandlingFormInitialValues(formNameAvklarAktiviteter)], values => values);
+  getBehandlingFormInitialValues(formNameAvklarAktiviteter)], (values) => values);
 
-  export const isAvklarAktiviteterFormDirty = state => isBehandlingFormDirty(formNameAvklarAktiviteter)(state);
+export const isAvklarAktiviteterFormDirty = (state) => isBehandlingFormDirty(formNameAvklarAktiviteter)(state);
 
 
 export const getFormValuesForBeregning = createSelector([
-  getBehandlingFormValues(formNameVurderFaktaBeregning)], values => values);
+  getBehandlingFormValues(formNameVurderFaktaBeregning)], (values) => values);
 
 export const getFormInitialValuesForBeregning = createSelector([
-  getBehandlingFormInitialValues(formNameVurderFaktaBeregning)], values => values);
+  getBehandlingFormInitialValues(formNameVurderFaktaBeregning)], (values) => values);
 
-export const isBeregningFormDirty = state => isBehandlingFormDirty(formNameVurderFaktaBeregning)(state);
+export const isBeregningFormDirty = (state) => isBehandlingFormDirty(formNameVurderFaktaBeregning)(state);

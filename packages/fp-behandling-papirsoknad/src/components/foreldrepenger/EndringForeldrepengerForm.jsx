@@ -45,12 +45,12 @@ export class EndringForeldrepengerForm extends Component {
 }
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const validate = values => PermisjonPanel.validate(values, ownProps.soknadData);
+  const validate = (values) => PermisjonPanel.validate(values, ownProps.soknadData);
   const initialValues = buildInitialValues();
 
   return (state) => {
     const registeredFields = getRegisteredFields(ENDRING_FORELDREPENGER_FORM_NAME)(state);
-    const registeredFieldNames = Object.values(registeredFields).map(rf => rf.name);
+    const registeredFieldNames = Object.values(registeredFields).map((rf) => rf.name);
     const valuesForRegisteredFieldsOnly = registeredFieldNames.length
       ? {
         ...formValueSelector(ENDRING_FORELDREPENGER_FORM_NAME)(state, ...registeredFieldNames),

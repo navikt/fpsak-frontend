@@ -49,11 +49,11 @@ VilkarBegrunnelseImpl.defaultProps = {
 
 const VilkarBegrunnelse = injectIntl(VilkarBegrunnelseImpl);
 
-VilkarBegrunnelse.buildInitialValues = aksjonspunkt => ({
+VilkarBegrunnelse.buildInitialValues = (aksjonspunkt) => ({
   begrunnelse: decodeHtmlEntity(aksjonspunkt && aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : ''),
 });
 
-VilkarBegrunnelse.transformValues = values => ({
+VilkarBegrunnelse.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });
 

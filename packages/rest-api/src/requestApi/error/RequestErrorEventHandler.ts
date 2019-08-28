@@ -7,9 +7,9 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 type NotificationEmitter = (eventType: keyof typeof EventType, data?: any, isPollingRequest?: boolean) => void
 
-const isString = value => typeof value === 'string';
+const isString = (value) => typeof value === 'string';
 
-const isOfTypeBlob = error => error && error.config && error.config.responseType === 'blob';
+const isOfTypeBlob = (error) => error && error.config && error.config.responseType === 'blob';
 
 const blobParser = (blob: any): Promise<string> => {
   const fileReader = new FileReader();

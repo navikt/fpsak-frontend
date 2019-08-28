@@ -52,8 +52,7 @@ export const PermisjonUtsettelsePanel = ({
         utsettelseKvoter={utsettelseKvoter}
         readOnly={readOnly}
       />
-      )
-    }
+      )}
   </div>
 );
 

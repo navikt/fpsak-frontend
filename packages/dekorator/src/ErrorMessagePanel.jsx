@@ -73,8 +73,8 @@ export class ErrorMessagePanel extends Component {
                 <Undertekst>
                   <a
                     href=""
-                    onClick={event => this.toggleModalOnClick(event, index)}
-                    onKeyDown={event => this.toggleModalOnKeyDown(event, index)}
+                    onClick={(event) => this.toggleModalOnClick(event, index)}
+                    onKeyDown={(event) => this.toggleModalOnKeyDown(event, index)}
                     className={styles.link}
                   >
                     <FormattedMessage id="ErrorMessagePanel.ErrorDetails" />
@@ -94,8 +94,7 @@ export class ErrorMessagePanel extends Component {
             closeModalFn={this.toggleModalOnClick}
             errorDetails={errorMessages[selectedErrorMsgIndex].additionalInfo}
           />
-          )
-        }
+          )}
       </div>
     );
   }

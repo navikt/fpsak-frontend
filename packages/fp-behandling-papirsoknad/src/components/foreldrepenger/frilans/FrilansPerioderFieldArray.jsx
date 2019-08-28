@@ -51,8 +51,7 @@ export const FrilansPerioderFieldArray = ({
           </FlexContainer>
         </Column>
       </Row>
-    )
-  }
+    )}
   </PeriodFieldArray>
 );
 
@@ -83,7 +82,7 @@ FrilansPerioderFieldArray.validate = (values) => {
     return null;
   });
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   return null;

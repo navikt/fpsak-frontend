@@ -17,7 +17,7 @@ const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPe
   const firstElement = showCollapseButton ? <CollapseButton {...collapseProps} key={`collapseButton-${rangeOfMonths.length}`} /> : <div />;
   return [
     firstElement,
-    ...rangeOfMonths.map(month => (
+    ...rangeOfMonths.map((month) => (
       <span
         className={classNames({
           nextPeriod: isNextPeriod(month, nextPeriod),
@@ -31,10 +31,10 @@ const getHeaderCodes = (showCollapseButton, collapseProps, rangeOfMonths, nextPe
   ];
 };
 
-const showCollapseButton = mottakerResultatPerFag => mottakerResultatPerFag.some(fag => fag.rader.length > 1);
+const showCollapseButton = (mottakerResultatPerFag) => mottakerResultatPerFag.some((fag) => fag.rader.length > 1);
 
 const rowToggable = (fagOmråde, rowIsFeilUtbetalt) => {
-  const fagFeilUtbetalt = fagOmråde.rader.find(rad => rad.feltnavn === avregningCodes.DIFFERANSE);
+  const fagFeilUtbetalt = fagOmråde.rader.find((rad) => rad.feltnavn === avregningCodes.DIFFERANSE);
   return fagFeilUtbetalt && !rowIsFeilUtbetalt;
 };
 
@@ -44,7 +44,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
   const nextPeriodFormatted = `${moment(nextPeriod).format('MMMMYY')}`;
 
   const perioderData = rangeOfMonths.map((month) => {
-    const periodeExists = perioder.find(periode => moment(periode.periode.tom).format('MMMMYY') === `${month.month}${month.year}`);
+    const periodeExists = perioder.find((periode) => moment(periode.periode.tom).format('MMMMYY') === `${month.month}${month.year}`);
     return periodeExists || { måned: `${month.month}${month.year}`, beløp: null };
   });
 
@@ -61,7 +61,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
   ));
 };
 
-const tableTitle = mottaker => (mottaker.mottakerType.kode === mottakerTyper.ARBG
+const tableTitle = (mottaker) => (mottaker.mottakerType.kode === mottakerTyper.ARBG
   ? (
     <Normaltekst className={styles.tableTitle}>
       {mottaker.mottakerNavn}
@@ -78,7 +78,7 @@ const getResultatRadene = (ingenPerioderMedAvvik, resultatPerFagområde, resulta
   if (!ingenPerioderMedAvvik) {
     return resultatOgMotregningRader;
   }
-  return resultatPerFagområde.length > 1 ? resultatOgMotregningRader.filter(resultat => resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED) : [];
+  return resultatPerFagområde.length > 1 ? resultatOgMotregningRader.filter((resultat) => resultat.feltnavn !== avregningCodes.INNTREKKNESTEMÅNED) : [];
 };
 
 const avvikBruker = (ingenPerioderMedAvvik, mottakerTypeKode) => (!!(ingenPerioderMedAvvik && mottakerTypeKode === mottakerTyper.BRUKER));
@@ -96,7 +96,7 @@ const AvregningTable = ({
   simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
     const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periodeFom, mottaker);
     const nesteMåned = mottaker.nestUtbPeriodeTom;
-    const visDetaljer = showDetails.find(d => d.id === mottakerIndex);
+    const visDetaljer = showDetails.find((d) => d.id === mottakerIndex);
     return (
       <div className={styles.tableWrapper} key={`tableIndex${mottakerIndex + 1}`}>
         { tableTitle(mottaker) }
@@ -147,8 +147,7 @@ const AvregningTable = ({
                   </TableColumn>
                   {createColumns(resultat.resultaterPerMåned, rangeOfMonths, nesteMåned)}
                 </TableRow>
-              )))
-        }
+              )))}
         </Table>
       </div>
     );

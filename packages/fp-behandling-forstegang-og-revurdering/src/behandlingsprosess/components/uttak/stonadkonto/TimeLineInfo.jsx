@@ -106,7 +106,7 @@ class TimeLineInfo extends Component {
       stonadskontoType.FORELDREPENGER,
       stonadskontoType.FLERBARNSDAGER];
 
-    const stonadArray = Object.keys(stonadskonto).map(key => ({
+    const stonadArray = Object.keys(stonadskonto).map((key) => ({
       kontonavn: key,
       kontoinfo: stonadskonto[key],
     }));
@@ -160,16 +160,14 @@ class TimeLineInfo extends Component {
                       />
                     </Normaltekst>
                   </Column>
-                )
-                }
+                )}
               </Row>
               <Row>
                 <div className={styles.tabs}>
                   <ul role="tablist">
                     {stonadArray.map((konto, index) => (
                       <TimeLineTab key={konto.kontonavn} aktiv={index === aktiv} stonadskonto={konto} onClickCallback={() => this.handleChange(konto, index)} />
-                    ))
-                    }
+                    ))}
                   </ul>
                 </div>
               </Row>
@@ -178,7 +176,7 @@ class TimeLineInfo extends Component {
                 && (
                   <div className={styles.visKonto}>
                     <Table headerTextCodes={headerTextCodes}>
-                      {updatekonto.kontoinfo.aktivitetSaldoDtoList.map(arbforhold => (
+                      {updatekonto.kontoinfo.aktivitetSaldoDtoList.map((arbforhold) => (
                         <TableRow key={createKey(arbforhold)}>
                           <TableColumn>
                             <Normaltekst>{createTextStrings(arbforhold.aktivitetIdentifikator)}</Normaltekst>
@@ -198,22 +196,18 @@ class TimeLineInfo extends Component {
                                   ).dager,
                                 }}
                               />
-                              )
-                              }
+                              )}
                             </Normaltekst>
                           </TableColumn>
                         </TableRow>
-                      ))
-                      }
+                      ))}
                     </Table>
                   </div>
-                )
-                }
+                )}
               </Row>
             </div>
           </Column>
-        )
-        }
+        )}
       </div>
     );
   }

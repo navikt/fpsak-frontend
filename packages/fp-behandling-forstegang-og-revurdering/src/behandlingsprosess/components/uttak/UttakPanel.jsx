@@ -38,7 +38,7 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
 ];
 const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
-  const helptTextAksjonspunkter = aksjonspunkter.filter(ap => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
+  const helptTextAksjonspunkter = aksjonspunkter.filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.FASTSETT_UTTAKPERIODER
     && ap.definisjon.kode !== aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER);
 
   const uttakPanelAksjonsPunktKoder = {
@@ -54,7 +54,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   };
 
   const texts = [];
-  const [helpText] = uttaksresultat.perioderSøker.filter(p => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
+  const [helpText] = uttaksresultat.perioderSøker.filter((p) => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
 
   const overstyrApHelpTextOpen = aksjonspunkter.length === 1
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
@@ -114,8 +114,7 @@ export const UttakPanelImpl = ({
         </AksjonspunktHelpText>
         <VerticalSpacer twentyPx />
       </ElementWrapper>
-    )
-    }
+    )}
     {uttaksresultat
     && (
       <form onSubmit={formProps.handleSubmit}>
@@ -130,8 +129,7 @@ export const UttakPanelImpl = ({
           aksjonspunkter={aksjonspunkter}
         />
       </form>
-    )
-    }
+    )}
     {formProps.error && formProps.submitFailed
     && formProps.error}
   </FadingPanel>
@@ -180,7 +178,7 @@ const getResult = (uttaksresultatActivity) => {
 };
 
 
-const convertToArray = uttakResult => Object.values(uttakResult)
+const convertToArray = (uttakResult) => Object.values(uttakResult)
   .map((u) => {
     const uttakElement = { ...u };
     uttakElement.trekkdagerDesimaler = u.trekkdagerDesimaler;
@@ -188,49 +186,49 @@ const convertToArray = uttakResult => Object.values(uttakResult)
     return uttakElement;
   });
 
-  const getGjeldeneStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
-    switch (stonadskontoTypeKode) {
-      case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
-        return stonadskontoer.FORELDREPENGER_FØR_FØDSEL;
-      case stonadskontoType.FORELDREPENGER:
-        return stonadskontoer.FORELDREPENGER;
-      case stonadskontoType.FELLESPERIODE:
-        return stonadskontoer.FELLESPERIODE;
-      case stonadskontoType.MØDREKVOTE:
-        return stonadskontoer.MØDREKVOTE;
-      case stonadskontoType.FEDREKVOTE:
-        return stonadskontoer.FEDREKVOTE;
-      default:
-        return {};
-    }
-  };
+const getGjeldeneStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
+  switch (stonadskontoTypeKode) {
+    case stonadskontoType.FORELDREPENGER_FØR_FØDSEL:
+      return stonadskontoer.FORELDREPENGER_FØR_FØDSEL;
+    case stonadskontoType.FORELDREPENGER:
+      return stonadskontoer.FORELDREPENGER;
+    case stonadskontoType.FELLESPERIODE:
+      return stonadskontoer.FELLESPERIODE;
+    case stonadskontoType.MØDREKVOTE:
+      return stonadskontoer.MØDREKVOTE;
+    case stonadskontoType.FEDREKVOTE:
+      return stonadskontoer.FEDREKVOTE;
+    default:
+      return {};
+  }
+};
 
-  const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
-    let errors = null;
-    const uttakResult = getResult(uttaksresultatActivity);
-    const uttakResultArray = convertToArray(uttakResult);
-    uttakResultArray
-      .filter(res => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
-      .forEach((value) => {
-        const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
-        if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
-          errors = {
-            _error: (
-              <AlertStripe type="advarsel" className={styles.marginTop}>
-                <FormattedMessage
-                  id="ValidationMessage.NegativeSaldo"
-                  values={{
-                      periode: uttakPeriodeNavn[value.konto],
-                      days: gjeldeneStønadskonto.saldo * -1,
-                    }}
-                />
-              </AlertStripe>
-            ),
-          };
-        }
-      });
-    return errors;
-  };
+const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
+  let errors = null;
+  const uttakResult = getResult(uttaksresultatActivity);
+  const uttakResultArray = convertToArray(uttakResult);
+  uttakResultArray
+    .filter((res) => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
+    .forEach((value) => {
+      const gjeldeneStønadskonto = getGjeldeneStønadskonto(value.konto, stonadskonto.stonadskontoer);
+      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
+        errors = {
+          _error: (
+            <AlertStripe type="advarsel" className={styles.marginTop}>
+              <FormattedMessage
+                id="ValidationMessage.NegativeSaldo"
+                values={{
+                  periode: uttakPeriodeNavn[value.konto],
+                  days: gjeldeneStønadskonto.saldo * -1,
+                }}
+              />
+            </AlertStripe>
+          ),
+        };
+      }
+    });
+  return errors;
+};
 
 const checkFlerbarnsMaksDager = (stonadskonto = {}) => {
   let errors = null;
@@ -253,7 +251,7 @@ const checkFlerbarnsMaksDager = (stonadskonto = {}) => {
 const checkValidStonadKonto = (uttakPerioder, stonadskontoer) => {
   let errors = null;
   uttakPerioder.forEach((periode) => {
-    const ikkeGyldigKonto = periode.aktiviteter.filter(a => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode))
+    const ikkeGyldigKonto = periode.aktiviteter.filter((a) => !(Object.prototype.hasOwnProperty.call(stonadskontoer, a.stønadskontoType.kode))
       && (a.days >= 0 || a.weeks >= 0));
     if (ikkeGyldigKonto && ikkeGyldigKonto.length > 0) {
       errors = {
@@ -303,8 +301,8 @@ export const buildInitialValues = createSelector(
 );
 
 export const transformValues = (values, apCodes, aksjonspunkter) => {
-  const overstyrErOpprettet = aksjonspunkter.filter(ap => ap.status.kode === 'OPPR' && ap.definisjon.kode === '6008');
-  const removeOverstyrApCode = apCodes.filter(a => a !== '6008');
+  const overstyrErOpprettet = aksjonspunkter.filter((ap) => ap.status.kode === 'OPPR' && ap.definisjon.kode === '6008');
+  const removeOverstyrApCode = apCodes.filter((a) => a !== '6008');
   let aksjonspunkt = removeOverstyrApCode;
 
   const transformedResultat = values.uttaksresultatActivity.map((perioder) => {
@@ -332,7 +330,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
     aksjonspunkt = [aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER];
   }
 
-  return aksjonspunkt.map(ap => ({
+  return aksjonspunkt.map((ap) => ({
     kode: ap,
     perioder: transformedResultat,
   }));
@@ -343,10 +341,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
   const stonadskonto = getStonadskontoer(initialState);
 
-  const validate = values => validateUttakPanelForm(values);
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
+  const validate = (values) => validateUttakPanelForm(values);
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
 
-  return state => ({
+  return (state) => ({
     validate,
     onSubmit,
     uttaksresultat,
@@ -362,6 +360,6 @@ const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingFormFors
   enableReinitialize: false,
 })(UttakPanelImpl)));
 
-UttakPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.UTTAK || uttakAksjonspunkter.some(ap => apCodes.includes(ap));
+UttakPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.UTTAK || uttakAksjonspunkter.some((ap) => apCodes.includes(ap));
 
 export default UttakPanel;

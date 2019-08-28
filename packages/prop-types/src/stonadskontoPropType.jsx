@@ -9,7 +9,7 @@ export const stonadskontoPropType = PropTypes.shape({
 
 export const stonadskontoerPropType = PropTypes.shape((
   Object.values(stonadskontoType)
-    .filter(typeKode => typeKode !== stonadskontoType.UDEFINERT)
-    .map(typeKode => ({ [typeKode]: stonadskontoPropType }))
+    .filter((typeKode) => typeKode !== stonadskontoType.UDEFINERT)
+    .map((typeKode) => ({ [typeKode]: stonadskontoPropType }))
     .reduce((type1, type2) => ({ ...type1, ...type2 }))
 ));

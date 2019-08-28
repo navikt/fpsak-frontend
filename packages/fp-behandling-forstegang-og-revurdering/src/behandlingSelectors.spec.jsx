@@ -39,7 +39,7 @@ describe('behandlingSelectors', () => {
       };
 
       const statuser = getAktivitetStatuser.resultFunc(beregningsgrunnlag);
-      const codes = statuser.map(status => status.kode);
+      const codes = statuser.map((status) => status.kode);
       expect(codes).is.eql([aktivitetStatus.ARBEIDSTAKER, aktivitetStatus.FRILANSER]);
     });
 

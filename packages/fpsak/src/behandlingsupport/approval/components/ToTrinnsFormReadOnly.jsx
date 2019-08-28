@@ -57,8 +57,7 @@ const godkjendAksjonspunkt = (aksjonspunkt) => {
               </div>
             ))}
           </div>
-        )
-      }
+        )}
     </div>
   );
 };
@@ -101,13 +100,12 @@ export const ToTrinnsFormReadOnlyImpl = ({ approvalList, getAksjonspunktText }) 
               <NavLink to={skjermlenke}>
                 {skjermlenkeNavn}
               </NavLink>
-              {aksjonspunkter.map(aksjonspunkt => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
+              {aksjonspunkter.map((aksjonspunkt) => renderAksjonspunkt(aksjonspunkt, getAksjonspunktText))}
             </ElementWrapper>
           );
         }
         return null;
-      })
-      }
+      })}
     </div>
   );
 };
@@ -117,7 +115,7 @@ ToTrinnsFormReadOnlyImpl.propTypes = {
   getAksjonspunktText: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   getAksjonspunktText: getAksjonspunktTextSelector(state),
 });
 

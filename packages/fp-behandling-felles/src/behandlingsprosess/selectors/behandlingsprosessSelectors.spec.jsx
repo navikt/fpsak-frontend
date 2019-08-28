@@ -51,7 +51,7 @@ describe('behandlingsprosessSelectors', () => {
 
     const punktIds = getSelectors().getBehandlingspunkter.resultFunc(bpProps);
 
-    expect(punktIds).is.eql(bpProps.map(p => p.code));
+    expect(punktIds).is.eql(bpProps.map((p) => p.code));
   });
 
   it('skal hente behandlingspunkt-statuser', () => {

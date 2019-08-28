@@ -30,7 +30,7 @@ const { VURDER_DEKNINGSGRAD } = aksjonspunktCodes;
 
 const createAktivitetstatusString = (listeMedStatuser, getKodeverknavn) => {
   const tekstList = [];
-  const listeMedKoder = listeMedStatuser.map(status => status.kode);
+  const listeMedKoder = listeMedStatuser.map((status) => status.kode);
   if (listeMedKoder.includes(aktivitetStatus.DAGPENGER)) {
     tekstList.push('Tilstøtende ytelse dagpenger');
   }
@@ -40,7 +40,7 @@ const createAktivitetstatusString = (listeMedStatuser, getKodeverknavn) => {
   if (listeMedKoder.includes(aktivitetStatus.MILITAER_ELLER_SIVIL)) {
     tekstList.push('Militær eller sivilforsvarstjeneste');
   }
-  const statuserMedEgneNavn = listeMedStatuser.filter(status => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
+  const statuserMedEgneNavn = listeMedStatuser.filter((status) => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
     && status.kode !== aktivitetStatus.DAGPENGER
     && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
   statuserMedEgneNavn.forEach((status) => {
@@ -70,12 +70,12 @@ const createAktivitetstatusString = (listeMedStatuser, getKodeverknavn) => {
 };
 
 const erVurderDekningsgradAksjonspunktLukket = (aksjonspunkter) => {
-  const aksjonspunkt = aksjonspunkter && aksjonspunkter.find(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
+  const aksjonspunkt = aksjonspunkter && aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
   return aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
 };
 
-const harVurderDekningsgradAksjonspunkt = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
+const harVurderDekningsgradAksjonspunkt = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter
+  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
 const lagVurderDekningsgradElementer = (readOnly, gjeldendeAksjonspunkter, gjeldendeDekningsgrad) => {
   if (harVurderDekningsgradAksjonspunkt(gjeldendeAksjonspunkter)) {
@@ -155,8 +155,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
             { lagVurderDekningsgradElementer(readOnly, gjeldendeAksjonspunkter, gjeldendeDekningsgrad) }
           </ElementWrapper>
         </Column>
-        )
-      }
+        )}
     </Row>
   </BorderBox>
 );
@@ -188,7 +187,7 @@ const mapStateToProps = (state) => {
 const SkjeringspunktOgStatusPanel = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(SkjeringspunktOgStatusPanelImpl));
 
 SkjeringspunktOgStatusPanel.buildInitialValues = (gjeldendeDekningsgrad, gjeldendeAksjonspunkter) => {
-  const aksjonspunkt = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_DEKNINGSGRAD);
+  const aksjonspunkt = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_DEKNINGSGRAD);
   const initialDekningsgrad = aksjonspunkt && gjeldendeDekningsgrad === 100 ? gjeldendeDekningsgrad : undefined;
   return { [RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN]: initialDekningsgrad };
 };

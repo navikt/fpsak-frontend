@@ -32,7 +32,7 @@ const tilbakekrevingBuilders = [
     .withStatus(getVedtakStatus),
 ];
 
-const createTilbakekrevingBpProps = builderData => tilbakekrevingBuilders.reduce((currentEbs, eb) => {
+const createTilbakekrevingBpProps = (builderData) => tilbakekrevingBuilders.reduce((currentEbs, eb) => {
   const res = eb.build(builderData, currentEbs.length);
   return res.isVisible ? currentEbs.concat([res]) : currentEbs;
 }, []);

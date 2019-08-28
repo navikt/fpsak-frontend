@@ -7,7 +7,7 @@ import Label, { labelPropType } from './Label';
 
 import styles from './readOnlyField.less';
 
-const hasValue = value => value !== undefined && value !== null && value !== '';
+const hasValue = (value) => value !== undefined && value !== null && value !== '';
 
 export const ReadOnlyField = ({
   label, input, isEdited,

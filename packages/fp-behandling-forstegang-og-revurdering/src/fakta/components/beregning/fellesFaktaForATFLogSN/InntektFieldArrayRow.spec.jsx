@@ -42,8 +42,8 @@ const faktaOmBeregning = {
 const initial = {};
 initial.fieldArrayName = [andelField];
 const state = lagStateMedAksjonspunkterOgBeregningsgrunnlag(aksjonspunkter, {
- faktaOmBeregning,
-beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [{ andelsnr: 1 }] }],
+  faktaOmBeregning,
+  beregningsgrunnlagPeriode: [{ beregningsgrunnlagPrStatusOgAndel: [{ andelsnr: 1 }] }],
 }, formNameVurderFaktaBeregning, initial, initial);
 const props = mapStateToProps(state, { fields, index: 0 });
 

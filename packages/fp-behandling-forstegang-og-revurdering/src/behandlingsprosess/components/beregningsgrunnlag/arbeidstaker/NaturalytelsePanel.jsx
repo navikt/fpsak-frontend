@@ -12,13 +12,13 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import styles from './naturalytelsePanel.less';
 
-const createArbeidsforholdKey = andel => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdKey = (andel) => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
 
-const findArbeidsforholdMedFrafaltYtelse = periode => periode.beregningsgrunnlagPrStatusOgAndel.filter(andel => andel.bortfaltNaturalytelse !== undefined
+const findArbeidsforholdMedFrafaltYtelse = (periode) => periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.bortfaltNaturalytelse !== undefined
     && andel.bortfaltNaturalytelse !== null
     && andel.bortfaltNaturalytelse !== 0);
 
-const createHeaderData = perioder => perioder.map(periode => periode.beregningsgrunnlagPeriodeFom);
+const createHeaderData = (perioder) => perioder.map((periode) => periode.beregningsgrunnlagPeriodeFom);
 
 const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse) => {
   let newMapValue = [];
@@ -35,7 +35,7 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse) =
 };
 
 const fillMapWithMissingPeriodes = (arbeidsforholdMap, antallPerioderMedFrafaltYtelse) => {
-  const copyOfMap = Object.assign({}, arbeidsforholdMap);
+  const copyOfMap = { ...arbeidsforholdMap };
   Object.keys(copyOfMap).forEach((val) => {
     const listeMedKolonneInnhold = copyOfMap[val];
     // Fordi det første elementet i lista inneholder en liste length - 1 perioder
@@ -56,8 +56,8 @@ const fillMapWithMissingPeriodes = (arbeidsforholdMap, antallPerioderMedFrafaltY
 //  arbeidsgivernavnTo651: ['arbeidsgiver 2', ' ', 21 000]
 // }
 
-const findAllePerioderMedBortfaltNaturalytelse = allePerioder => allePerioder
-  .filter(periode => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
+const findAllePerioderMedBortfaltNaturalytelse = (allePerioder) => allePerioder
+  .filter((periode) => periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT));
 
 export const createNaturalytelseTableData = createSelector([getBeregningsgrunnlagPerioder], (allePerioder = {}) => {
   const relevantePerioder = findAllePerioderMedBortfaltNaturalytelse(allePerioder);
@@ -141,7 +141,7 @@ NaturalytelsePanel.propTypes = {
   tableData: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tableData: createNaturalytelseTableData(state),
 });
 

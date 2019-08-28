@@ -45,18 +45,18 @@ EktefelleFaktaForm.defaultProps = {
   ektefellesBarnIsEdited: false,
 };
 
-EktefelleFaktaForm.buildInitialValues = familiehendelse => ({
+EktefelleFaktaForm.buildInitialValues = (familiehendelse) => ({
   ektefellesBarn: familiehendelse && familiehendelse.ektefellesBarn !== null
     ? familiehendelse.ektefellesBarn
     : undefined,
 });
 
-EktefelleFaktaForm.transformValues = values => ({
+EktefelleFaktaForm.transformValues = (values) => ({
   kode: aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN,
   ektefellesBarn: values.ektefellesBarn,
 });
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ektefellesBarnIsEdited: getEditedStatus(state).ektefellesBarn,
 });
 

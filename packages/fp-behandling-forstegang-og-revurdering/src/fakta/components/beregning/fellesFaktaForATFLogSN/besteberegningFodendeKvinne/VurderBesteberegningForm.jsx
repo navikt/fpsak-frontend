@@ -99,7 +99,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
       },
     };
   }
-  const transformedValues = inntektPrAndel.map(verdi => ({
+  const transformedValues = inntektPrAndel.map((verdi) => ({
     andelsnr: verdi.andelsnr,
     nyAndel: verdi.nyAndel,
     lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
@@ -116,7 +116,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
 };
 
 
-export const vurderBesteberegningTransform = faktaOmBeregning => (values, inntektPrAndel) => {
+export const vurderBesteberegningTransform = (faktaOmBeregning) => (values, inntektPrAndel) => {
   if (!(faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
       || faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
     return {};
@@ -132,7 +132,7 @@ export const vurderBesteberegningTransform = faktaOmBeregning => (values, inntek
   });
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   erBesteberegning: getFormValuesForBeregning(state)[besteberegningField],
 });
 

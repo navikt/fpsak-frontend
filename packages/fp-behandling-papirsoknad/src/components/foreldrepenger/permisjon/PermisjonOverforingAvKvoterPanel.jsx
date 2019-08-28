@@ -34,7 +34,7 @@ const mapArsaker = (arsaker, sokerErMor, intl) => arsaker.map(({ kode, navn }) =
   ? <option value={kode} key={kode}>{getText(intl, kode, navn)}</option>
   : <option value={kode} key={kode}>{navn}</option>));
 
-const showPeriod = arsakForOverforingCode => arsakForOverforingCode === overforingArsak.SYKDOM_ANNEN_FORELDER
+const showPeriod = (arsakForOverforingCode) => arsakForOverforingCode === overforingArsak.SYKDOM_ANNEN_FORELDER
     || arsakForOverforingCode === overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER;
 
 /**
@@ -101,13 +101,11 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
                   />
                 </FlexColumn>
               </ElementWrapper>
-              )
-            }
+              )}
             </FlexRow>
           </FlexContainer>
         </FormSection>
-        )
-      }
+        )}
     </ElementWrapper>
   );
 };

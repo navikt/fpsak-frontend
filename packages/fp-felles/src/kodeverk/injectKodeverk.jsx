@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFraKode } from './kodeverkUtils';
 
-const injectKodeverk = getAlleKodeverkSelector => (WrappedComponent) => {
+const injectKodeverk = (getAlleKodeverkSelector) => (WrappedComponent) => {
   class KodeverkWrapper extends React.Component {
     getKodeverknavnFraKode = (kodeverkType, kode, undertype) => {
       const { alleKodeverk } = this.props;
@@ -31,7 +31,7 @@ const injectKodeverk = getAlleKodeverkSelector => (WrappedComponent) => {
     alleKodeverk: PropTypes.shape({}).isRequired,
   };
 
-  const mapStateToProps = state => ({
+  const mapStateToProps = (state) => ({
     alleKodeverk: getAlleKodeverkSelector(state),
   });
 

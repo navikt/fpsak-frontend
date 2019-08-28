@@ -64,8 +64,7 @@ export const TilkjentYtelsePanelImpl = ({
         medsokerKjonnKode={medsokerKjonn}
         isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
       />
-      )
-      }
+      )}
     { vurderTilbaketrekkAP
     && (
     <Tilbaketrekkpanel
@@ -74,8 +73,7 @@ export const TilkjentYtelsePanelImpl = ({
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
     />
-    )
-    }
+    )}
   </FadingPanel>
 );
 
@@ -98,7 +96,7 @@ TilkjentYtelsePanelImpl.defaultProps = {
   vurderTilbaketrekkAP: undefined,
 };
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 const getFamiliehendelsedatoFraSoknad = (soknad) => {
   if (soknad.fodselsdatoer && Object.keys(soknad.fodselsdatoer).length > 0) {
@@ -125,7 +123,7 @@ const getCurrentFamiliehendelseDato = (
 
 const finnTilbaketrekkAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], (alleAksjonspunkter) => {
   if (alleAksjonspunkter) {
-    return alleAksjonspunkter.find(ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK);
+    return alleAksjonspunkter.find((ap) => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK);
   }
   return undefined;
 });
@@ -155,6 +153,6 @@ const mapStateToProps = (state) => {
 
 const TilkjentYtelsePanel = connect(mapStateToProps)(injectIntl(TilkjentYtelsePanelImpl));
 
-TilkjentYtelsePanel.supports = bp => bp === behandlingspunktCodes.TILKJENT_YTELSE;
+TilkjentYtelsePanel.supports = (bp) => bp === behandlingspunktCodes.TILKJENT_YTELSE;
 
 export default TilkjentYtelsePanel;

@@ -27,8 +27,7 @@ const TextAreaWithBadge = ({
         </EtikettFokus>
       ))}
     </div>
-    )
-    }
+    )}
     <NavTextarea {...otherProps} />
   </div>
 );

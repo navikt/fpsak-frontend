@@ -190,9 +190,9 @@ const skjermlenkeCodes = {
     punktNavn: '',
   },
   PUNKT_FOR_SVANGERSKAPSPENGER: {
-  kode: 'SVANGERSKAP',
-  faktaNavn: faktaPanelCodes.DEFAULT,
-  punktNavn: behandlingspunktCodes.SVANGERSKAP,
+    kode: 'SVANGERSKAP',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.SVANGERSKAP,
   },
   VURDER_FARESIGNALER: {
     kode: 'VURDER_FARESIGNALER',

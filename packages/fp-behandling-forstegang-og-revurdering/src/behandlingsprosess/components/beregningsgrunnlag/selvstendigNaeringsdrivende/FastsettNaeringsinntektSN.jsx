@@ -36,20 +36,20 @@ const {
 // Methods
 // ------------------------------------------------------------------------------------------ //
 
-const finnAksjonspunktBruttoFastsatt = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
-  ap => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+const finnAksjonspunktBruttoFastsatt = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
+  (ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 );
 
-const finnAksjonspunktVarigEndretNaering = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
-  ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+const finnAksjonspunktVarigEndretNaering = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
+  (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
 );
 
-const finnAksjonspunktSnNyIArbeidslivet = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
-  ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+const finnAksjonspunktSnNyIArbeidslivet = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
+  (ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 );
 
-const finnSnAksjonspunkt = aksjonspunkter => aksjonspunkter && aksjonspunkter.find(
-  ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+const finnSnAksjonspunkt = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
+  (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
   || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 );
 
@@ -65,7 +65,7 @@ const constructNyIArbeidslivetAPValue = (relevanteAndeler, aksjonspunkt) => ({
   bruttoBeregningsgrunnlag: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
 });
 
-const harFlereAksjonspunkter = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
+const harFlereAksjonspunkter = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
 
 const finnVurderingLabel = (gjeldendeAksjonspunkter) => {
   if (harFlereAksjonspunkter(gjeldendeAksjonspunkter)) {
@@ -118,8 +118,7 @@ export const FastsettNaeringsinntektSNImpl = ({
         />
       </Column>
     </Row>
-    )
-    }
+    )}
     { finnAksjonspunktVarigEndretNaering(gjeldendeAksjonspunkter)
       && (
       <div>
@@ -182,11 +181,9 @@ export const FastsettNaeringsinntektSNImpl = ({
             </ArrowBox>
           </Column>
         </Row>
-        )
-        }
+        )}
       </div>
-      )
-    }
+      )}
   </div>
 );
 

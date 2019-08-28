@@ -74,8 +74,7 @@ export const TerminFodselDatoPanelImpl = ({
                 />
               </div>
             </ArrowBox>
-          )
-          }
+          )}
           { erBarnetFodt
           && (
             <ArrowBox alignOffset={0}>
@@ -83,8 +82,8 @@ export const TerminFodselDatoPanelImpl = ({
                 name="foedselsDato"
                 label={{ id: 'Registrering.Fodselsdato' }}
               /* foedselsDato is array in DTO data model, so we transform the value to/from the store/input */
-                format={valueFromStore => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
-                parse={valueFromInput => (valueFromInput ? [valueFromInput] : valueFromInput)}
+                format={(valueFromStore) => (valueFromStore && valueFromStore.length ? valueFromStore[0] : valueFromStore)}
+                parse={(valueFromInput) => (valueFromInput ? [valueFromInput] : valueFromInput)}
                 readOnly={readOnly}
               />
               <InputField
@@ -94,8 +93,7 @@ export const TerminFodselDatoPanelImpl = ({
                 readOnly={readOnly}
               />
             </ArrowBox>
-          )
-          }
+          )}
         </Fieldset>
       </NavFieldGroup>
     </div>
@@ -130,7 +128,7 @@ const getLatestTerminbekreftelseDato = (termindato) => {
   return today;
 };
 
-const validateTermin = values => ({
+const validateTermin = (values) => ({
   termindato: required(values.termindato) || hasValidDate(values.termindato),
   terminbekreftelseDato: (
     hasValidDate(values.terminbekreftelseDato)
@@ -144,7 +142,7 @@ const validateTermin = values => ({
   ),
 });
 
-const validateFodsel = values => ({
+const validateFodsel = (values) => ({
   foedselsDato: (
     required(values.foedselsDato)
     || required(values.foedselsDato[0])

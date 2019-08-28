@@ -74,7 +74,7 @@ const VilkarResultPickerImpl = ({
             name="avslagCode"
             label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
             placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-            selectValues={avslagsarsaker.map(aa => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
+            selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
             bredde="xl"
             readOnly={readOnly}
           />
@@ -87,15 +87,12 @@ const VilkarResultPickerImpl = ({
             // isEdited={!isApOpen}
             validate={[required, hasValidDate]}
           />
-          )
-          }
+          )}
 
         </ArrowBox>
       </Column>
     </Row>
-    )
-
-    }
+    )}
   </div>
 );
 
@@ -138,7 +135,7 @@ VilkarResultPicker.validate = (erVilkarOk, avslagCode) => {
 };
 
 VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, status) => {
-  const isOpenAksjonspunkt = aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
   const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
   return {
     erVilkarOk,
@@ -148,7 +145,7 @@ VilkarResultPicker.buildInitialValues = (behandlingsresultat, aksjonspunkter, st
   };
 };
 
-VilkarResultPicker.transformValues = values => (
+VilkarResultPicker.transformValues = (values) => (
   values.erVilkarOk
     ? { erVilkarOk: values.erVilkarOk }
     : {

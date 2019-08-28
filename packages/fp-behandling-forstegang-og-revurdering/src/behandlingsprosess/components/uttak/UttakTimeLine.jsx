@@ -13,7 +13,7 @@ import styles from './uttakTimeLine.less';
 
 const getStartDateForTimeLine = (uttakPeriod, customTimes) => (moment(customTimes.fodsel) < moment(uttakPeriod.fom)
   ? moment(customTimes.fodsel).subtract(4, 'weeks') : moment(uttakPeriod.fom).subtract(4, 'weeks'));
-const getEndDateForTimeLine = customTimes => moment(customTimes.fodsel).add(4, 'years');
+const getEndDateForTimeLine = (customTimes) => moment(customTimes.fodsel).add(4, 'years');
 
 
 const getOptions = (customTimes, sortedUttakPeriods, medsoker) => ({
@@ -41,7 +41,7 @@ const getOptions = (customTimes, sortedUttakPeriods, medsoker) => ({
   moment,
 });
 
-const parseDateString = dateString => moment(dateString, ISO_DATE_FORMAT).toDate();
+const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
 
 function sortByDate(a, b) {
   if (a.fom < b.fom) {
@@ -53,7 +53,7 @@ function sortByDate(a, b) {
   return 0;
 }
 
-const parseDates = item => ({
+const parseDates = (item) => ({
   ...item,
   start: parseDateString(item.fom),
   end: parseDateString(item.tomMoment),
@@ -71,11 +71,11 @@ const formatItems = (periodItems = []) => {
 
 const formatGroups = (periodItems = []) => {
   const duplicatesRemoved = periodItems.reduce((accPeriods, period) => {
-    const hasPeriod = accPeriods.some(p => p.group === period.group);
+    const hasPeriod = accPeriods.some((p) => p.group === period.group);
     if (!hasPeriod) accPeriods.push(period);
     return accPeriods;
   }, []);
-  return duplicatesRemoved.map(activity => ({
+  return duplicatesRemoved.map((activity) => ({
     id: activity.group,
     content: '',
   }));
@@ -162,15 +162,13 @@ class UttakTimeLine extends Component {
               hovedsokerKjonnKode={hovedsokerKjonnKode}
               medsokerKjonnKode={medsokerKjonnKode}
             />
-            )
-            }
+            )}
             {!medsokerKjonnKode
               && (
               <TimeLineSokerEnsamSoker
                 hovedsokerKjonnKode={hovedsokerKjonnKode}
               />
-              )
-            }
+              )}
           </Column>
           <Column xs="11">
             <div className={styles.timeLineWrapper}>

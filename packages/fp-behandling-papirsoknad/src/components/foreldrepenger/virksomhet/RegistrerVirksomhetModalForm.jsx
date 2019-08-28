@@ -96,7 +96,7 @@ RegistrerVirksomhetModalForm.defaultProps = {
 
 const mapStateToProps = (state) => {
   const registeredFields = getRegisteredFields(REGISTRER_VIRKSOMHET_FORM_NAME)(state);
-  const registeredFieldNames = registeredFields ? Object.values(registeredFields).map(rf => rf.name) : [];
+  const registeredFieldNames = registeredFields ? Object.values(registeredFields).map((rf) => rf.name) : [];
   const valuesForRegisteredFieldsOnly = registeredFieldNames.length
     ? formValueSelector(REGISTRER_VIRKSOMHET_FORM_NAME)(state, ...registeredFieldNames)
     : {};

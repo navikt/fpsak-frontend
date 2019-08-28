@@ -81,8 +81,7 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
             readOnly={readOnly}
             submitCallback={submitCallback}
           />
-)
-        }
+          )}
         <VerticalSpacer twentyPx />
         {hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
           && (
@@ -92,11 +91,10 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
             readOnly={readOnly}
             submitCallback={submitCallback}
           />
-)
-        }
+          )}
       </FaktaEkspandertpanel>
     );
-}
+  }
 }
 
 FordelBeregningsgrunnlagPanelImpl.propTypes = {
@@ -115,7 +113,7 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
 });
@@ -124,6 +122,6 @@ const mapStateToProps = state => ({
 const FordelBeregningsgrunnlagPanel = withDefaultToggling(faktaPanelCodes.FORDELING,
   faktaOmFordelingAksjonspunkter)(connect(mapStateToProps)(injectIntl(FordelBeregningsgrunnlagPanelImpl)));
 
-FordelBeregningsgrunnlagPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => faktaOmFordelingAksjonspunkter.includes(ap.definisjon.kode));
+FordelBeregningsgrunnlagPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => faktaOmFordelingAksjonspunkter.includes(ap.definisjon.kode));
 
 export default FordelBeregningsgrunnlagPanel;

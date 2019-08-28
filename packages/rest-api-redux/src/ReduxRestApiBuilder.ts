@@ -7,7 +7,7 @@ class ReduxRestApiBuilder {
 
   reducerName: string;
 
-  contextPath: string = '';
+  contextPath = '';
 
   reduxEvents: ReduxEvents = new ReduxEvents();
 

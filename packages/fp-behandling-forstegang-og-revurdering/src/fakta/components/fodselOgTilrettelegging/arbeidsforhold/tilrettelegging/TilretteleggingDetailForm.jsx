@@ -9,7 +9,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
- VerticalSpacer, ArrowBox, FlexContainer, FlexColumn, FlexRow,
+  VerticalSpacer, ArrowBox, FlexContainer, FlexColumn, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
@@ -84,7 +84,7 @@ export const TilretteleggingDetailFormImpl = ({
           )}
         </FlexRow>
       </FlexContainer>
-      )}
+    )}
   </Fieldset>
 );
 
@@ -108,7 +108,7 @@ const TilretteleggingDetailForm = injectIntl(behandlingFormForstegangOgRevurderi
 
 TilretteleggingDetailForm.validate = (values, tilretteleggingDatoer, jordmorTilretteleggingFraDato) => {
   const errors = {};
-  if (tilretteleggingDatoer.filter(td => td.id !== values.id).some(td => td.fom === values.fom)) {
+  if (tilretteleggingDatoer.filter((td) => td.id !== values.id).some((td) => td.fom === values.fom)) {
     errors.fom = [{ id: 'TilretteleggingDetailForm.DatoFinnes' }];
   }
   if (moment(values.fom).isBefore(jordmorTilretteleggingFraDato)) {

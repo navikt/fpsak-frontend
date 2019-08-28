@@ -19,9 +19,9 @@ export const AktoerGrid = ({ data, getKodeverknavn }) => (
           <PersonInfo person={data.person} medPanel />
         </div>
         <div className={styles.column}>
-          {data.fagsaker.length ? data.fagsaker.map(fagsak => (
+          {data.fagsaker.length ? data.fagsaker.map((fagsak) => (
             <Lenkepanel
-              linkCreator={props => (<Link to={pathToFagsak(fagsak.saksnummer)} {...props} />)}
+              linkCreator={(props) => (<Link to={pathToFagsak(fagsak.saksnummer)} {...props} />)}
               key={fagsak.saksnummer}
             >
               {getKodeverknavn(fagsak.sakstype)}

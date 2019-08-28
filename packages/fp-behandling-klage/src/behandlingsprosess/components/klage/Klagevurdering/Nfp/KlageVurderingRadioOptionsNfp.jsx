@@ -19,10 +19,10 @@ export const KlageVurderingRadioOptionsNfpImpl = ({
   klageVurdering,
   intl,
 }) => {
-  const medholdOptions = medholdReasons.map(mo => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
+  const medholdOptions = medholdReasons.map((mo) => <option key={mo.kode} value={mo.kode}>{mo.navn}</option>);
   return (
     <div>
-      <React.Fragment>
+      <>
         <RadioGroupField
           name="klageVurdering"
           validate={[required]}
@@ -32,7 +32,7 @@ export const KlageVurderingRadioOptionsNfpImpl = ({
           <RadioOption value={klageVurderingType.MEDHOLD_I_KLAGE} label={{ id: 'Klage.ResolveKlage.ChangeVedtak' }} />
           <RadioOption value={klageVurderingType.STADFESTE_YTELSESVEDTAK} label={{ id: 'Klage.ResolveKlage.KeepVedtakNfp' }} />
         </RadioGroupField>
-      </React.Fragment>
+      </>
       {(klageVurdering === klageVurderingType.MEDHOLD_I_KLAGE)
       && (
         <ArrowBox className={readOnly ? styles.selectReadOnly : null}>
@@ -58,8 +58,7 @@ export const KlageVurderingRadioOptionsNfpImpl = ({
             <RadioOption value={klageVurderingOmgjoerType.DELVIS_MEDHOLD_I_KLAGE} label={{ id: 'Klage.Behandle.DelvisOmgjort' }} />
           </RadioGroupField>
         </ArrowBox>
-      )
-      }
+      )}
       {(klageVurdering === klageVurderingType.OPPHEVE_YTELSESVEDTAK)
       && (
         <ArrowBox>
@@ -73,8 +72,7 @@ export const KlageVurderingRadioOptionsNfpImpl = ({
             bredde="xl"
           />
         </ArrowBox>
-      )
-      }
+      )}
     </div>
   );
 };
@@ -88,7 +86,7 @@ KlageVurderingRadioOptionsNfpImpl.propTypes = {
   intl: intlShape.isRequired,
 };
 
-export const mapStateToProps = state => ({
+export const mapStateToProps = (state) => ({
   medholdReasons: getKodeverk(kodeverkTyper.KLAGE_MEDHOLD_ARSAK)(state),
 });
 

@@ -117,32 +117,32 @@ describe('<ShelveBehandlingModal>', () => {
   it('skal bruke behandlingsresultat-typer for klage', () => {
     const behandlingsType = { kode: behandlingType.KLAGE };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for innsyn', () => {
     const behandlingsType = { kode: behandlingType.DOKUMENTINNSYN };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for tilbakekreving', () => {
     const behandlingsType = { kode: behandlingType.TILBAKEKREVING };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_FEILOPPRETTET]);
   });
 
   it('skal bruke behandlingsresultat-typer for revudering', () => {
     const behandlingsType = { kode: behandlingType.REVURDERING };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER]);
   });
 
   it('skal bruke behandlingsresultat-typer for førstegangsbehandling', () => {
     const behandlingsType = { kode: behandlingType.FORSTEGANGSSOKNAD };
     const resultat = getHenleggArsaker.resultFunc(behandlingResultatTyper, behandlingsType);
-    expect(resultat.map(r => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
+    expect(resultat.map((r) => r.kode)).is.eql([behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
       behandlingResultatType.HENLAGT_SOKNAD_MANGLER, behandlingResultatType.MANGLER_BEREGNINGSREGLER]);
   });
 
@@ -182,7 +182,7 @@ describe('<ShelveBehandlingModal>', () => {
     />);
 
     const form = wrapper.find('form');
-    form.simulate('submit', { preventDefault() {} });
+    form.simulate('submit', { preventDefault() { return undefined; } });
     expect(submitEventCallback.called).is.true;
   });
 

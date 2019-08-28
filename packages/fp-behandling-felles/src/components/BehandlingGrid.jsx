@@ -14,22 +14,19 @@ const BehandlingGrid = ({
     <div className={styles.contentBlock}>
       {behandlingsprosessContent}
     </div>
-    )
-    }
+    )}
     {faktaContent
     && (
     <div className={styles.contentBlock}>
       {faktaContent}
     </div>
-    )
-    }
+    )}
     {papirsoknadContent
     && (
     <div className={styles.contentBlock}>
       {papirsoknadContent}
     </div>
-    )
-    }
+    )}
   </div>
 );
 

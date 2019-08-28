@@ -65,7 +65,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
     const {
       reduxFormChange: formChange, behandlingFormPrefix, arbeidsforhold, formName,
     } = this.props;
-    const otherThanUpdated = arbeidsforhold.filter(a => a.tilretteleggingId !== values.tilretteleggingId);
+    const otherThanUpdated = arbeidsforhold.filter((a) => a.tilretteleggingId !== values.tilretteleggingId);
     const fieldValues = otherThanUpdated.concat(values).sort((a, b) => a.arbeidsgiverNavn.localeCompare(b.arbeidsgiverNavn));
     formChange(`${behandlingFormPrefix}.${formName}`, 'arbeidsforhold', fieldValues);
     this.toggleArbeidsforhold();
@@ -95,8 +95,7 @@ export class ArbeidsforholdFaktaPanel extends Component {
           leggTilPeriode={this.updateArbeidsforhold}
           submittable={submittable}
         />
-        )
-      }
+        )}
       </FaktaGruppe>
     );
   }
@@ -122,7 +121,7 @@ const mapStateToProps = (state, props) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormInitialize,

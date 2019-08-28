@@ -21,7 +21,7 @@ const defaultUtenlandsOpphold = {
   periodeTom: '',
 };
 
-const countrySelectValues = countryCodes => countryCodes
+const countrySelectValues = (countryCodes) => countryCodes
   .filter(({ kode }) => kode !== landkoder.NORGE)
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 

@@ -20,7 +20,7 @@ const foreldrepengerBuilders = [
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt),
 ];
 
-const createForeldrepengerAnkeBpDefinition = builderData => foreldrepengerBuilders.reduce((currentFbs, fb) => {
+const createForeldrepengerAnkeBpDefinition = (builderData) => foreldrepengerBuilders.reduce((currentFbs, fb) => {
   const res = fb.build(builderData, currentFbs.length);
   return res.isVisible ? currentFbs.concat([res]) : currentFbs;
 }, []);

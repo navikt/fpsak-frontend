@@ -6,4 +6,4 @@ const aksjonspunktStatus = {
 
 export default aksjonspunktStatus;
 
-export const isAksjonspunktOpen = statusKode => statusKode === aksjonspunktStatus.OPPRETTET;
+export const isAksjonspunktOpen = (statusKode) => statusKode === aksjonspunktStatus.OPPRETTET;

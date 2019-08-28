@@ -22,13 +22,13 @@ class TilbakekrevingTimelinePanel extends Component {
     } = this.state;
 
     if (vPeriode !== valgtPeriode) {
-      this.setState(state => ({ ...state, valgtPeriode: vPeriode }));
+      this.setState((state) => ({ ...state, valgtPeriode: vPeriode }));
     }
   }
 
   selectHandler = (eventProps) => {
     const { perioder, setPeriode } = this.props;
-    const valgtPeriode = perioder.find(periode => periode.id === eventProps.items[0]);
+    const valgtPeriode = perioder.find((periode) => periode.id === eventProps.items[0]);
     if (valgtPeriode) {
       setPeriode(valgtPeriode);
       this.setState({ valgtPeriode });

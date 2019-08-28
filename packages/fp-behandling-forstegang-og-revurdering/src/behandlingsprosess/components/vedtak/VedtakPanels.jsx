@@ -53,7 +53,7 @@ VedtakPanels.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingTypeKode: behandlingSelectors.getBehandlingType(state).kode,
 });
 

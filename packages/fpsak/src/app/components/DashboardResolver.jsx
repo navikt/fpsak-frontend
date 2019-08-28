@@ -30,7 +30,7 @@ export class DashboardResolver extends Component {
       window.location.assign(url);
     } catch (e) {
       const { addErrorMessage, intl } = this.props;
-      this.setState(prevState => ({ ...prevState, isLoading: false }));
+      this.setState((prevState) => ({ ...prevState, isLoading: false }));
       addErrorMessage(intl.formatMessage({ id: 'DashboardResolver.FpLosErNede' }));
     }
   }
@@ -49,7 +49,7 @@ DashboardResolver.propTypes = {
 const mapStateToProps = () => ({
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   addErrorMessage: errorHandler.getErrorActionCreator(),
 }, dispatch);
 

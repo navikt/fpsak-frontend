@@ -76,16 +76,14 @@ class ShelveBehandlingMenuItem extends Component {
             previewHenleggBehandling={previewHenleggBehandling}
             behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
           />
-          )
-        }
+          )}
         {showBehandlingErHenlagtModal
           && (
           <BehandlingenShelvedModal
             showModal={showBehandlingErHenlagtModal}
             closeEvent={this.goToSearchPage}
           />
-          )
-        }
+          )}
       </div>
     );
   }

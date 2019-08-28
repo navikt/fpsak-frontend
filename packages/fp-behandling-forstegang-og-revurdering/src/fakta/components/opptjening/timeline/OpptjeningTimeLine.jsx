@@ -50,11 +50,11 @@ const classNameGenerator = (ap) => {
 };
 
 const createItems = (opptjeningPeriods, groups, opptjeningFomDato, opptjeningTomDato) => {
-  const items = opptjeningPeriods.map(ap => ({
+  const items = opptjeningPeriods.map((ap) => ({
     id: ap.id,
     start: moment(ap.opptjeningFom),
     end: moment(ap.opptjeningTom),
-    group: groups.find(g => g.aktivitetTypeKode === ap.aktivitetType.kode
+    group: groups.find((g) => g.aktivitetTypeKode === ap.aktivitetType.kode
       && g.arbeidsforholdRef === ap.arbeidsforholdRef && g.oppdragsgiverOrg === ap.oppdragsgiverOrg).id,
     className: classNameGenerator(ap),
     content: '',
@@ -65,14 +65,14 @@ const createItems = (opptjeningPeriods, groups, opptjeningFomDato, opptjeningTom
 
 const createGroups = (opptjeningPeriods, opptjeningAktivitetTypes) => {
   const duplicatesRemoved = opptjeningPeriods.reduce((accPeriods, period) => {
-    const hasPeriod = accPeriods.some(p => p.aktivitetType.kode === period.aktivitetType.kode
+    const hasPeriod = accPeriods.some((p) => p.aktivitetType.kode === period.aktivitetType.kode
       && p.arbeidsforholdRef === period.arbeidsforholdRef && p.oppdragsgiverOrg === period.oppdragsgiverOrg);
     if (!hasPeriod) accPeriods.push(period);
     return accPeriods;
   }, []);
   return duplicatesRemoved.map((activity, index) => ({
     id: index + 1,
-    content: opptjeningAktivitetTypes.find(oat => oat.kode === activity.aktivitetType.kode).navn,
+    content: opptjeningAktivitetTypes.find((oat) => oat.kode === activity.aktivitetType.kode).navn,
     aktivitetTypeKode: activity.aktivitetType.kode,
     arbeidsforholdRef: activity.arbeidsforholdRef,
     oppdragsgiverOrg: activity.oppdragsgiverOrg,
@@ -155,7 +155,7 @@ class OpptjeningTimeLine extends Component {
   selectHandler(eventProps) {
     const { selectPeriodCallback } = this.props;
     const { items } = this.state;
-    const selectedItem = items.find(item => item.id === eventProps.items[0]);
+    const selectedItem = items.find((item) => item.id === eventProps.items[0]);
     if (selectedItem) {
       selectPeriodCallback(selectedItem.data);
     }

@@ -67,8 +67,7 @@ class OpenBehandlingForChangesMenuItem extends Component {
             submit={this.submit}
             cancel={this.hideModal}
           />
-          )
-        }
+          )}
       </div>
     );
   }

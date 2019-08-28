@@ -104,7 +104,7 @@ const isInnvilgetText = (selectedItemData, getKodeverknavn) => {
         id="UttakActivity.IkkeOppfyltAarsak"
         values={{ avslagAarsak: getKodeverknavn(selectedItemData.periodeResultatÅrsak) }}
       />
-);
+    );
   }
   return returnText;
 };
@@ -123,7 +123,7 @@ const gyldigeÅrsaker = [
   oppholdArsakType.UTTAK_FELLESP_ANNEN_FORELDER,
   oppholdArsakType.UTTAK_FORELDREPENGER_ANNEN_FORELDER];
 
-const mapPeriodeTyper = typer => typer
+const mapPeriodeTyper = (typer) => typer
   .filter(({ kode }) => gyldigeÅrsaker.includes(kode))
   .map(({ kode }) => <option value={kode} key={kode}>{oppholdArsakKontoNavn[kode]}</option>);
 
@@ -170,8 +170,7 @@ export const UttakInfo = ({
             <div>
               {isInnvilgetText(selectedItemData, getKodeverknavn)}
             </div>
-          )
-          }
+          )}
         </Column>
         <Column xs="3">
           <>
@@ -217,18 +216,16 @@ export const UttakInfo = ({
                         }
                         return '';
                       }}
-                      normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                      normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                     />
                   </Column>
                   {!readOnly && <Column className={styles.suffix}>%</Column>}
                 </Row>
               </>
-            )
-          }
+            )}
         </Column>
       </Row>
-      )
-      }
+      )}
       <Row>
         <Column xs="4">
           <Row>
@@ -324,8 +321,7 @@ export const UttakInfo = ({
           </Column>
         </Row>
       </div>
-      )
-      }
+      )}
     </div>
   </Column>
 );

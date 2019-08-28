@@ -71,7 +71,7 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   previewHenleggBehandling,
   resumeBehandling,
   shelveBehandling,

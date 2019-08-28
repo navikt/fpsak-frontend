@@ -84,9 +84,9 @@ export class BehandlingIndex extends Component {
     erAktivPapirsoknad: false,
   }
 
-  componentWillMount() {
-    const { behandlingLinks } = this.props;
-    reduxRestApi.injectPaths(behandlingLinks);
+  constructor(props) {
+    super(props);
+    reduxRestApi.injectPaths(props.behandlingLinks);
   }
 
   componentDidUpdate(prevProps) {
@@ -259,14 +259,14 @@ const mapStateToPropsFactory = (initialState) => {
   };
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   setHolder: setBehandlingInfoHolder,
   resetBehandlingContext: resetBehandlingContextActionCreator,
 }, dispatch);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
-  parse: saksnummerFromUrl => Number.parseInt(saksnummerFromUrl, 10),
+  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,

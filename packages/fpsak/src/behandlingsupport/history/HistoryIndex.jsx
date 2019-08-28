@@ -44,7 +44,7 @@ HistoryIndex.defaultProps = {
   selectedBehandlingId: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedBehandlingId: getSelectedBehandlingId(state),
   saksnummer: getSelectedSaksnummer(state),
   history: getAllHistory(state),

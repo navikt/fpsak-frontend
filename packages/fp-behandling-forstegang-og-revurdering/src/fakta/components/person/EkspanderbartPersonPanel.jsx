@@ -19,16 +19,16 @@ import styles from './ekspanderbartPersonPanel.less';
 const classNames = classnames.bind(styles);
 
 const EkspanderbartPersonPanel = ({
-                                    primaryParent,
-                                    secondaryParent,
-                                    hasOpenAksjonspunkter,
-                                    readOnly,
-                                    selected,
-                                    setSelected,
-                                    children,
-                                  }) => (
-                                    <div
-                                      className={classNames(
+  primaryParent,
+  secondaryParent,
+  hasOpenAksjonspunkter,
+  readOnly,
+  selected,
+  setSelected,
+  children,
+}) => (
+  <div
+    className={classNames(
       hasOpenAksjonspunkter && !readOnly ? 'statusAksjonspunkt' : undefined,
       'ekspanderbartPanel',
       {
@@ -36,43 +36,43 @@ const EkspanderbartPersonPanel = ({
         'ekspanderbartPanel--lukket': !selected,
       },
     )}
-                                    >
-                                      <div className={styles.container}>
-                                        {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+  >
+    <div className={styles.container}>
+      {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
       }
-                                        <div
-                                          className={classNames({
+      <div
+        className={classNames({
           primary: secondaryParent,
           primaryfull: !secondaryParent,
         })}
-                                          onClick={() => (setSelected(primaryParent))}
-                                          onKeyDown={(event) => {
+        onClick={() => (setSelected(primaryParent))}
+        onKeyDown={(event) => {
           if (event.keyCode === 32 || event.keyCode === 13) return (setSelected(primaryParent));
           return false;
         }}
-                                          role="link"
-                                          tabIndex="0"
-                                        >
-                                          <div className={classNames({
+        role="link"
+        tabIndex="0"
+      >
+        <div className={classNames({
           personprimary: secondaryParent,
           personprimaryfull: !secondaryParent,
           selected: selected === primaryParent,
         })}
-                                          >
-                                            <PersonDetailedHeader personopplysninger={primaryParent} medPanel isPrimaryParent />
-                                          </div>
-                                          <div className={classNames({
+        >
+          <PersonDetailedHeader personopplysninger={primaryParent} medPanel isPrimaryParent />
+        </div>
+        <div className={classNames({
           personchevron: secondaryParent,
           personchevronfull: !secondaryParent,
         })}
-                                          >
-                                            <div className={styles.invisibleButton}>
-                                              {selected === primaryParent ? <OppChevron /> : <NedChevron />}
-                                            </div>
-                                          </div>
-                                        </div>
+        >
+          <div className={styles.invisibleButton}>
+            {selected === primaryParent ? <OppChevron /> : <NedChevron />}
+          </div>
+        </div>
+      </div>
 
-                                        {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
+      {// eslint-disable-next-line jsx-a11y/click-events-have-key-events
         secondaryParent && (
           <div
             className={styles.secondary}
@@ -98,16 +98,17 @@ const EkspanderbartPersonPanel = ({
               </div>
             </div>
           </div>
-        )}
-                                      </div>
-                                      {children && (
-                                      <Collapse isOpened={!!selected}>
-                                        <article aria-label="Person panel" className="ekspanderbartPanel__innhold">
-                                          {children}
-                                        </article>
-                                      </Collapse>
+        )
+}
+    </div>
+    {children && (
+    <Collapse isOpened={!!selected}>
+      <article aria-label="Person panel" className="ekspanderbartPanel__innhold">
+        {children}
+      </article>
+    </Collapse>
     )}
-                                    </div>
+  </div>
 );
 
 EkspanderbartPersonPanel.propTypes = {

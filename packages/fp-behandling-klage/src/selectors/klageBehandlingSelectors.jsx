@@ -11,7 +11,7 @@ const commonBehandlingKlageSelectors = getCommonBehandlingSelectors(getSelectedB
 
 const getMellomlagringData = createSelector(
   [klageBehandlingApi.SAVE_KLAGE_VURDERING.getRestApiMeta()],
-  data => (data ? data.params : {}),
+  (data) => (data ? data.params : {}),
 );
 
 const getMellomlagringSpinner = createSelector(
@@ -39,7 +39,7 @@ const getBehandlingKlageFormkravResultatKA = createSelector(
 
 const isKlageBehandlingInKA = createSelector(
   [commonBehandlingKlageSelectors.getAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter
-    .some(ap => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA
+    .some((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA
       || ap.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK),
 );
 

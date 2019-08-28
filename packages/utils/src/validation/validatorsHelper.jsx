@@ -12,7 +12,7 @@ export const textGyldigRegex = /[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGg
 export const nameRegex = /^[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'-]*$/;
 export const nameGyldigRegex = /[0-9a-zA-ZæøåÆØÅAaÁáBbCcČčDdĐđEeFfGgHhIiJjKkLlMmNnŊŋOoPpRrSsŠšTtŦŧUuVvZzŽžéôèÉöüäÖÜÄ .'-]*/g;
 
-export const isEmpty = text => text === null || text === undefined || text.toString().trim().length === 0;
+export const isEmpty = (text) => text === null || text === undefined || text.toString().trim().length === 0;
 
 export const yesterday = () => moment().subtract(1, 'days').startOf('day');
 export const tomorrow = () => moment().add(1, 'days').startOf('day');
@@ -26,7 +26,7 @@ export const dateRangesAreSequential = (ranges) => {
 
   return [...ranges]
     .sort((range1, range2) => (moment(range1[0]).startOf('day').isAfter(moment(range2[0]).startOf('day')) ? 1 : -1))
-    .map(range => (range[0] === range[1] ? [range[0]] : range))
+    .map((range) => (range[0] === range[1] ? [range[0]] : range))
     .reduce((range1, range2) => range1.concat(range2))
     .every(isBeforeTheNextDate);
 };

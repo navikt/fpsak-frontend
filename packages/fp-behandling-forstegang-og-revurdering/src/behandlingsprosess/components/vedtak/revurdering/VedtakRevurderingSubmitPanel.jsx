@@ -62,7 +62,7 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
 
 export const getSubmitKnappTekst = createSelector(
   [behandlingSelectors.getAksjonspunkter],
-  aksjonspunkter => (aksjonspunkter && aksjonspunkter.some(ap => ap.erAktivt === true
+  (aksjonspunkter) => (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true
     && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
 );
 
@@ -145,7 +145,7 @@ VedtakRevurderingSubmitPanelImpl.defaultProps = {
   skalBrukeOverstyrendeFritekstBrev: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   submitKnappTextId: getSubmitKnappTekst(state),
   beregningResultat: getBehandlingResultatstruktur(state),
   originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),

@@ -18,7 +18,7 @@ const MedlemskapEndringerTabellImpl = ({
   selectedId,
 }) => (
   <Table headerTextCodes={headerTextCodes}>
-    {perioder.map(periode => (
+    {perioder.map((periode) => (
       <TableRow
         key={periode.id}
         id={periode.id}
@@ -35,8 +35,7 @@ const MedlemskapEndringerTabellImpl = ({
           {periode.årsaker.join()}
         </TableColumn>
       </TableRow>
-    ))
-    }
+    ))}
   </Table>
 );
 

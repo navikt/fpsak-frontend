@@ -28,7 +28,7 @@ const additionalBehandlingspunktImages = {
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Førstegangsbehandling eller Revudering.
  */
-export const BehandlingsprosessForstegangOgRevContainer = props => (
+export const BehandlingsprosessForstegangOgRevContainer = (props) => (
   <BehandlingsprosessForstegangOgRevIndex
     additionalBehandlingspunktImages={additionalBehandlingspunktImages}
     doNotUseIverksetterVedtakModal
@@ -58,7 +58,7 @@ BehandlingsprosessForstegangOgRevContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

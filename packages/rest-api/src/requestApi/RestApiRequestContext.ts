@@ -7,7 +7,7 @@ class RestApiRequestContext {
 
   config: RequestConfig
 
-  hostname: string = '';
+  hostname = '';
 
   constructor(contextPath: string, config: RequestConfig) {
     this.contextPath = contextPath;

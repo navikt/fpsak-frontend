@@ -106,7 +106,7 @@ RenderInntektsgivendeArbeidAmbassadeFieldArray.validate = (values) => {
     return null;
   });
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
 

@@ -45,9 +45,16 @@ const config = {
     'react/require-default-props': OFF,
     'react/jsx-filename-extension': OFF,
     'no-undef': OFF,
+    'react/static-property-placement': OFF,
+    'react/state-in-constructor': OFF,
 
     // TODO (TOR) Ignorert inntil videre grunnet kost/nytte
     'jsx-a11y/anchor-is-valid': OFF,
+    'react/jsx-props-no-spreading': OFF,
+
+    // TODO (TOR) Midlertidig utkommentert
+    'max-classes-per-file': OFF,
+    'jsx-a11y/control-has-associated-label': OFF,
 
     '@typescript-eslint/no-unused-vars': ERROR,
     '@typescript-eslint/indent': OFF,
@@ -56,6 +63,7 @@ const config = {
     '@typescript-eslint/explicit-member-accessibility': OFF,
     '@typescript-eslint/explicit-function-return-type': OFF,
     '@typescript-eslint/no-explicit-any': OFF,
+    '@typescript-eslint/ban-ts-ignore': OFF,
   },
   overrides: [
     {

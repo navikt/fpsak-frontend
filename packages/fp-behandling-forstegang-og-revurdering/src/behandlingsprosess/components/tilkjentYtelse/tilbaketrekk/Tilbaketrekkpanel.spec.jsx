@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
 
-const lagAksjonspunktTilbaketrekk = begrunnelse => ({
+const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
   definisjon: {
     kode: aksjonspunktCodes.VURDER_TILBAKETREKK,
   },

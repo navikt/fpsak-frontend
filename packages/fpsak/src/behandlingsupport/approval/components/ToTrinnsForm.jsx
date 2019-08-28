@@ -15,13 +15,13 @@ import { isKlage, isKlageWithKA } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsForm.less';
 
-const allApproved = formState => formState
+const allApproved = (formState) => formState
   .reduce((a, b) => a.concat(b.aksjonspunkter), [])
-  .every(ap => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
+  .every((ap) => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
 
-const allSelected = formState => formState
+const allSelected = (formState) => formState
   .reduce((a, b) => a.concat(b.aksjonspunkter), [])
-  .every(ap => ap.totrinnskontrollGodkjent !== null);
+  .every((ap) => ap.totrinnskontrollGodkjent !== null);
 
 
 /*
@@ -96,8 +96,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="VedtakForm.ForhandvisBrev" />
         </button>
-        )
-        }
+        )}
       </div>
     </form>
   );
@@ -124,7 +123,7 @@ ToTrinnsFormImpl.defaultProps = {
 const validate = (values) => {
   const errors = {};
 
-  errors.approvals = values.approvals.map(kontekst => ({
+  errors.approvals = values.approvals.map((kontekst) => ({
     aksjonspunkter: kontekst.aksjonspunkter.map((ap) => {
       if (!ap.feilFakta && !ap.feilLov && !ap.feilRegel && !ap.annet) {
         return { missingArsakError: isRequiredMessage() };
@@ -139,7 +138,7 @@ const validate = (values) => {
 
 const formName = 'toTrinnForm';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   formState: behandlingFormValueSelector(formName)(state, 'approvals'),
   klageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
   klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),

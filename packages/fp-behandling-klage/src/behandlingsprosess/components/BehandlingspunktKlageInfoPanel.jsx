@@ -43,8 +43,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
          previewVedtakCallback={previewCallback}
          readOnly={readOnly}
        />
-       )
-      }
+       )}
 
       {BehandleKlageFormKa.supports(apCodes)
       && (
@@ -55,8 +54,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-      }
+      )}
       {BehandleKlageFormNfp.supports(apCodes)
       && (
       <BehandleKlageFormNfp
@@ -66,8 +64,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         previewCallback={previewCallback}
         readOnlySubmitButton={readOnlySubmitButton}
       />
-      )
-      }
+      )}
       {FormkravKlageFormNfp.supports(apCodes)
       && (
         <FormkravKlageFormNfp
@@ -75,8 +72,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
           readOnly={readOnly}
           readOnlySubmitButton={readOnlySubmitButton}
         />
-      )
-      }
+      )}
       {FormkravKlageFormKa.supports(apCodes)
       && (
         <FormkravKlageFormKa
@@ -84,8 +80,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
           readOnly={readOnly}
           readOnlySubmitButton={readOnlySubmitButton}
         />
-      )
-      }
+      )}
     </div>
   </div>
 );
@@ -107,7 +102,7 @@ BehandlingspunktKlageInfoPanel.defaultProps = {
   notAcceptedByBeslutter: false,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   openAksjonspunkt: behandlingspunktKlageSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingspunktKlageSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingspunktKlageSelectors.isBehandlingspunktAksjonspunkterSolvable(state),

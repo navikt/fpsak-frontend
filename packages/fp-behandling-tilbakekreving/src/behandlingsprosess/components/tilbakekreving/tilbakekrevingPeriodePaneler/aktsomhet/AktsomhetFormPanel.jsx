@@ -41,7 +41,7 @@ const AktsomhetFormPanel = ({
       readOnly={readOnly}
       onChange={resetFields}
     >
-      {aktsomhetTyper.map(vrt => (
+      {aktsomhetTyper.map((vrt) => (
         <RadioOption
           key={vrt.kode}
           label={vrt.navn}

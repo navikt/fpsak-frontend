@@ -60,11 +60,11 @@ export class BehandlingsprosessKlageIndex extends Component {
     const { submitCallback, goToDefaultPage } = this.props;
 
     const skalByttTilKlageinstans = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
+      .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
     const erKlageHjemsendt = aksjonspunktModels
-      .some(apValue => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
+      .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
 
-      const shouldUpdateInfo = !skalByttTilKlageinstans;
+    const shouldUpdateInfo = !skalByttTilKlageinstans;
 
     const afterAksjonspunktSubmit = () => {
       if (skalByttTilKlageinstans) {
@@ -114,12 +114,12 @@ BehandlingsprosessKlageIndex.defaultProps = {
   location: undefined,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
 });
 
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     saveKlage,

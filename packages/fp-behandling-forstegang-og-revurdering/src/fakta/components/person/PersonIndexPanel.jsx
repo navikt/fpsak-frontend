@@ -14,7 +14,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import styles from './PersonIndexPanel.less';
 
 const personAksjonspunkter = [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK];
-const erMarkertUtenlandssak = aksjonspunkter => aksjonspunkter.some(ap => ap.definisjon.kode === personAksjonspunkter[0]);
+const erMarkertUtenlandssak = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === personAksjonspunkter[0]);
 
 /**
  * Container component. Viser grunnleggende personinformasjon. Dette panelet blir
@@ -28,8 +28,7 @@ const PersonIndexPanelImpl = ({
 }) => (
   <Panel>
     {person
-    && <PersonIndex person={person} />
-    }
+    && <PersonIndex person={person} />}
     {erMarkertUtenlandssak(aksjonspunkter)
     && (
       <form onSubmit={formProps.handleSubmit}>
@@ -42,8 +41,7 @@ const PersonIndexPanelImpl = ({
             <Hovedknapp mini className={styles.button} spinner={formProps.submitting} disabled={readOnly || formProps.submitting}>
               <FormattedMessage id="OkAvbrytModal.Ok" />
             </Hovedknapp>
-            )
-          }
+            )}
         </div>
       </form>
     )}

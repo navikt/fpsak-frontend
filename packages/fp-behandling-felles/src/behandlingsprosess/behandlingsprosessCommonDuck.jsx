@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const toggleBehandlingspunkt = (overrideBehandlingspunkter, toggledBehandlingspunkt) => (overrideBehandlingspunkter.includes(toggledBehandlingspunkt)
-  ? overrideBehandlingspunkter.filter(bp => bp !== toggledBehandlingspunkt)
+  ? overrideBehandlingspunkter.filter((bp) => bp !== toggledBehandlingspunkt)
   : [...overrideBehandlingspunkter, toggledBehandlingspunkt]);
 
 const getBehandlingsprosessReducer = (initialState, actionTypes) => (state = initialState, action = {}) => {
@@ -40,7 +40,7 @@ const getBehandlingsprosessReducer = (initialState, actionTypes) => (state = ini
 };
 
 const getBehandlingsprosessRedux = (reducerName) => {
-  const actionType = name => `${reducerName}/${name}`;
+  const actionType = (name) => `${reducerName}/${name}`;
   const actionTypes = {
     SET_SELECTED_BEHANDLINGSPUNKT_NAVN: actionType('SET_SELECTED_BEHANDLINGSPUNKT_NAVN'),
     RESET_BEHANDLINGSPUNKTER: actionType('RESET_BEHANDLINGSPUNKTER'),
@@ -53,11 +53,11 @@ const getBehandlingsprosessRedux = (reducerName) => {
     resetBehandlingspunkter: () => ({
       type: actionTypes.RESET_BEHANDLINGSPUNKTER,
     }),
-    setSelectedBehandlingspunktNavn: selectedBehandlingspunktNavn => ({
+    setSelectedBehandlingspunktNavn: (selectedBehandlingspunktNavn) => ({
       type: actionTypes.SET_SELECTED_BEHANDLINGSPUNKT_NAVN,
       data: selectedBehandlingspunktNavn,
     }),
-    toggleBehandlingspunktOverstyring: behandlingspunkt => ({
+    toggleBehandlingspunktOverstyring: (behandlingspunkt) => ({
       type: actionTypes.TOGGLE_BEHANDLINGSPUNKT_OVERSTYRING,
       data: behandlingspunkt,
     }),
@@ -76,11 +76,11 @@ const getBehandlingsprosessRedux = (reducerName) => {
     resolveProsessAksjonspunkterSuccess: false,
   };
 
-  const getBehandlingsprosessContext = state => state.default[reducerName];
+  const getBehandlingsprosessContext = (state) => state.default[reducerName];
   const selectors = {
-    getSelectedBehandlingspunktNavn: createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.selectedBehandlingspunktNavn),
-    getOverrideBehandlingspunkter: createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.overrideBehandlingspunkter),
-    getResolveProsessAksjonspunkterSuccess: createSelector([getBehandlingsprosessContext], bpCtx => bpCtx.resolveProsessAksjonspunkterSuccess),
+    getSelectedBehandlingspunktNavn: createSelector([getBehandlingsprosessContext], (bpCtx) => bpCtx.selectedBehandlingspunktNavn),
+    getOverrideBehandlingspunkter: createSelector([getBehandlingsprosessContext], (bpCtx) => bpCtx.overrideBehandlingspunkter),
+    getResolveProsessAksjonspunkterSuccess: createSelector([getBehandlingsprosessContext], (bpCtx) => bpCtx.resolveProsessAksjonspunkterSuccess),
   };
 
   return {

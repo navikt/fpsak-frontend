@@ -65,11 +65,11 @@ export const findAvslagResultatText = (behandlingResultatTypeKode, ytelseType) =
 };
 
 
-export const hasIkkeOppfyltSoknadsfristvilkar = vilkar => vilkar.some(v => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET
+export const hasIkkeOppfyltSoknadsfristvilkar = (vilkar) => vilkar.some((v) => v.vilkarType.kode === vilkarType.SOKNADFRISTVILKARET
   && v.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
 
 
-export const medholdIKlage = klageVurderingResultat => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE);
+export const medholdIKlage = (klageVurderingResultat) => (klageVurderingResultat && klageVurderingResultat.klageVurdering === klageVurdering.MEDHOLD_I_KLAGE);
 
 export const hasKlageVurderingSomIkkeErAvvist = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
   const isKlageVurderingNfpAvvisKlage = klageVurderingResultatNFP
@@ -91,6 +91,6 @@ export const endringerIBeregningsgrunnlagGirFritekstfelt = (aksjonspunkter, ytel
   if (ytelseType === fagsakYtelseType.ENGANGSSTONAD || aksjonspunkter === undefined || aksjonspunkter.length < 1) {
     return false;
   }
-  return aksjonspunkter.find(ap => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
+  return aksjonspunkter.find((ap) => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
     && ap.status.kode === aksjonspunktStatus.UTFORT) !== undefined;
 };

@@ -78,7 +78,7 @@ SettBehandlingPaVentFormImpl.defaultProps = {
   isUpdateOnHold: false,
 };
 
-const buildInitialValues = initialProps => ({
+const buildInitialValues = (initialProps) => ({
   ventearsak: initialProps.ventearsak,
   frist: initialProps.frist || !initialProps.hasManualPaVent ? initialProps.frist : initFrist(),
 });

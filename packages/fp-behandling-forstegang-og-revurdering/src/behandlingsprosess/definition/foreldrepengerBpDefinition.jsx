@@ -18,11 +18,11 @@ const faktaUttakAp = [
 ];
 
 const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
-  if (!uttaksresultat || aksjonspunkter.some(ap => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
+  if (!uttaksresultat || aksjonspunkter.some((ap) => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
     return vut.IKKE_VURDERT;
   }
   if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some(p => (
+    const oppfylt = uttaksresultat.perioderSøker.some((p) => (
       p.periodeResultatType.kode !== prt.AVSLATT
     ));
     if (oppfylt) {
@@ -35,7 +35,7 @@ const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
 const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
-      const oppfylt = uttaksresultat.perioderSøker.some(p => (
+      const oppfylt = uttaksresultat.perioderSøker.some((p) => (
         p.periodeResultatType.kode !== prt.AVSLATT
       ));
       if (!oppfylt) {
@@ -47,12 +47,12 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => 
   return vut.IKKE_VURDERT;
 };
 
-const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some(b => b === behandlingType.kode);
+const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some((b) => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
 const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
   const isRevurdering = bt.REVURDERING === behandlingType.kode;
-  const hasAp = aksjonspunkter.some(ap => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
+  const hasAp = aksjonspunkter.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
   return !(isRevurdering && !hasAp);
 };
 
@@ -148,7 +148,7 @@ const foreldrepengerBuilders = [
     .withStatus(getVedtakStatus),
 ];
 
-const createForeldrepengerBpProps = builderData => foreldrepengerBuilders.reduce((currentFbs, fb) => {
+const createForeldrepengerBpProps = (builderData) => foreldrepengerBuilders.reduce((currentFbs, fb) => {
   const res = fb.build(builderData, currentFbs.length);
   return res.isVisible ? currentFbs.concat([res]) : currentFbs;
 }, []);

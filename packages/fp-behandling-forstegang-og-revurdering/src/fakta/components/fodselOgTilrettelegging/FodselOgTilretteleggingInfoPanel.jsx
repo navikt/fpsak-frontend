@@ -59,6 +59,6 @@ const ConnectedComponent = injectIntl(FodselOgTilretteleggingInfoPanelImpl);
 
 const FodselOgTilretteleggingInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELTILRETTELEGGING, fodselOgTilretteleggingAksjonspunkt)(ConnectedComponent);
 
-FodselOgTilretteleggingInfoPanel.supports = aksjonspunkter => aksjonspunkter.some(ap => fodselOgTilretteleggingAksjonspunkt.includes(ap.definisjon.kode));
+FodselOgTilretteleggingInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => fodselOgTilretteleggingAksjonspunkt.includes(ap.definisjon.kode));
 
 export default (FodselOgTilretteleggingInfoPanel);

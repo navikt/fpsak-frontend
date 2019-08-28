@@ -32,7 +32,7 @@ describe('<Search>', () => {
     />);
 
     const form = wrapper.find('form');
-    form.simulate('submit', { preventDefault() {} });
+    form.simulate('submit', { preventDefault() { return undefined; } });
 
     expect(onButtonClick).to.have.property('callCount', 1);
   });

@@ -50,14 +50,14 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.VEDTAK_FATTET:
     case historikkinnslagType.UENDRET_UTFALL:
     case historikkinnslagType.REGISTRER_OM_VERGE:
-    return HistorikkMalType2;
+      return HistorikkMalType2;
     case historikkinnslagType.SAK_RETUR:
-    return HistorikkMalType3;
+      return HistorikkMalType3;
     case historikkinnslagType.AVBRUTT_BEH:
     case historikkinnslagType.BEH_KØET:
     case historikkinnslagType.BEH_VENT:
     case historikkinnslagType.IVERKSETTELSE_VENT:
-    return HistorikkMalType4;
+      return HistorikkMalType4;
     case historikkinnslagType.SAK_GODKJENT:
     case historikkinnslagType.FAKTA_ENDRET:
     case historikkinnslagType.KLAGE_BEH_NK:
@@ -66,22 +66,22 @@ const velgHistorikkMal = (histType) => { // NOSONAR
     case historikkinnslagType.UTTAK:
     case historikkinnslagType.TERMINBEKREFTELSE_UGYLDIG:
     case historikkinnslagType.ANKE_BEH:
-    return HistorikkMalType5;
+      return HistorikkMalType5;
     case historikkinnslagType.NY_INFO_FRA_TPS:
-    return HistorikkMalType6;
+      return HistorikkMalType6;
     case historikkinnslagType.OVERSTYRT:
-    return HistorikkMalType7;
+      return HistorikkMalType7;
     case historikkinnslagType.OPPTJENING:
-    return HistorikkMalType8;
+      return HistorikkMalType8;
     case historikkinnslagType.OVST_UTTAK_SPLITT:
     case historikkinnslagType.FASTSATT_UTTAK_SPLITT:
     case historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING:
-    return HistorikkMalType9;
+      return HistorikkMalType9;
     case historikkinnslagType.OVST_UTTAK:
     case historikkinnslagType.FASTSATT_UTTAK:
-    return HistorikkMalType10;
+      return HistorikkMalType10;
     case historikkinnslagType.FAKTA_OM_FEILUTBETALING:
-    return HistorikkMalTypeFeilutbetaling;
+      return HistorikkMalTypeFeilutbetaling;
     case historikkinnslagType.FORELDELSE:
       return HistorikkMalTypeForeldelse;
     case historikkinnslagType.TILBAKEKREVING:
@@ -134,8 +134,7 @@ const History = ({
           />
         </Snakkeboble>
       );
-    })
-    }
+    })}
   </div>
 );
 

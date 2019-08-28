@@ -12,7 +12,7 @@ import styles from './behandlingspunktBegrunnelseTextField.less';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
-const getBegrunnelseTextCode = readOnly => (readOnly
+const getBegrunnelseTextCode = (readOnly) => (readOnly
   ? 'BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly'
   : 'BehandlingspunktBegrunnelseTextField.ExplanationRequired');
 
@@ -50,15 +50,15 @@ BehandlingspunktBegrunnelseTextFieldImpl.defaultProps = {
 
 const BehandlingspunktBegrunnelseTextField = injectIntl(BehandlingspunktBegrunnelseTextFieldImpl);
 
-const getBegrunnelse = aksjonspunkter => (aksjonspunkter.length > 0 && aksjonspunkter[0].begrunnelse
+const getBegrunnelse = (aksjonspunkter) => (aksjonspunkter.length > 0 && aksjonspunkter[0].begrunnelse
   ? aksjonspunkter[0].begrunnelse
   : '');
 
-BehandlingspunktBegrunnelseTextField.buildInitialValues = aksjonspunkter => ({
+BehandlingspunktBegrunnelseTextField.buildInitialValues = (aksjonspunkter) => ({
   begrunnelse: decodeHtmlEntity(getBegrunnelse(aksjonspunkter)),
 });
 
-BehandlingspunktBegrunnelseTextField.transformValues = values => ({
+BehandlingspunktBegrunnelseTextField.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });
 

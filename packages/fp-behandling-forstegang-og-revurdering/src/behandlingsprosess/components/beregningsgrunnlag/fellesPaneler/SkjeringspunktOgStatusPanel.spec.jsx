@@ -28,10 +28,10 @@ const lukketVurderDekningsgradAP = {
 };
 const skjeringstidspunktDato = '2017-12-12';
 const aktivitetstatusList = [{
-    kode: aktivitetStatus.ARBEIDSTAKER,
-  }, {
-    kode: aktivitetStatus.FRILANSER,
-  },
+  kode: aktivitetStatus.ARBEIDSTAKER,
+}, {
+  kode: aktivitetStatus.FRILANSER,
+},
 ];
 
 const getKodeverknavn = (kodeverk) => {

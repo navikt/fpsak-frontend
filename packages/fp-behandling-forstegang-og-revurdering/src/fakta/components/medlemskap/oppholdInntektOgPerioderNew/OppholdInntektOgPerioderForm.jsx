@@ -65,8 +65,8 @@ const getHelpTexts = (aksjonspunkter) => {
 };
 
 const createNewPerioder = (perioder, id, values) => {
-  const updatedIndex = perioder.findIndex(p => p.id === id);
-  const updatedPeriode = perioder.find(p => p.id === id);
+  const updatedIndex = perioder.findIndex((p) => p.id === id);
+  const updatedPeriode = perioder.find((p) => p.id === id);
 
   return [
     ...perioder.slice(0, updatedIndex),
@@ -129,7 +129,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
       behandlingFormPrefix, perioder, reduxFormChange: formChange,
     } = this.props;
 
-    const updatedPeriode = perioder.find(p => p.id === values.id);
+    const updatedPeriode = perioder.find((p) => p.id === values.id);
 
     const newPeriodeObject = {
       ...updatedPeriode,
@@ -151,7 +151,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
     }
 
     if (perioder && perioder.length > 0) {
-      const ubekreftPerioder = perioder.filter(periode => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null);
+      const ubekreftPerioder = perioder.filter((periode) => periode.aksjonspunkter.length > 0 && periode.begrunnelse === null);
 
       if (ubekreftPerioder.length > 0) {
         return true;
@@ -226,11 +226,11 @@ const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLA
 
 const transformValues = (values, aksjonspunkter) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
-    .filter(ap => medlemAksjonspunkter.includes(ap.definisjon.kode))
-    .filter(ap => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
+    .filter((ap) => medlemAksjonspunkter.includes(ap.definisjon.kode))
+    .filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
 
 
-  return aktiveMedlemAksjonspunkter.map(ap => ({
+  return aktiveMedlemAksjonspunkter.map((ap) => ({
     kode: ap.definisjon.kode,
     begrunnelse: '',
     bekreftedePerioder: values.perioder.map((periode) => {
@@ -243,7 +243,7 @@ const transformValues = (values, aksjonspunkter) => {
         ...bekreftetPeriode
       } = periode;
       return bekreftetPeriode;
-    }).filter(periode => periode.aksjonspunkter.includes(ap.definisjon.kode)
+    }).filter((periode) => periode.aksjonspunkter.includes(ap.definisjon.kode)
       || (periode.aksjonspunkter.length > 0 && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP)),
   }));
 };
@@ -257,15 +257,15 @@ const buildInitalValues = createSelector([behandlingSelectors.getSoknad, getFags
   gjeldendeFom,
   medlemskapPerioder: medlem.medlemskapPerioder || [],
   inntekter: medlem.inntekt,
-  perioder: (medlem.perioder || []).map(periode => ({
+  perioder: (medlem.perioder || []).map((periode) => ({
     ...periode,
     id: guid(),
   })),
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
-  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some(ap => isAksjonspunktOpen(ap.status.kode));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
   const perioder = [];
 
   return (state) => {
@@ -281,7 +281,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     reduxFormChange,
     reduxFormReset,

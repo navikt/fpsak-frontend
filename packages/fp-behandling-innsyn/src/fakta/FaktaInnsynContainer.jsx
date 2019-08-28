@@ -15,7 +15,7 @@ import FaktaInnsynPanel from './components/FaktaInnsynPanel';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Innsyn.
  */
-export const FaktaInnsynContainer = props => (
+export const FaktaInnsynContainer = (props) => (
   <FaktaInnsynPanel {...props} />
 );
 
@@ -27,7 +27,7 @@ FaktaInnsynContainer.propTypes = {
   resetFakta: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

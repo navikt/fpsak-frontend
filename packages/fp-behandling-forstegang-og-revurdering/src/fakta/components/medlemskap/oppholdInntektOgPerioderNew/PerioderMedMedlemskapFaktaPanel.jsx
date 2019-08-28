@@ -71,8 +71,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
               </TableColumn>
             </TableRow>
           );
-        })
-        }
+        })}
       </Table>
       <FlexContainer>
         {hasPeriodeAksjonspunkt
@@ -80,12 +79,11 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
       <FlexRow>
         <FlexColumn>
           <RadioGroupField name="medlemskapManuellVurderingType.kode" validate={[required]} readOnly={readOnly} isEdited={isPeriodAksjonspunktClosed}>
-            {vurderingTypes.map(type => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
+            {vurderingTypes.map((type) => <RadioOption key={type.kode} value={type.kode} label={type.navn} />)}
           </RadioGroupField>
         </FlexColumn>
       </FlexRow>
-      )
-      }
+      )}
         <VerticalSpacer sixteenPx />
         <FlexRow className="justifyItemsToFlexEnd">
           <FlexColumn>
@@ -95,24 +93,21 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
             id="PerioderMedMedlemskapFaktaPanel.Fodselsdato"
             values={{ dato: moment(fodselsdato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
             {termindato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Termindato"
             values={{ dato: moment(termindato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
             {omsorgsovertakelseDato
           && (
           <FormattedMessage
             id="PerioderMedMedlemskapFaktaPanel.Omsorgsovertakelse"
             values={{ dato: moment(omsorgsovertakelseDato).format(DDMMYYYY_DATE_FORMAT) }}
           />
-          )
-          }
+          )}
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -153,7 +148,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
     return [];
   }
 
-  const fixedMedlemskapPerioder = medlemskapPerioder.map(i => ({
+  const fixedMedlemskapPerioder = medlemskapPerioder.map((i) => ({
     fom: i.fom,
     tom: i.tom,
     dekning: getKodeverknavn(i.dekningType),
@@ -161,7 +156,7 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
     beslutningsdato: i.beslutningsdato,
   }))
     .sort((p1, p2) => new Date(p1.fom).getTime() - new Date(p2.fom).getTime());
-  const filteredAp = aksjonspunkter.filter(ap => periode.aksjonspunkter.includes(ap.definisjon.kode)
+  const filteredAp = aksjonspunkter.filter((ap) => periode.aksjonspunkter.includes(ap.definisjon.kode)
       || (periode.aksjonspunkter.length > 0
         && periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE)
         && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
@@ -173,13 +168,13 @@ PerioderMedMedlemskapFaktaPanel.buildInitialValues = (periode, medlemskapPeriode
     termindato: soknad.termindato,
     omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
     hasPeriodeAksjonspunkt: filteredAp.length > 0,
-    isPeriodAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isPeriodAksjonspunktClosed: filteredAp.some((ap) => !isAksjonspunktOpen(ap.status.kode)),
   };
 };
 
 PerioderMedMedlemskapFaktaPanel.transformValues = (values, manuellVurderingTyper) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-  medlemskapManuellVurderingType: manuellVurderingTyper.find(m => m.kode === values.medlemskapManuellVurderingType.kode),
+  medlemskapManuellVurderingType: manuellVurderingTyper.find((m) => m.kode === values.medlemskapManuellVurderingType.kode),
 });
 
 export default PerioderMedMedlemskapFaktaPanel;

@@ -83,14 +83,14 @@ FagsakSearchIndex.defaultProps = {
   searchResultAccessDenied: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   searchResultReceived: getSearchFagsakerFinished(state),
   fagsaker: getFagsaker(state),
   searchStarted: getSearchFagsakerStarted(state),
   searchResultAccessDenied: getSearchFagsakerAccessDenied(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push, searchFagsaker, resetFagsakSearch,
   }, dispatch),

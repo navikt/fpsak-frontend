@@ -48,7 +48,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   fagsakPerson,
   erOverstyrer,
 }) => (
-  <React.Fragment>
+  <>
     <div className={styles.personContainer}>
       {personopplysninger
       && (
@@ -60,8 +60,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {!personopplysninger
       && (
       <PersonIndexPanel
@@ -73,8 +72,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
         readOnly={readOnly}
       />
-      )
-      }
+      )}
     </div>
     <div className={styles.container}>
       {personopplysninger
@@ -87,8 +85,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {RegistrereVergeInfoPanel.supports(aksjonspunkter)
       && (
         <RegistrereVergeInfoPanel
@@ -99,8 +96,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {TilleggsopplysningerInfoPanel.supports(aksjonspunkter)
       && (
         <TilleggsopplysningerInfoPanel
@@ -111,8 +107,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {OmsorgOgForeldreansvarInfoPanel.supports(aksjonspunkter)
       && (
         <OmsorgOgForeldreansvarInfoPanel
@@ -123,8 +118,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
       && (
       <FodselOgTilretteleggingInfoPanel
@@ -135,8 +129,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         submitCallback={submitCallback}
         readOnly={readOnly}
       />
-      )
-      }
+      )}
       {AdopsjonInfoPanel.supports(vilkarCodes, aksjonspunkter)
       && (
         <AdopsjonInfoPanel
@@ -147,8 +140,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {FodselInfoPanel.supports(vilkarCodes, aksjonspunkter)
       && (
         <FodselInfoPanel
@@ -159,8 +151,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       { MedlemskapInfoPanel.supports(personopplysninger)
       && (
         <MedlemskapInfoPanel
@@ -171,8 +162,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       { OpptjeningInfoPanel.supports(vilkarCodes)
       && (
         <OpptjeningInfoPanel
@@ -183,8 +173,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       <BeregningInfoPanel
         aksjonspunkter={aksjonspunkter}
         openInfoPanels={openInfoPanels}
@@ -204,8 +193,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {OmsorgInfoPanel.supports(aksjonspunkter)
       && (
         <OmsorgInfoPanel
@@ -216,8 +204,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
       {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling)
       && (
         <UttakInfoPanel
@@ -228,10 +215,9 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           submitCallback={submitCallback}
           readOnly={readOnly}
         />
-      )
-      }
+      )}
     </div>
-  </React.Fragment>
+  </>
 );
 
 FaktaPanel.propTypes = {

@@ -10,14 +10,14 @@ import styles from './snakkeboble.less';
 
 const cx = classNames.bind(styles);
 
-const snakkebobleCls = rolle => cx('snakkeboble', {
+const snakkebobleCls = (rolle) => cx('snakkeboble', {
   'snakkeboble--hoyre': rolle !== 'SOKER' && rolle !== 'ARBEIDSGIVER',
   'snakkeboble--venstre': rolle === 'SOKER' || rolle === 'ARBEIDSGIVER',
 });
 
-const formatDate = date => (`${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)} - ${date.substring(11, 16)}`);
+const formatDate = (date) => (`${date.substring(8, 10)}.${date.substring(5, 7)}.${date.substring(0, 4)} - ${date.substring(11, 16)}`);
 
-const snakkeboblePilCls = rolle => cx('snakkeboble__snakkebole-pil', {
+const snakkeboblePilCls = (rolle) => cx('snakkeboble__snakkebole-pil', {
   'snakkeboble__snakkebole-pil--hoyre--saksbehandler': rolle === 'SBH',
   'snakkeboble__snakkebole-pil--hoyre--beslutter': rolle === 'BESL',
   'snakkeboble__snakkebole-pil--hoyre--losningen': rolle === 'VL',
@@ -34,7 +34,7 @@ const snakkebobleIkonCls = (rolle, kjoennKode) => cx('snakkeboble__ikon', {
   'snakkeboble__ikon--ekstern': rolle === 'ARBEIDSGIVER',
 });
 
-const snakkeboblePanelCls = rolle => cx('snakkeboble__panel snakkeboble-panel', {
+const snakkeboblePanelCls = (rolle) => cx('snakkeboble__panel snakkeboble-panel', {
   'snakkeboble__snakkebole-panel--saksbehandler': rolle === 'SBH',
   'snakkeboble__snakkebole-panel--beslutter': rolle === 'BESL',
   'snakkeboble__snakkebole-panel--losningen': rolle === 'VL',

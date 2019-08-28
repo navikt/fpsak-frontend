@@ -16,8 +16,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './grunnlagForAarsinntektPanelFL.less';
 
-const finnFrilansAksjonspunkt = aksjonspunkter => !!aksjonspunkter && aksjonspunkter.find(
-  ap => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
+const finnFrilansAksjonspunkt = (aksjonspunkter) => !!aksjonspunkter && aksjonspunkter.find(
+  (ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
   || ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
 );
 
@@ -39,7 +39,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
   aksjonspunkter,
   isKombinasjonsstatus,
 }) => {
-  const relevanteAndeler = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   return (
     <div className={styles.breddeFL}>
@@ -49,8 +49,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
         <Element><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilanser" /></Element>
         <VerticalSpacer eightPx />
       </div>
-      )
-    }
+      )}
       <Row>
         <Column xs="4">
           <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" /></Normaltekst>
@@ -60,8 +59,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
         <Column xs="4">
           <Normaltekst><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FastsattFrilans" /></Normaltekst>
         </Column>
-        )
-        }
+        )}
       </Row>
       <Row>
         <Column xs="4">
@@ -79,8 +77,7 @@ export const GrunnlagForAarsinntektPanelFL = ({
             readOnly={readOnly}
           />
         </Column>
-        )
-        }
+        )}
       </Row>
     </div>
   );

@@ -14,7 +14,7 @@ import FaktaAnkePanel from './components/FaktaAnkePanel';
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
  */
-export const FaktaAnkeContainer = props => (
+export const FaktaAnkeContainer = (props) => (
   <FaktaAnkePanel {...props} />
 );
 
@@ -26,7 +26,7 @@ FaktaAnkeContainer.propTypes = {
   resetFakta: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

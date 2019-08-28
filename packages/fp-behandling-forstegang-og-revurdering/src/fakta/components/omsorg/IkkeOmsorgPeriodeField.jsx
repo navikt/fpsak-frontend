@@ -54,8 +54,7 @@ const IkkeOmsorgPeriodeField = ({
             <Column xs="2">
               {getRemoveButton()}
             </Column>
-          )
-          }
+          )}
         </Row>
       )}
     </PeriodFieldArray>
@@ -69,9 +68,9 @@ IkkeOmsorgPeriodeField.propTypes = {
   fields: PropTypes.shape().isRequired,
 };
 
-const hasValue = values => (values && values.length && values.length < 2 && !values[0].periodeTom);
+const hasValue = (values) => (values && values.length && values.length < 2 && !values[0].periodeTom);
 
-const checkArrayErrors = values => values.map(({ periodeFom, periodeTom }, index) => {
+const checkArrayErrors = (values) => values.map(({ periodeFom, periodeTom }, index) => {
   if (isObjectEmpty(periodeFom) && isObjectEmpty(periodeTom)) {
     return null;
   }
@@ -92,7 +91,7 @@ const checkArrayErrors = values => values.map(({ periodeFom, periodeTom }, index
   return null;
 });
 
-const checkOverlapError = values => dateRangesNotOverlapping(values.reduce((result, current) => {
+const checkOverlapError = (values) => dateRangesNotOverlapping(values.reduce((result, current) => {
   if (current.periodeTom && current.periodeFom) {
     result.push([current.periodeFom, current.periodeTom]);
   }
@@ -106,7 +105,7 @@ const hasValidPeriodOrOnlyStartDate = (values) => {
 
   const arrayErrors = checkArrayErrors(values);
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   if (values.length > 1) {
@@ -115,7 +114,7 @@ const hasValidPeriodOrOnlyStartDate = (values) => {
     const lastEntry = values[values.length - 1];
     if (!overlapError && lastEntry.periodeFom && !lastEntry.periodeTom) {
       const arrayWithoutLast = values.slice(0, values.length - 1);
-      overlapError = arrayWithoutLast.some(date => dateIsAfter(date.periodeFom, lastEntry.periodeFom)
+      overlapError = arrayWithoutLast.some((date) => dateIsAfter(date.periodeFom, lastEntry.periodeFom)
         || dateIsAfter(date.periodeTom, lastEntry.periodeFom))
         ? dateRangesOverlappingMessage() : null;
     }

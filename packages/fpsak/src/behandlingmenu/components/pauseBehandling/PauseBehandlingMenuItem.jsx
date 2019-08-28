@@ -75,8 +75,7 @@ export class PauseBehandlingMenuItem extends Component {
             hasManualPaVent
             ventearsaker={ventearsaker}
           />
-          )
-        }
+          )}
       </div>
     );
   }

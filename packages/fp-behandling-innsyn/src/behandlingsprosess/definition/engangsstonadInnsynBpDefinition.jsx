@@ -22,7 +22,7 @@ const engangsstonadBuilders = [
     .withStatus(getVedtakStatus),
 ];
 
-const createEngangsstonadBpProps = builderData => engangsstonadBuilders.reduce((currentEbs, eb) => {
+const createEngangsstonadBpProps = (builderData) => engangsstonadBuilders.reduce((currentEbs, eb) => {
   const res = eb.build(builderData, currentEbs.length);
   return res.isVisible ? currentEbs.concat([res]) : currentEbs;
 }, []);

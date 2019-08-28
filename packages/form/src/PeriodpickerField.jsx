@@ -25,7 +25,7 @@ const formatError = (intl, otherProps, names) => {
   return undefined;
 };
 
-const hasValue = value => value !== undefined && value !== null && value !== '';
+const hasValue = (value) => value !== undefined && value !== null && value !== '';
 
 // eslint-disable-next-line react/prop-types
 const renderReadOnly = () => ({ names, renderIfMissingDateOnReadOnly, ...otherProps }) => {
@@ -69,17 +69,17 @@ const isoToDdMmYyyy = (string) => {
 };
 
 const acceptedFormatToIso = (value, name, names) => {
-  const dates = value.split('-').map(date => date.trim());
+  const dates = value.split('-').map((date) => date.trim());
   const date = dates[names.indexOf(name)];
 
   const validDate = ACCEPTED_DATE_INPUT_FORMATS
-    .map(format => moment(date, format, true))
-    .find(parsedDate => parsedDate.isValid());
+    .map((format) => moment(date, format, true))
+    .find((parsedDate) => parsedDate.isValid());
 
   return validDate ? validDate.format(ISO_DATE_FORMAT) : date;
 };
 
-const formatValue = format => value => isoToDdMmYyyy(format(value));
+const formatValue = (format) => (value) => isoToDdMmYyyy(format(value));
 const parseValue = (parse, names) => (value, name) => parse(acceptedFormatToIso(value, name, names));
 
 const PeriodpickerField = ({
@@ -112,8 +112,8 @@ PeriodpickerField.defaultProps = {
   readOnly: false,
   isEdited: false,
   renderIfMissingDateOnReadOnly: false,
-  format: value => value,
-  parse: value => value,
+  format: (value) => value,
+  parse: (value) => value,
 };
 
 export default PeriodpickerField;

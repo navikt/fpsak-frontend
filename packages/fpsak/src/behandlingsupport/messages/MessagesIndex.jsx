@@ -146,8 +146,7 @@ export class MessagesIndex extends Component {
             hasManualPaVent
             ventearsaker={ventearsaker}
           />
-        )
-        }
+        )}
       </div>
     );
   }
@@ -184,7 +183,7 @@ MessagesIndex.defaultProps = {
   recipients: ['Søker'],
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   templates: getBrevMaler(state),
   submitFinished: isSubmitMessageFinished(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
@@ -193,7 +192,7 @@ const mapStateToProps = state => ({
   ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     resetReduxForm,

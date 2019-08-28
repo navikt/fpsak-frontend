@@ -45,8 +45,7 @@ export const VedtakInnvilgetPanelImpl = ({
       behandlingsresultat={behandlingsresultat}
       labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
     />
-    )
-    }
+    )}
     {ytelseType === fagsakYtelseType.ENGANGSSTONAD
       && (
       <Row>
@@ -56,19 +55,16 @@ export const VedtakInnvilgetPanelImpl = ({
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.beregnetTilkjentYtelse' })}</Undertekst>
           <Element>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Element>
         </Column>
-        )
-        }
+        )}
         {antallBarn
         && (
         <Column xs="8">
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.AntallBarn' })}</Undertekst>
           <Element>{antallBarn}</Element>
         </Column>
-        )
-        }
+        )}
       </Row>
-      )
-      }
+      )}
   </ElementWrapper>
 );
 
@@ -94,7 +90,7 @@ VedtakInnvilgetPanelImpl.defaultProps = {
 };
 
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ytelseType: getFagsakYtelseType(state).kode,
   beregningResultat: getBehandlingResultatstruktur(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),

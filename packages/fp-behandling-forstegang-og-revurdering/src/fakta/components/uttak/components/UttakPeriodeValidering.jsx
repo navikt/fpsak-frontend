@@ -7,9 +7,9 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
 ];
 
-export const sjekkOmfaktaOmUttakAksjonspunkt = aksjonspunkter => aksjonspunkter.some(ap => uttakAksjonspunkter.includes(ap.definisjon.kode));
+export const sjekkOmfaktaOmUttakAksjonspunkt = (aksjonspunkter) => aksjonspunkter.some((ap) => uttakAksjonspunkter.includes(ap.definisjon.kode));
 
-export const sjekkArbeidsprosentOver100 = periode => periode.arbeidstidsprosent > 100;
+export const sjekkArbeidsprosentOver100 = (periode) => periode.arbeidstidsprosent > 100;
 
 export const sjekkOverlappendePerioder = (index, nestePeriode, forrigePeriode) => index !== 0
   && moment(nestePeriode.fom) <= moment(forrigePeriode.tom);

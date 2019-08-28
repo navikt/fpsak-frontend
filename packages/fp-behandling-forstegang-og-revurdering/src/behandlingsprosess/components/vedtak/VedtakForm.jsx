@@ -61,7 +61,7 @@ export const ForhaandsvisningsKnapp = (props) => {
     <a
       href=""
       onClick={previewFunction}
-      onKeyDown={e => (e.keyCode === 13 ? previewFunction(e) : null)}
+      onKeyDown={(e) => (e.keyCode === 13 ? previewFunction(e) : null)}
       className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
     >
       <FormattedMessage id="VedtakForm.ForhandvisBrev" />
@@ -77,7 +77,7 @@ function kanSendesTilGodkjenning(behandlingStatusKode) {
   return behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 }
 
-const getPreviewAutomatiskBrevCallback = formProps => (e) => {
+const getPreviewAutomatiskBrevCallback = (formProps) => (e) => {
   const {
     begrunnelse, brødtekst, behandlingId,
   } = formProps;
@@ -141,7 +141,7 @@ export class VedtakFormImpl extends Component {
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
-      <React.Fragment>
+      <>
         <VedtakFritekstbrevModal
           readOnly={readOnly}
           behandlingsresultat={behandlingsresultat}
@@ -160,8 +160,7 @@ export class VedtakFormImpl extends Component {
                 keyName="skalBrukeOverstyrendeFritekstBrev"
                 readOnlyHideEmpty={false}
               />
-            )
-            }
+            )}
 
           {isInnvilget(behandlingsresultat.type.kode)
             && (
@@ -172,8 +171,7 @@ export class VedtakFormImpl extends Component {
                 readOnly={readOnly}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
               />
-            )
-            }
+            )}
 
           {isAvslag(behandlingsresultat.type.kode)
             && (
@@ -183,8 +181,7 @@ export class VedtakFormImpl extends Component {
                 behandlingsresultat={behandlingsresultat}
                 readOnly={readOnly}
               />
-            )
-            }
+            )}
 
           {skalBrukeOverstyrendeFritekstBrev && !isEngangsstonad
             && (
@@ -194,8 +191,7 @@ export class VedtakFormImpl extends Component {
                 sprakkode={sprakkode}
                 previewBrev={previewAutomatiskBrev}
               />
-            )
-            }
+            )}
 
           {kanSendesTilGodkjenning(behandlingStatusKode)
             && (
@@ -212,24 +208,20 @@ export class VedtakFormImpl extends Component {
                     >
                       {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
                     </Hovedknapp>
-                  )
-                  }
+                  )}
                   {skalBrukeOverstyrendeFritekstBrev && skalViseLink
                   && (
                     <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                  )
-                  }
+                  )}
                   {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage
                   && (
                     <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-                  )
-                  }
+                  )}
                 </Column>
               </Row>
-            )
-            }
+            )}
         </VedtakAksjonspunktPanel>
-      </React.Fragment>
+      </>
     );
   }
 }
@@ -267,8 +259,8 @@ export const buildInitialValues = createSelector(
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseType ? ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
-    aksjonspunktKoder: aksjonspunkter.filter(ap => ap.kanLoses)
-      .map(ap => ap.definisjon.kode),
+    aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses)
+      .map((ap) => ap.definisjon.kode),
     skalBrukeOverstyrendeFritekstBrev: behandlingresultat.vedtaksbrev.kode === 'FRITEKST',
     overskrift: decodeHtmlEntity(behandlingresultat.overskrift),
     brødtekst: decodeHtmlEntity(behandlingresultat.fritekstbrev),
@@ -276,10 +268,10 @@ export const buildInitialValues = createSelector(
 );
 
 export const getAksjonspunktKoder = createSelector(
-  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], aksjonspunkter => aksjonspunkter.map(ap => ap.definisjon.kode),
+  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], (aksjonspunkter) => aksjonspunkter.map((ap) => ap.definisjon.kode),
 );
 
-const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
+const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
   kode: apCode,
   begrunnelse: values.begrunnelse,
   fritekstBrev: values.brødtekst,
@@ -291,8 +283,8 @@ const transformValues = values => values.aksjonspunktKoder.map(apCode => ({
 const formName = 'VedtakForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values));
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state),
     isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
@@ -318,7 +310,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
     fetchVedtaksbrevPreview,

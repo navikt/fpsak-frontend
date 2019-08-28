@@ -15,11 +15,11 @@ class ErrorFormatter {
     if (errorMessages.length > 0) {
       errorMessages
         .map((e) => {
-          const formatter = formatters.find(f => f.isOfType(e.type));
+          const formatter = formatters.find((f) => f.isOfType(e.type));
           return formatter ? formatter.format(e) : undefined;
         })
-        .filter(e => e)
-        .forEach(e => allErrorMessages.push(e));
+        .filter((e) => e)
+        .forEach((e) => allErrorMessages.push(e));
     }
 
     return allErrorMessages;

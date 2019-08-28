@@ -21,7 +21,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 const createAksjonspunktHelptTexts = (intl, aksjonspunkter) => {
   const helpTexts = [];
-  const apCodes = aksjonspunkter.map(ap => ap.definisjon.kode);
+  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   if (apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD)) {
     helpTexts.push('ErForeldreansvar4LeddVilkaarOppfyltForm.Paragraf');
   }
@@ -93,7 +93,7 @@ export const buildInitialValues = createSelector(
   }),
 );
 
-const transformValues = (values, aksjonspunkter) => aksjonspunkter.map(ap => ({
+const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => ({
   ...VilkarResultPicker.transformValues(values),
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
   ...{ kode: ap.definisjon.kode },
@@ -103,16 +103,16 @@ const formName = 'ErForeldreansvar4LeddVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkter = behandlingspunktSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, aksjonspunkter));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, aksjonspunkter));
   const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FORELDREANSVARSVILKARET_4_LEDD];
 
-  return state => ({
-      initialValues: buildInitialValues(state),
-      erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-      avslagsarsaker,
-      aksjonspunkter,
-      onSubmit,
-    });
+  return (state) => ({
+    initialValues: buildInitialValues(state),
+    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
+    avslagsarsaker,
+    aksjonspunkter,
+    onSubmit,
+  });
 };
 
 const ErForeldreansvar4LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
@@ -120,7 +120,7 @@ const ErForeldreansvar4LeddVilkaarOppfyltForm = connect(mapStateToPropsFactory)(
   validate,
 })(ErForeldreansvar4LeddVilkaarOppfyltFormImpl)));
 
-const hasAksjonspunktCode = apCodes => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD)
+const hasAksjonspunktCode = (apCodes) => apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD)
 || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
 || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN);
 

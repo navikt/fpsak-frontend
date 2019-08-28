@@ -18,7 +18,7 @@ export const errorOfType = (error: ErrorType, errorType: string) => error && (ge
 
 export const isHandledError = (errorType?: string) => errorType && handledErrorTypes.includes(errorType);
 
-const hasStatusCode = statusCode => (errorStatus?: number) => errorStatus === statusCode;
+const hasStatusCode = (statusCode) => (errorStatus?: number) => errorStatus === statusCode;
 
 export const is401Error = hasStatusCode(401);
 

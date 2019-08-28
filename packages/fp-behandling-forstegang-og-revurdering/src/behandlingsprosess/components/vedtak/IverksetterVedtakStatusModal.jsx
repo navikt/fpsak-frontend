@@ -161,7 +161,7 @@ const getModalTextId = createSelector(
   },
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
   resolveFaktaAksjonspunkterSuccess: getResolveFaktaAksjonspunkterSuccess(state),

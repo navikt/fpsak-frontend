@@ -16,7 +16,7 @@ import { getSortedKortvarigeArbeidsforholdList } from '../../ArbeidsforholdHelpe
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';
 
-const createArbeidsforholdRadioKey = andel => (andel && andel.arbeidsforhold
+const createArbeidsforholdRadioKey = (andel) => (andel && andel.arbeidsforhold
   ? `${andel.arbeidsforhold.arbeidsgiverNavn}(${andel.arbeidsforhold.arbeidsforholdId})(${andel.andelsnr})`
   : '');
 /**
@@ -33,7 +33,7 @@ export const TidsbegrensetArbeidsforholdFormImpl = ({
   getKodeverknavn,
 }) => (
   <div>
-    {andelsliste.map(andel => (
+    {andelsliste.map((andel) => (
       <div key={`fastsettTidsbegrensedeForhold_${createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}`}>
         <Normaltekst>
           <FormattedMessage

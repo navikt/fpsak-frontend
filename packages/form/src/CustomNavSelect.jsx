@@ -22,12 +22,12 @@ class CustomNavSelect extends Component {
   getOptionValues() {
     const { props: { selectValues } } = this;
     return selectValues
-      .map(option => option.props)
+      .map((option) => option.props)
       .map((props = {}) => props.value);
   }
 
   selectedValue(value) {
-    const selectedValue = this.getOptionValues().find(optionValue => optionValue === value);
+    const selectedValue = this.getOptionValues().find((optionValue) => optionValue === value);
 
     return selectedValue || '';
   }

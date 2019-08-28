@@ -54,7 +54,7 @@ describe('RequestApi', () => {
 
     const httpClientMock = {
       ...httpClientGeneralMock,
-        get: () => Promise.resolve(response),
+      get: () => Promise.resolve(response),
     };
 
     const requestConfig = new RequestConfig('BEHANDLING', '/behandling');

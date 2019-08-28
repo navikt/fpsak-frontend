@@ -59,8 +59,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
         <Column xs="3">
           <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.BeregnetEngangsstonad' })}</Undertekst>
           {(!isOverstyrt || isReadOnly)
-          && <Normaltekst>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Normaltekst>
-        }
+          && <Normaltekst>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Normaltekst>}
           {isOverstyrt && !isReadOnly
           && (
           <FlexContainer fluid>
@@ -81,8 +80,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
               </FlexColumn>
             </FlexRow>
           </FlexContainer>
-          )
-        }
+          )}
         </Column>
         <Column xs="2">
           <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.AntallBarn' })}</Undertekst>
@@ -99,8 +97,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
         <OverstyrConfirmationForm isBeregningConfirmation />
         <OverstyrConfirmVilkarButton submitting={formProps.submitting} pristine={formProps.pristine} />
       </div>
-      )
-    }
+      )}
     </form>
   </FadingPanel>
 );
@@ -124,7 +121,7 @@ BeregningsresultatEngangsstonadFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector([behandlingSelectors.getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
-  const aksjonspunkt = aksjonspunkter.find(ap => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
+  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
   return {
     beregningResultat,
     isOverstyrt: aksjonspunkt !== undefined,
@@ -132,7 +129,7 @@ const buildInitialValues = createSelector([behandlingSelectors.getAksjonspunkter
   };
 });
 
-const transformValues = values => ({
+const transformValues = (values) => ({
   kode: aksjonspunktCode.OVERSTYR_BEREGNING,
   beregnetTilkjentYtelse: values.beregningResultat.beregnetTilkjentYtelse,
   ...OverstyrConfirmationForm.transformValues(values),
@@ -141,8 +138,8 @@ const transformValues = values => ({
 const formName = 'BeregningsresultatEngangsstonadForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback([transformValues(values)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  return (state) => ({
     onSubmit,
     initialValues: buildInitialValues(state),
     isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
@@ -154,6 +151,6 @@ const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(inje
   form: formName,
 })(BeregningsresultatEngangsstonadFormImpl)));
 
-BeregningsresultatEngangsstonadForm.supports = behandlingspunkt => behandlingspunkt === behandlingspunktCodes.BEREGNING;
+BeregningsresultatEngangsstonadForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.BEREGNING;
 
 export default BeregningsresultatEngangsstonadForm;

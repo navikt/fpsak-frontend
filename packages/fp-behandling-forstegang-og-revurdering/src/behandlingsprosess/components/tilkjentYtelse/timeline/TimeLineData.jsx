@@ -47,15 +47,15 @@ const tableHeaderTextCodes = (isFagsakSVP = 'false') => {
       'TilkjentYtelse.PeriodeData.SisteUtbDato',
     ]);
   }
-return ([
-  'TilkjentYtelse.PeriodeData.Andel',
-  'TilkjentYtelse.PeriodeData.KontoType',
-  'TilkjentYtelse.PeriodeData.Gradering',
-  'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
-  'TilkjentYtelse.PeriodeData.Refusjon',
-  'TilkjentYtelse.PeriodeData.TilSoker',
-  'TilkjentYtelse.PeriodeData.SisteUtbDato',
-]);
+  return ([
+    'TilkjentYtelse.PeriodeData.Andel',
+    'TilkjentYtelse.PeriodeData.KontoType',
+    'TilkjentYtelse.PeriodeData.Gradering',
+    'TilkjentYtelse.PeriodeData.Utbetalingsgrad',
+    'TilkjentYtelse.PeriodeData.Refusjon',
+    'TilkjentYtelse.PeriodeData.TilSoker',
+    'TilkjentYtelse.PeriodeData.SisteUtbDato',
+  ]);
 };
 
 const findAndelsnavn = (andel, getKodeverknavn) => {
@@ -80,8 +80,8 @@ const findAndelsnavn = (andel, getKodeverknavn) => {
   }
 };
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 const getGradering = (andel) => {
   if (andel === undefined) {
     return null;
@@ -190,10 +190,10 @@ export const TimeLineData = ({
                   <TableColumn>{findAndelsnavn(andel, getKodeverknavn)}</TableColumn>
                   {!isSoknadSvangerskapspenger && (
                   <TableColumn><Normaltekst>{uttakPeriodeNavn[andel.uttak.stonadskontoType]}</Normaltekst></TableColumn>
-                )}
+                  )}
                   {!isSoknadSvangerskapspenger && (
                   <TableColumn><Normaltekst>{getGradering(andel)}</Normaltekst></TableColumn>
-                )}
+                  )}
                   <TableColumn><Normaltekst>{andel.utbetalingsgrad}</Normaltekst></TableColumn>
                   <TableColumn>
                     <Normaltekst>
@@ -207,11 +207,9 @@ export const TimeLineData = ({
                     </Normaltekst>
                   </TableColumn>
                 </TableRow>
-            ))
-              }
+              ))}
             </Table>
-          )
-            }
+          )}
         </div>
       </Column>
     </Row>

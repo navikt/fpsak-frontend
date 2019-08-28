@@ -34,15 +34,13 @@ export const FodselSammenligningRevurderingPanel = ({
         <Column xs="4">
           <Normaltekst><FormattedMessage id="FodselsammenligningPanel.Vedtaksdato" /></Normaltekst>
         </Column>
-        )
-      }
+        )}
       <Column xs="4"><Normaltekst><FormattedMessage id={terminOrFodselLabel} /></Normaltekst></Column>
       <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.AntallBarn" /></Normaltekst></Column>
     </Row>
     <Row>
       {shouldShowVedtaksdatoAsSvangerskapsuke
-        && <Column xs="4"><Normaltekst>{vedtaksDato}</Normaltekst></Column>
-      }
+        && <Column xs="4"><Normaltekst>{vedtaksDato}</Normaltekst></Column>}
       <Column xs="4"><Normaltekst>{terminOrFodselDate}</Normaltekst></Column>
       <Column xs="4"><Normaltekst>{antallBarn}</Normaltekst></Column>
     </Row>
@@ -61,7 +59,7 @@ FodselSammenligningRevurderingPanel.defaultProps = {
   vedtaksDato: '',
 };
 
-const formatDate = date => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 export const getIsTermin = createSelector(
   [getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling],
@@ -70,7 +68,7 @@ export const getIsTermin = createSelector(
 );
 
 const getTerminOrFodselLabel = createSelector(
-  [getIsTermin], isTermin => (isTermin ? 'FodselsammenligningPanel.Termindato' : 'FodselsammenligningPanel.Fodselsdato'),
+  [getIsTermin], (isTermin) => (isTermin ? 'FodselsammenligningPanel.Termindato' : 'FodselsammenligningPanel.Fodselsdato'),
 );
 
 export const getTerminDateOrFodselDate = createSelector(
@@ -104,7 +102,7 @@ export const showVedtaksdatoAsSvangerskapsuke = createSelector(
   (orginalFamiliehendelse, vedtaksDato) => (!orginalFamiliehendelse ? false : !orginalFamiliehendelse.fodselsdato && !!vedtaksDato),
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   terminOrFodselLabel: getTerminOrFodselLabel(state),
   terminOrFodselDate: getTerminDateOrFodselDate(state),
   antallBarn: getAntallBarn(state),

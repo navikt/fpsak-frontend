@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import {
- Table, TableRow, TableColumn, EditedIcon,
+  Table, TableRow, TableColumn, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import VurderAktiviteterTabell, { VurderAktiviteterTabellImpl, lagAktivitetFieldId, skalVurdereAktivitet } from './VurderAktiviteterTabell';
 

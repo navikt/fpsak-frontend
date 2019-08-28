@@ -46,8 +46,7 @@ const DocumentListVedtakInnsyn = ({
                   </TableColumn>
                 </TableRow>
               );
-            })
-        }
+            })}
           </Table>
         </Column>
       </Row>

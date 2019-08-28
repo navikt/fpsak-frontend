@@ -18,7 +18,7 @@ import BehandlingsprosessTilbakekrevingIndex from './BehandlingsprosessTilbakekr
  *
  * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Tilbakekreving.
  */
-export const BehandlingsprosessTilbakekrevingContainer = props => (
+export const BehandlingsprosessTilbakekrevingContainer = (props) => (
   <BehandlingsprosessTilbakekrevingIndex {...props} doNotUseFatterVedtakModal />
 );
 
@@ -42,7 +42,7 @@ BehandlingsprosessTilbakekrevingContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

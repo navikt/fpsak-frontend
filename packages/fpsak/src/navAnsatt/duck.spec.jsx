@@ -40,7 +40,7 @@ describe('NAV-ansatt-reducer', () => {
 
     expect(Object.keys(rettigheter)).to.have.lengthOf.above(0);
     Object.keys(rettigheter)
-      .forEach(key => expect(rettigheter).to.have.property(key)
+      .forEach((key) => expect(rettigheter).to.have.property(key)
         .that.has.all.keys('employeeHasAccess', 'isEnabled'));
   });
 

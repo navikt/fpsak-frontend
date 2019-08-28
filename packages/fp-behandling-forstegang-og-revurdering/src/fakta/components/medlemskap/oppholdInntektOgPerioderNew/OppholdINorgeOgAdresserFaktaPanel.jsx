@@ -27,7 +27,7 @@ const capitalizeFirstLetter = (landNavn) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const sjekkOpphold = opphold => (
+const sjekkOpphold = (opphold) => (
   opphold !== undefined && (
     <Row>
       <Column xs="1">
@@ -46,8 +46,8 @@ const sjekkOpphold = opphold => (
   )
 );
 
-const lagOppholdIUtland = utlandsOpphold => (
-  utlandsOpphold && utlandsOpphold.map(u => (
+const lagOppholdIUtland = (utlandsOpphold) => (
+  utlandsOpphold && utlandsOpphold.map((u) => (
     <div key={`${u.landNavn}${u.fom}${u.tom}`}>
       <Row>
         <Column xs="4">
@@ -107,17 +107,14 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
       </Column>
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
-          {foreldre.map(f => (
+          {foreldre.map((f) => (
             <div key={f.personopplysning.navn}>
               {f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={f.personopplysning} />
-              }
+              && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={f.personopplysning} />}
               {!f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.Parent" />} soker={f.personopplysning} />
-              }
+              && <BostedSokerView typeSoker={<FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.Parent" />} soker={f.personopplysning} />}
             </div>
-          ))
-          }
+          ))}
         </FaktaGruppe>
         {hasBosattAksjonspunkt
           && (
@@ -129,8 +126,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
                 </RadioGroupField>
               </ElementWrapper>
             </div>
-          )
-        }
+          )}
       </Column>
     </Row>
   </FaktaGruppe>
@@ -182,7 +178,7 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
   }
 
   const filteredAp = aksjonspunkter
-    .filter(ap => periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
+    .filter((ap) => periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
       || (periode.aksjonspunkter.length > 0
         && periode.aksjonspunkter.includes(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT)
         && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP));
@@ -190,14 +186,14 @@ OppholdINorgeOgAdresserFaktaPanel.buildInitialValues = (soknad, periode, aksjons
   return {
     opphold,
     hasBosattAksjonspunkt: filteredAp.length > 0,
-    isBosattAksjonspunktClosed: filteredAp.some(ap => !isAksjonspunktOpen(ap.status.kode)),
+    isBosattAksjonspunktClosed: filteredAp.some((ap) => !isAksjonspunktOpen(ap.status.kode)),
     foreldre: parents,
     bosattVurdering: periode.bosattVurdering || periode.bosattVurdering === false
       ? periode.bosattVurdering : undefined,
   };
 };
 
-OppholdINorgeOgAdresserFaktaPanel.transformValues = values => ({
+OppholdINorgeOgAdresserFaktaPanel.transformValues = (values) => ({
   kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
   bosattVurdering: values.bosattVurdering,
 });

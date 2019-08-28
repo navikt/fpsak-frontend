@@ -93,9 +93,9 @@ const HistorikkMalType10 = ({
 
   const sortArray = ((endredeFelter) => {
     if (endredeFelter.length > 1) {
-      const resultatFelt = endredeFelter.filter(e => e.endretFeltNavn.kode === 'UTTAK_PERIODE_RESULTAT_TYPE');
+      const resultatFelt = endredeFelter.filter((e) => e.endretFeltNavn.kode === 'UTTAK_PERIODE_RESULTAT_TYPE');
       if (resultatFelt.length > 0) {
-        const andreFelt = endredeFelter.filter(e => e.endretFeltNavn.kode !== 'UTTAK_PERIODE_RESULTAT_TYPE');
+        const andreFelt = endredeFelter.filter((e) => e.endretFeltNavn.kode !== 'UTTAK_PERIODE_RESULTAT_TYPE');
         return andreFelt.concat(resultatFelt);
       }
     }
@@ -103,18 +103,19 @@ const HistorikkMalType10 = ({
   });
 
   const finnFomOpplysning = (opplysninger) => {
-    const [found] = opplysninger.filter(o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode);
+    const [found] = opplysninger.filter((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_FOM.kode);
     return found.tilVerdi;
   };
 
   const finnTomOpplysning = (opplysninger) => {
-    const [found] = opplysninger.filter(o => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode);
+    const [found] = opplysninger.filter((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.UTTAK_PERIODE_TOM.kode);
     return found.tilVerdi;
   };
 
   return (
     historikkinnslagDeler.map((historikkinnslagDel, historikkinnslagDelIndex) => (
-      <div key={`historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
+      <div key={
+        `historikkinnslagDel${historikkinnslagDelIndex}` // eslint-disable-line react/no-array-index-key
       }
       >
         {historikkinnslagDel.skjermlenke
@@ -127,8 +128,7 @@ const HistorikkMalType10 = ({
             {getKodeverknavn(historikkinnslagDeler[0].skjermlenke)}
           </NavLink>
         </Element>
-        )
-        }
+        )}
 
         {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.OVST_UTTAK
         && (
@@ -139,8 +139,7 @@ const HistorikkMalType10 = ({
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
           }}
         />
-        )
-        }
+        )}
 
         {historikkinnslagDel.opplysninger && originType.kode === historikkinnslagType.FASTSATT_UTTAK
         && (
@@ -151,8 +150,7 @@ const HistorikkMalType10 = ({
             periodeTom: finnTomOpplysning(historikkinnslagDel.opplysninger),
           }}
         />
-        )
-        }
+        )}
 
         {historikkinnslagDel.endredeFelter && sortArray(historikkinnslagDel.endredeFelter)
           .map((endretFelt, i) => <div key={`endredeFelter${i + 1}`}>{formatChangedField(endretFelt)}</div>)}
@@ -165,7 +163,7 @@ const HistorikkMalType10 = ({
         )}
 
         <div>
-          {dokumentLinks && dokumentLinks.map(dokumentLenke => (
+          {dokumentLinks && dokumentLinks.map((dokumentLenke) => (
             <HistorikkDokumentLenke
               key={`${dokumentLenke.tag}@${dokumentLenke.url}`}
               dokumentLenke={dokumentLenke}

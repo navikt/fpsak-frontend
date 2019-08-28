@@ -14,8 +14,9 @@ const HistorikkMalType4 = ({ historikkinnslagDeler, getKodeverknavn }) => (
   <div>
     {
       historikkinnslagDeler.map((del, delIndex) => (
-        <div key={`del${delIndex}` // eslint-disable-line react/no-array-index-key
-      }
+        <div key={
+          `del${delIndex}` // eslint-disable-line react/no-array-index-key
+        }
         >
           <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse, getKodeverknavn)}</Element>
           {del.aarsak && <Normaltekst>{getKodeverknavn(del.aarsak)}</Normaltekst>}

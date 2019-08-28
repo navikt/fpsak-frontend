@@ -58,15 +58,15 @@ const gyldigeOverføringÅrsaker = [
   overforingArsak.ALENEOMSORG,
 ];
 
-const mapPeriodeTyper = typer => typer
+const mapPeriodeTyper = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapOverføringÅrsaker = typer => typer
+const mapOverføringÅrsaker = (typer) => typer
   .filter(({ kode }) => gyldigeOverføringÅrsaker.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapUtsettelseÅrsaker = typer => typer
+const mapUtsettelseÅrsaker = (typer) => typer
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 const mapArbeidsforhold = (andeler, getKodeverknavn) => andeler.map((andel) => {
@@ -176,14 +176,14 @@ export const UttakNyPeriode = ({
                             bredde="XS"
                             label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
                             validate={[required, maxValue100, hasValidDecimal]}
-                            normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                             inputClassName={styles.textAlignRight}
                           />
                         </FlexColumn>
                         <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
                       </FlexRow>
                     </FlexColumn>
-                          )}
+                    )}
                   </FlexColumn>
                 </FlexRow>
               </FlexColumn>
@@ -198,7 +198,7 @@ export const UttakNyPeriode = ({
                     validate={[required]}
                   />
                 </FlexRow>
-                      )}
+                )}
               </FlexColumn>
             </FlexColumn>
           </FlexRow>
@@ -243,7 +243,7 @@ export const UttakNyPeriode = ({
                                 label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
                                 bredde="XS"
                                 validate={[required, maxValue100, hasValidDecimal]}
-                                normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                                normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                                 inputClassName={styles.textAlignRight}
                               />
                             </FlexColumn>
@@ -321,10 +321,10 @@ const getPeriodeData = (periode, periodeArray) => periodeArray
 
 const getResultat = (utsettelseÅrsak, uttakPeriodeVurderingTyper) => {
   if ([utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER, utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET, utsettelseArsakCodes.SYKDOM]
-    .some(årsak => årsak === utsettelseÅrsak.kode)) {
-    return uttakPeriodeVurderingTyper.find(type => type.kode === uttakPeriodeVurdering.PERIODE_OK);
+    .some((årsak) => årsak === utsettelseÅrsak.kode)) {
+    return uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_OK);
   }
-  return uttakPeriodeVurderingTyper.find(type => type.kode === uttakPeriodeVurdering.PERIODE_IKKE_VURDERT);
+  return uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_IKKE_VURDERT);
 };
 
 
@@ -413,7 +413,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState) || null;
   const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(initialState);
   const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(initialState);
-  const onSubmit = values => newPeriodeCallback(
+  const onSubmit = (values) => newPeriodeCallback(
     transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn),
   );
 
@@ -459,6 +459,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
   form: 'nyPeriodeForm',
-  validate: values => validateNyPeriodeForm(values),
+  validate: (values) => validateNyPeriodeForm(values),
   enableReinitialize: true,
 })(injectKodeverk(getAlleKodeverk)(UttakNyPeriode)));

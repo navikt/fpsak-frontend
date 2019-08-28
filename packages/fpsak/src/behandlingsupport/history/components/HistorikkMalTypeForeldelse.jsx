@@ -13,10 +13,10 @@ import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 
 const scrollUp = () => {
-if (window.innerWidth < 1305) {
+  if (window.innerWidth < 1305) {
     window.scroll(0, 0);
-}
-return false;
+  }
+  return false;
 };
 
 export const HistorikkMalTypeForeldelse = ({
@@ -38,41 +38,41 @@ export const HistorikkMalTypeForeldelse = ({
         </NavLink>
       </Element>
       {historikkinnslagDeler.map((historikkinnslagDel) => {
-      const { begrunnelseFritekst, opplysninger, endredeFelter } = historikkinnslagDel;
-      const periodeFom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
-      const periodeTom = opplysninger.find(o => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
+        const { begrunnelseFritekst, opplysninger, endredeFelter } = historikkinnslagDel;
+        const periodeFom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_FOM.kode).tilVerdi;
+        const periodeTom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
 
-      return (
-        <div key={periodeFom + periodeTom}>
-          <Normaltekst>
-            <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
-          </Normaltekst>
-          {endredeFelter && endredeFelter.map((felt) => {
-            const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
+        return (
+          <div key={periodeFom + periodeTom}>
+            <Normaltekst>
+              <FormattedHTMLMessage id="Historikk.Template.Foreldelse.VurderingAvPerioden" values={{ periodeFom, periodeTom }} />
+            </Normaltekst>
+            {endredeFelter && endredeFelter.map((felt) => {
+              const { endretFeltNavn, fraVerdi, tilVerdi } = felt;
 
-            return (
-              <React.Fragment key={endretFeltNavn.kode}>
-                <Normaltekst>
-                  <FormattedHTMLMessage
-                    id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
-                    values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi }}
-                  />
-                </Normaltekst>
-                <VerticalSpacer eightPx />
-              </React.Fragment>
-            );
+              return (
+                <React.Fragment key={endretFeltNavn.kode}>
+                  <Normaltekst>
+                    <FormattedHTMLMessage
+                      id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
+                      values={{ navn: getKodeverknavn(endretFeltNavn), fraVerdi, tilVerdi }}
+                    />
+                  </Normaltekst>
+                  <VerticalSpacer eightPx />
+                </React.Fragment>
+              );
             })}
-          <VerticalSpacer eightPx />
-          <Normaltekst>
-            {begrunnelseFritekst && begrunnelseFritekst}
-          </Normaltekst>
-          <VerticalSpacer eightPx />
-        </div>
-      );
-    })}
+            <VerticalSpacer eightPx />
+            <Normaltekst>
+              {begrunnelseFritekst && begrunnelseFritekst}
+            </Normaltekst>
+            <VerticalSpacer eightPx />
+          </div>
+        );
+      })}
     </div>
-);
-  };
+  );
+};
 
 HistorikkMalTypeForeldelse.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,

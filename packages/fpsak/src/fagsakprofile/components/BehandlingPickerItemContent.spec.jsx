@@ -50,7 +50,7 @@ describe('<BehandlingPickerItemContent>', () => {
       },
       erAutomatiskRevurdering: false,
       manueltOpprettet: false,
-  };
+    };
     const wrapper = shallow(<BehandlingPickerItemContent
       withChevronDown
       withChevronUp

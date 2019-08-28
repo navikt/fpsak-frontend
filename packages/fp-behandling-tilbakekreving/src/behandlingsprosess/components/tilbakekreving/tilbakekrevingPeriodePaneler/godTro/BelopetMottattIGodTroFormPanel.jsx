@@ -8,7 +8,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
 import {
- RadioOption, RadioGroupField, InputField,
+  RadioOption, RadioGroupField, InputField,
 } from '@fpsak-frontend/form';
 
 import styles from './belopetMottattIGodTroFormPanel.less';
@@ -77,7 +77,7 @@ BelopetMottattIGodTroFormPanel.transformValues = (info, vurderingBegrunnelse) =>
   tilbakekrevesBelop: info.erBelopetIBehold ? removeSpacesFromNumber(info.tilbakekrevdBelop) : undefined,
 });
 
-BelopetMottattIGodTroFormPanel.buildIntialValues = info => ({
+BelopetMottattIGodTroFormPanel.buildIntialValues = (info) => ({
   erBelopetIBehold: info.erBelopetIBehold,
   tilbakekrevdBelop: info.tilbakekrevesBelop,
 });

@@ -74,7 +74,7 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
 
-const createBehandlingInnvilget = behandlingHenlagt => createBehandling(BehandlingResultatType.INNVILGET, behandlingHenlagt || false);
+const createBehandlingInnvilget = (behandlingHenlagt) => createBehandling(BehandlingResultatType.INNVILGET, behandlingHenlagt || false);
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {

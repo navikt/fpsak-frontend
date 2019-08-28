@@ -29,7 +29,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, intl, getKodeverknavn }) => 
   return (
     <div>
       {
-        historikkinnslagDeler.map(del => (
+        historikkinnslagDeler.map((del) => (
           <div>
             <Element className="snakkeboble-panel__tekst">{findHendelseText(del.hendelse, getKodeverknavn)}</Element>
             {del.opplysninger.map(formaterOpplysning)}

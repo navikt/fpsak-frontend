@@ -15,7 +15,7 @@ export const fetchNavAnsatt = fpsakApi.NAV_ANSATT.makeRestApiRequest();
 /* selectors */
 export const getNavAnsatt = createSelector(
   [fpsakApi.NAV_ANSATT.getRestApiData()],
-  navAnsattData => navAnsattData || {},
+  (navAnsattData) => navAnsattData || {},
 );
 export const getRettigheter = createSelector([getNavAnsatt, getSelectedFagsakStatus, getBehandlingStatus, getSoknad,
   getAksjonspunkter, getBehandlingType, getBehandlingAnsvarligSaksbehandler, getSelectedFagsak], allAccessRights);

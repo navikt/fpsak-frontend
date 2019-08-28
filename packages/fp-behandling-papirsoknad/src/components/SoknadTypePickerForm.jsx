@@ -56,7 +56,7 @@ export const SoknadTypePickerForm = ({
           <Undertekst><FormattedMessage id="Registrering.Omsoknaden.soknadstype" /></Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField name="fagsakYtelseType" validate={[required]} direction="vertical">
-            { fagsakYtelseTyper.map(fyt => <RadioOption disabled={ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />) }
+            { fagsakYtelseTyper.map((fyt) => <RadioOption disabled={ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />) }
           </RadioGroupField>
         </Column>
         <Column xs="4">
@@ -67,7 +67,7 @@ export const SoknadTypePickerForm = ({
             validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER ? [] : [required]}
             direction="vertical"
           >
-            { familieHendelseTyper.filter(({ kode }) => soeknadsTyper.includes(kode)).map(bmt => (
+            { familieHendelseTyper.filter(({ kode }) => soeknadsTyper.includes(kode)).map((bmt) => (
               <RadioOption
                 key={bmt.kode}
                 label={bmt.navn}
@@ -88,7 +88,7 @@ export const SoknadTypePickerForm = ({
             validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER ? [] : [required]}
             direction="vertical"
           >
-            { foreldreTyper.map(ft => (
+            { foreldreTyper.map((ft) => (
               <RadioOption
                 key={ft.kode}
                 label={ft.navn}
@@ -134,7 +134,7 @@ SoknadTypePickerForm.defaultProps = {
 const getSakstype = createSelector(
   [getFagsakYtelseType, behandlingSelectors.getBehandlingType], (sakstype, bt) => (
     bt.kode === behandlingType.REVURDERING && sakstype.kode === fagsakYtelseType.FORELDREPENGER
-    ? fagsakYtelseType.ENDRING_FORELDREPENGER : sakstype.kode),
+      ? fagsakYtelseType.ENDRING_FORELDREPENGER : sakstype.kode),
 );
 
 const buildInitialValues = createSelector(
@@ -165,8 +165,8 @@ const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.setSoknadData(new SoknadData(values.fagsakYtelseType, values.familieHendelseType, values.foreldreType));
-  return state => ({
+  const onSubmit = (values) => ownProps.setSoknadData(new SoknadData(values.fagsakYtelseType, values.familieHendelseType, values.foreldreType));
+  return (state) => ({
     selectedFagsakYtelseType: formValueSelector(SOKNAD_TYPE_PICKER_FORM)(state, 'fagsakYtelseType'),
     ytelseErSatt: !!getFagsakYtelseType(state).kode,
     initialValues: buildInitialValues(state),

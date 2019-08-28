@@ -31,8 +31,7 @@ const Tooltip = ({
         <VerticalSpacer eightPx />
         {body}
       </div>
-      )
-    }
+      )}
   </div>
 );
 

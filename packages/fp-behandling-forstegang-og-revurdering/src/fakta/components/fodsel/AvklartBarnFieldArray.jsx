@@ -65,8 +65,7 @@ export const AvklartBarnFieldArray = ({
                   readOnly={readOnly}
                 />
               </FlexColumn>
-              )
-              }
+              )}
               <FlexColumn>
                 {getRemoveButton()}
               </FlexColumn>

@@ -85,13 +85,13 @@ RenderAndreYtelserPerioderFieldArray.validate = (values) => {
     return null;
   });
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
   return null;
 };
 
-RenderAndreYtelserPerioderFieldArray.transformValues = (values, ytelseType) => values.map(ytelsePeriode => ({
+RenderAndreYtelserPerioderFieldArray.transformValues = (values, ytelseType) => values.map((ytelsePeriode) => ({
   ytelseType,
   periodeFom: ytelsePeriode.periodeFom,
   periodeTom: ytelsePeriode.periodeTom,

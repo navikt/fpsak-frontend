@@ -493,7 +493,7 @@ describe('Validators', () => {
   });
 
   describe('dateIsBefore', () => {
-    const errorMessageFunction = dato => ([{ id: 'ErrorMsg.Msg' }, { dato }]);
+    const errorMessageFunction = (dato) => ([{ id: 'ErrorMsg.Msg' }, { dato }]);
     const dateToCheckAgainst = '2019-08-05';
     it('skal ikke feile når input datoene er før datoen som blir sjekket mot', () => {
       const result = dateIsBefore(dateToCheckAgainst, errorMessageFunction)('2019-08-04');

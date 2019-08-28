@@ -21,8 +21,8 @@ const getChildrenAddresses = (opplysningAdresser) => {
   return addressesIndexedByType ? addressesIndexedByType[opplysningAdresseType.BOSTEDSADRESSE] : '-';
 };
 
-const getAgeFromDate = birthDate => moment().diff(moment(birthDate), 'years');
-const erKvinne = genderCode => genderCode === navBrukerKjonn.KVINNE;
+const getAgeFromDate = (birthDate) => moment().diff(moment(birthDate), 'years');
+const erKvinne = (genderCode) => genderCode === navBrukerKjonn.KVINNE;
 
 /**
  * Barnepanel
@@ -75,15 +75,13 @@ const BarnePanel = ({
               <Element><DateLabel dateString={barn.dodsdato} /></Element>
               <VerticalSpacer eightPx />
             </Normaltekst>
-)
-            }
+            )}
             {barn.adresser
             && (
             <Normaltekst>
               {getChildrenAddresses(barn.adresser)}
             </Normaltekst>
-            )
-            }
+            )}
           </Column>
         </Column>
       ))}

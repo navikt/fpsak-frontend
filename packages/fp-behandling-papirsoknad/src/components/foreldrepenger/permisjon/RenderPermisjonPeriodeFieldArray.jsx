@@ -34,11 +34,11 @@ export const gyldigeUttakperioder = [uttakPeriodeType.FELLESPERIODE,
   uttakPeriodeType.FORELDREPENGER,
   uttakPeriodeType.MODREKVOTE];
 
-const mapPeriodeTyper = typer => typer
+const mapPeriodeTyper = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
-const mapAktiviteter = aktiviteter => aktiviteter
+const mapAktiviteter = (aktiviteter) => aktiviteter
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
 
 export const periodsWithNoMorsAktivitet = [
@@ -123,8 +123,7 @@ export const RenderPermisjonPeriodeFieldArray = ({
                         hideValueOnDisable
                       />
                     </FlexColumn>
-                    )
-                    }
+                    )}
                     <FlexColumn className={styles.smalHeader}>
                       <Undertekst className={erForsteRad ? styles.visOverskrift : styles.skjulOverskrift}>
                         <FormattedMessage id="Registrering.Permisjon.Flerbarnsdager" />
@@ -153,11 +152,10 @@ export const RenderPermisjonPeriodeFieldArray = ({
                         bredde="S"
                         validate={[hasValidDecimal, maxValue100]}
                         label={{ id: 'Registrering.Permisjon.SamtidigUttaksprosent' }}
-                        normalizeOnBlur={value => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                        normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                       />
                     </FlexColumn>
-                    )
-                    }
+                    )}
                     <FlexColumn>
                       {!readOnly
                     && (
@@ -168,8 +166,7 @@ export const RenderPermisjonPeriodeFieldArray = ({
                           fields.remove(index);
                         }}
                       />
-                    )
-                    }
+                    )}
                     </FlexColumn>
                   </FlexRow>
                   {periodeFomForTidlig
@@ -182,16 +179,14 @@ export const RenderPermisjonPeriodeFieldArray = ({
                       </FlexRow>
                       <VerticalSpacer sixteenPx />
                     </div>
-                  )
-                }
+                  )}
                 </FlexContainer>
               </Column>
             </Row>
             <VerticalSpacer eightPx />
           </div>
         );
-      }
-      }
+      }}
     </PeriodFieldArray>
   );
 };
@@ -231,7 +226,7 @@ RenderPermisjonPeriodeFieldArray.validate = (values) => {
     return null;
   });
 
-  if (arrayErrors.some(errors => errors !== null)) {
+  if (arrayErrors.some((errors) => errors !== null)) {
     return arrayErrors;
   }
 
@@ -245,7 +240,7 @@ RenderPermisjonPeriodeFieldArray.validate = (values) => {
   return null;
 };
 
-RenderPermisjonPeriodeFieldArray.transformValues = values => values.map((value) => {
+RenderPermisjonPeriodeFieldArray.transformValues = (values) => values.map((value) => {
   if (periodsWithNoMorsAktivitet.includes(value.periodeType)) {
     return {
       periodeType: value.periodeType,

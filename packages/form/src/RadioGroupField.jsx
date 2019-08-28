@@ -27,9 +27,9 @@ const renderRadioGroupField = renderNavField(({
   const actualValueStringified = JSON.stringify(value);
   const showCheckedOnly = readOnly && value !== null && value !== undefined && value !== '';
   const options = children
-    .filter(radioOption => !!radioOption)
-    .map(radioOption => React.cloneElement(radioOption, { key: JSON.stringify(radioOption.props.value), ...optionProps }))
-    .filter(radioOption => !showCheckedOnly || isChecked(radioOption, actualValueStringified));
+    .filter((radioOption) => !!radioOption)
+    .map((radioOption) => React.cloneElement(radioOption, { key: JSON.stringify(radioOption.props.value), ...optionProps }))
+    .filter((radioOption) => !showCheckedOnly || isChecked(radioOption, actualValueStringified));
 
   return (
     <NavSkjemaGruppe feil={readOnly ? undefined : feil} className={classNames(`input--${bredde}`, 'radioGroup', { readOnly })}>
@@ -47,7 +47,7 @@ const renderRadioGroupField = renderNavField(({
   );
 });
 
-export const RadioGroupField = props => (
+export const RadioGroupField = (props) => (
   <Field
     component={renderRadioGroupField}
     {...props}

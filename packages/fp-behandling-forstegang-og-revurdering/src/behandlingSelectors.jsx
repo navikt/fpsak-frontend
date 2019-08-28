@@ -30,11 +30,11 @@ export const getBehandlingArsakTyper = createSelector(
 );
 
 export const erManueltOpprettet = createSelector([getBehandlingArsaker], (behandlingArsaker = []) => behandlingArsaker
-  .some(ba => ba.manueltOpprettet === true));
+  .some((ba) => ba.manueltOpprettet === true));
 export const erArsakTypeHendelseFodsel = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .some(bt => bt.kode === 'RE-HENDELSE-FØDSEL'));
+  .some((bt) => bt.kode === 'RE-HENDELSE-FØDSEL'));
 export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .some(bt => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
     || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
 
 export const getBehandlingIsManuellRevurdering = createSelector(
@@ -60,7 +60,7 @@ export const getIsFagsakTypeSVP = createSelector([getFagsakYtelseType], (fagsakT
 export const getBehandlingResultatstruktur = createSelector(
   [getFagsakYtelseType, commonBehandlingSelectors.getSelectedBehandling], (fagsakType, selectedBehandling = {}) => (
     fagsakType.kode === fagsakYtelseType.FORELDREPENGER || fagsakType.kode === fagsakYtelseType.SVANGERSKAPSPENGER
-    ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
+      ? selectedBehandling['beregningsresultat-foreldrepenger'] : selectedBehandling['beregningsresultat-engangsstonad']),
 );
 export const getOpphoersdatoFraUttak = createSelector(
   [getBehandlingResultatstruktur], (behandlingResultatStruktur = {}) => (behandlingResultatStruktur ? behandlingResultatStruktur.opphoersdato : undefined),
@@ -71,7 +71,7 @@ export const getUttaksresultatPerioder = createSelector([commonBehandlingSelecto
 export const getBehandlingVerge = createSelector(
   [commonBehandlingSelectors.getSelectedBehandling], (
     selectedBehandling = {},
-) => (selectedBehandling['soeker-verge'] ? selectedBehandling['soeker-verge'] : {}),
+  ) => (selectedBehandling['soeker-verge'] ? selectedBehandling['soeker-verge'] : {}),
 );
 export const getStonadskontoer = createSelector([commonBehandlingSelectors.getSelectedBehandling], (
   selectedBehandling = {},
@@ -79,7 +79,7 @@ export const getStonadskontoer = createSelector([commonBehandlingSelectors.getSe
 export const getUttakPerioder = createSelector(
   [commonBehandlingSelectors.getSelectedBehandling], (
     selectedBehandling = {},
-) => (selectedBehandling['uttak-kontroller-fakta-perioder']
+  ) => (selectedBehandling['uttak-kontroller-fakta-perioder']
     ? selectedBehandling['uttak-kontroller-fakta-perioder'].perioder.sort((a, b) => a.fom.localeCompare(b.fom)) : undefined),
 );
 export const getFaktaArbeidsforhold = createSelector(
@@ -89,7 +89,7 @@ export const getFaktaArbeidsforhold = createSelector(
 
 export const getTilrettelegging = createSelector(
   [commonBehandlingSelectors.getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['svangerskapspenger-tilrettelegging']
-  ? selectedBehandling['svangerskapspenger-tilrettelegging'] : undefined),
+    ? selectedBehandling['svangerskapspenger-tilrettelegging'] : undefined),
 );
 
 export const getHaveSentVarsel = createSelector([commonBehandlingSelectors.getSelectedBehandling], (
@@ -106,10 +106,10 @@ export const getTilbakekrevingValg = createSelector([commonBehandlingSelectors.g
 // AKSJONSPUNKTER
 export const getToTrinnsAksjonspunkter = createSelector([commonBehandlingSelectors.getAksjonspunkter], (
   aksjonspunkter = [],
-) => aksjonspunkter.filter(ap => ap.toTrinnsBehandling));
+) => aksjonspunkter.filter((ap) => ap.toTrinnsBehandling));
 
 export const doesVilkarForSykdomOppfyltExist = createSelector(
-  [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter(ap => isVilkarForSykdomOppfylt(ap)).length > 0,
+  [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter = []) => aksjonspunkter.filter((ap) => isVilkarForSykdomOppfylt(ap)).length > 0,
 );
 
 
@@ -119,12 +119,12 @@ export const getBeregningsgrunnlag = createSelector(
     selectedBehandling.beregningsgrunnlag ? selectedBehandling.beregningsgrunnlag : undefined),
 );
 export const getGjeldendeBeregningAksjonspunkter = createSelector(
-  [commonBehandlingSelectors.getAksjonspunkter], aksjonspunkter => aksjonspunkter.filter(ap => isBeregningAksjonspunkt(ap.definisjon.kode)),
+  [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter) => aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)),
 );
 
 export const getBeregningGraderingAksjonspunkt = createSelector(
-  [commonBehandlingSelectors.getAksjonspunkter], aksjonspunkter => aksjonspunkter
-    .find(ap => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
+  [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter) => aksjonspunkter
+    .find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG),
 );
 
 export const getAktivitetStatuser = createSelector(
@@ -153,7 +153,7 @@ export const getFaktaOmFordeling = createSelector(
 
 export const getBehandlingGjelderBesteberegning = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning && faktaOmBeregning.faktaOmBeregningTilfeller
-    ? faktaOmBeregning.faktaOmBeregningTilfeller.some(tilfelle => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
+    ? faktaOmBeregning.faktaOmBeregningTilfeller.some((tilfelle) => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
     : false),
 );
 
@@ -174,12 +174,12 @@ export const getSkjæringstidspunktBeregning = createSelector(
 );
 export const getEndringBeregningsgrunnlag = createSelector(
   [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
-      if (faktaOmFordeling && faktaOmFordeling.endringBeregningsgrunnlag) {
-        return faktaOmFordeling.endringBeregningsgrunnlag;
-      }
-      return undefined;
-    },
-  );
+    if (faktaOmFordeling && faktaOmFordeling.endringBeregningsgrunnlag) {
+      return faktaOmFordeling.endringBeregningsgrunnlag;
+    }
+    return undefined;
+  },
+);
 
 export const getEndringBeregningsgrunnlagPerioder = createSelector(
   [getEndringBeregningsgrunnlag], (endringBG = {}) => (endringBG ? endringBG.endringBeregningsgrunnlagPerioder : []),
@@ -202,12 +202,12 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 // Refusjonskrav som kommer for sent
 export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
   [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
-      if (faktaOmFordeling && faktaOmFordeling.refusjonskravSomKommerForSentListe) {
-        return faktaOmFordeling.refusjonskravSomKommerForSentListe;
-      }
-      return [];
-    },
-  );
+    if (faktaOmFordeling && faktaOmFordeling.refusjonskravSomKommerForSentListe) {
+      return faktaOmFordeling.refusjonskravSomKommerForSentListe;
+    }
+    return [];
+  },
+);
 
 // Risikoklassifisering
 export const getRisikoklassifisering = createSelector(
@@ -216,7 +216,7 @@ export const getRisikoklassifisering = createSelector(
 );
 export const getRisikoAksjonspunkt = createSelector(
   [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter = []) => (
-    aksjonspunkter.find(ap => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER)),
+    aksjonspunkter.find((ap) => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_FARESIGNALER)),
 );
 
 // FAMILIEHENDELSE
@@ -320,17 +320,17 @@ export const getAnnenPartPersonopplysning = createSelector([getPersonopplysning]
 export const getEktefellePersonopplysning = createSelector([getPersonopplysning], (personopplysning = {}) => personopplysning.ektefelle);
 
 // SØKNAD
-export const getSoknadUtstedtdato = createSelector([commonBehandlingSelectors.getSoknad], soknad => soknad.utstedtdato);
-export const getSoknadTermindato = createSelector([commonBehandlingSelectors.getSoknad], soknad => soknad.termindato);
-export const getSoknadFodselsdatoer = createSelector([commonBehandlingSelectors.getSoknad], soknad => (soknad.fodselsdatoer ? soknad.fodselsdatoer : {}));
-export const getSoknadAntallBarn = createSelector([commonBehandlingSelectors.getSoknad], soknad => (soknad.antallBarn));
+export const getSoknadUtstedtdato = createSelector([commonBehandlingSelectors.getSoknad], (soknad) => soknad.utstedtdato);
+export const getSoknadTermindato = createSelector([commonBehandlingSelectors.getSoknad], (soknad) => soknad.termindato);
+export const getSoknadFodselsdatoer = createSelector([commonBehandlingSelectors.getSoknad], (soknad) => (soknad.fodselsdatoer ? soknad.fodselsdatoer : {}));
+export const getSoknadAntallBarn = createSelector([commonBehandlingSelectors.getSoknad], (soknad) => (soknad.antallBarn));
 export const getBehandlingStartDatoForPermisjon = createSelector(
   [commonBehandlingSelectors.getSoknad], (soknad = {}) => (soknad.oppgittFordeling ? soknad.oppgittFordeling.startDatoForPermisjon : undefined),
 );
 
 // ORIGINAL BEHANDLING
 export const getOriginalBehandling = createSelector(
-  [commonBehandlingSelectors.getSelectedBehandling], selectedBehandling => (selectedBehandling ? selectedBehandling['original-behandling'] : undefined),
+  [commonBehandlingSelectors.getSelectedBehandling], (selectedBehandling) => (selectedBehandling ? selectedBehandling['original-behandling'] : undefined),
 );
 
 export const getEditedStatus = createSelector(

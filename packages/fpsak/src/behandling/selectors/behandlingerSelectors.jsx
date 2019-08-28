@@ -24,14 +24,14 @@ export const getBehandlinger = createSelector(
 );
 
 export const getAvsluttedeBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .filter(behandling => behandling.status.kode === behandlingStatus.AVSLUTTET)
-  .map(behandling => ({
+  .filter((behandling) => behandling.status.kode === behandlingStatus.AVSLUTTET)
+  .map((behandling) => ({
     id: behandling.id,
     type: behandling.type,
     avsluttet: behandling.avsluttet,
   })));
 
-export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map(b => b.id));
+export const getBehandlingerIds = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.map((b) => b.id));
 
 export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((acc, b) => ({ ...acc, [b.id]: b.type.kode }), {}));
@@ -45,7 +45,7 @@ export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBeha
 export const getBehandlingerLinksMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.links }), {}));
 
-  export const getBehandlingerErPaaVentStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+export const getBehandlingerErPaaVentStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.erPaaVent }), {}));
 
 export const getNumBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length);

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { FormattedHTMLMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -21,11 +21,11 @@ const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   };
 };
 
-const harPermisjonOgIkkeMottattIM = arbeidsforhold => arbeidsforhold.permisjoner
+const harPermisjonOgIkkeMottattIM = (arbeidsforhold) => arbeidsforhold.permisjoner
     && arbeidsforhold.permisjoner.length === 1
     && (arbeidsforhold.mottattDatoInntektsmelding === undefined || arbeidsforhold.mottattDatoInntektsmelding === null);
 
-const harPermisjonOgMottattIM = arbeidsforhold => arbeidsforhold.permisjoner
+const harPermisjonOgMottattIM = (arbeidsforhold) => arbeidsforhold.permisjoner
   && arbeidsforhold.permisjoner.length === 1
   && (arbeidsforhold.mottattDatoInntektsmelding !== undefined && arbeidsforhold.mottattDatoInntektsmelding !== null);
 
@@ -82,12 +82,12 @@ export const PersonAksjonspunktTextImpl = ({
     return null;
   }
   return (
-    <Fragment>
+    <>
       <VerticalSpacer eightPx />
       <AksjonspunktHelpText isAksjonspunktOpen={arbeidsforhold.tilVurdering}>
         {[msg]}
       </AksjonspunktHelpText>
-    </Fragment>
+    </>
   );
 };
 

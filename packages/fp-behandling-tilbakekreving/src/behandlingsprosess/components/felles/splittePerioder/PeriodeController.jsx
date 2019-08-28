@@ -20,9 +20,9 @@ import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './periodeController.less';
 
-const findArrowLeftImg = isHovering => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = isHovering => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const splitPeriodImg = isHovering => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
+const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
+const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
+const splitPeriodImg = (isHovering) => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
 const isEdited = false;
 
@@ -49,7 +49,7 @@ export class PeriodeControllerImpl extends Component {
   }
 
   showModal(event) {
-    this.setState(state => ({
+    this.setState((state) => ({
       ...state,
       showDelPeriodeModal: true,
     }));
@@ -132,13 +132,12 @@ export class PeriodeControllerImpl extends Component {
                 imageSrcFunction={splitPeriodImg}
                 altCode="PeriodeController.DelOppPerioden"
                 onMouseDown={this.showModal}
-                onKeyDown={e => (e.keyCode === 13 ? this.showModal(e) : null)}
+                onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
               />
 
               <FormattedMessage id="PeriodeController.DelOppPerioden" />
             </span>
-          )
-          }
+          )}
           {showDelPeriodeModal
           && (
             <DelOppPeriodeModal
@@ -147,8 +146,7 @@ export class PeriodeControllerImpl extends Component {
               periodeData={periode}
               splitPeriod={this.splitPeriod}
             />
-          )
-          }
+          )}
         </Column>
         <Column xs="2">
           <span className={styles.navigationPosition}>
@@ -175,11 +173,11 @@ export class PeriodeControllerImpl extends Component {
   }
 }
 
-const mapStateToPros = state => ({
+const mapStateToPros = (state) => ({
   behandlingId: getSelectedBehandlingId(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     beregnBelop: beregnBeløp,
   }, dispatch),

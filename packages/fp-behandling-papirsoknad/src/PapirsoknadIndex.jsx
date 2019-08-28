@@ -59,8 +59,8 @@ export class PapirsoknadIndex extends Component {
 
   getApKode() {
     const { aksjonspunkter } = this.props;
-    return aksjonspunkter.filter(a => a.erAktivt).map(ap => ap.definisjon.kode)
-      .filter(kode => kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER
+    return aksjonspunkter.filter((a) => a.erAktivt).map((ap) => ap.definisjon.kode)
+      .filter((kode) => kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER
         || kode === aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER)[0];
   }
 
@@ -130,9 +130,9 @@ PapirsoknadIndex.defaultProps = {
   aksjonspunkter: [],
 };
 
-const hasAccessError = error => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
+const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   submitRegistreringSuccess: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
   || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
   soknadData: getSoknadData(state),
@@ -144,7 +144,7 @@ const mapStateToProps = state => ({
   ...getRettigheter(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     submitRegistrering,
     setSoknadData,

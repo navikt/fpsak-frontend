@@ -35,8 +35,8 @@ export const metaMock = {
 
 export function mountFieldComponent(node, input = {}, meta = {}, label = 'field') {
   return mountWithIntl(React.cloneElement(node, {
-    input: Object.assign({}, inputMock, input),
-    meta: Object.assign({}, metaMock, meta),
+    input: { ...inputMock, ...input },
+    meta: { ...metaMock, ...meta },
     intl: intlMock,
     label,
   }));
@@ -68,17 +68,17 @@ export const reduxFormPropsMock = Object.assign(metaMock, {
 
 export class MockFields {
   constructor(name, len) {
-    const formatName = index => `${name}[${index}]`;
+    const formatName = (index) => `${name}[${index}]`;
     const array = [...new Array(len).keys()].map(formatName); // NOSONAR
 
     this.array = array;
     this.push = () => array.push(formatName(array.length));
     this.pop = array.pop.bind(array);
     this.map = array.map.bind(array);
-    this.get = index => array[index];
+    this.get = (index) => array[index];
 
-    this.get = index => array[index];
-    this.remove = index => array.splice(index, 1);
+    this.get = (index) => array[index];
+    this.remove = (index) => array.splice(index, 1);
   }
 
   get length() {
@@ -88,16 +88,16 @@ export class MockFields {
 
 export class MockFieldsWithContent {
   constructor(name, array) {
-    const formatName = index => `${name}[${index}]`;
+    const formatName = (index) => `${name}[${index}]`;
     this.fields = array;
     this.array = [array].map(formatName); // NOSONAR;
     this.push = () => array.push(formatName(array.length));
 
     this.pop = array.pop.bind(array);
     this.map = array.map.bind(array);
-    this.get = index => array[index];
+    this.get = (index) => array[index];
 
-    this.get = index => array[index];
+    this.get = (index) => array[index];
     this.remove = (index) => {
       this.fields.splice(index, 1);
       this.array.splice(index, 1);

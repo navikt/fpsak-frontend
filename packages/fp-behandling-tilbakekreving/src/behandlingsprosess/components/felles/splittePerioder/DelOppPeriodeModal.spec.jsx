@@ -117,7 +117,7 @@ describe('<DelOppPeriodeModal>', () => {
         fom: '2019-10-10',
         tom: '2019-11-10',
       },
-      splitPeriod: value => value,
+      splitPeriod: (value) => value,
     };
 
     const validateAndOnSubmit = mapStateToPropsFactory(initialState, ownProps)();

@@ -70,7 +70,7 @@ const createPgiListe = (relevantAndel) => {
 export const GrunnlagForAarsinntektPanelSN = ({
   alleAndeler,
 }) => {
-  const relevantAndel = alleAndeler.filter(andel => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
+  const relevantAndel = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
   const pgiVerdier = createPgiListe(relevantAndel);
   const headers = createYearHeaders(relevantAndel);
   return (
@@ -81,7 +81,7 @@ export const GrunnlagForAarsinntektPanelSN = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivende" />
           </Normaltekst>
         </TableColumn>
-        {pgiVerdier.map(element => (
+        {pgiVerdier.map((element) => (
           <TableColumn key={element.key}>
             <Normaltekst>
               {element.pgiVerdi === undefined ? formatCurrencyNoKr(0) : formatCurrencyNoKr(element.pgiVerdi)}
@@ -89,8 +89,7 @@ export const GrunnlagForAarsinntektPanelSN = ({
           </TableColumn>
         ))}
         {relevantAndel.pgiSnitt !== undefined && !relevantAndel.erNyIArbeidslivet
-        && <TableColumn><Element>{formatCurrencyNoKr(relevantAndel.pgiSnitt)}</Element></TableColumn>
-        }
+        && <TableColumn><Element>{formatCurrencyNoKr(relevantAndel.pgiSnitt)}</Element></TableColumn>}
       </TableRow>
     </Table>
   );

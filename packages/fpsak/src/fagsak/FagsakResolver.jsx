@@ -109,7 +109,7 @@ FagsakResolver.defaultProps = {
   children: null,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
   selectedFagsak: getSelectedFagsak(state),
   behandlingerIds: getBehandlingerIds(state),
@@ -118,7 +118,7 @@ const mapStateToProps = state => ({
   disableTilbakekreving: !getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchFagsakInfo: fetchFagsakInfoActionCreator,
   resetFagsakContext: resetFagsakContextActionCreator,
   resetFagsakSearch: resetFagsakSearchActionCreator,

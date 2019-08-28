@@ -10,7 +10,7 @@ const HTTP_ACCEPTED = 202;
 const MAX_POLLING_ATTEMPTS = 150;
 const CANCELLED = 'INTERNAL_CANCELLATION';
 
-const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) => {
   switch (restMethodString) {
@@ -23,7 +23,7 @@ const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) =
   }
 };
 
-const hasLocationAndStatusDelayedOrHalted = responseData => responseData.location && (responseData.status === asyncPollingStatus.DELAYED
+const hasLocationAndStatusDelayedOrHalted = (responseData) => responseData.location && (responseData.status === asyncPollingStatus.DELAYED
   || responseData.status === asyncPollingStatus.HALTED);
 
 type Notify = (eventType: keyof typeof EventType, data?: any, isPolling?: boolean) => void
@@ -57,9 +57,9 @@ class RequestProcess {
 
   notify: Notify = () => undefined;
 
-  isCancelled: boolean = false;
+  isCancelled = false;
 
-  isPollingRequest: boolean = false;
+  isPollingRequest = false;
 
   constructor(httpClientApi: HttpClientApi, restMethod: (url: string, params: any, responseType?: string) => Promise<Response>,
     path: string, config: RequestAdditionalConfig) {
@@ -74,7 +74,7 @@ class RequestProcess {
     this.notify = notificationEmitter;
   }
 
-  execLongPolling = async (location: string, pollingInterval: number = 0, pollingCounter: number = 0): Promise<Response> => {
+  execLongPolling = async (location: string, pollingInterval = 0, pollingCounter = 0): Promise<Response> => {
     if (pollingCounter === this.maxPollingLimit) {
       throw new TimeoutError(location);
     }
@@ -105,12 +105,12 @@ class RequestProcess {
   execLinkRequests = async (responseData: {links: ResponseDataLink[]}) => {
     const linksToFetch = this.config.linksToFetchAutomatically;
     const requestList = responseData.links
-      .filter(link => linksToFetch.length === 0 || linksToFetch.includes(link.rel))
-      .map(link => () => this.execute(// eslint-disable-line no-use-before-define
+      .filter((link) => linksToFetch.length === 0 || linksToFetch.includes(link.rel))
+      .map((link) => () => this.execute(// eslint-disable-line no-use-before-define
         link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
       ).then((response: SuccessResponse) => Promise.resolve({ [link.rel]: response.data })));
 
-    const allResponses = await Promise.all([Promise.resolve(responseData), ...requestList.map(request => request())]);
+    const allResponses = await Promise.all([Promise.resolve(responseData), ...requestList.map((request) => request())]);
     const data = this.config.addLinkDataToArray
       ? allResponses.reduce((acc, rData) => (rData.links ? acc : acc.concat(Object.values(rData)[0])), [])
       : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {});

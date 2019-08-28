@@ -30,7 +30,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     <Normaltekst>
       <FormattedMessage
         id={ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
-        : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer'}
+          : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer'}
         values={{ dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) }}
       />
     </Normaltekst>
@@ -41,8 +41,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     <Normaltekst>
       {revurderingsAarsakString}
     </Normaltekst>
-    )
-    }
+    )}
     {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType)
     && (
     <VedtakFritekstPanel
@@ -51,8 +50,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
       behandlingsresultat={behandlingsresultat}
       labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
     />
-    )
-    }
+    )}
   </div>
 );
 
@@ -89,7 +87,7 @@ const getOpphorsdato = createSelector(
   },
 );
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   opphoersdato: getOpphorsdato(state),
   sprakKode: behandlingSelectors.getBehandlingSprak(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),

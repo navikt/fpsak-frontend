@@ -9,7 +9,7 @@ import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
  * Utils klasse med diverse støttefunksjoner til person komponentene
  */
 
-const emptyIfnull = text => (text == null ? '' : text);
+const emptyIfnull = (text) => (text == null ? '' : text);
 
 const constructAddress = (
   adresse = '',
@@ -27,7 +27,7 @@ const getAddresses = (addresses = []) => addresses.reduce((acc, address) => {
   }
 
   const currentAddress = [address.adresselinje1, address.adresselinje2, address.adresselinje3]
-    .filter(linje => !!linje)
+    .filter((linje) => !!linje)
     .join(', ');
   if (!currentAddress) {
     return acc;

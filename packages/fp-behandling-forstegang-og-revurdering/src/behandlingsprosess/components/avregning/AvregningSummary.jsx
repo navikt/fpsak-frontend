@@ -74,8 +74,7 @@ const AvregningSummary = ({
                       <span className={inntrekk ? styles.lastNumberRed : styles.lastNumberPositiv}>{ formatCurrencyNoKr(inntrekk) }</span>
                     </Normaltekst>
                   </Column>
-                )
-                }
+                )}
               </Row>
             </div>
           </>

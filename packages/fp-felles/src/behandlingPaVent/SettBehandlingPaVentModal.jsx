@@ -15,7 +15,7 @@ import {
 
 import styles from './settBehandlingPaVentModal.less';
 
-const getFristValidationRules = isUpdateOnHold => (isUpdateOnHold ? [required, hasValidDate] : [required, hasValidDate, dateAfterOrEqualToToday]);
+const getFristValidationRules = (isUpdateOnHold) => (isUpdateOnHold ? [required, hasValidDate] : [required, hasValidDate, dateAfterOrEqualToToday]);
 
 const isButtonDisabled = (frist, showAvbryt, venteArsakHasChanged, fristHasChanged, hasManualPaVent) => {
   const dateNotValid = hasValidDate(frist) !== null || dateAfterOrEqualToToday(frist) !== null;
@@ -23,7 +23,7 @@ const isButtonDisabled = (frist, showAvbryt, venteArsakHasChanged, fristHasChang
   return defaultOptions || dateNotValid;
 };
 
-const isAksjonPunktRevurdering = kode => kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL;
+const isAksjonPunktRevurdering = (kode) => kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL;
 const hovedKnappenType = (venteArsakHasChanged, fristHasChanged) => venteArsakHasChanged || fristHasChanged;
 
 const getPaVentText = (isUpdateOnHold, hasManualPaVent, frist) => {
@@ -88,8 +88,7 @@ export const SettBehandlingPaVentModal = ({
                 />
               </div>
             </Column>
-            )
-          }
+            )}
         </Row>
         <Row className={styles.marginTop}>
           <Column xs="1" />
@@ -99,7 +98,7 @@ export const SettBehandlingPaVentModal = ({
               label={intl.formatMessage({ id: 'SettBehandlingPaVentModal.Arsak' })}
               placeholder={intl.formatMessage({ id: 'SettBehandlingPaVentModal.SelectPlaceholder' })}
               validate={[required]}
-              selectValues={ventearsaker.map(ventearsak => <option key={ventearsak.kode} value={ventearsak.kode}>{ventearsak.navn}</option>)}
+              selectValues={ventearsaker.map((ventearsak) => <option key={ventearsak.kode} value={ventearsak.kode}>{ventearsak.navn}</option>)}
               bredde="xxl"
               readOnly={!hasManualPaVent}
             />
@@ -109,8 +108,7 @@ export const SettBehandlingPaVentModal = ({
           <Column xs="1" />
           <Column xs="11">
             {hasManualPaVent
-              && comment
-            }
+              && comment}
           </Column>
         </Row>
         <VerticalSpacer eightPx />
@@ -136,8 +134,7 @@ export const SettBehandlingPaVentModal = ({
               >
                 {intl.formatMessage({ id: hasManualPaVent ? 'SettBehandlingPaVentModal.Avbryt' : 'SettBehandlingPaVentModal.Lukk' })}
               </Knapp>
-              )
-                }
+              )}
           </Column>
         </Row>
       </form>

@@ -20,7 +20,7 @@ import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehan
 import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import styles from './uttakPeriodeType.less';
 
-const formatProsent = prosent => `${prosent}%`;
+const formatProsent = (prosent) => `${prosent}%`;
 
 const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn) => {
   if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
@@ -112,8 +112,7 @@ export const UttakPeriodeType = ({ // NOSONAR
               altCode="UttakInfoPanel.SlettPerioden"
             />
           </div>
-          )
-        }
+          )}
       </div>
       <div className={styles.textWrapper}>
         <Element>{`${dateFormat(fraDato)} - ${dateFormat(tilDato)}`}</Element>
@@ -149,11 +148,10 @@ export const UttakPeriodeType = ({ // NOSONAR
           <Undertekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Undertekst>
           <Normaltekst>{formatProsent(arbeidstidprosent)}</Normaltekst>
         </div>
-        )
-      }
+        )}
       {isGradering
       && (
-      <React.Fragment>
+      <>
         {erFrilanser
         && (
           <div className={styles.textWrapper}>
@@ -172,7 +170,7 @@ export const UttakPeriodeType = ({ // NOSONAR
             <Element>{lagVisningsNavn(arbeidsgiver)}</Element>
           </div>
         )}
-      </React.Fragment>
+      </>
       )}
     </div>
   );

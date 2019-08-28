@@ -31,7 +31,7 @@ class RequestApi {
     Object.values(this.requestRunnersMappedByName).forEach((runner) => {
       const { rel } = runner.getConfig();
       if (rel) {
-        const link = links.find(l => l.rel === rel);
+        const link = links.find((l) => l.rel === rel);
         if (link) {
           runner.injectLink(rel, link.href, link.type);
         }

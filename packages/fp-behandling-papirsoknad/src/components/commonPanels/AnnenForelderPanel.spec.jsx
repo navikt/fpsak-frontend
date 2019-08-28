@@ -11,7 +11,7 @@ describe('<AnnenForelderPanel>', () => {
   describe('validate', () => {
     describe('hvis kan oppgi annen forelder', () => {
       const sokersPersonnummer = '12345678910';
-      const validate = values => AnnenForelderPanel.validate(sokersPersonnummer, { kanIkkeOppgiAnnenForelder: false, ...values });
+      const validate = (values) => AnnenForelderPanel.validate(sokersPersonnummer, { kanIkkeOppgiAnnenForelder: false, ...values });
       it('skal validere fornavn', () => {
         const errorsWithoutFornavn = validate({});
         const errorsWithFornavn = validate({ fornavn: 'Ola' });
@@ -44,7 +44,7 @@ describe('<AnnenForelderPanel>', () => {
 
     describe('hvis ikke kan oppgi annen forelder', () => {
       const sokersPersonnummer = '12345678910';
-      const validateBegrunnelse = kanIkkeOppgiBegrunnelse => AnnenForelderPanel.validate(sokersPersonnummer,
+      const validateBegrunnelse = (kanIkkeOppgiBegrunnelse) => AnnenForelderPanel.validate(sokersPersonnummer,
         { kanIkkeOppgiAnnenForelder: true, kanIkkeOppgiBegrunnelse });
       it('skal validere årsak', () => {
         const errorsWithNoArsak = validateBegrunnelse({});

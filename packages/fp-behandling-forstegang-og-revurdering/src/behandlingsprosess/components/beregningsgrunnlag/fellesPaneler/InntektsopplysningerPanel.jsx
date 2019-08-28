@@ -35,15 +35,14 @@ const InntektsopplysningerPanel = ({
       && (
         <Column xs="6">
           {
-            sammenligningsgrunnlagTekst.map(tekst => (
+            sammenligningsgrunnlagTekst.map((tekst) => (
               <Undertekst key={tekst}>
                 <FormattedMessage id={tekst} />
               </Undertekst>
             ))
           }
         </Column>
-      )
-      }
+      )}
     </Row>
     <Row>
       <Column xs="6">
@@ -59,8 +58,7 @@ const InntektsopplysningerPanel = ({
             {formatCurrencyNoKr(sammenligningsgrunnlag)}
           </Element>
         </Column>
-      )
-      }
+      )}
     </Row>
     { avvik !== undefined && avvik !== null
     && (
@@ -71,8 +69,7 @@ const InntektsopplysningerPanel = ({
           </Normaltekst>
         </Column>
       </Row>
-    )
-    }
+    )}
   </BorderBox>
 );
 

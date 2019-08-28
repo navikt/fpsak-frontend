@@ -24,7 +24,7 @@ const FORM_NAME_SEN_REFUSON = 'senRefusjonForm';
 
 const erRefusjonskravGyldigFieldPrefix = 'erKravGyldig_';
 
-export const lagFieldName = arbeidsgiverVisningsnavn => erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn;
+export const lagFieldName = (arbeidsgiverVisningsnavn) => erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn;
 
 const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed) => senRefusjonkravListe.map((kravPerArbeidsgiver) => {
   const { arbeidsgiverVisningsnavn } = kravPerArbeidsgiver;
@@ -34,7 +34,7 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktCl
       <FormattedMessage
         id="VurderRefusjonForm.ErRefusjonskravGyldig"
         values={{
- arbeidsgiverVisningsnavn,
+          arbeidsgiverVisningsnavn,
         }}
       />
       <VerticalSpacer eightPx />
@@ -52,8 +52,8 @@ const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktCl
 });
 
 
-const findAksjonspunktMedBegrunnelse = aksjonspunkter => aksjonspunkter
-  .find(ap => ap.definisjon.kode === VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT && ap.begrunnelse !== null);
+const findAksjonspunktMedBegrunnelse = (aksjonspunkter) => aksjonspunkter
+  .find((ap) => ap.definisjon.kode === VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT && ap.begrunnelse !== null);
 
 export const BEGRUNNELSE_SEN_REFUSJON_NAME = 'begrunnelseSenRefusjon';
 
@@ -84,7 +84,7 @@ export const VurderRefusjonFormImpl = ({
       isReadOnly={readOnly}
       hasBegrunnelse={hasBegrunnelse}
     />
-    <React.Fragment>
+    <>
       <VerticalSpacer twentyPx />
       <FaktaSubmitButton
         formName={formProps.form}
@@ -92,7 +92,7 @@ export const VurderRefusjonFormImpl = ({
         isReadOnly={readOnly}
         hasOpenAksjonspunkter={!isAksjonspunktClosed}
       />
-    </React.Fragment>
+    </>
   </form>
 );
 
@@ -142,10 +142,10 @@ export const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const onSubmit = values => initialOwnProps.submitCallback(transformValues(initialState)(values));
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(initialState)(values));
   return (state) => {
     const alleAp = behandlingSelectors.getAksjonspunkter(state);
-    const relevantAp = alleAp.find(ap => ap.definisjon.kode === VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT);
+    const relevantAp = alleAp.find((ap) => ap.definisjon.kode === VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT);
     const isAksjonspunktClosed = !isAksjonspunktOpen(relevantAp.status.kode);
     const initialValues = buildInitialValues(state);
     const hasBegrunnelse = initialValues && !!initialValues[BEGRUNNELSE_SEN_REFUSJON_NAME];

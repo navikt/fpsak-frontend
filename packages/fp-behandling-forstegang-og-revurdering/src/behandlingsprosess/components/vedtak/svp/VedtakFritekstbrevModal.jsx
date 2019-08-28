@@ -9,7 +9,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 import {
- getIsFagsakTypeSVP, getBehandlingIsRevurdering,
+  getIsFagsakTypeSVP, getBehandlingIsRevurdering,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { createStructuredSelector } from 'reselect';
@@ -46,7 +46,7 @@ export const VedtakFritekstbrevModal = ({
   const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP, erRevurdering);
   const [showModal, settShowModal] = useState(fritektsbrevRequired);
   return (
-    <React.Fragment>
+    <>
       { fritektsbrevRequired && (
         <Modal
           className={styles.modal}
@@ -87,7 +87,7 @@ export const VedtakFritekstbrevModal = ({
           </Row>
         </Modal>
       )}
-    </React.Fragment>
+    </>
   );
 };
 

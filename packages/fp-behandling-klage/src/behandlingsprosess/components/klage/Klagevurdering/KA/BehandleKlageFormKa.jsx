@@ -80,8 +80,7 @@ export const BehandleKlageFormKaImpl = ({
                 klageVurdering={formValues.klageVurdering}
                 aksjonspunktCode={aksjonspunktCode}
               />
-            )
-            }
+            )}
           </Column>
           <Column xs="2">
             <TempsaveKlageButton
@@ -112,7 +111,7 @@ BehandleKlageFormKaImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNK], klageVurderingResultat => ({
+export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNK], (klageVurderingResultat) => ({
   klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
   klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
   klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -135,8 +134,8 @@ const formName = 'BehandleKlageKaForm';
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = values => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return state => ({
+  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state) => ({
     aksjonspunktCode,
     initialValues: buildInitialValues(state),
     formValues: behandlingFormValueSelector(formName)(state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak'),
@@ -149,7 +148,7 @@ const BehandleKlageFormKa = connect(mapStateToPropsFactory)(behandlingFormKlage(
   form: formName,
 })(BehandleKlageFormKaImpl));
 
-BehandleKlageFormKa.supports = apCodes => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK);
+BehandleKlageFormKa.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK);
 
 
 export default injectIntl(BehandleKlageFormKa);

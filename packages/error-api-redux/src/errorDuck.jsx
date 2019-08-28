@@ -6,12 +6,12 @@ const ADD_CRASH_MESSAGE = 'ADD_CRASH_MESSAGE';
 export const REMOVE_ERROR_MESSAGE = 'REMOVE_ERROR_MESSAGE';
 
 /* Action creators */
-export const addErrorMessage = data => ({
+export const addErrorMessage = (data) => ({
   type: ADD_ERROR_MESSAGE,
   data,
 });
 
-export const showCrashMessage = message => ({
+export const showCrashMessage = (message) => ({
   type: ADD_CRASH_MESSAGE,
   data: message,
 });
@@ -53,7 +53,7 @@ export const errorReducer = (state = initialState, action = {}) => {
 
 
 /* Selectors */
-const getErrorContext = state => state.default[reducerName];
+const getErrorContext = (state) => state.default[reducerName];
 
-export const getErrorMessages = createSelector([getErrorContext], appContext => appContext.errorMessages);
-export const getCrashMessage = createSelector([getErrorContext], appContext => appContext.crashMessage);
+export const getErrorMessages = createSelector([getErrorContext], (appContext) => appContext.errorMessages);
+export const getCrashMessage = createSelector([getErrorContext], (appContext) => appContext.crashMessage);

@@ -3,7 +3,7 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import { expect } from 'chai';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
+const lagOpptjeningAktivitetArbeidMedNavn = (resultat) => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: 'Andersen Transport AS',
@@ -11,7 +11,7 @@ const lagOpptjeningAktivitetArbeidMedNavn = resultat => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitetArbeidUtenNavn = resultat => ({
+const lagOpptjeningAktivitetArbeidUtenNavn = (resultat) => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Arbeid',
   arbeidsgiverNavn: null,
@@ -19,7 +19,7 @@ const lagOpptjeningAktivitetArbeidUtenNavn = resultat => ({
   godkjent: resultat === 'GODKJENT',
 });
 
-const lagOpptjeningAktivitet = resultat => ({
+const lagOpptjeningAktivitet = (resultat) => ({
   erEndring: resultat === 'ENDRING',
   aktivitetType: 'Aktivitet',
   arbeidsgiverNavn: null,

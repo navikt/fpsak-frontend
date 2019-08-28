@@ -55,34 +55,34 @@ const maxLength1500 = maxLength(1500);
 
 const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspunkter) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
     && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET))
-    && gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
+    && gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
 
-const skalFastsetteSN = aksjonspunkter => aksjonspunkter && aksjonspunkter.some(
-  ap => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+const skalFastsetteSN = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.some(
+  (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
   || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 );
 
-const isSelvstendigMedKombinasjonsstatus = relevanteStatuser => relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus;
+const isSelvstendigMedKombinasjonsstatus = (relevanteStatuser) => relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus;
 
 const skalViseSNOppsummering = (relevanteStatuser, gjeldendeAksjonspunkter) => isSelvstendigMedKombinasjonsstatus(relevanteStatuser)
-  && (gjeldendeAksjonspunkter ? gjeldendeAksjonspunkter.every(ap => ap.definisjon.kode !== FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET) : true);
+  && (gjeldendeAksjonspunkter ? gjeldendeAksjonspunkter.every((ap) => ap.definisjon.kode !== FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET) : true);
 
-const finnAksjonspunktForATFL = gjeldendeAksjonspunkter => gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(
-  ap => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
+const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(
+  (ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
   || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
 );
 
-const finnAksjonspunktForVurderDekningsgrad = gjeldendeAksjonspunkter => gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.find(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
+const finnAksjonspunktForVurderDekningsgrad = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter
+  && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
-const erVurderDekningsgradEnesteAksjonspunkt = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
+const erVurderDekningsgradEnesteAksjonspunkt = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter
+  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
   && gjeldendeAksjonspunkter.length === 1;
 
-const harFlereAksjonspunkter = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
+const harFlereAksjonspunkter = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
 
-const harFlereAksjonspunkterOgVurderDekningsgradErInkludert = gjeldendeAksjonspunkter => !!gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.some(ap => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
+const harFlereAksjonspunkterOgVurderDekningsgradErInkludert = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter
+  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
   && harFlereAksjonspunkter(gjeldendeAksjonspunkter);
 
 const finnATFLVurderingLabel = (gjeldendeAksjonspunkter) => {
@@ -104,8 +104,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
     <GrunnlagForAarsinntektPanelSN
       alleAndeler={alleAndelerIForstePeriode}
     />
-    )
-    }
+    )}
       {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
@@ -116,8 +115,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       />
       <VerticalSpacer twentyPx />
     </div>
-    )
-    }
+    )}
       <VerticalSpacer eightPx />
       {(relevanteStatuser.isMilitaer)
       && (
@@ -127,8 +125,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
           <VerticalSpacer twentyPx />
         </div>
-      )
-      }
+      )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
     && (
       <div>
@@ -139,8 +136,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         />
         <VerticalSpacer twentyPx />
       </div>
-    )
-    }
+    )}
       { relevanteStatuser.isFrilanser
     && (
     <div>
@@ -152,8 +148,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       />
       <VerticalSpacer twentyPx />
     </div>
-    )
-    }
+    )}
       <VerticalSpacer eightPx />
       { relevanteStatuser.isArbeidstaker
     && (
@@ -167,25 +162,21 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         readOnly={readOnly}
         isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
       />
-      )
-      }
+      )}
       { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
       && (
       <FastsettInntektTidsbegrenset
         readOnly={readOnly}
       />
-      )
-      }
+      )}
     </div>
-    )
-    }
+    )}
       { skalViseSNOppsummering(relevanteStatuser, gjeldendeAksjonspunkter)
     && (
     <OppsummeringSN
       alleAndeler={alleAndelerIForstePeriode}
     />
-    )
-    }
+    )}
     </div>
 );
 
@@ -230,8 +221,7 @@ export const BeregningsgrunnlagImpl = ({
         maxLength={1500}
         readOnly={readOnly}
       />
-      )
-      }
+      )}
     <BorderBox>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Beregningsgrunnlag" />
@@ -253,8 +243,7 @@ export const BeregningsgrunnlagImpl = ({
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         readOnly={readOnly}
       />
-      )
-      }
+      )}
     <VerticalSpacer sixteenPx />
     { erVurderDekningsgradEnesteAksjonspunkt(gjeldendeAksjonspunkter) && (
       <TextAreaField
@@ -278,8 +267,7 @@ export const BeregningsgrunnlagImpl = ({
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
         </>
-        )
-      }
+        )}
   </div>
 );
 

@@ -56,7 +56,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
     const { behandlendeEnheter, behandlendeEnhetId } = this.props;
 
     const filtrerteBehandlendeEnheter = behandlendeEnheter
-      .filter(enhet => enhet.enhetId !== behandlendeEnhetId);
+      .filter((enhet) => enhet.enhetId !== behandlendeEnhetId);
     this.setState({ nyEnhet: filtrerteBehandlendeEnheter[e.target.value] });
   }
 
@@ -81,8 +81,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
             onSubmit={this.submit}
             handleEnhetChange={this.handleEnhetChange}
           />
-          )
-        }
+          )}
       </div>
     );
   }

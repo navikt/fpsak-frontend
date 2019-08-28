@@ -46,7 +46,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     fagsak: ownProps.fagsak,
   };
 
-  return state => ({
+  return (state) => ({
     behandlingIdentifier: getBehandlingIdentifier(state),
     behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
     fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
@@ -60,7 +60,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({
+const mapDispatchToProps = (dispatch) => bindActionCreators({
   setHasShownBehandlingPaVent,
   updateOnHold,
   setBehandlingInfo,

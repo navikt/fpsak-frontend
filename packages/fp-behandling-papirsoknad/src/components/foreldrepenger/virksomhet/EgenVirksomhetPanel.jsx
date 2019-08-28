@@ -53,8 +53,7 @@ export const EgenVirksomhetPanel = ({
           validate={[arrayMinLength1]}
           readOnly={readOnly}
         />
-        )
-    }
+        )}
         </ElementWrapper>
       </Fieldset>
     </BorderBox>
