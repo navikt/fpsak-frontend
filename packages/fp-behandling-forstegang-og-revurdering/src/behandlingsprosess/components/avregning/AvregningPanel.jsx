@@ -442,7 +442,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
   return (state) => {
     const tilbakekrevingValg = getTilbakekrevingValg(state);
-    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
       && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
       simuleringResultat: getSimuleringResultat(state),

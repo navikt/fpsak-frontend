@@ -283,9 +283,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
   return (state) => {
     const tilbakekrevingValg = getTilbakekrevingValg(state);
-    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
       && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
-      return {
+    return {
       onSubmit,
       aksjonspunktKoder,
       revurderingsAarsakString,
