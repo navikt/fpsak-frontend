@@ -7,6 +7,11 @@ import behandlingSelectors from './selectors/tilbakekrevingBehandlingSelectors';
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export class FpTilbakeBehandlingInfoSetter extends Component {
+  constructor(props) {
+    super(props);
+    this.setBehandlingInfo();
+  }
+
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
@@ -32,10 +37,6 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad));
-  }
-
-  componentWillMount = () => {
-    this.setBehandlingInfo();
   }
 
   componentDidUpdate = (prevProps) => {

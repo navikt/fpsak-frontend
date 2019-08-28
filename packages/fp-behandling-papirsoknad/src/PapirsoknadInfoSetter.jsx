@@ -9,6 +9,11 @@ import behandlingSelectors from './selectors/papirsoknadSelectors';
 
 // TODO (TOR) Midlertidig komponent. Ikkje legg meir her!! Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
 export class PapirsoknadInfoSetter extends Component {
+  constructor(props) {
+    super(props);
+    this.setBehandlingInfo();
+  }
+
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, aksjonspunkter,
@@ -33,10 +38,6 @@ export class PapirsoknadInfoSetter extends Component {
       .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad));
-  }
-
-  componentWillMount = () => {
-    this.setBehandlingInfo();
   }
 
   componentDidUpdate = (prevProps) => {

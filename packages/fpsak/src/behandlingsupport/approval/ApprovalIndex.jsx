@@ -94,14 +94,15 @@ export class ApprovalIndexImpl extends Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
     this.forhandsvisVedtaksbrev = this.forhandsvisVedtaksbrev.bind(this);
-  }
 
-  componentWillMount() {
     const {
       totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper,
-    } = this.props;
+    } = props;
     if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.setState({ approvals: mapPropsToContext(toTrinnsBehandling, this.props, skjemalenkeTyper) });
+      this.state = {
+        ...this.state,
+        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper),
+      };
     }
   }
 

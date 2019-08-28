@@ -84,9 +84,9 @@ export class BehandlingIndex extends Component {
     erAktivPapirsoknad: false,
   }
 
-  componentWillMount() {
-    const { behandlingLinks } = this.props;
-    reduxRestApi.injectPaths(behandlingLinks);
+  constructor(props) {
+    super(props);
+    reduxRestApi.injectPaths(props.behandlingLinks);
   }
 
   componentDidUpdate(prevProps) {
