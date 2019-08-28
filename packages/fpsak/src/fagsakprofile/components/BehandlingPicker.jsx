@@ -9,7 +9,7 @@ import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';
 
-export const sortBehandlinger = behandlinger => behandlinger.sort((b1, b2) => {
+export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => {
   if (b1.avsluttet && !b2.avsluttet) {
     return 1;
   } if (!b1.avsluttet && b2.avsluttet) {
@@ -22,7 +22,7 @@ export const sortBehandlinger = behandlinger => behandlinger.sort((b1, b2) => {
 
 const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll) => (
   sortBehandlinger(behandlinger)
-    .map(behandling => (
+    .map((behandling) => (
       <li key={behandling.id}>
         <BehandlingPickerItem
           onlyOneBehandling={behandlinger.length === 1}

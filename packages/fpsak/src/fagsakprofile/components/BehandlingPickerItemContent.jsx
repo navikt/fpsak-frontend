@@ -85,7 +85,7 @@ const getÅrsak = (årsak) => {
 
 const renderChevron = (chevron, messageId) => (
   <FormattedMessage id={messageId}>
-    {altText => <Image className={styles.image} src={chevron} alt={altText} />}
+    {(altText) => <Image className={styles.image} src={chevron} alt={altText} />}
   </FormattedMessage>
 );
 
