@@ -18,7 +18,9 @@ import styles from '../vedtakForm.less';
 
 const getPreviewCallback = (formProps, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    previewCallback({});
+    previewCallback({
+      gjelderVedtak: true,
+    });
   } else {
     formProps.submit();
   }
@@ -32,7 +34,9 @@ const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback
     } = formProps;
     const data = {
       fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
       tittel: overskrift,
+      gjelderVedtak: true,
     };
     previewCallback(data);
   } else {

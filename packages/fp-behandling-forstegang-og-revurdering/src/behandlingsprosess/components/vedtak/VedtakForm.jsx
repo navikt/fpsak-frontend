@@ -39,8 +39,11 @@ const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback
     } = formProps;
     const data = {
       fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
       tittel: overskrift,
+      gjelderVedtak: true,
     };
+
     previewCallback(data);
   } else {
     formProps.submit();
@@ -75,6 +78,7 @@ function kanSendesTilGodkjenning(behandlingStatusKode) {
 const getPreviewAutomatiskBrevCallback = (begrunnelse, previewCallback) => (e) => {
   const formValues = {
     fritekst: begrunnelse,
+    gjelderVedtak: true,
   };
   previewCallback(formValues);
   e.preventDefault();

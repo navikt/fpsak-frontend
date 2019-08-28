@@ -40,6 +40,7 @@ const isVedtakSubmission = true;
 const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => (e) => {
   const data = {
     fritekst: begrunnelse,
+    gjelderVedtak: true,
   };
   previewCallback(data);
   e.preventDefault();

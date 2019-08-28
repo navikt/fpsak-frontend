@@ -37,6 +37,7 @@ const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
       fritekst: begrunnelse || ' ',
       mottaker: '',
       dokumentMal: 'INSSKR',
+      gjelderVedtak: true,
     };
     previewCallback(data);
   } else {

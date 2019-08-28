@@ -161,7 +161,10 @@ export class ApprovalIndexImpl extends Component {
 
   forhandsvisVedtaksbrev() {
     const { previewMessage: fetchPreview, behandlingUuid, erTilbakekreving } = this.props;
-    fetchPreview(erTilbakekreving, { behandlingUuid });
+    fetchPreview(erTilbakekreving, {
+      behandlingUuid,
+      gjelderVedtak: true,
+    });
   }
 
   goToSearchPage() {
