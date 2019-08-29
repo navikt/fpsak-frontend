@@ -26,8 +26,8 @@ const utledNavn = (arbeidsforhold) => {
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
     return arbeidsforhold.navn;
   }
-  return arbeidsforhold.arbeidsforholdId
-    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(arbeidsforhold.arbeidsforholdId)}`
+  return arbeidsforhold.arbeidsforholdEksternId
+    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(arbeidsforhold.arbeidsforholdEksternId)}`
     : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
 };
 
