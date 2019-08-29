@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 
-import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBehandlingFormPrefix, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -17,10 +16,9 @@ import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-component
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getBehandlingArsakTyper, getBehandlingResultatstruktur, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingArsakTyper, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { getAlleKodeverk, getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
