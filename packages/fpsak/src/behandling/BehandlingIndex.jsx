@@ -1,15 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Suspense } from 'react';
 import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import BehandlingPapirsoknadIndex from '@fpsak-frontend/fp-behandling-papirsoknad';
-import BehandlingTilbakekrevingIndex from '@fpsak-frontend/fp-behandling-tilbakekreving';
-import BehandlingInnsynIndex from '@fpsak-frontend/fp-behandling-innsyn';
-import BehandlingKlageIndex from '@fpsak-frontend/fp-behandling-klage';
-import BehandlingForstegangOgRevurderingIndex from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering';
-import BehandlingAnkeIndex from '@fpsak-frontend/fp-behandling-anke';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -32,6 +27,13 @@ import {
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 import appContextUpdater from './AppContextUpdater';
+
+const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
+const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-innsyn'));
+const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-klage'));
+const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
+const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
+const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
 
 /**
  * BehandlingIndex
@@ -125,87 +127,118 @@ export class BehandlingIndex extends Component {
     } = this.props;
     if (erAktivPapirsoknad) {
       return (
-        <BehandlingPapirsoknadIndex
-          key={behandlingId}
-          saksnummer={saksnummer}
-          behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-          location={location}
-          setBehandlingInfoHolder={setHolder}
-          behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
-          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          kodeverk={kodeverk}
-          fagsak={fagsak}
-          navAnsatt={navAnsatt}
-        />
+        <Suspense fallback={<LoadingPanel />}>
+          <BehandlingPapirsoknadIndex
+            key={behandlingId}
+            saksnummer={saksnummer}
+            behandlingId={behandlingId}
+            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+            location={location}
+            setBehandlingInfoHolder={setHolder}
+            behandlingUpdater={behandlingUpdater}
+            appContextUpdater={appContextUpdater}
+            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            kodeverk={kodeverk}
+            fagsak={fagsak}
+            navAnsatt={navAnsatt}
+          />
+        </Suspense>
       );
     }
 
     if (behandlingType === BehandlingType.TILBAKEKREVING) {
       return (
-        <BehandlingTilbakekrevingIndex
-          key={behandlingId}
-          saksnummer={saksnummer}
-          behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-          location={location}
-          setBehandlingInfoHolder={setHolder}
-          behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
-          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          fagsak={fagsak}
-          navAnsatt={navAnsatt}
-        />
+        <Suspense fallback={<LoadingPanel />}>
+          <BehandlingTilbakekrevingIndex
+            key={behandlingId}
+            saksnummer={saksnummer}
+            behandlingId={behandlingId}
+            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+            location={location}
+            setBehandlingInfoHolder={setHolder}
+            behandlingUpdater={behandlingUpdater}
+            appContextUpdater={appContextUpdater}
+            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            fagsak={fagsak}
+            navAnsatt={navAnsatt}
+          />
+        </Suspense>
       );
     }
 
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
       return (
-        <BehandlingInnsynIndex
-          key={behandlingId}
-          saksnummer={saksnummer}
-          behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-          location={location}
-          setBehandlingInfoHolder={setHolder}
-          behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
-          featureToggles={featureToggles}
-          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          allDocuments={allDocuments}
-          kodeverk={kodeverk}
-          fagsak={fagsak}
-          navAnsatt={navAnsatt}
-        />
+        <Suspense fallback={<LoadingPanel />}>
+          <BehandlingInnsynIndex
+            key={behandlingId}
+            saksnummer={saksnummer}
+            behandlingId={behandlingId}
+            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+            location={location}
+            setBehandlingInfoHolder={setHolder}
+            behandlingUpdater={behandlingUpdater}
+            appContextUpdater={appContextUpdater}
+            featureToggles={featureToggles}
+            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            allDocuments={allDocuments}
+            kodeverk={kodeverk}
+            fagsak={fagsak}
+            navAnsatt={navAnsatt}
+          />
+        </Suspense>
       );
     }
 
     if (behandlingType === BehandlingType.KLAGE) {
       return (
-        <BehandlingKlageIndex
-          key={behandlingId}
-          saksnummer={saksnummer}
-          behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-          location={location}
-          setBehandlingInfoHolder={setHolder}
-          behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
-          featureToggles={featureToggles}
-          hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          allDocuments={allDocuments}
-          kodeverk={kodeverk}
-          fagsak={fagsak}
-          avsluttedeBehandlinger={avsluttedeBehandlinger}
-          navAnsatt={navAnsatt}
-        />
+        <Suspense fallback={<LoadingPanel />}>
+          <BehandlingKlageIndex
+            key={behandlingId}
+            saksnummer={saksnummer}
+            behandlingId={behandlingId}
+            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+            location={location}
+            setBehandlingInfoHolder={setHolder}
+            behandlingUpdater={behandlingUpdater}
+            appContextUpdater={appContextUpdater}
+            featureToggles={featureToggles}
+            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            allDocuments={allDocuments}
+            kodeverk={kodeverk}
+            fagsak={fagsak}
+            avsluttedeBehandlinger={avsluttedeBehandlinger}
+            navAnsatt={navAnsatt}
+          />
+        </Suspense>
       );
     }
 
     if (behandlingType === BehandlingType.ANKE) {
       return (
-        <BehandlingAnkeIndex
+        <Suspense fallback={<LoadingPanel />}>
+          <BehandlingAnkeIndex
+            key={behandlingId}
+            saksnummer={saksnummer}
+            behandlingId={behandlingId}
+            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+            location={location}
+            setBehandlingInfoHolder={setHolder}
+            behandlingUpdater={behandlingUpdater}
+            appContextUpdater={appContextUpdater}
+            featureToggles={featureToggles}
+            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            allDocuments={allDocuments}
+            kodeverk={kodeverk}
+            fagsak={fagsak}
+            navAnsatt={navAnsatt}
+          />
+        </Suspense>
+      );
+    }
+
+    return (
+      <Suspense fallback={<LoadingPanel />}>
+        <BehandlingForstegangOgRevurderingIndex
           key={behandlingId}
           saksnummer={saksnummer}
           behandlingId={behandlingId}
@@ -216,30 +249,11 @@ export class BehandlingIndex extends Component {
           appContextUpdater={appContextUpdater}
           featureToggles={featureToggles}
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-          allDocuments={allDocuments}
           kodeverk={kodeverk}
           fagsak={fagsak}
           navAnsatt={navAnsatt}
         />
-      );
-    }
-
-    return (
-      <BehandlingForstegangOgRevurderingIndex
-        key={behandlingId}
-        saksnummer={saksnummer}
-        behandlingId={behandlingId}
-        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-        location={location}
-        setBehandlingInfoHolder={setHolder}
-        behandlingUpdater={behandlingUpdater}
-        appContextUpdater={appContextUpdater}
-        featureToggles={featureToggles}
-        hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-        kodeverk={kodeverk}
-        fagsak={fagsak}
-        navAnsatt={navAnsatt}
-      />
+      </Suspense>
     );
   }
 }

@@ -20,7 +20,7 @@ const config = {
   output: {
     filename: '[name]-[hash].js',
     path: path.resolve(__dirname, '../dist/public'),
-    publicPath: '/fpsak/public',
+    publicPath: '/fpsak/public/',
   },
   optimization: {
     minimizer: [
