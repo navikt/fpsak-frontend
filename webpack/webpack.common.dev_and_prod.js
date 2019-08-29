@@ -68,13 +68,13 @@ const config = {
             options: {
               importLoaders: 1,
               modules: true,
-              localIdentName: '[name]_[local]_[hash:base64:5]',
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
             },
           }, {
             loader: 'less-loader',
             options: {
               modules: true,
-              localIdentName: '[name]_[local]_[hash:base64:5]',
+              localIdentName: '[name]_[local]_[contenthash:base64:5]',
               modifyVars: {
                 nodeModulesPath: '~',
                 coreModulePath: '~',
@@ -115,7 +115,7 @@ const config = {
 
   plugins: [
     new MiniCssExtractPlugin({
-      filename: isDevelopment ? 'style.css' : 'style_[hash].css',
+      filename: isDevelopment ? 'style.css' : 'style_[contenthash].css',
     }),
     new HtmlWebpackPlugin({
       filename: isDevelopment ? 'index.html' : '../index.html',

@@ -18,7 +18,8 @@ const config = {
     APP_DIR + '/index.jsx',
   ],
   output: {
-    filename: '[name]-[hash].js',
+    filename: '[name]-[contenthash].js',
+    chunkFilename: '[name].[contenthash].chunk.js',
     path: path.resolve(__dirname, '../dist/public'),
     publicPath: '/fpsak/public/',
   },
