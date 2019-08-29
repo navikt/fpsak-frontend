@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getBehandlingFormPrefix, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { isAvslag, isInnvilget, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
