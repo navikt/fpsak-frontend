@@ -201,9 +201,9 @@ export const getAndelerMedGraderingUtenBG = createSelector(
 
 // Refusjonskrav som kommer for sent
 export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
-  [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
-    if (faktaOmFordeling && faktaOmFordeling.refusjonskravSomKommerForSentListe) {
-      return faktaOmFordeling.refusjonskravSomKommerForSentListe;
+  [getFaktaOmBeregning], (faktaOmBeregning = {}) => {
+    if (faktaOmBeregning && faktaOmBeregning.refusjonskravSomKommerForSentListe) {
+      return faktaOmBeregning.refusjonskravSomKommerForSentListe;
     }
     return [];
   },
