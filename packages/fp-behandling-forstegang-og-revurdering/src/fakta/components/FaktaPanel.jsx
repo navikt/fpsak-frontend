@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { setOpenInfoPanels, getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
@@ -244,7 +243,7 @@ FaktaPanel.defaultProps = {
 };
 
 const mapStateToProps = (state) => {
-  const rettigheter = getRettigheter(state);
+  const rettigheter = behandlingSelectors.getRettigheter(state);
   return {
     aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
     vilkarCodes: behandlingSelectors.getBehandlingVilkarCodes(state),

@@ -15,12 +15,12 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
+import { getNavAnsatt } from 'app/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   getBehandlingVersjon, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
   getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier, getBehandlingType,
 } from 'behandling/duck';
-import { getNavAnsatt } from 'navAnsatt/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';

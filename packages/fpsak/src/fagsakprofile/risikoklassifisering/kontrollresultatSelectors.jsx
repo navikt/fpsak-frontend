@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
-import { getAksjonspunkter, getSelectedBehandlingId } from 'behandling/duck';
-import { getRettigheter, getNavAnsatt } from 'navAnsatt/duck';
 
-import { getBehandlingerErPaaVentStatusMappedById } from 'behandling/selectors/behandlingerSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import { getBehandlingerErPaaVentStatusMappedById } from 'behandling/selectors/behandlingerSelectors';
+import { getRettigheter, getAksjonspunkter, getSelectedBehandlingId } from 'behandling/duck';
+import { getNavAnsatt } from 'app/duck';
 import fpsakApi from '../../data/fpsakApi';
 
 export const getRisikoaksjonspunkt = createSelector([getAksjonspunkter], (aksjonspunkter) => (aksjonspunkter

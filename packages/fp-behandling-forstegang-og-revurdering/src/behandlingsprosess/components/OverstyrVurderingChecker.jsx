@@ -6,7 +6,7 @@ import { injectIntl, intlShape } from 'react-intl';
 
 import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import { getRettigheter } from 'navAnsatt/duck';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { CheckboxField } from '@fpsak-frontend/form';
 
@@ -84,7 +84,7 @@ const mapStateToProps = (state) => ({
   aksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
   selectedBehandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
   isBehandlingReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
-  kanOverstyreAccess: getRettigheter(state).kanOverstyreAccess,
+  kanOverstyreAccess: behandlingSelectors.getRettigheter(state).kanOverstyreAccess,
 });
 
 const mapDispatchToProps = (dispatch) => ({

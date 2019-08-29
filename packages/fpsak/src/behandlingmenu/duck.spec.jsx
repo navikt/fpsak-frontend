@@ -140,8 +140,7 @@ describe('BehandlingMenu-reducer', () => {
       });
   });
 
-  // TODO (TOR) Fiks test
-  xit('skal ved opprettelse av ny behandling returnere behandling og så velge denne', () => {
+  it('skal ved opprettelse av ny behandling returnere behandling og så velge denne', () => {
     const fagsak = {
       id: 1,
     };
@@ -187,7 +186,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewForstegangsbehandling(push, 1, true, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(15);
+        expect(store.getActions()).to.have.length(12);
         const [requestStartedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
@@ -208,13 +207,9 @@ describe('BehandlingMenu-reducer', () => {
       });
   });
 
-  // TODO (TOR) Fiks test
-  xit('skal ved opprettelse av ny behandling returnere behandling og så velge denne', () => {
+  it('skal åpne behandling for endringer', () => {
     const fagsak = {
       id: 1,
-    };
-    const behandling = {
-      id: 2,
     };
     const behandlinger = [{
       id: 1,
@@ -225,11 +220,13 @@ describe('BehandlingMenu-reducer', () => {
     }];
 
     const updater = {
-      resetBehandling: () => () => Promise.resolve(sinon.spy()),
-      openBehandlingForChanges: () => () => (params) => Promise.resolve({ type: 'OPEN_BEHANDLING_FOR_CHANGES', data: params }),
+      setBehandlingResult: () => () => () => Promise.resolve(sinon.spy()),
     };
     behandlingUpdater.setUpdater(updater);
 
+    mockAxios
+      .onGet(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
+      .replyOnce(200);
     mockAxios
       .onGet(fpsakApi.FETCH_FAGSAK.path)
       .replyOnce(200, fagsak);
@@ -254,15 +251,12 @@ describe('BehandlingMenu-reducer', () => {
     return store.dispatch(openBehandlingForChanges(params, id))
       .then(() => {
         expect(store.getActions()).to.have.length(12);
-        const [copyStartedAction, copyFinishedAction] = store.getActions();
-        expect(copyStartedAction.type).to.contain('@@REST/BEHANDLING COPY_DATA_STARTED');
-        expect(copyStartedAction.payload.params).is.eql(id.toJson());
-        expect(copyStartedAction.meta).is.eql({ options: { keepData: true } });
-
-        expect(copyFinishedAction.type).to.contain('@@REST/BEHANDLING COPY_DATA_FINISHED');
-        expect(copyFinishedAction.payload).is.eql(behandling);
-
-        // Andre restkall blir ikke testet
+        const [startOpenForChanges] = store.getActions();
+        expect(startOpenForChanges.type).to.contain('@@REST/OPEN_BEHANDLING_FOR_CHANGES');
+        expect(startOpenForChanges.payload.params).is.eql({
+          behandlingId: 2,
+          behandlingVersjon: 10,
+        });
       });
   });
 });

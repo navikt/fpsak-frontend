@@ -24,7 +24,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
-import { getRettigheter } from 'navAnsatt/duck';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -306,7 +305,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     sprakkode: behandlingSelectors.getBehandlingSprak(state),
     aksjonspunktKoder: getAksjonspunktKoder(state),
     erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
-    kanOverstyre: getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
   });
 };
 

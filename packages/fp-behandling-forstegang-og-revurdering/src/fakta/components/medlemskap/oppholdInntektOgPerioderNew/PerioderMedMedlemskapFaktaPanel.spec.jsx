@@ -146,7 +146,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
     expect(table.find('TableRow')).to.length(1);
   });
 
-  xit('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
+  it('skal ikke vise tabell når det ikke finnes medlemskapsperioder', () => {
     const medlemskapPerioder = [];
 
     const wrapper = shallowWithIntl(<UndecoratedForm

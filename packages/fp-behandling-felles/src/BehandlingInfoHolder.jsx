@@ -59,6 +59,8 @@ class BehandlingInfoHolder {
 
     resultatstrukturFraOriginalBehandling;
 
+    erArsakTypeBehandlingEtterKlage = false;
+
     withIsKontrollerRevurderingAksjonspunkOpen = (isKontrollerRevurderingAksjonspunkOpen) => {
       this.isKontrollerRevurderingAksjonspunkOpen = isKontrollerRevurderingAksjonspunkOpen;
       return this;
@@ -201,6 +203,11 @@ class BehandlingInfoHolder {
 
      withResultatstrukturFraOriginalBehandling = (resultatstrukturFraOriginalBehandling) => {
        this.resultatstrukturFraOriginalBehandling = resultatstrukturFraOriginalBehandling;
+       return this;
+     }
+
+     withErArsakTypeBehandlingEtterKlage = (erArsakTypeBehandlingEtterKlage) => {
+       this.erArsakTypeBehandlingEtterKlage = erArsakTypeBehandlingEtterKlage;
        return this;
      }
 }

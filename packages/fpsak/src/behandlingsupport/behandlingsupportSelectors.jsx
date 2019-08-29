@@ -8,9 +8,9 @@ import {
   getBehandlingStatus,
   getTotrinnskontrollArsakerReadOnly,
   getBehandlingIsOnHold,
+  getRettigheter,
 } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/duck';
-import { getRettigheter } from 'navAnsatt/duck';
 import SupportPanel from './supportPanels';
 
 

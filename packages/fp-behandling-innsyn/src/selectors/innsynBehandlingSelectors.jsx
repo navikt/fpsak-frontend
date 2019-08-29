@@ -2,9 +2,12 @@ import { createSelector } from 'reselect';
 
 import { omit } from '@fpsak-frontend/utils';
 import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-felles';
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
-import { getSelectedBehandlingId } from '../duckBehandlingInnsyn';
+import {
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+} from '../duckBehandlingInnsyn';
 
 const commonBehandlingInnsynSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, innsynBehandlingApi);
 
@@ -19,12 +22,26 @@ const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
   [getBehandlingInnsyn], (innsyn = {}) => (innsyn.vedtaksdokumentasjon ? innsyn.vedtaksdokumentasjon : []),
 );
 
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  commonBehandlingInnsynSelectors.getBehandlingStatus,
+  commonBehandlingInnsynSelectors.getSoknad,
+  commonBehandlingInnsynSelectors.getAksjonspunkter,
+  commonBehandlingInnsynSelectors.getBehandlingType,
+  commonBehandlingInnsynSelectors.getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);
+
 const innsynBehandlingSelectors = {
   ...omit(commonBehandlingInnsynSelectors, 'getSelectedBehandling'),
   getBehandlingInnsynResultatType,
   getBehandlingInnsynMottattDato,
   getBehandlingInnsynDokumenter,
   getBehandlingInnsynVedtaksdokumentasjon,
+  getRettigheter,
 };
 
 export default innsynBehandlingSelectors;

@@ -45,6 +45,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     featureToggles: ownProps.featureToggles,
     kodeverk: ownProps.kodeverk,
     fagsak: ownProps.fagsak,
+    navAnsatt: ownProps.navAnsatt,
     avsluttedeBehandlinger: ownProps.avsluttedeBehandlinger,
   };
   return (state) => ({

@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect';
 
+import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
+
+import { getNavAnsatt } from 'app/duck';
+import {
+  getSelectedFagsakStatus, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd, getFagsakYtelseType,
+} from 'fagsak/fagsakSelectors';
 import { getSelectedSaksnummer } from 'fagsak/duck';
-import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 const reducerName = 'behandling';
 
@@ -92,3 +97,19 @@ export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingIn
 export const getSoknad = createSelector([getBehandlingInfoHolder], (data) => data.soknad);
 export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
 export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
+export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], (data) => data.erArsakTypeBehandlingEtterKlage);
+
+
+/* Skal ikkje fjernast */
+export const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  getBehandlingStatus,
+  getSoknad,
+  getAksjonspunkter,
+  getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);

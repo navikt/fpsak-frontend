@@ -24,8 +24,12 @@ export const {
 export const {
   getBehandlingIdentifier,
   getFagsakPerson,
+  getFagsakStatus,
   getFagsakYtelseType,
   getHasShownBehandlingPaVent,
   getKodeverk,
   getSelectedBehandlingId,
+  getNavAnsatt,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;

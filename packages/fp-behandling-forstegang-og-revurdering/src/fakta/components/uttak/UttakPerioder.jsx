@@ -26,7 +26,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getRettigheter } from 'navAnsatt/duck';
 import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
@@ -539,7 +538,7 @@ const mapStateToProps = (state) => {
   return {
     behandlingFormPrefix,
     isManuellOverstyring: manuellOverstyring(state),
-    kanOverstyre: getRettigheter(state).kanOverstyreAccess.isEnabled,
+    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.isEnabled,
     openForms: !!perioder(state).find((periode) => periode.openForm === true),
     førsteUttaksdato: getFørsteUttaksdato(state),
     endringsdato: getEndringsdato(state),

@@ -116,6 +116,8 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     getFagsakStatus: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus),
     getFagsakPerson: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson),
     getFagsakYtelseType: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType),
+    getKanRevurderingOpprettes: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.kanRevurderingOpprettes),
+    getSkalBehandlesAvInfotrygd: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.skalBehandlesAvInfotrygd),
     isForeldrepengerFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.isForeldrepengerFagsak),
     getKodeverk: (kodeverkType) => createSelector(
       [getBehandlingContext], (behandlingContext) => behandlingContext.kodeverk[kodeverkType],
@@ -125,6 +127,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     ),
     getFeatureToggles: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.featureToggles),
     getHasShownBehandlingPaVent: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.hasShownBehandlingPaVent),
+    getNavAnsatt: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.navAnsatt),
   };
 
   return {

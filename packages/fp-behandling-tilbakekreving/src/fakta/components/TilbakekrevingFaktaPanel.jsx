@@ -6,7 +6,6 @@ import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import {
   setOpenInfoPanels, getOpenInfoPanels,
@@ -71,7 +70,7 @@ TilbakekrevingFaktaPanel.defaultProps = {
 const mapStateToProps = (state) => ({
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   openInfoPanels: getOpenInfoPanels(state),
-  readOnly: !getRettigheter(state).writeAccess.isEnabled
+  readOnly: !behandlingSelectors.getRettigheter(state).writeAccess.isEnabled
     || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
   feilutbetaling: behandlingSelectors.getFeilutbetalingFakta(state),
   fagsakPerson: getFagsakPerson(state),

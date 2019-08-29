@@ -3,9 +3,12 @@ import { createSelector } from 'reselect';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { omit } from '@fpsak-frontend/utils';
 import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-felles';
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import klageBehandlingApi from '../data/klageBehandlingApi';
-import { getSelectedBehandlingId } from '../duckBehandlingKlage';
+import {
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+} from '../duckBehandlingKlage';
 
 const commonBehandlingKlageSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, klageBehandlingApi);
 
@@ -43,6 +46,19 @@ const isKlageBehandlingInKA = createSelector(
       || ap.definisjon.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK),
 );
 
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  commonBehandlingKlageSelectors.getBehandlingStatus,
+  commonBehandlingKlageSelectors.getSoknad,
+  commonBehandlingKlageSelectors.getAksjonspunkter,
+  commonBehandlingKlageSelectors.getBehandlingType,
+  commonBehandlingKlageSelectors.getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);
+
 const klageBehandlingSelectors = {
   ...omit(commonBehandlingKlageSelectors, 'getSelectedBehandling'),
   getMellomlagringData,
@@ -53,6 +69,7 @@ const klageBehandlingSelectors = {
   getBehandlingKlageFormkravResultatNFP,
   getBehandlingKlageFormkravResultatKA,
   isKlageBehandlingInKA,
+  getRettigheter,
 };
 
 export default klageBehandlingSelectors;

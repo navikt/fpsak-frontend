@@ -22,7 +22,6 @@
 			"person/*": ["fpsak/src/person/*"],
 			"fagsakprofile/*": ["fpsak/src/fagsakprofile/*"],
 			"kodeverk/*": ["fpsak/src/kodeverk/*"],
-			"navAnsatt/*": ["fpsak/src/navAnsatt/*"],
 			"data/*": ["fpsak/src/data/*"],
 			"behandlingForstegangOgRevurdering/*": ["fp-behandling-forstegang-og-revurdering/src/*"],
 			"behandlingTilbakekreving/*": ["fp-behandling-tilbakekreving/src/*"],

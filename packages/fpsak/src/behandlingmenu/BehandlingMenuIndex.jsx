@@ -13,10 +13,10 @@ import {
   getBehandlingBehandlendeEnhetNavn,
   getBehandlingIsInnsyn,
   getBehandlingIdentifier,
+  getRettigheter,
 } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
-import { getNavAnsatt, getRettigheter } from 'navAnsatt/duck';
-
+import { getNavAnsatt } from 'app/duck';
 import {
   previewHenleggBehandling, nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,
   setBehandlingOnHold, openBehandlingForChanges, resetBehandlingMenuData,

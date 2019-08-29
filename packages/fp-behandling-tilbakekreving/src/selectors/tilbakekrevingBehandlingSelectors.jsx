@@ -2,9 +2,12 @@ import { createSelector } from 'reselect';
 
 import { omit } from '@fpsak-frontend/utils';
 import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-felles';
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
-import { getSelectedBehandlingId } from '../duckBehandlingTilbakekreving';
+import {
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+} from '../duckBehandlingTilbakekreving';
 
 const commonBehandlingSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, tilbakekrevingBehandlingApi);
 
@@ -56,6 +59,19 @@ const getVedtaksbrevAvsnitt = createSelector([commonBehandlingSelectors.getSelec
   selectedBehandling = {},
 ) => selectedBehandling.vedtaksbrev.avsnittsliste);
 
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  commonBehandlingSelectors.getBehandlingStatus,
+  commonBehandlingSelectors.getSoknad,
+  commonBehandlingSelectors.getAksjonspunkter,
+  commonBehandlingSelectors.getBehandlingType,
+  commonBehandlingSelectors.getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);
+
 const tilbakekrevingBehandlingSelectors = {
   ...omit(commonBehandlingSelectors, 'getSelectedBehandling'),
   getBehandlingRelatertTilgrensendeYtelserForSoker,
@@ -69,6 +85,7 @@ const tilbakekrevingBehandlingSelectors = {
   getBehandlingVilkarsvurdering,
   getBeregningsresultat,
   getVedtaksbrevAvsnitt,
+  getRettigheter,
 };
 
 export default tilbakekrevingBehandlingSelectors;

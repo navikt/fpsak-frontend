@@ -15,7 +15,6 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSelectedBehandlingId, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { getAvklarAktiviteter } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -278,7 +277,7 @@ export const buildInitialValuesAvklarAktiviteter = createSelector([behandlingSel
 
 const skalKunneOverstyre = (rettigheter, aksjonspunkter) => rettigheter.kanOverstyreAccess.isEnabled && !hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
 
-const getSkalKunneOverstyre = createSelector([getRettigheter, behandlingSelectors.getAksjonspunkter], skalKunneOverstyre);
+const getSkalKunneOverstyre = createSelector([behandlingSelectors.getRettigheter, behandlingSelectors.getAksjonspunkter], skalKunneOverstyre);
 
 const getIsAksjonspunktClosed = createSelector([behandlingSelectors.getAksjonspunkter],
   (alleAp) => {
