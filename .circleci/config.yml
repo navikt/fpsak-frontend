@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  slack: circleci/slack@3.3.0
+  
 executors:
   docker-publisher:
     docker:
@@ -148,6 +151,10 @@ jobs:
     executor: nais-deployer
     working_directory: ~/repo
     steps:
+      - slack/notify:
+          color: '#117007'
+          message: "Deploy av fpsak-frontend:${VERSION} til t4"
+          webhook: ${SLACK_WEBHOOK}
       - attach_workspace:
           at: /tmp/workspace
       - run:
@@ -163,6 +170,10 @@ jobs:
             --key=/tmp/workspace/github.key.pem \
             --vars=/tmp/workspace/k8s/application.t4.variabler.json \
             --resource=/tmp/workspace/k8s/app.yaml
+      - slack/notify:
+          color: '#117007'
+          message: "_Deploy av fpsak-frontend:${VERSION} til t4 var suksessfult._"
+          webhook: ${SLACK_WEBHOOK} 
 
 workflows:
   version: 2
