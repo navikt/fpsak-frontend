@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getBehandlingRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
@@ -50,5 +52,6 @@ export const getAlleTilbakekrevingKodeverk = createSelector(
   [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk,
 );
 
-export const getFagsakBehandlingerInfo = createSelector([behandlingRedux.selectors.getBehandlingContext],
-  (behandlingContext) => behandlingContext.fagsakBehandlingerInfo);
+export const hasOpenRevurdering = createSelector([behandlingRedux.selectors.getBehandlingContext],
+  (behandlingContext) => behandlingContext.fagsakBehandlingerInfo
+    .some((b) => b.type.kode === behandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET));

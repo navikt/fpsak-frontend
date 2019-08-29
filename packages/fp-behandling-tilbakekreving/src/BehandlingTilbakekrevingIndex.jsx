@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
+import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
+import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
@@ -21,6 +23,7 @@ import {
   setBehandlingInfo as setBehandlingInfoFunc,
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   updateOnHold as updateOnHoldFunc,
+  hasOpenRevurdering,
 } from './duckBehandlingTilbakekreving';
 import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 
@@ -51,39 +54,48 @@ export const BehandlingTilbakekrevingIndex = ({
   setHasShownBehandlingPaVent,
   setBehandlingInfo,
   hasSubmittedPaVentForm,
-}) => (
-  <CommonBehandlingIndex
-    behandlingId={behandlingId}
-    behandlingVersjon={behandlingVersjon}
-    behandlingIdentifier={behandlingIdentifier}
-    behandlingPaaVent={behandlingPaaVent}
-    fristBehandlingPaaVent={fristBehandlingPaaVent}
-    hasShownBehandlingPaVent={hasShownBehandlingPaVent}
-    setHasShownBehandlingPaVent={setHasShownBehandlingPaVent}
-    updateOnHold={updateOnHold}
-    hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-    venteArsakKode={venteArsakKode}
-    ventearsaker={ventearsaker}
-    hasManualPaVent={hasManualPaVent}
-    isInSync={isInSync}
-    fagsakInfo={fagsakInfo}
-    fetchBehandling={fetchBehandling}
-    resetBehandlingFpsakContext={resetBehandling}
-    behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-    appContextUpdater={appContextUpdater}
-    setBehandlingInfo={setBehandlingInfo}
-    fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
-    behandlingUpdater={behandlingUpdater}
-  >
-    <TilbakekrevingDataResolver>
-      <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
-      <BehandlingGrid
-        behandlingsprosessContent={<BehandlingsprosessTilbakekrevingIndex />}
-        faktaContent={<FaktaTilbakeContainer />}
-      />
-    </TilbakekrevingDataResolver>
-  </CommonBehandlingIndex>
-);
+  showOpenRevurderingModal,
+}) => {
+  const [showModal, closeModal] = useState(showOpenRevurderingModal);
+  return (
+    <>
+      <CommonBehandlingIndex
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingPaaVent={behandlingPaaVent}
+        fristBehandlingPaaVent={fristBehandlingPaaVent}
+        hasShownBehandlingPaVent={hasShownBehandlingPaVent}
+        setHasShownBehandlingPaVent={setHasShownBehandlingPaVent}
+        updateOnHold={updateOnHold}
+        hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+        venteArsakKode={venteArsakKode}
+        ventearsaker={ventearsaker}
+        hasManualPaVent={hasManualPaVent}
+        isInSync={isInSync}
+        fagsakInfo={fagsakInfo}
+        fetchBehandling={fetchBehandling}
+        resetBehandlingFpsakContext={resetBehandling}
+        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
+        appContextUpdater={appContextUpdater}
+        setBehandlingInfo={setBehandlingInfo}
+        fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
+        behandlingUpdater={behandlingUpdater}
+      >
+        <TilbakekrevingDataResolver>
+          <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
+          <BehandlingGrid
+            behandlingsprosessContent={<BehandlingsprosessTilbakekrevingIndex />}
+            faktaContent={<FaktaTilbakeContainer />}
+          />
+        </TilbakekrevingDataResolver>
+      </CommonBehandlingIndex>
+      {showModal && (
+        <AdvarselModal textCode="BehandlingTilbakekrevingIndex.ApenRevurdering" showModal submit={() => closeModal(false)} />
+      )}
+    </>
+  );
+}
 
 BehandlingTilbakekrevingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
@@ -110,7 +122,12 @@ BehandlingTilbakekrevingIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
+  showOpenRevurderingModal: PropTypes.bool.isRequired,
 };
+
+const showOpenRevurderingModal = createSelector([hasOpenRevurdering, behandlingSelectors.getBehandlingIsOnHold], (
+  hasOpenRev, isBehandlingOnHold,
+) => hasOpenRev && !isBehandlingOnHold);
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const fagsakInfo = {
@@ -131,6 +148,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
     ventearsaker: getTilbakekrevingKodeverk(kodeverkTyper.VENTEARSAK)(state),
     isInSync: behandlingSelectors.isBehandlingInSync(state),
+    showOpenRevurderingModal: showOpenRevurderingModal(state),
     fagsakInfo,
   });
 };
