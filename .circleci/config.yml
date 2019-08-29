@@ -170,7 +170,6 @@ jobs:
             --key=/tmp/workspace/github.key.pem \
             --vars=/tmp/workspace/k8s/application.t4.variabler.json \
             --resource=/tmp/workspace/k8s/app.yaml
-    steps:
       - slack/notify:
           color: '#595959'
           message: "_Deploy av fpsak-frontend:${VERSION} til t4 var suksessfult._"
