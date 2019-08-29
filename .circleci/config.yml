@@ -155,7 +155,6 @@ jobs:
           color: '#595959'
           message: "Deploy av fpsak-frontend:${VERSION} til t4"
           webhook: ${SLACK_WEBHOOK}    
-    steps:
       - attach_workspace:
           at: /tmp/workspace
       - run:
