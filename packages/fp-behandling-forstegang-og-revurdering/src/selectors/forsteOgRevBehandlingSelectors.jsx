@@ -12,17 +12,17 @@ import {
 const commonBehandlingSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, forstegangOgRevBehandlingApi);
 
 const getRettigheter = createSelector([
-    getNavAnsatt,
-    getFagsakStatus,
-    getKanRevurderingOpprettes,
-    getSkalBehandlesAvInfotrygd,
-    getFagsakYtelseType,
-    commonBehandlingSelectors.getBehandlingStatus,
-    commonBehandlingSelectors.getSoknad,
-    commonBehandlingSelectors.getAksjonspunkter,
-    commonBehandlingSelectors.getBehandlingType,
-    commonBehandlingSelectors.getBehandlingAnsvarligSaksbehandler,
-  ], allAccessRights);
+  getNavAnsatt,
+  getFagsakStatus,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
+  getFagsakYtelseType,
+  commonBehandlingSelectors.getBehandlingStatus,
+  commonBehandlingSelectors.getSoknad,
+  commonBehandlingSelectors.getAksjonspunkter,
+  commonBehandlingSelectors.getBehandlingType,
+  commonBehandlingSelectors.getBehandlingAnsvarligSaksbehandler,
+], allAccessRights);
 
 const forsteOgRevBehandlingSelectors = {
   ...commonBehandlingSelectors,

@@ -98,12 +98,12 @@ export const opprettNyForstegangsBehandlingAccess = accessSelector(
   [fagsakStatusCode.AVSLUTTET],
   [behandlingStatusCode.AVSLUTTET],
 );
-const infotrygdSelector = skalBehandlesAvInfotrygd => ({
+const infotrygdSelector = (skalBehandlesAvInfotrygd) => ({
   employeeHasAccess: true,
   isEnabled: skalBehandlesAvInfotrygd,
 });
 
-export const sjekkOmSkalTilInfotrygdAccess = skalBehandlesAvInfotrygd => infotrygdSelector(skalBehandlesAvInfotrygd);
+export const sjekkOmSkalTilInfotrygdAccess = (skalBehandlesAvInfotrygd) => infotrygdSelector(skalBehandlesAvInfotrygd);
 
 export const gjenopptaBehandlingAccess = accessSelector(
   [kanSaksbehandle],

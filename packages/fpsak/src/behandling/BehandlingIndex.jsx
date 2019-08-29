@@ -259,8 +259,8 @@ export class BehandlingIndex extends Component {
 }
 
 export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
-    getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd], (fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger,
-      kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
+  getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd], (fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger,
+  kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
   fagsakStatus,
   fagsakPerson,
   fagsakYtelseType,

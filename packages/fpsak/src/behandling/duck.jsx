@@ -90,14 +90,14 @@ export const getBehandlingHasSoknad = createSelector([getBehandlingInfoHolder], 
 export const getBehandlingIsInnsyn = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsInnsyn);
 export const getBehandlingIsOnHold = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsOnHold);
 export const isBehandlingInInnhentSoknadsopplysningerSteg = createSelector([
-  getBehandlingInfoHolder], data => data.isBehandlingInInnhentSoknadsopplysningerSteg);
-export const getBehandlingIsQueued = createSelector([getBehandlingInfoHolder], data => data.behandlingIsQueued);
-export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetId);
-export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], data => data.behandlingBehandlendeEnhetNavn);
-export const getSoknad = createSelector([getBehandlingInfoHolder], data => data.soknad);
-export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.behandlingsresultatFraOriginalBehandling);
-export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], data => data.resultatstrukturFraOriginalBehandling);
-export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], data => data.erArsakTypeBehandlingEtterKlage);
+  getBehandlingInfoHolder], (data) => data.isBehandlingInInnhentSoknadsopplysningerSteg);
+export const getBehandlingIsQueued = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsQueued);
+export const getBehandlingBehandlendeEnhetId = createSelector([getBehandlingInfoHolder], (data) => data.behandlingBehandlendeEnhetId);
+export const getBehandlingBehandlendeEnhetNavn = createSelector([getBehandlingInfoHolder], (data) => data.behandlingBehandlendeEnhetNavn);
+export const getSoknad = createSelector([getBehandlingInfoHolder], (data) => data.soknad);
+export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
+export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
+export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], (data) => data.erArsakTypeBehandlingEtterKlage);
 
 
 /* Skal ikkje fjernast */

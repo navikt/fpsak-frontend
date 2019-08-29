@@ -24,7 +24,7 @@ const {
 
 const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
-const erOverstyrerSelector = createSelector([behandlingSelectors.getRettigheter], rettigheter => rettigheter.kanOverstyreAccess.isEnabled);
+const erOverstyrerSelector = createSelector([behandlingSelectors.getRettigheter], (rettigheter) => rettigheter.kanOverstyreAccess.isEnabled);
 
 const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable, erOverstyrer) => (
   <div>
