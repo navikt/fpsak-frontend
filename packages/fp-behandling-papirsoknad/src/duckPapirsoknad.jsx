@@ -127,7 +127,9 @@ export const getFagsakStatus = createSelector([getPapirsoknadContext], (behandli
 export const getFagsakPerson = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson);
 export const getFagsakYtelseType = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType);
 export const isForeldrepengerFagsak = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.isForeldrepengerFagsak);
-
+export const getKanRevurderingOpprettes = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.kanRevurderingOpprettes);
+export const getSkalBehandlesAvInfotrygd = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.fagsak.skalBehandlesAvInfotrygd);
+export const getNavAnsatt = createSelector([getPapirsoknadContext], (behandlingContext) => behandlingContext.navAnsatt);
 
 export const getSoknadData = createSelector(
   [getPapirsoknadContext],

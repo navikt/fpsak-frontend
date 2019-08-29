@@ -9,7 +9,6 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import { getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -91,7 +90,7 @@ InntektstabellPanelImpl.defaultProps = {
   skalViseTabell: true,
 };
 
-const getSkalKunneOverstyre = createSelector([getRettigheter, behandlingSelectors.getAksjonspunkter, getFeatureToggles],
+const getSkalKunneOverstyre = createSelector([behandlingSelectors.getRettigheter, behandlingSelectors.getAksjonspunkter, getFeatureToggles],
   (rettigheter, aksjonspunkter, toggles) => rettigheter.kanOverstyreAccess.isEnabled
   && !aksjonspunkter.some((ap) => ap.definisjon.kode === AVKLAR_AKTIVITETER && isAksjonspunktOpen(ap.status.kode))
   && toggles[featureToggle.OVERSTYR_BEREGNINGSGRUNNLAG]);

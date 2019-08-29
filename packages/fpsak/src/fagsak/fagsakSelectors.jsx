@@ -19,13 +19,12 @@ export const getSelectedFagsak = createSelector(
 );
 
 export const getSelectedFagsakStatus = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.status : undefined));
-
 export const getFagsakPerson = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.person : undefined));
-
 export const getFagsakYtelseType = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.sakstype : undefined));
-
 export const isForeldrepengerFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.FORELDREPENGER));
 export const isSvangerskapFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER));
+export const getKanRevurderingOpprettes = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.kanRevurderingOpprettes : undefined));
+export const getSkalBehandlesAvInfotrygd = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.skalBehandlesAvInfotrygd : undefined));
 
 // TODO (TOR) Endre tre funksjonane under til selectors
 export const getFetchFagsakInfoFinished = (state) => {

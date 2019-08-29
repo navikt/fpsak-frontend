@@ -7,8 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { behandlingFormFpsak, behandlingFormValueSelector } from 'behandling/behandlingFormFpsak';
-import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK } from 'behandling/duck';
-import { erArsakTypeBehandlingEtterKlage } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK, erArsakTypeBehandlingEtterKlage } from 'behandling/duck';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import ApprovalField from './ApprovalField';
 import { isKlage, isKlageWithKA } from './ApprovalTextUtils';

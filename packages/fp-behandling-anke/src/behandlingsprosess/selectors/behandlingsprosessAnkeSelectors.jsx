@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpAnke';
 import { getFagsakYtelseType } from '../../duckBehandlingAnke';
@@ -37,7 +36,7 @@ const behandlingspunktAnkeSelectors = getCommonBehandlingsprosessSelectors(
   behandlingSelectors.isBehandlingStatusReadOnly,
   getSelectedBehandlingspunktNavn,
   getOverrideBehandlingspunkter,
-  getRettigheter,
+  behandlingSelectors.getRettigheter,
 );
 
 export default behandlingspunktAnkeSelectors;

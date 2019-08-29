@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
+
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getRettigheter } from 'navAnsatt/duck';
+
 import { getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
@@ -23,7 +24,7 @@ const {
 
 const faktaOmBeregningAksjonspunkter = [VURDER_FAKTA_FOR_ATFL_SN, AVKLAR_AKTIVITETER, OVERSTYRING_AV_BEREGNINGSAKTIVITETER, OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
-const erOverstyrerSelector = createSelector([getRettigheter], (rettigheter) => rettigheter.kanOverstyreAccess.isEnabled);
+const erOverstyrerSelector = createSelector([behandlingSelectors.getRettigheter], (rettigheter) => rettigheter.kanOverstyreAccess.isEnabled);
 
 const createRelevantForms = (readOnly, aksjonspunkter, submitCallback, submittable, erOverstyrer) => (
   <div>

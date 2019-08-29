@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { getBehandlingResultatstruktur } from './behandlingSelectors';
+import { getBehandlingResultatstruktur, erArsakTypeBehandlingEtterKlage as erEtterKlage } from './behandlingSelectors';
 import behandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
 import { getBehandlingsresultatFraOriginalBehandling, getResultatstrukturFraOriginalBehandling } from './selectors/originalBehandlingSelectors';
 
@@ -23,7 +23,7 @@ export class FpSakBehandlingInfoSetter extends Component {
       totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker, behandlingResultatstruktur, behandlingsresultat,
       behandlingType, behandlingHasSoknad, behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued,
       behandlingBehandlendeEnhetId, behandlingBehandlendeEnhetNavn, soknad, behandlingsresultatFraOriginalBehandling,
-      resultatstrukturFraOriginalBehandling,
+      resultatstrukturFraOriginalBehandling, erArsakTypeBehandlingEtterKlage,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -49,7 +49,8 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad)
       .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
-      .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling));
+      .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling)
+      .withErArsakTypeBehandlingEtterKlage(erArsakTypeBehandlingEtterKlage));
   }
 
   componentDidUpdate = (prevProps) => {
@@ -86,6 +87,7 @@ FpSakBehandlingInfoSetter.propTypes = {
   behandlingHasSoknad: PropTypes.bool.isRequired,
   behandlingIsOnHold: PropTypes.bool.isRequired,
   isBehandlingInInnhentSoknadsinfoSteg: PropTypes.bool.isRequired,
+  erArsakTypeBehandlingEtterKlage: PropTypes.bool.isRequired,
   behandlingIsQueued: PropTypes.bool,
   behandlingBehandlendeEnhetId: PropTypes.string,
   behandlingBehandlendeEnhetNavn: PropTypes.string,
@@ -137,6 +139,7 @@ const mapStateToProps = (state) => ({
   soknad: behandlingSelectors.getSoknad(state),
   behandlingsresultatFraOriginalBehandling: getBehandlingsresultatFraOriginalBehandling(state),
   resultatstrukturFraOriginalBehandling: getResultatstrukturFraOriginalBehandling(state),
+  erArsakTypeBehandlingEtterKlage: erEtterKlage(state),
 });
 
 export default connect(mapStateToProps)(FpSakBehandlingInfoSetter);

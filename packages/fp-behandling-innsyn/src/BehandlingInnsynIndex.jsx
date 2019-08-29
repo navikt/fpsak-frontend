@@ -46,6 +46,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     kodeverk: ownProps.kodeverk,
     fagsak: ownProps.fagsak,
     allDocuments: ownProps.allDocuments,
+    navAnsatt: ownProps.navAnsatt,
   };
   return (state) => ({
     behandlingIdentifier: getBehandlingIdentifier(state),

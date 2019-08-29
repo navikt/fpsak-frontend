@@ -11,8 +11,9 @@ export const fetchAllFeatureToggles = () => (dispatch) => (
 );
 
 /* Selectors */
-export const getNavAnsattName = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsatt = {}) => navAnsatt.navn);
-export const getFunksjonellTid = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsatt = {}) => navAnsatt.funksjonellTid);
+export const getNavAnsatt = createSelector([fpsakApi.NAV_ANSATT.getRestApiData()], (navAnsattData) => navAnsattData || {});
+export const getNavAnsattName = createSelector([getNavAnsatt], (navAnsatt) => navAnsatt.navn);
+export const getFunksjonellTid = createSelector([getNavAnsatt], (navAnsatt) => navAnsatt.funksjonellTid);
 export const getFeatureToggles = createSelector([fpsakApi.FEATURE_TOGGLE.getRestApiData()], (ftData = {}) => ftData.featureToggles);
 export const getShowDetailedErrorMessages = createSelector(
   [fpsakApi.SHOW_DETAILED_ERROR_MESSAGES.getRestApiData()], (showDetailedErrorMessages = false) => showDetailedErrorMessages,

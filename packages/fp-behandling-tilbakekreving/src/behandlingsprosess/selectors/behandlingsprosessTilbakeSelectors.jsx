@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from '../definition/tilbakekrevingBpDefinition';
 import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpTilbake';
@@ -38,7 +37,7 @@ const behandlingspunktTilbakekrevingSelectors = getCommonBehandlingsprosessSelec
   behandlingSelectors.isBehandlingStatusReadOnly,
   getSelectedBehandlingspunktNavn,
   getOverrideBehandlingspunkter,
-  getRettigheter,
+  behandlingSelectors.getRettigheter,
 );
 
 export default behandlingspunktTilbakekrevingSelectors;

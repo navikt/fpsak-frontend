@@ -58,7 +58,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
     expect(inntektsmeldinginfo).to.have.length(0);
   });
 
-  xit('skal vise inntektsmeldinginfo hvis søknad mottatt før 4. juni 2019', () => {
+  it('skal vise inntektsmeldinginfo hvis søknad mottatt før 4. juni 2019', () => {
     const wrapper = shallowWithIntl(<FerieOgArbeidsPeriode
       fieldId="periode[0]"
       resultat={undefined}

@@ -10,7 +10,6 @@ import {
   PersonIndex, requireProps, BehandlingIdentifier, ErrorTypes,
 } from '@fpsak-frontend/fp-felles';
 
-import { getRettigheter } from 'navAnsatt/duck';
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
 import behandlingSelectors from './selectors/papirsoknadSelectors';
@@ -141,7 +140,7 @@ const mapStateToProps = (state) => ({
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
   fagsakPerson: getFagsakPerson(state),
-  ...getRettigheter(state),
+  ...behandlingSelectors.getRettigheter(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

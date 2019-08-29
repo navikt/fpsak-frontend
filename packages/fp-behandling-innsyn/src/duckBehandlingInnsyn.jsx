@@ -31,11 +31,15 @@ export const {
 export const {
   getBehandlingIdentifier,
   getFagsakPerson,
+  getFagsakStatus,
   getFagsakYtelseType,
   getHasShownBehandlingPaVent,
   getKodeverk,
   getSelectedBehandlingId,
   getSelectedSaksnummer,
+  getNavAnsatt,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;
 
 export const getAllDocuments = createSelector(

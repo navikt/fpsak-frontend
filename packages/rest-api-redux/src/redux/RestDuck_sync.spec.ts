@@ -39,6 +39,8 @@ const getAsyncDefaultProps = {
 
 const createStore = (): Store => mockStore();
 
+const resultKeyActionCreators = undefined;
+
 describe('RestDuck (sync)', () => {
   let sandbox;
   let mockAxios;
@@ -73,7 +75,7 @@ describe('RestDuck (sync)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -115,7 +117,7 @@ describe('RestDuck (sync)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -160,7 +162,7 @@ describe('RestDuck (sync)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params))
@@ -191,7 +193,7 @@ describe('RestDuck (sync)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), sinon.spy(), reduxEvents, resultKeyActionCreators);
 
     const params = { id: 'id' };
     return store.dispatch(getRessursDuck.actionCreators.execRequest(params, { keepData: true }))
@@ -223,7 +225,7 @@ describe('RestDuck (sync)', () => {
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint);
 
     const requestApi = new RequestApi(httpClientApi, 'fpsak', [requestConfig]);
-    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext, reduxEvents);
+    const getRessursDuck = new RestDuck(requestApi.getRequestRunner(requestConfig.name), getApiContext, reduxEvents, resultKeyActionCreators);
 
     // Unpack to named selectors
     const getRessursData = (state) => getRessursDuck.stateSelector(state).data;

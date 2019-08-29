@@ -7,11 +7,13 @@ import RequestErrorEventHandler from './RequestErrorEventHandler';
 import NotificationMapper from '../NotificationMapper';
 
 describe('RequestErrorEventHandler', () => {
+  const isPollingRequest = false;
+
   it('skal håndtere timeout-error', async () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addPollingTimeoutEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     errorEventHandler.handleError(new TimeoutError('test-location'));
 
@@ -24,7 +26,7 @@ describe('RequestErrorEventHandler', () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addHaltedOrDelayedEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     const error = {
       response: {
@@ -47,7 +49,7 @@ describe('RequestErrorEventHandler', () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addRequestErrorEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     const error = {
       message: 'Dette er en feil',
@@ -63,7 +65,7 @@ describe('RequestErrorEventHandler', () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addRequestErrorEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     const error = {
       response: {
@@ -84,7 +86,7 @@ describe('RequestErrorEventHandler', () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addRequestErrorEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     const error = {
       response: {
@@ -103,7 +105,7 @@ describe('RequestErrorEventHandler', () => {
     const eventHandler = sinon.spy();
     const notificationMapper = new NotificationMapper();
     notificationMapper.addRequestErrorEventHandler(eventHandler);
-    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter());
+    const errorEventHandler = new RequestErrorEventHandler(notificationMapper.getNotificationEmitter(), isPollingRequest);
 
     const error = {
       response: {
