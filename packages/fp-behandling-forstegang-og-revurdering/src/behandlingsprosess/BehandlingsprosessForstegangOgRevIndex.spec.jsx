@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { BehandlingsprosessForstegangOgRevIndex } from './BehandlingsprosessForstegangOgRevIndex';
 import BehandlingspunktInfoPanel from './components/BehandlingspunktInfoPanel';
@@ -11,7 +11,8 @@ import BehandlingspunktInfoPanel from './components/BehandlingspunktInfoPanel';
 describe('BehandlingsprosessForstegangOgRevIndex', () => {
   it('skal rendre komponent uten feil', () => {
     const wrapper = shallow(<BehandlingsprosessForstegangOgRevIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
+      behandlingUuid="123"
+      fagsakYtelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       previewCallback={sinon.spy()}
       submitCallback={sinon.spy()}
       goToDefaultPage={sinon.spy()}
