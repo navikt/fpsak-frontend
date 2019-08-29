@@ -118,6 +118,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingId: ownProps.behandlingId,
     fagsak: ownProps.fagsak,
     navAnsatt: ownProps.navAnsatt,
+    fagsakBehandlingerInfo: ownProps.fagsakBehandlingerInfo,
   };
 
   return (state) => ({

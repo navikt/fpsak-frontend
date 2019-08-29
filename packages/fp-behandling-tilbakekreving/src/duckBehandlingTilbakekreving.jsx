@@ -7,7 +7,11 @@ import tilbakekrevingBehandlingApi, { TilbakekrevingBehandlingApiKeys } from './
 
 const reducerName = 'tilbakekrevingBehandling';
 
-const behandlingRedux = getBehandlingRedux(reducerName, tilbakekrevingBehandlingApi, TilbakekrevingBehandlingApiKeys);
+const additionalInitialState = {
+  fagsakBehandlingerInfo: [],
+};
+
+const behandlingRedux = getBehandlingRedux(reducerName, tilbakekrevingBehandlingApi, TilbakekrevingBehandlingApiKeys, additionalInitialState);
 
 // Eksportert kun for test
 export const { reducer } = behandlingRedux;
@@ -45,3 +49,6 @@ export const getTilbakekrevingKodeverk = (kodeverkType) => createSelector(
 export const getAlleTilbakekrevingKodeverk = createSelector(
   [tilbakekrevingBehandlingApi.TILBAKE_KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk,
 );
+
+export const getFagsakBehandlingerInfo = createSelector([behandlingRedux.selectors.getBehandlingContext],
+  (behandlingContext) => behandlingContext.fagsakBehandlingerInfo);

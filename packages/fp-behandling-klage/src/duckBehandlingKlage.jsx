@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { getBehandlingRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
@@ -7,11 +8,11 @@ import klageBehandlingApi, { KlageBehandlingApiKeys } from './data/klageBehandli
 
 const reducerName = 'klageBehandling';
 
-const additionalInitalState = {
-  avsluttedeBehandlinger: [],
+const additionalInitialState = {
+  fagsakBehandlingerInfo: [],
 };
 
-const behandlingRedux = getBehandlingRedux(reducerName, klageBehandlingApi, KlageBehandlingApiKeys, additionalInitalState);
+const behandlingRedux = getBehandlingRedux(reducerName, klageBehandlingApi, KlageBehandlingApiKeys, additionalInitialState);
 
 // Eksportert kun for test
 export const { reducer } = behandlingRedux;
@@ -43,4 +44,4 @@ export const {
 } = behandlingRedux.selectors;
 
 export const getAvsluttedeBehandlinger = createSelector([behandlingRedux.selectors.getBehandlingContext],
-  (behandlingContext) => behandlingContext.avsluttedeBehandlinger);
+  (behandlingContext) => behandlingContext.fagsakBehandlingerInfo.filter((behandling) => behandling.status.kode === behandlingStatus.AVSLUTTET));
