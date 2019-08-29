@@ -86,6 +86,10 @@ jobs:
     executor: docker-publisher
     working_directory: ~/repo
     steps:
+      - slack/notify:
+          color: '#595959'
+          message: "Test av fpsak-frontend:${VERSION} til TEST"
+          webhook: ${SLACK_WEBHOOK}   
       - attach_workspace:
           at: /tmp/workspace
       - run:
