@@ -99,4 +99,3 @@ PersonArbeidsforholdTable.defaultProps = {
 };
 
 export default PersonArbeidsforholdTable;
-
