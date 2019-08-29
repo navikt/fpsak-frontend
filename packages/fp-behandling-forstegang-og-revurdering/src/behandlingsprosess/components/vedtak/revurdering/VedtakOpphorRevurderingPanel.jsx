@@ -24,7 +24,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   readOnly,
   behandlingsresultat,
   ytelseType,
-  hasOpenTilbakekrevingsbehandling,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -33,7 +32,6 @@ export const VedtakOpphorRevurderingPanelImpl = ({
         id: ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
           : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer',
       }, { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) })}
-      {hasOpenTilbakekrevingsbehandling && `. ${intl.formatMessage({ id: 'VedtakOpphorRevurderingPanel.EndringVilOppdatere' })}`}
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
@@ -64,7 +62,6 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseType: PropTypes.string.isRequired,
-  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {

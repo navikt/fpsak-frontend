@@ -962,12 +962,6 @@
   
   "VedtakRevurderingForm.OpphorPanel.ArsakTilOpphor": "Årsak til opphør",
 
-  "VedtakAvslagRevurderingPanel.EndringVilOppdatere": "Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.",
-  
-  "VedtakInnvilgetRevurderingPanel.EndringVilOppdatere": "Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.",
-  
-  "VedtakOpphorRevurderingPanel.EndringVilOppdatere": "Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.",
-
   "VedtakForm.ForslagTilVedtak": "Vedtak",
   "VedtakForm.BehandlingHenlagt": "Behandlingen er henlagt",
   "VedtakForm.ResultatKlageYtelsesvedtakOpphevet": "Vedtaket er opphevet",
@@ -981,10 +975,7 @@
   "VedtakForm.VilkarStatusInnvilgetEngangsstonad": "Engangsstønad er innvilget",
   "VedtakForm.SvangerskapspengerInnvilget": "Svangerskapspenger er innvilget",
   "VedtakForm.VilkarStatusInnvilgetForeldrepenger": "Foreldrepenger er innvilget",
-  "VedtakForm.TILBAKEKR_INFOTRYGD": "Feilutbetaling med tilbakekreving",
-  "VedtakForm.TILBAKEKR_INNTREKK": "Feilutbetaling hvor inntrekk dekker hele beløpet",
   "VedtakForm.TilbakekrInfotrygdOgInntrekk": "Feilutbetaling med tilbakekreving hvor beløp er redusert med inntrekk",
-  "VedtakForm.TILBAKEKR_IGNORER": "Feilutbetaling, avvent samordning",
   "VedtakForm.TilGodkjenning": "Til godkjenning",
   "VedtakForm.FattVedtak": "Fatt vedtak",
   "VedtakForm.ForhandvisBrev": "Forhåndsvis brev",

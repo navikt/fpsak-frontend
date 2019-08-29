@@ -46,14 +46,12 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   readOnly,
   originaltBeregningResultat,
   tilbakekrevingText,
-  hasOpenTilbakekrevingsbehandling,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({ id: resultText(beregningResultat, originaltBeregningResultat) })}
       {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
-      {hasOpenTilbakekrevingsbehandling && `. ${intl.formatMessage({ id: 'VedtakAvslagRevurderingPanel.EndringVilOppdatere' })}`}
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <VedtakAvslagArsakOgBegrunnelsePanel
@@ -79,7 +77,6 @@ VedtakAvslagRevurderingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   originaltBeregningResultat: PropTypes.shape(),
   tilbakekrevingText: PropTypes.string,
-  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
 };
 
 VedtakAvslagRevurderingPanelImpl.defaultProps = {

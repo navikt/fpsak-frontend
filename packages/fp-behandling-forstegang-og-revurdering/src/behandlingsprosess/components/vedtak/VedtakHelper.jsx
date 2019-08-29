@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -9,21 +10,23 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { isBGAksjonspunktSomGirFritekstfelt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
-  [getSimuleringResultat, getTilbakekrevingValg],
-  (simuleringResultat, tilbakekrevingValg) => {
+  [getSimuleringResultat, getTilbakekrevingValg, getAlleKodeverk],
+  (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
     if (tilbakekrevingValg) {
       if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {
         return 'VedtakForm.TilbakekrInfotrygdOgInntrekk';
       }
-      // TODO Bør vel bruka kodeverk-navn her?
-      return `VedtakForm.${tilbakekrevingValg.videreBehandling.kode}`;
+      const getKodeverkNavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+      return getKodeverkNavn(tilbakekrevingValg.videreBehandling);
     }
     return null;
   },

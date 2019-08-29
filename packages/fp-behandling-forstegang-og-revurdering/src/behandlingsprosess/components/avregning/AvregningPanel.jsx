@@ -6,7 +6,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import {
+  Undertekst, Undertittel, Element, Normaltekst,
+} from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
@@ -30,7 +33,7 @@ import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
- getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable, { avregningCodes } from './AvregningTable';
@@ -217,9 +220,9 @@ export class AvregningPanelImpl extends Component {
                 />
                 <VerticalSpacer twentyPx />
                 {hasOpenTilbakekrevingsbehandling && (
-                  <Undertittel>
+                  <Element>
                     <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
-                  </Undertittel>
+                  </Element>
                 )}
               </Column>
             </Row>
@@ -439,7 +442,7 @@ const buildInitialValues = createSelector(
 );
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = values => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
   return (state) => {
     const tilbakekrevingValg = getTilbakekrevingValg(state);
     const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
