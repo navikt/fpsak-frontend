@@ -13,6 +13,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
     id: '1',
     arbeidsforholdId: '1231-2345',
+    arbeidsforholdEksternId: '23456789',
     navn: 'Svendsen Eksos',
     arbeidsgiverIdentifikator: '1234567',
     arbeidsgiverIdentifiktorGUI: '1234567',
@@ -41,6 +42,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const arbeidsforhold2 = {
       id: '2',
       arbeidsforholdId: '1231-2345',
+      arbeidsforholdEksternId: '565656565',
       navn: 'Nilsen Eksos',
       arbeidsgiverIdentifikator: '223455667',
       arbeidsgiverIdentifiktorGUI: '223455667',
@@ -73,7 +75,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(row1.prop('isSelected')).is.true;
     const colsRow1 = row1.find(TableColumn);
     expect(colsRow1).has.length(6);
-    expect(colsRow1.first().childAt(0).childAt(0).text()).is.eql('Svendsen Eksos(1234567)...2345');
+    expect(colsRow1.first().childAt(0).childAt(0).text()).is.eql('Svendsen Eksos(1234567)...6789');
     expect(colsRow1.at(1).find(PeriodLabel)).has.length(1);
     expect(colsRow1.at(3).childAt(0).childAt(0).text()).is.eql('80.00 %');
 
