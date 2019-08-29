@@ -61,7 +61,7 @@ BehandlingsprosessForstegangOgRevContainer.propTypes = {
   selectedBehandlingspunkt: PropTypes.string,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),

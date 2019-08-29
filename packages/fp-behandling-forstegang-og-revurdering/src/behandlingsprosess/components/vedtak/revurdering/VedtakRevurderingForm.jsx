@@ -147,7 +147,7 @@ export class VedtakRevurderingFormImpl extends Component {
               />
             )}
 
-          {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD
+            {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD
           && (
             <FritekstBrevPanel
               intl={intl}
@@ -155,9 +155,8 @@ export class VedtakRevurderingFormImpl extends Component {
               sprakkode={sprakkode}
               previewBrev={previewAutomatiskBrev}
             />
-          )
-          }
-          {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES
+          )}
+            {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES
           && (
             <VedtakRevurderingSubmitPanel
               begrunnelse={begrunnelse}
@@ -167,10 +166,10 @@ export class VedtakRevurderingFormImpl extends Component {
               ytelseType={ytelseType}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
             />
-          )
-          }
-        </ElementWrapper>
-      </VedtakAksjonspunktPanel>
+          )}
+          </ElementWrapper>
+        </VedtakAksjonspunktPanel>
+      </>
     );
   }
 }

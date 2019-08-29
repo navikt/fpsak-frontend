@@ -18,7 +18,7 @@ import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
-const getPreviewVedtakCallback = previewVedtakCallback => () => previewVedtakCallback({
+const getPreviewVedtakCallback = (previewVedtakCallback) => () => previewVedtakCallback({
   gjelderVedtak: true,
 });
 
