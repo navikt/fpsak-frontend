@@ -153,7 +153,7 @@ EndringBeregningsgrunnlagForm.buildInitialValues = (endringBGPerioder, bg, getKo
   }
   const harKunYtelse = bg.aktivitetStatus.some((status) => status.kode === aktivitetStatuser.KUN_YTELSE);
   const bgPerioder = bg.beregningsgrunnlagPeriode;
-  endringBGPerioder.forEach((periode, index) => {
+  slaaSammenPerioder(endringBGPerioder, bgPerioder).forEach((periode, index) => {
     const bgPeriode = finnRiktigBgPeriode(periode, bgPerioder);
     initialValues[getFieldNameKey(index)] = EndringBeregningsgrunnlagPeriodePanel
       .buildInitialValues(periode, bgPeriode, bg.skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn);
