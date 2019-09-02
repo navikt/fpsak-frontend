@@ -2,21 +2,18 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FordelingForm from './FordelingForm';
-import VurderRefusjonForm from './VurderRefusjonForm';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
-  VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT,
 } = aksjonspunktCodes;
 
-const faktaOmFordelingAksjonspunkter = [FORDEL_BEREGNINGSGRUNNLAG, VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT];
+const faktaOmFordelingAksjonspunkter = [FORDEL_BEREGNINGSGRUNNLAG];
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -73,16 +70,6 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
         faktaId={faktaPanelCodes.FORDELING}
         readOnly={readOnly}
       >
-        {hasAksjonspunkt(VURDER_REFUSJONSKRAV_SOM_HAR_KOMMET_FOR_SENT, aksjonspunkter)
-          && (
-          <VurderRefusjonForm
-            submitEnabled={submitEnabled}
-            submittable={submittable}
-            readOnly={readOnly}
-            submitCallback={submitCallback}
-          />
-          )}
-        <VerticalSpacer twentyPx />
         {hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
           && (
           <FordelingForm

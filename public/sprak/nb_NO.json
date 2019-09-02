@@ -1344,7 +1344,6 @@
   "FordelBeregningsgrunnlag.Title": "Fakta om fordeling",
   "FordelBeregningsgrunnlag.Validation.KanIkkeHaNullIBeregningsgrunnlag": "Fastsatt beløp for gradert andel må være høyere enn 0.",
   "VurderRefusjonForm.ErRefusjonskravGyldig": "{arbeidsgiverVisningsnavn} har minst ett refusjonskrav som har kommet for sent. Skal refusjonskrav som ikke har kommet innen fristen tas med i beregning?",
-  "VurderRefusjonForm.AksjonspunktHelpText": "En eller flere arbeidsgivere har fremsatt refusjonskrav etter fristen. Vurder om disse skal tas med i beregning.",
 
 
   "VilkarResultPicker.SelectArsak": "Velg årsak",
