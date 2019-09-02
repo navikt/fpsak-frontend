@@ -5,9 +5,11 @@ import sinon from 'sinon';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import ToTrinnsForm from 'behandlingsupport/approval/components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from 'behandlingsupport/approval/components/ToTrinnsFormReadOnly';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import { ApprovalIndexImpl, mapPropsToContext } from './ApprovalIndex';
 
@@ -244,6 +246,9 @@ describe('<ApprovalIndex>', () => {
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
       previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -285,6 +290,9 @@ describe('<ApprovalIndex>', () => {
       erTilbakekreving={false}
       behandlingUuid="1"
       previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -333,6 +341,9 @@ describe('<ApprovalIndex>', () => {
       erTilbakekreving={false}
       behandlingUuid="1"
       previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -376,6 +387,9 @@ describe('<ApprovalIndex>', () => {
       erTilbakekreving={false}
       behandlingUuid="1"
       previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
@@ -407,6 +421,9 @@ describe('<ApprovalIndex>', () => {
       erTilbakekreving={false}
       behandlingUuid="1"
       previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     wrapper.unmount();

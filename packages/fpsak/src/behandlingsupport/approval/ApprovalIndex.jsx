@@ -13,9 +13,10 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier, requireProps } from '@fpsak-frontend/fp-felles';
-import { navAnsattPropType } from '@fpsak-frontend/prop-types';
+import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getNavAnsatt } from 'app/duck';
 import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
@@ -160,9 +161,12 @@ export class ApprovalIndexImpl extends Component {
   }
 
   forhandsvisVedtaksbrev() {
-    const { previewMessage: fetchPreview, behandlingUuid, erTilbakekreving } = this.props;
+    const {
+      previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving,
+    } = this.props;
     fetchPreview(erTilbakekreving, {
       behandlingUuid,
+      ytelseType: fagsakYtelseType,
       gjelderVedtak: true,
     });
   }
@@ -252,6 +256,7 @@ ApprovalIndexImpl.propTypes = {
   skjemalenkeTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   erTilbakekreving: PropTypes.bool.isRequired,
   behandlingUuid: PropTypes.string.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
 };
 
 ApprovalIndexImpl.defaultProps = {
@@ -279,6 +284,7 @@ const mapStateToPropsFactory = (initialState) => {
       skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak,
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
+      fagsakYtelseType: getFagsakYtelseType(state),
       behandlingIdentifier,
       erTilbakekreving,
     };

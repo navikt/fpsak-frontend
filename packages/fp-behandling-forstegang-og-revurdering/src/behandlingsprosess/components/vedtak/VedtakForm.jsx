@@ -32,10 +32,10 @@ import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import VedtakFritekstbrevModal from './svp/VedtakFritekstbrevModal';
 
-const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback) => (e) => {
+const getPreviewManueltBrevCallback = (formProps, begrunnelse, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
     const {
-      begrunnelse, brødtekst, overskrift,
+      brødtekst, overskrift,
     } = formProps;
     const data = {
       fritekst: skalOverstyre ? brødtekst : begrunnelse,
@@ -125,8 +125,8 @@ export class VedtakFormImpl extends Component {
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
-    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, true, previewCallback);
-    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, false, previewCallback);
+    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, true, previewCallback);
+    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, false, previewCallback);
     const skalViseLink = (behandlingsresultat.avslagsarsak === null)
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
