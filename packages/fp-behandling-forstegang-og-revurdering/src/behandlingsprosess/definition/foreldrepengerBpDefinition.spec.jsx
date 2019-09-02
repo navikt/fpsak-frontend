@@ -279,6 +279,53 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     }, defaultBehandlingspunkter[3], defaultBehandlingspunkter[4]]);
   });
 
+  it('skal vise status ikke_vurdert for behandlingspunktet tilkjent ytelse når det ikke finnes innvilgede uttaksperioder', () => {
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      resultatstruktur: {
+        perioder: [{
+          fomDato: '2018-10-10',
+          dagsats: 1200,
+        }],
+      },
+      stonadskontoer: {},
+      featureToggles,
+      uttaksresultat: {
+        perioderSøker: [{
+          periodeResultatType: {
+            kode: 'AVSLÅTT',
+          },
+        }],
+      },
+      fagsakYtelseType: {
+        kode: fagsakYtelseType.FORELDREPENGER,
+      },
+    };
+
+    const bpPropList = createForeldrepengerBpProps(builderData);
+
+    expect(bpPropList).to.eql([sokersOpplysningspliktBehandlingspunkt, defaultBehandlingspunkter[0], {
+      apCodes: [],
+      code: behandlingspunktCodes.UTTAK,
+      isVisible: true,
+      status: vilkarUtfallType.IKKE_OPPFYLT,
+      titleCode: 'Behandlingspunkt.Uttak',
+      vilkarene: [],
+    }, {
+      apCodes: [],
+      code: behandlingspunktCodes.TILKJENT_YTELSE,
+      isVisible: true,
+      status: vilkarUtfallType.IKKE_VURDERT,
+      titleCode: 'Behandlingspunkt.TilkjentYtelse',
+      vilkarene: [],
+    }, defaultBehandlingspunkter[3], defaultBehandlingspunkter[4]]);
+  });
+
   it('skal ikke vise behandlingspunkt for søkers opplysningsplikt når behandling er revurdering og manuelt aksjonspunkt ikke er opprettet', () => {
     const builderData = {
       behandlingType: {

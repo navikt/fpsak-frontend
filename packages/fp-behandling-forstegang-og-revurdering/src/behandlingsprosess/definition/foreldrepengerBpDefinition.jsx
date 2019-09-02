@@ -38,10 +38,9 @@ const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => 
       const oppfylt = uttaksresultat.perioderSøker.some((p) => (
         p.periodeResultatType.kode !== prt.AVSLATT
       ));
-      if (!oppfylt) {
-        return vut.IKKE_OPPFYLT;
+      if (oppfylt) {
+        return vut.OPPFYLT;
       }
-      return vut.OPPFYLT;
     }
   }
   return vut.IKKE_VURDERT;
