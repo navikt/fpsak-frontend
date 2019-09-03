@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -13,11 +13,11 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import {
-  calcDays, ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks,
+  calcDays, calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { CheckboxField } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
@@ -28,13 +28,13 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
+  getBarnFraTpsRelatertTilSoknad,
+  getBehandlingIsRevurdering,
+  getBehandlingUttaksperiodegrense,
   getBehandlingYtelseFordeling,
   getFamiliehendelseGjeldende,
-  getBehandlingIsRevurdering,
   getPersonopplysning,
   getUttaksresultatPerioder,
-  getBehandlingUttaksperiodegrense,
-  getBarnFraTpsRelatertTilSoknad,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';

@@ -7,14 +7,14 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import { aksjonspunktPropType, beregningsgrunnlagPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
   getAlleAndelerIForstePeriode,
   getBehandlingGjelderBesteberegning,
+  getBeregningGraderingAksjonspunkt,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkter,
-  getBeregningGraderingAksjonspunkt,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import aktivitetStatus, {

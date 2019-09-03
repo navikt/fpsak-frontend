@@ -4,7 +4,7 @@ import { expect } from 'chai';
 
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
-import { MockFields, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RenderOppholdPeriodeFieldArray } from './RenderOppholdPeriodeFieldArray';
 
 const oppholdsReasons = [{ navn: 'Grunn1', kode: 'Grunn1' }];

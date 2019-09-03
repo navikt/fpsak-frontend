@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
+import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
@@ -15,7 +15,11 @@ import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehan
 import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import {
-  utledArbeidsforholdFieldName, finnFrilansFieldName, skalFastsetteInntektATUtenInntektsmelding, frilansMottarYtelse, andelsnrMottarYtelseMap,
+  andelsnrMottarYtelseMap,
+  finnFrilansFieldName,
+  frilansMottarYtelse,
+  skalFastsetteInntektATUtenInntektsmelding,
+  utledArbeidsforholdFieldName,
 } from './VurderMottarYtelseUtils';
 
 

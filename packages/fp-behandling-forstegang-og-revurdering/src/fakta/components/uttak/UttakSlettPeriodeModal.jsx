@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -9,11 +9,11 @@ import Modal from 'nav-frontend-modal';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, required, hasValidText, DDMMYYYY_DATE_FORMAT,
+  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
-  FlexColumn, FlexRow, FlexContainer, VerticalSpacer, Image,
+  FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
@@ -106,7 +106,7 @@ UttakSlettPeriodeModalImpl.propTypes = {
   showModal: PropTypes.bool,
   closeEvent: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   periode: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };

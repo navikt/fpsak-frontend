@@ -8,7 +8,7 @@ import { TableRow } from '@fpsak-frontend/shared-components';
 import { Element } from 'nav-frontend-typografi';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import { skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding } from '../ValidateAndelerUtils';
-import RenderEndringBGFieldArray, { RenderEndringBGFieldArrayImpl, lagBelopKolonne } from './RenderEndringBGFieldArray';
+import RenderEndringBGFieldArray, { lagBelopKolonne, RenderEndringBGFieldArrayImpl } from './RenderEndringBGFieldArray';
 
 const inntektskategorier = [
   {

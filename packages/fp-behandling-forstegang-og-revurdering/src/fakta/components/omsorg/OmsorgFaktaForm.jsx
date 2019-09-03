@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';

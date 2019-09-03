@@ -6,7 +6,7 @@ import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import { getFagsakPerson } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
-import { setOpenInfoPanels, getOpenInfoPanels } from '../duckFaktaInnsyn';
+import { getOpenInfoPanels, setOpenInfoPanels } from '../duckFaktaInnsyn';
 
 import styles from './faktaInnsynPanel.less';
 

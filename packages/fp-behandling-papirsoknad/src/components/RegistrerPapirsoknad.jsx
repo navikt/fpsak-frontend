@@ -6,7 +6,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import SoknadData from 'papirsoknad/src/SoknadData';
-import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';

@@ -11,7 +11,7 @@ describe('<AksjonspunktHelpText>', () => {
         {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
       </AksjonspunktHelpText>,
     );
-    expect(wrapper.find('InjectIntl(Image)')).to.have.length(1);
+    expect(wrapper.find('injectIntl(Image)')).to.have.length(1);
     expect(wrapper.find('Element').childAt(0).prop('id')).is.eql('HelpText.Aksjonspunkt');
   });
 
@@ -21,7 +21,7 @@ describe('<AksjonspunktHelpText>', () => {
         {[<FormattedMessage key="1" id="HelpText.Aksjonspunkt" />]}
       </AksjonspunktHelpText>,
     );
-    expect(wrapper.find('InjectIntl(Image)')).to.have.length(0);
+    expect(wrapper.find('injectIntl(Image)')).to.have.length(0);
     expect(wrapper.find('Normaltekst').childAt(2).prop('id')).is.eql('HelpText.Aksjonspunkt');
   });
 });

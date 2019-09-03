@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import { DateLabel, BorderBox } from '@fpsak-frontend/shared-components';
+import { BorderBox, DateLabel } from '@fpsak-frontend/shared-components';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
 describe('<BehandlingPickerItemContent>', () => {

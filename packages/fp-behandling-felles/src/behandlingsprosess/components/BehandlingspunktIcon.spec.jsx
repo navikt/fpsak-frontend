@@ -2,25 +2,19 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
-
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Image } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { BehandlingspunktIcon } from './BehandlingspunktIcon';
 
 describe('<BehandlingspunktIcon>', () => {
   it('skal rendre komponent korrekt', () => {
+    const callback = sinon.spy();
     const wrapper = shallow(<BehandlingspunktIcon
-      intl={intlMock}
-      behandlingspunkt={behandlingspunktCodes.ADOPSJON}
-      isSelectedBehandlingspunkt
-      isSelectedBehandlingHenlagt={false}
-      titleCode="Behandlingspunkt.Adopsjonsvilkaret"
-      status={vilkarUtfallType.IKKE_VURDERT}
-      hasOpenAksjonspunkt
-      selectBehandlingspunktCallback={sinon.spy()}
-      findBehandlingsprosessIcon={sinon.spy()}
+      callback={callback}
+      isIkkeVurdert
+      selected={false}
+      src="/dummy.svg"
+      srcHoover="/dummy_hoover.svg"
+      title="Adopsjonsvilkaret"
     />);
 
     const image = wrapper.find(Image);
@@ -30,37 +24,27 @@ describe('<BehandlingspunktIcon>', () => {
   it('skal velge behandling ved tastetrykk når behandlingspunkt er vurdert', () => {
     const callback = sinon.spy();
     const wrapper = shallow(<BehandlingspunktIcon
-      intl={intlMock}
-      behandlingspunkt={behandlingspunktCodes.ADOPSJON}
-      isSelectedBehandlingspunkt
-      isSelectedBehandlingHenlagt={false}
-      titleCode="Behandlingspunkt.Adopsjonsvilkaret"
-      status={vilkarUtfallType.IKKE_VURDERT}
-      hasOpenAksjonspunkt
-      selectBehandlingspunktCallback={callback}
-      findBehandlingsprosessIcon={sinon.spy()}
+      callback={callback}
+      isIkkeVurdert={false}
+      selected={false}
+      src="/dummy.svg"
+      srcHoover="/dummy_hoover.svg"
+      title="Adopsjonsvilkaret"
     />);
 
     wrapper.find(Image).simulate('keyDown');
-
     expect(callback.called).is.true;
-    const { args } = callback.getCalls()[0];
-    expect(args).has.length(1);
-    expect(args[0]).is.eql(behandlingspunktCodes.ADOPSJON);
   });
 
   it('skal ikke velge behandling ved tastetrykk når behandlingspunkt ikke er vurdert', () => {
     const callback = sinon.spy();
     const wrapper = shallow(<BehandlingspunktIcon
-      intl={intlMock}
-      behandlingspunkt={behandlingspunktCodes.ADOPSJON}
-      isSelectedBehandlingspunkt
-      isSelectedBehandlingHenlagt={false}
-      titleCode="Behandlingspunkt.Adopsjonsvilkaret"
-      status={vilkarUtfallType.IKKE_VURDERT}
-      hasOpenAksjonspunkt={false}
-      selectBehandlingspunktCallback={callback}
-      findBehandlingsprosessIcon={sinon.spy()}
+      callback={callback}
+      isIkkeVurdert
+      selected={false}
+      src="/dummy.svg"
+      srcHoover="/dummy_hoover.svg"
+      title="Adopsjonsvilkaret"
     />);
 
     wrapper.find(Image).simulate('keyDown');

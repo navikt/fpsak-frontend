@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import {
-  VerticalSpacer, DateLabel, ElementWrapper,
-} from '@fpsak-frontend/shared-components';
+import { DateLabel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /*
  * TODO Ta i bruk fpsakApi

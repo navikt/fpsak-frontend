@@ -1,22 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import {
-  injectIntl, intlShape, FormattedMessage, FormattedHTMLMessage,
-} from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import Panel from 'nav-frontend-paneler';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
-  ElementWrapper, FadingPanel, VerticalSpacer, DateLabel,
+  DateLabel, ElementWrapper, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
@@ -30,7 +28,11 @@ import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/b
 import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
@@ -155,7 +157,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
 );
 
 ErSoknadsfristVilkaretOppfyltFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   /**
    * Skal knapp for å bekrefte data være trykkbar
    */

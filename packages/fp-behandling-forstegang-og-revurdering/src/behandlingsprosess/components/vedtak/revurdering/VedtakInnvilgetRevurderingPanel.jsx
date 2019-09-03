@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -17,7 +17,8 @@ import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import {
-  endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText,
+  endringerIBeregningsgrunnlagGirFritekstfelt,
+  findTilbakekrevingText,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 
@@ -132,7 +133,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
 );
 
 VedtakInnvilgetRevurderingPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   antallBarn: PropTypes.number,
   originaltBeregningResultat: PropTypes.shape(),
   beregningResultat: PropTypes.shape(),

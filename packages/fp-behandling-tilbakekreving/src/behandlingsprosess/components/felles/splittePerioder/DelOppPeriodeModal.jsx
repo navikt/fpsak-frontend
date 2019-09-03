@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import {
-  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, hasValidDate, required, dateAfterOrEqual, dateBeforeOrEqual,
+  dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField } from '@fpsak-frontend/form';
 
@@ -82,7 +82,7 @@ DelOppPeriodeModalImpl.propTypes = {
   }).isRequired,
   cancelEvent: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 

@@ -2,16 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { formValueSelector } from 'redux-form';
-import { FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  RadioGroupField, RadioOption, SelectField, InputField, DatepickerField,
+  DatepickerField, InputField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidInteger, validPeriodeFomTom, hasValidDate, dateBeforeOrEqualToToday, hasValidOrgNumber,
+  dateBeforeOrEqualToToday, hasValidDate, hasValidInteger, hasValidOrgNumber, required, validPeriodeFomTom,
 } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -111,7 +111,7 @@ export const VirksomhetIdentifikasjonPanel = ({
 };
 
 VirksomhetIdentifikasjonPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   virksomhetRegistrertINorge: PropTypes.bool,
   readOnly: PropTypes.bool,
   countryCodes: PropTypes.arrayOf(PropTypes.object).isRequired,

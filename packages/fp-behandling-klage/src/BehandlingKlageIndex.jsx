@@ -11,8 +11,14 @@ import FpKlageBehandlingInfoSetter from './FpKlageBehandlingInfoSetter';
 import BehandlingsprosessKlageContainer from './behandlingsprosess/BehandlingsprosessKlageContainer';
 import FaktaKlageContainer from './fakta/FaktaKlageContainer';
 import {
-  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+  fetchBehandling as fetchBehandlingActionCreator,
+  getBehandlingIdentifier,
+  getHasShownBehandlingPaVent,
+  getKodeverk,
+  resetBehandlingFpsakContext,
+  setBehandlingInfo,
+  setHasShownBehandlingPaVent,
+  updateOnHold,
 } from './duckBehandlingKlage';
 import fpKlageBehandlingUpdater from './FpKlageBehandlingUpdater';
 

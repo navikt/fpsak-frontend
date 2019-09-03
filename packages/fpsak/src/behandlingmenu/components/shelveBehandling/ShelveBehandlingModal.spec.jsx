@@ -3,11 +3,11 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import { ShelveBehandlingModalImpl, getHenleggArsaker } from './ShelveBehandlingModal';
+import { getHenleggArsaker, ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
 
 describe('<ShelveBehandlingModal>', () => {
   const henleggArsaker = [{

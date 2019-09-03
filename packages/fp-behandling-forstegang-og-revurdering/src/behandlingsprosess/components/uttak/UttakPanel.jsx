@@ -8,17 +8,18 @@ import { formPropTypes } from 'redux-form';
 
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { getUttaksresultatPerioder, getStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getStonadskontoer, getUttaksresultatPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  FadingPanel, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
+  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
-import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import Uttak from './Uttak';

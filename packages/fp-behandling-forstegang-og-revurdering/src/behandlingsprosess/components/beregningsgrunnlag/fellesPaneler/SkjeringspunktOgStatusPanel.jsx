@@ -16,11 +16,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import ElementWrapper from '@fpsak-frontend/shared-components/src/ElementWrapper';
 
-import {
-  getAktivitetStatuser,
-  getSkjæringstidspunktBeregning,
-  getGjeldendeDekningsgrad,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getAktivitetStatuser, getGjeldendeDekningsgrad, getSkjæringstidspunktBeregning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './skjeringspunktOgStatusPanel.less';

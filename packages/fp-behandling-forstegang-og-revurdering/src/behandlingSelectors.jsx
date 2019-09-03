@@ -1,9 +1,6 @@
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes, {
-  isVilkarForSykdomOppfylt,
-  isBeregningAksjonspunkt,
-} from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { isBeregningAksjonspunkt, isVilkarForSykdomOppfylt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';

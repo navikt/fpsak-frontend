@@ -7,12 +7,9 @@ import { bindActionCreators } from 'redux';
 import { pathToFagsak } from '@fpsak-frontend/fp-felles';
 
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
-import { searchFagsaker, resetFagsakSearch } from './duck';
+import { resetFagsakSearch, searchFagsaker } from './duck';
 import {
-  getFagsaker,
-  getSearchFagsakerAccessDenied,
-  getSearchFagsakerFinished,
-  getSearchFagsakerStarted,
+  getFagsaker, getSearchFagsakerAccessDenied, getSearchFagsakerFinished, getSearchFagsakerStarted,
 } from './fagsakSearchSelectors';
 import FagsakSearch from './components/FagsakSearch';
 

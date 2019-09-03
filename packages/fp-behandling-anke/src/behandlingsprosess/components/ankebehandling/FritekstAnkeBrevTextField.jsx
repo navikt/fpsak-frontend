@@ -1,8 +1,8 @@
 import React from 'react';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { required, hasValidText, getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
+import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import styles from './fritekstAnkeBrevTextField.less';
@@ -31,7 +31,7 @@ const FritekstAnkeBrevTextField = ({
 
 FritekstAnkeBrevTextField.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,
 };
 

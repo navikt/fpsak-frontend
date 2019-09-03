@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import {
-  PeriodpickerField, SelectField, CheckboxField, DecimalField, TextAreaField,
+  CheckboxField, DecimalField, PeriodpickerField, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import sinon from 'sinon';
 import { UttakNyPeriode } from './UttakNyPeriode';

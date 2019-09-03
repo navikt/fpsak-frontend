@@ -2,7 +2,7 @@
 import { expect } from 'chai';
 
 import {
-  notNull, isObjectEmpty, isEqual, isObject, diff,
+  diff, isEqual, isObject, isObjectEmpty, notNull,
 } from './objectUtils';
 
 describe('Object-utils', () => {

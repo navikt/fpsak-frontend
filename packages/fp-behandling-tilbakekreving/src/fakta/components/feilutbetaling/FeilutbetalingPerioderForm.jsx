@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 
-import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { SelectField } from '@fpsak-frontend/form';
 

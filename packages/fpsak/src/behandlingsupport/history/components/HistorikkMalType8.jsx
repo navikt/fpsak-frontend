@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -10,11 +10,7 @@ import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { getAlleKodeverk } from 'kodeverk/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
-  findEndretFeltNavn,
-  findEndretFeltVerdi,
-  findHendelseText,
-  findIdForOpplysningCode,
-  findResultatText,
+  findEndretFeltNavn, findEndretFeltVerdi, findHendelseText, findIdForOpplysningCode, findResultatText,
 } from './historikkUtils';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
 import BubbleText from './bubbleText';
@@ -112,7 +108,7 @@ HistorikkMalType8.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };

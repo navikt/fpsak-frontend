@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { Undertittel, Undertekst } from 'nav-frontend-typografi';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { Image } from '@fpsak-frontend/shared-components';
 import PersonInfo from './PersonInfo';

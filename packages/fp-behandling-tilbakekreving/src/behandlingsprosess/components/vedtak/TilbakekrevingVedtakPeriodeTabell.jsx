@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import {
-  Table, TableColumn, TableRow, PeriodLabel,
+  PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './tilbakekrevingVedtakPeriodeTabell.less';

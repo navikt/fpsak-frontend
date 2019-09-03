@@ -5,13 +5,16 @@ import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandl
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getBehandlingResultatstruktur, getStonadskontoer, getUttaksresultatPerioder, getSimuleringResultat,
+  getBehandlingResultatstruktur,
+  getSimuleringResultat,
+  getStonadskontoer,
+  getUttaksresultatPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerBpDefinition';
 import createSvangerskapspengerBpProps from '../definition/svangerskapspengerBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpForstegangOgRev';
-import { getFeatureToggles, getFagsakYtelseType } from '../../duckBehandlingForstegangOgRev';
+import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpForstegangOgRev';
+import { getFagsakYtelseType, getFeatureToggles } from '../../duckBehandlingForstegangOgRev';
 
 // Kun eksportert for test. Ikke bruk andre steder!
 export const getBehandlingspunkterProps = createSelector(

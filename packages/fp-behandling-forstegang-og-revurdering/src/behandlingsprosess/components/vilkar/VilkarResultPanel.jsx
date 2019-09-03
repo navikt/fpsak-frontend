@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -28,7 +28,7 @@ const VilkarResultPanel = ({
 
 VilkarResultPanel.propTypes = {
   status: PropTypes.string.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 export default injectIntl(VilkarResultPanel);

@@ -1,5 +1,4 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import sinon from 'sinon';
@@ -12,6 +11,8 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
+import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { Provider } from 'react-redux';
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
 import withBehandlingsprosessIndex from './withBehandlingsprosessIndex';
 
@@ -19,7 +20,9 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 const BehandlingspunktPanel = () => (
-  <div className="component" />
+  <>
+    <div className="component">Somecomponent content</div>
+  </>
 );
 
 const BehandlingspunktComp = withBehandlingsprosessIndex(sinon.spy(), sinon.spy())(BehandlingspunktPanel);
@@ -35,44 +38,41 @@ describe('<HOC: withBehandlingsprosessIndex>', () => {
       return Promise.resolve();
     };
 
-    const wrapper = shallow(
-      <Router>
-        <BehandlingspunktComp
-          store={mockStore({ router: { location: { path: 'test' } } })}
-          behandlingIdentifier={behandlingIdentifier}
-          behandlingVersjon={1}
-          resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
-          behandlingspunkter={[]}
-          resetBehandlingspunkter={dummyFn}
-          isSelectedBehandlingHenlagt
-          location={{}}
-          fetchPreview={dummyFn}
-          fagsakYtelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
-          behandlingStatus={{ kode: behandlingStatus.OPPRETTET }}
-          resolveProsessAksjonspunkterSuccess
-          behandlingsresultat={{}}
-          getBehandlingspunkterStatus={sinon.spy()}
-          getBehandlingspunkterTitleCodes={sinon.spy()}
-          getAksjonspunkterOpenStatus={sinon.spy()}
-          behandlingType={{
-            kode: behandlingType.FORSTEGANGSSOKNAD,
-          }}
-          aksjonspunkter={[]}
-        />
-      </Router>,
-    ).dive() // TODO (TOR) Bør unngå deep dive
-      .dive()
-      .dive()
-      .dive()
-      .dive()
-      .dive()
-      .dive()
-      .dive();
-
-    expect(wrapper.find(BehandlingsprosessPanel)).to.have.length(1);
+    const wrapper = mountWithIntl(
+      <Provider store={mockStore({ router: { location: { path: 'test' } } })}>
+        <Router>
+          <BehandlingspunktComp
+            aksjonspunkter={[]}
+            aksjonspunkterOpenStatus={{}}
+            behandlingIdentifier={behandlingIdentifier}
+            behandlingspunkter={[]}
+            behandlingspunkterStatus={{}}
+            behandlingspunkterTitleCodes={{}}
+            behandlingsresultat={undefined}
+            behandlingStatus={{ kode: behandlingStatus.OPPRETTET }}
+            behandlingType={{ kode: behandlingType.FORSTEGANGSSOKNAD }}
+            behandlingVersjon={1}
+            fagsakYtelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+            fetchPreview={dummyFn}
+            isSelectedBehandlingHenlagt
+            location={{}}
+            resetBehandlingspunkter={dummyFn}
+            resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
+            resolveProsessAksjonspunkterSuccess
+            selectedBehandlingspunkt="test"
+          />
+        </Router>
+      </Provider>,
+    );
+    expect(wrapper.find(BehandlingsprosessPanel))
+      .to
+      .have
+      .length(1, 'Finner ikke BehandlingsprosessPanel');
     const panel = wrapper.find(BehandlingspunktPanel);
-    expect(panel).to.have.length(1);
-
+    expect(panel)
+      .to
+      .have
+      .length(1, 'Finner ikke BehandlingspunktPanel');
     const aksjonspunktModels = [{
       kode: ac.VURDER_INNSYN,
     }];
@@ -80,7 +80,6 @@ describe('<HOC: withBehandlingsprosessIndex>', () => {
     const shouldUpdateInfo = true;
 
     await panel.prop('submitCallback')(aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo);
-
     expect(apData).is.eql({
       behandlingIdentifier: {
         $$behandlingId: 1,

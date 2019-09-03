@@ -6,16 +6,11 @@ import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import {
-  faktaPanelCodes,
-} from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import {
-  FaktaEkspandertpanel,
-  withDefaultToggling,
-} from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
-import { getSkalKunneLeggeTilNyeArbeidsforhold, getBehandlingArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingArbeidsforhold, getSkalKunneLeggeTilNyeArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';

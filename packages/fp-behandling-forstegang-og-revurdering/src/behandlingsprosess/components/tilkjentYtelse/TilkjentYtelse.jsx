@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ISO_DATE_FORMAT, DDMMYY_DATE_FORMAT, calcDaysAndWeeks } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import TimeLineData from './timeline/TimeLineData';
@@ -312,7 +312,7 @@ TilkjentYtelse.propTypes = {
   familiehendelseDate: PropTypes.shape().isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
   medsokerKjonnKode: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 

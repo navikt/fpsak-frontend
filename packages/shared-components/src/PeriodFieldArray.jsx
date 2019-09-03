@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import NavFieldGroup from '@fpsak-frontend/form/src/NavFieldGroup';
 import Image from './Image';
@@ -98,7 +98,7 @@ const PeriodFieldArray = ({
 
 
 PeriodFieldArray.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   children: PropTypes.func.isRequired,
   fields: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool,

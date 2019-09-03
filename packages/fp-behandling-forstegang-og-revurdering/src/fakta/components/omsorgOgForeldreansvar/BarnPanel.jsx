@@ -8,10 +8,10 @@ import moment from 'moment';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate } from '@fpsak-frontend/utils';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { MerkePanel } from '@fpsak-frontend/person-info';
 

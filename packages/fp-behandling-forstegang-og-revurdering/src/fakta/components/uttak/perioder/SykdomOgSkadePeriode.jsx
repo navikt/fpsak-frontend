@@ -10,16 +10,18 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, maxLength, minLength, hasValidPeriod, hasValidText,
+  hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
-import { getFamiliehendelseGjeldende, doesVilkarForSykdomOppfyltExist } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { doesVilkarForSykdomOppfyltExist, getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, getBehandlingFormSyncErrors,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
+  getBehandlingFormSyncErrors,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';

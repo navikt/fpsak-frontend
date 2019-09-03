@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import TilbakekrevingAktivitetTabell from './TilbakekrevingAktivitetTabell';
 

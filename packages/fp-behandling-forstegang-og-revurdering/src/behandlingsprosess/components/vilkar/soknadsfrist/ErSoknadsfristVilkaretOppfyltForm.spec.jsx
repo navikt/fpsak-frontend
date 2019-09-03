@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
@@ -9,7 +9,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ErSoknadsfristVilkaretOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErSoknadsfristVilkaretOppfyltForm';
+import { buildInitialValues, ErSoknadsfristVilkaretOppfyltFormImpl as UnwrappedForm } from './ErSoknadsfristVilkaretOppfyltForm';
 
 describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
   const behandlingspunkt = {
@@ -147,7 +147,7 @@ describe('<ErSoknadsfristVilkaretOppfyltForm>', () => {
     const radioButtons = wrapper.find('RadioOption');
     expect(radioButtons).has.length(2);
     expect(wrapper.find(BehandlingspunktBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find('InjectIntl(ConfirmInformationVilkarFormReadOnly)')).has.length(0);
+    expect(wrapper.find('injectIntl(ConfirmInformationVilkarFormReadOnly)')).has.length(0);
   });
 
   it('skal ved readonly kun vise en radioknapp med valgt verdi', () => {

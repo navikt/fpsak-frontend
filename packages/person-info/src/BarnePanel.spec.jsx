@@ -29,7 +29,7 @@ describe('<BarnePanel>', () => {
   it('skal sjekke at korrekt ikon vises for barna', () => {
     const wrapper = shallowWithIntl(<BarnePanel barneListe={barneListe} />);
 
-    const image = wrapper.find('InjectIntl(Image)');
+    const image = wrapper.find('injectIntl(Image)');
     expect(image.first().prop('titleCode')).to.equal('Person.Girl');
     expect(image.at(1).prop('titleCode')).to.equal('Person.Boy');
   });

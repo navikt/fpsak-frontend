@@ -2,12 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FieldArray, formValueSelector } from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import {
-  ElementWrapper, VerticalSpacer, ArrowBox,
-} from '@fpsak-frontend/shared-components';
+import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansOppdragForFamilieFieldArray, { defaultFrilansPeriode } from './FrilansOppdragForFamilieFieldArray';
 
@@ -42,7 +40,7 @@ export const FrilansOppdragForFamiliePanelImpl = ({
 );
 
 FrilansOppdragForFamiliePanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   harHattOppdragForFamilie: PropTypes.bool,
 };

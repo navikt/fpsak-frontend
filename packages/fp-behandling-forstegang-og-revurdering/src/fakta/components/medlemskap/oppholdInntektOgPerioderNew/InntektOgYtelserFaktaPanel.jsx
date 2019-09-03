@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
-import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  Table, TableRow, TableColumn, PeriodLabel,
+  PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 
 const headerTextCodes = [
@@ -72,7 +72,7 @@ const InntektOgYtelserFaktaPanelImpl = ({ inntekter, intl }) => {
 
 InntektOgYtelserFaktaPanelImpl.propTypes = {
   inntekter: PropTypes.arrayOf(PropTypes.shape()),
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 InntektOgYtelserFaktaPanelImpl.defaultProps = {

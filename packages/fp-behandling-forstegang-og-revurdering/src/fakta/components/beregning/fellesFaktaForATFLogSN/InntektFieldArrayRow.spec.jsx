@@ -6,8 +6,8 @@ import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
+import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { InputField, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import { AndelRowImpl, mapStateToProps } from './InntektFieldArrayRow';
 import ArbeidsforholdField from './ArbeidsforholdField';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';

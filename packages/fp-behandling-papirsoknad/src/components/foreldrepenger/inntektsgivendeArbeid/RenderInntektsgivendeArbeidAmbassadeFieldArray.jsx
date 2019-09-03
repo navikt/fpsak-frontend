@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  dateAfterOrEqual,
-  hasValidDate,
-  maxLength,
-  required,
-  ISO_DATE_FORMAT,
-  isArrayEmpty,
+  dateAfterOrEqual, hasValidDate, isArrayEmpty, ISO_DATE_FORMAT, maxLength, required,
 } from '@fpsak-frontend/utils';
 import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
-import { InputField, DatepickerField } from '@fpsak-frontend/form';
+import { DatepickerField, InputField } from '@fpsak-frontend/form';
 
 import moment from 'moment';
 import styles from './renderInntektsgivendeArbeidFieldArray.less';

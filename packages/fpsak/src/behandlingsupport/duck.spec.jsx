@@ -7,9 +7,8 @@ import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
-  behandlingSupportReducer, setSelectedSupportPanel, getSelectedSupportPanel, resetBehandlingSupport, updateBehandlingsupportInfo,
-}
-  from './duck';
+  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel, updateBehandlingsupportInfo,
+} from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

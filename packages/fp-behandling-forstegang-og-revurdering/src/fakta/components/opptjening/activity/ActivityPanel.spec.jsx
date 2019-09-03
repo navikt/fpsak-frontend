@@ -5,9 +5,9 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { FormattedMessage } from 'react-intl';
 import {
-  PeriodpickerField, SelectField, RadioGroupField, TextAreaField,
+  PeriodpickerField, RadioGroupField, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { ActivityPanel } from './ActivityPanel';

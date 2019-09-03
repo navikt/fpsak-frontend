@@ -8,7 +8,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
-  resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter, getOpenInfoPanels,
+  getOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter,
 } from './duckFaktaForstegangOgRev';
 import FaktaPanel from './components/FaktaPanel';
 

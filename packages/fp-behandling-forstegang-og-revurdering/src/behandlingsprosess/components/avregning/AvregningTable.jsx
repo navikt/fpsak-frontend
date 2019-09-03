@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import { getRangeOfMonths, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
 import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import PropTypes from 'prop-types';

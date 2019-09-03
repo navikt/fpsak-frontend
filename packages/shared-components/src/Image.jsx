@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import Tooltip from './Tooltip';
 
@@ -42,14 +42,18 @@ class Image extends Component {
 
   render() {
     const {
-      tooltip, altCode, onClick, onMouseDown, tabIndex, titleCode, title, intl, className, src, imageSrcFunction, alt,
+      tooltip, altCode, onClick, onMouseDown, tabIndex, titleCode, title, intl, className, src, srcHoover, imageSrcFunction, alt,
       alignTooltipArrowLeft,
     } = this.props;
+    let imgSource = src;
     const { isHovering } = this.state;
+    if (srcHoover !== null && isHovering) {
+      imgSource = srcHoover;
+    }
     const image = (
       <img // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
         className={className}
-        src={src !== null ? src : imageSrcFunction(isHovering)}
+        src={imgSource !== null ? imgSource : imageSrcFunction(isHovering)}
         alt={altCode ? intl.formatMessage({ id: altCode }) : alt}
         title={titleCode ? intl.formatMessage({ id: titleCode }) : title}
         tabIndex={tabIndex}
@@ -84,6 +88,7 @@ Image.propTypes = {
     PropTypes.string,
     PropTypes.shape(),
   ]),
+  srcHoover: PropTypes.string,
   /**
    * Brukes når en har behov for dynamisk visning av bilder, for eksempel grunnet mouseover.
    */
@@ -101,12 +106,13 @@ Image.propTypes = {
     body: PropTypes.node,
   }),
   alignTooltipArrowLeft: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 Image.defaultProps = {
   className: '',
   src: null,
+  srcHoover: null,
   imageSrcFunction: null,
   onMouseDown: null,
   onKeyDown: null,

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
+  decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 
 import styles from './vilkarBegrunnelse.less';
@@ -38,7 +38,7 @@ const VilkarBegrunnelseImpl = ({
 );
 
 VilkarBegrunnelseImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   begrunnelseLabel: PropTypes.string,
 };

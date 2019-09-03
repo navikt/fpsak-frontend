@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { FormattedMessage } from 'react-intl';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import {
-  required, minValue, maxValue, hasValidDecimal, DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
+  DDMMYYYY_DATE_FORMAT, hasValidDecimal, ISO_DATE_FORMAT, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
-import {
-  ElementWrapper, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { DatepickerField, InputField, DecimalField } from '@fpsak-frontend/form';
+import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
 import moment from 'moment';
 import styles from './activityDataSubPanel.less';
 

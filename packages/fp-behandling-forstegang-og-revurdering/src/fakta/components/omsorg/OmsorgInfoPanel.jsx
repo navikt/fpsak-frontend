@@ -3,21 +3,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { aksjonspunktPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
-import {
-  FaktaBegrunnelseTextField,
-  FaktaEkspandertpanel,
-  withDefaultToggling,
-} from '@fpsak-frontend/fp-behandling-felles';
-import {
-  getPersonopplysning, getBehandlingYtelseFordeling, getEktefellePersonopplysning,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingYtelseFordeling, getEktefellePersonopplysning, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import BostedFaktaView from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/BostedFaktaView';
@@ -90,7 +85,7 @@ OmsorgInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   omsorg: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 

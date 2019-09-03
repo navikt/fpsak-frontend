@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import {
-  minLength, maxLength, hasValidText,
-} from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 
@@ -65,7 +63,7 @@ TilbakekrevingVedtakUtdypendeTekstPanel.propTypes = {
   type: PropTypes.string.isRequired,
   isEmpty: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

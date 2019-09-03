@@ -5,9 +5,9 @@ import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { VerticalSpacer, ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required, hasValidDate } from '@fpsak-frontend/utils';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import PropTypes from 'prop-types';
 
 /**

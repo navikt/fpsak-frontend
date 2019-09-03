@@ -5,18 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  getBehandlingYtelseFordeling,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  required, minLength, maxLength, hasValidText,
+  hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import {
-  AksjonspunktHelpText, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
-import {
-  RadioGroupField, RadioOption, TextAreaField,
-} from '@fpsak-frontend/form';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import styles from './annenForelderHarRettForm.less';

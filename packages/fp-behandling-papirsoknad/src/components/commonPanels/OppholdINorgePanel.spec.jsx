@@ -1,12 +1,15 @@
 import React from 'react';
 import moment from 'moment';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import {
+  dateNotAfterOrEqualMessage,
+  dateNotBeforeOrEqualMessage,
+  dateRangesOverlappingMessage,
+  invalidDateMessage,
   ISO_DATE_FORMAT,
-  invalidDateMessage, dateNotBeforeOrEqualMessage, dateRangesOverlappingMessage,
-  dateNotAfterOrEqualMessage, isRequiredMessage,
+  isRequiredMessage,
 } from '@fpsak-frontend/utils';
 
 import SoknadData from '../../SoknadData';

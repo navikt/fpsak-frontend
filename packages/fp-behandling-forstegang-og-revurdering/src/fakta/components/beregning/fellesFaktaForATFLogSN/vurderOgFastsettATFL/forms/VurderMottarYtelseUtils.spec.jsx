@@ -1,8 +1,11 @@
 import { expect } from 'chai';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
-  andelsnrMottarYtelseMap, utledArbeidsforholdFieldName, finnFrilansFieldName,
-  skalFastsetteInntektATUtenInntektsmelding, harVurdertMottarYtelse,
+  andelsnrMottarYtelseMap,
+  finnFrilansFieldName,
+  harVurdertMottarYtelse,
+  skalFastsetteInntektATUtenInntektsmelding,
+  utledArbeidsforholdFieldName,
 } from './VurderMottarYtelseUtils';
 
 const arbeidsforhold = {

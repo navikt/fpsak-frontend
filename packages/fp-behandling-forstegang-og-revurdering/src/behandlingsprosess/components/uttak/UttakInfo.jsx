@@ -1,19 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment/moment';
 
+import { CheckboxField, DecimalField, SelectField } from '@fpsak-frontend/form';
 import {
-  CheckboxField, DecimalField, SelectField,
-} from '@fpsak-frontend/form';
-import {
-  required,
-  hasValidDecimal,
-  maxValue,
-  notDash,
-  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT,
+  calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, hasValidDecimal, maxValue, notDash, required,
 } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';

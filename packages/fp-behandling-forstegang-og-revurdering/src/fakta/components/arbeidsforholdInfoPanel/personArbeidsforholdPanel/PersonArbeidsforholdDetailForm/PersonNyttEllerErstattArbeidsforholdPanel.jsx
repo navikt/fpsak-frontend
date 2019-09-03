@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import BehandlingFormFieldCleaner from 'behandlingForstegangOgRevurdering/src/components/BehandlingFormFieldCleaner';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import { required } from '@fpsak-frontend/utils';
-import { ElementWrapper, ArrowBox } from '@fpsak-frontend/shared-components';
-import { SelectField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { ArrowBox, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 
 const getEndCharFromId = (id) => id.substring(id.length - 4, id.length);
 
@@ -57,7 +57,7 @@ const PersonNyttEllerErstattArbeidsforholdPanel = ({
 );
 
 PersonNyttEllerErstattArbeidsforholdPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   isErstattArbeidsforhold: PropTypes.bool.isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,

@@ -1,16 +1,12 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import {
-  InputField,
-  DatepickerField,
-  SelectField,
-  CheckboxField,
-  DecimalField,
+  CheckboxField, DatepickerField, DecimalField, InputField, SelectField,
 } from '@fpsak-frontend/form';
-import { MockFields, metaMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RenderGraderingPeriodeFieldArray } from './RenderGraderingPeriodeFieldArray';
 
 const graderingKvoter = [{ navn: 'Mødrekvote', kode: 'MODREKVOTE' }];

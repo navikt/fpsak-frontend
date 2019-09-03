@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
-// import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage, IntlProvider } from 'react-intl';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandImpl as Utland } from './Utland';
 

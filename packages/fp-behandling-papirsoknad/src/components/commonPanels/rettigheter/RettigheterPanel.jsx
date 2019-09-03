@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -62,7 +62,7 @@ export const RettigheterPanel = ({
 );
 
 RettigheterPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   readOnly: PropTypes.bool,
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { ElementWrapper, AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './vedtakForm.less';
@@ -54,7 +54,7 @@ export const VedtakHelpTextPanelImpl = ({
 };
 
 VedtakHelpTextPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   isBehandlingReadOnly: PropTypes.bool.isRequired,

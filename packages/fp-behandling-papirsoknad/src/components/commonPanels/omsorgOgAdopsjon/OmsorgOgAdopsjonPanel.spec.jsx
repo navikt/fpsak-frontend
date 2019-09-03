@@ -4,10 +4,10 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
-import { OmsorgOgAdopsjonPanelImpl, FodselsDatoFields } from './OmsorgOgAdopsjonPanel';
+import { FodselsDatoFields, OmsorgOgAdopsjonPanelImpl } from './OmsorgOgAdopsjonPanel';
 
 chai.use(sinonChai);
 

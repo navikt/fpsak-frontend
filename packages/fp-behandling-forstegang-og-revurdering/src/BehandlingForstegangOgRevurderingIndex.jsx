@@ -11,8 +11,14 @@ import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import BehandlingsprosessForstegangOgRevContainer from './behandlingsprosess/BehandlingsprosessForstegangOgRevContainer';
 import FaktaContainer from './fakta/FaktaContainer';
 import {
-  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+  fetchBehandling as fetchBehandlingActionCreator,
+  getBehandlingIdentifier,
+  getHasShownBehandlingPaVent,
+  getKodeverk,
+  resetBehandlingFpsakContext,
+  setBehandlingInfo,
+  setHasShownBehandlingPaVent,
+  updateOnHold,
 } from './duckBehandlingForstegangOgRev';
 import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 

@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import { getResultatstrukturFraOriginalBehandling }
-  from './originalBehandlingSelectors';
+import { getResultatstrukturFraOriginalBehandling } from './originalBehandlingSelectors';
 
 describe('originalBehandlingSelectors', () => {
   describe('getResultatstrukturFraOriginalBehandling', () => {

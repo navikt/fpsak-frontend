@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
-import { removeSpacesFromNumber, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import { getSkalRedigereInntekt } from './BgFordelingUtils';
 
 import styles from './inntektFieldArray.less';

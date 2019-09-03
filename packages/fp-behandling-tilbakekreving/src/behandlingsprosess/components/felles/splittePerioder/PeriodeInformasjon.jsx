@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { formatCurrencyNoKr, DDMMYYYY_DATE_FORMAT, calcDaysAndWeeks } from '@fpsak-frontend/utils';
+import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import styles from './periodeInformasjon.less';
 

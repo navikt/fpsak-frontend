@@ -16,13 +16,14 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText, maxLength, minLength, required, removeSpacesFromNumber,
+  hasValidText, maxLength, minLength, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import YtelserFraInfotrygd
-  from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
+import YtelserFraInfotrygd from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/beregningsgrunnlag/tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';

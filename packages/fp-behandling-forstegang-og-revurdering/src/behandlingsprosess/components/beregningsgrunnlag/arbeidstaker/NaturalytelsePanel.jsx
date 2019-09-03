@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import { createSelector } from 'reselect';
 import { getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import styles from './naturalytelsePanel.less';

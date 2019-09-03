@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-import { Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl } from 'react-intl';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import VilkarResultPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPanel';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  ElementWrapper, VerticalSpacer, AksjonspunktHelpText, FadingPanel,
+  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 /*
@@ -68,7 +70,7 @@ const BpPanelTemplate = ({
 );
 
 BpPanelTemplate.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   titleCode: PropTypes.string.isRequired,
   lovReferanse: PropTypes.string,

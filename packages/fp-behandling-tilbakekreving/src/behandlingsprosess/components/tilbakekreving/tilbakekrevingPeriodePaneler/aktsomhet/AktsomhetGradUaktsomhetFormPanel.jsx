@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 
 import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';

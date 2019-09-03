@@ -8,8 +8,8 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { hasValidDate, dateBeforeOrEqualToToday, getAddresses } from '@fpsak-frontend/utils';
-import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import { dateBeforeOrEqualToToday, getAddresses, hasValidDate } from '@fpsak-frontend/utils';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 

@@ -6,18 +6,13 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
-  FaktaForATFLOgSNPanelImpl,
-  getHelpTextsFaktaForATFLOgSN,
-  transformValuesFaktaForATFLOgSN,
-  transformValues,
+  FaktaForATFLOgSNPanelImpl, getHelpTextsFaktaForATFLOgSN, transformValues, transformValuesFaktaForATFLOgSN,
 } from './FaktaForATFLOgSNPanel';
 import TidsbegrensetArbeidsforholdForm from './tidsbegrensetArbeidsforhold/TidsbegrensetArbeidsforholdForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
-import {
-  besteberegningField,
-} from './besteberegningFodendeKvinne/VurderBesteberegningForm';
+import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
 import { INNTEKT_FIELD_ARRAY_NAME } from './BgFordelingUtils';
 

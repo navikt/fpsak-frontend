@@ -1,18 +1,18 @@
 import { expect } from 'chai';
 import moment from 'moment';
 import {
-  isoDateRegex,
-  integerRegex,
-  decimalRegex,
-  saksnummerOrFodselsnummerPattern,
-  textRegex,
-  textGyldigRegex,
-  nameRegex,
-  nameGyldigRegex,
-  isEmpty,
-  yesterday,
-  tomorrow,
   dateRangesAreSequential,
+  decimalRegex,
+  integerRegex,
+  isEmpty,
+  isoDateRegex,
+  nameGyldigRegex,
+  nameRegex,
+  saksnummerOrFodselsnummerPattern,
+  textGyldigRegex,
+  textRegex,
+  tomorrow,
+  yesterday,
 } from './validatorsHelper';
 
 describe('validatorsHelper', () => {

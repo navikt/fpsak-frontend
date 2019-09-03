@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Container, Row, Column } from 'nav-frontend-grid';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import fht from '@fpsak-frontend/kodeverk/src/familieHendelseType';
-import { VerticalSpacer, BorderBox } from '@fpsak-frontend/shared-components';
+import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  InputField, DatepickerField, RadioGroupField, RadioOption,
+  DatepickerField, InputField, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import {
-  hasValidInteger, hasValidDate, isDatesEqual, required, minValue, maxValue, dateBeforeOrEqualToToday, isRequiredMessage,
+  dateBeforeOrEqualToToday, hasValidDate, hasValidInteger, isDatesEqual, isRequiredMessage, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 
 import { isForeldrepengerFagsak } from 'papirsoknad/src/duckPapirsoknad';
@@ -173,7 +173,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
 };
 
 OmsorgOgAdopsjonPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   antallBarn: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   familieHendelseType: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { reduxForm, formPropTypes, formValueSelector } from 'redux-form';
+import { formPropTypes, formValueSelector, reduxForm } from 'redux-form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEqual } from '@fpsak-frontend/utils';

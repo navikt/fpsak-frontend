@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import {
-  getEndringBeregningsgrunnlagPerioder,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getEndringBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {

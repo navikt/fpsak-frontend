@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formValueSelector } from 'redux-form';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { RadioGroupField, RadioOption, NavFieldGroup } from '@fpsak-frontend/form';
+import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { BorderBox, VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
@@ -110,7 +110,7 @@ export const OppholdINorgePanelImpl = ({
 };
 
 OppholdINorgePanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   countryCodes: kodeverkPropType.isRequired,
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   harFremtidigeOppholdUtenlands: PropTypes.bool,

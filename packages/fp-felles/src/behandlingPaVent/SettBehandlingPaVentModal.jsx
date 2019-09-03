@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import Modal from 'nav-frontend-modal';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
@@ -155,7 +155,7 @@ SettBehandlingPaVentModal.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   venteArsakHasChanged: PropTypes.bool.isRequired,
   fristHasChanged: PropTypes.bool.isRequired,
   hasManualPaVent: PropTypes.bool.isRequired,

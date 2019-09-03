@@ -4,10 +4,19 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { arrayToObject } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { DEFAULT_BEHANDLINGSPROSESS, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, DEFAULT_BEHANDLINGSPROSESS } from '@fpsak-frontend/fp-felles';
 
-const getCommonBehandlingsprosessSelectors = (getBehandlingspunkterProps, getAksjonspunkter, getBehandlingIsOnHold, getAllMerknaderFraBeslutter,
-  hasReadOnlyBehandling, isBehandlingStatusReadOnly, getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter, getRettigheter) => {
+const getCommonBehandlingsprosessSelectors = (
+  getBehandlingspunkterProps,
+  getAksjonspunkter,
+  getBehandlingIsOnHold,
+  getAllMerknaderFraBeslutter,
+  hasReadOnlyBehandling,
+  isBehandlingStatusReadOnly,
+  getSelectedBehandlingspunktNavn,
+  getOverrideBehandlingspunkter,
+  getRettigheter,
+) => {
   const getBehandlingspunkter = createSelector([getBehandlingspunkterProps], (bpProps = []) => bpProps.map((p) => p.code));
 
   const getBehandlingspunkterStatus = createSelector(
@@ -99,9 +108,9 @@ const getCommonBehandlingsprosessSelectors = (getBehandlingspunkterProps, getAks
     (selectedBehandlingspunkt, aksjonspunkter = {}, merknaderFraBeslutter = {}) => {
       const ap = aksjonspunkter[selectedBehandlingspunkt];
       return ap !== undefined
-          && ap.length > 0
-          && !!merknaderFraBeslutter[ap[0]]
-          && merknaderFraBeslutter[ap[0]].notAccepted;
+        && ap.length > 0
+        && !!merknaderFraBeslutter[ap[0]]
+        && merknaderFraBeslutter[ap[0]].notAccepted;
     },
   );
 
@@ -124,13 +133,13 @@ const getCommonBehandlingsprosessSelectors = (getBehandlingspunkterProps, getAks
   const isSelectedBehandlingspunktReadOnly = createSelector(
     [getRettigheter, getBehandlingIsOnHold, hasReadOnlyBehandling, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar],
     (rettigheter, behandlingIsOnHold, isBehandlingReadOnly, hasNonActivOrNonOverstyrbar) => !rettigheter.writeAccess.isEnabled
-        || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
+      || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar,
   );
 
   const isSelectedBehandlingspunktOverrideReadOnly = createSelector(
     [getRettigheter, hasNonActiveAksjonspunkterOrNonOverstyrbarVilkar, isBehandlingStatusReadOnly],
     (rettigheter, hasNonActivOrNonOverstyrbar, isStatusReadOnly) => !rettigheter.kanOverstyreAccess.isEnabled
-        || isStatusReadOnly || hasNonActivOrNonOverstyrbar,
+      || isStatusReadOnly || hasNonActivOrNonOverstyrbar,
   );
 
   const hasBehandlingspunktAtLeastOneOpenAksjonspunkt = createSelector(

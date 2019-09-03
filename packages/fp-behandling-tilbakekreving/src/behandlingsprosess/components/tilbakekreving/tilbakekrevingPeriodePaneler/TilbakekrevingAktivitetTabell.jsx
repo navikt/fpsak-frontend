@@ -3,9 +3,7 @@ import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import {
-  Table, TableRow, TableColumn,
-} from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import styles from './tilbakekrevingAktivitetTabell.less';
 

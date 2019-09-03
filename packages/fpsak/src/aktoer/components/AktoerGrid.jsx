@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Lenkepanel from 'nav-frontend-lenkepanel';
 
 import { PersonInfo } from '@fpsak-frontend/person-info';
-import { pathToFagsak, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { injectKodeverk, pathToFagsak } from '@fpsak-frontend/fp-felles';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import { getAlleKodeverk } from 'kodeverk/duck';

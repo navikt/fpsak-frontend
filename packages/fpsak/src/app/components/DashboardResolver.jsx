@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -42,7 +42,7 @@ export class DashboardResolver extends Component {
 }
 
 DashboardResolver.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   addErrorMessage: PropTypes.func.isRequired,
 };
 

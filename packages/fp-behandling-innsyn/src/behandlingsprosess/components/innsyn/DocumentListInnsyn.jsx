@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
-  Image, Table, TableRow, TableColumn, ElementWrapper, DateTimeLabel,
+  DateTimeLabel, ElementWrapper, Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 

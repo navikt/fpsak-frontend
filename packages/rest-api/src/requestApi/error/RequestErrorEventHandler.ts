@@ -1,6 +1,6 @@
 import EventType from '../eventType';
 import { ErrorType } from './errorTsType';
-import { isHandledError, is401Error, is418Error } from './ErrorTypes';
+import { is401Error, is418Error, isHandledError } from './ErrorTypes';
 import TimeoutError from './TimeoutError';
 
 const isDevelopment = process.env.NODE_ENV === 'development';

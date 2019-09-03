@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -17,15 +17,15 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
-  getSelectedBehandlingId,
   getBehandlingIsKlage,
+  getBehandlingKlageVurderingResultatNK,
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
+  getBehandlingsresultatFraOriginalBehandling,
   getBehandlingStatus,
   getBehandlingType,
-  getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
-  getBehandlingKlageVurderingResultatNK,
+  getSelectedBehandlingId,
 } from 'behandling/duck';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getApproveFinished, getApproveFinishedTilbakekreving } from '../duck';
@@ -100,7 +100,7 @@ FatterVedtakApprovalModal.propTypes = {
   altImgTextCode: PropTypes.string.isRequired,
   modalDescriptionTextCode: PropTypes.string.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   showModal: PropTypes.bool,
 };
 

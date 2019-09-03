@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 
 import {
-  BorderBox, FlexContainer, FlexColumn, FlexRow,
+  BorderBox, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import { TextAreaField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { maxLength as maxLengthValidator, hasValidText, required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import { hasValidText, maxLength as maxLengthValidator, required } from '@fpsak-frontend/utils';
 
 import styles from './tilleggsopplysningerPanel.less';
 
@@ -72,7 +72,7 @@ export const TilleggsopplysningerPanel = ({
 );
 
 TilleggsopplysningerPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

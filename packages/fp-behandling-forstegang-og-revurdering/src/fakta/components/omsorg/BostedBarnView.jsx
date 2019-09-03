@@ -4,9 +4,9 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 
 import { personopplysningPropType } from '@fpsak-frontend/prop-types';
-import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, getAddresses } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, getAddresses, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { MerkePanel } from '@fpsak-frontend/person-info';
 

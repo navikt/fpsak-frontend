@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
@@ -82,7 +82,7 @@ export const BeregningInfoPanelImpl = ({
 };
 
 BeregningInfoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
    */

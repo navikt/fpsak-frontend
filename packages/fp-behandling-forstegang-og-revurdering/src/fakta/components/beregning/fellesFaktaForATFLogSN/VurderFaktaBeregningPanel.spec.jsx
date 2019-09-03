@@ -2,8 +2,10 @@ import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  buildInitialValuesVurderFaktaBeregning, transformValuesVurderFaktaBeregning,
-  BEGRUNNELSE_FAKTA_TILFELLER_NAME, harIkkeEndringerIAvklarMedFlereAksjonspunkter,
+  BEGRUNNELSE_FAKTA_TILFELLER_NAME,
+  buildInitialValuesVurderFaktaBeregning,
+  harIkkeEndringerIAvklarMedFlereAksjonspunkter,
+  transformValuesVurderFaktaBeregning,
 } from './VurderFaktaBeregningPanel';
 
 const {

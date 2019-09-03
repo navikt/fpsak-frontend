@@ -11,8 +11,14 @@ import FpInnsynBehandlingInfoSetter from './FpInnsynBehandlingInfoSetter';
 import BehandlingsprosessInnsynContainer from './behandlingsprosess/BehandlingsprosessInnsynContainer';
 import FaktaInnsynContainer from './fakta/FaktaInnsynContainer';
 import {
-  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+  fetchBehandling as fetchBehandlingActionCreator,
+  getBehandlingIdentifier,
+  getHasShownBehandlingPaVent,
+  getKodeverk,
+  resetBehandlingFpsakContext,
+  setBehandlingInfo,
+  setHasShownBehandlingPaVent,
+  updateOnHold,
 } from './duckBehandlingInnsyn';
 import fpInnsynBehandlingUpdater from './FpInnsynBehandlingUpdater';
 

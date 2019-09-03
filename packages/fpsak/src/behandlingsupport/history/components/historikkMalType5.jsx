@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
 import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
 
@@ -230,7 +230,7 @@ HistorikkMalType5.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import {
@@ -14,11 +14,9 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
-  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, required,
-} from '@fpsak-frontend/utils';
-import {
-  VerticalSpacer, AksjonspunktHelpText, FadingPanel, ArrowBox,
+  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import ankeOmgjorArsak from '@fpsak-frontend/kodeverk/src/ankeOmgjorArsak';
@@ -27,7 +25,11 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
 import {
-  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  behandlingFormAnke,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingFormAnke';
 import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';

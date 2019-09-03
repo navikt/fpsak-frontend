@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  injectIntl, intlShape, FormattedMessage, FormattedHTMLMessage,
-} from 'react-intl';
-import { reduxForm, formValueSelector } from 'redux-form';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { formValueSelector, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -67,7 +65,7 @@ const SearchFormImpl = ({
 );
 
 SearchFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   /**
    * Saksnummer eller fødselsnummer/D-nummer
    */
