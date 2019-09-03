@@ -60,6 +60,7 @@ describe('<HOC: withBehandlingsprosessIndex>', () => {
             resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
             resolveProsessAksjonspunkterSuccess
             selectedBehandlingspunkt="test"
+            behandlingUuid="1"
           />
         </Router>
       </Provider>,
