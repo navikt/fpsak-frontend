@@ -959,7 +959,9 @@
   "Historikk.Template.Foreldelse.VurderingAvPerioden": "<b>Manuell vurdering</b> av perioden {periodeFom}-{periodeTom}.",
   "HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn": "Vurder om engangsstønad eller foreldrepenger utbetalt til søker gjelder samme barn",
   "HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn": "Avklar om engangsstønad eller foreldrepenger utbetalt til annen forelder gjelder samme barn",
+  
   "VedtakRevurderingForm.OpphorPanel.ArsakTilOpphor": "Årsak til opphør",
+
   "VedtakForm.ForslagTilVedtak": "Vedtak",
   "VedtakForm.BehandlingHenlagt": "Behandlingen er henlagt",
   "VedtakForm.ResultatKlageYtelsesvedtakOpphevet": "Vedtaket er opphevet",
@@ -973,10 +975,7 @@
   "VedtakForm.VilkarStatusInnvilgetEngangsstonad": "Engangsstønad er innvilget",
   "VedtakForm.SvangerskapspengerInnvilget": "Svangerskapspenger er innvilget",
   "VedtakForm.VilkarStatusInnvilgetForeldrepenger": "Foreldrepenger er innvilget",
-  "VedtakForm.TILBAKEKR_INFOTRYGD": "Feilutbetaling med tilbakekreving",
-  "VedtakForm.TILBAKEKR_INNTREKK": "Feilutbetaling hvor inntrekk dekker hele beløpet",
-  "VedtakForm.TILBAKEKR_INFOTRYGD_OG_INNTREKK": "Feilutbetaling med tilbakekreving hvor beløp er redusert med inntrekk",
-  "VedtakForm.TILBAKEKR_IGNORER": "Feilutbetaling, avvent samordning",
+  "VedtakForm.TilbakekrInfotrygdOgInntrekk": "Feilutbetaling med tilbakekreving hvor beløp er redusert med inntrekk",
   "VedtakForm.TilGodkjenning": "Til godkjenning",
   "VedtakForm.FattVedtak": "Fatt vedtak",
   "VedtakForm.ForhandvisBrev": "Forhåndsvis brev",
@@ -1131,6 +1130,7 @@
   "Avregning.SVPREF.differanse": "Svangerskapspenger avvik",
   "Avregning.HjelpetekstForeldrepenger": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV. Eksempel på tekst: «Vi mottok melding fra deg [dato]om at du hadde jobbet heltid. Du kan ikke jobbe og motta foreldrepenger samtidig. Da vi mottok meldingen fra deg, var det allerede utbetalt foreldrenger for perioden du har jobbet.",
   "Avregning.HjelpetekstEngangsstonad": "Her skal du oppgi hvorfor brukeren ikke skulle fått utbetalt ytelsen i perioden(e). Du må også oppgi hvordan feilutbetalingen ble oppdaget, hvem som oppdaget den og når den ble oppdaget eller meldt til NAV.",
+  "Avregning.ApenTilbakekrevingsbehandling": "Det foreligger en åpen tilbakekrevingsbehandling, endringer i vedtaket vil automatisk oppdatere eksisterende feilutbetalte perioder og beløp.",
 
   "PeriodeInformasjon.Feilutbetaling": "Feilutbetaling",
 

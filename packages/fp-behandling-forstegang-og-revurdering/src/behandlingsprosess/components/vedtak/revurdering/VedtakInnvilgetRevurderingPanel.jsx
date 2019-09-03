@@ -72,9 +72,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
       <Normaltekst>
         {intl.formatMessage({ id: resultTextES(beregningResultat, originaltBeregningResultat) })}
-        {tilbakekrevingText && `. ${intl.formatMessage({
-          id: tilbakekrevingText,
-        })}`}
+        {tilbakekrevingText && `. ${intl.formatMessage({ id: tilbakekrevingText })}`}
       </Normaltekst>
       <VerticalSpacer sixteenPx />
       <Row>

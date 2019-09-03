@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -28,11 +28,10 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
-      <FormattedMessage
-        id={ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
-          : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer'}
-        values={{ dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) }}
-      />
+      {intl.formatMessage({
+        id: ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
+          : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer',
+      }, { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) })}
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>

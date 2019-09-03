@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
 import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
@@ -76,7 +76,7 @@ export const HistorikkMalType9 = ({
 
             {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
             && (
-              historikkinnslagDel.endredeFelter.map((endretFelt, index) => endretFelt.tilVerdi !== avregningCodes.TILBAKEKR_INNTREKK && (
+              historikkinnslagDel.endredeFelter.map((endretFelt, index) => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK && (
                 <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
                   <FormattedHTMLMessage
                     id="Historikk.Template.9.TilbakekrViderebehandling"

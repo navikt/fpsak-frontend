@@ -2,9 +2,11 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
-import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
+
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
 
 const simuleringResultat = {
@@ -28,6 +30,7 @@ const mockProps = {
   erTilbakekrevingVilkårOppfylt: false,
   grunnerTilReduksjon: false,
   previewCallback: sinon.spy(),
+  hasOpenTilbakekrevingsbehandling: false,
 };
 
 describe('<AvregningPanelImpl>', () => {
@@ -147,18 +150,46 @@ describe('<AvregningPanelImpl>', () => {
     expect(wrapper.state('feilutbetaling')).is.eql(undefined);
   });
 
+  it('skal vise tekst for åpen tilbakekrevingsbehandling', () => {
+    const props = {
+      ...mockProps,
+      apCodes: ['5084'],
+      erTilbakekrevingVilkårOppfylt: undefined,
+      hasOpenTilbakekrevingsbehandling: true,
+    };
+    const wrapper = shallow(<AvregningPanelImpl
+      {...props}
+    />);
+
+    expect(wrapper.find('[id="Avregning.ApenTilbakekrevingsbehandling"]')).has.length(1);
+  });
+
+  it('skal ikke vise tekst for åpen tilbakekrevingsbehandling', () => {
+    const props = {
+      ...mockProps,
+      apCodes: ['5084'],
+      erTilbakekrevingVilkårOppfylt: undefined,
+      hasOpenTilbakekrevingsbehandling: false,
+    };
+    const wrapper = shallow(<AvregningPanelImpl
+      {...props}
+    />);
+
+    expect(wrapper.find('[id="Avregning.ApenTilbakekrevingsbehandling"]')).has.length(0);
+  });
+
   it('transform values skal returnere inntrekk som videre behandling gitt at vilkår er oppfylt og grunnerTilReduksjon er false', () => {
     const values = {
       erTilbakekrevingVilkårOppfylt: true,
       grunnerTilReduksjon: false,
-      videreBehandling: avregningCodes.TILBAKEKR_INFOTRYGD,
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD,
     };
     const apCode = '5084';
 
     const transformedValues = transformValues(values, apCode)[0];
     expect(transformedValues.kode).is.eql(apCode);
     expect(transformedValues.grunnerTilReduksjon).is.eql(values.grunnerTilReduksjon);
-    expect(transformedValues.videreBehandling).is.eql(avregningCodes.TILBAKEKR_INNTREKK);
+    expect(transformedValues.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK);
   });
 
   it('transform values skal returnere verdi av videre behandling gitt at vilkår er oppfylt og grunnerTilReduksjon er true', () => {
@@ -168,11 +199,11 @@ describe('<AvregningPanelImpl>', () => {
     };
     const apCode = '5084';
 
-    const transformedValuesInfotrygd = transformValues({ ...values, videreBehandling: avregningCodes.TILBAKEKR_INFOTRYGD }, apCode)[0];
+    const transformedValuesInfotrygd = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD }, apCode)[0];
     expect(transformedValuesInfotrygd.kode).is.eql(apCode);
     expect(transformedValuesInfotrygd.grunnerTilReduksjon).is.eql(values.grunnerTilReduksjon);
-    expect(transformedValuesInfotrygd.videreBehandling).is.eql(avregningCodes.TILBAKEKR_INFOTRYGD);
-    const transformedValuesIgnorer = transformValues({ ...values, videreBehandling: avregningCodes.TILBAKEKR_IGNORER }, apCode)[0];
-    expect(transformedValuesIgnorer.videreBehandling).is.eql(avregningCodes.TILBAKEKR_IGNORER);
+    expect(transformedValuesInfotrygd.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
+    const transformedValuesIgnorer = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER }, apCode)[0];
+    expect(transformedValuesIgnorer.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER);
   });
 });
