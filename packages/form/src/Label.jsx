@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import styles from './label.less';
@@ -40,7 +40,7 @@ export const labelPropType = PropTypes.oneOfType([
 ]);
 
 Label.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   input: labelPropType,
   typographyElement: PropTypes.func,
   readOnly: PropTypes.bool,

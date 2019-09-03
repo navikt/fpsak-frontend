@@ -1,7 +1,7 @@
 import React from 'react';
-import { reduxForm, FormSection, formValueSelector } from 'redux-form';
+import { FormSection, formValueSelector, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
@@ -86,7 +86,7 @@ RegistrerVirksomhetModalForm.propTypes = {
   closeEvent: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 RegistrerVirksomhetModalForm.defaultProps = {

@@ -9,10 +9,10 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { InputField } from '@fpsak-frontend/form';
 import {
-  Table, TableRow, TableColumn, Image,
+  Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, DDMMYYYY_DATE_FORMAT,
+  DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';

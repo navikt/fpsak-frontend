@@ -5,9 +5,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import {
-  Table, TableColumn, TableRow,
-} from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import style from './arbeidsforholdTable.less';
 
 /**

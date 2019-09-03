@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import {
-  ariaCheck, hasValidText, maxLength, minLength, required, getLanguageCodeFromSprakkode,
+  ariaCheck, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
@@ -124,7 +124,7 @@ export const MessagesImpl = ({
 };
 
 MessagesImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   previewCallback: PropTypes.func.isRequired,
   recipients: PropTypes.arrayOf(PropTypes.string).isRequired,
   templates: PropTypes.arrayOf(PropTypes.shape({

@@ -8,7 +8,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { TermindatoFaktaForm, buildInitialValues } from './TermindatoFaktaForm';
+import { buildInitialValues, TermindatoFaktaForm } from './TermindatoFaktaForm';
 
 describe('<TermindatoFaktaForm>', () => {
   it('skal rendre form som lar NAV-ansatt avklare fødselsdato og antall barn', () => {

@@ -4,8 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { getSelectedSaksnummer, getFagsakYtelseType, getSelectedFagsakStatus } from 'fagsak/fagsakSelectors';
-import { getBehandlinger, getNoExistingBehandlinger, getBehandlingerTypesMappedById } from 'behandling/selectors/behandlingerSelectors';
+import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
+import { getBehandlinger, getBehandlingerTypesMappedById, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId } from 'behandling/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
@@ -14,7 +14,7 @@ import { Panel } from 'nav-frontend-paneler';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
-  getShowAllBehandlinger, toggleShowAllBehandlinger, resetFagsakProfile, getAnnenPartBehandling,
+  getAnnenPartBehandling, getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger,
 } from './duck';
 import FagsakProfile from './components/FagsakProfile';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';

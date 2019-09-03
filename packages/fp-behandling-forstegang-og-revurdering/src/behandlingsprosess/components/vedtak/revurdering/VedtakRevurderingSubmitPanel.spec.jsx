@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/src/vedtakbrevStatus';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
-import { VedtakRevurderingSubmitPanelImpl as UnwrappedForm, getSubmitKnappTekst } from './VedtakRevurderingSubmitPanel';
+import { getSubmitKnappTekst, VedtakRevurderingSubmitPanelImpl as UnwrappedForm } from './VedtakRevurderingSubmitPanel';
 
 const forhandsvisVedtaksbrevFunc = sinon.spy();
 const forhandsvisManueltBrevFunc = sinon.spy();

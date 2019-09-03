@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
@@ -121,7 +121,7 @@ export const AdressePanel = ({
 };
 
 AdressePanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   bostedsadresse: PropTypes.string,
   midlertidigAdresse: PropTypes.string,
   postAdresseNorge: PropTypes.string,

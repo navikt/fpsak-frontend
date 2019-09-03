@@ -4,7 +4,7 @@ import { Fields } from 'redux-form';
 import moment from 'moment';
 import { injectIntl } from 'react-intl';
 import {
-  haystack, ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, ACCEPTED_DATE_INPUT_FORMATS,
+  ACCEPTED_DATE_INPUT_FORMATS, DDMMYYYY_DATE_FORMAT, haystack, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { Periodpicker } from '@fpsak-frontend/shared-components';
 import ReadOnlyField from './ReadOnlyField';

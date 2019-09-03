@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import {
-  toggleShowAllBehandlinger, resetFagsakProfile, fagsakProfileReducer, getShowAllBehandlinger,
+  fagsakProfileReducer, getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger,
 } from './duck';
 
 describe('Fagsak-reducer', () => {

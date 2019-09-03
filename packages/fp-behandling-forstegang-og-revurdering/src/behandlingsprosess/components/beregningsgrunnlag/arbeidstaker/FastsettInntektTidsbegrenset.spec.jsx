@@ -9,11 +9,11 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import FastsettInntektTidsbegrenset, {
+  createInputFieldKey,
   createTableData,
   getIsAksjonspunktClosed,
-  getTableHeaderData,
   getOppsummertBruttoInntektForTidsbegrensedePerioder,
-  createInputFieldKey,
+  getTableHeaderData,
 } from './FastsettInntektTidsbegrenset';
 
 const firstCol = {

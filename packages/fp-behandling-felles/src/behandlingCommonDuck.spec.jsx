@@ -4,9 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import {
-  RestApiConfigBuilder, ReduxRestApiBuilder,
-} from '@fpsak-frontend/rest-api-redux';
+import { ReduxRestApiBuilder, RestApiConfigBuilder } from '@fpsak-frontend/rest-api-redux';
 
 import getBehandlingRedux from './behandlingCommonDuck';
 

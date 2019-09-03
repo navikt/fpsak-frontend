@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { injectKodeverk, pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
+import { getLocationWithDefaultBehandlingspunktAndFakta, injectKodeverk, pathToBehandling } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 
 import { getAlleKodeverk } from 'kodeverk/duck';

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage, intlShape, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import classNames from 'classnames';
 import moment from 'moment';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
@@ -11,7 +11,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  FadingPanel, VerticalSpacer, AksjonspunktHelpText, ArrowBox,
+  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import PropTypes from 'prop-types';
 import { getBehandlingArsaker } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
@@ -19,14 +19,15 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import { SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  ISO_DATE_FORMAT, required, minLength, hasValidText,
+  hasValidText, ISO_DATE_FORMAT, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import styles from './varselOmRevurderingForm.less';
@@ -207,7 +208,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
 }
 
 VarselOmRevurderingFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   aksjonspunktStatus: PropTypes.string.isRequired,

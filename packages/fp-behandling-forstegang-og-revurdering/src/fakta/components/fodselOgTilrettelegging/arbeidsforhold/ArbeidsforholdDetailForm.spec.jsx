@@ -3,9 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import {
-  DatepickerField,
-} from '@fpsak-frontend/form';
+import { DatepickerField } from '@fpsak-frontend/form';
 import { Knapp } from 'nav-frontend-knapper';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';

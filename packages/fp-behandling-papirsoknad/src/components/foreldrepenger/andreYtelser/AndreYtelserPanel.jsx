@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormSection, formValueSelector, FieldArray } from 'redux-form';
+import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
-import { ElementWrapper, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
@@ -73,7 +73,7 @@ export const AndreYtelserPanelImpl = ({
 
 
 AndreYtelserPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   andreYtelser: kodeverkPropType.isRequired,
   selectedYtelser: PropTypes.shape().isRequired,

@@ -5,23 +5,20 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
-import { guid, dateFormat } from '@fpsak-frontend/utils';
+import { dateFormat, guid } from '@fpsak-frontend/utils';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import {
-  getUttakPerioder,
-  getBehandlingYtelseFordeling,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingYtelseFordeling, getUttakPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPerioder from './UttakPerioder';
 import {
-  sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkArbeidsprosentOver100,
-  sjekkOverlappendePerioder,
   sjekkEndretFørsteUttaksdato,
+  sjekkOmfaktaOmUttakAksjonspunkt,
+  sjekkOverlappendePerioder,
 } from './components/UttakPeriodeValidering';
 
 export const UttakFaktaForm = ({

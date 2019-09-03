@@ -1,14 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Container, Row, Column } from 'nav-frontend-grid';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './MessagesModal.less';
+
 /**
  * MessagesModal
  *
@@ -58,7 +59,7 @@ const MessagesModal = ({
 MessagesModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   closeEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 export default injectIntl(MessagesModal);

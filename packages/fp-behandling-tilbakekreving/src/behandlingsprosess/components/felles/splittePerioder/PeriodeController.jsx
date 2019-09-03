@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 
-import { Image, EditedIcon } from '@fpsak-frontend/shared-components';
+import { EditedIcon, Image } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';

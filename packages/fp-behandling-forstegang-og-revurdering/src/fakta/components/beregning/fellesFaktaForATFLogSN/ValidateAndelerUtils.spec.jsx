@@ -1,7 +1,5 @@
 import { expect } from 'chai';
-import {
-  validateUlikeAndeler, ulikeAndelerErrorMessage, compareAndeler,
-} from './ValidateAndelerUtils';
+import { compareAndeler, ulikeAndelerErrorMessage, validateUlikeAndeler } from './ValidateAndelerUtils';
 
 
 describe('<ValidateAndelerUtils>', () => {

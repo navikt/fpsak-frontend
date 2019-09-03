@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -85,7 +85,7 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
 }
 
 FordelBeregningsgrunnlagPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
    */

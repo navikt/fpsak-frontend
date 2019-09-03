@@ -9,18 +9,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  RadioOption, RadioGroupField, TextAreaField,
-} from '@fpsak-frontend/form';
-import {
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
+  hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import {
-  VerticalSpacer, FlexRow, FlexColumn,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';

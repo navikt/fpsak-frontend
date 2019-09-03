@@ -8,11 +8,7 @@ import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Table, TableRow } from '@fpsak-frontend/shared-components';
-import {
-  buildInitialValues,
-  getSortedManglendeVedlegg,
-  SokersOpplysningspliktFormImpl,
-} from './SokersOpplysningspliktForm';
+import { buildInitialValues, getSortedManglendeVedlegg, SokersOpplysningspliktFormImpl } from './SokersOpplysningspliktForm';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;

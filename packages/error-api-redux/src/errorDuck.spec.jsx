@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import {
-  errorReducer, addErrorMessage, removeErrorMessage, showCrashMessage,
+  addErrorMessage, errorReducer, removeErrorMessage, showCrashMessage,
 } from './errorDuck';
 
 describe('Error-reducer', () => {

@@ -6,10 +6,15 @@ import MockAdapter from 'axios-mock-adapter';
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import fpsakApi, { FpsakApiKeys, reduxRestApi } from 'data/fpsakApi';
 import {
-  RESET_FAGSAKER, fagsakReducer, setSelectedSaksnummer, resetFagsakContext, doNotResetWhitelist, updateFagsakInfo,
-  updateBehandlinger, fetchFagsakInfo,
-}
-  from './duck';
+  doNotResetWhitelist,
+  fagsakReducer,
+  fetchFagsakInfo,
+  RESET_FAGSAKER,
+  resetFagsakContext,
+  setSelectedSaksnummer,
+  updateBehandlinger,
+  updateFagsakInfo,
+} from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

@@ -6,9 +6,9 @@ import classnames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import { ISO_DATE_FORMAT, calcDays } from '@fpsak-frontend/utils';
+import { calcDays, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  FlexContainer, FlexRow, FlexColumn, Image,
+  FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 import overlapp from '@fpsak-frontend/assets/images/overlapp.svg';
 import tomPeriode from '@fpsak-frontend/assets/images/tom_periode.svg';

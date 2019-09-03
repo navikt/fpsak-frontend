@@ -9,9 +9,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-import {
-  hasValidPeriodIncludingOtherErrors, required, isRequiredMessage,
-} from '@fpsak-frontend/utils';
+import { hasValidPeriodIncludingOtherErrors, isRequiredMessage, required } from '@fpsak-frontend/utils';
 
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import RenderOppholdPeriodeFieldArray from './RenderOppholdPeriodeFieldArray';

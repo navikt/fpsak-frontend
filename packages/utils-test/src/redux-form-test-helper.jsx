@@ -1,6 +1,6 @@
 import React from 'react';
 import sinon from 'sinon';
-import { mountWithIntl, intlMock } from './intl-enzyme-test-helper';
+import { intlMock, mountWithIntl } from './intl-enzyme-test-helper';
 
 function noop() {
   return undefined;

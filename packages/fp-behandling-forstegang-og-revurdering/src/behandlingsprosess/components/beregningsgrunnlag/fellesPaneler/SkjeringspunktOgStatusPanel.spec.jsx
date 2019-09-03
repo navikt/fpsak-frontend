@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import SkjeringspunktOgStatusPanel, { SkjeringspunktOgStatusPanelImpl, RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from './SkjeringspunktOgStatusPanel';
+import SkjeringspunktOgStatusPanel, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN, SkjeringspunktOgStatusPanelImpl } from './SkjeringspunktOgStatusPanel';
 
 const apentVurderDekningsgradAP = {
   definisjon: {

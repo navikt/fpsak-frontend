@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
@@ -59,7 +59,7 @@ const AnkeVurderingModal = ({
 AnkeVurderingModal.propTypes = {
   showModal: PropTypes.bool,
   closeEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 AnkeVurderingModal.defaultProps = {

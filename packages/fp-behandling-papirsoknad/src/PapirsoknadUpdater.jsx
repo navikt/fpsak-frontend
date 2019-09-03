@@ -1,5 +1,5 @@
 import papirsoknadApi from './data/papirsoknadApi';
-import { updateBehandling, resetBehandling } from './duckPapirsoknad';
+import { resetBehandling, updateBehandling } from './duckPapirsoknad';
 
 class PapirsoknadUpdater {
     updateBehandling = () => updateBehandling;

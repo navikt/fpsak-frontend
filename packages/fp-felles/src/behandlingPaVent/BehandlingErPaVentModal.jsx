@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
@@ -90,7 +90,7 @@ BehandlingErPaVentModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   closeEvent: PropTypes.func.isRequired,
   handleOnHoldSubmit: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
   venteArsakKode: PropTypes.string,

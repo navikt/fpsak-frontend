@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Field as reduxFormField } from 'redux-form';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Input as NavInput } from 'nav-frontend-skjema';
 import renderNavField from './renderNavField';
 import ReadOnlyField from './ReadOnlyField';
@@ -45,7 +45,7 @@ const createNormalizeOnBlurField = (WrappedNavFieldComponent) => {
   FieldComponent.propTypes = {
     normalizeOnBlur: PropTypes.func.isRequired,
     component: PropTypes.func,
-    intl: intlShape.isRequired,
+    intl: PropTypes.shape().isRequired,
   };
   FieldComponent.defaultProps = {
     component: undefined,

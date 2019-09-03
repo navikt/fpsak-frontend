@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
-import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { Image } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -139,7 +139,7 @@ export class FatterVedtakStatusModal extends Component {
 FatterVedtakStatusModal.propTypes = {
   closeEvent: PropTypes.func.isRequired,
   isVedtakSubmission: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   showModal: PropTypes.bool,
   isKlageWithKA: PropTypes.bool,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,

@@ -4,14 +4,14 @@ import { getFormValues } from 'redux-form';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { maxValue, hasValidDecimal } from '@fpsak-frontend/utils';
+import { hasValidDecimal, maxValue } from '@fpsak-frontend/utils';
 import {
-  DatepickerField, SelectField, InputField, CheckboxField, DecimalField,
+  CheckboxField, DatepickerField, DecimalField, InputField, SelectField,
 } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';

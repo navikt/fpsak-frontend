@@ -1,27 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import moment from 'moment';
-import { Row, Column } from 'nav-frontend-grid';
-import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
+import { FaktaEkspandertpanel, FaktaGruppe, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { faktaPanelCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  FaktaEkspandertpanel, withDefaultToggling, FaktaGruppe,
-} from '@fpsak-frontend/fp-behandling-felles';
-import { getBehandlingFormPrefix, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import {
-  DDMMYYYY_DATE_FORMAT, minLength, maxLength, hasValidText, required,
+  DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import { getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import { behandlingFormTilbakekreving } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
 import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
@@ -258,7 +256,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
 }
 
 FeilutbetalingInfoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,

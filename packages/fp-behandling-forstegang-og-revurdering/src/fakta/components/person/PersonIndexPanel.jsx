@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { PersonIndex, faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, PersonIndex } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Hovedknapp } from 'nav-frontend-knapper';

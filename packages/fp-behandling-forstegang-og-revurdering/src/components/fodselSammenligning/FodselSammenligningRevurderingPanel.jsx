@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling,
+  getFamiliehendelseFraOriginalBehandling,
+  getSoknadFraOriginalBehandling,
 } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';

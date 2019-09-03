@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import { change as reduxFormChange, initialize as reduxFormInitialize } from 'redux-form';
 import { bindActionCreators } from 'redux';
 import moment from 'moment';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import { omit, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  FadingPanel, VerticalSpacer, FlexRow, FlexColumn, AksjonspunktHelpText,
+  AksjonspunktHelpText, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
@@ -18,11 +18,14 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import {
-  behandlingFormTilbakekreving, behandlingFormValueSelector, isBehandlingFormDirty,
-  hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  behandlingFormTilbakekreving,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import { getFagsakPerson, getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
 import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';

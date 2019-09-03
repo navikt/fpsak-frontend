@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBeregningsgrunnlag, getEndringBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import EndringBeregningsgrunnlagForm from './EndringBeregningsgrunnlagForm';
 
 export const FastsettEndretBeregningsgrunnlagImpl = ({

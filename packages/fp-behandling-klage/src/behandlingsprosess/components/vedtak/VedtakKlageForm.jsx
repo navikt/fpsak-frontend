@@ -6,7 +6,7 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import { FadingPanel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 

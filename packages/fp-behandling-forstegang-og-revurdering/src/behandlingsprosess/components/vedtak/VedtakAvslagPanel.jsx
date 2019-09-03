@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -11,12 +11,12 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getFagsakYtelseType, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getAlleKodeverk, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   endringerIBeregningsgrunnlagGirFritekstfelt,
-  hasIkkeOppfyltSoknadsfristvilkar,
   findAvslagResultatText,
   findTilbakekrevingText,
+  hasIkkeOppfyltSoknadsfristvilkar,
 } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
 import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
 
@@ -79,7 +79,7 @@ export const VedtakAvslagPanelImpl = ({
 };
 
 VedtakAvslagPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,

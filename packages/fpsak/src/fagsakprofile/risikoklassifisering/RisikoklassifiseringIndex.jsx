@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { trackRouteParam, getRiskPanelLocationCreator } from '@fpsak-frontend/fp-felles';
-import {
-  getBehandlingIdentifier, getBehandlingVersjon,
-} from 'behandling/duck';
+import { getRiskPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { getBehandlingIdentifier, getBehandlingVersjon } from 'behandling/duck';
 
 import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -16,12 +14,12 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fpsakApi from '../../data/fpsakApi';
 import {
-  hentKontrollresultat, resolveAksjonspunkter, setRiskPanelOpen, isRiskPanelOpen,
+  hentKontrollresultat, isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
 } from './duck';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
-import { getRisikoaksjonspunkt, getKontrollresultat, getReadOnly } from './kontrollresultatSelectors';
+import { getKontrollresultat, getReadOnly, getRisikoaksjonspunkt } from './kontrollresultatSelectors';
 
 const harResultatkode = (risikoklassifisering, resultatkode) => {
   if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {

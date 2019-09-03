@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
-import checkImg from '@fpsak-frontend/assets/images/check.svg';//
+import checkImg from '@fpsak-frontend/assets/images/check.svg'; //
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';

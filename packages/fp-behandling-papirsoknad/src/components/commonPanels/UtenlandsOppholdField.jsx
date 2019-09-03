@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray } from 'redux-form';
 import classnames from 'classnames/bind';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
-import { SelectField, DatepickerField } from '@fpsak-frontend/form';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
-  required, hasValidValue, hasValidPeriodIncludingOtherErrors, isRequiredMessage,
+  hasValidPeriodIncludingOtherErrors, hasValidValue, isRequiredMessage, required,
 } from '@fpsak-frontend/utils';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 

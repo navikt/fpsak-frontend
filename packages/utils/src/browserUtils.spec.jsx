@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { isIE11, isEdge } from './browserUtils';
+import { isEdge, isIE11 } from './browserUtils';
 
 describe('browserUtils', () => {
   describe('isIE11', () => {

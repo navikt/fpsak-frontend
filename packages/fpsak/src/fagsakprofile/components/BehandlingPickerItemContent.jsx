@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { DateLabel, Image, BorderBox } from '@fpsak-frontend/shared-components';
+import { BorderBox, DateLabel, Image } from '@fpsak-frontend/shared-components';
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';

@@ -2,25 +2,19 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { FormSection, clearFields, formPropTypes } from 'redux-form';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertekst, Element } from 'nav-frontend-typografi';
+import { clearFields, formPropTypes, FormSection } from 'redux-form';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import {
-  RadioOption, RadioGroupField, TextAreaField,
-} from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 
 import {
-  formatCurrencyNoKr,
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
+  formatCurrencyNoKr, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import {
-  VerticalSpacer, FlexRow, FlexColumn, AdvarselModal,
+  AdvarselModal, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import { behandlingFormTilbakekreving, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';

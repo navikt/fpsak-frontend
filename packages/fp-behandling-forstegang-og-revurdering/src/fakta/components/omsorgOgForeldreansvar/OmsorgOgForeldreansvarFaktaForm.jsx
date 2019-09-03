@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray } from 'redux-form';
 import { connect } from 'react-redux';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { EditedIcon, ElementWrapper, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, EditedIcon, ElementWrapper } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { SelectField } from '@fpsak-frontend/form';
-import { required, hasValidInteger, isObjectEmpty } from '@fpsak-frontend/utils';
+import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
 import VilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import OmsorgsovertakelseFaktaPanel from './OmsorgsovertakelseFaktaPanel';
 import RettighetFaktaPanel from './RettighetFaktaPanel';
@@ -117,7 +117,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
 );
 
 OmsorgOgForeldreansvarFaktaFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   vilkarTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,

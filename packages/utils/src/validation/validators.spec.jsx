@@ -3,12 +3,31 @@ import moment from 'moment';
 
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '../formats';
 import {
-  required, requiredIfNotPristine, requiredIfCustomFunctionIsTrue, minLength, maxLength, minValue, maxValue,
-  hasValidInteger, hasValidDecimal, hasValidDate, dateBeforeOrEqual, dateAfterOrEqual, dateRangesNotOverlapping,
-  dateBeforeToday, dateBeforeOrEqualToToday, dateAfterToday, dateAfterOrEqualToToday,
-  hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidText, hasValidName,
-  hasValidSaksnummerOrFodselsnummerFormat, hasValidPeriod, isWithinOpptjeningsperiode,
+  dateAfterOrEqual,
+  dateAfterOrEqualToToday,
+  dateAfterToday,
+  dateBeforeOrEqual,
+  dateBeforeOrEqualToToday,
+  dateBeforeToday,
   dateIsBefore,
+  dateRangesNotOverlapping,
+  hasValidDate,
+  hasValidDecimal,
+  hasValidFodselsnummer,
+  hasValidFodselsnummerFormat,
+  hasValidInteger,
+  hasValidName,
+  hasValidPeriod,
+  hasValidSaksnummerOrFodselsnummerFormat,
+  hasValidText,
+  isWithinOpptjeningsperiode,
+  maxLength,
+  maxValue,
+  minLength,
+  minValue,
+  required,
+  requiredIfCustomFunctionIsTrue,
+  requiredIfNotPristine,
 } from './validators';
 
 const today = moment();

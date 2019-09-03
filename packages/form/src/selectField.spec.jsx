@@ -1,8 +1,8 @@
 import React from 'react';
-import { createStore, combineReducers } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
-import { reduxForm, reducer as formReducer } from 'redux-form';
+import { reducer as formReducer, reduxForm } from 'redux-form';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';

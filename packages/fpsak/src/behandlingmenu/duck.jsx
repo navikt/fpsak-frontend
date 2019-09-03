@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { reducerRegistry, pathToBehandling, getLocationWithDefaultBehandlingspunktAndFakta } from '@fpsak-frontend/fp-felles';
+import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakApi from 'data/fpsakApi';
-import { updateFagsakInfo, updateBehandlinger } from 'fagsak/duck';
+import { updateBehandlinger, updateFagsakInfo } from 'fagsak/duck';
 import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
 

@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import {
-  getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import { omit, addDaysToDate } from '@fpsak-frontend/utils';
+import { addDaysToDate, omit } from '@fpsak-frontend/utils';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
@@ -61,7 +59,7 @@ export const OpptjeningInfoPanelImpl = ({
 );
 
 OpptjeningInfoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
    */

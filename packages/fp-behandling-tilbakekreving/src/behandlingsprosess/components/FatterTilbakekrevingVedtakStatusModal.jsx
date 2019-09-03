@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
@@ -58,7 +58,7 @@ const FatterTilbakekrevingVedtakStatusModal = ({
 );
 
 FatterTilbakekrevingVedtakStatusModal.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   closeEvent: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
 };

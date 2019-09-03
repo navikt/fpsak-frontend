@@ -6,9 +6,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import moment from 'moment';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
-import {
-  skalValidereMotBeregningsgrunnlag,
-} from '../BgFordelingUtils';
+import { skalValidereMotBeregningsgrunnlag } from '../BgFordelingUtils';
 
 import styles from './endringBeregningsgrunnlagForm.less';
 

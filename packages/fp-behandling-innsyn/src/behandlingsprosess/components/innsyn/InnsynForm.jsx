@@ -11,9 +11,9 @@ import { Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  FadingPanel, ArrowBox, VerticalSpacer, AksjonspunktHelpText,
+  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { required, hasValidDate, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -21,11 +21,15 @@ import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatTy
 
 import behandlingspunktInnsynSelectors from 'behandlingInnsyn/src/behandlingsprosess/selectors/behandlingsprosessInnsynSelectors';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormInnsyn, behandlingFormValueSelector,
+  behandlingFormInnsyn,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingInnsyn/src/behandlingFormInnsyn';
 import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import {
-  getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer, getAllDocuments,
+  getAllDocuments, getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer,
 } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';

@@ -11,7 +11,10 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
 import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
-  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, fetchVedtaksbrevPreview, fetchFptilbakePreviewBrev as fetchFptilbakePreview,
+  fetchFptilbakePreviewBrev as fetchFptilbakePreview,
+  fetchVedtaksbrevPreview,
+  getSelectedBehandlingspunktNavn,
+  setSelectedBehandlingspunktNavn,
 } from './duckBpForstegangOgRev';
 
 import BehandlingspunktInfoPanel from './components/BehandlingspunktInfoPanel';

@@ -1,23 +1,21 @@
 import { expect } from 'chai';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
-import { lonnsendringField }
-  from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
-import { erNyoppstartetFLField }
-  from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
+// eslint-disable-next-line max-len
+import { lonnsendringField } from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
+// eslint-disable-next-line max-len
+import { erNyoppstartetFLField } from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
+  mapAndelToField,
+  mapToBelop,
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
   skalRedigereInntektForAndel,
-  mapToBelop,
-  mapAndelToField,
   skalRedigereInntektskategoriForAndel,
 } from './BgFordelingUtils';
-import { utledArbeidsforholdFieldName, finnFrilansFieldName }
-  from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
-import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD }
-  from './InntektstabellPanel';
+import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
+import { MANUELL_OVERSTYRING_BEREGNINGSGRUNNLAG_FIELD } from './InntektstabellPanel';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 
 const arbeidsgiver = {

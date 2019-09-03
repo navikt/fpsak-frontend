@@ -4,9 +4,12 @@ import { expect } from 'chai';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  FodselSammenligningOtherPanel, getTerminFodselLabel, getAntallBarn, getTerminOrFodselDate, getTerminFodselHeader,
-}
-  from './FodselSammenligningOtherPanel';
+  FodselSammenligningOtherPanel,
+  getAntallBarn,
+  getTerminFodselHeader,
+  getTerminFodselLabel,
+  getTerminOrFodselDate,
+} from './FodselSammenligningOtherPanel';
 
 describe('<FodselSammenligningOtherPanel>', () => {
   it('skal vise utstedt dato når denne finnes', () => {

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { lagTotalInntektArbeidsforholdList, AAP_ARBEIDSGIVER_KEY } from './TotalbelopPrArbeidsgiverError';
+import { AAP_ARBEIDSGIVER_KEY, lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 
 
 const getKodeverknavn = (kodeverk) => {

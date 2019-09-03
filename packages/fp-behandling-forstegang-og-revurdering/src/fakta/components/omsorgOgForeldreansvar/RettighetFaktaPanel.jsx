@@ -8,7 +8,7 @@ import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/s
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer, DateLabel } from '@fpsak-frontend/shared-components';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './rettighetFaktaPanel.less';
 

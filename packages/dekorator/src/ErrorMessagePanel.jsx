@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
@@ -101,7 +101,7 @@ export class ErrorMessagePanel extends Component {
 }
 
 ErrorMessagePanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   showDetailedErrorMessages: PropTypes.bool.isRequired,
   errorMessages: PropTypes.arrayOf(PropTypes.shape({
     message: PropTypes.string.isRequired,

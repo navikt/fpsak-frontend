@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { withoutRestActions, ignoreRestErrors } from '@fpsak-frontend/utils-test/src/data-test-helper';
+import { ignoreRestErrors, withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 
 import fpsakBehandlingApi, { reduxRestApi } from '../data/fpsakBehandlingApi';
-import { resolveProsessAksjonspunkter, overrideProsessAksjonspunkter } from './duckBpForstegangOgRev';
+import { overrideProsessAksjonspunkter, resolveProsessAksjonspunkter } from './duckBpForstegangOgRev';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);

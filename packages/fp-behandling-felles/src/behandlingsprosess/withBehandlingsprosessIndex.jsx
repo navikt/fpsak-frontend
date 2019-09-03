@@ -3,16 +3,21 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta, BehandlingIdentifier,
+  BehandlingIdentifier,
+  getBehandlingspunktLocation,
+  getLocationWithDefaultBehandlingspunktAndFakta,
+  requireProps,
+  trackRouteParam,
 } from '@fpsak-frontend/fp-felles';
 
+import { injectIntl } from 'react-intl';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import findStatusIcon from './statusIconHelper';
 import BehandlingsprosessPanel from './components/BehandlingsprosessPanel';
 import IverksetterVedtakStatusModal from './components/vedtak/IverksetterVedtakStatusModal';
@@ -25,6 +30,7 @@ const hasOverstyringAp = (aksjonspunkter) => (
     .some((ap) => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING)
 );
 
+
 /**
  * withBehandlingsprosessIndex
  *
@@ -32,27 +38,29 @@ const hasOverstyringAp = (aksjonspunkter) => (
  * fagsak og behandling for å generere opp korrekte behandlingspunkter og tilhørende aksjonspunkter.
  * Er også ansvarlig for alle serverkall. Dvs. henting av data og lagrefunksjonalitet.
  */
+
+
 const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn) => (WrappedComponent) => {
   class BehandlingsprosessIndex extends Component {
     componentDidMount = () => {
       this.setup();
-    }
+    };
 
     componentDidUpdate = (prevProps) => {
       this.setup(prevProps.behandlingVersjon);
-    }
+    };
 
     componentWillUnmount = () => {
       const { resetBehandlingspunkter: resetBp } = this.props;
       resetBp();
-    }
+    };
 
     setup = (prevBehandlingVersjon) => {
       const { behandlingVersjon, resetBehandlingspunkter: resetBp } = this.props;
       if (behandlingVersjon !== prevBehandlingVersjon) {
         resetBp();
       }
-    }
+    };
 
     /* NOTE: Denne er en slags toggle, selv om ikke navnet tilsier det */
     goToBehandlingspunkt = (punktName) => {
@@ -62,17 +70,17 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
       } else {
         pushLocation(getBehandlingspunktLocation(location)(formatBehandlingspunktName(punktName)));
       }
-    }
+    };
 
     goToBehandlingWithDefaultPunktAndFakta = () => {
       const { push: pushLocation, location } = this.props;
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    }
+    };
 
     goToSearchPage = () => {
       const { push: pushLocation } = this.props;
       pushLocation('/');
-    }
+    };
 
     previewCallback = (data) => {
       const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
@@ -81,7 +89,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
         behandlingId: behandlingIdentifier.behandlingId,
       };
       fetchBrevPreview(brevData);
-    }
+    };
 
     submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo) => {
       const {
@@ -119,27 +127,40 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
 
       return resolveAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
         .then(afterSubmitCallback);
-    }
+    };
 
     render = () => {
       const {
         behandlingspunkter, selectedBehandlingspunkt, isSelectedBehandlingHenlagt, fagsakYtelseType,
-        resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, getBehandlingspunkterStatus,
-        getBehandlingspunkterTitleCodes, getAksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
-        aksjonspunkter, behandlingType, isKlageWithKA, doNotUseIverksetterVedtakModal, additionalBehandlingspunktImages,
+        resolveProsessAksjonspunkterSuccess, behandlingStatus, behandlingsresultat, behandlingspunkterStatus,
+        behandlingspunkterTitleCodes, aksjonspunkterOpenStatus, doNotUseFatterVedtakModal, behandlingIdentifier,
+        aksjonspunkter, behandlingType, isKlageWithKA, doNotUseIverksetterVedtakModal, additionalBehandlingspunktImages, intl,
       } = this.props;
 
+      const punkter = [];
+      const findIcon = findStatusIcon(additionalBehandlingspunktImages);
+      behandlingspunkter.forEach((navn) => {
+        const selected = navn === selectedBehandlingspunkt;
+        const status = behandlingspunkterStatus ? behandlingspunkterStatus[navn] : null;
+        const hasOpenAksjonspunkt = aksjonspunkterOpenStatus ? aksjonspunkterOpenStatus[navn] : null;
+        const titleCode = behandlingspunkterTitleCodes[navn];
+        const isIkkeVurdert = status === vilkarUtfallType.IKKE_VURDERT && !hasOpenAksjonspunkt;
+        punkter.push({
+          navn,
+          selected,
+          src: findIcon(navn, status, selected, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)(false),
+          srcHoover: findIcon(navn, status, selected, isSelectedBehandlingHenlagt, hasOpenAksjonspunkt)(true),
+          title: intl.formatMessage({ id: titleCode }),
+          isIkkeVurdert,
+          callback: () => this.goToBehandlingspunkt(navn),
+        });
+      });
       return (
         <>
           <BehandlingsprosessPanel
-            behandlingspunkter={behandlingspunkter}
+            punkter={punkter}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
-            selectBehandlingspunktCallback={this.goToBehandlingspunkt}
             isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-            findBehandlingsprosessIcon={findStatusIcon(additionalBehandlingspunktImages)}
-            getBehandlingspunkterStatus={getBehandlingspunkterStatus}
-            getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
-            getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
           >
             <WrappedComponent
               submitCallback={this.submitAksjonspunkter}
@@ -175,34 +196,35 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
           )}
         </>
       );
-    }
+    };
   }
 
   BehandlingsprosessIndex.propTypes = {
-    behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-    behandlingVersjon: PropTypes.number.isRequired,
-    behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
-    selectedBehandlingspunkt: PropTypes.string,
-    resetBehandlingspunkter: PropTypes.func.isRequired,
-    isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
-    location: PropTypes.shape().isRequired,
-    push: PropTypes.func.isRequired,
-    resolveProsessAksjonspunkter: PropTypes.func.isRequired,
-    overrideProsessAksjonspunkter: PropTypes.func,
-    fetchPreview: PropTypes.func,
-    fagsakYtelseType: kodeverkObjektPropType.isRequired,
-    behandlingStatus: kodeverkObjektPropType.isRequired,
-    resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-    behandlingsresultat: PropTypes.shape(),
-    getBehandlingspunkterStatus: PropTypes.func.isRequired,
-    getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
-    getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
-    behandlingType: kodeverkObjektPropType.isRequired,
+    additionalBehandlingspunktImages: PropTypes.shape(),
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+    aksjonspunkterOpenStatus: PropTypes.shape(),
+    behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+    behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
+    behandlingspunkterStatus: PropTypes.shape(),
+    behandlingspunkterTitleCodes: PropTypes.shape(),
+    behandlingsresultat: PropTypes.shape(),
+    behandlingStatus: kodeverkObjektPropType.isRequired,
+    behandlingType: kodeverkObjektPropType.isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
     doNotUseFatterVedtakModal: PropTypes.bool,
     doNotUseIverksetterVedtakModal: PropTypes.bool,
+    fagsakYtelseType: kodeverkObjektPropType.isRequired,
+    fetchPreview: PropTypes.func,
+    intl: PropTypes.shape().isRequired,
     isKlageWithKA: PropTypes.bool,
-    additionalBehandlingspunktImages: PropTypes.shape(),
+    isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
+    location: PropTypes.shape().isRequired,
+    overrideProsessAksjonspunkter: PropTypes.func,
+    push: PropTypes.func.isRequired,
+    resetBehandlingspunkter: PropTypes.func.isRequired,
+    resolveProsessAksjonspunkter: PropTypes.func.isRequired,
+    resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+    selectedBehandlingspunkt: PropTypes.string,
   };
 
   BehandlingsprosessIndex.defaultProps = {
@@ -241,7 +263,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     };
   };
 
-  const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(BehandlingsprosessIndex);
+  const withPropsCheck = requireProps(['behandlingIdentifier', 'behandlingspunkter'], <LoadingPanel />)(injectIntl(BehandlingsprosessIndex));
   const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({
     paramName: 'punkt',
     paramPropType: PropTypes.string,

@@ -3,11 +3,11 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import faresignalVurdering from '@fpsak-frontend/kodeverk/src/faresignalVurdering';
 
 import {
-  AvklarFaresignalerForm as UnwrappedForm, buildInitialValues, begrunnelseFieldName, radioFieldName,
+  AvklarFaresignalerForm as UnwrappedForm, begrunnelseFieldName, buildInitialValues, radioFieldName,
 } from './AvklarFaresignalerForm';
 
 const mockAksjonspunkt = (status, begrunnelse) => ({

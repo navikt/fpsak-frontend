@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import {
-  formatCurrencyWithKr, formatCurrencyNoKr, removeSpacesFromNumber, parseCurrencyInput,
+  formatCurrencyNoKr, formatCurrencyWithKr, parseCurrencyInput, removeSpacesFromNumber,
 } from './currencyUtils';
 
 describe('Currency-utils', () => {

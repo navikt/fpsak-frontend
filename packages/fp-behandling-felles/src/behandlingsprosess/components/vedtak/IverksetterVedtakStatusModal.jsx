@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -85,7 +85,7 @@ class IverksetterVedtakStatusModal extends Component {
 }
 
 IverksetterVedtakStatusModal.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   closeEvent: PropTypes.func.isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,

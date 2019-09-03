@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Normaltekst, Undertittel, Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
 
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';

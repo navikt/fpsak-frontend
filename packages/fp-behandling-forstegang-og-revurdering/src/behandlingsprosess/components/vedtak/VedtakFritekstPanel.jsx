@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, injectIntl } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText, getLanguageCodeFromSprakkode, decodeHtmlEntity,
+  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 
 import styles from './vedtakAvslagPanel.less';
@@ -56,7 +56,7 @@ const VedtakFritekstPanelImpl = ({
 );
 
 VedtakFritekstPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,

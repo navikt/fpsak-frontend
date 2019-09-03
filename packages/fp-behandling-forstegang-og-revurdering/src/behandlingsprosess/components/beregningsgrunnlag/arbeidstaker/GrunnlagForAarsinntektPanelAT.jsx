@@ -9,10 +9,10 @@ import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/s
 import { InputField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  Image, VerticalSpacer, Table, TableRow, TableColumn,
+  Image, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+  formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';

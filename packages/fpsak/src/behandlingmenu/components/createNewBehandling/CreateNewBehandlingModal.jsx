@@ -3,7 +3,7 @@ import { formValueSelector, reduxForm } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -135,7 +135,7 @@ CreateNewBehandlingModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingType: PropTypes.string,
   behandlingArsakTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,

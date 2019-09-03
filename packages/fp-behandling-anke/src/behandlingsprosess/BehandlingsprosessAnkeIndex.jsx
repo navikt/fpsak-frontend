@@ -9,7 +9,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
 import {
-  setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke,
+  getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke, setSelectedBehandlingspunktNavn,
 } from './duckBpAnke';
 
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';

@@ -4,7 +4,10 @@ import { expect } from 'chai';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  FodselSammenligningRevurderingPanel, getIsTermin, getTerminDateOrFodselDate, getAntallBarn,
+  FodselSammenligningRevurderingPanel,
+  getAntallBarn,
+  getIsTermin,
+  getTerminDateOrFodselDate,
   showVedtaksdatoAsSvangerskapsuke,
 } from './FodselSammenligningRevurderingPanel';
 

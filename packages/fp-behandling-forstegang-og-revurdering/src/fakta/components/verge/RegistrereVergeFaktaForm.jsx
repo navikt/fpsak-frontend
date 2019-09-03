@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import {
-  required, hasValidDate, hasValidFodselsnummer, hasValidName,
+  hasValidDate, hasValidFodselsnummer, hasValidName, required,
 } from '@fpsak-frontend/utils';
 import {
-  InputField, DatepickerField, SelectField, TextAreaField, CheckboxField,
+  CheckboxField, DatepickerField, InputField, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -151,7 +151,7 @@ RegistrereVergeFaktaForm.transformValues = (values) => ({
 });
 
 RegistrereVergeFaktaForm.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   vergetyper: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,

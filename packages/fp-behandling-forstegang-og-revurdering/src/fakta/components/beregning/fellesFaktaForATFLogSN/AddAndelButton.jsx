@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
@@ -67,7 +67,7 @@ export const AddAndelButtonImpl = ({
 
 AddAndelButtonImpl.propTypes = {
   fields: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   aktivitetStatuser: kodeverkPropType.isRequired,
   erKunYtelse: PropTypes.bool.isRequired,
 };

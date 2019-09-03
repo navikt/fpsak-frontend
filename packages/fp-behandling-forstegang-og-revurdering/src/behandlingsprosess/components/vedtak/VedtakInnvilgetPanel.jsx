@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
-import { intlShape } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -12,7 +11,7 @@ import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlin
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { findInnvilgetResultatText, endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from './VedtakHelper';
+import { endringerIBeregningsgrunnlagGirFritekstfelt, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -69,7 +68,7 @@ export const VedtakInnvilgetPanelImpl = ({
 );
 
 VedtakInnvilgetPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   beregningResultat: PropTypes.shape(),
   antallBarn: PropTypes.number,
   behandlingsresultat: PropTypes.shape().isRequired,

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
-  FlexContainer, FlexRow, FlexColumn, Image,
+  FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './tittelMedDivider.less';

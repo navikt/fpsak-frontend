@@ -1,7 +1,7 @@
 import moment from 'moment/moment';
 import 'moment/locale/nb';
 import {
-  DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, HHMM_TIME_FORMAT, YYYY_MM_FORMAT,
+  DDMMYYYY_DATE_FORMAT, HHMM_TIME_FORMAT, ISO_DATE_FORMAT, YYYY_MM_FORMAT,
 } from './formats';
 
 export const TIDENES_ENDE = '9999-12-31';

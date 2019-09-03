@@ -2,28 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { formPropTypes, FieldArray } from 'redux-form';
+import { FieldArray, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  ElementWrapper, VerticalSpacer, ArrowBox,
-} from '@fpsak-frontend/shared-components';
-import {
-  getEditedStatus, getFamiliehendelseGjeldende, getBarnFraTpsRelatertTilSoknad, getSoknadAntallBarn,
+  getBarnFraTpsRelatertTilSoknad,
+  getEditedStatus,
+  getFamiliehendelseGjeldende,
+  getSoknadAntallBarn,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
-import {
-  required,
-} from '@fpsak-frontend/utils';
-import {
-  RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

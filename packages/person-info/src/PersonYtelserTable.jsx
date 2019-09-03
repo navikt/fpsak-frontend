@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 
 import styles from './personYtelserTable.less';
 
@@ -71,7 +71,7 @@ export const PersonYtelserTable = ({
 };
 
 PersonYtelserTable.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   ytelser: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,

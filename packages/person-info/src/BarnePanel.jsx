@@ -1,11 +1,11 @@
 import React from 'react';
-import { Element, Undertekst, Normaltekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 import Panel from 'nav-frontend-paneler';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer, DateLabel, Image } from '@fpsak-frontend/shared-components';
+import { DateLabel, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';

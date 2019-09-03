@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { required } from '@fpsak-frontend/utils';
@@ -28,7 +28,7 @@ export const DekningsgradPanel = ({
 );
 
 DekningsgradPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import behandlingSelectors from '../selectors/innsynBehandlingSelectors';
 import {
-  resolveProsessAksjonspunkter, resetBehandlingspunkter, getResolveProsessAksjonspunkterSuccess, fetchPreviewBrev as fetchPreview,
+  fetchPreviewBrev as fetchPreview,
+  getResolveProsessAksjonspunkterSuccess,
+  resetBehandlingspunkter,
+  resolveProsessAksjonspunkter,
 } from './duckBpInnsyn';
 import behandlingspunktInnsynSelectors from './selectors/behandlingsprosessInnsynSelectors';
 import BehandlingsprosessInnsynIndex from './BehandlingsprosessInnsynIndex';
@@ -32,9 +35,9 @@ BehandlingsprosessInnsynContainer.propTypes = {
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingStatus: kodeverkObjektPropType.isRequired,
   behandlingsresultat: PropTypes.shape(),
-  getBehandlingspunkterStatus: PropTypes.func.isRequired,
-  getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
-  getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
+  behandlingspunkterStatus: PropTypes.shape(),
+  behandlingspunkterTitleCodes: PropTypes.shape(),
+  aksjonspunkterOpenStatus: PropTypes.shape(),
   location: PropTypes.shape().isRequired,
   fetchPreviewBrev: PropTypes.func.isRequired,
   resolveProsessAksjonspunkter: PropTypes.func.isRequired,
@@ -55,9 +58,9 @@ const mapStateToProps = (state) => ({
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   behandlingType: behandlingSelectors.getBehandlingType(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  getBehandlingspunkterStatus: behandlingspunktInnsynSelectors.getBehandlingspunkterStatus,
-  getBehandlingspunkterTitleCodes: behandlingspunktInnsynSelectors.getBehandlingspunkterTitleCodes,
-  getAksjonspunkterOpenStatus: behandlingspunktInnsynSelectors.getAksjonspunkterOpenStatus,
+  behandlingspunkterStatus: behandlingspunktInnsynSelectors.getBehandlingspunkterStatus(state),
+  behandlingspunkterTitleCodes: behandlingspunktInnsynSelectors.getBehandlingspunkterTitleCodes(state),
+  aksjonspunkterOpenStatus: behandlingspunktInnsynSelectors.getAksjonspunkterOpenStatus(state),
   fetchPreviewBrev: fetchPreview,
   location: state.router.location,
   resolveProsessAksjonspunkter,

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
-import { Element, Undertittel, Undertekst } from 'nav-frontend-typografi';
+import { Element, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import nbKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -60,12 +60,14 @@ const PersonDetailedHeader = ({
   const alder = getAgeFromDate(fodselsdato);
   const currentPersonstatus = getCurrentPersonstatus(personstatus, avklartPersonstatus);
   const isDod = currentPersonstatus ? currentPersonstatus.kode === personstatusType.DOD : false;
-
+  const intl = useIntl();
   const content = (
     <>
       <Image
+        intl={intl}
         className={styles.icon}
         src={getPersonImage(navBrukerKjonn.kode)}
+        alt={intl.formatMessage({ id: 'Person.ImageText' })}
         altCode="Person.ImageText"
         titleCode={getTitleCode(navBrukerKjonn.kode)}
       />

@@ -1,20 +1,14 @@
 import React from 'react';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import {
-  DDMMYYYY_DATE_FORMAT,
-  hasValidDate, required,
-  dateAfterOrEqual,
-  dateBeforeOrEqual,
-  ISO_DATE_FORMAT,
-  calcDaysAndWeeks,
+  calcDaysAndWeeks, dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import {
-  FlexContainer, FlexRow, FlexColumn,
-} from '@fpsak-frontend/shared-components';
-import {
-  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -124,7 +118,7 @@ DelOppPeriodeModalImpl.propTypes = {
   periodeData: uttaksresultatAktivitetPropType.isRequired,
   cancelEvent: PropTypes.func.isRequired,
   showModal: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 

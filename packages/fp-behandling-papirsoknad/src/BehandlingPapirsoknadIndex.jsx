@@ -10,8 +10,14 @@ import behandlingSelectors from './selectors/papirsoknadSelectors';
 import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadIndex from './PapirsoknadIndex';
 import {
-  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetRegistreringSuccess, getKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+  fetchBehandling as fetchBehandlingActionCreator,
+  getBehandlingIdentifier,
+  getHasShownBehandlingPaVent,
+  getKodeverk,
+  resetRegistreringSuccess,
+  setBehandlingInfo,
+  setHasShownBehandlingPaVent,
+  updateOnHold,
 } from './duckPapirsoknad';
 import PapirsoknadUpdater from './PapirsoknadUpdater';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
@@ -44,7 +44,7 @@ export const FodselOgTilretteleggingInfoPanelImpl = ({
 );
 
 FodselOgTilretteleggingInfoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   readOnly: PropTypes.bool.isRequired,

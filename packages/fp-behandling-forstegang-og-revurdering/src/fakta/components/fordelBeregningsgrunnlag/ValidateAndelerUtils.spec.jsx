@@ -1,9 +1,18 @@
 import { expect } from 'chai';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
 import {
-  validateUlikeAndeler, ulikeAndelerErrorMessage, validateSumFastsattBelop, skalVereLikFordelingMessage, compareAndeler,
-  validateTotalRefusjonPrArbeidsforhold, skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding, validateAndeler, tomErrorMessage,
-  validateAgainstBeregningsgrunnlag, validateFastsattBelop, kanIkkjeHaNullBeregningsgrunnlagError,
+  compareAndeler,
+  kanIkkjeHaNullBeregningsgrunnlagError,
+  skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding,
+  skalVereLikFordelingMessage,
+  tomErrorMessage,
+  ulikeAndelerErrorMessage,
+  validateAgainstBeregningsgrunnlag,
+  validateAndeler,
+  validateFastsattBelop,
+  validateSumFastsattBelop,
+  validateTotalRefusjonPrArbeidsforhold,
+  validateUlikeAndeler,
 } from './ValidateAndelerUtils';
 
 const skalValidereMotRapportert = () => true;

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import {
-  reduxForm, formValueSelector, getFormSyncErrors, isDirty, getFormValues, getFormInitialValues, isSubmitting,
+  formValueSelector, getFormInitialValues, getFormSyncErrors, getFormValues, isDirty, isSubmitting, reduxForm,
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';

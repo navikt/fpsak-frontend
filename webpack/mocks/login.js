@@ -29,7 +29,7 @@ module.exports = function (app) {
     })
       .then(result => {
         res.cookie('ID_token', result.data.id_token, {
-          maxAge: 900000,
+          maxAge: 86400000,
           httpOnly: true,
         });
         res.redirect(redirectUri);

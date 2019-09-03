@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { formValueSelector, FieldArray, FormSection } from 'redux-form';
+import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
-import { required, arrayMinLength } from '@fpsak-frontend/utils';
+import { arrayMinLength, required } from '@fpsak-frontend/utils';
 import { Fieldset } from 'nav-frontend-skjema';
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
@@ -61,7 +61,7 @@ export const EgenVirksomhetPanel = ({
 );
 
 EgenVirksomhetPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   form: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   harArbeidetIEgenVirksomhet: PropTypes.bool,

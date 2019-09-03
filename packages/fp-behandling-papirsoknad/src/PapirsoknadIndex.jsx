@@ -7,15 +7,20 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, rettighetPropType } from '@fpsak-frontend/prop-types';
 import {
-  PersonIndex, requireProps, BehandlingIdentifier, ErrorTypes,
+  BehandlingIdentifier, ErrorTypes, PersonIndex, requireProps,
 } from '@fpsak-frontend/fp-felles';
 
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';
 import behandlingSelectors from './selectors/papirsoknadSelectors';
 import {
-  resetRegistrering, submitRegistrering, resetRegistreringSuccess, setSoknadData, getSoknadData, getBehandlingIdentifier,
+  getBehandlingIdentifier,
   getFagsakPerson,
+  getSoknadData,
+  resetRegistrering,
+  resetRegistreringSuccess,
+  setSoknadData,
+  submitRegistrering,
 } from './duckPapirsoknad';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
 import SoknadRegistrertModal from './components/SoknadRegistrertModal';

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -67,7 +67,7 @@ const OkAvbrytModal = ({
 );
 
 OkAvbrytModal.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   textCode: PropTypes.string.isRequired,
   showModal: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import { required } from '@fpsak-frontend/utils';
-import { ElementWrapper, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Undertittel, Undertekst } from 'nav-frontend-typografi';
+import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 /**
  *
@@ -33,7 +33,7 @@ export const BekreftelsePanel = ({
 );
 
 BekreftelsePanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   annenForelderInformertRequired: PropTypes.bool,
 };

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  Table, TableRow, TableColumn, DateLabel,
+  DateLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import { injectIntl } from 'react-intl';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';

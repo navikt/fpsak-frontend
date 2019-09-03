@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
-import { OppChevron, NedChevron } from 'nav-frontend-chevron';
+import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 
 import BubbleText from './bubbleText';
 

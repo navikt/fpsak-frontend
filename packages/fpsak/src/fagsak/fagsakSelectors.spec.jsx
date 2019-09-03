@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { FpsakApiKeys } from 'data/fpsakApi';
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import {
-  getSelectedFagsak, getFetchFagsakInfoFinished, getFetchFagsakInfoFailed, getAllFagsakInfoResolved,
+  getAllFagsakInfoResolved, getFetchFagsakInfoFailed, getFetchFagsakInfoFinished, getSelectedFagsak,
 } from './fagsakSelectors';
 
 describe('<fagsakSelectors>', () => {

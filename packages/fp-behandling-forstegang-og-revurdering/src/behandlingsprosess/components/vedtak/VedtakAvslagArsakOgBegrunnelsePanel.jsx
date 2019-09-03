@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity, getLanguageCodeFromSprakkode,
+  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { hasIkkeOppfyltSoknadsfristvilkar } from './VedtakHelper';
@@ -85,7 +85,7 @@ export const VedtakAvslagArsakOgBegrunnelsePanel = ({
 );
 
 VedtakAvslagArsakOgBegrunnelsePanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,

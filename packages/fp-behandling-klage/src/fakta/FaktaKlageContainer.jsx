@@ -6,7 +6,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingKlage/src/duckBehandlingKlage';
-import { resetFakta, getOpenInfoPanels } from './duckFaktaKlage';
+import { getOpenInfoPanels, resetFakta } from './duckFaktaKlage';
 import FaktaKlagePanel from './components/FaktaKlagePanel';
 
 /**

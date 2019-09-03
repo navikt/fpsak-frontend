@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl } from 'react-intl';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -69,7 +69,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
 );
 
 VedtakAvslagRevurderingPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   beregningResultat: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,

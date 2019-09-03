@@ -4,25 +4,29 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
-import { Knapp, Hovedknapp } from 'nav-frontend-knapper';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import {
-  PeriodpickerField, SelectField, CheckboxField, RadioGroupField, RadioOption, TextAreaField, DecimalField,
+  CheckboxField, DecimalField, PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import {
+  calcDaysAndWeeks,
+  guid,
   hasValidDate,
-  requiredIfNotPristine,
-  required,
   hasValidDecimal,
   hasValidPeriod,
-  maxValue, minLength, maxLength, hasValidText, guid,
+  hasValidText,
   ISO_DATE_FORMAT,
-  calcDaysAndWeeks,
+  maxLength,
+  maxValue,
+  minLength,
+  required,
+  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import uttakArbeidType from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer, ArrowBox,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -31,12 +35,13 @@ import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCo
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getPersonopplysning, getFaktaArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFaktaArbeidsforhold, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingFormValueSelector, behandlingFormForstegangOgRevurdering,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
-import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakNyPeriode.less';
 

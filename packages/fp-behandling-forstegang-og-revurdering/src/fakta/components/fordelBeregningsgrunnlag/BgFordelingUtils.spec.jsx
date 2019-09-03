@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
+  mapToBelop,
   setArbeidsforholdInitialValues,
   setGenerellAndelsinfo,
   settAndelIArbeid,
   settFastsattBelop,
-  mapToBelop,
   skalValidereMotBeregningsgrunnlag,
 } from './BgFordelingUtils';
 

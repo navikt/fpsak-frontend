@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import { formValueSelector, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
@@ -122,7 +122,7 @@ export const ShelveBehandlingModalImpl = ({
 );
 
 ShelveBehandlingModalImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   showModal: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,

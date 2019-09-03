@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import {
-  range, zip, flatten, without, haystack,
+  flatten, haystack, range, without, zip,
 } from './arrayUtils';
 
 describe('arrayUtils', () => {

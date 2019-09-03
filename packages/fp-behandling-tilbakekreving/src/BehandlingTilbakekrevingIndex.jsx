@@ -12,8 +12,14 @@ import TilbakekrevingDataResolver from './TilbakekrevingDataResolver';
 import BehandlingsprosessTilbakekrevingContainer from './behandlingsprosess/BehandlingsprosessTilbakekrevingContainer';
 import FaktaTilbakeContainer from './fakta/FaktaTilbakeContainer';
 import {
-  setHasShownBehandlingPaVent, setBehandlingInfo, updateOnHold, getBehandlingIdentifier,
-  getHasShownBehandlingPaVent, resetBehandlingFpsakContext, getTilbakekrevingKodeverk, fetchBehandling as fetchBehandlingActionCreator,
+  fetchBehandling as fetchBehandlingActionCreator,
+  getBehandlingIdentifier,
+  getHasShownBehandlingPaVent,
+  getTilbakekrevingKodeverk,
+  resetBehandlingFpsakContext,
+  setBehandlingInfo,
+  setHasShownBehandlingPaVent,
+  updateOnHold,
 } from './duckBehandlingTilbakekreving';
 import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 

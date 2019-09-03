@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
-import { setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn } from './duckBpInnsyn';
+import { getSelectedBehandlingspunktNavn, setSelectedBehandlingspunktNavn } from './duckBpInnsyn';
 import BehandlingspunktInnsynInfoPanel from './components/BehandlingspunktInnsynInfoPanel';
 
 /**
@@ -20,7 +20,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
     };
 
     return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, true);
-  }
+  };
 
   render = () => {
     const { previewCallback, selectedBehandlingspunkt } = this.props;

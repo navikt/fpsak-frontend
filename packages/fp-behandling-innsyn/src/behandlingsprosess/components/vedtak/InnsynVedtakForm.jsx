@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormInnsyn, behandlingFormValueSelector,
+  behandlingFormInnsyn,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingInnsyn/src/behandlingFormInnsyn';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import {
-  FadingPanel, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  hasValidText, maxLength, minLength, requiredIfNotPristine, getLanguageCodeFromSprakkode, decodeHtmlEntity,
+  decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
@@ -146,7 +148,7 @@ export const InnsynVedtakFormImpl = ({
 
 InnsynVedtakFormImpl.propTypes = {
   saksNr: PropTypes.number.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   apBegrunnelse: PropTypes.string.isRequired,
   resultat: PropTypes.string.isRequired,

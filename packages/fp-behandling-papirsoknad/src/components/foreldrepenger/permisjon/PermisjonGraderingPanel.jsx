@@ -10,13 +10,13 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
+  hasValidFodselsnummer,
   hasValidInteger,
   hasValidPeriodIncludingOtherErrors,
+  isRequiredMessage,
+  maxLengthOrFodselsnr,
   required,
   validateProsentandel,
-  maxLengthOrFodselsnr,
-  hasValidFodselsnummer,
-  isRequiredMessage,
 } from '@fpsak-frontend/utils';
 import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
 

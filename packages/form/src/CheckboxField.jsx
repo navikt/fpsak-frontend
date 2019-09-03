@@ -7,14 +7,18 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
 
-export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherProps }) => (
-  <NavCheckbox
-    onChange={(event) => onChange(event.target.checked)}
-    checked={otherProps.value}
-    label={React.cloneElement(label, { typographyElement: Normaltekst })}
-    {...otherProps}
-  />
-));
+export const RenderCheckboxField = renderNavField(({ onChange, label, ...otherProps }) => {
+  // eslint-disable-next-line no-param-reassign
+  delete otherProps.isEdited;
+  return (
+    <NavCheckbox
+      onChange={(event) => onChange(event.target.checked)}
+      checked={otherProps.value}
+      label={React.cloneElement(label, { typographyElement: Normaltekst })}
+      {...otherProps}
+    />
+  );
+});
 
 const CheckboxField = ({
   name, label, validate, readOnly, ...otherProps

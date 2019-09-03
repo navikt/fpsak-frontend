@@ -1,5 +1,4 @@
-
-import { getLocationWithQueryParams, faktaPanelCodes, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, faktaPanelCodes, getLocationWithQueryParams } from '@fpsak-frontend/fp-felles';
 
 const skjermlenkeCodes = {
   BEREGNING_ENGANGSSTOENAD: {

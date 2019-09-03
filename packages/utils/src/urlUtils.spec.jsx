@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { parseQueryString, buildPath } from './urlUtils';
+import { buildPath, parseQueryString } from './urlUtils';
 
 describe('Url-utils', () => {
   it('skal parse url parameter', () => {

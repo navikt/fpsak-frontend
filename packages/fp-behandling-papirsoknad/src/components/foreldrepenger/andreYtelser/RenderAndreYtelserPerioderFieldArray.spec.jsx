@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import moment from 'moment';
 
-import { ISO_DATE_FORMAT, invalidDateMessage } from '@fpsak-frontend/utils';
+import { invalidDateMessage, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';

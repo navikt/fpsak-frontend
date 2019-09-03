@@ -2,10 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
-  FieldArray,
-  change as reduxFormChange,
-  reset as reduxFormReset,
-  getFormInitialValues,
+  change as reduxFormChange, FieldArray, getFormInitialValues, reset as reduxFormReset,
 } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { bindActionCreators } from 'redux';
@@ -16,19 +13,17 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { getBehandlingFormPrefix, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { CheckboxField } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
-import {
-  ariaCheck, DDMMYYYY_DATE_FORMAT,
-} from '@fpsak-frontend/utils';
+import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
-  VerticalSpacer, AksjonspunktHelpText, FlexContainer, FlexColumn, FlexRow,
+  AksjonspunktHelpText, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId, getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getAlleKodeverk, getKodeverk, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';

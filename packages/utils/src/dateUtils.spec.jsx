@@ -1,9 +1,14 @@
 import { expect } from 'chai';
 
 import {
-  calcDaysAndWeeksWithWeekends, calcDaysAndWeeks, splitWeeksAndDays, dateFormat, timeFormat, addDaysToDate, findDifferenceInMonthsAndDays,
-}
-  from './dateUtils';
+  addDaysToDate,
+  calcDaysAndWeeks,
+  calcDaysAndWeeksWithWeekends,
+  dateFormat,
+  findDifferenceInMonthsAndDays,
+  splitWeeksAndDays,
+  timeFormat,
+} from './dateUtils';
 
 describe('dateutils', () => {
   describe('calcDaysAndWeeksWithWeekends', () => {

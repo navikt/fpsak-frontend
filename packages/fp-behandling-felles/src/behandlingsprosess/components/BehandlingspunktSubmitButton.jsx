@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { isRequiredMessage, ariaCheck } from '@fpsak-frontend/utils';
+import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields) => {

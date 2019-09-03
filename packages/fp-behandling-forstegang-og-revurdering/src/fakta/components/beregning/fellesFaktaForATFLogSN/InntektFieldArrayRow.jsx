@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
-import { InputField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
+import { injectIntl } from 'react-intl';
+import { InputField, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import { parseCurrencyInput } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-import { TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -145,7 +145,7 @@ export const AndelRowImpl = ({
 AndelRowImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   skalVisePeriode: PropTypes.bool.isRequired,

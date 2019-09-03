@@ -7,9 +7,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import {
-  setOpenInfoPanels, getOpenInfoPanels,
-} from '../duckFaktaTilbake';
+import { getOpenInfoPanels, setOpenInfoPanels } from '../duckFaktaTilbake';
 import { getFagsakPerson } from '../../duckBehandlingTilbakekreving';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 

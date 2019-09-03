@@ -7,7 +7,7 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
 import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
-import { TilbakekrevingFormImpl, slaSammenOriginaleOgLagredePeriode } from './TilbakekrevingForm';
+import { slaSammenOriginaleOgLagredePeriode, TilbakekrevingFormImpl } from './TilbakekrevingForm';
 import TilbakekrevingPeriodeForm from './TilbakekrevingPeriodeForm';
 
 describe('<TilbakekrevingForm>', () => {

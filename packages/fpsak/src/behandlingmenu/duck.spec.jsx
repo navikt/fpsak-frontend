@@ -9,8 +9,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import behandlingUpdater from 'behandling/BehandlingUpdater';
 import {
-  behandlingMenuReducer, setHasSubmittedPaVentForm, createNewForstegangsbehandling, openBehandlingForChanges,
-  resetBehandlingMenuData,
+  behandlingMenuReducer, createNewForstegangsbehandling, openBehandlingForChanges, resetBehandlingMenuData, setHasSubmittedPaVentForm,
 } from './duck';
 
 const middlewares = [thunk];

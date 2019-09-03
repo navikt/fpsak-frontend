@@ -2,30 +2,30 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray, formPropTypes } from 'redux-form';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import {
-  RadioGroupField, RadioOption, TextAreaField, SelectField,
+  RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import {
-  omit,
-  minLength,
-  maxLength,
-  requiredIfNotPristine,
   hasValidText,
-  required,
-  notDash,
-  isUtbetalingsgradMerSamitidigUttaksprosent,
-  isUkerOgDagerVidNullUtbetalningsgrad,
   isArbeidsProsentVidUtsettelse100,
-  isutbetalingPlusArbeidsprosentMerEn100,
   isTrekkdagerMerEnnNullUtsettelse,
+  isUkerOgDagerVidNullUtbetalningsgrad,
   isUtbetalingMerEnnNullUtsettelse,
+  isutbetalingPlusArbeidsprosentMerEn100,
+  isUtbetalingsgradMerSamitidigUttaksprosent,
+  maxLength,
+  minLength,
+  notDash,
+  omit,
+  required,
+  requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -34,11 +34,12 @@ import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType'
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
-  ArrowBox, ElementWrapper, VerticalSpacer, FlexContainer, FlexColumn, FlexRow,
+  ArrowBox, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';

@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { IntlProvider, intlShape } from 'react-intl';
+import { createIntl, createIntlCache, IntlProvider } from 'react-intl';
 import { mount, shallow } from 'enzyme';
 import sinon from 'sinon';
 // You can pass your messages to the IntlProvider. Optional: remove if unneeded.
@@ -16,8 +16,13 @@ import messages from '../../../public/sprak/nb_NO.json';
 export { default as messages } from '../../../public/sprak/nb_NO.json';
 
 // Create the IntlProvider to retrieve context for wrapping around.
-const intlProvider = new IntlProvider({ locale: 'nb-NO', messages }, {});
-const { intl } = intlProvider.getChildContext();
+const cache = createIntlCache();
+
+const intl = createIntl({
+  locale: 'nb-NO',
+  defaultLocale: 'nb-NO',
+  messages,
+}, cache);
 
 /**
  * When using React-Intl `injectIntl` on components, props.intl is required.
@@ -26,23 +31,26 @@ function nodeWithIntlProp(node) {
   return React.cloneElement(node, { intl });
 }
 
-export function shallowWithIntl(node, { context } = {}) {
-  return shallow(
-    nodeWithIntlProp(node),
-    {
-      context: { ...context, intl },
+export function shallowWithIntl(node) {
+  return shallow(nodeWithIntlProp(node), {
+    wrappingComponent: IntlProvider,
+    wrappingComponentProps: {
+      locale: 'nb-NO',
+      defaultLocale: 'nb-NO',
+      messages,
     },
-  );
+  });
 }
 
-export function mountWithIntl(node, { context, childContextTypes } = {}) {
-  return mount(
-    nodeWithIntlProp(node),
-    {
-      context: { ...context, intl },
-      childContextTypes: { intl: intlShape, ...childContextTypes },
+export function mountWithIntl(node) {
+  return mount(nodeWithIntlProp(node), {
+    wrappingComponent: IntlProvider,
+    wrappingComponentProps: {
+      locale: 'nb-NO',
+      defaultLocale: 'nb-NO',
+      messages,
     },
-  );
+  });
 }
 
 /* Lagt til for a hindre warnings i tester */

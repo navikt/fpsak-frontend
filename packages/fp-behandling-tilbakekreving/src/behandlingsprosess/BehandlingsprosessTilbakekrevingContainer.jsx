@@ -3,13 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
-import {
-  resolveProsessAksjonspunkter, resetBehandlingspunkter, getResolveProsessAksjonspunkterSuccess,
-} from './duckBpTilbake';
+import { getResolveProsessAksjonspunkterSuccess, resetBehandlingspunkter, resolveProsessAksjonspunkter } from './duckBpTilbake';
 import behandlingspunktTilbakekrevingSelectors from './selectors/behandlingsprosessTilbakeSelectors';
 import BehandlingsprosessTilbakekrevingIndex from './BehandlingsprosessTilbakekrevingIndex';
 
@@ -23,23 +21,23 @@ export const BehandlingsprosessTilbakekrevingContainer = (props) => (
 );
 
 BehandlingsprosessTilbakekrevingContainer.propTypes = {
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
+  behandlingspunkterStatus: PropTypes.shape(),
+  behandlingspunkterTitleCodes: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
-  behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
-  selectedBehandlingspunkt: PropTypes.string,
-  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
-  behandlingStatus: kodeverkObjektPropType.isRequired,
-  behandlingsresultat: PropTypes.shape(),
-  getBehandlingspunkterStatus: PropTypes.func.isRequired,
-  getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
-  getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
-  resolveProsessAksjonspunkter: PropTypes.func.isRequired,
   resetBehandlingspunkter: PropTypes.func.isRequired,
-  behandlingType: kodeverkObjektPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  resolveProsessAksjonspunkter: PropTypes.func.isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  selectedBehandlingspunkt: PropTypes.string,
 };
 
 const mapStateToProps = (state) => ({
@@ -54,9 +52,9 @@ const mapStateToProps = (state) => ({
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   behandlingType: behandlingSelectors.getBehandlingType(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  getBehandlingspunkterStatus: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterStatus,
-  getBehandlingspunkterTitleCodes: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterTitleCodes,
-  getAksjonspunkterOpenStatus: behandlingspunktTilbakekrevingSelectors.getAksjonspunkterOpenStatus,
+  behandlingspunkterStatus: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterStatus(state),
+  behandlingspunkterTitleCodes: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterTitleCodes(state),
+  aksjonspunkterOpenStatus: behandlingspunktTilbakekrevingSelectors.getAksjonspunkterOpenStatus(state),
   location: state.router.location,
   resolveProsessAksjonspunkter,
   resetBehandlingspunkter,

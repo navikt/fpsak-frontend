@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import thunk from 'redux-thunk';
 import configureMockStore from 'redux-mock-store';
 
-import { BehandlingIdentifier, BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
+import { BehandlingErPaVentModal, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import { withBehandlingIndex } from './withBehandlingIndex';
 import CommonBehandlingResolver from './CommonBehandlingResolver';

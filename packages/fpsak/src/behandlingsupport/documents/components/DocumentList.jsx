@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  Table, TableRow, TableColumn, DateTimeLabel, Image, Tooltip,
+  DateTimeLabel, Image, Table, TableColumn, TableRow, Tooltip,
 } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import sendDokumentImageUrl from '@fpsak-frontend/assets/images/send_dokument.svg';

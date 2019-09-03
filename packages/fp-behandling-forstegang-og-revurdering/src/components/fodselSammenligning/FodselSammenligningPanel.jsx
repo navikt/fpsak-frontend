@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { EtikettInfo } from 'nav-frontend-etiketter';
-import { Row, Column } from 'nav-frontend-grid';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { Column, Row } from 'nav-frontend-grid';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -103,7 +103,7 @@ export const FodselSammenligningPanel = ({
 );
 
 FodselSammenligningPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   behandlingsTypeKode: PropTypes.string.isRequired,
   antallBarn: PropTypes.arrayOf(PropTypes.shape()),
   nrOfDodfodteBarn: PropTypes.number.isRequired,

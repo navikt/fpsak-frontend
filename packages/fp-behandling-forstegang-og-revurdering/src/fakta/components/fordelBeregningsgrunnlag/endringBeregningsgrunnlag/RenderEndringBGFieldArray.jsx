@@ -1,39 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
-  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber,
+  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber,
 } from '@fpsak-frontend/utils';
 import {
-  Table, Image, TableRow, TableColumn, ElementWrapper,
+  ElementWrapper, Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import {
-  InputField, DecimalField, PeriodpickerField, NavFieldGroup, SelectField,
+  DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
 } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { kodeverkPropType, arbeidsforholdBeregningProptype } from '@fpsak-frontend/prop-types';
+import { arbeidsforholdBeregningProptype, kodeverkPropType } from '@fpsak-frontend/prop-types';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
-import {
-  getBeregningsgrunnlag,
-  getBehandlingIsRevurdering,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingIsRevurdering, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
-import { getKodeverk, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import 'core-js/features/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import {
-  validateAndeler, validateUlikeAndeler,
-  validateTotalRefusjonPrArbeidsforhold, validateSumFastsattBelop,
+  validateAndeler, validateSumFastsattBelop, validateTotalRefusjonPrArbeidsforhold, validateUlikeAndeler,
 } from '../ValidateAndelerUtils';
 import styles from './renderEndringBGFieldArray.less';
 
@@ -426,7 +422,7 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   arbeidsforholdList: PropTypes.arrayOf(arbeidsforholdBeregningProptype).isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,

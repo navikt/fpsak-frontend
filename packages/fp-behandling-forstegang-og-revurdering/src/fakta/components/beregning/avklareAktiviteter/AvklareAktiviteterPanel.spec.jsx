@@ -8,8 +8,12 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, BorderBox } from '@fpsak-frontend/shared-components';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import {
-  AvklareAktiviteterPanelImpl, buildInitialValuesAvklarAktiviteter,
-  transformValues, erAvklartAktivitetEndret, BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME, MANUELL_OVERSTYRING_FIELD,
+  AvklareAktiviteterPanelImpl,
+  BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME,
+  buildInitialValuesAvklarAktiviteter,
+  erAvklartAktivitetEndret,
+  MANUELL_OVERSTYRING_FIELD,
+  transformValues,
 } from './AvklareAktiviteterPanel';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
 import { formNameAvklarAktiviteter } from '../BeregningFormUtils';

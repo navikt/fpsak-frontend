@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
-import { getFaktaOmBeregningTilfellerKoder, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { injectIntl } from 'react-intl';
+import { getBeregningsgrunnlag, getFaktaOmBeregningTilfellerKoder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { NavFieldGroup } from '@fpsak-frontend/form';
 import {
-  isArrayEmpty, removeSpacesFromNumber, required, formatCurrencyNoKr,
+  formatCurrencyNoKr, isArrayEmpty, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
@@ -14,9 +14,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { Table, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import {
-  mapAndelToField, skalHaBesteberegningSelector, skalFastsetteInntektForSN,
-} from './BgFordelingUtils';
+import { mapAndelToField, skalFastsetteInntektForSN, skalHaBesteberegningSelector } from './BgFordelingUtils';
 import styles from './inntektFieldArray.less';
 import { validateUlikeAndeler, validateUlikeAndelerWithGroupingFunction } from './ValidateAndelerUtils';
 import { isBeregningFormDirty as isFormDirty } from '../BeregningFormUtils';
@@ -176,7 +174,7 @@ InntektFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   isBeregningFormDirty: PropTypes.bool.isRequired,
   erKunYtelse: PropTypes.bool.isRequired,
   skalKunneLeggeTilAndel: PropTypes.bool,

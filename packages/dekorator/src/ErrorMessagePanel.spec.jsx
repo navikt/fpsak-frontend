@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import { ErrorMessagePanel } from './ErrorMessagePanel';
 

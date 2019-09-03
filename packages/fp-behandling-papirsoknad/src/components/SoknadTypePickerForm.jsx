@@ -2,12 +2,12 @@ import React from 'react';
 import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 import {
-  reduxForm, formPropTypes, formValueSelector, getFormValues,
+  formPropTypes, formValueSelector, getFormValues, reduxForm,
 } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Undertittel, Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
@@ -20,7 +20,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
 import SoknadData from 'papirsoknad/src/SoknadData';
-import { getKodeverk, getFagsakYtelseType } from 'papirsoknad/src/duckPapirsoknad';
+import { getFagsakYtelseType, getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import behandlingSelectors from 'papirsoknad/src/selectors/papirsoknadSelectors';
 
 import styles from './soknadTypePickerForm.less';

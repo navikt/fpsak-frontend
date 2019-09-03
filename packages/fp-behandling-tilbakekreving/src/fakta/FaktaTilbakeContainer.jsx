@@ -6,9 +6,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import {
-  resetFakta, resolveFaktaAksjonspunkter, getOpenInfoPanels,
-} from './duckFaktaTilbake';
+import { getOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter } from './duckFaktaTilbake';
 import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
 
 /**

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
@@ -11,7 +11,7 @@ import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_
 import { Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import advarselImg from '@fpsak-frontend/assets/images/remove.svg';
-import { ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetKlassifisering';
 
 

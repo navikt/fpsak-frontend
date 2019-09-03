@@ -6,7 +6,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import { getBehandlingIdentifier } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
-import { resetFakta, getOpenInfoPanels } from './duckFaktaInnsyn';
+import { getOpenInfoPanels, resetFakta } from './duckFaktaInnsyn';
 
 import FaktaInnsynPanel from './components/FaktaInnsynPanel';
 

@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { UttakActivity, initialValue } from './UttakActivity';
+import { initialValue, UttakActivity } from './UttakActivity';
 
 describe('<UttakActivity>', () => {
   const selectedItem = {

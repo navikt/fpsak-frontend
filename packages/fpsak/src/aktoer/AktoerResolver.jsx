@@ -8,7 +8,7 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 
 import { updateAktoer as updateAktoerCreator } from './duck';
-import { getSelectedAktoerId, getAllAktoerInfoResolved } from './aktoerSelectors';
+import { getAllAktoerInfoResolved, getSelectedAktoerId } from './aktoerSelectors';
 
 /**
  * AktoerResolver

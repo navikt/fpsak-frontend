@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
@@ -12,7 +11,7 @@ import { Table } from '@fpsak-frontend/shared-components';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import { AndelRow } from './InntektFieldArrayRow';
 import SummaryRow from './SummaryRow';
-import InntektFieldArray, { mapStateToProps, InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning } from './InntektFieldArray';
+import InntektFieldArray, { InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning, mapStateToProps } from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
 
 const aksjonspunkter = [

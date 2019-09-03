@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Image } from '@fpsak-frontend/shared-components';
 
@@ -57,7 +57,7 @@ const BehandlingenShelvedModal = ({
 BehandlingenShelvedModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   closeEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 export default injectIntl(BehandlingenShelvedModal);

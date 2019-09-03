@@ -6,7 +6,7 @@ import { Element } from 'nav-frontend-typografi';
 
 import { calcDays } from '@fpsak-frontend/utils';
 import {
-  Image, EditedIcon, ElementWrapper, AksjonspunktHelpText, VerticalSpacer,
+  AksjonspunktHelpText, EditedIcon, ElementWrapper, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';

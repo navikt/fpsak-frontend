@@ -6,7 +6,7 @@ import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadInnsynBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpInnsyn';
+import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpInnsyn';
 import { getFagsakYtelseType } from '../../duckBehandlingInnsyn';
 
 // Kun eksportert for test. Ikke bruk andre steder!

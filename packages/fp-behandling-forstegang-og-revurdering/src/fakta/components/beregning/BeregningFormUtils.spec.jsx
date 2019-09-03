@@ -1,9 +1,7 @@
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { lagStateMedAksjonspunkterOgBeregningsgrunnlag } from '@fpsak-frontend/utils-test/src/beregning-test-helper';
-import {
-  getFormValuesForBeregning, getFormInitialValuesForBeregning, formNameVurderFaktaBeregning,
-} from './BeregningFormUtils';
+import { formNameVurderFaktaBeregning, getFormInitialValuesForBeregning, getFormValuesForBeregning } from './BeregningFormUtils';
 
 const {
   VURDER_FAKTA_FOR_ATFL_SN,

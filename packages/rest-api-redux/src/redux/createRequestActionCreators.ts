@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { Dispatch } from 'redux';
 
-import { RequestRunner, NotificationMapper } from '@fpsak-frontend/rest-api';
+import { NotificationMapper, RequestRunner } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';
 import { ActionTypes } from './ActionTypesTsType';

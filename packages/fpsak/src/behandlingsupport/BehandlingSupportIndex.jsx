@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { trackRouteParam, getSupportPanelLocationCreator } from '@fpsak-frontend/fp-felles';
+import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';

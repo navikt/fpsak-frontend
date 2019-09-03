@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import {
-  ISO_DATE_FORMAT, dateRangesOverlappingMessage, invalidDateMessage, invalidDecimalMessage,
+  dateRangesOverlappingMessage, invalidDateMessage, invalidDecimalMessage, ISO_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
 import { PermisjonGraderingPanel } from './PermisjonGraderingPanel';
 

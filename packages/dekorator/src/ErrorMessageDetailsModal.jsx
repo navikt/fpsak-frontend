@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
-import {
-  Image, VerticalSpacer, ElementWrapper,
-} from '@fpsak-frontend/shared-components';
+import { ElementWrapper, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
 
@@ -75,7 +73,7 @@ const ErrorMessageDetailsModal = ({
 );
 
 ErrorMessageDetailsModal.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   showModal: PropTypes.bool.isRequired,
   closeModalFn: PropTypes.func.isRequired,
   errorDetails: PropTypes.shape().isRequired,

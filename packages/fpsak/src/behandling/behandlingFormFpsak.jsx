@@ -1,6 +1,6 @@
 import { getBehandlingForm, getBehandlingFormSelectors } from '@fpsak-frontend/fp-felles';
 
-import { getSelectedBehandlingId, getBehandlingVersjon } from './duck';
+import { getBehandlingVersjon, getSelectedBehandlingId } from './duck';
 
 /**
  * behandlingFormFpsak

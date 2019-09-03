@@ -7,10 +7,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import {
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
+  hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';

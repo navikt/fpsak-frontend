@@ -5,7 +5,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 
 import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { SjekkFodselDokForm, buildInitialValues } from './SjekkFodselDokForm';
+import { buildInitialValues, SjekkFodselDokForm } from './SjekkFodselDokForm';
 
 describe('<SjekkFodselDokForm>', () => {
   it('skal rendre form', () => {

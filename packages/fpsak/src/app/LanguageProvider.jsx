@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { IntlProvider, addLocaleData } from 'react-intl';
-import nb from 'react-intl/locale-data/nb';
+import { IntlProvider } from 'react-intl';
+
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import fpsakApi from 'data/fpsakApi';
 
-addLocaleData(nb);
 
 /**
  * LanguageProvider

@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import { maxLength } from '@fpsak-frontend/utils';
 import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
-import {
-  InputField, DatepickerField, SelectField,
-} from '@fpsak-frontend/form';
+import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
 
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 

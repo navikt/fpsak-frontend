@@ -1,6 +1,6 @@
-import { routerMiddleware, connectRouter } from 'connected-react-router';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import {
-  createStore, combineReducers, compose, applyMiddleware,
+  applyMiddleware, combineReducers, compose, createStore,
 } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import { reducer as formReducer } from 'redux-form';

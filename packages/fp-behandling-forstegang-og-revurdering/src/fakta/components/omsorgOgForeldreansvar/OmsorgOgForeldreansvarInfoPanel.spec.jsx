@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
@@ -47,7 +47,7 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('omsorgsvilkaaret');
-    const form = wrapper.find('Connect(InjectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
+    const form = wrapper.find('Connect(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
     expect(form).to.have.length(1);
     expect(form.prop('readOnly')).is.false;
 
@@ -92,7 +92,7 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       relatertYtelseTypes={[relatertYtelseType]}
     />);
 
-    const form = wrapper.find('Connect(InjectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
+    const form = wrapper.find('Connect(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
     expect(form.prop('readOnly')).is.true;
   });
 

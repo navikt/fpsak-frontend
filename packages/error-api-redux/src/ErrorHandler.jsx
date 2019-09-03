@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import {
-  addErrorMessage, getCrashMessage, removeErrorMessage, showCrashMessage, errorReducer, reducerName, getErrorMessages,
+  addErrorMessage, errorReducer, getCrashMessage, getErrorMessages, reducerName, removeErrorMessage, showCrashMessage,
 } from './errorDuck';
 import ErrorFormatter from './ErrorFormatter';
 

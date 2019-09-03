@@ -5,7 +5,12 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 
 import {
-  trackRouteParam, requireProps, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta, DEFAULT_FAKTA, BehandlingIdentifier,
+  BehandlingIdentifier,
+  DEFAULT_FAKTA,
+  getFaktaLocation,
+  getLocationWithDefaultBehandlingspunktAndFakta,
+  requireProps,
+  trackRouteParam,
 } from '@fpsak-frontend/fp-felles';
 
 const notEmptyParam = (p) => p !== null && p !== undefined && p !== '';

@@ -7,11 +7,12 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import VurderMottarYtelseForm, {
-  VurderMottarYtelseFormImpl, frilansUtenAndreFrilanstilfeller, frilansMedAndreFrilanstilfeller, mottarYtelseForArbeidMsg,
+  frilansMedAndreFrilanstilfeller,
+  frilansUtenAndreFrilanstilfeller,
+  mottarYtelseForArbeidMsg,
+  VurderMottarYtelseFormImpl,
 } from './VurderMottarYtelseForm';
-import {
-  finnFrilansFieldName, utledArbeidsforholdFieldName,
-} from './VurderMottarYtelseUtils';
+import { finnFrilansFieldName, utledArbeidsforholdFieldName } from './VurderMottarYtelseUtils';
 
 const requiredMessageId = isRequiredMessage()[0].id;
 

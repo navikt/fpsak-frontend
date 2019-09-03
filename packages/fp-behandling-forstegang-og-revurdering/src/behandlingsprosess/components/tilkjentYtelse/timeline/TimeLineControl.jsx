@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
-import { injectIntl, FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
@@ -26,7 +26,7 @@ import uavklartUrl from '@fpsak-frontend/assets/images/uavklart.svg';
 import gradertImage from '@fpsak-frontend/assets/images/periode_gradert.svg';
 import manueltAvklart from '@fpsak-frontend/assets/images/periode_manuelt_avklart.svg';
 
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import styles from './timeLineControl.less';
 
 /*

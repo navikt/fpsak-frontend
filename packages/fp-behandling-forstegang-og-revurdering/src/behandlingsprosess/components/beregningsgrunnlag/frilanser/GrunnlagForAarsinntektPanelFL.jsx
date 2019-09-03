@@ -9,9 +9,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import {
-  required, formatCurrencyNoKr, parseCurrencyInput,
-} from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, parseCurrencyInput, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './grunnlagForAarsinntektPanelFL.less';

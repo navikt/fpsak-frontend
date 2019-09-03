@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  minLength, maxLength, requiredIfNotPristine, hasValidText, decodeHtmlEntity,
+  decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';

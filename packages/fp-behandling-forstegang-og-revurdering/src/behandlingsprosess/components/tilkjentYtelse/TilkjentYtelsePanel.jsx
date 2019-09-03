@@ -10,10 +10,10 @@ import { beregningresultatMedUttaksplanPropType } from '@fpsak-frontend/prop-typ
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  getPersonopplysning,
   getBehandlingResultatstruktur,
   getFamiliehendelseGjeldende,
   getIsFagsakTypeSVP,
+  getPersonopplysning,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';

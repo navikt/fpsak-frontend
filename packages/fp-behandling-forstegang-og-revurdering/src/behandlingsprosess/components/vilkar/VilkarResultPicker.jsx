@@ -1,16 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedHTMLMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  SelectField, RadioGroupField, RadioOption, DatepickerField,
+  DatepickerField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
-import { hasValidDate, required, isRequiredMessage } from '@fpsak-frontend/utils';
+import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 
 import styles from './vilkarResultPicker.less';
 
@@ -97,7 +97,7 @@ const VilkarResultPickerImpl = ({
 );
 
 VilkarResultPickerImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,

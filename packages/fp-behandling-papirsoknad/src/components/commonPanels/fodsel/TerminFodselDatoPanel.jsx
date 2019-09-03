@@ -1,5 +1,5 @@
 import React from 'react';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { formValueSelector } from 'redux-form';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,19 +7,19 @@ import moment from 'moment';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { VerticalSpacer, BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DatepickerField, InputField, NavFieldGroup, RadioGroupField, RadioOption,
 } from '@fpsak-frontend/form';
 import {
-  hasValidDate,
   dateBeforeOrEqual,
   dateBeforeOrEqualToToday,
-  required,
+  hasValidDate,
   hasValidInteger,
-  minValue,
-  maxValue,
   ISO_DATE_FORMAT,
+  maxValue,
+  minValue,
+  required,
 } from '@fpsak-frontend/utils';
 
 import styles from './terminFodselDatoPanel.less';
@@ -101,7 +101,7 @@ export const TerminFodselDatoPanelImpl = ({
 );
 
 TerminFodselDatoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   erBarnetFodt: PropTypes.bool,
 };

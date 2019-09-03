@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -12,20 +12,26 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, requireProps } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import { getNavAnsatt } from 'app/duck';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
-  getBehandlingVersjon, getBehandlingAnsvarligSaksbehandler, getTotrinnskontrollArsakerUtenUdefinert,
-  getBehandlingStatus, getBehandlingToTrinnsBehandling, getTotrinnskontrollArsakerReadOnly, getBehandlingIdentifier, getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+  getBehandlingIdentifier,
+  getBehandlingStatus,
+  getBehandlingToTrinnsBehandling,
+  getBehandlingType,
+  getBehandlingVersjon,
+  getTotrinnskontrollArsakerReadOnly,
+  getTotrinnskontrollArsakerUtenUdefinert,
 } from 'behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
-import { approve, resetApproval, fetchApprovalVedtaksbrevPreview } from './duck';
+import { approve, fetchApprovalVedtaksbrevPreview, resetApproval } from './duck';
 
 import styles from './ApprovalIndex.less';
 

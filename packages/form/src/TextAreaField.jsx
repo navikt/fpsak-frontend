@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'redux-form';
 import { Textarea as NavTextarea } from 'nav-frontend-skjema';
 import EtikettFokus from 'nav-frontend-etiketter';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import renderNavField from './renderNavField';
 import { labelPropType } from './Label';
@@ -62,7 +62,7 @@ TextAreaField.defaultProps = {
 };
 
 TextAreaWithBadge.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   badges: PropTypes.arrayOf(PropTypes.shape({
     textId: PropTypes.string.isRequired,
     type: PropTypes.string.isRequired,

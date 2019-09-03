@@ -21,7 +21,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
       henleggBehandlingEnabled
     />);
 
-    expect(wrapper.find('Connect(InjectIntl(ReduxForm))')).has.length(0);
+    expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
   });
 
   it('skal vise modal ved trykk på meny-lenke', () => {
@@ -49,7 +49,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
     expect(wrapper.state('showModal')).is.true;
     expect(toggleBehandlingsmenyCallback.called).is.true;
 
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
     expect(modal.prop('showModal')).is.true;
   });
@@ -69,14 +69,14 @@ describe('<ShelveBehandlingMenuItem>', () => {
     />);
 
     wrapper.setState({ showModal: true });
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
 
     modal.prop('cancelEvent')();
     wrapper.update();
 
     expect(wrapper.state('showModal')).is.false;
-    expect(wrapper.find('Connect(InjectIntl(ReduxForm))')).has.length(0);
+    expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
   });
 
   it('skal sende data til server og vise "behandling er henlagt"-modal ved trykk på ok-knapp', () => {
@@ -97,8 +97,8 @@ describe('<ShelveBehandlingMenuItem>', () => {
 
     wrapper.setState({ showBehandlingErHenlagtModal: false });
     wrapper.setState({ showModal: true });
-    expect(wrapper.find('InjectIntl(BehandlingenShelvedModal)')).has.length(0);
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    expect(wrapper.find('injectIntl(BehandlingenShelvedModal)')).has.length(0);
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
 
     modal.prop('onSubmit')({
@@ -117,9 +117,9 @@ describe('<ShelveBehandlingMenuItem>', () => {
     });
 
     expect(wrapper.state('showModal')).is.false;
-    expect(wrapper.find('Connect(InjectIntl(ReduxForm))')).has.length(0);
+    expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
 
     expect(wrapper.state('showBehandlingErHenlagtModal')).is.true;
-    expect(wrapper.find('InjectIntl(BehandlingenShelvedModal)')).has.length(1);
+    expect(wrapper.find('injectIntl(BehandlingenShelvedModal)')).has.length(1);
   });
 });

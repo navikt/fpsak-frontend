@@ -14,15 +14,12 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { getKodeverk } from 'kodeverk/duck';
 import {
-  getBehandlingSprak,
-  getBehandlingVersjon,
-  getBrevMaler,
-  getBehandlingIdentifier,
+  getBehandlingIdentifier, getBehandlingSprak, getBehandlingVersjon, getBrevMaler,
 } from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import { requireProps, BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, requireProps, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
-  resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator, isSubmitMessageFinished,
+  isSubmitMessageFinished, previewMessageActionCreator, resetSubmitMessageActionCreator, submitMessageActionCreator,
 } from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';

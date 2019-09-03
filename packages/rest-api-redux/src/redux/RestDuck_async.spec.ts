@@ -6,7 +6,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import {
-  getAxiosHttpClientApi, RequestApi, asyncPollingStatus, RequestConfig,
+  asyncPollingStatus, getAxiosHttpClientApi, RequestApi, RequestConfig,
 } from '@fpsak-frontend/rest-api';
 
 import ReduxEvents from './ReduxEvents';

@@ -8,17 +8,22 @@ import classNames from 'classnames';
 import { omit } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
-  VerticalSpacer, FlexContainer, FlexRow, FlexColumn,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import {
-  behandlingFormTilbakekreving, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, isBehandlingFormDirty, getBehandlingFormValues,
+  behandlingFormTilbakekreving,
+  getBehandlingFormValues,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import vedtaksbrevAvsnittPropType from 'behandlingTilbakekreving/src/proptypes/vedtaksbrevAvsnittPropType';
 import {
-  fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator, getBehandlingIdentifier,
+  fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator,
+  getBehandlingIdentifier,
 } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';

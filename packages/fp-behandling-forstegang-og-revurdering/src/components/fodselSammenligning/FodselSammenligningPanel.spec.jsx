@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { FodselSammenligningPanel } from './FodselSammenligningPanel';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';

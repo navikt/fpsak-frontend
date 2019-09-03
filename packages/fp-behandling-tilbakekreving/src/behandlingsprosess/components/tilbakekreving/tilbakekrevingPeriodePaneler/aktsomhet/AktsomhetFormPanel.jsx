@@ -5,8 +5,8 @@ import { FormSection } from 'redux-form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { required, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';

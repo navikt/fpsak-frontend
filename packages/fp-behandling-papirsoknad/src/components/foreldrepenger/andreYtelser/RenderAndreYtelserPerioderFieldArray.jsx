@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, dateAfterOrEqual, isRequiredMessage, ISO_DATE_FORMAT,
+  dateAfterOrEqual, hasValidDate, ISO_DATE_FORMAT, isRequiredMessage, required,
 } from '@fpsak-frontend/utils';
 
 import styles from './renderAndreYtelserPerioderFieldArray.less';
