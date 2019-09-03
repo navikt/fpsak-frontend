@@ -8,7 +8,6 @@ export const BehandlingFpsakApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
 };
@@ -28,7 +27,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', BehandlingFpsakApiKeys.SUBMIT_MESSAGE)
 
   .build();
 

@@ -7,8 +7,6 @@ class BehandlingInfoHolder {
 
     behandlingVersjon;
 
-    brevMaler;
-
     aksjonspunkter;
 
     behandlingAnsvarligSaksbehandler;
@@ -16,12 +14,6 @@ class BehandlingInfoHolder {
     behandlingStatus;
 
     behandlingToTrinnsBehandling = false;
-
-    totrinnskontrollArsakerUtenUdefinert;
-
-    totrinnskontrollArsakerReadOnly;
-
-    totrinnskontrollArsaker;
 
     behandlingKlageVurdering;
 
@@ -76,11 +68,6 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBrevMaler = (brevMaler) => {
-      this.brevMaler = brevMaler;
-      return this;
-    }
-
     withAksjonspunkter = (aksjonspunkter) => {
       this.aksjonspunkter = aksjonspunkter;
       return this;
@@ -98,21 +85,6 @@ class BehandlingInfoHolder {
 
     withBehandlingToTrinnsBehandling = (behandlingToTrinnsBehandling) => {
       this.behandlingToTrinnsBehandling = behandlingToTrinnsBehandling;
-      return this;
-    }
-
-    withTotrinnskontrollArsakerUtenUdefinert = (totrinnskontrollArsakerUtenUdefinert) => {
-      this.totrinnskontrollArsakerUtenUdefinert = totrinnskontrollArsakerUtenUdefinert;
-      return this;
-    }
-
-    withTotrinnskontrollArsakerReadOnly = (totrinnskontrollArsakerReadOnly) => {
-      this.totrinnskontrollArsakerReadOnly = totrinnskontrollArsakerReadOnly;
-      return this;
-    }
-
-    withTotrinnskontrollArsaker = (totrinnskontrollArsaker) => {
-      this.totrinnskontrollArsaker = totrinnskontrollArsaker;
       return this;
     }
 

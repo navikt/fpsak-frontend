@@ -8,7 +8,6 @@ export const TilbakekrevingBehandlingApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
@@ -24,7 +23,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', TilbakekrevingBehandlingApiKeys.SUBMIT_MESSAGE)
   .withPostAndOpenBlob('/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
 
   /* /api/foreldelse */

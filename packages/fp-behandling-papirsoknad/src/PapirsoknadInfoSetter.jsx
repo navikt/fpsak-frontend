@@ -16,7 +16,7 @@ export class PapirsoknadInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, brevMaler, aksjonspunkter,
+      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter,
       behandlingAnsvarligSaksbehandler, behandlingStatus,
       behandlingsresultat, behandlingType, behandlingHasSoknad,
       behandlingIsOnHold, behandlingIsQueued, behandlingBehandlendeEnhetId,
@@ -26,7 +26,6 @@ export class PapirsoknadInfoSetter extends Component {
     setBehandlingInfoHolder(new BehandlingInfoHolder()
       .withBehandlingSprak(behandlingSprak)
       .withBehandlingVersjon(behandlingVersjon)
-      .withBrevMaler(brevMaler)
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingStatus(behandlingStatus)
@@ -55,11 +54,6 @@ PapirsoknadInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingSprak: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
-  brevMaler: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-    tilgjengelig: PropTypes.bool.isRequired,
-  })),
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingStatus: PropTypes.shape().isRequired,
@@ -79,7 +73,6 @@ PapirsoknadInfoSetter.defaultProps = {
   aksjonspunkter: [],
   behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
-  brevMaler: undefined,
   behandlingIsQueued: false,
   behandlingBehandlendeEnhetId: undefined,
   behandlingBehandlendeEnhetNavn: undefined,
@@ -89,7 +82,6 @@ PapirsoknadInfoSetter.defaultProps = {
 const mapStateToProps = (state) => ({
   behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-  brevMaler: behandlingSelectors.getBrevMaler(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
   behandlingStatus: behandlingSelectors.getBehandlingStatus(state),

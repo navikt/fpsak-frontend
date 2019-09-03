@@ -35,6 +35,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const messages = wrapper.find(Messages);
@@ -58,6 +60,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const previewCallback = wrapper.find(Messages).prop('previewCallback');
@@ -82,6 +86,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={resetSubmitMessageFunction}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
     wrapper.setState({ showMessagesModal: true });
 
@@ -110,6 +116,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const message = {
@@ -147,6 +155,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const message = {
@@ -187,6 +197,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const message = {
@@ -227,6 +239,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const message = {
@@ -267,6 +281,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
 
     const message = {
@@ -308,6 +324,8 @@ describe('<MessagesIndex>', () => {
       resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={pushCallback}
+      fetchBrevmaler={sinon.spy()}
+      loadingBrevmaler={false}
     />);
     wrapper.setState({ showSettPaVentModal: true });
 

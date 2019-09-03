@@ -7,7 +7,6 @@ export const AnkeBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_ANKE: 'PREVIEW_MESSAGE_ANKE',
   SAVE_ANKE_VURDERING: 'SAVE_ANKE_VURDERING',
   SAVE_REOPEN_ANKE_VURDERING: 'SAVE_REOPEN_ANKE_VURDERING',
@@ -31,7 +30,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', AnkeBehandlingApiKeys.SUBMIT_MESSAGE)
   .withPostAndOpenBlob('/api/brev/forhandsvis-anke', AnkeBehandlingApiKeys.PREVIEW_MESSAGE_ANKE)
 
 /* /api/brev */

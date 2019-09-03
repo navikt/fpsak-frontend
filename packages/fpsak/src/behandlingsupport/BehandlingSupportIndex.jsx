@@ -6,6 +6,7 @@ import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend
 import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
+import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
 
 import supportPanels from './supportPanels';
 import LinkRow from './components/LinkRow';
@@ -45,22 +46,24 @@ export const BehandlingSupportIndex = ({
   enabledSupportPanels,
   getSupportPanelLocation,
 }) => (
-  <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
-    <div className={styles.marginBottom}>
-      <LinkRow>
-        {acccessibleSupportPanels.map((supportPanel) => (
-          <SupportPanelLink
-            key={supportPanel}
-            supportPanel={supportPanel}
-            isEnabled={enabledSupportPanels.includes(supportPanel)}
-            isActive={supportPanel === activeSupportPanel}
-            supportPanelLocation={getSupportPanelLocation(supportPanel)}
-          />
-        ))}
-      </LinkRow>
+  <BehandlingsupportDataResolver>
+    <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
+      <div className={styles.marginBottom}>
+        <LinkRow>
+          {acccessibleSupportPanels.map((supportPanel) => (
+            <SupportPanelLink
+              key={supportPanel}
+              supportPanel={supportPanel}
+              isEnabled={enabledSupportPanels.includes(supportPanel)}
+              isActive={supportPanel === activeSupportPanel}
+              supportPanelLocation={getSupportPanelLocation(supportPanel)}
+            />
+          ))}
+        </LinkRow>
+      </div>
+      {renderSupportPanel(activeSupportPanel)}
     </div>
-    {renderSupportPanel(activeSupportPanel)}
-  </div>
+  </BehandlingsupportDataResolver>
 );
 
 BehandlingSupportIndex.propTypes = {

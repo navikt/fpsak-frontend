@@ -7,7 +7,6 @@ export const InnsynBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -16,7 +15,6 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: InnsynBehandlingApiKeys.BEHANDLING,
   })
-  .withPost('/fpsak/api/brev/bestill', InnsynBehandlingApiKeys.SUBMIT_MESSAGE)
   // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
   .withPostAndOpenBlob('/fpsak/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();

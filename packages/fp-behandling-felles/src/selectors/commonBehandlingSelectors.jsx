@@ -39,16 +39,6 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   const getBehandlingAnsvarligSaksbehandler = createSelector(
     [getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.ansvarligSaksbehandler,
   );
-  const getTotrinnskontrollArsaker = createSelector(
-    [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker']),
-  );
-  const getTotrinnskontrollArsakerUtenUdefinert = createSelector(
-    [getTotrinnskontrollArsaker], (aarsaker = []) => (aarsaker.filter((aarsak) => aarsak.skjermlenkeType !== '-')),
-  );
-  const getTotrinnskontrollArsakerReadOnly = createSelector(
-    [getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['totrinnskontroll-arsaker-readOnly']),
-  );
-  const getBrevMaler = createSelector([getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['brev-maler']));
 
   // AKSJONSPUNKTER
   const getAksjonspunkter = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.aksjonspunkter);
@@ -125,10 +115,6 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     getBehandlingToTrinnsBehandling,
     getBehandlingVenteArsakKode,
     getBehandlingAnsvarligSaksbehandler,
-    getTotrinnskontrollArsaker,
-    getTotrinnskontrollArsakerUtenUdefinert,
-    getTotrinnskontrollArsakerReadOnly,
-    getBrevMaler,
     getAksjonspunkter,
     getOpenAksjonspunkter,
     isBehandlingInInnhentSoknadsopplysningerSteg,

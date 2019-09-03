@@ -71,14 +71,10 @@ export const getBehandlingInfoHolder = createSelector([getBehandlingContext], (b
 export const isKontrollerRevurderingAksjonspunkOpen = createSelector([getBehandlingInfoHolder], (data) => data.isKontrollerRevurderingAksjonspunkOpen);
 export const getBehandlingSprak = createSelector([getBehandlingInfoHolder], (data) => data.behandlingSprak);
 export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], (data) => data.behandlingVersjon);
-export const getBrevMaler = createSelector([getBehandlingInfoHolder], (data) => data.brevMaler);
 export const getAksjonspunkter = createSelector([getBehandlingInfoHolder], (data) => data.aksjonspunkter);
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandlingInfoHolder], (data) => data.behandlingAnsvarligSaksbehandler);
 export const getBehandlingStatus = createSelector([getBehandlingInfoHolder], (data) => data.behandlingStatus);
 export const getBehandlingToTrinnsBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingToTrinnsBehandling);
-export const getTotrinnskontrollArsakerUtenUdefinert = createSelector([getBehandlingInfoHolder], (data) => data.totrinnskontrollArsakerUtenUdefinert);
-export const getTotrinnskontrollArsakerReadOnly = createSelector([getBehandlingInfoHolder], (data) => data.totrinnskontrollArsakerReadOnly);
-export const getTotrinnskontrollArsaker = createSelector([getBehandlingInfoHolder], (data) => data.totrinnskontrollArsaker);
 export const getBehandlingKlageVurdering = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurdering);
 export const getBehandlingIsKlage = createSelector([getBehandlingInfoHolder], (data) => data.behandlingIsKlage);
 export const getBehandlingResultatstruktur = createSelector([getBehandlingInfoHolder], (data) => data.behandlingResultatstruktur);
