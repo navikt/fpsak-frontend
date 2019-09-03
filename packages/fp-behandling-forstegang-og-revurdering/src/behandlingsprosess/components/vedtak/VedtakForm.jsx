@@ -32,13 +32,10 @@ import styles from './vedtakForm.less';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
 import VedtakFritekstbrevModal from './svp/VedtakFritekstbrevModal';
 
-const getPreviewManueltBrevCallback = (formProps, begrunnelse, skalOverstyre, previewCallback) => (e) => {
+const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, overskrift, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    const {
-      brødtekst, overskrift,
-    } = formProps;
     const data = {
-      fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      fritekst: skalOverstyre ? brodtekst : begrunnelse,
       dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
       tittel: overskrift,
       gjelderVedtak: true,
@@ -114,6 +111,8 @@ export class VedtakFormImpl extends Component {
       antallBarn,
       previewCallback,
       begrunnelse,
+      brødtekst,
+      overskrift,
       aksjonspunktKoder,
       isBehandlingReadOnly,
       kanOverstyre,
@@ -125,8 +124,8 @@ export class VedtakFormImpl extends Component {
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
-    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, true, previewCallback);
-    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, false, previewCallback);
+    const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, true, previewCallback);
+    const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
     const skalViseLink = (behandlingsresultat.avslagsarsak === null)
       || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
@@ -219,6 +218,8 @@ export class VedtakFormImpl extends Component {
 VedtakFormImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
+  brødtekst: PropTypes.string,
+  overskrift: PropTypes.string,
   antallBarn: PropTypes.number,
   behandlingStatusKode: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -237,6 +238,8 @@ VedtakFormImpl.propTypes = {
 VedtakFormImpl.defaultProps = {
   antallBarn: undefined,
   begrunnelse: undefined,
+  brødtekst: undefined,
+  overskrift: undefined,
   kanOverstyre: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
 };

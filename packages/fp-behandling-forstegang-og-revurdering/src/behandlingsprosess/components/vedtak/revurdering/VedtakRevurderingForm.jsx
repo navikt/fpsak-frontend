@@ -87,6 +87,8 @@ export class VedtakRevurderingFormImpl extends Component {
       kanOverstyre,
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
+      brødtekst,
+      overskrift,
       initialValues,
       ...formProps
     } = this.props;
@@ -160,6 +162,8 @@ export class VedtakRevurderingFormImpl extends Component {
           && (
             <VedtakRevurderingSubmitPanel
               begrunnelse={begrunnelse}
+              brodtekst={brødtekst}
+              overskrift={overskrift}
               previewCallback={previewCallback}
               formProps={formProps}
               readOnly={readOnly}
@@ -177,6 +181,8 @@ export class VedtakRevurderingFormImpl extends Component {
 VedtakRevurderingFormImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
+  brødtekst: PropTypes.string,
+  overskrift: PropTypes.string,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   antallBarn: PropTypes.number,
@@ -193,6 +199,8 @@ VedtakRevurderingFormImpl.propTypes = {
 
 VedtakRevurderingFormImpl.defaultProps = {
   begrunnelse: undefined,
+  brødtekst: undefined,
+  overskrift: undefined,
   antallBarn: undefined,
   revurderingsAarsakString: undefined,
   kanOverstyre: undefined,

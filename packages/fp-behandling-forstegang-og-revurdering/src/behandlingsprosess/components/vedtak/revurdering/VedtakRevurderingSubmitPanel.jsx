@@ -27,13 +27,10 @@ const getPreviewCallback = (formProps, previewCallback) => (e) => {
   e.preventDefault();
 };
 
-const getPreviewManueltBrevCallback = (formProps, skalOverstyre, previewCallback) => (e) => {
+const getPreviewManueltBrevCallback = (formProps, begrunnelse, brodtekst, overskrift, skalOverstyre, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
-    const {
-      begrunnelse, brødtekst, overskrift,
-    } = formProps;
     const data = {
-      fritekst: skalOverstyre ? brødtekst : begrunnelse,
+      fritekst: skalOverstyre ? brodtekst : begrunnelse,
       dokumentMal: skalOverstyre ? 'FRITKS' : undefined,
       tittel: overskrift,
       gjelderVedtak: true,
@@ -80,9 +77,12 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   readOnly,
   erBehandlingEtterKlage,
   submitKnappTextId,
+  begrunnelse,
+  brodtekst,
+  overskrift,
 }) => {
   const previewBrev = getPreviewCallback(formProps, previewCallback);
-  const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, true, previewCallback);
+  const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brodtekst, overskrift, true, previewCallback);
 
   return (
     <div>
@@ -130,6 +130,9 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   formProps: PropTypes.shape().isRequired,
   ytelseType: PropTypes.string.isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
+  begrunnelse: PropTypes.string,
+  brodtekst: PropTypes.string,
+  overskrift: PropTypes.string,
 };
 
 VedtakRevurderingSubmitPanelImpl.defaultProps = {
@@ -137,6 +140,9 @@ VedtakRevurderingSubmitPanelImpl.defaultProps = {
   beregningResultat: undefined,
   originaltBeregningResultat: undefined,
   skalBrukeOverstyrendeFritekstBrev: undefined,
+  begrunnelse: undefined,
+  brodtekst: undefined,
+  overskrift: undefined,
 };
 
 const mapStateToProps = (state) => ({
