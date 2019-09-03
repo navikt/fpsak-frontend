@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { reduxForm, formValueSelector } from 'redux-form';
-import { Row, Column } from 'nav-frontend-grid';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { formValueSelector, reduxForm } from 'redux-form';
+import { Column, Row } from 'nav-frontend-grid';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import { maxLength, required, hasValidText } from '@fpsak-frontend/utils';
+import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
 import { Image } from '@fpsak-frontend/shared-components';
 
@@ -129,7 +129,7 @@ ChangeBehandlendeEnhetModalImpl.propTypes = {
   gjeldendeBehandlendeEnhetId: PropTypes.string,
   gjeldendeBehandlendeEnhetNavn: PropTypes.string,
   handleEnhetChange: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   nyEnhet: PropTypes.string,
   begrunnelse: PropTypes.string,
 };

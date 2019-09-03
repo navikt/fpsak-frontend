@@ -9,10 +9,7 @@ import { FieldArray, formPropTypes } from 'redux-form';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import {
-  getInntektsmeldinger,
-  getBehandlingStartDatoForPermisjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getBehandlingStartDatoForPermisjon, getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';

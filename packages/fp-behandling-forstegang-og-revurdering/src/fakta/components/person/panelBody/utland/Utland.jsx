@@ -7,10 +7,10 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
-import { RadioOption, RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { omit, required } from '@fpsak-frontend/utils';
 import {
-  ElementWrapper, FlexContainer, FlexColumn, FlexRow, Image,
+  ElementWrapper, FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

@@ -5,13 +5,13 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import {
-  VerticalSpacer, ArrowBox, FlexRow, FlexColumn,
+  ArrowBox, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  RadioOption, RadioGroupField, SelectField, InputField,
+  InputField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
 
-import { required, formatCurrencyNoKr, minValue } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, minValue, required } from '@fpsak-frontend/utils';
 
 import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 

@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  injectIntl, intlShape, FormattedMessage, FormattedHTMLMessage,
-} from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -14,7 +12,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
 import {
-  VerticalSpacer, ElementWrapper, Image, PeriodLabel,
+  ElementWrapper, Image, PeriodLabel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
@@ -134,7 +132,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
 );
 
 OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
   isBosattAksjonspunktClosed: PropTypes.bool.isRequired,

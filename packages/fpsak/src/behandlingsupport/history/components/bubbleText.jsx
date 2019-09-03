@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
-import { OppChevron, NedChevron } from 'nav-frontend-chevron';
+import { NedChevron, OppChevron } from 'nav-frontend-chevron';
 import styles from './bubbleText.less';
 
 /**

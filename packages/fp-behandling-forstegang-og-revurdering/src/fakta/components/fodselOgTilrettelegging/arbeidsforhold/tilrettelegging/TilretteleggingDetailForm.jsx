@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from 'moment';
 import { Fieldset } from 'nav-frontend-skjema';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -9,7 +9,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  VerticalSpacer, ArrowBox, FlexContainer, FlexColumn, FlexRow,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 
@@ -91,7 +91,7 @@ export const TilretteleggingDetailFormImpl = ({
 TilretteleggingDetailFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   cancelTilrettelegging: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   warning: PropTypes.shape(),
   submittable: PropTypes.bool.isRequired,
   harIngenTilretteleggingDatoer: PropTypes.bool.isRequired,

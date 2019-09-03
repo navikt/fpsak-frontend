@@ -21,6 +21,10 @@ yarn build
 * gjøre form pakken tilgjengelig med final-form og redux-form
 * Legge inn readme for pakkene!
 
+## Intellj og stubs
+Disse må installeres manuelt, følg denne tråden:
+
+https://intellij-support.jetbrains.com/hc/en-us/community/posts/207725245-React-import-are-not-resolved-in-WebStrom-and-Intellij-2016-2
 
 ## Workspaces
 * Common dev dependencies skal kun ligge på roten. ref 

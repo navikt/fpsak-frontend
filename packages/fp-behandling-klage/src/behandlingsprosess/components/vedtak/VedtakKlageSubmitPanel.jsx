@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
@@ -93,7 +93,7 @@ export const VedtakKlageSubmitPanelImpl = ({
 };
 
 VedtakKlageSubmitPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   begrunnelse: PropTypes.string,

@@ -48,7 +48,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     expect(toggleBehandlingsmenyCallback.called).is.true;
     expect(wrapper.state('showModal')).is.true;
 
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
     expect(modal.prop('showModal')).is.true;
   });
@@ -64,14 +64,14 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     />);
 
     wrapper.setState({ showModal: true });
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
 
     modal.prop('cancelEvent')();
     wrapper.update();
 
     expect(wrapper.state('showModal')).is.false;
-    expect(wrapper.find('Connect(InjectIntl(ReduxForm))')).has.length(0);
+    expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
   });
 
   it('skal sende data til server ved trykk på ok-knapp', () => {
@@ -91,8 +91,8 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
 
     wrapper.setState({ nyEnhet });
     wrapper.setState({ showModal: true });
-    expect(wrapper.find('InjectIntl(EndreBehandlendeEnhetModal)')).has.length(0);
-    const modal = wrapper.find('Connect(InjectIntl(ReduxForm))');
+    expect(wrapper.find('injectIntl(EndreBehandlendeEnhetModal)')).has.length(0);
+    const modal = wrapper.find('Connect(injectIntl(ReduxForm))');
     expect(modal).has.length(1);
 
     modal.prop('onSubmit')({
@@ -111,6 +111,6 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     });
 
     expect(wrapper.state('showModal')).is.false;
-    expect(wrapper.find('Connect(InjectIntl(ReduxForm))')).has.length(0);
+    expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
   });
 });

@@ -7,7 +7,7 @@ import BehandlingerIndex from 'behandling/BehandlingerIndex';
 import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
 import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import {
-  behandlingerPath, trackRouteParam, requireProps, getRequestPollingMessage,
+  behandlingerPath, getRequestPollingMessage, requireProps, trackRouteParam,
 } from '@fpsak-frontend/fp-felles';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';

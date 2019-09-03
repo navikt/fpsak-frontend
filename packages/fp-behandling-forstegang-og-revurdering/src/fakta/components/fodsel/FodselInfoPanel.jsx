@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -143,7 +143,7 @@ export class FodselInfoPanelImpl extends Component {
 }
 
 FodselInfoPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne

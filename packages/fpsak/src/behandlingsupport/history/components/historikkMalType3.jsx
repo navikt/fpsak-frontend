@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -161,7 +161,7 @@ HistorikkMalType3.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType3));

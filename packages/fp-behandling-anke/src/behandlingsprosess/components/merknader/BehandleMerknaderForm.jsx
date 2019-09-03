@@ -8,15 +8,17 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  RadioGroupField, RadioOption, TextAreaField,
-} from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import {
-  behandlingFormAnke, behandlingFormValueSelector, isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting,
+  behandlingFormAnke,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingFormAnke';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';

@@ -87,7 +87,7 @@ describe('<ApprovalField>', () => {
       approvalIndex={approvalIndex}
       currentValue={currentValue}
     />);
-    const reasonsField = wrapper.find('InjectIntl(ReasonsField)');
+    const reasonsField = wrapper.find('injectIntl(ReasonsField)');
     expect(reasonsField).to.have.length(1);
   });
 });

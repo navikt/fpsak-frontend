@@ -4,13 +4,16 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import {
-  getSoknadTermindato, getSoknadAntallBarn, getSoknadUtstedtdato,
-  getSoknadFodselsdatoer, getFamiliehendelseTermindato,
+  getFamiliehendelseTermindato,
+  getSoknadAntallBarn,
+  getSoknadFodselsdatoer,
+  getSoknadTermindato,
+  getSoknadUtstedtdato,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';

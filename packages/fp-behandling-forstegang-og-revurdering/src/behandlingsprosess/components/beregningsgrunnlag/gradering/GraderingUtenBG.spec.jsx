@@ -5,11 +5,11 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { GraderingUtenBG as UnwrappedForm, buildInitialValues } from './GraderingUtenBG';
+import { buildInitialValues, GraderingUtenBG as UnwrappedForm } from './GraderingUtenBG';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
   definisjon: {

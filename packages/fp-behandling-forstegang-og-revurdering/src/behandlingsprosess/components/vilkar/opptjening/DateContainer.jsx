@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import styles from './dateContainer.less';
 

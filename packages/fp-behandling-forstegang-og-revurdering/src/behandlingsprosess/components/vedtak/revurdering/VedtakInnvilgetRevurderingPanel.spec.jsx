@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Undertekst, Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { VedtakInnvilgetRevurderingPanelImpl, lagKonsekvensForYtelsenTekst } from './VedtakInnvilgetRevurderingPanel';
+import { lagKonsekvensForYtelsenTekst, VedtakInnvilgetRevurderingPanelImpl } from './VedtakInnvilgetRevurderingPanel';
 
 
 const ytelseType = fagsakYtelseType.ENGANGSSTONAD;

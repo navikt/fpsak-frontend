@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { fieldInputPropTypes, fieldMetaPropTypes } from 'redux-form';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import Label, { labelPropType } from './Label';
 
@@ -33,7 +33,6 @@ const renderNavField = (WrappedNavFieldComponent) => {
         feil: this.formatError(submitFailed, error),
         label: <Label input={label} readOnly={readOnly} />,
       };
-
       if (!readOnly) {
         return <WrappedNavFieldComponent {...fieldProps} {...input} {...otherProps} readOnly={readOnly} />;
       }
@@ -48,7 +47,7 @@ const renderNavField = (WrappedNavFieldComponent) => {
       submitFailed: PropTypes.bool,
       error: PropTypes.any,
     }).isRequired,
-    intl: intlShape.isRequired,
+    intl: PropTypes.shape().isRequired,
     label: labelPropType,
     readOnly: PropTypes.bool,
     readOnlyHideEmpty: PropTypes.bool,

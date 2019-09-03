@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import connect from 'react-redux/es/connect/connect';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { trackRouteParam, requireProps, getRequestPollingMessage } from '@fpsak-frontend/fp-felles';
+import { getRequestPollingMessage, requireProps, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';
 import { setSelectedAktoerId } from './duck';
 import DataFetchPendingModal from '../fagsak/components/DataFetchPendingModal';

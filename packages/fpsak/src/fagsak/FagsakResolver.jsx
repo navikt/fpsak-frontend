@@ -10,18 +10,22 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import {
-  featureToggle, requireProps, getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
+  featureToggle,
+  getLocationWithDefaultBehandlingspunktAndFakta,
+  pathToBehandling,
+  pathToBehandlinger,
+  pathToMissingPage,
+  requireProps,
 } from '@fpsak-frontend/fp-felles';
 import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
 import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 
 import { fetchKodeverk as fetchKodeverkActionCreator } from '../kodeverk/duck';
-import { resetFagsakContext as resetFagsakContextActionCreator, fetchFagsakInfo as fetchFagsakInfoActionCreator } from './duck';
+import { fetchFagsakInfo as fetchFagsakInfoActionCreator, resetFagsakContext as resetFagsakContextActionCreator } from './duck';
 import {
-  getSelectedSaksnummer, getFetchFagsakInfoFinished, getFetchFagsakInfoFailed, getAllFagsakInfoResolved, getSelectedFagsak,
-}
-  from './fagsakSelectors';
+  getAllFagsakInfoResolved, getFetchFagsakInfoFailed, getFetchFagsakInfoFinished, getSelectedFagsak, getSelectedSaksnummer,
+} from './fagsakSelectors';
 
 /**
  * FagsakResolver

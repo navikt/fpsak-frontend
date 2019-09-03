@@ -2,9 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import {
-  VerticalSpacer, ArrowBox,
-} from '@fpsak-frontend/shared-components';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const AktsomhetGradForsettFormPanel = () => (
   <div>

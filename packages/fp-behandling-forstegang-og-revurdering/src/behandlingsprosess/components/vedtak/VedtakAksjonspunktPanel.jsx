@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
 
@@ -41,7 +41,7 @@ export const VedtakAksjonspunktPanelImpl = ({
 
 
 VedtakAksjonspunktPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]),
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,

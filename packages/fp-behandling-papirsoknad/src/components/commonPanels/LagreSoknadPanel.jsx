@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { formValueSelector } from 'redux-form';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Fieldset } from 'nav-frontend-skjema';
 
-import { ariaCheck, maxLength, hasValidText } from '@fpsak-frontend/utils';
+import { ariaCheck, hasValidText, maxLength } from '@fpsak-frontend/utils';
 import {
-  BorderBox, FlexContainer, FlexColumn, FlexRow,
+  BorderBox, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
@@ -117,7 +117,7 @@ export class LagreSoknadPanel extends Component {
 }
 
 LagreSoknadPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   onSubmitUfullstendigsoknad: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   ufullstendigSoeknad: PropTypes.bool,

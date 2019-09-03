@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import classnames from 'classnames/bind';
-import { Undertekst, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import {
-  flatten, guid, dateFormat, calcDaysAndWeeks, TIDENES_ENDE,
+  calcDaysAndWeeks, dateFormat, flatten, guid, TIDENES_ENDE,
 } from '@fpsak-frontend/utils';
 import {
-  FlexRow, FlexColumn, VerticalSpacer, Image,
+  FlexColumn, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';

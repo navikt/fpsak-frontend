@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import sinon from 'sinon';
 import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';

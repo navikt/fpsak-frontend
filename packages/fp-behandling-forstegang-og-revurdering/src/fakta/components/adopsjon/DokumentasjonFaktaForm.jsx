@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-import { Container, Row, Column } from 'nav-frontend-grid';
+import { injectIntl } from 'react-intl';
+import { Column, Container, Row } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
@@ -11,45 +11,52 @@ import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/du
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { DatepickerField } from '@fpsak-frontend/form';
-import { required, hasValidDate } from '@fpsak-frontend/utils';
-import { VerticalSpacer, Image } from '@fpsak-frontend/shared-components';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './dokumentasjonFaktaForm.less';
 
 const findAntallBarnUnder15 = (fodselsdatoer, omsorgsovertakelseDato) => {
-  const nrOfNotNullFodselsdatoer = Object.keys(fodselsdatoer).filter((id) => fodselsdatoer[id]).length;
+  const nrOfNotNullFodselsdatoer = Object.keys(fodselsdatoer)
+    .filter((id) => fodselsdatoer[id]).length;
   if (nrOfNotNullFodselsdatoer === 0 || !omsorgsovertakelseDato) {
     return '-';
   }
-  const omsorgsdato = moment(omsorgsovertakelseDato).subtract(15, 'years');
+  const omsorgsdato = moment(omsorgsovertakelseDato)
+    .subtract(15, 'years');
   return Object.values(fodselsdatoer)
-    .map((fodselsdato) => (moment(fodselsdato).isAfter(omsorgsdato) ? 1 : 0))
+    .map((fodselsdato) => (moment(fodselsdato)
+      .isAfter(omsorgsdato) ? 1 : 0))
     .reduce((a, b) => a + b, 0);
 };
 
 const isAgeAbove15 = (fodselsdatoer, omsorgsovertakelseDato, id) => fodselsdatoer[id]
-    && omsorgsovertakelseDato
-    && moment(fodselsdatoer[id]).isSameOrBefore(moment(omsorgsovertakelseDato).subtract(15, 'years'));
+  && omsorgsovertakelseDato
+  && moment(fodselsdatoer[id])
+    .isSameOrBefore(moment(omsorgsovertakelseDato)
+      .subtract(15, 'years'));
 
 /**
  * DokumentasjonFaktaForm
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av adopsjonsopplysninger i søknaden.
  */
-const DokumentasjonFaktaFormImpl = ({
-  intl,
-  readOnly,
-  fodselsdatoer,
-  omsorgsovertakelseDato,
-  barnetsAnkomstTilNorgeDato,
-  adopsjonFodelsedatoerIsEdited,
-  omsorgsovertakelseDatoIsEdited,
-  barnetsAnkomstTilNorgeDatoIsEdited,
-  erForeldrepengerFagsak,
-  hasEktefellesBarnAksjonspunkt,
-}) => (
+const DokumentasjonFaktaFormImpl = (
+  {
+    intl,
+    readOnly,
+    fodselsdatoer,
+    omsorgsovertakelseDato,
+    barnetsAnkomstTilNorgeDato,
+    adopsjonFodelsedatoerIsEdited,
+    omsorgsovertakelseDatoIsEdited,
+    barnetsAnkomstTilNorgeDatoIsEdited,
+    erForeldrepengerFagsak,
+    hasEktefellesBarnAksjonspunkt,
+  },
+) => (
   <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.ADOPSJONSDOKUMENTAJON} titleCode="DokumentasjonFaktaForm.ApplicationInformation">
     <Container className={styles.container}>
       <DatepickerField
@@ -64,41 +71,47 @@ const DokumentasjonFaktaFormImpl = ({
       />
       {erForeldrepengerFagsak && barnetsAnkomstTilNorgeDato
       && (
-      <DatepickerField
-        name="barnetsAnkomstTilNorgeDato"
-        label={{ id: 'DokumentasjonFaktaForm.DatoForBarnetsAnkomstTilNorge' }}
-        validate={[hasValidDate]}
-        readOnly={readOnly}
-        isEdited={barnetsAnkomstTilNorgeDatoIsEdited}
-      />
+        <DatepickerField
+          name="barnetsAnkomstTilNorgeDato"
+          label={{ id: 'DokumentasjonFaktaForm.DatoForBarnetsAnkomstTilNorge' }}
+          validate={[hasValidDate]}
+          readOnly={readOnly}
+          isEdited={barnetsAnkomstTilNorgeDatoIsEdited}
+        />
       )}
-      {Object.keys(fodselsdatoer).map((id, i) => (
-        <div key={`div-${aksjonspunktCodes.ADOPSJONSDOKUMENTAJON}-${id}`}>
-          <VerticalSpacer eightPx />
-          <Row>
-            <Column xs="6">
-              <DatepickerField
-                name={`fodselsdatoer.${id}`}
-                label={{ id: 'DokumentasjonFaktaForm.Fodselsdato', args: { number: i + 1 } }}
-                validate={[required, hasValidDate]}
-                readOnly={readOnly}
-                isEdited={adopsjonFodelsedatoerIsEdited[id]}
-              />
-            </Column>
-            <Column xs="6">
-              {(!readOnly && isAgeAbove15(fodselsdatoer, omsorgsovertakelseDato, id))
-              && (
-              <Image
-                className={styles.image}
-                altCode="DokumentasjonFaktaForm.BarnErOver15Ar"
-                titleCode="DokumentasjonFaktaForm.BarnErOver15Ar"
-                src={advarselImageUrl}
-              />
-              )}
-            </Column>
-          </Row>
-        </div>
-      ))}
+
+      {Object.keys(fodselsdatoer)
+        .map((id, i) => (
+          <div key={`div-${aksjonspunktCodes.ADOPSJONSDOKUMENTAJON}-${id}`}>
+            <VerticalSpacer eightPx />
+            <Row>
+              <Column xs="6">
+                <DatepickerField
+                  name={`fodselsdatoer.${id}`}
+                  label={{
+                    id: 'DokumentasjonFaktaForm.Fodselsdato',
+                    args: { number: i + 1 },
+                  }}
+                  validate={[required, hasValidDate]}
+                  readOnly={readOnly}
+                  isEdited={adopsjonFodelsedatoerIsEdited[id]}
+                />
+              </Column>
+              <Column xs="6">
+                {(!readOnly && isAgeAbove15(fodselsdatoer, omsorgsovertakelseDato, id))
+                && (
+                  <Image
+                    className={styles.image}
+                    altCode="DokumentasjonFaktaForm.BarnErOver15Ar"
+                    titleCode="DokumentasjonFaktaForm.BarnErOver15Ar"
+                    src={advarselImageUrl}
+                  />
+                )}
+
+              </Column>
+            </Row>
+          </div>
+        ))}
       <VerticalSpacer twentyPx />
       <Undertekst>{intl.formatMessage({ id: 'DokumentasjonFaktaForm.AntallBarnSomFyllerVilkaret' })}</Undertekst>
       <Normaltekst>{findAntallBarnUnder15(fodselsdatoer, omsorgsovertakelseDato)}</Normaltekst>
@@ -107,7 +120,7 @@ const DokumentasjonFaktaFormImpl = ({
 );
 
 DokumentasjonFaktaFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   fodselsdatoer: PropTypes.shape(),
   omsorgsovertakelseDato: PropTypes.string,
   barnetsAnkomstTilNorgeDato: PropTypes.string,

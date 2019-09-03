@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
@@ -98,7 +98,7 @@ export const HistorikkMalType9 = ({
 HistorikkMalType9.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
   behandlingLocation: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   originType: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };

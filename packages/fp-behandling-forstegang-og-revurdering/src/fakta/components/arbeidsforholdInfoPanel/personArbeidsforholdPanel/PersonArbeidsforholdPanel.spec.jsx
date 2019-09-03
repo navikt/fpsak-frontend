@@ -7,8 +7,11 @@ import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArb
 import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable/PersonArbeidsforholdTable';
 import PersonArbeidsforholdDetailForm from './PersonArbeidsforholdDetailForm/PersonArbeidsforholdDetailForm';
-import PersonArbeidsforholdPanel, { PersonArbeidsforholdPanelImpl, sortArbeidsforhold, erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM }
-  from './PersonArbeidsforholdPanel';
+import PersonArbeidsforholdPanel, {
+  erDetTillattMedFortsettingAvAktivtArbeidsforholdUtenIM,
+  PersonArbeidsforholdPanelImpl,
+  sortArbeidsforhold,
+} from './PersonArbeidsforholdPanel';
 
 describe('<PersonArbeidsforholdPanel>', () => {
   const arbeidsforhold = {

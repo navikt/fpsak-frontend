@@ -6,29 +6,27 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst, Undertittel, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
-import {
-  getSimuleringResultat, getTilbakekrevingValg,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+  getFeatureToggles,
+  getSelectedBehandlingId,
+  getSelectedSaksnummer,
+  isForeldrepengerFagsak,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  VerticalSpacer, AksjonspunktHelpText, ArrowBox, Image, FadingPanel,
+  AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  minLength,
-  maxLength,
-  hasValidText,
-  required,
-  getLanguageCodeFromSprakkode,
+  getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';

@@ -19,7 +19,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       form="form"
     />);
 
-    const image = wrapper.find('InjectIntl(Image)');
+    const image = wrapper.find('injectIntl(Image)');
     expect(image).to.have.length(1);
 
     const undertekst = wrapper.find('Undertekst');

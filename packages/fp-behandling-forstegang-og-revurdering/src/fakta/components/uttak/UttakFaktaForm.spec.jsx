@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { UttakFaktaForm, transformValues } from './UttakFaktaForm';
+import { transformValues, UttakFaktaForm } from './UttakFaktaForm';
 
 
 const ap5070 = {

@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormSection, FieldArray } from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FieldArray, FormSection } from 'redux-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { VerticalSpacer, ArrowBox, BorderBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';
@@ -68,7 +68,7 @@ const FrilansPanelImpl = ({
 );
 
 FrilansPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   formName: PropTypes.string.isRequired,
 };

@@ -1,12 +1,10 @@
 import React from 'react';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { required } from '@fpsak-frontend/utils';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
-import {
-  RadioGroupField, RadioOption, SelectField,
-} from '@fpsak-frontend/form';
+import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import PropTypes from 'prop-types';
 import { getKodeverk } from 'behandlingKlage/src/duckBehandlingKlage';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -83,7 +81,7 @@ KlageVurderingRadioOptionsNfpImpl.propTypes = {
     navn: PropTypes.string,
   })).isRequired,
   klageVurdering: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 export const mapStateToProps = (state) => ({

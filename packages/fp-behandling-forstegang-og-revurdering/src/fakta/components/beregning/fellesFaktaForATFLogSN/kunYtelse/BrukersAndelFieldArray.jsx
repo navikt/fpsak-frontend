@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { InputField, NavFieldGroup, SelectField } from '@fpsak-frontend/form';
 import {
-  isArrayEmpty, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+  formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
@@ -15,7 +15,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { createSelector } from 'reselect';
 import {
-  Image, Table, TableRow, TableColumn, VerticalSpacer,
+  Image, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -188,7 +188,7 @@ BrukersAndelFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   inntektskategoriKoder: kodeverkPropType.isRequired,
   aktivitetStatuser: kodeverkPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,

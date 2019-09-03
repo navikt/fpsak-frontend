@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import { FormattedMessage } from 'react-intl';
 
 import { Normaltekst } from 'nav-frontend-typografi';
-import { SelectField, InputField, RadioGroupField } from '@fpsak-frontend/form';
+import { InputField, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 
 import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 

@@ -1,4 +1,4 @@
-import { sakOperations, getFaktaRedux } from '@fpsak-frontend/fp-behandling-felles';
+import { getFaktaRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
 

@@ -5,10 +5,13 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import {
-  getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate, getBehandlingFastsattOpptjeningActivities,
-  getBehandlingFastsattOpptjeningperiodeMnder, getBehandlingFastsattOpptjeningperiodeDager,
+  getBehandlingFastsattOpptjeningActivities,
+  getBehandlingFastsattOpptjeningFomDate,
+  getBehandlingFastsattOpptjeningperiodeDager,
+  getBehandlingFastsattOpptjeningperiodeMnder,
+  getBehandlingFastsattOpptjeningTomDate,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { VerticalSpacer, PeriodLabel } from '@fpsak-frontend/shared-components';
+import { PeriodLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import OpptjeningTimeLineLight from './OpptjeningTimeLineLight';
 
 

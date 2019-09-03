@@ -1,16 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FlexColumn, FlexRow, ArrowBox } from '@fpsak-frontend/shared-components';
-import { DecimalField, SelectField, PeriodpickerField } from '@fpsak-frontend/form';
+import { ArrowBox, FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
+import { DecimalField, PeriodpickerField, SelectField } from '@fpsak-frontend/form';
 import oppholdArsakType, { oppholdArsakKontoNavn } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import {
-  required,
-  hasValidDecimal,
-  maxValue,
-  minValue,
+  hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
-import { uttakPeriodeNavn, stonadskontoType } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 
 import styles from '../perioder/periodeTyper.less';
 

@@ -9,27 +9,17 @@ import { Undertekst } from 'nav-frontend-typografi';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer,
-  FlexRow,
-  FlexColumn,
-  VerticalSpacer,
-  ArrowBox,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  RadioOption,
-  RadioGroupField,
-  TextAreaField,
-} from '@fpsak-frontend/form';
-import {
-  required,
-  maxLength,
-  minLength,
-  hasValidPeriod,
-  hasValidText,
+  hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector, getBehandlingFormSyncErrors,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
+  getBehandlingFormSyncErrors,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';

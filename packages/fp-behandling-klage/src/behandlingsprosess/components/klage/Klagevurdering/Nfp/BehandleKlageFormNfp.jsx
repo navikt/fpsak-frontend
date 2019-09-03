@@ -4,18 +4,22 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { VerticalSpacer, AksjonspunktHelpText, FadingPanel } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
-  isBehandlingFormDirty, hasBehandlingFormErrorsOfType, isBehandlingFormSubmitting, behandlingFormKlage, behandlingFormValueSelector,
+  behandlingFormKlage,
+  behandlingFormValueSelector,
+  hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
 } from 'behandlingKlage/src/behandlingFormKlage';
 import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
 import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';

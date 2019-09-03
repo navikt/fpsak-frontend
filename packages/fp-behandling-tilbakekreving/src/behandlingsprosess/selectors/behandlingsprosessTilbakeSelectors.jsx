@@ -4,7 +4,7 @@ import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandl
 
 import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import createTilbakekrevingBpProps from '../definition/tilbakekrevingBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpTilbake';
+import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpTilbake';
 import { getFagsakYtelseType } from '../../duckBehandlingTilbakekreving';
 
 // Kun eksportert for test. Ikke bruk andre steder!

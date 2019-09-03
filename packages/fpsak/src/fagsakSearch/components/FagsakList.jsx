@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {
-  Table, TableRow, TableColumn, DateLabel,
+  DateLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';

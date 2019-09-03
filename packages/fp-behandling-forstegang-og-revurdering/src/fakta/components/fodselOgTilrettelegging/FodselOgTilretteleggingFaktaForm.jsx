@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import {
-  FlexContainer, FlexColumn, FlexRow, VerticalSpacer, ElementWrapper,
+  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, hasValidText, maxLength, requiredIfNotPristine,
+  hasValidDate, hasValidText, maxLength, required, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

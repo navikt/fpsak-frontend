@@ -9,15 +9,16 @@ import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { RadioOption, RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, maxLength, minLength, hasValidPeriod, hasValidText,
+  hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
 import EndreSoknadsperiode from '../components/EndreSoknadsperiode';

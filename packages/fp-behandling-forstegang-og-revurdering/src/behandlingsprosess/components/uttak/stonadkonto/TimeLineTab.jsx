@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
 import PropTypes from 'prop-types';
 import { stonadskontoerPropType } from '@fpsak-frontend/prop-types';

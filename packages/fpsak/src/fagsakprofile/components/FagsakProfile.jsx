@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Systemtittel, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { NavLink } from 'react-router-dom';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';

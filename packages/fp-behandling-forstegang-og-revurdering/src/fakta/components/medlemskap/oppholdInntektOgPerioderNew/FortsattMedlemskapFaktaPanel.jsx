@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
-  getBehandlingSkjaringstidspunkt, getBehandlingMedlemEndredeOpplysninger, getBehandlingStartDatoForPermisjon,
+  getBehandlingMedlemEndredeOpplysninger,
+  getBehandlingSkjaringstidspunkt,
+  getBehandlingStartDatoForPermisjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
-  ISO_DATE_FORMAT, DDMMYYYY_DATE_FORMAT, required, hasValidDate, dateAfterOrEqual,
+  dateAfterOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
 
 const getParam = (opplysning) => ({ dato: moment(opplysning.fom).format(DDMMYYYY_DATE_FORMAT) });

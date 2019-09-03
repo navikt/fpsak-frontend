@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 
 import {
-  EtikettAdvarsel, EtikettInfo, EtikettFokus, EtikettSuksess,
+  EtikettAdvarsel, EtikettFokus, EtikettInfo, EtikettSuksess,
 } from 'nav-frontend-etiketter';
 import styles from './merkepanel.less';
 
@@ -83,7 +83,7 @@ MerkePanel.propTypes = {
   erNAVAnsatt: PropTypes.bool,
   erVerge: PropTypes.bool,
   diskresjonskode: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 MerkePanel.defaultProps = {

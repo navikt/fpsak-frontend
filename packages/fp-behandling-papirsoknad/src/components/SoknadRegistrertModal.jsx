@@ -1,5 +1,5 @@
 import React from 'react';
-import { intlShape, injectIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -43,7 +43,7 @@ export const SoknadRegistrertModal = ({
 
 SoknadRegistrertModal.propTypes = {
   isOpen: PropTypes.bool,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 SoknadRegistrertModal.defaultProps = {

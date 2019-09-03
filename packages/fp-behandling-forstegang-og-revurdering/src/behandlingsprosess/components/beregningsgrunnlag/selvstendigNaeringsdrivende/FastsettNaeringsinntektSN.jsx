@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 
 import {
-  required, minLength, maxLength, hasValidText,
-  parseCurrencyInput, removeSpacesFromNumber, formatCurrencyNoKr,
+  formatCurrencyNoKr, hasValidText, maxLength, minLength, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import { ArrowBox } from '@fpsak-frontend/shared-components';
 import {
@@ -188,7 +187,7 @@ export const FastsettNaeringsinntektSNImpl = ({
 );
 
 FastsettNaeringsinntektSNImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   erVarigEndretNaering: PropTypes.bool,
   isAksjonspunktClosed: PropTypes.bool.isRequired,

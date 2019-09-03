@@ -7,7 +7,7 @@ import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { Tilbaketrekkpanel as UnwrappedForm, buildInitialValues, transformValues } from './Tilbaketrekkpanel';
+import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
 
 const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
   definisjon: {

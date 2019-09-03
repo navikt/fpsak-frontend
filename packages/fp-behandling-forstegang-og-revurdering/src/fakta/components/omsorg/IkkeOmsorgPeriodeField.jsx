@@ -2,12 +2,18 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
-  required, hasValidDate, dateIsAfter, dateRangesNotOverlapping, isObjectEmpty, dateRangesOverlappingMessage, invalidPeriodMessage,
+  dateIsAfter,
+  dateRangesNotOverlapping,
+  dateRangesOverlappingMessage,
+  hasValidDate,
+  invalidPeriodMessage,
+  isObjectEmpty,
+  required,
 } from '@fpsak-frontend/utils';
 
 const showAddButton = (fields) => {

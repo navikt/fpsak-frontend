@@ -4,9 +4,12 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { shallow } from 'enzyme';
 import {
-  EndringBeregningsgrunnlagForm, getFieldNameKey,
-  mapTilFastsatteVerdier, mapAndel,
-  transformPerioder, slaaSammenPerioder,
+  EndringBeregningsgrunnlagForm,
+  getFieldNameKey,
+  mapAndel,
+  mapTilFastsatteVerdier,
+  slaaSammenPerioder,
+  transformPerioder,
 } from './EndringBeregningsgrunnlagForm';
 import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
 

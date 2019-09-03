@@ -6,7 +6,7 @@ import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { required, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 

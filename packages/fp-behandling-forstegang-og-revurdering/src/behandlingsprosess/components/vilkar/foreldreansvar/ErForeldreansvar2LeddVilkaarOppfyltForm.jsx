@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
@@ -9,7 +9,8 @@ import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingspr
 import behandlingspunktSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { getFagsakYtelseType, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
@@ -72,7 +73,7 @@ export const ErForeldreansvar2LeddVilkaarOppfyltFormImpl = ({
 );
 
 ErForeldreansvar2LeddVilkaarOppfyltFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,

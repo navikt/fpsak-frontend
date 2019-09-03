@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import {
-  hasValidText, maxLength, minLength, required, getLanguageCodeFromSprakkode,
+  getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import classNames from 'classnames';
 import { Column, Row } from 'nav-frontend-grid';

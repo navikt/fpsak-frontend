@@ -3,12 +3,10 @@ import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  InputField, RadioGroupField, RadioOption,
-} from '@fpsak-frontend/form';
+import { InputField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import PropTypes from 'prop-types';
 

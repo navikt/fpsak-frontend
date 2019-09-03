@@ -1,6 +1,8 @@
 import { createSelector } from 'reselect';
 import {
-  getBehandlingFormValues, getBehandlingFormInitialValues, isBehandlingFormDirty,
+  getBehandlingFormInitialValues,
+  getBehandlingFormValues,
+  isBehandlingFormDirty,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 
 export const formNameAvklarAktiviteter = 'avklarAktiviteterForm';

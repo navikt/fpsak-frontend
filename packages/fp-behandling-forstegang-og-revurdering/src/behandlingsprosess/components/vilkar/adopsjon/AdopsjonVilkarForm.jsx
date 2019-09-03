@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';

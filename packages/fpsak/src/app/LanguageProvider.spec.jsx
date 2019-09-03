@@ -10,10 +10,9 @@ describe('<LanguageProvider>', () => {
   it('skal sette opp react-intl', () => {
     const wrapper = mountWithIntl((
       <LanguageProvider nbMessages={{ 'Header.Foreldrepenger': 'Foreldrepenger' }}>
-        <FormattedMessage id="Header.Foreldrepenger" />
+        <FormattedMessage id="Header.Foreldrepenger" tagName="span" />
       </LanguageProvider>
     ));
-
     const intlProvider = wrapper.find('IntlProvider');
     expect(intlProvider).to.have.length(1);
     expect(intlProvider.prop('messages')).to.eql({ 'Header.Foreldrepenger': 'Foreldrepenger' });

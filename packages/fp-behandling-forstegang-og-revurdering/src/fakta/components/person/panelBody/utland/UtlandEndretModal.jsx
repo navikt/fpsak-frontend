@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -9,7 +9,7 @@ import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRev
 import Modal from 'nav-frontend-modal';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import {
-  FlexColumn, FlexRow, FlexContainer, VerticalSpacer, Image,
+  FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import styles from './utlandEndretModal.less';
 
@@ -58,7 +58,7 @@ export const UtlandEndretModalImpl = ({
 UtlandEndretModalImpl.propTypes = {
   showModal: PropTypes.bool,
   closeEvent: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 UtlandEndretModalImpl.defaultProps = {

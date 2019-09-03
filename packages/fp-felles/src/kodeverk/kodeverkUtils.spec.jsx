@@ -5,7 +5,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 
-import { getKodeverknavnFraKode, getKodeverknavnFn } from './kodeverkUtils';
+import { getKodeverknavnFn, getKodeverknavnFraKode } from './kodeverkUtils';
 
 describe('<kodeverkUtils>', () => {
   it('skal finne navn til gitt kodeverk-kode', () => {

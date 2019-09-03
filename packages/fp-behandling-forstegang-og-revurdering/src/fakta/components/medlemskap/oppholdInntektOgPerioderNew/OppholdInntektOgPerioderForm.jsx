@@ -2,18 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import {
-  change as reduxFormChange,
-  reset as reduxFormReset,
-  formPropTypes,
-} from 'redux-form';
-import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import { change as reduxFormChange, formPropTypes, reset as reduxFormReset } from 'redux-form';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import {
-  AksjonspunktHelpText, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -27,9 +21,10 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingId, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getFagsakPerson, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
 
@@ -211,7 +206,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
 }
 
 OppholdInntektOgPerioderFormNew.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,

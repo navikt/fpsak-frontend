@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Etikettfokus from 'nav-frontend-etiketter';
 import { kodeverkPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
@@ -100,7 +100,7 @@ export const BostedSokerView = ({
 BostedSokerView.propTypes = {
   soker: personopplysningPropType.isRequired,
   typeSoker: PropTypes.node.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   className: PropTypes.string,
   regionTypes: kodeverkPropType.isRequired,
   sivilstandTypes: kodeverkPropType.isRequired,

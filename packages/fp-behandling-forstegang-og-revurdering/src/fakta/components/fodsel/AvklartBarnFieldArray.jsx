@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 
+import { hasValidDate, required } from '@fpsak-frontend/utils';
 import {
-  hasValidDate, required,
-} from '@fpsak-frontend/utils';
-import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
-import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
+import { CheckboxField, DatepickerField } from '@fpsak-frontend/form';
 import styles from './avklartBarnFieldArray.less';
 
 export const defaultAntallBarn = {

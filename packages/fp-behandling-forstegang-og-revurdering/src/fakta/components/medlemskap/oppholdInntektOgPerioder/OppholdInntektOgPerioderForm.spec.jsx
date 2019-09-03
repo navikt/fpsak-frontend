@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
@@ -59,7 +59,6 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
-      intl={intlMock}
       aksjonspunkter={[bosattAksjonspunkt]}
       openInfoPanels={['omsorgsvilkaaret']}
       toggleInfoPanelCallback={sinon.spy()}
@@ -73,8 +72,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
     expect(helpText.childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.ErSokerBosattINorge');
-
-    expect(wrapper.find('Connect(InjectIntl(OppholdINorgeOgAdresserFaktaPanelImpl))')).has.length(1);
+    const faktaPanel = wrapper.find('Connect(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl))');
+    expect(faktaPanel).has.length(1);
     expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
     expect(wrapper.find(FaktaSubmitButton)).has.length(1);
   });

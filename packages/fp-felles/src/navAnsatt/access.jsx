@@ -1,7 +1,7 @@
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { without, isObject } from '@fpsak-frontend/utils';
+import { isObject, without } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';

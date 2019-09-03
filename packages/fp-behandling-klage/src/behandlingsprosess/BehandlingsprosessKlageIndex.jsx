@@ -7,16 +7,13 @@ import { push } from 'connected-react-router';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, getLocationWithQueryParams } from '@fpsak-frontend/fp-felles';
 
 import { getBehandlingIdentifier } from 'behandlingKlage/src/duckBehandlingKlage';
 import BehandlingspunktKlageInfoPanel from './components/BehandlingspunktKlageInfoPanel';
 import KlageBehandlingModal from './components/klage/KlageBehandlingModal';
 import {
-  setSelectedBehandlingspunktNavn,
-  getSelectedBehandlingspunktNavn,
-  saveKlage,
-  resolveKlageTemp,
+  getSelectedBehandlingspunktNavn, resolveKlageTemp, saveKlage, setSelectedBehandlingspunktNavn,
 } from './duckBpKlage';
 
 /**

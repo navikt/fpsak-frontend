@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
@@ -43,7 +43,7 @@ const HistorikkMalType6 = ({ historikkinnslagDeler, intl, getKodeverknavn }) => 
 
 HistorikkMalType6.propTypes = {
   historikkinnslagDeler: PropTypes.arrayOf(historikkinnslagDelPropType).isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 

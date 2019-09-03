@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage, FormattedHTMLMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { Undertittel, Normaltekst, Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import { getBeregningsgrunnlagLedetekster, getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  BorderBox, Table, TableRow, TableColumn,
+  BorderBox, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';

@@ -4,16 +4,19 @@ import moment from 'moment';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { isBehandlingRevurderingFortsattMedlemskap, getBehandlingRevurderingAvFortsattMedlemskapFom }
-  from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+  getBehandlingRevurderingAvFortsattMedlemskapFom,
+  isBehandlingRevurderingFortsattMedlemskap,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
@@ -28,7 +31,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 
 import { getFodselVilkarAvslagsarsaker } from './fodsel/FodselVilkarForm';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-import { getApCode, getAllApCodes } from './BehandlingspunktToAksjonspunkt';
+import { getAllApCodes, getApCode } from './BehandlingspunktToAksjonspunkt';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 
@@ -95,7 +98,7 @@ export const VilkarresultatMedOverstyringFormImpl = ({
 );
 
 VilkarresultatMedOverstyringFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   isOverstyrt: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,

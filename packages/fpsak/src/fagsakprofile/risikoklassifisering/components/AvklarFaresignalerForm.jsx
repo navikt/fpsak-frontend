@@ -7,10 +7,10 @@ import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { behandlingFormFpsak } from 'behandling/behandlingFormFpsak';
 import {
-  FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, minLength, maxLength, hasValidText, ariaCheck,
+  ariaCheck, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -20,7 +20,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import faresignalVurdering from '@fpsak-frontend/kodeverk/src/faresignalVurdering';
 
-import { getRisikoaksjonspunkt, getKontrollresultat } from '../kontrollresultatSelectors';
+import { getKontrollresultat, getRisikoaksjonspunkt } from '../kontrollresultatSelectors';
 import styles from './avklarFaresignalerForm.less';
 
 const maxLength1500 = maxLength(1500);

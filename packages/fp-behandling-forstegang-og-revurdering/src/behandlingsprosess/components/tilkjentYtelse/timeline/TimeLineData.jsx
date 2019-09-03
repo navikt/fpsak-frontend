@@ -8,7 +8,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
-  Table, TableRow, TableColumn, VerticalSpacer, Image,
+  Image, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';

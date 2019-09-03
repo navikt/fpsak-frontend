@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import {
-  Image, Table, TableColumn, TableRow, PeriodLabel, DateLabel,
+  DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';

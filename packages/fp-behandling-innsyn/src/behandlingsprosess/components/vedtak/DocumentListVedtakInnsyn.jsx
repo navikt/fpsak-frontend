@@ -6,7 +6,7 @@ import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  Table, TableRow, TableColumn, ElementWrapper,
+  ElementWrapper, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import styles from './documentListVedtakInnsyn.less';
 

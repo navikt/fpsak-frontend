@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import {
-  ArrowBox, FlexContainer, FlexColumn, FlexRow,
+  ArrowBox, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
-import { NavFieldGroup, CheckboxField, TextAreaField } from '@fpsak-frontend/form';
+import { CheckboxField, NavFieldGroup, TextAreaField } from '@fpsak-frontend/form';
 import {
-  required, minLength, maxLength, hasValidText,
+  hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
 import styles from './ReasonsField.less';
@@ -82,7 +82,7 @@ ReasonsField.propTypes = {
   fieldName: PropTypes.string.isRequired,
   showOnlyBegrunnelse: PropTypes.bool.isRequired,
   godkjentHosKA: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 

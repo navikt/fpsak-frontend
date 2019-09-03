@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/src/kanIkkeOppgiAnnenForelderArsak';
 import {
-  CheckboxField, InputField, NavFieldGroup, RadioOption, RadioGroupField, SelectField,
+  CheckboxField, InputField, NavFieldGroup, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
 import {
-  required, hasValidFodselsnummerFormat, hasValidFodselsnummer, hasValidName, sammeFodselsnummerSomSokerMessage,
+  hasValidFodselsnummer, hasValidFodselsnummerFormat, hasValidName, required, sammeFodselsnummerSomSokerMessage,
 } from '@fpsak-frontend/utils';
-import { BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, BorderBox } from '@fpsak-frontend/shared-components';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -121,7 +121,7 @@ export const AnnenForelderPanelImpl = ({
 };
 
 AnnenForelderPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   isForeldrepenger: PropTypes.bool,
   countryCodes: kodeverkPropType.isRequired,
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,

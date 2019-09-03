@@ -1,9 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
-import aksjonspunktCodes, {
-  isInnhentSaksopplysningerAksjonspunkt,
-} from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { isInnhentSaksopplysningerAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 

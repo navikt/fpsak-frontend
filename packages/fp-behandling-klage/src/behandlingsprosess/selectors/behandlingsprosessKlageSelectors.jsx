@@ -6,7 +6,7 @@ import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadKlageBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerKlageBpDefinition';
-import { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter } from '../duckBpKlage';
+import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpKlage';
 import { getFagsakYtelseType } from '../../duckBehandlingKlage';
 
 // Kun eksportert for test. Ikke bruk andre steder!

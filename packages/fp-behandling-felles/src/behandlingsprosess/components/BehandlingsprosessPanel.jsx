@@ -13,28 +13,15 @@ import styles from './behandlingsprosessPanel.less';
  * I tillegg vises navn og merknad knyttet til behandlingspunktet.
  */
 const BehandlingsprosessPanel = ({
-  behandlingspunkter,
+  punkter,
   selectedBehandlingspunkt,
-  selectBehandlingspunktCallback,
-  isSelectedBehandlingHenlagt,
-  findBehandlingsprosessIcon,
-  getBehandlingspunkterStatus,
-  getBehandlingspunkterTitleCodes,
-  getAksjonspunkterOpenStatus,
   children,
 }) => (
   <Panel className={styles.container}>
-    { behandlingspunkter.map((bp) => (
+    {punkter.map((bp) => (
       <BehandlingspunktIcon
-        key={bp}
-        behandlingspunkt={bp}
-        isSelectedBehandlingspunkt={bp === selectedBehandlingspunkt}
-        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
-        selectBehandlingspunktCallback={selectBehandlingspunktCallback}
-        findBehandlingsprosessIcon={findBehandlingsprosessIcon}
-        getBehandlingspunkterStatus={getBehandlingspunkterStatus}
-        getBehandlingspunkterTitleCodes={getBehandlingspunkterTitleCodes}
-        getAksjonspunkterOpenStatus={getAksjonspunkterOpenStatus}
+        {...bp}
+        key={bp.navn}
       />
     ))}
     <>
@@ -45,20 +32,13 @@ const BehandlingsprosessPanel = ({
 );
 
 BehandlingsprosessPanel.propTypes = {
-  behandlingspunkter: PropTypes.arrayOf(PropTypes.string).isRequired,
+  punkter: PropTypes.arrayOf(BehandlingspunktIcon).isRequired,
   selectedBehandlingspunkt: PropTypes.string,
-  selectBehandlingspunktCallback: PropTypes.func.isRequired,
-  findBehandlingsprosessIcon: PropTypes.func.isRequired,
-  getBehandlingspunkterStatus: PropTypes.func.isRequired,
-  getBehandlingspunkterTitleCodes: PropTypes.func.isRequired,
-  getAksjonspunkterOpenStatus: PropTypes.func.isRequired,
-  isSelectedBehandlingHenlagt: PropTypes.bool,
   children: PropTypes.element,
 };
 
 BehandlingsprosessPanel.defaultProps = {
   selectedBehandlingspunkt: undefined,
-  isSelectedBehandlingHenlagt: false,
   children: undefined,
 };
 

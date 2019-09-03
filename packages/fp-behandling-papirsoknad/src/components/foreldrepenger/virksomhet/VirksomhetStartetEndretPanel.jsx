@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { ElementWrapper, VerticalSpacer, ArrowBox } from '@fpsak-frontend/shared-components';
+import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { hasValidDate, hasValidInteger, required } from '@fpsak-frontend/utils';
 import {
-  CheckboxField, InputField, RadioGroupField, RadioOption, DatepickerField, TextAreaField,
+  CheckboxField, DatepickerField, InputField, RadioGroupField, RadioOption, TextAreaField,
 } from '@fpsak-frontend/form';
 
 /**

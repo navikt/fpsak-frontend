@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, intlShape } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  PeriodFieldArray, FlexContainer, FlexColumn, FlexRow,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
-import {
-  DatepickerField, SelectField,
-} from '@fpsak-frontend/form';
+import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
@@ -112,7 +110,7 @@ RenderUtsettelsePeriodeFieldArray.propTypes = {
   utsettelseReasons: kodeverkPropType.isRequired,
   utsettelseKvoter: kodeverkPropType.isRequired,
   meta: PropTypes.shape().isRequired,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

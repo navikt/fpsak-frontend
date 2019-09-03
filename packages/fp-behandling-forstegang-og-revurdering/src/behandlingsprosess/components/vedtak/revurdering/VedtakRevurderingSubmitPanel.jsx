@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { injectIntl, intlShape } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
-import {
-  getBehandlingResultatstruktur, getHaveSentVarsel, erArsakTypeBehandlingEtterKlage,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { erArsakTypeBehandlingEtterKlage, getBehandlingResultatstruktur, getHaveSentVarsel } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -121,7 +119,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
 };
 
 VedtakRevurderingSubmitPanelImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   previewManueltBrevCallback: PropTypes.func.isRequired,
   beregningResultat: PropTypes.shape(),

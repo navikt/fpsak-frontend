@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
-  FlexColumn, FlexContainer, FlexRow, ElementWrapper, VerticalSpacer,
+  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { DatepickerField, CheckboxField, SelectField } from '@fpsak-frontend/form';
+import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
@@ -115,7 +115,7 @@ PermisjonOverforingAvKvoterPanelImpl.propTypes = {
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   skalOvertaKvote: PropTypes.bool.isRequired,
   arsakForOverforingCode: PropTypes.string,
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   visFeilMelding: PropTypes.bool.isRequired,
 };

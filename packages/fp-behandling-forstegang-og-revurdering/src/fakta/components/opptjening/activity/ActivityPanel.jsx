@@ -2,9 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
-import {
-  injectIntl, intlShape, FormattedMessage, FormattedHTMLMessage,
-} from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -12,23 +10,31 @@ import moment from 'moment';
 
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  Image, FlexContainer, FlexRow, FlexColumn, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
-  omit, isEqual, findDifferenceInMonthsAndDays,
-  requiredIfCustomFunctionIsTrue, required, hasValidPeriod, minLength, maxLength, hasValidText, isWithinOpptjeningsperiode,
-}
-  from '@fpsak-frontend/utils';
+  findDifferenceInMonthsAndDays,
+  hasValidPeriod,
+  hasValidText,
+  isEqual,
+  isWithinOpptjeningsperiode,
+  maxLength,
+  minLength,
+  omit,
+  required,
+  requiredIfCustomFunctionIsTrue,
+} from '@fpsak-frontend/utils';
 import {
-  PeriodpickerField, RadioGroupField, RadioOption, TextAreaField, SelectField,
+  PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
@@ -227,7 +233,7 @@ export const ActivityPanel = ({
 );
 
 ActivityPanel.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
   opptjeningAktivitetTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,

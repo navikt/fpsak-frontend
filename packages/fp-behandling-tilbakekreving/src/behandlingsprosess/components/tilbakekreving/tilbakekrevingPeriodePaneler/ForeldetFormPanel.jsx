@@ -2,9 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import {
-  TextAreaField, RadioOption, RadioGroupField,
-} from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 
 const ForeldetFormPanel = () => (
   <Row>

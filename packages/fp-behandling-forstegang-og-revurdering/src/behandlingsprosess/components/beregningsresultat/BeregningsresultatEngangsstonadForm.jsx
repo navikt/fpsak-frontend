@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { injectIntl, intlShape } from 'react-intl';
-import { Row, Column } from 'nav-frontend-grid';
+import { injectIntl } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
@@ -12,13 +12,14 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  VerticalSpacer, FadingPanel, FlexContainer, FlexRow, FlexColumn,
+  FadingPanel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, minValue, maxValue, hasValidInteger, formatCurrencyWithKr,
+  formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
 import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
@@ -103,7 +104,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
 );
 
 BeregningsresultatEngangsstonadFormImpl.propTypes = {
-  intl: intlShape.isRequired,
+  intl: PropTypes.shape().isRequired,
   beregningResultat: PropTypes.shape(),
   isOverstyrt: PropTypes.bool,
   isReadOnly: PropTypes.bool,

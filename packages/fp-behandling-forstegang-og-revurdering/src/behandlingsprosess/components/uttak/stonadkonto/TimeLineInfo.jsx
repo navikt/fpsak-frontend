@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Table, TableRow, TableColumn } from '@fpsak-frontend/shared-components';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { stonadskontoerPropType } from '@fpsak-frontend/prop-types';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';

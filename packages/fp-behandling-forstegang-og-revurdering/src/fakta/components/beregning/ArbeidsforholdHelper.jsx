@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import {
-  getFaktaOmBeregning,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFaktaOmBeregning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 export const sortArbeidsforholdList = (arbeidsforhold) => {
   const copy = arbeidsforhold.slice(0);

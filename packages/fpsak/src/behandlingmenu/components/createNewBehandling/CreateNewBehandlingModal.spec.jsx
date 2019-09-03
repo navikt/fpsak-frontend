@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
@@ -31,7 +31,7 @@ describe('<CreateNewBehandlingModal>', () => {
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
 
-    const image = modal.find('InjectIntl(Image)');
+    const image = modal.find('injectIntl(Image)');
     expect(image).to.have.length(1);
 
     const okKnapp = modal.find('Hovedknapp');

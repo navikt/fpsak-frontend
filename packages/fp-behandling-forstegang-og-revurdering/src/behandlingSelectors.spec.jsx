@@ -5,8 +5,14 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  getToTrinnsAksjonspunkter, getAktivitetStatuser, getAlleAndelerIForstePeriode, isBehandlingRevurderingFortsattMedlemskap,
-  getEditedStatus, getAntallDodfodteBarn, getGjeldendeBeregningAksjonspunkter, getSkalKunneLeggeTilNyeArbeidsforhold,
+  getAktivitetStatuser,
+  getAlleAndelerIForstePeriode,
+  getAntallDodfodteBarn,
+  getEditedStatus,
+  getGjeldendeBeregningAksjonspunkter,
+  getSkalKunneLeggeTilNyeArbeidsforhold,
+  getToTrinnsAksjonspunkter,
+  isBehandlingRevurderingFortsattMedlemskap,
 } from './behandlingSelectors';
 
 describe('behandlingSelectors', () => {

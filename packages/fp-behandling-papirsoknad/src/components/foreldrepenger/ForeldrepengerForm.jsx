@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  reduxForm, formPropTypes, FormSection, formValueSelector,
+  formPropTypes, FormSection, formValueSelector, reduxForm,
 } from 'redux-form';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
@@ -10,7 +10,7 @@ import { omit } from '@fpsak-frontend/utils';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getRegisteredFields, getKodeverk, getFagsakPerson } from 'papirsoknad/src/duckPapirsoknad';
+import { getFagsakPerson, getKodeverk, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import AnnenForelderPanel from 'papirsoknad/src/components/commonPanels/AnnenForelderPanel';
 import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';

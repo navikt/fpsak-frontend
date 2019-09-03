@@ -2,8 +2,7 @@ import { expect } from 'chai';
 
 import {
   getBehandlinger, getBehandlingerIds, getBehandlingerVersjonMappedById, getNoExistingBehandlinger,
-}
-  from './behandlingerSelectors';
+} from './behandlingerSelectors';
 
 describe('behandlingerSelectors', () => {
   describe('getBehandlinger', () => {

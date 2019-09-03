@@ -4,9 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import {
-  FlexContainer, FlexRow, FlexColumn,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 
 /**
  * Faresignaler

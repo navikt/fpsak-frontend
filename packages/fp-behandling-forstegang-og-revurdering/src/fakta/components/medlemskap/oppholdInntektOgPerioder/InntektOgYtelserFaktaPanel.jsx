@@ -7,9 +7,9 @@ import moment from 'moment';
 
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { ISO_DATE_FORMAT, formatCurrencyWithKr } from '@fpsak-frontend/utils';
+import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  Table, TableRow, TableColumn, PeriodLabel,
+  PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 
 const headerTextCodes = [

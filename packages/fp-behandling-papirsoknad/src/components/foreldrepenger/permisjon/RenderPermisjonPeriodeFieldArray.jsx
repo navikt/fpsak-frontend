@@ -5,21 +5,28 @@ import { getFormValues } from 'redux-form';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Row, Column } from 'nav-frontend-grid';
+import { Column, Row } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import {
-  FlexContainer, FlexColumn, FlexRow, VerticalSpacer, PeriodFieldArray,
+  FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual, hasValidDecimal, maxValue,
-  ISO_DATE_FORMAT, isRequiredMessage, isArrayEmpty,
+  dateAfterOrEqual,
+  dateRangesNotOverlapping,
+  hasValidDate,
+  hasValidDecimal,
+  isArrayEmpty,
+  ISO_DATE_FORMAT,
+  isRequiredMessage,
+  maxValue,
+  required,
 } from '@fpsak-frontend/utils';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
-  CheckboxField, DatepickerField, SelectField, DecimalField,
+  CheckboxField, DatepickerField, DecimalField, SelectField,
 } from '@fpsak-frontend/form';
 
 import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';

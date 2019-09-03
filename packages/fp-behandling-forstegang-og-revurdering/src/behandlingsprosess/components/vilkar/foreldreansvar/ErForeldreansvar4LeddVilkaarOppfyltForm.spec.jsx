@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ErForeldreansvar4LeddVilkaarOppfyltFormImpl as UnwrappedForm, buildInitialValues } from './ErForeldreansvar4LeddVilkaarOppfyltForm';
+import { buildInitialValues, ErForeldreansvar4LeddVilkaarOppfyltFormImpl as UnwrappedForm } from './ErForeldreansvar4LeddVilkaarOppfyltForm';
 
 describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
   const aksjonspunkterList = [{
@@ -64,7 +64,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       erVilkarOk={undefined}
     />);
 
-    const selector = wrapper.find('InjectIntl(VilkarResultPickerImpl)');
+    const selector = wrapper.find('injectIntl(VilkarResultPickerImpl)');
     expect(selector).to.have.length(1);
     expect(selector.prop('avslagsarsaker')).to.eql([{
       kode: 'TEST_KODE',
