@@ -8,20 +8,18 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
-import {
-  getIsFagsakTypeSVP, getBehandlingIsRevurdering,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getIsFagsakTypeSVP } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { createStructuredSelector } from 'reselect';
 import styles from './vedtakFritekstbrevModal.less';
 
-const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP, erRevurdering) => {
+const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
   if (readOnly || !erSVP) {
     return false;
   }
   const erAvslag = behandlingsresultat && isAvslag(behandlingsresultat.type.kode);
   const erOpphor = behandlingsresultat && isOpphor(behandlingsresultat.type.kode);
-  return erAvslag || (erOpphor && !erRevurdering) || (erRevurdering && !erOpphor);
+  return erAvslag || erOpphor;
 };
 
 /**
@@ -41,9 +39,8 @@ export const VedtakFritekstbrevModal = ({
   readOnly,
   behandlingsresultat,
   erSVP,
-  erRevurdering,
 }) => {
-  const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP, erRevurdering);
+  const fritektsbrevRequired = isFritekstbrevRequired(readOnly, behandlingsresultat, erSVP);
   const [showModal, settShowModal] = useState(fritektsbrevRequired);
   return (
     <>
@@ -95,12 +92,10 @@ VedtakFritekstbrevModal.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   erSVP: PropTypes.bool.isRequired,
-  erRevurdering: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   erSVP: getIsFagsakTypeSVP,
-  erRevurdering: getBehandlingIsRevurdering,
 });
 
 export default connect(mapStateToProps)(VedtakFritekstbrevModal);

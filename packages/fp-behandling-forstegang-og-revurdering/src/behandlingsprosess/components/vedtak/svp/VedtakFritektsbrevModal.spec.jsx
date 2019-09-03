@@ -16,7 +16,6 @@ describe('<VedtakFritekstbrevModal>', () => {
         },
       }}
       erSVP
-      erRevurdering={false}
     />);
     const modal = wrapper.find(Modal);
     const isOpen = modal.prop('isOpen');
@@ -24,7 +23,7 @@ describe('<VedtakFritekstbrevModal>', () => {
     expect(isOpen).to.eql(true);
   });
 
-  it('skal vise modal når behandlingsresultat er OPPHOR og ikke revurdering', () => {
+  it('skal vise modal når behandlingsresultat er OPPHOR', () => {
     const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
       intl={intlMock}
       readOnly={false}
@@ -34,12 +33,26 @@ describe('<VedtakFritekstbrevModal>', () => {
         },
       }}
       erSVP
-      erRevurdering={false}
     />);
     const modal = wrapper.find(Modal);
     const isOpen = modal.prop('isOpen');
     expect(modal).to.have.length(1);
     expect(isOpen).to.eql(true);
+  });
+
+  it('skal ikke vise modal når behandlingsresultat er noe annet en OPPHOR og AVSLATT', () => {
+    const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
+      intl={intlMock}
+      readOnly={false}
+      behandlingsresultat={{
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+        },
+      }}
+      erSVP
+    />);
+    const modal = wrapper.find(Modal);
+    expect(modal).to.have.length(0);
   });
 
   it('skal ikke vise modal når readOnly er true', () => {
@@ -52,7 +65,6 @@ describe('<VedtakFritekstbrevModal>', () => {
         },
       }}
       erSVP
-      erRevurdering={false}
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(0);
@@ -68,59 +80,8 @@ describe('<VedtakFritekstbrevModal>', () => {
         },
       }}
       erSVP={false}
-      erRevurdering={false}
     />);
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(0);
-  });
-
-  it('skal ikke vise modal når behandlingsresultat er noe annet enn OPPHOR og AVSLATT', () => {
-    const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
-      intl={intlMock}
-      readOnly={false}
-      behandlingsresultat={{
-        type: {
-          kode: behandlingResultatType.INNVILGET,
-        },
-      }}
-      erSVP
-      erRevurdering={false}
-    />);
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
-  });
-
-  it('skal ikke vise modal når behandlingsresultat er OPPHOR og er en revurdering', () => {
-    const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
-      intl={intlMock}
-      readOnly={false}
-      behandlingsresultat={{
-        type: {
-          kode: behandlingResultatType.OPPHOR,
-        },
-      }}
-      erSVP
-      erRevurdering
-    />);
-    const modal = wrapper.find(Modal);
-    expect(modal).to.have.length(0);
-  });
-
-  it('skal vise modal når behandlingsresultat er noe annet enn OPPHOR og er en revurdering', () => {
-    const wrapper = shallowWithIntl(<VedtakFritekstbrevModal
-      intl={intlMock}
-      readOnly={false}
-      behandlingsresultat={{
-        type: {
-          kode: behandlingResultatType.AVSLATT,
-        },
-      }}
-      erSVP
-      erRevurdering
-    />);
-    const modal = wrapper.find(Modal);
-    const isOpen = modal.prop('isOpen');
-    expect(modal).to.have.length(1);
-    expect(isOpen).to.eql(true);
   });
 });
