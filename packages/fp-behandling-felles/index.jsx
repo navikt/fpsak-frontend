@@ -22,3 +22,4 @@ export { default as getCommonBehandlingSelectors } from './src/selectors/commonB
 export { default as CommonBehandlingResolver } from './src/CommonBehandlingResolver';
 export { default as withBehandlingIndex } from './src/withBehandlingIndex';
 export { default as CommonBehandlingIndex } from './src/CommonBehandlingIndex';
+export { default as CommonBehandlingsprosessIndex } from './src/behandlingsprosess/CommonBehandlingsprosessIndex';

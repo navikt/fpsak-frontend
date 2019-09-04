@@ -2,12 +2,12 @@ const merge = require('webpack-merge');
 const common = require('./eslintrc.common.js');
 
 const OFF = 0;
-const ERROR = 2;
+const WARN = 1;
 
 const config = {
   rules: {
     'no-debugger': OFF,
-    'no-console': ERROR,
+    'no-console': WARN,
     'import/no-extraneous-dependencies': OFF,
   },
 };

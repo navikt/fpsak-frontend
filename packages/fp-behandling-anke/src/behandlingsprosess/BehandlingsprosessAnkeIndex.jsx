@@ -3,13 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckBehandlingAnke';
+import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
+import behandlingspunktAnkeSelectors from './selectors/behandlingsprosessAnkeSelectors';
 import {
   getSelectedBehandlingspunktNavn, resolveAnkeTemp, saveAnke, setSelectedBehandlingspunktNavn,
+  fetchPreviewAnkeBrev, getResolveProsessAksjonspunkterSuccess, resetBehandlingspunkter, resolveProsessAksjonspunkter,
 } from './duckBpAnke';
 
 import AnkeBehandlingModal from './components/AnkeBehandlingModal';
@@ -41,9 +45,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
     }
   }
 
-  submit = (aksjonspunktModels) => {
-    const { submitCallback, goToDefaultPage } = this.props;
-
+  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
     const skalTilMedunderskriver = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
@@ -62,20 +64,48 @@ export class BehandlingsprosessAnkeIndex extends Component {
   }
 
   render = () => {
-    const { previewCallback, selectedBehandlingspunkt, goToSearchPage } = this.props;
+    const {
+      selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
+      resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
+      behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, fetchPreviewBrev, isSelectedBehandlingHenlagt,
+      location,
+    } = this.props;
     const { showModalAnkeBehandling } = this.state;
 
     return (
-      <>
-        <BehandlingspunktAnkeInfoPanel
-          previewCallback={previewCallback}
-          previewCallbackAnke={previewCallback}
-          saveTempAnke={this.saveAnkeText}
-          submitCallback={this.submit}
-          selectedBehandlingspunkt={selectedBehandlingspunkt}
-        />
-        <AnkeBehandlingModal showModal={showModalAnkeBehandling} closeEvent={goToSearchPage} />
-      </>
+      <CommonBehandlingsprosessIndex
+        aksjonspunkter={aksjonspunkter}
+        aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingspunkter={behandlingspunkter}
+        selectedBehandlingspunkt={selectedBehandlingspunkt}
+        behandlingspunkterStatus={behandlingspunkterStatus}
+        behandlingspunkterTitleCodes={behandlingspunkterTitleCodes}
+        behandlingsresultat={behandlingsresultat}
+        behandlingStatus={behandlingStatus}
+        behandlingType={behandlingType}
+        behandlingVersjon={behandlingVersjon}
+        fagsakYtelseType={fagsakYtelseType}
+        fetchPreviewBrev={fetchPreviewBrev}
+        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+        location={location}
+        resetBehandlingspunkter={resetBehandlingspunkter}
+        resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
+        resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+        doNotUseFatterVedtakModal
+        render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
+          <>
+            <BehandlingspunktAnkeInfoPanel
+              previewCallback={previewCallback}
+              previewCallbackAnke={previewCallback}
+              saveTempAnke={this.saveAnkeText}
+              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              selectedBehandlingspunkt={selectedBehandlingspunkt}
+            />
+            <AnkeBehandlingModal showModal={showModalAnkeBehandling} closeEvent={goToSearchPage} />
+          </>
+        )}
+      />
     );
   }
 }
@@ -84,15 +114,41 @@ BehandlingsprosessAnkeIndex.propTypes = {
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   saveAnke: PropTypes.func.isRequired,
   resolveAnkeTemp: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  goToDefaultPage: PropTypes.func.isRequired,
-  goToSearchPage: PropTypes.func.isRequired,
   selectedBehandlingspunkt: PropTypes.string,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
+  behandlingspunkterStatus: PropTypes.shape(),
+  behandlingspunkterTitleCodes: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  fetchPreviewBrev: PropTypes.func.isRequired,
+  isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
+  fagsakYtelseType: getFagsakYtelseType(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  behandlingspunkter: behandlingspunktAnkeSelectors.getBehandlingspunkter(state),
+  selectedBehandlingspunkt: behandlingspunktAnkeSelectors.getSelectedBehandlingspunkt(state),
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingspunkterStatus: behandlingspunktAnkeSelectors.getBehandlingspunkterStatus(state),
+  behandlingspunkterTitleCodes: behandlingspunktAnkeSelectors.getBehandlingspunkterTitleCodes(state),
+  aksjonspunkterOpenStatus: behandlingspunktAnkeSelectors.getAksjonspunkterOpenStatus(state),
+  location: state.router.location,
+  fetchPreviewBrev: fetchPreviewAnkeBrev,
+  resolveProsessAksjonspunkter,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -102,5 +158,12 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessAnkeIndex);
-export default withBehandlingsprosessIndex(setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn)(connectedComponent);
+const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({
+  paramName: 'punkt',
+  paramPropType: PropTypes.string,
+  storeParam: setSelectedBehandlingspunktNavn,
+  getParamFromStore: getSelectedBehandlingspunktNavn,
+  isQueryParam: true,
+})(connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessAnkeIndex));
+
+export default TrackRouteParamBehandlingsprosessIndex;

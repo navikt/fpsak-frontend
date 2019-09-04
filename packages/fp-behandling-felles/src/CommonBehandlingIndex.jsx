@@ -134,6 +134,8 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...stateProps,
+  ...dispatchProps,
   ...ownProps,
   handleOnHoldSubmit: (formData) => {
     const {
