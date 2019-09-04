@@ -88,4 +88,41 @@ describe('RequestApi', () => {
     expect(newConfig.restMethod).to.eql('GET');
     expect(newConfig.rel).to.eql('behandling-rel');
   });
+
+  it('skal resette alle injecta urler som ikke er med i siste lista', () => {
+    const relBehandling = 'behandling-rel';
+    const requestConfigBehandling = new RequestConfig('BEHANDLING').withRel(relBehandling);
+    const relFagsak = 'fagsak-rel';
+    const requestConfigFagsak = new RequestConfig('FAGSAK').withRel(relFagsak);
+
+    const api = new RequestApi(httpClientGeneralMock, contextPath, [requestConfigBehandling, requestConfigFagsak]);
+
+    const links1 = [{
+      href: '/behandling',
+      rel: relBehandling,
+      type: 'GET',
+    }, {
+      href: '/fagsak',
+      rel: relFagsak,
+      type: 'POST',
+    }];
+    api.injectPaths(links1);
+
+    const newConfig1 = api.getRequestRunner(requestConfigBehandling.name).getConfig();
+    expect(newConfig1.path).to.eql('/behandling');
+    const newConfig2 = api.getRequestRunner(requestConfigFagsak.name).getConfig();
+    expect(newConfig2.path).to.eql('/fagsak');
+
+    const links2 = [{
+      href: '/behandling',
+      rel: relBehandling,
+      type: 'GET',
+    }];
+    api.injectPaths(links2);
+
+    const newConfig21 = api.getRequestRunner(requestConfigBehandling.name).getConfig();
+    expect(newConfig21.path).to.eql('/behandling');
+    const newConfig22 = api.getRequestRunner(requestConfigFagsak.name).getConfig();
+    expect(newConfig22.path).is.undefined;
+  });
 });
