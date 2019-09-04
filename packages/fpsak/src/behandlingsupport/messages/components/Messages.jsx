@@ -28,7 +28,9 @@ const minLength3 = minLength(3);
 const getFritekstMessage = (brevmalkode) => (brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst');
 
 const showFritekst = (brevmalkode, arsakskode) => (brevmalkode === dokumentMalType.INNHENT_DOK
-    || (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET));
+  || brevmalkode === dokumentMalType.KORRIGVARS
+  || brevmalkode === dokumentMalType.FRITKS
+  || (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET));
 
 /**
  * Messages
