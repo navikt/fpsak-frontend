@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import { getFagsakPerson } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
-import { getOpenInfoPanels, setOpenInfoPanels } from '../duckFaktaInnsyn';
 
 import styles from './faktaInnsynPanel.less';
 
@@ -32,4 +30,4 @@ const mapStateToProps = (state) => ({
   fagsakPerson: getFagsakPerson(state),
 });
 
-export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(FaktaInnsynPanel));
+export default connect(mapStateToProps)(FaktaInnsynPanel);
