@@ -146,7 +146,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.TILBAKEKREVING) {
+    if (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingTilbakekrevingIndex
