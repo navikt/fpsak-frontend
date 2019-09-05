@@ -27,7 +27,7 @@ const harPeriodeSomKanKombineresMedForrige = (periode, bgPerioder, endretPeriode
   || periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.GRADERING_OPPHOERER)) {
     return false;
   }
-  if (periode.periodeAarsaker.includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET)) {
+  if (periode.periodeAarsaker.map(({ kode }) => kode).includes(periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET)) {
     const periodeIndex = bgPerioder.indexOf(periode);
     const forrigePeriode = bgPerioder[periodeIndex - 1];
     return forrigePeriode.bruttoPrAar === periode.bruttoPrAar;
@@ -132,8 +132,9 @@ EndringBeregningsgrunnlagForm.validate = (values, endringBGPerioder, beregningsg
   const errors = {};
   if (endringBGPerioder && endringBGPerioder.length > 0) {
     const skalValidereMotBeregningsgrunnlagPrAar = (andel) => skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
-    for (let i = 0; i < endringBGPerioder.length; i += 1) {
-      const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, endringBGPerioder[i].fom);
+    const perioderSlattSammen = slaaSammenPerioder(endringBGPerioder, beregningsgrunnlag.beregningsgrunnlagPeriode);
+    for (let i = 0; i < perioderSlattSammen.length; i += 1) {
+      const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
       const periode = values[getFieldNameKey(i)];
       errors[getFieldNameKey(i)] = EndringBeregningsgrunnlagPeriodePanel.validate(periode, sumIPeriode,
         skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
