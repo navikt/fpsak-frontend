@@ -6,6 +6,7 @@ import { getFeatureToggles, isForeldrepengerFagsak } from 'behandlingForstegangO
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
 import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import connect from 'react-redux/es/connect/connect';
@@ -19,6 +20,23 @@ const {
 } = aksjonspunktCodes;
 
 const avklarStartdatoAp = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, OVERSTYR_AVKLAR_STARTDATO];
+
+const hasOpen = (aksjonspunkt) => (aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode));
+
+const skalKunneLoseUtenAksjonpunkter = (isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter) => (isForeldrepenger
+  && (aksjonspunkterMinusAvklarStartDato.length === 0 || !hasOpenAksjonspunkter));
+
+const harAksjonspunkterForAvklarStartdato = (aksjonspunkter) => aksjonspunkter
+  .find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)
+|| aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+
+const skalViseAvklarStartdatoPanel = (
+  aksjonspunkter,
+  isForeldrepenger,
+  aksjonspunkterMinusAvklarStartDato,
+  hasOpenAksjonspunkter,
+) => (harAksjonspunkterForAvklarStartdato(aksjonspunkter)
+  || skalKunneLoseUtenAksjonpunkter(isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter));
 
 /**
  * MedlemskapInfoPanel
@@ -51,17 +69,20 @@ export const MedlemskapInfoPanelImpl = ({
       faktaId={faktaPanelCodes.MEDLEMSKAPSVILKARET}
       readOnly={readOnly}
     >
-      { (avklarStartdatoAksjonspunkt || (isForeldrepenger && (aksjonspunkterMinusAvklarStartDato.length === 0 || !hasOpenAksjonspunkter)))
+      {skalViseAvklarStartdatoPanel(aksjonspunkter, isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter)
         && (
-        <StartdatoForForeldrepengerperiodenForm
-          readOnly={readOnly}
-          aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
-          submitCallback={submitCallback}
-          submittable={submittable}
-          hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
-        />
+        <>
+          <StartdatoForForeldrepengerperiodenForm
+            readOnly={readOnly}
+            aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
+            submitCallback={submitCallback}
+            submittable={submittable}
+            hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
+          />
+          <VerticalSpacer twentyPx />
+        </>
         )}
-      { (skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
+      { (skalBrukeNyeMedlemskap && !hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
         && (
         <OppholdInntektOgPerioderFormNew
           readOnly={readOnly}
@@ -70,7 +91,7 @@ export const MedlemskapInfoPanelImpl = ({
           aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
         )}
-      { (!skalBrukeNyeMedlemskap && (!avklarStartdatoAksjonspunkt || !isAksjonspunktOpen(avklarStartdatoAksjonspunkt.status.kode)))
+      { (!skalBrukeNyeMedlemskap && !hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
       && (
         <OppholdInntektOgPerioderForm
           readOnly={readOnly}
