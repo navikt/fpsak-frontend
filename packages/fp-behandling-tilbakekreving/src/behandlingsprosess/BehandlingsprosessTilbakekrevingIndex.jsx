@@ -4,11 +4,17 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
+import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
 import {
+  getResolveProsessAksjonspunkterSuccess, resetBehandlingspunkter, resolveProsessAksjonspunkter,
   setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
+import behandlingspunktTilbakekrevingSelectors from './selectors/behandlingsprosessTilbakeSelectors';
 import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
 import FatterTilbakekrevingVedtakStatusModal from './components/FatterTilbakekrevingVedtakStatusModal';
@@ -26,9 +32,7 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
     };
   }
 
-  submit = (aksjonspunktModels) => {
-    const { submitCallback, goToDefaultPage } = this.props;
-
+  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
     const afterAksjonspunktSubmit = () => {
       const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
@@ -43,32 +47,83 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
 
   render = () => {
     const {
-      selectedBehandlingspunkt, goToSearchPage, dispatchSubmitFailed: submitFailedDispatch,
+      selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
+      resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
+      behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, isSelectedBehandlingHenlagt,
+      location, dispatchSubmitFailed: submitFailedDispatch,
     } = this.props;
     const { showFatterVedtakModal } = this.state;
 
     return (
-      <>
-        <TilbakekrevingBehandlingspunktInfoPanel
-          submitCallback={this.submit}
-          dispatchSubmitFailed={submitFailedDispatch}
-          selectedBehandlingspunkt={selectedBehandlingspunkt}
-        />
-        <FatterTilbakekrevingVedtakStatusModal closeEvent={goToSearchPage} showModal={showFatterVedtakModal} />
-      </>
+      <CommonBehandlingsprosessIndex
+        aksjonspunkter={aksjonspunkter}
+        aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingspunkter={behandlingspunkter}
+        selectedBehandlingspunkt={selectedBehandlingspunkt}
+        behandlingspunkterStatus={behandlingspunkterStatus}
+        behandlingspunkterTitleCodes={behandlingspunkterTitleCodes}
+        behandlingsresultat={behandlingsresultat}
+        behandlingStatus={behandlingStatus}
+        behandlingType={behandlingType}
+        behandlingVersjon={behandlingVersjon}
+        fagsakYtelseType={fagsakYtelseType}
+        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+        location={location}
+        resetBehandlingspunkter={resetBehandlingspunkter}
+        resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
+        resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+        doNotUseFatterVedtakModal
+        render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
+          <>
+            <TilbakekrevingBehandlingspunktInfoPanel
+              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              dispatchSubmitFailed={submitFailedDispatch}
+              selectedBehandlingspunkt={selectedBehandlingspunkt}
+            />
+            <FatterTilbakekrevingVedtakStatusModal closeEvent={goToSearchPage} showModal={showFatterVedtakModal} />
+          </>
+        )}
+      />
     );
   }
 }
 
 BehandlingsprosessTilbakekrevingIndex.propTypes = {
-  submitCallback: PropTypes.func.isRequired,
-  goToDefaultPage: PropTypes.func.isRequired,
-  goToSearchPage: PropTypes.func.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
+  behandlingspunkterStatus: PropTypes.shape(),
+  behandlingspunkterTitleCodes: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   selectedBehandlingspunkt: PropTypes.string,
   dispatchSubmitFailed: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state) => ({
+  fagsakYtelseType: getFagsakYtelseType(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
+  behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  behandlingspunkter: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkter(state),
+  selectedBehandlingspunkt: behandlingspunktTilbakekrevingSelectors.getSelectedBehandlingspunkt(state),
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingspunkterStatus: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterStatus(state),
+  behandlingspunkterTitleCodes: behandlingspunktTilbakekrevingSelectors.getBehandlingspunkterTitleCodes(state),
+  aksjonspunkterOpenStatus: behandlingspunktTilbakekrevingSelectors.getAksjonspunkterOpenStatus(state),
+  location: state.router.location,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -77,5 +132,12 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessTilbakekrevingIndex);
-export default withBehandlingsprosessIndex(setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn)(connectedComponent);
+const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({
+  paramName: 'punkt',
+  paramPropType: PropTypes.string,
+  storeParam: setSelectedBehandlingspunktNavn,
+  getParamFromStore: getSelectedBehandlingspunktNavn,
+  isQueryParam: true,
+})(connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessTilbakekrevingIndex));
+
+export default TrackRouteParamBehandlingsprosessIndex;

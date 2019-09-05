@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getOpenInfoPanels, setOpenInfoPanels } from '../duckFaktaTilbake';
+import { getOpenInfoPanels } from '../duckFaktaTilbake';
 import { getFagsakPerson } from '../../duckBehandlingTilbakekreving';
 import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
 
@@ -74,4 +73,4 @@ const mapStateToProps = (state) => ({
   fagsakPerson: getFagsakPerson(state),
 });
 
-export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(TilbakekrevingFaktaPanel));
+export default connect(mapStateToProps)(TilbakekrevingFaktaPanel);

@@ -10,7 +10,7 @@ import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behand
 import behandlingSelectors from './selectors/ankeBehandlingSelectors';
 import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
 import BehandlingsprosessAnkeIndex from './behandlingsprosess/BehandlingsprosessAnkeIndex';
-import FaktaAnkeContainer from './fakta/FaktaAnkeContainer';
+import FaktaAnkeIndex from './fakta/FaktaAnkeIndex';
 import {
   fetchBehandling as fetchBehandlingActionCreator,
   getBehandlingIdentifier,
@@ -78,7 +78,7 @@ export const BehandlingAnkeIndex = ({
     <FpAnkeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessAnkeIndex />}
-      faktaContent={<FaktaAnkeContainer />}
+      faktaContent={<FaktaAnkeIndex />}
     />
   </CommonBehandlingIndex>
 );
