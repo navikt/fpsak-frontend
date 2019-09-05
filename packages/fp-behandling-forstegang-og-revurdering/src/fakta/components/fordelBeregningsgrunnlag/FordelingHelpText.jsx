@@ -12,7 +12,7 @@ import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-fro
 
 import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getEndringBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFordelBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 
 const {
@@ -28,10 +28,10 @@ export const textCase = {
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
 const getEndredeArbeidsforhold = createSelector(
-  [getEndringBeregningsgrunnlag],
-  (endringBG) => {
-    if (endringBG) {
-      return endringBG.endredeArbeidsforhold;
+  [getFordelBeregningsgrunnlag],
+  (fordelBG) => {
+    if (fordelBG) {
+      return fordelBG.arbeidsforholdTilFordeling;
     }
     return [];
   },
@@ -64,7 +64,7 @@ const lagPeriodeStreng = (perioder) => {
   return byggListeSomStreng(listeMedPeriodeStrenger);
 };
 
-export const createEndretArbeidsforholdString = (listOfArbeidsforhold, mTextCase, getKodeverknavn) => {
+export const createFordelArbeidsforholdString = (listOfArbeidsforhold, mTextCase, getKodeverknavn) => {
   const listOfStrings = listOfArbeidsforhold.map((arbeidsforhold) => {
     const navnOgOrgnr = createVisningsnavnForAktivitet(arbeidsforhold, getKodeverknavn);
     if (mTextCase === textCase.GRADERING) {
@@ -87,7 +87,7 @@ export const createEndretArbeidsforholdString = (listOfArbeidsforhold, mTextCase
 const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeidsforhold, permisjonMedGraderingEllerRefusjon, getKodeverknavn) => {
   const text = [];
   if (permisjonMedGraderingEllerRefusjon.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(permisjonMedGraderingEllerRefusjon, textCase.PERMISJON, getKodeverknavn);
+    const arbeidsforholdString = createFordelArbeidsforholdString(permisjonMedGraderingEllerRefusjon, textCase.PERMISJON, getKodeverknavn);
     text.push(<FormattedMessage
       key="EndringBeregningsgrunnlagPermisjon"
       id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Permisjon"
@@ -98,7 +98,7 @@ const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeid
     />);
   }
   if (graderingArbeidsforhold.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(graderingArbeidsforhold, textCase.GRADERING, getKodeverknavn);
+    const arbeidsforholdString = createFordelArbeidsforholdString(graderingArbeidsforhold, textCase.GRADERING, getKodeverknavn);
     text.push(<FormattedMessage
       key="EndringBeregningsgrunnlagGradering"
       id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Gradering"
@@ -106,7 +106,7 @@ const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeid
     />);
   }
   if (refusjonArbeidsforhold.length > 0) {
-    const arbeidsforholdString = createEndretArbeidsforholdString(refusjonArbeidsforhold, textCase.REFUSJON, getKodeverknavn);
+    const arbeidsforholdString = createFordelArbeidsforholdString(refusjonArbeidsforhold, textCase.REFUSJON, getKodeverknavn);
     text.push(<FormattedMessage
       key="EndringBeregningsgrunnlagRefusjon"
       id="BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning.EndringBeregningsgrunnlag.Refusjon"
@@ -126,7 +126,7 @@ const createGraderingOrRefusjonString = (graderingArbeidsforhold, refusjonArbeid
 const harGraderingEllerRefusjon = (perioderMedGraderingEllerRefusjon) => perioderMedGraderingEllerRefusjon.map(({ erRefusjon }) => erRefusjon).includes(true)
     || perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true);
 
-const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
+const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
   const gradering = endredeArbeidsforhold
     .filter(({ perioderMedGraderingEllerRefusjon }) => perioderMedGraderingEllerRefusjon.map(({ erGradering }) => erGradering).includes(true));
   const refusjon = endredeArbeidsforhold
@@ -146,10 +146,10 @@ const lagHelpTextsEndringBG = (endredeArbeidsforhold, getKodeverknavn) => {
   return helpTexts;
 };
 
-const getHelpTextsEndringBG = createSelector(
+const getHelpTextsFordelBG = createSelector(
   [getEndredeArbeidsforhold, behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
   (endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
-    ? lagHelpTextsEndringBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
+    ? lagHelpTextsFordelBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
 );
 
 export const FordelingHelpTextImpl = ({
@@ -165,7 +165,7 @@ FordelingHelpTextImpl.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  helpText: getHelpTextsEndringBG(state),
+  helpText: getHelpTextsFordelBG(state),
 });
 
 export default connect(mapStateToProps)(FordelingHelpTextImpl);

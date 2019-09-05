@@ -34,7 +34,7 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]: 'ToTrinnsForm.Beregning.InntektFastsatt',
   [aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.GraderingUtenBG',
   [aksjonspunktCodes.VURDER_DEKNINGSGRAD]: 'ToTrinnsForm.Beregning.DekningsgradEndret',
-  [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.FastsettEndretBeregningsgrunnlag',
+  [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: 'ToTrinnsForm.Beregning.FastsettFordeltBeregningsgrunnlag',
 
   [aksjonspunktCodes.SOKNADSFRISTVILKARET]: 'ToTrinnsForm.Soknadsfrist.ManueltVurdert',
   [aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]: 'ToTrinnsForm.Soknadsfrist.ManueltVurdert',
