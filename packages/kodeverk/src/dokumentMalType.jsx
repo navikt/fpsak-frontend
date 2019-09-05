@@ -9,6 +9,8 @@ const dokumentMalType = {
   KLAGE_YTELSESVEDTAK_OPPHEVET_DOK: 'KLAGNY',
   KLAGE_OVERSENDT_KLAGEINSTANS_DOK: 'KLAGOV',
   TBKVAR: 'TBKVAR',
+  KORRIGVARS: 'KORRIGVARS',
+  FRITKS: 'FRITKS',
 };
 
 export default dokumentMalType;

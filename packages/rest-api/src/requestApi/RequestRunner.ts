@@ -82,6 +82,13 @@ class RequestRunner {
     newConfig.withRestMethod(type).withRel(rel);
     this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
   }
+
+  resetLink = (rel: string) => {
+    const contextConfig = this.context.getConfig();
+    const newConfig = new RequestConfig(contextConfig.name, undefined, contextConfig.config);
+    newConfig.withRel(rel);
+    this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
+  }
 }
 
 export default RequestRunner;

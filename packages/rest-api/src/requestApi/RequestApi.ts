@@ -34,6 +34,8 @@ class RequestApi {
         const link = links.find((l) => l.rel === rel);
         if (link) {
           runner.injectLink(rel, link.href, link.type);
+        } else {
+          runner.resetLink(rel);
         }
       }
     });

@@ -7,7 +7,6 @@ export const PapirsoknadApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -19,7 +18,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', PapirsoknadApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', PapirsoknadApiKeys.SUBMIT_MESSAGE)
 
   .build();
 

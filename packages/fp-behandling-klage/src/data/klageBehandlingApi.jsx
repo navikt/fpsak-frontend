@@ -8,7 +8,6 @@ export const KlageBehandlingApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
   SAVE_KLAGE_VURDERING: 'SAVE_KLAGE_VURDERING',
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
@@ -31,7 +30,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/api/brev/forhandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPost('/api/brev/bestill', KlageBehandlingApiKeys.SUBMIT_MESSAGE)
   .withPostAndOpenBlob('/api/brev/forhandsvis-klage', KlageBehandlingApiKeys.PREVIEW_MESSAGE_KLAGE)
 
 /* /api/brev */

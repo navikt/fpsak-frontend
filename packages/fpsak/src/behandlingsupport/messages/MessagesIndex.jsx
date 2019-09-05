@@ -13,13 +13,12 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { getKodeverk } from 'kodeverk/duck';
-import {
-  getBehandlingIdentifier, getBehandlingSprak, getBehandlingVersjon, getBrevMaler,
-} from 'behandling/duck';
+import { getBehandlingSprak, getBehandlingVersjon, getBehandlingIdentifier } from 'behandling/duck';
+import fpsakApi from 'data/fpsakApi';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import { BehandlingIdentifier, requireProps, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
-  isSubmitMessageFinished, previewMessageActionCreator, resetSubmitMessageActionCreator, submitMessageActionCreator,
+  resetSubmitMessageActionCreator, previewMessageActionCreator, submitMessageActionCreator,
 } from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';
@@ -40,8 +39,24 @@ export class MessagesIndex extends Component {
     this.state = { showSettPaVentModal: false, showMessagesModal: false };
   }
 
+  componentDidMount = () => {
+    const { fetchBrevmaler } = this.props;
+    fetchBrevmaler();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const { fetchBrevmaler, behandlingIdentifier, selectedBehandlingVersjon } = this.props;
+
+    if (behandlingIdentifier.behandlingId !== prevProps.behandlingIdentifier.behandlingId
+        || selectedBehandlingVersjon !== prevProps.selectedBehandlingVersjon) {
+      fetchBrevmaler();
+    }
+  }
+
   submitCallback(values) {
-    const { behandlingIdentifier, submitMessage, resetReduxForm: resetForm } = this.props;
+    const {
+      behandlingIdentifier, submitMessage, resetReduxForm: resetForm, fetchBrevmaler,
+    } = this.props;
     const isInnhentEllerForlenget = values.brevmalkode === dokumentMalType.INNHENT_DOK
       || values.brevmalkode === dokumentMalType.FORLENGET_DOK
       || values.brevmalkode === dokumentMalType.FORLENGET_MEDL_DOK;
@@ -55,6 +70,7 @@ export class MessagesIndex extends Component {
     };
     return submitMessage(data)
       .then(() => this.resetMessage())
+      .then(() => fetchBrevmaler())
       .then(() => this.setState({ showSettPaVentModal: isInnhentEllerForlenget }))
       .then(() => resetForm(Messages.formName));
   }
@@ -112,7 +128,13 @@ export class MessagesIndex extends Component {
       submitFinished,
       selectedBehandlingSprak,
       ventearsaker,
+      loadingBrevmaler,
     } = this.props;
+
+    if (loadingBrevmaler) {
+      return <LoadingPanel />;
+    }
+
     const { showMessagesModal, showSettPaVentModal } = this.state;
     const model = {
       mottaker: recipients[0] ? recipients[0] : null,
@@ -159,7 +181,7 @@ MessagesIndex.propTypes = {
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,
     tilgjengelig: PropTypes.bool.isRequired,
-  })).isRequired,
+  })),
   fetchPreview: PropTypes.func.isRequired,
   submitMessage: PropTypes.func.isRequired,
   setBehandlingOnHold: PropTypes.func.isRequired,
@@ -170,6 +192,8 @@ MessagesIndex.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })),
+  fetchBrevmaler: PropTypes.func.isRequired,
+  loadingBrevmaler: PropTypes.bool.isRequired,
 };
 
 MessagesIndex.defaultProps = {
@@ -178,11 +202,13 @@ MessagesIndex.defaultProps = {
   selectedBehandlingSprak: undefined,
   ventearsaker: [],
   recipients: ['Søker'],
+  templates: [],
 };
 
 const mapStateToProps = (state) => ({
-  templates: getBrevMaler(state),
-  submitFinished: isSubmitMessageFinished(state),
+  templates: fpsakApi.BREVMALER.getRestApiData()(state),
+  loadingBrevmaler: fpsakApi.BREVMALER.getRestApiStarted()(state),
+  submitFinished: fpsakApi.SUBMIT_MESSAGE.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
@@ -197,7 +223,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchPreview: previewMessageActionCreator,
     submitMessage: submitMessageActionCreator,
     resetSubmitMessage: resetSubmitMessageActionCreator,
+    fetchBrevmaler: fpsakApi.BREVMALER.makeRestApiRequest(),
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['templates'], <LoadingPanel />)(MessagesIndex));
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesIndex);

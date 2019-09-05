@@ -7,6 +7,7 @@ const behandlingType = {
   DOKUMENTINNSYN: 'BT-006',
   TILBAKEKREVING: 'BT-007',
   ANKE: 'BT-008',
+  TILBAKEKREVING_REVURDERING: 'BT-009',
 };
 
 export default behandlingType;

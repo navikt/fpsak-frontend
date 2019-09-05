@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
+import fpsakApi from 'data/fpsakApi';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
@@ -24,8 +25,6 @@ import {
   getBehandlingToTrinnsBehandling,
   getBehandlingType,
   getBehandlingVersjon,
-  getTotrinnskontrollArsakerReadOnly,
-  getTotrinnskontrollArsakerUtenUdefinert,
 } from 'behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
@@ -35,28 +34,20 @@ import { approve, fetchApprovalVedtaksbrevPreview, resetApproval } from './duck'
 
 import styles from './ApprovalIndex.less';
 
-
-const getArsaker = (approval) => (
-  [
-    {
-      code: vurderPaNyttArsakType.FEIL_FAKTA,
-      isSet: approval.feilFakta,
-    },
-    {
-      code: vurderPaNyttArsakType.FEIL_LOV,
-      isSet: approval.feilLov,
-    },
-    {
-      code: vurderPaNyttArsakType.FEIL_REGEL,
-      isSet: approval.feilRegel,
-    },
-    {
-      code: vurderPaNyttArsakType.ANNET,
-      isSet: approval.annet,
-    },
-  ]
-    .filter((arsak) => arsak.isSet)
-    .map((arsak) => arsak.code)
+const getArsaker = (approval) => ([{
+  code: vurderPaNyttArsakType.FEIL_FAKTA,
+  isSet: approval.feilFakta,
+}, {
+  code: vurderPaNyttArsakType.FEIL_LOV,
+  isSet: approval.feilLov,
+}, {
+  code: vurderPaNyttArsakType.FEIL_REGEL,
+  isSet: approval.feilRegel,
+}, {
+  code: vurderPaNyttArsakType.ANNET,
+  isSet: approval.annet,
+}].filter((arsak) => arsak.isSet)
+  .map((arsak) => arsak.code)
 );
 
 export const mapPropsToContext = (toTrinnsBehandling, nextProps, skjemalenkeTyper) => {
@@ -119,9 +110,9 @@ export class ApprovalIndexImpl extends Component {
   }
 
   componentWillUnmount() {
-    const { resetApproval: reset, erTilbakekreving } = this.props;
+    const { resetApproval: reset } = this.props;
     this.setState({ approvals: [] });
-    reset(erTilbakekreving);
+    reset();
   }
 
   onSubmit(values) {
@@ -158,7 +149,7 @@ export class ApprovalIndexImpl extends Component {
     this.setState({
       showBeslutterModal: true,
     });
-    return approveAp(erTilbakekreving, params);
+    return approveAp(params);
   }
 
   setAksjonspunktApproved(toTrinnsAksjonspunkter) {
@@ -272,8 +263,8 @@ const mapStateToPropsFactory = (initialState) => {
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
     const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
     return {
-      totrinnskontrollSkjermlenkeContext: getTotrinnskontrollArsakerUtenUdefinert(state),
-      totrinnskontrollReadOnlySkjermlenkeContext: getTotrinnskontrollArsakerReadOnly(state),
+      totrinnskontrollSkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.getRestApiData()(state),
+      totrinnskontrollReadOnlySkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData()(state),
       behandlingIdentifier: getBehandlingIdentifier(state),
       selectedBehandlingVersjon: getBehandlingVersjon(state),
       ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),

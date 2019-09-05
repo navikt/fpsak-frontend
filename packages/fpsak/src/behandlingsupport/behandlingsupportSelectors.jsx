@@ -6,7 +6,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fpsakApi from 'data/fpsakApi';
 import {
   getBehandlingStatus,
-  getTotrinnskontrollArsakerReadOnly,
   getBehandlingIsOnHold,
   getRettigheter,
 } from 'behandling/duck';
@@ -18,11 +17,9 @@ const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, getBehan
   (fagsakSaksnummer, isOnHold) => (fagsakSaksnummer && !isOnHold));
 
 const getReturnedIsRelevant = createSelector(
-  [getTotrinnskontrollArsakerReadOnly, getBehandlingStatus],
-  (toTrinnsAksjonspunkter = [], status = {}) => (
-    toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
-      .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES
-  ),
+  [fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData(), getBehandlingStatus],
+  (toTrinnsAksjonspunkter = [], status = {}) => toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
+    .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES,
 );
 
 const getApprovalIsRelevant = createSelector([getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.FATTER_VEDTAK);

@@ -28,7 +28,7 @@ import {
   getSelectedBehandlingId,
 } from 'behandling/duck';
 import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getApproveFinished, getApproveFinishedTilbakekreving } from '../duck';
+import { getApproveFinished } from '../duck';
 
 
 import styles from './fatterVedtakApprovalModal.less';
@@ -210,11 +210,6 @@ const getInfoTextCode = createSelector(
 const isStatusFatterVedtak = createSelector([getBehandlingStatus], (behandlingstatus) => behandlingstatus.kode === behandlingStatus.FATTER_VEDTAK);
 
 const mapStateToProps = (state, ownProps) => {
-  const behandlingType = getBehandlingType(state);
-  const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
-  const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
-  const isFinished = erTilbakekreving ? getApproveFinished(state) : getApproveFinishedTilbakekreving(state);
-
   if (!ownProps.allAksjonspunktApproved) {
     return {
       infoTextCode: 'FatterVedtakApprovalModal.VedtakReturneresTilSaksbehandler',
@@ -222,7 +217,7 @@ const mapStateToProps = (state, ownProps) => {
       modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
       selectedBehandlingId: getSelectedBehandlingId(state),
       isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-      resolveProsessAksjonspunkterSuccess: isFinished,
+      resolveProsessAksjonspunkterSuccess: getApproveFinished(state),
     };
   }
   return {
@@ -231,7 +226,7 @@ const mapStateToProps = (state, ownProps) => {
     modalDescriptionTextCode: isStatusFatterVedtak(state) ? getModalDescriptionTextCode(state) : 'FatterVedtakApprovalModal.ModalDescription',
     selectedBehandlingId: getSelectedBehandlingId(state),
     isBehandlingStatusFatterVedtak: getBehandlingStatus(state).kode === behandlingStatus.FATTER_VEDTAK ? true : undefined,
-    resolveProsessAksjonspunkterSuccess: isFinished,
+    resolveProsessAksjonspunkterSuccess: getApproveFinished(state),
   };
 };
 

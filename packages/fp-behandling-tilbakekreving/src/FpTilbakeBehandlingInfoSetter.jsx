@@ -15,8 +15,7 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
-      behandlingToTrinnsBehandling, totrinnskontrollArsakerUtenUdefinert, totrinnskontrollArsakerReadOnly, totrinnskontrollArsaker,
-      behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
+      behandlingToTrinnsBehandling, behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
       behandlingBehandlendeEnhetNavn, soknad,
     } = this.props;
 
@@ -27,9 +26,6 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingStatus(behandlingStatus)
       .withBehandlingToTrinnsBehandling(behandlingToTrinnsBehandling)
-      .withTotrinnskontrollArsakerUtenUdefinert(totrinnskontrollArsakerUtenUdefinert)
-      .withTotrinnskontrollArsakerReadOnly(totrinnskontrollArsakerReadOnly)
-      .withTotrinnskontrollArsaker(totrinnskontrollArsaker)
       .withBehandlingsresultat(behandlingsresultat)
       .withBehandlingType(behandlingType)
       .withBehandlingHasSoknad(behandlingHasSoknad)
@@ -58,9 +54,6 @@ FpTilbakeBehandlingInfoSetter.propTypes = {
   behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingStatus: PropTypes.shape().isRequired,
   behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
-  totrinnskontrollArsakerUtenUdefinert: PropTypes.arrayOf(PropTypes.shape()),
-  totrinnskontrollArsakerReadOnly: PropTypes.arrayOf(PropTypes.shape()),
-  totrinnskontrollArsaker: PropTypes.arrayOf(PropTypes.shape()),
   behandlingsresultat: PropTypes.shape(),
   behandlingType: PropTypes.shape().isRequired,
   behandlingHasSoknad: PropTypes.bool.isRequired,
@@ -88,9 +81,6 @@ const mapStateToProps = (state) => ({
   behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
   behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
   behandlingToTrinnsBehandling: behandlingSelectors.getBehandlingToTrinnsBehandling(state),
-  totrinnskontrollArsakerUtenUdefinert: behandlingSelectors.getTotrinnskontrollArsakerUtenUdefinert(state),
-  totrinnskontrollArsakerReadOnly: behandlingSelectors.getTotrinnskontrollArsakerReadOnly(state),
-  totrinnskontrollArsaker: behandlingSelectors.getTotrinnskontrollArsaker(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
   behandlingType: behandlingSelectors.getBehandlingType(state),
   behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),

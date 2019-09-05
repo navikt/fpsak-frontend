@@ -194,7 +194,7 @@ export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isS
   });
 
 const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE)], (behandlingTyper) => behandlingTyper
-  .filter((bt) => bt.kode !== bType.SOKNAD && bt.kode !== bType.TILBAKEKREVING)
+  .filter((bt) => bt.kode !== bType.SOKNAD && bt.kode !== bType.TILBAKEKREVING && bt.kode !== bType.TILBAKEKREVING_REVURDERING)
   .sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn)));
 
 const mapStateToProps = (state) => ({

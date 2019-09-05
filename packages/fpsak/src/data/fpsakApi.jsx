@@ -14,7 +14,6 @@ export const FpsakApiKeys = {
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
   NEW_BEHANDLING: 'NEW_BEHANDLING',
-  SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE: 'SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
@@ -31,7 +30,12 @@ export const FpsakApiKeys = {
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   KONTROLLRESULTAT: 'KONTROLLRESULTAT',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
+  TOTRINNSAKSJONSPUNKT_ARSAKER: 'TOTRINNSAKSJONSPUNKT_ARSAKER',
+  SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
+  TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
   BEHANDLING: 'BEHANDLING',
+  BREVMALER: 'BREVMALER',
+  SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
 };
 
 
@@ -53,10 +57,18 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('gjenoppta-behandling', FpsakApiKeys.RESUME_BEHANDLING)
   .withInjectedPath('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
 
-  /* /api/behandling */
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT_FPTILBAKE)
+  /* Totrinnskontroll */
+  .withInjectedPath('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
+  .withInjectedPath('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withInjectedPath('totrinnskontroll-arsaker-readOnly', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
+
+  /* Brev */
+  .withInjectedPath('brev-maler', FpsakApiKeys.BREVMALER)
+  .withInjectedPath('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
+
+  /* /api/behandling/kontrollresultat */
   .withGet('/fpsak/api/behandling/kontrollresultat/resultat', FpsakApiKeys.KONTROLLRESULTAT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
