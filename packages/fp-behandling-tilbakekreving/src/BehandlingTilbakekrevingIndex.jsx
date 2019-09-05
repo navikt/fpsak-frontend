@@ -91,7 +91,12 @@ export const BehandlingTilbakekrevingIndex = ({
         </TilbakekrevingDataResolver>
       </CommonBehandlingIndex>
       {showModal && (
-        <AdvarselModal textCode="BehandlingTilbakekrevingIndex.ApenRevurdering" showModal submit={() => closeModal(false)} />
+        <AdvarselModal
+          headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
+          textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
+          showModal
+          submit={() => closeModal(false)}
+        />
       )}
     </>
   );

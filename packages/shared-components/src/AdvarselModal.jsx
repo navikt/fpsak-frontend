@@ -4,8 +4,10 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+
 import Image from './Image';
 
 import styles from './advarselModal.less';
@@ -17,6 +19,7 @@ import styles from './advarselModal.less';
  */
 const AdvarselModal = ({
   textCode,
+  headerTextCode,
   showModal,
   submit,
   intl,
@@ -36,6 +39,7 @@ const AdvarselModal = ({
         <div className={styles.divider} />
       </Column>
       <Column xs="8" className={styles.text}>
+        {headerTextCode && <Undertittel><FormattedMessage id={headerTextCode} /></Undertittel>}
         <Normaltekst><FormattedMessage id={textCode} /></Normaltekst>
       </Column>
       <Column xs="2">
@@ -56,8 +60,13 @@ const AdvarselModal = ({
 AdvarselModal.propTypes = {
   intl: PropTypes.shape().isRequired,
   textCode: PropTypes.string.isRequired,
+  headerTextCode: PropTypes.string,
   showModal: PropTypes.bool.isRequired,
   submit: PropTypes.func.isRequired,
+};
+
+AdvarselModal.defaultProps = {
+  headerTextCode: undefined,
 };
 
 export default injectIntl(AdvarselModal);
