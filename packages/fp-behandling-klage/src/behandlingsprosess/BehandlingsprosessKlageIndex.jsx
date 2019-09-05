@@ -4,17 +4,28 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 
+import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingIdentifier, getLocationWithQueryParams } from '@fpsak-frontend/fp-felles';
+import { BehandlingIdentifier, getLocationWithQueryParams, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { getBehandlingIdentifier } from 'behandlingKlage/src/duckBehandlingKlage';
+import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckBehandlingKlage';
 import BehandlingspunktKlageInfoPanel from './components/BehandlingspunktKlageInfoPanel';
 import KlageBehandlingModal from './components/klage/KlageBehandlingModal';
+import behandlingSelectors from '../selectors/klageBehandlingSelectors';
 import {
-  getSelectedBehandlingspunktNavn, resolveKlageTemp, saveKlage, setSelectedBehandlingspunktNavn,
+  fetchPreviewKlageBrev,
+  getResolveProsessAksjonspunkterSuccess,
+  overrideProsessAksjonspunkter,
+  resetBehandlingspunkter,
+  resolveProsessAksjonspunkter,
+  getSelectedBehandlingspunktNavn,
+  resolveKlageTemp,
+  saveKlage,
+  setSelectedBehandlingspunktNavn,
 } from './duckBpKlage';
+import behandlingsprosessKlageSelectors from './selectors/behandlingsprosessKlageSelectors';
 
 /**
  * BehandlingsprosessKlageIndex
@@ -53,9 +64,7 @@ export class BehandlingsprosessKlageIndex extends Component {
     }
   }
 
-  submit = (aksjonspunktModels) => {
-    const { submitCallback, goToDefaultPage } = this.props;
-
+  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
     const skalByttTilKlageinstans = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
     const erKlageHjemsendt = aksjonspunktModels
@@ -77,44 +86,92 @@ export class BehandlingsprosessKlageIndex extends Component {
   }
 
   render = () => {
-    const { previewCallback, selectedBehandlingspunkt, goToSearchPage } = this.props;
+    const {
+      selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
+      resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
+      behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, fetchPreviewBrev, isSelectedBehandlingHenlagt,
+      location,
+    } = this.props;
     const { showModalKlageBehandling } = this.state;
 
     return (
-      <>
-        <BehandlingspunktKlageInfoPanel
-          submitCallback={this.submit}
-          saveTempKlage={this.saveKlageText}
-          previewCallback={previewCallback}
-          selectedBehandlingspunkt={selectedBehandlingspunkt}
-        />
-        <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={goToSearchPage} />
-      </>
+      <CommonBehandlingsprosessIndex
+        aksjonspunkter={aksjonspunkter}
+        aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingIdentifier={behandlingIdentifier}
+        behandlingspunkter={behandlingspunkter}
+        selectedBehandlingspunkt={selectedBehandlingspunkt}
+        behandlingspunkterStatus={behandlingspunkterStatus}
+        behandlingspunkterTitleCodes={behandlingspunkterTitleCodes}
+        behandlingsresultat={behandlingsresultat}
+        behandlingStatus={behandlingStatus}
+        behandlingType={behandlingType}
+        behandlingVersjon={behandlingVersjon}
+        fagsakYtelseType={fagsakYtelseType}
+        fetchPreviewBrev={fetchPreviewBrev}
+        isSelectedBehandlingHenlagt={isSelectedBehandlingHenlagt}
+        location={location}
+        resetBehandlingspunkter={resetBehandlingspunkter}
+        resolveProsessAksjonspunkter={resolveProsessAksjonspunkter}
+        resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
+        overrideProsessAksjonspunkter={overrideProsessAksjonspunkter}
+        render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
+          <>
+            <BehandlingspunktKlageInfoPanel
+              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              saveTempKlage={this.saveKlageText}
+              previewCallback={previewCallback}
+              selectedBehandlingspunkt={selectedBehandlingspunkt}
+            />
+            <KlageBehandlingModal showModal={showModalKlageBehandling} closeEvent={goToSearchPage} />
+          </>
+        )}
+      />
     );
   }
 }
 
 BehandlingsprosessKlageIndex.propTypes = {
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkterOpenStatus: PropTypes.shape(),
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
+  behandlingspunkterStatus: PropTypes.shape(),
+  behandlingspunkterTitleCodes: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
+  behandlingStatus: kodeverkObjektPropType.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  fetchPreviewBrev: PropTypes.func.isRequired,
+  isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   selectedBehandlingspunkt: PropTypes.string,
-  previewCallback: PropTypes.func.isRequired,
-  submitCallback: PropTypes.func.isRequired,
-  goToDefaultPage: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
-  location: PropTypes.shape(),
   saveKlage: PropTypes.func.isRequired,
   resolveKlageTemp: PropTypes.func.isRequired,
-  goToSearchPage: PropTypes.func.isRequired,
-};
-
-BehandlingsprosessKlageIndex.defaultProps = {
-  location: undefined,
 };
 
 const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
+  fagsakYtelseType: getFagsakYtelseType(state),
+  isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  behandlingspunkter: behandlingsprosessKlageSelectors.getBehandlingspunkter(state),
+  selectedBehandlingspunkt: behandlingsprosessKlageSelectors.getSelectedBehandlingspunkt(state),
+  resolveProsessAksjonspunkterSuccess: getResolveProsessAksjonspunkterSuccess(state),
+  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  behandlingType: behandlingSelectors.getBehandlingType(state),
+  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+  behandlingspunkterStatus: behandlingsprosessKlageSelectors.getBehandlingspunkterStatus(state),
+  behandlingspunkterTitleCodes: behandlingsprosessKlageSelectors.getBehandlingspunkterTitleCodes(state),
+  aksjonspunkterOpenStatus: behandlingsprosessKlageSelectors.getAksjonspunkterOpenStatus(state),
+  fetchPreviewBrev: fetchPreviewKlageBrev,
+  location: state.router.location,
+  resolveProsessAksjonspunkter,
 });
-
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
@@ -124,5 +181,12 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const connectedComponent = connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessKlageIndex);
-export default withBehandlingsprosessIndex(setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn)(connectedComponent);
+const TrackRouteParamBehandlingsprosessIndex = trackRouteParam({
+  paramName: 'punkt',
+  paramPropType: PropTypes.string,
+  storeParam: setSelectedBehandlingspunktNavn,
+  getParamFromStore: getSelectedBehandlingspunktNavn,
+  isQueryParam: true,
+})(connect(mapStateToProps, mapDispatchToProps)(BehandlingsprosessKlageIndex));
+
+export default TrackRouteParamBehandlingsprosessIndex;
