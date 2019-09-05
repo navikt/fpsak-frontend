@@ -179,6 +179,14 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const initialValues = EndringBeregningsgrunnlagForm.buildInitialValues(perioder, bg, getKodeverknavn);
     expect(initialValues[fieldName1].length).to.equal(andeler1.length);
     expect(initialValues[fieldName2].length).to.equal(andeler2.length);
+
+
+    const values = {};
+    values[getFieldNameKey(0)] = initialValues[fieldName1];
+    values[getFieldNameKey(1)] = initialValues[fieldName2];
+    const errors = EndringBeregningsgrunnlagForm.validate(values, perioder, bg, getKodeverknavn);
+    expect(errors[getFieldNameKey(0)]).to.equal(null);
+    expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
 
 
@@ -205,12 +213,12 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.NATURALYTELSE_TILKOMMER],
+      periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(1);
@@ -228,12 +236,12 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
-      periodeAarsaker: [periodeAarsak.NATURALYTELSE_BORTFALT],
+      periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(1);
@@ -252,13 +260,13 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
+      periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(1);
@@ -277,13 +285,13 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 130000,
-      periodeAarsaker: [periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET],
+      periodeAarsaker: [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(2);
@@ -304,13 +312,13 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.GRADERING_OPPHOERER],
+      periodeAarsaker: [{ kode: periodeAarsak.GRADERING_OPPHOERER }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(2);
@@ -331,13 +339,13 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '01-01-2019',
       beregningsgrunnlagPeriodeTom: '01-02-2019',
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     },
     {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.REFUSJON_OPPHOERER],
+      periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(2);
@@ -364,7 +372,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeFom: '02-02-2019',
       beregningsgrunnlagPeriodeTom: null,
       bruttoPrAar: 120000,
-      periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
+      periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     }];
     const nyePerioder = slaaSammenPerioder(perioder, bgPerioder);
     expect(nyePerioder.length).to.equal(2);
@@ -416,6 +424,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [{ fom: '2018-01-01', tom: null }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [{
+        periodeAarsaker: [],
         beregningsgrunnlagPeriodeFom: '2018-01-01',
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
@@ -431,10 +440,12 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const endringBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [{
+        periodeAarsaker: [],
         beregningsgrunnlagPeriodeFom: '2018-01-01',
         beregningsgrunnlagPrStatusOgAndel: [],
       },
       {
+        periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
         beregningsgrunnlagPeriodeFom: '2018-07-02',
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
