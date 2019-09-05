@@ -6,21 +6,12 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
+import {
+  Undertekst, Undertittel, Element, Normaltekst,
+} from 'nav-frontend-typografi';
+import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import {
-  getFeatureToggles,
-  getSelectedBehandlingId,
-  getSelectedSaksnummer,
-  isForeldrepengerFagsak,
-} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
@@ -29,13 +20,24 @@ import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import avregningCodes from '@fpsak-frontend/kodeverk/src/avregningCodes';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
+
+import {
+  getSimuleringResultat, getTilbakekrevingValg,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import {
+  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import AvregningSummary from './AvregningSummary';
-import AvregningTable from './AvregningTable';
+import AvregningTable, { avregningCodes } from './AvregningTable';
+
 import styles from './avregningPanel.less';
 
 const minLength3 = minLength(3);
@@ -176,13 +178,14 @@ export class AvregningPanelImpl extends Component {
       featureVarseltekst,
       previewCallback,
       isForeldrepenger,
+      hasOpenTilbakekrevingsbehandling,
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
     const varselBoxHeight = this.textVarselBox.current ? this.textVarselBox.current.clientHeight : null;
     const inlineStyle = {
       radioOption: {
-        height: (videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? varselBoxHeight + 45 : 'auto',
+        height: (videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? varselBoxHeight + 45 : 'auto',
       },
     };
 
@@ -216,6 +219,11 @@ export class AvregningPanelImpl extends Component {
                   ingenPerioderMedAvvik={simuleringResultatOption.ingenPerioderMedAvvik}
                 />
                 <VerticalSpacer twentyPx />
+                {hasOpenTilbakekrevingsbehandling && (
+                  <Element>
+                    <FormattedMessage id="Avregning.ApenTilbakekrevingsbehandling" />
+                  </Element>
+                )}
               </Column>
             </Row>
           </div>
@@ -248,12 +256,12 @@ export class AvregningPanelImpl extends Component {
                         <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
                           <RadioOption
                             label={<FormattedMessage id="Avregning.gjennomfør" />}
-                            value={avregningCodes.TILBAKEKR_INFOTRYGD}
+                            value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
                             style={inlineStyle.radioOption}
                           />
-                          <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                          <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER} />
                         </RadioGroupField>
-                        { videreBehandling === avregningCodes.TILBAKEKR_INFOTRYGD && featureVarseltekst
+                        { videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD && featureVarseltekst
                         && (
                           <div
                             className={styles.varsel}
@@ -333,8 +341,14 @@ export class AvregningPanelImpl extends Component {
                                 <div className={styles.marginBottom20}>
                                   <ArrowBox alignOffset={20}>
                                     <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                      <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
-                                      <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                                      <RadioOption
+                                        label={<FormattedMessage id="Avregning.gjennomfør" />}
+                                        value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
+                                      />
+                                      <RadioOption
+                                        label={<FormattedMessage id="Avregning.avvent" />}
+                                        value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER}
+                                      />
                                     </RadioGroupField>
                                   </ArrowBox>
                                 </div>
@@ -347,8 +361,11 @@ export class AvregningPanelImpl extends Component {
                           <div className={styles.marginBottom20}>
                             <ArrowBox alignOffset={98}>
                               <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                <RadioOption label={<FormattedMessage id="Avregning.gjennomfør" />} value={avregningCodes.TILBAKEKR_INFOTRYGD} />
-                                <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={avregningCodes.TILBAKEKR_IGNORER} />
+                                <RadioOption
+                                  label={<FormattedMessage id="Avregning.gjennomfør" />}
+                                  value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
+                                />
+                                <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER} />
                               </RadioGroupField>
                             </ArrowBox>
                           </div>
@@ -384,6 +401,7 @@ AvregningPanelImpl.propTypes = {
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: PropTypes.shape(),
   previewCallback: PropTypes.func.isRequired,
+  hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -395,7 +413,8 @@ export const transformValues = (values, ap) => [{
   ...values,
   kode: ap,
   grunnerTilReduksjon: values.erTilbakekrevingVilkårOppfylt ? values.grunnerTilReduksjon : undefined,
-  videreBehandling: values.erTilbakekrevingVilkårOppfylt && !values.grunnerTilReduksjon ? avregningCodes.TILBAKEKR_INNTREKK : values.videreBehandling,
+  videreBehandling: values.erTilbakekrevingVilkårOppfylt && !values.grunnerTilReduksjon
+    ? tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK : values.videreBehandling,
 }];
 
 const buildInitialValues = createSelector(
@@ -424,17 +443,23 @@ const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
-  return (state) => ({
-    simuleringResultat: getSimuleringResultat(state),
-    initialValues: buildInitialValues(state),
-    ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-    sprakkode: behandlingSelectors.getBehandlingSprak(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
-    saksnummer: getSelectedSaksnummer(state),
-    isForeldrepenger: isForeldrepengerFagsak(state),
-    onSubmit,
-  });
+  return (state) => {
+    const tilbakekrevingValg = getTilbakekrevingValg(state);
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
+      && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+    return {
+      simuleringResultat: getSimuleringResultat(state),
+      initialValues: buildInitialValues(state),
+      ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
+      sprakkode: behandlingSelectors.getBehandlingSprak(state),
+      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
+      featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
+      saksnummer: getSelectedSaksnummer(state),
+      isForeldrepenger: isForeldrepengerFagsak(state),
+      hasOpenTilbakekrevingsbehandling,
+      onSubmit,
+    };
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
