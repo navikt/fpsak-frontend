@@ -16,10 +16,11 @@ import { ForhaandsvisningsKnapp } from '../VedtakForm';
 
 import styles from '../vedtakForm.less';
 
-const getPreviewCallback = (formProps, previewCallback) => (e) => {
+const getPreviewCallback = (formProps, begrunnelse, previewCallback) => (e) => {
   if (formProps.valid || formProps.pristine) {
     previewCallback({
       gjelderVedtak: true,
+      fritekst: begrunnelse,
     });
   } else {
     formProps.submit();
@@ -81,7 +82,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   brodtekst,
   overskrift,
 }) => {
-  const previewBrev = getPreviewCallback(formProps, previewCallback);
+  const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brodtekst, overskrift, true, previewCallback);
 
   return (
