@@ -26,7 +26,7 @@ import fpKlageBehandlingUpdater from './FpKlageBehandlingUpdater';
 /**
  * BehandlingKlageIndex
  *
- * Bruker HOC withBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
+ * Bruker CommonBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
  */
 export const BehandlingKlageIndex = ({
   behandlingId,
@@ -109,7 +109,6 @@ BehandlingKlageIndex.propTypes = {
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
 };
 
-// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker klage-spesifikke selectors og funksjoner)
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const fagsakInfo = {
     fagsakSaksnummer: ownProps.saksnummer,

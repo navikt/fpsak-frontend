@@ -26,7 +26,7 @@ import fpInnsynBehandlingUpdater from './FpInnsynBehandlingUpdater';
 /**
  * BehandlingInnsynIndex
  *
- * Bruker HOC withBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
+ * Bruker CommonBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
  */
 export const BehandlingInnsynIndex = ({
   behandlingId,
@@ -118,7 +118,6 @@ BehandlingInnsynIndex.defaultProps = {
   ventearsaker: [],
 };
 
-// Definerer mapStateToPropsFactory og mapDispatchToProps her og send inn til HOC (Bruker innsyn-spesifikke selectors og funksjoner)
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const fagsakInfo = {
     fagsakSaksnummer: ownProps.saksnummer,
