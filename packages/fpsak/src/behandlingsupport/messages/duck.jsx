@@ -8,5 +8,4 @@ export const resetSubmitMessageActionCreator = (behandlingIdentifier) => (dispat
     .then(() => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier));
 };
 
-export const previewMessage = () => fpsakApi.PREVIEW_MESSAGE.makeRestApiRequest();
 export const submitMessageActionCreator = (params) => (dispatch) => (dispatch(fpsakApi.SUBMIT_MESSAGE.makeRestApiRequest()(params)));

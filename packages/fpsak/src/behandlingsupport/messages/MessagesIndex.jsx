@@ -14,6 +14,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import fpsakApi from 'data/fpsakApi';
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from 'kodeverk/duck';
@@ -21,11 +22,12 @@ import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBehandlingIdentifier,
+  previewMessage,
 } from 'behandling/duck';
 import { setBehandlingOnHold } from 'behandlingmenu/duck';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import {
-  resetSubmitMessageActionCreator, previewMessage, submitMessageActionCreator,
+  resetSubmitMessageActionCreator, submitMessageActionCreator,
 } from './duck';
 import Messages from './components/Messages';
 import MessagesModal from './components/MessagesModal';
