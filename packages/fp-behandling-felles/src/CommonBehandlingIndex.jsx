@@ -10,7 +10,7 @@ import { BehandlingErPaVentModal, BehandlingIdentifier, getBehandlingFormPrefix 
 import sakOperations from './SakOperations';
 import CommonBehandlingResolver from './CommonBehandlingResolver';
 
-class CommonBehandlingIndex extends Component {
+export class CommonBehandlingIndex extends Component {
   componentDidMount = () => {
     const {
       setBehandlingInfo: setInfo, behandlingUpdater, appContextUpdater, fagsakInfo, fpBehandlingUpdater,

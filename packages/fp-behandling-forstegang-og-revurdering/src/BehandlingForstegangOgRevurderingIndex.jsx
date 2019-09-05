@@ -10,7 +10,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import BehandlingsprosessForstegangOgRevIndex from './behandlingsprosess/BehandlingsprosessForstegangOgRevIndex';
-import FaktaContainer from './fakta/FaktaContainer';
+import FaktaIndex from './fakta/FaktaIndex';
 import {
   fetchBehandling as fetchBehandlingActionCreator,
   getBehandlingIdentifier,
@@ -26,7 +26,7 @@ import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 /**
  * BehandlingForstegangOgRevurderingIndex
  *
- * Bruker HOC withBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
+ * Bruker CommonBehandlingIndex for å styrer livssyklusen til de mekanismene som er relatert til den valgte behandlingen.
  */
 export const BehandlingForstegangOgRevurderingIndex = ({
   behandlingId,
@@ -77,7 +77,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
     <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessForstegangOgRevIndex />}
-      faktaContent={<FaktaContainer />}
+      faktaContent={<FaktaIndex />}
     />
   </CommonBehandlingIndex>
 );

@@ -37,7 +37,7 @@ const hasOverstyringAp = (aksjonspunkter) => (
  * fagsak og behandling for å generere opp korrekte behandlingspunkter og tilhørende aksjonspunkter.
  * Er også ansvarlig for alle serverkall. Dvs. henting av data og lagrefunksjonalitet.
  */
-class CommonBehandlingsprosessIndex extends Component {
+export class CommonBehandlingsprosessIndex extends Component {
   componentDidMount = () => {
     this.setup();
   };
