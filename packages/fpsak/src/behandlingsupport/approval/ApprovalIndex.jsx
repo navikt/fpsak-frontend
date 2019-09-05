@@ -27,6 +27,7 @@ import {
   getBehandlingToTrinnsBehandling,
   getBehandlingType,
   getBehandlingVersjon,
+  previewMessage,
 } from 'behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
