@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './iverksetterVedtakStatusModal.less';
+
+const getModalTextId = (ytelseType, behandlingsresultat, behandlingType) => {
+  if (!(behandlingsresultat
+      && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT)) {
+    return behandlingType.kode === BehandlingType.TILBAKEKREVING
+      ? 'IverksetterVedtakStatusModal.InnvilgetOgIverksatt'
+      : 'IverksetterVedtakStatusModal.InnvilgetOgIverksattAutomatisk';
+  }
+  return ytelseType.kode === FagsakYtelseType.ENGANGSSTONAD
+    ? 'IverksetterVedtakStatusModal.AvslattOgIverksattES' : 'IverksetterVedtakStatusModal.AvslattOgIverksattFP';
+};
+
 
 /**
  * IverksetterVedtakStatusModal
@@ -22,16 +34,18 @@ import styles from './iverksetterVedtakStatusModal.less';
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
 class IverksetterVedtakStatusModal extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.showModal = false;
   }
 
   render() {
     const {
-      intl, closeEvent, modalTextId, behandlingsresultat, behandlingStatusKode,
-      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess,
+      intl, closeEvent, behandlingsresultat, behandlingStatusKode, behandlingType,
+      resolveProsessAksjonspunkterSuccess, resolveFaktaAksjonspunkterSuccess, fagsakYtelseType,
     } = this.props;
+    const modalTextId = getModalTextId(fagsakYtelseType, behandlingsresultat, behandlingType);
+
     const rejected = behandlingsresultat
       && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT;
 
@@ -91,24 +105,12 @@ IverksetterVedtakStatusModal.propTypes = {
   resolveFaktaAksjonspunkterSuccess: PropTypes.bool.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   behandlingsresultat: PropTypes.shape(),
-  modalTextId: PropTypes.string.isRequired,
+  behandlingType: PropTypes.shape().isRequired,
+  fagsakYtelseType: PropTypes.shape().isRequired,
 };
 
 IverksetterVedtakStatusModal.defaultProps = {
   behandlingsresultat: undefined,
 };
 
-const getModalTextId = (ytelseType, behandlingsresultat) => {
-  if (!(behandlingsresultat
-      && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT)) {
-    return 'IverksetterVedtakStatusModal.InnvilgetOgIverksatt';
-  }
-  return ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-    ? 'IverksetterVedtakStatusModal.AvslattOgIverksattES' : 'IverksetterVedtakStatusModal.AvslattOgIverksattFP';
-};
-
-const mapStateToProps = (state, ownProps) => ({
-  modalTextId: getModalTextId(ownProps.fagsakYtelseType, ownProps.behandlingsresultat),
-});
-
-export default connect(mapStateToProps)(injectIntl(IverksetterVedtakStatusModal));
+export default injectIntl(IverksetterVedtakStatusModal);

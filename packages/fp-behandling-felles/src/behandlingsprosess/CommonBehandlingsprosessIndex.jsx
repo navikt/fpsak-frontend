@@ -167,6 +167,7 @@ export class CommonBehandlingsprosessIndex extends Component {
             closeEvent={this.goToSearchPage}
             behandlingsresultat={behandlingsresultat}
             behandlingStatusKode={behandlingStatus.kode}
+            behandlingType={behandlingType}
             fagsakYtelseType={fagsakYtelseType}
             resolveFaktaAksjonspunkterSuccess
             resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
