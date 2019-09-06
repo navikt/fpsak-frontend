@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
@@ -56,7 +56,10 @@ export const BehandlingTilbakekrevingIndex = ({
   hasSubmittedPaVentForm,
   showOpenRevurderingModal,
 }) => {
-  const [showModal, closeModal] = useState(showOpenRevurderingModal);
+  const [showModal, setShowModal] = useState(showOpenRevurderingModal);
+  useEffect(() => {
+    setShowModal(showOpenRevurderingModal);
+  }, [showOpenRevurderingModal]);
   return (
     <>
       <CommonBehandlingIndex
@@ -88,16 +91,16 @@ export const BehandlingTilbakekrevingIndex = ({
             behandlingsprosessContent={<BehandlingsprosessTilbakekrevingIndex />}
             faktaContent={<FaktaTilbakeContainer />}
           />
+          {showModal && (
+          <AdvarselModal
+            headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
+            textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
+            showModal
+            submit={() => setShowModal(false)}
+          />
+          )}
         </TilbakekrevingDataResolver>
       </CommonBehandlingIndex>
-      {showModal && (
-        <AdvarselModal
-          headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
-          textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
-          showModal
-          submit={() => closeModal(false)}
-        />
-      )}
     </>
   );
 };
@@ -134,29 +137,34 @@ const showOpenRevurderingModal = createSelector([hasOpenRevurdering, behandlingS
   hasOpenRev, isBehandlingOnHold,
 ) => hasOpenRev && !isBehandlingOnHold);
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const fagsakInfo = {
-    fagsakSaksnummer: ownProps.saksnummer,
-    behandlingId: ownProps.behandlingId,
-    fagsak: ownProps.fagsak,
-    navAnsatt: ownProps.navAnsatt,
-    fagsakBehandlingerInfo: ownProps.fagsakBehandlingerInfo,
-  };
+const createFagsakInfo = createSelector([
+  (state, ownProps) => ownProps.saksnummer,
+  (state, ownProps) => ownProps.behandlingId,
+  (state, ownProps) => ownProps.fagsak,
+  (state, ownProps) => ownProps.navAnsatt,
+  (state, ownProps) => ownProps.fagsakBehandlingerInfo], (
+  fagsakSaksnummer, behandlingId, fagsak, navAnsatt, fagsakBehandlingerInfo,
+) => ({
+  fagsakSaksnummer,
+  behandlingId,
+  fagsak,
+  navAnsatt,
+  fagsakBehandlingerInfo,
+}));
 
-  return (state) => ({
-    behandlingIdentifier: getBehandlingIdentifier(state),
-    behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-    fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
-    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
-    venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
-    hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
-    hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-    ventearsaker: getTilbakekrevingKodeverk(kodeverkTyper.VENTEARSAK)(state),
-    isInSync: behandlingSelectors.isBehandlingInSync(state),
-    showOpenRevurderingModal: showOpenRevurderingModal(state),
-    fagsakInfo,
-  });
-};
+const mapStateToProps = (state, ownProps) => ({
+  behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
+  fristBehandlingPaaVent: behandlingSelectors.getBehandlingOnHoldDate(state),
+  behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
+  venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
+  hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
+  hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
+  ventearsaker: getTilbakekrevingKodeverk(kodeverkTyper.VENTEARSAK)(state),
+  isInSync: behandlingSelectors.isBehandlingInSync(state),
+  showOpenRevurderingModal: showOpenRevurderingModal(state),
+  fagsakInfo: createFagsakInfo(state, ownProps),
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   setHasShownBehandlingPaVent: setHasShownBehandlingPaVentFunc,
@@ -166,4 +174,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchBehandling: fetchBehandlingActionCreator,
 }, dispatch);
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(BehandlingTilbakekrevingIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(BehandlingTilbakekrevingIndex);
