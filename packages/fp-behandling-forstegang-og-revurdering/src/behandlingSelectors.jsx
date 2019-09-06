@@ -169,17 +169,17 @@ export const getKortvarigeArbeidsforhold = createSelector(
 export const getSkjæringstidspunktBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.skjaeringstidspunktBeregning : undefined),
 );
-export const getEndringBeregningsgrunnlag = createSelector(
+export const getFordelBeregningsgrunnlag = createSelector(
   [getFaktaOmFordeling], (faktaOmFordeling = {}) => {
-    if (faktaOmFordeling && faktaOmFordeling.endringBeregningsgrunnlag) {
-      return faktaOmFordeling.endringBeregningsgrunnlag;
+    if (faktaOmFordeling && faktaOmFordeling.fordelBeregningsgrunnlag) {
+      return faktaOmFordeling.fordelBeregningsgrunnlag;
     }
     return undefined;
   },
 );
 
-export const getEndringBeregningsgrunnlagPerioder = createSelector(
-  [getEndringBeregningsgrunnlag], (endringBG = {}) => (endringBG ? endringBG.endringBeregningsgrunnlagPerioder : []),
+export const getFordelBeregningsgrunnlagPerioder = createSelector(
+  [getFordelBeregningsgrunnlag], (fordelBG = {}) => (fordelBG ? fordelBG.fordelBeregningsgrunnlagPerioder : []),
 );
 export const getFaktaOmBeregningTilfeller = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = []) => (faktaOmBeregning ? faktaOmBeregning.faktaOmBeregningTilfeller : []),

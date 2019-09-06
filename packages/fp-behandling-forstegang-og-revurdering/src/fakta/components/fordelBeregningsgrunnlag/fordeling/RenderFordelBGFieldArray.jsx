@@ -31,7 +31,7 @@ import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import {
   validateAndeler, validateSumFastsattBelop, validateTotalRefusjonPrArbeidsforhold, validateUlikeAndeler,
 } from '../ValidateAndelerUtils';
-import styles from './renderEndringBGFieldArray.less';
+import styles from './renderFordelBGFieldArray.less';
 
 const ENTER_KEY_CODE = 13;
 
@@ -179,7 +179,7 @@ const arbeidsforholdReadOnlyOrSelect = (fields, index, elementFieldId, selectVal
       <SelectField
         name={`${elementFieldId}.andel`}
         bredde="l"
-        label={fieldLabel(index, 'BeregningInfoPanel.EndringBG.Andel')}
+        label={fieldLabel(index, 'BeregningInfoPanel.FordelBG.Andel')}
         selectValues={selectVals}
         readOnly={isReadOnly}
         onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
@@ -307,7 +307,7 @@ const createAndelerTableRows = (fields, isAksjonspunktClosed, readOnly,
 const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, sumBeregningsgrunnlagPrAar, erRevurdering) => (
   <TableRow key="bruttoBGSummaryRow">
     <TableColumn>
-      <FormattedMessage id="BeregningInfoPanel.EndringBG.Sum" />
+      <FormattedMessage id="BeregningInfoPanel.FordelBG.Sum" />
     </TableColumn>
     <TableColumn />
     {erRevurdering
@@ -337,26 +337,26 @@ const createBruttoBGSummaryRow = (sumFordelingForrigeBehandling, sumFordeling, s
 
 const getHeaderTextCodes = (erRevurdering) => {
   const headerCodes = [];
-  headerCodes.push('BeregningInfoPanel.EndringBG.Andel');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Arbeidsperiode');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Andel');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Arbeidsperiode');
   if (erRevurdering) {
-    headerCodes.push('BeregningInfoPanel.EndringBG.FordelingForrigeBehandling');
+    headerCodes.push('BeregningInfoPanel.FordelBG.FordelingForrigeBehandling');
   }
-  headerCodes.push('BeregningInfoPanel.EndringBG.AndelIArbeid');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Refusjonskrav');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Beregningsgrunnlag');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Fordeling');
-  headerCodes.push('BeregningInfoPanel.EndringBG.Inntektskategori');
+  headerCodes.push('BeregningInfoPanel.FordelBG.AndelIArbeid');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Refusjonskrav');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Beregningsgrunnlag');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Fordeling');
+  headerCodes.push('BeregningInfoPanel.FordelBG.Inntektskategori');
   return headerCodes;
 };
 
 /**
- *  RenderEndringBGFieldArray
+ *  RenderFordelBGFieldArray
  *
  * Presentasjonskomponent: Viser fordeling av brutto beregningsgrunnlag ved endret beregningsgrunnlag
  * Komponenten må rendres som komponenten til et FieldArray.
  */
-export const RenderEndringBGFieldArrayImpl = ({
+export const RenderFordelBGFieldArrayImpl = ({
   fields,
   meta,
   intl,
@@ -418,7 +418,7 @@ export const RenderEndringBGFieldArrayImpl = ({
   );
 };
 
-RenderEndringBGFieldArrayImpl.propTypes = {
+RenderFordelBGFieldArrayImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
@@ -432,9 +432,9 @@ RenderEndringBGFieldArrayImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-const RenderEndringBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderEndringBGFieldArrayImpl));
+const RenderFordelBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderFordelBGFieldArrayImpl));
 
-RenderEndringBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
   const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
@@ -471,4 +471,4 @@ const mapStateToPropsFactory = (initialState) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(RenderEndringBGFieldArray);
+export default connect(mapStateToPropsFactory)(RenderFordelBGFieldArray);

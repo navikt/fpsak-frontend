@@ -10,12 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 import classnames from 'classnames/bind';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
-import RenderEndringBGFieldArray from './RenderEndringBGFieldArray';
+import RenderFordelBGFieldArray from './RenderFordelBGFieldArray';
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, starterPaaEllerEtterStp,
 } from '../BgFordelingUtils';
 
-import styles from './endringBeregningsgrunnlagPeriodePanel.less';
+import styles from './fordelBeregningsgrunnlagPeriodePanel.less';
 
 const classNames = classnames.bind(styles);
 
@@ -26,7 +26,7 @@ const renderDateHeading = (fom, tom) => {
     return (
       <Element>
         <FormattedMessage
-          id="BeregningInfoPanel.EndringBG.PeriodeFom"
+          id="BeregningInfoPanel.FordelBG.PeriodeFom"
           values={{ fom: formatDate(fom) }}
         />
       </Element>
@@ -35,7 +35,7 @@ const renderDateHeading = (fom, tom) => {
   return (
     <Element>
       <FormattedMessage
-        id="BeregningInfoPanel.EndringBG.PeriodeFomOgTom"
+        id="BeregningInfoPanel.FordelBG.PeriodeFomOgTom"
         values={{ fom: formatDate(fom), tom: formatDate(tom) }}
       />
     </Element>
@@ -43,14 +43,14 @@ const renderDateHeading = (fom, tom) => {
 };
 
 /**
- * EndringBeregningsgrunnlagPeriodePanel
+ * FordelBeregningsgrunnlagPeriodePanel
  *
  * Presentasjonskomponent. Viser ekspanderbart panel for perioder i nytt/endret beregningsgrunnlag
  */
 
-const EndringBeregningsgrunnlagPeriodePanel = ({
+const FordelBeregningsgrunnlagPeriodePanel = ({
   readOnly,
-  endringBGFieldArrayName,
+  fordelBGFieldArrayName,
   fom,
   tom,
   harPeriodeAarsakGraderingEllerRefusjon,
@@ -59,14 +59,14 @@ const EndringBeregningsgrunnlagPeriodePanel = ({
   showPanel,
 }) => (
   <EkspanderbartpanelPure
-    className={readOnly ? styles.statusOk : classNames(`endringBeregningsgrunnlagPeriode--${fom}`)}
+    className={readOnly ? styles.statusOk : classNames(`fordelBeregningsgrunnlagPeriode--${fom}`)}
     tittel={renderDateHeading(fom, tom)}
     apen={open}
     onClick={() => showPanel(fom)}
   >
     <FieldArray
-      name={endringBGFieldArrayName}
-      component={RenderEndringBGFieldArray}
+      name={fordelBGFieldArrayName}
+      component={RenderFordelBGFieldArray}
       readOnly={readOnly}
       periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
       isAksjonspunktClosed={isAksjonspunktClosed}
@@ -74,9 +74,9 @@ const EndringBeregningsgrunnlagPeriodePanel = ({
   </EkspanderbartpanelPure>
 );
 
-EndringBeregningsgrunnlagPeriodePanel.propTypes = {
+FordelBeregningsgrunnlagPeriodePanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  endringBGFieldArrayName: PropTypes.string.isRequired,
+  fordelBGFieldArrayName: PropTypes.string.isRequired,
   fom: PropTypes.string.isRequired,
   tom: PropTypes.string,
   open: PropTypes.bool,
@@ -85,13 +85,13 @@ EndringBeregningsgrunnlagPeriodePanel.propTypes = {
   showPanel: PropTypes.func.isRequired,
 };
 
-EndringBeregningsgrunnlagPeriodePanel.defaultProps = {
+FordelBeregningsgrunnlagPeriodePanel.defaultProps = {
   open: null,
   tom: null,
 };
 
-EndringBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValidereMotRapportert,
-  getKodeverknavn) => RenderEndringBGFieldArray
+FordelBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValidereMotRapportert,
+  getKodeverknavn) => RenderFordelBGFieldArray
   .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find((a) => a.andelsnr === andel.andelsnr);
@@ -109,12 +109,12 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   return null;
 };
 
-EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn) => {
-  if (!periode || !periode.endringBeregningsgrunnlagAndeler) {
+FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, skjaeringstidspunktBeregning, harKunYtelse, getKodeverknavn) => {
+  if (!periode || !periode.fordelBeregningsgrunnlagAndeler) {
     return {};
   }
   return (
-    periode.endringBeregningsgrunnlagAndeler
+    periode.fordelBeregningsgrunnlagAndeler
       .map((andel) => {
         const bgAndel = finnRiktigAndel(andel, bgPeriode);
         return ({
@@ -138,4 +138,4 @@ EndringBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, 
   );
 };
 
-export default EndringBeregningsgrunnlagPeriodePanel;
+export default FordelBeregningsgrunnlagPeriodePanel;

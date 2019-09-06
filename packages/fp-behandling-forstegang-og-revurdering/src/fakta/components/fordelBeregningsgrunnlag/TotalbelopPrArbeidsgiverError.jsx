@@ -55,7 +55,7 @@ export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregni
 const aapOgRefusjonValidering = (value) => (
   <div key={value.key}>
     <FormattedMessage
-      id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
+      id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForAAPOgArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
       values={{ arbeidsgiver: value.arbeidsgiverNavn, inntekt: formatCurrencyNoKr(value.beregningsgrunnlagPrAar) }}
     />
   </div>
@@ -64,7 +64,7 @@ const aapOgRefusjonValidering = (value) => (
 const arbeidsforholdValidering = (value) => (
   <div key={value.key}>
     <FormattedMessage
-      id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
+      id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeregningsgrunnlag"
       values={{ arbeidsgiver: value.arbeidsgiverNavn, inntekt: formatCurrencyNoKr(value.beregningsgrunnlagPrAar) }}
     />
   </div>

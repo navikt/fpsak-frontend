@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { getEndringBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFordelBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
@@ -29,9 +29,9 @@ export const getUniqueListOfArbeidsforholdFromAndeler = (andeler) => {
 
 const emptyList = [];
 
-export const getUniqueListOfArbeidsforhold = createSelector([getEndringBeregningsgrunnlagPerioder],
-  (endringPerioder) => getUniqueListOfArbeidsforholdFromAndeler(endringPerioder.length > 0
-    ? endringPerioder.flatMap((p) => p.endringBeregningsgrunnlagAndeler) : emptyList));
+export const getUniqueListOfArbeidsforhold = createSelector([getFordelBeregningsgrunnlagPerioder],
+  (fordelPerioder) => getUniqueListOfArbeidsforholdFromAndeler(fordelPerioder.length > 0
+    ? fordelPerioder.flatMap((p) => p.fordelBeregningsgrunnlagAndeler) : emptyList));
 
 export const getUniqueListOfArbeidsforholdFields = (fields) => {
   const arbeidsgiverList = [];

@@ -14,11 +14,11 @@ import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  getEndringBeregningsgrunnlagPerioder,
+  getFordelBeregningsgrunnlagPerioder,
   getBeregningsgrunnlag,
   getBeregningsgrunnlagPerioder,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import FastsettEndretBeregningsgrunnlag from './endringBeregningsgrunnlag/FastsettEndretBeregningsgrunnlag';
+import FastsettFordeltBeregningsgrunnlag from './fordeling/FastsettFordeltBeregningsgrunnlag';
 import FordelingHelpText from './FordelingHelpText';
 
 const {
@@ -52,7 +52,7 @@ const FordelingFormImpl = ({
   <form onSubmit={formProps.handleSubmit}>
     <FordelingHelpText isAksjonspunktClosed={isAksjonspunktClosed} />
     <VerticalSpacer twentyPx />
-    <FastsettEndretBeregningsgrunnlag
+    <FastsettFordeltBeregningsgrunnlag
       readOnly={readOnly}
       isAksjonspunktClosed={isAksjonspunktClosed}
     />
@@ -87,15 +87,15 @@ FordelingFormImpl.propTypes = {
 };
 
 export const transformValuesFordelBeregning = createSelector(
-  [behandlingSelectors.getAksjonspunkter, getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
-  (aksjonspunkter, endringBGPerioder, bgPerioder) => (values) => {
+  [behandlingSelectors.getAksjonspunkter, getFordelBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder],
+  (aksjonspunkter, fordelBGPerioder, bgPerioder) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       const faktaBeregningValues = values;
       const begrunnelse = faktaBeregningValues[BEGRUNNELSE_FORDELING_NAME];
       return [{
         begrunnelse,
         kode: FORDEL_BEREGNINGSGRUNNLAG,
-        ...FastsettEndretBeregningsgrunnlag.transformValues(values, endringBGPerioder, bgPerioder),
+        ...FastsettFordeltBeregningsgrunnlag.transformValues(values, fordelBGPerioder, bgPerioder),
       }];
     }
     return {};
@@ -103,20 +103,20 @@ export const transformValuesFordelBeregning = createSelector(
 );
 
 export const buildInitialValuesFordelBeregning = createSelector(
-  [getEndringBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getAlleKodeverk, behandlingSelectors.getAksjonspunkter],
-  (endringBGPerioder, beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
+  [getFordelBeregningsgrunnlagPerioder, getBeregningsgrunnlag, getAlleKodeverk, behandlingSelectors.getAksjonspunkter],
+  (fordelBGPerioder, beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
     if (!hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {};
     }
     return ({
       ...FaktaBegrunnelseTextField.buildInitialValues(findAksjonspunktMedBegrunnelse(aksjonspunkter), BEGRUNNELSE_FORDELING_NAME),
-      ...FastsettEndretBeregningsgrunnlag.buildInitialValues(endringBGPerioder, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
+      ...FastsettFordeltBeregningsgrunnlag.buildInitialValues(fordelBGPerioder, beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
     });
   },
 );
 
 export const mapStateToValidationProps = createStructuredSelector({
-  endringBGPerioder: getEndringBeregningsgrunnlagPerioder,
+  fordelBGPerioder: getFordelBeregningsgrunnlagPerioder,
   beregningsgrunnlag: getBeregningsgrunnlag,
 });
 
@@ -124,7 +124,7 @@ export const getValidationFordelBeregning = createSelector([mapStateToValidation
   (props, alleKodeverk, aksjonspunkter) => (values) => {
     if (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)) {
       return {
-        ...FastsettEndretBeregningsgrunnlag.validate(values, props.endringBGPerioder,
+        ...FastsettFordeltBeregningsgrunnlag.validate(values, props.fordelBGPerioder,
           props.beregningsgrunnlag, getKodeverknavnFn(alleKodeverk, kodeverkTyper)),
       };
     }

@@ -64,7 +64,7 @@ export const ArbeidsforholdFieldImpl = ({
       <SelectField
         name={name}
         bredde="l"
-        label={fieldLabel(index, 'BeregningInfoPanel.EndringBG.Andel')}
+        label={fieldLabel(index, 'BeregningInfoPanel.FordelBG.Andel')}
         selectValues={arbeidsgiverSelectValues(arbeidsforholdList, getKodeverknavn)}
         readOnly={readOnly}
         onChange={(event) => setArbeidsforholdInfo(fields, index, arbeidsforholdList, event.target.value)}
