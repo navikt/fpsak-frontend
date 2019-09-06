@@ -67,6 +67,39 @@ describe('<MedlemskapInfoPanel>', () => {
     expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(0);
   });
 
+  it('skal vise form for startdato for foreldrepengerperioden når en har overstyr-aksjonspunktet for dette', () => {
+    const avklarStartdatoAksjonspunkt = {
+      id: 1,
+      definisjon: {
+        kode: aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO,
+        navn: 'ap1',
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    };
+
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+      intl={intlMock}
+      aksjonspunkter={[avklarStartdatoAksjonspunkt]}
+      aksjonspunkterMinusAvklarStartDato={[]}
+      openInfoPanels={['medlemskapsvilkaret']}
+      toggleInfoPanelCallback={sinon.spy()}
+      hasOpenAksjonspunkter={false}
+      submittable
+      readOnly
+      submitCallback={sinon.spy()}
+    />);
+
+    expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
+    expect(wrapper.find(OppholdInntektOgPerioderForm)).has.length(0);
+  });
+
   it('skal vise begge medlemskapsformer når aksjonspunkt for startdato for foreldrepengerperioden er avklart', () => {
     const avklarStartdatoAksjonspunkt = {
       id: 1,

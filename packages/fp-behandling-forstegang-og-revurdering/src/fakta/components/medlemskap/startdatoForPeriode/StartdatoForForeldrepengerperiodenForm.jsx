@@ -8,7 +8,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { Hovedknapp } from 'nav-frontend-knapper';
 import { getBehandlingStartDatoForPermisjon, getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
@@ -80,28 +79,15 @@ export const StartdatoForForeldrepengerperiodenForm = ({
             />
           </Column>
         </Row>
-        {!hasOpenAksjonspunkt
-        && (
-          <div>
-            <VerticalSpacer twentyPx />
-            <Hovedknapp
-              mini
-              htmlType="submit"
-              spinner={formProps.submitting}
-              onClick={formProps.handleSubmit}
-              disabled={formProps.submitting || formProps.pristine}
-              readOnly={overstyringDisabled}
-            >
-              <FormattedMessage id="StartdatoForForeldrepengerperiodenForm.Oppdater" />
-            </Hovedknapp>
-          </div>
-        )}
       </FaktaGruppe>
       <VerticalSpacer twentyPx />
-      {hasOpenAksjonspunkt
-        && (
-        <FaktaSubmitButton formName={formProps.form} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkt} />
-        )}
+      <FaktaSubmitButton
+        buttonTextId={!hasOpenAksjonspunkt ? 'StartdatoForForeldrepengerperiodenForm.Oppdater' : undefined}
+        formName={formProps.form}
+        isSubmittable={submittable}
+        isReadOnly={readOnly}
+        hasOpenAksjonspunkter={hasOpenAksjonspunkt}
+      />
     </form>
   </div>
 );
@@ -137,19 +123,18 @@ const transformValues = (values, isOverstyring) => ({
   begrunnelse: values.begrunnelse,
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+const mapStateToProps = (state, ownProps) => {
   const hasAksjonspunkt = ownProps.aksjonspunkt !== undefined;
-  const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(ownProps.aksjonspunkt.status.kode);
   const isOverstyring = !hasAksjonspunkt || ownProps.aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
+  const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(ownProps.aksjonspunkt.status.kode);
   const onSubmit = (values) => ownProps.submitCallback([transformValues(values, isOverstyring)]);
-
-  return (state) => ({
+  return {
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     overstyringDisabled: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     initialValues: buildInitialValues(state),
     onSubmit,
-  });
+  };
 };
 
 const isBefore2019 = (startdato) => (
@@ -173,7 +158,7 @@ const validateDates = (values) => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToProps)(behandlingFormForstegangOgRevurdering({
   form: 'StartdatoForForeldrepengerperiodenForm',
   validate: validateDates,
 })(StartdatoForForeldrepengerperiodenForm));
