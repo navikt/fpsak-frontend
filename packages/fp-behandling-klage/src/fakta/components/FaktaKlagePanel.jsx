@@ -2,11 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { PersonIndex } from '@fpsak-frontend/fp-felles';
 
 import { getFagsakPerson } from 'behandlingKlage/src/duckBehandlingKlage';
-import { getOpenInfoPanels, setOpenInfoPanels } from '../duckFaktaKlage';
 
 import styles from './faktaKlagePanel.less';
 
@@ -32,4 +30,4 @@ const mapStateToProps = (state) => ({
   fagsakPerson: getFagsakPerson(state),
 });
 
-export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(FaktaKlagePanel));
+export default connect(mapStateToProps)(FaktaKlagePanel);

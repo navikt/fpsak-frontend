@@ -5,21 +5,36 @@ import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import { BehandlingsprosessAnkeIndex } from './BehandlingsprosessAnkeIndex';
 import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfoPanel';
 
 describe('BehandlingsprosessAnkeIndex', () => {
+  const defaultProps = {
+    behandlingIdentifier: new BehandlingIdentifier(1, 1),
+    saveAnke: sinon.spy(),
+    resolveAnkeTemp: sinon.spy(),
+    fetchPreviewBrev: sinon.spy(),
+    fagsakYtelseType: { kode: '' },
+    behandlingVersjon: 1,
+    behandlingType: { kode: '' },
+    behandlingStatus: { kode: '' },
+    aksjonspunkter: [],
+    resolveProsessAksjonspunkterSuccess: true,
+    location: {},
+    isSelectedBehandlingHenlagt: true,
+  };
+  const previewCallbackDef = sinon.spy();
+  const submitCallbackDef = sinon.spy();
+  const goToDefaultPageDef = sinon.spy();
+  const goToSearchPageDef = sinon.spy();
+
   it('skal rendre komponent uten feil', () => {
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      saveAnke={sinon.spy()}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={sinon.spy()}
-      goToDefaultPage={sinon.spy()}
-      goToSearchPage={sinon.spy()}
-    />);
+      {...defaultProps}
+    />).find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submitCallbackDef, goToDefaultPageDef, goToSearchPageDef);
     expect(wrapper.find(BehandlingspunktAnkeInfoPanel)).to.have.length(1);
   });
 
@@ -27,16 +42,13 @@ describe('BehandlingsprosessAnkeIndex', () => {
     const submit = sinon.spy();
     const goToDefaultPage = sinon.spy();
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      saveAnke={sinon.spy()}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={submit}
-      goToDefaultPage={goToDefaultPage}
-      goToSearchPage={sinon.spy()}
+      {...defaultProps}
     />);
 
-    const panel = wrapper.find(BehandlingspunktAnkeInfoPanel);
+    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submit, goToDefaultPage, goToSearchPageDef);
+
+    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
     const apModels = [{
       kode: '1234',
     }];
@@ -58,16 +70,13 @@ describe('BehandlingsprosessAnkeIndex', () => {
     const submit = sinon.spy();
     const goToDefaultPage = sinon.spy();
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      saveAnke={sinon.spy()}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={submit}
-      goToDefaultPage={goToDefaultPage}
-      goToSearchPage={sinon.spy()}
+      {...defaultProps}
     />);
 
-    const panel = wrapper.find(BehandlingspunktAnkeInfoPanel);
+    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submit, goToDefaultPage, goToSearchPageDef);
+
+    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
     const apModels = [{
       kode: aksjonspunktCodes.FORESLA_VEDTAK,
     }];
@@ -88,16 +97,13 @@ describe('BehandlingsprosessAnkeIndex', () => {
   it('skal oppdatere info når behandlingen ikke skal til medunderskriver', () => {
     const submit = sinon.spy();
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      saveAnke={sinon.spy()}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={submit}
-      goToDefaultPage={sinon.spy()}
-      goToSearchPage={sinon.spy()}
+      {...defaultProps}
     />);
 
-    const panel = wrapper.find(BehandlingspunktAnkeInfoPanel);
+    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submit, goToDefaultPageDef, goToSearchPageDef);
+
+    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
     const apModels = [{
       kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
     }];
@@ -113,16 +119,13 @@ describe('BehandlingsprosessAnkeIndex', () => {
   it('skal oppdatere info når behandlingen skal til medunderskriver', () => {
     const submit = sinon.spy();
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
-      saveAnke={sinon.spy()}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={submit}
-      goToDefaultPage={sinon.spy()}
-      goToSearchPage={sinon.spy()}
+      {...defaultProps}
     />);
 
-    const panel = wrapper.find(BehandlingspunktAnkeInfoPanel);
+    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submit, goToDefaultPageDef, goToSearchPageDef);
+
+    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
     const apModels = [{
       kode: aksjonspunktCodes.FORESLA_VEDTAK,
     }];
@@ -138,16 +141,14 @@ describe('BehandlingsprosessAnkeIndex', () => {
   it('skal mellomlagre anketekst', () => {
     const saveAnke = sinon.spy();
     const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
+      {...defaultProps}
       saveAnke={saveAnke}
-      resolveAnkeTemp={sinon.spy()}
-      previewCallback={sinon.spy()}
-      submitCallback={sinon.spy()}
-      goToDefaultPage={sinon.spy()}
-      goToSearchPage={sinon.spy()}
     />);
 
-    const panel = wrapper.find(BehandlingspunktAnkeInfoPanel);
+    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
+      .renderProp('render')(previewCallbackDef, submitCallbackDef, goToDefaultPageDef, goToSearchPageDef);
+
+    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
     const apModels = [{
       kode: aksjonspunktCodes.FORESLA_VEDTAK,
     }];

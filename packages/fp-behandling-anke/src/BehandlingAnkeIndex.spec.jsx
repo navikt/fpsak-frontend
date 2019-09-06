@@ -12,6 +12,21 @@ describe('BehandlingAnkeIndex', () => {
     const wrapper = shallow(
       <BehandlingAnkeIndex
         setBehandlingInfoHolder={sinon.spy()}
+        behandlingId={1}
+        hasShownBehandlingPaVent
+        setHasShownBehandlingPaVent={sinon.spy()}
+        updateOnHold={sinon.spy()}
+        hasSubmittedPaVentForm
+        hasManualPaVent
+        isInSync
+        fagsakInfo={{}}
+        fetchBehandling={sinon.spy()}
+        resetBehandling={sinon.spy()}
+        behandlingerVersjonMappedById={{}}
+        appContextUpdater={{}}
+        setBehandlingInfo={sinon.spy()}
+        fpBehandlingUpdater={{}}
+        behandlingUpdater={{}}
       />,
     );
     expect(wrapper.find(FpAnkeBehandlingInfoSetter)).to.have.length(1);

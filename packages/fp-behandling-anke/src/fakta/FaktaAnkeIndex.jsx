@@ -5,19 +5,17 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonFaktaIndex, parseFaktaParam, paramsAreEqual } from '@fpsak-frontend/fp-behandling-felles';
 
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import {
-  getOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter, setOpenInfoPanels,
-} from './duckFaktaTilbake';
-import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
+import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
+import { getOpenInfoPanels, resetFakta, setOpenInfoPanels } from './duckFaktaAnke';
+import FaktaAnkePanel from './components/FaktaAnkePanel';
 
 /**
- * FaktaTilbakeContainer
+ * FaktaAnkeIndex
  *
- * Har ansvar for faktadelen av hovedvinduet for Tilbakekreving.
+ * Har ansvar for faktadelen av hovedvinduet når behandlingstypen er Anke.
  */
-export const FaktaTilbakeContainer = ({
+export const FaktaAnkeIndex = ({
   location,
   behandlingIdentifier,
   behandlingVersjon,
@@ -29,18 +27,11 @@ export const FaktaTilbakeContainer = ({
     behandlingVersjon={behandlingVersjon}
     openInfoPanels={openInfoPanels}
     resetFakta={resetFakta}
-    resolveFaktaAksjonspunkter={resolveFaktaAksjonspunkter}
-    render={(submitFakta, toggleInfoPanel, shouldOpenDefaultInfoPanels) => (
-      <TilbakekrevingFaktaPanel
-        submitCallback={submitFakta}
-        toggleInfoPanelCallback={toggleInfoPanel}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-      />
-    )}
+    render={() => <FaktaAnkePanel />}
   />
 );
 
-FaktaTilbakeContainer.propTypes = {
+FaktaAnkeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -52,10 +43,7 @@ const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
-  resetFakta,
-  resolveFaktaAksjonspunkter,
 });
-
 
 const TrackRouteParamFaktaIndex = trackRouteParam({
   paramName: 'fakta',
@@ -65,6 +53,6 @@ const TrackRouteParamFaktaIndex = trackRouteParam({
   getParamFromStore: getOpenInfoPanels,
   isQueryParam: true,
   paramsAreEqual,
-})(connect(mapStateToProps)(FaktaTilbakeContainer));
+})(connect(mapStateToProps)(FaktaAnkeIndex));
 
 export default TrackRouteParamFaktaIndex;

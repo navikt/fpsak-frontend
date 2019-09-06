@@ -35,7 +35,7 @@ export const setHasShownBehandlingPaVent = () => ({
 
 export const submitRegistrering = papirsoknadApi.SAVE_AKSJONSPUNKT.makeRestApiRequest();
 
-export const resetRegistreringSuccess = papirsoknadApi.SAVE_AKSJONSPUNKT.resetRestApi();
+export const resetRegistreringData = papirsoknadApi.SAVE_AKSJONSPUNKT.resetRestApi();
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (

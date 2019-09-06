@@ -112,7 +112,7 @@ describe('<PapirsoknadIndex>', () => {
       writeAccess={writeAccess}
       setSoknadData={sinon.spy()}
       soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
-      resetRegistreringSuccess={sinon.spy()}
+      resetRegistreringData={sinon.spy()}
       getFormValuesFromFormName={sinon.spy()}
       aksjonspunkter={aksjonspunkter}
       fagsakPerson={person}
@@ -136,7 +136,7 @@ describe('<PapirsoknadIndex>', () => {
       writeAccess={writeAccess}
       setSoknadData={sinon.spy()}
       soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
-      resetRegistreringSuccess={resetRegistreringSuccessFunction}
+      resetRegistreringData={resetRegistreringSuccessFunction}
       getFormValuesFromFormName={sinon.spy()}
       fagsakPerson={person}
     />);
@@ -165,7 +165,7 @@ describe('<PapirsoknadIndex>', () => {
       writeAccess={writeAccess}
       setSoknadData={sinon.spy()}
       soknadData={new SoknadData('ES', 'TEST', 'TEST', [])}
-      resetRegistreringSuccess={sinon.spy()}
+      resetRegistreringData={sinon.spy()}
       getFormValuesFromFormName={sinon.spy()}
       fagsakPerson={person}
     />);

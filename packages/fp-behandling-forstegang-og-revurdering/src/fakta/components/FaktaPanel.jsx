@@ -2,12 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { withFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { setOpenInfoPanels, getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
+import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import FodselInfoPanel from './fodsel/FodselInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
@@ -257,4 +256,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default withFaktaIndex(setOpenInfoPanels, getOpenInfoPanels)(connect(mapStateToProps)(FaktaPanel));
+export default connect(mapStateToProps)(FaktaPanel);

@@ -18,7 +18,7 @@ import {
   getFagsakPerson,
   getSoknadData,
   resetRegistrering,
-  resetRegistreringSuccess,
+  resetRegistreringData,
   setSoknadData,
   submitRegistrering,
 } from './duckPapirsoknad';
@@ -47,7 +47,7 @@ export class PapirsoknadIndex extends Component {
   }
 
   componentWillUnmount() {
-    const { resetRegistrering: resetReg, resetRegistreringSuccess: resetRegSuccess } = this.props;
+    const { resetRegistrering: resetReg, resetRegistreringData: resetRegSuccess } = this.props;
     resetReg();
     resetRegSuccess();
   }
@@ -121,7 +121,7 @@ PapirsoknadIndex.propTypes = {
   writeAccess: rettighetPropType,
   setSoknadData: PropTypes.func.isRequired,
   soknadData: PropTypes.instanceOf(SoknadData),
-  resetRegistreringSuccess: PropTypes.func.isRequired,
+  resetRegistreringData: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
 };
 
@@ -153,7 +153,7 @@ const mapDispatchToProps = (dispatch) => ({
     submitRegistrering,
     setSoknadData,
     resetRegistrering,
-    resetRegistreringSuccess,
+    resetRegistreringData,
   }, dispatch),
 });
 

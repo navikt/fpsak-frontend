@@ -4,20 +4,24 @@ import { connect } from 'react-redux';
 
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonFaktaIndex, parseFaktaParam, paramsAreEqual } from '@fpsak-frontend/fp-behandling-felles';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
-  getOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter, setOpenInfoPanels,
-} from './duckFaktaTilbake';
-import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
+  getOpenInfoPanels, setOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter,
+} from './duckFaktaForstegangOgRev';
+import FaktaPanel from './components/FaktaPanel';
+
+const overstyringApCodes = [ac.OVERSTYR_AVKLAR_FAKTA_UTTAK, ac.OVERSTYR_AVKLAR_STARTDATO, ac.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
+  ac.MANUELL_AVKLAR_FAKTA_UTTAK, ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 /**
- * FaktaTilbakeContainer
+ * FaktaIndex
  *
- * Har ansvar for faktadelen av hovedvinduet for Tilbakekreving.
+ * Har ansvar for faktadelen av hovedvinduet.
  */
-export const FaktaTilbakeContainer = ({
+export const FaktaIndex = ({
   location,
   behandlingIdentifier,
   behandlingVersjon,
@@ -30,8 +34,10 @@ export const FaktaTilbakeContainer = ({
     openInfoPanels={openInfoPanels}
     resetFakta={resetFakta}
     resolveFaktaAksjonspunkter={resolveFaktaAksjonspunkter}
+    resolveFaktaOverstyrAksjonspunkter={resolveFaktaOverstyrAksjonspunkter}
+    overstyringApCodes={overstyringApCodes}
     render={(submitFakta, toggleInfoPanel, shouldOpenDefaultInfoPanels) => (
-      <TilbakekrevingFaktaPanel
+      <FaktaPanel
         submitCallback={submitFakta}
         toggleInfoPanelCallback={toggleInfoPanel}
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
@@ -40,7 +46,7 @@ export const FaktaTilbakeContainer = ({
   />
 );
 
-FaktaTilbakeContainer.propTypes = {
+FaktaIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -52,10 +58,7 @@ const mapStateToProps = (state) => ({
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   openInfoPanels: getOpenInfoPanels(state),
-  resetFakta,
-  resolveFaktaAksjonspunkter,
 });
-
 
 const TrackRouteParamFaktaIndex = trackRouteParam({
   paramName: 'fakta',
@@ -65,6 +68,6 @@ const TrackRouteParamFaktaIndex = trackRouteParam({
   getParamFromStore: getOpenInfoPanels,
   isQueryParam: true,
   paramsAreEqual,
-})(connect(mapStateToProps)(FaktaTilbakeContainer));
+})(connect(mapStateToProps)(FaktaIndex));
 
 export default TrackRouteParamFaktaIndex;
