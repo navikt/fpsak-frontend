@@ -100,7 +100,7 @@ export const BehandlingTilbakekrevingIndex = ({
       )}
     </>
   );
-}
+};
 
 BehandlingTilbakekrevingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
