@@ -150,7 +150,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
         setHasShownBehandlingPaVent();
       });
   },
-  closeBehandlingOnHoldModal: () => setHasShownBehandlingPaVent(),
+  closeBehandlingOnHoldModal: () => ownProps.setHasShownBehandlingPaVent(),
 });
 
 export default connect(() => ({}), mapDispatchToProps, mergeProps)(CommonBehandlingIndex);
