@@ -11,6 +11,7 @@ import BehandlingspunktInfoPanel from './components/BehandlingspunktInfoPanel';
 
 describe('BehandlingsprosessForstegangOgRevIndex', () => {
   const defaultProps = {
+    behandlingUuid: '1',
     behandlingIdentifier: new BehandlingIdentifier(1, 1),
     fetchPreviewBrev: sinon.spy(),
     fagsakYtelseType: { kode: '' },

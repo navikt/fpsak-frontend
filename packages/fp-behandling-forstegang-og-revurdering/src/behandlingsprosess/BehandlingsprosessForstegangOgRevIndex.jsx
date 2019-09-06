@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
-import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+
 import { BehandlingIdentifier, behandlingspunktCodes, trackRouteParam } from '@fpsak-frontend/fp-felles';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
