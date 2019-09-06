@@ -83,10 +83,11 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     };
 
     previewCallback = (data) => {
-      const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
+      const { behandlingUuid, fetchPreview: fetchBrevPreview, fagsakYtelseType } = this.props;
       const brevData = {
         ...data,
-        behandlingId: behandlingIdentifier.behandlingId,
+        behandlingUuid,
+        ytelseType: fagsakYtelseType,
       };
       fetchBrevPreview(brevData);
     };
@@ -203,6 +204,7 @@ const withBehandlingsprosessIndex = (setSelectedBehandlingspunktNavn, getSelecte
     additionalBehandlingspunktImages: PropTypes.shape(),
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
     aksjonspunkterOpenStatus: PropTypes.shape(),
+    behandlingUuid: PropTypes.string.isRequired,
     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
     behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
     behandlingspunkterStatus: PropTypes.shape(),

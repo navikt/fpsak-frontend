@@ -16,7 +16,7 @@ const endpoints = new RestApiConfigBuilder()
     storeResultKey: InnsynBehandlingApiKeys.BEHANDLING,
   })
   // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
-  .withPostAndOpenBlob('/fpsak/api/brev/forhandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 
 

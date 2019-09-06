@@ -18,6 +18,10 @@ import VedtakKlageKaSubmitPanel from './VedtakKlageKaSubmitPanel';
 
 export const VEDTAK_KLAGE_FORM_NAME = 'VEDTAK_KLAGE_FORM';
 
+const getPreviewVedtakCallback = (previewVedtakCallback) => () => previewVedtakCallback({
+  gjelderVedtak: true,
+});
+
 /**
  * VedtakKlageForm
  *
@@ -77,7 +81,7 @@ export const VedtakKlageFormImpl = ({
         <VedtakKlageKaSubmitPanel
           begrunnelse={fritekstTilBrev}
           klageResultat={klageVurdering}
-          previewVedtakCallback={previewVedtakCallback}
+          previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
           formProps={formProps}
           readOnly={readOnly}
         />
@@ -87,7 +91,7 @@ export const VedtakKlageFormImpl = ({
         <VedtakKlageSubmitPanel
           begrunnelse={fritekstTilBrev}
           klageResultat={klageVurdering}
-          previewVedtakCallback={previewVedtakCallback}
+          previewVedtakCallback={getPreviewVedtakCallback(previewVedtakCallback)}
           formProps={formProps}
           readOnly={readOnly}
         />

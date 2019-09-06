@@ -8,32 +8,31 @@ export const BehandlingFpsakApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  PREVIEW_TILBAKEKREVING_MESSAGE: 'PREVIEW_TILBAKEKREVING_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
-  FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
 };
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
-  .withPost('/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/fpsak/api/behandlinger', BehandlingFpsakApiKeys.BEHANDLING)
+  .withPost('/fpsak/api/behandlinger/endre-pa-vent', BehandlingFpsakApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-  .withPost('/api/behandling/uttak/stonadskontoerGittUttaksperioder', BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', BehandlingFpsakApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', BehandlingFpsakApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+  .withPost('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder', BehandlingFpsakApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
-  /* /api/dokumentbestiller */
-  .withPostAndOpenBlob('/api/dokumentbestiller/forhandsvis-vedtaksbrev', BehandlingFpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
+  /* fptilbake/api/dokument */
+  .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', BehandlingFpsakApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
 
   .build();
 
 const reducerName = 'dataContextForstegangOgRevurderingBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withContextPath('fpsak')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
     .withPollingMessageActionCreator(setRequestPollingMessage))

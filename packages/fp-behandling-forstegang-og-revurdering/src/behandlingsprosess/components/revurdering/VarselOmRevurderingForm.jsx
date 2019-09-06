@@ -57,7 +57,7 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     if (valid || pristine) {
       const data = {
         mottaker: '',
-        brevmalkode: 'REVURD',
+        dokumentMal: 'REVURD',
         fritekst: fritekst || ' ',
       };
       previewCallback(data);

@@ -6,6 +6,7 @@ import { push } from 'connected-react-router';
 
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import {
+  previewMessage,
   getBehandlingIsOnHold,
   getBehandlingVersjon,
   getBehandlingIsQueued,
@@ -18,7 +19,7 @@ import {
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt } from 'app/duck';
 import {
-  previewHenleggBehandling, nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,
+  nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,
   setBehandlingOnHold, openBehandlingForChanges, resetBehandlingMenuData,
 } from './duck';
 import BehandlingMenu from './components/BehandlingMenu';
@@ -72,7 +73,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  previewHenleggBehandling,
+  previewHenleggBehandling: previewMessage,
   resumeBehandling,
   shelveBehandling,
   nyBehandlendeEnhet,

@@ -33,6 +33,11 @@ const options = {
       secure: false,
       changeOrigin: (!!process.env.APP_URL_FPTILBAKE),
     },
+    '/fpformidling/**': {
+      target: process.env.APP_URL_FPFORMIDLING || 'http://localhost:8010',
+      secure: false,
+      changeOrigin: (!!process.env.APP_URL_FPFORMIDLING),
+    },
     '/fpsak/(api|jetty)/**': {
       target: process.env.APP_URL_FPSAK || 'http://localhost:8080',
       secure: false,

@@ -15,8 +15,7 @@ import VedtakRevurderingForm from './revurdering/VedtakRevurderingForm';
 const VedtakPanels = ({
   behandlingspunkt,
   readOnly,
-  previewVedtakCallback,
-  previewManueltBrevCallback,
+  previewCallback,
   submitCallback,
   behandlingTypeKode,
 }) => {
@@ -25,8 +24,7 @@ const VedtakPanels = ({
       return (
         <VedtakRevurderingForm
           submitCallback={submitCallback}
-          previewVedtakCallback={previewVedtakCallback}
-          previewManueltBrevCallback={previewManueltBrevCallback}
+          previewCallback={previewCallback}
           readOnly={readOnly}
         />
       );
@@ -36,8 +34,7 @@ const VedtakPanels = ({
       <VedtakForm
         submitCallback={submitCallback}
         readOnly={readOnly}
-        previewVedtakCallback={previewVedtakCallback}
-        previewManueltBrevCallback={previewManueltBrevCallback}
+        previewCallback={previewCallback}
       />
     );
   }
@@ -47,8 +44,7 @@ const VedtakPanels = ({
 VedtakPanels.propTypes = {
   behandlingspunkt: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
+  previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
 };

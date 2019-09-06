@@ -13,10 +13,12 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier, requireProps } from '@fpsak-frontend/fp-felles';
-import { navAnsattPropType } from '@fpsak-frontend/prop-types';
+import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getNavAnsatt } from 'app/duck';
+import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -25,12 +27,13 @@ import {
   getBehandlingToTrinnsBehandling,
   getBehandlingType,
   getBehandlingVersjon,
+  previewMessage,
 } from 'behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import ToTrinnsForm from './components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
-import { approve, fetchApprovalVedtaksbrevPreview, resetApproval } from './duck';
+import { approve, resetApproval } from './duck';
 
 import styles from './ApprovalIndex.less';
 
@@ -159,8 +162,14 @@ export class ApprovalIndexImpl extends Component {
   }
 
   forhandsvisVedtaksbrev() {
-    const { fetchApprovalVedtaksbrevPreview: fetchPreview, behandlingIdentifier } = this.props;
-    fetchPreview({ behandlingId: behandlingIdentifier.behandlingId });
+    const {
+      previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving,
+    } = this.props;
+    fetchPreview(erTilbakekreving, {
+      behandlingUuid,
+      ytelseType: fagsakYtelseType,
+      gjelderVedtak: true,
+    });
   }
 
   goToSearchPage() {
@@ -235,7 +244,7 @@ ApprovalIndexImpl.propTypes = {
   totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollReadOnlySkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   approve: PropTypes.func.isRequired,
-  fetchApprovalVedtaksbrevPreview: PropTypes.func.isRequired,
+  previewMessage: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   selectedBehandlingVersjon: PropTypes.number.isRequired,
   ansvarligSaksbehandler: PropTypes.string,
@@ -247,6 +256,8 @@ ApprovalIndexImpl.propTypes = {
   navAnsatt: navAnsattPropType.isRequired,
   skjemalenkeTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   erTilbakekreving: PropTypes.bool.isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
 };
 
 ApprovalIndexImpl.defaultProps = {
@@ -262,10 +273,10 @@ const mapStateToPropsFactory = (initialState) => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
     const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
+    const behandlingIdentifier = getBehandlingIdentifier(state);
     return {
       totrinnskontrollSkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.getRestApiData()(state),
       totrinnskontrollReadOnlySkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData()(state),
-      behandlingIdentifier: getBehandlingIdentifier(state),
       selectedBehandlingVersjon: getBehandlingVersjon(state),
       ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
       status: getBehandlingStatus(state),
@@ -273,6 +284,9 @@ const mapStateToPropsFactory = (initialState) => {
       navAnsatt: getNavAnsatt(state),
       skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak,
       location: state.router.location,
+      behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
+      fagsakYtelseType: getFagsakYtelseType(state),
+      behandlingIdentifier,
       erTilbakekreving,
     };
   };
@@ -283,7 +297,7 @@ const mapDispatchToProps = (dispatch) => ({
     push,
     approve,
     resetApproval,
-    fetchApprovalVedtaksbrevPreview,
+    previewMessage,
   }, dispatch),
 });
 

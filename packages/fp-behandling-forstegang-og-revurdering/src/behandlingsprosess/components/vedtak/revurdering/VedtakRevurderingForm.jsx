@@ -21,8 +21,9 @@ import {
   behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import { getAlleKodeverk, getFagsakYtelseType, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { fetchVedtaksbrevPreview } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
+import {
+  getFagsakYtelseType, getSelectedBehandlingId, getAlleKodeverk,
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
 import VedtakOverstyrendeKnapp from '../VedtakOverstyrendeKnapp';
 import VedtakAksjonspunktPanel from '../VedtakAksjonspunktPanel';
@@ -36,20 +37,12 @@ export const VEDTAK_REVURDERING_FORM_NAME = 'VEDTAK_REVURDERING_FORM';
 
 const isVedtakSubmission = true;
 
-const getPreviewAutomatiskBrevCallback = (formProps) => (e) => {
-  const {
-    begrunnelse, brødtekst, behandlingId,
-  } = formProps;
-  const formValues = {
-    behandlingId,
+const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => (e) => {
+  const data = {
     fritekst: begrunnelse,
-    skalBrukeOverstyrendeFritekstBrev: false,
-    fritekstBrev: brødtekst,
-    finnesAllerede: false,
-    overskrift: '',
-    begrunnelse: '',
+    gjelderVedtak: true,
   };
-  formProps.fetchVedtaksbrevPreview(formValues);
+  previewCallback(data);
   e.preventDefault();
 };
 
@@ -84,8 +77,7 @@ export class VedtakRevurderingFormImpl extends Component {
       behandlingStatusKode,
       behandlingsresultat,
       aksjonspunkter,
-      previewVedtakCallback,
-      previewManueltBrevCallback,
+      previewCallback,
       begrunnelse,
       aksjonspunktKoder,
       antallBarn,
@@ -95,10 +87,12 @@ export class VedtakRevurderingFormImpl extends Component {
       kanOverstyre,
       sprakkode,
       skalBrukeOverstyrendeFritekstBrev,
+      brødtekst,
+      overskrift,
       initialValues,
       ...formProps
     } = this.props;
-    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(formProps);
+    const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <>
@@ -156,26 +150,27 @@ export class VedtakRevurderingFormImpl extends Component {
             )}
 
             {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD
-            && (
-              <FritekstBrevPanel
-                intl={intl}
-                readOnly={readOnly}
-                sprakkode={sprakkode}
-                previewBrev={previewAutomatiskBrev}
-              />
-            )}
+          && (
+            <FritekstBrevPanel
+              intl={intl}
+              readOnly={readOnly}
+              sprakkode={sprakkode}
+              previewBrev={previewAutomatiskBrev}
+            />
+          )}
             {behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES
-            && (
-              <VedtakRevurderingSubmitPanel
-                begrunnelse={begrunnelse}
-                previewVedtakCallback={previewVedtakCallback}
-                previewManueltBrevCallback={previewManueltBrevCallback}
-                formProps={formProps}
-                readOnly={readOnly}
-                ytelseType={ytelseType}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              />
-            )}
+          && (
+            <VedtakRevurderingSubmitPanel
+              begrunnelse={begrunnelse}
+              brodtekst={brødtekst}
+              overskrift={overskrift}
+              previewCallback={previewCallback}
+              formProps={formProps}
+              readOnly={readOnly}
+              ytelseType={ytelseType}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+            />
+          )}
           </ElementWrapper>
         </VedtakAksjonspunktPanel>
       </>
@@ -186,8 +181,9 @@ export class VedtakRevurderingFormImpl extends Component {
 VedtakRevurderingFormImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
-  previewVedtakCallback: PropTypes.func.isRequired,
-  previewManueltBrevCallback: PropTypes.func.isRequired,
+  brødtekst: PropTypes.string,
+  overskrift: PropTypes.string,
+  previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   antallBarn: PropTypes.number,
   isBehandlingReadOnly: PropTypes.bool.isRequired,
@@ -203,6 +199,8 @@ VedtakRevurderingFormImpl.propTypes = {
 
 VedtakRevurderingFormImpl.defaultProps = {
   begrunnelse: undefined,
+  brødtekst: undefined,
+  overskrift: undefined,
   antallBarn: undefined,
   revurderingsAarsakString: undefined,
   kanOverstyre: undefined,
@@ -304,7 +302,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     clearFields,
-    fetchVedtaksbrevPreview,
   }, dispatch),
 });
 

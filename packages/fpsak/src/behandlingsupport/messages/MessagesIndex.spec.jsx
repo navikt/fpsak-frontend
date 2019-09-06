@@ -3,7 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+
 import MessagesModal from './components/MessagesModal';
 import { MessagesIndex } from './MessagesIndex';
 import Messages from './components/Messages';
@@ -37,6 +40,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const messages = wrapper.find(Messages);
@@ -62,13 +70,18 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const previewCallback = wrapper.find(Messages).prop('previewCallback');
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
-    expect(fetchPreviewFunction.getCall(0).args[0].fritekst).to.equal(' ');
+    expect(fetchPreviewFunction.getCall(0).args[1].fritekst).to.equal(' ');
   });
 
   it('skal resette fritekst ved lukking av modal', () => {
@@ -88,6 +101,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
     wrapper.setState({ showMessagesModal: true });
 
@@ -118,6 +136,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const message = {
@@ -157,6 +180,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const message = {
@@ -199,6 +227,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const message = {
@@ -241,6 +274,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const message = {
@@ -283,6 +321,11 @@ describe('<MessagesIndex>', () => {
       push={sinon.spy()}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
 
     const message = {
@@ -326,6 +369,11 @@ describe('<MessagesIndex>', () => {
       push={pushCallback}
       fetchBrevmaler={sinon.spy()}
       loadingBrevmaler={false}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
+      behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
     />);
     wrapper.setState({ showSettPaVentModal: true });
 

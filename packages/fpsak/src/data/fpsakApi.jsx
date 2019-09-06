@@ -16,7 +16,6 @@ export const FpsakApiKeys = {
   NEW_BEHANDLING: 'NEW_BEHANDLING',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
-  FORHANDSVISNING_FORVED_BREV: 'FORHANDSVISNING_FORVED_BREV',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
   HISTORY_FPTILBAKE: 'HISTORY_FPTILBAKE',
   SHOW_DETAILED_ERROR_MESSAGES: 'SHOW_DETAILED_ERROR_MESSAGES',
@@ -36,6 +35,8 @@ export const FpsakApiKeys = {
   BEHANDLING: 'BEHANDLING',
   BREVMALER: 'BREVMALER',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
+  PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
+  PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
 };
 
 
@@ -78,9 +79,6 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/historikk', FpsakApiKeys.HISTORY_FPSAK)
   .withGet('/fptilbake/api/historikk', FpsakApiKeys.HISTORY_FPTILBAKE)
 
-  /* /api/dokumentbestiller */
-  .withPostAndOpenBlob('/fpsak/api/dokumentbestiller/forhandsvis-vedtaksbrev', FpsakApiKeys.FORHANDSVISNING_FORVED_BREV)
-
   /* /api/kodeverk */
   .withGet('/fpsak/api/kodeverk', FpsakApiKeys.KODEVERK)
   .withGet('/fptilbake/api/kodeverk', FpsakApiKeys.KODEVERK_FPTILBAKE)
@@ -95,6 +93,10 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/aktoer */
   .withGet('/fpsak/api/aktoer-info', FpsakApiKeys.AKTOER_INFO)
+
+  /* fpformidling/api/brev */
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
+  .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
 
   /* /sprak */
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

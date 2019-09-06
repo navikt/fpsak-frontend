@@ -18,8 +18,6 @@ class BehandlingUpdater {
     resetBehandling = (dispatch) => (this.updater ? dispatch(this.updater.resetBehandling()) : undefined)
 
     setBehandlingResult = (dispatch, payload, params, options) => dispatch(this.updater.setBehandlingResult()(payload, params, options))
-
-    previewMessage = (dispatch, params) => dispatch(this.updater.previewMessage()(params))
 }
 
 export default new BehandlingUpdater();

@@ -35,6 +35,7 @@ describe('BehandlingsprosessForstegangOgRevContainer', () => {
       },
       aksjonspunkter: [],
       overrideProsessAksjonspunkter: sinon.spy(),
+      behandlingUuid: '123',
     };
 
     const wrapper = shallow(<BehandlingsprosessForstegangOgRevContainer {...props} />);

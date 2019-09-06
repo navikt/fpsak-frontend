@@ -22,6 +22,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
       || (selectedBehandling.taskStatus && selectedBehandling.taskStatus.readOnly ? selectedBehandling.taskStatus.readOnly : false)),
   );
 
+  const getBehandlingUuid = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.uuid);
   const getBehandlingVersjon = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.versjon);
   const getBehandlingStatus = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.status);
   const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetId);
@@ -102,6 +103,7 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     getSelectedBehandling,
     isBehandlingInSync,
     hasReadOnlyBehandling,
+    getBehandlingUuid,
     getBehandlingVersjon,
     getBehandlingStatus,
     getBehandlingBehandlendeEnhetId,

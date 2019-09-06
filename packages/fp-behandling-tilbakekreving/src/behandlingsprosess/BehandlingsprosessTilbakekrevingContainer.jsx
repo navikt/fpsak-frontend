@@ -23,6 +23,7 @@ export const BehandlingsprosessTilbakekrevingContainer = (props) => (
 BehandlingsprosessTilbakekrevingContainer.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   aksjonspunkterOpenStatus: PropTypes.shape(),
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingspunkter: PropTypes.arrayOf(PropTypes.string),
   behandlingspunkterStatus: PropTypes.shape(),
@@ -42,6 +43,7 @@ BehandlingsprosessTilbakekrevingContainer.propTypes = {
 
 const mapStateToProps = (state) => ({
   fagsakYtelseType: getFagsakYtelseType(state),
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),

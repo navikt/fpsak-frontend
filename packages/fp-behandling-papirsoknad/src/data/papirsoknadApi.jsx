@@ -6,7 +6,6 @@ export const PapirsoknadApiKeys = {
   BEHANDLING: 'BEHANDLING',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -15,10 +14,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/behandling */
   .withAsyncPost('/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
-
-  /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', PapirsoknadApiKeys.PREVIEW_MESSAGE)
-
   .build();
 
 const reducerName = 'dataContextPapirsoknad';

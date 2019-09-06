@@ -40,9 +40,7 @@ export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shou
     .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
-export const fetchPreviewBrev = klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
-
-export const fetchPreviewKlageBrev = klageBehandlingApi.PREVIEW_MESSAGE_KLAGE.makeRestApiRequest();
+export const fetchPreviewKlageBrev = klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
 export const { resetBehandlingspunkter, setSelectedBehandlingspunktNavn } = behandlingsprosessRedux.actionCreators;
 export const { getSelectedBehandlingspunktNavn, getResolveProsessAksjonspunkterSuccess, getOverrideBehandlingspunkter } = behandlingsprosessRedux.selectors;

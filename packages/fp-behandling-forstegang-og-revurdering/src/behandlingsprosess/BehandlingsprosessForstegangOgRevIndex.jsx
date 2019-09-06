@@ -4,15 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { withBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
+import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
-import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import {
   fetchFptilbakePreviewBrev as fetchFptilbakePreview,
-  fetchVedtaksbrevPreview,
   getSelectedBehandlingspunktNavn,
   setSelectedBehandlingspunktNavn,
 } from './duckBpForstegangOgRev';
@@ -39,32 +39,14 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
   }
 
   previewFptilbakeCallback = (mottaker, brevmalkode, fritekst, saksnummer) => {
-    const { behandlingIdentifier, fetchFptilbakePreview: fetchBrevPreview } = this.props;
+    const { behandlingUuid, fagsakYtelseType, fetchFptilbakePreview: fetchBrevPreview } = this.props;
     const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingUuid,
+      fagsakYtelseType,
       varseltekst: fritekst || '',
       mottaker,
       brevmalkode,
       saksnummer,
-    };
-    fetchBrevPreview(data);
-  }
-
-  previewVedtakCallback = (fritekst) => {
-    const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      fritekst: fritekst || '',
-      skalBrukeOverstyrendeFritekstBrev: false,
-    };
-    fetchBrevPreview(data);
-  }
-
-  previewManueltBrevCallback = (values) => {
-    const { behandlingIdentifier, fetchVedtaksbrevPreview: fetchBrevPreview } = this.props;
-    const data = {
-      behandlingId: behandlingIdentifier.behandlingId,
-      ...values,
     };
     fetchBrevPreview(data);
   }
@@ -105,8 +87,6 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
         <BehandlingspunktInfoPanel
           submitCallback={this.submit}
           previewCallback={previewCallback}
-          previewVedtakCallback={this.previewVedtakCallback}
-          previewManueltBrevCallback={this.previewManueltBrevCallback}
           previewFptilbakeCallback={this.previewFptilbakeCallback}
           dispatchSubmitFailed={submitFailedDispatch}
           selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -121,7 +101,8 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
 }
 
 BehandlingsprosessForstegangOgRevIndex.propTypes = {
-  behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
+  behandlingUuid: PropTypes.string.isRequired,
+  fagsakYtelseType: kodeverkObjektPropType.isRequired,
   previewCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   goToDefaultPage: PropTypes.func.isRequired,
@@ -129,17 +110,16 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   selectedBehandlingspunkt: PropTypes.string,
   dispatchSubmitFailed: PropTypes.func.isRequired,
   fetchFptilbakePreview: PropTypes.func.isRequired,
-  fetchVedtaksbrevPreview: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  behandlingIdentifier: getBehandlingIdentifier(state),
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
+  fagsakYtelseType: getFagsakYtelseType(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
-    fetchVedtaksbrevPreview,
     fetchFptilbakePreview,
   }, dispatch),
 });

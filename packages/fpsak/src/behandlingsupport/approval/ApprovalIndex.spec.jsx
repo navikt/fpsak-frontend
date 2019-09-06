@@ -5,9 +5,11 @@ import sinon from 'sinon';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import ToTrinnsForm from 'behandlingsupport/approval/components/ToTrinnsForm';
 import ToTrinnsFormReadOnly from 'behandlingsupport/approval/components/ToTrinnsFormReadOnly';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
 import { ApprovalIndexImpl, mapPropsToContext } from './ApprovalIndex';
 
@@ -229,6 +231,7 @@ describe('<ApprovalIndex>', () => {
       fetchBehandlinger={sinon.spy()}
       fetchForhandsvisBrev={sinon.spy()}
       behandlingIdentifier={new BehandlingIdentifier(12345, behandling.id)}
+      behandlingUuid="1"
       selectedBehandlingVersjon={behandling.versjon}
       ansvarligSaksbehandler={behandling.ansvarligSaksbehandler}
       status={behandling.status}
@@ -238,11 +241,14 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -278,11 +284,15 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       totrinnskontrollSkjermlenkeContext={undefined}
       navAnsatt={navAnsatt}
       skjemalenkeTyper={[]}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -325,11 +335,15 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -367,11 +381,15 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={sinon.spy()}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
@@ -397,11 +415,15 @@ describe('<ApprovalIndex>', () => {
       push={sinon.spy()}
       resetApproval={resetApprovalFunction}
       location={{ pathname: 'test' }}
-      fetchApprovalVedtaksbrevPreview={sinon.spy()}
       navAnsatt={navAnsatt}
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
       erTilbakekreving={false}
+      behandlingUuid="1"
+      previewMessage={sinon.spy()}
+      fagsakYtelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
     />);
 
     wrapper.unmount();

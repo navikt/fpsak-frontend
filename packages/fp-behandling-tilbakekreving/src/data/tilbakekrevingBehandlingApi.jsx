@@ -7,7 +7,6 @@ export const TilbakekrevingBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
-  PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
@@ -22,7 +21,6 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', TilbakekrevingBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', TilbakekrevingBehandlingApiKeys.PREVIEW_MESSAGE)
   .withPostAndOpenBlob('/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
 
   /* /api/foreldelse */

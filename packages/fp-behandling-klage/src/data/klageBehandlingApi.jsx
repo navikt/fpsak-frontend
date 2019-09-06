@@ -8,7 +8,6 @@ export const KlageBehandlingApiKeys = {
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
-  PREVIEW_MESSAGE_KLAGE: 'PREVIEW_MESSAGE_KLAGE',
   SAVE_KLAGE_VURDERING: 'SAVE_KLAGE_VURDERING',
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
 };
@@ -17,20 +16,19 @@ const endpoints = new RestApiConfigBuilder()
 /* /api */
 
   /* /api/behandlinger */
-  .withAsyncPost('/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING)
-  .withPost('/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withAsyncPost('/fpsak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING)
+  .withPost('/fpsak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
-  .withAsyncPost('/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)
-  .withAsyncPost('/api/behandling/aksjonspunkt/overstyr', KlageBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', KlageBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
 
   /* /api/klage */
-  .withAsyncPost('/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
-  .withAsyncPost('/api/behandling/klage/mellomlagre-gjennapne-klage', KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING)
+  .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
+  .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-gjennapne-klage', KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING)
 
   /* /api/brev */
-  .withPostAndOpenBlob('/api/brev/forhandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
-  .withPostAndOpenBlob('/api/brev/forhandsvis-klage', KlageBehandlingApiKeys.PREVIEW_MESSAGE_KLAGE)
+  .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
 
 /* /api/brev */
   .build();
@@ -38,7 +36,6 @@ const endpoints = new RestApiConfigBuilder()
 const reducerName = 'dataContextKlageBehandling';
 
 export const reduxRestApi = new ReduxRestApiBuilder(endpoints, reducerName)
-  .withContextPath('fpsak')
   .withReduxEvents(new ReduxEvents()
     .withErrorActionCreator(errorHandler.getErrorActionCreator())
     .withPollingMessageActionCreator(setRequestPollingMessage))

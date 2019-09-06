@@ -7,8 +7,6 @@ class FpInnsynBehandlingResolver {
     resetBehandling = () => resetBehandling;
 
     setBehandlingResult = () => innsynBehandlingApi.BEHANDLING.setDataRestApi();
-
-    previewMessage = () => innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 }
 
 export default new FpInnsynBehandlingResolver();

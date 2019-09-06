@@ -7,8 +7,7 @@ import vedtaksbrevStatus from '@fpsak-frontend/kodeverk/src/vedtakbrevStatus';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 import { getSubmitKnappTekst, VedtakRevurderingSubmitPanelImpl as UnwrappedForm } from './VedtakRevurderingSubmitPanel';
 
-const forhandsvisVedtaksbrevFunc = sinon.spy();
-const forhandsvisManueltBrevFunc = sinon.spy();
+const previewCallback = sinon.spy();
 
 const beregningResultatInnvilget = {
   antallBarn: 1,
@@ -23,8 +22,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       formProps={reduxFormPropsMock}
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       begrunnelse=""
       haveSentVarsel
       originaltBeregningResultat={beregningResultatInnvilget}
@@ -44,8 +42,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       formProps={reduxFormPropsMock}
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       begrunnelse=""
       haveSentVarsel={false}
       originaltBeregningResultat={beregningResultatInnvilget}
@@ -64,8 +61,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       formProps={reduxFormPropsMock}
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       begrunnelse=""
       haveSentVarsel={false}
       originaltBeregningResultat={beregningResultatAvslatt}
@@ -85,8 +81,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       formProps={reduxFormPropsMock}
       intl={intlMock}
       beregningResultat={beregningResultatInnvilget}
-      previewVedtakCallback={forhandsvisVedtaksbrevFunc}
-      previewManueltBrevCallback={forhandsvisManueltBrevFunc}
+      previewCallback={previewCallback}
       begrunnelse=""
       erBehandlingEtterKlage={false}
       haveSentVarsel={false}
