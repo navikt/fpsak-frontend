@@ -68,7 +68,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
       selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
       resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
       behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, fetchPreviewBrev, isSelectedBehandlingHenlagt,
-      location,
+      location, behandlingUuid,
     } = this.props;
     const { showModalAnkeBehandling } = this.state;
 
@@ -76,6 +76,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
       <CommonBehandlingsprosessIndex
         aksjonspunkter={aksjonspunkter}
         aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingUuid={behandlingUuid}
         behandlingIdentifier={behandlingIdentifier}
         behandlingspunkter={behandlingspunkter}
         selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -111,6 +112,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
 }
 
 BehandlingsprosessAnkeIndex.propTypes = {
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   saveAnke: PropTypes.func.isRequired,
   resolveAnkeTemp: PropTypes.func.isRequired,
@@ -132,6 +134,7 @@ BehandlingsprosessAnkeIndex.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),

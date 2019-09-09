@@ -50,12 +50,13 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
       selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
       resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
       behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, isSelectedBehandlingHenlagt,
-      location, dispatchSubmitFailed: submitFailedDispatch,
+      location, dispatchSubmitFailed: submitFailedDispatch, behandlingUuid,
     } = this.props;
     const { showFatterVedtakModal } = this.state;
 
     return (
       <CommonBehandlingsprosessIndex
+        behandlingUuid={behandlingUuid}
         aksjonspunkter={aksjonspunkter}
         aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
         behandlingIdentifier={behandlingIdentifier}
@@ -90,6 +91,7 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
 }
 
 BehandlingsprosessTilbakekrevingIndex.propTypes = {
+  behandlingUuid: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   aksjonspunkterOpenStatus: PropTypes.shape(),
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
@@ -109,6 +111,7 @@ BehandlingsprosessTilbakekrevingIndex.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),

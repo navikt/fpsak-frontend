@@ -12,6 +12,7 @@ import BehandlingspunktAnkeInfoPanel from './components/BehandlingspunktAnkeInfo
 
 describe('BehandlingsprosessAnkeIndex', () => {
   const defaultProps = {
+    behandlingUuid: '1',
     behandlingIdentifier: new BehandlingIdentifier(1, 1),
     saveAnke: sinon.spy(),
     resolveAnkeTemp: sinon.spy(),
