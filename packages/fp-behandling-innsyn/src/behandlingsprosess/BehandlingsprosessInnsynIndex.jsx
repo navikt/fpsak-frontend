@@ -38,13 +38,14 @@ export class BehandlingsprosessInnsynIndex extends Component {
       selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
       resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
       behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, fetchPreviewBrev, isSelectedBehandlingHenlagt,
-      location,
+      location, behandlingUuid,
     } = this.props;
 
     return (
       <CommonBehandlingsprosessIndex
         aksjonspunkter={aksjonspunkter}
         aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingUuid={behandlingUuid}
         behandlingIdentifier={behandlingIdentifier}
         behandlingspunkter={behandlingspunkter}
         selectedBehandlingspunkt={selectedBehandlingspunkt}
@@ -75,6 +76,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
 }
 
 BehandlingsprosessInnsynIndex.propTypes = {
+  behandlingUuid: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
@@ -94,6 +96,7 @@ BehandlingsprosessInnsynIndex.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
+  behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
   fagsakYtelseType: getFagsakYtelseType(state),
   isSelectedBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
