@@ -364,10 +364,10 @@ const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagr
 const getAntallPerioderMedAksjonspunkt = createSelector([(state) => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
   (perioder = []) => perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0));
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
   const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
-  const submitCallback = (values) => ownProps.submitCallback(transformValues(values, sarligGrunnTyper));
-  return (state) => {
+  const submitCallback = (values) => ownPropsStatic.submitCallback(transformValues(values, sarligGrunnTyper));
+  return (state, ownProps) => {
     const periodFormValues = getBehandlingFormValues(TILBAKEKREVING_PERIODE_FORM_NAME)(state) || {};
     return {
       initialValues: buildInitialValues(state),

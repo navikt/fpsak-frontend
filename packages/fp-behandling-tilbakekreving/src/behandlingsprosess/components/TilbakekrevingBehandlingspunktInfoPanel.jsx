@@ -31,26 +31,26 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     {ForeldelseForm.supports(selectedBehandlingspunkt, apCodes) && (
-      <ForeldelseForm
-        submitCallback={submitCallback}
-        apCodes={apCodes}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
+    <ForeldelseForm
+      submitCallback={submitCallback}
+      apCodes={apCodes}
+      readOnly={readOnly}
+      readOnlySubmitButton={readOnlySubmitButton}
+    />
     )}
     {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes) && (
-      <TilbakekrevingForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
+    <TilbakekrevingForm
+      submitCallback={submitCallback}
+      readOnly={readOnly}
+      readOnlySubmitButton={readOnlySubmitButton}
+    />
     )}
     {TilbakekrevingVedtak.supports(apCodes, isBehandlingHenlagt) && (
-      <TilbakekrevingVedtak
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        isBehandlingHenlagt={isBehandlingHenlagt}
-      />
+    <TilbakekrevingVedtak
+      submitCallback={submitCallback}
+      readOnly={readOnly}
+      isBehandlingHenlagt={isBehandlingHenlagt}
+    />
     )}
   </div>
 );
