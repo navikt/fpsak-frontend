@@ -2,47 +2,25 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
+
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
 describe('<IverksetterVedtakStatusModal>', () => {
-  const behandling = {
-    id: 1,
-    versjon: 123,
-    type: {
-      kode: 'BT-002',
-      navn: '',
-    },
-    status: {
-      kode: behandlingStatus.IVERKSETTER_VEDTAK,
-      navn: 'test',
-    },
-    aksjonspunkter: [],
-    fagsakId: 1,
-    opprettet: '15.10.2017',
-    vilkar: [{
-      vilkarType: {
-        kode: '1',
-        navn: 'test',
-      },
-      avslagKode: '2',
-      lovReferanse: '§ 22-13, 2. ledd',
-    }],
-  };
-
   it('skal rendre modal', () => {
     const closeEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<IverksetterVedtakStatusModal.WrappedComponent
       intl={intlMock}
+      behandlingType={{ kode: BehandlingType.FORSTEGANGSSOKNAD }}
+      fagsakYtelseType={{ kode: FagsakYtelseType.FORELDREPENGER }}
       closeEvent={closeEventCallback}
-      selectedBehandling={behandling}
       behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
-      isSameResultAsOriginalBehandling
       resolveProsessAksjonspunkterSuccess
       resolveFaktaAksjonspunkterSuccess
-      behandlinger={[behandling]}
-      modalTextId="IverksetterVedtakStatusModal.AvslattOgIverksattES"
     />);
 
     const modal = wrapper.find(Modal);
