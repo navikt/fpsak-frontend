@@ -12,6 +12,7 @@ import TilbakekrevingBehandlingspunktInfoPanel from './components/Tilbakekreving
 
 describe('BehandlingsprosessTilbakekrevingIndex', () => {
   const defaultProps = {
+    behandlingUuid: '1',
     behandlingIdentifier: new BehandlingIdentifier(1, 1),
     fagsakYtelseType: { kode: '' },
     behandlingVersjon: 1,

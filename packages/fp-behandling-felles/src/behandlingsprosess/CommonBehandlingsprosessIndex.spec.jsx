@@ -26,6 +26,7 @@ describe('<CommonBehandlingsprosessIndex>', () => {
     const wrapper = shallowWithIntl(
       <CommonBehandlingsprosessIndex
         intl={intlMock}
+        behandlingUuid="1"
         aksjonspunkter={[]}
         aksjonspunkterOpenStatus={{}}
         behandlingIdentifier={behandlingIdentifier}
