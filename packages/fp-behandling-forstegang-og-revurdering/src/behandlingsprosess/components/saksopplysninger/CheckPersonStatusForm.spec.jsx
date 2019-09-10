@@ -8,6 +8,8 @@ import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } fr
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { RadioOption } from '@fpsak-frontend/form';
 import { buildInitialValues, CheckPersonStatusFormImpl as UnwrappedForm } from './CheckPersonStatusForm';
 
 describe('<CheckPersonStatusForm>', () => {
@@ -36,7 +38,7 @@ describe('<CheckPersonStatusForm>', () => {
       gjeldeneFom="2018-10-10"
     />);
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).to.have.length(1);
     expect(helpText.childAt(0).text())
       .is.eql('Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus');
@@ -58,7 +60,7 @@ describe('<CheckPersonStatusForm>', () => {
       gjeldeneFom="2018-10-10"
     />);
 
-    const radios = wrapper.find('RadioOption');
+    const radios = wrapper.find(RadioOption);
     expect(radios).to.have.length(2);
     expect(radios.first().prop('label').id).is.eql('CheckPersonStatusForm.HaltBehandling');
     expect(radios.last().prop('label').id).is.eql('CheckPersonStatusForm.ContinueBehandling');
@@ -84,7 +86,7 @@ describe('<CheckPersonStatusForm>', () => {
       gjeldeneFom="2018-10-10"
     />);
 
-    const radios = wrapper.find('RadioOption');
+    const radios = wrapper.find(RadioOption);
     expect(radios).to.have.length(4);
     expect(radios.at(2).prop('value')).is.eql('BOSATT');
     expect(radios.at(2).prop('label')).is.eql('Bosatt');

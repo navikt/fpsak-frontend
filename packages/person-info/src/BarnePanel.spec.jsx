@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import BarnePanel from './BarnePanel';
 
@@ -27,15 +27,15 @@ describe('<BarnePanel>', () => {
   const barneListe = [barn1, barn2, barn3];
 
   it('skal sjekke at korrekt ikon vises for barna', () => {
-    const wrapper = shallowWithIntl(<BarnePanel barneListe={barneListe} />);
+    const wrapper = shallowWithIntl(<BarnePanel.WrappedComponent barneListe={barneListe} intl={intlMock} />);
 
-    const image = wrapper.find('injectIntl(Image)');
-    expect(image.first().prop('titleCode')).to.equal('Person.Girl');
-    expect(image.at(1).prop('titleCode')).to.equal('Person.Boy');
+    const image = wrapper.find(Image);
+    expect(image.first().prop('title')).to.have.length.above(1);
+    expect(image.at(1).prop('title')).to.have.length.above(1);
   });
 
   it('skal sjekke at korrekt antall barn vises', () => {
-    const wrapper = shallowWithIntl(<BarnePanel barneListe={barneListe} />);
+    const wrapper = shallowWithIntl(<BarnePanel.WrappedComponent barneListe={barneListe} intl={intlMock} />);
     expect(wrapper.find('Row').children()).to.have.length(barneListe.length);
   });
 });

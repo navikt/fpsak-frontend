@@ -33,7 +33,7 @@ const BehandlingenShelvedModal = ({
   >
     <Row>
       <Column xs="1">
-        <Image className={styles.image} altCode="BehandlingenShelvedModal.Henlagt" src={innvilgetImageUrl} />
+        <Image className={styles.image} alt={intl.formatMessage({ id: 'BehandlingenShelvedModal.Henlagt' })} src={innvilgetImageUrl} />
         <div className={styles.divider} />
       </Column>
       <Column xs="9">

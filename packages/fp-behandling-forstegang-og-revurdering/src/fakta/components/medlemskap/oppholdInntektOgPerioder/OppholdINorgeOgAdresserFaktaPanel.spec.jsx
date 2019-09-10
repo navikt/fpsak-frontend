@@ -6,6 +6,8 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { RadioOption } from '@fpsak-frontend/form';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
@@ -42,7 +44,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       opphold={opphold}
       foreldre={foreldre}
     />);
-    const felter = wrapper.find('Normaltekst');
+    const felter = wrapper.find(Normaltekst);
     expect(felter).to.have.length(5);
     expect(felter.first().childAt(0).text()).to.eql('Ja');
     expect(felter.at(1).childAt(0).text()).to.eql('Ja');
@@ -85,7 +87,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       foreldre={toForeldre}
     />);
 
-    const radioFields = wrapper.find('RadioOption');
+    const radioFields = wrapper.find(RadioOption);
     expect(radioFields).to.have.length(2);
     expect(radioFields.first().prop('label').id).to.eql('OppholdINorgeOgAdresserFaktaPanel.ResidingInNorway');
   });

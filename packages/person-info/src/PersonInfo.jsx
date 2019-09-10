@@ -5,6 +5,7 @@ import Panel from 'nav-frontend-paneler';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import { Image } from '@fpsak-frontend/shared-components';
+import { injectIntl } from 'react-intl';
 import AlderVisning from './Aldervisning';
 import MerkePanel from './Merkepanel';
 
@@ -24,6 +25,7 @@ import styles from './personInfo.less';
 const PersonInfo = ({
   person,
   medPanel,
+  intl,
 }) => {
   const {
     erKvinne, dodsdato, diskresjonskode, erDod, alder, navn, personnummer,
@@ -33,8 +35,8 @@ const PersonInfo = ({
       <Image
         className={styles.icon}
         src={erKvinne ? urlKvinne : urlMann}
-        altCode="Person.ImageText"
-        titleCode={erKvinne ? 'Person.Woman' : 'Person.Man'}
+        alt={intl.formatMessage({ id: 'Person.ImageText' })}
+        title={intl.formatMessage({ id: erKvinne ? 'Person.Woman' : 'Person.Man' })}
       />
       <div className={styles.infoPlaceholder}>
         <div>
@@ -57,8 +59,9 @@ const PersonInfo = ({
 };
 
 PersonInfo.propTypes = {
+  intl: PropTypes.shape().isRequired,
   person: PropTypes.shape().isRequired,
   medPanel: PropTypes.bool.isRequired,
 };
 
-export default PersonInfo;
+export default injectIntl(PersonInfo);

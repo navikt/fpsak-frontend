@@ -36,7 +36,7 @@ const config = {
       },
     ],
   },
-  plugins: [],
+  plugins: []
 };
 
 module.exports = merge(common, config);

@@ -35,7 +35,11 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
             role="button"
             tabIndex="0"
           >
-            <Image className={styles.addCircleIcon} src={addCircleIcon} altCode="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
+            <Image
+              className={styles.addCircleIcon}
+              src={addCircleIcon}
+              alt={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst' })}
+            />
             <Undertekst className={styles.imageText}>
               <FormattedMessage className={styles.text} id="TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst" />
             </Undertekst>

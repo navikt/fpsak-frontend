@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { clearFields, formPropTypes } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 import {
-  Undertekst, Undertittel, Element, Normaltekst,
+  Element, Normaltekst, Undertekst, Undertittel,
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
@@ -25,15 +25,17 @@ import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
-import {
-  getSimuleringResultat, getTilbakekrevingValg,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering, behandlingFormValueSelector,
+  behandlingFormForstegangOgRevurdering,
+  behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import {
-  getSelectedBehandlingId, getFeatureToggles, getSelectedSaksnummer, isForeldrepengerFagsak,
+  getFeatureToggles,
+  getSelectedBehandlingId,
+  getSelectedSaksnummer,
+  isForeldrepengerFagsak,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable, { avregningCodes } from './AvregningTable';
@@ -46,6 +48,16 @@ const simuleringAksjonspunkter = [
   aksjonspunktCodes.VURDER_FEILUTBETALING,
   aksjonspunktCodes.VURDER_INNTREKK,
 ];
+const textCodesHelpText = {
+  [aksjonspunktCodes.VURDER_FEILUTBETALING]: 'Avregning.AksjonspunktHelpText.5084',
+  [aksjonspunktCodes.VURDER_INNTREKK]: 'Avregning.AksjonspunktHelpText.5085',
+};
+const textCodesRadioGroup = {
+  [avregningCodes.OPPFYLT]: 'Avregning.RadioGroup.oppfylt',
+  [avregningCodes.REDUKSJON]: 'Avregning.RadioGroup.reduksjon',
+};
+
+
 const formName = 'AvregnigForm';
 const oppfyltTooltipContent = (
   <span className={styles.tooltipContent}>
@@ -79,17 +91,18 @@ const createHelptextTooltip = (isForeldrepenger) => ({
       <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
     </Normaltekst>),
 });
-const getApTekst = (apCode) => (apCode ? [<FormattedMessage id={`Avregning.AksjonspunktHelpText.${apCode}`} key="vurderFeilutbetaling" />] : []);
-const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
+const getApTekst = (apCode) => (apCode ? [<FormattedMessage id={textCodesHelpText[apCode]} key="vurderFeilutbetaling" />] : []);
+
 const tooltipContent = (type) => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
 
-const radioGroupLabel = (contentType) => (
+const radioGroupLabel = (contentType, altText) => (
   <span>
-    <FormattedMessage id={`Avregning.RadioGroup.${contentType}`} />
+    <FormattedMessage id={textCodesRadioGroup[contentType]} />
     <Image
       className={styles.helpTextImage}
-      imageSrcFunction={findQuestionImage}
-      altCode={`Avregning.RadioGroup.${contentType}`}
+      src={questionNormalUrl}
+      srcHover={questionHoverUrl}
+      alt={altText}
       tooltip={{ header: tooltipContent(contentType) }}
     />
   </span>
@@ -167,6 +180,7 @@ export class AvregningPanelImpl extends Component {
   render() {
     const { showDetails, feilutbetaling } = this.state;
     const {
+      intl,
       simuleringResultat,
       isApOpen,
       apCodes,
@@ -275,8 +289,9 @@ export class AvregningPanelImpl extends Component {
                                 <Column sm="2">
                                   <Image
                                     tabIndex="0"
-                                    imageSrcFunction={findQuestionImage}
-                                    altCode="Avregning.HjelpetekstForeldrepenger"
+                                    src={questionNormalUrl}
+                                    srcHover={questionHoverUrl}
+                                    alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
                                     tooltip={createHelptextTooltip(isForeldrepenger)}
                                   />
                                 </Column>
@@ -314,7 +329,7 @@ export class AvregningPanelImpl extends Component {
                     && (
                       <Column sm="6">
                         <RadioGroupField
-                          label={radioGroupLabel(avregningCodes.OPPFYLT)}
+                          label={radioGroupLabel(avregningCodes.OPPFYLT, intl.formatMessage({ id: textCodesRadioGroup[avregningCodes.OPPFYLT] }))}
                           name="erTilbakekrevingVilkårOppfylt"
                           onChange={this.resetFields}
                           readOnly={readOnly}
@@ -327,7 +342,7 @@ export class AvregningPanelImpl extends Component {
                           <div className={styles.marginBottom20}>
                             <ArrowBox alignOffset={20}>
                               <RadioGroupField
-                                label={radioGroupLabel(avregningCodes.REDUKSJON)}
+                                label={radioGroupLabel(avregningCodes.REDUKSJON, intl.formatMessage({ id: textCodesRadioGroup[avregningCodes.REDUKSJON] }))}
                                 validate={[required]}
                                 name="grunnerTilReduksjon"
                                 onChange={this.resetFields}
@@ -398,6 +413,7 @@ export class AvregningPanelImpl extends Component {
 }
 
 AvregningPanelImpl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   simuleringResultat: PropTypes.shape(),
   previewCallback: PropTypes.func.isRequired,
@@ -471,7 +487,7 @@ const mapDispatchToProps = (dispatch) => ({
 const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
   enableReinitialize: true,
-})(AvregningPanelImpl)));
+})(injectIntl(AvregningPanelImpl))));
 
 AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some((ap) => apCodes.includes(ap));
 

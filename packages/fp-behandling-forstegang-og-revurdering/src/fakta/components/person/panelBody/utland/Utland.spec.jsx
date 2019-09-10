@@ -1,16 +1,17 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
-// import { FormattedMessage, IntlProvider } from 'react-intl';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandImpl as Utland } from './Utland';
 
+
 describe('<Utland>', () => {
   it('skal vise riktig utland status', () => {
-    const wrapper = shallow(
+    const wrapper = shallowWithIntl(
       <Utland
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
       />,
@@ -30,8 +31,9 @@ describe('<Utland>', () => {
   });
 
   it('skal sjekke at panel for endring av status vises/skjules når det skal ', () => {
-    const wrapper = shallow(
+    const wrapper = shallowWithIntl(
       <Utland
+        intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
       />,

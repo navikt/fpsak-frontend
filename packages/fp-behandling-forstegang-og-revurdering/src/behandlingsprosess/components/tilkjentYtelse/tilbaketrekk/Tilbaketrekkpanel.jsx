@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -34,6 +34,7 @@ const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 
 export const Tilbaketrekkpanel = ({
+  intl,
   readOnly,
   vurderTilbaketrekkAP,
   readOnlySubmitButton,
@@ -44,7 +45,11 @@ export const Tilbaketrekkpanel = ({
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Image className={styles.image} altCode="HelpText.Aksjonspunkt" src={behandleImageURL} />
+            <Image
+              className={styles.image}
+              alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })}
+              src={behandleImageURL}
+            />
           </FlexColumn>
           <FlexColumn>
             <div className={styles.divider} />
@@ -111,6 +116,7 @@ export const Tilbaketrekkpanel = ({
 );
 
 Tilbaketrekkpanel.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vurderTilbaketrekkAP: PropTypes.shape().isRequired,
@@ -145,4 +151,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(Tilbaketrekkpanel));
+export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(injectIntl(Tilbaketrekkpanel)));

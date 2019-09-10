@@ -6,6 +6,8 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
@@ -42,12 +44,12 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       opphold={opphold}
       foreldre={foreldre}
     />);
-    const felter = wrapper.find('Normaltekst');
+    const felter = wrapper.find(Normaltekst);
     expect(felter).to.have.length(5);
-    expect(felter.first().childAt(0).find('FormattedMessage').prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
-    expect(felter.at(1).childAt(0).find('FormattedMessage').prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
+    expect(felter.first().childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
+    expect(felter.at(1).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.Yes');
     expect(felter.at(2).childAt(0).text()).to.eql('Sverige');
-    expect(felter.at(4).childAt(0).find('FormattedMessage').prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
+    expect(felter.at(4).childAt(0).find(FormattedMessage).prop('id')).to.eql('OppholdINorgeOgAdresserFaktaPanel.No');
   });
 
   it('skal rendre form som viser bosatt informasjon', () => {

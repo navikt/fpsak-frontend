@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
@@ -25,14 +25,14 @@ const capitalizeFirstLetter = (landNavn) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const sjekkOpphold = (opphold) => (
+const sjekkOpphold = (opphold, intl) => (
   opphold !== undefined && (
     <Row>
       <Column xs="1">
         <Image
           className={styles.imageWidth}
           src={opphold === true ? checkImage : avslaattImage}
-          altCode={opphold === true ? 'OppholdINorgeOgAdresserFaktaPanel.Opphold' : 'OppholdINorgeOgAdresserFaktaPanel.IkkeOpphold'}
+          alt={intl.formatMessage({ id: opphold === true ? 'OppholdINorgeOgAdresserFaktaPanel.Opphold' : 'OppholdINorgeOgAdresserFaktaPanel.IkkeOpphold' })}
         />
       </Column>
       <Column xs="11">
@@ -70,6 +70,7 @@ const lagOppholdIUtland = (utlandsOpphold) => (
  * Viser opphold i innland og utland som er relevante for søker. ReadOnly.
  */
 const OppholdINorgeOgAdresserFaktaPanelImpl = ({
+  intl,
   readOnly,
   hasBosattAksjonspunkt,
   isBosattAksjonspunktClosed,
@@ -84,23 +85,23 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorway" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdNorgeNa)}
+          {sjekkOpphold(opphold.oppholdNorgeNa, intl)}
           <VerticalSpacer sixteenPx />
           <Undertekst>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayLast12" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdSistePeriode)}
+          {sjekkOpphold(opphold.oppholdSistePeriode, intl)}
           <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdFor)}
+          {lagOppholdIUtland(opphold.utlandsoppholdFor, intl)}
           <VerticalSpacer sixteenPx />
           <Undertekst>
             <FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.StayingInNorwayNext12" />
           </Undertekst>
           <VerticalSpacer fourPx />
-          {sjekkOpphold(opphold.oppholdNestePeriode)}
+          {sjekkOpphold(opphold.oppholdNestePeriode, intl)}
           <VerticalSpacer eightPx />
-          {lagOppholdIUtland(opphold.utlandsoppholdEtter)}
+          {lagOppholdIUtland(opphold.utlandsoppholdEtter, intl)}
         </FaktaGruppe>
       </Column>
       <Column xs="6">
@@ -131,6 +132,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
 );
 
 OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasBosattAksjonspunkt: PropTypes.bool.isRequired,
   isBosattAksjonspunktClosed: PropTypes.bool.isRequired,
@@ -148,7 +150,7 @@ const OppholdINorgeOgAdresserFaktaPanel = connect((state, ownProps) => ({
   foreldre: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'foreldre'),
   hasBosattAksjonspunkt: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'hasBosattAksjonspunkt'),
   isBosattAksjonspunktClosed: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'isBosattAksjonspunktClosed'),
-}))(OppholdINorgeOgAdresserFaktaPanelImpl);
+}))(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl));
 
 const createParent = (isApplicant, personopplysning) => ({
   isApplicant,

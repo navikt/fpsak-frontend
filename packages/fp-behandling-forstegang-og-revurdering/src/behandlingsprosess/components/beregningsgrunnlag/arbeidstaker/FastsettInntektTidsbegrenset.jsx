@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { createSelector } from 'reselect';
@@ -208,7 +208,7 @@ const createSummaryTableRow = (listOfBruttoPrPeriode) => (
 );
 
 // Konstruerer radene i tabellen
-const createTableRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPeriode) => {
+const createTableRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPeriode, intl) => {
   const rows = [];
   Object.keys(tableData).forEach((val) => {
     const list = tableData[val];
@@ -225,7 +225,7 @@ const createTableRows = (tableData, readOnly, isAksjonspunktClosed, listOfBrutto
                 <div className={styles.absoluteField}>
                   <Image
                     src={hourglassImg}
-                    titleCode="Beregningsgrunnlag.AarsinntektPanel.TidsbegrensetHjelpetekst"
+                    title={intl.formatMessage({ id: 'Beregningsgrunnlag.AarsinntektPanel.TidsbegrensetHjelpetekst' })}
                   />
                 </div>
                 )}
@@ -266,6 +266,7 @@ const createTableRows = (tableData, readOnly, isAksjonspunktClosed, listOfBrutto
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker som er tidsbegrenset.
  */
 const FastsettInntektTidsbegrenset = ({
+  intl,
   tableData,
   readOnly,
   isAksjonspunktClosed,
@@ -280,10 +281,9 @@ const FastsettInntektTidsbegrenset = ({
   if (readOnly && isAksjonspunktClosed) {
     tableHeaderData.push(<Image
       src={endretUrl}
-      titleCode="Behandling.EditedField"
+      title={intl.formatMessage({ id: 'Behandling.EditedField' })}
     />);
   }
-
   return (
     <div className={styles.inntektTablePanel}>
       <Table
@@ -292,7 +292,7 @@ const FastsettInntektTidsbegrenset = ({
         allowFormattedHeader
         classNameTable={styles.inntektTable}
       >
-        {createTableRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, bruttoPrPeriodeList)}
+        {createTableRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, bruttoPrPeriodeList, intl)}
       </Table>
       { perioderMedBortfaltNaturalytelse.length > 0
       && <NaturalytelsePanel />}
@@ -301,6 +301,7 @@ const FastsettInntektTidsbegrenset = ({
 };
 
 FastsettInntektTidsbegrenset.propTypes = {
+  intl: PropTypes.shape().isRequired,
   tableData: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool,
@@ -426,4 +427,4 @@ FastsettInntektTidsbegrenset.transformValues = (values, perioder) => {
   return fastsattePerioder;
 };
 
-export default connect(mapStateToProps)(FastsettInntektTidsbegrenset);
+export default connect(mapStateToProps)(injectIntl(FastsettInntektTidsbegrenset));

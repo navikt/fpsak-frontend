@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -22,6 +22,7 @@ import styles from './aksjonspunktHelpText.less';
  */
 const AksjonspunktHelpText = ({
   children,
+  intl,
   isAksjonspunktOpen,
   marginBottom,
 }) => {
@@ -41,14 +42,13 @@ const AksjonspunktHelpText = ({
       </>
     );
   }
-
   const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
   return (
     <div className={marginBottom ? styles.container : ''}>
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <Image className={styles.image} altCode="HelpText.Aksjonspunkt" src={advarselIkonUrl} />
+            <Image className={styles.image} alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} src={advarselIkonUrl} />
           </FlexColumn>
           <FlexColumn>
             <div className={styles.divider} />
@@ -67,6 +67,7 @@ const AksjonspunktHelpText = ({
 };
 
 AksjonspunktHelpText.propTypes = {
+  intl: PropTypes.shape().isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string.isRequired),
     PropTypes.arrayOf(PropTypes.element.isRequired),
@@ -79,4 +80,4 @@ AksjonspunktHelpText.defaultProps = {
   marginBottom: false,
 };
 
-export default AksjonspunktHelpText;
+export default injectIntl(AksjonspunktHelpText);

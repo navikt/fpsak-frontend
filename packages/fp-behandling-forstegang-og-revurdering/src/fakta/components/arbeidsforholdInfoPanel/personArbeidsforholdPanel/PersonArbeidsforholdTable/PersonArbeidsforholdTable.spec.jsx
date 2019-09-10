@@ -1,13 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import {
   DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
+import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
+
 
 describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
@@ -58,7 +59,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       lagtTilAvSaksbehandler: false,
     };
 
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[arbeidsforhold, arbeidsforhold2]}
       selectedId={arbeidsforhold.id}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -69,9 +70,10 @@ describe('<PersonArbeidsforholdTable>', () => {
     expect(table).has.length(1);
 
     const rows = table.find(TableRow);
-    expect(rows).has.length(2);
 
-    const row1 = rows.first();
+    expect(rows).has.length(3);
+
+    const row1 = rows.at(1);
     expect(row1.prop('isSelected')).is.true;
     const colsRow1 = row1.find(TableColumn);
     expect(colsRow1).has.length(6);
@@ -84,7 +86,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   });
 
   it('skal ikke vise mottatt dato for inntektsmelding når denne ikke finnes', () => {
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[arbeidsforhold]}
       selectedId={arbeidsforhold.id}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -92,8 +94,9 @@ describe('<PersonArbeidsforholdTable>', () => {
     />);
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).has.length(6);
-    expect(cols.at(4).children()).has.length(0);
+
+    expect(cols).has.length(12);
+    expect(cols.at(10).children()).has.length(1);
   });
 
   it('skal vise mottatt dato for inntektsmelding når denne finnes', () => {
@@ -102,7 +105,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       mottattDatoInntektsmelding: '2018-05-05',
     };
 
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[newArbeidsforhold]}
       selectedId={newArbeidsforhold.id}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -110,12 +113,12 @@ describe('<PersonArbeidsforholdTable>', () => {
     />);
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).has.length(6);
-    expect(cols.at(4).find(DateLabel).prop('dateString')).to.eql('2018-05-05');
+    expect(cols).has.length(12);
+    expect(wrapper.find(DateLabel).prop('dateString')).to.eql('2018-05-05');
   });
 
   it('skal ikke vise ikon for at arbeidsforholdet er i bruk', () => {
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[arbeidsforhold]}
       selectedId={arbeidsforhold.id}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -123,8 +126,8 @@ describe('<PersonArbeidsforholdTable>', () => {
     />);
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).has.length(6);
-    expect(cols.last().children()).has.length(0);
+    expect(cols).has.length(12);
+    expect(cols.last().children()).has.length(1);
   });
 
   it('skal vise ikon for at arbeidsforholdet er i bruk', () => {
@@ -133,7 +136,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       brukArbeidsforholdet: true,
     };
 
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[newArbeidsforhold]}
       selectedId={newArbeidsforhold.id}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -141,12 +144,12 @@ describe('<PersonArbeidsforholdTable>', () => {
     />);
 
     const cols = wrapper.find(TableColumn);
-    expect(cols).has.length(6);
+    expect(cols).has.length(12);
     expect(cols.last().find(Image)).has.length(1);
   });
 
   it('skal vise IngenArbeidsforholdRegistrert komponent når ingen arbeidsforhold', () => {
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[]}
       selectedId={undefined}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -161,13 +164,13 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       stillingsprosent: 0,
     };
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[endretArbeidsforhold]}
       selectedId={undefined}
       selectArbeidsforholdCallback={sinon.spy()}
       fagsystemer={fagsystemer}
     />);
-    const tableRow = wrapper.find(TableRow);
+    const tableRow = wrapper.find(TableRow).at(1);
     expect(tableRow.props().model.stillingsprosent).to.eql(0);
   });
 
@@ -176,13 +179,13 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       lagtTilAvSaksbehandler: true,
     };
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[endretArbeidsforhold]}
       selectedId={undefined}
       selectArbeidsforholdCallback={sinon.spy()}
       fagsystemer={fagsystemer}
     />);
-    const tableRow = wrapper.find(TableRow);
+    const tableRow = wrapper.find(TableRow).at(1);
     expect(tableRow.props().model.navn).to.eql('Svendsen Eksos');
   });
   it('skal vise overstyrt tom dato', () => {
@@ -190,7 +193,7 @@ describe('<PersonArbeidsforholdTable>', () => {
       ...arbeidsforhold,
       overstyrtTom: '2025-01-01',
     };
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[endretArbeidsforhold]}
       selectedId={undefined}
       selectArbeidsforholdCallback={sinon.spy()}
@@ -203,7 +206,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const endretArbeidsforhold = {
       ...arbeidsforhold,
     };
-    const wrapper = shallow(<PersonArbeidsforholdTable
+    const wrapper = mountWithIntl(<PersonArbeidsforholdTable
       alleArbeidsforhold={[endretArbeidsforhold]}
       selectedId={undefined}
       selectArbeidsforholdCallback={sinon.spy()}

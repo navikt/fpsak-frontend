@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
+
 import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { parseQueryString } from '@fpsak-frontend/utils';
-import { Header } from '@fpsak-frontend/dekorator';
-
 import AppConfigResolver from './AppConfigResolver';
 import { getFunksjonellTid, getNavAnsattName, getShowDetailedErrorMessages } from './duck';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.less';
+import Dekorator from './components/Dekorator';
 
 /**
  * AppIndex
@@ -80,7 +80,7 @@ class AppIndex extends Component {
 
   render() {
     const {
-      location, crashMessage, errorMessagesLength, navAnsattName, funksjonellTid, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
+      location, crashMessage, errorMessagesLength, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
     } = this.props;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
@@ -93,11 +93,10 @@ class AppIndex extends Component {
     return (
       <AppConfigResolver>
         <LanguageProvider>
-          <Header
+          <Dekorator
             queryStrings={queryStrings}
             navAnsattName={navAnsattName}
             removeErrorMessage={removeErrorMsg}
-            funksjonellTid={funksjonellTid}
             showDetailedErrorMessages={showDetailedErrorMessages}
           />
           {!crashMessage && (

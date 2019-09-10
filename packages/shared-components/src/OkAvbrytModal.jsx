@@ -34,7 +34,7 @@ const OkAvbrytModal = ({
   >
     <Row>
       <Column xs="1">
-        <Image className={styles.image} altCode={textCode} src={innvilgetImageUrl} />
+        <Image className={styles.image} alt={intl.formatMessage({ id: textCode })} src={innvilgetImageUrl} />
         <div className={styles.divider} />
       </Column>
       <Column xs="9" className={styles.text}>

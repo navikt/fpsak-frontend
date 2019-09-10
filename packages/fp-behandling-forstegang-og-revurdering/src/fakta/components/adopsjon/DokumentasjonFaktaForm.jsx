@@ -102,8 +102,8 @@ const DokumentasjonFaktaFormImpl = (
                 && (
                   <Image
                     className={styles.image}
-                    altCode="DokumentasjonFaktaForm.BarnErOver15Ar"
-                    titleCode="DokumentasjonFaktaForm.BarnErOver15Ar"
+                    alt={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
+                    title={intl.formatMessage({ id: 'DokumentasjonFaktaForm.BarnErOver15Ar' })}
                     src={advarselImageUrl}
                   />
                 )}

@@ -19,7 +19,7 @@ export const BehandlingspunktIcon = (
     isIkkeVurdert,
     selected,
     src,
-    srcHoover,
+    srcHover,
     title,
   },
 ) => (
@@ -30,7 +30,7 @@ export const BehandlingspunktIcon = (
       onKeyDown={isIkkeVurdert ? undefined : callback}
       onMouseDown={isIkkeVurdert ? undefined : callback}
       src={src}
-      srcHoover={srcHoover}
+      srcHover={srcHover}
       tabIndex={isIkkeVurdert ? '-1' : '0'}
     />
     <Undertekst className={styles.label}>{title}</Undertekst>
@@ -42,7 +42,7 @@ BehandlingspunktIcon.propTypes = {
   isIkkeVurdert: PropTypes.bool.isRequired,
   selected: PropTypes.bool.isRequired,
   src: PropTypes.string.isRequired,
-  srcHoover: PropTypes.string,
+  srcHover: PropTypes.string,
   title: PropTypes.string.isRequired,
 };
 

@@ -9,9 +9,6 @@ import { CommonBehandlingIndex } from './CommonBehandlingIndex';
 import CommonBehandlingResolver from './CommonBehandlingResolver';
 
 describe('<CommonBehandlingIndex>', () => {
-  // eslint-disable-next-line no-console
-  // console.log(global.Date.now());
-  // process.exit(1);
   let sandbox;
   let clock;
 

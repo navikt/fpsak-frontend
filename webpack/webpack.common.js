@@ -5,6 +5,7 @@ const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
 
 //TODO (TOR) Dette må delast opp og flyttast inn i kvar pakke.
 const config = {
+
   resolve: {
     alias: {
       //Burde kun brukast av pakke fpsak
@@ -32,10 +33,13 @@ const config = {
   },
 
   externals: {
+    canvas: 'commonjs canvas',
     cheerio: 'window',
     'react/addons': 'react',
     'react/lib/ExecutionEnvironment': 'react',
     'react/lib/ReactContext': 'react',
+    bufferutil: 'bufferutil',
+    'utf-8-validate': 'utf-8-validate',
   },
 };
 

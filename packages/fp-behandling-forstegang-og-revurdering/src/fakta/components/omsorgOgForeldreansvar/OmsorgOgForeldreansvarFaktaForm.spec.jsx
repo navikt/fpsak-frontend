@@ -8,6 +8,7 @@ import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { SelectField } from '@fpsak-frontend/form';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
@@ -56,7 +57,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       relatertYtelseTypes={[relatertYtelseType]}
     />);
 
-    const select = wrapper.find('SelectField');
+    const select = wrapper.find(SelectField);
     expect(select).has.length(1);
     expect(select.prop('selectValues')).has.length(1);
     expect(select.prop('selectValues')[0].props.value).to.eql('kode1');
@@ -77,7 +78,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       relatertYtelseTypes={[relatertYtelseType]}
     />);
 
-    const select = wrapper.find('SelectField');
+    const select = wrapper.find(SelectField);
     expect(select).has.length(0);
     const element = wrapper.find('Element');
     expect(element).has.length(1);
@@ -98,7 +99,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       relatertYtelseTypes={[relatertYtelseType]}
     />);
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
     expect(helpText.childAt(0).props().id).is.eql('OmsorgOgForeldreansvarFaktaForm.CheckInformationForeldreansvar');

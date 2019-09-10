@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { shallow } from 'enzyme';
 import { Image } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FastsettInntektTidsbegrenset, {
   createInputFieldKey,
   createTableData,
@@ -214,7 +214,8 @@ const beregningsgrunnlagPerioder = [
 
 describe('<FastsettInntektTidsbegrenset>', () => {
   it('Skal tabell for riktig antall rader', () => {
-    const wrapper = shallow(<FastsettInntektTidsbegrenset.WrappedComponent
+    const wrapper = shallowWithIntl(<FastsettInntektTidsbegrenset.WrappedComponent
+      intl={intlMock}
       tableData={tableData}
       readOnly={false}
       isAksjonspunktClosed={false}
@@ -227,7 +228,8 @@ describe('<FastsettInntektTidsbegrenset>', () => {
   });
 
   it('Skal teste kolonner vises med korrekt innhold uten inputfelter når ingen kolonner er redigerbare', () => {
-    const wrapper = shallow(<FastsettInntektTidsbegrenset.WrappedComponent
+    const wrapper = shallowWithIntl(<FastsettInntektTidsbegrenset.WrappedComponent
+      intl={intlMock}
       tableData={tableData}
       readOnly={false}
       isAksjonspunktClosed={false}
@@ -247,7 +249,8 @@ describe('<FastsettInntektTidsbegrenset>', () => {
 
   it('Skal teste at kolonner lages med inputfelter når de skal være redigerbare', () => {
     fourthCol.isEditable = true;
-    const wrapper = shallow(<FastsettInntektTidsbegrenset.WrappedComponent
+    const wrapper = shallowWithIntl(<FastsettInntektTidsbegrenset.WrappedComponent
+      intl={intlMock}
       tableData={tableData}
       readOnly={false}
       isAksjonspunktClosed={false}
@@ -265,7 +268,8 @@ describe('<FastsettInntektTidsbegrenset>', () => {
     thirdCol.isEditable = true;
     fourthCol.isEditable = true;
     fourthCol.erTidsbegrenset = true;
-    const wrapper = shallow(<FastsettInntektTidsbegrenset.WrappedComponent
+    const wrapper = shallowWithIntl(<FastsettInntektTidsbegrenset.WrappedComponent
+      intl={intlMock}
       tableData={tableData}
       readOnly={false}
       isAksjonspunktClosed={false}
@@ -279,7 +283,7 @@ describe('<FastsettInntektTidsbegrenset>', () => {
 
     expect(inputs.length).to.equal(2);
     expect(image.length).to.equal(1);
-    expect(image.at(0).prop('titleCode')).to.equal('Beregningsgrunnlag.AarsinntektPanel.TidsbegrensetHjelpetekst');
+    expect(image.at(0).prop('title')).to.have.length.above(1);
   });
 
   const aksjonspunkter = [

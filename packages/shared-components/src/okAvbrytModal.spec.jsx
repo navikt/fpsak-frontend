@@ -27,7 +27,7 @@ describe('<OkAvbrytModal>', () => {
 
     const image = wrapper.find(Image);
     expect(image).to.have.length(1);
-    expect(image.prop('altCode')).is.eql('OpenBehandlingForChangesMenuItem.OpenBehandling');
+    expect(image.prop('alt')).to.have.length.above(3);
 
     const message = wrapper.find(FormattedMessage);
     expect(message).to.have.length(1);

@@ -70,8 +70,6 @@ const shouldDisablePeriodpicker = (hasAksjonspunkt, initialValues) => {
 };
 
 const hasMerknad = (activity) => !!activity.erGodkjent && !activity.erManueltOpprettet && activity.erEndret;
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 
 const findInYearsMonthsAndDays = (opptjeningFom, opptjeningTom) => {
   const difference = findDifferenceInMonthsAndDays(opptjeningFom, opptjeningTom);
@@ -133,16 +131,18 @@ export const ActivityPanel = ({
         <Image
           tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findArrowLeftImg}
-          altCode="Timeline.prevPeriod"
+          src={arrowLeftImageUrl}
+          srcHover={arrowLeftFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
           onMouseDown={selectPrevPeriod}
           onKeyDown={selectPrevPeriod}
         />
         <Image
           tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findArrowRightImg}
-          altCode="Timeline.nextPeriod"
+          src={arrowRightImageUrl}
+          srcHover={arrowRightFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
           onMouseDown={selectNextPeriod}
           onKeyDown={selectNextPeriod}
         />

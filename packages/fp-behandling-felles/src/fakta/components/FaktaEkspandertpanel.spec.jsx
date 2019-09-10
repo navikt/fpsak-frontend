@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
+import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
 import FaktaEkspandertpanel from './FaktaEkspandertpanel';
 
 describe('<FaktaEkspandertpanel>', () => {
@@ -21,7 +22,7 @@ describe('<FaktaEkspandertpanel>', () => {
       </FaktaEkspandertpanel>,
     );
 
-    const panel = wrapper.find('EkspanderbartpanelPure');
+    const panel = wrapper.find(EkspanderbartpanelPure);
     expect(panel).to.have.length(1);
     expect(panel.prop('tittel')).to.eql('faktapanelTitle');
     expect(panel.prop('apen')).is.true;

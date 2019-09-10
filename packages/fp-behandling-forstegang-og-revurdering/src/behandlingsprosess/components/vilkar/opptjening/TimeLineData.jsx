@@ -3,11 +3,9 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import advarselImg from '@fpsak-frontend/assets/images/remove.svg';
@@ -23,9 +21,6 @@ const isoToDdMmYyyy = (string) => {
   const parsedDate = moment(string, ISO_DATE_FORMAT, true);
   return parsedDate.isValid() ? parsedDate.format(DDMMYYYY_DATE_FORMAT) : string;
 };
-
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 
 const backgroundStyle = (kode) => (
   (kode === MELLOMLIGGENDE_PERIODE
@@ -46,28 +41,30 @@ const TimeLineData = ({
   selectedPeriod,
   selectNextPeriod,
   selectPrevPeriod,
-}) => (
-  <div>
-    <Row>
-      <Element>
-        <FormattedMessage id="OpptjeningVilkarView.DetailsForSelectedPeriod" />
-      </Element>
-    </Row>
-    <Row>
-      <Column xs="6" className={backgroundStyle(selectedPeriod.data.klasse.kode)}>
-        <Row className={styles.timeLineDataContainer}>
-          <Column xs="6">
-            <div>
-              <Element>
-                {isoToDdMmYyyy(selectedPeriod.data.fom)}
-                {' '}
+}) => {
+  const intl = useIntl();
+  return (
+    <div>
+      <Row>
+        <Element>
+          <FormattedMessage id="OpptjeningVilkarView.DetailsForSelectedPeriod" />
+        </Element>
+      </Row>
+      <Row>
+        <Column xs="6" className={backgroundStyle(selectedPeriod.data.klasse.kode)}>
+          <Row className={styles.timeLineDataContainer}>
+            <Column xs="6">
+              <div>
+                <Element>
+                  {isoToDdMmYyyy(selectedPeriod.data.fom)}
+                  {' '}
 -
-                {isoToDdMmYyyy(selectedPeriod.data.tom)}
-              </Element>
-            </div>
-          </Column>
-          <Column xs="6">
-            {isPeriodGodkjent(selectedPeriod.data.klasse)
+                  {isoToDdMmYyyy(selectedPeriod.data.tom)}
+                </Element>
+              </div>
+            </Column>
+            <Column xs="6">
+              {isPeriodGodkjent(selectedPeriod.data.klasse)
               && (
               <span className={styles.image}>
                 <Image
@@ -76,7 +73,7 @@ const TimeLineData = ({
                 />
               </span>
               )}
-            {!isPeriodGodkjent(selectedPeriod.data.klasse)
+              {!isPeriodGodkjent(selectedPeriod.data.klasse)
             && (
             <span className={styles.image}>
               <Image
@@ -85,32 +82,35 @@ const TimeLineData = ({
               />
             </span>
             )}
-            <FormattedMessage id={periodStatus(selectedPeriod.data.klasse.kode)} />
-          </Column>
-        </Row>
-      </Column>
-      <Column xs="6">
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          imageSrcFunction={findArrowLeftImg}
-          altCode="Timeline.prevPeriod"
-          onMouseDown={selectPrevPeriod}
-          onKeyDown={selectPrevPeriod}
-        />
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          imageSrcFunction={findArrowRightImg}
-          altCode="Timeline.nextPeriod"
-          onMouseDown={selectNextPeriod}
-          onKeyDown={selectNextPeriod}
-        />
-      </Column>
-    </Row>
-    <Row />
-  </div>
-);
+              <FormattedMessage id={periodStatus(selectedPeriod.data.klasse.kode)} />
+            </Column>
+          </Row>
+        </Column>
+        <Column xs="6">
+          <Image
+            tabIndex="0"
+            className={styles.timeLineButton}
+            src={arrowLeftImageUrl}
+            srcHover={arrowLeftFilledImageUrl}
+            alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+            onMouseDown={selectPrevPeriod}
+            onKeyDown={selectPrevPeriod}
+          />
+          <Image
+            tabIndex="0"
+            className={styles.timeLineButton}
+            src={arrowLeftImageUrl}
+            srcHover={arrowLeftFilledImageUrl}
+            alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+            onMouseDown={selectNextPeriod}
+            onKeyDown={selectNextPeriod}
+          />
+        </Column>
+      </Row>
+      <Row />
+    </div>
+  );
+};
 
 TimeLineData.propTypes = {
   selectedPeriod: PropTypes.shape().isRequired,

@@ -1,14 +1,15 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+
 import { expect } from 'chai';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { Image } from '@fpsak-frontend/shared-components';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import PersonInfo from './PersonInfo';
 import AlderVisning from './Aldervisning';
 import MerkePanel from './Merkepanel';
 
-describe('<PersonInfor>', () => {
+describe('<PersonInfo>', () => {
   it('skal sjekke at props blir brukt korrekt', () => {
     const person = {
       navn: 'frida',
@@ -20,15 +21,16 @@ describe('<PersonInfor>', () => {
       diskresjonskode: '6',
       dodsdato: '2017.01.01',
     };
-    const wrapper = shallow(<PersonInfo
+    const wrapper = shallowWithIntl(<PersonInfo.WrappedComponent
+      intl={intlMock}
       person={person}
       isPrimaryParent
       medPanel
     />);
 
     const image = wrapper.find(Image);
-    expect(image.prop('altCode')).to.eql('Person.ImageText');
-    expect(image.prop('titleCode')).to.eql('Person.Woman');
+    expect(image.prop('alt')).to.have.length.above(1);
+    expect(image.prop('title')).to.have.length.above(1);
 
     const innholdstittel = wrapper.find(Undertittel);
     expect(innholdstittel.childAt(0).text()).to.eql('frida');
@@ -55,13 +57,14 @@ describe('<PersonInfor>', () => {
       diskresjonskode: '6',
       dodsdato: '2017.01.01',
     };
-    const wrapper = shallow(<PersonInfo
+    const wrapper = shallowWithIntl(<PersonInfo.WrappedComponent
+      intl={intlMock}
       person={person}
       isPrimaryParent
       medPanel
     />);
 
     const image = wrapper.find(Image);
-    expect(image.prop('titleCode')).to.eql('Person.Man');
+    expect(image.prop('title')).to.have.length.above(1);
   });
 });

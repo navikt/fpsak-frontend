@@ -68,7 +68,7 @@ export const SettBehandlingPaVentModal = ({
       <form onSubmit={handleSubmit} name="ventModalForm">
         <Row>
           <Column xs="1">
-            <Image className={styles.image} altCode="SettBehandlingPaVentModal.PaVent" src={innvilgetImageUrl} />
+            <Image className={styles.image} alt={intl.formatMessage({ id: 'SettBehandlingPaVentModal.PaVent' })} src={innvilgetImageUrl} />
             <div className={styles.divider} />
           </Column>
           <Column xs="7">

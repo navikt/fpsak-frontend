@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.3.0
-  
+
 executors:
   docker-publisher:
     docker:
@@ -48,13 +48,12 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
+          name: Install full-icu
+          command: |
+            yarn global add full-icu
+      - run:
           name: Run yarn install
           command: yarn install --ignore-optional --ignore-scripts --no-progress --frozen-lockfile
-#      - run:
-#          name: Node prune feiler på "assets" i NAV-folderen.
-#          command: |
-#            curl -sfL https://install.goreleaser.com/github.com/tj/node-prune.sh | bash
-#            ./bin/node-prune
       - run:
           name: Run linting and tests
           command: yarn less:lint && yarn test
@@ -173,7 +172,7 @@ jobs:
       - slack/notify:
           color: '#117007'
           message: "_Deploy av fpsak-frontend:${VERSION} til t4 var suksessfult._"
-          webhook: ${SLACK_WEBHOOK} 
+          webhook: ${SLACK_WEBHOOK}
 
 workflows:
   version: 2

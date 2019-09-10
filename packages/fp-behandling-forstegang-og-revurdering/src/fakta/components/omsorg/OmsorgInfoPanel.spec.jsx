@@ -5,8 +5,11 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { OmsorgInfoPanelImpl } from './OmsorgInfoPanel';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { FormattedMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
+import { OmsorgInfoPanelImpl } from './OmsorgInfoPanel';
 
 describe('<OmsorgInfoPanel>', () => {
   const personopplysning = {
@@ -82,7 +85,7 @@ describe('<OmsorgInfoPanel>', () => {
       readOnly={false}
       personopplysning={personopplysning}
     />);
-    const panel = wrapper.find('FaktaEkspandertpanel');
+    const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).to.have.length(1);
     expect(panel.prop('title')).to.eql('Fakta om omsorg');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
@@ -104,9 +107,9 @@ describe('<OmsorgInfoPanel>', () => {
       readOnly={false}
       personopplysning={personopplysning}
     />);
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
-    const helpTextMessage = wrapper.find('FormattedMessage');
+    const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(2);
     expect(helpTextMessage.at(0).prop('id')).is.eql('OmsorgInfoPanel.VurderAleneomsorg');
     expect(helpTextMessage.at(1).prop('id')).is.eql('OmsorgInfoPanel.VurderOmsorg');
@@ -126,9 +129,9 @@ describe('<OmsorgInfoPanel>', () => {
       readOnly={false}
       personopplysning={personopplysning}
     />);
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
-    const helpTextMessage = wrapper.find('FormattedMessage');
+    const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(1);
     expect(helpTextMessage.at(0).prop('id')).is.eql('OmsorgInfoPanel.VurderOmsorg');
   });

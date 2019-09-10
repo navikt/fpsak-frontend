@@ -3,10 +3,11 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaBegrunnelseTextField, FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { AdopsjonInfoPanelImpl } from './AdopsjonInfoPanel';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 import EktefelleFaktaForm from './EktefelleFaktaForm';
@@ -61,7 +62,7 @@ describe('<AdopsjonInfoPanel>', () => {
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel.prop('title')).to.eql('Fakta om adopsjon');
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(2);
     expect(helpText.childAt(0).prop('id')).is.eql('AdopsjonInfoPanel.KontrollerMotDok');
@@ -102,10 +103,10 @@ describe('<AdopsjonInfoPanel>', () => {
       readOnly={false}
     />);
 
-    const panel = wrapper.find('FaktaEkspandertpanel');
+    const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel.prop('title')).to.eql('Fakta om adopsjon');
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(3);
     expect(helpText.childAt(0).prop('id')).is.eql('AdopsjonInfoPanel.KontrollerMotDok');

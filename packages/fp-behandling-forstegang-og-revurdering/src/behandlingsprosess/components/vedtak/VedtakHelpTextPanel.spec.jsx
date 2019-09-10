@@ -6,6 +6,7 @@ import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
 
 
@@ -86,7 +87,7 @@ describe('<VedtakHelpTextPanel>', () => {
       isBehandlingReadOnly={false}
     />);
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
     expect(helpText.children()).to.have.length(1);
     expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen');
@@ -102,7 +103,7 @@ describe('<VedtakHelpTextPanel>', () => {
       isBehandlingReadOnly={false}
     />);
 
-    const helpText = wrapper.find('AksjonspunktHelpText');
+    const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
     expect(helpText.children()).to.have.length(2);
     expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen');

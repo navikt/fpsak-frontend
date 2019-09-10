@@ -59,7 +59,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
         <div>
           <Row className={styles.infotekst}>
             <Column xs="1">
-              <Image className={styles.image} altCode="ChangeBehandlendeEnhetModal.Endre" src={innvilgetImageUrl} />
+              <Image className={styles.image} alt={intl.formatMessage({ id: 'ChangeBehandlendeEnhetModal.Endre' })} src={innvilgetImageUrl} />
               <div className={styles.divider} />
             </Column>
             <Column xs="11">

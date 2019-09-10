@@ -18,21 +18,14 @@ import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
 import { Image } from '@fpsak-frontend/shared-components';
 
+import { useIntl } from 'react-intl';
 import styles from './tilbakekrevingTimelineController.less';
 
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const findZoomInImg = (isHovering) => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
-const findZoomOutImg = (isHovering) => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
-const findOpenPeriodImage = (isHovering) => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
-const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
 
 /*
  * TilbakekrevingTimelineController
  *
  * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
- *
- * ```
  */
 const TilbakekrevingTimelineController = ({
   goBackwardCallback,
@@ -42,64 +35,73 @@ const TilbakekrevingTimelineController = ({
   openPeriodInfo,
   selectedPeriod,
   children,
-}) => (
-  <div className={styles.scrollButtonContainer}>
-    <span className={styles.popUnder}>
-      <span>
+}) => {
+  const intl = useIntl();
+  return (
+    <div className={styles.scrollButtonContainer}>
+      <span className={styles.popUnder}>
+        <span>
+          <Image
+            className={styles.timeLineButton}
+            src={questionNormalUrl}
+            srcHover={questionHoverUrl}
+            alt={intl.formatMessage({ id: 'Timeline.openData' })}
+          />
+        </span>
+        <div className={styles.popUnderContent}>
+          {children}
+        </div>
+      </span>
+      <Image
+        tabIndex="0"
+        className={selectedPeriod ? styles.timeLineButtonInverted : styles.timeLineButton}
+        src={arrowDownImageUrl}
+        srcHover={arrowDownFilledImageUrl}
+        alt={intl.formatMessage({ id: 'Timeline.openData' })}
+        onMouseDown={openPeriodInfo}
+        onKeyDown={openPeriodInfo}
+      />
+      <span className={styles.buttonSpacing}>
         <Image
+          tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findQuestionImage}
-          altCode="Timeline.openData"
+          src={zoomInImageUrl}
+          srcHover={zoomInImageFilledUrl}
+          alt={intl.formatMessage({ id: 'Timeline.zoomIn' })}
+          onMouseDown={zoomInCallback}
+          onKeyDown={zoomInCallback}
+        />
+        <Image
+          tabIndex="0"
+          className={styles.timeLineButton}
+          src={zoomOutImageUrl}
+          srcHover={zoomOutImageFilledUrl}
+          alt={intl.formatMessage({ id: 'Timeline.zoomOut' })}
+          onMouseDown={zoomOutCallback}
+          onKeyDown={zoomOutCallback}
         />
       </span>
-      <div className={styles.popUnderContent}>
-        {children}
-      </div>
-    </span>
-    <Image
-      tabIndex="0"
-      className={selectedPeriod ? styles.timeLineButtonInverted : styles.timeLineButton}
-      imageSrcFunction={findOpenPeriodImage}
-      altCode="Timeline.openData"
-      onMouseDown={openPeriodInfo}
-      onKeyDown={openPeriodInfo}
-    />
-    <span className={styles.buttonSpacing}>
       <Image
         tabIndex="0"
         className={styles.timeLineButton}
-        imageSrcFunction={findZoomInImg}
-        altCode="Timeline.zoomIn"
-        onMouseDown={zoomInCallback}
-        onKeyDown={zoomInCallback}
+        src={arrowLeftImageUrl}
+        srcHover={arrowLeftFilledImageUrl}
+        alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+        onMouseDown={goBackwardCallback}
+        onKeyDown={goBackwardCallback}
       />
       <Image
         tabIndex="0"
         className={styles.timeLineButton}
-        imageSrcFunction={findZoomOutImg}
-        altCode="Timeline.zoomOut"
-        onMouseDown={zoomOutCallback}
-        onKeyDown={zoomOutCallback}
+        src={arrowRightImageUrl}
+        srcHover={arrowRightFilledImageUrl}
+        alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+        onMouseDown={goForwardCallback}
+        onKeyDown={goForwardCallback}
       />
-    </span>
-    <Image
-      tabIndex="0"
-      className={styles.timeLineButton}
-      imageSrcFunction={findArrowLeftImg}
-      altCode="Timeline.prevPeriod"
-      onMouseDown={goBackwardCallback}
-      onKeyDown={goBackwardCallback}
-    />
-    <Image
-      tabIndex="0"
-      className={styles.timeLineButton}
-      imageSrcFunction={findArrowRightImg}
-      altCode="Timeline.nextPeriod"
-      onMouseDown={goForwardCallback}
-      onKeyDown={goForwardCallback}
-    />
-  </div>
-);
+    </div>
+  );
+};
 
 TilbakekrevingTimelineController.propTypes = {
   goBackwardCallback: PropTypes.func.isRequired,

@@ -1,8 +1,12 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { Normaltekst } from 'nav-frontend-typografi';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { FormattedMessage } from 'react-intl';
+import { Label } from '@fpsak-frontend/form/src/Label';
 import DocumentList from './DocumentList';
 
 describe('<DocumentList>', () => {
@@ -23,25 +27,26 @@ describe('<DocumentList>', () => {
       kommunikasjonsretning: 'UT',
     };
 
-    const wrapper = shallow(<DocumentList
+    const wrapper = shallowWithIntl(<DocumentList.WrappedComponent
+      intl={intlMock}
       documents={[document, anotherDocument]}
       selectDocumentCallback={sinon.spy()}
       behandlingId={1}
     />);
 
-    const label = wrapper.find('Label');
+    const label = wrapper.find(Label);
     expect(label).to.have.length(0);
 
-    const table = wrapper.find('Table');
+    const table = wrapper.find(Table);
     expect(table).to.have.length(1);
-    const tableRows = table.find('TableRow');
+    const tableRows = table.find(TableRow);
     expect(tableRows).to.have.length(2);
 
-    const tableColumnsRow1 = tableRows.first().find('TableColumn');
+    const tableColumnsRow1 = tableRows.first().find(TableColumn);
     expect(tableColumnsRow1.children()).to.have.length(3);
     expect(tableColumnsRow1.at(1).html()).to.eql('<td class="">Terminbekreftelse</td>');
 
-    const tableColumnsRow2 = tableRows.last().find('TableColumn');
+    const tableColumnsRow2 = tableRows.last().find(TableColumn);
     expect(tableColumnsRow2.children()).to.have.length(3);
     expect(tableColumnsRow2.at(1).html()).to.eql('<td class="">Førstegangssøknad</td>');
   });
@@ -55,27 +60,29 @@ describe('<DocumentList>', () => {
       kommunikasjonsretning: 'INN',
     };
 
-    const wrapper = shallow(<DocumentList
+    const wrapper = shallowWithIntl(<DocumentList.WrappedComponent
+      intl={intlMock}
       documents={[document]}
       selectDocumentCallback={sinon.spy()}
       behandlingId={1}
     />);
 
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.prop('id')).to.eql('DocumentList.IProduksjon');
   });
 
   it('skal ikke vise tabell når det ikke finnes dokumenter', () => {
-    const wrapper = shallow(<DocumentList
+    const wrapper = shallowWithIntl(<DocumentList.WrappedComponent
+      intl={intlMock}
       documents={[]}
       selectDocumentCallback={sinon.spy()}
       behandlingId={1}
     />);
 
-    const label = wrapper.find('Normaltekst');
+    const label = wrapper.find(Normaltekst);
     expect(label).to.have.length(1);
-    const table = wrapper.find('Table');
+    const table = wrapper.find(Table);
     expect(table).to.have.length(0);
   });
 });

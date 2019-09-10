@@ -69,7 +69,7 @@ export class FatterVedtakApprovalModal extends Component {
       >
         <Row>
           <Column xs="1">
-            <Image className={styles.image} altCode={altImgTextCode} src={innvilgetImageUrl} />
+            <Image className={styles.image} alt={intl.formatMessage({ id: altImgTextCode })} src={innvilgetImageUrl} />
             <div className={styles.divider} />
           </Column>
           <Column xs="9">

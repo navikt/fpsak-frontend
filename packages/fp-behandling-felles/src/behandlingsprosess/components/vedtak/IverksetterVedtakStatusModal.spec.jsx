@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
 
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -28,7 +29,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('contentLabel')).is.eql('Engangsstønaden er innvilget. Du kommer nå til forsiden.');
 
-    const button = wrapper.find('Hovedknapp');
+    const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
   });
 });

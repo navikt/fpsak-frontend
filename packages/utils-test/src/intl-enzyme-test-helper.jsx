@@ -31,26 +31,21 @@ function nodeWithIntlProp(node) {
   return React.cloneElement(node, { intl });
 }
 
-export function shallowWithIntl(node) {
-  return shallow(nodeWithIntlProp(node), {
-    wrappingComponent: IntlProvider,
-    wrappingComponentProps: {
-      locale: 'nb-NO',
-      defaultLocale: 'nb-NO',
-      messages,
-    },
-  });
+const intlOptions = {
+  wrappingComponent: IntlProvider,
+  wrappingComponentProps: {
+    locale: 'nb-NO',
+    defaultLocale: 'nb-NO',
+    messages,
+  },
+};
+
+export function shallowWithIntl(node, options) {
+  return shallow(nodeWithIntlProp(node), { ...intlOptions, ...options });
 }
 
-export function mountWithIntl(node) {
-  return mount(nodeWithIntlProp(node), {
-    wrappingComponent: IntlProvider,
-    wrappingComponentProps: {
-      locale: 'nb-NO',
-      defaultLocale: 'nb-NO',
-      messages,
-    },
-  });
+export function mountWithIntl(node, options) {
+  return mount(nodeWithIntlProp(node), { ...intlOptions, ...options });
 }
 
 /* Lagt til for a hindre warnings i tester */

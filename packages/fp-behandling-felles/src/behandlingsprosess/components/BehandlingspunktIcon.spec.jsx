@@ -13,7 +13,7 @@ describe('<BehandlingspunktIcon>', () => {
       isIkkeVurdert
       selected={false}
       src="/dummy.svg"
-      srcHoover="/dummy_hoover.svg"
+      srcHover="/dummy_hoover.svg"
       title="Adopsjonsvilkaret"
     />);
 
@@ -28,7 +28,7 @@ describe('<BehandlingspunktIcon>', () => {
       isIkkeVurdert={false}
       selected={false}
       src="/dummy.svg"
-      srcHoover="/dummy_hoover.svg"
+      srcHover="/dummy_hoover.svg"
       title="Adopsjonsvilkaret"
     />);
 
@@ -43,7 +43,7 @@ describe('<BehandlingspunktIcon>', () => {
       isIkkeVurdert
       selected={false}
       src="/dummy.svg"
-      srcHoover="/dummy_hoover.svg"
+      srcHover="/dummy_hoover.svg"
       title="Adopsjonsvilkaret"
     />);
 

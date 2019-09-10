@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import Modal from 'nav-frontend-modal';
+import ModalWrapper from 'nav-frontend-modal';
 import { Image } from '@fpsak-frontend/shared-components';
 
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
@@ -26,7 +26,7 @@ export const LukkPapirSoknadModal = ({
   intl,
   form,
 }) => (
-  <Modal
+  <ModalWrapper
     className={styles.modal}
     isOpen={showModal}
     closeButton={false}
@@ -37,7 +37,7 @@ export const LukkPapirSoknadModal = ({
   >
     <Row>
       <Column xs="1">
-        <Image className={styles.image} altCode="ModalLukkPapirSoknad.Avslutt" src={advarselImageUrl} />
+        <Image className={styles.image} alt={intl.formatMessage({ id: 'ModalLukkPapirSoknad.Avslutt' })} src={advarselImageUrl} />
         <div className={styles.divider} />
       </Column>
       <Column xs="11">
@@ -72,7 +72,7 @@ export const LukkPapirSoknadModal = ({
         </div>
       </Column>
     </Row>
-  </Modal>
+  </ModalWrapper>
 );
 
 LukkPapirSoknadModal.propTypes = {

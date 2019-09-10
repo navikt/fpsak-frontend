@@ -21,7 +21,7 @@ const dom = new JSDOM('<html><body></body></html><div id="app" />', {
 });
 global.document = dom.window.document;
 global.window = document.window;
-
+global.DOMParser = dom.window.DOMParser;
 Object.keys(document.defaultView)
   .forEach((property) => {
     if (typeof global[property] === 'undefined') {

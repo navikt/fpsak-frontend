@@ -3,8 +3,10 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { CreateNewBehandlingModal } from './CreateNewBehandlingModal';
 
 describe('<CreateNewBehandlingModal>', () => {
@@ -31,10 +33,10 @@ describe('<CreateNewBehandlingModal>', () => {
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
 
-    const image = modal.find('injectIntl(Image)');
+    const image = modal.find(Image);
     expect(image).to.have.length(1);
 
-    const okKnapp = modal.find('Hovedknapp');
+    const okKnapp = modal.find(Hovedknapp);
     expect(okKnapp).to.have.length(1);
     expect(okKnapp.prop('mini')).is.true;
 

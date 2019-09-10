@@ -52,7 +52,7 @@ class IverksetterVedtakStatusModal extends Component {
     if (!this.showModal && behandlingStatusKode === behandlingStatus.IVERKSETTER_VEDTAK) {
       this.showModal = resolveProsessAksjonspunkterSuccess || resolveFaktaAksjonspunkterSuccess;
     }
-
+    const imageAltText = intl.formatMessage({ id: rejected ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget' });
     return (
       <Modal
         className={styles.modal}
@@ -68,7 +68,7 @@ class IverksetterVedtakStatusModal extends Component {
           <Column xs="1">
             <Image
               className={styles.image}
-              altCode={rejected ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget'}
+              alt={imageAltText}
               src={innvilgetImageUrl}
             />
             <div className={styles.divider} />

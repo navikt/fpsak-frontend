@@ -1,11 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
-import { Image } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText, Image } from '@fpsak-frontend/shared-components';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { FormattedMessage } from 'react-intl';
 import { kalkulerTrekkdager, UttakTimeLineData } from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
+
 
 describe('<UttakTimeLineData>', () => {
   const selectedItem = {
@@ -75,7 +77,8 @@ describe('<UttakTimeLineData>', () => {
   const getKodeverknavn = () => undefined;
 
   it('skal rendre UttakTimeLineData, ikke deloppperiode, ikke readonly', () => {
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       readOnly={false}
       periodeTyper={[]}
       callbackForward={sinon.spy()}
@@ -111,7 +114,8 @@ describe('<UttakTimeLineData>', () => {
   });
 
   it('skal rendre UttakTimeLineData med modal og lukke modal', () => {
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       readOnly={false}
       periodeTyper={[]}
       callbackForward={sinon.spy()}
@@ -142,7 +146,8 @@ describe('<UttakTimeLineData>', () => {
   });
 
   it('skal rendre UttakTimeLineData readOnly', () => {
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       readOnly
       periodeTyper={[]}
       callbackForward={sinon.spy()}
@@ -175,7 +180,8 @@ describe('<UttakTimeLineData>', () => {
   it('skal rendre naviagtion', () => {
     const callbackForward = sinon.spy();
     const callbackBackward = sinon.spy();
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       readOnly={false}
       periodeTyper={[]}
       callbackForward={callbackForward}
@@ -197,18 +203,19 @@ describe('<UttakTimeLineData>', () => {
     expect(image).to.have.length(3);
     expect(image.at(1).prop('onMouseDown')).to.eql(callbackBackward);
     expect(image.at(1).prop('onKeyDown')).to.eql(callbackBackward);
-    expect(image.at(1).prop('altCode')).to.eql('Timeline.prevPeriod');
+    expect(image.at(1).prop('alt')).to.have.length.above(3);
     expect(image.at(2).prop('onMouseDown')).to.eql(callbackForward);
     expect(image.at(2).prop('onKeyDown')).to.eql(callbackForward);
-    expect(image.at(2).prop('altCode')).to.eql('Timeline.nextPeriod');
+    expect(image.at(2).prop('alt')).to.have.length.above(3);
   });
 
   it('skal rendre UttakActivity i UttakTimeLineData', () => {
     const callbackCancelSelectedActivity = sinon.spy();
     const callbackUpdateActivity = sinon.spy();
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
       isApOpen
       readOnly={false}
+      intl={intlMock}
       periodeTyper={[]}
       callbackForward={sinon.spy()}
       callbackBackward={sinon.spy()}
@@ -237,7 +244,8 @@ describe('<UttakTimeLineData>', () => {
   it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för en aktivitets dager', () => {
     const callbackCancelSelectedActivity = sinon.spy();
     const callbackUpdateActivity = sinon.spy();
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       isApOpen
       readOnly={false}
       periodeTyper={[]}
@@ -256,9 +264,9 @@ describe('<UttakTimeLineData>', () => {
       stonadskonto={stonadskonto}
       getKodeverknavn={getKodeverknavn}
     />);
-    const uttak = wrapper.find('AksjonspunktHelpText');
+    const uttak = wrapper.find(AksjonspunktHelpText);
     expect(uttak).has.length(1);
-    const formattedMessage = uttak.find('FormattedMessage');
+    const formattedMessage = uttak.find(FormattedMessage);
     expect(formattedMessage).has.length(1);
     expect(formattedMessage.prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakEnskiltArbeidsforhold');
     expect(formattedMessage).has.length(1);
@@ -267,7 +275,8 @@ describe('<UttakTimeLineData>', () => {
   it('skal rendre uttakpanel med aksjonspunkt og korrekt tekst om man går tom för flere aktiviteters dager', () => {
     const callbackCancelSelectedActivity = sinon.spy();
     const callbackUpdateActivity = sinon.spy();
-    const wrapper = shallow(<UttakTimeLineData
+    const wrapper = shallowWithIntl(<UttakTimeLineData
+      intl={intlMock}
       isApOpen
       readOnly={false}
       periodeTyper={[]}
@@ -286,9 +295,9 @@ describe('<UttakTimeLineData>', () => {
       stonadskonto={stonadskontoFlerGarTom}
       getKodeverknavn={getKodeverknavn}
     />);
-    const uttak = wrapper.find('AksjonspunktHelpText');
+    const uttak = wrapper.find(AksjonspunktHelpText);
     expect(uttak).has.length(1);
-    const formattedMessage = uttak.find('FormattedMessage');
+    const formattedMessage = uttak.find(FormattedMessage);
     expect(formattedMessage.prop('id')).to.eql('UttakPanel.manuellBehandlingÅrsakArbeidsforhold');
     expect(formattedMessage).has.length(1);
   });

@@ -92,18 +92,17 @@ export class FatterVedtakStatusModal extends Component {
     }
 
     const isFatterVedtak = isStatusFatterVedtak(behandlingStatus);
-    const infoTextCode = isFatterVedtak ? getInfoTextCode(behandlingType, isKlageWithKA) : '';
+    const infoTextCode = isFatterVedtak ? getInfoTextCode(behandlingType, isKlageWithKA) : undefined;
     const altImgTextCode = isFatterVedtak ? getAltImgTextCode(aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA) : '';
     const modalDescriptionTextCode = isFatterVedtak
       ? getModalDescriptionTextCode(behandlingsresultat, aksjonspunkter, fagsakYtelseType, behandlingType, isKlageWithKA)
       : 'FatterVedtakStatusModal.ModalDescription';
-
     return (
       <Modal
         className={styles.modal}
         isOpen={this.showModal}
         closeButton={false}
-        contentLabel={intl.formatMessage({ id: modalDescriptionTextCode })}
+        contentLabel={modalDescriptionTextCode && intl.formatMessage({ id: modalDescriptionTextCode })}
         onRequestClose={closeEvent}
         shouldCloseOnOverlayClick={false}
         ariaHideApp={false}
@@ -111,13 +110,19 @@ export class FatterVedtakStatusModal extends Component {
       >
         <Row>
           <Column xs="1">
-            <Image className={styles.image} altCode={altImgTextCode} src={innvilgetImageUrl} />
+            <Image
+              className={styles.image}
+              alt={altImgTextCode && intl.formatMessage({ id: altImgTextCode })}
+              src={innvilgetImageUrl}
+            />
             <div className={styles.divider} />
           </Column>
           <Column xs="9">
-            <Normaltekst>
-              <FormattedMessage id={infoTextCode} />
-            </Normaltekst>
+            {infoTextCode && (
+              <Normaltekst>
+                <FormattedMessage id={infoTextCode} />
+              </Normaltekst>
+            )}
             <Normaltekst><FormattedMessage id="FatterVedtakStatusModal.GoToSearchPage" /></Normaltekst>
           </Column>
           <Column xs="2">

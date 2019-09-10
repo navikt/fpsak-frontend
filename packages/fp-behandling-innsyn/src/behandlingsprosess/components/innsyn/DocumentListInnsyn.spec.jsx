@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
-import { shallow } from 'enzyme';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import {
   DateTimeLabel, Image, Table, TableRow,
@@ -12,7 +12,8 @@ import DocumentListInnsyn from './DocumentListInnsyn';
 
 describe('<DocumentListInnsyn>', () => {
   it('skal vise tekst ved tom dokumentliste', () => {
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={[]}
       saksNr={123}
       readOnly={false}
@@ -28,7 +29,8 @@ describe('<DocumentListInnsyn>', () => {
       tidspunkt: '22.12.2017',
       kommunikasjonsretning: kommunikasjonsretning.INN,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}
@@ -52,7 +54,8 @@ describe('<DocumentListInnsyn>', () => {
       tidspunkt: '22.12.2017-09:00',
       kommunikasjonsretning: kommunikasjonsretning.UT,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}
@@ -68,13 +71,14 @@ describe('<DocumentListInnsyn>', () => {
       tidspunkt: '22.12.2017-09:00',
       kommunikasjonsretning: kommunikasjonsretning.UT,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}
     />);
 
-    expect(wrapper.find(Image).prop('titleCode')).is.equal('DocumentListInnsyn.Send');
+    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
   });
 
 
@@ -86,12 +90,13 @@ describe('<DocumentListInnsyn>', () => {
       tidspunkt: '22.12.2017-09:00',
       kommunikasjonsretning: kommunikasjonsretning.INN,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}
     />);
-    expect(wrapper.find(Image).prop('titleCode')).is.equal('DocumentListInnsyn.Motta');
+    expect(wrapper.find(Image).prop('title')).to.have.length.above(1);
   });
 
 
@@ -103,7 +108,8 @@ describe('<DocumentListInnsyn>', () => {
 
       kommunikasjonsretning: kommunikasjonsretning.INN,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}
@@ -119,7 +125,8 @@ describe('<DocumentListInnsyn>', () => {
       tidspunkt: '22.12.2017 - 09:00',
       kommunikasjonsretning: kommunikasjonsretning.INN,
     }];
-    const wrapper = shallow(<DocumentListInnsyn
+    const wrapper = shallowWithIntl(<DocumentListInnsyn.WrappedComponent
+      intl={intlMock}
       documents={documents}
       saksNr={123}
       readOnly={false}

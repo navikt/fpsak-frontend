@@ -35,7 +35,7 @@ const AdvarselModal = ({
   >
     <Row>
       <Column xs="1">
-        <Image className={styles.image} altCode={textCode} src={advarselImageUrl} />
+        <Image className={styles.image} alt={intl.formatMessage({ id: textCode })} src={advarselImageUrl} />
         <div className={styles.divider} />
       </Column>
       <Column xs="8" className={styles.text}>
