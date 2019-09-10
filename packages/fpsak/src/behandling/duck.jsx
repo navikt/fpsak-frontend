@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 
 import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getSelectedSaksnummer } from 'fagsak/duck';
 import fpsakApi from 'data/fpsakApi';
@@ -101,6 +102,10 @@ export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfo
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
   (behandlinger, behandlingId) => behandlinger.find((b) => b.id === behandlingId));
 
+export const harValgtAvsluttetTilbakekreving = createSelector([getBehandling], (behandling = {}) => behandling
+  .type.kode === behandlingType.TILBAKEKREVING || behandling.type.kode === behandlingType.TILBAKEKREVING_REVURDERING);
+
+export const getUuidForValgtBehandling = createSelector([getBehandling], (behandling = {}) => behandling.uuid);
 export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);
 export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetId);

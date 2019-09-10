@@ -21,7 +21,7 @@ import {
 import fpsakApi from 'data/fpsakApi';
 import { getNavAnsatt } from 'app/duck';
 import {
-  nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewForstegangsbehandling,
+  nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling,
   setBehandlingOnHold, openBehandlingForChanges, resetBehandlingMenuData,
 } from './duck';
 import BehandlingMenu from './components/BehandlingMenu';
@@ -79,7 +79,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   resumeBehandling,
   shelveBehandling,
   nyBehandlendeEnhet,
-  createNewForstegangsbehandling,
+  createNewBehandling,
   setBehandlingOnHold,
   openBehandlingForChanges,
   resetBehandlingMenuData,
