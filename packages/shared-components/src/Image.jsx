@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 
 import Tooltip from './Tooltip';
 
@@ -42,20 +41,20 @@ class Image extends Component {
 
   render() {
     const {
-      tooltip, altCode, onClick, onMouseDown, tabIndex, titleCode, title, intl, className, src, srcHoover, imageSrcFunction, alt,
+      tooltip, onClick, onMouseDown, tabIndex, title, className, src, srcHover, alt,
       alignTooltipArrowLeft,
     } = this.props;
     let imgSource = src;
     const { isHovering } = this.state;
-    if (srcHoover !== null && isHovering) {
-      imgSource = srcHoover;
+    if (srcHover !== null && isHovering) {
+      imgSource = srcHover;
     }
     const image = (
       <img // eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
         className={className}
-        src={imgSource !== null ? imgSource : imageSrcFunction(isHovering)}
-        alt={altCode ? intl.formatMessage({ id: altCode }) : alt}
-        title={titleCode ? intl.formatMessage({ id: titleCode }) : title}
+        src={imgSource}
+        alt={alt}
+        title={title}
         tabIndex={tabIndex}
         onMouseOver={this.onFocus}
         onMouseOut={this.onBlur}
@@ -81,39 +80,31 @@ class Image extends Component {
 
 Image.propTypes = {
   className: PropTypes.string,
-  /**
-   * Brukes når en alltid skal vise samme bilde
-   */
   src: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.shape(),
   ]),
-  srcHoover: PropTypes.string,
-  /**
-   * Brukes når en har behov for dynamisk visning av bilder, for eksempel grunnet mouseover.
-   */
-  imageSrcFunction: PropTypes.func,
+  srcHover: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.shape(),
+  ]),
   onMouseDown: PropTypes.func,
   onKeyDown: PropTypes.func,
   onClick: PropTypes.func,
   alt: PropTypes.string,
-  altCode: PropTypes.string,
   title: PropTypes.string,
-  titleCode: PropTypes.string,
   tabIndex: PropTypes.string,
   tooltip: PropTypes.shape({
     header: PropTypes.node.isRequired,
     body: PropTypes.node,
   }),
   alignTooltipArrowLeft: PropTypes.bool,
-  intl: PropTypes.shape().isRequired,
 };
 
 Image.defaultProps = {
   className: '',
   src: null,
-  srcHoover: null,
-  imageSrcFunction: null,
+  srcHover: null,
   onMouseDown: null,
   onKeyDown: null,
   onClick: () => undefined,
@@ -121,9 +112,7 @@ Image.defaultProps = {
   tooltip: null,
   alignTooltipArrowLeft: false,
   alt: null,
-  altCode: null,
   title: null,
-  titleCode: null,
 };
 
-export default injectIntl(Image);
+export default Image;

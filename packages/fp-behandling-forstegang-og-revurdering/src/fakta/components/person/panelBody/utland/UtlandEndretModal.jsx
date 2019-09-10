@@ -31,7 +31,7 @@ export const UtlandEndretModalImpl = ({
     <FlexContainer wrap>
       <FlexRow>
         <FlexColumn className={styles.iconContainer}>
-          <Image className={styles.icon} src={innvilgetImageUrl} altCode="UttakInfoPanel.Ok" />
+          <Image className={styles.icon} src={innvilgetImageUrl} alt={intl.formatMessage({ id: 'UttakInfoPanel.Ok' })} />
         </FlexColumn>
         <FlexColumn className={styles.fullWidth}>
           <Normaltekst className={styles.modalLabel}>

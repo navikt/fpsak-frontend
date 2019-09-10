@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import Panel from 'nav-frontend-paneler';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { DateLabel, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -32,6 +32,7 @@ const erKvinne = (genderCode) => genderCode === navBrukerKjonn.KVINNE;
  */
 const BarnePanel = ({
   barneListe,
+  intl,
 }) => {
   if (!barneListe) {
     return null;
@@ -45,8 +46,8 @@ const BarnePanel = ({
             <Image
               className={styles.icon}
               src={erKvinne(barn.navBrukerKjonn.kode) ? urlKvinne : urlMann}
-              altCode="Person.ImageText"
-              titleCode={erKvinne(barn.navBrukerKjonn.kode) ? 'Person.Girl' : 'Person.Boy'}
+              alt={intl.formatMessage({ id: 'Person.ImageText' })}
+              title={intl.formatMessage({ id: erKvinne(barn.navBrukerKjonn.kode) ? 'Person.Girl' : 'Person.Boy' })}
             />
             )}
           </Column>
@@ -90,6 +91,7 @@ const BarnePanel = ({
   return <Panel className={styles.panel}>{content}</Panel>;
 };
 BarnePanel.propTypes = {
+  intl: PropTypes.shape().isRequired,
   barneListe: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
-export default BarnePanel;
+export default injectIntl(BarnePanel);

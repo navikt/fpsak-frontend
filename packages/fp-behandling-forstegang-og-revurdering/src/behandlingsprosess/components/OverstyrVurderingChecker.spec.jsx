@@ -1,9 +1,11 @@
 import React from 'react';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { CheckboxField } from '@fpsak-frontend/form';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { OverstyrVurderingChecker } from './OverstyrVurderingChecker';
+
 
 describe('<OverstyrVurderingChecker>', () => {
   const aksjonspunkter = [{
@@ -32,7 +34,7 @@ describe('<OverstyrVurderingChecker>', () => {
       isBehandlingReadOnly
     />);
 
-    const checkbox = wrapper.find('CheckboxField');
+    const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).to.have.length(1);
     expect(checkbox.prop('label')).is.eql('Overstyrt automatisk vurdering');
     expect(checkbox.prop('disabled')).is.true;
@@ -51,7 +53,7 @@ describe('<OverstyrVurderingChecker>', () => {
       isBehandlingReadOnly
     />);
 
-    const checkbox = wrapper.find('CheckboxField');
+    const checkbox = wrapper.find(CheckboxField);
     expect(checkbox.prop('label')).is.eql('Overstyrt beregning');
   });
 
@@ -67,7 +69,7 @@ describe('<OverstyrVurderingChecker>', () => {
       isBehandlingReadOnly
     />);
 
-    const checkbox = wrapper.find('CheckboxField');
+    const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).to.have.length(0);
   });
 
@@ -83,7 +85,7 @@ describe('<OverstyrVurderingChecker>', () => {
       isBehandlingReadOnly
     />);
 
-    const checkbox = wrapper.find('CheckboxField');
+    const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).to.have.length(1);
   });
 
@@ -102,7 +104,7 @@ describe('<OverstyrVurderingChecker>', () => {
       isBehandlingReadOnly
     />);
 
-    const checkbox = wrapper.find('CheckboxField');
+    const checkbox = wrapper.find(CheckboxField);
     checkbox.prop('onChange')();
 
     expect(resetCallback).to.have.property('callCount', 1);

@@ -67,7 +67,7 @@ class IverksetterVedtakStatusModal extends Component {
           <Column xs="1">
             <Image
               className={styles.image}
-              altCode={rejected ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget'}
+              alt={intl.formatMessage({ id: (rejected ? 'IverksetterVedtakStatusModal.Avslatt' : 'IverksetterVedtakStatusModal.Innvilget') })}
               src={innvilgetImageUrl}
             />
             <div className={styles.divider} />

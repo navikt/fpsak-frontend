@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
@@ -52,6 +52,7 @@ const getDirectionText = (document) => {
  * som viser at ingen dokumenter finnes på fagsak.
  */
 const DocumentList = ({
+  intl,
   documents,
   behandlingId,
   selectDocumentCallback,
@@ -59,7 +60,6 @@ const DocumentList = ({
   if (documents.length === 0) {
     return <Normaltekst className={styles.noDocuments}><FormattedMessage id="DocumentList.NoDocuments" /></Normaltekst>;
   }
-
   return (
     <Table headerTextCodes={headerTextCodes}>
       {documents.map((document) => {
@@ -77,8 +77,8 @@ const DocumentList = ({
               <Image
                 className={styles.image}
                 src={directionImage}
-                titleCode={directionTextCode}
-                altCode={directionTextCode}
+                alt={intl.formatMessage({ id: directionTextCode })}
+                title={intl.formatMessage({ id: directionTextCode })}
                 tabIndex="0"
               />
             </TableColumn>
@@ -117,6 +117,7 @@ const DocumentList = ({
 };
 
 DocumentList.propTypes = {
+  intl: PropTypes.shape().isRequired,
   documents: PropTypes.arrayOf(PropTypes.shape({
     journalpostId: PropTypes.string.isRequired,
     dokumentId: PropTypes.string.isRequired,
@@ -130,4 +131,4 @@ DocumentList.propTypes = {
   behandlingId: PropTypes.number.isRequired,
 };
 
-export default DocumentList;
+export default injectIntl(DocumentList);

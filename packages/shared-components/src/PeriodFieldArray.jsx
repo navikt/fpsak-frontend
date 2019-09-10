@@ -74,7 +74,7 @@ const PeriodFieldArray = ({
             role="button"
             tabIndex="0"
           >
-            <Image className={styles.addCircleIcon} src={addCircleIcon} altCode={textCode} />
+            <Image className={styles.addCircleIcon} src={addCircleIcon} alt={intl.formatMessage({ id: textCode })} />
             <Undertekst className={styles.imageText}>
               <FormattedMessage id={textCode} />
             </Undertekst>

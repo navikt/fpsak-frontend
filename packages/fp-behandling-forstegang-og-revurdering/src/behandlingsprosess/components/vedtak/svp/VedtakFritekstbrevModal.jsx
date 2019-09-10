@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Image from '@fpsak-frontend/shared-components/src/Image';
@@ -36,6 +36,7 @@ const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
  *
  */
 export const VedtakFritekstbrevModal = ({
+  intl,
   readOnly,
   behandlingsresultat,
   erSVP,
@@ -62,7 +63,7 @@ export const VedtakFritekstbrevModal = ({
               <Image
                 className={styles.image}
                 src={infoImageUrl}
-                altCode="VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImageAltCode"
+                alt={intl.formatMessage({ id: 'VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage' })}
               />
               <div className={styles.divider} />
             </Column>
@@ -89,6 +90,7 @@ export const VedtakFritekstbrevModal = ({
 };
 
 VedtakFritekstbrevModal.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   erSVP: PropTypes.bool.isRequired,
@@ -98,4 +100,4 @@ const mapStateToProps = createStructuredSelector({
   erSVP: getIsFagsakTypeSVP,
 });
 
-export default connect(mapStateToProps)(VedtakFritekstbrevModal);
+export default connect(mapStateToProps)(injectIntl(VedtakFritekstbrevModal));

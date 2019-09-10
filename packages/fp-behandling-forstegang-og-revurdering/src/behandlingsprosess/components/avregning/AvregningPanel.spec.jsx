@@ -7,6 +7,13 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
+import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { Undertittel } from 'nav-frontend-typografi';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { Column, Row } from 'nav-frontend-grid';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import AvregningSummary from './AvregningSummary';
+import AvregningTable from './AvregningTable';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
 
 const simuleringResultat = {
@@ -25,6 +32,7 @@ const mockProps = {
   ...reduxFormPropsMock,
   simuleringResultat,
   isApOpen: false,
+  intl: intlMock,
   apCodes: [],
   readOnly: false,
   erTilbakekrevingVilkårOppfylt: false,
@@ -35,24 +43,24 @@ const mockProps = {
 
 describe('<AvregningPanelImpl>', () => {
   it('skal rendre AvregningPanel', () => {
-    const wrapper = shallow(<AvregningPanelImpl
+    const wrapper = shallowWithIntl(<AvregningPanelImpl
       {...mockProps}
     />);
 
-    const fadingPanel = wrapper.find('FadingPanel');
+    const fadingPanel = wrapper.find(FadingPanel);
     expect(fadingPanel).has.length(1);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.prop('id')).is.eql('Avregning.Title');
-    const undertittel = wrapper.find('Undertittel');
+    const undertittel = wrapper.find(Undertittel);
     expect(undertittel).has.length(1);
-    const avregningSummary = wrapper.find('AvregningSummary');
+    const avregningSummary = wrapper.find(AvregningSummary);
     expect(avregningSummary).has.length(1);
-    const avregningTable = wrapper.find('AvregningTable');
+    const avregningTable = wrapper.find(AvregningTable);
     expect(avregningTable).has.length(1);
-    const row = wrapper.find('Row');
+    const row = wrapper.find(Row);
     expect(row).has.length(1);
-    const column = wrapper.find('Column');
+    const column = wrapper.find(Column);
     expect(column).has.length(1);
     const form = wrapper.find('form');
     expect(form).has.length(0);
@@ -69,10 +77,10 @@ describe('<AvregningPanelImpl>', () => {
 
     const form = wrapper.find('form');
     expect(form).has.length(1);
-    const radioGroupField = wrapper.find('RadioGroupField');
+    const radioGroupField = wrapper.find(RadioGroupField);
     expect(radioGroupField).has.length(1);
     expect(radioGroupField.at(0).prop('name')).is.eql('videreBehandling');
-    const radioOption = wrapper.find('RadioOption');
+    const radioOption = wrapper.find(RadioOption);
     expect(radioOption).has.length(2);
     const radioOptionGjennomfør = radioOption.at(0);
     expect(radioOptionGjennomfør.prop('label')).is.eql(<FormattedMessage id="Avregning.gjennomfør" />);
@@ -86,17 +94,17 @@ describe('<AvregningPanelImpl>', () => {
       apCodes: ['5085'],
       erTilbakekrevingVilkårOppfylt: true,
     };
-    const wrapper = shallow(<AvregningPanelImpl
+    const wrapper = shallowWithIntl(<AvregningPanelImpl
       {...props}
     />);
 
     const form = wrapper.find('form');
     expect(form).has.length(1);
-    const radioGroupField = wrapper.find('RadioGroupField');
+    const radioGroupField = wrapper.find(RadioGroupField);
     expect(radioGroupField).has.length(2);
     expect(radioGroupField.at(0).prop('name')).is.eql('erTilbakekrevingVilkårOppfylt');
     expect(radioGroupField.at(1).prop('name')).is.eql('grunnerTilReduksjon');
-    const radioOption = wrapper.find('RadioOption');
+    const radioOption = wrapper.find(RadioOption);
     expect(radioOption).has.length(4);
     expect(radioOption.at(0).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.ja" />);
     expect(radioOption.at(1).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.nei" />);
@@ -124,7 +132,7 @@ describe('<AvregningPanelImpl>', () => {
       apCodes: ['5085'],
       erTilbakekrevingVilkårOppfylt: undefined,
     };
-    const wrapper = shallow(<AvregningPanelImpl
+    const wrapper = shallowWithIntl(<AvregningPanelImpl
       {...props}
     />);
 

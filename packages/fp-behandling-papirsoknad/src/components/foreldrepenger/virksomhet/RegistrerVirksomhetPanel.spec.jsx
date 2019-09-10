@@ -3,8 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import Image from '@fpsak-frontend/shared-components/src/Image';
 
-
+import { Undertekst } from 'nav-frontend-typografi';
 import { RegistrerVirksomhetPanel } from './RegistrerVirksomhetPanel';
 
 describe('<RegistrerVirksomhetPanel>', () => {
@@ -19,10 +20,10 @@ describe('<RegistrerVirksomhetPanel>', () => {
       form="form"
     />);
 
-    const image = wrapper.find('injectIntl(Image)');
+    const image = wrapper.find(Image);
     expect(image).to.have.length(1);
 
-    const undertekst = wrapper.find('Undertekst');
+    const undertekst = wrapper.find(Undertekst);
     expect(undertekst).to.have.length(1);
   });
 

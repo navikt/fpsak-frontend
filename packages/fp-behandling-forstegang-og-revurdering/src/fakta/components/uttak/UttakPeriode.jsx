@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import moment from 'moment';
 import classnames from 'classnames/bind';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -19,32 +19,32 @@ import styles from './uttakPeriode.less';
 
 const classNames = classnames.bind(styles);
 
-const renderTomPeriode = () => (
+const renderTomPeriode = (intl) => (
   <div className={styles.periodeIconWrapper}>
-    <Image src={tomPeriode} altCode="UttakInfoPanel.PeriodenharTommeDagerFremTilNestePeriode" />
+    <Image src={tomPeriode} alt={intl.formatMessage({ id: 'UttakInfoPanel.PeriodenharTommeDagerFremTilNestePeriode' })} />
     <Normaltekst><FormattedMessage id="UttakInfoPanel.TomPeriode" /></Normaltekst>
   </div>
 );
 
-const renderOverlappendePeriode = () => (
+const renderOverlappendePeriode = (intl) => (
   <div className={styles.periodeIconWrapper}>
-    <Image src={overlapp} altCode="UttakInfoPanel.PeriodenErOverlappende" />
+    <Image src={overlapp} alt={intl.formatMessage({ id: 'UttakInfoPanel.PeriodenErOverlappende' })} />
     <Normaltekst><FormattedMessage id="UttakInfoPanel.OverlappendePeriode" /></Normaltekst>
   </div>
 );
 
-const renderValidationGraphic = (perioder, index, isLastIndex) => {
+const renderValidationGraphic = (perioder, index, isLastIndex, intl) => {
   if (!isLastIndex) {
     const periode = perioder[index];
     const nextPeriode = perioder[index + 1];
     const diff = calcDays(periode.tom, nextPeriode.fom, ISO_DATE_FORMAT);
 
     if (moment(periode.tom) >= moment(nextPeriode.fom)) {
-      return renderOverlappendePeriode();
+      return renderOverlappendePeriode(intl);
     }
 
     if (moment(periode.tom) < moment(nextPeriode.fom) && diff > 2) {
-      return renderTomPeriode();
+      return renderTomPeriode(intl);
     }
   }
 
@@ -59,19 +59,20 @@ const getClassName = (periode, readOnly) => {
 };
 
 const UttakPeriode = ({
-  fields,
-  openSlettPeriodeModalCallback,
-  updatePeriode,
-  editPeriode,
   cancelEditPeriode,
-  isAnyFormOpen,
-  isNyPeriodeFormOpen,
-  readOnly,
-  perioder,
-  inntektsmeldingInfo,
+  editPeriode,
   endringsdato,
   farSøkerFør6Uker,
+  fields,
+  inntektsmeldingInfo,
+  intl,
+  isAnyFormOpen,
+  isNyPeriodeFormOpen,
   meta,
+  openSlettPeriodeModalCallback,
+  perioder,
+  readOnly,
+  updatePeriode,
 }) => (
   <div>
     {meta.error && <AlertStripe className={styles.fullWidth} type="feil">{meta.error}</AlertStripe>}
@@ -85,7 +86,7 @@ const UttakPeriode = ({
           <React.Fragment key={fieldId}>
             <FlexRow>
               <FlexColumn className={styles.fullWidth}>
-                {index === 0 && harEndringsdatoSomErFørFørsteUttaksperiode && renderTomPeriode()}
+                {index === 0 && harEndringsdatoSomErFørFørsteUttaksperiode && renderTomPeriode(intl)}
                 <div className={getClassName(periode, readOnly)}>
                   <UttakPeriodeType
                     bekreftet={periode.bekreftet}
@@ -143,6 +144,7 @@ const UttakPeriode = ({
 );
 
 UttakPeriode.propTypes = {
+  intl: PropTypes.shape().isRequired,
   fields: PropTypes.shape().isRequired,
   meta: PropTypes.shape().isRequired,
   openSlettPeriodeModalCallback: PropTypes.func.isRequired,
@@ -163,4 +165,4 @@ UttakPeriode.defaultProps = {
   farSøkerFør6Uker: false,
 };
 
-export default UttakPeriode;
+export default injectIntl(UttakPeriode);

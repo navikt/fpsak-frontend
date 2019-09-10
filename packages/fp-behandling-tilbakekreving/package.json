@@ -48,10 +48,11 @@
     "react-motion": "^0.5.2",
     "react-redux": "^5.1.1",
     "react-router-dom": "^4.3.1",
-    "react-visjs-timeline": "^1.5.0",
+    "react-visjs-timeline": "^1.6.0",
     "redux": "^4.0.4",
     "redux-form": "^7.4.2",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "vis-timeline": "^5.1.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

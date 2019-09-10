@@ -7,6 +7,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import { useIntl } from 'react-intl';
 import styles from './timeLineSoker.less';
 
 /**
@@ -31,27 +32,30 @@ const getKjønn = (kode) => {
 const TimeLineSoker = ({
   hovedsokerKjonnKode,
   medsokerKjonnKode,
-}) => (
-  <div className={styles.timelineSokerContatiner}>
-    <Row>
-      <Image
-        className={styles.iconHovedsoker}
-        src={getKjønn(hovedsokerKjonnKode).src}
-        altCode="Person.ImageText"
-        titleCode={getKjønn(hovedsokerKjonnKode).title}
-      />
-    </Row>
-    <Row>
-      <Image
-        className={styles.iconMedsoker}
-        src={getKjønn(medsokerKjonnKode).src}
-        altCode="Person.ImageText"
-        titleCode={getKjønn(medsokerKjonnKode).title}
-      />
-    </Row>
-  </div>
+}) => {
+  const intl = useIntl();
+  return (
+    <div className={styles.timelineSokerContatiner}>
+      <Row>
+        <Image
+          className={styles.iconHovedsoker}
+          src={getKjønn(hovedsokerKjonnKode).src}
+          alt={intl.formatMessage({ id: 'Person.ImageText' })}
+          title={intl.formatMessage({ id: getKjønn(hovedsokerKjonnKode).title })}
+        />
+      </Row>
+      <Row>
+        <Image
+          className={styles.iconMedsoker}
+          src={getKjønn(medsokerKjonnKode).src}
+          alt={intl.formatMessage({ id: 'Person.ImageText' })}
+          title={intl.formatMessage({ id: getKjønn(medsokerKjonnKode).title })}
+        />
+      </Row>
+    </div>
 
-);
+  );
+};
 
 TimeLineSoker.propTypes = {
   hovedsokerKjonnKode: PropTypes.string.isRequired,

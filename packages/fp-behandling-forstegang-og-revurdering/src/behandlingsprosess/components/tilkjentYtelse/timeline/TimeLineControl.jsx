@@ -6,11 +6,10 @@ import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-
-import zoomOutImageUrl from '@fpsak-frontend/assets/images/zoom_out.svg';
-import zoomOutImageFilledUrl from '@fpsak-frontend/assets/images/zoom_out_filled.svg';
 import zoomInImageUrl from '@fpsak-frontend/assets/images/zoom_in.svg';
 import zoomInImageFilledUrl from '@fpsak-frontend/assets/images/zoom_in_filled.svg';
+import zoomOutImageUrl from '@fpsak-frontend/assets/images/zoom_out.svg';
+import zoomOutImageFilledUrl from '@fpsak-frontend/assets/images/zoom_out_filled.svg';
 
 import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
@@ -34,24 +33,10 @@ import styles from './timeLineControl.less';
  *
  * Holds the controls for the timeline (zoom, traversing left/right and opening the data area)
  *
- * ```
  */
 
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const findZoomInImg = (isHovering) => (isHovering ? zoomInImageFilledUrl : zoomInImageUrl);
-const findZoomOutImg = (isHovering) => (isHovering ? zoomOutImageFilledUrl : zoomOutImageUrl);
-const findOpenPeriodImage = (isHovering) => (isHovering ? arrowDownFilledImageUrl : arrowDownImageUrl);
-const findQuestionImage = (isHovering) => (isHovering ? questionHoverUrl : questionNormalUrl);
-const oppfyltImage = () => (oppfyltUrl);
-const ikkeOppfyltImage = () => (ikkeOppfyltUrl);
-const findFodselImage = () => (fodselUrl);
-const soknadImage = () => (soknadUrl);
-const endringsTidspunktImage = () => (revurderingUrl);
-const uavklartImage = () => (uavklartUrl);
-
-
 const TimeLineControl = ({
+  intl,
   goBackwardCallback,
   goForwardCallback,
   zoomInCallback,
@@ -66,8 +51,9 @@ const TimeLineControl = ({
           <span>
             <Image
               className={styles.timeLineButton}
-              imageSrcFunction={findQuestionImage}
-              altCode="Timeline.openData"
+              src={questionNormalUrl}
+              srcHover={questionHoverUrl}
+              alt={intl.formatMessage({ id: 'Timeline.openData' })}
             />
           </span>
           <div className={styles.popUnderContent}>
@@ -75,16 +61,16 @@ const TimeLineControl = ({
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={oppfyltImage}
-                  altCode="Timeline.OppfyltPeriode"
+                  src={oppfyltUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.OppfyltPeriode' })}
                 />
                 <FormattedMessage id="Timeline.OppfyltPeriode" />
               </Column>
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={findFodselImage}
-                  altCode="Timeline.TidspunktFamiliehendelse"
+                  src={fodselUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.TidspunktFamiliehendelse' })}
                 />
                 <FormattedMessage id="Timeline.TidspunktFamiliehendelse" />
               </Column>
@@ -94,16 +80,16 @@ const TimeLineControl = ({
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={ikkeOppfyltImage}
-                  altCode="Timeline.IkkeOppfyltPeriode"
+                  src={ikkeOppfyltUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.IkkeOppfyltPeriode' })}
                 />
                 <FormattedMessage id="Timeline.IkkeOppfyltPeriode" />
               </Column>
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={soknadImage}
-                  altCode="Timeline.TidspunktMotakSoknad"
+                  src={soknadUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.TidspunktMotakSoknad' })}
                 />
                 <FormattedMessage id="Timeline.TidspunktMotakSoknad" />
               </Column>
@@ -113,16 +99,16 @@ const TimeLineControl = ({
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={uavklartImage}
-                  altCode="Timeline.IkkeAvklartPeriode"
+                  src={uavklartUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.IkkeAvklartPeriode' })}
                 />
                 <FormattedMessage id="Timeline.IkkeAvklartPeriode" />
               </Column>
               <Column xs="6">
                 <Image
                   className={styles.timeLineButton}
-                  imageSrcFunction={endringsTidspunktImage}
-                  altCode="Timeline.TidspunktRevurdering"
+                  src={revurderingUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.TidspunktRevurdering' })}
                 />
                 <FormattedMessage id="Timeline.TidspunktRevurdering" />
               </Column>
@@ -133,7 +119,7 @@ const TimeLineControl = ({
                 <Image
                   className={styles.timeLineButton}
                   src={gradertImage}
-                  altCode="Timeline.GradertPeriode"
+                  alt={intl.formatMessage({ id: 'Timeline.GradertPeriode' })}
                 />
                 <FormattedMessage id="Timeline.GradertPeriode" />
               </Column>
@@ -141,7 +127,7 @@ const TimeLineControl = ({
                 <Image
                   className={styles.timeLineButton}
                   src={manueltAvklart}
-                  altCode="Timeline.ManueltAvklart"
+                  alt={intl.formatMessage({ id: 'Timeline.ManueltAvklart' })}
                 />
                 <FormattedMessage id="Timeline.ManueltAvklart" />
               </Column>
@@ -153,8 +139,9 @@ const TimeLineControl = ({
         <Image
           tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findOpenPeriodImage}
-          altCode="Timeline.openData"
+          src={arrowDownImageUrl}
+          srcHover={arrowDownFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.openData' })}
           onMouseDown={openPeriodInfo}
           onKeyDown={openPeriodInfo}
         />
@@ -164,8 +151,9 @@ const TimeLineControl = ({
         <Image
           tabIndex="0"
           className={styles.timeLineButtonInverted}
-          imageSrcFunction={findOpenPeriodImage}
-          altCode="Timeline.openData"
+          src={arrowDownImageUrl}
+          srcHover={arrowDownFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.openData' })}
           onMouseDown={openPeriodInfo}
           onKeyDown={openPeriodInfo}
         />
@@ -174,16 +162,18 @@ const TimeLineControl = ({
           <Image
             tabIndex="0"
             className={styles.timeLineButton}
-            imageSrcFunction={findZoomInImg}
-            altCode="Timeline.zoomIn"
+            src={zoomInImageUrl}
+            srcHover={zoomInImageFilledUrl}
+            alt={intl.formatMessage({ id: 'Timeline.zoomIn' })}
             onMouseDown={zoomInCallback}
             onKeyDown={zoomInCallback}
           />
           <Image
             tabIndex="0"
             className={styles.timeLineButton}
-            imageSrcFunction={findZoomOutImg}
-            altCode="Timeline.zoomOut"
+            src={zoomOutImageUrl}
+            srcHover={zoomOutImageFilledUrl}
+            alt={intl.formatMessage({ id: 'Timeline.zoomOut' })}
             onMouseDown={zoomOutCallback}
             onKeyDown={zoomOutCallback}
           />
@@ -191,16 +181,18 @@ const TimeLineControl = ({
         <Image
           tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findArrowLeftImg}
-          altCode="Timeline.prevPeriod"
+          src={arrowLeftImageUrl}
+          srcHover={arrowLeftFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
           onMouseDown={goBackwardCallback}
           onKeyDown={goBackwardCallback}
         />
         <Image
           tabIndex="0"
           className={styles.timeLineButton}
-          imageSrcFunction={findArrowRightImg}
-          altCode="Timeline.nextPeriod"
+          src={arrowRightImageUrl}
+          srcHover={arrowRightFilledImageUrl}
+          alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
           onMouseDown={goForwardCallback}
           onKeyDown={goForwardCallback}
         />
@@ -210,6 +202,7 @@ const TimeLineControl = ({
 );
 
 TimeLineControl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   goBackwardCallback: PropTypes.func.isRequired,
   goForwardCallback: PropTypes.func.isRequired,
   zoomInCallback: PropTypes.func.isRequired,

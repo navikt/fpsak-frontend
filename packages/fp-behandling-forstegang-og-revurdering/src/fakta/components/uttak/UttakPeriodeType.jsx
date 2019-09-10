@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
@@ -61,27 +61,28 @@ const getUttakPeriode = (uttakPeriodeType, oppholdArsak, getKodeverknavn) => {
 };
 
 export const UttakPeriodeType = ({ // NOSONAR
-  tilDato,
-  fraDato,
-  openSlettPeriodeModalCallback,
-  id,
-  editPeriode,
-  isAnyFormOpen,
-  isNyPeriodeFormOpen,
-  readOnly,
-  arbeidstidprosent,
-  utsettelseArsak,
-  overforingArsak,
-  uttakPeriodeType,
-  isFromSøknad,
   arbeidsgiver,
+  arbeidstidprosent,
+  editPeriode,
   erFrilanser,
   erSelvstendig,
+  flerbarnsdager,
+  fraDato,
+  getKodeverknavn,
+  id,
+  intl,
+  isAnyFormOpen,
+  isFromSøknad,
+  isNyPeriodeFormOpen,
+  openSlettPeriodeModalCallback,
+  oppholdArsak,
+  overforingArsak,
+  readOnly,
   samtidigUttak,
   samtidigUttaksprosent,
-  flerbarnsdager,
-  oppholdArsak,
-  getKodeverknavn,
+  tilDato,
+  utsettelseArsak,
+  uttakPeriodeType,
 }) => {
   const isAnyFormOrNyPeriodeOpen = isAnyFormOpen() || isNyPeriodeFormOpen;
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fraDato, tilDato, ISO_DATE_FORMAT);
@@ -101,13 +102,13 @@ export const UttakPeriodeType = ({ // NOSONAR
               className={styles.editIcon}
               src={isAnyFormOrNyPeriodeOpen ? editPeriodeDisabledIcon : editPeriodeIcon}
               onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => editPeriode(id)}
-              altCode="UttakInfoPanel.EndrePerioden"
+              alt={intl.formatMessage({ id: 'UttakInfoPanel.EndrePerioden' })}
             />
             <Image
               className={styles.removeIcon}
               src={isAnyFormOrNyPeriodeOpen ? removePeriodDisabled : removePeriod}
               onClick={isAnyFormOrNyPeriodeOpen ? () => undefined : () => openSlettPeriodeModalCallback(id)}
-              altCode="UttakInfoPanel.SlettPerioden"
+              alt={intl.formatMessage({ id: 'UttakInfoPanel.SlettPerioden' })}
             />
           </div>
           )}
@@ -175,36 +176,37 @@ export const UttakPeriodeType = ({ // NOSONAR
 };
 
 UttakPeriodeType.propTypes = {
-  fraDato: PropTypes.string.isRequired,
-  tilDato: PropTypes.string.isRequired,
-  uttakPeriodeType: PropTypes.shape().isRequired,
-  openSlettPeriodeModalCallback: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
-  editPeriode: PropTypes.func.isRequired,
-  isAnyFormOpen: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  arbeidstidprosent: PropTypes.number,
   arbeidsgiver: PropTypes.shape(),
-  isNyPeriodeFormOpen: PropTypes.bool.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
-  overforingArsak: PropTypes.shape().isRequired,
-  isFromSøknad: PropTypes.bool.isRequired,
-  flerbarnsdager: PropTypes.bool.isRequired,
-  samtidigUttak: PropTypes.bool.isRequired,
-  samtidigUttaksprosent: PropTypes.string,
+  arbeidstidprosent: PropTypes.number,
+  editPeriode: PropTypes.func.isRequired,
   erFrilanser: PropTypes.bool,
   erSelvstendig: PropTypes.bool,
-  oppholdArsak: PropTypes.shape(),
+  flerbarnsdager: PropTypes.bool.isRequired,
+  fraDato: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
+  intl: PropTypes.shape().isRequired,
+  isAnyFormOpen: PropTypes.func.isRequired,
+  isFromSøknad: PropTypes.bool.isRequired,
+  isNyPeriodeFormOpen: PropTypes.bool.isRequired,
+  openSlettPeriodeModalCallback: PropTypes.func.isRequired,
+  oppholdArsak: PropTypes.shape(),
+  overforingArsak: PropTypes.shape().isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  samtidigUttak: PropTypes.bool.isRequired,
+  samtidigUttaksprosent: PropTypes.string,
+  tilDato: PropTypes.string.isRequired,
+  utsettelseArsak: PropTypes.shape().isRequired,
+  uttakPeriodeType: PropTypes.shape().isRequired,
 };
 
 UttakPeriodeType.defaultProps = {
-  arbeidstidprosent: null,
-  samtidigUttaksprosent: null,
   arbeidsgiver: {},
+  arbeidstidprosent: null,
   erFrilanser: false,
   erSelvstendig: false,
   oppholdArsak: undefined,
+  samtidigUttaksprosent: null,
 };
 
-export default injectKodeverk(getAlleKodeverk)(UttakPeriodeType);
+export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakPeriodeType));

@@ -1,16 +1,16 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
-
 import { Image } from '@fpsak-frontend/shared-components';
-
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import { PeriodeControllerImpl } from './PeriodeController';
 
+
 describe('<PeriodeController>', () => {
   it('skal vise knapp for å dele opp perioden og knapper for å velge forrige eller neste periode', () => {
-    const wrapper = shallow(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+      intl={intlMock}
       behandlingId={1}
       beregnBelop={sinon.spy()}
       oppdaterSplittedePerioder={sinon.spy()}
@@ -21,14 +21,28 @@ describe('<PeriodeController>', () => {
     />);
 
     const knapper = wrapper.find(Image);
+
     expect(knapper).to.have.length(3);
-    expect(knapper.first().prop('altCode')).is.eql('PeriodeController.DelOppPerioden');
-    expect(knapper.at(1).prop('altCode')).is.eql('PeriodeController.ForrigePeriode');
-    expect(knapper.last().prop('altCode')).is.eql('PeriodeController.NestePeriode');
+    expect(knapper.first()
+      .prop('alt'))
+      .is
+      .length
+      .above(3);
+    expect(knapper.at(1)
+      .prop('alt'))
+      .is
+      .length
+      .above(3);
+    expect(knapper.last()
+      .prop('alt'))
+      .is
+      .length
+      .above(3);
   });
 
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
-    const wrapper = shallow(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+      intl={intlMock}
       behandlingId={1}
       beregnBelop={sinon.spy()}
       oppdaterSplittedePerioder={sinon.spy()}
@@ -54,7 +68,8 @@ describe('<PeriodeController>', () => {
     const periode = {
       feilutbetaling: 1000,
     };
-    const wrapper = shallow(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+      intl={intlMock}
       behandlingId={1}
       beregnBelop={beregnBelop}
       oppdaterSplittedePerioder={oppdaterSplittedePerioder}

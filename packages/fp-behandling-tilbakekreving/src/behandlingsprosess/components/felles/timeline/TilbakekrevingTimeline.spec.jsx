@@ -1,13 +1,14 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
-import Timeline from 'react-visjs-timeline';
 
+import Timeline from 'react-visjs-timeline';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
 import TilbakekrevingTimelineController from './TilbakekrevingTimelineController';
+
 
 describe('<TilbakekrevingTimeline>', () => {
   it('skal rendre tidslinje korrekt', () => {
@@ -32,8 +33,9 @@ describe('<TilbakekrevingTimeline>', () => {
       isGodkjent: true,
     };
 
-    const wrapper = shallow(
-      <TilbakekrevingTimeline
+    const wrapper = shallowWithIntl(
+      <TilbakekrevingTimeline.WrappedComponent
+        intl={intlMock}
         perioder={perioder}
         selectedPeriod={valgtPeriode}
         toggleDetaljevindu={sinon.spy()}

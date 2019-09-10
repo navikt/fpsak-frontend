@@ -34,7 +34,7 @@ const FatterTilbakekrevingVedtakStatusModal = ({
   >
     <Row>
       <Column xs="1">
-        <Image className={styles.image} altCode="FatterTilbakekrevingVedtakStatusModal.Sendt" src={innvilgetImageUrl} />
+        <Image className={styles.image} alt={intl.formatMessage({ id: 'FatterTilbakekrevingVedtakStatusModal.Sendt' })} src={innvilgetImageUrl} />
         <div className={styles.divider} />
       </Column>
       <Column xs="9">

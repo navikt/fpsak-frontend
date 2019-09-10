@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { DocumentIndex } from './DocumentIndex';
+import DocumentList from './components/DocumentList';
 
 describe('<DocumentIndex>', () => {
   const documents = [{
@@ -16,7 +17,7 @@ describe('<DocumentIndex>', () => {
   it('skal vise documentList med dokumenter', () => {
     const wrapper = shallow(<DocumentIndex documents={documents} behandlingId={1} saksNr={123} />);
 
-    const documentList = wrapper.find('DocumentList');
+    const documentList = wrapper.find(DocumentList);
     expect(documentList).to.have.length(1);
     expect(documentList.prop('documents')).to.eql(documents);
     expect(documentList.prop('selectDocumentCallback')).is.not.null;

@@ -8,11 +8,11 @@ import ReduxApiCreator from './ReduxApiCreator';
 class EndpointOperations {
   reduxApiCreator: ReduxApiCreator;
 
-  contextPath: string
+  contextPath: string;
 
-  name: string
+  name: string;
 
-  path: string
+  path: string;
 
   constructor(reduxApiCreator: ReduxApiCreator, contextPath: string, config: RequestConfig) {
     this.reduxApiCreator = reduxApiCreator;
@@ -35,7 +35,7 @@ class EndpointOperations {
 
   getRestApiMeta = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.meta);
 
-  getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error)
+  getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error);
 
   getRestApiStarted = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.started);
 

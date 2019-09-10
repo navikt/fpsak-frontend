@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Image } from '@fpsak-frontend/shared-components';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { UttakPeriodeType } from './UttakPeriodeType';
 
 describe('<UttakPeriodeType>', () => {
@@ -28,24 +28,25 @@ describe('<UttakPeriodeType>', () => {
   const getKodeverknavn = () => undefined;
 
   it('skal vise redigere og slett periode hvis manuellOverstyring er true og readOnly er false', () => {
-    const wrapper = shallow(<UttakPeriodeType
-      tilDato={tilDato}
-      fraDato={fraDato}
-      id={id}
-      uttakPeriodeType={uttakPeriodeType}
-      utsettelseArsak={utsettelseArsak}
-      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+    const wrapper = shallowWithIntl(<UttakPeriodeType
       editPeriode={editPeriode}
+      flerbarnsdager={flerbarnsdager}
+      fraDato={fraDato}
+      getKodeverknavn={getKodeverknavn}
+      id={id}
+      intl={intlMock}
       isAnyFormOpen={isAnyFormOpen}
+      isFromSøknad
+      isNyPeriodeFormOpen={false}
+      manuellOverstyring
+      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+      oppholdArsak={oppholdArsak}
       overforingArsak={{}}
       readOnly={false}
-      manuellOverstyring
-      isNyPeriodeFormOpen={false}
       samtidigUttak={samtidigUttak}
-      flerbarnsdager={flerbarnsdager}
-      oppholdArsak={oppholdArsak}
-      isFromSøknad
-      getKodeverknavn={getKodeverknavn}
+      tilDato={tilDato}
+      utsettelseArsak={utsettelseArsak}
+      uttakPeriodeType={uttakPeriodeType}
     />);
 
     const image = wrapper.find(Image);
@@ -53,24 +54,25 @@ describe('<UttakPeriodeType>', () => {
   });
 
   it('skal ikke vise redigere og slett periode hvis det er readonly', () => {
-    const wrapper = shallow(<UttakPeriodeType
-      tilDato={tilDato}
-      fraDato={fraDato}
-      id={id}
-      uttakPeriodeType={uttakPeriodeType}
-      utsettelseArsak={utsettelseArsak}
-      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+    const wrapper = shallowWithIntl(<UttakPeriodeType
       editPeriode={editPeriode}
+      flerbarnsdager={flerbarnsdager}
+      fraDato={fraDato}
+      getKodeverknavn={getKodeverknavn}
+      id={id}
+      intl={intlMock}
       isAnyFormOpen={isAnyFormOpen}
+      isFromSøknad
+      isNyPeriodeFormOpen={false}
+      manuellOverstyring={false}
+      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+      oppholdArsak={oppholdArsak}
       overforingArsak={{}}
       readOnly
-      manuellOverstyring={false}
-      isNyPeriodeFormOpen={false}
       samtidigUttak={samtidigUttak}
-      flerbarnsdager={flerbarnsdager}
-      oppholdArsak={oppholdArsak}
-      isFromSøknad
-      getKodeverknavn={getKodeverknavn}
+      tilDato={tilDato}
+      utsettelseArsak={utsettelseArsak}
+      uttakPeriodeType={uttakPeriodeType}
     />);
 
     const image = wrapper.find(Image);
@@ -78,53 +80,55 @@ describe('<UttakPeriodeType>', () => {
   });
 
   it('skal vise frilans når erFrilans er true', () => {
-    const wrapper = shallow(<UttakPeriodeType
-      tilDato={tilDato}
-      fraDato={fraDato}
-      id={id}
-      uttakPeriodeType={uttakPeriodeType}
-      utsettelseArsak={utsettelseArsak}
-      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+    const wrapper = shallowWithIntl(<UttakPeriodeType
+      arbeidstidprosent={arbeidstidprosent}
       editPeriode={editPeriode}
-      isAnyFormOpen={isAnyFormOpen}
-      overforingArsak={{}}
-      readOnly
-      manuellOverstyring={false}
-      isNyPeriodeFormOpen={false}
       erFrilanser
       erSelvstendig={false}
-      samtidigUttak={samtidigUttak}
       flerbarnsdager={flerbarnsdager}
-      arbeidstidprosent={arbeidstidprosent}
-      oppholdArsak={oppholdArsak}
-      isFromSøknad
+      fraDato={fraDato}
       getKodeverknavn={getKodeverknavn}
+      id={id}
+      intl={intlMock}
+      isAnyFormOpen={isAnyFormOpen}
+      isFromSøknad
+      isNyPeriodeFormOpen={false}
+      manuellOverstyring={false}
+      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+      oppholdArsak={oppholdArsak}
+      overforingArsak={{}}
+      readOnly
+      samtidigUttak={samtidigUttak}
+      tilDato={tilDato}
+      utsettelseArsak={utsettelseArsak}
+      uttakPeriodeType={uttakPeriodeType}
     />);
 
     expect(wrapper.find('FormattedMessage').last().prop('id')).to.eql('UttakInfoPanel.Frilans');
   });
 
   it('skal vise arbeidsgiver og arbeidsgiverIdentifikator hvis erArbeidstaker', () => {
-    const wrapper = shallow(<UttakPeriodeType
-      tilDato={tilDato}
-      fraDato={fraDato}
-      id={id}
-      uttakPeriodeType={uttakPeriodeType}
-      utsettelseArsak={utsettelseArsak}
-      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+    const wrapper = shallowWithIntl(<UttakPeriodeType
+      arbeidsgiver={arbeidsgiver}
+      arbeidstidprosent={arbeidstidprosent}
       editPeriode={editPeriode}
+      flerbarnsdager={flerbarnsdager}
+      fraDato={fraDato}
+      getKodeverknavn={getKodeverknavn}
+      id={id}
+      intl={intlMock}
       isAnyFormOpen={isAnyFormOpen}
+      isFromSøknad
+      isNyPeriodeFormOpen={false}
+      manuellOverstyring={false}
+      openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
+      oppholdArsak={oppholdArsak}
       overforingArsak={{}}
       readOnly
-      manuellOverstyring={false}
-      isNyPeriodeFormOpen={false}
       samtidigUttak={samtidigUttak}
-      flerbarnsdager={flerbarnsdager}
-      arbeidstidprosent={arbeidstidprosent}
-      arbeidsgiver={arbeidsgiver}
-      oppholdArsak={oppholdArsak}
-      isFromSøknad
-      getKodeverknavn={getKodeverknavn}
+      tilDato={tilDato}
+      utsettelseArsak={utsettelseArsak}
+      uttakPeriodeType={uttakPeriodeType}
     />);
 
     expect(wrapper.find('Element').last().childAt(0).text()).to.eql(`${arbeidsgiver.navn} (${arbeidsgiver.identifikator})`);

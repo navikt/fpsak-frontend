@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -26,7 +26,7 @@ import styles from './grunnlagForAarsinntektPanelAT.less';
 
 const formName = 'BeregningForm';
 
-const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn) => {
+const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn, intl) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const rows = relevanteAndeler.map((andel, index) => (
     <TableRow key={`index${index + 1}`}>
@@ -55,7 +55,7 @@ const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntek
       <TableColumn>
         <Image
           src={endretUrl}
-          titleCode="Behandling.EditedField"
+          title={intl.formatMessage({ id: 'Behandling.EditedField' })}
         />
       </TableColumn>
       )}
@@ -93,6 +93,7 @@ const harFastsettBgAtFlAksjonspunkt = (aksjonspunkter) => aksjonspunkter !== und
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
 export const GrunnlagForAarsinntektPanelATImpl = ({
+  intl,
   readOnly,
   alleAndeler,
   allePerioder,
@@ -121,7 +122,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
       </div>
       )}
       <Table headerTextCodes={headers} noHover classNameTable={styles.inntektTable}>
-        {createTableRows(relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
+        {createTableRows(relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn, intl)}
       </Table>
 
       { perioderMedBortfaltNaturalytelse.length > 0
@@ -132,6 +133,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
 };
 
 GrunnlagForAarsinntektPanelATImpl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   bruttoFastsattInntekt: PropTypes.number,
@@ -197,4 +199,4 @@ GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alle
   };
 };
 
-export default GrunnlagForAarsinntektPanelAT;
+export default injectIntl(GrunnlagForAarsinntektPanelAT);

@@ -11,6 +11,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
+import { injectIntl } from 'react-intl';
 import TilbakekrevingTimelineController from './TilbakekrevingTimelineController';
 
 import styles from './tilbakekrevingTimeline.less';
@@ -108,7 +109,6 @@ class TilbakekrevingTimeline extends Component {
     this.goBackward = this.goBackward.bind(this);
     this.zoomIn = this.zoomIn.bind(this);
     this.zoomOut = this.zoomOut.bind(this);
-
     this.timelineRef = React.createRef();
   }
 
@@ -155,6 +155,7 @@ class TilbakekrevingTimeline extends Component {
 
   render() {
     const {
+      intl,
       perioder,
       selectedPeriod,
       selectPeriodCallback,
@@ -182,8 +183,8 @@ class TilbakekrevingTimeline extends Component {
               <Image
                 className={styles.iconMedsoker}
                 src={isKvinne(kjonn) ? urlKvinne : urlMann}
-                altCode="TilbakekrevingTimeline.ImageText"
-                titleCode={isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man'}
+                alt={intl.formatMessage({ id: 'TilbakekrevingTimeline.ImageText' })}
+                title={intl.formatMessage({ id: isKvinne(kjonn) ? 'TilbakekrevingTimeline.Woman' : 'TilbakekrevingTimeline.Man' })}
               />
             </Row>
           </Column>
@@ -222,6 +223,7 @@ class TilbakekrevingTimeline extends Component {
 }
 
 TilbakekrevingTimeline.propTypes = {
+  intl: PropTypes.shape().isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     fom: PropTypes.string.isRequired,
@@ -246,4 +248,4 @@ TilbakekrevingTimeline.defaultProps = {
   selectedPeriod: undefined,
 };
 
-export default TilbakekrevingTimeline;
+export default injectIntl(TilbakekrevingTimeline);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import UttakPeriode from './UttakPeriode';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
@@ -66,7 +66,8 @@ const endringsdato = '2018-08-01';
 
 describe('<UttakPeriode>', () => {
   it('skal vise UttakPeriode', () => {
-    const wrapper = shallow(<UttakPeriode
+    const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
+      intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
       inntektsmeldinger={inntektsmeldinger}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
@@ -91,7 +92,8 @@ describe('<UttakPeriode>', () => {
   });
 
   it('skal ikke gi class active til perioder som er bekreftet,', () => {
-    const wrapper = shallow(<UttakPeriode
+    const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
+      intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
       inntektsmeldinger={inntektsmeldinger}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
@@ -115,7 +117,8 @@ describe('<UttakPeriode>', () => {
   });
 
   it('skal gi class active til perioder som er ikke bekreftet og ikke readOnly,', () => {
-    const wrapper = shallow(<UttakPeriode
+    const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
+      intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
       inntektsmeldinger={inntektsmeldinger}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
@@ -144,7 +147,8 @@ describe('<UttakPeriode>', () => {
         error: 'Perioder overlapper',
       },
     };
-    const wrapper = shallow(<UttakPeriode
+    const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
+      intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
       inntektsmeldinger={inntektsmeldinger}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}

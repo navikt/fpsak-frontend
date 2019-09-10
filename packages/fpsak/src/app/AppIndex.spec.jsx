@@ -1,10 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import AppIndex from './AppIndex';
+import Home from './components/Home';
+import Dekorator from './components/Dekorator';
+
 
 describe('<AppIndex>', () => {
   it('skal vise hjem-skjermbilde inkludert header men ikke feilmelding', () => {
@@ -18,11 +20,11 @@ describe('<AppIndex>', () => {
       showDetailedErrorMessages={false}
     />);
 
-    const headerComp = wrapper.find('Header');
+    const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
     expect(headerComp.prop('navAnsattName')).to.eql('Peder');
 
-    const homeComp = wrapper.find('Home');
+    const homeComp = wrapper.find(Home);
     expect(homeComp).to.have.length(1);
     expect(homeComp.prop('nrOfErrorMessages')).is.eql(0);
   });
@@ -38,11 +40,11 @@ describe('<AppIndex>', () => {
       showDetailedErrorMessages={false}
     />);
 
-    const headerComp = wrapper.find('Header');
+    const headerComp = wrapper.find(Dekorator);
     expect(headerComp).to.have.length(1);
     expect(headerComp.prop('navAnsattName')).to.eql('Peder');
 
-    const homeComp = wrapper.find('Home');
+    const homeComp = wrapper.find(Home);
     expect(homeComp).to.have.length(1);
     expect(homeComp.prop('nrOfErrorMessages')).is.eql(1);
   });
@@ -62,10 +64,10 @@ describe('<AppIndex>', () => {
       showDetailedErrorMessages={false}
     />);
 
-    const headerComp = wrapper.find('Header');
+    const headerComp = wrapper.find(Dekorator);
     expect(headerComp.prop('queryStrings')).to.eql({ errormessage: 'Det finnes ingen sak med denne referansen: 266' });
 
-    const homeComp = wrapper.find('Home');
+    const homeComp = wrapper.find(Home);
     expect(homeComp.prop('nrOfErrorMessages')).is.eql(1);
   });
 });

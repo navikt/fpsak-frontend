@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { EditedIcon, Image } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
@@ -20,14 +20,11 @@ import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './periodeController.less';
 
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const splitPeriodImg = (isHovering) => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
-
 const isEdited = false;
 
 export class PeriodeControllerImpl extends Component {
   static propTypes = {
+    intl: PropTypes.shape().isRequired,
     behandlingId: PropTypes.number.isRequired,
     beregnBelop: PropTypes.func.isRequired,
     oppdaterSplittedePerioder: PropTypes.func.isRequired,
@@ -106,6 +103,7 @@ export class PeriodeControllerImpl extends Component {
 
   render() {
     const {
+      intl,
       callbackForward,
       callbackBackward,
       periode,
@@ -129,12 +127,12 @@ export class PeriodeControllerImpl extends Component {
               <Image
                 tabIndex="0"
                 className={styles.splitPeriodImage}
-                imageSrcFunction={splitPeriodImg}
-                altCode="PeriodeController.DelOppPerioden"
+                src={splitPeriodImageUrl}
+                srcHover={splitPeriodImageHoverUrl}
+                alt={intl.formatMessage({ id: 'PeriodeController.DelOppPerioden' })}
                 onMouseDown={this.showModal}
                 onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
               />
-
               <FormattedMessage id="PeriodeController.DelOppPerioden" />
             </span>
           )}
@@ -153,16 +151,18 @@ export class PeriodeControllerImpl extends Component {
             <Image
               tabIndex="0"
               className={styles.timeLineButton}
-              imageSrcFunction={findArrowLeftImg}
-              altCode="PeriodeController.ForrigePeriode"
+              src={arrowLeftImageUrl}
+              srcHover={arrowLeftFilledImageUrl}
+              alt={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
               onMouseDown={callbackBackward}
               onKeyDown={callbackBackward}
             />
             <Image
               tabIndex="0"
               className={styles.timeLineButton}
-              imageSrcFunction={findArrowRightImg}
-              altCode="PeriodeController.NestePeriode"
+              src={arrowRightImageUrl}
+              srcHover={arrowRightFilledImageUrl}
+              alt={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
               onMouseDown={callbackForward}
               onKeyDown={callbackForward}
             />
@@ -183,6 +183,6 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const PeriodeController = connect(mapStateToPros, mapDispatchToProps)(PeriodeControllerImpl);
+const PeriodeController = connect(mapStateToPros, mapDispatchToProps)(injectIntl(PeriodeControllerImpl));
 
 export default PeriodeController;

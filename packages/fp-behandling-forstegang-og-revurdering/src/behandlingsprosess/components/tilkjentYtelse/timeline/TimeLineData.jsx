@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
@@ -80,8 +80,6 @@ const findAndelsnavn = (andel, getKodeverknavn) => {
   }
 };
 
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
 const getGradering = (andel) => {
   if (andel === undefined) {
     return null;
@@ -111,7 +109,7 @@ export const TimeLineData = ({
   isSoknadSvangerskapspenger,
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
-
+  const intl = useIntl();
   return (
     <Row>
       <Column xs="12">
@@ -127,16 +125,18 @@ export const TimeLineData = ({
                 <Image
                   tabIndex="0"
                   className={styles.timeLineButton}
-                  imageSrcFunction={findArrowLeftImg}
-                  altCode="Timeline.prevPeriod"
+                  src={arrowLeftImageUrl}
+                  srcHover={arrowLeftFilledImageUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
                   onMouseDown={callbackBackward}
                   onKeyDown={callbackBackward}
                 />
                 <Image
                   tabIndex="0"
                   className={styles.timeLineButton}
-                  imageSrcFunction={findArrowRightImg}
-                  altCode="Timeline.nextPeriod"
+                  src={arrowRightImageUrl}
+                  srcHover={arrowRightFilledImageUrl}
+                  alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
                   onMouseDown={callbackForward}
                   onKeyDown={callbackForward}
                 />

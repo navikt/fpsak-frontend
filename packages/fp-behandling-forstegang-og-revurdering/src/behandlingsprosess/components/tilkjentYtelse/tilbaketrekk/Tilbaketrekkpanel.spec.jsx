@@ -2,12 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { buildInitialValues, Tilbaketrekkpanel as UnwrappedForm, transformValues } from './Tilbaketrekkpanel';
+
 
 const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
   definisjon: {
@@ -22,12 +23,14 @@ const lagAksjonspunktTilbaketrekk = (begrunnelse) => ({
 describe('<Tilbaketrekkpanel>', () => {
   it('skal teste at komponent vises korrekt', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
+      intl={intlMock}
       readOnly={false}
       submitCallback={sinon.spy()}
       readOnlySubmitButton={false}
       vurderTilbaketrekkAP={lagAksjonspunktTilbaketrekk(undefined)}
       {...reduxFormPropsMock}
     />);
+
     const radioOption = wrapper.find(RadioOption);
     expect(radioOption).to.have.length(2);
     const textfield = wrapper.find(TextAreaField);

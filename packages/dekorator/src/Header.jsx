@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Systemtittel } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
 
 import {
   FlexColumn, FlexContainer, FlexRow, Image,
@@ -10,13 +8,18 @@ import {
 
 import logoUrl from '@fpsak-frontend/assets/images/nav.svg';
 import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
-import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
-import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
-import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
-
-import ErrorMessagePanel from './ErrorMessagePanel';
+import { Systemtittel } from 'nav-frontend-typografi';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import styles from './header.less';
+import messages from '../i18n/nb_NO';
+import ErrorMessagePanel from './ErrorMessagePanel';
 
+const cache = createIntlCache();
+
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
 /**
  * Header
  *
@@ -25,68 +28,65 @@ import styles from './header.less';
  * I tillegg vil den vise potensielle feilmeldinger i ErrorMessagePanel.
  */
 const Header = ({
+  iconLinks,
+  systemTittel,
   navAnsattName,
   removeErrorMessage,
   queryStrings,
   showDetailedErrorMessages,
 }) => (
   <header className={styles.container}>
-    <FlexContainer>
-      <FlexRow className={styles.dekorator} role="banner">
-        <FlexColumn className={styles.logo}>
-          <Link to="/">
-            <Image
-              className={styles.headerIkon}
-              src={logoUrl}
-              altCode="Header.LinkToMainPage"
-              titleCode="Header.LinkToMainPage"
-            />
-          </Link>
-        </FlexColumn>
+    <RawIntlProvider value={intl}>
+      <FlexContainer>
+        <FlexRow className={styles.dekorator} role="banner">
+          <FlexColumn className={styles.logo}>
+            <Link to="/">
+              <Image
+                className={styles.headerIkon}
+                src={logoUrl}
+                alt={intl.formatMessage({ id: 'Header.LinkToMainPage' })}
+                title={intl.formatMessage({ id: 'Header.LinkToMainPage' })}
+              />
+            </Link>
+          </FlexColumn>
 
-        <Systemtittel><FormattedMessage id="Header.Foreldrepenger" /></Systemtittel>
-        <FlexColumn className="justifyItemsToFlexEnd">
-          <FlexRow className="justifyItemsToFlexEnd">
-            <FlexColumn>
-              <Image
-                className={styles.headerIkon}
-                src={systemrutineIkonUrl}
-                onMouseDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
-                onKeyDown={() => window.open(SYSTEMRUTINE_URL, '_blank')}
-                altCode="Header.Systemrutine"
-                titleCode="Header.Systemrutine"
-                tabIndex="0"
-              />
-            </FlexColumn>
-            <FlexColumn>
-              <Image
-                className={styles.headerIkon}
-                src={rettskildeneIkonUrl}
-                onMouseDown={() => window.open(RETTSKILDE_URL, '_blank')}
-                onKeyDown={() => window.open(RETTSKILDE_URL, '_blank')}
-                altCode="Header.Rettskilde"
-                titleCode="Header.Rettskilde"
-                tabIndex="0"
-              />
-            </FlexColumn>
-            <FlexColumn className={styles.navAnsatt}>
-              <Image
-                className={styles.headerIkon}
-                src={navAnsattIkonUrl}
-                altCode="Header.NavAnsatt"
-                titleCode="Header.NavAnsatt"
-              />
-              <span>{navAnsattName}</span>
-            </FlexColumn>
-          </FlexRow>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} showDetailedErrorMessages={showDetailedErrorMessages} />
+          <Systemtittel>{systemTittel}</Systemtittel>
+          <FlexColumn className="justifyItemsToFlexEnd">
+            <FlexRow className="justifyItemsToFlexEnd">
+              {iconLinks.map((iconLink) => (
+                <FlexColumn key={iconLink.text}>
+                  <Image
+                    className={styles.headerIkon}
+                    src={iconLink.icon}
+                    onMouseDown={() => window.open(iconLink.url, '_blank')}
+                    onKeyDown={() => window.open(iconLink.url, '_blank')}
+                    alt={iconLink.text}
+                    title={iconLink.text}
+                    tabIndex="0"
+                  />
+                </FlexColumn>
+              ))}
+              <FlexColumn className={styles.navAnsatt}>
+                <Image
+                  className={styles.headerIkon}
+                  src={navAnsattIkonUrl}
+                  alt={intl.formatMessage({ id: 'Header.NavAnsatt' })}
+                  title={intl.formatMessage({ id: 'Header.NavAnsatt' })}
+                />
+                <span>{navAnsattName}</span>
+              </FlexColumn>
+            </FlexRow>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} showDetailedErrorMessages={showDetailedErrorMessages} />
+    </RawIntlProvider>
   </header>
 );
 
 Header.propTypes = {
+  iconLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  systemTittel: PropTypes.string.isRequired,
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,

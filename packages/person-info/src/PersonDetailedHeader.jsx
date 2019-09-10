@@ -68,8 +68,7 @@ const PersonDetailedHeader = ({
         className={styles.icon}
         src={getPersonImage(navBrukerKjonn.kode)}
         alt={intl.formatMessage({ id: 'Person.ImageText' })}
-        altCode="Person.ImageText"
-        titleCode={getTitleCode(navBrukerKjonn.kode)}
+        title={intl.formatMessage({ id: getTitleCode(navBrukerKjonn.kode) })}
       />
       <div className={styles.infoPlaceholder}>
         <div>

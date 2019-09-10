@@ -72,7 +72,7 @@ export const CreateNewBehandlingModal = ({
     <form onSubmit={handleSubmit}>
       <Row>
         <Column xs="1">
-          <Image className={styles.image} altCode="CreateNewBehandlingModal.OpprettNyForstegangsbehandling" src={innvilgetImageUrl} />
+          <Image className={styles.image} alt={intl.formatMessage({ id: 'CreateNewBehandlingModal.OpprettNyForstegangsbehandling' })} src={innvilgetImageUrl} />
           <div className={styles.divider} />
         </Column>
         <Column xs="11">

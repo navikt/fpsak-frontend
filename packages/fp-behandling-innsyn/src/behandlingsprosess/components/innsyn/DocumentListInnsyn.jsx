@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
@@ -19,14 +19,35 @@ import styles from './documentListInnsyn.less';
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
 const getLink = (document, saksNr) => `${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
-const getDirectionImage = (document) => {
+const getDirectionImage = (document, intl) => {
   if (document.kommunikasjonsretning === kommunikasjonsretning.INN) {
-    return (<Image className={styles.image} src={mottaDokumentImageUrl} titleCode="DocumentListInnsyn.Motta" altCode="DocumentListInnsyn.Motta" />);
+    return (
+      <Image
+        className={styles.image}
+        src={mottaDokumentImageUrl}
+        alt={intl.formatMessage({ id: 'DocumentListInnsyn.Motta' })}
+        title={intl.formatMessage({ id: 'DocumentListInnsyn.Motta' })}
+      />
+    );
   }
   if (document.kommunikasjonsretning === kommunikasjonsretning.UT) {
-    return (<Image className={styles.image} src={sendDokumentImageUrl} titleCode="DocumentListInnsyn.Send" altCode="DocumentListInnsyn.Send" />);
+    return (
+      <Image
+        className={styles.image}
+        src={sendDokumentImageUrl}
+        alt={intl.formatMessage({ id: 'DocumentListInnsyn.Send' })}
+        title={intl.formatMessage({ id: 'DocumentListInnsyn.Send' })}
+      />
+    );
   }
-  return (<Image className={styles.image} src={internDokumentImageUrl} titleCode="DocumentListInnsyn.Intern" altCode="DocumentListInnsyn.Intern" />);
+  return (
+    <Image
+      className={styles.image}
+      src={internDokumentImageUrl}
+      alt={intl.formatMessage({ id: 'DocumentListInnsyn.Intern' })}
+      title={intl.formatMessage({ id: 'DocumentListInnsyn.Intern' })}
+    />
+  );
 };
 
 const noLabelHack = () => <span className={styles.hidden}>-</span>;
@@ -39,6 +60,7 @@ const noLabelHack = () => <span className={styles.hidden}>-</span>;
  * som viser at ingen dokumenter finnes på fagsak.
  */
 const DocumentListInnsyn = ({
+  intl,
   documents,
   saksNr,
   readOnly,
@@ -55,7 +77,6 @@ const DocumentListInnsyn = ({
       'DocumentListInnsyn.DateTime',
     ];
 
-
   return (
     <ElementWrapper>
       <Undertekst className={styles.noDocuments}><FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" /></Undertekst>
@@ -63,7 +84,7 @@ const DocumentListInnsyn = ({
         <Column xs={readOnly ? '6' : '10'}>
           <Table headerTextCodes={headerTextCodes}>
             {documents.map((document) => {
-              const img = getDirectionImage(document);
+              const img = getDirectionImage(document, intl);
               const dokId = parseInt(document.dokumentId, 10);
               return (
                 <TableRow key={dokId} id={dokId}>
@@ -93,6 +114,7 @@ const DocumentListInnsyn = ({
 
 
 DocumentListInnsyn.propTypes = {
+  intl: PropTypes.shape().isRequired,
   saksNr: PropTypes.number.isRequired,
   documents: PropTypes.arrayOf(PropTypes.shape({
     journalpostId: PropTypes.string.isRequired,
@@ -108,4 +130,4 @@ DocumentListInnsyn.defaultProps = {
   readOnly: false,
 };
 
-export default DocumentListInnsyn;
+export default injectIntl(DocumentListInnsyn);

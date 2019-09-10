@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage, useIntl } from 'react-intl';
 import classnames from 'classnames/bind';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
@@ -18,47 +18,56 @@ import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehan
 import styles from '../uttakPeriode.less';
 
 const classNames = classnames.bind(styles);
+/**
+ * @TODO Denne komponenten MÅ refaktoreres...
+ */
 
-const renderAvvikContentGraderingFraSøknad = () => (
-  <React.Fragment key={guid()}>
-    <VerticalSpacer eightPx />
-    <FlexRow>
-      <FlexColumn>
-        <Image src={advarselIkonUrl} altCode="HelpText.Aksjonspunkt" />
-      </FlexColumn>
-      <FlexColumn>
-        <Normaltekst className={classNames('avvik', 'hasAvvik')}>
-          <b><FormattedMessage id="UttakInfoPanel.Gradering" /></b>
-          :
-          {' '}
-          <FormattedMessage id="UttakInfoPanel.IkkeOppgittGradering" />
-        </Normaltekst>
-      </FlexColumn>
-    </FlexRow>
-  </React.Fragment>
-);
+const renderAvvikContentGraderingFraSøknad = () => {
+  const intl = useIntl();
+  return (
+    <React.Fragment key={guid()}>
+      <VerticalSpacer eightPx />
+      <FlexRow>
+        <FlexColumn>
+          <Image src={advarselIkonUrl} alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
+        </FlexColumn>
+        <FlexColumn>
+          <Normaltekst className={classNames('avvik', 'hasAvvik')}>
+            <b><FormattedMessage id="UttakInfoPanel.Gradering" /></b>
+            :
+            {' '}
+            <FormattedMessage id="UttakInfoPanel.IkkeOppgittGradering" />
+          </Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+    </React.Fragment>
+  );
+};
 
-const renderAvvikContentUtsettelseFraSøknad = (utsettelseArsak, getKodeverknavn) => (
-  <React.Fragment key={guid()}>
-    <VerticalSpacer eightPx />
-    <FlexRow>
-      <FlexColumn>
-        <Image src={advarselIkonUrl} altCode="HelpText.Aksjonspunkt" />
-      </FlexColumn>
-      <FlexColumn>
-        <Normaltekst className={classNames('avvik', 'hasAvvik')}>
-          <FormattedHTMLMessage
-            id="UttakInfoPanel.IkkeOppgittUtsettelse"
-            values={{
-              årsak: getKodeverknavn(utsettelseArsak),
-              årsakLowerCase: getKodeverknavn(utsettelseArsak).toLowerCase(),
-            }}
-          />
-        </Normaltekst>
-      </FlexColumn>
-    </FlexRow>
-  </React.Fragment>
-);
+const renderAvvikContentUtsettelseFraSøknad = (utsettelseArsak, getKodeverknavn) => {
+  const intl = useIntl();
+  return (
+    <React.Fragment key={guid()}>
+      <VerticalSpacer eightPx />
+      <FlexRow>
+        <FlexColumn>
+          <Image src={advarselIkonUrl} alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
+        </FlexColumn>
+        <FlexColumn>
+          <Normaltekst className={classNames('avvik', 'hasAvvik')}>
+            <FormattedHTMLMessage
+              id="UttakInfoPanel.IkkeOppgittUtsettelse"
+              values={{
+                årsak: getKodeverknavn(utsettelseArsak),
+                årsakLowerCase: getKodeverknavn(utsettelseArsak).toLowerCase(),
+              }}
+            />
+          </Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+    </React.Fragment>
+  );
+};
 
 const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
   const {
@@ -68,12 +77,13 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(fom, tom, 'YYYY-MM-DD');
   const isGradering = arbeidsprosent !== undefined && arbeidsprosent !== null;
   const tidenesEnde = tom === TIDENES_ENDE;
+  const intl = useIntl();
   return (
     <React.Fragment key={guid()}>
       <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
-          <Image src={advarselIkonUrl} altCode="HelpText.Aksjonspunkt" />
+          <Image src={advarselIkonUrl} alt={intl.formatMessage({ id: 'HelpText.Aksjonspunkt' })} />
         </FlexColumn>
         <FlexColumn>
           {!isGradering && (

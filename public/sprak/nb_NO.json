@@ -336,7 +336,6 @@
   "MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold": "Avklar om søker har lovlig opphold",
   "MedlemskapInfoPanel.HarFortsattMedlemskap": "Vurder om søker fortsatt har gyldig medlemskap i perioden",
   "Header.Foreldrepenger": "Foreldrepenger, engangsstønad og svangerskapspenger",
-  "Header.NavAnsatt": "NAV-ansatt",
   "Header.LinkToMainPage": "NAV, forsiden",
   "Header.Rettskilde": "Rettskildene",
   "Header.Systemrutine": "Systemrutine",
@@ -960,7 +959,7 @@
   "Historikk.Template.Foreldelse.VurderingAvPerioden": "<b>Manuell vurdering</b> av perioden {periodeFom}-{periodeTom}.",
   "HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn": "Vurder om engangsstønad eller foreldrepenger utbetalt til søker gjelder samme barn",
   "HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn": "Avklar om engangsstønad eller foreldrepenger utbetalt til annen forelder gjelder samme barn",
-  
+
   "VedtakRevurderingForm.OpphorPanel.ArsakTilOpphor": "Årsak til opphør",
 
   "VedtakForm.ForslagTilVedtak": "Vedtak",
@@ -1015,7 +1014,7 @@
   "VedtakForm.AutomatiskBrev.Lenke": "Forhåndsvis automatisk brev",
   "VedtakForm.SvpFritektsBrevModal.Ok": "Ok",
   "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrev": "I denne behandlingen er det ikke automatisk vedtaksbrev. Du må velge 'Overstyr automatisk brev' og skrive fritekstbrev.",
-  "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImageAltCode": "Ingen automatisk vedtaksbrev.",
+  "VedtakForm.SvpFritektsBrevModal.IngenAutomatiskVedtaksbrevImage": "Ingen automatisk vedtaksbrev.",
   "VedtakForm.SvpFritektsBrevModal.ModalDescription": "Informasjonsboks om ingen automatisk vedtaksbrev. Fritekstbrev er nødvendig.",
   "VedtakKlageForm.ArsakTilAvslag": "Årsak til avslag",
   "VedtakKlageForm.ResultatOpprettholdVedtak": "Vedtaket er stadfestet",
@@ -2539,10 +2538,6 @@
   "IntegrationStatusPanel.Endpoint": "Endepunkt:",
   "IntegrationStatusPanel.ErrorMessage": "Feilmelding:",
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
-  "ErrorMessagePanel.ErrorDetails": "Detaljert informasjon",
-  "ErrorMessagePanel.Close": "Lukk",
-  "ErrorMessageDetailsModal.ErrorDetails": "Detaljert informasjon",
-  "ErrorMessageDetailsModal.Close": "Lukk",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",

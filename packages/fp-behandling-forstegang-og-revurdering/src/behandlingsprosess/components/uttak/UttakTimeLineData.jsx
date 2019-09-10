@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 
@@ -22,10 +22,6 @@ import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './uttakTimeLineData.less';
-
-const findArrowLeftImg = (isHovering) => (isHovering ? arrowLeftFilledImageUrl : arrowLeftImageUrl);
-const findArrowRightImg = (isHovering) => (isHovering ? arrowRightFilledImageUrl : arrowRightImageUrl);
-const splitPeriodImg = (isHovering) => (isHovering ? splitPeriodImageHoverUrl : splitPeriodImageUrl);
 
 const getCorrectEmptyArbeidsForhold = (preiodeTypeKode, arbeidsForhold, getKodeverknavn) => {
   const arbeidsForholdMedNullDagerIgjenArray = [];
@@ -176,6 +172,7 @@ export class UttakTimeLineData extends Component {
 
   render() {
     const {
+      intl,
       readOnly,
       selectedItemData,
       callbackForward,
@@ -207,12 +204,12 @@ export class UttakTimeLineData extends Component {
                     <Image
                       tabIndex="0"
                       className={styles.splitPeriodImage}
-                      imageSrcFunction={splitPeriodImg}
-                      altCode="UttakTimeLineData.PeriodeData.DelOppPerioden"
+                      src={splitPeriodImageUrl}
+                      srcHover={splitPeriodImageHoverUrl}
+                      alt={intl.formatMessage({ id: 'UttakTimeLineData.PeriodeData.DelOppPerioden' })}
                       onMouseDown={this.showModal}
                       onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
                     />
-
                     <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
                   </span>
                 )}
@@ -231,16 +228,18 @@ export class UttakTimeLineData extends Component {
                   <Image
                     tabIndex="0"
                     className={styles.timeLineButton}
-                    imageSrcFunction={findArrowLeftImg}
-                    altCode="Timeline.prevPeriod"
+                    src={arrowLeftImageUrl}
+                    srcHover={arrowLeftFilledImageUrl}
+                    alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
                     onMouseDown={callbackBackward}
                     onKeyDown={callbackBackward}
                   />
                   <Image
                     tabIndex="0"
                     className={styles.timeLineButton}
-                    imageSrcFunction={findArrowRightImg}
-                    altCode="Timeline.nextPeriod"
+                    src={arrowRightImageUrl}
+                    srcHover={arrowRightFilledImageUrl}
+                    alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
                     onMouseDown={callbackForward}
                     onKeyDown={callbackForward}
                   />
@@ -273,6 +272,7 @@ export class UttakTimeLineData extends Component {
 }
 
 UttakTimeLineData.propTypes = {
+  intl: PropTypes.shape().isRequired,
   selectedItemData: uttaksresultatAktivitetPropType,
   callbackForward: PropTypes.func.isRequired,
   callbackSetSelected: PropTypes.func.isRequired,
@@ -297,4 +297,4 @@ UttakTimeLineData.defaultProps = {
   stonadskonto: {},
 };
 
-export default injectKodeverk(getAlleKodeverk)(UttakTimeLineData);
+export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakTimeLineData));

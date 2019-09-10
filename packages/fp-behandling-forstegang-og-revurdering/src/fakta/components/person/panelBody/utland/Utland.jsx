@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -84,6 +84,7 @@ export class UtlandImpl extends Component {
 
   render() {
     const {
+      intl,
       readOnly,
       utlandSakstype,
     } = this.props;
@@ -111,7 +112,7 @@ export class UtlandImpl extends Component {
                 className={styles.editIcon}
                 src={readOnly ? editUtlandDisabledIcon : editUtlandIcon}
                 onClick={readOnly ? undefined : this.editUtland}
-                altCode="UttakInfoPanel.EndrePerioden"
+                alt={intl.formatMessage({ id: 'UttakInfoPanel.EndrePerioden' })}
               />
             </div>
           </div>
@@ -176,6 +177,7 @@ export class UtlandImpl extends Component {
 }
 
 UtlandImpl.propTypes = {
+  intl: PropTypes.shape().isRequired,
   initialValue: PropTypes.string,
   utlandSakstype: PropTypes.string,
   submitCallback: PropTypes.func.isRequired,
@@ -201,4 +203,4 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-export const Utland = connect(mapStateToPropsFactory)(UtlandImpl);
+export const Utland = connect(mapStateToPropsFactory)(injectIntl(UtlandImpl));

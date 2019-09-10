@@ -2,9 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
-
 import { Normaltekst } from 'nav-frontend-typografi';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TableRow } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -62,7 +61,7 @@ const getKodeverknavn = () => undefined;
 
 describe('<TimeLineData>', () => {
   it('skal teste at TimeLineData viser korrekte verdier i detaljboks', () => {
-    const wrapper = shallowWithIntl(<TimeLineData
+    const wrapper = mountWithIntl(<TimeLineData
       selectedItemStartDate={startDate}
       selectedItemEndDate={endDate}
       selectedItemData={item}
@@ -85,7 +84,7 @@ describe('<TimeLineData>', () => {
   });
 
   it('skal teste at TimeLineData viser korrekte verdier i andelstabell', () => {
-    const wrapper = shallowWithIntl(<TimeLineData
+    const wrapper = mountWithIntl(<TimeLineData
       selectedItemStartDate={startDate}
       selectedItemEndDate={endDate}
       selectedItemData={item}
@@ -97,13 +96,14 @@ describe('<TimeLineData>', () => {
 
     const rows = wrapper.find(TableRow);
     // Første rad
-    const firstRowNormalText = rows.first().find(Normaltekst);
+    const firstRowNormalText = rows.at(1)
+      .find(Normaltekst);
     expect(firstRowNormalText.at(0).childAt(0).text()).to.equal('Mødrekvote');
     expect(firstRowNormalText.at(2).childAt(0).text()).to.equal('50');
     expect(firstRowNormalText.at(3).childAt(0)).is.empty;
     expect(firstRowNormalText.at(4).childAt(0).text()).to.equal('123');
 
-    // Andre rad
+    // Siste rad
     const secondRow = rows.last();
     expect(secondRow.find(FormattedMessage).at(0).prop('id')).to.eql('TilkjentYtelse.PeriodeData.Frilans');
     expect(secondRow.find(Normaltekst).at(0).childAt(0).text()).to.equal('Fedrekvote');
