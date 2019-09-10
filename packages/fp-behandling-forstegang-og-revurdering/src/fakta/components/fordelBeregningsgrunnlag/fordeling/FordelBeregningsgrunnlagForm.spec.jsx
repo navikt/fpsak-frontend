@@ -4,14 +4,14 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { shallow } from 'enzyme';
 import {
-  EndringBeregningsgrunnlagForm,
+  FordelBeregningsgrunnlagForm,
   getFieldNameKey,
   mapAndel,
   mapTilFastsatteVerdier,
   slaaSammenPerioder,
   transformPerioder,
-} from './EndringBeregningsgrunnlagForm';
-import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
+} from './FordelBeregningsgrunnlagForm';
+import FordelBeregningsgrunnlagPeriodePanel from './FordelBeregningsgrunnlagPeriodePanel';
 
 const getKodeverknavn = () => ({});
 
@@ -67,7 +67,7 @@ const arbeidsforhold2 = {
   startdato: '2019-06-02',
 };
 
-const endringAndel = {
+const fordelAndel = {
   aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
   andelIArbeid: [0],
   andelsnr: 1,
@@ -76,7 +76,7 @@ const endringAndel = {
   nyttArbeidsforhold: false,
 };
 
-const endringAndel2 = {
+const fordelAndel2 = {
   aktivitetStatus: { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
   andelIArbeid: [0],
   andelsnr: 2,
@@ -85,7 +85,7 @@ const endringAndel2 = {
   nyttArbeidsforhold: true,
 };
 
-describe('<EndringBeregningsgrunnlagForm>', () => {
+describe('<FordelBeregningsgrunnlagForm>', () => {
   it('skal vise 2 perioder', () => {
     const bgAndel1 = {
       andelsnr: 1,
@@ -106,21 +106,21 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     };
 
     const periode1 = {
-      endringBeregningsgrunnlagAndeler: [endringAndel],
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
       skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode2 = {
-      endringBeregningsgrunnlagAndeler: [endringAndel],
+      fordelBeregningsgrunnlagAndeler: [fordelAndel],
       fom: '2019-04-01',
       harPeriodeAarsakGraderingEllerRefusjon: false,
       skalKunneEndreRefusjon: false,
       tom: '2019-06-01',
     };
     const periode3 = {
-      endringBeregningsgrunnlagAndeler: [endringAndel, endringAndel2],
+      fordelBeregningsgrunnlagAndeler: [fordelAndel, fordelAndel2],
       fom: '2019-06-02',
       harPeriodeAarsakGraderingEllerRefusjon: true,
       skalKunneEndreRefusjon: false,
@@ -154,21 +154,21 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const perioder = [periode1, periode2, periode3];
     const bgPerioder = [bgPeriode1, bgPeriode2, bgPeriode3];
 
-    const wrapper = shallow(<EndringBeregningsgrunnlagForm
+    const wrapper = shallow(<FordelBeregningsgrunnlagForm
       perioder={perioder}
       bgPerioder={bgPerioder}
       isAksjonspunktClosed={false}
       readOnly={false}
     />);
 
-    const periodePanel = wrapper.find(EndringBeregningsgrunnlagPeriodePanel);
+    const periodePanel = wrapper.find(FordelBeregningsgrunnlagPeriodePanel);
     expect(periodePanel.length).to.equal(2);
-    const fieldName1 = periodePanel.get(0).props.endringBGFieldArrayName;
+    const fieldName1 = periodePanel.get(0).props.fordelBGFieldArrayName;
     const fom1 = periodePanel.get(0).props.fom;
-    const andeler1 = perioder.find(({ fom }) => fom === fom1).endringBeregningsgrunnlagAndeler;
-    const fieldName2 = periodePanel.get(1).props.endringBGFieldArrayName;
+    const andeler1 = perioder.find(({ fom }) => fom === fom1).fordelBeregningsgrunnlagAndeler;
+    const fieldName2 = periodePanel.get(1).props.fordelBGFieldArrayName;
     const fom2 = periodePanel.get(1).props.fom;
-    const andeler2 = perioder.find(({ fom }) => fom === fom2).endringBeregningsgrunnlagAndeler;
+    const andeler2 = perioder.find(({ fom }) => fom === fom2).fordelBeregningsgrunnlagAndeler;
 
     const bg = {
       aktivitetStatus: [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }],
@@ -176,7 +176,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       skjaeringstidspunktBeregning: '2019-03-30',
     };
 
-    const initialValues = EndringBeregningsgrunnlagForm.buildInitialValues(perioder, bg, getKodeverknavn);
+    const initialValues = FordelBeregningsgrunnlagForm.buildInitialValues(perioder, bg, getKodeverknavn);
     expect(initialValues[fieldName1].length).to.equal(andeler1.length);
     expect(initialValues[fieldName2].length).to.equal(andeler2.length);
 
@@ -184,7 +184,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const values = {};
     values[getFieldNameKey(0)] = initialValues[fieldName1];
     values[getFieldNameKey(1)] = initialValues[fieldName2];
-    const errors = EndringBeregningsgrunnlagForm.validate(values, perioder, bg, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, perioder, bg, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.equal(null);
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
@@ -192,7 +192,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om kun en periode i grunnlag', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019', beregningsgrunnlagPeriodeTom: null, periodeAarsaker: [periodeAarsak.ENDRING_I_REFUSJONSKRAV],
@@ -205,10 +205,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har naturalytelse tilkommet', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -228,10 +228,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har naturalytelse bortfalt', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -251,10 +251,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med en periode om andre periode har avsluttet arbeidsforhold uten endring i bruttoPrÅr', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -276,10 +276,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har avsluttet arbeidsforhold med endring i bruttoPrÅr', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -303,10 +303,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har opphør av gradering', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -330,10 +330,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har opphør av refusjon', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -357,10 +357,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har endring i refusjon', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: false,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -384,10 +384,10 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal returnere liste med to perioder om andre periode har gradering', () => {
     const perioder = [{
-      fom: '01-01-2019', tom: '01-02-2019', endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '01-01-2019', tom: '01-02-2019', fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     },
     {
-      fom: '02-02-2019', tom: null, endringBeregningsgrunnlagAndeler: [endringAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
+      fom: '02-02-2019', tom: null, fordelBeregningsgrunnlagAndeler: [fordelAndel], harPeriodeAarsakGraderingEllerRefusjon: true,
     }];
     const bgPerioder = [{
       beregningsgrunnlagPeriodeFom: '01-01-2019',
@@ -412,16 +412,16 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
 
   it('skal ikkje validere om det ikkje finnes perioder', () => {
     const values = {};
-    const endringBGPerioder = [];
+    const fordelBGPerioder = [];
     const beregningsgrunnlag = {};
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors).to.be.empty;
   });
 
   it('skal validere 1 periode', () => {
     const values = {};
     values[getFieldNameKey(0)] = [andel1, andel2];
-    const endringBGPerioder = [{ fom: '2018-01-01', tom: null }];
+    const fordelBGPerioder = [{ fom: '2018-01-01', tom: null }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [{
         periodeAarsaker: [],
@@ -429,7 +429,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
     };
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
   });
 
@@ -437,7 +437,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     const values = {};
     values[getFieldNameKey(0)] = [andel1, andel2];
     values[getFieldNameKey(1)] = [andel1, andel2];
-    const endringBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
+    const fordelBGPerioder = [{ fom: '2018-01-01', tom: '2018-07-01' }, { fom: '2018-07-02', tom: null }];
     const beregningsgrunnlag = {
       beregningsgrunnlagPeriode: [{
         periodeAarsaker: [],
@@ -450,7 +450,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
         beregningsgrunnlagPrStatusOgAndel: [],
       }],
     };
-    const errors = EndringBeregningsgrunnlagForm.validate(values, endringBGPerioder, beregningsgrunnlag, getKodeverknavn);
+    const errors = FordelBeregningsgrunnlagForm.validate(values, fordelBGPerioder, beregningsgrunnlag, getKodeverknavn);
     expect(errors[getFieldNameKey(0)]).to.not.be.empty;
     expect(errors[getFieldNameKey(1)]).to.not.be.empty;
   });
@@ -493,14 +493,14 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.ENDRING_I_REFUSJONSKRAV }],
     }];
-    const endringBGPerioder = [
+    const fordelBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-06-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true },
     ];
     const values = {};
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
-    const perioder = transformPerioder(endringBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
     expect(perioder.length).to.equal(1);
     expect(perioder[0].fom).to.equal('2018-06-02');
     expect(perioder[0].tom).to.equal(null);
@@ -540,7 +540,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
-    const endringBGPerioder = [
+    const fordelBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: true },
       { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
       { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: false },
@@ -550,7 +550,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
     values[getFieldNameKey(1)] = [{ ...andel1 }, { ...andel2 }];
 
-    const perioder = transformPerioder(endringBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-01-01');
     expect(perioder[0].tom).to.equal('2018-06-01');
@@ -610,7 +610,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.NATURALYTELSE_TILKOMMER }],
     }];
-    const endringBGPerioder = [
+    const fordelBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
       { fom: '2018-10-02', tom: null, harPeriodeAarsakGraderingEllerRefusjon: true },
@@ -620,7 +620,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
 
-    const perioder = transformPerioder(endringBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
 
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-06-02');
@@ -686,7 +686,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
       beregningsgrunnlagPeriodeTom: null,
       periodeAarsaker: [{ kode: periodeAarsak.REFUSJON_OPPHOERER }],
     }];
-    const endringBGPerioder = [
+    const fordelBGPerioder = [
       { fom: '2018-01-01', tom: '2018-06-01', harPeriodeAarsakGraderingEllerRefusjon: false },
       { fom: '2018-06-02', tom: '2018-10-01', harPeriodeAarsakGraderingEllerRefusjon: true },
       { fom: '2018-10-02', tom: '2018-11-01', harPeriodeAarsakGraderingEllerRefusjon: true },
@@ -696,7 +696,7 @@ describe('<EndringBeregningsgrunnlagForm>', () => {
     values[getFieldNameKey(0)] = [{ ...andel1 }, { ...andel2 }];
     values[getFieldNameKey(1)] = [{ ...andel1, fastsattBelop: '10 000' }, andel2];
 
-    const perioder = transformPerioder(endringBGPerioder, values, bgPerioder);
+    const perioder = transformPerioder(fordelBGPerioder, values, bgPerioder);
 
     expect(perioder.length).to.equal(2);
     expect(perioder[0].fom).to.equal('2018-06-02');

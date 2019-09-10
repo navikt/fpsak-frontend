@@ -110,7 +110,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     };
     const values = {
       tilfeller: aktivePaneler,
-      endringBGPerioder: [],
+      fordelBGPerioder: [],
       vurderMottarYtelse: undefined,
       faktaOmBeregning,
       beregningsgrunnlag,
@@ -192,7 +192,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     const beregningsgrunnlag = lagBeregningsgrunnlag([forholdMedLonnsendringUtenIM, frilansAndel]);
     const values = {
       tilfeller: aktivePaneler,
-      endringBGPerioder: [],
+      fordelBGPerioder: [],
       vurderMottarYtelse: undefined,
       faktaOmBeregning,
       beregningsgrunnlag,

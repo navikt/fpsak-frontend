@@ -61,7 +61,7 @@ const TotalbelopPrArbeidsgiverError = ({
       {validerMotRefusjonList.map((v) => (
         <div key={v.key}>
           <FormattedMessage
-            id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRefusjon"
+            id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRefusjon"
             values={{ arbeidsgiver: v.key, refusjonskrav: formatCurrencyNoKr(v.refusjonskrav) }}
           />
         </div>
@@ -69,7 +69,7 @@ const TotalbelopPrArbeidsgiverError = ({
       {beforeStpList.map((v) => (
         <div key={v.key}>
           <FormattedMessage
-            id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRapportertInntekt"
+            id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnRapportertInntekt"
             values={{ arbeidsgiver: v.key, inntekt: formatCurrencyNoKr(v.registerInntekt) }}
           />
         </div>
@@ -77,7 +77,7 @@ const TotalbelopPrArbeidsgiverError = ({
       {afterOrEqualStpList.map((v) => (
         <div key={v.key}>
           <FormattedMessage
-            id="BeregningInfoPanel.EndringBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeløpetFraInntektsmeldingen"
+            id="BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidsforholdIkkeHøyereEnnBeløpetFraInntektsmeldingen"
             values={{ arbeidsgiver: v.key, inntekt: formatCurrencyNoKr(v.belopFraInntektsmelding) }}
           />
         </div>

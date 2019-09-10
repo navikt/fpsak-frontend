@@ -79,10 +79,11 @@ export class CommonBehandlingsprosessIndex extends Component {
   };
 
   previewCallback = (data) => {
-    const { behandlingIdentifier, fetchPreview: fetchBrevPreview } = this.props;
+    const { behandlingUuid, fagsakYtelseType, fetchPreview: fetchBrevPreview } = this.props;
     const brevData = {
       ...data,
-      behandlingId: behandlingIdentifier.behandlingId,
+      behandlingUuid,
+      ytelseType: fagsakYtelseType,
     };
     fetchBrevPreview(brevData);
   };
@@ -167,6 +168,7 @@ export class CommonBehandlingsprosessIndex extends Component {
             closeEvent={this.goToSearchPage}
             behandlingsresultat={behandlingsresultat}
             behandlingStatusKode={behandlingStatus.kode}
+            behandlingType={behandlingType}
             fagsakYtelseType={fagsakYtelseType}
             resolveFaktaAksjonspunkterSuccess
             resolveProsessAksjonspunkterSuccess={resolveProsessAksjonspunkterSuccess}
@@ -191,6 +193,7 @@ export class CommonBehandlingsprosessIndex extends Component {
 }
 
 CommonBehandlingsprosessIndex.propTypes = {
+  behandlingUuid: PropTypes.string.isRequired,
   additionalBehandlingspunktImages: PropTypes.shape(),
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   aksjonspunkterOpenStatus: PropTypes.shape(),

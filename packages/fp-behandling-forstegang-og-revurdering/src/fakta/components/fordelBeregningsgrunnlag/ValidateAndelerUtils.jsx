@@ -38,7 +38,7 @@ const mapAndelToSortedObject = (value, andelList) => {
   return { andelsinfo: andel, inntektskategori };
 };
 
-export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.EndringBG.Validation.UlikeAndeler' }]);
+export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.FordelBG.Validation.UlikeAndeler' }]);
 
 
 const erAndelerLike = (andel1, andel2) => andel2.andelsinfo === andel1.andelsinfo && andel2.inntektskategori === andel1.inntektskategori;
@@ -94,7 +94,7 @@ const finnArbeidsforholdRefusjonsinfoListe = (andelList) => {
 };
 
 export const skalIkkjeVereHoegereEnnRefusjonFraInntektsmelding = (arbeidsgiver) => (
-  [{ id: 'BeregningInfoPanel.EndringBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.IkkjeHogereRefusjonEnnInntektsmelding' },
     { arbeidsgiver }]);
 
 export const validateTotalRefusjonPrArbeidsforhold = (andelList, getKodeverknavn) => {
@@ -113,7 +113,7 @@ const skalIkkjeVereHogareEnn = (
 ) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
 export const skalVereLikFordelingMessage = (fordeling) => (
-  [{ id: 'BeregningInfoPanel.EndringBG.Validation.LikFordeling' },
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.LikFordeling' },
     { fordeling }]);
 
 export const kanIkkjeHaNullBeregningsgrunnlagError = () => (

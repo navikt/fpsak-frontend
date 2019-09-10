@@ -90,7 +90,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       selectedBehandlingspunkt, aksjonspunkter, aksjonspunkterOpenStatus, behandlingIdentifier, behandlingspunkter,
       resolveProsessAksjonspunkterSuccess, behandlingspunkterStatus, behandlingspunkterTitleCodes, behandlingsresultat,
       behandlingStatus, behandlingType, behandlingVersjon, fagsakYtelseType, isSelectedBehandlingHenlagt,
-      location, dispatchSubmitFailed: submitFailedDispatch,
+      location, dispatchSubmitFailed: submitFailedDispatch, behandlingUuid,
     } = this.props;
     const {
       showIverksetterVedtakModal,
@@ -100,6 +100,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       <CommonBehandlingsprosessIndex
         aksjonspunkter={aksjonspunkter}
         aksjonspunkterOpenStatus={aksjonspunkterOpenStatus}
+        behandlingUuid={behandlingUuid}
         behandlingIdentifier={behandlingIdentifier}
         behandlingspunkter={behandlingspunkter}
         selectedBehandlingspunkt={selectedBehandlingspunkt}

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import moment from 'moment';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import EndringBeregningsgrunnlagPeriodePanel from './EndringBeregningsgrunnlagPeriodePanel';
+import FordelBeregningsgrunnlagPeriodePanel from './FordelBeregningsgrunnlagPeriodePanel';
 
 const stpBeregning = '2018-01-01';
 
@@ -115,12 +115,12 @@ const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   refusjonskravFraInntektsmeldingPrAar,
 });
 
-describe('<EndringBeregningsgrunnlagPeriodePanel>', () => {
+describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
   it('skal sette initial values', () => {
     const periode = {
       harPeriodeAarsakGraderingEllerRefusjon: true,
       skalKunneEndreRefusjon: true,
-      endringBeregningsgrunnlagAndeler: [
+      fordelBeregningsgrunnlagAndeler: [
         lagArbeidstakerAndel(1, false, 10000, 10000, null, false, 10000, 10000, 10000, [0, 20]),
         lagArbeidstakerAndel(2, false, 20000, 10000, 10000, true, 10000, 20000, 10000, [0]),
         lagArbeidstakerAndel(3, false, 30000, 10000, 30000, false, 0, 30000, 0, [0, 20, 80]),
@@ -197,7 +197,7 @@ describe('<EndringBeregningsgrunnlagPeriodePanel>', () => {
       ],
     };
 
-    const initialValues = EndringBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, false, getKodeverknavn);
+    const initialValues = FordelBeregningsgrunnlagPeriodePanel.buildInitialValues(periode, bgPeriode, stpBeregning, false, getKodeverknavn);
     expect(initialValues).to.have.length(8);
     const arbeidstakerAndelerBeforeStp = initialValues.filter(({ arbeidsperiodeFom }) => arbeidsperiodeFom !== ''
     && moment(arbeidsperiodeFom).isBefore(moment(stpBeregning)))
