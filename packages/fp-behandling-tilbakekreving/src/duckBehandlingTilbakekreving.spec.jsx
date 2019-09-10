@@ -11,6 +11,7 @@ describe('Tilbakekreving-behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
+      fagsakBehandlingerInfo: [],
     });
   });
 });

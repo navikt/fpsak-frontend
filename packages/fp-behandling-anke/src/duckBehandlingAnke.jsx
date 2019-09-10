@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { getBehandlingRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
@@ -5,7 +7,11 @@ import ankeBehandlingApi, { AnkeBehandlingApiKeys } from './data/ankeBehandlingA
 
 const reducerName = 'ankeBehandling';
 
-const behandlingRedux = getBehandlingRedux(reducerName, ankeBehandlingApi, AnkeBehandlingApiKeys);
+const additionalInitialState = {
+  fagsakBehandlingerInfo: [],
+};
+
+const behandlingRedux = getBehandlingRedux(reducerName, ankeBehandlingApi, AnkeBehandlingApiKeys, additionalInitialState);
 
 // Eksportert kun for test
 export const { reducer } = behandlingRedux;
@@ -33,3 +39,6 @@ export const {
   getKanRevurderingOpprettes,
   getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;
+
+export const getFagsakBehandlingerInfo = createSelector([behandlingRedux.selectors.getBehandlingContext],
+  (behandlingContext) => behandlingContext.fagsakBehandlingerInfo);

@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
@@ -23,11 +22,13 @@ export const getBehandlinger = createSelector(
   },
 );
 
-export const getAvsluttedeBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .filter((behandling) => behandling.status.kode === behandlingStatus.AVSLUTTET)
+// Skal kun brukes av BehandlingIndex
+export const getBehandlingerInfo = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .map((behandling) => ({
     id: behandling.id,
     type: behandling.type,
+    status: behandling.status,
+    opprettet: behandling.opprettet,
     avsluttet: behandling.avsluttet,
   })));
 

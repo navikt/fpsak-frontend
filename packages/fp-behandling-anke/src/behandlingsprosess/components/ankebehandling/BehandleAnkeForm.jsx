@@ -24,6 +24,7 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import { getFagsakBehandlingerInfo } from 'behandlingAnke/src/duckBehandlingAnke';
 import {
   behandlingFormAnke,
   behandlingFormValueSelector,
@@ -31,7 +32,6 @@ import {
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from 'behandlingAnke/src/behandlingFormAnke';
-import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
 import PreviewAnkeLink from '../felles/PreviewAnkeLink';
 import FritekstBrevTextField from './FritekstAnkeBrevTextField';
 import behandlingspunktAnkeSelectors from '../../selectors/behandlingsprosessAnkeSelectors';
@@ -369,7 +369,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'ankeOmgjoerArsak',
       'ankeVurderingOmgjoer'),
     sprakkode: behandlingSelectors.getBehandlingSprak(state),
-    behandlinger: getBehandlinger(state),
+    behandlinger: getFagsakBehandlingerInfo(state),
     onSubmit,
   });
 };

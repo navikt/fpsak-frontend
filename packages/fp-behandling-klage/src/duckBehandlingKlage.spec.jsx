@@ -11,7 +11,7 @@ describe('Klage-behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
-      avsluttedeBehandlinger: [],
+      fagsakBehandlingerInfo: [],
     });
   });
 });

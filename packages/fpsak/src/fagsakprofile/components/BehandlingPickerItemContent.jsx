@@ -179,7 +179,7 @@ BehandlingPickerItemContent.propTypes = {
     erAutomatiskRevurdering: PropTypes.bool,
     manueltOpprettet: PropTypes.bool,
   }),
-  erGjeldendeVedtak: PropTypes.bool.isRequired,
+  erGjeldendeVedtak: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired,
 };
 
@@ -194,6 +194,7 @@ BehandlingPickerItemContent.defaultProps = {
       kode: '-',
     },
   },
+  erGjeldendeVedtak: false,
 };
 
 export default BehandlingPickerItemContent;

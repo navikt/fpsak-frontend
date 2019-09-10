@@ -22,7 +22,7 @@ import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getAvsluttedeBehandlinger,
+  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
@@ -71,7 +71,7 @@ export class BehandlingIndex extends Component {
       kanRevurderingOpprettes: PropTypes.bool.isRequired,
       skalBehandlesAvInfotrygd: PropTypes.bool.isRequired,
     }).isRequired,
-    avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
+    fagsakBehandlingerInfo: PropTypes.arrayOf(PropTypes.shape({
       id: PropTypes.number.isRequired,
       type: PropTypes.shape({
         kode: PropTypes.string.isRequired,
@@ -122,7 +122,7 @@ export class BehandlingIndex extends Component {
       allDocuments,
       kodeverk,
       fagsak,
-      avsluttedeBehandlinger,
+      fagsakBehandlingerInfo,
       navAnsatt,
     } = this.props;
     if (erAktivPapirsoknad) {
@@ -146,7 +146,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.TILBAKEKREVING) {
+    if (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingTilbakekrevingIndex
@@ -160,6 +160,7 @@ export class BehandlingIndex extends Component {
             appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             fagsak={fagsak}
+            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
             navAnsatt={navAnsatt}
           />
         </Suspense>
@@ -206,7 +207,7 @@ export class BehandlingIndex extends Component {
             allDocuments={allDocuments}
             kodeverk={kodeverk}
             fagsak={fagsak}
-            avsluttedeBehandlinger={avsluttedeBehandlinger}
+            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
             navAnsatt={navAnsatt}
           />
         </Suspense>
@@ -251,6 +252,7 @@ export class BehandlingIndex extends Component {
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
           kodeverk={kodeverk}
           fagsak={fagsak}
+          fagsakBehandlingerInfo={fagsakBehandlingerInfo}
           navAnsatt={navAnsatt}
         />
       </Suspense>
@@ -282,7 +284,7 @@ const mapStateToProps = (state) => {
     hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
     kodeverk: getAlleKodeverk(state),
     allDocuments: getAllDocuments(state),
-    avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
+    fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),
     fagsak: getFagsakInfo(state),
