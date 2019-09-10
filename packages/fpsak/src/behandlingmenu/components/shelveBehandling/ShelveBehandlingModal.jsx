@@ -18,9 +18,9 @@ import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
 
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getBehandlingType } from 'behandling/duck';
 import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
 import { getKodeverk } from 'kodeverk/duck';
-import { getBehandlingType } from 'behandling/duck';
 
 import styles from './shelveBehandlingModal.less';
 

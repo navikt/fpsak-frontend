@@ -4,6 +4,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import {
   previewMessage,
@@ -12,8 +14,8 @@ import {
   getBehandlingIsQueued,
   getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn,
-  getBehandlingIsInnsyn,
   getBehandlingIdentifier,
+  getBehandlingType,
   getRettigheter,
 } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
@@ -60,7 +62,7 @@ const mapStateToProps = (state) => {
     behandlendeEnhetNavn: getBehandlingBehandlendeEnhetNavn(state),
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
-    isInnsynsbehandling: getBehandlingIsInnsyn(state),
+    isInnsynsbehandling: getBehandlingType(state) === behandlingType.DOKUMENTINNSYN,
     henleggBehandlingAccess,
     settBehandlingPaVentAccess,
     byttBehandlendeEnhetAccess,
