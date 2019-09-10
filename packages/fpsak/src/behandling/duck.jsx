@@ -102,8 +102,8 @@ export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfo
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
   (behandlinger, behandlingId) => behandlinger.find((b) => b.id === behandlingId));
 
-export const harValgtAvsluttetTilbakekreving = createSelector([getBehandling], (behandling = {}) => behandling
-  .type.kode === behandlingType.TILBAKEKREVING || behandling.type.kode === behandlingType.TILBAKEKREVING_REVURDERING);
+export const harValgtAvsluttetTilbakekreving = createSelector([getBehandling], (behandling) => behandling && (behandling
+  .type.kode === behandlingType.TILBAKEKREVING || behandling.type.kode === behandlingType.TILBAKEKREVING_REVURDERING));
 
 export const getUuidForValgtBehandling = createSelector([getBehandling], (behandling = {}) => behandling.uuid);
 export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);

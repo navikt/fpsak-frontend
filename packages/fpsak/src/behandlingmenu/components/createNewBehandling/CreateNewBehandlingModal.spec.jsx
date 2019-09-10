@@ -14,15 +14,16 @@ describe('<CreateNewBehandlingModal>', () => {
   const cancelEventCallback = sinon.spy();
 
   it('skal rendre komponent korrekt', () => {
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }]}
+      behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     const modal = wrapper.find(Modal);
@@ -47,15 +48,16 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal bruke submit-callback når en trykker lagre', () => {
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={sinon.spy()}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }]}
+      behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     const form = wrapper.find('form');
@@ -64,15 +66,16 @@ describe('<CreateNewBehandlingModal>', () => {
   });
 
   it('skal lukke modal ved klikk på avbryt-knapp', () => {
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }]}
+      behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     wrapper.find('Knapp').simulate('click');
@@ -81,16 +84,17 @@ describe('<CreateNewBehandlingModal>', () => {
 
 
   it('skal vise checkbox for behandling etter klage når førstegangsbehandling er valgt', () => {
+    const behandlingstyper = [{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.FORSTEGANGSSOKNAD, navn: 'FØRSTEGANGSSØKNAD' }]}
+      behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     expect(wrapper.find('CheckboxField')).to.have.length(1);
@@ -98,32 +102,34 @@ describe('<CreateNewBehandlingModal>', () => {
 
 
   it('skal ikke vise checkbox for behandling etter klage når dokumentinnsyn er valgt', () => {
+    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }]}
+      behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.DOKUMENTINNSYN}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     expect(wrapper.find('CheckboxField')).to.have.length(0);
   });
 
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
+    const behandlingstyper = [{ kode: behandlingType.REVURDERING, navn: 'REVURDERING' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.REVURDERING, navn: 'REVURDERING' }]}
+      behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.REVURDERING}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     expect(wrapper.find('SelectField')).to.have.length(2);
@@ -131,16 +137,17 @@ describe('<CreateNewBehandlingModal>', () => {
 
 
   it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
+    const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
     const wrapper = shallowWithIntl(<CreateNewBehandlingModal
       showModal
       handleSubmit={submitEventCallback}
       cancelEvent={cancelEventCallback}
       intl={intlMock}
-      behandlingTyper={[{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }]}
+      behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.DOKUMENTINNSYN}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
-      hasEnabledCreateNewBehandling
-      hasEnabledCreateRevurdering
+      enabledBehandlingstyper={behandlingstyper}
+      kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
     expect(wrapper.find('SelectField')).to.have.length(1);
