@@ -18,7 +18,7 @@ const release = VERSION;
 const environment = window.location.hostname;
 const isDevelopment = process.env.NODE_ENV === 'development';
 init({
-  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://f1df84f98e254eea93e20afb33c0de19@sentry.nais.adeo.no/2',
+  dsn: isDevelopment ? 'http://dev@localhost:9000/1' : 'https://f1df84f98e254eea93e20afb33c0de19@sentry.nav.no/2',
   release,
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
