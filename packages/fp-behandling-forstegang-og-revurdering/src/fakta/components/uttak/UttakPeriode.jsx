@@ -133,7 +133,7 @@ const UttakPeriode = ({
                   />
                 </div>
                 {perioder.length === fields.length
-                  && renderValidationGraphic(perioder, index, index === (fields.length - 1))}
+                && renderValidationGraphic(perioder, index, index === (fields.length - 1), intl)}
               </FlexColumn>
             </FlexRow>
           </React.Fragment>
