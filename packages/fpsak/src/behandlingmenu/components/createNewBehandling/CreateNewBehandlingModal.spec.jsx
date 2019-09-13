@@ -145,7 +145,7 @@ describe('<CreateNewBehandlingModal>', () => {
       intl={intlMock}
       behandlingTyper={behandlingstyper}
       behandlingType={behandlingType.DOKUMENTINNSYN}
-      behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
+      behandlingArsakTyper={[]}
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);

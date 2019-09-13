@@ -94,29 +94,27 @@ export const CreateNewBehandlingModal = ({
               bredde="l"
             />
             <VerticalSpacer eightPx />
-            { behandlingType === bType.FORSTEGANGSSOKNAD
-          && (
-          <CheckboxField
-            name="nyBehandlingEtterKlage"
-            label={intl.formatMessage({ id: 'CreateNewBehandlingModal.NyBehandlingEtterKlage' })}
-          />
-          )}
-            { behandlingType === bType.REVURDERING
-          && (
-          <SelectField
-            name="behandlingArsakType"
-            label=""
-            placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder' })}
-            validate={[required]}
-            selectValues={behandlingArsakTyper.map((b) => <option key={b.kode} value={b.kode}>{b.navn}</option>)}
-          />
-          )}
+            { behandlingType === bType.FORSTEGANGSSOKNAD && (
+              <CheckboxField
+                name="nyBehandlingEtterKlage"
+                label={intl.formatMessage({ id: 'CreateNewBehandlingModal.NyBehandlingEtterKlage' })}
+              />
+            )}
+            { behandlingArsakTyper.length > 0 && (
+              <SelectField
+                name="behandlingArsakType"
+                label=""
+                placeholder={intl.formatMessage({ id: 'CreateNewBehandlingModal.SelectBehandlingArsakTypePlaceholder' })}
+                validate={[required]}
+                selectValues={behandlingArsakTyper.map((b) => <option key={b.kode} value={b.kode}>{b.navn}</option>)}
+              />
+            )}
             <div className={styles.right}>
               <Hovedknapp
                 mini
                 className={styles.button}
               >
-                {intl.formatMessage({ id: 'CreateNewBehandlingModal.Ok' })}
+                <FormattedMessage id="CreateNewBehandlingModal.Ok" />
               </Hovedknapp>
               <Knapp
                 htmlType="button"
@@ -124,7 +122,7 @@ export const CreateNewBehandlingModal = ({
                 onClick={cancelEvent}
                 className={styles.cancelButton}
               >
-                {intl.formatMessage({ id: 'CreateNewBehandlingModal.Avbryt' })}
+                <FormattedMessage id="CreateNewBehandlingModal.Avbryt" />
               </Knapp>
             </div>
           </Column>
@@ -154,6 +152,7 @@ CreateNewBehandlingModal.defaultProps = {
 
 const formName = 'CreateNewBehandlingModal';
 
+// TODO Denne inndelinga burde vel flyttast til DB (KODELISTE.EKSTRA_DATA)?
 const manuelleRevurderingsArsakerES = [
   behandlingArsakType.ANNET,
   behandlingArsakType.FEIL_I_LOVANDVENDELSE,
@@ -161,7 +160,6 @@ const manuelleRevurderingsArsakerES = [
   behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
   behandlingArsakType.FEIL_PROSESSUELL,
 ];
-
 
 const manuelleRevurderingsArsakerFP = [
   behandlingArsakType.BEREEGNINGSGRUNNLAG,
@@ -187,18 +185,35 @@ const manuelleRevurderingsArsakerSVP = [
   behandlingArsakType.INNTEKT,
 ];
 
-export const getBehandlingAarsaker = createSelector([isForeldrepengerFagsak, isSvangerskapFagsak, getKodeverk(kodeverkTyper.BEHANDLING_AARSAK)],
-  (isForeldrepenger, isSvangerskap, behandlingArsaker) => {
+export const getBehandlingAarsaker = createSelector([
+  isForeldrepengerFagsak,
+  isSvangerskapFagsak,
+  getKodeverk(kodeverkTyper.BEHANDLING_AARSAK),
+  getFpTilbakeKodeverk(kodeverkTyper.BEHANDLING_AARSAK),
+  (state) => formValueSelector(formName)(state, 'behandlingType')],
+(isForeldrepenger, isSvangerskap, behandlingArsaker, behandlingArsakerFpTilbake, valgtBehandlingType) => {
+  if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
+    return behandlingArsakerFpTilbake
+      .filter((ba) => ba.kode !== behandlingArsakType.RE_KLAGE_KA && ba.kode !== behandlingArsakType.RE_KLAGE_NFP)
+      .sort((ba1, ba2) => ba2.navn.localeCompare(ba1.navn.length));
+  }
+
+  if (valgtBehandlingType === bType.REVURDERING) {
     let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
     if (isSvangerskap) {
       manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
     }
     return behandlingArsaker
       .filter((bat) => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
-      .sort((bat1, bat2) => bat2.navn.length - bat1.navn.length);
-  });
+      .sort((bat1, bat2) => bat2.navn.localeCompare(bat1.navn.length));
+  }
 
-const getBehandlingTyper = createSelector([getKodeverk(kodeverkTyper.BEHANDLING_TYPE), getFpTilbakeKodeverk(kodeverkTyper.BEHANDLING_TYPE),
+  return [];
+});
+
+const getBehandlingTyper = createSelector([
+  getKodeverk(kodeverkTyper.BEHANDLING_TYPE),
+  getFpTilbakeKodeverk(kodeverkTyper.BEHANDLING_TYPE),
   (state) => getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]],
 (behandlingTyper, tilbakekrevingBehandlingTyper = [], isTilbakekrevingAktiv = false) => {
   const fpsakBehandlingTyper = behandlingTyper
