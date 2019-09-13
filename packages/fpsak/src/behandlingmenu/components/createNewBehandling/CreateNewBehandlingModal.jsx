@@ -238,7 +238,7 @@ export const getEnabledBehandlingstyper = createSelector([
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => ownProps.submitCallback({
     ...values,
-    uuid: getUuidForSisteLukkedeForsteEllerRevurd(initialState),
+    eksternUuid: getUuidForSisteLukkedeForsteEllerRevurd(initialState),
   });
   const behandlingTyper = getBehandlingTyper(initialState);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
