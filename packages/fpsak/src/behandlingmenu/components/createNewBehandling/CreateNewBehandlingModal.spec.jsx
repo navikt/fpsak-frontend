@@ -9,7 +9,9 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
-import { CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper } from './CreateNewBehandlingModal';
+import {
+  CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper, getEnabledBehandlingstyper,
+} from './CreateNewBehandlingModal';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
@@ -246,6 +248,110 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingtyperFpSak[2],
       behandlingtyperFpSak[1],
       behandlingtyperFpTilbake[0],
+    ]);
+  });
+
+  it('skal filtrere bort tilbakekreving når denne ikke kan lages', () => {
+    const behandlingstyper = [{
+      kode: behandlingType.TILBAKEKREVING,
+    }, {
+      kode: behandlingType.TILBAKEKREVING_REVURDERING,
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+    }, {
+      kode: behandlingType.REVURDERING,
+    }];
+    const kanLageNyTilbakekreving = false;
+    const hasEnabledCreateNewBehandling = true;
+    const hasEnabledCreateRevurdering = true;
+    const hasEnabledTilbakekrevingRevudering = true;
+
+    const res = getEnabledBehandlingstyper.resultFunc(
+      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+    );
+
+    expect(res).is.eql([
+      behandlingstyper[1],
+      behandlingstyper[2],
+      behandlingstyper[3],
+    ]);
+  });
+
+  it('skal filtrere bort tilbakekreving-revurdering når denne ikke kan lages', () => {
+    const behandlingstyper = [{
+      kode: behandlingType.TILBAKEKREVING,
+    }, {
+      kode: behandlingType.TILBAKEKREVING_REVURDERING,
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+    }, {
+      kode: behandlingType.REVURDERING,
+    }];
+    const kanLageNyTilbakekreving = true;
+    const hasEnabledCreateNewBehandling = true;
+    const hasEnabledCreateRevurdering = true;
+    const hasEnabledTilbakekrevingRevudering = false;
+
+    const res = getEnabledBehandlingstyper.resultFunc(
+      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+    );
+
+    expect(res).is.eql([
+      behandlingstyper[0],
+      behandlingstyper[2],
+      behandlingstyper[3],
+    ]);
+  });
+
+  it('skal filtrere bort førstegangsbehandling når denne ikke kan lages', () => {
+    const behandlingstyper = [{
+      kode: behandlingType.TILBAKEKREVING,
+    }, {
+      kode: behandlingType.TILBAKEKREVING_REVURDERING,
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+    }, {
+      kode: behandlingType.REVURDERING,
+    }];
+    const kanLageNyTilbakekreving = true;
+    const hasEnabledCreateNewBehandling = false;
+    const hasEnabledCreateRevurdering = true;
+    const hasEnabledTilbakekrevingRevudering = true;
+
+    const res = getEnabledBehandlingstyper.resultFunc(
+      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+    );
+
+    expect(res).is.eql([
+      behandlingstyper[0],
+      behandlingstyper[1],
+      behandlingstyper[3],
+    ]);
+  });
+
+  it('skal filtrere bort revurdering når denne ikke kan lages', () => {
+    const behandlingstyper = [{
+      kode: behandlingType.TILBAKEKREVING,
+    }, {
+      kode: behandlingType.TILBAKEKREVING_REVURDERING,
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+    }, {
+      kode: behandlingType.REVURDERING,
+    }];
+    const kanLageNyTilbakekreving = true;
+    const hasEnabledCreateNewBehandling = true;
+    const hasEnabledCreateRevurdering = false;
+    const hasEnabledTilbakekrevingRevudering = true;
+
+    const res = getEnabledBehandlingstyper.resultFunc(
+      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+    );
+
+    expect(res).is.eql([
+      behandlingstyper[0],
+      behandlingstyper[1],
+      behandlingstyper[2],
     ]);
   });
 });
