@@ -205,13 +205,13 @@ export const getBehandlingAarsaker = createSelector([
     }
     return behandlingArsaker
       .filter((bat) => manuelleRevurderingsArsaker.indexOf(bat.kode) > -1)
-      .sort((bat1, bat2) => bat2.navn.localeCompare(bat1.navn.length));
+      .sort((bat1, bat2) => bat1.navn.localeCompare(bat2.navn));
   }
 
   return [];
 });
 
-const getBehandlingTyper = createSelector([
+export const getBehandlingTyper = createSelector([
   getKodeverk(kodeverkTyper.BEHANDLING_TYPE),
   getFpTilbakeKodeverk(kodeverkTyper.BEHANDLING_TYPE),
   (state) => getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]],
@@ -222,7 +222,7 @@ const getBehandlingTyper = createSelector([
   return alleTyper.sort((bt1, bt2) => bt1.navn.localeCompare(bt2.navn));
 });
 
-const getEnabledBehandlingstyper = createSelector([
+export const getEnabledBehandlingstyper = createSelector([
   getBehandlingTyper,
   kanLageNyTilbakekrevingsbehandling,
   (state, ownProps) => ownProps.hasEnabledCreateNewBehandling,
@@ -241,15 +241,14 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     uuid: getUuidForSisteLukkedeForsteEllerRevurd(initialState),
   });
   const behandlingTyper = getBehandlingTyper(initialState);
-  const behandlingArsakTyper = getBehandlingAarsaker(initialState);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
-  const uuid = harValgtAvsluttetTilbakekreving(initialState) ? getUuidForValgtBehandling(intitalState) : undefined;
+  const uuid = harValgtAvsluttetTilbakekreving(initialState) ? getUuidForValgtBehandling(initialState) : undefined;
   return (state) => ({
     onSubmit,
     behandlingTyper,
-    behandlingArsakTyper,
     enabledBehandlingstyper,
     uuid,
+    behandlingArsakTyper: getBehandlingAarsaker(state),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
   });
 };

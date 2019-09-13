@@ -1,13 +1,15 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
-import Image from '@fpsak-frontend/shared-components/src/Image';
+import { Knapp } from 'nav-frontend-knapper';
+
+import { CheckboxField, SelectField } from '@fpsak-frontend/form';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { CreateNewBehandlingModal } from './CreateNewBehandlingModal';
+
+import { CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper } from './CreateNewBehandlingModal';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
@@ -29,22 +31,9 @@ describe('<CreateNewBehandlingModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('closeButton')).is.false;
     expect(modal.prop('contentLabel')).to.eql('Ny behandling');
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
-
-    const image = modal.find(Image);
-    expect(image).to.have.length(1);
-
-    const okKnapp = modal.find(Hovedknapp);
-    expect(okKnapp).to.have.length(1);
-    expect(okKnapp.prop('mini')).is.true;
-
-    const avbrytKnapp = modal.find('Knapp');
-    expect(avbrytKnapp).to.have.length(1);
-    expect(avbrytKnapp.prop('mini')).is.true;
-    expect(avbrytKnapp.prop('onClick')).is.eql(cancelEventCallback);
   });
 
   it('skal bruke submit-callback når en trykker lagre', () => {
@@ -78,7 +67,7 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
-    wrapper.find('Knapp').simulate('click');
+    wrapper.find(Knapp).simulate('click');
     expect(cancelEventCallback).to.have.property('callCount', 1);
   });
 
@@ -97,7 +86,7 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
-    expect(wrapper.find('CheckboxField')).to.have.length(1);
+    expect(wrapper.find(CheckboxField)).to.have.length(1);
   });
 
 
@@ -115,7 +104,7 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
-    expect(wrapper.find('CheckboxField')).to.have.length(0);
+    expect(wrapper.find(CheckboxField)).to.have.length(0);
   });
 
   it('skal vise dropdown for revuderingsårsaker når revurdering er valgt', () => {
@@ -132,9 +121,8 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
-    expect(wrapper.find('SelectField')).to.have.length(2);
+    expect(wrapper.find(SelectField)).to.have.length(2);
   });
-
 
   it('skal ikke vise dropdown for revuderingsårsaker når dokumentinnsyn er valgt', () => {
     const behandlingstyper = [{ kode: behandlingType.DOKUMENTINNSYN, navn: 'DOKUMENTINNSYN' }];
@@ -150,6 +138,114 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakeRevurderingOpprettes={sinon.spy()}
     />);
 
-    expect(wrapper.find('SelectField')).to.have.length(1);
+    expect(wrapper.find(SelectField)).to.have.length(1);
+  });
+
+  it('skal finne filtrerte og sorterte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {
+    const isForeldrepengerFagsak = true;
+    const isSvangerskapFagsak = false;
+    const behandlingArsakerFpSak = [];
+    const behandlingArsakerFpTilbake = [{
+      kode: behandlingArsakType.RE_KLAGE_KA,
+      navn: 'RE_KLAGE_KA',
+    }, {
+      kode: behandlingArsakType.RE_KLAGE_NFP,
+      navn: 'RE_KLAGE_KA',
+    }, {
+      kode: behandlingArsakType.RE_VILKÅR,
+      navn: 'Nye opplysninger om vilkårsvurdering',
+    }, {
+      kode: behandlingArsakType.RE_FORELDELSE,
+      navn: 'Nye opplysninger om foreldelse',
+    }];
+    const bType = behandlingType.TILBAKEKREVING_REVURDERING;
+
+    const res = getBehandlingAarsaker.resultFunc(isForeldrepengerFagsak, isSvangerskapFagsak, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
+
+    expect(res).is.eql([behandlingArsakerFpTilbake[3], behandlingArsakerFpTilbake[2]]);
+  });
+
+  it('skal finne filtrerte og sorterte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
+    const isForeldrepengerFagsak = false;
+    const isSvangerskapFagsak = false;
+    const behandlingArsakerFpSak = [{
+      kode: behandlingArsakType.ANNET,
+      navn: 'annet',
+    }, {
+      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+      navn: 'feil i lovandvendelse',
+    }, {
+      kode: behandlingArsakType.FEIL_ELLER_ENDRET_FAKTA,
+      navn: 'feil eller endret fakta',
+    }, {
+      kode: behandlingArsakType.FEIL_REGELVERKSFORSTAELSE,
+      navn: 'feil regelverksforstaelse',
+    }, {
+      kode: behandlingArsakType.FEIL_PROSESSUELL,
+      navn: 'feil prosessuell',
+    }];
+    const behandlingArsakerFpTilbake = [];
+    const bType = behandlingType.REVURDERING;
+
+    const res = getBehandlingAarsaker.resultFunc(isForeldrepengerFagsak, isSvangerskapFagsak, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
+
+    expect(res).is.eql([
+      behandlingArsakerFpSak[0],
+      behandlingArsakerFpSak[2],
+      behandlingArsakerFpSak[1],
+      behandlingArsakerFpSak[4],
+      behandlingArsakerFpSak[3],
+    ]);
+  });
+
+  it('skal finne filtrere og sortere behandlingstyper for kun fpsak', () => {
+    const behandlingtyperFpSak = [{
+      kode: behandlingType.TILBAKEKREVING,
+      navn: 'tilbakekreving',
+    }, {
+      kode: behandlingType.REVURDERING,
+      navn: 'revurdering',
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: 'forstegangssoknad',
+    }];
+    const behandlingtyperFpTilbake = [{
+      kode: behandlingType.TILBAKEKREVING,
+      navn: 'tilbakekreving',
+    }];
+    const aktiverTilbakekreving = false;
+
+    const res = getBehandlingTyper.resultFunc(behandlingtyperFpSak, behandlingtyperFpTilbake, aktiverTilbakekreving);
+
+    expect(res).is.eql([
+      behandlingtyperFpSak[2],
+      behandlingtyperFpSak[1],
+    ]);
+  });
+
+  it('skal finne filtrere og sortere behandlingstyper for både fpsak og fptilbake', () => {
+    const behandlingtyperFpSak = [{
+      kode: behandlingType.TILBAKEKREVING,
+      navn: 'tilbakekreving',
+    }, {
+      kode: behandlingType.REVURDERING,
+      navn: 'revurdering',
+    }, {
+      kode: behandlingType.FORSTEGANGSSOKNAD,
+      navn: 'forstegangssoknad',
+    }];
+    const behandlingtyperFpTilbake = [{
+      kode: behandlingType.TILBAKEKREVING,
+      navn: 'tilbakekreving',
+    }];
+    const aktiverTilbakekreving = true;
+
+    const res = getBehandlingTyper.resultFunc(behandlingtyperFpSak, behandlingtyperFpTilbake, aktiverTilbakekreving);
+
+    expect(res).is.eql([
+      behandlingtyperFpSak[2],
+      behandlingtyperFpSak[1],
+      behandlingtyperFpTilbake[0],
+    ]);
   });
 });

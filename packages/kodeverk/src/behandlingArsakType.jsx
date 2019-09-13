@@ -23,6 +23,8 @@ const behandlingArsakType = {
   RE_ENDRET_INNTEKTSMELDING: 'RE-END-INNTEKTSMELD',
   RE_KLAGE_KA: 'RE_KLAGE_KA',
   RE_KLAGE_NFP: 'RE_KLAGE_NFP',
+  RE_VILKÅR: 'RE_VILKÅR',
+  RE_FORELDELSE: 'RE_FORELDELSE',
 };
 
 export default behandlingArsakType;
