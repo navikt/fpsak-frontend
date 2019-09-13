@@ -63,11 +63,11 @@ export const getNumBehandlinger = createSelector([getBehandlinger], (behandlinge
 export const getNoExistingBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length === 0);
 
 const getSisteLukkedeForsteEllerRevurd = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .find((b) => b.gjeldendeVedtak && b.status === behandlingStatus.AVSLUTTET
+  .find((b) => b.gjeldendeVedtak && b.status.kode === behandlingStatus.AVSLUTTET
     && (b.type.kode === behandlingType.FORSTEGANGSSOKNAD || b.type.kode === behandlingType.REVURDERING)));
 
 export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling = {}) => behandling.uuid);
 
 export const kanLageNyTilbakekrevingsbehandling = createSelector([getBehandlinger, getSisteLukkedeForsteEllerRevurd],
   (behandlinger = [], behandling) => behandling && !behandlinger
-    .some((b) => b.type.kode === behandlingType.TILBAKEKREVING && b.status !== behandlingStatus.AVSLUTTET));
+    .some((b) => b.type.kode === behandlingType.TILBAKEKREVING && b.status.kode !== behandlingStatus.AVSLUTTET));
