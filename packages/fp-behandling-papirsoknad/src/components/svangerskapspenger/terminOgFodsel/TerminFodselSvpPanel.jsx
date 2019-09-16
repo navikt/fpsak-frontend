@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { useIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 
 import { Fieldset } from 'nav-frontend-skjema';
 import { BorderBox } from '@fpsak-frontend/shared-components';
@@ -19,9 +19,10 @@ import {
  */
 const TerminFodselSvpPanel = ({
   readOnly,
+  intl,
 }) => (
   <BorderBox>
-    <Fieldset legend={useIntl().formatMessage({ id: 'Registrering.TerminOgFodsel' })}>
+    <Fieldset legend={intl.formatMessage({ id: 'Registrering.TerminOgFodsel' })}>
       <Row>
         <Column xs="2">
           <DatepickerField
@@ -44,6 +45,7 @@ const TerminFodselSvpPanel = ({
 
 TerminFodselSvpPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 TerminFodselSvpPanel.validate = (values) => ({
@@ -51,4 +53,4 @@ TerminFodselSvpPanel.validate = (values) => ({
   foedselsDato: hasValidDate(values.foedselsDato) || dateBeforeOrEqualToToday(values.foedselsDato),
 });
 
-export default TerminFodselSvpPanel;
+export default injectIntl(TerminFodselSvpPanel);
