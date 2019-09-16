@@ -22,7 +22,24 @@ init({
   release,
   environment,
   integrations: [new Integrations.Breadcrumbs({ console: false })],
-  // Tror buggen med breadcrumbs er fikset nå https://github.com/getsentry/sentry-javascript/releases/tag/5.1.1
+  beforeSend: (event, hint) => {
+    const exception = hint.originalException;
+    if (exception.isAxiosError) {
+      const requestUrl = new URL(exception.request.responseURL);
+      // eslint-disable-next-line no-param-reassign
+      event.fingerprint = [
+        '{{ default }}',
+        String(exception.name),
+        String(exception.message),
+        String(requestUrl.pathname),
+      ];
+      // eslint-disable-next-line no-param-reassign
+      event.extra = event.extra ? event.extra : {};
+      // eslint-disable-next-line no-param-reassign
+      event.extra.callId = exception.response.config.headers['Nav-Callid'];
+    }
+    return event;
+  },
 });
 
 const history = createBrowserHistory({

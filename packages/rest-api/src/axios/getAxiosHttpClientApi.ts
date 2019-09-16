@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { withScope } from '@sentry/browser';
 
 import initRestMethods from './initRestMethods';
 
@@ -20,11 +19,7 @@ const getAxiosHttpClientApi = () => {
   axiosInstance.interceptors.request.use((c): any => {
     const navCallId = `CallId_${(new Date()).getTime()}_${Math.floor(Math.random() * 1000000000)}`;
     const config = { ...c };
-    withScope((scope) => {
-      scope.setTag('Nav-CallId', navCallId);
-    });
     config.headers['Nav-Callid'] = navCallId;
-
     return config;
   });
 
