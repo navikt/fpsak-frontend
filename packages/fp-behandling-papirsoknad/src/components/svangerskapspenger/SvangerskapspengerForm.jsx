@@ -6,8 +6,6 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import { omit } from '@fpsak-frontend/utils';
-import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { getFagsakPerson, getKodeverk, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
@@ -20,6 +18,7 @@ import EgenVirksomhetPanel from '../commonPanels/virksomhet/EgenVirksomhetPanel'
 import InntektsgivendeArbeidPanel from '../commonPanels/inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
 import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from '../commonPanels/andreYtelser/AndreYtelserPanel';
 import FrilansPanel from '../commonPanels/frilans/FrilansPanel';
+import TerminFodselSvpPanel from './terminOgFodsel/TerminFodselSvpPanel';
 
 const SVANGERSKAPSPENGER_FORM_NAME = 'SvangerskapspengerForm';
 
@@ -59,6 +58,7 @@ export class SvangerskapspengerForm extends React.Component {
         />
         <FrilansPanel readOnly={readOnly} form={form} formName={SVANGERSKAPSPENGER_FORM_NAME} />
         <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
+        <TerminFodselSvpPanel readOnly={readOnly} form={form} />
         <TilleggsopplysningerPanel readOnly={readOnly} />
         <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
       </form>
@@ -79,31 +79,16 @@ SvangerskapspengerForm.defaultProps = {
   readOnly: true,
 };
 
-const getValidation = (soknadData, andreYtelser) => {
-  if (soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL) {
-    return (values) => ({
-      ...AndreYtelserPanel.validate(values, andreYtelser),
-      ...InntektsgivendeArbeidPanel.validate(values),
-      ...FrilansPanel.validate(values),
-      ...OppholdINorgePanel.validate(values),
-    });
-  }
-  if (soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON) {
-    return (values) => ({
-      ...AndreYtelserPanel.validate(values, andreYtelser),
-      ...InntektsgivendeArbeidPanel.validate(values),
-      ...FrilansPanel.validate(values),
-      ...OppholdINorgePanel.validate(values),
-    });
-  }
-  return null;
-};
+const getValidation = (soknadData, andreYtelser) => (values) => ({
+  ...AndreYtelserPanel.validate(values, andreYtelser),
+  ...InntektsgivendeArbeidPanel.validate(values),
+  ...FrilansPanel.validate(values),
+  ...OppholdINorgePanel.validate(values),
+  ...TerminFodselSvpPanel.validate(values),
+});
 
 const transformRootValues = (state, registeredFieldNames) => {
   const values = formValueSelector(SVANGERSKAPSPENGER_FORM_NAME)(state, ...registeredFieldNames);
-  if (values.rettigheter === rettighet.IKKE_RELEVANT) {
-    return omit(values, 'rettigheter');
-  }
   return values;
 };
 

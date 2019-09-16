@@ -56,7 +56,7 @@ export const SoknadTypePickerForm = ({
           <Undertekst><FormattedMessage id="Registrering.Omsoknaden.soknadstype" /></Undertekst>
           <VerticalSpacer fourPx />
           <RadioGroupField name="fagsakYtelseType" validate={[required]} direction="vertical">
-            { fagsakYtelseTyper.map((fyt) => <RadioOption disabled={ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />) }
+            { fagsakYtelseTyper.map((fyt) => <RadioOption disabled={!ytelseErSatt} key={fyt.kode} label={fyt.navn} value={fyt.kode} />) }
           </RadioGroupField>
         </Column>
         <Column xs="4">
