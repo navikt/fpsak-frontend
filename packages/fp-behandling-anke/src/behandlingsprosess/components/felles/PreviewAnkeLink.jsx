@@ -4,31 +4,31 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+
+import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import styles from './previewAnkeLink.less';
 
-const getBrevKode = (ankeVurdering, ankeVurdertAvKa) => {
+const getBrevKode = (ankeVurdering) => {
   switch (ankeVurdering) {
-    case klageVurderingType.STADFESTE_YTELSESVEDTAK:
-      return ankeVurdertAvKa ? dokumentMalType.KLAGE_YTELSESVEDTAK_STADFESTET_DOK : dokumentMalType.KLAGE_OVERSENDT_KLAGEINSTANS_DOK;
-    case klageVurderingType.OPPHEVE_YTELSESVEDTAK:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
-    case klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE:
-      return dokumentMalType.KLAGE_YTELSESVEDTAK_OPPHEVET_DOK;
-    case klageVurderingType.MEDHOLD_I_KLAGE:
-      return dokumentMalType.VEDTAK_MEDHOLD;
+    case ankeVurderingType.ANKE_STADFESTE_YTELSESVEDTAK:
+      return null;
+    case ankeVurderingType.ANKE_OMGJOER:
+      return dokumentMalType.ANKE_VEDTAK_OMGJORING;
+    case ankeVurderingType.ANKE_OPPHEVE_OG_HJEMSENDE:
+      return null;
+    case ankeVurderingType.ANKE_AVVIS:
+      return null;
     default:
       return null;
   }
 };
 
 const getBrevData = (ankeVurdering, aksjonspunktCode, fritekstTilBrev) => {
-  const ankeVurdertAv = aksjonspunktCode === aksjonspunktCodes.BEHANDLE_KLAGE_NK ? 'NK' : 'NFP';
   const data = {
     fritekst: fritekstTilBrev || '',
     mottaker: '',
-    dokumentMal: getBrevKode(ankeVurdering, ankeVurdertAv === 'NK'),
+    dokumentMal: getBrevKode(ankeVurdering),
   };
   return data;
 };
@@ -41,8 +41,8 @@ const PreviewAnkeLink = ({
   readOnly,
 }) => {
   const previewMessage = (e) => {
-    previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
     e.preventDefault();
+    previewCallback(getBrevData(ankeVurdering, aksjonspunktCode, fritekstTilBrev));
   };
   if (readOnly) {
     return (
