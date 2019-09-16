@@ -34,8 +34,7 @@ export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shoul
     .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
 };
 
-export const fetchPreviewBrev = ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
-export const fetchPreviewAnkeBrev = ankeBehandlingApi.PREVIEW_MESSAGE_ANKE.makeRestApiRequest();
+export const fetchPreviewAnkeBrev = ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();
 
 export const { resetBehandlingspunkter, setSelectedBehandlingspunktNavn, toggleBehandlingspunktOverstyring } = behandlingsprosessRedux.actionCreators;
 export const { getSelectedBehandlingspunktNavn, getOverrideBehandlingspunkter, getResolveProsessAksjonspunkterSuccess } = behandlingsprosessRedux.selectors;
