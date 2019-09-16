@@ -20,7 +20,7 @@ import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import { getFeatureToggles } from 'app/duck';
-import { isForeldrepengerFagsak, isSvangerskapFagsak } from 'fagsak/fagsakSelectors';
+import { isForeldrepengerFagsak, isSvangerskapFagsak, getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { kanLageNyTilbakekrevingsbehandling, getUuidForSisteLukkedeForsteEllerRevurd } from 'behandling/selectors/behandlingerSelectors';
 import { sjekkOmTilbakekrevingRevurderingKanOpprettes } from 'behandlingmenu/duck';
 import { harValgtAvsluttetTilbakekreving, getUuidForValgtBehandling } from 'behandling/duck';
@@ -239,6 +239,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => ownProps.submitCallback({
     ...values,
     eksternUuid: getUuidForSisteLukkedeForsteEllerRevurd(initialState),
+    fagsakYtelseType: getFagsakYtelseType(initialState),
   });
   const behandlingTyper = getBehandlingTyper(initialState);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
