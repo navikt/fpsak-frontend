@@ -10,6 +10,7 @@ import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-com
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
+import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import EndringForeldrepengerForm from './foreldrepenger/EndringForeldrepengerForm';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 
@@ -64,6 +65,15 @@ export const RegistrerPapirsoknad = ({
       {soknadData !== null && soknadData.getFagsakYtelseType() === fagsakYtelseType.ENDRING_FORELDREPENGER
         && (
         <EndringForeldrepengerForm
+          onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
+          onSubmit={submitPapirsoknad}
+          readOnly={readOnly}
+          soknadData={soknadData}
+        />
+        )}
+      {soknadData !== null && soknadData.getFagsakYtelseType() === fagsakYtelseType.SVANGERSKAPSPENGER
+        && (
+        <SvangerskapspengerForm
           onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
           onSubmit={submitPapirsoknad}
           readOnly={readOnly}
