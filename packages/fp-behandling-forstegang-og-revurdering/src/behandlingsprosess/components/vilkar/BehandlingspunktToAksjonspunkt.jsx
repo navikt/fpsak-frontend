@@ -35,9 +35,9 @@ const behandlingspunktToAksjonspunktSvangerskapspenger = {
 
 export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
   let apCode = null;
-  if (ytelseType === fagsakYtelseType.FORELDREPENGER) {
+  if (ytelseType && ytelseType.kode === fagsakYtelseType.FORELDREPENGER) {
     apCode = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
-  } else if (ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) {
+  } else if (ytelseType && ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
     apCode = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
   } else {
     apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
