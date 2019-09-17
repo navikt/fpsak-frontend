@@ -10,7 +10,7 @@ import { required } from '@fpsak-frontend/utils';
 /*
  * MigreringFraInfotrygdPanel
  *
- * Form som brukes for registrere termin og fødsel i papirsøknad.
+ * Form som brukes for registrere om behandling er migrert fra Infotrygd.
  */
 const MigreringFraInfotrygdPanel = ({
   readOnly,

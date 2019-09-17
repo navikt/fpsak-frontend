@@ -2545,6 +2545,21 @@
   "MigreringFraInfotrygdPanel.Nei": "Nei",
   "MigreringFraInfotrygdPanel.ErDenneSakenMigrert": "Er denne saken migrert fra Infotrygd og skal i utgangspunktet bare fortsette som før?",
 
+  "BehovForTilretteleggingPanel.BehovForTilrettelegging": "Behov for tilrettelegging",
+  "BehovForTilretteleggingPanel.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
+  "BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende": "Søkes det om tilrettelegging som selvstendig næringsdrivende?",
+  "BehovForTilretteleggingPanel.Ja": "Ja",
+  "BehovForTilretteleggingPanel.Nei": "Nei",
+  "BehovForTilretteleggingPanel.SokForFrilans": "Søkes det om tilrettelegging som frilans?",
+
+  "SelvstendigNaringsdrivendeFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
+  "SelvstendigNaringsdrivendeFieldArray.BehovForTilrettelegging": "Behov for tilrettelegging",
+  "SelvstendigNaringsdrivendeFieldArray.FraDato": "Fra dato",
+  "SelvstendigNaringsdrivendeFieldArray.Stillingsprosent": "Stillingsprosent",
+  "SelvstendigNaringsdrivendeFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
+  "SelvstendigNaringsdrivendeFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
+  "SelvstendigNaringsdrivendeFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv og behandle saken litt senere. Om feilen oppstår igjen meld den inn via porten.",

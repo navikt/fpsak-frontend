@@ -20,6 +20,7 @@ import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from '../commonPane
 import FrilansPanel from '../commonPanels/frilans/FrilansPanel';
 import TerminFodselSvpPanel from './terminOgFodsel/TerminFodselSvpPanel';
 import MigreringFraInfotrygdPanel from './migreringFraInfotrygd/MigreringFraInfotrygdPanel';
+import BehovForTilretteleggingPanel from './tilrettelegging/BehovForTilretteleggingPanel';
 
 const SVANGERSKAPSPENGER_FORM_NAME = 'SvangerskapspengerForm';
 
@@ -60,6 +61,7 @@ export class SvangerskapspengerForm extends React.Component {
         <FrilansPanel readOnly={readOnly} form={form} formName={SVANGERSKAPSPENGER_FORM_NAME} />
         <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
         <TerminFodselSvpPanel readOnly={readOnly} form={form} />
+        <BehovForTilretteleggingPanel readOnly={readOnly} formName={SVANGERSKAPSPENGER_FORM_NAME} />
         <TilleggsopplysningerPanel readOnly={readOnly} />
         <MigreringFraInfotrygdPanel readOnly={readOnly} />
         <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
@@ -99,6 +101,7 @@ const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownP
   ...AndreYtelserPanel.buildInitialValues(ownProps.andreYtelser),
   ...InntektsgivendeArbeidPanel.initialValues,
   ...OppholdINorgePanel.initialValues,
+  ...BehovForTilretteleggingPanel.initialValues,
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
