@@ -8,8 +8,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
-// import styles from './lonnsendringForm.less';
-
 /**
  * LonnsendringForm
  *
