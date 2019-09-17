@@ -1,6 +1,7 @@
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import organisasjonstyper from '@fpsak-frontend/kodeverk/src/organisasjonstype';
+import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import { lonnsendringField }
   from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/LonnsendringForm';
@@ -12,6 +13,8 @@ import {
   getBeregningsgrunnlag,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { createSelector } from 'reselect';
+import { harEtterlonnSluttpakkeField }
+  from 'behandlingForstegangOgRevurdering/src/fakta/components/beregning/fellesFaktaForATFLogSN/vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import { andelsnrMottarYtelseMap } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
@@ -28,6 +31,7 @@ export const setArbeidsforholdInitialValues = (andel) => ({
   arbeidsforholdId: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdId : null,
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold ? andel.arbeidsforhold.opphoersdato : '',
+  arbeidsforholdType: andel.arbeidsforhold ? andel.arbeidsforhold.arbeidsforholdType : '',
 });
 
 export const setGenerellAndelsinfo = (andel) => ({
@@ -91,6 +95,14 @@ const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgr
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
 };
 
+// Etterlønn / sluttpakke
+const andelErEtterlønnSluttpakkeOgSkalFastsettes = (andel, values) => {
+  if (andel.arbeidsforholdType && andel.arbeidsforholdType.kode === OAType.ETTERLONN_SLUTTPAKKE) {
+    return values[harEtterlonnSluttpakkeField];
+  }
+  return false;
+};
+
 // Manuelt registrert med handlingstype LAGT_TIL_AV_BRUKER
 const erAndelKunstigArbeidsforhold = (andel, beregningsgrunnlag) => {
   const firstBgPeriod = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
@@ -122,6 +134,9 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, f
     return true;
   }
   if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
+    return true;
+  }
+  if (andelErEtterlønnSluttpakkeOgSkalFastsettes(andel, values)) {
     return true;
   }
   return false;
@@ -192,8 +207,6 @@ export const mapAndelToField = (andel) => ({
   fastsattBelop: andel.fastsattBelop || andel.fastsattBelop === 0 ? formatCurrencyNoKr(andel.fastsattBelop) : '',
   belopReadOnly: andel.belopReadOnly || andel.belopReadOnly === 0 ? formatCurrencyNoKr(andel.belopReadOnly) : '',
   refusjonskrav: andel.refusjonskrav || andel.refusjonskrav === 0 ? formatCurrencyNoKr(andel.refusjonskrav) : '',
-  arbeidsperiodeFom: andel.arbeidsperiodeFom,
-  arbeidsperiodeTom: andel.arbeidsperiodeTom,
   andel: andel.visningsnavn,
   aktivitetStatus: andel.aktivitetStatus.kode,
   andelsnr: andel.andelsnr,

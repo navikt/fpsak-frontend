@@ -21,6 +21,7 @@ import {
 } from '../BgFordelingUtils';
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
+import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
 
 
 const lonnsendringErVurdertEllerIkkjeTilstede = (tilfeller, values) => (
@@ -122,6 +123,14 @@ const VurderOgFastsettATFL = ({
           manglerIM={manglerInntektsmelding}
         />
       )}
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE)
+      && (
+        <VurderEtterlonnSluttpakkeForm
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+          tilfeller={tilfeller}
+        />
+      )}
       {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL)
       && (
         <NyoppstartetFLForm
@@ -214,6 +223,9 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
     const allInntektErFastsatt = values[besteberegningField] === true;
     // Nyoppstartet FL
     transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, fastsatteAndelsnr));
+    // Etterlønn / sluttpakke
+    transformed = concatTilfeller(transformed, VurderEtterlonnSluttpakkeForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
     // Lønnsendring FL
     transformed = concatTilfeller(transformed,

@@ -30,8 +30,7 @@ import {
 import LonnsendringForm from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import NyIArbeidslivetSNForm from './nyIArbeidslivet/NyIArbeidslivetSNForm';
 import VurderOgFastsettATFL from './vurderOgFastsettATFL/VurderOgFastsettATFL';
-import VurderEtterlonnSluttpakkeForm from './etterlønnSluttpakke/VurderEtterlonnSluttpakkeForm';
-import FastsettEtterlonnSluttpakkeForm from './etterlønnSluttpakke/FastsettEtterlonnSluttpakkeForm';
+import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
@@ -103,18 +102,6 @@ const getFaktaPanels = (readOnly, tilfeller, isAksjonspunktClosed) => {
         <ElementWrapper key={tilfelle}>
           {spacer(hasShownPanel)}
           <NyIArbeidslivetSNForm
-            readOnly={readOnly}
-            isAksjonspunktClosed={isAksjonspunktClosed}
-          />
-        </ElementWrapper>,
-      );
-    }
-    if (tilfelle === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
-      hasShownPanel = true;
-      faktaPanels.push(
-        <ElementWrapper key={tilfelle}>
-          {spacer(hasShownPanel)}
-          <VurderEtterlonnSluttpakkeForm
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
           />
@@ -198,15 +185,6 @@ const kortvarigeArbeidsforholdTransform = (kortvarigeArbeidsforhold) => (vurderF
   });
 };
 
-const etterlonnSluttpakkeTransform = (aktivePaneler) => (vurderFaktaValues, values) => {
-  vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE);
-  return {
-    ...vurderFaktaValues,
-    ...VurderEtterlonnSluttpakkeForm.etterlonnSluttpakkeInntekt(values, aktivePaneler, vurderFaktaValues),
-    ...VurderEtterlonnSluttpakkeForm.transformValues(values),
-  };
-};
-
 const vurderMilitaerSiviltjenesteTransform = (vurderFaktaValues, values) => {
   vurderFaktaValues.faktaOmBeregningTilfeller.push(faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE);
   return ({
@@ -227,7 +205,6 @@ export const transformValues = (
   aktivePaneler,
   nyIArbTransform,
   kortvarigTransform,
-  etterlonnTransform,
   militaerTransform,
   vurderRefusjonTransform,
 ) => (vurderFaktaValues, values) => {
@@ -238,9 +215,6 @@ export const transformValues = (
     }
     if (kode === faktaOmBeregningTilfelle.VURDER_TIDSBEGRENSET_ARBEIDSFORHOLD) {
       transformed = kortvarigTransform(transformed, values);
-    }
-    if (kode === faktaOmBeregningTilfelle.VURDER_ETTERLONN_SLUTTPAKKE) {
-      transformed = etterlonnTransform(transformed, values);
     }
     if (kode === faktaOmBeregningTilfelle.VURDER_MILITÆR_SIVILTJENESTE) {
       transformed = militaerTransform(transformed, values);
@@ -270,7 +244,6 @@ const setValuesForVurderFakta = (aktivePaneler, values, kortvarigeArbeidsforhold
     fakta: transformValues(aktivePaneler,
       nyIArbeidslivetTransform,
       kortvarigeArbeidsforholdTransform(kortvarigeArbeidsforhold),
-      etterlonnSluttpakkeTransform(aktivePaneler),
       vurderMilitaerSiviltjenesteTransform,
       vurderRefusjonskravTransform(faktaOmBeregning))(vurderFaktaValues.fakta, values),
     overstyrteAndeler: vurderFaktaValues.overstyrteAndeler,
@@ -299,7 +272,6 @@ const buildInitialValuesForTilfeller = (props) => ({
   ...NyoppstartetFLForm.buildInitialValues(props.beregningsgrunnlag),
   ...buildInitialValuesKunYtelse(props.kunYtelse, props.tilfeller, props.faktaOmBeregning.andelerForFaktaOmBeregning),
   ...VurderEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag, props.vurderFaktaAP),
-  ...FastsettEtterlonnSluttpakkeForm.buildInitialValues(props.beregningsgrunnlag),
   ...VurderMottarYtelseForm.buildInitialValues(props.vurderMottarYtelse),
   ...VurderBesteberegningForm.buildInitialValues(props.vurderBesteberegning, props.tilfeller),
   ...VurderOgFastsettATFL.buildInitialValues(props.aksjonspunkter, props.faktaOmBeregning),
