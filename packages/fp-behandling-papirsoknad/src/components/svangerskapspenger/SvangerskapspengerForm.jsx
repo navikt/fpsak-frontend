@@ -19,6 +19,7 @@ import InntektsgivendeArbeidPanel from '../commonPanels/inntektsgivendeArbeid/In
 import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from '../commonPanels/andreYtelser/AndreYtelserPanel';
 import FrilansPanel from '../commonPanels/frilans/FrilansPanel';
 import TerminFodselSvpPanel from './terminOgFodsel/TerminFodselSvpPanel';
+import MigreringFraInfotrygdPanel from './migreringFraInfotrygd/MigreringFraInfotrygdPanel';
 
 const SVANGERSKAPSPENGER_FORM_NAME = 'SvangerskapspengerForm';
 
@@ -60,6 +61,7 @@ export class SvangerskapspengerForm extends React.Component {
         <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
         <TerminFodselSvpPanel readOnly={readOnly} form={form} />
         <TilleggsopplysningerPanel readOnly={readOnly} />
+        <MigreringFraInfotrygdPanel readOnly={readOnly} />
         <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
       </form>
     );
