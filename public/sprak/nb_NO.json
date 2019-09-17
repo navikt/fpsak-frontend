@@ -2551,14 +2551,18 @@
   "BehovForTilretteleggingPanel.Ja": "Ja",
   "BehovForTilretteleggingPanel.Nei": "Nei",
   "BehovForTilretteleggingPanel.SokForFrilans": "Søkes det om tilrettelegging som frilans?",
+  "BehovForTilretteleggingPanel.SokForArbeidsgiver": "Søkes det om tilrettelegging fra arbeidsgiver?",
 
-  "SelvstendigNaringsdrivendeFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
-  "SelvstendigNaringsdrivendeFieldArray.BehovForTilrettelegging": "Behov for tilrettelegging",
-  "SelvstendigNaringsdrivendeFieldArray.FraDato": "Fra dato",
-  "SelvstendigNaringsdrivendeFieldArray.Stillingsprosent": "Stillingsprosent",
-  "SelvstendigNaringsdrivendeFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
-  "SelvstendigNaringsdrivendeFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
-  "SelvstendigNaringsdrivendeFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+  "BehovForTilrettteleggingFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
+  "BehovForTilrettteleggingFieldArray.BehovForTilrettelegging": "Behov for tilrettelegging",
+  "BehovForTilrettteleggingFieldArray.FraDato": "Fra dato",
+  "BehovForTilrettteleggingFieldArray.Stillingsprosent": "Stillingsprosent",
+  "BehovForTilrettteleggingFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
+  "BehovForTilrettteleggingFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
+  "BehovForTilrettteleggingFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+
+  "TilretteleggingForArbeidsgiverFieldArray.OrgNr": "Arbeidsgivers org.nr.",
+  "TilretteleggingForArbeidsgiverFieldArray.LeggTilArbeidsgiver": "Legg til arbeidsgiver",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 

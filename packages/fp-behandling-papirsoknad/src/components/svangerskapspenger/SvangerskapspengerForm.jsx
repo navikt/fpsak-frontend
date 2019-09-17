@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  formPropTypes, formValueSelector, reduxForm,
+  formPropTypes, formValueSelector, reduxForm, FormSection,
 } from 'redux-form';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
@@ -23,6 +23,7 @@ import MigreringFraInfotrygdPanel from './migreringFraInfotrygd/MigreringFraInfo
 import BehovForTilretteleggingPanel from './tilrettelegging/BehovForTilretteleggingPanel';
 
 const SVANGERSKAPSPENGER_FORM_NAME = 'SvangerskapspengerForm';
+const TILRETTELEGGING_NAME_PREFIX = 'tilrettelegging';
 
 /**
  * SvangerskapspengerForm
@@ -61,7 +62,9 @@ export class SvangerskapspengerForm extends React.Component {
         <FrilansPanel readOnly={readOnly} form={form} formName={SVANGERSKAPSPENGER_FORM_NAME} />
         <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
         <TerminFodselSvpPanel readOnly={readOnly} form={form} />
-        <BehovForTilretteleggingPanel readOnly={readOnly} formName={SVANGERSKAPSPENGER_FORM_NAME} />
+        <FormSection name={TILRETTELEGGING_NAME_PREFIX}>
+          <BehovForTilretteleggingPanel readOnly={readOnly} formName={SVANGERSKAPSPENGER_FORM_NAME} namePrefix={TILRETTELEGGING_NAME_PREFIX} />
+        </FormSection>
         <TilleggsopplysningerPanel readOnly={readOnly} />
         <MigreringFraInfotrygdPanel readOnly={readOnly} />
         <LagreSoknadForm readOnly={readOnly} onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad} form={form} submitting={submitting} />
@@ -101,7 +104,7 @@ const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownP
   ...AndreYtelserPanel.buildInitialValues(ownProps.andreYtelser),
   ...InntektsgivendeArbeidPanel.initialValues,
   ...OppholdINorgePanel.initialValues,
-  ...BehovForTilretteleggingPanel.initialValues,
+  [TILRETTELEGGING_NAME_PREFIX]: BehovForTilretteleggingPanel.initialValues,
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {

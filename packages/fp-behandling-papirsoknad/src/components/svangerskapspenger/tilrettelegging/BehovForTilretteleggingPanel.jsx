@@ -4,15 +4,17 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { formValueSelector, FieldArray } from 'redux-form';
 
-import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { RadioGroupField, RadioOption, DatepickerField } from '@fpsak-frontend/form';
 import { Fieldset } from 'nav-frontend-skjema';
 import { BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 
-import SelvstendigNaringsdrivendeEllerFrilansFieldArray from './SelvstendigNaringsdrivendeEllerFrilansFieldArray';
+import BehovForTilrettteleggingFieldArray from './BehovForTilrettteleggingFieldArray';
+import TilretteleggingForArbeidsgiverFieldArray from './TilretteleggingForArbeidsgiverFieldArray';
 
 const selvstendigNaringsdrivendeFieldArrayName = 'tilretteleggingSelvstendigNaringsdrivende';
 const frilansFieldArrayName = 'tilretteleggingFrilans';
+const tilretteleggingForArbeidsgiverFieldArrayName = 'tilretteleggingForArbeidsgiver';
 
 /*
  * BehovForTilretteleggingPanel
@@ -23,16 +25,11 @@ const BehovForTilretteleggingPanelImpl = ({
   readOnly,
   sokForSelvstendigNaringsdrivende,
   sokForFrilans,
+  sokForArbeidsgiver,
   intl,
 }) => (
   <BorderBox>
     <Fieldset legend={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.BehovForTilrettelegging' })}>
-      <DatepickerField
-        name="tilretteleggingFraDato"
-        label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
-        validate={[required]}
-        readOnly={readOnly}
-      />
       <RadioGroupField
         name="sokForSelvstendigNaringsdrivende"
         label={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende' })}
@@ -44,9 +41,15 @@ const BehovForTilretteleggingPanelImpl = ({
       </RadioGroupField>
       {sokForSelvstendigNaringsdrivende && (
         <ArrowBox>
+          <DatepickerField
+            name="tilretteleggingFraDatoSN"
+            label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
+            validate={[required]}
+            readOnly={readOnly}
+          />
           <FieldArray
             name={selvstendigNaringsdrivendeFieldArrayName}
-            component={SelvstendigNaringsdrivendeEllerFrilansFieldArray}
+            component={BehovForTilrettteleggingFieldArray}
             readOnly={readOnly}
           />
         </ArrowBox>
@@ -62,9 +65,33 @@ const BehovForTilretteleggingPanelImpl = ({
       </RadioGroupField>
       {sokForFrilans && (
         <ArrowBox>
+          <DatepickerField
+            name="tilretteleggingFraDatoFrilans"
+            label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
+            validate={[required]}
+            readOnly={readOnly}
+          />
           <FieldArray
             name={frilansFieldArrayName}
-            component={SelvstendigNaringsdrivendeEllerFrilansFieldArray}
+            component={BehovForTilrettteleggingFieldArray}
+            readOnly={readOnly}
+          />
+        </ArrowBox>
+      )}
+      <RadioGroupField
+        name="sokForArbeidsgiver"
+        label={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.SokForArbeidsgiver' })}
+        validate={[required]}
+        readOnly={readOnly}
+      >
+        <RadioOption value label={{ id: 'BehovForTilretteleggingPanel.Ja' }} />
+        <RadioOption value={false} label={{ id: 'BehovForTilretteleggingPanel.Nei' }} />
+      </RadioGroupField>
+      {sokForArbeidsgiver && (
+        <ArrowBox>
+          <FieldArray
+            name={tilretteleggingForArbeidsgiverFieldArrayName}
+            component={TilretteleggingForArbeidsgiverFieldArray}
             readOnly={readOnly}
           />
         </ArrowBox>
@@ -75,21 +102,26 @@ const BehovForTilretteleggingPanelImpl = ({
 
 BehovForTilretteleggingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  sokForSelvstendigNaringsdrivende: PropTypes.bool.isRequired,
-  sokForFrilans: PropTypes.bool.isRequired,
+  sokForSelvstendigNaringsdrivende: PropTypes.bool,
+  sokForFrilans: PropTypes.bool,
+  sokForArbeidsgiver: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
 };
 
+BehovForTilretteleggingPanelImpl.defaultProps = {
+  sokForSelvstendigNaringsdrivende: undefined,
+  sokForFrilans: undefined,
+  sokForArbeidsgiver: undefined,
+};
+
 const mapStateToProps = (state, ownProps) => ({
-  sokForSelvstendigNaringsdrivende: formValueSelector(ownProps.formName)(state, 'sokForSelvstendigNaringsdrivende'),
-  sokForFrilans: formValueSelector(ownProps.formName)(state, 'sokForFrilans'),
+  ...formValueSelector(ownProps.formName)(state, ownProps.namePrefix),
 });
 
 const BehovForTilretteleggingPanel = connect(mapStateToProps)(injectIntl(BehovForTilretteleggingPanelImpl));
 
 BehovForTilretteleggingPanel.initialValues = {
-  [selvstendigNaringsdrivendeFieldArrayName]: [{}],
-  [frilansFieldArrayName]: [{}],
+  [tilretteleggingForArbeidsgiverFieldArrayName]: [{}],
 };
 
 export default BehovForTilretteleggingPanel;
