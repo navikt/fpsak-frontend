@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getFagsakPerson, getKodeverk, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
 import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
 import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';
 import TilleggsopplysningerPanel from 'papirsoknad/src/components/commonPanels/TilleggsopplysningerPanel';
@@ -108,9 +108,8 @@ const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownP
 }));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const sokerPersonnummer = getFagsakPerson(initialState).personnummer;
   const andreYtelserObject = { andreYtelser: getKodeverk(kodeverkTyper.ARBEID_TYPE)(initialState) };
-  const validate = getValidation(ownProps.soknadData, andreYtelserObject.andreYtelser, sokerPersonnummer);
+  const validate = getValidation(ownProps.soknadData, andreYtelserObject.andreYtelser);
   return (state) => {
     const registeredFields = getRegisteredFields(SVANGERSKAPSPENGER_FORM_NAME)(state);
     const registeredFieldNames = Object.values(registeredFields).map((rf) => rf.name);
@@ -122,18 +121,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
           .transformValues(formValueSelector(SVANGERSKAPSPENGER_FORM_NAME)(state, ...registeredFieldNames), andreYtelserObject.andreYtelser),
       }
       : {};
-    const sokerValue = valuesForRegisteredFieldsOnly.annenForelder;
-    const sokerHarAleneomsorg = sokerValue ? sokerValue.sokerHarAleneomsorg : undefined;
 
-    let annenForelderInformertRequired = true;
-    if (sokerValue && (sokerHarAleneomsorg || sokerValue.denAndreForelderenHarRettPaForeldrepenger === false)) {
-      annenForelderInformertRequired = false;
-    }
     return {
       initialValues: buildInitialValues(state, andreYtelserObject),
       valuesForRegisteredFieldsOnly,
-      annenForelderInformertRequired,
-      sokerHarAleneomsorg,
       validate,
     };
   };

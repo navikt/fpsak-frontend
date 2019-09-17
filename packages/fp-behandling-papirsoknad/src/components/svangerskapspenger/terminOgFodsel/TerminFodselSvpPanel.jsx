@@ -22,19 +22,19 @@ const TerminFodselSvpPanel = ({
   intl,
 }) => (
   <BorderBox>
-    <Fieldset legend={intl.formatMessage({ id: 'Registrering.TerminOgFodsel' })}>
+    <Fieldset legend={intl.formatMessage({ id: 'TerminFodselSvpPanel.TerminOgFodsel' })}>
       <Row>
         <Column xs="2">
           <DatepickerField
             name="termindato"
-            label={{ id: 'Registrering.Termindato' }}
+            label={{ id: 'TerminFodselSvpPanel.Termindato' }}
             readOnly={readOnly}
           />
         </Column>
         <Column xs="3">
           <DatepickerField
             name="foedselsDato"
-            label={{ id: 'Registrering.Fodselsdato' }}
+            label={{ id: 'TerminFodselSvpPanel.Fodselsdato' }}
             readOnly={readOnly}
           />
         </Column>

@@ -25,13 +25,13 @@ const leggTilArbeidsgiver = (fields) => () => {
 /*
  * TilretteleggingForArbeidsgiverFieldArray
  *
- * Form som brukes for registrere om det er behov for tilrettelegging.
+ * Form som brukes for registrere om det er behov for tilrettelegging for arbeidsgiver.
  */
 const TilretteleggingForArbeidsgiverFieldArray = ({
   fields,
   readOnly,
 }) => fields.map((fieldId, index) => (
-  <React.Fragment key={fieldId}>
+  <div key={fieldId}>
     <FlexContainer>
       <FlexRow>
         <FlexColumn>
@@ -70,7 +70,7 @@ const TilretteleggingForArbeidsgiverFieldArray = ({
         <FormattedMessage id="TilretteleggingForArbeidsgiverFieldArray.LeggTilArbeidsgiver" />
       </Knapp>
     )}
-  </React.Fragment>
+  </div>
 ));
 
 TilretteleggingForArbeidsgiverFieldArray.propTypes = {

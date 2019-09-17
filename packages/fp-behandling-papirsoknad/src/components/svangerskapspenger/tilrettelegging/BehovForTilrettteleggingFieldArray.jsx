@@ -25,7 +25,7 @@ const defaultTilrettelegging = {
  *
  * Viser inputfelter for tilrettelegging av arbeidsforhold for selvstendig næringsdrivende eller frilans.
  */
-export const BehovForTilrettteleggingFieldArray = ({
+const BehovForTilrettteleggingFieldArray = ({
   intl,
   fields,
   meta,

@@ -21,7 +21,7 @@ const tilretteleggingForArbeidsgiverFieldArrayName = 'tilretteleggingForArbeidsg
  *
  * Form som brukes for registrere om det er behov for tilrettelegging.
  */
-const BehovForTilretteleggingPanelImpl = ({
+export const BehovForTilretteleggingPanelImpl = ({
   readOnly,
   sokForSelvstendigNaringsdrivende,
   sokForFrilans,
