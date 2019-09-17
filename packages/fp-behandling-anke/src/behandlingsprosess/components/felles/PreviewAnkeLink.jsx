@@ -11,14 +11,10 @@ import styles from './previewAnkeLink.less';
 
 const getBrevKode = (ankeVurdering) => {
   switch (ankeVurdering) {
-    case ankeVurderingType.ANKE_STADFESTE_YTELSESVEDTAK:
-      return null;
     case ankeVurderingType.ANKE_OMGJOER:
       return dokumentMalType.ANKE_VEDTAK_OMGJORING;
     case ankeVurderingType.ANKE_OPPHEVE_OG_HJEMSENDE:
-      return null;
-    case ankeVurderingType.ANKE_AVVIS:
-      return null;
+      return dokumentMalType.ANKE_BESLUTNING_OM_OPPHEVING;
     default:
       return null;
   }
