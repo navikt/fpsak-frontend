@@ -105,7 +105,6 @@ const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
 export const harValgtAvsluttetTilbakekreving = createSelector([getBehandling], (behandling) => behandling && (behandling
   .type.kode === behandlingType.TILBAKEKREVING || behandling.type.kode === behandlingType.TILBAKEKREVING_REVURDERING));
 
-export const getUuidForValgtBehandling = createSelector([getBehandling], (behandling = {}) => behandling.uuid);
 export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);
 export const getBehandlingBehandlendeEnhetId = createSelector([getBehandling], (behandling = {}) => behandling.behandlendeEnhetId);

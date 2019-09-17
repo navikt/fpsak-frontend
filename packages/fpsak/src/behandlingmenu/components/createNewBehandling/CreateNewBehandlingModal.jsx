@@ -23,7 +23,7 @@ import { getFeatureToggles } from 'app/duck';
 import { isForeldrepengerFagsak, isSvangerskapFagsak, getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { kanLageNyTilbakekrevingsbehandling, getUuidForSisteLukkedeForsteEllerRevurd } from 'behandling/selectors/behandlingerSelectors';
 import { sjekkOmTilbakekrevingRevurderingKanOpprettes } from 'behandlingmenu/duck';
-import { harValgtAvsluttetTilbakekreving, getUuidForValgtBehandling } from 'behandling/duck';
+import { harValgtAvsluttetTilbakekreving, getSelectedBehandlingId } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getFpTilbakeKodeverk, getKodeverk } from 'kodeverk/duck';
 
@@ -53,12 +53,12 @@ export const CreateNewBehandlingModal = ({
   behandlingType,
   behandlingArsakTyper,
   enabledBehandlingstyper,
-  uuid,
+  behandlingId,
   kanTilbakeRevurderingOpprettes,
 }) => {
   useEffect(() => {
-    if (uuid) {
-      kanTilbakeRevurderingOpprettes({ uuid });
+    if (behandlingId) {
+      kanTilbakeRevurderingOpprettes({ behandlingId });
     }
   }, []);
   return (
@@ -136,7 +136,7 @@ CreateNewBehandlingModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
-  uuid: PropTypes.string,
+  behandlingId: PropTypes.string,
   kanTilbakeRevurderingOpprettes: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
   behandlingTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -147,7 +147,7 @@ CreateNewBehandlingModal.propTypes = {
 
 CreateNewBehandlingModal.defaultProps = {
   behandlingType: undefined,
-  uuid: undefined,
+  behandlingId: undefined,
 };
 
 const formName = 'CreateNewBehandlingModal';
@@ -243,12 +243,12 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
   const behandlingTyper = getBehandlingTyper(initialState);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
-  const uuid = harValgtAvsluttetTilbakekreving(initialState) ? getUuidForValgtBehandling(initialState) : undefined;
+  const behandlingId = harValgtAvsluttetTilbakekreving(initialState) ? getSelectedBehandlingId(initialState) : undefined;
   return (state) => ({
     onSubmit,
     behandlingTyper,
     enabledBehandlingstyper,
-    uuid,
+    behandlingId,
     behandlingArsakTyper: getBehandlingAarsaker(state),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
   });
