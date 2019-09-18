@@ -27,6 +27,7 @@ describe('<SvangerskapspengerForm>', () => {
 
   it('skal transformere tilretteleggingsdata for arbeidsgiver før lagring', () => {
     const values = {
+      foedselsDato: '2019-09-18',
       tilretteleggingArbeidsforhold: {
         sokForSelvstendigNaringsdrivende: false,
         sokForFrilans: false,
@@ -58,6 +59,7 @@ describe('<SvangerskapspengerForm>', () => {
     };
 
     expect(transformValues(values)).is.eql({
+      foedselsDato: ['2019-09-18'],
       tilretteleggingArbeidsforhold: [{
         '@type': 'VI',
         behovsdato: '2019-09-18',
@@ -86,6 +88,7 @@ describe('<SvangerskapspengerForm>', () => {
 
   it('skal transformere tilretteleggingsdata for frilans før lagring', () => {
     const values = {
+      foedselsDato: '2019-09-18',
       tilretteleggingArbeidsforhold: {
         sokForSelvstendigNaringsdrivende: false,
         sokForFrilans: true,
@@ -104,6 +107,7 @@ describe('<SvangerskapspengerForm>', () => {
     };
 
     expect(transformValues(values)).is.eql({
+      foedselsDato: ['2019-09-18'],
       tilretteleggingArbeidsforhold: [{
         '@type': 'FR',
         behovsdato: '2019-09-18',
@@ -122,6 +126,7 @@ describe('<SvangerskapspengerForm>', () => {
 
   it('skal transformere tilretteleggingsdata for selvstendig næringsdrivende før lagring', () => {
     const values = {
+      foedselsDato: '2019-09-18',
       tilretteleggingArbeidsforhold: {
         sokForSelvstendigNaringsdrivende: true,
         sokForFrilans: false,
@@ -140,6 +145,7 @@ describe('<SvangerskapspengerForm>', () => {
     };
 
     expect(transformValues(values)).is.eql({
+      foedselsDato: ['2019-09-18'],
       tilretteleggingArbeidsforhold: [{
         '@type': 'SN',
         behovsdato: '2019-09-18',

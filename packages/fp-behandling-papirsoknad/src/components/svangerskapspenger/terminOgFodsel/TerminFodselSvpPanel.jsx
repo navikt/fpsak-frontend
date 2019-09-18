@@ -29,6 +29,7 @@ const TerminFodselSvpPanel = ({
             name="termindato"
             label={{ id: 'TerminFodselSvpPanel.Termindato' }}
             readOnly={readOnly}
+            validate={[required, hasValidDate]}
           />
         </Column>
         <Column xs="3">
@@ -36,6 +37,7 @@ const TerminFodselSvpPanel = ({
             name="foedselsDato"
             label={{ id: 'TerminFodselSvpPanel.Fodselsdato' }}
             readOnly={readOnly}
+            validate={[hasValidDate, dateBeforeOrEqualToToday]}
           />
         </Column>
       </Row>
@@ -47,10 +49,5 @@ TerminFodselSvpPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   intl: PropTypes.shape().isRequired,
 };
-
-TerminFodselSvpPanel.validate = (values) => ({
-  termindato: required(values.termindato) || hasValidDate(values.termindato),
-  foedselsDato: hasValidDate(values.foedselsDato) || dateBeforeOrEqualToToday(values.foedselsDato),
-});
 
 export default injectIntl(TerminFodselSvpPanel);

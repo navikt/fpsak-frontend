@@ -55,10 +55,7 @@ export class SvangerskapspengerForm extends React.Component {
         <MottattDatoPanel readOnly={readOnly} />
         <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
         <InntektsgivendeArbeidPanel readOnly={readOnly} />
-        <EgenVirksomhetPanel
-          readOnly={readOnly}
-          form={form}
-        />
+        <EgenVirksomhetPanel readOnly={readOnly} form={form} />
         <FrilansPanel readOnly={readOnly} form={form} formName={SVANGERSKAPSPENGER_FORM_NAME} />
         <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
         <TerminFodselSvpPanel readOnly={readOnly} form={form} />
@@ -91,7 +88,6 @@ const getValidation = (soknadData, andreYtelser) => (values) => ({
   ...InntektsgivendeArbeidPanel.validate(values),
   ...FrilansPanel.validate(values),
   ...OppholdINorgePanel.validate(values),
-  ...TerminFodselSvpPanel.validate(values),
 });
 
 const transformRootValues = (state, registeredFieldNames) => {
@@ -137,6 +133,7 @@ const transformTilretteleggingsArbeidsforhold = (tilretteleggingArbeidsforhold) 
 
 export const transformValues = (values) => ({
   ...values,
+  foedselsDato: [values.foedselsDato],
   tilretteleggingArbeidsforhold: transformTilretteleggingsArbeidsforhold(values.tilretteleggingArbeidsforhold),
 });
 
