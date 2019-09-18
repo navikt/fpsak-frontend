@@ -16,7 +16,7 @@ const maxValue3 = maxValue(100);
 
 const defaultTilrettelegging = {
   tilretteleggingType: '',
-  fomDato: '',
+  dato: '',
   stillingsprosent: '',
 };
 
@@ -73,7 +73,7 @@ const BehovForTilrettteleggingFieldArray = ({
                 <FlexColumn>
                   <DatepickerField
                     readOnly={readOnly}
-                    name={`${tilretteleggingFieldId}.fomDato`}
+                    name={`${tilretteleggingFieldId}.dato`}
                     defaultValue={null}
                     label={index === 0 ? { id: 'BehovForTilrettteleggingFieldArray.FraDato' } : ''}
                     validate={[required]}

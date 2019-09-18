@@ -23,7 +23,7 @@ import MigreringFraInfotrygdPanel from './migreringFraInfotrygd/MigreringFraInfo
 import BehovForTilretteleggingPanel from './tilrettelegging/BehovForTilretteleggingPanel';
 
 const SVANGERSKAPSPENGER_FORM_NAME = 'SvangerskapspengerForm';
-const TILRETTELEGGING_NAME_PREFIX = 'tilrettelegging';
+const TILRETTELEGGING_NAME_PREFIX = 'tilretteleggingArbeidsforhold';
 
 /**
  * SvangerskapspengerForm
@@ -107,9 +107,45 @@ const buildInitialValues = createSelector([(state, ownProps) => ownProps], (ownP
   [TILRETTELEGGING_NAME_PREFIX]: BehovForTilretteleggingPanel.initialValues,
 }));
 
+const transformTilretteleggingsArbeidsforhold = (tilretteleggingArbeidsforhold) => {
+  let transformerteVerdier = [];
+  if (tilretteleggingArbeidsforhold.sokForArbeidsgiver) {
+    transformerteVerdier = transformerteVerdier.concat(tilretteleggingArbeidsforhold.tilretteleggingForArbeidsgiver.map((ta) => ({
+      '@type': 'VI',
+      behovsdato: ta.behovsdato,
+      organisasjonsnummer: ta.organisasjonsnummer,
+      tilrettelegginger: ta.tilretteleggingArbeidsgiver,
+    })));
+  }
+  if (tilretteleggingArbeidsforhold.sokForFrilans) {
+    transformerteVerdier.push({
+      '@type': 'FR',
+      behovsdato: tilretteleggingArbeidsforhold.behovsdatoFrilans,
+      tilrettelegginger: tilretteleggingArbeidsforhold.tilretteleggingFrilans,
+    });
+  }
+  if (tilretteleggingArbeidsforhold.sokForSelvstendigNaringsdrivende) {
+    transformerteVerdier.push({
+      '@type': 'SN',
+      behovsdato: tilretteleggingArbeidsforhold.behovsdatoSN,
+      tilrettelegginger: tilretteleggingArbeidsforhold.tilretteleggingSelvstendigNaringsdrivende,
+    });
+  }
+
+  return transformerteVerdier;
+};
+
+export const transformValues = (values) => ({
+  ...values,
+  tilretteleggingArbeidsforhold: transformTilretteleggingsArbeidsforhold(values.tilretteleggingArbeidsforhold),
+});
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const andreYtelserObject = { andreYtelser: getKodeverk(kodeverkTyper.ARBEID_TYPE)(initialState) };
   const validate = getValidation(ownProps.soknadData, andreYtelserObject.andreYtelser);
+  const onSubmit = (values, dispatch, props) => ownProps.submitCallback(values, dispatch, {
+    valuesForRegisteredFieldsOnly: transformValues(props.valuesForRegisteredFieldsOnly),
+  });
   return (state) => {
     const registeredFields = getRegisteredFields(SVANGERSKAPSPENGER_FORM_NAME)(state);
     const registeredFieldNames = Object.values(registeredFields).map((rf) => rf.name);
@@ -126,6 +162,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       initialValues: buildInitialValues(state, andreYtelserObject),
       valuesForRegisteredFieldsOnly,
       validate,
+      onSubmit,
     };
   };
 };

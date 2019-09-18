@@ -15,7 +15,8 @@ import BehovForTilrettteleggingFieldArray from './BehovForTilrettteleggingFieldA
 const behovForTilretteleggingFieldArrayName = 'tilretteleggingArbeidsgiver';
 
 const defaultTilrettelegging = {
-  arbeidsgiverOrgNr: '',
+  organisasjonsnummer: '',
+  behovsdato: '',
 };
 
 const leggTilArbeidsgiver = (fields) => () => {
@@ -37,7 +38,7 @@ const TilretteleggingForArbeidsgiverFieldArray = ({
         <FlexColumn>
           <InputField
             readOnly={readOnly}
-            name={`${fieldId}.arbeidsgiverOrgNr`}
+            name={`${fieldId}.organisasjonsnummer`}
             label={{ id: 'TilretteleggingForArbeidsgiverFieldArray.OrgNr' }}
             bredde="XL"
             validate={[required]}
@@ -46,7 +47,7 @@ const TilretteleggingForArbeidsgiverFieldArray = ({
         </FlexColumn>
         <FlexColumn>
           <DatepickerField
-            name={`${fieldId}.tilretteleggingFraDato`}
+            name={`${fieldId}.behovsdato`}
             label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
             validate={[required]}
             readOnly={readOnly}

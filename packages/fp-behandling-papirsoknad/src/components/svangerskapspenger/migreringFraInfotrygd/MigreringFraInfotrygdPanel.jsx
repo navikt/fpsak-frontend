@@ -19,7 +19,7 @@ const MigreringFraInfotrygdPanel = ({
   <BorderBox>
     <Fieldset legend={intl.formatMessage({ id: 'MigreringFraInfotrygdPanel.Migrering' })}>
       <RadioGroupField
-        name="skalMigrereFraInfotrygd"
+        name="migrertFraInfotrygd"
         label={intl.formatMessage({ id: 'MigreringFraInfotrygdPanel.ErDenneSakenMigrert' })}
         validate={[required]}
         readOnly={readOnly}

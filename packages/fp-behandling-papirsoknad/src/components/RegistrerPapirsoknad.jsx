@@ -75,7 +75,7 @@ export const RegistrerPapirsoknad = ({
         && (
         <SvangerskapspengerForm
           onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
-          onSubmit={submitPapirsoknad}
+          submitCallback={submitPapirsoknad}
           readOnly={readOnly}
           soknadData={soknadData}
         />

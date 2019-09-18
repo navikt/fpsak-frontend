@@ -42,7 +42,7 @@ export const BehovForTilretteleggingPanelImpl = ({
       {sokForSelvstendigNaringsdrivende && (
         <ArrowBox>
           <DatepickerField
-            name="tilretteleggingFraDatoSN"
+            name="behovsdatoSN"
             label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
             validate={[required]}
             readOnly={readOnly}
@@ -66,7 +66,7 @@ export const BehovForTilretteleggingPanelImpl = ({
       {sokForFrilans && (
         <ArrowBox>
           <DatepickerField
-            name="tilretteleggingFraDatoFrilans"
+            name="behovsdatoFrilans"
             label={{ id: 'BehovForTilretteleggingPanel.TilretteleggingFra' }}
             validate={[required]}
             readOnly={readOnly}
