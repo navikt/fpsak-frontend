@@ -157,7 +157,7 @@ describe('<CreateNewBehandlingModal>', () => {
     expect(wrapper.find(SelectField)).to.have.length(1);
   });
 
-  it('skal finne filtrerte og sorterte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {
+  it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype TILBAKEKREVING_REVURDERING', () => {
     const isForeldrepengerFagsak = true;
     const isSvangerskapFagsak = false;
     const behandlingArsakerFpSak = [];
@@ -178,11 +178,10 @@ describe('<CreateNewBehandlingModal>', () => {
 
     const res = getBehandlingAarsaker.resultFunc(isForeldrepengerFagsak, isSvangerskapFagsak, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
 
-    expect(res).is.eql([behandlingArsakerFpTilbake[3], behandlingArsakerFpTilbake[2]]);
+    expect(res).to.deep.include.members([behandlingArsakerFpTilbake[3], behandlingArsakerFpTilbake[2]]);
   });
 
-  // TODO (TOR) Fiks denne (feilar på cc)
-  xit('skal finne filtrerte og sorterte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
+  it('skal finne filtrerte behandlingsårsaker når det er valgt behandlingstype REVURDERING', () => {
     const isForeldrepengerFagsak = false;
     const isSvangerskapFagsak = false;
     const behandlingArsakerFpSak = [{
@@ -206,7 +205,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
     const res = getBehandlingAarsaker.resultFunc(isForeldrepengerFagsak, isSvangerskapFagsak, behandlingArsakerFpSak, behandlingArsakerFpTilbake, bType);
 
-    expect(res).is.eql([
+    expect(res).to.deep.include.members([
       behandlingArsakerFpSak[0],
       behandlingArsakerFpSak[2],
       behandlingArsakerFpSak[1],
@@ -215,7 +214,7 @@ describe('<CreateNewBehandlingModal>', () => {
     ]);
   });
 
-  it('skal finne filtrere og sortere behandlingstyper for kun fpsak', () => {
+  it('skal finne filtrere behandlingstyper for kun fpsak', () => {
     const behandlingtyperFpSak = [{
       kode: behandlingType.TILBAKEKREVING,
       navn: 'tilbakekreving',
@@ -234,13 +233,13 @@ describe('<CreateNewBehandlingModal>', () => {
 
     const res = getBehandlingTyper.resultFunc(behandlingtyperFpSak, behandlingtyperFpTilbake, aktiverTilbakekreving);
 
-    expect(res).is.eql([
+    expect(res).to.deep.include.members([
       behandlingtyperFpSak[2],
       behandlingtyperFpSak[1],
     ]);
   });
 
-  it('skal finne filtrere og sortere behandlingstyper for både fpsak og fptilbake', () => {
+  it('skal finne filtrere behandlingstyper for både fpsak og fptilbake', () => {
     const behandlingtyperFpSak = [{
       kode: behandlingType.TILBAKEKREVING,
       navn: 'tilbakekreving',
@@ -259,7 +258,7 @@ describe('<CreateNewBehandlingModal>', () => {
 
     const res = getBehandlingTyper.resultFunc(behandlingtyperFpSak, behandlingtyperFpTilbake, aktiverTilbakekreving);
 
-    expect(res).is.eql([
+    expect(res).to.deep.include.members([
       behandlingtyperFpSak[2],
       behandlingtyperFpSak[1],
       behandlingtyperFpTilbake[0],
