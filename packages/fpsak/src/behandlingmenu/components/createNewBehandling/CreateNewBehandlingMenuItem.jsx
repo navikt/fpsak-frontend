@@ -8,7 +8,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import CreateNewBehandlingModal from './CreateNewBehandlingModal';
 import MenuButton from '../MenuButton';
 
-const TILBAKEKREVING_BEHANDLINGSTYPER = [behandlingType.TILBAKEKREVING || behandlingType.TILBAKEKREVING_REVURDERING];
+const TILBAKEKREVING_BEHANDLINGSTYPER = [behandlingType.TILBAKEKREVING, behandlingType.TILBAKEKREVING_REVURDERING];
 
 /**
  * CreateNewBehandlingMenuItem
