@@ -25,7 +25,8 @@
     "down": "docker-compose down",
     "lint": "./node_modules/.bin/eslint ./packages/**/*.jsx",
     "remove-node-modules": "find . -name \"node_modules\" -exec rm -rf '{}' +",
-    "lint:config": "node -e 'console.dir(require(\"./.eslintrc.js\"))'"
+    "lint:config": "node -e 'console.dir(require(\"./.eslintrc.js\"))'",
+    "storybook": "start-storybook -c packages/storybook/.storybook"
   },
   "workspaces": [
     "packages/*"
@@ -51,6 +52,8 @@
     "@babel/register": "^7.5.5",
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@istanbuljs/nyc-config-babel": "^2.1.1",
+    "@storybook/cli": "^5.2.0",
+    "@storybook/react": "^5.2.0",
     "@types/chai": "^4.1.7",
     "@types/classnames": "^2.2.8",
     "@types/enzyme": "^3.9.3",
