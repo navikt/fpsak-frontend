@@ -35,7 +35,6 @@ pipeline {
                         String msgColor = "#077040"
                         sh "k config use-context ${naisContext}"
 
-
                         def props = readProperties  interpolate: true, file: "application.${til}.variabler.properties"
                         
                         def value = "s/{{version}}/${version}/g"
