@@ -10,6 +10,7 @@ const personstatusType = {
   UREGISTRERT: 'UREG',
   UTGATTANNULLERT: 'UTAN',
   UTGATTPERSON: 'UTPE',
+  UKJENT: '-',
 };
 
 export default personstatusType;
