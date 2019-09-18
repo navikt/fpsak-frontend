@@ -250,11 +250,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     fagsakYtelseType: getFagsakYtelseType(initialState),
   });
   const behandlingTyper = getBehandlingTyper(initialState);
-  const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
   return (state) => ({
     onSubmit,
     behandlingTyper,
-    enabledBehandlingstyper,
+    enabledBehandlingstyper: getEnabledBehandlingstyper(state, ownProps),
     uuid: eksternUuid,
     behandlingId: getSelectedBehandlingId(initialState),
     saksnummer: getSelectedSaksnummer(state),
