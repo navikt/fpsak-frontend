@@ -80,8 +80,8 @@ export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispa
   .then((response) => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }))
   .then(() => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer)));
 
-export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatch) => dispatch(
-  fpsakApi.KAN_TILBAKE_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
+export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
+  fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
 );
 
 /* Reducer */

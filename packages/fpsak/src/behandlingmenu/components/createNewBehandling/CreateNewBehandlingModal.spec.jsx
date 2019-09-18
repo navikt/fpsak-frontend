@@ -27,7 +27,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     const modal = wrapper.find(Modal);
@@ -48,7 +50,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     const form = wrapper.find('form');
@@ -66,7 +70,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingTyper={behandlingstyper}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     wrapper.find(Knapp).simulate('click');
@@ -85,7 +91,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingType={behandlingType.FORSTEGANGSSOKNAD}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(1);
@@ -103,7 +111,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingType={behandlingType.DOKUMENTINNSYN}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(0);
@@ -120,7 +130,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingType={behandlingType.REVURDERING}
       behandlingArsakTyper={[{ kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE, navn: 'FEIL_I_LOVANDVENDELSE' }]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(2);
@@ -137,7 +149,9 @@ describe('<CreateNewBehandlingModal>', () => {
       behandlingType={behandlingType.DOKUMENTINNSYN}
       behandlingArsakTyper={[]}
       enabledBehandlingstyper={behandlingstyper}
-      kanTilbakeRevurderingOpprettes={sinon.spy()}
+      kanTilbakekrevingOpprettes={sinon.spy()}
+      erTilbakekrevingAktivert={false}
+      saksnummer="123"
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(1);
@@ -261,13 +275,15 @@ describe('<CreateNewBehandlingModal>', () => {
     }, {
       kode: behandlingType.REVURDERING,
     }];
-    const kanLageNyTilbakekreving = false;
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = true;
-    const hasEnabledTilbakekrevingRevudering = true;
+    const hasEnabledTilbakekreving = {
+      kanBehandlingOpprettes: false,
+      kanRevurderingOpprettes: true,
+    };
 
     const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+      behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekreving,
     );
 
     expect(res).is.eql([
@@ -287,13 +303,15 @@ describe('<CreateNewBehandlingModal>', () => {
     }, {
       kode: behandlingType.REVURDERING,
     }];
-    const kanLageNyTilbakekreving = true;
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = true;
-    const hasEnabledTilbakekrevingRevudering = false;
+    const hasEnabledTilbakekreving = {
+      kanBehandlingOpprettes: true,
+      kanRevurderingOpprettes: false,
+    };
 
     const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+      behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekreving,
     );
 
     expect(res).is.eql([
@@ -313,13 +331,15 @@ describe('<CreateNewBehandlingModal>', () => {
     }, {
       kode: behandlingType.REVURDERING,
     }];
-    const kanLageNyTilbakekreving = true;
     const hasEnabledCreateNewBehandling = false;
     const hasEnabledCreateRevurdering = true;
-    const hasEnabledTilbakekrevingRevudering = true;
+    const hasEnabledTilbakekreving = {
+      kanBehandlingOpprettes: true,
+      kanRevurderingOpprettes: true,
+    };
 
     const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+      behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekreving,
     );
 
     expect(res).is.eql([
@@ -339,13 +359,15 @@ describe('<CreateNewBehandlingModal>', () => {
     }, {
       kode: behandlingType.REVURDERING,
     }];
-    const kanLageNyTilbakekreving = true;
     const hasEnabledCreateNewBehandling = true;
     const hasEnabledCreateRevurdering = false;
-    const hasEnabledTilbakekrevingRevudering = true;
+    const hasEnabledTilbakekreving = {
+      kanBehandlingOpprettes: true,
+      kanRevurderingOpprettes: true,
+    };
 
     const res = getEnabledBehandlingstyper.resultFunc(
-      behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekrevingRevudering,
+      behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekreving,
     );
 
     expect(res).is.eql([

@@ -19,11 +19,14 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import bType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
+import {
+  getSelectedSaksnummer, isForeldrepengerFagsak, isSvangerskapFagsak, getFagsakYtelseType,
+} from 'fagsak/fagsakSelectors';
 import { getFeatureToggles } from 'app/duck';
-import { isForeldrepengerFagsak, isSvangerskapFagsak, getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { kanLageNyTilbakekrevingsbehandling, getUuidForSisteLukkedeForsteEllerRevurd } from 'behandling/selectors/behandlingerSelectors';
-import { sjekkOmTilbakekrevingRevurderingKanOpprettes } from 'behandlingmenu/duck';
-import { harValgtAvsluttetTilbakekreving, getSelectedBehandlingId } from 'behandling/duck';
+
+import { getUuidForSisteLukkedeForsteEllerRevurd } from 'behandling/selectors/behandlingerSelectors';
+import { sjekkOmTilbakekrevingKanOpprettes } from 'behandlingmenu/duck';
+import { getSelectedBehandlingId } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getFpTilbakeKodeverk, getKodeverk } from 'kodeverk/duck';
 
@@ -54,11 +57,14 @@ export const CreateNewBehandlingModal = ({
   behandlingArsakTyper,
   enabledBehandlingstyper,
   behandlingId,
-  kanTilbakeRevurderingOpprettes,
+  kanTilbakekrevingOpprettes,
+  uuid,
+  saksnummer,
+  erTilbakekrevingAktivert,
 }) => {
   useEffect(() => {
-    if (behandlingId) {
-      kanTilbakeRevurderingOpprettes({ behandlingId });
+    if (erTilbakekrevingAktivert && uuid !== undefined) {
+      kanTilbakekrevingOpprettes({ saksnummer, uuid, behandlingId });
     }
   }, []);
   return (
@@ -137,10 +143,13 @@ CreateNewBehandlingModal.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
   behandlingId: PropTypes.string,
-  kanTilbakeRevurderingOpprettes: PropTypes.func.isRequired,
+  kanTilbakekrevingOpprettes: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
   behandlingTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingType: PropTypes.string,
+  uuid: PropTypes.string,
+  erTilbakekrevingAktivert: PropTypes.bool.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingArsakTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   enabledBehandlingstyper: PropTypes.arrayOf(PropTypes.shape().isRequired).isRequired,
 };
@@ -224,38 +233,39 @@ export const getBehandlingTyper = createSelector([
 
 export const getEnabledBehandlingstyper = createSelector([
   getBehandlingTyper,
-  kanLageNyTilbakekrevingsbehandling,
   (state, ownProps) => ownProps.hasEnabledCreateNewBehandling,
   (state, ownProps) => ownProps.hasEnabledCreateRevurdering,
-  (state) => fpsakApi.KAN_TILBAKE_REVURDERING_OPPRETTES.getRestApiData()(state)],
-(behandlingstyper, kanLageNyTilbakekreving, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering,
-  hasEnabledTilbakekrevingRevudering) => behandlingstyper
-  .filter((b) => (b.kode === bType.TILBAKEKREVING ? kanLageNyTilbakekreving : true))
-  .filter((b) => (b.kode === bType.TILBAKEKREVING_REVURDERING ? hasEnabledTilbakekrevingRevudering : true))
+  (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state)],
+(behandlingstyper, hasEnabledCreateNewBehandling, hasEnabledCreateRevurdering, hasEnabledTilbakekreving = {}) => behandlingstyper
+  .filter((b) => (b.kode === bType.TILBAKEKREVING ? hasEnabledTilbakekreving.kanBehandlingOpprettes : true))
+  .filter((b) => (b.kode === bType.TILBAKEKREVING_REVURDERING ? hasEnabledTilbakekreving.kanRevurderingOpprettes : true))
   .filter((b) => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
   .filter((b) => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
+  const eksternUuid = getUuidForSisteLukkedeForsteEllerRevurd(initialState);
   const onSubmit = (values) => ownProps.submitCallback({
     ...values,
-    eksternUuid: getUuidForSisteLukkedeForsteEllerRevurd(initialState),
+    eksternUuid,
     fagsakYtelseType: getFagsakYtelseType(initialState),
   });
   const behandlingTyper = getBehandlingTyper(initialState);
   const enabledBehandlingstyper = getEnabledBehandlingstyper(initialState, ownProps);
-  const behandlingId = harValgtAvsluttetTilbakekreving(initialState) ? getSelectedBehandlingId(initialState) : undefined;
   return (state) => ({
     onSubmit,
     behandlingTyper,
     enabledBehandlingstyper,
-    behandlingId,
+    uuid: eksternUuid,
+    behandlingId: getSelectedBehandlingId(initialState),
+    saksnummer: getSelectedSaksnummer(state),
     behandlingArsakTyper: getBehandlingAarsaker(state),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
+    erTilbakekrevingAktivert: getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
   });
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  kanTilbakeRevurderingOpprettes: sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  kanTilbakekrevingOpprettes: sjekkOmTilbakekrevingKanOpprettes,
 }, dispatch);
 
 export default connect(mapStateToPropsFactory, mapDispatchToProps)(reduxForm({

@@ -67,7 +67,3 @@ const getSisteLukkedeForsteEllerRevurd = createSelector([getBehandlinger], (beha
     && (b.type.kode === behandlingType.FORSTEGANGSSOKNAD || b.type.kode === behandlingType.REVURDERING)));
 
 export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling = {}) => behandling.uuid);
-
-export const kanLageNyTilbakekrevingsbehandling = createSelector([getBehandlinger, getSisteLukkedeForsteEllerRevurd],
-  (behandlinger = [], behandling) => behandling && !behandlinger
-    .some((b) => b.type.kode === behandlingType.TILBAKEKREVING && b.status.kode !== behandlingStatus.AVSLUTTET));
