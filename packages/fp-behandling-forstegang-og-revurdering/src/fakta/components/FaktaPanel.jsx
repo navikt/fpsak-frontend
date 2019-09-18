@@ -36,6 +36,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   aksjonspunkter,
   vilkarCodes,
   personopplysninger,
+  soknad,
   submitCallback,
   openInfoPanels,
   toggleInfoPanelCallback,
@@ -150,7 +151,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      { MedlemskapInfoPanel.supports(personopplysninger)
+      { MedlemskapInfoPanel.supports(personopplysninger, soknad)
       && (
         <MedlemskapInfoPanel
           aksjonspunkter={aksjonspunkter}
@@ -222,6 +223,7 @@ FaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   vilkarCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   personopplysninger: PropTypes.shape(),
+  soknad: PropTypes.shape(),
   ytelsefordeling: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   /**
@@ -238,6 +240,7 @@ FaktaPanel.propTypes = {
 
 FaktaPanel.defaultProps = {
   personopplysninger: undefined,
+  soknad: undefined,
   ytelsefordeling: undefined,
 };
 
@@ -250,6 +253,7 @@ const mapStateToProps = (state) => {
     openInfoPanels: getOpenInfoPanels(state),
     readOnly: !rettigheter.writeAccess.isEnabled || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     personopplysninger: getPersonopplysning(state) || null,
+    soknad: behandlingSelectors.getSoknad(state),
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),

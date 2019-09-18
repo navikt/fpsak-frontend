@@ -28,6 +28,12 @@ describe('<FaktaPanel>', () => {
     ikkeOmsorgPerioder: null,
   };
 
+  const soknadUndefined = undefined;
+
+  const soknad = {
+    innhold: 'mat',
+  };
+
   const personopplysninger = {
     navBrukerKjonn: {
       kode: '',
@@ -116,6 +122,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, tilleggsopplysningerAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -155,6 +162,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, aleneomsorgAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -194,6 +202,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, omsorgAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -233,6 +242,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, omsorgAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -272,6 +282,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[omsorgAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -311,6 +322,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, omsorgAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -354,6 +366,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, adopsjonAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -397,6 +410,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[medlemAksjonspunkt, fodselAksjonspunkt]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -422,6 +436,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -441,6 +456,7 @@ describe('<FaktaPanel>', () => {
       aksjonspunkter={[]}
       vilkarCodes={[]}
       personopplysninger={personopplysninger}
+      soknad={soknad}
       submitCallback={sinon.spy()}
       openInfoPanels={[]}
       toggleInfoPanelCallback={sinon.spy()}
@@ -452,5 +468,24 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
+  });
+
+  it('skal IKKE vise faktapanel for medlemskap hvis soknad ikke er satt', () => {
+    const wrapper = shallowWithIntl(<FaktaPanel
+      aksjonspunkter={[]}
+      vilkarCodes={[]}
+      personopplysninger={personopplysninger}
+      soknad={soknadUndefined}
+      submitCallback={sinon.spy()}
+      openInfoPanels={[]}
+      toggleInfoPanelCallback={sinon.spy()}
+      shouldOpenDefaultInfoPanels
+      ytelsesType={ytelsestype}
+      readOnly={false}
+      fagsakPerson={person}
+      erOverstyrer={false}
+      ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
+    />);
+    expect(wrapper.find(MedlemskapInfoPanel)).has.length(0);
   });
 });

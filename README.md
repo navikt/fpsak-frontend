@@ -39,3 +39,4 @@ https://medium.com/@jsilvax/a-workflow-guide-for-lerna-with-yarn-workspaces-60f9
 ### For NAV-ansatte
 Interne henvendelser kan sendes via Slack i kanalen **#p2-frontend**.
 
+##

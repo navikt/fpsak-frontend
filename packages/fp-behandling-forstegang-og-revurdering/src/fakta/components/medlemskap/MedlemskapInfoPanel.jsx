@@ -142,6 +142,8 @@ const ConnectedComponent = connect(mapStateToPropsFactory)(injectIntl(Medlemskap
 
 const MedlemskapInfoPanel = withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, medlemAksjonspunkter)(ConnectedComponent);
 
-MedlemskapInfoPanel.supports = (personopplysninger) => personopplysninger !== null && personopplysninger !== undefined;
+const isNotNullOrUndefined = (object) => object !== null && object !== undefined;
+
+MedlemskapInfoPanel.supports = (personopplysninger, soknad) => isNotNullOrUndefined(personopplysninger) && isNotNullOrUndefined(soknad);
 
 export default MedlemskapInfoPanel;
