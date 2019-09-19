@@ -9,7 +9,7 @@ describe('<CreateNewBehandlingMenuItem>', () => {
   it('skal ikke vise modal ved rendring', () => {
     const wrapper = shallow(<CreateNewBehandlingMenuItem
       saksnummer={23}
-      submitNyForstegangsBehandling={sinon.spy()}
+      submitNyBehandling={sinon.spy()}
       toggleBehandlingsmeny={sinon.spy()}
       opprettNyForstegangsBehandlingEnabled
       push={sinon.spy()}
@@ -21,7 +21,7 @@ describe('<CreateNewBehandlingMenuItem>', () => {
   it('skal vise modal ved trykk på meny-lenke', () => {
     const wrapper = shallow(<CreateNewBehandlingMenuItem
       saksnummer={23}
-      submitNyForstegangsBehandling={sinon.spy()}
+      submitNyBehandling={sinon.spy()}
       toggleBehandlingsmeny={sinon.spy()}
       opprettNyForstegangsBehandlingEnabled
       push={sinon.spy()}

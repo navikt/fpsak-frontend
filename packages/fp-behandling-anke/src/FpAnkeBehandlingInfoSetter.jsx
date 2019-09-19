@@ -15,9 +15,9 @@ export class FpSakBehandlingInfoSetter extends Component {
   setBehandlingInfo = () => {
     const {
       setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingSprak, behandlingVersjon, aksjonspunkter,
-      behandlingAnsvarligSaksbehandler, behandlingStatus, behandlingToTrinnsBehandling, behandlingsresultat, behandlingType, behandlingHasSoknad,
-      behandlingIsOnHold, isBehandlingInInnhentSoknadsinfoSteg, behandlingIsQueued, behandlingBehandlendeEnhetId,
-      behandlingBehandlendeEnhetNavn, soknad, behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
+      behandlingAnsvarligSaksbehandler, behandlingToTrinnsBehandling, behandlingsresultat,
+      behandlingIsOnHold, behandlingIsQueued, soknad,
+      behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -26,16 +26,10 @@ export class FpSakBehandlingInfoSetter extends Component {
       .withBehandlingVersjon(behandlingVersjon)
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
-      .withBehandlingStatus(behandlingStatus)
       .withBehandlingToTrinnsBehandling(behandlingToTrinnsBehandling)
       .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingType(behandlingType)
-      .withBehandlingHasSoknad(behandlingHasSoknad)
       .withBehandlingIsOnHold(behandlingIsOnHold)
-      .withIsBehandlingInInnhentSoknadsopplysningerSteg(isBehandlingInInnhentSoknadsinfoSteg)
       .withBehandlingIsQueued(behandlingIsQueued)
-      .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
-      .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad)
       .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
       .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling));
@@ -59,16 +53,10 @@ FpSakBehandlingInfoSetter.propTypes = {
   behandlingVersjon: PropTypes.number,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
-  behandlingStatus: PropTypes.shape().isRequired,
   behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
-  behandlingType: PropTypes.shape().isRequired,
-  behandlingHasSoknad: PropTypes.bool.isRequired,
   behandlingIsOnHold: PropTypes.bool.isRequired,
-  isBehandlingInInnhentSoknadsinfoSteg: PropTypes.bool.isRequired,
   behandlingIsQueued: PropTypes.bool,
-  behandlingBehandlendeEnhetId: PropTypes.string,
-  behandlingBehandlendeEnhetNavn: PropTypes.string,
   soknad: PropTypes.shape(),
   behandlingsresultatFraOriginalBehandling: PropTypes.shape(),
   resultatstrukturFraOriginalBehandling: PropTypes.shape(),
@@ -81,8 +69,6 @@ FpSakBehandlingInfoSetter.defaultProps = {
   behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
   behandlingIsQueued: false,
-  behandlingBehandlendeEnhetId: undefined,
-  behandlingBehandlendeEnhetNavn: undefined,
   soknad: undefined,
   behandlingsresultatFraOriginalBehandling: undefined,
   resultatstrukturFraOriginalBehandling: undefined,
@@ -94,18 +80,12 @@ const mapStateToProps = (state) => ({
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
-  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
   behandlingToTrinnsBehandling: behandlingSelectors.getBehandlingToTrinnsBehandling(state),
   behandlingAnkeVurdering: behandlingSelectors.getBehandlingAnkeVurdering(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingType: behandlingSelectors.getBehandlingType(state),
   behandlingAnkeVurderingResultat: behandlingSelectors.getBehandlingAnkeVurderingResultat(state),
-  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
   behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
-  isBehandlingInInnhentSoknadsinfoSteg: behandlingSelectors.isBehandlingInInnhentSoknadsopplysningerSteg(state),
   behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
-  behandlingBehandlendeEnhetId: behandlingSelectors.getBehandlingBehandlendeEnhetId(state),
-  behandlingBehandlendeEnhetNavn: behandlingSelectors.getBehandlingBehandlendeEnhetNavn(state),
   soknad: behandlingSelectors.getSoknad(state),
 });
 

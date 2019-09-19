@@ -7,7 +7,7 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingType } from '../../../behandling/duck';
+import { getBehandlingType } from 'behandling/duck';
 import { getFpTilbakeKodeverk, getKodeverk } from '../../../kodeverk/duck';
 import MenuButton from '../MenuButton';
 

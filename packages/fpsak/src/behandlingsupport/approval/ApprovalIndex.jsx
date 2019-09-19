@@ -23,11 +23,11 @@ import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,
-  getBehandlingStatus,
   getBehandlingToTrinnsBehandling,
-  getBehandlingType,
   getBehandlingVersjon,
   previewMessage,
+  getBehandlingStatus,
+  getBehandlingType,
 } from 'behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
 import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';

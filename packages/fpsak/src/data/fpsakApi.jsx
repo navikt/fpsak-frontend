@@ -13,7 +13,8 @@ export const FpsakApiKeys = {
   BEHANDLINGER_FPTILBAKE: 'BEHANDLINGER_FPTILBAKE',
   ANNEN_PART_BEHANDLING: 'ANNEN_PART_BEHANDLING',
   BEHANDLENDE_ENHETER: 'BEHANDLENDE_ENHETER',
-  NEW_BEHANDLING: 'NEW_BEHANDLING',
+  NEW_BEHANDLING_FPSAK: 'NEW_BEHANDLING_FPSAK',
+  NEW_BEHANDLING_FPTILBAKE: 'NEW_BEHANDLING_FPTILBAKE',
   ALL_DOCUMENTS: 'ALL_DOCUMENTS',
   DOCUMENT: 'DOCUMENT',
   HISTORY_FPSAK: 'HISTORY_FPSAK',
@@ -37,6 +38,7 @@ export const FpsakApiKeys = {
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
+  KAN_TILBAKEKREVING_OPPRETTES: 'KAN_TILBAKEKREVING_OPPRETTES',
 };
 
 
@@ -50,7 +52,9 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
   .withAsyncPost('/fpsak/api/behandlinger', FpsakApiKeys.BEHANDLING)
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING, { fetchLinkDataAutomatically: false })
+  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE, { fetchLinkDataAutomatically: false })
+  .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withInjectedPath('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withInjectedPath('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)

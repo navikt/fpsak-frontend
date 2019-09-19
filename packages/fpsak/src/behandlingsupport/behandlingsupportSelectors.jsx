@@ -4,11 +4,7 @@ import moment from 'moment';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import fpsakApi from 'data/fpsakApi';
-import {
-  getBehandlingStatus,
-  getBehandlingIsOnHold,
-  getRettigheter,
-} from 'behandling/duck';
+import { getRettigheter, getBehandlingStatus, getBehandlingIsOnHold } from 'behandling/duck';
 import { getSelectedSaksnummer } from 'fagsak/duck';
 import SupportPanel from './supportPanels';
 

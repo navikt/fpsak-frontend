@@ -127,13 +127,6 @@ const uttakAksjonspunkter = [
   aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
 ];
 
-const innhentSaksopplysningerAksjonspunkt = [
-  aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-  aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER,
-  aksjonspunktCodes.AUTO_VENTER_PÅ_KOMPLETT_SOKNAD,
-  aksjonspunktCodes.BEHANDLE_KLAGE_NFP,
-];
-
 const beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt = [
   aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
@@ -157,7 +150,6 @@ const aksjonspunktIsOfType = (validAksjonspunktCodes) => (aksjonspunktCode) => v
 export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
 
 export const isKlageAksjonspunkt = aksjonspunktIsOfType(klageAksjonspunkter);
-export const isInnhentSaksopplysningerAksjonspunkt = aksjonspunktIsOfType(innhentSaksopplysningerAksjonspunkt);
 export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(beregningsgrunnlagFritekstfeltIVedtakAksjonspunkt);
 export const isVilkarForSykdomOppfylt = aksjonspunktIsOfType(isVilkarForSykdomOppfyltAksjonspunkter);
 export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);

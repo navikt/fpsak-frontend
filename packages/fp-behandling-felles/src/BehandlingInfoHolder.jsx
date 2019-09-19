@@ -11,41 +11,23 @@ class BehandlingInfoHolder {
 
     behandlingAnsvarligSaksbehandler;
 
-    behandlingStatus;
-
     behandlingToTrinnsBehandling = false;
 
     behandlingKlageVurdering;
-
-    behandlingIsKlage = false;
 
     behandlingResultatstruktur;
 
     behandlingsresultat;
 
-    behandlingType;
-
     behandlingKlageVurderingResultatNFP;
 
     behandlingKlageVurderingResultatNK;
 
-    behandlingHasSoknad;
-
-    behandlingIsInnsyn = false;
-
     behandlingIsOnHold;
-
-    isBehandlingInInnhentSoknadsopplysningerSteg = false;
 
     behandlingIsQueued;
 
-    behandlingBehandlendeEnhetId;
-
-    behandlingBehandlendeEnhetNavn;
-
     soknad;
-
-    behandlingIdentifier;
 
     behandlingsresultatFraOriginalBehandling;
 
@@ -78,11 +60,6 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlingStatus = (behandlingStatus) => {
-      this.behandlingStatus = behandlingStatus;
-      return this;
-    }
-
     withBehandlingToTrinnsBehandling = (behandlingToTrinnsBehandling) => {
       this.behandlingToTrinnsBehandling = behandlingToTrinnsBehandling;
       return this;
@@ -90,11 +67,6 @@ class BehandlingInfoHolder {
 
     withBehandlingKlageVurdering = (behandlingKlageVurdering) => {
       this.behandlingKlageVurdering = behandlingKlageVurdering;
-      return this;
-    }
-
-    withBehandlingIsKlage = (behandlingIsKlage) => {
-      this.behandlingIsKlage = behandlingIsKlage;
       return this;
     }
 
@@ -108,11 +80,6 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlingType = (behandlingType) => {
-      this.behandlingType = behandlingType;
-      return this;
-    }
-
     withBehandlingKlageVurderingResultatNFP = (behandlingKlageVurderingResultatNFP) => {
       this.behandlingKlageVurderingResultatNFP = behandlingKlageVurderingResultatNFP;
       return this;
@@ -123,23 +90,8 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlingHasSoknad = (behandlingHasSoknad) => {
-      this.behandlingHasSoknad = behandlingHasSoknad;
-      return this;
-    }
-
-    withBehandlingIsInnsyn = (behandlingIsInnsyn) => {
-      this.behandlingIsInnsyn = behandlingIsInnsyn;
-      return this;
-    }
-
     withBehandlingIsOnHold = (behandlingIsOnHold) => {
       this.behandlingIsOnHold = behandlingIsOnHold;
-      return this;
-    }
-
-    withIsBehandlingInInnhentSoknadsopplysningerSteg = (isBehandlingInInnhentSoknadsopplysningerSteg) => {
-      this.isBehandlingInInnhentSoknadsopplysningerSteg = isBehandlingInInnhentSoknadsopplysningerSteg;
       return this;
     }
 
@@ -148,23 +100,8 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlingBehandlendeEnhetId = (behandlingBehandlendeEnhetId) => {
-      this.behandlingBehandlendeEnhetId = behandlingBehandlendeEnhetId;
-      return this;
-    }
-
-    withBehandlendeEnhetNavn = (behandlingBehandlendeEnhetNavn) => {
-      this.behandlingBehandlendeEnhetNavn = behandlingBehandlendeEnhetNavn;
-      return this;
-    }
-
     withSoknad= (soknad) => {
       this.soknad = soknad;
-      return this;
-    }
-
-    withBehandlingIdentifier = (behandlingIdentifier) => {
-      this.behandlingIdentifier = behandlingIdentifier;
       return this;
     }
 

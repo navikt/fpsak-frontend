@@ -9,18 +9,20 @@ export const ignoreRestErrors = (e) => (e.config && e.response ? e : Promise.rej
 export class ApiStateBuilder {
   stateParts = {};
 
-  withData = (api, data, dataContextName = 'dataContext') => {
+  withData = (api, params, data, dataContextName = 'dataContext') => {
     const configs = [{
       name: api,
     }];
     const requestApi = new RequestApi(getAxiosHttpClientApi(), 'fpsak', configs);
     const d = new RestDuck(requestApi.getRequestRunner(api));
 
+    const afterStartState = d.reducer(d.reducer(), d.actionCreators.requestStarted(params));
+    const afterFinishedState = d.reducer(afterStartState, d.actionCreators.requestFinished(data));
     this.stateParts = {
       ...this.stateParts,
       [dataContextName]: {
         ...(this.stateParts[dataContextName] ? this.stateParts[dataContextName] : {}),
-        [api]: d.reducer(d.reducer(), d.actionCreators.requestFinished(data)),
+        [api]: afterFinishedState,
       },
     };
 

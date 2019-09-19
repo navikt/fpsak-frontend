@@ -13,7 +13,8 @@ const kanVeilede = (navAnsatt = {}) => navAnsatt.kanVeilede;
 const kanSaksbehandle = (navAnsatt = {}) => navAnsatt.kanSaksbehandle;
 const kanBeslutte = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanBeslutte;
 const kanOverstyre = (navAnsatt = {}) => kanSaksbehandle(navAnsatt) && navAnsatt.kanOverstyre;
-const isBehandlingAvTilbakekreving = (type) => (type ? type.kode === BehandlingType.TILBAKEKREVING : false);
+const isBehandlingAvTilbakekreving = (type) => (type
+  ? (type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING) : false);
 
 const accessibleFor = (validNavAnsattPredicates) => (navAnsatt) => validNavAnsattPredicates.some((predicate) => predicate(navAnsatt));
 

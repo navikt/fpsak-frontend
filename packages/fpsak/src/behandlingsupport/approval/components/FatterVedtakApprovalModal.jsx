@@ -17,15 +17,14 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import {
-  getBehandlingIsKlage,
   getBehandlingKlageVurderingResultatNK,
   getBehandlingResultatstruktur,
   getBehandlingsresultat,
   getBehandlingsresultatFraOriginalBehandling,
-  getBehandlingStatus,
-  getBehandlingType,
   getResultatstrukturFraOriginalBehandling,
   getSelectedBehandlingId,
+  getBehandlingStatus,
+  getBehandlingType,
 } from 'behandling/duck';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 import { getApproveFinished } from '../duck';
@@ -117,9 +116,9 @@ const isBehandlingsresultatOpphor = createSelector(
   [getBehandlingsresultat], (behandlingsresultat) => behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
 
-const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingIsKlage],
-  (isOpphor, ytelseType, isKlage) => {
-    if (isKlage) {
+const getModalDescriptionTextCode = createSelector([isBehandlingsresultatOpphor, getFagsakYtelseType, getBehandlingType],
+  (isOpphor, ytelseType, behandlingType) => {
+    if (behandlingType.kode === BehandlingType.KLAGE) {
       if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
       }
@@ -164,16 +163,16 @@ const isSameResultAsOriginalBehandling = (
 
 const getInfoTextCode = createSelector(
   [getBehandlingType, getBehandlingsresultat, getBehandlingResultatstruktur, getBehandlingsresultatFraOriginalBehandling,
-    getResultatstrukturFraOriginalBehandling, getBehandlingIsKlage,
+    getResultatstrukturFraOriginalBehandling,
     getFagsakYtelseType, isBehandlingsresultatOpphor],
   (
-    behandlingtype, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat, originaltBeregningResultat, behandlingIsKlage,
+    behandlingtype, behandlingsresultat, beregningResultat, orginaltBehandlingsresultat, originaltBeregningResultat,
     ytelseType, isOpphor,
   ) => {
     if (behandlingtype.kode === BehandlingType.TILBAKEKREVING) {
       return 'FatterVedtakApprovalModal.Tilbakekreving';
     }
-    if (behandlingIsKlage) {
+    if (behandlingtype.kode === BehandlingType.KLAGE) {
       if (isKlageWithKA(getBehandlingKlageVurderingResultatNK)) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
       }
