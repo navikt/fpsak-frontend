@@ -26,7 +26,7 @@ import { getFeatureToggles } from 'app/duck';
 
 import { getUuidForSisteLukkedeForsteEllerRevurd } from 'behandling/selectors/behandlingerSelectors';
 import { sjekkOmTilbakekrevingKanOpprettes } from 'behandlingmenu/duck';
-import { getSelectedBehandlingId } from 'behandling/duck';
+import { getSelectedBehandlingId, getBehandlingType } from 'behandling/duck';
 import fpsakApi from 'data/fpsakApi';
 import { getFpTilbakeKodeverk, getKodeverk } from 'kodeverk/duck';
 
@@ -242,6 +242,9 @@ export const getEnabledBehandlingstyper = createSelector([
   .filter((b) => (b.kode === bType.FORSTEGANGSSOKNAD ? hasEnabledCreateNewBehandling : true))
   .filter((b) => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)));
 
+const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([getBehandlingType],
+  (behandlingType) => behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING);
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const eksternUuid = getUuidForSisteLukkedeForsteEllerRevurd(initialState);
   const onSubmit = (values) => ownProps.submitCallback({
@@ -255,7 +258,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     behandlingTyper,
     enabledBehandlingstyper: getEnabledBehandlingstyper(state, ownProps),
     uuid: eksternUuid,
-    behandlingId: getSelectedBehandlingId(initialState),
+    behandlingId: isTilbakekrevingEllerTilbakekrevingRevurdering(state) ? getSelectedBehandlingId(state) : undefined,
     saksnummer: getSelectedSaksnummer(state),
     behandlingArsakTyper: getBehandlingAarsaker(state),
     behandlingType: formValueSelector(formName)(state, 'behandlingType'),
