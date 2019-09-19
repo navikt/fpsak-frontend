@@ -46,13 +46,13 @@ const getApTekst = (apCode) => (apCode
   : []);
 
 const harApentAksjonspunkt = (periode) => ((!periode.foreldelseVurderingType || periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT)
-  && (periode.begrunnelse === undefined || periode.erSplittet));
+  && (periode.begrunnelse === null || periode.begrunnelse === undefined || periode.erSplittet));
 
 const formaterPerioderForTidslinje = (perioder = []) => perioder
   .map((periode, index) => ({
     fom: periode.fom,
     tom: periode.tom,
-    isAksjonspunktOpen: periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT,
+    isAksjonspunktOpen: harApentAksjonspunkt(periode),
     isGodkjent: foreldelseVurderingType.FORELDET !== periode.foreldet,
     id: index,
   }));
