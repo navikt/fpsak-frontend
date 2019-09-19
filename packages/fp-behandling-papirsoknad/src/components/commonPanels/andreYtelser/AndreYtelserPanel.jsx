@@ -21,8 +21,13 @@ export const ANDRE_YTELSER_FORM_NAME_PREFIX = 'andreYtelser';
 
 const ANDRE_YTELSER_PERIODE_SUFFIX = 'PERIODER';
 
-const removeArbeidstyper = (andreYtelser) => andreYtelser.filter((ay) => ay.kode !== arbeidType.UTENLANDSK_ARBEIDSFORHOLD
+const removeArbeidstyper = (andreYtelser, kunMiliterEllerSiviltjeneste) => {
+  if (kunMiliterEllerSiviltjeneste) {
+    return andreYtelser.filter((ay) => ay.kode === arbeidType.MILITÆR_ELLER_SIVILTJENESTE);
+  }
+  return andreYtelser.filter((ay) => ay.kode !== arbeidType.UTENLANDSK_ARBEIDSFORHOLD
   && ay.kode !== arbeidType.FRILANSER && ay.kode !== arbeidType.LONN_UNDER_UTDANNING);
+};
 
 /**
  * AndreYtelserPanel
@@ -34,8 +39,9 @@ export const AndreYtelserPanelImpl = ({
   readOnly,
   andreYtelser,
   selectedYtelser,
+  kunMiliterEllerSiviltjeneste,
 }) => {
-  const checkboxFields = removeArbeidstyper(andreYtelser)
+  const checkboxFields = removeArbeidstyper(andreYtelser, kunMiliterEllerSiviltjeneste)
     .map((ay) => {
       const ytelseFieldName = `${ay.kode}_${ANDRE_YTELSER_PERIODE_SUFFIX}`;
       return (
@@ -77,8 +83,12 @@ AndreYtelserPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andreYtelser: kodeverkPropType.isRequired,
   selectedYtelser: PropTypes.shape().isRequired,
+  kunMiliterEllerSiviltjeneste: PropTypes.bool,
 };
 
+AndreYtelserPanelImpl.defaultProps = {
+  kunMiliterEllerSiviltjeneste: false,
+};
 
 const mapStateToProps = (state, initialProps) => ({
   selectedYtelser: formValueSelector(initialProps.form)(state, ANDRE_YTELSER_FORM_NAME_PREFIX),
