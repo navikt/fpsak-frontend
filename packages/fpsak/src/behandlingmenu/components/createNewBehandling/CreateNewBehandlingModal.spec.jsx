@@ -29,7 +29,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     const modal = wrapper.find(Modal);
@@ -52,7 +52,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     const form = wrapper.find('form');
@@ -72,7 +72,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     wrapper.find(Knapp).simulate('click');
@@ -93,7 +93,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(1);
@@ -113,7 +113,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     expect(wrapper.find(CheckboxField)).to.have.length(0);
@@ -132,7 +132,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(2);
@@ -151,7 +151,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
-      saksnummer="123"
+      saksnummer={123}
     />);
 
     expect(wrapper.find(SelectField)).to.have.length(1);

@@ -149,7 +149,7 @@ CreateNewBehandlingModal.propTypes = {
   behandlingType: PropTypes.string,
   uuid: PropTypes.string,
   erTilbakekrevingAktivert: PropTypes.bool.isRequired,
-  saksnummer: PropTypes.string.isRequired,
+  saksnummer: PropTypes.number.isRequired,
   behandlingArsakTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   enabledBehandlingstyper: PropTypes.arrayOf(PropTypes.shape().isRequired).isRequired,
 };
@@ -243,7 +243,7 @@ export const getEnabledBehandlingstyper = createSelector([
   .filter((b) => (b.kode === bType.REVURDERING ? hasEnabledCreateRevurdering : true)));
 
 const isTilbakekrevingEllerTilbakekrevingRevurdering = createSelector([getBehandlingType],
-  (behandlingType) => behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING);
+  (behandlingType) => behandlingType && (behandlingType.kode === bType.TILBAKEKREVING || behandlingType.kode === bType.TILBAKEKREVING_REVURDERING));
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const eksternUuid = getUuidForSisteLukkedeForsteEllerRevurd(initialState);
