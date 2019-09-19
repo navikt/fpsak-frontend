@@ -10,7 +10,7 @@ import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurder
 import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getBehandlingKlageVurdering, getBehandlingStatus } from 'behandling/duck';
+import { getBehandlingStatus, getBehandlingKlageVurdering } from 'behandling/duck';
 import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
 import { getKodeverk } from 'kodeverk/duck';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';

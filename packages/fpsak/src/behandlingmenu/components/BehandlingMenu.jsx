@@ -140,7 +140,7 @@ export class BehandlingMenu extends Component {
       behandlingIdentifier, behandlendeEnheter, settBehandlingPaVentAccess, setBehandlingOnHold,
       gjenopptaBehandlingAccess, openBehandlingForChanges, previewHenleggBehandling, selectedBehandlingVersjon,
       shelveBehandling, push, henleggBehandlingAccess, behandlendeEnhetId, behandlendeEnhetNavn, nyBehandlendeEnhet,
-      byttBehandlendeEnhetAccess, saksnummer, createNewForstegangsbehandling, ikkeVisOpprettNyBehandling,
+      byttBehandlendeEnhetAccess, saksnummer, createNewBehandling, ikkeVisOpprettNyBehandling,
     } = this.props;
     const { menuVisible } = this.state;
     return (
@@ -226,7 +226,7 @@ export class BehandlingMenu extends Component {
                 saksnummer={saksnummer}
                 behandlingIdentifier={behandlingIdentifier}
                 push={push}
-                submitNyForstegangsBehandling={createNewForstegangsbehandling}
+                submitNyBehandling={createNewBehandling}
                 opprettNyForstegangsBehandlingEnabled={this.hasEnabledNewBehandling()}
                 opprettRevurderingEnabled={this.hasEnabledNewRevurdering()}
                 ikkeVisOpprettNyBehandling={ikkeVisOpprettNyBehandling.isEnabled}
@@ -251,7 +251,7 @@ BehandlingMenu.propTypes = {
   resumeBehandling: PropTypes.func.isRequired,
   shelveBehandling: PropTypes.func.isRequired,
   nyBehandlendeEnhet: PropTypes.func.isRequired,
-  createNewForstegangsbehandling: PropTypes.func.isRequired,
+  createNewBehandling: PropTypes.func.isRequired,
   behandlendeEnheter: PropTypes.arrayOf(PropTypes.shape({
     enhetId: PropTypes.string.isRequired,
     enhetNavn: PropTypes.string.isRequired,

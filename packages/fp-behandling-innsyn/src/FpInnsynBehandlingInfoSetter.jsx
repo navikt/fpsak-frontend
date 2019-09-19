@@ -16,9 +16,8 @@ export class FpInnsynBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler, behandlingStatus,
-      behandlingsresultat, behandlingType, behandlingHasSoknad, behandlingIsOnHold, behandlingBehandlendeEnhetId,
-      behandlingBehandlendeEnhetNavn, soknad,
+      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler,
+      behandlingsresultat, behandlingIsOnHold, soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
@@ -26,14 +25,8 @@ export class FpInnsynBehandlingInfoSetter extends Component {
       .withBehandlingVersjon(behandlingVersjon)
       .withAksjonspunkter(aksjonspunkter)
       .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
-      .withBehandlingStatus(behandlingStatus)
       .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingType(behandlingType)
-      .withBehandlingHasSoknad(behandlingHasSoknad)
-      .withBehandlingIsInnsyn(true)
       .withBehandlingIsOnHold(behandlingIsOnHold)
-      .withBehandlingBehandlendeEnhetId(behandlingBehandlendeEnhetId)
-      .withBehandlendeEnhetNavn(behandlingBehandlendeEnhetNavn)
       .withSoknad(soknad));
   }
 
@@ -54,13 +47,8 @@ FpInnsynBehandlingInfoSetter.propTypes = {
   behandlingVersjon: PropTypes.number,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingAnsvarligSaksbehandler: PropTypes.string,
-  behandlingStatus: PropTypes.shape().isRequired,
   behandlingsresultat: PropTypes.shape(),
-  behandlingType: PropTypes.shape().isRequired,
-  behandlingHasSoknad: PropTypes.bool.isRequired,
   behandlingIsOnHold: PropTypes.bool.isRequired,
-  behandlingBehandlendeEnhetId: PropTypes.string,
-  behandlingBehandlendeEnhetNavn: PropTypes.string,
   soknad: PropTypes.shape(),
 };
 
@@ -70,8 +58,6 @@ FpInnsynBehandlingInfoSetter.defaultProps = {
   aksjonspunkter: [],
   behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
-  behandlingBehandlendeEnhetId: undefined,
-  behandlingBehandlendeEnhetNavn: undefined,
   soknad: undefined,
 };
 
@@ -80,13 +66,8 @@ const mapStateToProps = (state) => ({
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
-  behandlingStatus: behandlingSelectors.getBehandlingStatus(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingType: behandlingSelectors.getBehandlingType(state),
-  behandlingHasSoknad: behandlingSelectors.getBehandlingHasSoknad(state),
   behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
-  behandlingBehandlendeEnhetId: behandlingSelectors.getBehandlingBehandlendeEnhetId(state),
-  behandlingBehandlendeEnhetNavn: behandlingSelectors.getBehandlingBehandlendeEnhetNavn(state),
   soknad: behandlingSelectors.getSoknad(state),
 });
 
