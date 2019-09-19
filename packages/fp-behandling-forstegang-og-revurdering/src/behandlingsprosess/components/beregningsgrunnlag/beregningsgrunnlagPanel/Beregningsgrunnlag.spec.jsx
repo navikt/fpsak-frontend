@@ -13,7 +13,7 @@ import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntek
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
 import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
-import FastsettGrunnlagSN from '../selvstendigNaeringsdrivende/FastsettNaeringsinntektSN';
+import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import MilitaerPanel from '../militær/MilitaerPanel';
@@ -178,7 +178,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(atPanel.props().alleAndeler[0]).to.equal(arbeidstakerAndel);
     expect(atPanel.props().aksjonspunkt).to.equal(undefined);
@@ -204,7 +204,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(flPanel).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(flPanel.props().alleAndeler[0]).to.equal(frilanserAndel);
     expect(flPanel.props().aksjonspunkt).to.equal(undefined);
@@ -230,7 +230,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(snPanel).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(snPanel.props().alleAndeler[0]).to.equal(selvstedigNaeringsdrivendeAndel);
     expect(snPanel.props().aksjonspunkt).to.equal(undefined);
@@ -257,7 +257,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(snPanel).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
     expect(snPanel.props().alleAndeler[0]).to.equal(selvstedigNaeringsdrivendeAndel);
     expect(snPanel.props().aksjonspunkt).to.equal(undefined);
@@ -284,7 +284,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(1);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN).props().alleAndeler).to.have.length(2);
   });
@@ -312,7 +312,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(1);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN).props().alleAndeler).to.have.length(2);
   });
@@ -342,7 +342,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
   });
   it('Skal teste at korrekte komponenter vises for arbeidstaker / frilanser / selvstendig næringsdrivende med aksjonspunkt', () => {
@@ -372,7 +372,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(1);
     expect(wrapper.find(OppsummeringSN)).to.have.length(1);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(1);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(1);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
   });
   it('Skal teste at korrekte komponenter vises for dagpenger / aap uten aksjonspunkt', () => {
@@ -395,7 +395,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(wrapper.find(MilitaerPanel)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser)).to.have.length(1);
@@ -424,7 +424,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser)).to.have.length(0);
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(1);
@@ -450,7 +450,7 @@ describe('<Beregningsgrunnlag>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN)).to.have.length(0);
     expect(wrapper.find(OppsummeringSN)).to.have.length(0);
-    expect(wrapper.find(FastsettGrunnlagSN)).to.have.length(0);
+    expect(wrapper.find(VurderOgFastsettSN)).to.have.length(0);
     expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser)).to.have.length(0);
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
