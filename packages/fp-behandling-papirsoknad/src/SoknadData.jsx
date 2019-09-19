@@ -7,7 +7,8 @@ import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseTyp
 class SoknadData {
   constructor(selectedFagsakYtelseType, selectedFamilieHendelseType, selectedForeldreType) {
     this.fagsakYtelseType = notNull(selectedFagsakYtelseType);
-    if (selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER) {
+    if (selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER
+        || selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER) {
       this.familieHendelseType = familieHendelseType.IKKE_RELEVANT;
       this.foreldreType = foreldreType.IKKE_RELEVANT;
     } else {

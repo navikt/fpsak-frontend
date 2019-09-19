@@ -64,8 +64,10 @@ export class PapirsoknadIndex extends Component {
   getApKode() {
     const { aksjonspunkter } = this.props;
     return aksjonspunkter.filter((a) => a.erAktivt).map((ap) => ap.definisjon.kode)
-      .filter((kode) => kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER
-        || kode === aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER)[0];
+      .filter((kode) => kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD
+        || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER
+        || kode === aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER
+        || kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_SVANGERSKAPSPENGER)[0];
   }
 
   createManuellRegistrering(valuesForRegisteredFieldsOnly) {

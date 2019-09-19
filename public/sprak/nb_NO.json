@@ -2540,6 +2540,34 @@
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
+  "MigreringFraInfotrygdPanel.Migrering": "Migrering fra Infotrygd",
+  "MigreringFraInfotrygdPanel.Ja": "Ja",
+  "MigreringFraInfotrygdPanel.Nei": "Nei",
+  "MigreringFraInfotrygdPanel.ErDenneSakenMigrert": "Er denne saken migrert fra Infotrygd og skal i utgangspunktet bare fortsette som før?",
+
+  "BehovForTilretteleggingPanel.BehovForTilrettelegging": "Behov for tilrettelegging",
+  "BehovForTilretteleggingPanel.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
+  "BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende": "Søkes det om tilrettelegging som selvstendig næringsdrivende?",
+  "BehovForTilretteleggingPanel.Ja": "Ja",
+  "BehovForTilretteleggingPanel.Nei": "Nei",
+  "BehovForTilretteleggingPanel.SokForFrilans": "Søkes det om tilrettelegging som frilans?",
+  "BehovForTilretteleggingPanel.SokForArbeidsgiver": "Søkes det om tilrettelegging fra arbeidsgiver?",
+
+  "BehovForTilrettteleggingFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
+  "BehovForTilrettteleggingFieldArray.BehovForTilrettelegging": "Behov for tilrettelegging",
+  "BehovForTilrettteleggingFieldArray.FraDato": "Fra dato",
+  "BehovForTilrettteleggingFieldArray.Stillingsprosent": "Stillingsprosent",
+  "BehovForTilrettteleggingFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
+  "BehovForTilrettteleggingFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
+  "BehovForTilrettteleggingFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
+
+  "TilretteleggingForArbeidsgiverFieldArray.OrgNr": "Arbeidsgivers org.nr.",
+  "TilretteleggingForArbeidsgiverFieldArray.LeggTilArbeidsgiver": "Legg til arbeidsgiver",
+
+  "TerminFodselSvpPanel.TerminOgFodsel": "Opplysninger om termin og fødsel",
+  "TerminFodselSvpPanel.Termindato": "Termindato",
+  "TerminFodselSvpPanel.Fodselsdato": "Fødselsdato",
+
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv og behandle saken litt senere. Om feilen oppstår igjen meld den inn via porten.",

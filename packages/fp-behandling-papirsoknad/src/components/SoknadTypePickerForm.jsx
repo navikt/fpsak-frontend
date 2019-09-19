@@ -64,7 +64,8 @@ export const SoknadTypePickerForm = ({
           <VerticalSpacer fourPx />
           <RadioGroupField
             name="familieHendelseType"
-            validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER ? [] : [required]}
+            validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER
+              || selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? [] : [required]}
             direction="vertical"
           >
             { familieHendelseTyper.filter(({ kode }) => soeknadsTyper.includes(kode)).map((bmt) => (
@@ -72,7 +73,8 @@ export const SoknadTypePickerForm = ({
                 key={bmt.kode}
                 label={bmt.navn}
                 value={bmt.kode}
-                disabled={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER}
+                disabled={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER
+                  || selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER}
               />
             ))}
           </RadioGroupField>

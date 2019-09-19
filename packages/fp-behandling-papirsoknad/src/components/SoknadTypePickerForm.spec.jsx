@@ -98,6 +98,30 @@ describe('<SoknadTypePickerForm>', () => {
     expect(radioOptionTema.prop('disabled')).is.equal(true);
   });
 
+  it('radioknapper for familieHendelseType skal vere disabled og validering slått av når ytelsetype er svangerskapspenger', () => {
+    const familieHendelseTyper = [{ kode: familieHendelseType.ADOPSJON, navn: 'Adopsjon' }];
+    const fagsakYtelseTyper = [{ kode: fagsakYtelseType.SVANGERSKAPSPENGER, navn: 'Endring foreldrepenger' }];
+    const foreldreTyper = [{ kode: foreldreType.MOR, navn: 'Mor' }];
+    const soknadTypeTillegger = [{ kode: soknadTypeTillegg.UTSETTELSE, navn: 'Utsettelse' }];
+    const selectedFagsakYtelseType = fagsakYtelseType.SVANGERSKAPSPENGER;
+
+    const wrapper = shallow(<SoknadTypePickerForm
+      {...reduxFormPropsMock}
+      familieHendelseTyper={familieHendelseTyper}
+      fagsakYtelseTyper={fagsakYtelseTyper}
+      foreldreTyper={foreldreTyper}
+      soknadTypeTillegg={soknadTypeTillegger}
+      selectedFagsakYtelseType={selectedFagsakYtelseType}
+      ytelseErSatt
+    />);
+
+    const familieHendelseRadioGroup = wrapper.find('[name="familieHendelseType"]');
+    expect(familieHendelseRadioGroup.prop('validate')).is.eql([]);
+
+    const familieHendelseRadioButton = familieHendelseRadioGroup.at(0).find(RadioOption);
+    expect(familieHendelseRadioButton.prop('disabled')).is.true;
+  });
+
 
   it('skal kalle submitevent', () => {
     const familieHendelseTyper = [{ kode: familieHendelseType.ADOPSJON, navn: 'Adopsjon' }];
