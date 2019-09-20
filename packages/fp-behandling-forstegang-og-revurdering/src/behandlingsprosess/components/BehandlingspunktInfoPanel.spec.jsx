@@ -17,15 +17,14 @@ describe('<BehandlingspunktInfoPanel>', () => {
       submitCallback={sinon.spy()}
       previewCallback={sinon.spy()}
       previewFptilbakeCallback={sinon.spy()}
-      previewVedtakCallback={sinon.spy()}
-      previewManueltBrevCallback={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       openAksjonspunkt={false}
       readOnly={false}
       isApSolvable={false}
       apCodes={[]}
       readOnlySubmitButton={false}
-      featureToggleFormkrav
+      fagsakInfo={{}}
+      featureToggles={{}}
     />);
 
     expect(wrapper.find(BeregningsresultatEngangsstonadForm)).to.have.length(1);
@@ -37,15 +36,14 @@ describe('<BehandlingspunktInfoPanel>', () => {
       submitCallback={sinon.spy()}
       previewCallback={sinon.spy()}
       previewFptilbakeCallback={sinon.spy()}
-      previewVedtakCallback={sinon.spy()}
-      previewManueltBrevCallback={sinon.spy()}
       dispatchSubmitFailed={sinon.spy()}
       openAksjonspunkt={false}
       readOnly={false}
       isApSolvable={false}
       apCodes={[aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]}
       readOnlySubmitButton={false}
-      featureToggleFormkrav
+      fagsakInfo={{}}
+      featureToggles={{}}
     />);
     expect(wrapper.find(VurderSoknadsfristForeldrepengerForm)).to.have.length(1);
   });
