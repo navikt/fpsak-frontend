@@ -33,7 +33,9 @@ const AvregningBpIndex = ({
   <RawIntlProvider value={intl}>
     <AvregningPanel
       fagsak={fagsak}
-      behandling={behandling}
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
+      sprakkode={behandling.sprakkode}
       aksjonspunkter={aksjonspunkter}
       simuleringResultat={simuleringResultat}
       tilbakekrevingvalg={tilbakekrevingvalg}
@@ -53,7 +55,7 @@ AvregningBpIndex.propTypes = {
   behandling: avregningBehandlingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
   simuleringResultat: avregningSimuleringResultatPropType,
-  tilbakekrevingvalg: PropTypes.shape().isRequired,
+  tilbakekrevingvalg: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -64,7 +66,8 @@ AvregningBpIndex.propTypes = {
 };
 
 AvregningBpIndex.defaultProps = {
-  simuleringResultat: null,
+  simuleringResultat: undefined,
+  tilbakekrevingvalg: undefined,
 };
 
 export default AvregningBpIndex;

@@ -24,6 +24,8 @@ import styles from './behandlingspunktInfoPanel.less';
 
 const classNames = classnames.bind(styles);
 
+const avregningData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SIMULERING_RESULTAT, fpsakApi.TILBAKEKREVINGVALG];
+
 /*
  * PunktInfoPanel
  *
@@ -105,19 +107,21 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       {selectedBehandlingspunkt === behandlingspunktCodes.AVREGNING && (
         <DataFetcherWithCache
           behandlingVersjon={1}
-          data={[fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SIMULERING_RESULTAT, fpsakApi.TILBAKEKREVINGVALG]}
-        >
-          <AvregningBpIndex
-            fagsak={fagsakInfo}
-            featureToggles={featureToggles}
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            apCodes={apCodes}
-            isApOpen={openAksjonspunkt}
-            previewCallback={previewFptilbakeCallback}
-          />
-        </DataFetcherWithCache>
+          data={avregningData}
+          render={(props) => (
+            <AvregningBpIndex
+              fagsak={fagsakInfo}
+              featureToggles={featureToggles}
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              readOnlySubmitButton={readOnlySubmitButton}
+              apCodes={apCodes}
+              isApOpen={openAksjonspunkt}
+              previewCallback={previewFptilbakeCallback}
+              {...props}
+            />
+          )}
+        />
       )}
       {VurderSoknadsfristForeldrepengerForm.supports(apCodes)
       && (

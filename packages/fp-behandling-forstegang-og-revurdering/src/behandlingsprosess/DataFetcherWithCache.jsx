@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
@@ -9,17 +9,17 @@ import { BehandlingFpsakApiKeys } from '../data/fpsakBehandlingApi';
 // alle panel nyttar denne. No hentar den ynskja data fra behandling-objektet og lagar props av det.
 export class DataFetcherWithCache extends Component {
   static propTypes = {
-    behandlingData: PropTypes.arrayOf(PropTypes.object).isRequired,
-    children: PropTypes.node.isRequired,
+    behandlingData: PropTypes.shape().isRequired,
+    render: PropTypes.func.isRequired,
   };
 
   render() {
-    const { behandlingData, children } = this.props;
-    return React.cloneElement(children, behandlingData);
+    const { behandlingData, render } = this.props;
+    return render(behandlingData);
   }
 }
 
-const mapper = {
+const mapping = {
   [BehandlingFpsakApiKeys.PERSONOPPLYSNINGER]: 'soeker-personopplysninger',
   [BehandlingFpsakApiKeys.SIMULERING_RESULTAT]: 'simuleringResultat',
   [BehandlingFpsakApiKeys.TILBAKEKREVINGVALG]: 'tilbakekrevingvalg',
@@ -34,7 +34,7 @@ const createProps = createSelector([(state, ownProps) => ownProps.data[0].getRes
   behandlingData: data
     .reduce((acc, d) => ({
       ...acc,
-      [format(d.name)]: d.name === BehandlingFpsakApiKeys.BEHANDLING ? behandling : behandling[mapper[d.name]],
+      [format(d.name)]: d.name === BehandlingFpsakApiKeys.BEHANDLING ? behandling : behandling[mapping[d.name]],
     }), {}),
 }));
 

@@ -11,7 +11,9 @@ import {
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import {
+  featureToggle, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
@@ -27,10 +29,6 @@ import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
 
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-behandling-forstegang-og-revurdering/src/behandlingFormForstegangOgRevurdering';
 import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable, { avregningCodes } from './AvregningTable';
@@ -460,20 +458,23 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
   const onSubmit = (values) => ownPropsStatic.submitCallback(transformValues(values, ownPropsStatic.apCodes[0]));
 
   return (state, ownProps) => {
-    const { tilbakekrevingValg } = ownProps;
+    const {
+      sprakkode, behandlingId, behandlingVersjon, tilbakekrevingValg, simuleringResultat, featureToggles, fagsak,
+    } = ownProps;
     const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
       && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
-
     return {
-      ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst',
+      ),
       initialValues: buildInitialValues(state, ownProps),
-      behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandling.id, ownProps.behandling.versjon),
-      simuleringResultat: ownProps.simuleringResultat,
-      sprakkode: ownProps.behandling.sprakkode,
-      featureVarseltekst: ownProps.featureToggles[featureToggle.SIMULER_VARSELTEKST],
-      saksnummer: ownProps.fagsak.saksnummer,
-      isForeldrepenger: ownProps.fagsak.ytelseType.kode === fagsakYtelseType.FORELDREPENGER,
+      behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
+      featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
+      saksnummer: fagsak.saksnummer,
+      isForeldrepenger: fagsak.ytelseType.kode === fagsakYtelseType.FORELDREPENGER,
       hasOpenTilbakekrevingsbehandling,
+      sprakkode,
+      simuleringResultat,
       onSubmit,
     };
   };
@@ -485,7 +486,7 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: true,
 })(injectIntl(AvregningPanelImpl))));

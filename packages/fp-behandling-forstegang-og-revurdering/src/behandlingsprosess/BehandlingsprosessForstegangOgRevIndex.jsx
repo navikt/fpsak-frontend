@@ -67,7 +67,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
     fetchBrevPreview(data);
   }
 
-  submit = (submitCallback, goToDefaultPage, goToSearchPage) => (aksjonspunktModels) => {
+  submit = (aksjonspunktModels) => {
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
     const shouldUpdateInfo = !submitIsRevurdering;
 
@@ -76,13 +76,20 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       if (showModal) {
         this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
-        goToSearchPage();
+        this.goToSearchPage();
       } else {
-        goToDefaultPage();
+        this.goToDefaultPage();
       }
     };
 
-    return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+  }
+
+  getSubmit = (submitCallback, goToDefaultPage, goToSearchPage) => {
+    this.submitCallback = submitCallback;
+    this.goToDefaultPage = goToDefaultPage;
+    this.goToSearchPage = goToSearchPage;
+    return this.submit;
   }
 
   render = () => {
@@ -123,7 +130,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
         render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
           <>
             <BehandlingspunktInfoPanel
-              submitCallback={this.submit(submitCallback, goToDefaultPage, goToSearchPage)}
+              submitCallback={this.getSubmit(submitCallback, goToDefaultPage, goToSearchPage)}
               previewCallback={previewCallback}
               previewFptilbakeCallback={this.previewFptilbakeCallback}
               dispatchSubmitFailed={submitFailedDispatch}

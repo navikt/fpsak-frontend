@@ -32,17 +32,23 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
     };
   }
 
-  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
+  submit = (aksjonspunktModels) => {
     const afterAksjonspunktSubmit = () => {
       const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
         this.setState((prevState) => ({ ...prevState, showFatterVedtakModal: true }));
       } else {
-        goToDefaultPage();
+        this.goToDefaultPage();
       }
     };
 
-    return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, true);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, true);
+  }
+
+  getSubmit = (submitCallback, goToDefaultPage) => {
+    this.submitCallback = submitCallback;
+    this.goToDefaultPage = goToDefaultPage;
+    return this.submit;
   }
 
   render = () => {
@@ -78,7 +84,7 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
         render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
           <>
             <TilbakekrevingBehandlingspunktInfoPanel
-              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              submitCallback={this.getSubmit(submitCallback, goToDefaultPage)}
               dispatchSubmitFailed={submitFailedDispatch}
               selectedBehandlingspunkt={selectedBehandlingspunkt}
             />
