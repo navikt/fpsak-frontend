@@ -7,9 +7,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import AvregningPanel from './components/AvregningPanel';
-import AvregningBpIndex from './AvregningBpIndex';
+import AvregningProsessIndex from './AvregningProsessIndex';
 
-describe('<AvregningBpIndex>', () => {
+describe('<AvregningProsessIndex>', () => {
   const fagsak = {
     saksnummer: 123,
     ytelseType: {
@@ -33,7 +33,7 @@ describe('<AvregningBpIndex>', () => {
   }];
 
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<AvregningBpIndex
+    const wrapper = shallow(<AvregningProsessIndex
       fagsak={fagsak}
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}

@@ -1,1 +1,1 @@
-export { default } from './src/AvregningBpIndex';
+export { default } from './src/AvregningProsessIndex';

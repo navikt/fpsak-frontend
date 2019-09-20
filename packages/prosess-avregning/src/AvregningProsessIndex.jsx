@@ -16,7 +16,7 @@ const intl = createIntl({
   messages,
 }, cache);
 
-const AvregningBpIndex = ({
+const AvregningProsessIndex = ({
   fagsak,
   behandling,
   aksjonspunkter,
@@ -50,7 +50,7 @@ const AvregningBpIndex = ({
   </RawIntlProvider>
 );
 
-AvregningBpIndex.propTypes = {
+AvregningProsessIndex.propTypes = {
   fagsak: avregningFagsakPropType.isRequired,
   behandling: avregningBehandlingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
@@ -65,9 +65,9 @@ AvregningBpIndex.propTypes = {
   featureToggles: PropTypes.shape().isRequired,
 };
 
-AvregningBpIndex.defaultProps = {
+AvregningProsessIndex.defaultProps = {
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
 };
 
-export default AvregningBpIndex;
+export default AvregningProsessIndex;

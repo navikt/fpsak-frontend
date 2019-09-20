@@ -8,7 +8,7 @@ import {
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import AvregningBpIndex from '@fpsak-frontend/prosess-avregning';
+import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -112,12 +112,12 @@ const tilbakekrevingvalg = {
   varseltekst: 'varsel-eksempel',
 };
 
-const stories = storiesOf('AvregningBpIndex', module)
+const stories = storiesOf('AvregningProsessIndex', module)
   .addDecorator(withKnobs)
   .addDecorator(withReduxProvider);
 
 stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
-  <AvregningBpIndex
+  <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
     aksjonspunkter={object('aksjonspunkter', [{
@@ -139,7 +139,7 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
 ));
 
 stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
-  <AvregningBpIndex
+  <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
     aksjonspunkter={object('aksjonspunkter', [{

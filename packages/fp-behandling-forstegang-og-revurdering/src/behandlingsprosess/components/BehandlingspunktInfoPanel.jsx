@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
-import AvregningBpIndex from '@fpsak-frontend/prosess-avregning';
+import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
@@ -109,7 +109,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
           behandlingVersjon={1}
           data={avregningData}
           render={(props) => (
-            <AvregningBpIndex
+            <AvregningProsessIndex
               fagsak={fagsakInfo}
               featureToggles={featureToggles}
               submitCallback={submitCallback}
