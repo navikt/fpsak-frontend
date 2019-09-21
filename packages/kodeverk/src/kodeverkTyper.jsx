@@ -64,7 +64,7 @@ const kodeverkTyper = {
   VEDTAK_RESULTAT_TYPE: 'VedtakResultatType',
   PERMISJONSBESKRIVELSE_TYPE: 'PermisjonsbeskrivelseType',
   VURDER_ARBEIDSFORHOLD_HISTORIKKINNSLAG: 'VurderArbeidsforholdHistorikkinnslag',
-  TILBAKEKR_VIDERE_BEH: 'TilbakekrevingVidereBehandling',
+  TILBAKEKR_VIDERE_BEH: 'VidereBehandling',
 };
 
 export default kodeverkTyper;
