@@ -35,7 +35,8 @@ const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandlin
     fritekst: ' ',
     mottaker: 'Søker',
   };
-  previewHenleggBehandling(behandlingType.TILBAKEKREVING === behandlingTypeKode, data);
+  previewHenleggBehandling(behandlingType.TILBAKEKREVING === behandlingTypeKode
+    || behandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode, data);
   e.preventDefault();
 };
 
@@ -160,6 +161,7 @@ const henleggArsakerPerBehandlingType = {
   [behandlingType.KLAGE]: [behandlingResultatType.HENLAGT_KLAGE_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.DOKUMENTINNSYN]: [behandlingResultatType.HENLAGT_INNSYN_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.TILBAKEKREVING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET],
+  [behandlingType.TILBAKEKREVING_REVURDERING]: [behandlingResultatType.HENLAGT_FEILOPPRETTET],
   [behandlingType.REVURDERING]: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
     behandlingResultatType.HENLAGT_SOKNAD_MANGLER],
   OTHER: [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_FEILOPPRETTET,
@@ -176,7 +178,7 @@ export const getHenleggArsaker = createSelector([getKodeverk(kodeverkTyper.BEHAN
 const getShowLink = createSelector([
   (state) => formValueSelector('ShelveBehandlingModal')(state, 'årsakKode'), getBehandlingType],
 (arsakKode, type) => {
-  if (type.kode === behandlingType.TILBAKEKREVING) {
+  if (type.kode === behandlingType.TILBAKEKREVING || type.kode === behandlingType.TILBAKEKREVING_REVURDERING) {
     return behandlingResultatType.HENLAGT_FEILOPPRETTET === arsakKode;
   }
   return [behandlingResultatType.HENLAGT_SOKNAD_TRUKKET, behandlingResultatType.HENLAGT_KLAGE_TRUKKET,
