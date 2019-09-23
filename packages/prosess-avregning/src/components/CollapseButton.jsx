@@ -6,7 +6,11 @@ import styles from './collapseButton.less';
 
 const buttonText = (showDetails) => (showDetails ? 'Avregning.headerText.VisFærreDetaljer' : 'Avregning.headerText.VisFlereDetaljer');
 
-const CollapseButton = ({ toggleDetails, showDetails, mottakerIndex }) => (
+const CollapseButton = ({
+  toggleDetails,
+  showDetails,
+  mottakerIndex,
+}) => (
   <button type="button" className={styles.invisibleButton} onClick={() => toggleDetails(mottakerIndex)}>
     <FormattedMessage id={buttonText(showDetails)} />
     {showDetails ? <OppChevron /> : <NedChevron />}

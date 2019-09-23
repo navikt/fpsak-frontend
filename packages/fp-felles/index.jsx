@@ -45,4 +45,5 @@ export {
 export {
   getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
 } from './src/behandlingForm';
+export { behandlingForm, behandlingFormValueSelector } from './src/behandlingFormNew';
 export { allAccessRights } from './src/navAnsatt/access';

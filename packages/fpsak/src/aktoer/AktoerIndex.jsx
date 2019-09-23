@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { getRequestPollingMessage, requireProps, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { getSelectedAktoer, getSelectedAktoerId } from './aktoerSelectors';

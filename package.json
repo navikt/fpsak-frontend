@@ -51,6 +51,8 @@
     "@babel/register": "^7.5.5",
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@istanbuljs/nyc-config-babel": "^2.1.1",
+    "@storybook/addon-knobs": "^5.2.0",
+    "@storybook/addons": "^5.2.0",
     "@storybook/cli": "^5.2.0",
     "@storybook/react": "^5.2.0",
     "@types/chai": "^4.1.7",

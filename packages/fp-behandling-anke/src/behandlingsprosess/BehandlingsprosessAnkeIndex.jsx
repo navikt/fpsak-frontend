@@ -45,7 +45,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
     }
   }
 
-  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
+  submit = (aksjonspunktModels) => {
     const skalTilMedunderskriver = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
@@ -56,11 +56,17 @@ export class BehandlingsprosessAnkeIndex extends Component {
       if (skalTilMedunderskriver || skalFerdigstilles) {
         this.setState((state) => ({ ...state, showModalAnkeBehandling: true }));
       } else {
-        goToDefaultPage();
+        this.goToDefaultPage();
       }
     };
 
-    return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+  }
+
+  getSubmit = (submitCallback, goToDefaultPage) => {
+    this.submitCallback = submitCallback;
+    this.goToDefaultPage = goToDefaultPage;
+    return this.submit;
   }
 
   render = () => {
@@ -100,7 +106,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
               previewCallback={previewCallback}
               previewCallbackAnke={previewCallback}
               saveTempAnke={this.saveAnkeText}
-              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              submitCallback={this.getSubmit(submitCallback, goToDefaultPage)}
               selectedBehandlingspunkt={selectedBehandlingspunkt}
             />
             <AnkeBehandlingModal showModal={showModalAnkeBehandling} closeEvent={goToSearchPage} />

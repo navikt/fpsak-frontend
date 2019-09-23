@@ -10,6 +10,10 @@ export const BehandlingFpsakApiKeys = {
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE: 'PREVIEW_TILBAKEKREVING_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
+  AKSJONSPUNKTER: 'AKSJONSPUNKTER',
+  PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
+  SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
+  TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -27,6 +31,12 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', BehandlingFpsakApiKeys.PREVIEW_MESSAGE)
+
+  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
+  .withInjectedPath('aksjonspunkter', BehandlingFpsakApiKeys.AKSJONSPUNKTER)
+  .withInjectedPath('soeker-personopplysninger', BehandlingFpsakApiKeys.PERSONOPPLYSNINGER)
+  .withInjectedPath('simuleringResultat', BehandlingFpsakApiKeys.SIMULERING_RESULTAT)
+  .withInjectedPath('tilbakekrevingvalg', BehandlingFpsakApiKeys.TILBAKEKREVINGVALG)
 
   .build();
 
