@@ -1,0 +1,14 @@
+{
+  "BeregningEngangsstonadForm.Beregning": "Beregning",
+  "BeregningEngangsstonadForm.BeregnetEngangsstonad": "Beregnet engangsstønad",
+  "BeregningEngangsstonadForm.AntallBarn": "Antall barn",
+  "BeregningEngangsstonadForm.Sats": "Sats",
+  "BeregningEngangsstonadForm.Kroner": "kr",
+
+  "OverstyrBegrunnelsePanel.Beregning": "Oppgi årsak til overstyring av beregningsgrunnlag",
+  "OverstyrBekreftKnappPanel.ConfirmInformation": "Bekreft overstyring",
+  "OverstyrVurderingVelger.OverstyrBeregning": "Overstyr beregning",
+  "OverstyrVurderingVelger.OverstyrtBeregning": "Overstyrt beregning",
+  "OverstyrVurderingVelger.OverstyrAutomatiskVurdering": "Overstyr automatisk vurdering",
+  "OverstyrVurderingVelger.OverstyrtAutomatiskVurdering": "Overstyrt automatisk vurdering"
+}

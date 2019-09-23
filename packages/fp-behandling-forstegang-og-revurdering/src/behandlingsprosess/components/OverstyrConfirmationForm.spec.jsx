@@ -1,7 +1,9 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
-import VilkarBegrunnelse from './VilkarBegrunnelse';
+
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { VilkarBegrunnelse } from '@fpsak-frontend/fp-felles';
+
 import OverstyrConfirmationForm from './OverstyrConfirmationForm';
 
 describe('<OverstyrConfirmationForm>', () => {

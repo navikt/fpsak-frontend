@@ -3,7 +3,7 @@ import { configure } from '@storybook/react';
 function loadStories() {
   require('../stories/sharedComponents.js');
   require('../stories/prosess/avregning.js');
-  // You can require as many stories as you need.
+  require('../stories/prosess/beregningsresultat.js');
 }
 
 configure(loadStories, module);

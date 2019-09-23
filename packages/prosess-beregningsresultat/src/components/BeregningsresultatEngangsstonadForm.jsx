@@ -7,14 +7,10 @@ import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+  behandlingForm, behandlingFormValueSelector, OverstyrBegrunnelsePanel, OverstyrBekreftKnappPanel,
+  OverstyrVurderingVelger,
+} from '@fpsak-frontend/fp-felles';
 import {
   FadingPanel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -22,9 +18,6 @@ import {
   formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import { InputField } from '@fpsak-frontend/form';
-import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
-import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
-import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './beregningsresultatEngangsstonadForm.less';
@@ -43,6 +36,10 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
   beregningResultat,
   isOverstyrt,
   isReadOnly,
+  overrideReadOnly,
+  kanOverstyreAccess,
+  aksjonspunktCodes,
+  toggleOverstyring,
   ...formProps
 }) => (
   <FadingPanel>
@@ -52,7 +49,15 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
           <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
         </Column>
         <Column xs="3">
-          <OverstyrVurderingChecker isBeregningOverstyrer aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING} resetValues={formProps.reset} />
+          <OverstyrVurderingVelger
+            isBeregningOverstyrer
+            aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
+            resetValues={formProps.reset}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            aksjonspunktCodes={aksjonspunktCodes}
+            toggleOverstyring={toggleOverstyring}
+          />
         </Column>
       </Row>
       <VerticalSpacer eightPx />
@@ -95,8 +100,12 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
       {isOverstyrt
       && (
       <div>
-        <OverstyrConfirmationForm isBeregningConfirmation />
-        <OverstyrConfirmVilkarButton submitting={formProps.submitting} pristine={formProps.pristine} />
+        <OverstyrBegrunnelsePanel isBeregningConfirmation overrideReadOnly={overrideReadOnly} />
+        <OverstyrBekreftKnappPanel
+          submitting={formProps.submitting}
+          pristine={formProps.pristine}
+          overrideReadOnly={overrideReadOnly}
+        />
       </div>
       )}
     </form>
@@ -108,6 +117,10 @@ BeregningsresultatEngangsstonadFormImpl.propTypes = {
   beregningResultat: PropTypes.shape(),
   isOverstyrt: PropTypes.bool,
   isReadOnly: PropTypes.bool,
+  kanOverstyreAccess: PropTypes.shape({
+    isEnabled: PropTypes.bool.isRequired,
+  }).isRequired,
+  aksjonspunktCodes: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   ...formPropTypes,
 };
 
@@ -121,37 +134,38 @@ BeregningsresultatEngangsstonadFormImpl.defaultProps = {
   isReadOnly: false,
 };
 
-const buildInitialValues = createSelector([behandlingSelectors.getAksjonspunkter, getBehandlingResultatstruktur], (aksjonspunkter, beregningResultat) => {
+const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.behandlingResultatstruktur],
+(aksjonspunkter, beregningResultat) => {
   const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCode.OVERSTYR_BEREGNING);
   return {
     beregningResultat,
     isOverstyrt: aksjonspunkt !== undefined,
-    ...OverstyrConfirmationForm.buildInitialValues(aksjonspunkt),
+    ...OverstyrBegrunnelsePanel.buildInitialValues(aksjonspunkt),
   };
 });
 
 const transformValues = (values) => ({
   kode: aksjonspunktCode.OVERSTYR_BEREGNING,
   beregnetTilkjentYtelse: values.beregningResultat.beregnetTilkjentYtelse,
-  ...OverstyrConfirmationForm.transformValues(values),
+  ...OverstyrBegrunnelsePanel.transformValues(values),
 });
 
 const formName = 'BeregningsresultatEngangsstonadForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values)]);
+  const { behandlingId, behandlingVersjon } = staticOwnProps;
+  const aksjonspunktCodes = staticOwnProps.aksjonspunkter.map((a) => a.definisjon.kode);
+  return (state, ownProps) => ({
     onSubmit,
-    initialValues: buildInitialValues(state),
-    isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
-    ...behandlingFormValueSelector(formName)(state, 'beregningResultat', 'isOverstyrt'),
+    aksjonspunktCodes,
+    initialValues: buildInitialValues(state, ownProps),
+    isReadOnly: ownProps.overrideReadOnly,
+    ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'beregningResultat', 'isOverstyrt'),
   });
 };
 
-const BeregningsresultatEngangsstonadForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(BeregningsresultatEngangsstonadFormImpl)));
-
-BeregningsresultatEngangsstonadForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.BEREGNING;
-
-export default BeregningsresultatEngangsstonadForm;

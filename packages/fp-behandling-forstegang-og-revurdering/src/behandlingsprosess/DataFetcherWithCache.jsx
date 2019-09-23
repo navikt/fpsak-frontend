@@ -20,10 +20,11 @@ export class DataFetcherWithCache extends Component {
 }
 
 const mapping = {
-  [BehandlingFpsakApiKeys.PERSONOPPLYSNINGER]: 'soeker-personopplysninger',
+  [BehandlingFpsakApiKeys.PERSONOPPLYSNINGER]: 'soekerPersonopplysninger',
   [BehandlingFpsakApiKeys.SIMULERING_RESULTAT]: 'simuleringResultat',
   [BehandlingFpsakApiKeys.TILBAKEKREVINGVALG]: 'tilbakekrevingvalg',
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
+  [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
 };
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/, (m) => m.toUpperCase()).replace(/_/, '');

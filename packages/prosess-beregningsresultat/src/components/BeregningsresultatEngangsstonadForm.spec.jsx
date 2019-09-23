@@ -18,7 +18,11 @@ describe('<BeregningsresultatEngangsstonadForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       beregningResultat={beregningResultat}
+      aksjonspunktCodes={[]}
       isOverstyrt={false}
+      kanOverstyreAccess={{
+        isEnabled: true,
+      }}
     />);
 
     const texts = wrapper.find('Normaltekst');

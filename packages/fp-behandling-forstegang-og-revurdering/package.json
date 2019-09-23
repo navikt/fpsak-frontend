@@ -14,6 +14,7 @@
     "@fpsak-frontend/person-info": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/prosess-avregning": "1.0.0",
+    "@fpsak-frontend/prosess-beregningsresultat": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
