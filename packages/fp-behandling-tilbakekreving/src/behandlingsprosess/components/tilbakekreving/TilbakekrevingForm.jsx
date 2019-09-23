@@ -68,9 +68,8 @@ const emptyFeltverdiOmFinnes = (periode) => {
 
 const formaterPerioderForTidslinje = (perioder = [], vilkarsVurdertePerioder) => perioder
   .map((periode, index) => {
-    const erBelopetIBehold = periode.vilkarResultatInfo
-      ? periode.vilkarResultatInfo.erBelopetIBehold : undefined;
     const per = vilkarsVurdertePerioder.find((p) => p.fom === periode.fom && p.tom === periode.tom);
+    const erBelopetIBehold = per && per[per.valgtVilkarResultatType] ? per[per.valgtVilkarResultatType].erBelopetIBehold : undefined;
     const erSplittet = per ? !!per.erSplittet : false;
     return {
       fom: periode.fom,
