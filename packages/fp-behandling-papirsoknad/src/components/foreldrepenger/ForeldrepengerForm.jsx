@@ -20,12 +20,12 @@ import LagreSoknadForm from 'papirsoknad/src/components/commonPanels/LagreSoknad
 import OmsorgOgAdopsjonPanel from 'papirsoknad/src/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 import TerminFodselDatoPanel from 'papirsoknad/src/components/commonPanels/fodsel/TerminFodselDatoPanel';
 import RettigheterPanel, { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
-import EgenVirksomhetPanel from './virksomhet/EgenVirksomhetPanel';
+import EgenVirksomhetPanel from '../commonPanels/virksomhet/EgenVirksomhetPanel';
 import DekningsgradPanel from './dekningsgrad/DekningsgradPanel';
-import InntektsgivendeArbeidPanel from './inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
-import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from './andreYtelser/AndreYtelserPanel';
+import InntektsgivendeArbeidPanel from '../commonPanels/inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
+import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from '../commonPanels/andreYtelser/AndreYtelserPanel';
 import PermisjonPanel, { TIDSROM_PERMISJON_FORM_NAME_PREFIX } from './permisjon/PermisjonPanel';
-import FrilansPanel from './frilans/FrilansPanel';
+import FrilansPanel from '../commonPanels/frilans/FrilansPanel';
 import BekreftelsePanel from './bekreftelse/BekreftelsePanel';
 
 const FORELDREPENGER_FORM_NAME = 'ForeldrepengerForm';

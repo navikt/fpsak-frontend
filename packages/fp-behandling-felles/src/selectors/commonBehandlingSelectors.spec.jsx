@@ -115,38 +115,6 @@ describe('commonBehandlingSelectors', () => {
       expect(openAps[0].id).is.eql(1);
     });
 
-    it('skal være i innehent søknadsopplysningersteg når en har registrer papirsøknad aksjonspunkt', () => {
-      const aksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
-        },
-      }, {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
-        },
-      }];
-
-      const isInSteg = selectors.isBehandlingInInnhentSoknadsopplysningerSteg.resultFunc(aksjonspunkter);
-
-      expect(isInSteg).is.true;
-    });
-
-    it('skal ikke være i innehent søknadsopplysningersteg når en ikke har aktuelle aksjonspunkter', () => {
-      const aksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.VURDERE_DOKUMENT,
-        },
-      }, {
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
-        },
-      }];
-
-      const isInSteg = selectors.isBehandlingInInnhentSoknadsopplysningerSteg.resultFunc(aksjonspunkter);
-
-      expect(isInSteg).is.false;
-    });
-
     it('skal ha åpent aksjonspunkt for kontrollering av revurdering', () => {
       const openAksjonspunkter = [{
         definisjon: {

@@ -1,8 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FieldArray } from 'redux-form';
+
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { CheckboxField } from '@fpsak-frontend/form';
+import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 
 import AndreYtelserPanel, { AndreYtelserPanelImpl } from './AndreYtelserPanel';
 
@@ -10,7 +12,7 @@ describe('<AndreYtelserPanel>', () => {
   const andreYtelser = [
     { navn: 'Lønn under utdanning', kode: 'LONN_UTDANNING' },
     { navn: 'Etterlønn fr arbeidsgiver', kode: 'ETTERLONN_ARBEIDSGIVER' },
-    { navn: 'Militær- eller siviltjeneste', kode: 'MILITAER_SIVIL_TJENESTE' },
+    { navn: 'Militær- eller siviltjeneste', kode: arbeidType.MILITÆR_ELLER_SIVILTJENESTE },
     { navn: 'Ventelønn', kode: 'VENTELONN' },
   ];
 
@@ -26,6 +28,18 @@ describe('<AndreYtelserPanel>', () => {
     expect(checkboxes).to.have.length(4);
   });
 
+  it('skal kun vise checkbox for militær og siviltjeneste når prop er satt', () => {
+    const wrapper = shallowWithIntl(<AndreYtelserPanelImpl
+      intl={intlMock}
+      readOnly={false}
+      andreYtelser={andreYtelser}
+      selectedYtelser={{}}
+      kunMiliterEllerSiviltjeneste
+    />);
+
+    const checkboxes = wrapper.find(CheckboxField);
+    expect(checkboxes).to.have.length(1);
+  });
 
   it('skal vise andre ytelser panel med FieldArray når ytelse er valgt', () => {
     const wrapper = shallowWithIntl(<AndreYtelserPanelImpl

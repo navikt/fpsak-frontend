@@ -7,9 +7,8 @@ import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper
 
 import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
 import {
-  getRettigheter, behandlingReducer, setSelectedBehandlingId,
+  behandlingReducer, setSelectedBehandlingId, getRettigheter,
 } from './duck';
-
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -51,17 +50,16 @@ describe('Behandling-reducer', () => {
 
   it('skal hente rettigheter til NAV-ansatt fra state', () => {
     const navAnsatt = { navn: 'Ann S. Att', kanSaksbehandle: true };
+    const params = { saksnummer: 1 };
 
     const dataState = new ApiStateBuilder()
-      .withData(fpsakApi.NAV_ANSATT.name, navAnsatt)
-      .withData(fpsakApi.FETCH_FAGSAK.name, {})
-      .withData('BEHANDLING', {
+      .withData(fpsakApi.NAV_ANSATT.name, params, navAnsatt)
+      .withData(fpsakApi.FETCH_FAGSAK.name, params, {})
+      .withData(fpsakApi.BEHANDLINGER_FPSAK.name, params, [{
         id: 1000051,
-        'original-behandling': {
-          id: 1000050,
-          versjon: 1,
-        },
-      }, 'dataContextFpsakBehandling')
+        versjon: 1,
+      }])
+      .withData(fpsakApi.BEHANDLINGER_FPTILBAKE.name, params, [])
       .build();
 
 
@@ -72,7 +70,7 @@ describe('Behandling-reducer', () => {
           selectedSaksnummer: 1,
         },
         fpsakBehandling: {
-          behandlingId: 1,
+          behandlingId: 1000051,
         },
         behandling: {
           behandlingInfoHolder: {},

@@ -57,10 +57,11 @@ export const lagStateMedAksjonspunkterOgBeregningsgrunnlag = (aksjonspunkter, be
     beregningsgrunnlag,
     aksjonspunkter,
   };
+  const params = {};
   const dataState = new ApiStateBuilder()
-    .withData('NAV_ANSATT', navAnsatt)
-    .withData('FETCH_FAGSAK', fagsak)
-    .withData('BEHANDLING', data, 'dataContextForstegangOgRevurderingBehandling')
+    .withData('NAV_ANSATT', params, navAnsatt)
+    .withData('FETCH_FAGSAK', params, fagsak)
+    .withData('BEHANDLING', params, data, 'dataContextForstegangOgRevurderingBehandling')
     .build();
 
   const state = {

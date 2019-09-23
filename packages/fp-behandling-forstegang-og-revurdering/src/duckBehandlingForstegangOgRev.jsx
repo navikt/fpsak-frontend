@@ -1,3 +1,5 @@
+import { createSelector } from 'reselect';
+
 import { getBehandlingRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
@@ -37,3 +39,10 @@ export const {
   getKanRevurderingOpprettes,
   getSkalBehandlesAvInfotrygd,
 } = behandlingRedux.selectors;
+
+export const getFagsakInfo = createSelector([getSelectedSaksnummer, getFagsakYtelseType], (
+  saksnummer, ytelseType,
+) => ({
+  saksnummer,
+  ytelseType,
+}));

@@ -25,12 +25,18 @@ import BehandlingspunktInnsynInfoPanel from './components/BehandlingspunktInnsyn
  * Har ansvar for behandlingsprosessdelen av hovedvinduet når behandlingstypen er Innsyn.
  */
 export class BehandlingsprosessInnsynIndex extends Component {
-  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
+  submit = (aksjonspunktModels) => {
     const afterAksjonspunktSubmit = () => {
-      goToDefaultPage();
+      this.goToDefaultPage();
     };
 
-    return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, true);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, true);
+  };
+
+  getSubmit = (submitCallback, goToDefaultPage) => {
+    this.submitCallback = submitCallback;
+    this.goToDefaultPage = goToDefaultPage;
+    return this.submit;
   };
 
   render = () => {
@@ -65,7 +71,7 @@ export class BehandlingsprosessInnsynIndex extends Component {
         doNotUseFatterVedtakModal
         render={(previewCallback, submitCallback, goToDefaultPage) => (
           <BehandlingspunktInnsynInfoPanel
-            submitCallback={this.submit(submitCallback, goToDefaultPage)}
+            submitCallback={this.getSubmit(submitCallback, goToDefaultPage)}
             previewCallback={previewCallback}
             selectedBehandlingspunkt={selectedBehandlingspunkt}
           />

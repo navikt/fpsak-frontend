@@ -231,6 +231,7 @@ export class BehandlingIndex extends Component {
             allDocuments={allDocuments}
             kodeverk={kodeverk}
             fagsak={fagsak}
+            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
             navAnsatt={navAnsatt}
           />
         </Suspense>

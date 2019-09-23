@@ -100,7 +100,10 @@ const getPeriod = (ingenPerioderMedAvvik, periodeFom, mottaker) => getRangeOfMon
 );
 
 const AvregningTable = ({
-  simuleringResultat, toggleDetails, showDetails, ingenPerioderMedAvvik,
+  simuleringResultat,
+  toggleDetails,
+  showDetails,
+  ingenPerioderMedAvvik,
 }) => (
   simuleringResultat.perioderPerMottaker.map((mottaker, mottakerIndex) => {
     const rangeOfMonths = getPeriod(ingenPerioderMedAvvik, simuleringResultat.periodeFom, mottaker);

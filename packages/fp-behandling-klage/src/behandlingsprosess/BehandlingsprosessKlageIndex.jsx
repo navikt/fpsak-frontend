@@ -64,7 +64,7 @@ export class BehandlingsprosessKlageIndex extends Component {
     }
   }
 
-  submit = (submitCallback, goToDefaultPage) => (aksjonspunktModels) => {
+  submit = (aksjonspunktModels) => {
     const skalByttTilKlageinstans = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
     const erKlageHjemsendt = aksjonspunktModels
@@ -78,11 +78,17 @@ export class BehandlingsprosessKlageIndex extends Component {
       } else if (erKlageHjemsendt) {
         this.goToKlageResultat();
       } else {
-        goToDefaultPage();
+        this.goToDefaultPage();
       }
     };
 
-    return submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+  }
+
+  getSubmit = (submitCallback, goToDefaultPage) => {
+    this.submitCallback = submitCallback;
+    this.goToDefaultPage = goToDefaultPage;
+    return this.submit;
   }
 
   render = () => {
@@ -119,7 +125,7 @@ export class BehandlingsprosessKlageIndex extends Component {
         render={(previewCallback, submitCallback, goToDefaultPage, goToSearchPage) => (
           <>
             <BehandlingspunktKlageInfoPanel
-              submitCallback={this.submit(submitCallback, goToDefaultPage)}
+              submitCallback={this.getSubmit(submitCallback, goToDefaultPage)}
               saveTempKlage={this.saveKlageText}
               previewCallback={previewCallback}
               selectedBehandlingspunkt={selectedBehandlingspunkt}

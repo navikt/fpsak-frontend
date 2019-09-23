@@ -5,7 +5,6 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { getAvvisningsAarsaker, getIsAvvist, VedtakKlageFormImpl } from './VedtakKlageForm';
 
 const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjort';
@@ -58,14 +57,11 @@ describe('<VedtakKlageForm>', () => {
 
     describe('getIsAvgetAvvisningsAarsakervist', () => {
       it('should return avvisningsAarsaker with length 2', () => {
-        const toggle = {
-          [featureToggle.FORMKRAV]: true,
-        };
         const klageVurdering = {
           klageFormkravResultatNFP: { avvistArsaker: [{ navn: 'arsak1' }, { navn: 'arsak2' }] },
           klageVurderingResultatNFP: { klageAvvistArsakNavn: 'Klager er ikke part' },
         };
-        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering, toggle);
+        const selected = getAvvisningsAarsaker.resultFunc(klageVurdering);
         expect(selected).to.have.length(2);
       });
     });
