@@ -14,6 +14,7 @@ export const BehandlingFpsakApiKeys = {
   PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
+  BEREGNINGRESULTAT_ENGANGSSTONAD: 'BEREGNINGRESULTAT_ENGANGSSTONAD',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -37,6 +38,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('soeker-personopplysninger', BehandlingFpsakApiKeys.PERSONOPPLYSNINGER)
   .withInjectedPath('simuleringResultat', BehandlingFpsakApiKeys.SIMULERING_RESULTAT)
   .withInjectedPath('tilbakekrevingvalg', BehandlingFpsakApiKeys.TILBAKEKREVINGVALG)
+  .withInjectedPath('beregningsresultat-engangsstonad', BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD)
 
   .build();
 

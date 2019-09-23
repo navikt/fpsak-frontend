@@ -47,3 +47,7 @@ export {
 } from './src/behandlingForm';
 export { behandlingForm, behandlingFormValueSelector } from './src/behandlingFormNew';
 export { allAccessRights } from './src/navAnsatt/access';
+export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
+export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
+export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';
+export { default as OverstyrVurderingVelger } from './src/overstyr/OverstyrVurderingVelger';

@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import { VilkarBegrunnelse } from '@fpsak-frontend/fp-felles';
+
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import VilkarBegrunnelse from './VilkarBegrunnelse';
 
 /**
  * OverstyrConfirmationForm

@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+import { VilkarBegrunnelse } from '@fpsak-frontend/fp-felles';
+
 import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import VilkarBegrunnelse from '../VilkarBegrunnelse';
 import { getApCode } from './BehandlingspunktToAksjonspunkt';
 
 

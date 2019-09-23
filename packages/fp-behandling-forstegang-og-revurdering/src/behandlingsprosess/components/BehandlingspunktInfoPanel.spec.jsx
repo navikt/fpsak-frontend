@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { BehandlingspunktInfoPanel } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
-import BeregningsresultatEngangsstonadForm
-  from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/beregningsresultat/BeregningsresultatEngangsstonadForm';
+import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import { BehandlingspunktInfoPanel } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
+import DataFetcherWithCache from '../DataFetcherWithCache';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {
@@ -25,9 +26,20 @@ describe('<BehandlingspunktInfoPanel>', () => {
       readOnlySubmitButton={false}
       fagsakInfo={{}}
       featureToggles={{}}
+      overrideReadOnly={false}
+      kanOverstyreAccess={{ isEnabled: false }}
+      behandlingspunktAksjonspunkter={[]}
+      toggleOverstyring={sinon.spy()}
     />);
 
-    expect(wrapper.find(BeregningsresultatEngangsstonadForm)).to.have.length(1);
+    const dataFetchers = wrapper.find(DataFetcherWithCache);
+    expect(dataFetchers).to.have.length(1);
+
+    const beregningPanel = dataFetchers.renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      beregningresultatEngangsstonad: {},
+    }).find(BeregningsresultatProsessIndex);
+    expect(beregningPanel).to.have.length(1);
   });
 
   it('skal rendre panelet for søknadsfrist ved aksjonspunkt', () => {
@@ -44,6 +56,10 @@ describe('<BehandlingspunktInfoPanel>', () => {
       readOnlySubmitButton={false}
       fagsakInfo={{}}
       featureToggles={{}}
+      overrideReadOnly={false}
+      kanOverstyreAccess={{ isEnabled: false }}
+      behandlingspunktAksjonspunkter={[]}
+      toggleOverstyring={sinon.spy()}
     />);
     expect(wrapper.find(VurderSoknadsfristForeldrepengerForm)).to.have.length(1);
   });
