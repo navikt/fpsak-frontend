@@ -64,7 +64,8 @@ export const BostedSokerView = ({
               typo="undertekst"
               title={intl.formatMessage({ id: 'Personstatus.Hjelpetekst' })}
             >
-              {personstatusTypes.find((s) => s.kode === getPersonstatus(soker).kode).navn}
+              {getPersonstatus(soker).kode === personstatusType.UDEFINERT ? intl.formatMessage({ id: 'Personstatus.Ukjent' })
+                : personstatusTypes.find((s) => s.kode === getPersonstatus(soker).kode).navn}
             </Etikettfokus>
           </div>
           )}

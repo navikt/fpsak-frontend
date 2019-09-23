@@ -53,7 +53,7 @@ jobs:
             yarn global add full-icu
       - run:
           name: Run yarn install
-          command: yarn install --ignore-optional --ignore-scripts --no-progress --frozen-lockfile
+          command: yarn install --ignore-optional --no-progress --frozen-lockfile
       - run:
           name: Run linting and tests
           command: yarn less:lint && yarn test

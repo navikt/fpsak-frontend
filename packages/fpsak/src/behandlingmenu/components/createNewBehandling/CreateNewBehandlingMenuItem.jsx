@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import CreateNewBehandlingModal from './CreateNewBehandlingModal';
 import MenuButton from '../MenuButton';
+
+const TILBAKEKREVING_BEHANDLINGSTYPER = [behandlingType.TILBAKEKREVING, behandlingType.TILBAKEKREVING_REVURDERING];
 
 /**
  * CreateNewBehandlingMenuItem
@@ -28,13 +31,15 @@ class CreateNewBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      saksnummer, behandlingIdentifier, submitNyForstegangsBehandling, push,
+      saksnummer, behandlingIdentifier, submitNyBehandling, push,
     } = this.props;
     const data = {
       saksnummer: saksnummer.toString(),
       ...formValues,
     };
-    submitNyForstegangsBehandling(push, saksnummer, behandlingIdentifier !== undefined, data);
+
+    const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
+    submitNyBehandling(push, saksnummer, behandlingIdentifier !== undefined, isTilbakekreving, data);
     this.hideModal();
   }
 
@@ -61,7 +66,7 @@ class CreateNewBehandlingMenuItem extends Component {
         <CreateNewBehandlingModal
           showModal={showModal}
           cancelEvent={this.hideModal}
-          onSubmit={this.submit}
+          submitCallback={this.submit}
           hasEnabledCreateNewBehandling={opprettNyForstegangsBehandlingEnabled}
           hasEnabledCreateRevurdering={opprettRevurderingEnabled}
         />
@@ -75,7 +80,7 @@ CreateNewBehandlingMenuItem.propTypes = {
   saksnummer: PropTypes.number.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   push: PropTypes.func.isRequired,
-  submitNyForstegangsBehandling: PropTypes.func.isRequired,
+  submitNyBehandling: PropTypes.func.isRequired,
   opprettNyForstegangsBehandlingEnabled: PropTypes.bool,
   opprettRevurderingEnabled: PropTypes.bool,
   ikkeVisOpprettNyBehandling: PropTypes.bool,

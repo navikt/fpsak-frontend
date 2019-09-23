@@ -1,7 +1,8 @@
 import React from 'react';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
+import { action } from '@storybook/addon-actions';
 import { storiesOf } from '@storybook/react';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { OkAvbrytModal, DateLabel, ArrowBox } from '@fpsak-frontend/shared-components';
 
@@ -21,8 +22,8 @@ storiesOf('OkAvbrytModal', module)
         intl={intlMock}
         textCode="Test.Test"
         showModal
-        submit={() => alert('ok')}
-        cancel={() => alert('avbryt')}
+        submit={action('button-click')}
+        cancel={action('button-click')}
       />
     </RawIntlProvider>
   ));

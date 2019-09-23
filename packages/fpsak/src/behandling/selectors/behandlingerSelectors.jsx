@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+
 import fpsakApi from 'data/fpsakApi';
 import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 
@@ -58,3 +61,9 @@ export const getBehandlingerUuidsMappedById = createSelector([getBehandlinger], 
 export const getNumBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length);
 
 export const getNoExistingBehandlinger = createSelector([getBehandlinger], (behandlinger = []) => behandlinger.length === 0);
+
+const getSisteLukkedeForsteEllerRevurd = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
+  .find((b) => b.gjeldendeVedtak && b.status.kode === behandlingStatus.AVSLUTTET
+    && (b.type.kode === behandlingType.FORSTEGANGSSOKNAD || b.type.kode === behandlingType.REVURDERING)));
+
+export const getUuidForSisteLukkedeForsteEllerRevurd = createSelector([getSisteLukkedeForsteEllerRevurd], (behandling = {}) => behandling.uuid);

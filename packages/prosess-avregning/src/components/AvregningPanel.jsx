@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -11,7 +11,9 @@ import {
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { behandlingspunktCodes, featureToggle, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import {
+  featureToggle, getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
@@ -22,25 +24,18 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import {
-  getFeatureToggles,
-  getSelectedBehandlingId,
-  getSelectedSaksnummer,
-  isForeldrepengerFagsak,
-} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+
+import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable, { avregningCodes } from './AvregningTable';
 
 import styles from './avregningPanel.less';
+
+// TODO Denne komponenten må refaktorerast! Er frykteleg stor
 
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
@@ -415,7 +410,7 @@ export class AvregningPanelImpl extends Component {
 AvregningPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
-  simuleringResultat: PropTypes.shape(),
+  simuleringResultat: avregningSimuleringResultatPropType,
   previewCallback: PropTypes.func.isRequired,
   hasOpenTilbakekrevingsbehandling: PropTypes.bool.isRequired,
   ...formPropTypes,
@@ -434,7 +429,9 @@ export const transformValues = (values, ap) => [{
 }];
 
 const buildInitialValues = createSelector(
-  [getTilbakekrevingValg, behandlingSelectors.getAksjonspunkter], (tilbakekrevingValg, aksjonspunkter) => {
+  [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter], (
+    tilbakekrevingValg, aksjonspunkter,
+  ) => {
     const aksjonspunkt = aksjonspunkter.find((ap) => simuleringAksjonspunkter.includes(ap.definisjon.kode));
     if (!aksjonspunkt || !tilbakekrevingValg) {
       return undefined;
@@ -457,22 +454,27 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
-  return (state) => {
-    const tilbakekrevingValg = getTilbakekrevingValg(state);
+const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
+  const onSubmit = (values) => ownPropsStatic.submitCallback(transformValues(values, ownPropsStatic.apCodes[0]));
+
+  return (state, ownProps) => {
+    const {
+      sprakkode, behandlingId, behandlingVersjon, tilbakekrevingValg, simuleringResultat, featureToggles, fagsak,
+    } = ownProps;
     const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
       && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
-      simuleringResultat: getSimuleringResultat(state),
-      initialValues: buildInitialValues(state),
-      ...behandlingFormValueSelector(formName)(state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst'),
-      sprakkode: behandlingSelectors.getBehandlingSprak(state),
-      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-      featureVarseltekst: getFeatureToggles(state)[featureToggle.SIMULER_VARSELTEKST],
-      saksnummer: getSelectedSaksnummer(state),
-      isForeldrepenger: isForeldrepengerFagsak(state),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
+        state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst',
+      ),
+      initialValues: buildInitialValues(state, ownProps),
+      behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
+      featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
+      saksnummer: fagsak.saksnummer,
+      isForeldrepenger: fagsak.ytelseType.kode === fagsakYtelseType.FORELDREPENGER,
       hasOpenTilbakekrevingsbehandling,
+      sprakkode,
+      simuleringResultat,
       onSubmit,
     };
   };
@@ -484,11 +486,7 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const AvregningPanel = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: true,
 })(injectIntl(AvregningPanelImpl))));
-
-AvregningPanel.supports = (bp, apCodes) => bp === behandlingspunktCodes.AVREGNING || simuleringAksjonspunkter.some((ap) => apCodes.includes(ap));
-
-export default AvregningPanel;

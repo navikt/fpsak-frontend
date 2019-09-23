@@ -127,4 +127,32 @@ describe('<BostedsokerView>', () => {
     expect(region.prop('title')).to.equal('Region');
     expect(region.childAt(0).text()).to.equal('Norden');
   });
+
+  it('skal vise ukjent når personstatus ukjent', () => {
+    soker.avklartPersonstatus = null;
+    soker.personstatus = {
+      kode: '-',
+    };
+
+    const wrapper = shallowWithIntl(<BostedSokerView
+      intl={intlMock}
+      soker={soker}
+      typeSoker="Søker"
+      className="defaultBostedSoker"
+      regionTypes={regionTypes}
+      sivilstandTypes={sivilstandTypes}
+      personstatusTypes={personstatusTypes}
+    />);
+    const etikettfokus = wrapper.find('EtikettBase');
+    expect(etikettfokus).to.have.length(3);
+    const personstatus = etikettfokus.at(0);
+    expect(personstatus.prop('title')).to.equal('Personstatus');
+    expect(personstatus.childAt(0).text()).to.equal('Ukjent');
+    const sivilstand = etikettfokus.at(1);
+    expect(sivilstand.prop('title')).to.equal('Sivilstand');
+    expect(sivilstand.childAt(0).text()).to.equal('Ugift');
+    const region = etikettfokus.at(2);
+    expect(region.prop('title')).to.equal('Region');
+    expect(region.childAt(0).text()).to.equal('Norden');
+  });
 });

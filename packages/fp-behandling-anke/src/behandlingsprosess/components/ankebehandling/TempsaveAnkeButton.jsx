@@ -2,7 +2,7 @@ import React from 'react';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import connect from 'react-redux/es/connect/connect';
+import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
