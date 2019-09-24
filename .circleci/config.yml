@@ -48,10 +48,6 @@ jobs:
           keys:
             - yarn-packages-{{ checksum "yarn.lock" }}
       - run:
-          name: Install full-icu
-          command: |
-            yarn global add full-icu
-      - run:
           name: Run yarn install
           command: yarn install --ignore-optional --no-progress --frozen-lockfile
       - run:
@@ -80,6 +76,56 @@ jobs:
             - ./Dockerfile
             - ./dist
             - ./k8s
+
+  coverage:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - restore_cache:
+          name: Restore Yarn Package Cache
+          keys:
+            - yarn-packages-{{ checksum "yarn.lock" }}
+      - run:
+          name: Run yarn install
+          command: yarn install --ignore-optional --no-progress --frozen-lockfile
+      - run:
+          name: Run Test Coverage
+          command: yarn test:coverage
+      - save_cache:
+          name: Save Yarn Package Cache
+          key: yarn-packages-{{ checksum "yarn.lock" }}
+          paths:
+            - ~/.cache/yarn
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./coverage
+            - ./.nyc_output
+
+  publish-sonar:
+    docker:
+      - image: circleci/node:latest
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - run:
+          name: Unpack coverage data from previous step
+          command: |
+            cp -r /tmp/workspace/coverage ~/repo/coverage
+            cp -r /tmp/workspace/.nyc_output ~/repo/.nyc_output
+      - run:
+          name: Install Sonar
+          command: yarn global add sonarqube-scanner
+      - run:
+          name: Run Test Coverage
+          halt_build_on_fail: false
+          command: $(yarn global bin)/sonar-scanner -Dsonar.login=$SONAR_TOKEN
 
   build-docker:
     executor: docker-publisher
@@ -110,7 +156,7 @@ jobs:
           paths:
             - ./image.tar
 
-  publish-docker:
+  publish-dockerhub:
     executor: docker-publisher
     steps:
       - attach_workspace:
@@ -184,14 +230,25 @@ workflows:
           context: familie-ci
           requires:
             - verify
+      - coverage:
+          requires:
+            - verify
       - build-docker:
           context: familie-ci
           requires:
             - build
-      - publish-docker:
+      - publish-sonar:
+          requires:
+            - coverage
+            - build-docker
+          filters:
+            branches:
+              only: master
+      - publish-dockerhub:
           context: NAIS deployment
           requires:
             - build-docker
+            - coverage
           filters:
             branches:
               only: master
@@ -199,13 +256,14 @@ workflows:
           context: familie-ci
           requires:
             - build-docker
+            - coverage
           filters:
             branches:
               only: master
       - deploy:
           context: familie-ci
           requires:
-            - publish-docker
+            - publish-dockerhub
             - publish-github
           filters:
             branches:

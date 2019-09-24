@@ -1,6 +1,6 @@
 {
   "name": "fpsak-frontend",
-  "description": "Klient for Foreldrepenger",
+  "description": "Klient for FPSAK",
   "main": "./dist/index.js",
   "author": "NAV",
   "private": true,
@@ -125,6 +125,10 @@
     "react-test-renderer": "^16.9.0"
   },
   "nyc": {
+    "branches": 40,
+    "lines": 60,
+    "functions": 50,
+    "statements": 50,
     "cache": false,
     "check-coverage": true,
     "require": [
