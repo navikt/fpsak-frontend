@@ -24,3 +24,5 @@ lerna-debug.log
 ssh.exe.stackdump
 .DS_Store
 tmp/
+.scannerwork
+node_modules_bak
