@@ -25,6 +25,9 @@ const mapping = {
   [BehandlingFpsakApiKeys.TILBAKEKREVINGVALG]: 'tilbakekrevingvalg',
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
+  [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
+  [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
+  [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
 };
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/, (m) => m.toUpperCase()).replace(/_/, '');

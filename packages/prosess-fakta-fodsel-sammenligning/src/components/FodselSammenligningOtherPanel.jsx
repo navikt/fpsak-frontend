@@ -8,14 +8,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import {
-  getFamiliehendelseTermindato,
-  getSoknadAntallBarn,
-  getSoknadFodselsdatoer,
-  getSoknadTermindato,
-  getSoknadUtstedtdato,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
@@ -74,13 +66,17 @@ FodselSammenligningOtherPanel.defaultProps = {
   terminFodselHeader: null,
 };
 
+const getHasSoknad = createSelector([(state, ownProps) => ownProps.soknad], (soknad) => !!soknad);
+const getSoknadFodselsdatoer = createSelector([(state, ownProps) => ownProps.soknad], (soknad = {}) => (soknad.fodselsdatoer ? soknad.fodselsdatoer : {}));
+const getSoknadTermindato = createSelector([(state, ownProps) => ownProps.soknad], (soknad = {}) => (soknad.termindato ? soknad.termindato : {}));
+
 export const getTerminFodselLabel = createSelector(
   [getSoknadFodselsdatoer], (fodselsdatoer) => (Object.keys(fodselsdatoer).length
   > 0 ? 'FodselsammenligningPanel.Fodselsdato' : 'FodselsammenligningPanel.Termindato'),
 );
 
 export const getTerminOrFodselDate = createSelector(
-  [behandlingSelectors.getBehandlingHasSoknad, getSoknadTermindato, getSoknadFodselsdatoer, getFamiliehendelseTermindato],
+  [getHasSoknad, getSoknadTermindato, getSoknadFodselsdatoer, (state, ownProps) => ownProps.termindato],
   (hasSoknad, termindatoSoknad, fødselsdatoerSoknad, termindato) => {
     if (termindato) {
       return formatDate(termindato);
@@ -95,17 +91,16 @@ export const getTerminOrFodselDate = createSelector(
   },
 );
 
-export const getAntallBarn = createSelector([getSoknadAntallBarn], (antallBarnSoknad) => (antallBarnSoknad));
-
 export const getTerminFodselHeader = createSelector([getSoknadFodselsdatoer], (fodselsdatoer) => (Object.keys(fodselsdatoer).length > 0
   ? 'FodselSammenligningOtherPanel.OpplysningerISoknad' : 'FodselSammenligningOtherPanel.TerminISoknad'));
 
-const mapStateToProps = (state) => ({
-  terminOrFodselLabel: getTerminFodselLabel(state),
-  terminOrFodselDate: getTerminOrFodselDate(state),
-  antallBarnSoknad: getAntallBarn(state),
-  terminFodselHeader: getTerminFodselHeader(state),
-  utstedtdato: getSoknadUtstedtdato(state),
+// TODO Fjern mapStateToProps (ingenting blir henta fra state)
+const mapStateToProps = (state, ownProps) => ({
+  terminOrFodselLabel: getTerminFodselLabel(state, ownProps),
+  terminOrFodselDate: getTerminOrFodselDate(state, ownProps),
+  antallBarnSoknad: ownProps.soknad.antallBarn,
+  terminFodselHeader: getTerminFodselHeader(state, ownProps),
+  utstedtdato: ownProps.soknad.utstedtdato,
 });
 
 export default connect(mapStateToProps)(FodselSammenligningOtherPanel);

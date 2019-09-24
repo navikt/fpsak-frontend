@@ -30,6 +30,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       kanOverstyreAccess={{ isEnabled: false }}
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
@@ -60,6 +61,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       kanOverstyreAccess={{ isEnabled: false }}
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(VurderSoknadsfristForeldrepengerForm)).to.have.length(1);
   });

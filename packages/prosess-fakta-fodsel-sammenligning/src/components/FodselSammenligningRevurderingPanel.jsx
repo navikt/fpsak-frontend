@@ -7,11 +7,6 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { getBehandlingVedtaksDatoSomSvangerskapsuke } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  getFamiliehendelseFraOriginalBehandling,
-  getSoknadFraOriginalBehandling,
-} from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
@@ -62,6 +57,12 @@ FodselSammenligningRevurderingPanel.defaultProps = {
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
+const getSoknadFraOriginalBehandling = createSelector([(state, ownProps) => ownProps.originalBehandling],
+  (originalBehandling = {}) => originalBehandling.soknad);
+const getFamiliehendelseFraOriginalBehandling = createSelector(
+  [(state, ownProps) => ownProps.originalBehandling], (originalBehandling = {}) => originalBehandling.familiehendelse,
+);
+
 export const getIsTermin = createSelector(
   [getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling],
   (originalSoknad = {}, orginalFamiliehendelse = {}) => !!orginalFamiliehendelse.termindato
@@ -99,16 +100,17 @@ export const getAntallBarn = createSelector(
 );
 
 export const showVedtaksdatoAsSvangerskapsuke = createSelector(
-  [getFamiliehendelseFraOriginalBehandling, getBehandlingVedtaksDatoSomSvangerskapsuke],
+  [getFamiliehendelseFraOriginalBehandling, (state, ownProps) => ownProps.vedtaksDatoSomSvangerskapsuke],
   (orginalFamiliehendelse, vedtaksDato) => (!orginalFamiliehendelse ? false : !orginalFamiliehendelse.fodselsdato && !!vedtaksDato),
 );
 
-const mapStateToProps = (state) => ({
-  terminOrFodselLabel: getTerminOrFodselLabel(state),
-  terminOrFodselDate: getTerminDateOrFodselDate(state),
-  antallBarn: getAntallBarn(state),
-  shouldShowVedtaksdatoAsSvangerskapsuke: showVedtaksdatoAsSvangerskapsuke(state),
-  vedtaksdato: getBehandlingVedtaksDatoSomSvangerskapsuke(state),
+// TODO Fjern mapStateToProps (ingenting blir henta fra state)
+const mapStateToProps = (state, ownProps) => ({
+  terminOrFodselLabel: getTerminOrFodselLabel(state, ownProps),
+  terminOrFodselDate: getTerminDateOrFodselDate(state, ownProps),
+  antallBarn: getAntallBarn(state, ownProps),
+  shouldShowVedtaksdatoAsSvangerskapsuke: showVedtaksdatoAsSvangerskapsuke(state, ownProps),
+  vedtaksdato: ownProps.vedtaksDatoSomSvangerskapsuke,
 });
 
 export default connect(mapStateToProps)(FodselSammenligningRevurderingPanel);

@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
 import TermindatoFaktaForm from './TermindatoFaktaForm';
@@ -103,7 +104,7 @@ describe('<FodselInfoPanel>', () => {
       dispatch={sinon.spy}
     />);
 
-    expect(wrapper.find(FodselSammenligningPanel)).has.length(1);
+    expect(wrapper.find(FodselSammenligningIndex)).has.length(1);
     expect(wrapper.find(SjekkFodselDokForm)).has.length(0);
     expect(wrapper.find(TermindatoFaktaForm)).has.length(0);
   });

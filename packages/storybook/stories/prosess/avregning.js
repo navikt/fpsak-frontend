@@ -112,7 +112,7 @@ const tilbakekrevingvalg = {
   varseltekst: 'varsel-eksempel',
 };
 
-const stories = storiesOf('AvregningProsessIndex', module)
+const stories = storiesOf('prosess/AvregningProsessIndex', module)
   .addDecorator(withKnobs)
   .addDecorator(withReduxProvider);
 

@@ -9,12 +9,32 @@ import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 
 describe('<FodselSammenligningPanel>', () => {
+  const soknad = {
+    fodselsdatoer: ['2019-01-01'],
+    termindato: '2019-01-01',
+    antallBarn: 1,
+    utstedtdato: '2019-01-01',
+  };
+  const originalBehandling = {
+    soknad,
+    familiehendelse: {
+      termindato: '2019-01-01',
+      fodselsdato: '2019-01-01',
+      antallBarnTermin: 1,
+      antallBarnFodsel: 1,
+    },
+  };
+
   it('skal rendre korrekt ved førstegangssøknad', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={[{ fodselsdato: '2017-05-15' }]}
+      avklartBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     expect(wrapper.find(FodselSammenligningOtherPanel)).to.have.length(1);
@@ -25,8 +45,12 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.REVURDERING}
-      antallBarn={[{ fodselsdato: '2017-05-15' }]}
+      avklartBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     expect(wrapper.find(FodselSammenligningOtherPanel)).to.have.length(0);
@@ -37,8 +61,12 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={[{ fodselsdato: '2017-05-15' }]}
+      avklartBarn={[{ fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     const tpsfodseldato = wrapper.find({ name: 'tpsFodseldato' });
@@ -49,8 +77,12 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={[]}
+      avklartBarn={[]}
       nrOfDodfodteBarn={0}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     const tpsfodseldato = wrapper.find({ name: 'tpsFodseldato' });
@@ -61,8 +93,12 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
+      avklartBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={1}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     expect(wrapper.find(EtikettInfo)).to.have.length(1);
@@ -72,8 +108,12 @@ describe('<FodselSammenligningPanel>', () => {
     const wrapper = shallowWithIntl(<FodselSammenligningPanel
       intl={intlMock}
       behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
-      antallBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
+      avklartBarn={[{ fodselsdato: '2017-05-15' }, { fodselsdato: '2017-05-15' }]}
       nrOfDodfodteBarn={0}
+      soknad={soknad}
+      vedtaksDatoSomSvangerskapsuke="2019-02-02"
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
     />);
 
     expect(wrapper.find(EtikettInfo)).to.have.length(0);

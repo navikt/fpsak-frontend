@@ -2,10 +2,29 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
+import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { VarselOmRevurderingFormImpl as UnwrappedForm } from './VarselOmRevurderingForm';
+
+const soknad = {
+  fodselsdatoer: ['2019-01-10'],
+  termindato: '2019-01-01',
+  utstedtdato: '2019-01-02',
+  antallBarn: 1,
+};
+
+const originalBehandling = {
+  soknad,
+  familiehendelse: {
+    termindato: '2019-01-01',
+    fodselsdato: '2019-01-10',
+    antallBarnTermin: 1,
+    antallBarnFodsel: 1,
+  },
+};
 
 describe('<VarselOmRevurderingFormImpl>', () => {
   it('skal vise fodselsammenligningpanel når automatisk revurdering', () => {
@@ -21,8 +40,14 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       frist="2017-05-15"
       aksjonspunktStatus="OPPR"
       begrunnelse="Begrunnelse"
+      avklartBarn={[]}
+      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+      soknad={soknad}
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
+      vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
-    const fodselPanel = wrapper.find(FodselSammenligningPanel);
+    const fodselPanel = wrapper.find(FodselSammenligningIndex);
     expect(fodselPanel).to.have.length(1);
   });
 
@@ -39,8 +64,14 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       frist="2017-05-15"
       aksjonspunktStatus="OPPR"
       begrunnelse="Begrunnelse"
+      avklartBarn={[]}
+      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+      soknad={soknad}
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
+      vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
-    const fodselPanel = wrapper.find(FodselSammenligningPanel);
+    const fodselPanel = wrapper.find(FodselSammenligningIndex);
     expect(fodselPanel).to.have.length(0);
 
     const textarea = wrapper.find('TextAreaField');
@@ -62,6 +93,12 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       frist="2017-05-15"
       aksjonspunktStatus="OPPR"
       begrunnelse="Begrunnelse"
+      avklartBarn={[]}
+      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+      soknad={soknad}
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
+      vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
 
     const textarea = wrapper.find('TextAreaField');
@@ -84,6 +121,12 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       frist="2017-05-15"
       aksjonspunktStatus="UTFRT"
       begrunnelse={begrunnelse}
+      avklartBarn={[]}
+      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
+      soknad={soknad}
+      termindato="2019-01-01"
+      originalBehandling={originalBehandling}
+      vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
 
     expect(wrapper.find('Undertekst')).to.have.length(1);

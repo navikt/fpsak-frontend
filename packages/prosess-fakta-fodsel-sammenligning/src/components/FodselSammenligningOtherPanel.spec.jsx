@@ -5,7 +5,6 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
   FodselSammenligningOtherPanel,
-  getAntallBarn,
   getTerminFodselHeader,
   getTerminFodselLabel,
   getTerminOrFodselDate,
@@ -94,13 +93,6 @@ describe('<FodselSammenligningOtherPanel>', () => {
 
     const date = getTerminOrFodselDate.resultFunc(hasSoknad, termindatoSoknad, fodselsdatoerSoknad, termindato);
     expect(date).to.eql('01.02.2017');
-  });
-
-  it('skal vise antall barn fra søknad når familiehendelse ikke finnes', () => {
-    const antallBarnSoknad = 1;
-    const antallBarnTermin = undefined;
-    const antallBarn = getAntallBarn.resultFunc(antallBarnSoknad, antallBarnTermin);
-    expect(antallBarn).to.eql(1);
   });
 
   it('skal vise fødselsdato fra søknad når en har minst en fødselsdato', () => {

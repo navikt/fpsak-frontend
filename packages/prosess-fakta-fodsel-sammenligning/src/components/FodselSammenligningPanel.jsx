@@ -1,24 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
 import moment from 'moment';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import { Column, Row } from 'nav-frontend-grid';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { getAntallDodfodteBarn, getBarnFraTpsRelatertTilSoknad } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+
+import fodselSammenligningSoknadPropType from '../propTypes/fodselSammenligningSoknadPropType';
+import fodselSammenligningOriginalBehandlingPropType from '../propTypes/fodselSammenligningOriginalBehandlingPropType';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 
 import styles from './fodselSammenligningPanel.less';
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+
 /**
  * FodselSammenlingningPanel
  *
@@ -27,15 +28,19 @@ const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYY
 export const FodselSammenligningPanel = ({
   intl,
   behandlingsTypeKode,
-  antallBarn,
+  avklartBarn,
   nrOfDodfodteBarn,
+  soknad,
+  vedtaksDatoSomSvangerskapsuke,
+  termindato,
+  originalBehandling,
 }) => (
   <div className={styles.panelWrapper}>
     <Panel className={styles.panel}>
       {behandlingsTypeKode !== behandlingType.REVURDERING
-        && <FodselSammenligningOtherPanel />}
+        && <FodselSammenligningOtherPanel soknad={soknad} termindato={termindato} />}
       {behandlingsTypeKode === behandlingType.REVURDERING
-        && <FodselSammenligningRevurderingPanel />}
+        && <FodselSammenligningRevurderingPanel originalBehandling={originalBehandling} vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke} />}
     </Panel>
     <Panel className={styles.panel} name="tpsFodseldato">
       <Row>
@@ -56,10 +61,10 @@ export const FodselSammenligningPanel = ({
         <Column xs="4"><Normaltekst><FormattedMessage id="FodselsammenligningPanel.Dodsdato" /></Normaltekst></Column>
       </Row>
       <Row>
-        {antallBarn.length > 0
+        {avklartBarn.length > 0
         && (
         <Table>
-          {antallBarn.map((barn) => {
+          {avklartBarn.map((barn) => {
             const key = barn.fodselsdato + barn.dodsdato;
             return (
               <TableRow key={key} id={key}>
@@ -87,7 +92,7 @@ export const FodselSammenligningPanel = ({
         </Table>
         )}
         {' '}
-        {!antallBarn.length > 0
+        {!avklartBarn.length > 0
       && (
       <Row>
         <Column xs="12" className={styles.noChildrenInTps}>
@@ -105,18 +110,16 @@ export const FodselSammenligningPanel = ({
 FodselSammenligningPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   behandlingsTypeKode: PropTypes.string.isRequired,
-  antallBarn: PropTypes.arrayOf(PropTypes.shape()),
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   nrOfDodfodteBarn: PropTypes.number.isRequired,
+  soknad: fodselSammenligningSoknadPropType.isRequired,
+  originalBehandling: fodselSammenligningOriginalBehandlingPropType.isRequired,
+  termindato: PropTypes.string.isRequired,
+  vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
 };
 
 FodselSammenligningPanel.defaultProps = {
-  antallBarn: [],
+  avklartBarn: [],
 };
 
-const mapStateToProps = (state) => ({
-  antallBarn: getBarnFraTpsRelatertTilSoknad(state),
-  nrOfDodfodteBarn: getAntallDodfodteBarn(state),
-  behandlingsTypeKode: behandlingSelectors.getBehandlingType(state).kode,
-});
-
-export default connect(mapStateToProps)(injectIntl(FodselSammenligningPanel));
+export default injectIntl(FodselSammenligningPanel);

@@ -8,22 +8,26 @@ import { Column } from 'nav-frontend-grid';
 
 import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import {
   getBarnFraTpsRelatertTilSoknad,
   getEditedStatus,
   getFamiliehendelseGjeldende,
   getSoknadAntallBarn,
+  getFamiliehendelseTermindato,
+  getBehandlingVedtaksDatoSomSvangerskapsuke,
+  getOriginalBehandling,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
-import { required } from '@fpsak-frontend/utils';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import avklartBarnFieldArray from './AvklartBarnFieldArray';
 import styles from './SjekkFodselDokForm.less';
@@ -58,9 +62,22 @@ export const SjekkFodselDokForm = ({
   initialValues,
   submittable,
   avklartBarn,
+  behandlingTypeKode,
+  termindato,
+  vedtaksDatoSomSvangerskapsuke,
+  soknad,
+  originalBehandling,
 }) => (
   <ElementWrapper>
-    <FodselSammenligningPanel />
+    <FodselSammenligningIndex
+      behandlingsTypeKode={behandlingTypeKode}
+      avklartBarn={avklartBarn}
+      termindato={termindato}
+      vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
+      soknad={soknad}
+      originalBehandling={originalBehandling}
+    />
+}
     <FaktaGruppe
       aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
       titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
@@ -175,6 +192,11 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
     dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
     dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
+    behandlingTypeKode: behandlingSelectors.getBehandlingType(state).kode,
+    termindato: getFamiliehendelseTermindato(state),
+    vedtaksDatoSomSvangerskapsuke: getBehandlingVedtaksDatoSomSvangerskapsuke(state),
+    soknad: behandlingSelectors.getSoknad(state),
+    originalBehandling: getOriginalBehandling(state),
   });
 };
 

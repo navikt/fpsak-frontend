@@ -1,10 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import FodselSammenligningPanel from 'behandlingForstegangOgRevurdering/src/components/fodselSammenligning/FodselSammenligningPanel';
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { buildInitialValues, SjekkFodselDokForm } from './SjekkFodselDokForm';
 
 describe('<SjekkFodselDokForm>', () => {
@@ -15,7 +16,7 @@ describe('<SjekkFodselDokForm>', () => {
       initialValues={{ begrunnelse: 'test' }}
       submittable
     />);
-    expect(wrapper.find(FodselSammenligningPanel)).has.length(1);
+    expect(wrapper.find(FodselSammenligningIndex)).has.length(1);
   });
 
   it('skal sette korrekte initielle verdier når vi har avklarte data', () => {
