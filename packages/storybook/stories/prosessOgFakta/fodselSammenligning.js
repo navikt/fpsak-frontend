@@ -12,6 +12,7 @@ import withReduxProvider from '../../decorators/withRedux';
 const avklartBarn = [{
   fodselsdato: '2019-01-10',
   dodsdato: '2019-01-10',
+  fnr: '1213200001',
 }];
 
 const soknad = {
