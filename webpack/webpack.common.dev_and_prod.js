@@ -134,14 +134,8 @@ const config = {
         cache: {
           key: '[hash]',
         },
-      }, {
-        from: path.join(__dirname, '../public/appdynamics/eum.min.js'),
-        to: PUBLIC_PATH + 'eum.min.js',
-        force: true,
-        cache: {
-          key: '[hash]',
-        },
-      }]),
+      }
+    ]),
     new webpack.ContextReplacementPlugin(
       /moment[\/\\]locale$/,
       /nb/,

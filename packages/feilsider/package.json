@@ -1,0 +1,16 @@
+{
+  "name": "@fpsak-frontend/feilsider",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.9.0",
+    "react-intl": "^3.1.11",
+    "nav-frontend-typografi": "2.0.12",
+    "nav-frontend-typografi-style": "1.0.13"
+  },
+  "devDependencies": {
+  }
+}
