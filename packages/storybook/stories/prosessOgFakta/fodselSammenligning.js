@@ -11,7 +11,7 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const avklartBarn = [{
   fodselsdato: '2019-01-10',
-  dodsdato: undefined,
+  dodsdato: '2019-01-10',
 }];
 
 const soknad = {
@@ -41,8 +41,8 @@ stories.add('Vis panel for når behandlingstype er Revurdering', () => (
     avklartBarn={object('avklartBarn', avklartBarn)}
     termindato={text('termindato', '2019-01-01')}
     vedtaksDatoSomSvangerskapsuke={text('vedtaksDatoSomSvangerskapsuke', '2019-01-01')}
-    soknad={soknad}
-    originalBehandling={originalBehandling}
+    soknad={object('soknad', soknad)}
+    originalBehandling={object('originalBehandling', originalBehandling)}
   />
 ));
 
@@ -52,7 +52,7 @@ stories.add('Vis panel for når behandlingstype er Førstegangssoknad', () => (
     avklartBarn={object('avklartBarn', avklartBarn)}
     termindato={text('termindato', '2019-01-01')}
     vedtaksDatoSomSvangerskapsuke={text('vedtaksDatoSomSvangerskapsuke', '2019-01-01')}
-    soknad={soknad}
-    originalBehandling={originalBehandling}
+    soknad={object('soknad', soknad)}
+    originalBehandling={object('originalBehandling', originalBehandling)}
   />
 ));

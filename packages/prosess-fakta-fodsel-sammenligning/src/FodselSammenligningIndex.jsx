@@ -28,7 +28,7 @@ const FodselSammenligningIndex = ({
   return (
     <RawIntlProvider value={intl}>
       <FodselSammenligningPanel
-        antallBarn={avklartBarn}
+        avklartBarn={avklartBarn}
         termindato={termindato}
         vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
         nrOfDodfodteBarn={nrOfDodfodteBarn}
