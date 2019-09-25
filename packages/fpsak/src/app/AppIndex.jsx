@@ -8,6 +8,8 @@ import moment from 'moment';
 import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
+import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
+import { ForbiddenPage, UnauthorizedPage } from '@fpsak-frontend/feilsider';
 import { parseQueryString } from '@fpsak-frontend/utils';
 import AppConfigResolver from './AppConfigResolver';
 import { getFunksjonellTid, getNavAnsattName, getShowDetailedErrorMessages } from './duck';
@@ -16,6 +18,7 @@ import Home from './components/Home';
 
 import '@fpsak-frontend/assets/styles/global.less';
 import Dekorator from './components/Dekorator';
+
 
 /**
  * AppIndex
@@ -26,25 +29,6 @@ import Dekorator from './components/Dekorator';
  * lagre desse i klientens state.
  */
 class AppIndex extends Component {
-  static propTypes = {
-    errorMessagesLength: PropTypes.number.isRequired,
-    removeErrorMessage: PropTypes.func.isRequired,
-    crashMessage: PropTypes.string,
-    showCrashMessage: PropTypes.func.isRequired,
-    navAnsattName: PropTypes.string,
-    funksjonellTid: PropTypes.string,
-    location: PropTypes.shape({
-      search: PropTypes.string,
-    }).isRequired,
-    showDetailedErrorMessages: PropTypes.bool.isRequired,
-  };
-
-  static defaultProps = {
-    crashMessage: '',
-    navAnsattName: '',
-    funksjonellTid: undefined,
-  };
-
   componentDidUpdate(prevProps) {
     const { funksjonellTid } = this.props;
     if (prevProps.funksjonellTid !== funksjonellTid) {
@@ -80,7 +64,7 @@ class AppIndex extends Component {
 
   render() {
     const {
-      location, crashMessage, errorMessagesLength, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
+      location, crashMessage, errorMessages, navAnsattName, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
     } = this.props;
 
     // todo sjekke om dette er beste stedet å sette dette for sentry
@@ -89,27 +73,52 @@ class AppIndex extends Component {
     });
 
     const queryStrings = parseQueryString(location.search);
+    const forbiddenErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_FORBIDDEN);
+    const unauthorizedErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_UNAUTHORIZED);
+    const shouldRenderHome = (!crashMessage && !forbiddenErrors.length > 0 && !unauthorizedErrors.length > 0);
+    const nrOfErrorMessages = queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessages.length;
 
     return (
       <AppConfigResolver>
         <LanguageProvider>
           <Dekorator
-            queryStrings={queryStrings}
+            errorMessages={errorMessages}
+            hideErrorMessages={!shouldRenderHome}
             navAnsattName={navAnsattName}
+            queryStrings={queryStrings}
             removeErrorMessage={removeErrorMsg}
             showDetailedErrorMessages={showDetailedErrorMessages}
           />
-          {!crashMessage && (
-            <Home nrOfErrorMessages={queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessagesLength} />
-          )}
+          {shouldRenderHome && (<Home nrOfErrorMessages={nrOfErrorMessages} />)}
+          {forbiddenErrors.length > 0 && (<ForbiddenPage errorMessages={forbiddenErrors} />)}
+          {unauthorizedErrors.length > 0 && (<UnauthorizedPage errorMessages={unauthorizedErrors} />)}
         </LanguageProvider>
       </AppConfigResolver>
     );
   }
 }
 
+AppIndex.propTypes = {
+  errorMessages: PropTypes.arrayOf(PropTypes.shape()),
+  removeErrorMessage: PropTypes.func.isRequired,
+  crashMessage: PropTypes.string,
+  showCrashMessage: PropTypes.func.isRequired,
+  navAnsattName: PropTypes.string,
+  funksjonellTid: PropTypes.string,
+  location: PropTypes.shape({
+    search: PropTypes.string,
+  }).isRequired,
+  showDetailedErrorMessages: PropTypes.bool.isRequired,
+};
+AppIndex.defaultProps = {
+  crashMessage: '',
+  navAnsattName: '',
+  funksjonellTid: undefined,
+  errorMessages: [],
+};
+
 const mapStateToProps = (state) => ({
-  errorMessagesLength: errorHandler.getAllErrorMessages(state).length,
+  errorMessages: errorHandler.getAllErrorMessages(state),
   crashMessage: errorHandler.getCrashMessage(state),
   navAnsattName: getNavAnsattName(state),
   funksjonellTid: getFunksjonellTid(state),

@@ -35,7 +35,7 @@ describe('<AppIndex>', () => {
       navAnsattName="Peder"
       showCrashMessage={sinon.spy()}
       removeErrorMessage={sinon.spy()}
-      errorMessagesLength={1}
+      errorMessages={[{ message: 'error' }]}
       location={{ search: undefined }}
       showDetailedErrorMessages={false}
     />);

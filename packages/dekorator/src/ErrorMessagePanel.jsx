@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { createSelector } from 'reselect';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 import Lukknapp from 'nav-frontend-lukknapp';
 
-import errorHandler from '@fpsak-frontend/error-api-redux';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
@@ -110,34 +107,4 @@ ErrorMessagePanel.propTypes = {
   removeErrorMessage: PropTypes.func.isRequired,
 };
 
-export const getErrorMessageList = createSelector([(state, ownProps) => ownProps, errorHandler.getAllErrorMessages], (ownProps, allErrorMessages = []) => {
-  const { queryStrings, intl } = ownProps;
-  const errorMessages = [];
-
-  if (queryStrings.errorcode) {
-    errorMessages.push({ message: intl.formatMessage({ id: queryStrings.errorcode }) });
-  }
-  if (queryStrings.errormessage) {
-    errorMessages.push({ message: queryStrings.errormessage });
-  }
-
-  allErrorMessages.forEach((message) => {
-    let msg = { message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text) };
-    if (message.params && message.params.errorDetails) {
-      msg = {
-        ...msg,
-        additionalInfo: JSON.parse(decodeHtmlEntity(message.params.errorDetails)),
-      };
-    }
-    errorMessages.push(msg);
-  });
-
-  return errorMessages;
-});
-
-
-const mapStateToProps = (state, ownProps) => ({
-  errorMessages: getErrorMessageList(state, ownProps),
-});
-
-export default injectIntl(connect(mapStateToProps)(ErrorMessagePanel));
+export default injectIntl(ErrorMessagePanel);

@@ -10,14 +10,16 @@ type EventCallback = (data?: any, type?: string) => Promise<string>
  */
 class NotificationMapper {
   eventTypes = {
-    [EventType.REQUEST_STARTED]: [],
-    [EventType.REQUEST_FINISHED]: [],
-    [EventType.REQUEST_ERROR]: [],
-    [EventType.STATUS_REQUEST_STARTED]: [],
-    [EventType.STATUS_REQUEST_FINISHED]: [],
-    [EventType.UPDATE_POLLING_MESSAGE]: [],
-    [EventType.POLLING_TIMEOUT]: [],
     [EventType.POLLING_HALTED_OR_DELAYED]: [],
+    [EventType.POLLING_TIMEOUT]: [],
+    [EventType.REQUEST_ERROR]: [],
+    [EventType.REQUEST_FINISHED]: [],
+    [EventType.REQUEST_FORBIDDEN]: [],
+    [EventType.REQUEST_STARTED]: [],
+    [EventType.REQUEST_UNAUTHORIZED]: [],
+    [EventType.STATUS_REQUEST_FINISHED]: [],
+    [EventType.STATUS_REQUEST_STARTED]: [],
+    [EventType.UPDATE_POLLING_MESSAGE]: [],
   };
 
   addEventHandler = (eventType: string, callback: EventCallback) => {
@@ -31,7 +33,11 @@ class NotificationMapper {
 
   addRequestFinishedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.REQUEST_FINISHED, callback);
 
-  addRequestErrorEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.REQUEST_ERROR, callback);
+  addRequestErrorEventHandler = (callback: EventCallback) => {
+    this.addEventHandler(EventType.REQUEST_ERROR, callback);
+    this.addEventHandler(EventType.REQUEST_FORBIDDEN, callback);
+    this.addEventHandler(EventType.REQUEST_UNAUTHORIZED, callback);
+  };
 
   addStatusRequestStartedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.STATUS_REQUEST_STARTED, callback);
 

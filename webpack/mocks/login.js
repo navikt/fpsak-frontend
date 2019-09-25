@@ -11,7 +11,7 @@ module.exports = function (app) {
     const roles = ['beslut', 'klageb', 'oversty', 'saksbeh', 'saksbeh6', 'saksbeh7', 'veil'];
     const urls = {};
     roles.forEach((role) => {
-      const url = new URL(fullUrl + '/redirect');
+      const url = new URL(fullUrl + 'redirect');
       url.searchParams.append('code', role);
       urls[role] = url.toString();
     });

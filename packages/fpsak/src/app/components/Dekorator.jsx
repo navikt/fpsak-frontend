@@ -5,11 +5,41 @@ import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import PropTypes from 'prop-types';
+import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+import { createSelector } from 'reselect';
 
-
+const errorMessagesSelector = createSelector([
+  (s) => s.intl,
+  (s) => s.errorMessages,
+  (s) => s.queryStrings,
+], (intl, errorMessages, queryStrings) => {
+  const resolvedErrorMessages = [];
+  if (queryStrings.errorcode) {
+    resolvedErrorMessages.push({ message: intl.formatMessage({ id: queryStrings.errorcode }) });
+  }
+  if (queryStrings.errormessage) {
+    resolvedErrorMessages.push({ message: queryStrings.errormessage });
+  }
+  errorMessages.forEach((message) => {
+    let msg = { message: (message.code ? intl.formatMessage({ id: message.code }, message.params) : message.text) };
+    if (message.params && message.params.errorDetails) {
+      msg = {
+        ...msg,
+        additionalInfo: JSON.parse(decodeHtmlEntity(message.params.errorDetails)),
+      };
+    }
+    resolvedErrorMessages.push(msg);
+  });
+  return resolvedErrorMessages;
+});
 const Dekorator = ({
-  intl, navAnsattName, queryStrings, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages,
+  intl, errorMessages, navAnsattName, queryStrings, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages, hideErrorMessages,
 }) => {
+  const resolvedErrorMessages = errorMessagesSelector({
+    intl,
+    errorMessages,
+    queryStrings,
+  });
   const iconLinks = [
     {
       url: RETTSKILDE_URL,
@@ -30,6 +60,7 @@ const Dekorator = ({
       navAnsattName={navAnsattName}
       removeErrorMessage={removeErrorMsg}
       showDetailedErrorMessages={showDetailedErrorMessages}
+      errorMessages={hideErrorMessages ? [] : resolvedErrorMessages}
     />
   );
 };
@@ -39,7 +70,15 @@ Dekorator.propTypes = {
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
-  showDetailedErrorMessages: PropTypes.bool.isRequired,
+  showDetailedErrorMessages: PropTypes.bool,
+  hideErrorMessages: PropTypes.bool,
+  errorMessages: PropTypes.arrayOf(PropTypes.shape()),
+};
+
+Dekorator.defaultProps = {
+  hideErrorMessages: false,
+  showDetailedErrorMessages: false,
+  errorMessages: [],
 };
 
 export default injectIntl(Dekorator);

@@ -11,8 +11,9 @@ import navAnsattIkonUrl from '@fpsak-frontend/assets/images/nav_ansatt.svg';
 import { Systemtittel } from 'nav-frontend-typografi';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import styles from './header.less';
-import messages from '../i18n/nb_NO';
 import ErrorMessagePanel from './ErrorMessagePanel';
+
+import messages from '../i18n/nb_NO';
 
 const cache = createIntlCache();
 
@@ -34,6 +35,7 @@ const Header = ({
   removeErrorMessage,
   queryStrings,
   showDetailedErrorMessages,
+  errorMessages,
 }) => (
   <header className={styles.container}>
     <RawIntlProvider value={intl}>
@@ -79,7 +81,12 @@ const Header = ({
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
-      <ErrorMessagePanel queryStrings={queryStrings} removeErrorMessage={removeErrorMessage} showDetailedErrorMessages={showDetailedErrorMessages} />
+      <ErrorMessagePanel
+        queryStrings={queryStrings}
+        removeErrorMessage={removeErrorMessage}
+        showDetailedErrorMessages={showDetailedErrorMessages}
+        errorMessages={errorMessages}
+      />
     </RawIntlProvider>
   </header>
 );
@@ -90,7 +97,12 @@ Header.propTypes = {
   queryStrings: PropTypes.shape().isRequired,
   navAnsattName: PropTypes.string.isRequired,
   removeErrorMessage: PropTypes.func.isRequired,
-  showDetailedErrorMessages: PropTypes.bool.isRequired,
+  showDetailedErrorMessages: PropTypes.bool,
+  errorMessages: PropTypes.arrayOf(PropTypes.shape()),
 };
 
+Header.defaultProps = {
+  showDetailedErrorMessages: false,
+  errorMessages: [],
+};
 export default Header;

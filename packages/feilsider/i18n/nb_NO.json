@@ -1,0 +1,9 @@
+{
+  "GenericErrorPage.Header": "Noe gikk galt",
+  "NotFoundPage.Header": "Beklager, vi finner ikke siden du leter etter.",
+  "NotFoundPage.LinkText": "Gå til forsiden",
+  "UnauthorizedPage.Header": "Du må logge inn for å få tilgang til systemet",
+  "UnauthorizedPage.LinkText": "Gå til innloggingssiden",
+  "ForbiddenPage.Header": "Du har ikke tilgang til å slå opp denne personen",
+  "ForbiddenPage.LinkText": "Gå til forsiden"
+}

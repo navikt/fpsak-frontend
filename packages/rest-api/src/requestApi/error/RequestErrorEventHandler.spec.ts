@@ -38,7 +38,7 @@ describe('RequestErrorEventHandler', () => {
         },
       },
     };
-    errorEventHandler.handleError(error);
+    await errorEventHandler.handleError(error);
 
     // eslint-disable-next-line no-unused-expressions
     expect(eventHandler.calledOnce).to.true;

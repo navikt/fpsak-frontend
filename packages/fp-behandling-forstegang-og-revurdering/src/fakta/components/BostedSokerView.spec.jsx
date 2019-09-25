@@ -5,6 +5,8 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
+import { Normaltekst } from 'nav-frontend-typografi';
+import EtikettBase from 'nav-frontend-etiketter';
 import { BostedSokerView } from './BostedSokerView';
 
 describe('<BostedsokerView>', () => {
@@ -99,7 +101,7 @@ describe('<BostedsokerView>', () => {
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
     />);
-    const adr = wrapper.find('Normaltekst');
+    const adr = wrapper.find(Normaltekst);
     expect(adr).to.have.length(2);
     expect(adr.first().childAt(0).text()).to.eql('Vei 1, 1000 Oslo');
     expect(adr.last().childAt(0).text()).to.eql('-');
@@ -115,7 +117,7 @@ describe('<BostedsokerView>', () => {
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
     />);
-    const etikettfokus = wrapper.find('EtikettBase');
+    const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
     expect(personstatus.prop('title')).to.equal('Personstatus');
@@ -143,7 +145,7 @@ describe('<BostedsokerView>', () => {
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
     />);
-    const etikettfokus = wrapper.find('EtikettBase');
+    const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
     expect(personstatus.prop('title')).to.equal('Personstatus');
