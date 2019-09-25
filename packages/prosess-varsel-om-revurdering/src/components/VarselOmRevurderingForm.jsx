@@ -234,10 +234,10 @@ VarselOmRevurderingFormImpl.propTypes = {
     kode: PropTypes.string,
     navn: PropTypes.string,
   })),
-  avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   behandlingTypeKode: PropTypes.string.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
-  termindato: PropTypes.string.isRequired,
+  termindato: PropTypes.string,
   originalBehandling: revurderingOriginalBehandlingPropType.isRequired,
   ...formPropTypes,
 };
@@ -252,6 +252,8 @@ VarselOmRevurderingFormImpl.defaultProps = {
   originalVentearsak: null,
   ventearsak: null,
   ventearsaker: [],
+  avklartBarn: undefined,
+  termindato: undefined,
 };
 
 export const buildInitialValues = createSelector([(state, ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => ({

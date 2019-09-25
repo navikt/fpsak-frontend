@@ -6,7 +6,7 @@ const revurderingOriginalBehandlingPropType = PropTypes.shape({
     antallBarn: PropTypes.number.isRequired,
   }).isRequired,
   familiehendelse: PropTypes.shape({
-    termindato: PropTypes.string.isRequired,
+    termindato: PropTypes.string,
     fodselsdato: PropTypes.string.isRequired,
     antallBarnTermin: PropTypes.number.isRequired,
     antallBarnFodsel: PropTypes.number.isRequired,
