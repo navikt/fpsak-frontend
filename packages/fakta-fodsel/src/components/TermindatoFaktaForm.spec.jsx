@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
+
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { buildInitialValues, TermindatoFaktaForm } from './TermindatoFaktaForm';
 
 describe('<TermindatoFaktaForm>', () => {
@@ -19,6 +20,9 @@ describe('<TermindatoFaktaForm>', () => {
       error={false}
       isForTidligTerminbekreftelse={false}
       submittable
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.TERMINBEKREFTELSE]: {},
+      }}
     />);
 
     expect(wrapper.find(DatepickerField)).has.length(2);
@@ -36,6 +40,9 @@ describe('<TermindatoFaktaForm>', () => {
       isForTidligTerminbekreftelse={false}
       isOverridden={false}
       submittable
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.TERMINBEKREFTELSE]: {},
+      }}
     />);
 
     expect(wrapper.find(FaktaGruppe)).has.length(2);

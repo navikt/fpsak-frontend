@@ -262,6 +262,8 @@ export const buildInitialValues = createSelector([(state, ownProps) => ownProps.
 
 const formName = 'VarselOmRevurderingForm';
 
+const nullSafe = (value) => (value || {});
+
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const {
     behandlingId, behandlingVersjon, behandlingType, behandlingArsaker, aksjonspunkter, submitCallback, sprakkode, ventearsak, frist, familieHendelse,
@@ -278,9 +280,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
     ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'sendVarsel', 'fritekst', 'frist', 'ventearsak'),
-    avklartBarn: familieHendelse.register.avklartBarn,
-    termindato: familieHendelse.gjeldende.termindato,
-    vedtaksDatoSomSvangerskapsuke: familieHendelse.gjeldende.vedtaksDatoSomSvangerskapsuke,
+    avklartBarn: nullSafe(familieHendelse.register).avklartBarn,
+    termindato: nullSafe(familieHendelse.gjeldende).termindato,
+    vedtaksDatoSomSvangerskapsuke: nullSafe(familieHendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
     originalVentearsak: ventearsak,
     originalFrist: frist,
     behandlingTypeKode: behandlingType.kode,

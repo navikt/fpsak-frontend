@@ -10,7 +10,7 @@ import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderin
 
 describe('<FodselSammenligningPanel>', () => {
   const soknad = {
-    fodselsdatoer: ['2019-01-01'],
+    fodselsdatoer: { 1: '2019-01-01' },
     termindato: '2019-01-01',
     antallBarn: 1,
     utstedtdato: '2019-01-01',
