@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -31,6 +32,8 @@ import styles from './faktaPanel.less';
 
 const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
+const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+  aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 
 /**
  * FaktaPanel
@@ -272,7 +275,7 @@ const mapStateToProps = (state) => {
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),
-    alleMerknaderFraBeslutter: getAllMerknaderFraBeslutter(state),
+    alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
   };
 };
 

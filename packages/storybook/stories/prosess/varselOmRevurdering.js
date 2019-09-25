@@ -20,7 +20,7 @@ const behandling = {
   sprakkode: {
     kode: 'NN',
   },
-  behandlingType: {
+  type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },
 };

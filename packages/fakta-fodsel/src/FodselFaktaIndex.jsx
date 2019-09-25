@@ -36,7 +36,7 @@ const FodselFaktaIndex = ({
     <FodselInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      behandlingType={behandling.behandlingType}
+      behandlingType={behandling.type}
       soknad={soknad}
       familiehendelse={familiehendelse}
       originalBehandling={originalBehandling}

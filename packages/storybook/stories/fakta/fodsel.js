@@ -15,7 +15,7 @@ import withReduxProvider from '../../decorators/withRedux';
 const behandling = {
   id: 1,
   versjon: 1,
-  behandlingType: {
+  type: {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },
 };
@@ -83,92 +83,108 @@ const personopplysninger = {
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
-const openInfoPanels = [faktaPanelCodes.FODSELSVILKARET];
+
+const toggle = (openInfoPanels, togglePanel) => (value) => {
+  const exists = openInfoPanels.some((op) => op === value);
+  return togglePanel(exists ? [] : [value]);
+};
 
 const stories = storiesOf('fakta/FodselFaktaIndex', module)
   .addDecorator(withKnobs)
   .addDecorator(withReduxProvider);
 
-stories.add('Vis aksjonspunkt Terminbekreftelse', () => (
-  <FodselFaktaIndex
-    behandling={behandling}
-    soknad={object('soknad', soknad)}
-    familiehendelse={object('familiehendelse', familieHendelse)}
-    personopplysninger={personopplysninger}
-    originalBehandling={object('originalBehandling', originalBehandling)}
-    aksjonspunkter={aksjonspunkter}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.TERMINBEKREFTELSE]: merknaderFraBeslutter,
-    }}
-    submitCallback={action('button-click')}
-    openInfoPanels={openInfoPanels}
-    toggleInfoPanelCallback={action('button-click')}
-    shouldOpenDefaultInfoPanels
-    readOnly={boolean('readOnly', false)}
-  />
-));
+stories.add('Vis aksjonspunkt Terminbekreftelse', () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
+  return (
+    <FodselFaktaIndex
+      behandling={behandling}
+      soknad={object('soknad', soknad)}
+      familiehendelse={object('familiehendelse', familieHendelse)}
+      personopplysninger={personopplysninger}
+      originalBehandling={object('originalBehandling', originalBehandling)}
+      aksjonspunkter={aksjonspunkter}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.TERMINBEKREFTELSE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      }}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+});
 
-stories.add('Vis aksjonspunkt Sjekk manglende fødsel', () => (
-  <FodselFaktaIndex
-    behandling={behandling}
-    soknad={object('soknad', soknad)}
-    familiehendelse={object('familiehendelse', familieHendelse)}
-    personopplysninger={personopplysninger}
-    originalBehandling={object('originalBehandling', originalBehandling)}
-    aksjonspunkter={aksjonspunkter.map((a) => ({
-      ...a,
-      definisjon: {
-        kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
-      },
-    }))}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: merknaderFraBeslutter,
-    }}
-    submitCallback={action('button-click')}
-    openInfoPanels={openInfoPanels}
-    toggleInfoPanelCallback={action('button-click')}
-    shouldOpenDefaultInfoPanels
-    readOnly={boolean('readOnly', false)}
-  />
-));
+stories.add('Vis aksjonspunkt Sjekk manglende fødsel', () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
+  return (
+    <FodselFaktaIndex
+      behandling={behandling}
+      soknad={object('soknad', soknad)}
+      familiehendelse={object('familiehendelse', familieHendelse)}
+      personopplysninger={personopplysninger}
+      originalBehandling={object('originalBehandling', originalBehandling)}
+      aksjonspunkter={aksjonspunkter.map((a) => ({
+        ...a,
+        definisjon: {
+          kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+        },
+      }))}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      }}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+});
 
-stories.add('Vis aksjonspunkt Vurder om vilkår for sykdom er oppfylt', () => (
-  <FodselFaktaIndex
-    behandling={behandling}
-    soknad={object('soknad', soknad)}
-    familiehendelse={object('familiehendelse', familieHendelse)}
-    personopplysninger={personopplysninger}
-    originalBehandling={object('originalBehandling', originalBehandling)}
-    aksjonspunkter={aksjonspunkter.map((a) => ({
-      ...a,
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
-      },
-    }))}
-    alleMerknaderFraBeslutter={{
-      [aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT]: merknaderFraBeslutter,
-    }}
-    submitCallback={action('button-click')}
-    openInfoPanels={openInfoPanels}
-    toggleInfoPanelCallback={action('button-click')}
-    shouldOpenDefaultInfoPanels
-    readOnly={boolean('readOnly', false)}
-  />
-));
+stories.add('Vis aksjonspunkt Vurder om vilkår for sykdom er oppfylt', () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
+  return (
+    <FodselFaktaIndex
+      behandling={behandling}
+      soknad={object('soknad', soknad)}
+      familiehendelse={object('familiehendelse', familieHendelse)}
+      personopplysninger={personopplysninger}
+      originalBehandling={object('originalBehandling', originalBehandling)}
+      aksjonspunkter={aksjonspunkter.map((a) => ({
+        ...a,
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
+        },
+      }))}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      }}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+});
 
-stories.add('Vis panel for fødselssammenligning når det ikke finnes aksjonspunkter', () => (
-  <FodselFaktaIndex
-    behandling={behandling}
-    soknad={object('soknad', soknad)}
-    familiehendelse={object('familiehendelse', familieHendelse)}
-    personopplysninger={personopplysninger}
-    originalBehandling={object('originalBehandling', originalBehandling)}
-    aksjonspunkter={[]}
-    alleMerknaderFraBeslutter={{}}
-    submitCallback={action('button-click')}
-    openInfoPanels={openInfoPanels}
-    toggleInfoPanelCallback={action('button-click')}
-    shouldOpenDefaultInfoPanels
-    readOnly={boolean('readOnly', false)}
-  />
-));
+stories.add('Vis panel for fødselssammenligning når det ikke finnes aksjonspunkter', () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
+  return (
+    <FodselFaktaIndex
+      behandling={behandling}
+      soknad={object('soknad', soknad)}
+      familiehendelse={object('familiehendelse', familieHendelse)}
+      personopplysninger={personopplysninger}
+      originalBehandling={object('originalBehandling', originalBehandling)}
+      aksjonspunkter={[]}
+      alleMerknaderFraBeslutter={{}}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+});

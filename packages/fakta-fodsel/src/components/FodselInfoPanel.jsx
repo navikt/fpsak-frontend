@@ -152,7 +152,7 @@ export class FodselInfoPanelImpl extends Component {
               originalBehandling={originalBehandling}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               soknad={soknad}
-              avklartBarn={familiehendelse.register.avklartBarn}
+              avklartBarn={avklartBarn}
               gjeldendeFamiliehendelse={familiehendelse.gjeldende}
               personopplysninger={personopplysninger}
             />
@@ -215,12 +215,14 @@ FodselInfoPanelImpl.propTypes = {
   personopplysninger: fodselPersonopplysningerPropType.isRequired,
 };
 
+const nullSafe = (value) => (value || {});
+
 const mapStateToProps = (state, ownProps) => ({
   formPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
   behandlingTypeKode: ownProps.behandlingType.kode,
-  avklartBarn: ownProps.familiehendelse.register.avklartBarn,
-  termindato: ownProps.familiehendelse.gjeldende.termindato,
-  vedtaksDatoSomSvangerskapsuke: ownProps.familiehendelse.gjeldende.vedtaksDatoSomSvangerskapsuke,
+  avklartBarn: nullSafe(ownProps.familiehendelse.register).avklartBarn,
+  termindato: nullSafe(ownProps.familiehendelse.gjeldende).termindato,
+  vedtaksDatoSomSvangerskapsuke: nullSafe(ownProps.familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
 });
 
 const ConnectedComponent = connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));
