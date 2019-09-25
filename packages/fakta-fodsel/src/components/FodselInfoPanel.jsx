@@ -90,7 +90,6 @@ export class FodselInfoPanelImpl extends Component {
       formPrefix,
       readOnly,
       dispatch,
-      behandlingTypeKode,
       avklartBarn,
       termindato,
       vedtaksDatoSomSvangerskapsuke,
@@ -174,7 +173,7 @@ export class FodselInfoPanelImpl extends Component {
             )}
           {aksjonspunkter.length === 0 && (
             <FodselSammenligningIndex
-              behandlingsTypeKode={behandlingTypeKode}
+              behandlingsTypeKode={behandlingType.kode}
               avklartBarn={avklartBarn}
               termindato={termindato}
               vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
@@ -202,7 +201,6 @@ FodselInfoPanelImpl.propTypes = {
   formPrefix: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  behandlingTypeKode: PropTypes.string.isRequired,
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   termindato: PropTypes.string,
   vedtaksDatoSomSvangerskapsuke: PropTypes.string,
@@ -226,7 +224,6 @@ const nullSafe = (value) => (value || {});
 
 const mapStateToProps = (state, ownProps) => ({
   formPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
-  behandlingTypeKode: ownProps.behandlingType.kode,
   avklartBarn: nullSafe(ownProps.familiehendelse.register).avklartBarn,
   termindato: nullSafe(ownProps.familiehendelse.gjeldende).termindato,
   vedtaksDatoSomSvangerskapsuke: nullSafe(ownProps.familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,

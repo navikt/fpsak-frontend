@@ -51,7 +51,7 @@ const FaktaGruppe = ({
 FaktaGruppe.propTypes = {
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
-  }).isRequired,
+  }),
   children: PropTypes.node.isRequired,
   titleCode: PropTypes.string,
   withoutBorder: PropTypes.bool,
@@ -62,6 +62,7 @@ FaktaGruppe.defaultProps = {
   titleCode: '',
   withoutBorder: false,
   className: '',
+  merknaderFraBeslutter: undefined,
 };
 
 export default FaktaGruppe;

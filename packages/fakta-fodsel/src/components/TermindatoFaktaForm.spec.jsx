@@ -7,8 +7,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel } from '@fpsak-frontend/shared-components';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { buildInitialValues, TermindatoFaktaForm } from './TermindatoFaktaForm';
 
 describe('<TermindatoFaktaForm>', () => {

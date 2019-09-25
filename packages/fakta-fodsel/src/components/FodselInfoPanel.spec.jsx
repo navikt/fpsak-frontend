@@ -5,11 +5,26 @@ import sinon from 'sinon';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
 import TermindatoFaktaForm from './TermindatoFaktaForm';
+
+const soknad = {
+  fodselsdatoer: { 1: '2019-01-01' },
+  antallBarn: 1,
+  soknadType: {
+    kode: soknadType.FODSEL,
+  },
+};
+const alleMerknaderFraBeslutter = {};
+const familiehendelse = {};
+const personopplysninger = {
+  barnSoktFor: [],
+};
 
 describe('<FodselInfoPanel>', () => {
   it('skal vise sjekkFodselDok-form når en har dette aksjonspunktet', () => {
@@ -42,10 +57,17 @@ describe('<FodselInfoPanel>', () => {
       isFormSubmitting={false}
       isDirty={false}
       dispatch={sinon.spy}
+      behandlingType={{ kode: behandlingType.FORSTEGANGSSOKNAD }}
+      soknad={soknad}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      familiehendelse={familiehendelse}
+      behandlingId={1}
+      behandlingVersjon={1}
+      personopplysninger={personopplysninger}
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
+    expect(panel.prop('title')).to.eql('FodselInfoPanel.Fodsel');
 
     expect(wrapper.find(SjekkFodselDokForm)).has.length(1);
   });
@@ -80,10 +102,17 @@ describe('<FodselInfoPanel>', () => {
       isFormSubmitting={false}
       isDirty={false}
       dispatch={sinon.spy}
+      behandlingType={{ kode: behandlingType.FORSTEGANGSSOKNAD }}
+      soknad={soknad}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      familiehendelse={familiehendelse}
+      behandlingId={1}
+      behandlingVersjon={1}
+      personopplysninger={personopplysninger}
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
+    expect(panel.prop('title')).to.eql('FodselInfoPanel.Fodsel');
 
     expect(wrapper.find(TermindatoFaktaForm)).has.length(1);
   });
@@ -102,6 +131,13 @@ describe('<FodselInfoPanel>', () => {
       isFormSubmitting={false}
       isDirty={false}
       dispatch={sinon.spy}
+      behandlingType={{ kode: behandlingType.FORSTEGANGSSOKNAD }}
+      soknad={soknad}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      familiehendelse={familiehendelse}
+      behandlingId={1}
+      behandlingVersjon={1}
+      personopplysninger={personopplysninger}
     />);
 
     expect(wrapper.find(FodselSammenligningIndex)).has.length(1);
