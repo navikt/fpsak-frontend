@@ -5,8 +5,8 @@ import { Route, Switch } from 'react-router-dom';
 import FagsakIndex from 'fagsak/FagsakIndex';
 import { aktoerPath, fagsakPath } from '@fpsak-frontend/fp-felles';
 
+import { NotFoundPage } from '@fpsak-frontend/feilsider';
 import DashboardResolver from './DashboardResolver';
-import MissingPage from './MissingPage';
 
 import styles from './home.less';
 import AktoerIndex from '../../aktoer/AktoerIndex';
@@ -25,7 +25,7 @@ const Home = ({
       <Route exact path="/" component={DashboardResolver} />
       <Route strict path={fagsakPath} component={FagsakIndex} />
       <Route strict path={aktoerPath} component={AktoerIndex} />
-      <Route component={MissingPage} />
+      <Route component={NotFoundPage} />
     </Switch>
   </div>
 );

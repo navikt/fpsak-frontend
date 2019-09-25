@@ -6,7 +6,6 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import { getFeatureToggles } from 'app/duck';
-import errorHandler from '@fpsak-frontend/error-api-redux';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import {
@@ -43,10 +42,9 @@ export class FagsakResolver extends Component {
   }
 
   componentWillUnmount() {
-    const { resetFagsakContext, resetFagsakSearch, removeErrorMessage: removeErrorMsg } = this.props;
+    const { resetFagsakContext, resetFagsakSearch } = this.props;
     resetFagsakContext();
     resetFagsakSearch();
-    removeErrorMsg();
   }
 
   resolveFagsakInfo() {
@@ -97,7 +95,6 @@ FagsakResolver.propTypes = {
   fetchFagsakInfo: PropTypes.func.isRequired,
   resetFagsakContext: PropTypes.func.isRequired,
   resetFagsakSearch: PropTypes.func.isRequired,
-  removeErrorMessage: PropTypes.func.isRequired,
   fetchKodeverk: PropTypes.func.isRequired,
   fetchFagsakInfoPending: PropTypes.bool.isRequired,
   allFagsakInfoResolved: PropTypes.bool.isRequired,
@@ -127,7 +124,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   resetFagsakContext: resetFagsakContextActionCreator,
   resetFagsakSearch: resetFagsakSearchActionCreator,
   fetchKodeverk: fetchKodeverkActionCreator,
-  removeErrorMessage: errorHandler.getRemoveErrorMessageActionCreator(),
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
