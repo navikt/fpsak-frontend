@@ -6,10 +6,10 @@ const fodselSammenligningOriginalBehandlingPropType = PropTypes.shape({
     antallBarn: PropTypes.number.isRequired,
   }).isRequired,
   familiehendelse: PropTypes.shape({
-    termindato: PropTypes.string.isRequired,
-    fodselsdato: PropTypes.string.isRequired,
-    antallBarnTermin: PropTypes.number.isRequired,
-    antallBarnFodsel: PropTypes.number.isRequired,
+    termindato: PropTypes.string,
+    fodselsdato: PropTypes.string,
+    antallBarnTermin: PropTypes.number,
+    antallBarnFodsel: PropTypes.number,
   }).isRequired,
 });
 
