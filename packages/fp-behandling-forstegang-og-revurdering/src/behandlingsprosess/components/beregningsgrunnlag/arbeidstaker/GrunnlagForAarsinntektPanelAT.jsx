@@ -26,6 +26,26 @@ import styles from './grunnlagForAarsinntektPanelAT.less';
 
 const formName = 'BeregningForm';
 
+const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
+  // Andelen er fastsatt før og må kunne fastsettes igjen
+  if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
+    return true;
+  }
+
+  // Andeler som er lagt til av sbh eller tilkom før stp skal ikke kunne endres på
+  return andel.erTilkommetAndel === false && andel.lagtTilAvSaksbehandler === false;
+};
+
+const finnAndelerSomSkalVises = (andeler) => {
+  if (!andeler) {
+    return [];
+  }
+
+  return andeler
+    .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+    .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
+};
+
 const createTableRows = (relevanteAndeler, harAksjonspunkt, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn, intl) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const rows = relevanteAndeler.map((andel, index) => (
@@ -104,7 +124,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   getKodeverknavn,
 }) => {
   const headers = ['Beregningsgrunnlag.AarsinntektPanel.Arbeidsgiver', 'Beregningsgrunnlag.AarsinntektPanel.Inntekt'];
-  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const perioderMedBortfaltNaturalytelse = allePerioder
     .filter((periode) => periode.periodeAarsaker !== null && (periode.periodeAarsaker
       .map(({ kode }) => kode).includes(periodeAarsak.NATURALYTELSE_BORTFALT)));
@@ -153,7 +173,7 @@ const mapStateToProps = (state, initialProps) => {
   const { alleAndeler, aksjonspunkter } = initialProps;
   const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
   const closedAps = aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
-  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+  const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const overstyrteInntekter = relevanteAndeler.map((inntekt, index) => {
     const overstyrtInntekt = behandlingFormValueSelector(formName)(state, `inntekt${index}`);
     return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
@@ -167,7 +187,8 @@ const mapStateToProps = (state, initialProps) => {
 
 const GrunnlagForAarsinntektPanelAT = connect(mapStateToProps)(injectKodeverk(getAlleKodeverk)(GrunnlagForAarsinntektPanelATImpl));
 
-GrunnlagForAarsinntektPanelAT.buildInitialValues = (relevanteAndeler) => {
+GrunnlagForAarsinntektPanelAT.buildInitialValues = (alleAndeler) => {
+  const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const initialValues = { };
   relevanteAndeler.forEach((inntekt, index) => {
     initialValues[`inntekt${index}`] = formatCurrencyNoKr(inntekt.overstyrtPrAar);
@@ -179,7 +200,7 @@ GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alle
   let inntektPrAndelList = null;
   let frilansInntekt = null;
   if (relevanteStatuser.isArbeidstaker) {
-    inntektPrAndelList = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+    inntektPrAndelList = finnAndelerSomSkalVises(alleAndelerIForstePeriode)
       .map(({ andelsnr }, index) => {
         const overstyrtInntekt = values[`inntekt${index}`];
         return {
