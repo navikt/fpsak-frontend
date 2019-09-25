@@ -6,7 +6,7 @@ const revurderingFamilieHendelsePropType = PropTypes.shape({
   }),
   gjeldende: PropTypes.shape({
     termindato: PropTypes.string,
-    vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
+    vedtaksDatoSomSvangerskapsuke: PropTypes.string,
   }),
 });
 
