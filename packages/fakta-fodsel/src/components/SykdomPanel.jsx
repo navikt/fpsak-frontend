@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -21,8 +19,13 @@ const minLength3 = minLength(3);
  */
 export const SykdomPanel = ({
   readOnly,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT} titleCode="SykdomPanel.ApplicationInformation">
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT}
+    titleCode="SykdomPanel.ApplicationInformation"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT]}
+  >
     <TextAreaField
       name="begrunnelseSykdom"
       label={{ id: 'SykdomPanel.Begrunnelse' }}
@@ -40,11 +43,14 @@ export const SykdomPanel = ({
 
 SykdomPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
-const buildInitialValues = (aksjonspunkt, familiehendelse) => ({
+const buildInitialValues = (aksjonspunkt, morForSykVedFodsel) => ({
   begrunnelseSykdom: aksjonspunkt.begrunnelse ? aksjonspunkt.begrunnelse : '',
-  erMorForSykVedFodsel: familiehendelse.morForSykVedFodsel,
+  erMorForSykVedFodsel: morForSykVedFodsel,
 });
 
 const transformValues = (values) => ({
@@ -53,16 +59,16 @@ const transformValues = (values) => ({
   erMorForSykVedFodsel: values.erMorForSykVedFodsel,
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitHandler(transformValues(values));
-  return (state) => ({
-    initialValues: buildInitialValues(ownProps.aksjonspunkt, getFamiliehendelseGjeldende(state)),
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const onSubmit = (values) => staticOwnProps.submitHandler(transformValues(values));
+  return (state, ownProps) => ({
+    initialValues: buildInitialValues(ownProps.aksjonspunkt, ownProps.morForSykVedFodsel),
     onSubmit,
   });
 };
 
 export const sykdomPanelName = 'SykdomPanel';
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: sykdomPanelName,
 })(SykdomPanel));

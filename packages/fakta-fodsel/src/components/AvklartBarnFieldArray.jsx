@@ -7,6 +7,7 @@ import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
 import { CheckboxField, DatepickerField } from '@fpsak-frontend/form';
+
 import styles from './avklartBarnFieldArray.less';
 
 export const defaultAntallBarn = {
@@ -26,7 +27,7 @@ export const AvklartBarnFieldArray = ({
     meta={meta}
     emptyPeriodTemplate={defaultAntallBarn}
     readOnly={readOnly}
-    textCode="PeriodFieldArray.LeggTilBarn"
+    textCode="AvklartBarnFieldArray.LeggTilBarn"
     shouldShowAddButton={avklartBarn.length < 9}
   >
     {(periodeElementFieldId, index, getRemoveButton) => (
@@ -38,7 +39,7 @@ export const AvklartBarnFieldArray = ({
                 <DatepickerField
                   name={`${periodeElementFieldId}.fodselsdato`}
                   defaultValue={null}
-                  label={{ id: 'Registrering.Fodsel.Title' }}
+                  label={{ id: 'AvklartBarnFieldArray.Title' }}
                   validate={[hasValidDate, required]}
                   readOnly={readOnly}
                 />
@@ -47,7 +48,7 @@ export const AvklartBarnFieldArray = ({
                 <CheckboxField
                   className={styles.registerBarnCheckbox}
                   name={`${periodeElementFieldId}.isBarnDodt`}
-                  label={{ id: 'Registrering.ErBarnetDott' }}
+                  label={{ id: 'AvklartBarnFieldArray.ErBarnetDott' }}
                   disabled={readOnly}
                 />
               </FlexColumn>
@@ -58,7 +59,7 @@ export const AvklartBarnFieldArray = ({
                 <DatepickerField
                   name={`${periodeElementFieldId}.dodsdato`}
                   defaultValue={null}
-                  label={{ id: 'Registrering.Dodsdato' }}
+                  label={{ id: 'AvklartBarnFieldArray.Dodsdato' }}
                   validate={[hasValidDate]}
                   readOnly={readOnly}
                 />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { BehandlingFpsakApiKeys } from '../data/fpsakBehandlingApi';
+import { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 
 // TODO (TOR) Denne klassen skal hente data fra server. Men funksjonalitet kan ikkje implementerast før
 // alle panel nyttar denne. No hentar den ynskja data fra behandling-objektet og lagar props av det.

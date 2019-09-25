@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
+import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import FodselInfoPanel from './fodsel/FodselInfoPanel';
+import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 import OmsorgOgForeldreansvarInfoPanel from './omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel';
 import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
@@ -25,6 +28,9 @@ import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOg
 import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
 import styles from './faktaPanel.less';
+
+const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
 
 /**
  * FaktaPanel
@@ -46,6 +52,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsefordeling,
   fagsakPerson,
   erOverstyrer,
+  alleMerknaderFraBeslutter,
 }) => (
   <>
     <div className={styles.personContainer}>
@@ -140,15 +147,22 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      {FodselInfoPanel.supports(vilkarCodes, aksjonspunkter)
-      && (
-        <FodselInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
+      {(aksjonspunkter.some((ap) => fodselAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some((code) => fodselsvilkarene.includes(code))) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={fodselData}
+          render={(props) => (
+            <FodselFaktaIndex
+              aksjonspunkter={aksjonspunkter}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              {...props}
+            />
+          )}
         />
       )}
       { MedlemskapInfoPanel.supports(personopplysninger, soknad)
@@ -236,6 +250,7 @@ FaktaPanel.propTypes = {
   ytelsesType: PropTypes.shape().isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -257,6 +272,7 @@ const mapStateToProps = (state) => {
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),
+    alleMerknaderFraBeslutter: getAllMerknaderFraBeslutter(state),
   };
 };
 

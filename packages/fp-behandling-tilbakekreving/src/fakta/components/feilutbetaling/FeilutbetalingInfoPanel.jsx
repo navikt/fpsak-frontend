@@ -11,8 +11,9 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { TextAreaField } from '@fpsak-frontend/form';
-import { FaktaEkspandertpanel, FaktaGruppe, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import {
+  faktaPanelCodes, getBehandlingFormPrefix, FaktaGruppe, FaktaEkspandertpanel, withDefaultToggling,
+} from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,

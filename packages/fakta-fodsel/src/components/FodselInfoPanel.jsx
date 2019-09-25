@@ -4,22 +4,19 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import {
+  faktaPanelCodes, getBehandlingFormPrefix, FaktaSubmitButton, FaktaEkspandertpanel, withDefaultToggling,
+} from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  getBarnFraTpsRelatertTilSoknad, getFamiliehendelseTermindato, getBehandlingVedtaksDatoSomSvangerskapsuke, getOriginalBehandling,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import TermindatoFaktaForm, { termindatoFaktaFormName } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/TermindatoFaktaForm';
-import SjekkFodselDokForm, { sjekkFodselDokForm } from 'behandlingForstegangOgRevurdering/src/fakta/components/fodsel/SjekkFodselDokForm';
+import fodselPersonopplysningerPropType from '../propTypes/fodselPersonopplysningerPropType';
+import fodselFamilieHendelsePropType from '../propTypes/fodselFamilieHendelsePropType';
+import fodselSoknadPropType from '../propTypes/fodselSoknadPropType';
+import TermindatoFaktaForm, { termindatoFaktaFormName } from './TermindatoFaktaForm';
+import SjekkFodselDokForm, { sjekkFodselDokForm } from './SjekkFodselDokForm';
 import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 
 const {
@@ -98,6 +95,12 @@ export class FodselInfoPanelImpl extends Component {
       vedtaksDatoSomSvangerskapsuke,
       soknad,
       originalBehandling,
+      familiehendelse,
+      alleMerknaderFraBeslutter,
+      personopplysninger,
+      behandlingId,
+      behandlingVersjon,
+      behandlingType,
     } = this.props;
     return (
       <FaktaEkspandertpanel
@@ -110,37 +113,62 @@ export class FodselInfoPanelImpl extends Component {
       >
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
         <form onSubmit={this.getSubmitFunction(dispatch, formPrefix)}>
-          {hasAksjonspunkt(VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, aksjonspunkter)
-            && (
+          {hasAksjonspunkt(VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, aksjonspunkter) && (
             <SykdomPanel
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               readOnly={readOnly}
               aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT)}
               submitHandler={this.submitHandler}
+              morForSykVedFodsel={familiehendelse.gjeldende.morForSykVedFodsel}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
             />
-            )}
-          {hasAksjonspunkt(TERMINBEKREFTELSE, aksjonspunkter)
-            && (
+          )}
+          {hasAksjonspunkt(TERMINBEKREFTELSE, aksjonspunkter) && (
             <TermindatoFaktaForm
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === TERMINBEKREFTELSE)}
               readOnly={readOnly}
               submittable={submittable}
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              soknad={soknad}
+              gjeldendeFamiliehendelse={familiehendelse.gjeldende}
+              personopplysninger={personopplysninger}
             />
-            )}
-          {hasAksjonspunkt(SJEKK_MANGLENDE_FODSEL, aksjonspunkter)
-            && (
+          )}
+          {hasAksjonspunkt(SJEKK_MANGLENDE_FODSEL, aksjonspunkter) && (
             <SjekkFodselDokForm
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              behandlingType={behandlingType}
+              aksjonspunkt={aksjonspunkter.find((ap) => ap.definisjon.kode === SJEKK_MANGLENDE_FODSEL)}
               readOnly={readOnly}
               submittable={submittable}
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
+              originalBehandling={originalBehandling}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              soknad={soknad}
+              avklartBarn={familiehendelse.register.avklartBarn}
+              gjeldendeFamiliehendelse={familiehendelse.gjeldende}
+              personopplysninger={personopplysninger}
             />
-            )}
+          )}
           {aksjonspunkter.length !== 0 && !readOnly
             && (
             <>
               <VerticalSpacer twentyPx />
-              <FaktaSubmitButton formNames={formNames} isSubmittable={submittable} isReadOnly={readOnly} hasOpenAksjonspunkter={hasOpenAksjonspunkter} />
+              <FaktaSubmitButton
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                formNames={formNames}
+                isSubmittable={submittable}
+                isReadOnly={readOnly}
+                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+              />
             </>
             )}
           {aksjonspunkter.length === 0 && (
@@ -174,28 +202,28 @@ FodselInfoPanelImpl.propTypes = {
   dispatch: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
-  avklartBarn: PropTypes.arrayOf(PropTypes.string).isRequired,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   termindato: PropTypes.string.isRequired,
   vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
-  soknad: PropTypes.shape().isRequired,
+  soknad: fodselSoknadPropType.isRequired,
   originalBehandling: PropTypes.shape().isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  familiehendelse: fodselFamilieHendelsePropType.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  personopplysninger: fodselPersonopplysningerPropType.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  formPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-  behandlingTypeKode: behandlingSelectors.getBehandlingType(state).kode,
-  avklartBarn: getBarnFraTpsRelatertTilSoknad(state),
-  termindato: getFamiliehendelseTermindato(state),
-  vedtaksDatoSomSvangerskapsuke: getBehandlingVedtaksDatoSomSvangerskapsuke(state),
-  soknad: behandlingSelectors.getSoknad(state),
-  originalBehandling: getOriginalBehandling(state),
+const mapStateToProps = (state, ownProps) => ({
+  formPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+  behandlingTypeKode: ownProps.behandlingType.kode,
+  avklartBarn: ownProps.familiehendelse.register.avklartBarn,
+  termindato: ownProps.familiehendelse.gjeldende.termindato,
+  vedtaksDatoSomSvangerskapsuke: ownProps.familiehendelse.gjeldende.vedtaksDatoSomSvangerskapsuke,
 });
 
 const ConnectedComponent = connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));
 const FodselInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELSVILKARET, fodselAksjonspunkter)(ConnectedComponent);
-
-FodselInfoPanel.supports = (
-  vilkarCodes, aksjonspunkter,
-) => aksjonspunkter.some((ap) => fodselAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some((code) => fodselsvilkarene.includes(code));
 
 export default FodselInfoPanel;

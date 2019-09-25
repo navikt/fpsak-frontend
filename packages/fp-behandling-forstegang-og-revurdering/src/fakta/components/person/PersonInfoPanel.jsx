@@ -4,8 +4,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, featureToggle, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

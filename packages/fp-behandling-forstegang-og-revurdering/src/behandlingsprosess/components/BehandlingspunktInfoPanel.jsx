@@ -21,7 +21,7 @@ import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
-import DataFetcherWithCache from '../DataFetcherWithCache';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './behandlingspunktInfoPanel.less';
 

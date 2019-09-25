@@ -8,7 +8,7 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { BehandlingspunktInfoPanel } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
-import DataFetcherWithCache from '../DataFetcherWithCache';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {

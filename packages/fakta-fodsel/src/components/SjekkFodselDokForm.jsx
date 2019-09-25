@@ -6,30 +6,17 @@ import { FieldArray, formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Column } from 'nav-frontend-grid';
 
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  isFieldEdited, behandlingForm, behandlingFormValueSelector, FaktaGruppe, FaktaBegrunnelseTextField,
+} from '@fpsak-frontend/fp-felles';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import {
-  getBarnFraTpsRelatertTilSoknad,
-  getEditedStatus,
-  getFamiliehendelseGjeldende,
-  getSoknadAntallBarn,
-  getFamiliehendelseTermindato,
-  getBehandlingVedtaksDatoSomSvangerskapsuke,
-  getOriginalBehandling,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-
 import avklartBarnFieldArray from './AvklartBarnFieldArray';
+
 import styles from './SjekkFodselDokForm.less';
 
 export const AVKLARTE_BARN_FORM_NAME_PREFIX = 'avklartBarn';
@@ -67,6 +54,7 @@ export const SjekkFodselDokForm = ({
   vedtaksDatoSomSvangerskapsuke,
   soknad,
   originalBehandling,
+  alleMerknaderFraBeslutter,
 }) => (
   <ElementWrapper>
     <FodselSammenligningIndex
@@ -77,10 +65,10 @@ export const SjekkFodselDokForm = ({
       soknad={soknad}
       originalBehandling={originalBehandling}
     />
-}
     <FaktaGruppe
       aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}
       titleCode="SjekkFodselDokForm.DokumentasjonAvFodsel"
+      merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]}
     >
       <div className={styles.horizontalForm}>
         <RadioGroupField name="dokumentasjonForeligger" validate={[required]} readOnly={readOnly} isEdited={dokumentasjonForeliggerIsEdited}>
@@ -149,17 +137,28 @@ const allaBarn = (avklarteBarn) => {
   return komplettBarn;
 };
 
-export const buildInitialValues = createSelector([getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter, getSoknadAntallBarn],
-  (familiehendelse, aksjonspunkter, soknadAntallBarn) => ({
-    dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
-      ? familiehendelse.dokumentasjonForeligger : undefined,
-    brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
-      ? familiehendelse.brukAntallBarnFraTps : undefined,
-    avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
-      ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
-    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL)),
-  }));
+export const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.gjeldendeFamiliehendelse,
+  (state, ownProps) => ownProps.aksjonspunkt,
+  (state, ownProps) => ownProps.soknad.antallBarn],
+(familiehendelse, aksjonspunkt, soknadAntallBarn) => ({
+  dokumentasjonForeligger: familiehendelse.dokumentasjonForeligger !== null
+    ? familiehendelse.dokumentasjonForeligger : undefined,
+  brukAntallBarnITps: familiehendelse.brukAntallBarnFraTps !== null
+    ? familiehendelse.brukAntallBarnFraTps : undefined,
+  avklartBarn: (familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0)
+    ? addIsBarnDodt(familiehendelse.avklartBarn) : createNewChildren(soknadAntallBarn || 0),
+  ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkt),
+}));
 
+const getEditedStatus = createSelector(
+  [(state, ownProps) => ownProps.soknad,
+    (state, ownProps) => ownProps.gjeldendeFamiliehendelse,
+    (state, ownProps) => ownProps.personopplysninger],
+  (soknad, familiehendelse, personopplysning) => (
+    isFieldEdited(soknad || {}, familiehendelse || {}, personopplysning || {})
+  ),
+);
 
 const getAntallBarn = (brukAntallBarnITps, antallBarnLagret, antallBarnFraSoknad, antallBarnFraTps) => {
   if (antallBarnFraTps === 0) {
@@ -181,25 +180,28 @@ const transformValues = (values, antallBarnFraSoknad, antallBarnFraTps, fodselIn
 
 export const sjekkFodselDokForm = 'SjekkFodselDokForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const fodselInfo = getFamiliehendelseGjeldende(initialState).avklartBarn;
-  const onSubmit = (values) => ownProps.submitHandler(transformValues(values,
-    getSoknadAntallBarn(initialState), getBarnFraTpsRelatertTilSoknad(initialState).length, fodselInfo));
-  return (state) => ({
-    onSubmit,
-    initialValues: buildInitialValues(state),
-    fodselInfo,
-    avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'avklartBarn'),
-    dokumentasjonForeliggerIsEdited: getEditedStatus(state).dokumentasjonForeligger,
-    dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm)(state, 'dokumentasjonForeligger'),
-    behandlingTypeKode: behandlingSelectors.getBehandlingType(state).kode,
-    termindato: getFamiliehendelseTermindato(state),
-    vedtaksDatoSomSvangerskapsuke: getBehandlingVedtaksDatoSomSvangerskapsuke(state),
-    soknad: behandlingSelectors.getSoknad(state),
-    originalBehandling: getOriginalBehandling(state),
-  });
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const fodselInfo = staticOwnProps.gjeldendeFamiliehendelse.avklartBarn;
+  const onSubmit = (values) => staticOwnProps.submitHandler(transformValues(values,
+    staticOwnProps.soknad.antallBarn, staticOwnProps.avklartBarn.length, fodselInfo));
+  return (state, ownProps) => {
+    const {
+      behandlingId, behandlingVersjon, behandlingType, gjeldendeFamiliehendelse,
+    } = ownProps;
+    return {
+      onSubmit,
+      initialValues: buildInitialValues(state, ownProps),
+      fodselInfo,
+      avklartBarn: behandlingFormValueSelector(sjekkFodselDokForm, behandlingId, behandlingVersjon)(state, 'avklartBarn'),
+      dokumentasjonForeliggerIsEdited: getEditedStatus(state, ownProps).dokumentasjonForeligger,
+      dokumentasjonForeligger: behandlingFormValueSelector(sjekkFodselDokForm, behandlingId, behandlingVersjon)(state, 'dokumentasjonForeligger'),
+      behandlingTypeKode: behandlingType.kode,
+      termindato: gjeldendeFamiliehendelse.termindato,
+      vedtaksDatoSomSvangerskapsuke: gjeldendeFamiliehendelse.vedtaksDatoSomSvangerskapsuke,
+    };
+  };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: sjekkFodselDokForm,
 })(SjekkFodselDokForm));

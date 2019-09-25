@@ -11,7 +11,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { aksjonspunktPropType, personopplysningPropType } from '@fpsak-frontend/prop-types';
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import { getBehandlingYtelseFordeling, getEktefellePersonopplysning, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';

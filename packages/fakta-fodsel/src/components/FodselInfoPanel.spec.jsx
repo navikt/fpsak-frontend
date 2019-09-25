@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';

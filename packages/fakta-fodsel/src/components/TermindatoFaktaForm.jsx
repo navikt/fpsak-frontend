@@ -5,25 +5,19 @@ import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { DateLabel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import {
   hasValidDate, hasValidInteger, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getEditedStatus, getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import {
+  behandlingForm, behandlingFormValueSelector, FaktaGruppe, isFieldEdited, FaktaBegrunnelseTextField,
+} from '@fpsak-frontend/fp-felles';
 
 import styles from './termindatoFaktaForm.less';
 
@@ -47,9 +41,14 @@ export const TermindatoFaktaForm = ({
   antallBarnTps,
   isOverridden,
   submittable,
+  alleMerknaderFraBeslutter,
 }) => (
   <ElementWrapper>
-    <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.TERMINBEKREFTELSE} titleCode="TermindatoFaktaForm.ApplicationInformation">
+    <FaktaGruppe
+      aksjonspunktCode={aksjonspunktCodes.TERMINBEKREFTELSE}
+      titleCode="TermindatoFaktaForm.ApplicationInformation"
+      merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.TERMINBEKREFTELSE]}
+    >
       <Row>
         <Column xs="3">
           <DatepickerField
@@ -137,15 +136,18 @@ TermindatoFaktaForm.defaultProps = {
   isOverridden: false,
 };
 
-export const buildInitialValues = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende, behandlingSelectors.getAksjonspunkter], (
-  soknad, familiehendelse, aksjonspunkter,
+export const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.soknad,
+  (state, ownProps) => ownProps.gjeldendeFamiliehendelse,
+  (state, ownProps) => ownProps.aksjonspunkt], (
+  soknad, familiehendelse, aksjonspunkt,
 ) => {
   const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;
   return {
     utstedtdato: familiehendelse.utstedtdato ? familiehendelse.utstedtdato : soknad.utstedtdato,
     termindato: familiehendelse.termindato ? familiehendelse.termindato : soknad.termindato,
     antallBarn: familiehendelse.antallBarnTermin ? familiehendelse.antallBarnTermin : antallBarn,
-    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.TERMINBEKREFTELSE)),
+    ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkt),
   };
 });
 
@@ -162,25 +164,36 @@ const transformValues = (values) => ({
 
 export const termindatoFaktaFormName = 'TermindatoFaktaForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitHandler(transformValues(values));
-  return (state) => {
-    const termindato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'termindato');
-    const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName)(state, 'utstedtdato');
+const getEditedStatus = createSelector(
+  [(state, ownProps) => ownProps.soknad,
+    (state, ownProps) => ownProps.gjeldendeFamiliehendelse,
+    (state, ownProps) => ownProps.personopplysninger],
+  (soknad, familiehendelse, personopplysning) => (
+    isFieldEdited(soknad || {}, familiehendelse || {}, personopplysning || {})
+  ),
+);
+
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const { behandlingId, behandlingVersjon } = staticOwnProps;
+  const onSubmit = (values) => staticOwnProps.submitHandler(transformValues(values));
+  return (state, ownProps) => {
+    const termindato = behandlingFormValueSelector(termindatoFaktaFormName, behandlingId, behandlingVersjon)(state, 'termindato');
+    const utstedtdato = behandlingFormValueSelector(termindatoFaktaFormName, behandlingId, behandlingVersjon)(state, 'utstedtdato');
+    const editedStatus = getEditedStatus(state, ownProps);
     return {
       onSubmit,
-      initialValues: buildInitialValues(state),
-      isTerminDatoEdited: getEditedStatus(state).termindato,
-      isUtstedtDatoEdited: getEditedStatus(state).utstedtdato,
+      initialValues: buildInitialValues(state, ownProps),
+      isTerminDatoEdited: editedStatus.termindato,
+      isUtstedtDatoEdited: editedStatus.utstedtdato,
       isForTidligTerminbekreftelse: erTerminbekreftelseUtstedtForTidlig(utstedtdato, termindato),
-      isAntallBarnEdited: getEditedStatus(state).antallBarn,
-      fodselsdatoTps: getFamiliehendelseGjeldende(state).fodselsdato,
-      antallBarnTps: getFamiliehendelseGjeldende(state).antallBarnFodsel,
-      isOverridden: getFamiliehendelseGjeldende(state).erOverstyrt,
+      isAntallBarnEdited: editedStatus.antallBarn,
+      fodselsdatoTps: ownProps.gjeldendeFamiliehendelse.fodselsdato,
+      antallBarnTps: ownProps.gjeldendeFamiliehendelse.antallBarnFodsel,
+      isOverridden: ownProps.gjeldendeFamiliehendelse.erOverstyrt,
     };
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: termindatoFaktaFormName,
 })(TermindatoFaktaForm));

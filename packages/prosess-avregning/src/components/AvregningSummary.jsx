@@ -1,11 +1,13 @@
 import React from 'react';
-import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
+
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+
 import styles from './avregningSummary.less';
 
 /**

@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import {
-  reduxForm, formValueSelector,
+  reduxForm, formValueSelector, isDirty, getFormSyncErrors, isSubmitting,
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -52,9 +53,50 @@ export const behandlingForm = (config = {}) => (WrappedComponent) => {
   return connect(mapStateToProps)(requireProps(['behandlingId', 'behandlingVersjon'], <LoadingPanel />)(WithBehandlingForm));
 };
 
-export const behandlingFormValueSelector = (formName, behandlingId, behandlingVersjon) => (state, ...fieldNames) => {
-  const behandlingFormName = behandlingId && behandlingVersjon
-    ? getBehandlingFormName(behandlingId, behandlingVersjon, formName)
-    : {};
-  return formValueSelector(behandlingFormName)(state, ...fieldNames);
-};
+const getFormName = (formName, behandlingId, behandlingVersjon) => (behandlingId && behandlingVersjon
+  ? getBehandlingFormName(behandlingId, behandlingVersjon, formName)
+  : {});
+
+export const behandlingFormValueSelector = (formName, behandlingId, behandlingVersjon) => (
+  state, ...fieldNames
+) => formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
+
+export const isBehandlingFormDirty = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => isDirty(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const isBehandlingFormSubmitting = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+const getFormState = (state) => state.form;
+const getBehandlingFormRegisteredFields = (formName, behandlingId, behandlingVersjon) => createSelector(
+  [getFormState], (formState = {}) => {
+    const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+    return (formState[behandlingFormId] && formState[behandlingFormId][formName]
+      ? formState[behandlingFormId][formName].registeredFields : {});
+  },
+);
+
+const traverseAndFindValue = (error, idParts) => idParts.reduce((o, i) => (o[i] ? o[i] : []), error);
+
+export const hasBehandlingFormErrorsOfType = (formName, behandlingId, behandlingVersjon, errorMsg) => createSelector(
+  [getBehandlingFormRegisteredFields(formName, behandlingId, behandlingVersjon),
+    getBehandlingFormSyncErrors(formName, behandlingId, behandlingVersjon)],
+  (registeredFields = {}, errors = {}) => {
+    const shownFieldIds = Object.keys(registeredFields).filter((rf) => registeredFields[rf].count > 0);
+
+    return shownFieldIds.some((id) => {
+      const idParts = id.split(/[.|\[|\]]/).filter((parts) => parts && parts !== ''); /* eslint-disable-line no-useless-escape */
+      return Object.keys(errors)
+        .some((errorKey) => {
+          const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
+          return Array.isArray(value) ? value.some((eo) => eo && eo.id === errorMsg[0].id) : false;
+        });
+    });
+  },
+);
