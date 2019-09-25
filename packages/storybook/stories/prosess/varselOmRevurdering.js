@@ -78,7 +78,7 @@ const stories = storiesOf('prosess/VarselOmRevurderingProsessIndex', module)
 stories.add('Vis for Førstegangsbehandling', () => (
   <VarselOmRevurderingProsessIndex
     behandling={behandling}
-    familieHendelse={object('familieHendelse', familieHendelse)}
+    familiehendelse={object('familieHendelse', familieHendelse)}
     soknad={object('soknad', soknad)}
     originalBehandling={object('originalBehandling', originalBehandling)}
     aksjonspunkter={aksjonspunkter}
@@ -98,7 +98,7 @@ stories.add('Vis for Revurdering', () => (
         kode: behandlingType.REVURDERING,
       },
     }}
-    familieHendelse={object('familieHendelse', familieHendelse)}
+    familiehendelse={object('familieHendelse', familieHendelse)}
     soknad={object('soknad', soknad)}
     originalBehandling={object('originalBehandling', originalBehandling)}
     aksjonspunkter={aksjonspunkter}

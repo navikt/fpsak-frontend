@@ -19,7 +19,7 @@ const intl = createIntl({
 
 const VarselOmRevurderingProsessIndex = ({
   behandling,
-  familieHendelse,
+  familiehendelse,
   soknad,
   originalBehandling,
   aksjonspunkter,
@@ -36,7 +36,7 @@ const VarselOmRevurderingProsessIndex = ({
       behandlingArsaker={behandling.behandlingArsaker}
       sprakkode={behandling.sprakkode}
       behandlingType={behandling.type}
-      familieHendelse={familieHendelse}
+      familiehendelse={familiehendelse}
       soknad={soknad}
       originalBehandling={originalBehandling}
       aksjonspunkter={aksjonspunkter}
@@ -51,7 +51,7 @@ const VarselOmRevurderingProsessIndex = ({
 
 VarselOmRevurderingProsessIndex.propTypes = {
   behandling: revurderingBehandlingPropType.isRequired,
-  familieHendelse: revurderingFamilieHendelsePropType.isRequired,
+  familiehendelse: revurderingFamilieHendelsePropType.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
   originalBehandling: revurderingOriginalBehandlingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(revurderingAksjonspunkterPropType).isRequired,

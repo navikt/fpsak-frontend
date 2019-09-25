@@ -266,7 +266,7 @@ const nullSafe = (value) => (value || {});
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const {
-    behandlingId, behandlingVersjon, behandlingType, behandlingArsaker, aksjonspunkter, submitCallback, sprakkode, ventearsak, frist, familieHendelse,
+    behandlingId, behandlingVersjon, behandlingType, behandlingArsaker, aksjonspunkter, submitCallback, sprakkode, ventearsak, frist, familiehendelse,
   } = ownProps;
   const onSubmit = (values) => submitCallback([values]);
   const erAutomatiskRevurdering = behandlingArsaker.reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
@@ -280,9 +280,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     aksjonspunktKode: aksjonspunkt.definisjon.kode,
     begrunnelse: aksjonspunkt.begrunnelse,
     ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'sendVarsel', 'fritekst', 'frist', 'ventearsak'),
-    avklartBarn: nullSafe(familieHendelse.register).avklartBarn,
-    termindato: nullSafe(familieHendelse.gjeldende).termindato,
-    vedtaksDatoSomSvangerskapsuke: nullSafe(familieHendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
+    avklartBarn: nullSafe(familiehendelse.register).avklartBarn,
+    termindato: nullSafe(familiehendelse.gjeldende).termindato,
+    vedtaksDatoSomSvangerskapsuke: nullSafe(familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
     originalVentearsak: ventearsak,
     originalFrist: frist,
     behandlingTypeKode: behandlingType.kode,
