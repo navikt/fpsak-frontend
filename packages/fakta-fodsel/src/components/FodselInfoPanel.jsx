@@ -12,6 +12,7 @@ import {
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
+import fodselOriginalBehandlingPropType from '../propTypes/fodselOriginalBehandlingPropType';
 import fodselPersonopplysningerPropType from '../propTypes/fodselPersonopplysningerPropType';
 import fodselFamilieHendelsePropType from '../propTypes/fodselFamilieHendelsePropType';
 import fodselSoknadPropType from '../propTypes/fodselSoknadPropType';
@@ -202,17 +203,23 @@ FodselInfoPanelImpl.propTypes = {
   dispatch: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
-  avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  termindato: PropTypes.string.isRequired,
-  vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
+  termindato: PropTypes.string,
+  vedtaksDatoSomSvangerskapsuke: PropTypes.string,
   soknad: fodselSoknadPropType.isRequired,
-  originalBehandling: PropTypes.shape().isRequired,
+  originalBehandling: fodselOriginalBehandlingPropType,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   familiehendelse: fodselFamilieHendelsePropType.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
   personopplysninger: fodselPersonopplysningerPropType.isRequired,
+};
+
+FodselInfoPanelImpl.defaultProps = {
+  originalBehandling: undefined,
+  avklartBarn: [],
+  termindato: undefined,
 };
 
 const nullSafe = (value) => (value || {});

@@ -15,7 +15,7 @@ const avklartBarn = [{
 }];
 
 const soknad = {
-  fodselsdatoer: ['2019-01-10'],
+  fodselsdatoer: { 1: '2019-01-10' },
   termindato: '2019-01-01',
   utstedtdato: '2019-01-02',
   antallBarn: 1,

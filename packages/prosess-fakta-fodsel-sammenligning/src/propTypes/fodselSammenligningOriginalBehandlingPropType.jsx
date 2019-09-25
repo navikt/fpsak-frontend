@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const fodselSammenligningOriginalBehandlingPropType = PropTypes.shape({
   soknad: PropTypes.shape({
-    fodselsdatoer: PropTypes.arrayOf(PropTypes.string).isRequired,
+    fodselsdatoer: PropTypes.shape().isRequired,
     antallBarn: PropTypes.number.isRequired,
   }).isRequired,
   familiehendelse: PropTypes.shape({

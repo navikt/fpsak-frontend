@@ -42,11 +42,18 @@ const FodselSammenligningIndex = ({
 
 FodselSammenligningIndex.propTypes = {
   behandlingsTypeKode: PropTypes.string.isRequired,
-  avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  termindato: PropTypes.string.isRequired,
-  vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
+  avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
+  termindato: PropTypes.string,
+  vedtaksDatoSomSvangerskapsuke: PropTypes.string,
   soknad: fodselSammenligningSoknadPropType.isRequired,
-  originalBehandling: fodselSammenligningOriginalBehandlingPropType.isRequired,
+  originalBehandling: fodselSammenligningOriginalBehandlingPropType,
+};
+
+FodselSammenligningIndex.defaultProps = {
+  termindato: undefined,
+  vedtaksDatoSomSvangerskapsuke: undefined,
+  originalBehandling: undefined,
+  avklartBarn: [],
 };
 
 export default FodselSammenligningIndex;

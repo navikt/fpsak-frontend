@@ -2,20 +2,20 @@ import PropTypes from 'prop-types';
 
 const fodselFamilieHendelsePropType = PropTypes.shape({
   register: PropTypes.shape({
-    avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+    avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   }),
   gjeldende: PropTypes.shape({
-    fodselsdato: PropTypes.string.isRequired,
-    termindato: PropTypes.string.isRequired,
-    utstedtdato: PropTypes.string.isRequired,
-    antallBarnTermin: PropTypes.number.isRequired,
-    antallBarnFodsel: PropTypes.number.isRequired,
-    erOverstyrt: PropTypes.bool.isRequired,
-    vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
-    morForSykVedFodsel: PropTypes.bool.isRequired,
-    dokumentasjonForeligger: PropTypes.bool.isRequired,
-    brukAntallBarnFraTps: PropTypes.bool.isRequired,
-    avklartBarn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+    fodselsdato: PropTypes.string,
+    termindato: PropTypes.string,
+    utstedtdato: PropTypes.string,
+    antallBarnTermin: PropTypes.number,
+    antallBarnFodsel: PropTypes.number,
+    erOverstyrt: PropTypes.bool,
+    vedtaksDatoSomSvangerskapsuke: PropTypes.string,
+    morForSykVedFodsel: PropTypes.bool,
+    dokumentasjonForeligger: PropTypes.bool,
+    brukAntallBarnFraTps: PropTypes.bool,
+    avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   }),
 });
 

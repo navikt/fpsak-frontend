@@ -1355,6 +1355,9 @@
   "AdressePanel.utlandSakstype.EøsBosattNorge": "EØS bosatt Norge",
   "AdressePanel.utlandSakstype.BosattUtland": "Bosatt utland",
 
+  "SjekkFodselDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
+  "SjekkFodselDokForm.BrukAntallISoknad": "Bruk antall fra søknad",
+
   "PersonYtelserTable.Ytelser": "Ytelser",
   "PersonYtelserTable.Ytelse": "Ytelse",
   "PersonYtelserTable.Periode": "Periode",

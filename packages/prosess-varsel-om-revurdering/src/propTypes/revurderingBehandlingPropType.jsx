@@ -8,7 +8,7 @@ const revurderingBehandlingPropType = PropTypes.shape({
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape({
     erAutomatiskRevurdering: PropTypes.bool.isRequired,
   })),
-  behandlingType: kodeverkObjektPropType.isRequired,
+  type: kodeverkObjektPropType.isRequired,
   sprakkode: kodeverkObjektPropType.isRequired,
 });
 

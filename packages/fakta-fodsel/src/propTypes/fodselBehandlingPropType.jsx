@@ -5,7 +5,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 const fodselBehandlingPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   versjon: PropTypes.number.isRequired,
-  behandlingType: kodeverkObjektPropType.isRequired,
+  type: kodeverkObjektPropType.isRequired,
 });
 
 export default fodselBehandlingPropType;

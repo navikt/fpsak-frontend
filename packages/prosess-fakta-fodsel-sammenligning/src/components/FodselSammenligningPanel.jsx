@@ -113,13 +113,16 @@ FodselSammenligningPanel.propTypes = {
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   nrOfDodfodteBarn: PropTypes.number.isRequired,
   soknad: fodselSammenligningSoknadPropType.isRequired,
-  originalBehandling: fodselSammenligningOriginalBehandlingPropType.isRequired,
-  termindato: PropTypes.string.isRequired,
-  vedtaksDatoSomSvangerskapsuke: PropTypes.string.isRequired,
+  originalBehandling: fodselSammenligningOriginalBehandlingPropType,
+  termindato: PropTypes.string,
+  vedtaksDatoSomSvangerskapsuke: PropTypes.string,
 };
 
 FodselSammenligningPanel.defaultProps = {
   avklartBarn: [],
+  termindato: undefined,
+  vedtaksDatoSomSvangerskapsuke: undefined,
+  originalBehandling: undefined,
 };
 
 export default injectIntl(FodselSammenligningPanel);

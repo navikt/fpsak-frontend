@@ -57,7 +57,7 @@ FodselFaktaIndex.propTypes = {
   soknad: fodselSoknadPropType.isRequired,
   familiehendelse: fodselFamilieHendelsePropType.isRequired,
   personopplysninger: fodselPersonopplysningerPropType.isRequired,
-  originalBehandling: fodselOriginalBehandlingPropType.isRequired,
+  originalBehandling: fodselOriginalBehandlingPropType,
   aksjonspunkter: PropTypes.arrayOf(fodselAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
@@ -65,6 +65,10 @@ FodselFaktaIndex.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+};
+
+FodselFaktaIndex.defaultProps = {
+  originalBehandling: undefined,
 };
 
 export default FodselFaktaIndex;

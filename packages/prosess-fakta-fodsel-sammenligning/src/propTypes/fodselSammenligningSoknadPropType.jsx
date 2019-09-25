@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 
 const revurderingSoknadPropType = PropTypes.shape({
-  fodselsdatoer: PropTypes.arrayOf(PropTypes.string).isRequired,
-  termindato: PropTypes.string.isRequired,
+  fodselsdatoer: PropTypes.shape().isRequired,
+  termindato: PropTypes.string,
   antallBarn: PropTypes.number.isRequired,
-  utstedtdato: PropTypes.string.isRequired,
+  utstedtdato: PropTypes.string,
 });
 
 export default revurderingSoknadPropType;

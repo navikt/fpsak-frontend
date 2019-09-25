@@ -20,7 +20,7 @@ export class DataFetcherWithCache extends Component {
 }
 
 const mapping = {
-  [BehandlingFpsakApiKeys.PERSONOPPLYSNINGER]: 'soekerPersonopplysninger',
+  [BehandlingFpsakApiKeys.PERSONOPPLYSNINGER]: 'soeker-personopplysninger',
   [BehandlingFpsakApiKeys.SIMULERING_RESULTAT]: 'simuleringResultat',
   [BehandlingFpsakApiKeys.TILBAKEKREVINGVALG]: 'tilbakekrevingvalg',
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
