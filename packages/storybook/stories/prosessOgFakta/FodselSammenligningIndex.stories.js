@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import {
   withKnobs, object, text,
 } from '@storybook/addon-knobs';
@@ -32,11 +31,13 @@ const originalBehandling = {
   },
 };
 
-const stories = storiesOf('prosessOgFakta/FodselSammenligningIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+export default {
+  title: 'prosessOgFakta/FodselSammenligningIndex',
+  component: FodselSammenligningIndex,
+  decorators: [withKnobs, withReduxProvider],
+};
 
-stories.add('Vis panel for når behandlingstype er Revurdering', () => (
+export const visPanelForNårBehandlingstypeErRevurdering = () => (
   <FodselSammenligningIndex
     behandlingsTypeKode={behandlingType.REVURDERING}
     avklartBarn={object('avklartBarn', avklartBarn)}
@@ -45,9 +46,9 @@ stories.add('Vis panel for når behandlingstype er Revurdering', () => (
     soknad={object('soknad', soknad)}
     originalBehandling={object('originalBehandling', originalBehandling)}
   />
-));
+);
 
-stories.add('Vis panel for når behandlingstype er Førstegangssoknad', () => (
+export const visPanelForNårBehandlingstypeErFørstegangssoknad = () => (
   <FodselSammenligningIndex
     behandlingsTypeKode={behandlingType.FORSTEGANGSSOKNAD}
     avklartBarn={object('avklartBarn', avklartBarn)}
@@ -56,4 +57,4 @@ stories.add('Vis panel for når behandlingstype er Førstegangssoknad', () => (
     soknad={object('soknad', soknad)}
     originalBehandling={object('originalBehandling', originalBehandling)}
   />
-));
+);
