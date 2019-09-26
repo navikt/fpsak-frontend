@@ -92,10 +92,6 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling" />
                       </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12">
                       <Normaltekst className={styles.smallPaddingRight}>
                         {`${moment(feilutbetaling.totalPeriodeFom)
                           .format(DDMMYYYY_DATE_FORMAT)} - ${
@@ -111,10 +107,6 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.FeilutbetaltBeløp" />
                       </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12" className={styles.smallPaddingRight}>
                       <Normaltekst className={styles.redText}>
                         {feilutbetaling.aktuellFeilUtbetaltBeløp}
                       </Normaltekst>
@@ -127,10 +119,6 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                       <Undertekst className={styles.undertekstMarginBottom}>
                         <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
                       </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12">
                       <Normaltekst className={styles.smallPaddingRight}>
                         {feilutbetaling.tidligereVarseltBeløp}
                       </Normaltekst>
@@ -165,53 +153,58 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                 </Column>
               </Row>
               <Row>
-                <Column xs="12" md="6">
-                  <Row>
-                    <Column xs="12">
-                      <Undertekst className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
-                      </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12">
-                      <Normaltekst className={styles.smallPaddingRight}>
-                        {feilutbetaling.behandlingÅrsaker.map((ba) => getKodeverknavn(ba.behandlingArsakType)).join(', ')}
-                      </Normaltekst>
-                    </Column>
-                  </Row>
-                  <Row className={styles.smallMarginTop}>
-                    <Column xs="12">
-                      <Undertekst className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
-                      </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12">
-                      <Normaltekst className={styles.smallPaddingRight}>
-                        {`${getKodeverknavn(feilutbetaling.behandlingsresultat.type)}.${feilutbetaling.behandlingsresultat.konsekvenserForYtelsen
-                          .map((ba) => getKodeverknavn(ba)).join(', ')}.${getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}` }
-                      </Normaltekst>
-                    </Column>
-                  </Row>
+                <Column xs="6">
+                  <Undertekst className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Årsaker" />
+                  </Undertekst>
+                  { feilutbetaling.behandlingÅrsaker && (
+                    <Normaltekst className={styles.smallPaddingRight}>
+                      {feilutbetaling.behandlingÅrsaker.map((ba) => getKodeverknavn(ba.behandlingArsakType)).join(', ')}
+                    </Normaltekst>
+                  )}
                 </Column>
-                <Column xs="12" md="6">
-                  <Row>
-                    <Column xs="12">
-                      <Undertekst className={styles.undertekstMarginBottom}>
-                        <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
-                      </Undertekst>
-                    </Column>
-                  </Row>
-                  <Row>
-                    <Column xs="12">
-                      <Normaltekst className={styles.smallPaddingRight}>
-                        {moment(feilutbetaling.datoForRevurderingsvedtak)
-                          .format(DDMMYYYY_DATE_FORMAT)}
-                      </Normaltekst>
-                    </Column>
-                  </Row>
+                <Column xs="6">
+                  <Undertekst className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
+                  </Undertekst>
+                  <Normaltekst className={styles.smallPaddingRight}>
+                    {moment(feilutbetaling.datoForRevurderingsvedtak)
+                      .format(DDMMYYYY_DATE_FORMAT)}
+                  </Normaltekst>
+                </Column>
+              </Row>
+              <Row className={styles.smallMarginTop}>
+                <Column xs="6">
+                  <Undertekst className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Resultat" />
+                  </Undertekst>
+                  {feilutbetaling.behandlingsresultat && (
+                    <Normaltekst className={styles.smallPaddingRight}>
+                      {getKodeverknavn(feilutbetaling.behandlingsresultat.type)}
+                    </Normaltekst>
+                  )}
+                </Column>
+                <Column xs="6">
+                  <Undertekst className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Konsekvens" />
+                  </Undertekst>
+                  {feilutbetaling.behandlingsresultat && (
+                    <Normaltekst className={styles.smallPaddingRight}>
+                      {feilutbetaling.behandlingsresultat.konsekvenserForYtelsen.map((ba) => getKodeverknavn(ba)).join(', ')}
+                    </Normaltekst>
+                  )}
+                </Column>
+              </Row>
+              <Row className={styles.smallMarginTop}>
+                <Column xs="6">
+                  <Undertekst className={styles.undertekstMarginBottom}>
+                    <FormattedMessage id="FeilutbetalingInfoPanel.Tilbakekrevingsvalg" />
+                  </Undertekst>
+                  {feilutbetaling.tilbakekrevingValg && (
+                    <Normaltekst className={styles.smallPaddingRight}>
+                      {getKodeverknavn(feilutbetaling.tilbakekrevingValg.videreBehandling)}
+                    </Normaltekst>
+                  )}
                 </Column>
               </Row>
             </Column>

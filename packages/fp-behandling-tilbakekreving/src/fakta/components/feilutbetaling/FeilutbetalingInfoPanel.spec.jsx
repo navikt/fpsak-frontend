@@ -52,7 +52,7 @@ const getKodeverknavn = (kodeverk) => {
     return 'Endring fra bruker Inntekstmelding Nyeregisteropplysninger';
   }
   if (kodeverk.kode === 'test2') {
-    return 'Innviliget';
+    return 'Innvilget';
   }
   if (kodeverk.kode === '2') {
     return 'Endring i beregning og uttak';
@@ -85,14 +85,15 @@ describe('<FeilutbetalingInfoPanel>', () => {
     />);
 
     const normaltekstfelter = wrapper.find(Normaltekst);
-    expect(normaltekstfelter).length(6);
+    expect(normaltekstfelter).length(8);
 
     expect(normaltekstfelter.first().childAt(0).text()).is.eql('01.09.2018 - 31.01.2019');
     expect(normaltekstfelter.at(1).childAt(0).text()).is.eql('51000');
     expect(normaltekstfelter.at(2).childAt(0).text()).is.eql('49863');
     expect(normaltekstfelter.at(3).childAt(0).text()).is.eql('Endring fra bruker Inntekstmelding Nyeregisteropplysninger');
-    expect(normaltekstfelter.at(4).childAt(0).text()).is.eql('Innviliget.Endring i beregning og uttak, Feilutbetaling med tilbakekreving.Endring'
-      + ' fra bruker Inntekstmelding Nyeregisteropplysninger');
-    expect(normaltekstfelter.at(5).childAt(0).text()).is.eql('04.01.2019');
+    expect(normaltekstfelter.at(4).childAt(0).text()).is.eql('04.01.2019');
+    expect(normaltekstfelter.at(5).childAt(0).text()).is.eql('Innvilget');
+    expect(normaltekstfelter.at(6).childAt(0).text()).is.eql('Endring i beregning og uttak, Feilutbetaling med tilbakekreving');
+    expect(normaltekstfelter.at(7).childAt(0).text()).is.eql('Endring fra bruker Inntekstmelding Nyeregisteropplysninger');
   });
 });
