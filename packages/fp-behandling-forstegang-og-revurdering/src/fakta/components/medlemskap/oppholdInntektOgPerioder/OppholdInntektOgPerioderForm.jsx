@@ -73,7 +73,7 @@ const createNewPerioder = (perioder, id, values) => {
   ];
 };
 
-export class OppholdInntektOgPerioderFormNew extends Component {
+export class OppholdInntektOgPerioderForm extends Component {
   constructor(props) {
     super(props);
 
@@ -205,7 +205,7 @@ export class OppholdInntektOgPerioderFormNew extends Component {
   }
 }
 
-OppholdInntektOgPerioderFormNew.propTypes = {
+OppholdInntektOgPerioderForm.propTypes = {
   intl: PropTypes.shape().isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
@@ -286,4 +286,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
   form: 'OppholdInntektOgPerioderForm',
   enableReinitialize: true,
-})(injectIntl(OppholdInntektOgPerioderFormNew)));
+})(injectIntl(OppholdInntektOgPerioderForm)));

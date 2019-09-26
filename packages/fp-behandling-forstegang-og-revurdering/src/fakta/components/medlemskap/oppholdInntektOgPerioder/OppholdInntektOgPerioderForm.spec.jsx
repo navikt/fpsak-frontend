@@ -6,13 +6,13 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { OppholdInntektOgPerioderFormNew } from './OppholdInntektOgPerioderForm';
+import { OppholdInntektOgPerioderForm } from './OppholdInntektOgPerioderForm';
 
 const perioder = [];
 
 describe('<OppholdInntektOgPerioderForm>', () => {
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{}}
       intl={intlMock}
@@ -48,7 +48,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
@@ -87,7 +87,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
@@ -122,7 +122,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OPPHOLDSRETT}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
@@ -157,7 +157,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
@@ -193,7 +193,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderFormNew
+    const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP}`]: 'test', begrunnelse: 'test' }}
       intl={intlMock}
