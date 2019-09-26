@@ -8,11 +8,11 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton, FaktaGruppe } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   AksjonspunktHelpText, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 

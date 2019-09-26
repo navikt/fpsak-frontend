@@ -5,8 +5,9 @@ import { connect } from 'react-redux';
 
 import { getFeatureToggles, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import {
+  faktaPanelCodes, featureToggle, FaktaEkspandertpanel, withDefaultToggling,
+} from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

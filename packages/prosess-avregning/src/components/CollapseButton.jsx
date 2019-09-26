@@ -2,6 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { NedChevron, OppChevron } from 'nav-frontend-chevron';
+
 import styles from './collapseButton.less';
 
 const buttonText = (showDetails) => (showDetails ? 'Avregning.headerText.VisFærreDetaljer' : 'Avregning.headerText.VisFlereDetaljer');

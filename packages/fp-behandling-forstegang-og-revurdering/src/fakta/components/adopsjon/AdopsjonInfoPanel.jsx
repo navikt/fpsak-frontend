@@ -13,8 +13,9 @@ import DokumentasjonFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/
 import MannAdoptererAleneFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/MannAdoptererAleneFaktaForm';
 import EktefelleFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/adopsjon/EktefelleFaktaForm';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import {
+  faktaPanelCodes, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling,
+} from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';

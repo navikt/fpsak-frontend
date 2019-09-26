@@ -1,0 +1,15 @@
+{
+  "FodselsammenligningPanel.AntallBarn": "Antall barn",
+  "FodselsammenligningPanel.Termindato": "Termindato",
+  "FodselsammenligningPanel.Vedtaksdato": "Vedtaksdato",
+  "FodselsammenligningPanel.Svangerskapsuke": "Svangerskapsuke",
+  "FodselsammenligningPanel.OpplysningerTPS": "Opplysninger om fødsel fra folkeregisteret",
+  "FodselsammenligningPanel.Fodselsdato": "Fødselsdato",
+  "FodselsammenligningPanel.Dodsdato": "Dødsdato",
+  "FodselsammenligningPanel.UstedtDato": "Utstedt dato",
+  "FodselsammenligningPanel.Ytelsesvedtak": "Vedtak",
+  "FodselsammenligningPanel.Dodfodt": "Dødfødsel",
+  "FodselsammenligningPanel.Dod": "Død",
+  "FodselSammenligningOtherPanel.OpplysningerISoknad": "Opplysninger om fødsel fra søknaden",
+  "FodselSammenligningOtherPanel.TerminISoknad": "Opplysninger om termin oppgitt i søknaden"
+}
