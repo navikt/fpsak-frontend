@@ -12,7 +12,10 @@ const intl = createIntl({
   },
 }, createIntlCache());
 
-export default { title: 'sharedComponents/DateLabel' };
+export default {
+  title: 'sharedComponents/DateLabel',
+  component: DateLabel,
+};
 
 export const visFormatertDato = () => (
   <RawIntlProvider value={intl}>

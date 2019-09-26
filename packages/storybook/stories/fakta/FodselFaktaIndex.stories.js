@@ -90,6 +90,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 
 export default {
   title: 'fakta/FodselFaktaIndex',
+  component: FodselFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 

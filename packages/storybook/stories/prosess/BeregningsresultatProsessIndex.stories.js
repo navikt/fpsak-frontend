@@ -27,6 +27,7 @@ const aksjonspunkter = [{
 
 export default {
   title: 'prosess/BeregningsresultatProsessIndex',
+  component: BeregningsresultatProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 

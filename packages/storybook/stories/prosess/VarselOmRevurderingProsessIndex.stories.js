@@ -72,6 +72,7 @@ const aksjonspunkter = [{
 
 export default {
   title: 'prosess/VarselOmRevurderingProsessIndex',
+  component: VarselOmRevurderingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 

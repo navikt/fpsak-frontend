@@ -117,6 +117,7 @@ const toggles = {
 
 export default {
   title: 'prosess/AvregningProsessIndex',
+  component: AvregningProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 

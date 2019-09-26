@@ -13,7 +13,10 @@ const intl = createIntl({
   },
 }, createIntlCache());
 
-export default { title: 'sharedComponents/OkAvbrytModal' };
+export default {
+  title: 'sharedComponents/OkAvbrytModal',
+  component: OkAvbrytModal,
+};
 
 export const visModal = () => (
   <RawIntlProvider value={intl}>

@@ -33,6 +33,7 @@ const originalBehandling = {
 
 export default {
   title: 'prosessOgFakta/FodselSammenligningIndex',
+  component: FodselSammenligningIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
