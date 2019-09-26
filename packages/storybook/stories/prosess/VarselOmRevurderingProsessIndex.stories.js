@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
@@ -71,11 +70,12 @@ const aksjonspunkter = [{
   begrunnelse: undefined,
 }];
 
-const stories = storiesOf('prosess/VarselOmRevurderingProsessIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+export default {
+  title: 'prosess/VarselOmRevurderingProsessIndex',
+  decorators: [withKnobs, withReduxProvider],
+};
 
-stories.add('Vis for Førstegangsbehandling', () => (
+export const visForFørstegangsbehandling = () => (
   <VarselOmRevurderingProsessIndex
     behandling={behandling}
     familiehendelse={object('familieHendelse', familieHendelse)}
@@ -88,9 +88,9 @@ stories.add('Vis for Førstegangsbehandling', () => (
     readOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
   />
-));
+);
 
-stories.add('Vis for Revurdering', () => (
+export const visForRevurdering = () => (
   <VarselOmRevurderingProsessIndex
     behandling={{
       ...behandling,
@@ -108,4 +108,4 @@ stories.add('Vis for Revurdering', () => (
     readOnly={boolean('readOnly', false)}
     alleKodeverk={alleKodeverk}
   />
-));
+);

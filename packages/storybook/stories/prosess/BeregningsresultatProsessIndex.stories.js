@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
@@ -26,11 +25,12 @@ const aksjonspunkter = [{
   begrunnelse: 'test',
 }];
 
-const stories = storiesOf('prosess/BeregningsresultatProsessIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+export default {
+  title: 'prosess/BeregningsresultatProsessIndex',
+  decorators: [withKnobs, withReduxProvider],
+};
 
-stories.add('Saksbehandler kan ikke overstyre', () => (
+export const saksbehandlerKanIkkeOverstyre = () => (
   <BeregningsresultatProsessIndex
     behandling={behandling}
     beregningresultatEngangsstonad={beregningsresultat}
@@ -40,9 +40,9 @@ stories.add('Saksbehandler kan ikke overstyre', () => (
     kanOverstyreAccess={{ isEnabled: false }}
     toggleOverstyring={action('button-click')}
   />
-));
+);
 
-stories.add('Saksbehandler kan overstyre', () => (
+export const saksbehandlerKanOverstyre = () => (
   <BeregningsresultatProsessIndex
     behandling={behandling}
     beregningresultatEngangsstonad={beregningsresultat}
@@ -52,4 +52,4 @@ stories.add('Saksbehandler kan overstyre', () => (
     kanOverstyreAccess={{ isEnabled: true }}
     toggleOverstyring={action('button-click')}
   />
-));
+);
