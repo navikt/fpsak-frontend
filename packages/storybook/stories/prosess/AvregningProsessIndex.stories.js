@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs, object, boolean, array,
@@ -116,11 +115,13 @@ const toggles = {
   'fpsak.simuler-oppdrag-varseltekst': true,
 };
 
-const stories = storiesOf('prosess/AvregningProsessIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+export default {
+  title: 'prosess/AvregningProsessIndex',
+  component: AvregningProsessIndex,
+  decorators: [withKnobs, withReduxProvider],
+};
 
-stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
+export const visAksjonspunktVurderFeilutbetaling = () => (
   <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
@@ -140,9 +141,9 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
     featureToggles={toggles}
   />
-));
+);
 
-stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
+export const visAksjonspunktVurderInntrekk = () => (
   <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
@@ -162,4 +163,4 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_INNTREKK])}
     featureToggles={toggles}
   />
-));
+);

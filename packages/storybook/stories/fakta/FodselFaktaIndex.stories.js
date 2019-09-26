@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
@@ -89,11 +88,13 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
   return togglePanel(exists ? [] : [value]);
 };
 
-const stories = storiesOf('fakta/FodselFaktaIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+export default {
+  title: 'fakta/FodselFaktaIndex',
+  component: FodselFaktaIndex,
+  decorators: [withKnobs, withReduxProvider],
+};
 
-stories.add('Vis aksjonspunkt Terminbekreftelse', () => {
+export const visAksjonspunktTerminbekreftelse = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
   return (
     <FodselFaktaIndex
@@ -113,9 +114,9 @@ stories.add('Vis aksjonspunkt Terminbekreftelse', () => {
       readOnly={boolean('readOnly', false)}
     />
   );
-});
+};
 
-stories.add('Vis aksjonspunkt Sjekk manglende fødsel', () => {
+export const visAksjonspunktSjekkManglendeFødsel = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
   return (
     <FodselFaktaIndex
@@ -140,9 +141,9 @@ stories.add('Vis aksjonspunkt Sjekk manglende fødsel', () => {
       readOnly={boolean('readOnly', false)}
     />
   );
-});
+};
 
-stories.add('Vis aksjonspunkt Vurder om vilkår for sykdom er oppfylt', () => {
+export const visAksjonspunktVurderOmVilkårForSykdomErOppfylt = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
   return (
     <FodselFaktaIndex
@@ -167,9 +168,9 @@ stories.add('Vis aksjonspunkt Vurder om vilkår for sykdom er oppfylt', () => {
       readOnly={boolean('readOnly', false)}
     />
   );
-});
+};
 
-stories.add('Vis panel for fødselssammenligning når det ikke finnes aksjonspunkter', () => {
+export const visPanelForFødselssammenligningNårDetIkkeFinnesAksjonspunkter = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELSVILKARET]);
   return (
     <FodselFaktaIndex
@@ -187,4 +188,4 @@ stories.add('Vis panel for fødselssammenligning når det ikke finnes aksjonspun
       readOnly={boolean('readOnly', false)}
     />
   );
-});
+};
