@@ -35,7 +35,7 @@ const familieHendelse = {
     antallBarnFodsel: 1,
     vedtaksDatoSomSvangerskapsuke: '2019-01-01',
     erOverstyrt: false,
-    morForSykVedFodsel: false,
+    morForSykVedFodsel: true,
     dokumentasjonForeligger: true,
     brukAntallBarnFraTps: true,
     avklartBarn: [{
