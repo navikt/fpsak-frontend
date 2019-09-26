@@ -4,16 +4,13 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 
+import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-
-import styles from './statusForBorgerFaktaPanel.less';
 
 /**
  * StatusForBorgerFaktaPanel
@@ -21,13 +18,10 @@ import styles from './statusForBorgerFaktaPanel.less';
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av borgerstatus (Medlemskapsvilkåret).
  */
 const StatusForBorgerFaktaPanelImpl = ({
-  readOnly,
-  erEosBorger,
-  isBorgerAksjonspunktClosed,
-  apKode,
+  readOnly, erEosBorger, isBorgerAksjonspunktClosed, apKode,
 }) => (
   <FaktaGruppe aksjonspunktCode={apKode} titleCode="StatusForBorgerFaktaPanel.ApplicationInformation">
-    <RadioGroupField className={styles.radioGroup} name="erEosBorger" validate={[required]} readOnly={readOnly}>
+    <RadioGroupField name="erEosBorger" validate={[required]} readOnly={readOnly}>
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenEEA' }} value />
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenOutsideEEA' }} value={false} />
     </RadioGroupField>
@@ -79,7 +73,6 @@ const StatusForBorgerFaktaPanelImpl = ({
   </FaktaGruppe>
 );
 
-
 StatusForBorgerFaktaPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erEosBorger: PropTypes.bool,
@@ -91,35 +84,40 @@ StatusForBorgerFaktaPanelImpl.defaultProps = {
   erEosBorger: undefined,
 };
 
-const StatusForBorgerFaktaPanel = connect((state) => ({
-  ...behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
+const StatusForBorgerFaktaPanel = connect((state, ownProps) => ({
+  ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
 }))(StatusForBorgerFaktaPanelImpl);
 
 const getApKode = (aksjonspunkter) => aksjonspunkter
   .map((ap) => ap.definisjon.kode)
   .filter((kode) => kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)[0];
 
-const getEosBorger = (medlem, aksjonspunkter) => (medlem.erEosBorger || medlem.erEosBorger === false
-  ? medlem.erEosBorger
+const getEosBorger = (periode, aksjonspunkter) => (periode.erEosBorger || periode.erEosBorger === false
+  ? periode.erEosBorger
   : aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT));
 
-const getOppholdsrettVurdering = (medlem) => (medlem.oppholdsrettVurdering
-  || medlem.oppholdsrettVurdering === false ? medlem.oppholdsrettVurdering : undefined);
+const getOppholdsrettVurdering = (periode) => (periode.oppholdsrettVurdering
+|| periode.oppholdsrettVurdering === false ? periode.oppholdsrettVurdering : undefined);
 
-const getLovligOppholdVurdering = (medlem) => (medlem.lovligOppholdVurdering || medlem.lovligOppholdVurdering === false
-  ? medlem.lovligOppholdVurdering : undefined);
+const getLovligOppholdVurdering = (periode) => (periode.lovligOppholdVurdering || periode.lovligOppholdVurdering === false
+  ? periode.lovligOppholdVurdering : undefined);
 
-StatusForBorgerFaktaPanel.buildInitialValues = (medlem, aksjonspunkter) => {
-  const erEosBorger = getEosBorger(medlem, aksjonspunkter);
+StatusForBorgerFaktaPanel.buildInitialValues = (periode, aksjonspunkter) => {
+  const erEosBorger = getEosBorger(periode, aksjonspunkter);
+
   const closedAp = aksjonspunkter
-    .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT || ap.definisjon.kode === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)
+    .filter((ap) => periode.aksjonspunkter.includes(ap.definisjon.kode)
+      || (periode.aksjonspunkter.length > 0
+        && periode.aksjonspunkter.some((pap) => pap === aksjonspunktCodes.AVKLAR_OPPHOLDSRETT
+          || pap === aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD)
+        && ap.definisjon.kode === aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP))
     .filter((ap) => !isAksjonspunktOpen(ap.status.kode));
 
   return {
     erEosBorger,
     isBorgerAksjonspunktClosed: closedAp.length > 0,
-    oppholdsrettVurdering: erEosBorger ? getOppholdsrettVurdering(medlem) : undefined,
-    lovligOppholdVurdering: erEosBorger === false ? getLovligOppholdVurdering(medlem) : undefined,
+    oppholdsrettVurdering: erEosBorger ? getOppholdsrettVurdering(periode) : undefined,
+    lovligOppholdVurdering: erEosBorger === false ? getLovligOppholdVurdering(periode) : undefined,
     apKode: getApKode(aksjonspunkter),
   };
 };

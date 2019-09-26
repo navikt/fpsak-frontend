@@ -12,7 +12,7 @@ import {
   getBehandlingStartDatoForPermisjon,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {
   dateAfterOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
@@ -32,7 +32,7 @@ export const FortsattMedlemskapFaktaPanelImpl = ({
   skjaringstidspunkt,
   changedOpplysninger,
 }) => (
-  <ElementWrapper>
+  <>
     <VerticalSpacer sixteenPx />
     <Row>
       <Column xs="1" />
@@ -65,7 +65,7 @@ export const FortsattMedlemskapFaktaPanelImpl = ({
         })}
       </Column>
     </Row>
-  </ElementWrapper>
+  </>
 );
 
 

@@ -3,16 +3,15 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { getFeatureToggles, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  faktaPanelCodes, featureToggle, FaktaEkspandertpanel, withDefaultToggling,
+  faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling,
 } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
-import OppholdInntektOgPerioderFormNew from './oppholdInntektOgPerioderNew/OppholdInntektOgPerioderForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 
 const {
@@ -56,7 +55,6 @@ export const MedlemskapInfoPanelImpl = ({
   aksjonspunkterMinusAvklarStartDato,
   readOnly,
   submitCallback,
-  skalBrukeNyeMedlemskap,
   isForeldrepenger,
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
@@ -83,24 +81,15 @@ export const MedlemskapInfoPanelImpl = ({
           <VerticalSpacer twentyPx />
         </>
         )}
-      { (skalBrukeNyeMedlemskap && !hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
+      { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
         && (
-        <OppholdInntektOgPerioderFormNew
-          readOnly={readOnly}
-          submitCallback={submitCallback}
-          submittable={submittable}
-          aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
-        />
-        )}
-      { (!skalBrukeNyeMedlemskap && !hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
-      && (
         <OppholdInntektOgPerioderForm
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
           aksjonspunkter={aksjonspunkterMinusAvklarStartDato}
         />
-      )}
+        )}
     </FaktaEkspandertpanel>
   );
 };
@@ -118,19 +107,16 @@ MedlemskapInfoPanelImpl.propTypes = {
   aksjonspunkterMinusAvklarStartDato: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  skalBrukeNyeMedlemskap: PropTypes.bool,
   isForeldrepenger: PropTypes.bool,
 };
 
 MedlemskapInfoPanelImpl.defaultProps = {
-  skalBrukeNyeMedlemskap: false,
   isForeldrepenger: true,
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode));
   return (state) => ({
-    skalBrukeNyeMedlemskap: getFeatureToggles(state)[featureToggle.LØPENDE_MEDLESMKAP],
     isForeldrepenger: isForeldrepengerFagsak(state),
     aksjonspunkterMinusAvklarStartDato,
   });
