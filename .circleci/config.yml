@@ -52,7 +52,7 @@ jobs:
           command: yarn install --ignore-optional --no-progress --frozen-lockfile
       - run:
           name: Run linting and tests
-          command: yarn less:lint && yarn test
+          command: yarn less:lint
       - run:
           name: Build
           command: yarn build
@@ -77,7 +77,7 @@ jobs:
             - ./dist
             - ./k8s
 
-  coverage:
+  test-and-coverage:
     docker:
       - image: circleci/node:latest
     working_directory: ~/repo
@@ -93,7 +93,7 @@ jobs:
           name: Run yarn install
           command: yarn install --ignore-optional --no-progress --frozen-lockfile
       - run:
-          name: Run Test Coverage
+          name: Run Test and coverage
           command: yarn test:coverage
       - save_cache:
           name: Save Yarn Package Cache
@@ -120,12 +120,12 @@ jobs:
             cp -r /tmp/workspace/coverage ~/repo/coverage
             cp -r /tmp/workspace/.nyc_output ~/repo/.nyc_output
       - run:
-          name: Install Sonar
+          name: Install Sonar Scanner
           command: yarn global add sonarqube-scanner
       - run:
-          name: Run Test Coverage
+          name: Run Sonar Scanner
           halt_build_on_fail: false
-          command: $(yarn global bin)/sonar-scanner -Dsonar.login=$SONAR_TOKEN
+          command: $(yarn global bin)/sonar-scanner -Dsonar.login=$SONAR_TOKEN -Dproject.settings=./.sonarcloud.properties
 
   build-docker:
     executor: docker-publisher
@@ -230,7 +230,7 @@ workflows:
           context: familie-ci
           requires:
             - verify
-      - coverage:
+      - test-and-coverage:
           requires:
             - verify
       - build-docker:
@@ -239,8 +239,7 @@ workflows:
             - build
       - publish-sonar:
           requires:
-            - coverage
-            - build-docker
+            - test-and-coverage
           filters:
             branches:
               only: master
@@ -248,7 +247,7 @@ workflows:
           context: NAIS deployment
           requires:
             - build-docker
-            - coverage
+            - test-and-coverage
           filters:
             branches:
               only: master
@@ -256,7 +255,7 @@ workflows:
           context: familie-ci
           requires:
             - build-docker
-            - coverage
+            - test-and-coverage
           filters:
             branches:
               only: master
