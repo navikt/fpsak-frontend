@@ -146,6 +146,13 @@ const beregningAksjonspunkter = [
   aksjonspunktCodes.VURDER_DEKNINGSGRAD,
 ];
 
+const papirsoknadAksjonspunkter = [
+  aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD,
+  aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_FORELDREPENGER,
+  aksjonspunktCodes.REGISTRER_PAPIR_ENDRINGSØKNAD_FORELDREPENGER,
+  aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_SVANGERSKAPSPENGER,
+];
+
 const aksjonspunktIsOfType = (validAksjonspunktCodes) => (aksjonspunktCode) => validAksjonspunktCodes.includes(aksjonspunktCode);
 
 export const hasAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCode);
@@ -155,5 +162,6 @@ export const isBGAksjonspunktSomGirFritekstfelt = aksjonspunktIsOfType(beregning
 export const isVilkarForSykdomOppfylt = aksjonspunktIsOfType(isVilkarForSykdomOppfyltAksjonspunkter);
 export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);
 export const isBeregningAksjonspunkt = aksjonspunktIsOfType(beregningAksjonspunkter);
+export const isPapirsoknadAksjonspunkt = aksjonspunktIsOfType(papirsoknadAksjonspunkter);
 
 export default aksjonspunktCodes;

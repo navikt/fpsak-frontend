@@ -3,7 +3,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatusCode from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { isObject, without } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { isPapirsoknadAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 const allFagsakStatuses = Object.values(fagsakStatusCode);
@@ -52,7 +52,7 @@ export const henleggBehandlingAccess = accessSelector(
 const settBehandlingPaVentAccessSelector = (navAnsatt, soknad, aksjonspunkter, type) => {
   const hasSoknad = isObject(soknad);
   const isInnhentSoknadopplysningerSteg = aksjonspunkter
-    ? aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.definisjon.kode === aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD) : false;
+    ? aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && isPapirsoknadAksjonspunkt(ap.definisjon.kode)) : false;
   const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
     ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN || type.kode === BehandlingType.TILBAKEKREVING
     : false;
