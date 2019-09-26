@@ -6,7 +6,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -18,7 +18,6 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
 import { getAlleKodeverk, getFagsakPerson, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';

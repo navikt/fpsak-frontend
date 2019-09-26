@@ -4,8 +4,7 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { FodselOgTilretteleggingInfoPanelImpl } from './FodselOgTilretteleggingInfoPanel';
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 

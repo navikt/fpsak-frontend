@@ -26,7 +26,7 @@ const aksjonspunkter = [{
   begrunnelse: 'test',
 }];
 
-const stories = storiesOf('BeregningsresultatProsessIndex', module)
+const stories = storiesOf('prosess/BeregningsresultatProsessIndex', module)
   .addDecorator(withKnobs)
   .addDecorator(withReduxProvider);
 
@@ -36,9 +36,9 @@ stories.add('Saksbehandler kan ikke overstyre', () => (
     beregningresultatEngangsstonad={beregningsresultat}
     aksjonspunkter={aksjonspunkter}
     overrideReadOnly={false}
-    submitCallback={() => undefined}
+    submitCallback={action('button-click')}
     kanOverstyreAccess={{ isEnabled: false }}
-    toggleOverstyring={() => undefined}
+    toggleOverstyring={action('button-click')}
   />
 ));
 

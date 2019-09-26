@@ -5,7 +5,7 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
+import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';

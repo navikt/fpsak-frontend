@@ -12,6 +12,9 @@ import {
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
+
+// TODO (TOR) Denne skal fjernast når alle komponentar er flytta.
+
 const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields, hasOpenAksjonspunkter) => {
   if (!isSubmittable || isSubmitting) {
     return true;

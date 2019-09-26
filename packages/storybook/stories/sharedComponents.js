@@ -15,7 +15,7 @@ const intl = createIntl({
   },
 }, createIntlCache());
 
-storiesOf('OkAvbrytModal', module)
+storiesOf('sharedComponents/OkAvbrytModal', module)
   .add('vis modal', () => (
     <RawIntlProvider value={intl}>
       <OkAvbrytModal
@@ -28,7 +28,7 @@ storiesOf('OkAvbrytModal', module)
     </RawIntlProvider>
   ));
 
-storiesOf('DateLabel', module)
+storiesOf('sharedComponents/DateLabel', module)
   .add('vis formatert dato', () => (
     <RawIntlProvider value={intl}>
       <DateLabel
@@ -37,7 +37,7 @@ storiesOf('DateLabel', module)
     </RawIntlProvider>
   ));
 
-storiesOf('ArrowBox', module)
+storiesOf('sharedComponents/ArrowBox', module)
   .add('med pil på toppen', () => (
     <div style={{ width: '200px', marginTop: '20px' }}>
       <ArrowBox>Dette er en tekst</ArrowBox>

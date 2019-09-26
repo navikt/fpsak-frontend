@@ -2,8 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-behandling-felles';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { buildInitialValues, OpptjeningInfoPanelImpl } from './OpptjeningInfoPanel';

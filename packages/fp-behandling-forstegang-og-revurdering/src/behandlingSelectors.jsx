@@ -5,9 +5,9 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { isFieldEdited } from '@fpsak-frontend/fp-felles';
 
 import commonBehandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
-import isFieldEdited from './util/isFieldEdited';
 import { getFagsakYtelseType } from './duckBehandlingForstegangOgRev';
 
 // TODO (TOR) Flytt og grupper alle selectors i filer under ./selectors

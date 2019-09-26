@@ -486,7 +486,7 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: formName,
   enableReinitialize: true,
-})(injectIntl(AvregningPanelImpl))));
+})(injectIntl(AvregningPanelImpl)));

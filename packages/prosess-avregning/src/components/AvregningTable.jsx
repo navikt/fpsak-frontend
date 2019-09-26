@@ -1,13 +1,16 @@
 import React from 'react';
 import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
-import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 import moment from 'moment/moment';
+import { Normaltekst } from 'nav-frontend-typografi';
+
+import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { formatCurrencyNoKr, getRangeOfMonths } from '@fpsak-frontend/utils';
+import mottakerTyper from '@fpsak-frontend/kodeverk/src/mottakerTyper';
+
 import CollapseButton from './CollapseButton';
+
 import styles from './avregningTable.less';
 
 const classNames = classnames.bind(styles);

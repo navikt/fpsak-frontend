@@ -8,9 +8,10 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { getBehandlingVerge } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, faktaPanelCodes,
+} from '@fpsak-frontend/fp-felles';
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';

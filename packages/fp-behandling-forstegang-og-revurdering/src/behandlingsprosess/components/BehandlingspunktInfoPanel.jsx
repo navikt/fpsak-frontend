@@ -6,22 +6,22 @@ import { bindActionCreators } from 'redux';
 
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
+import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-import { getFeatureToggles, getFagsakInfo } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
-import VarselOmRevurderingForm from './revurdering/VarselOmRevurderingForm';
 import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
-import DataFetcherWithCache from '../DataFetcherWithCache';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './behandlingspunktInfoPanel.less';
 
@@ -29,6 +29,7 @@ const classNames = classnames.bind(styles);
 
 const avregningData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SIMULERING_RESULTAT, fpsakApi.TILBAKEKREVINGVALG];
 const beregningsresultatData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD];
+const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.ORIGINAL_BEHANDLING];
 
 
 /*
@@ -55,6 +56,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   kanOverstyreAccess,
   behandlingspunktAksjonspunkter,
   toggleOverstyring,
+  alleKodeverk,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
@@ -92,14 +94,23 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
 
       {CheckPersonStatusForm.supports(apCodes)
       && <CheckPersonStatusForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />}
-      {VarselOmRevurderingForm.supports(apCodes)
-      && (
-      <VarselOmRevurderingForm
-        submitCallback={submitCallback}
-        previewCallback={previewCallback}
-        dispatchSubmitFailed={dispatchSubmitFailed}
-        readOnly={readOnly}
-      />
+
+      {selectedBehandlingspunkt === behandlingspunktCodes.VARSEL && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={revurderingData}
+          render={(props) => (
+            <VarselOmRevurderingProsessIndex
+              submitCallback={submitCallback}
+              previewCallback={previewCallback}
+              dispatchSubmitFailed={dispatchSubmitFailed}
+              readOnly={readOnly}
+              aksjonspunkter={behandlingspunktAksjonspunkter}
+              alleKodeverk={alleKodeverk}
+              {...props}
+            />
+          )}
+        />
       )}
       {BeregningFP.supports(selectedBehandlingspunkt)
       && (
@@ -177,6 +188,7 @@ BehandlingspunktInfoPanel.propTypes = {
   fagsakInfo: PropTypes.shape().isRequired,
   featureToggles: PropTypes.shape().isRequired,
   kanOverstyreAccess: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   toggleOverstyring: PropTypes.func.isRequired,
 };
 
@@ -195,6 +207,7 @@ const mapStateToProps = (state) => ({
   notAcceptedByBeslutter: behandlingsprosessSelectors.getNotAcceptedByBeslutter(state),
   overrideReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
   kanOverstyreAccess: behandlingSelectors.getRettigheter(state).kanOverstyreAccess,
+  alleKodeverk: getAlleKodeverk(state),
   fagsakInfo: getFagsakInfo(state),
   featureToggles: getFeatureToggles(state),
 });
