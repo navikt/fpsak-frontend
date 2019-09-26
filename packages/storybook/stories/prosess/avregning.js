@@ -112,6 +112,10 @@ const tilbakekrevingvalg = {
   varseltekst: 'varsel-eksempel',
 };
 
+const toggles = {
+  'fpsak.simuler-oppdrag-varseltekst': true,
+};
+
 const stories = storiesOf('prosess/AvregningProsessIndex', module)
   .addDecorator(withKnobs)
   .addDecorator(withReduxProvider);
@@ -134,7 +138,7 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
-    featureToggles={{}}
+    featureToggles={toggles}
   />
 ));
 
@@ -156,6 +160,6 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_INNTREKK])}
-    featureToggles={{}}
+    featureToggles={toggles}
   />
 ));
