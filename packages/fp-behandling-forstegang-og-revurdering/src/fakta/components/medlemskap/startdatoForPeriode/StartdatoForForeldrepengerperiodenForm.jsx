@@ -85,7 +85,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
         buttonTextId={!hasOpenAksjonspunkt ? 'StartdatoForForeldrepengerperiodenForm.Oppdater' : undefined}
         formName={formProps.form}
         isSubmittable={submittable}
-        isReadOnly={readOnly}
+        isReadOnly={readOnly && overstyringDisabled}
         hasOpenAksjonspunkter={hasOpenAksjonspunkt}
       />
     </form>
