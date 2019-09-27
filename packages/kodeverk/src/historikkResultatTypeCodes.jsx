@@ -84,6 +84,10 @@ const historikkResultatTypeCodes = {
     kode: 'INGEN_TILBAKEBETALING',
     feltId: 'HistorikkResultat.IngenTilbakebetaling',
   },
+  MIGRERT_FRA_INFOTRYGD: {
+    kode: 'MIGRERT_FRA_INFOTRYGD',
+    feltId: 'HistorikkResultat.MigrertFraInfotrygd',
+  },
 };
 
 export default historikkResultatTypeCodes;
