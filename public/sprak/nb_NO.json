@@ -274,6 +274,8 @@
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
   "FeilutbetalingInfoPanel.Årsaker": "Årsak(er) til revurdering",
   "FeilutbetalingInfoPanel.DatoForRevurdering": "Dato for revurderingsvedtak",
+  "FeilutbetalingInfoPanel.Konsekvens": "Konsekvens",
+  "FeilutbetalingInfoPanel.Tilbakekrevingsvalg": "Tilbakekrevingsvalg",
   "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
   "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
   "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
