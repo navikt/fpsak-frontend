@@ -77,6 +77,9 @@
   "Avregning.ApenTilbakekrevingsbehandling": "Det foreligger en åpen tilbakekrevingsbehandling, endringer i vedtaket vil automatisk oppdatere eksisterende feilutbetalte perioder og beløp.",
 
   "Malform.Beskrivelse": "Foretrukket språk",
+  "Malform.Bokmal": "Bokmål",
+  "Malform.Nynorsk": "Nynorsk",
+  "Malform.Engelsk": "Engelsk",
   "Messages.PreviewText": "Forhåndsvis varselbrev",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "HelpText.Aksjonspunkt": "Aksjonspunkt",

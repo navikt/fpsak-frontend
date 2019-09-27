@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 
-import { behandlingspunktCodes, featureToggle } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -66,10 +66,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
     vilkarene: [sokersOpplysningspliktVilkar],
   };
 
-  const featureToggles = {
-    [featureToggle.LØPENDE_MEDLESMKAP]: false,
-  };
-
   it('skal alltid vise behandlingspunktene for beregning, uttak, tilkjent-ytelse og vedtak når det finnes minst ett annet behandlingspunkt', () => {
     const builderData = {
       behandlingType: {
@@ -80,7 +76,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -98,7 +93,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -116,7 +110,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -148,7 +141,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -177,7 +169,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       },
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -210,7 +201,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
       uttaksresultat: {
         perioderSøker: [{
           periodeResultatType: {
@@ -247,7 +237,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         }],
       },
       stonadskontoer: {},
-      featureToggles,
       uttaksresultat: {
         perioderSøker: [{
           periodeResultatType: {
@@ -294,7 +283,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
         }],
       },
       stonadskontoer: {},
-      featureToggles,
       uttaksresultat: {
         perioderSøker: [{
           periodeResultatType: {
@@ -336,7 +324,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -361,7 +348,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);
@@ -383,7 +369,6 @@ describe('Definisjon av behandlingspunkter - Foreldrepenger', () => {
       behandlingsresultat: {},
       resultatstruktur: undefined,
       stonadskontoer: undefined,
-      featureToggles,
     };
 
     const bpPropList = createForeldrepengerBpProps(builderData);

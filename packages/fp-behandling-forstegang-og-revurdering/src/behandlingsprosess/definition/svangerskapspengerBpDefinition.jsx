@@ -1,5 +1,5 @@
 import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingspunktCodes as bpc, featureToggle } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -10,7 +10,6 @@ import getVedtakStatus from './vedtakStatusUtleder';
 
 const getStatusFromResultatstruktur = ({ resultatstruktur }) => (resultatstruktur && resultatstruktur.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT);
 
-const behandlingTypeEquals = (...behandlingTypes) => ({ behandlingType }) => behandlingTypes.some((b) => b === behandlingType.kode);
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
 const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
@@ -19,7 +18,6 @@ const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspu
   return !(isRevurdering && !hasAp);
 };
 
-const hasLøpendeMedlemskapOn = ({ featureToggles }) => featureToggles[featureToggle.LØPENDE_MEDLESMKAP];
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
  * @see BehandlingspunktProperties.Builder for mer informasjon.
@@ -55,8 +53,7 @@ const svangerskapspengerBuilders = [
     .withAksjonspunktCodes(ac.VURDER_SOKNADSFRIST_FORELDREPENGER),
   new BehandlingspunktProperties.Builder(bpc.FORTSATTMEDLEMSKAP, 'FortsattMedlemskap')
     .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
-    .withAksjonspunktCodes(ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR)
-    .withVisibilityWhen(behandlingTypeEquals(bt.REVURDERING), hasLøpendeMedlemskapOn),
+    .withAksjonspunktCodes(ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR),
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)

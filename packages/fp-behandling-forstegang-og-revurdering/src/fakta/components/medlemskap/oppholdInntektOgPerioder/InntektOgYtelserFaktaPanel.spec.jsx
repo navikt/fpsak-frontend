@@ -46,8 +46,8 @@ describe('<InntektOgYtelserFaktaPanel>', () => {
     const person = {
       navn: 'Espen Utvikler',
     };
-    const medlem = {
-      inntekt: [{
+    const inntekt = [
+      {
         navn: 'Espen Utvikler',
         utbetaler: 'Steria',
         fom: '2017-07-20',
@@ -65,10 +65,10 @@ describe('<InntektOgYtelserFaktaPanel>', () => {
         fom: '2017-08-20',
         tom: '2017-08-31',
         belop: 1,
-      }],
-    };
+      },
+    ];
 
-    const initialValues = InntektOgYtelserFaktaPanel.buildInitialValues(person, medlem);
+    const initialValues = InntektOgYtelserFaktaPanel.buildInitialValues(person, inntekt);
 
     expect(initialValues).to.eql({
       inntekter: [{

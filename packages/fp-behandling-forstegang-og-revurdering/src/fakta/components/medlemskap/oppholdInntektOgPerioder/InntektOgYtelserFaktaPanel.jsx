@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
 import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   PeriodLabel, Table, TableColumn, TableRow,
@@ -25,21 +24,27 @@ const headerTextCodes = [
  * Presentasjonskomponent. Er tilknyttet faktapanelet for medlemskap.
  * Viser inntektene relevante for søker. ReadOnly.
  */
-const InntektOgYtelserFaktaPanelImpl = ({
-  inntekter,
-}) => {
+const InntektOgYtelserFaktaPanelImpl = ({ inntekter, intl }) => {
   if (!inntekter || inntekter.length === 0) {
     return (
-      <FaktaGruppe titleCode="InntektOgYtelserFaktaPanel.ApplicationInformation">
+      <Ekspanderbartpanel
+        tittel={intl.formatMessage({ id: 'InntektOgYtelserFaktaPanel.ApplicationInformation' })}
+        tittelProps="element"
+        border
+      >
         <Normaltekst>
           <FormattedMessage id="InntektOgYtelserFaktaPanel.NoInformation" />
         </Normaltekst>
-      </FaktaGruppe>
+      </Ekspanderbartpanel>
     );
   }
 
   return (
-    <FaktaGruppe titleCode="InntektOgYtelserFaktaPanel.ApplicationInformation">
+    <Ekspanderbartpanel
+      tittel={intl.formatMessage({ id: 'InntektOgYtelserFaktaPanel.ApplicationInformation' })}
+      tittelProps="element"
+      border
+    >
       <Table headerTextCodes={headerTextCodes}>
         {inntekter.map((inntekt) => {
           const key = inntekt.person + inntekt.employer + inntekt.fom + inntekt.tom + inntekt.amount;
@@ -61,32 +66,33 @@ const InntektOgYtelserFaktaPanelImpl = ({
           );
         })}
       </Table>
-    </FaktaGruppe>
+    </Ekspanderbartpanel>
   );
 };
 
 InntektOgYtelserFaktaPanelImpl.propTypes = {
   inntekter: PropTypes.arrayOf(PropTypes.shape()),
+  intl: PropTypes.shape().isRequired,
 };
 
 InntektOgYtelserFaktaPanelImpl.defaultProps = {
   inntekter: [],
 };
 
-const InntektOgYtelserFaktaPanel = connect((state) => ({
-  inntekter: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
-}))(InntektOgYtelserFaktaPanelImpl);
+const InntektOgYtelserFaktaPanel = connect((state, ownProps) => ({
+  inntekter: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'inntekter'),
+}))(injectIntl(InntektOgYtelserFaktaPanelImpl));
 
 const sortInntekter = (inntekt1, inntekt2) => {
   const nameDiff = inntekt1.person.localeCompare(inntekt2.person);
   return nameDiff === 0 ? moment(inntekt2.fom, ISO_DATE_FORMAT).diff(moment(inntekt1.fom, ISO_DATE_FORMAT)) : nameDiff;
 };
 
-InntektOgYtelserFaktaPanel.buildInitialValues = (person, medlem) => {
-  if (medlem === null || medlem.inntekt === null) {
+InntektOgYtelserFaktaPanel.buildInitialValues = (person, inntekt) => {
+  if (inntekt === null) {
     return [];
   }
-  const inntekter = medlem.inntekt
+  const inntekter = inntekt
     .map((i) => ({
       person: i.navn,
       employer: i.utbetaler,

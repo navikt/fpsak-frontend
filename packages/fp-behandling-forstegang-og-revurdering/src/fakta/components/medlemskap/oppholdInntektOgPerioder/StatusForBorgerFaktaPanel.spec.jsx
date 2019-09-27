@@ -47,7 +47,9 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal sette initielle verdi når det er EØS borger og ingen vurdering er lagret', () => {
-    const medlem = {};
+    const periode = {
+      aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -57,7 +59,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       },
     },
     ];
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(medlem, aksjonspunkter);
+    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
     expect(initialValues).to.eql({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -69,14 +71,15 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal sette initielle verdi når det er EØS borger og vurdering er lagret', () => {
-    const medlem = {
+    const periode = {
+      aksjonspunkter: [],
       erEosBorger: true,
       oppholdsrettVurdering: true,
     };
 
     const aksjonspunkter = [];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(medlem, aksjonspunkter);
+    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
     expect(initialValues).to.eql({
       apKode: undefined,
@@ -88,7 +91,9 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal sette initielle verdi når regionkode ikke finnes men en har oppholdsrett-aksjonspunkt', () => {
-    const medlem = { };
+    const periode = {
+      aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
+    };
     const aksjonspunkter = [{
       definisjon: {
         kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -98,7 +103,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       },
     }];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(medlem, aksjonspunkter);
+    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
     expect(initialValues).to.eql({
       apKode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
@@ -110,13 +115,14 @@ describe('<StatusForBorgerFaktaPanel>', () => {
   });
 
   it('skal sette initielle verdi når det ikke er EØS borger', () => {
-    const medlem = {
+    const periode = {
+      aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
       erEosBorger: false,
       lovligOppholdVurdering: false,
     };
     const aksjonspunkter = [];
 
-    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(medlem, aksjonspunkter);
+    const initialValues = StatusForBorgerFaktaPanel.buildInitialValues(periode, aksjonspunkter);
 
     expect(initialValues).to.eql({
       apKode: undefined,

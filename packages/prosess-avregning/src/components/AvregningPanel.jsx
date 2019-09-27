@@ -115,7 +115,6 @@ export class AvregningPanelImpl extends Component {
     this.toggleDetails = this.toggleDetails.bind(this);
     this.resetFields = this.resetFields.bind(this);
     this.previewMessage = this.previewMessage.bind(this);
-    this.textVarselBox = React.createRef();
 
     this.state = {
       showDetails: [],
@@ -182,7 +181,6 @@ export class AvregningPanelImpl extends Component {
       readOnly,
       erTilbakekrevingVilkårOppfylt,
       grunnerTilReduksjon,
-      videreBehandling,
       sprakkode,
       featureVarseltekst,
       previewCallback,
@@ -191,12 +189,6 @@ export class AvregningPanelImpl extends Component {
       ...formProps
     } = this.props;
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
-    const varselBoxHeight = this.textVarselBox.current ? this.textVarselBox.current.clientHeight : null;
-    const inlineStyle = {
-      radioOption: {
-        height: (videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD && featureVarseltekst) ? varselBoxHeight + 45 : 'auto',
-      },
-    };
 
     return (
       <FadingPanel>
@@ -266,58 +258,56 @@ export class AvregningPanelImpl extends Component {
                           <RadioOption
                             label={<FormattedMessage id="Avregning.gjennomfør" />}
                             value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
-                            style={inlineStyle.radioOption}
-                          />
+                          >
+                            <>
+                              {featureVarseltekst && (
+                                <div className={styles.varsel}>
+                                  <ArrowBox alignOffset={20}>
+                                    <Row>
+                                      <Column sm="10">
+                                        <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
+                                      </Column>
+                                      <Column sm="2">
+                                        <Image
+                                          tabIndex="0"
+                                          src={questionNormalUrl}
+                                          srcHover={questionHoverUrl}
+                                          alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
+                                          tooltip={createHelptextTooltip(isForeldrepenger)}
+                                        />
+                                      </Column>
+                                    </Row>
+                                    <VerticalSpacer eightPx />
+                                    <TextAreaField
+                                      name="varseltekst"
+                                      label={{ id: 'Avregning.fritekst' }}
+                                      validate={[required, minLength3, maxLength1500, hasValidText]}
+                                      maxLength={1500}
+                                      readOnly={readOnly}
+                                      id="avregningFritekst"
+                                      badges={[{
+                                        type: 'fokus',
+                                        textId: getLanguageCodeFromSprakkode(sprakkode),
+                                        title: 'Malform.Beskrivelse',
+                                      }]}
+                                    />
+                                    <VerticalSpacer fourPx />
+                                    <a
+                                      href=""
+                                      onClick={(e) => {
+                                        this.previewMessage(e, previewCallback);
+                                      }}
+                                      className={styles.previewLink}
+                                    >
+                                      <FormattedMessage id="Messages.PreviewText" />
+                                    </a>
+                                  </ArrowBox>
+                                </div>
+                              )}
+                            </>
+                          </RadioOption>
                           <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER} />
                         </RadioGroupField>
-                        { videreBehandling === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD && featureVarseltekst
-                        && (
-                          <div
-                            className={styles.varsel}
-                            ref={this.textVarselBox}
-                          >
-                            <ArrowBox alignOffset={20}>
-                              <Row>
-                                <Column sm="10">
-                                  <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
-                                </Column>
-                                <Column sm="2">
-                                  <Image
-                                    tabIndex="0"
-                                    src={questionNormalUrl}
-                                    srcHover={questionHoverUrl}
-                                    alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
-                                    tooltip={createHelptextTooltip(isForeldrepenger)}
-                                  />
-                                </Column>
-                              </Row>
-                              <VerticalSpacer eightPx />
-                              <TextAreaField
-                                name="varseltekst"
-                                label={{ id: 'Avregning.fritekst' }}
-                                validate={[required, minLength3, maxLength1500, hasValidText]}
-                                maxLength={1500}
-                                readOnly={readOnly}
-                                id="avregningFritekst"
-                                badges={[{
-                                  type: 'fokus',
-                                  textId: getLanguageCodeFromSprakkode(sprakkode),
-                                  title: 'Malform.Beskrivelse',
-                                }]}
-                              />
-                              <VerticalSpacer fourPx />
-                              <a
-                                href=""
-                                onClick={(e) => {
-                                  this.previewMessage(e, previewCallback);
-                                }}
-                                className={styles.previewLink}
-                              >
-                                <FormattedMessage id="Messages.PreviewText" />
-                              </a>
-                            </ArrowBox>
-                          </div>
-                        )}
                       </Column>
                     )}
                     { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
@@ -465,7 +455,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-        state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'videreBehandling', 'varseltekst',
+        state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'varseltekst',
       ),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),

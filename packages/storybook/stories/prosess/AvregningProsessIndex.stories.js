@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import {
   withKnobs, object, boolean, array,
@@ -112,11 +111,17 @@ const tilbakekrevingvalg = {
   varseltekst: 'varsel-eksempel',
 };
 
-const stories = storiesOf('prosess/AvregningProsessIndex', module)
-  .addDecorator(withKnobs)
-  .addDecorator(withReduxProvider);
+const toggles = {
+  'fpsak.simuler-oppdrag-varseltekst': true,
+};
 
-stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
+export default {
+  title: 'prosess/AvregningProsessIndex',
+  component: AvregningProsessIndex,
+  decorators: [withKnobs, withReduxProvider],
+};
+
+export const visAksjonspunktVurderFeilutbetaling = () => (
   <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
@@ -134,11 +139,11 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5084)', () => (
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
-    featureToggles={{}}
+    featureToggles={toggles}
   />
-));
+);
 
-stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
+export const visAksjonspunktVurderInntrekk = () => (
   <AvregningProsessIndex
     fagsak={object('fagsak', fagsak)}
     behandling={behandling}
@@ -156,6 +161,6 @@ stories.add('Vis aksjonspunkt VURDER_INNTREKK (5085)', () => (
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_INNTREKK])}
-    featureToggles={{}}
+    featureToggles={toggles}
   />
-));
+);

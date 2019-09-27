@@ -2,18 +2,13 @@ import React from 'react';
 import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
-
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+import { Hovedknapp } from 'nav-frontend-knapper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { OppholdInntektOgPerioderForm } from './OppholdInntektOgPerioderForm';
-import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
-import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
-import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
-import StatusForBorgerFaktaPanel from './StatusForBorgerFaktaPanel';
-import FortsattMedlemskapFaktaPanel from './FortsattMedlemskapFaktaPanel';
+
+const perioder = [];
 
 describe('<OppholdInntektOgPerioderForm>', () => {
   it('skal vise informasjon uten editeringsmuligheter når det ikke finnes aksjonspunkter', () => {
@@ -26,17 +21,14 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
+      isRevurdering={false}
+      perioder={perioder}
       readOnly
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
-
-    expect(wrapper.find(OppholdINorgeOgAdresserFaktaPanel)).has.length(1);
-    expect(wrapper.find(InntektOgYtelserFaktaPanel)).has.length(1);
-    expect(wrapper.find(PerioderMedMedlemskapFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(0);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(0);
+    expect(wrapper.find(Hovedknapp).prop('disabled')).is.true;
   });
 
   it('skal avklare bosatt data når en har dette aksjonspunktet', () => {
@@ -59,12 +51,14 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     const wrapper = shallowWithIntl(<OppholdInntektOgPerioderForm
       {...reduxFormPropsMock}
       initialValues={{ [`punkt${aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}`]: 'test', begrunnelse: 'test' }}
+      intl={intlMock}
       aksjonspunkter={[bosattAksjonspunkt]}
       openInfoPanels={['omsorgsvilkaaret']}
       toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      isRevurdering={false}
     />);
 
 
@@ -72,10 +66,8 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
     expect(helpText.childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.ErSokerBosattINorge');
-    const faktaPanel = wrapper.find('Connect(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl))');
-    expect(faktaPanel).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 
   it('skal avklare perioder når en har dette aksjonspunktet', () => {
@@ -105,13 +97,12 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      isRevurdering={false}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.GyldigMedlemFolketrygden');
 
-    expect(wrapper.find(PerioderMedMedlemskapFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 
   it('skal avklare oppholdsrett når en har dette aksjonspunktet', () => {
@@ -141,13 +132,12 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      isRevurdering={false}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.EOSBorgerMedOppholdsrett');
 
-    expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 
   it('skal avklare lovlig opphold når en har dette aksjonspunktet', () => {
@@ -177,13 +167,12 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      isRevurdering={false}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold');
 
-    expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 
 
@@ -214,12 +203,11 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      isRevurdering={false}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
 
-    expect(wrapper.find(FortsattMedlemskapFaktaPanel)).has.length(1);
-    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 });
