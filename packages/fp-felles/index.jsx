@@ -45,7 +45,10 @@ export {
 export {
   getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
 } from './src/behandlingForm';
-export { behandlingForm, behandlingFormValueSelector } from './src/behandlingFormNew';
+export {
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from './src/behandlingFormNew';
 export { allAccessRights } from './src/navAnsatt/access';
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';

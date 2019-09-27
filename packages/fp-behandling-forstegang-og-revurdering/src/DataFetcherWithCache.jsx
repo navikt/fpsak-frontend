@@ -28,6 +28,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
+  [BehandlingFpsakApiKeys.MEDLEMSKAP]: 'soeker-medlemskap',
 };
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/, (m) => m.toUpperCase()).replace(/_/, '');

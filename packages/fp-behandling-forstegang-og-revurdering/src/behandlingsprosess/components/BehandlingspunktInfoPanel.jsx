@@ -7,6 +7,7 @@ import { bindActionCreators } from 'redux';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
+import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
@@ -14,7 +15,6 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import CheckPersonStatusForm from './saksopplysninger/CheckPersonStatusForm';
 import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
@@ -30,6 +30,7 @@ const classNames = classnames.bind(styles);
 const avregningData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SIMULERING_RESULTAT, fpsakApi.TILBAKEKREVINGVALG];
 const beregningsresultatData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD];
 const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.ORIGINAL_BEHANDLING];
+const sjekkPersonStatusData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP, fpsakApi.PERSONOPPLYSNINGER];
 
 
 /*
@@ -92,8 +93,22 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         />
       )}
 
-      {CheckPersonStatusForm.supports(apCodes)
-      && <CheckPersonStatusForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />}
+      {selectedBehandlingspunkt === behandlingspunktCodes.SAKSOPPLYSNINGER && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={sjekkPersonStatusData}
+          render={(props) => (
+            <CheckPersonStatusIndex
+              aksjonspunkter={behandlingspunktAksjonspunkter}
+              alleKodeverk={alleKodeverk}
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              readOnlySubmitButton={readOnlySubmitButton}
+              {...props}
+            />
+          )}
+        />
+      )}
 
       {selectedBehandlingspunkt === behandlingspunktCodes.VARSEL && (
         <DataFetcherWithCache

@@ -7,12 +7,14 @@ import configureStore from '../../fpsak/src/configureStore';
 const history = createBrowserHistory({
   basename: '/fpsak/',
 });
-const store = configureStore(history);
 
-const withReduxProvider = (story) => (
-  <Provider store={store}>
-    { story() }
-  </Provider>
-);
+const withReduxProvider = (story) => {
+  const store = configureStore(history);
+  return (
+    <Provider store={store}>
+      { story() }
+    </Provider>
+  );
+};
 
 export default withReduxProvider;
