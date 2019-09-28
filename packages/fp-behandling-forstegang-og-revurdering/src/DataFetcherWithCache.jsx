@@ -29,6 +29,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
   [BehandlingFpsakApiKeys.MEDLEMSKAP]: 'soeker-medlemskap',
+  [BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE]: 'uttak-periode-grense',
 };
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/, (m) => m.toUpperCase()).replace(/_/, '');

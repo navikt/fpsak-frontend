@@ -8,6 +8,7 @@ import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
+import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
@@ -20,7 +21,6 @@ import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
 import BeregningFP from './beregningsgrunnlag/BeregningFP';
-import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './behandlingspunktInfoPanel.less';
@@ -31,6 +31,7 @@ const avregningData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SI
 const beregningsresultatData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD];
 const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.ORIGINAL_BEHANDLING];
 const sjekkPersonStatusData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP, fpsakApi.PERSONOPPLYSNINGER];
+const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.UTTAK_PERIODE_GRENSE, fpsakApi.SOKNAD];
 
 
 /*
@@ -173,14 +174,22 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
           )}
         />
       )}
-      {VurderSoknadsfristForeldrepengerForm.supports(apCodes)
-      && (
-      <VurderSoknadsfristForeldrepengerForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-        isApOpen={openAksjonspunkt}
-      />
+
+      {selectedBehandlingspunkt === behandlingspunktCodes.SOEKNADSFRIST && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={soknadsfristData}
+          render={(props) => (
+            <VurderSoknadsfristForeldrepengerIndex
+              aksjonspunkter={behandlingspunktAksjonspunkter}
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              readOnlySubmitButton={readOnlySubmitButton}
+              isApOpen={openAksjonspunkt}
+              {...props}
+            />
+          )}
+        />
       )}
     </div>
   </div>

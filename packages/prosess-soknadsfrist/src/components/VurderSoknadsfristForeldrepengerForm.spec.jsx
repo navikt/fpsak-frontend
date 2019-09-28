@@ -13,11 +13,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-09',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-        periode: '',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={9}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
@@ -36,10 +32,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       intl={intlMock}
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={9}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
@@ -62,10 +55,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       gyldigSenFremsetting={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
@@ -86,10 +76,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       gyldigSenFremsetting={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
@@ -107,10 +94,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       gyldigSenFremsetting
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
