@@ -21,10 +21,10 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
+  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField,
 } from '@fpsak-frontend/fp-felles';
 
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 
