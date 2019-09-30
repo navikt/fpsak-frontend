@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -55,7 +56,11 @@ describe('<BehandlingspunktInfoPanel>', () => {
       isApSolvable={false}
       apCodes={[aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]}
       readOnlySubmitButton={false}
-      fagsakInfo={{}}
+      fagsakInfo={{
+        ytelseType: {
+          kode: fagsakYtelseType.FORELDREPENGER,
+        },
+      }}
       featureToggles={{}}
       overrideReadOnly={false}
       kanOverstyreAccess={{ isEnabled: false }}

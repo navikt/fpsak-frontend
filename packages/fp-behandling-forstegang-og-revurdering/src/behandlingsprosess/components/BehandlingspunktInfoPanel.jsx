@@ -10,6 +10,7 @@ import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-r
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -175,7 +176,8 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         />
       )}
 
-      {selectedBehandlingspunkt === behandlingspunktCodes.SOEKNADSFRIST && (
+      {(selectedBehandlingspunkt === behandlingspunktCodes.SOEKNADSFRIST
+        && fagsakInfo.ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD) && (
         <DataFetcherWithCache
           behandlingVersjon={1}
           data={soknadsfristData}
