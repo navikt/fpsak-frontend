@@ -32,7 +32,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE]: 'uttak-periode-grense',
 };
 
-const format = (name) => name.toLowerCase().replace(/_([a-z])/, (m) => m.toUpperCase()).replace(/_/, '');
+export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
 const createProps = createSelector([(state, ownProps) => ownProps.data[0].getRestApiData()(state), (state, ownProps) => ownProps.data], (
   behandling, data,
