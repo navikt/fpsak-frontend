@@ -10,6 +10,8 @@ import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+const personstatusKodeverk = 'PERSONSTATUS_TYPE';
+
 const behandling = {
   id: 1,
   versjon: 1,
@@ -23,16 +25,16 @@ const medlemskap = {
 const personopplysninger = {
   personstatus: {
     kode: personstatusType.DOD,
-    kodeverk: kodeverkTyper.PERSONSTATUS_TYPE,
+    kodeverk: personstatusKodeverk,
   },
   avklartPersonstatus: {
     orginalPersonstatus: {
       kode: personstatusType.BOSATT,
-      kodeverk: kodeverkTyper.PERSONSTATUS_TYPE,
+      kodeverk: personstatusKodeverk,
     },
     overstyrtPersonstatus: {
       kode: personstatusType.DOD,
-      kodeverk: kodeverkTyper.PERSONSTATUS_TYPE,
+      kodeverk: personstatusKodeverk,
     },
   },
 };
@@ -41,12 +43,15 @@ const alleKodeverk = {
   [kodeverkTyper.PERSONSTATUS_TYPE]: [{
     kode: personstatusType.DOD,
     navn: 'Død',
+    kodeverk: personstatusKodeverk,
   }, {
     kode: personstatusType.BOSATT,
     navn: 'Bosatt',
+    kodeverk: personstatusKodeverk,
   }, {
     kode: personstatusType.UTVANDRET,
     navn: 'Utvandret',
+    kodeverk: personstatusKodeverk,
   }],
 };
 
