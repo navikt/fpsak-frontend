@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import moment from 'moment';
+
 import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -13,10 +15,11 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ElementWrapper, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { isObject, required } from '@fpsak-frontend/utils';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 
@@ -34,6 +37,8 @@ import styles from './sokersOpplysningspliktForm.less';
 const formName = 'SokersOpplysningspliktForm';
 
 const orgPrefix = 'org_';
+const aktørPrefix = 'aktør_';
+
 const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
 const getLabel = (intl) => (
   <div>
@@ -42,9 +47,22 @@ const getLabel = (intl) => (
   </div>
 );
 const capitalizeFirstLetters = (navn) => navn.toLowerCase().split(' ').map((w) => w.charAt(0).toUpperCase() + w.substr(1)).join(' ');
-const formatArbeidsgiver = (arbeidsgiver) => (arbeidsgiver
-  ? `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`
-  : '');
+
+const lagArbeidsgiverNavnOgFødselsdatoTekst = (arbeidsgiver) => `${capitalizeFirstLetters(arbeidsgiver.navn)} (${moment(arbeidsgiver.fødselsdato)
+  .format(DDMMYYYY_DATE_FORMAT)})`;
+
+const lagArbeidsgiverNavnOgOrgnrTekst = (arbeidsgiver) => `${capitalizeFirstLetters(arbeidsgiver.navn)} (${arbeidsgiver.organisasjonsnummer})`;
+
+const formatArbeidsgiver = (arbeidsgiver) => {
+  if (!arbeidsgiver) {
+    return '';
+  }
+  if (arbeidsgiver.fødselsdato) {
+    return lagArbeidsgiverNavnOgFødselsdatoTekst(arbeidsgiver);
+  }
+  return lagArbeidsgiverNavnOgOrgnrTekst(arbeidsgiver);
+};
+
 const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !hasSoknad || Object.values(inntektsmeldingerSomIkkeKommer).some((vd) => !vd);
 
 /**
@@ -173,6 +191,12 @@ export const getSortedManglendeVedlegg = createSelector([behandlingSelectors.get
 
 const hasSoknad = createSelector([behandlingSelectors.getSoknad], (soknad) => soknad !== null && isObject(soknad));
 
+const lagArbeidsgiverKey = (arbeidsgiver) => {
+  if (arbeidsgiver.aktørId) {
+    return `${aktørPrefix}${arbeidsgiver.aktørId}`;
+  } return `${orgPrefix}${arbeidsgiver.organisasjonsnummer}`;
+};
+
 export const buildInitialValues = createSelector(
   [getSortedManglendeVedlegg, hasSoknad, behandlingsprosessSelectors.getSelectedBehandlingspunktStatus,
     behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter],
@@ -185,7 +209,7 @@ export const buildInitialValues = createSelector(
       .filter((mv) => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
       .reduce((acc, mv) => ({
         ...acc,
-        [`${orgPrefix}${mv.arbeidsgiver.organisasjonsnummer}`]: mv.brukerHarSagtAtIkkeKommer,
+        [lagArbeidsgiverKey(mv.arbeidsgiver)]: mv.brukerHarSagtAtIkkeKommer,
       }), {});
 
     return {
@@ -198,30 +222,38 @@ export const buildInitialValues = createSelector(
   },
 );
 
-const transformValues = (values) => ({
-  kode: values.aksjonspunktKode,
-  erVilkarOk: values.erVilkarOk,
-  inntektsmeldingerSomIkkeKommer: Object.keys(values.inntektsmeldingerSomIkkeKommer).map((key) => ({
-    organisasjonsnummer: key.replace(orgPrefix, ''),
-    brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[key],
-  }), {}),
-  ...BehandlingspunktBegrunnelseTextField.transformValues(values),
-});
-
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => ({
-    onSubmit,
-    hasSoknad: hasSoknad(state),
-    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
-    manglendeVedlegg: getSortedManglendeVedlegg(state),
-    initialValues: buildInitialValues(state),
-    ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
-  });
+const transformValues = (values, manglendeVedlegg) => {
+  const arbeidsgivere = manglendeVedlegg
+    .filter((mv) => mv.dokumentType.kode === dokumentTypeId.INNTEKTSMELDING)
+    .map((mv) => mv.arbeidsgiver);
+  return {
+    kode: values.aksjonspunktKode,
+    erVilkarOk: values.erVilkarOk,
+    inntektsmeldingerSomIkkeKommer: arbeidsgivere.map((ag) => ({
+      organisasjonsnummer: ag.aktørId ? null : ag.organisasjonsnummer, // backend sender fødselsdato i orgnummer feltet for privatpersoner... fiks dette
+      aktørId: ag.aktørId,
+      brukerHarSagtAtIkkeKommer: values.inntektsmeldingerSomIkkeKommer[lagArbeidsgiverKey(ag)],
+    }), {}),
+    ...BehandlingspunktBegrunnelseTextField.transformValues(values),
+  };
 };
 
-const SokersOpplysningspliktForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+const submitSelector = createSelector(
+  [getSortedManglendeVedlegg, (state, props) => props],
+  (manglendeVedlegg, props) => (values) => props.submitCallback([transformValues(values, manglendeVedlegg)]),
+);
+
+const mapStateToProps = (state, ownProps) => ({
+  onSubmit: submitSelector(state, ownProps),
+  hasSoknad: hasSoknad(state),
+  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+  dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
+  manglendeVedlegg: getSortedManglendeVedlegg(state),
+  initialValues: buildInitialValues(state),
+  ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
+});
+
+const SokersOpplysningspliktForm = connect(mapStateToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
   form: formName,
 })(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
 
