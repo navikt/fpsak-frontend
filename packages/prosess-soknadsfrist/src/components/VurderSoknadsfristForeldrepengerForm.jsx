@@ -21,10 +21,8 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField,
+  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
-
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 
 import styles from './vurderSoknadsfristForeldrepengerForm.less';
 
@@ -118,11 +116,13 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
         <VerticalSpacer twentyPx />
         <BehandlingspunktSubmitButton
           formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           isReadOnly={readOnly}
           isSubmittable={!readOnlySubmitButton}
-          isBehandlingFormSubmitting={(formName) => isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)}
-          isBehandlingFormDirty={(formName) => isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)}
-          hasBehandlingFormErrorsOfType={(formName, message) => hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, message)}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
         />
       </div>
     </form>
@@ -132,6 +132,8 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
 VurderSoknadsfristForeldrepengerFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   antallDagerSoknadLevertForSent: PropTypes.number,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   isApOpen: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool,
   ...formPropTypes,

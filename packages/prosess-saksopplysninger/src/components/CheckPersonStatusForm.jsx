@@ -9,7 +9,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -19,7 +18,7 @@ import {
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, getKodeverknavnFn, BehandlingspunktBegrunnelseTextField,
+  isBehandlingFormSubmitting, getKodeverknavnFn, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
 import styles from './checkPersonStatusForm.less';
@@ -85,11 +84,13 @@ export const CheckPersonStatusFormImpl = ({
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         isReadOnly={readOnly}
         isSubmittable={!readOnlySubmitButton}
-        isBehandlingFormSubmitting={(formName) => isBehandlingFormSubmitting(formName, behandlingId, behandlingVersjon)}
-        isBehandlingFormDirty={(formName) => isBehandlingFormDirty(formName, behandlingId, behandlingVersjon)}
-        hasBehandlingFormErrorsOfType={(formName, message) => hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, message)}
+        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+        isBehandlingFormDirty={isBehandlingFormDirty}
+        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
       />
     </form>
   </FadingPanel>
@@ -106,6 +107,8 @@ CheckPersonStatusFormImpl.propTypes = {
    */
   readOnlySubmitButton: PropTypes.bool.isRequired,
   gjeldeneFom: PropTypes.string.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 

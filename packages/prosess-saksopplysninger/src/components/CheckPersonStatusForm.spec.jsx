@@ -4,8 +4,7 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
@@ -37,6 +36,8 @@ describe('<CheckPersonStatusForm>', () => {
       personstatusName=""
       personStatuser={[]}
       gjeldeneFom="2018-10-10"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
@@ -59,6 +60,8 @@ describe('<CheckPersonStatusForm>', () => {
       personstatusName=""
       personStatuser={[]}
       gjeldeneFom="2018-10-10"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const radios = wrapper.find(RadioOption);
@@ -85,6 +88,8 @@ describe('<CheckPersonStatusForm>', () => {
       personstatusName=""
       personStatuser={personstatuser}
       gjeldeneFom="2018-10-10"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const radios = wrapper.find(RadioOption);
@@ -111,6 +116,8 @@ describe('<CheckPersonStatusForm>', () => {
       initialValues={initialValues}
       personStatuser={[{}]}
       gjeldeneFom="2018-10-10"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const radioGroupField = wrapper.find('RadioGroupField');

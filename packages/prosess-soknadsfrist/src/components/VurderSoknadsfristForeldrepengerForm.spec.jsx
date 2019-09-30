@@ -19,6 +19,8 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
@@ -38,6 +40,8 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const normalTekst = wrapper.find('Normaltekst');
     expect(normalTekst).has.length(2);
@@ -61,6 +65,8 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup).has.length(1);
@@ -82,6 +88,8 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const datepicker = wrapper.find('DatepickerField');
     expect(datepicker).has.length(0);
@@ -100,6 +108,8 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const datepicker = wrapper.find('DatepickerField');
     expect(datepicker).has.length(1);

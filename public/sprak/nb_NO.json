@@ -2430,5 +2430,9 @@
   "TerminFodselSvpPanel.Termindato": "Termindato",
   "TerminFodselSvpPanel.Fodselsdato": "Fødselsdato",
 
+  "VurderSoknadsfristForeldrepengerForm.GyldigGrunn": "Gyldig grunn for sen fremsetting av søknaden",
+  "VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn": "Ingen gyldig grunn for sen fremsetting av søknaden",
+  "VurderSoknadsfristForeldrepengerForm.NyMottattDato": "Dato for når søknaden kan anses som mottatt",
+
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid"
 }
