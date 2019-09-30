@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const saksopplysningMedlemskapPropType = PropTypes.shape({
-  fom: PropTypes.string.isRequired,
+  fom: PropTypes.string,
 });
 
 export default saksopplysningMedlemskapPropType;

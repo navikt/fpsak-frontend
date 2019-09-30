@@ -106,10 +106,14 @@ CheckPersonStatusFormImpl.propTypes = {
    * Skal knapp for å bekrefte data være trykkbar
    */
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  gjeldeneFom: PropTypes.string.isRequired,
+  gjeldeneFom: PropTypes.string,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
+};
+
+CheckPersonStatusFormImpl.defaultProps = {
+  gjeldeneFom: undefined,
 };
 
 const getValgtOpplysning = (avklartPersonstatus) => {
