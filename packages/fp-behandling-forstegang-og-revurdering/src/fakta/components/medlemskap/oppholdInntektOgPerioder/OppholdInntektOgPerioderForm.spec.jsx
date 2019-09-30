@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { OppholdInntektOgPerioderForm } from './OppholdInntektOgPerioderForm';
+import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
 
 const perioder = [];
 
@@ -209,5 +209,61 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
+  });
+
+
+  it('skal kun avklare aksjonspunkt som er aktive', () => {
+    const lovligOppholdAksjonspunkt = {
+      id: 1,
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: false,
+      erAktivt: false,
+    };
+
+    const fortsattMedlemskapAksjonspunkt = {
+      id: 1,
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+        navn: 'ap1',
+      },
+      status: {
+        kode: 's1',
+        navn: 's1',
+      },
+      toTrinnsBehandling: true,
+      toTrinnsBehandlingGodkjent: false,
+      kanLoses: true,
+      erAktivt: true,
+    };
+
+    const values = {
+      perioder: [
+        {
+          aksjonspunkter: [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD],
+          begrunnelse: 'dawdawdawdawdawda',
+          bosattVurdering: null,
+          erEosBorger: false,
+          lovligOppholdVurdering: true,
+          medlemskapManuellVurderingType: null,
+          oppholdsrettVurdering: null,
+          vurderingsdato: '2019-10-06',
+          årsaker: ['STATSBORGERSKAP'],
+        },
+      ],
+    };
+
+    const transformed = transformValues(values, [lovligOppholdAksjonspunkt, fortsattMedlemskapAksjonspunkt]);
+
+    expect(transformed).has.length(1);
+    expect(transformed[0].kode).is.eql(aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP);
   });
 });
