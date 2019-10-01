@@ -13,16 +13,14 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-09',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-        periode: '',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={9}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
@@ -36,15 +34,14 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       intl={intlMock}
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={9}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const normalTekst = wrapper.find('Normaltekst');
     expect(normalTekst).has.length(2);
@@ -62,15 +59,14 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       gyldigSenFremsetting={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const radioGroup = wrapper.find('RadioGroupField');
     expect(radioGroup).has.length(1);
@@ -86,15 +82,14 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       gyldigSenFremsetting={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const datepicker = wrapper.find('DatepickerField');
     expect(datepicker).has.length(0);
@@ -107,15 +102,14 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       gyldigSenFremsetting
       readOnly={false}
       readOnlySubmitButton={false}
-      soknad={{
-        mottattDato: '2017-10-15',
-        begrunnelseForSenInnsending: 'testbegrunnelse',
-      }}
+      mottattDato="2017-10-15"
       antallDagerSoknadLevertForSent={15}
       soknadsperiodeStart="2017-06-05"
       soknadsperiodeSlutt="2017-11-01"
       soknadsfristdato="2017-09-30"
       isApOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const datepicker = wrapper.find('DatepickerField');
     expect(datepicker).has.length(1);

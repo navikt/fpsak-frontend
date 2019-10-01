@@ -3,13 +3,14 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
+import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { BehandlingspunktInfoPanel } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import VurderSoknadsfristForeldrepengerForm from './soknadsfrist/VurderSoknadsfristForeldrepengerForm';
 
 describe('<BehandlingspunktInfoPanel>', () => {
   it('skal rendre panelet for beregningsresultat', () => {
@@ -55,7 +56,11 @@ describe('<BehandlingspunktInfoPanel>', () => {
       isApSolvable={false}
       apCodes={[aksjonspunktCodes.VURDER_SOKNADSFRIST_FORELDREPENGER]}
       readOnlySubmitButton={false}
-      fagsakInfo={{}}
+      fagsakInfo={{
+        ytelseType: {
+          kode: fagsakYtelseType.FORELDREPENGER,
+        },
+      }}
       featureToggles={{}}
       overrideReadOnly={false}
       kanOverstyreAccess={{ isEnabled: false }}
@@ -63,6 +68,21 @@ describe('<BehandlingspunktInfoPanel>', () => {
       toggleOverstyring={sinon.spy()}
       alleKodeverk={{}}
     />);
-    expect(wrapper.find(VurderSoknadsfristForeldrepengerForm)).to.have.length(1);
+
+    const dataFetchers = wrapper.find(DataFetcherWithCache);
+    expect(dataFetchers).to.have.length(1);
+
+    const beregningPanel = dataFetchers.renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      uttakPeriodeGrense: {
+        mottattDato: '2019-10-10',
+        antallDagerLevertForSent: 2,
+        soknadsperiodeStart: '2019-10-10',
+        soknadsperiodeSlutt: '2019-10-11',
+        soknadsfristForForsteUttaksdato: '2019-10-10',
+      },
+      soknad: { mottattDato: '2019-10-10' },
+    }).find(VurderSoknadsfristForeldrepengerIndex);
+    expect(beregningPanel).to.have.length(1);
   });
 });

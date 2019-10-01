@@ -10,7 +10,8 @@ import { Undertittel } from 'nav-frontend-typografi';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 
 import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';

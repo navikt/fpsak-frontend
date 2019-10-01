@@ -14,6 +14,8 @@ const isDisabled = (isDirty, isSubmitting, isSubmittable, hasEmptyRequiredFields
   return (!isDirty && hasEmptyRequiredFields) || hasEmptyRequiredFields;
 };
 
+// TODO (TOR) Fjern denne når alle behandlingspunkt er flytta ut til eigne pakker
+
 /**
  * BehandlingspunktSubmitButton
  */

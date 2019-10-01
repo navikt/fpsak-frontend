@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';

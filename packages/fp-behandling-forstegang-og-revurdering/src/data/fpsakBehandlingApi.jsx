@@ -18,6 +18,8 @@ export const BehandlingFpsakApiKeys = {
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
+  MEDLEMSKAP: 'MEDLEMSKAP',
+  UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -45,6 +47,8 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('familiehendelse-v2', BehandlingFpsakApiKeys.FAMILIEHENDELSE)
   .withInjectedPath('soknad', BehandlingFpsakApiKeys.SOKNAD)
   .withInjectedPath('original-behandling', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
+  .withInjectedPath('soeker-medlemskap', BehandlingFpsakApiKeys.MEDLEMSKAP)
+  .withInjectedPath('uttak-periode-grense', BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE)
 
   .build();
 

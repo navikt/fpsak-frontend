@@ -14,7 +14,8 @@ import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';

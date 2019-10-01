@@ -8,28 +8,18 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
-import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { getBehandlingRevurderingAvFortsattMedlemskapFom, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import {
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting, getKodeverknavnFn, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton,
+} from '@fpsak-frontend/fp-felles';
 
 import styles from './checkPersonStatusForm.less';
 
@@ -40,6 +30,8 @@ import styles from './checkPersonStatusForm.less';
  */
 export const CheckPersonStatusFormImpl = ({
   intl,
+  behandlingId,
+  behandlingVersjon,
   readOnly,
   readOnlySubmitButton,
   fortsettBehandling,
@@ -92,6 +84,8 @@ export const CheckPersonStatusFormImpl = ({
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         isReadOnly={readOnly}
         isSubmittable={!readOnlySubmitButton}
         isBehandlingFormSubmitting={isBehandlingFormSubmitting}
@@ -112,8 +106,14 @@ CheckPersonStatusFormImpl.propTypes = {
    * Skal knapp for å bekrefte data være trykkbar
    */
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  gjeldeneFom: PropTypes.string.isRequired,
+  gjeldeneFom: PropTypes.string,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
+};
+
+CheckPersonStatusFormImpl.defaultProps = {
+  gjeldeneFom: undefined,
 };
 
 const getValgtOpplysning = (avklartPersonstatus) => {
@@ -127,7 +127,10 @@ const getValgtOpplysning = (avklartPersonstatus) => {
 };
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingHenlagt, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, getPersonopplysning, getAlleKodeverk],
+  [(state, ownProps) => ownProps.behandlingHenlagt,
+    (state, ownProps) => ownProps.aksjonspunkter,
+    (state, ownProps) => ownProps.personopplysninger,
+    (state, ownProps) => ownProps.alleKodeverk],
   (behandlingHenlagt, aksjonspunkter, personopplysning, alleKodeverk) => {
     const shouldContinueBehandling = !behandlingHenlagt;
     const { avklartPersonstatus, personstatus } = personopplysning;
@@ -144,7 +147,7 @@ export const buildInitialValues = createSelector(
 );
 
 const getFilteredKodeverk = createSelector(
-  [getKodeverk(kodeverkTyper.PERSONSTATUS_TYPE)], (kodeverk) => kodeverk
+  [(state, ownProps) => ownProps.alleKodeverk[kodeverkTyper.PERSONSTATUS_TYPE]], (kodeverk) => kodeverk
     .filter((ps) => ps.kode === personstatusType.DOD || ps.kode === personstatusType.BOSATT || ps.kode === personstatusType.UTVANDRET),
 );
 
@@ -157,23 +160,22 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'CheckPersonStatusForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState))]);
-  const personStatuser = getFilteredKodeverk(initialState);
-  return (state) => ({
-    initialValues: buildInitialValues(state),
-    ...behandlingFormValueSelector(formName)(state, 'fortsettBehandling', 'originalPersonstatusName'),
-    gjeldeneFom: getBehandlingRevurderingAvFortsattMedlemskapFom(state),
-    personStatuser,
-    onSubmit,
-  });
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, staticOwnProps.aksjonspunkter)]);
+  const personStatuser = getFilteredKodeverk(initialState, staticOwnProps);
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon } = ownProps;
+    return {
+      initialValues: buildInitialValues(state, ownProps),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'fortsettBehandling', 'originalPersonstatusName'),
+      personStatuser,
+      onSubmit,
+    };
+  };
 };
 
-const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+const CheckPersonStatusForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(CheckPersonStatusFormImpl)));
-
-CheckPersonStatusForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.AVKLAR_PERSONSTATUS);
 
 export default CheckPersonStatusForm;

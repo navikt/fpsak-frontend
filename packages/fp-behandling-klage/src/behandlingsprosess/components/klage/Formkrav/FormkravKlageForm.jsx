@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from 'behandlingKlage/src/behandlingFormKlage';
 import { getAlleKodeverk, getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckBehandlingKlage';
-import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 // TODO komponent skal ha eiga less-fil
 import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
 

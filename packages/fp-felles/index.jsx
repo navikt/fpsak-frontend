@@ -45,7 +45,10 @@ export {
 export {
   getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
 } from './src/behandlingForm';
-export { behandlingForm, behandlingFormValueSelector } from './src/behandlingFormNew';
+export {
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from './src/behandlingFormNew';
 export { allAccessRights } from './src/navAnsatt/access';
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
@@ -57,3 +60,5 @@ export { default as FaktaSubmitButton } from './src/fakta/FaktaSubmitButton';
 export { default as FaktaBegrunnelseTextField } from './src/fakta/FaktaBegrunnelseTextField';
 export { default as FaktaEkspandertpanel } from './src/fakta/FaktaEkspandertpanel';
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
+export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/BehandlingspunktBegrunnelseTextField';
+export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';

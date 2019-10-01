@@ -9,8 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-behandling-felles';
-import { behandlingspunktCodes, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes, injectKodeverk, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ElementWrapper, Table, TableColumn, TableRow, VerticalSpacer,
