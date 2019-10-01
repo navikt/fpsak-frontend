@@ -43,6 +43,8 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
       readOnly
       readOnlySubmitButton
       erVilkarOk={false}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const form = wrapper.find(BehandlingspunktBegrunnelseTextField);
@@ -62,6 +64,8 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
       readOnly={false}
       readOnlySubmitButton
       erVilkarOk={undefined}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const selector = wrapper.find('injectIntl(VilkarResultPickerImpl)');
@@ -104,6 +108,8 @@ describe('<ErOmsorgVilkaarOppfyltForm>', () => {
       readOnly
       readOnlySubmitButton
       erVilkarOk
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);

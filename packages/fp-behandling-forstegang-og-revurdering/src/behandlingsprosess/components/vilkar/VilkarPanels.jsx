@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
+import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -13,7 +14,6 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import ErOmsorgVilkaarOppfyltForm from './omsorg/ErOmsorgVilkaarOppfyltForm';
 import ErSoknadsfristVilkaretOppfyltForm from './soknadsfrist/ErSoknadsfristVilkaretOppfyltForm';
 import ErForeldreansvar2LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar2LeddVilkaarOppfyltForm';
 import ErForeldreansvar4LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar4LeddVilkaarOppfyltForm';
@@ -24,6 +24,7 @@ import DataFetcherWithCache from '../../../DataFetcherWithCache';
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
 const svangerskapData = [fpsakApi.BEHANDLING];
+const omsorgData = [fpsakApi.BEHANDLING];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 
 /*
@@ -76,8 +77,28 @@ export const VilkarPanels = ({
       readOnlySubmitButton={readOnlySubmitButton}
     />
     )}
-    {ErOmsorgVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes)
-      && <ErOmsorgVilkaarOppfyltForm submitCallback={submitCallback} readOnly={readOnly} readOnlySubmitButton={readOnlySubmitButton} />}
+
+    {(behandlingspunkt === behandlingspunktCodes.OMSORG
+      && (aksjonspunktCodes.includes(AksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)
+      || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
+      || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))) && (
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={omsorgData}
+        render={(props) => (
+          <OmsorgVilkarProsessIndex
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            status={behandlingspunktStatus}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
+      />
+    )}
+
     {ErForeldreansvar2LeddVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes, vilkarTypeCodes)
       && (
       <ErForeldreansvar2LeddVilkaarOppfyltForm
