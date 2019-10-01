@@ -4,19 +4,12 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, BpPanelTemplate,
+} from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 
 /**
  * AdopsjonVilkarForm
@@ -32,6 +25,8 @@ export const AdopsjonVilkarFormImpl = ({
   hasAksjonspunkt,
   status,
   isAksjonspunktOpen,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <BpPanelTemplate
@@ -44,6 +39,8 @@ export const AdopsjonVilkarFormImpl = ({
     readOnly={readOnly}
     bpStatus={status}
     lovReferanse={lovReferanse}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
   >
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer eightPx />
@@ -62,6 +59,8 @@ AdopsjonVilkarFormImpl.propTypes = {
   hasAksjonspunkt: PropTypes.bool,
   status: PropTypes.string.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -73,8 +72,9 @@ AdopsjonVilkarFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
+  [(state, ownProps) => ownProps.behandlingsresultat,
+    (state, ownProps) => ownProps.aksjonspunkter,
+    (state, ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -89,28 +89,24 @@ const transformValues = (values, aksjonspunkter) => ({
 
 const formName = 'AdopsjonVilkarForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.ADOPSJONSVILKARET];
-  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
-  return (state) => ({
-    status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
-    initialValues: buildInitialValues(state),
-    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
-    hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker,
-    onSubmit,
-  });
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const { aksjonspunkter, alleKodeverk } = staticOwnProps;
+  const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.ADOPSJONSVILKARET];
+  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon, vilkar } = ownProps;
+    return {
+      initialValues: buildInitialValues(state, ownProps),
+      erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
+      lovReferanse: vilkar[0].lovReferanse,
+      hasAksjonspunkt: aksjonspunkter.length > 0,
+      avslagsarsaker,
+      onSubmit,
+    };
+  };
 };
 
-const AdopsjonVilkarForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   validate,
 })(AdopsjonVilkarFormImpl));
-
-AdopsjonVilkarForm.supports = (behandlingspunkt, apCodes) => behandlingspunkt === behandlingspunktCodes.ADOPSJON
-    && (apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-    || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN));
-
-export default AdopsjonVilkarForm;

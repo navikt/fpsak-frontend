@@ -393,8 +393,6 @@
   "TilleggsopplysningerFaktaForm.AdditionalInfo": "Tilleggsopplysninger",
   "TilleggsopplysningerFaktaForm.Confirmed": "Jeg har lest dette",
   "FodselOgTilleggsopplysningerForm.Fodselsdato": "Fødselsdato",
-  "AdopsjonVilkarForm.Adopsjon": "Adopsjon",
-  "AdopsjonVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
   "VilkarResultPanel.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPanel.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
   "BehandlingsprosessIndex.CheckAvklarPersonstatus": "Kontroller manglende opplysninger om fødsel",
