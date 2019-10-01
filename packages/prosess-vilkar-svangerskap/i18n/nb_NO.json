@@ -1,6 +1,6 @@
 {
-  "FodselVilkarForm.Fodsel": "Fødsel",
-  "FodselVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
+  "SvangerskapVilkarForm.Svangerskap": "Svangerskapspenger",
+  "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene for svangerskapspenger i § 14-4 første og andre ledd",
   
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",

@@ -8,13 +8,13 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
+import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 
 import withReduxProvider from '../../decorators/withRedux';
 
 const alleKodeverk = {
   [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.ADOPSJONSVILKARET]: [{
+    [vilkarType.SVANGERSKAPVILKARET]: [{
       kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
       navn: 'Ingen beregningsregler',
       kodeverk: kodeverkTyper.AVSLAGSARSAK,
@@ -24,13 +24,13 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/AdopsjonVilkarProsessIndex',
-  component: AdopsjonVilkarProsessIndex,
+  title: 'prosess/SvangerskapVilkarProsessIndex',
+  component: SvangerskapVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
 export const visÅpentAksjonspunkt = () => (
-  <AdopsjonVilkarProsessIndex
+  <SvangerskapVilkarProsessIndex
     behandling={{
       id: 1,
       versjon: 1,
@@ -57,7 +57,7 @@ export const visÅpentAksjonspunkt = () => (
 );
 
 export const visOppfyltVilkår = () => (
-  <AdopsjonVilkarProsessIndex
+  <SvangerskapVilkarProsessIndex
     behandling={{
       id: 1,
       versjon: 1,
@@ -85,7 +85,7 @@ export const visOppfyltVilkår = () => (
 );
 
 export const visAvslåttVilkår = () => (
-  <AdopsjonVilkarProsessIndex
+  <SvangerskapVilkarProsessIndex
     behandling={{
       id: 1,
       versjon: 1,
