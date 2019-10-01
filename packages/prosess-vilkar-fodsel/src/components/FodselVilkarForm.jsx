@@ -5,7 +5,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, BpPanelTemplate,
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -32,7 +32,7 @@ export const FodselVilkarFormImpl = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <BpPanelTemplate
+  <ProsessPanelTemplate
     handleSubmit={formProps.handleSubmit}
     titleCode="FodselVilkarForm.Fodsel"
     isAksjonspunktOpen={isAksjonspunktOpen}
@@ -48,7 +48,7 @@ export const FodselVilkarFormImpl = ({
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer eightPx />
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
-  </BpPanelTemplate>
+  </ProsessPanelTemplate>
 );
 
 FodselVilkarFormImpl.propTypes = {

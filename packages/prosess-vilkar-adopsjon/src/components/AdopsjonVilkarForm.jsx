@@ -5,7 +5,7 @@ import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
 import {
-  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, BpPanelTemplate,
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -29,7 +29,7 @@ export const AdopsjonVilkarFormImpl = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <BpPanelTemplate
+  <ProsessPanelTemplate
     handleSubmit={formProps.handleSubmit}
     titleCode="AdopsjonVilkarForm.Adopsjon"
     isAksjonspunktOpen={isAksjonspunktOpen}
@@ -45,7 +45,7 @@ export const AdopsjonVilkarFormImpl = ({
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer eightPx />
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
-  </BpPanelTemplate>
+  </ProsessPanelTemplate>
 );
 
 AdopsjonVilkarFormImpl.propTypes = {

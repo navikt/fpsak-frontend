@@ -15,11 +15,11 @@ import VilkarResultPanel from './VilkarResultPanel';
 import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
 
 /*
- * BpPanelTemplate
+ * ProsessPanelTemplate
  *
  * Presentasjonskomponent.
  */
-const BpPanelTemplate = ({
+const ProsessPanelTemplate = ({
   intl,
   handleSubmit,
   behandlingId,
@@ -73,7 +73,7 @@ const BpPanelTemplate = ({
   </FadingPanel>
 );
 
-BpPanelTemplate.propTypes = {
+ProsessPanelTemplate.propTypes = {
   intl: PropTypes.shape().isRequired,
   handleSubmit: PropTypes.func.isRequired,
   titleCode: PropTypes.string.isRequired,
@@ -90,10 +90,10 @@ BpPanelTemplate.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
-BpPanelTemplate.defaultProps = {
+ProsessPanelTemplate.defaultProps = {
   lovReferanse: undefined,
   bpStatus: undefined,
   isDirty: undefined,
 };
 
-export default injectIntl(BpPanelTemplate);
+export default injectIntl(ProsessPanelTemplate);

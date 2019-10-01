@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
+import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -16,13 +17,13 @@ import ErSoknadsfristVilkaretOppfyltForm from './soknadsfrist/ErSoknadsfristVilk
 import ErForeldreansvar2LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar2LeddVilkaarOppfyltForm';
 import ErForeldreansvar4LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar4LeddVilkaarOppfyltForm';
 import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysningspliktForm';
-import SvangerskapVilkarForm from './svangerskap/SvangerskapVilkarForm';
 import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
 
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
+const svangerskapData = [fpsakApi.BEHANDLING];
 
 /*
  * VilkarPanels
@@ -82,15 +83,25 @@ export const VilkarPanels = ({
       />
       )}
 
-    {SvangerskapVilkarForm.supports(behandlingspunkt)
-      && (
-      <SvangerskapVilkarForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-        isAksjonspunktOpen={isAksjonspunktOpen}
+    {behandlingspunkt === behandlingspunktCodes.SVANGERSKAP && (
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={svangerskapData}
+        render={(props) => (
+          <SvangerskapVilkarProsessIndex
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            isAksjonspunktOpen={isAksjonspunktOpen}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            status={behandlingspunktStatus}
+            vilkar={behandlingspunktVilkar}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
       />
-      )}
+    )}
 
     {(behandlingspunkt === behandlingspunktCodes.FOEDSEL
       && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)

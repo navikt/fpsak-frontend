@@ -7,13 +7,13 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import BpPanelTemplate from './BpPanelTemplate';
+import ProsessPanelTemplate from './ProsessPanelTemplate';
 import VilkarResultPanel from './VilkarResultPanel';
 
 describe('<BpPanelTemplate>', () => {
   it('skal ikke vise lovreferanse når dette ikke finnes', () => {
     const wrapper = shallowWithIntl(
-      <BpPanelTemplate.WrappedComponent
+      <ProsessPanelTemplate.WrappedComponent
         intl={intlMock}
         handleSubmit={sinon.spy()}
         titleCode="FodselVilkarForm.Fodsel"
@@ -27,7 +27,7 @@ describe('<BpPanelTemplate>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </BpPanelTemplate.WrappedComponent>,
+      </ProsessPanelTemplate.WrappedComponent>,
     );
 
     expect(wrapper.find(Normaltekst)).to.have.length(0);
@@ -35,7 +35,7 @@ describe('<BpPanelTemplate>', () => {
 
   it('skal vise lovreferanse når dette finnes', () => {
     const wrapper = shallowWithIntl(
-      <BpPanelTemplate.WrappedComponent
+      <ProsessPanelTemplate.WrappedComponent
         intl={intlMock}
         handleSubmit={sinon.spy()}
         lovReferanse="test lovReferanse"
@@ -50,7 +50,7 @@ describe('<BpPanelTemplate>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </BpPanelTemplate.WrappedComponent>,
+      </ProsessPanelTemplate.WrappedComponent>,
     );
 
     expect(wrapper.find(Normaltekst)).to.have.length(1);
@@ -58,7 +58,7 @@ describe('<BpPanelTemplate>', () => {
 
   it('skal vise vilkår-resultat når status er satt og aksjonspunkt er åpent', () => {
     const wrapper = shallowWithIntl(
-      <BpPanelTemplate.WrappedComponent
+      <ProsessPanelTemplate.WrappedComponent
         intl={intlMock}
         handleSubmit={sinon.spy()}
         lovReferanse="test lovReferanse"
@@ -74,7 +74,7 @@ describe('<BpPanelTemplate>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </BpPanelTemplate.WrappedComponent>,
+      </ProsessPanelTemplate.WrappedComponent>,
     );
 
     expect(wrapper.find(VilkarResultPanel)).to.have.length(1);
@@ -82,7 +82,7 @@ describe('<BpPanelTemplate>', () => {
 
   it('skal ikke vise vilkår-resultat når aksjonspunkt er lukket', () => {
     const wrapper = shallowWithIntl(
-      <BpPanelTemplate.WrappedComponent
+      <ProsessPanelTemplate.WrappedComponent
         intl={intlMock}
         handleSubmit={sinon.spy()}
         lovReferanse="test lovReferanse"
@@ -98,7 +98,7 @@ describe('<BpPanelTemplate>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </BpPanelTemplate.WrappedComponent>,
+      </ProsessPanelTemplate.WrappedComponent>,
     );
 
     expect(wrapper.find(VilkarResultPanel)).to.have.length(0);
@@ -106,7 +106,7 @@ describe('<BpPanelTemplate>', () => {
 
   it('skal vise hjelpetekst for åpent aksjonspunkt', () => {
     const wrapper = shallowWithIntl(
-      <BpPanelTemplate.WrappedComponent
+      <ProsessPanelTemplate.WrappedComponent
         intl={intlMock}
         handleSubmit={sinon.spy()}
         lovReferanse="test lovReferanse"
@@ -122,7 +122,7 @@ describe('<BpPanelTemplate>', () => {
         behandlingVersjon={1}
       >
         <div>test</div>
-      </BpPanelTemplate.WrappedComponent>,
+      </ProsessPanelTemplate.WrappedComponent>,
     );
 
     const ap = wrapper.find(AksjonspunktHelpText);

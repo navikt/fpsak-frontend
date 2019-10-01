@@ -5,15 +5,9 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { VilkarResultPicker, behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
+} from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
@@ -23,16 +17,17 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
  * Presentasjonskomponent.
  */
 export const SvangerskapVilkarFormImpl = ({
-  // intl,
   avslagsarsaker,
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
   hasAksjonspunkt,
   isAksjonspunktOpen,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
-  <BpPanelTemplate
+  <ProsessPanelTemplate
     handleSubmit={formProps.handleSubmit}
     titleCode="SvangerskapVilkarForm.Svangerskap"
     isAksjonspunktOpen={isAksjonspunktOpen}
@@ -40,11 +35,13 @@ export const SvangerskapVilkarFormImpl = ({
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
   >
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     {erVilkarOk === false
       && <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />}
-  </BpPanelTemplate>
+  </ProsessPanelTemplate>
 );
 
 SvangerskapVilkarFormImpl.propTypes = {
@@ -59,6 +56,8 @@ SvangerskapVilkarFormImpl.propTypes = {
   hasAksjonspunkt: PropTypes.bool,
   status: PropTypes.string.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -70,8 +69,9 @@ SvangerskapVilkarFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
+  [(state, ownProps) => ownProps.behandlingsresultat,
+    (state, ownProps) => ownProps.aksjonspunkter,
+    (state, ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -87,24 +87,22 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'SvangerskapVilkarForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
+  const { aksjonspunkter, alleKodeverk } = initialOwnProps;
   const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
-  return (state) => ({
-    status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
-    initialValues: buildInitialValues(state),
-    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
-    hasAksjonspunkt: aksjonspunkter.length > 0,
-    avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarType.SVANGERSKAPVILKARET],
-    onSubmit,
-  });
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon, vilkar } = ownProps;
+    return {
+      initialValues: buildInitialValues(state, ownProps),
+      erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
+      lovReferanse: vilkar[0].lovReferanse,
+      hasAksjonspunkt: aksjonspunkter.length > 0,
+      avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.SVANGERSKAPVILKARET],
+      onSubmit,
+    };
+  };
 };
 
-const SvangerskapVilkarForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   validate,
 })(SvangerskapVilkarFormImpl)));
-
-SvangerskapVilkarForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.SVANGERSKAP;
-
-export default SvangerskapVilkarForm;

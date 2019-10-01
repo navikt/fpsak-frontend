@@ -64,4 +64,4 @@ export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlin
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
 export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';
 export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/VilkarResultPanel';
-export { default as BpPanelTemplate } from './src/behandlingsprosess/vilkar/BpPanelTemplate';
+export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
