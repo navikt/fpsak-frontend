@@ -420,23 +420,23 @@ export const transformValues = (values, ap) => [{
 
 const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter], (
-    tilbakekrevingValg, aksjonspunkter,
+    tilbakekrevingvalg, aksjonspunkter,
   ) => {
     const aksjonspunkt = aksjonspunkter.find((ap) => simuleringAksjonspunkter.includes(ap.definisjon.kode));
-    if (!aksjonspunkt || !tilbakekrevingValg) {
+    if (!aksjonspunkt || !tilbakekrevingvalg) {
       return undefined;
     }
 
     let values = {
-      videreBehandling: tilbakekrevingValg.videreBehandling.kode,
-      varseltekst: tilbakekrevingValg.varseltekst,
+      videreBehandling: tilbakekrevingvalg.videreBehandling.kode,
+      varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };
 
     if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_INNTREKK) {
       values = {
-        erTilbakekrevingVilkårOppfylt: tilbakekrevingValg.grunnerTilReduksjon !== null,
-        grunnerTilReduksjon: tilbakekrevingValg.grunnerTilReduksjon,
+        erTilbakekrevingVilkårOppfylt: tilbakekrevingvalg.grunnerTilReduksjon !== null,
+        grunnerTilReduksjon: tilbakekrevingvalg.grunnerTilReduksjon,
         ...values,
       };
     }
@@ -449,10 +449,10 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
 
   return (state, ownProps) => {
     const {
-      sprakkode, behandlingId, behandlingVersjon, tilbakekrevingValg, simuleringResultat, featureToggles, fagsak,
+      sprakkode, behandlingId, behandlingVersjon, tilbakekrevingvalg, simuleringResultat, featureToggles, fagsak,
     } = ownProps;
-    const hasOpenTilbakekrevingsbehandling = tilbakekrevingValg !== undefined
-      && tilbakekrevingValg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
+    const hasOpenTilbakekrevingsbehandling = tilbakekrevingvalg !== undefined
+      && tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
         state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'varseltekst',
