@@ -369,21 +369,21 @@ const historikkEndretFeltTypeCodes = {
     kode: 'ANKE_AVVIST_ÅRSAK',
     feltId: 'HistorikkEndretFelt.AnkeAvvistAarsak',
   },
-  ER_ANKER_PART: {
-    kode: 'ER_ANKER_PART',
-    feltId: 'HistorikkEndretFelt.ErAnkerPart',
+  ER_ANKER_IKKE_PART: {
+    kode: 'ER_ANKER_IKKE_PART',
+    feltId: 'HistorikkEndretFelt.ErAnkerIkkePart',
   },
-  ER_ANKE_KONKRET: {
-    kode: 'ER_ANKE_KONKRET',
-    feltId: 'HistorikkEndretFelt.ErAnkeKonkret',
+  ER_ANKE_IKKE_KONKRET: {
+    kode: 'ER_ANKE_IKKE_KONKRET',
+    feltId: 'HistorikkEndretFelt.ErAnkeIkkeKonkret',
   },
-  ER_ANKEFRIST_OVERHOLDT: {
-    kode: 'ER_ANKEFRIST_OVERHOLDT',
-    feltId: 'HistorikkEndretFelt.ErAnkefristOverholdt',
+  ER_ANKEFRIST_IKKE_OVERHOLDT: {
+    kode: 'ER_ANKEFRIST_IKKE_OVERHOLDT',
+    feltId: 'HistorikkEndretFelt.ErAnkefristIkkeOverholdt',
   },
-  ER_ANKEN_SIGNERT: {
-    kode: 'ER_ANKEN_SIGNERT',
-    feltId: 'HistorikkEndretFelt.ErAnkenSignert',
+  ER_ANKEN_IKKE_SIGNERT: {
+    kode: 'ER_ANKEN_IKKE_SIGNERT',
+    feltId: 'HistorikkEndretFelt.ErAnkenIkkeSignert',
   },
   PA_ANKET_BEHANDLINGID: {
     kode: 'PA_ANKET_BEHANDLINGID',
