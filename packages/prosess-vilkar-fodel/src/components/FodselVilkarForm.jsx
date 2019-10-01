@@ -4,18 +4,11 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
-import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { behandlingspunktCodes, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
-import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
-import { getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, BpPanelTemplate,
+} from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -35,6 +28,8 @@ export const FodselVilkarFormImpl = ({
   hasAksjonspunkt,
   status,
   isAksjonspunktOpen,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <BpPanelTemplate
@@ -47,6 +42,8 @@ export const FodselVilkarFormImpl = ({
     readOnly={readOnly}
     bpStatus={status}
     lovReferanse={lovReferanse}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
   >
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <VerticalSpacer eightPx />
@@ -65,6 +62,8 @@ FodselVilkarFormImpl.propTypes = {
   hasAksjonspunkt: PropTypes.bool,
   status: PropTypes.string.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -76,8 +75,9 @@ FodselVilkarFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
+  [(state, ownProps) => ownProps.behandlingsresultat,
+    (state, ownProps) => ownProps.aksjonspunkter,
+    (state, ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -96,30 +96,26 @@ export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagsko
   ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
-  const avslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(initialState)[vilkarType.FODSELSVILKARET_MOR];
-  const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(initialState), avslagsarsaker);
+const mapStateToPropsFactory = (initialState, staticOwnProps) => {
+  const { aksjonspunkter, alleKodeverk } = staticOwnProps;
+  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+  const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.FODSELSVILKARET_MOR];
+  const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(staticOwnProps.ytelseTypeKode === fagsakYtelseType.FORELDREPENGER, avslagsarsaker);
 
-  return (state) => ({
-    onSubmit,
-    avslagsarsaker: filtrerteAvslagsarsaker,
-    status: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
-    initialValues: buildInitialValues(state),
-    erVilkarOk: behandlingFormValueSelector(formName)(state, 'erVilkarOk'),
-    lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
-    hasAksjonspunkt: aksjonspunkter.length > 0,
-  });
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon, vilkar } = ownProps;
+    return {
+      onSubmit,
+      avslagsarsaker: filtrerteAvslagsarsaker,
+      initialValues: buildInitialValues(state, ownProps),
+      erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
+      lovReferanse: vilkar[0].lovReferanse,
+      hasAksjonspunkt: aksjonspunkter.length > 0,
+    };
+  };
 };
 
-const FodselVilkarForm = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   validate,
 })(FodselVilkarFormImpl));
-
-FodselVilkarForm.supports = (behandlingspunkt, apCodes) => behandlingspunkt === behandlingspunktCodes.FOEDSEL
-    && (apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-    || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN));
-
-export default FodselVilkarForm;

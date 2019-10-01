@@ -26,6 +26,8 @@ describe('<FodselVilkarForm>', () => {
       erVilkarOk={false}
       status={vilkarUtfallType.OPPFYLT}
       isAksjonspunktOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
@@ -47,6 +49,8 @@ describe('<FodselVilkarForm>', () => {
       erVilkarOk={undefined}
       status={vilkarUtfallType.OPPFYLT}
       isAksjonspunktOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const selector = wrapper.find('injectIntl(VilkarResultPickerImpl)');
@@ -72,6 +76,8 @@ describe('<FodselVilkarForm>', () => {
       erVilkarOk
       status={vilkarUtfallType.OPPFYLT}
       isAksjonspunktOpen
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);

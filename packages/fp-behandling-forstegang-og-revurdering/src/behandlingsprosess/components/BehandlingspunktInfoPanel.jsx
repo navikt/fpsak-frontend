@@ -70,6 +70,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         submitCallback={submitCallback}
+        behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
+        fagsakInfo={fagsakInfo}
+        alleKodeverk={alleKodeverk}
       />
       <VedtakPanels
         behandlingspunkt={selectedBehandlingspunkt}

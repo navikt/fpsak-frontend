@@ -19,6 +19,11 @@ describe('<VilkarPanels>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       submitCallback={sinon.spy()}
+      behandlingspunktAksjonspunkter={[]}
+      behandlingspunktStatus=""
+      behandlingspunktVilkar={[]}
+      alleKodeverk={{}}
+      fagsakInfo={{}}
     />);
 
     expect(wrapper.find(VilkarresultatMedOverstyringForm)).to.have.length(1);
@@ -33,6 +38,11 @@ describe('<VilkarPanels>', () => {
       readOnly={false}
       readOnlySubmitButton={false}
       submitCallback={sinon.spy()}
+      behandlingspunktAksjonspunkter={[]}
+      behandlingspunktStatus=""
+      behandlingspunktVilkar={[]}
+      alleKodeverk={{}}
+      fagsakInfo={{}}
     />);
 
     expect(wrapper.find(SokersOpplysningspliktForm)).to.have.length(1);

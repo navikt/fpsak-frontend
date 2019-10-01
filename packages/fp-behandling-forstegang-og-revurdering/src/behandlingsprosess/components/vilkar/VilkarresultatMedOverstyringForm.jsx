@@ -9,6 +9,11 @@ import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { VilkarResultPicker, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 import {
   getBehandlingRevurderingAvFortsattMedlemskapFom,
   isBehandlingRevurderingFortsattMedlemskap,
@@ -18,18 +23,12 @@ import {
   behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
 import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
-import VilkarResultPicker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPicker';
 import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { getFodselVilkarAvslagsarsaker } from './fodsel/FodselVilkarForm';
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 import { getAllApCodes, getApCode } from './BehandlingspunktToAksjonspunkt';
 
@@ -38,6 +37,10 @@ import styles from './vilkarresultatMedOverstyringForm.less';
 const behandlingpunktToVilkar = {
   [behandlingspunktCodes.OPPTJENING]: vilkarType.OPPTJENINGSVILKARET,
 };
+
+const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
+  ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
+  : fodselsvilkarAvslagskoder);
 
 const getCustomVilkarText = (state, behandlingspunkt, oppfylt) => {
   const customVilkarText = {};

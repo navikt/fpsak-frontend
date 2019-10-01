@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -11,6 +10,8 @@ import {
   DatepickerField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
+
+import behandlingspunktCodes from '../../behandlingspunktCodes';
 
 import styles from './vilkarResultPicker.less';
 

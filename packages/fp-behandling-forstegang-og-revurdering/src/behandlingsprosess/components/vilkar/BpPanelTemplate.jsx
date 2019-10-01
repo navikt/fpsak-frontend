@@ -3,16 +3,19 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import VilkarResultPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPanel';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { VilkarResultPanel } from '@fpsak-frontend/fp-felles';
+import {
+  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
+
 import {
   hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import {
-  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
-} from '@fpsak-frontend/shared-components';
+
+// TODO (TOR) Fjern når alle panel er flytta ut til eigne pakker
 
 /*
  * BpPanelTemplate
