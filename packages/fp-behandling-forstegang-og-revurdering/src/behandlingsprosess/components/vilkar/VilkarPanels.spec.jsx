@@ -3,11 +3,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
+import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { VilkarPanels } from './VilkarPanels';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
-import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysningspliktForm';
+import DataFetcherWithCache from '../../../DataFetcherWithCache';
 
 describe('<VilkarPanels>', () => {
   it('skal rendre panelet med visning av vilkårsresultat når det ikke finnes aksjonspunkter', () => {
@@ -45,6 +47,13 @@ describe('<VilkarPanels>', () => {
       fagsakInfo={{}}
     />);
 
-    expect(wrapper.find(SokersOpplysningspliktForm)).to.have.length(1);
+    const dataFetchers = wrapper.find(DataFetcherWithCache);
+    expect(dataFetchers).to.have.length(1);
+
+    const sokersOpplysningPanel = dataFetchers.renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      soknad: {},
+    }).find(SokersOpplysningspliktVilkarProsessIndex);
+    expect(sokersOpplysningPanel).to.have.length(1);
   });
 });

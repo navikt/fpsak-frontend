@@ -3,13 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import moment from 'moment';
-
 import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
+import {
+  behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
+  getKodeverknavnFn,
+} from '@fpsak-frontend/fp-felles';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { behandlingspunktCodes, injectKodeverk, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   ElementWrapper, Table, TableColumn, TableRow, VerticalSpacer,
@@ -18,18 +20,8 @@ import { DDMMYYYY_DATE_FORMAT, isObject, required } from '@fpsak-frontend/utils'
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
-
-import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 
 import styles from './sokersOpplysningspliktForm.less';
 
@@ -82,9 +74,11 @@ export const SokersOpplysningspliktFormImpl = ({
   dokumentTypeIds,
   inntektsmeldingerSomIkkeKommer,
   getKodeverknavn,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
-  <BpPanelTemplate
+  <ProsessPanelTemplate
     handleSubmit={handleSubmit}
     titleCode="SokersOpplysningspliktForm.SokersOpplysningsplikt"
     isAksjonspunktOpen={!readOnlySubmitButton}
@@ -93,6 +87,8 @@ export const SokersOpplysningspliktFormImpl = ({
     readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
     isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
     readOnly={readOnly}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
   >
     {manglendeVedlegg.length > 0
       && (
@@ -151,7 +147,7 @@ export const SokersOpplysningspliktFormImpl = ({
         </div>
       </ElementWrapper>
       )}
-  </BpPanelTemplate>
+  </ProsessPanelTemplate>
 );
 
 SokersOpplysningspliktFormImpl.propTypes = {
@@ -173,6 +169,8 @@ SokersOpplysningspliktFormImpl.propTypes = {
   dokumentTypeIds: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   inntektsmeldingerSomIkkeKommer: PropTypes.shape(),
   getKodeverknavn: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 SokersOpplysningspliktFormImpl.defaultProps = {
@@ -184,11 +182,12 @@ SokersOpplysningspliktFormImpl.defaultProps = {
   inntektsmeldingerSomIkkeKommer: {},
 };
 
-export const getSortedManglendeVedlegg = createSelector([behandlingSelectors.getSoknad], (soknad) => (soknad && soknad.manglendeVedlegg
+export const getSortedManglendeVedlegg = createSelector([
+  (state, ownProps) => ownProps.soknad], (soknad) => (soknad && soknad.manglendeVedlegg
   ? soknad.manglendeVedlegg.slice().sort((mv1) => (mv1.dokumentType.kode === dokumentTypeId.DOKUMENTASJON_AV_TERMIN_ELLER_FØDSEL ? 1 : -1))
   : []));
 
-const hasSoknad = createSelector([behandlingSelectors.getSoknad], (soknad) => soknad !== null && isObject(soknad));
+const hasSoknad = createSelector([(state, ownProps) => ownProps.soknad], (soknad) => soknad !== null && isObject(soknad));
 
 const lagArbeidsgiverKey = (arbeidsgiver) => {
   if (arbeidsgiver.aktørId) {
@@ -197,8 +196,10 @@ const lagArbeidsgiverKey = (arbeidsgiver) => {
 };
 
 export const buildInitialValues = createSelector(
-  [getSortedManglendeVedlegg, hasSoknad, behandlingsprosessSelectors.getSelectedBehandlingspunktStatus,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter],
+  [getSortedManglendeVedlegg,
+    hasSoknad,
+    (state, ownProps) => ownProps.status,
+    (state, ownProps) => ownProps.aksjonspunkter],
   (manglendeVedlegg, soknadExists, status, aksjonspunkter) => {
     const aksjonspunkt = aksjonspunkter.length > 0 ? aksjonspunkter[0] : undefined;
     const isOpenAksjonspunkt = aksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
@@ -238,24 +239,27 @@ const transformValues = (values, manglendeVedlegg) => {
 };
 
 const submitSelector = createSelector(
-  [getSortedManglendeVedlegg, (state, props) => props],
-  (manglendeVedlegg, props) => (values) => props.submitCallback([transformValues(values, manglendeVedlegg)]),
+  [getSortedManglendeVedlegg, (state, props) => props.submitCallback],
+  (manglendeVedlegg, submitCallback) => (values) => submitCallback([transformValues(values, manglendeVedlegg)]),
 );
 
-const mapStateToProps = (state, ownProps) => ({
-  onSubmit: submitSelector(state, ownProps),
-  hasSoknad: hasSoknad(state),
-  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  dokumentTypeIds: getKodeverk(kodeverkTyper.DOKUMENT_TYPE_ID)(state),
-  manglendeVedlegg: getSortedManglendeVedlegg(state),
-  initialValues: buildInitialValues(state),
-  ...behandlingFormValueSelector(formName)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
-});
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon, alleKodeverk } = ownProps;
+    return {
+      getKodeverknavn,
+      onSubmit: submitSelector(state, ownProps),
+      hasSoknad: hasSoknad(state, ownProps),
+      dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
+      manglendeVedlegg: getSortedManglendeVedlegg(state, ownProps),
+      initialValues: buildInitialValues(state, ownProps),
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasAksjonspunkt', 'erVilkarOk', 'inntektsmeldingerSomIkkeKommer'),
+    };
+  };
+};
 
-const SokersOpplysningspliktForm = connect(mapStateToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
+
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
-})(injectKodeverk(getAlleKodeverk)(SokersOpplysningspliktFormImpl))));
-
-SokersOpplysningspliktForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT;
-
-export default SokersOpplysningspliktForm;
+})(SokersOpplysningspliktFormImpl)));

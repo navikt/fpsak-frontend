@@ -55,6 +55,8 @@ describe('<SokersOpplysningspliktForm>', () => {
       reduxFormChange={() => undefined}
       behandlingFormPrefix="form"
       getKodeverknavn={getKodeverknavn}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const table = wrapper.find(Table);
@@ -92,6 +94,8 @@ describe('<SokersOpplysningspliktForm>', () => {
       reduxFormChange={() => undefined}
       behandlingFormPrefix="form"
       getKodeverknavn={getKodeverknavn}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     expect(wrapper.find(Table)).to.have.length(0);

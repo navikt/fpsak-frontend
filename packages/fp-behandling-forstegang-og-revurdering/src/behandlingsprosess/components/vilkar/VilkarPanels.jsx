@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
+import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -16,7 +17,6 @@ import ErOmsorgVilkaarOppfyltForm from './omsorg/ErOmsorgVilkaarOppfyltForm';
 import ErSoknadsfristVilkaretOppfyltForm from './soknadsfrist/ErSoknadsfristVilkaretOppfyltForm';
 import ErForeldreansvar2LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar2LeddVilkaarOppfyltForm';
 import ErForeldreansvar4LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar4LeddVilkaarOppfyltForm';
-import SokersOpplysningspliktForm from './sokersOpplysningsplikt/SokersOpplysningspliktForm';
 import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
@@ -24,6 +24,7 @@ import DataFetcherWithCache from '../../../DataFetcherWithCache';
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
 const svangerskapData = [fpsakApi.BEHANDLING];
+const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 
 /*
  * VilkarPanels
@@ -45,16 +46,28 @@ export const VilkarPanels = ({
   fagsakInfo,
 }) => (
   <ElementWrapper>
-    {VilkarresultatMedOverstyringForm.supports(aksjonspunktCodes, behandlingspunkt)
-      && <VilkarresultatMedOverstyringForm key={behandlingspunkt} submitCallback={submitCallback} />}
-    {SokersOpplysningspliktForm.supports(behandlingspunkt)
-      && (
-      <SokersOpplysningspliktForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
+    {VilkarresultatMedOverstyringForm.supports(aksjonspunktCodes, behandlingspunkt) && (
+      <VilkarresultatMedOverstyringForm key={behandlingspunkt} submitCallback={submitCallback} />
+    )}
+
+    {behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT && (
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={sokersOpplysningspliktData}
+        render={(props) => (
+          <SokersOpplysningspliktVilkarProsessIndex
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            status={behandlingspunktStatus}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
       />
-      )}
+    )}
+
     {ErSoknadsfristVilkaretOppfyltForm.supports(aksjonspunktCodes)
     && (
     <ErSoknadsfristVilkaretOppfyltForm

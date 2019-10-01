@@ -37,7 +37,7 @@ export const visÅpentAksjonspunkt = () => (
     }}
     aksjonspunkter={[{
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+        kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
       },
       status: {
         kode: aksjonspunktStatus.OPPRETTET,
@@ -65,7 +65,7 @@ export const visOppfyltVilkår = () => (
     }}
     aksjonspunkter={[{
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+        kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
       },
       status: {
         kode: aksjonspunktStatus.UTFORT,
@@ -97,7 +97,7 @@ export const visAvslåttVilkår = () => (
     }}
     aksjonspunkter={[{
       definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_PERSONSTATUS,
+        kode: aksjonspunktCodes.SVANGERSKAPSVILKARET,
       },
       status: {
         kode: aksjonspunktStatus.UTFORT,

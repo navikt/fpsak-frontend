@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import fodselVilkarAksjonspunkterPropType from './propTypes/fodselVilkarAksjonspunkterPropType';
-import fodselVilkarBehandlingPropType from './propTypes/fodselVilkarBehandlingPropType';
+import svangerskapVilkarAksjonspunkterPropType from './propTypes/svangerskapVilkarAksjonspunkterPropType';
+import svangerskapVilkarBehandlingPropType from './propTypes/svangerskapVilkarBehandlingPropType';
 import SvangerskapVilkarForm from './components/SvangerskapVilkarForm';
 import messages from '../i18n/nb_NO';
 
@@ -43,8 +43,8 @@ const SvangerskapVilkarProsessIndex = ({
 );
 
 SvangerskapVilkarProsessIndex.propTypes = {
-  behandling: fodselVilkarBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(fodselVilkarAksjonspunkterPropType).isRequired,
+  behandling: svangerskapVilkarBehandlingPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(svangerskapVilkarAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-const fodselVilkarBehandlingPropType = PropTypes.shape({
+const svangerskapVilkarBehandlingPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   versjon: PropTypes.number.isRequired,
   behandlingsresultat: PropTypes.shape({
@@ -10,4 +10,4 @@ const fodselVilkarBehandlingPropType = PropTypes.shape({
   }),
 });
 
-export default fodselVilkarBehandlingPropType;
+export default svangerskapVilkarBehandlingPropType;
