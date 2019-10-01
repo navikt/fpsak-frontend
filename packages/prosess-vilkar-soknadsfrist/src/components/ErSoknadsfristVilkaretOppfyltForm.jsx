@@ -4,40 +4,31 @@ import { createSelector } from 'reselect';
 import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
 import { Fieldset } from 'nav-frontend-skjema';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
-import moment from 'moment';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BehandlingspunktBegrunnelseTextField, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import {
   DateLabel, ElementWrapper, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import { getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting, BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
+} from '@fpsak-frontend/fp-felles';
 
 import styles from './erSoknadsfristVilkaretOppfyltForm.less';
 
-const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk ? 'SokersOpplysningspliktForm.VilkarOppfylt' : 'SokersOpplysningspliktForm.VilkarIkkeOppfylt');
+const findRadioButtonTextCode = (erVilkarOk) => (erVilkarOk
+  ? 'ErSoknadsfristVilkaretOppfyltForm.VilkarOppfylt' : 'ErSoknadsfristVilkaretOppfyltForm.VilkarIkkeOppfylt');
 
 const findSoknadsfristDate = (mottattDato, antallDagerSoknadLevertForSent) => (
   moment(mottattDato)
@@ -65,6 +56,8 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
   behandlingsresultat,
   hasAksjonspunkt,
   getKodeverknavn,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <FadingPanel>
@@ -146,6 +139,8 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         isReadOnly={readOnly}
         isSubmittable={!readOnlySubmitButton}
         isBehandlingFormSubmitting={isBehandlingFormSubmitting}
@@ -179,13 +174,12 @@ ErSoknadsfristVilkaretOppfyltFormImpl.defaultProps = {
 };
 
 
-export const buildInitialValues = createSelector(
-  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter, behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
-  (aksjonspunkter, status) => ({
-    erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
-    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
-  }),
-);
+export const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.aksjonspunkter, (state, ownProps) => ownProps.status],
+(aksjonspunkter, status) => ({
+  erVilkarOk: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : vilkarUtfallType.OPPFYLT === status,
+  ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+}));
 
 const transformValues = (values, aksjonspunkter) => ({
   erVilkarOk: values.erVilkarOk,
@@ -193,7 +187,8 @@ const transformValues = (values, aksjonspunkter) => ({
   ...BehandlingspunktBegrunnelseTextField.transformValues(values),
 });
 
-const findDate = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
+const findDate = createSelector([
+  (state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse], (soknad, familiehendelse) => {
   if (soknad.soknadType.kode === soknadType.FODSEL) {
     const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
     const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
@@ -203,7 +198,8 @@ const findDate = createSelector([behandlingSelectors.getSoknad, getFamiliehendel
   return familiehendelse && familiehendelse.omsorgsovertakelseDato ? familiehendelse.omsorgsovertakelseDato : soknad.omsorgsovertakelseDato;
 });
 
-const findTextCode = createSelector([behandlingSelectors.getSoknad, getFamiliehendelseGjeldende], (soknad, familiehendelse) => {
+const findTextCode = createSelector([
+  (state, ownProps) => ownProps.soknad, (state, ownProps) => ownProps.gjeldendeFamiliehendelse], (soknad, familiehendelse) => {
   if (soknad.soknadType.kode === soknadType.FODSEL) {
     const soknadFodselsdato = soknad.fodselsdatoer ? Object.values(soknad.fodselsdatoer)[0] : undefined;
     const fodselsdato = familiehendelse && familiehendelse.fodselsdato ? familiehendelse.fodselsdato : soknadFodselsdato;
@@ -214,30 +210,31 @@ const findTextCode = createSelector([behandlingSelectors.getSoknad, getFamiliehe
 
 const formName = 'ErSoknadsfristVilkaretOppfyltForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const {
+    aksjonspunkter, vilkar, alleKodeverk, submitCallback,
+  } = initialOwnProps;
   const vilkarCodes = aksjonspunkter.map((a) => a.vilkarType.kode);
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
-  const antallDagerSoknadLevertForSent = behandlingSelectors.getBehandlingVilkar(initialState)
+  const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
+  const antallDagerSoknadLevertForSent = vilkar
     .find((v) => vilkarCodes.includes(v.vilkarType.kode)).merknadParametere.antallDagerSoeknadLevertForSent;
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
-  return (state) => ({
-    onSubmit,
-    antallDagerSoknadLevertForSent,
-    initialValues: buildInitialValues(state),
-    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    soknad: behandlingSelectors.getSoknad(state),
-    dato: findDate(state),
-    textCode: findTextCode(state),
-    hasAksjonspunkt: aksjonspunkter.length > 0,
-    ...behandlingFormValueSelector(formName)(state, 'textCode', 'dato', 'erVilkarOk'),
-  });
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon } = ownProps;
+    return {
+      getKodeverknavn,
+      onSubmit,
+      antallDagerSoknadLevertForSent,
+      initialValues: buildInitialValues(state, ownProps),
+      dato: findDate(state, ownProps),
+      textCode: findTextCode(state, ownProps),
+      hasAksjonspunkt: aksjonspunkter.length > 0,
+      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'textCode', 'dato', 'erVilkarOk'),
+    };
+  };
 };
 
-const ErSoknadsfristVilkaretOppfyltForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
-})(injectKodeverk(getAlleKodeverk)(ErSoknadsfristVilkaretOppfyltFormImpl))));
-
-ErSoknadsfristVilkaretOppfyltForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.SOKNADSFRISTVILKARET);
-
-export default ErSoknadsfristVilkaretOppfyltForm;
+})(ErSoknadsfristVilkaretOppfyltFormImpl)));

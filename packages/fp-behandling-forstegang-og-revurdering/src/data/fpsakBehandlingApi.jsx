@@ -11,6 +11,7 @@ export const BehandlingFpsakApiKeys = {
   PREVIEW_TILBAKEKREVING_MESSAGE: 'PREVIEW_TILBAKEKREVING_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER: 'AKSJONSPUNKTER',
+  VILKAR: 'VILKAR',
   PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
@@ -40,6 +41,7 @@ const endpoints = new RestApiConfigBuilder()
 
   // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
   .withInjectedPath('aksjonspunkter', BehandlingFpsakApiKeys.AKSJONSPUNKTER)
+  .withInjectedPath('vilkar', BehandlingFpsakApiKeys.VILKAR)
   .withInjectedPath('soeker-personopplysninger', BehandlingFpsakApiKeys.PERSONOPPLYSNINGER)
   .withInjectedPath('simuleringResultat', BehandlingFpsakApiKeys.SIMULERING_RESULTAT)
   .withInjectedPath('tilbakekrevingvalg', BehandlingFpsakApiKeys.TILBAKEKREVINGVALG)

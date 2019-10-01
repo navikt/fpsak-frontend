@@ -24,6 +24,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.SIMULERING_RESULTAT]: 'simuleringResultat',
   [BehandlingFpsakApiKeys.TILBAKEKREVINGVALG]: 'tilbakekrevingvalg',
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
+  [BehandlingFpsakApiKeys.VILKAR]: 'vilkar',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
