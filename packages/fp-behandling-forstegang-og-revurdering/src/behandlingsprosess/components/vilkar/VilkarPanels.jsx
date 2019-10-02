@@ -8,6 +8,7 @@ import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svange
 import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
+import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
@@ -15,8 +16,6 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import ErForeldreansvar2LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar2LeddVilkaarOppfyltForm';
-import ErForeldreansvar4LeddVilkaarOppfyltForm from './foreldreansvar/ErForeldreansvar4LeddVilkaarOppfyltForm';
 import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
 import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
@@ -27,6 +26,7 @@ const svangerskapData = [fpsakApi.BEHANDLING];
 const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
 const soknadsfristData = [fpsakApi.BEHANDLING];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
+const foreldreansvarData = [fpsakApi.BEHANDLING];
 
 /*
  * VilkarPanels
@@ -109,23 +109,25 @@ export const VilkarPanels = ({
       />
     )}
 
-    {ErForeldreansvar2LeddVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes, vilkarTypeCodes)
-      && (
-      <ErForeldreansvar2LeddVilkaarOppfyltForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
+    {behandlingspunkt === behandlingspunktCodes.FORELDREANSVAR && (
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={foreldreansvarData}
+        render={(props) => (
+          <ForeldreansvarVilkarProsessIndex
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            isEngangsstonad={fagsakInfo.ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD}
+            status={behandlingspunktStatus}
+            alleKodeverk={alleKodeverk}
+            vilkarTypeCodes={vilkarTypeCodes}
+            {...props}
+          />
+        )}
       />
-      )}
-    {ErForeldreansvar4LeddVilkaarOppfyltForm.supports(behandlingspunkt, aksjonspunktCodes, vilkarTypeCodes)
-      && (
-      <ErForeldreansvar4LeddVilkaarOppfyltForm
-        submitCallback={submitCallback}
-        behandlingspunkt={behandlingspunkt}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-      )}
+    )}
 
     {behandlingspunkt === behandlingspunktCodes.SVANGERSKAP && (
       <DataFetcherWithCache

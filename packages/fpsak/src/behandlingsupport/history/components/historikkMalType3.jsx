@@ -27,9 +27,9 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET]: 'OmsorgOgForeldreansvarFaktaForm.ApplicationInformation',
   [aksjonspunktCodes.REGISTRER_PAPIRSOKNAD_ENGANGSSTONAD]: 'Registrering.RegistrerePapirSoknadAksPkt',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD]:
-    'ErForeldreansvar2LeddVilkaarOppfyltForm.Foreldreansvar',
+    'Historikk.Foreldreansvar',
   [aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD]:
-    'ErForeldreansvar4LeddVilkaarOppfyltForm.Foreldreansvar',
+    'Historikk.Foreldreansvar',
   [aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL]: 'VarselOmRevurderingInfoPanel.Etterkontroll',
   [aksjonspunktCodes.VARSEL_REVURDERING_MANUELL]: 'VarselOmRevurderingInfoPanel.Manuell',
   [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn',

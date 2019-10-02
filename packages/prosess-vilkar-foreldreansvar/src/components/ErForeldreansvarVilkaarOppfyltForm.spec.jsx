@@ -1,29 +1,34 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { buildInitialValues, ErForeldreansvar4LeddVilkaarOppfyltFormImpl as UnwrappedForm } from './ErForeldreansvar4LeddVilkaarOppfyltForm';
 
-describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
+import { buildInitialValues, ErForeldreansvarVilkaarOppfyltForm as UnwrappedForm } from './ErForeldreansvarVilkaarOppfyltForm';
+
+
+const fagsakYtelseTypeEngangsstonad = {
+  kode: fagsakYtelseType.ENGANGSSTONAD,
+};
+
+describe('<ErForeldreansvarVilkaarOppfyltForm>', () => {
   const aksjonspunkterList = [{
-    id: 1,
     definisjon: {
-      navn: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
-      kode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
+      navn: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
+      kode: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
     },
     status: {
       kode: '',
       navn: '',
     },
     vilkarType: {
-      kode: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+      kode: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
       navn: 'Omsorgsvilkåret',
     },
     begrunnelse: 'begrunnelse',
@@ -35,6 +40,8 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
+      isEngangsstonad
+      fagsakYtelseTypeForSak={fagsakYtelseTypeEngangsstonad}
       avslagsarsaker={[{
         kode: 'TEST_KODE',
         navn: 'testnavn',
@@ -43,7 +50,10 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       readOnly
       readOnlySubmitButton
       erVilkarOk={false}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
+
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
     expect(readonlyForm).to.have.length(1);
@@ -54,6 +64,9 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
+      isEngangsstonad
+      fagsakYtelseTypeForSak={fagsakYtelseTypeEngangsstonad}
+
       avslagsarsaker={[{
         kode: 'TEST_KODE',
         navn: 'testnavn',
@@ -62,6 +75,8 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       readOnly={false}
       readOnlySubmitButton
       erVilkarOk={undefined}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const selector = wrapper.find('injectIntl(VilkarResultPickerImpl)');
@@ -80,7 +95,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
     const aksjonspunkter = [{
       id: 1,
       definisjon: {
-        navn: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
+        navn: aksjonspunktCodes.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD,
         kode: 'test',
       },
       status: {
@@ -88,7 +103,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
         navn: '',
       },
       vilkarType: {
-        kode: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+        kode: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
         navn: 'Adopsjonvilkåret',
       },
       begrunnelse: 'begrunnelse',
@@ -99,11 +114,15 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}
+      isEngangsstonad
+      fagsakYtelseTypeForSak={fagsakYtelseTypeEngangsstonad}
       avslagsarsaker={[]}
       aksjonspunkter={aksjonspunkter}
       readOnly
       readOnlySubmitButton
       erVilkarOk
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const readonlyForm = wrapper.find(BehandlingspunktBegrunnelseTextField);
@@ -111,8 +130,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
     expect(readonlyForm.prop('readOnly')).is.true;
   });
 
-
-  it('skal sette opp initielle verdier for form gitt behandling og behandlingspunkt', () => {
+  it('skal sette opp initielle0  verdier for form gitt behandling og behandlingspunkt', () => {
     const behandlingsresultat = {
       avslagsarsak: {
         kode: 'TEST',
@@ -127,7 +145,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       },
       begrunnelse: 'Dette er en begrunnelse',
       vilkarType: {
-        kode: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+        kode: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
       },
       erAktivt: true,
     }];
@@ -156,7 +174,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       },
       begrunnelse: 'Dette er en begrunnelse',
       vilkarType: {
-        kode: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+        kode: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
       },
       erAktivt: true,
     }];
@@ -185,7 +203,7 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       },
       begrunnelse: 'Dette er en begrunnelse',
       vilkarType: {
-        kode: vilkarType.FORELDREANSVARSVILKARET_4_LEDD,
+        kode: vilkarType.FORELDREANSVARSVILKARET_2_LEDD,
       },
       erAktivt: true,
     }];
@@ -197,5 +215,49 @@ describe('<ErForeldreansvar4LeddVilkaarOppfyltForm>', () => {
       avslagCode: behandlingsresultat.avslagsarsak.kode,
       begrunnelse: aksjonspunkter[0].begrunnelse,
     });
+  });
+
+  it('skal vise riktig hjelpetekst med fagsakYtelseType lik Foreldrepenger', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      isEngangsstonad={false}
+      avslagsarsaker={[{
+        kode: 'TEST_KODE',
+        navn: 'testnavn',
+      }]}
+      aksjonspunkter={aksjonspunkterList}
+      readOnly
+      readOnlySubmitButton
+      erVilkarOk={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+    />);
+
+    const template = wrapper.find(ProsessPanelTemplate);
+    expect(template).to.have.length(1);
+    expect(template.prop('aksjonspunktHelpTexts')).to.eql(['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger']);
+  });
+
+  it('skal vise riktig hjelpetekst med fagsakYtelseType lik Engangsstønad', () => {
+    const wrapper = shallowWithIntl(<UnwrappedForm
+      {...reduxFormPropsMock}
+      intl={intlMock}
+      isEngangsstonad
+      avslagsarsaker={[{
+        kode: 'TEST_KODE',
+        navn: 'testnavn',
+      }]}
+      aksjonspunkter={aksjonspunkterList}
+      readOnly
+      readOnlySubmitButton
+      erVilkarOk={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+    />);
+
+    const template = wrapper.find(ProsessPanelTemplate);
+    expect(template).to.have.length(1);
+    expect(template.prop('aksjonspunktHelpTexts')).to.eql(['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafEngangsStonad']);
   });
 });
