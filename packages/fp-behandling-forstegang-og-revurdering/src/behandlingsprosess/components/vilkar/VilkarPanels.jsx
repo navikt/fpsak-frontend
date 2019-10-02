@@ -23,8 +23,8 @@ import DataFetcherWithCache from '../../../DataFetcherWithCache';
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
 const svangerskapData = [fpsakApi.BEHANDLING];
-const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
-const soknadsfristData = [fpsakApi.BEHANDLING];
+const omsorgData = [fpsakApi.BEHANDLING];
+const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 const foreldreansvarData = [fpsakApi.BEHANDLING];
 
