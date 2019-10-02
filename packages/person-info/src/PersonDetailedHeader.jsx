@@ -89,16 +89,14 @@ const PersonDetailedHeader = ({
                 {isPrimaryParent
                 && (
                 <Undertittel>
-                  {navn}
-
+                  {`${navn} `}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Undertittel>
                 )}
                 {!isPrimaryParent
                 && (
                 <Element>
-                  {navn}
-
+                  {`${navn} `}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Element>
                 )}

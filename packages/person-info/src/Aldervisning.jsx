@@ -25,7 +25,7 @@ const AlderVisning = ({
     return (
       <Normaltekst className={styles.displayInline}>
         (
-        { renderDød(dodsdato) }
+        {renderDød(dodsdato)}
         )
       </Normaltekst>
     );
