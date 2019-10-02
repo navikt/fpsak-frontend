@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { IntlProvider } from 'react-intl';
 
-
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import fpsakApi from 'data/fpsakApi';
+import { CustomLanguageProvider } from '@fpsak-frontend/fp-felles';
 
 
 /**
@@ -14,11 +12,9 @@ import fpsakApi from 'data/fpsakApi';
  * Container komponent. Har ansvar for å hente språkfilen.
  */
 export const LanguageProvider = ({ nbMessages, children }) => (
-  <IntlProvider locale="nb-NO" messages={nbMessages}>
-    <ElementWrapper>
-      {children}
-    </ElementWrapper>
-  </IntlProvider>
+  <CustomLanguageProvider messages={nbMessages}>
+    {children}
+  </CustomLanguageProvider>
 );
 
 LanguageProvider.propTypes = {

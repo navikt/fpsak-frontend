@@ -1,20 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import { CustomLanguageProvider } from '@fpsak-frontend/fp-felles';
 import AvregningPanel from './components/AvregningPanel';
-import messages from '../i18n/nb_NO';
 import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
 import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
 import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
 import avregningSimuleringResultatPropType from './propTypes/avregningSimuleringResultatPropType';
-
-const cache = createIntlCache();
-
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+import messages from '../i18n/nb_NO';
 
 const AvregningProsessIndex = ({
   fagsak,
@@ -30,7 +23,7 @@ const AvregningProsessIndex = ({
   previewCallback,
   featureToggles,
 }) => (
-  <RawIntlProvider value={intl}>
+  <CustomLanguageProvider messages={messages}>
     <AvregningPanel
       fagsak={fagsak}
       behandlingId={behandling.id}
@@ -47,7 +40,7 @@ const AvregningProsessIndex = ({
       isApOpen={isApOpen}
       previewCallback={previewCallback}
     />
-  </RawIntlProvider>
+  </CustomLanguageProvider>
 );
 
 AvregningProsessIndex.propTypes = {

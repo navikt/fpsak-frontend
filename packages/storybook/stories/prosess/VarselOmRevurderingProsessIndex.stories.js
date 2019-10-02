@@ -10,6 +10,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
+import withIntlMessages from '../../decorators/withIntlMessages';
 
 const behandling = {
   id: 1,
@@ -78,7 +79,7 @@ const aksjonspunkter = [{
 export default {
   title: 'prosess/VarselOmRevurderingProsessIndex',
   component: VarselOmRevurderingProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withKnobs, withReduxProvider, withIntlMessages],
 };
 
 export const visForFørstegangsbehandling = () => (

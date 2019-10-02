@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+
+import { CustomLanguageProvider } from '@fpsak-frontend/fp-felles';
 
 import revurderingBehandlingPropType from './propTypes/revurderingBehandlingPropType';
 import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspunkterPropType';
@@ -9,13 +10,6 @@ import revurderingSoknadPropType from './propTypes/revurderingSoknadPropType';
 import revurderingOriginalBehandlingPropType from './propTypes/revurderingOriginalBehandlingPropType';
 import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
 import messages from '../i18n/nb_NO';
-
-const cache = createIntlCache();
-
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
 
 const VarselOmRevurderingProsessIndex = ({
   behandling,
@@ -29,7 +23,7 @@ const VarselOmRevurderingProsessIndex = ({
   readOnly,
   alleKodeverk,
 }) => (
-  <RawIntlProvider value={intl}>
+  <CustomLanguageProvider messages={messages}>
     <VarselOmRevurderingForm
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
@@ -46,7 +40,7 @@ const VarselOmRevurderingProsessIndex = ({
       readOnly={readOnly}
       alleKodeverk={alleKodeverk}
     />
-  </RawIntlProvider>
+  </CustomLanguageProvider>
 );
 
 VarselOmRevurderingProsessIndex.propTypes = {

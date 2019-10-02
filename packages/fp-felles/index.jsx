@@ -62,3 +62,4 @@ export { default as FaktaEkspandertpanel } from './src/fakta/FaktaEkspandertpane
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/BehandlingspunktBegrunnelseTextField';
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
+export { default as CustomLanguageProvider } from './src/CustomLanguageProvider';

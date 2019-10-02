@@ -9,6 +9,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 
+import withIntlMessages from '../../decorators/withIntlMessages';
 import withReduxProvider from '../../decorators/withRedux';
 
 const fagsak = {
@@ -118,7 +119,7 @@ const toggles = {
 export default {
   title: 'prosess/AvregningProsessIndex',
   component: AvregningProsessIndex,
-  decorators: [withKnobs, withReduxProvider],
+  decorators: [withKnobs, withReduxProvider, withIntlMessages],
 };
 
 export const visAksjonspunktVurderFeilutbetaling = () => (
