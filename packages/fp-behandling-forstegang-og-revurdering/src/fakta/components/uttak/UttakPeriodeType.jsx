@@ -150,26 +150,26 @@ export const UttakPeriodeType = ({ // NOSONAR
         )}
       {isGradering
       && (
-      <>
-        {erFrilanser
+        <>
+          {erFrilanser
         && (
           <div className={styles.textWrapper}>
             <Element><FormattedMessage id="UttakInfoPanel.Frilans" /></Element>
           </div>
         )}
-        {erSelvstendig
+          {erSelvstendig
         && (
           <div className={styles.textWrapper}>
             <Element><FormattedMessage id="UttakInfoPanel.Selvstendignæringsdrivende" /></Element>
           </div>
         )}
-        {arbeidsgiver && arbeidsgiver.navn && (arbeidsgiver.identifikator || arbeidsgiver.aktorId)
+          {arbeidsgiver && arbeidsgiver.navn && (arbeidsgiver.identifikator || arbeidsgiver.aktorId)
         && (
           <div className={styles.textWrapper}>
             <Element>{lagVisningsNavn(arbeidsgiver)}</Element>
           </div>
         )}
-      </>
+        </>
       )}
     </div>
   );

@@ -67,10 +67,6 @@ describe('Snakkeboble', () => {
     );
 
     const undertekst = wrapper.find(Undertekst);
-    expect(undertekst.childAt(0).text()).to.contain('10.12.2017 - ');
-    expect(undertekst.childAt(1).text()).to.contain(' ');
-    expect(undertekst.childAt(2).text()).to.contain('//');
-    expect(undertekst.childAt(3).text()).to.contain(' ');
-    expect(undertekst.childAt(4).text()).to.contain('Saksbehandler');
+    expect(undertekst.childAt(0).text()).to.contain('10.12.2017 -  // Saksbehandler');
   });
 });

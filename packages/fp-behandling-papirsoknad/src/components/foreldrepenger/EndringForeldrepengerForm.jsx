@@ -18,7 +18,7 @@ const buildInitialValues = () => ({ ...PermisjonPanel.initialValues });
  * TODO skriv dok
  */
 export class EndringForeldrepengerForm extends Component {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { soknadData } = this.props;
     if (!isEqual(soknadData, nextProps.soknadData)) {
       nextProps.initialize(buildInitialValues());

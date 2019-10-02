@@ -88,7 +88,7 @@ export class OppholdInntektOgPerioderForm extends Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { initialValues } = this.props;
     const defaultPeriode = initialValues.perioder ? initialValues.perioder[0] : {};
     this.setValgtPeriode(defaultPeriode);

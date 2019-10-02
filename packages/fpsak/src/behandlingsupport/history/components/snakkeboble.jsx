@@ -61,14 +61,7 @@ const Snakkeboble = ({
     </div>
     <Panel className={snakkeboblePanelCls(rolle)}>
       <Undertekst className={styles['snakkeboble-panel__dato']}>
-        {formatDate(dato)}
-        {' '}
-        {'//'}
-        {' '}
-        {rolleNavn}
-        {' '}
-        {opprettetAv}
-        {' '}
+        {`${formatDate(dato)} // ${rolleNavn} ${opprettetAv} `}
       </Undertekst>
       {children}
     </Panel>

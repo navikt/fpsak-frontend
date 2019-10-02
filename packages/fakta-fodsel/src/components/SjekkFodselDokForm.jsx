@@ -82,7 +82,7 @@ export const SjekkFodselDokForm = ({
         <div className={styles.clearfix}>
           <Column xs="12">
             <ArrowBox>
-              {<FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />}
+              <FormattedMessage id="SjekkFodselDokForm.FyllInnDokumenterteOpplysninger" />
               <FieldArray
                 name={avklarteBarnFieldArrayName}
                 component={avklartBarnFieldArray}

@@ -42,7 +42,7 @@ const PersonInfo = ({
         <div>
           <Undertittel>
             {navn}
-            {' '}
+
             <AlderVisning erDod={erDod} alder={alder} dodsdato={dodsdato} />
           </Undertittel>
           <Undertekst>

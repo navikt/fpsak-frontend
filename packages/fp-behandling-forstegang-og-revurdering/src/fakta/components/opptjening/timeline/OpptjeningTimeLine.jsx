@@ -119,7 +119,7 @@ class OpptjeningTimeLine extends Component {
     this.timelineRef = React.createRef();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const {
       opptjeningAktivitetTypes, opptjeningPeriods, opptjeningFomDato, opptjeningTomDato,
     } = this.props;
@@ -140,7 +140,7 @@ class OpptjeningTimeLine extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { opptjeningPeriods } = this.props;
     if (!isEqual(opptjeningPeriods, nextProps.opptjeningPeriods)) {
       const groups = createGroups(nextProps.opptjeningPeriods, nextProps.opptjeningAktivitetTypes);

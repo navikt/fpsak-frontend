@@ -81,7 +81,7 @@ export const SoknadTypePickerForm = ({
         </Column>
         <Column xs="4">
           <Undertekst>
-            {' '}
+
             <FormattedMessage id="Registrering.Omsoknaden.Soker" />
           </Undertekst>
           <VerticalSpacer fourPx />

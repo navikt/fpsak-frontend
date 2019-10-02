@@ -52,9 +52,9 @@ export const DelOppPeriodeModalImpl = ({
             <Undertekst><FormattedMessage id="DelOppPeriodeModalImpl.Periode" /></Undertekst>
             <Normaltekst>
               {moment(periodeData.fom.toString()).format(DDMMYYYY_DATE_FORMAT)}
-              {' '}
+
 -
-              {' '}
+
               {moment(periodeData.tom.toString()).format(DDMMYYYY_DATE_FORMAT)}
             </Normaltekst>
           </FlexColumn>

@@ -42,13 +42,13 @@ const adjustNumberOfFields = (fields, originalFields, antallBarn) => {
  * Viser barn som er bekreftet av TPS som readonly, mens en kan endre fødselsdato for de som ikke er det
  */
 export class BarnPanelImpl extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { fields, antallBarn } = this.props;
     this.originalFields = fields;
     adjustNumberOfFields(fields, fields, antallBarn);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     adjustNumberOfFields(nextProps.fields, this.originalFields, nextProps.antallBarn);
   }
 
@@ -71,7 +71,7 @@ export class BarnPanelImpl extends Component {
               <div key={`${b.nummer ? b.nummer : b.aktorId}`}>
                 <Undertittel>
                   {b.navn}
-                  {' '}
+
                   {b.dodsdato
               && <div className={styles.inline}><MerkePanel erDod /></div>}
                 </Undertittel>
@@ -91,7 +91,7 @@ export class BarnPanelImpl extends Component {
                 <Normaltekst><FormattedMessage id="BarnPanel.Address" /></Normaltekst>
                 <Element>
                   {b.adresse}
-                  {' '}
+
                 </Element>
                 <VerticalSpacer sixteenPx />
               </div>

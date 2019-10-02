@@ -276,7 +276,7 @@ export const UttakInfo = ({
           <Row>
             <Column xs="12">
               {gradertArbforhold(selectedItemData)}
-              {' '}
+
             </Column>
 
           </Row>
@@ -285,7 +285,7 @@ export const UttakInfo = ({
             <Column xs="12">
               <b>
                 <FormattedMessage id="UttakActivity.GraderingIkkeOppfylt" />
-                {': '}
+                :
               </b>
               {getKodeverknavn(selectedItemData.graderingAvslagÅrsak)}
             </Column>

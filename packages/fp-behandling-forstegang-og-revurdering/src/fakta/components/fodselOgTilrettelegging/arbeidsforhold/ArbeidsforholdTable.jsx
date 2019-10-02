@@ -38,7 +38,7 @@ const ArbeidsforholdTable = ({
         <TableColumn>
           <Normaltekst>
             {a.arbeidsgiverNavn}
-            {' '}
+
             {a.arbeidsgiverIdent && (
             <span>
             (

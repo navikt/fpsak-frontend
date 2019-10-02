@@ -41,7 +41,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
     .map((enhet, index) => (
       <option value={`${index}`} key={enhet.enhetId}>
         {enhet.enhetId}
-        {' '}
+
         {enhet.enhetNavn}
       </option>
     ));

@@ -78,7 +78,7 @@ export class OpptjeningFaktaFormImpl extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { opptjeningActivities } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     const opptjeningActivityWithAp = opptjeningActivities.find((o) => o.erGodkjent === null);

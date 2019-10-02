@@ -169,7 +169,7 @@ export const BrukersAndelFieldArrayImpl = ({
                 src={addCircleIcon}
               />
               <Undertekst className={styles.imageText}>
-                {' '}
+
                 <FormattedMessage
                   id="BeregningInfoPanel.FordelingBG.LeggTilAndel"
                 />

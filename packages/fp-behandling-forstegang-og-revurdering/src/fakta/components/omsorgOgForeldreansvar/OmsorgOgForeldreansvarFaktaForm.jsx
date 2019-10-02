@@ -109,7 +109,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
           )}
         <Normaltekst>
           {getDescriptionText(vilkarType)}
-          {' '}
+
         </Normaltekst>
       </FaktaGruppe>
       )}

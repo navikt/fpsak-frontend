@@ -41,11 +41,11 @@ const adjustNumberOfFields = ({ fields, antallBarn }) => {
  */
 
 export class FodselsDatoFields extends Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     adjustNumberOfFields(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     adjustNumberOfFields(nextProps);
   }
 

@@ -24,6 +24,6 @@ describe('<AksjonspunktHelpText>', () => {
       </AksjonspunktHelpText.WrappedComponent>,
     );
     expect(wrapper.find(Image)).to.have.length(0);
-    expect(wrapper.find(Normaltekst).childAt(2).prop('id')).is.eql('HelpText.Aksjonspunkt');
+    expect(wrapper.find(Normaltekst).childAt(1).prop('id')).is.eql('HelpText.Aksjonspunkt');
   });
 });

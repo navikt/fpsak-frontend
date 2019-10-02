@@ -257,17 +257,17 @@ export const BeregningsgrunnlagImpl = ({
     )}
     { gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
         && (
-        <>
-          <VerticalSpacer sixteenPx />
-          <BehandlingspunktSubmitButton
-            formName={formName}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnlySubmitButton}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-          />
-        </>
+          <>
+            <VerticalSpacer sixteenPx />
+            <BehandlingspunktSubmitButton
+              formName={formName}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
+          </>
         )}
   </div>
 );

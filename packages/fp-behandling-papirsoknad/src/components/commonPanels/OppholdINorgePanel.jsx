@@ -39,17 +39,17 @@ export const OppholdINorgePanelImpl = ({
           {soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON
           && (
           <Undertekst>
-            {' '}
+
             {formatMessage({ id: 'Registrering.OppholdVedAdopsjon' })}
-            {' '}
+
           </Undertekst>
           )}
           {soknadData.getFamilieHendelseType() !== familieHendelseType.ADOPSJON
           && (
           <Undertekst>
-            {' '}
+
             {formatMessage({ id: 'Registrering.OppholdVedFodsel' })}
-            {' '}
+
           </Undertekst>
           )}
           <VerticalSpacer eightPx />
@@ -60,9 +60,9 @@ export const OppholdINorgePanelImpl = ({
         </NavFieldGroup>
         <NavFieldGroup>
           <Undertekst>
-            {' '}
+
             {formatMessage({ id: 'Registrering.OppholdSisteTolv' })}
-            {' '}
+
           </Undertekst>
           <VerticalSpacer eightPx />
           <RadioGroupField name="harTidligereOppholdUtenlands" readOnly={readOnly}>
@@ -83,9 +83,9 @@ export const OppholdINorgePanelImpl = ({
         </NavFieldGroup>
         <NavFieldGroup>
           <Undertekst>
-            {' '}
+
             {formatMessage({ id: 'Registrering.OppholdNesteTolv' })}
-            {' '}
+
           </Undertekst>
           <VerticalSpacer eightPx />
           <RadioGroupField name="harFremtidigeOppholdUtenlands" readOnly={readOnly}>

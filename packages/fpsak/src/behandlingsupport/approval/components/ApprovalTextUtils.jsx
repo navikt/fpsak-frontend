@@ -74,9 +74,9 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => a
       />
       { formattedMessages.map((formattedMessage) => (
         <React.Fragment key={formattedMessage.props.id}>
-          {' '}
+
           {formattedMessage}
-          {' '}
+
         </React.Fragment>
       ))}
     </>

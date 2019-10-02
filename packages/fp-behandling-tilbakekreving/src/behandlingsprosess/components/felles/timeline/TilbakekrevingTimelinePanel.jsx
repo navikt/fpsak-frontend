@@ -13,7 +13,7 @@ class TilbakekrevingTimelinePanel extends Component {
     };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const {
       valgtPeriode: vPeriode,
     } = nextProps;

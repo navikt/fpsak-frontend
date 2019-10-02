@@ -24,7 +24,7 @@ export const FeilutbetalingPerioderFormImpl = ({
     <TableRow>
       <TableColumn>
         {moment(periode.fom).format(DDMMYYYY_DATE_FORMAT)}
-        {' '}
+
         -
         {moment(periode.tom).format(DDMMYYYY_DATE_FORMAT)}
       </TableColumn>
