@@ -36,6 +36,7 @@ describe('<ForeldrePanel>', () => {
     const wrapper = shallow(<ForeldrePanel
       readOnly
       fields={getMockedFields(fieldNames, parents)}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const DatepickerField = wrapper.find('DatepickerField');
@@ -67,6 +68,7 @@ describe('<ForeldrePanel>', () => {
     const wrapper = shallow(<ForeldrePanel
       readOnly
       fields={getMockedFields(fieldNames, parents)}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const DatepickerField = wrapper.find('DatepickerField');
@@ -98,6 +100,7 @@ describe('<ForeldrePanel>', () => {
     const wrapper = shallow(<ForeldrePanel
       readOnly
       fields={getMockedFields(fieldNames, parents)}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const DatepickerField = wrapper.find('DatepickerField');

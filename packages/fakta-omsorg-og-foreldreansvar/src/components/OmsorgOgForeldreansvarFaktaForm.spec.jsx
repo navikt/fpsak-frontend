@@ -34,6 +34,15 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser={[]}
       vilkarType="test"
       relatertYtelseTypes={[relatertYtelseType]}
+      editedStatus={{
+        omsorgsovertakelseDato: false,
+        antallBarnOmsorgOgForeldreansvar: false,
+        vilkarType: false,
+        fodselsdatoer: {},
+      }}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
@@ -55,6 +64,15 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser={[]}
       vilkarType="test"
       relatertYtelseTypes={[relatertYtelseType]}
+      editedStatus={{
+        omsorgsovertakelseDato: false,
+        antallBarnOmsorgOgForeldreansvar: false,
+        vilkarType: false,
+        fodselsdatoer: {},
+      }}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const select = wrapper.find(SelectField);
@@ -76,6 +94,15 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser={[]}
       vilkarType="kode1"
       relatertYtelseTypes={[relatertYtelseType]}
+      editedStatus={{
+        omsorgsovertakelseDato: false,
+        antallBarnOmsorgOgForeldreansvar: false,
+        vilkarType: false,
+        fodselsdatoer: {},
+      }}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const select = wrapper.find(SelectField);
@@ -97,6 +124,15 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       ytelser={[]}
       vilkarType="test"
       relatertYtelseTypes={[relatertYtelseType]}
+      editedStatus={{
+        omsorgsovertakelseDato: false,
+        antallBarnOmsorgOgForeldreansvar: false,
+        vilkarType: false,
+        fodselsdatoer: {},
+      }}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);

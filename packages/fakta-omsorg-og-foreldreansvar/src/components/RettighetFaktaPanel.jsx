@@ -4,11 +4,10 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './rettighetFaktaPanel.less';
 
@@ -21,8 +20,13 @@ const RettighetFaktaPanelImpl = ({
   farSokerType,
   ytelser,
   relatertYtelseTypes,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE} titleCode="OmsorgOgForeldreansvarFaktaForm.Rettighet">
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE}
+    titleCode="OmsorgOgForeldreansvarFaktaForm.Rettighet"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}
+  >
     <Normaltekst>{farSokerType || '-'}</Normaltekst>
     <VerticalSpacer sixteenPx />
     <FaktaGruppe withoutBorder titleCode="OmsorgOgForeldreansvarFaktaForm.AndreYtelseTilMor">
@@ -31,7 +35,7 @@ const RettighetFaktaPanelImpl = ({
           <Normaltekst className={styles.iverksatt}>
             <FormattedMessage
               id="OmsorgOgForeldreansvarFaktaForm.YtelseIverksatt"
-              values={{ ytelseType: relatertYtelseTypes.find((r) => r.kode === ytelse.relatertYtelseType).navn }}
+              values={{ ytelseType: relatertYtelseTypes.find((r) => r.kode === ytelse.relatertYtelseType.kode).navn }}
             />
             <DateLabel className={styles.dato} dateString={y.periodeFraDato} />
           </Normaltekst>
@@ -46,10 +50,15 @@ RettighetFaktaPanelImpl.propTypes = {
   farSokerType: PropTypes.string.isRequired,
   ytelser: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  ...behandlingFormValueSelector('OmsorgOgForeldreansvarInfoPanel')(state, 'farSokerType', 'ytelser'),
+const FORM_NAME = 'OmsorgOgForeldreansvarInfoPanel';
+
+const mapStateToProps = (state, ownProps) => ({
+  ...behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'farSokerType', 'ytelser'),
 });
 
 const RettighetFaktaPanel = connect(mapStateToProps)(RettighetFaktaPanelImpl);

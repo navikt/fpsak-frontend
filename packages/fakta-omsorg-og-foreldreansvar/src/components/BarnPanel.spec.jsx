@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { BarnPanelImpl as BarnPanel } from './BarnPanel';
+import BarnPanel from './BarnPanel';
 
 const getMockedFields = (fieldNames, children) => {
   const field = {
@@ -36,6 +36,7 @@ describe('<BarnPanel>', () => {
       readOnly
       fields={getMockedFields(fieldNames, children)}
       antallBarn={2}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const DatepickerField = wrapper.find('DatepickerField');
@@ -63,6 +64,7 @@ describe('<BarnPanel>', () => {
       readOnly
       fields={getMockedFields(fieldNames, children)}
       antallBarn={2}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const DatepickerField = wrapper.find('DatepickerField');
@@ -97,6 +99,7 @@ describe('<BarnPanel>', () => {
       readOnly={false}
       fields={getMockedFields(fieldNames, children)}
       antallBarn={2}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const alderMessage = wrapper.find({ id: 'BarnPanel.Age' });

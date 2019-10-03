@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 import moment from 'moment';
@@ -9,11 +8,10 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { MerkePanel } from '@fpsak-frontend/person-info';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import styles from './barnPanel.less';
 
@@ -41,7 +39,7 @@ const adjustNumberOfFields = (fields, originalFields, antallBarn) => {
  * Presentasjonskomponent. Brukes i tilknytning til faktapanel for omsorg.
  * Viser barn som er bekreftet av TPS som readonly, mens en kan endre fødselsdato for de som ikke er det
  */
-export class BarnPanelImpl extends Component {
+export class BarnPanel extends Component {
   UNSAFE_componentWillMount() {
     const { fields, antallBarn } = this.props;
     this.originalFields = fields;
@@ -60,10 +58,16 @@ export class BarnPanelImpl extends Component {
   }
 
   render() {
-    const { fields, isFodselsdatoerEdited, readOnly } = this.props;
+    const {
+      fields, isFodselsdatoerEdited, readOnly, alleMerknaderFraBeslutter,
+    } = this.props;
 
     return (
-      <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE} titleCode="BarnPanel.BarnDetSøkesOm">
+      <FaktaGruppe
+        aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE}
+        titleCode="BarnPanel.BarnDetSøkesOm"
+        merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}
+      >
         {fields.map((barn, index, field) => {
           const b = field.get(index);
           if (b.opplysningsKilde === opplysningsKilde.TPS) {
@@ -118,23 +122,20 @@ export class BarnPanelImpl extends Component {
   }
 }
 
-BarnPanelImpl.propTypes = {
+BarnPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   antallBarn: PropTypes.number,
   fields: PropTypes.shape().isRequired,
   isFodselsdatoerEdited: PropTypes.shape(),
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
-BarnPanelImpl.defaultProps = {
+BarnPanel.defaultProps = {
   antallBarn: '',
   isFodselsdatoerEdited: {},
 };
-
-const mapStateToProps = (state) => ({
-  isFodselsdatoerEdited: getEditedStatus(state).fodselsdatoer,
-});
-
-const BarnPanel = connect(mapStateToProps)(BarnPanelImpl);
 
 const prepChildObj = (child) => ({
   isTps: child.opplysningsKilde && child.opplysningsKilde === opplysningsKilde.TPS,

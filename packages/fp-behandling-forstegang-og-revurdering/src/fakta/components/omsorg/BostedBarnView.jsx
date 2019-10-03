@@ -48,7 +48,7 @@ const BostedBarnView = ({
     {barn.dodsdato
     && (
     <div>
-      <FormattedMessage id="BarnPanel.DodsDato" />
+      <FormattedMessage id="BostedBarnView.DodsDato" />
       <Element><DateLabel dateString={barn.dodsdato} /></Element>
       <VerticalSpacer eightPx />
     </div>

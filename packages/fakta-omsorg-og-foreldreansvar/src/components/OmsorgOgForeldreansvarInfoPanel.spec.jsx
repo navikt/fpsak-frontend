@@ -39,11 +39,14 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       readOnly={false}
       vilkarTypes={[{ data: 'test' }]}
       relatertYtelseTypes={[relatertYtelseType]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om omsorg og foreldreansvar');
+    expect(panel.prop('title')).to.eql('OmsorgOgForeldreansvarInfoPanel.Omsorg');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('omsorgsvilkaaret');
@@ -70,6 +73,9 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       readOnly={false}
       vilkarTypes={[{ data: 'test' }]}
       relatertYtelseTypes={[relatertYtelseType]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const panel = wrapper.find('FaktaEkspandertpanel');
@@ -90,6 +96,9 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       readOnly
       vilkarTypes={[{ data: 'test' }]}
       relatertYtelseTypes={[relatertYtelseType]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const form = wrapper.find('Connect(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
@@ -110,6 +119,9 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       readOnly={false}
       vilkarTypes={[{ data: 'test' }]}
       relatertYtelseTypes={[relatertYtelseType]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const begrunnelseForm = wrapper.find(FaktaBegrunnelseTextField);
@@ -131,6 +143,9 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       readOnly={false}
       vilkarTypes={[{ data: 'test' }]}
       relatertYtelseTypes={[relatertYtelseType]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
     const omsorgOgForeldreAnsvarFaktaForm = wrapper.find(OmsorgOgForeldreansvarFaktaForm);
     expect(omsorgOgForeldreAnsvarFaktaForm.prop('erAksjonspunktForeldreansvar')).is.true;

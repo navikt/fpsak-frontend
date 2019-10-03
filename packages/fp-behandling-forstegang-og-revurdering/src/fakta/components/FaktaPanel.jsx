@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
+import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -15,7 +16,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import OmsorgOgForeldreansvarInfoPanel from './omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel';
 import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
 import RegistrereVergeInfoPanel from './verge/RegistrereVergeInfoPanel';
@@ -30,10 +30,14 @@ import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBere
 
 import styles from './faktaPanel.less';
 
-const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
-  fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
 const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
   aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
+const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
+
+const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
+const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.AKSJONSPUNKTER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 
 /**
  * FaktaPanel
@@ -56,6 +60,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   fagsakPerson,
   erOverstyrer,
   alleMerknaderFraBeslutter,
+  alleKodeverk,
 }) => (
   <>
     <div className={styles.personContainer}>
@@ -117,15 +122,23 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      {OmsorgOgForeldreansvarInfoPanel.supports(aksjonspunkter)
-      && (
-        <OmsorgOgForeldreansvarInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
+      {aksjonspunkter.some((ap) => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode)) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={omsorgOgForeldreansvarData}
+          render={(props) => (
+            <OmsorgOgForeldreansvarFaktaIndex
+              aksjonspunkter={aksjonspunkter}
+              alleKodeverk={alleKodeverk}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              {...props}
+            />
+          )}
         />
       )}
       {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
@@ -254,6 +267,7 @@ FaktaPanel.propTypes = {
   fagsakPerson: PropTypes.shape().isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -276,6 +290,7 @@ const mapStateToProps = (state) => {
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
+    alleKodeverk: getAlleKodeverk(state),
   };
 };
 

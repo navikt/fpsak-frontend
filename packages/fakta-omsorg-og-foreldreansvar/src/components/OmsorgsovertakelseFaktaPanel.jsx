@@ -1,26 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 /**
  * OmsorgsovertakelseFaktaPanel
  */
-const OmsorgsovertakelseFaktaPanelImpl = ({
+const OmsorgsovertakelseFaktaPanel = ({
   readOnly,
   erAksjonspunktForeldreansvar,
-  omsorgsovertakelseDatoIsEdited,
-  antallBarnIsEdited,
+  editedStatus,
+  alleMerknaderFraBeslutter,
 }) => (
   <FaktaGruppe
     aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE}
     titleCode={erAksjonspunktForeldreansvar ? 'OmsorgOgForeldreansvarFaktaForm.ForeldreansvarInfo' : 'OmsorgOgForeldreansvarFaktaForm.OmsorgInfo'}
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}
   >
     <Row>
       <Column xs={erAksjonspunktForeldreansvar ? '4' : '8'}>
@@ -29,7 +28,7 @@ const OmsorgsovertakelseFaktaPanelImpl = ({
           label={{ id: 'OmsorgOgForeldreansvarFaktaForm.OmsorgsovertakelseDate' }}
           validate={[required, hasValidDate]}
           readOnly={readOnly}
-          isEdited={omsorgsovertakelseDatoIsEdited}
+          isEdited={editedStatus.omsorgsovertakelseDato}
         />
       </Column>
       {erAksjonspunktForeldreansvar
@@ -53,31 +52,24 @@ const OmsorgsovertakelseFaktaPanelImpl = ({
             return Number.isNaN(parsedValue) ? value : parsedValue;
           }}
           readOnly={readOnly}
-          isEdited={antallBarnIsEdited}
+          isEdited={editedStatus.antallBarnOmsorgOgForeldreansvar}
         />
       </Column>
     </Row>
   </FaktaGruppe>
 );
 
-OmsorgsovertakelseFaktaPanelImpl.propTypes = {
+OmsorgsovertakelseFaktaPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erAksjonspunktForeldreansvar: PropTypes.bool.isRequired,
-  omsorgsovertakelseDatoIsEdited: PropTypes.bool,
-  antallBarnIsEdited: PropTypes.bool,
+  editedStatus: PropTypes.shape({
+    omsorgsovertakelseDato: PropTypes.bool.isRequired,
+    antallBarnOmsorgOgForeldreansvar: PropTypes.bool.isRequired,
+  }).isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
-
-OmsorgsovertakelseFaktaPanelImpl.defaultProps = {
-  omsorgsovertakelseDatoIsEdited: false,
-  antallBarnIsEdited: false,
-};
-
-const mapStateToProps = (state) => ({
-  omsorgsovertakelseDatoIsEdited: getEditedStatus(state).omsorgsovertakelseDato,
-  antallBarnIsEdited: getEditedStatus(state).antallBarnOmsorgOgForeldreansvar,
-});
-
-const OmsorgsovertakelseFaktaPanel = connect(mapStateToProps)(OmsorgsovertakelseFaktaPanelImpl);
 
 const getAntallBarn = (soknad, familiehendelse) => {
   const antallBarn = soknad.antallBarn ? soknad.antallBarn : NaN;

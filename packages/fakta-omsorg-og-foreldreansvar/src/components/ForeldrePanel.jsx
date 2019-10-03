@@ -7,11 +7,11 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import { DatepickerField } from '@fpsak-frontend/form';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { dateBeforeOrEqualToToday, getAddresses, hasValidDate } from '@fpsak-frontend/utils';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 const getParentHeader = (erMor) => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'ForeldrePanel.FatherDeathDate');
 
@@ -22,8 +22,13 @@ const getParentHeader = (erMor) => (erMor ? 'ForeldrePanel.MotherDeathDate' : 'F
  */
 export const ForeldrePanel = ({
   fields,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE} titleCode="ForeldrePanel.Foreldre">
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.OMSORGSOVERTAKELSE}
+    titleCode="ForeldrePanel.Foreldre"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}
+  >
     {fields.map((foreldre, index, field) => {
       const f = field.get(index);
       const shouldShowAdress = f.adresse && !f.erDod;
@@ -68,6 +73,9 @@ export const ForeldrePanel = ({
 
 ForeldrePanel.propTypes = {
   fields: PropTypes.shape().isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 const buildSokerPersonopplysning = (sokerPersonopplysninger) => {

@@ -21,6 +21,7 @@ export const BehandlingFpsakApiKeys = {
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
+  INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -51,6 +52,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('original-behandling', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
   .withInjectedPath('soeker-medlemskap', BehandlingFpsakApiKeys.MEDLEMSKAP)
   .withInjectedPath('uttak-periode-grense', BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE)
+  .withInjectedPath('inntekt-arbeid-ytelse', BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE)
 
   .build();
 

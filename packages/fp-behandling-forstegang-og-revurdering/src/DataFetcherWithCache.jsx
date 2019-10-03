@@ -31,6 +31,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
   [BehandlingFpsakApiKeys.MEDLEMSKAP]: 'soeker-medlemskap',
   [BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE]: 'uttak-periode-grense',
+  [BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE]: 'inntekt-arbeid-ytelse',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
