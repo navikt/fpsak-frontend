@@ -11,6 +11,7 @@ import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokna
 import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
