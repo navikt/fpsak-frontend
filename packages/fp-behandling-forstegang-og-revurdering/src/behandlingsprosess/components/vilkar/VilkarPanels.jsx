@@ -173,7 +173,7 @@ export const VilkarPanels = ({
       />
     )}
 
-    {(behandlingspunktCodes.ADOPSJON
+    {(behandlingspunkt === behandlingspunktCodes.ADOPSJON
     && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
     || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))) && (
       <DataFetcherWithCache
