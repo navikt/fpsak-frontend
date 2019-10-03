@@ -26,7 +26,10 @@ import Beregningsgrunnlag, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from '
 import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
-import FastsettNaeringsinntektSN from '../selvstendigNaeringsdrivende/FastsettNaeringsinntektSN';
+import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
+
+
+// TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
 // ------------------------------------------------------------------------------------------ //
 // Variables
@@ -38,6 +41,7 @@ const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 
@@ -81,7 +85,11 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
     return undefined;
   }
   const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
-  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD);
+
+  // Aksjonspunkt FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE håndteres sammen med andre og skal ikke ha egen tekst
+  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD)
+    .filter((ap) => ap.definisjon.kode !== FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE);
+
   const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(andreAksjonspunkter);
   const apneAksjonspunkt = sorterteAksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
@@ -122,7 +130,7 @@ const buildInitialValues = createSelector(
       ...FastsettInntektTidsbegrenset.buildInitialValues(allePerioder),
       ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
       ...GrunnlagForAarsinntektPanelFL.buildInitialValues(frilanserAndeler),
-      ...FastsettNaeringsinntektSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
+      ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
       ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
     };
   },
@@ -143,7 +151,7 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
   }
   if (harAksjonspunkt(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)
     || harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
-    return aksjonspunkter.concat(FastsettNaeringsinntektSN.transformValues(values, gjeldendeAksjonspunkter));
+    return aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter));
   }
   if (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, gjeldendeAksjonspunkter)) {
     return aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder));

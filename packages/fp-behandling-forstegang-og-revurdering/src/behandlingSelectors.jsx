@@ -115,6 +115,12 @@ export const getBeregningsgrunnlag = createSelector(
   [commonBehandlingSelectors.getSelectedBehandling], (selectedBehandling = {}) => (
     selectedBehandling.beregningsgrunnlag ? selectedBehandling.beregningsgrunnlag : undefined),
 );
+
+export const getRepresentasjonAvAarsinntekt = createSelector(
+  [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (
+    beregningsgrunnlag.årsinntektVisningstall || beregningsgrunnlag.årsinntektVisningstall === 0 ? beregningsgrunnlag.årsinntektVisningstall : undefined),
+);
+
 export const getGjeldendeBeregningAksjonspunkter = createSelector(
   [commonBehandlingSelectors.getAksjonspunkter], (aksjonspunkter) => aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)),
 );

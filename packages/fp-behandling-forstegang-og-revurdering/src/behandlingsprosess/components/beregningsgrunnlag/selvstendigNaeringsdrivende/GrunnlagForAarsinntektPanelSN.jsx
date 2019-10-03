@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
@@ -10,69 +9,43 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
 import styles from './grunnlagForAarsinntektPanelSN.less';
 
-const createYearHeaders = (relevantAndel) => {
-  const fomY = moment(relevantAndel.beregningsgrunnlagFom).get('year');
-  const tomY = moment(relevantAndel.beregningsgrunnlagTom).get('year');
-  const headers = [<FormattedMessage
-    id="Beregningsgrunnlag.AarsinntektPanel.TomString"
-    key="TomStringITabellTittel"
-  />,
+const createHeaders = (pgiVerdier, erNyIArbeidslivet) => {
+  const headers = [
     <FormattedMessage
-      id="Beregningsgrunnlag.AarsinntektPanel.Aar"
-      values={{ aar: tomY.toString() }}
-      key={`InntektSistseTreÅr_${tomY.toString()}`}
-    />];
-  const diff = tomY - fomY;
-  if (diff > 0) {
-    let currYear = tomY - 1;
-    while (currYear > fomY) {
-      headers.push(<FormattedMessage
+      id="Beregningsgrunnlag.AarsinntektPanel.TomString"
+      key="TomStringITabellTittel"
+    />,
+  ];
+  pgiVerdier.forEach(({ årstall }) => {
+    headers.push(
+      <FormattedMessage
         id="Beregningsgrunnlag.AarsinntektPanel.Aar"
-        values={{ aar: currYear.toString() }}
-        key={`InntektSistseTreÅr_${currYear.toString()}`}
-      />);
-      currYear -= 1;
-    }
-    headers.push(<FormattedMessage
-      id="Beregningsgrunnlag.AarsinntektPanel.Aar"
-      values={{ aar: fomY.toString() }}
-      key={`InntektSistseTreÅr_${currYear.toString()}`}
-    />);
-  }
-  if (relevantAndel.pgiSnitt !== undefined && !relevantAndel.erNyIArbeidslivet) {
+        values={{ aar: årstall.toString() }}
+        key={`InntektSistseTreÅr_${årstall.toString()}`}
+      />,
+    );
+  });
+  if (!erNyIArbeidslivet) {
     headers.push(<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.BeregnetAarsinntekt" />);
   }
   return headers;
-};
-const createPgiListe = (relevantAndel) => {
-  const list = [];
-  list.push({
-    pgiVerdi: relevantAndel.pgi1,
-    key: 'Pgi1',
-  });
-  list.push({
-    pgiVerdi: relevantAndel.pgi2,
-    key: 'Pgi2',
-  });
-  list.push({
-    pgiVerdi: relevantAndel.pgi3,
-    key: 'Pgi3',
-  });
-  return list;
 };
 
 /**
  * GrunnlagForAarsinntektPanelSN
  *
- * Presentasjonskomponent. Viser beregningsgrunnlagstabellen for selvstendig næringsdrivende.
+ * Presentasjonskomponent. Viser PGI-verdier for selvstendig næringsdrivende.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer selvstendig næringsdrivende.
  */
 export const GrunnlagForAarsinntektPanelSN = ({
   alleAndeler,
 }) => {
-  const relevantAndel = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
-  const pgiVerdier = createPgiListe(relevantAndel);
-  const headers = createYearHeaders(relevantAndel);
+  const snAndel = alleAndeler.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  if (!snAndel) {
+    return null;
+  }
+  const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
+  const headers = createHeaders(pgiVerdier, erNyIArbeidslivet);
   return (
     <Table headerTextCodes={headers} allowFormattedHeader classNameTable={styles.inntektTable} noHover>
       <TableRow>
@@ -82,14 +55,14 @@ export const GrunnlagForAarsinntektPanelSN = ({
           </Normaltekst>
         </TableColumn>
         {pgiVerdier.map((element) => (
-          <TableColumn key={element.key}>
+          <TableColumn key={element.årstall}>
             <Normaltekst>
-              {element.pgiVerdi === undefined ? formatCurrencyNoKr(0) : formatCurrencyNoKr(element.pgiVerdi)}
+              {element.beløp === undefined ? '' : formatCurrencyNoKr(element.beløp)}
             </Normaltekst>
           </TableColumn>
         ))}
-        {relevantAndel.pgiSnitt !== undefined && !relevantAndel.erNyIArbeidslivet
-        && <TableColumn><Element>{formatCurrencyNoKr(relevantAndel.pgiSnitt)}</Element></TableColumn>}
+        {pgiSnitt !== undefined && !erNyIArbeidslivet
+        && <TableColumn><Element>{formatCurrencyNoKr(pgiSnitt)}</Element></TableColumn>}
       </TableRow>
     </Table>
   );

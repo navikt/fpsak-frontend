@@ -10,14 +10,13 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   getAktivitetStatuser,
-  getAlleAndelerIForstePeriode,
-  getBehandlingGjelderBesteberegning,
   getBeregningGraderingAksjonspunkt,
   getBeregningsgrunnlag,
   getGjeldendeBeregningAksjonspunkter,
+  getRepresentasjonAvAarsinntekt,
 } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import aktivitetStatus, {
+import {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
   isStatusFrilanserOrKombinasjon,
@@ -155,29 +154,9 @@ const bestemGjeldendeStatuser = createSelector([getAktivitetStatuser], (aktivite
   isMilitaer: aktivitetStatuser.some(({ kode }) => isStatusMilitaer(kode)),
 }) : null));
 
-const getBeregnetAarsinntekt = createSelector(
-  [getBeregningsgrunnlag, bestemGjeldendeStatuser, getAlleAndelerIForstePeriode, getBehandlingGjelderBesteberegning],
-  (beregningsgrunnlag, relevanteStatuser, alleAndelerIForstePeriode, gjelderBesteberegning) => {
-    if (!beregningsgrunnlag || !relevanteStatuser) {
-      return {};
-    }
-    if (relevanteStatuser.harAndreTilstotendeYtelser) {
-      return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
-    }
-    if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
-      if (gjelderBesteberegning) {
-        return beregningsgrunnlag.beregningsgrunnlagPeriode[0].bruttoPrAar;
-      }
-      const snAndel = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE)[0];
-      return snAndel.erNyIArbeidslivet ? undefined : snAndel.pgiSnitt;
-    }
-    return beregningsgrunnlag.beregningsgrunnlagPeriode[0].beregnetPrAar;
-  },
-);
-
 const buildProps = createSelector(
   [getBeregningsgrunnlag, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar, bestemGjeldendeStatuser,
-    getGjeldendeBeregningAksjonspunkter, getBeregnetAarsinntekt, getBeregningGraderingAksjonspunkt],
+    getGjeldendeBeregningAksjonspunkter, getRepresentasjonAvAarsinntekt, getBeregningGraderingAksjonspunkt],
   (berGr, gjeldendeVilkar, relevanteStatuser, gjeldendeAksjonspunkter, beregnetAarsinntekt, graderingAP) => {
     if (!berGr || !relevanteStatuser) {
       return {};
