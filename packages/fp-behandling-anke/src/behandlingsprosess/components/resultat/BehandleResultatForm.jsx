@@ -37,6 +37,15 @@ const ResultatEnkel = (resultat) => (
   </div>
 );
 
+const ResultatOpphev = (resultat) => (
+  <div>
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Oppheves" /></Undertekst>
+    <VerticalSpacer sixteenPx />
+    <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
+    <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
+  </div>
+);
+
 const ResultatAvvise = (resultat) => (
   <>
     <Undertekst>
@@ -97,7 +106,7 @@ const AnkeResultat = (resultat) => {
   const { ankevurderingresultat } = resultat;
   switch (ankevurderingresultat.ankeVurdering) {
     case ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
-    case ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE: return (<ResultatEnkel ankevurderingresultat={ankevurderingresultat} />);
+    case ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE: return (<ResultatOpphev ankevurderingresultat={ankevurderingresultat} />);
     case ankeVurdering.ANKE_OMGJOER: return (<ResultatOmgjores ankevurderingresultat={ankevurderingresultat} />);
     case ankeVurdering.ANKE_AVVIS: return (<ResultatAvvise ankevurderingresultat={ankevurderingresultat} />);
     default: return <div>???</div>;
