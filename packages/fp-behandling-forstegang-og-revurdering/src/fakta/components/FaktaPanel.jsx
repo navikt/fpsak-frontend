@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
+import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -15,7 +16,6 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
 import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
@@ -42,6 +42,7 @@ const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDEL
 const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const adopsjonData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.AKSJONSPUNKTER, fpsakApi.PERSONOPPLYSNINGER];
+const tilleggsopplysningerData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER];
 
 /**
  * FaktaPanel
@@ -115,17 +116,24 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      {TilleggsopplysningerInfoPanel.supports(aksjonspunkter)
-      && (
-        <TilleggsopplysningerInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
+
+      {aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.TILLEGGSOPPLYSNINGER) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={tilleggsopplysningerData}
+          render={(props) => (
+            <TilleggsopplysningerFaktaIndex
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              {...props}
+            />
+          )}
         />
       )}
+
       {aksjonspunkter.some((ap) => omsorgOgForeldreansvarAksjonspunkter.includes(ap.definisjon.kode)) && (
         <DataFetcherWithCache
           behandlingVersjon={1}

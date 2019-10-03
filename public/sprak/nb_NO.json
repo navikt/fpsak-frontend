@@ -304,7 +304,6 @@
   "MissingPage.PageIsMissing": "Siden finnes ikke",
   "MissingPage.Home": "Hjem",
 
-  "TilleggsopplysningerFaktaForm.Confirmed": "Jeg har lest dette",
   "VilkarResultPanel.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPanel.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
   "OmsorgInfoPanel.Omsorg": "Fakta om omsorg",
@@ -361,7 +360,7 @@
   "TilbakekrevingTimeline.Woman": "Kvinne",
   "TilbakekrevingTimeline.Man": "Mann",
 
-  "TilleggsopplysningerInfoPanel.Tilleggsopplysninger": "Tilleggsopplysninger",
+  "Historikk.Tilleggsopplysninger": "Tilleggsopplysninger",
   "OpptjeningInfoPanel.KontrollerFaktaForOpptjening": "Fakta om opptjening",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",

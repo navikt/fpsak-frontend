@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { formPropTypes } from 'redux-form';
-import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
+import {
+  faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling, behandlingForm,
+} from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
 
 /**
@@ -18,12 +18,13 @@ import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export const TilleggsopplysningerInfoPanelImpl = ({
+export const TilleggsopplysningerInfoPanel = ({
   intl,
   openInfoPanels,
   toggleInfoPanelCallback,
   hasOpenAksjonspunkter,
   readOnly,
+  tilleggsopplysninger,
   ...formProps
 }) => (
   <FaktaEkspandertpanel
@@ -38,12 +39,13 @@ export const TilleggsopplysningerInfoPanelImpl = ({
       <TilleggsopplysningerFaktaForm
         readOnly={!hasOpenAksjonspunkter || readOnly}
         submitting={formProps.submitting}
+        tilleggsopplysninger={tilleggsopplysninger}
       />
     </form>
   </FaktaEkspandertpanel>
 );
 
-TilleggsopplysningerInfoPanelImpl.propTypes = {
+TilleggsopplysningerInfoPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -52,31 +54,30 @@ TilleggsopplysningerInfoPanelImpl.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  tilleggsopplysninger: PropTypes.string,
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([behandlingSelectors.getSoknad], (soknad) => ({
-  ...TilleggsopplysningerFaktaForm.buildInitialValues(soknad),
-}));
+TilleggsopplysningerInfoPanel.defaultProps = {
+  tilleggsopplysninger: '',
+};
 
-const transformValues = (values) => TilleggsopplysningerFaktaForm.transformValues(values);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = () => initialOwnProps.submitCallback([{
+    kode: aksjonspunktCodes.TILLEGGSOPPLYSNINGER,
+  }]);
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => ({
+  return (state, ownProps) => ({
     onSubmit,
-    initialValues: buildInitialValues(state),
     dirty: !ownProps.notSubmittable && ownProps.dirty,
   });
 };
 
 const tilleggsopplysningerAksjonspunkter = [aksjonspunktCodes.TILLEGGSOPPLYSNINGER];
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'TilleggsopplysningerInfoPanel',
-})(injectIntl(TilleggsopplysningerInfoPanelImpl)));
-const TilleggsopplysningerInfoPanel = withDefaultToggling(faktaPanelCodes.TILLEGGSOPPLYSNINGER, tilleggsopplysningerAksjonspunkter)(ConnectedComponent);
-
-TilleggsopplysningerInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === tilleggsopplysningerAksjonspunkter[0]);
-
-export default TilleggsopplysningerInfoPanel;
+})(injectIntl(TilleggsopplysningerInfoPanel)));
+export default withDefaultToggling(faktaPanelCodes.TILLEGGSOPPLYSNINGER, tilleggsopplysningerAksjonspunkter)(ConnectedComponent);

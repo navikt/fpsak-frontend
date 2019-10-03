@@ -9,7 +9,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
-import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
@@ -134,7 +133,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -173,7 +171,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -212,7 +209,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -251,7 +247,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -332,7 +327,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
