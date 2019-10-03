@@ -151,7 +151,7 @@ const historikkEndretFeltTypeCodes = {
   },
   OMSORGSOVERTAKELSESDATO: {
     kode: 'OMSORGSOVERTAKELSESDATO',
-    feltId: 'HistorikkEndretFelt.Omsorgsovertakelsesdato',
+    feltId: 'Historikk.Omsorgsovertakelsesdato',
   },
   OMSORGSVILKAR: {
     kode: 'OMSORGSVILKAR',

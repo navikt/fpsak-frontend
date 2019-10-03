@@ -7,6 +7,7 @@
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
+    "@fpsak-frontend/fakta-adopsjon": "1.0.0",
     "@fpsak-frontend/fakta-fodsel": "1.0.0",
     "@fpsak-frontend/fakta-omsorg-og-foreldreansvar": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",

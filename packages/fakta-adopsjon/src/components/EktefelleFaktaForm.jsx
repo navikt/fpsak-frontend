@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Container } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { connect } from 'react-redux';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import styles from './ektefelleFaktaForm.less';
 
@@ -22,8 +20,13 @@ import styles from './ektefelleFaktaForm.less';
 export const EktefelleFaktaForm = ({
   readOnly,
   ektefellesBarnIsEdited,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN} titleCode="EktefelleFaktaForm.ApplicationInformation">
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN}
+    titleCode="EktefelleFaktaForm.ApplicationInformation"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN]}
+  >
     <Container className={styles.container}>
       <Normaltekst><FormattedMessage id="EktefelleFaktaForm.EktefellesBarn" /></Normaltekst>
       <VerticalSpacer twentyPx />
@@ -39,6 +42,9 @@ export const EktefelleFaktaForm = ({
 EktefelleFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   ektefellesBarnIsEdited: PropTypes.bool,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 EktefelleFaktaForm.defaultProps = {
@@ -56,8 +62,4 @@ EktefelleFaktaForm.transformValues = (values) => ({
   ektefellesBarn: values.ektefellesBarn,
 });
 
-const mapStateToProps = (state) => ({
-  ektefellesBarnIsEdited: getEditedStatus(state).ektefellesBarn,
-});
-
-export default connect(mapStateToProps)(EktefelleFaktaForm);
+export default EktefelleFaktaForm;

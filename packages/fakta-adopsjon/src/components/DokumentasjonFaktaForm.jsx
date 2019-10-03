@@ -6,11 +6,8 @@ import { connect } from 'react-redux';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import moment from 'moment';
 
-import { getEditedStatus } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { DatepickerField } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -43,21 +40,22 @@ const isAgeAbove15 = (fodselsdatoer, omsorgsovertakelseDato, id) => fodselsdatoe
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av adopsjonsopplysninger i søknaden.
  */
-const DokumentasjonFaktaFormImpl = (
-  {
-    intl,
-    readOnly,
-    fodselsdatoer,
-    omsorgsovertakelseDato,
-    barnetsAnkomstTilNorgeDato,
-    adopsjonFodelsedatoerIsEdited,
-    omsorgsovertakelseDatoIsEdited,
-    barnetsAnkomstTilNorgeDatoIsEdited,
-    erForeldrepengerFagsak,
-    hasEktefellesBarnAksjonspunkt,
-  },
-) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.ADOPSJONSDOKUMENTAJON} titleCode="DokumentasjonFaktaForm.ApplicationInformation">
+const DokumentasjonFaktaFormImpl = ({
+  intl,
+  readOnly,
+  fodselsdatoer,
+  omsorgsovertakelseDato,
+  editedStatus,
+  barnetsAnkomstTilNorgeDato,
+  erForeldrepengerFagsak,
+  hasEktefellesBarnAksjonspunkt,
+  alleMerknaderFraBeslutter,
+}) => (
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.ADOPSJONSDOKUMENTAJON}
+    titleCode="DokumentasjonFaktaForm.ApplicationInformation"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]}
+  >
     <Container className={styles.container}>
       <DatepickerField
         name="omsorgsovertakelseDato"
@@ -67,7 +65,7 @@ const DokumentasjonFaktaFormImpl = (
         }}
         validate={[required, hasValidDate]}
         readOnly={readOnly}
-        isEdited={omsorgsovertakelseDatoIsEdited}
+        isEdited={editedStatus.omsorgsovertakelseDato}
       />
       {erForeldrepengerFagsak && barnetsAnkomstTilNorgeDato
       && (
@@ -76,7 +74,7 @@ const DokumentasjonFaktaFormImpl = (
           label={{ id: 'DokumentasjonFaktaForm.DatoForBarnetsAnkomstTilNorge' }}
           validate={[hasValidDate]}
           readOnly={readOnly}
-          isEdited={barnetsAnkomstTilNorgeDatoIsEdited}
+          isEdited={editedStatus.barnetsAnkomstTilNorgeDato}
         />
       )}
 
@@ -94,7 +92,7 @@ const DokumentasjonFaktaFormImpl = (
                   }}
                   validate={[required, hasValidDate]}
                   readOnly={readOnly}
-                  isEdited={adopsjonFodelsedatoerIsEdited[id]}
+                  isEdited={editedStatus.adopsjonFodelsedatoer[id]}
                 />
               </Column>
               <Column xs="6">
@@ -125,28 +123,30 @@ DokumentasjonFaktaFormImpl.propTypes = {
   omsorgsovertakelseDato: PropTypes.string,
   barnetsAnkomstTilNorgeDato: PropTypes.string,
   readOnly: PropTypes.bool.isRequired,
-  adopsjonFodelsedatoerIsEdited: PropTypes.shape(),
-  omsorgsovertakelseDatoIsEdited: PropTypes.bool,
-  barnetsAnkomstTilNorgeDatoIsEdited: PropTypes.bool,
   erForeldrepengerFagsak: PropTypes.bool.isRequired,
   hasEktefellesBarnAksjonspunkt: PropTypes.bool.isRequired,
+  editedStatus: PropTypes.shape({
+    adopsjonFodelsedatoer: PropTypes.shape().isRequired,
+    omsorgsovertakelseDato: PropTypes.bool.isRequired,
+    barnetsAnkomstTilNorgeDato: PropTypes.bool.isRequired,
+  }).isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 DokumentasjonFaktaFormImpl.defaultProps = {
   fodselsdatoer: {},
   omsorgsovertakelseDato: undefined,
   barnetsAnkomstTilNorgeDato: undefined,
-  adopsjonFodelsedatoerIsEdited: {},
-  omsorgsovertakelseDatoIsEdited: false,
-  barnetsAnkomstTilNorgeDatoIsEdited: false,
 };
 
-const mapStateToProps = (state) => ({
-  erForeldrepengerFagsak: isForeldrepengerFagsak(state),
-  adopsjonFodelsedatoerIsEdited: getEditedStatus(state).adopsjonFodelsedatoer,
-  omsorgsovertakelseDatoIsEdited: getEditedStatus(state).omsorgsovertakelseDato,
-  barnetsAnkomstTilNorgeDatoIsEdited: getEditedStatus(state).barnetsAnkomstTilNorgeDato,
-  ...behandlingFormValueSelector('AdopsjonInfoPanel')(state, 'fodselsdatoer', 'omsorgsovertakelseDato', 'barnetsAnkomstTilNorgeDato'),
+const FORM_NAME = 'AdopsjonInfoPanel';
+
+const mapStateToProps = (state, ownProps) => ({
+  ...behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(
+    state, 'fodselsdatoer', 'omsorgsovertakelseDato', 'barnetsAnkomstTilNorgeDato',
+  ),
 });
 
 const DokumentasjonFaktaForm = connect(mapStateToProps)(injectIntl(DokumentasjonFaktaFormImpl));

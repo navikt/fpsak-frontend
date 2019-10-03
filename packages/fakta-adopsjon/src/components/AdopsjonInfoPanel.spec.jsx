@@ -1,13 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+
 import { AdopsjonInfoPanelImpl } from './AdopsjonInfoPanel';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 import EktefelleFaktaForm from './EktefelleFaktaForm';
@@ -45,6 +45,13 @@ describe('<AdopsjonInfoPanel>', () => {
     erAktivt: true,
   };
 
+  const editedStatus = {
+    mannAdoptererAlene: false,
+    ektefellesBarn: false,
+    adopsjonFodelsedatoer: {},
+    omsorgsovertakelseDato: false,
+    barnetsAnkomstTilNorgeDato: false,
+  };
 
   it('skal vise de to aksjonspunktene som alltid skal vises', () => {
     const wrapper = shallowWithIntl(<AdopsjonInfoPanelImpl
@@ -57,10 +64,16 @@ describe('<AdopsjonInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      isForeldrepengerFagsak
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
+    expect(panel.prop('title')).to.eql('AdopsjonInfoPanel.Adopsjon');
 
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -101,10 +114,16 @@ describe('<AdopsjonInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      isForeldrepengerFagsak
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
+    expect(panel.prop('title')).to.eql('AdopsjonInfoPanel.Adopsjon');
 
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -131,6 +150,12 @@ describe('<AdopsjonInfoPanel>', () => {
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      isForeldrepengerFagsak
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     expect(wrapper.find('HelpText')).has.length(0);

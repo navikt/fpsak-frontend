@@ -1,25 +1,17 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import MannAdoptererAleneFaktaForm, { MannAdoptererAleneFaktaFormImpl } from './MannAdoptererAleneFaktaForm';
+import { shallow } from 'enzyme';
+
+import MannAdoptererAleneFaktaForm from './MannAdoptererAleneFaktaForm';
 
 describe('<MannAdoptererAleneFaktaForm>', () => {
-  const model = {
-    mannAdoptererAlene: true,
-    farSokerType: {
-      navn: 'Adopterer alene',
-      kode: '',
-    },
-  };
-
   it('skal rendre form som lar NAV-ansatt velge om mann adopterer alene eller ei', () => {
-    const wrapper = shallowWithIntl(
-      <MannAdoptererAleneFaktaFormImpl
-        intl={intlMock}
-        aksjonspunktData={model}
+    const wrapper = shallow(
+      <MannAdoptererAleneFaktaForm
         readOnly={false}
-        error={false}
-        getKodeverknavn={() => undefined}
+        mannAdoptererAlene
+        alleKodeverk={{}}
+        alleMerknaderFraBeslutter={{}}
       />,
     );
 
@@ -37,7 +29,6 @@ describe('<MannAdoptererAleneFaktaForm>', () => {
 
     expect(initialValues).to.eql({
       mannAdoptererAlene: undefined,
-      farSokerType: 'test',
     });
   });
 
@@ -53,7 +44,6 @@ describe('<MannAdoptererAleneFaktaForm>', () => {
 
     expect(initialValues).to.eql({
       mannAdoptererAlene: true,
-      farSokerType: 'test',
     });
   });
 });

@@ -1,15 +1,14 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { shallow } from 'enzyme';
+
 import { EktefelleFaktaForm } from './EktefelleFaktaForm';
 
 describe('<EktefelleFaktaForm>', () => {
   it('skal rendre form som lar NAV-ansatt velge om barnet er ektefelles barn eller ei', () => {
-    const wrapper = shallowWithIntl(<EktefelleFaktaForm
-      intl={intlMock}
-      aksjonspunktData={{ ektefellesBarn: false }}
+    const wrapper = shallow(<EktefelleFaktaForm
       readOnly={false}
-      error={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const radioFields = wrapper.find('RadioOption');

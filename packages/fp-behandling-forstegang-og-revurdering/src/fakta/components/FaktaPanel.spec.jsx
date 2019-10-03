@@ -11,7 +11,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
-import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
@@ -138,7 +137,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -178,7 +176,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -218,7 +215,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -258,7 +254,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -298,7 +293,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
   });
 
   it('skal vise faktapanel for adopsjon og medlemskap når en har aksjonspunkt for disse', () => {
@@ -341,7 +335,6 @@ describe('<FaktaPanel>', () => {
     expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
     expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 

@@ -1,9 +1,17 @@
 import React from 'react';
 import { expect } from 'chai';
+
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
 
 describe('<DokumentasjonFaktaForm>', () => {
+  const editedStatus = {
+    adopsjonFodelsedatoer: { 1: false },
+    omsorgsovertakelseDato: false,
+    barnetsAnkomstTilNorgeDato: false,
+  };
+
   it('skal vise alle fodselsdatoer i datepickers', () => {
     const wrapper = shallowWithIntl(<DokumentasjonFaktaForm.WrappedComponent
       intl={intlMock}
@@ -12,6 +20,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
     const datepickers = wrapper.find('DatepickerField');
     expect(datepickers).to.have.length(3);
@@ -38,6 +48,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const antallBarnUnder15Ar = wrapper.find('Normaltekst');
@@ -53,6 +65,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const antallBarnUnder15Ar = wrapper.find('Normaltekst');
@@ -68,6 +82,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const antallBarnUnder15Ar = wrapper.find('Normaltekst');
@@ -98,6 +114,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const dateField = wrapper.find('[name="barnetsAnkomstTilNorgeDato"]');
@@ -113,6 +131,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const dateField = wrapper.find('[name="barnetsAnkomstTilNorgeDato"]');
@@ -127,6 +147,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak
       hasEktefellesBarnAksjonspunkt
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const dateField = wrapper.find('[name="omsorgsovertakelseDato"]');
@@ -141,6 +163,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak={false}
       hasEktefellesBarnAksjonspunkt
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const dateField = wrapper.find('[name="omsorgsovertakelseDato"]');
@@ -155,6 +179,8 @@ describe('<DokumentasjonFaktaForm>', () => {
       readOnly={false}
       erForeldrepengerFagsak
       hasEktefellesBarnAksjonspunkt={false}
+      editedStatus={editedStatus}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const dateField = wrapper.find('[name="omsorgsovertakelseDato"]');

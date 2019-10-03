@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
+import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
-import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
@@ -16,7 +18,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
 import RegistrereVergeInfoPanel from './verge/RegistrereVergeInfoPanel';
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
@@ -30,6 +31,8 @@ import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBere
 
 import styles from './faktaPanel.less';
 
+const adopsjonAksjonspunkter = [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
+  aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN];
 const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
   aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
@@ -38,6 +41,7 @@ const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDEL
   fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
 const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.INNTEKT_ARBEID_YTELSE];
+const adopsjonData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.AKSJONSPUNKTER, fpsakApi.PERSONOPPLYSNINGER];
 
 /**
  * FaktaPanel
@@ -128,7 +132,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           data={omsorgOgForeldreansvarData}
           render={(props) => (
             <OmsorgOgForeldreansvarFaktaIndex
-              aksjonspunkter={aksjonspunkter}
               alleKodeverk={alleKodeverk}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               submitCallback={submitCallback}
@@ -141,35 +144,43 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           )}
         />
       )}
-      {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter)
-      && (
-      <FodselOgTilretteleggingInfoPanel
-        aksjonspunkter={aksjonspunkter}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-      />
-      )}
-      {AdopsjonInfoPanel.supports(vilkarCodes, aksjonspunkter)
-      && (
-        <AdopsjonInfoPanel
+      {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter) && (
+        <FodselOgTilretteleggingInfoPanel
           aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
           openInfoPanels={openInfoPanels}
           toggleInfoPanelCallback={toggleInfoPanelCallback}
           shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+          submitCallback={submitCallback}
           readOnly={readOnly}
         />
       )}
+
+      {(aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={adopsjonData}
+          render={(props) => (
+            <AdopsjonFaktaIndex
+              alleKodeverk={alleKodeverk}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              isForeldrepengerFagsak={ytelsesType === fagsakYtelseType.FORELDREPENGER}
+              {...props}
+            />
+          )}
+        />
+      )}
+
       {(aksjonspunkter.some((ap) => fodselAksjonspunkter.includes(ap.definisjon.kode)) || vilkarCodes.some((code) => fodselsvilkarene.includes(code))) && (
         <DataFetcherWithCache
           behandlingVersjon={1}
           data={fodselData}
           render={(props) => (
             <FodselFaktaIndex
-              aksjonspunkter={aksjonspunkter}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               submitCallback={submitCallback}
               openInfoPanels={openInfoPanels}
