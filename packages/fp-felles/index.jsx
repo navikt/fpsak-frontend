@@ -62,3 +62,6 @@ export { default as FaktaEkspandertpanel } from './src/fakta/FaktaEkspandertpane
 export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/BehandlingspunktBegrunnelseTextField';
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
+export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';
+export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/VilkarResultPanel';
+export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';

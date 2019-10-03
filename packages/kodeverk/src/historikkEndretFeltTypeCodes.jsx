@@ -183,7 +183,7 @@ const historikkEndretFeltTypeCodes = {
   },
   SOKERSOPPLYSNINGSPLIKT: {
     kode: 'SOKERSOPPLYSNINGSPLIKT',
-    feltId: 'SokersOpplysningspliktForm.SokersOpplysningsplikt',
+    feltId: 'Historikk.SokersOpplysningsplikt',
   },
   SOKNADSFRIST: {
     kode: 'SOKNADSFRIST',
@@ -207,7 +207,7 @@ const historikkEndretFeltTypeCodes = {
   },
   VILKAR_SOM_ANVENDES: {
     kode: 'VILKAR_SOM_ANVENDES',
-    feltId: 'ErOmsorgVilkaarOppfyltForm.Anvendes',
+    feltId: 'Historikk.Anvendes',
   },
   OMSORG: {
     kode: 'OMSORG',
