@@ -275,17 +275,15 @@ export const UttakInfo = ({
           </Row>
           <Row>
             <Column xs="12">
-              {gradertArbforhold(selectedItemData)}
-              {' '}
+              {`${gradertArbforhold(selectedItemData)} `}
             </Column>
-
           </Row>
           {visGraderingIkkeInnvilget(selectedItemData, readOnly, graderingInnvilget) && (
           <Row>
             <Column xs="12">
               <b>
                 <FormattedMessage id="UttakActivity.GraderingIkkeOppfylt" />
-                {': '}
+                :
               </b>
               {getKodeverknavn(selectedItemData.graderingAvslagÅrsak)}
             </Column>

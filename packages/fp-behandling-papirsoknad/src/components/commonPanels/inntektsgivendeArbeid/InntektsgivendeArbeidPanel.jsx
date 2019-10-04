@@ -45,7 +45,6 @@ const InntektsgivendeArbeidPanel = ({
       <div>
         <VerticalSpacer sixteenPx />
         <Undertittel>
-          {' '}
           <FormattedMessage id="Registrering.InntektsgivendeArbeid.ArbeidPaAmbassade" />
         </Undertittel>
         <VerticalSpacer eightPx />

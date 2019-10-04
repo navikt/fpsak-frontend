@@ -40,9 +40,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
     .filter((enhet) => enhet.enhetId !== gjeldendeBehandlendeEnhetId)
     .map((enhet, index) => (
       <option value={`${index}`} key={enhet.enhetId}>
-        {enhet.enhetId}
-        {' '}
-        {enhet.enhetNavn}
+        {`${enhet.enhetId} ${enhet.enhetNavn}`}
       </option>
     ));
   return (

@@ -27,12 +27,12 @@ import YtelserFraInfotrygd from 'behandlingForstegangOgRevurdering/src/behandlin
 import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import GrunnlagForAarsinntektPanelSN from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN';
-import FastsettNaeringsinntektSN from '../selvstendigNaeringsdrivende/FastsettNaeringsinntektSN';
 import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
 import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
 import MilitaerPanel from '../militær/MilitaerPanel';
 import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
 import styles from './beregningsgrunnlag.less';
+import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
 
 // ------------------------------------------------------------------------------------------ //
 // Variables
@@ -240,7 +240,7 @@ export const BeregningsgrunnlagImpl = ({
     </BorderBox>
     { skalFastsetteSN(gjeldendeAksjonspunkter)
       && (
-      <FastsettNaeringsinntektSN
+      <VurderOgFastsettSN
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         readOnly={readOnly}
       />
@@ -257,17 +257,17 @@ export const BeregningsgrunnlagImpl = ({
     )}
     { gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
         && (
-        <>
-          <VerticalSpacer sixteenPx />
-          <BehandlingspunktSubmitButton
-            formName={formName}
-            isReadOnly={readOnly}
-            isSubmittable={!readOnlySubmitButton}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-          />
-        </>
+          <>
+            <VerticalSpacer sixteenPx />
+            <BehandlingspunktSubmitButton
+              formName={formName}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
+          </>
         )}
   </div>
 );

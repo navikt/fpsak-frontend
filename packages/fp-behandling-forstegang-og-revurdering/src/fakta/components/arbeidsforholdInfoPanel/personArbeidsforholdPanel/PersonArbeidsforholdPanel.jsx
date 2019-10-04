@@ -187,7 +187,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     this.updateArbeidsforholdBasertPaInntektsmelding = this.updateArbeidsforholdBasertPaInntektsmelding.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { arbeidsforhold } = this.props;
     const selected = getUnresolvedArbeidsforhold(arbeidsforhold) || undefined;
     this.setSelectedArbeidsforhold(undefined, undefined, selected);

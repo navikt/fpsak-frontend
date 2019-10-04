@@ -25,9 +25,7 @@ export const AktoerGrid = ({ data, getKodeverknavn }) => (
               key={fagsak.saksnummer}
             >
               {getKodeverknavn(fagsak.sakstype)}
-              {' ('}
-              {fagsak.saksnummer}
-              {') '}
+              {` (${fagsak.saksnummer}) `}
               {getKodeverknavn(fagsak.status)}
             </Lenkepanel>
           )) : 'Har ingen fagsaker i fpsak'}

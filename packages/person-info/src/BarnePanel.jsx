@@ -56,7 +56,7 @@ const BarnePanel = ({
             <Element>
               {barn.navn ? barn.navn : `Barn ${index + 1}`}
               ,
-              {' '}
+
               <FormattedMessage id="Person.Age" values={{ age: getAgeFromDate(barn.fodselsdato) }} />
               {barn.dodsdato && !(barn.dodsdato === barn.fodselsdato)
               && <div className={styles.erDod}><MerkePanel erDod /></div>}

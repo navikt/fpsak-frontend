@@ -41,8 +41,7 @@ const PersonInfo = ({
       <div className={styles.infoPlaceholder}>
         <div>
           <Undertittel>
-            {navn}
-            {' '}
+            {`${navn} `}
             <AlderVisning erDod={erDod} alder={alder} dodsdato={dodsdato} />
           </Undertittel>
           <Undertekst>

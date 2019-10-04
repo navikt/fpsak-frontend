@@ -56,10 +56,7 @@ const TimeLineData = ({
             <Column xs="6">
               <div>
                 <Element>
-                  {isoToDdMmYyyy(selectedPeriod.data.fom)}
-                  {' '}
--
-                  {isoToDdMmYyyy(selectedPeriod.data.tom)}
+                  {`${isoToDdMmYyyy(selectedPeriod.data.fom)} - ${isoToDdMmYyyy(selectedPeriod.data.tom)}`}
                 </Element>
               </div>
             </Column>

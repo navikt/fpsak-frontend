@@ -88,7 +88,7 @@ export class OppholdInntektOgPerioderForm extends Component {
   }
 
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { initialValues } = this.props;
     const defaultPeriode = initialValues.perioder ? initialValues.perioder[0] : {};
     this.setValgtPeriode(defaultPeriode);
@@ -219,9 +219,10 @@ OppholdInntektOgPerioderForm.propTypes = {
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP];
 
-const transformValues = (values, aksjonspunkter) => {
+export const transformValues = (values, aksjonspunkter) => {
   const aktiveMedlemAksjonspunkter = aksjonspunkter
     .filter((ap) => medlemAksjonspunkter.includes(ap.definisjon.kode))
+    .filter((ap) => ap.erAktivt)
     .filter((ap) => ap.definisjon.kode !== aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
 
 

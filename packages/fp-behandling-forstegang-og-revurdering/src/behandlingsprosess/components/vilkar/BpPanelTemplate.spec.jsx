@@ -3,10 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import VilkarResultPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/VilkarResultPanel';
+import { VilkarResultPanel } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+
 import BpPanelTemplate from './BpPanelTemplate';
 
 describe('<BpPanelTemplate>', () => {
@@ -117,7 +118,6 @@ describe('<BpPanelTemplate>', () => {
     const ap = wrapper.find(AksjonspunktHelpText);
     expect(ap).to.have.length(1);
     expect(ap.prop('isAksjonspunktOpen')).is.true;
-    expect(ap.childAt(0).text()).is.eql('Vurder om tidligere utbetalte foreldrepenger eller engangsstønad'
-    + ' gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.');
+    expect(ap.childAt(0).text()).is.eql('FodselVilkarForm.VurderGjelderSammeBarn');
   });
 });

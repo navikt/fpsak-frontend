@@ -101,7 +101,7 @@ class OpptjeningTimeLineLight extends Component {
     this.timelineRef = React.createRef();
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { opptjeningPeriods, opptjeningFomDate, opptjeningTomDate } = this.props;
     const unsortedItems = opptjeningPeriods.sort((a, b) => new Date(a.fom) - new Date(b.fom));
     const items = createItems(unsortedItems, opptjeningFomDate, opptjeningTomDate);

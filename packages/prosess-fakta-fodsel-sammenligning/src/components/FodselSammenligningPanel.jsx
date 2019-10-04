@@ -91,7 +91,7 @@ export const FodselSammenligningPanel = ({
           })}
         </Table>
         )}
-        {' '}
+
         {!avklartBarn.length > 0
       && (
       <Row>

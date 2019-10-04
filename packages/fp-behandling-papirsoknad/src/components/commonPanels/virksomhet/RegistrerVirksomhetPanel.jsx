@@ -29,9 +29,7 @@ const renderVirksomhetsnavn = ({ showRegistrerVirksomhetModal, index, ...fieldPr
       tabIndex="0"
     >
       <Normaltekst>
-        {' '}
-        {fieldProps.input.value}
-        {' '}
+        {` ${fieldProps.input.value} `}
       </Normaltekst>
     </a>
   </ElementWrapper>

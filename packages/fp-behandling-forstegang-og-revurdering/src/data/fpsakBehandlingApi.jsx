@@ -11,6 +11,7 @@ export const BehandlingFpsakApiKeys = {
   PREVIEW_TILBAKEKREVING_MESSAGE: 'PREVIEW_TILBAKEKREVING_MESSAGE',
   STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER: 'AKSJONSPUNKTER',
+  VILKAR: 'VILKAR',
   PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
@@ -18,6 +19,8 @@ export const BehandlingFpsakApiKeys = {
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
+  MEDLEMSKAP: 'MEDLEMSKAP',
+  UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -38,6 +41,7 @@ const endpoints = new RestApiConfigBuilder()
 
   // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
   .withInjectedPath('aksjonspunkter', BehandlingFpsakApiKeys.AKSJONSPUNKTER)
+  .withInjectedPath('vilkar', BehandlingFpsakApiKeys.VILKAR)
   .withInjectedPath('soeker-personopplysninger', BehandlingFpsakApiKeys.PERSONOPPLYSNINGER)
   .withInjectedPath('simuleringResultat', BehandlingFpsakApiKeys.SIMULERING_RESULTAT)
   .withInjectedPath('tilbakekrevingvalg', BehandlingFpsakApiKeys.TILBAKEKREVINGVALG)
@@ -45,6 +49,8 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('familiehendelse-v2', BehandlingFpsakApiKeys.FAMILIEHENDELSE)
   .withInjectedPath('soknad', BehandlingFpsakApiKeys.SOKNAD)
   .withInjectedPath('original-behandling', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
+  .withInjectedPath('soeker-medlemskap', BehandlingFpsakApiKeys.MEDLEMSKAP)
+  .withInjectedPath('uttak-periode-grense', BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE)
 
   .build();
 

@@ -35,7 +35,7 @@ const renderAvvikContentGraderingFraSøknad = () => {
           <Normaltekst className={classNames('avvik', 'hasAvvik')}>
             <b><FormattedMessage id="UttakInfoPanel.Gradering" /></b>
             :
-            {' '}
+
             <FormattedMessage id="UttakInfoPanel.IkkeOppgittGradering" />
           </Normaltekst>
         </FlexColumn>
@@ -114,14 +114,14 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
           </Undertekst>
           {isGradering
           && (
-          <>
-            <VerticalSpacer eightPx />
-            <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
-            <Undertekst className={classNames('avvik', { hasAvvik: isAvvikArbeidsprosent })}>
-              {periode.arbeidsprosent}
+            <>
+              <VerticalSpacer eightPx />
+              <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
+              <Undertekst className={classNames('avvik', { hasAvvik: isAvvikArbeidsprosent })}>
+                {periode.arbeidsprosent}
 %
-            </Undertekst>
-          </>
+              </Undertekst>
+            </>
           )}
         </FlexColumn>
       </FlexRow>
@@ -163,14 +163,14 @@ export const InntektsmeldingInfo = ({
   return (
     <>
       {shouldRenderAvvik && (
-      <>
-        <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
-        <VerticalSpacer eightPx />
-        {inntektsmeldingInfo.map((innmldInfo) => {
-          const renderContent = renderAvvik(innmldInfo, getKodeverknavn).filter((rc) => rc);
-          const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
-          return (
-            renderContent.length > 0 && (
+        <>
+          <Undertekst><FormattedMessage id="UttakInfoPanel.AvvikiInntektsmelding" /></Undertekst>
+          <VerticalSpacer eightPx />
+          {inntektsmeldingInfo.map((innmldInfo) => {
+            const renderContent = renderAvvik(innmldInfo, getKodeverknavn).filter((rc) => rc);
+            const avvikArbeidforhold = innmldInfo.arbeidsgiver !== arbeidsgiver || {}.navn || innmldInfo.arbeidsgiverOrgnr !== arbeidsgiver || {}.identifikator;
+            return (
+              renderContent.length > 0 && (
               <React.Fragment key={guid()}>
                 <Element className={classNames('avvik', { hasAvvik: avvikArbeidforhold })}>
                   {`${innmldInfo.arbeidsgiver} ${innmldInfo.arbeidsgiverOrgnr}`}
@@ -178,9 +178,9 @@ export const InntektsmeldingInfo = ({
                 {renderContent}
                 <VerticalSpacer twentyPx />
               </React.Fragment>
-            ));
-        })}
-      </>
+              ));
+          })}
+        </>
       )}
     </>
   );

@@ -76,11 +76,7 @@ const createColumns = (perioder, rangeOfMonths, nextPeriod) => {
 const tableTitle = (mottaker) => (mottaker.mottakerType.kode === mottakerTyper.ARBG
   ? (
     <Normaltekst className={styles.tableTitle}>
-      {mottaker.mottakerNavn}
-      {' '}
-(
-      {mottaker.mottakerNummer}
-)
+      {`${mottaker.mottakerNavn} (${mottaker.mottakerNummer})`}
     </Normaltekst>
   )
   : null

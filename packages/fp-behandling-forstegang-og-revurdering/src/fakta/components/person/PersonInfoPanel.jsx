@@ -53,7 +53,7 @@ export class PersonInfoPanelImpl extends Component {
     this.getYtelser = this.getYtelser.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { openInfoPanels } = this.props;
     const { selected } = this.state;
     if (openInfoPanels !== nextProps.openInfoPanels) {

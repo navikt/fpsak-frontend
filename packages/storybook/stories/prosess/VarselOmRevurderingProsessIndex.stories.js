@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -56,7 +57,11 @@ const originalBehandling = {
 
 const alleKodeverk = {
   [kodeverkTyper.VENTEARSAK]: [{
-    kode: 'test',
+    kode: venteArsakType.AVV_DOK,
+    navn: 'Avvent dokumentasjon',
+  }, {
+    kode: venteArsakType.UTV_FRIST,
+    navn: 'Utvid frist',
   }],
 };
 

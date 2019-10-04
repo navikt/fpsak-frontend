@@ -128,9 +128,7 @@ const BehandlingPickerItemContent = ({
           {behandlingTypeNavn}
         </Element>
         <Normaltekst className={styles.paddingBottom}>
-          {behandlendeEnhetId}
-          {' '}
-          {behandlendeEnhetNavn}
+          {`${behandlendeEnhetId} ${behandlendeEnhetNavn}`}
         </Normaltekst>
       </div>
     </div>

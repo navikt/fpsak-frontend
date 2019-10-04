@@ -159,17 +159,17 @@ export class FodselInfoPanelImpl extends Component {
           )}
           {aksjonspunkter.length !== 0 && !readOnly
             && (
-            <>
-              <VerticalSpacer twentyPx />
-              <FaktaSubmitButton
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                formNames={formNames}
-                isSubmittable={submittable}
-                isReadOnly={readOnly}
-                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-              />
-            </>
+              <>
+                <VerticalSpacer twentyPx />
+                <FaktaSubmitButton
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                  formNames={formNames}
+                  isSubmittable={submittable}
+                  isReadOnly={readOnly}
+                  hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+                />
+              </>
             )}
           {aksjonspunkter.length === 0 && (
             <FodselSammenligningIndex

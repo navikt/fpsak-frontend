@@ -24,18 +24,18 @@ const AlderVisning = ({
   if (erDod) {
     return (
       <Normaltekst className={styles.displayInline}>
-        {'('}
-        { renderDød(dodsdato) }
-        {')'}
+        (
+        {renderDød(dodsdato)}
+        )
       </Normaltekst>
     );
   }
 
   return (
     <span>
-      {'('}
+      (
       <FormattedMessage id="Person.Age" values={{ age: alder }} />
-      {')'}
+      )
     </span>
   );
 };

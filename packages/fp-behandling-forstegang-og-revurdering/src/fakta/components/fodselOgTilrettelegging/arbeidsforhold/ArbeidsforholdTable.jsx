@@ -37,15 +37,11 @@ const ArbeidsforholdTable = ({
       >
         <TableColumn>
           <Normaltekst>
-            {a.arbeidsgiverNavn}
-            {' '}
+            {`${a.arbeidsgiverNavn} `}
             {a.arbeidsgiverIdent && (
-            <span>
-            (
-              {a.arbeidsgiverIdent}
-            )
-            </span>
-
+              <span>
+                {`(${a.arbeidsgiverIdent})`}
+              </span>
             )}
           </Normaltekst>
         </TableColumn>

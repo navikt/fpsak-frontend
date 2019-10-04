@@ -55,7 +55,6 @@ export const AddAndelButtonImpl = ({
           src={addCircleIcon}
         />
         <Undertekst className={styles.imageText}>
-          {' '}
           <FormattedMessage
             id="BeregningInfoPanel.FordelingBG.LeggTilAndel"
           />
