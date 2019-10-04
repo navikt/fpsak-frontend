@@ -266,6 +266,10 @@ export const getSkalKunneLeggeTilNyeArbeidsforhold = createSelector(
   [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.skalKunneLeggeTilNyeArbeidsforhold,
 );
 
+export const getSkalKunneLageArbeidsforholdBasertPaInntektsmelding = createSelector(
+  [getBehandlingInntektArbeidYtelse], (inntektArbeidYtelse = {}) => inntektArbeidYtelse.skalKunneLageArbeidsforholdBasertPaInntektsmelding,
+);
+
 // MEDLEM
 export const getBehandlingMedlemNew = createSelector([commonBehandlingSelectors.getSelectedBehandling], (
   selectedBehandling = {},

@@ -43,6 +43,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -64,6 +65,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
@@ -86,6 +88,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [{ id: 2 }],
@@ -108,6 +111,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -130,6 +134,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -152,6 +157,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -174,6 +180,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -195,6 +202,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -217,6 +225,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM={false}
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],
@@ -239,6 +248,7 @@ describe('<PersonArbeidsforholdDetailForm>', () => {
       aktivtArbeidsforholdTillatUtenIM
       arbeidsforhold={arbeidsforhold}
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
       initialValues={{
         begrunnelse: '',
         replaceOptions: [],

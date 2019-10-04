@@ -36,6 +36,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold={false}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
         {...reduxFormPropsMock}
       />,
     );
@@ -54,6 +55,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding
         {...reduxFormPropsMock}
       />,
     );
@@ -72,6 +74,7 @@ describe('<ArbeidsforholdInfoPanel>', () => {
         readOnly={false}
         hasOpenAksjonspunkter={false}
         skalKunneLeggeTilNyeArbeidsforhold
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding
         {...reduxFormPropsMock}
       />,
     );

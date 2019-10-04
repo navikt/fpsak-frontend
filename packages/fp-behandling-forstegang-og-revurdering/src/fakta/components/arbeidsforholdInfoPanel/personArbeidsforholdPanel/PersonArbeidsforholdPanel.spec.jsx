@@ -55,6 +55,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
     expect(wrapper.find(PersonArbeidsforholdTable)).has.length(1);
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
@@ -77,6 +78,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const table = wrapper.find(PersonArbeidsforholdTable);
@@ -95,6 +97,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     wrapper.setState({ selectedArbeidsforhold: undefined });
@@ -114,6 +117,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(1);
@@ -135,6 +139,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -155,6 +160,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
@@ -172,6 +178,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
 
@@ -203,6 +210,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
     const editedArbeidsforhold = {
       ...newArbeidsforhold,
@@ -255,6 +263,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -453,6 +462,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -495,6 +505,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -537,6 +548,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -579,6 +591,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -621,6 +634,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
     const instance = wrapper.instance();
     expect(wrapper.state().selectedArbeidsforhold).to.eql(undefined);
@@ -663,6 +677,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
     const btn = wrapper.find('button');
     expect(btn).to.have.length(1);
@@ -682,6 +697,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
     const btn = wrapper.find('button');
     expect(btn).to.have.length(0);
@@ -701,6 +717,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -747,6 +764,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {
@@ -799,6 +817,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       fagsystemer={fagsystemer}
       aktivtArbeidsforholdTillatUtenIM
       skalKunneLeggeTilNyeArbeidsforhold={false}
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding={false}
     />);
 
     const editedArbeidsforhold = {

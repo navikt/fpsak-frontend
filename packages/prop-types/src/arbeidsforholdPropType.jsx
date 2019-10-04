@@ -44,6 +44,7 @@ export const arbeidsforholdPropType = PropTypes.shape({
   brukMedJustertPeriode: PropTypes.bool,
   overstyrtTom: PropTypes.string,
   lagtTilAvSaksbehandler: PropTypes.bool,
+  basertPaInntektsmelding: PropTypes.bool,
   inntektMedTilBeregningsgrunnlag: PropTypes.bool,
   skjaeringstidspunkt: PropTypes.string,
   begrunnelse: PropTypes.string,

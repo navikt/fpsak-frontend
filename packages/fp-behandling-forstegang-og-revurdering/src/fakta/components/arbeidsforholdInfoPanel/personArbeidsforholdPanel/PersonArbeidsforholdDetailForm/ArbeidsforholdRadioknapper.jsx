@@ -96,9 +96,15 @@ const utledRadioOptionForArbeidsforholdSomIkkeErAktive = (arbeidsforhold, hasRec
   );
 };
 
-const utledAktivtArbeidsforholdLabel = (arbeidsforhold) => (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0
-  ? 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon'
-  : 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt');
+const utledAktivtArbeidsforholdLabel = (arbeidsforhold) => {
+  if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
+    return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon';
+  }
+  if (arbeidsforhold.kilde.navn === 'Inntektsmelding') {
+    return 'PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold';
+  }
+  return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt';
+};
 
 const skalViseRadioOptionsForAktivtArbeidsforholdHandlinger = (hasReceivedInntektsmelding, arbeidsforholdHandlingVerdi) => {
   if (arbeidsforholdHandlingVerdi !== arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD) {
