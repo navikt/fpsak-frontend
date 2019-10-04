@@ -1,20 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 import { connect } from 'react-redux';
 import { FieldArray } from 'redux-form';
+import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ArrowBox } from '@fpsak-frontend/shared-components';
+
+import omsorgAksjonspunkterPropType from '../propTypes/omsorgAksjonspunkterPropType';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
+
 import styles from './omsorgFaktaForm.less';
 
 const { MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG } = aksjonspunktCodes;
@@ -30,11 +31,17 @@ const OmsorgFaktaForm = ({
   omsorgIsEdited,
   oppgittOmsorgSoknad,
   oppgittAleneomsorgSoknad,
+  alleMerknaderFraBeslutter,
 }) => (
   <div className={className}>
     {hasAksjonspunkt(MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunkter)
       && (
-      <FaktaGruppe aksjonspunktCode={MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG} titleCode="OmsorgFaktaForm.Aleneomsorg" withoutBorder>
+      <FaktaGruppe
+        aksjonspunktCode={MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG}
+        titleCode="OmsorgFaktaForm.Aleneomsorg"
+        withoutBorder
+        merknaderFraBeslutter={alleMerknaderFraBeslutter[MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]}
+      >
         <Normaltekst className={styles.paddingBottom}>
           {oppgittAleneomsorgSoknad
             ? <FormattedHTMLMessage id="OmsorgFaktaForm.OppgittAleneomsorg" />
@@ -52,6 +59,7 @@ const OmsorgFaktaForm = ({
         aksjonspunktCode={MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG}
         titleCode="OmsorgFaktaForm.Omsorg"
         withoutBorder
+        merknaderFraBeslutter={alleMerknaderFraBeslutter[MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]}
       >
         <Normaltekst className={styles.paddingBottom}>
           {oppgittOmsorgSoknad
@@ -84,7 +92,7 @@ const OmsorgFaktaForm = ({
 );
 
 OmsorgFaktaForm.propTypes = {
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(omsorgAksjonspunkterPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   aleneomsorgIsEdited: PropTypes.bool,
   omsorgIsEdited: PropTypes.bool,
@@ -92,6 +100,9 @@ OmsorgFaktaForm.propTypes = {
   className: PropTypes.string,
   oppgittAleneomsorgSoknad: PropTypes.bool.isRequired,
   oppgittOmsorgSoknad: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 OmsorgFaktaForm.defaultProps = {
@@ -134,11 +145,11 @@ OmsorgFaktaForm.transformOmsorgValues = (values) => ({
 });
 
 
-const mapStateToProps = (state) => ({
-  aleneomsorgIsEdited: !!getBehandlingYtelseFordeling(state).aleneOmsorgPerioder,
-  omsorgIsEdited: !!getBehandlingYtelseFordeling(state).ikkeOmsorgPerioder,
-  oppgittOmsorgSoknad: behandlingSelectors.getSoknad(state).oppgittRettighet.omsorgForBarnet,
-  oppgittAleneomsorgSoknad: behandlingSelectors.getSoknad(state).oppgittRettighet.aleneomsorgForBarnet,
+const mapStateToProps = (state, ownProps) => ({
+  aleneomsorgIsEdited: !!ownProps.ytelsefordeling.aleneOmsorgPerioder,
+  omsorgIsEdited: !!ownProps.ytelsefordeling.ikkeOmsorgPerioder,
+  oppgittOmsorgSoknad: ownProps.soknad.oppgittRettighet.omsorgForBarnet,
+  oppgittAleneomsorgSoknad: ownProps.soknad.oppgittRettighet.aleneomsorgForBarnet,
 });
 
 export default connect(mapStateToProps)(OmsorgFaktaForm);

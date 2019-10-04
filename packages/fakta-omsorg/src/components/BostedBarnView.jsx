@@ -1,14 +1,15 @@
 import React from 'react';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { personopplysningPropType } from '@fpsak-frontend/prop-types';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import PropTypes from 'prop-types';
 import { DDMMYYYY_DATE_FORMAT, getAddresses, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { MerkePanel } from '@fpsak-frontend/person-info';
+
+import omsorgPersonopplysningerPropType from '../propTypes/omsorgPersonopplysningerPropType';
 
 import styles from './bostedBarnView.less';
 
@@ -63,7 +64,7 @@ const BostedBarnView = ({
 );
 
 BostedBarnView.propTypes = {
-  barn: personopplysningPropType.isRequired,
+  barn: omsorgPersonopplysningerPropType.isRequired,
   barnNr: PropTypes.number.isRequired,
   className: PropTypes.string,
 };

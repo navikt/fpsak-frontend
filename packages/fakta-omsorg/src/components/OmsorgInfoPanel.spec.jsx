@@ -9,7 +9,7 @@ import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
-import { OmsorgInfoPanelImpl } from './OmsorgInfoPanel';
+import { OmsorgInfoPanel } from './OmsorgInfoPanel';
 
 describe('<OmsorgInfoPanel>', () => {
   const personopplysning = {
@@ -43,6 +43,7 @@ describe('<OmsorgInfoPanel>', () => {
       kode: '',
       navn: '',
     },
+    adresser: [],
   };
   const aleneomsorgAp = {
     id: 1,
@@ -72,7 +73,7 @@ describe('<OmsorgInfoPanel>', () => {
     erAktivt: false,
   };
   it('skal vise omsorginfopanel når en har aleneomsorgaksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<OmsorgInfoPanelImpl
+    const wrapper = shallowWithIntl(<OmsorgInfoPanel
       {...reduxFormPropsMock}
       initialValues={{ begrunnelse: 'test' }}
       omsorg={false}
@@ -83,19 +84,24 @@ describe('<OmsorgInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
-      personopplysning={personopplysning}
       alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      soknad={{}}
+      alleMerknaderFraBeslutter={{}}
+      personopplysninger={personopplysning}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om omsorg');
+    expect(panel.prop('title')).to.eql('OmsorgInfoPanel.Omsorg');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('omsorg');
   });
 
   it('skal vise helptext for omsorg og aleneomsorg aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<OmsorgInfoPanelImpl
+    const wrapper = shallowWithIntl(<OmsorgInfoPanel
       {...reduxFormPropsMock}
       initialValues={{ begrunnelse: 'test' }}
       omsorg={false}
@@ -106,8 +112,13 @@ describe('<OmsorgInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
-      personopplysning={personopplysning}
+      personopplysninger={personopplysning}
       alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      soknad={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -118,7 +129,7 @@ describe('<OmsorgInfoPanel>', () => {
   });
 
   it('skal vise helptext for omsorg aksjonspunkt', () => {
-    const wrapper = shallowWithIntl(<OmsorgInfoPanelImpl
+    const wrapper = shallowWithIntl(<OmsorgInfoPanel
       {...reduxFormPropsMock}
       initialValues={{ begrunnelse: 'test' }}
       omsorg={false}
@@ -129,8 +140,13 @@ describe('<OmsorgInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
-      personopplysning={personopplysning}
+      personopplysninger={personopplysning}
       alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      soknad={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -140,7 +156,7 @@ describe('<OmsorgInfoPanel>', () => {
   });
 
   it('skal vise BostedFakta', () => {
-    const wrapper = shallowWithIntl(<OmsorgInfoPanelImpl
+    const wrapper = shallowWithIntl(<OmsorgInfoPanel
       {...reduxFormPropsMock}
       initialValues={{ begrunnelse: 'test' }}
       omsorg={false}
@@ -151,8 +167,13 @@ describe('<OmsorgInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
-      personopplysning={personopplysning}
+      personopplysninger={personopplysning}
       alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      soknad={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const bostedFaktaView = wrapper.find('BostedFaktaView');
     expect(bostedFaktaView).has.length(1);
@@ -160,7 +181,7 @@ describe('<OmsorgInfoPanel>', () => {
   });
 
   it('skal vise OmsorgFaktaForm', () => {
-    const wrapper = shallowWithIntl(<OmsorgInfoPanelImpl
+    const wrapper = shallowWithIntl(<OmsorgInfoPanel
       {...reduxFormPropsMock}
       initialValues={{ begrunnelse: 'test' }}
       omsorg={false}
@@ -171,8 +192,13 @@ describe('<OmsorgInfoPanel>', () => {
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
-      personopplysning={personopplysning}
+      personopplysninger={personopplysning}
       alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      soknad={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const omsorgFaktaForm = wrapper.find(OmsorgFaktaForm);
     expect(omsorgFaktaForm).has.length(1);

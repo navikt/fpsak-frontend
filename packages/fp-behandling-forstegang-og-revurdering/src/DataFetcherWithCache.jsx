@@ -33,6 +33,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE]: 'uttak-periode-grense',
   [BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE]: 'inntekt-arbeid-ytelse',
   [BehandlingFpsakApiKeys.VERGE]: 'soeker-verge',
+  [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

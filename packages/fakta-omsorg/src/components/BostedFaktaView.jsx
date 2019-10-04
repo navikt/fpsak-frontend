@@ -1,10 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
-import { personopplysningPropType } from '@fpsak-frontend/prop-types';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
+
+import omsorgPersonopplysningerPropType from '../propTypes/omsorgPersonopplysningerPropType';
 import BostedBarnView from './BostedBarnView';
+
 import styles from './bostedFaktaView.less';
 
 const BostedFaktaView = ({
@@ -33,8 +36,8 @@ const BostedFaktaView = ({
 );
 
 BostedFaktaView.propTypes = {
-  personopplysning: personopplysningPropType.isRequired,
-  ektefellePersonopplysning: personopplysningPropType,
+  personopplysning: omsorgPersonopplysningerPropType.isRequired,
+  ektefellePersonopplysning: omsorgPersonopplysningerPropType,
   className: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
 };

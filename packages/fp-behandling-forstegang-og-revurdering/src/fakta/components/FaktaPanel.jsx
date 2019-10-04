@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
+import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
 import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
@@ -20,7 +21,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
-import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import PersonInfoPanel from './person/PersonInfoPanel';
@@ -36,6 +36,7 @@ const adopsjonAksjonspunkter = [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER
 const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
   aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
+const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
 
 const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
@@ -44,6 +45,7 @@ const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELS
 const adopsjonData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.AKSJONSPUNKTER, fpsakApi.PERSONOPPLYSNINGER];
 const tilleggsopplysningerData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER];
 const vergeData = [fpsakApi.BEHANDLING, fpsakApi.VERGE, fpsakApi.AKSJONSPUNKTER];
+const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.YTELSEFORDELING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.AKSJONSPUNKTER, fpsakApi.SOKNAD];
 
 /**
  * FaktaPanel
@@ -251,15 +253,23 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      {OmsorgInfoPanel.supports(aksjonspunkter)
-      && (
-        <OmsorgInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
+
+      {aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode)) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={omsorgData}
+          render={(props) => (
+            <OmsorgFaktaIndex
+              alleKodeverk={alleKodeverk}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              {...props}
+            />
+          )}
         />
       )}
       {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling)

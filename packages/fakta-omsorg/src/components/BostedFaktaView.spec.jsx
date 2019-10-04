@@ -38,6 +38,7 @@ describe('<BostedFaktaView>', () => {
       kode: '',
       navn: '',
     },
+    adresser: [],
   };
 
   const soker = {

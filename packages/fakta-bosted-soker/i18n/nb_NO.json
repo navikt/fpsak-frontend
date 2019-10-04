@@ -5,5 +5,7 @@
   "Personstatus.Hjelpetekst": "Personstatus",
   "Personstatus.Ukjent": "Ukjent",
   "Sivilstand.Hjelpetekst": "Sivilstand",
-  "BostedSokerView.Region": "Region"
+  "BostedSokerView.Region": "Region",
+
+  "BostedFaktaView.ForelderTo": "Forelder 2"
 }

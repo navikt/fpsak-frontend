@@ -18,7 +18,7 @@ import {
 
 const showAddButton = (fields) => {
   if (fields.length > 0) {
-    return (fields.get(fields.length - 1).periodeFom && fields.get(fields.length - 1).periodeTom);
+    return (fields.get(fields.length - 1).periodeFom !== undefined && fields.get(fields.length - 1).periodeTom !== undefined);
   }
   return false;
 };
@@ -33,7 +33,7 @@ const IkkeOmsorgPeriodeField = ({
     <PeriodFieldArray
       fields={fields}
       meta={meta}
-      textCode="Registrering.RegistreringOpphold.Add"
+      textCode="IkkeOmsorgPeriodeField.Add"
       shouldShowAddButton={!readOnly && showAddButton(fields)}
       createAddButtonInsteadOfImageLink
       readOnly={readOnly}

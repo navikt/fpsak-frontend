@@ -27,7 +27,7 @@ export const RegistrereVergeFaktaForm = ({
   vergetyper,
   alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE} merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}>
+  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE} merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
       <Row>
         <Column xs="3">

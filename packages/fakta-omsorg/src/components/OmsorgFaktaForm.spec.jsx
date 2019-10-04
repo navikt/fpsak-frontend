@@ -46,6 +46,7 @@ describe('<OmsorgFaktaForm>', () => {
       aksjonspunkter={[aleneomsorgAp]}
       oppgittOmsorgSoknad={false}
       oppgittAleneomsorgSoknad
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const formattedMessage = wrapper.find(FormattedHTMLMessage);
@@ -61,6 +62,7 @@ describe('<OmsorgFaktaForm>', () => {
       aksjonspunkter={[omsorgAp]}
       oppgittOmsorgSoknad={false}
       oppgittAleneomsorgSoknad
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const formattedMessage = wrapper.find(FormattedHTMLMessage);
@@ -76,6 +78,7 @@ describe('<OmsorgFaktaForm>', () => {
       aksjonspunkter={[aleneomsorgAp, omsorgAp]}
       oppgittOmsorgSoknad={false}
       oppgittAleneomsorgSoknad
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const radioGroup = wrapper.find('RadioGroupField');
@@ -107,6 +110,7 @@ describe('<OmsorgFaktaForm>', () => {
       className="defaultAleneOmsorgFakta"
       oppgittOmsorgSoknad
       oppgittAleneomsorgSoknad
+      alleMerknaderFraBeslutter={{}}
     />);
     expect(wrapper.find('RadioGroupField')).to.have.length(2);
     expect(wrapper.find('FieldArray')).to.have.length(0);
