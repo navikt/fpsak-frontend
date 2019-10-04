@@ -34,6 +34,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     inntektMedTilBeregningsgrunnlag: undefined,
     brukPermisjon: undefined,
     permisjoner: undefined,
+    basertPaInntektsmelding: false,
   };
   const fagsystemer = [{
     kode: 'AA',
@@ -193,7 +194,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
     expect(wrapper.find(PersonArbeidsforholdDetailForm)).has.length(0);
   });
 
-  it('skal rulle tilbake markering av nytt arbeidsforhold når det ikke lenger skal brukes', () => {
+  it('  skal rulle tilbake markering av nytt arbeidsforhold når det ikke lenger skal brukes', () => {
     const newArbeidsforhold = {
       ...arbeidsforhold,
       erNyttArbeidsforhold: true,
@@ -415,6 +416,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       navn: 'Svendsen Eksos',
       arbeidsgiverIdentifikator: '1234567',
       arbeidsgiverIdentifiktorGUI: '1234567',
+      basertPaInntektsmelding: false,
       fomDato: '2018-01-01',
       tomDato: '2018-10-10',
       kilde: {
@@ -432,6 +434,7 @@ describe('<PersonArbeidsforholdPanel>', () => {
       navn: 'Svendsen Eksos',
       arbeidsgiverIdentifikator: '1234567',
       arbeidsgiverIdentifiktorGUI: '1234567',
+      basertPaInntektsmelding: false,
       fomDato: '2018-01-01',
       tomDato: '2018-10-10',
       kilde: {
