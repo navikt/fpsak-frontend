@@ -47,7 +47,7 @@ export const ApprovalFieldImpl = ({
       {getAksjonspunktText(aksjonspunkt).map((formattedMessage, index) => (
         <div key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index))} className={styles.aksjonspunktTextContainer}>
           <Normaltekst key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index))}>
-            {` ${formattedMessage} `}
+            {formattedMessage}
           </Normaltekst>
         </div>
       ))}
