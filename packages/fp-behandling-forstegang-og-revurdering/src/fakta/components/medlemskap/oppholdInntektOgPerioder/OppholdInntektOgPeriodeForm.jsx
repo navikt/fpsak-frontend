@@ -36,10 +36,11 @@ export const OppholdInntektOgPeriodeForm = ({
   initialValues,
   submittable,
   periodeResetCallback,
+  alleKodeverk,
   ...formProps
 }) => (
   <BorderBox>
-    <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
+    <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} id={valgtPeriode.id} alleKodeverk={alleKodeverk} />
     <VerticalSpacer twentyPx />
     <InntektOgYtelserFaktaPanel id={valgtPeriode.id} />
     <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
@@ -92,6 +93,7 @@ OppholdInntektOgPeriodeForm.propTypes = {
   valgtPeriode: PropTypes.shape().isRequired,
   initialValues: PropTypes.shape().isRequired,
   periodeResetCallback: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {
@@ -147,6 +149,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       form: formName,
       submittable,
       onSubmit,
+      alleKodeverk: getAlleKodeverk(state),
     };
   };
 };

@@ -32,6 +32,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       submittable
       readOnly
       isRevurdering={false}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(OppholdINorgeOgAdresserFaktaPanel)).has.length(1);
@@ -75,6 +76,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       readOnly={false}
       valgtPeriode={valgtPeriodeMedBosattAksjonspunkt}
       isRevurdering={false}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
@@ -115,6 +117,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       readOnly={false}
       valgtPeriode={valgtPeriodeMedAksjonspunkt}
       isRevurdering={false}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(PerioderMedMedlemskapFaktaPanel)).has.length(1);
@@ -156,6 +159,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       readOnly={false}
       valgtPeriode={valgtPeriodeMedOppholdsrettAksjonspunkt}
       isRevurdering={false}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);
@@ -197,6 +201,7 @@ describe('<OppholdInntektOgPeriodeForm>', () => {
       readOnly={false}
       valgtPeriode={valgtPeriodeMedLovligoppholdAksjonspunkt}
       isRevurdering={false}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(StatusForBorgerFaktaPanel)).has.length(1);

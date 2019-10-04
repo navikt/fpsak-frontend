@@ -84,6 +84,7 @@ describe('<OmsorgInfoPanel>', () => {
       submittable
       readOnly={false}
       personopplysning={personopplysning}
+      alleKodeverk={{}}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).to.have.length(1);
@@ -106,6 +107,7 @@ describe('<OmsorgInfoPanel>', () => {
       submittable
       readOnly={false}
       personopplysning={personopplysning}
+      alleKodeverk={{}}
     />);
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -128,6 +130,7 @@ describe('<OmsorgInfoPanel>', () => {
       submittable
       readOnly={false}
       personopplysning={personopplysning}
+      alleKodeverk={{}}
     />);
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
@@ -149,6 +152,7 @@ describe('<OmsorgInfoPanel>', () => {
       submittable
       readOnly={false}
       personopplysning={personopplysning}
+      alleKodeverk={{}}
     />);
     const bostedFaktaView = wrapper.find('BostedFaktaView');
     expect(bostedFaktaView).has.length(1);
@@ -168,6 +172,7 @@ describe('<OmsorgInfoPanel>', () => {
       submittable
       readOnly={false}
       personopplysning={personopplysning}
+      alleKodeverk={{}}
     />);
     const omsorgFaktaForm = wrapper.find(OmsorgFaktaForm);
     expect(omsorgFaktaForm).has.length(1);

@@ -17,6 +17,7 @@ import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors
 import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
 import BostedFaktaView from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/BostedFaktaView';
 import OmsorgFaktaForm from 'behandlingForstegangOgRevurdering/src/fakta/components/omsorg/OmsorgFaktaForm';
+import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
 
@@ -49,6 +50,7 @@ export const OmsorgInfoPanelImpl = ({
   submittable,
   aksjonspunkter,
   omsorg,
+  alleKodeverk,
   ...formProps
 }) => (
   <FaktaEkspandertpanel
@@ -65,7 +67,7 @@ export const OmsorgInfoPanelImpl = ({
       {getHelpTexts(aksjonspunkter)}
     </AksjonspunktHelpText>
     )}
-    <BostedFaktaView personopplysning={personopplysning} ektefellePersonopplysning={ektefellePersonopplysning} />
+    <BostedFaktaView personopplysning={personopplysning} ektefellePersonopplysning={ektefellePersonopplysning} alleKodeverk={alleKodeverk} />
     <form onSubmit={formProps.handleSubmit}>
       <FaktaBegrunnelseTextField isDirty={formProps.dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse hasVurderingText />
       <OmsorgFaktaForm readOnly={readOnly} omsorg={omsorg} aksjonspunkter={aksjonspunkter} />
@@ -86,6 +88,7 @@ OmsorgInfoPanelImpl.propTypes = {
   submittable: PropTypes.bool.isRequired,
   omsorg: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -126,6 +129,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     personopplysning: getPersonopplysning(state),
     ektefellePersonopplysning: getEktefellePersonopplysning(state),
     omsorg: behandlingFormValueSelector('OmsorgInfoPanel')(state, 'omsorg'),
+    alleKodeverk: getAlleKodeverk(state),
     onSubmit,
   });
 };

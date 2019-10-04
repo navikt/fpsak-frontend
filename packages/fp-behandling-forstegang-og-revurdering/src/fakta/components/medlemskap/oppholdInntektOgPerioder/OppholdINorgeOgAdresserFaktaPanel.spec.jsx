@@ -27,11 +27,21 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
     isApplicant: true,
     personopplysning: {
       navn: 'Espen Utvikler',
+      adresser: [],
+      personstatus: {
+        kode: 'UTVANDRET',
+        navn: 'Utvandret',
+      },
     },
   }, {
     isApplicant: false,
     personopplysning: {
       navn: 'Petra Tester',
+      adresser: [],
+      personstatus: {
+        kode: 'UTVANDRET',
+        navn: 'Utvandret',
+      },
     },
   }];
 
@@ -43,6 +53,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       isBosattAksjonspunktClosed={false}
       opphold={opphold}
       foreldre={foreldre}
+      alleKodeverk={{}}
     />);
     const felter = wrapper.find(Normaltekst);
     expect(felter).to.have.length(5);
@@ -60,6 +71,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       isBosattAksjonspunktClosed={false}
       opphold={opphold}
       foreldre={foreldre}
+      alleKodeverk={{}}
     />);
     const foreldreDivs = wrapper.find('div');
     expect(foreldreDivs).to.have.length(3);
@@ -70,11 +82,21 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       isApplicant: true,
       personopplysning: {
         navn: 'Espen Utvikler',
+        adresser: [],
+        personstatus: {
+          kode: 'UTVANDRET',
+          navn: 'Utvandret',
+        },
       },
     }, {
       isApplicant: false,
       personopplysning: {
         navn: 'Petra Tester',
+        adresser: [],
+        personstatus: {
+          kode: 'UTVANDRET',
+          navn: 'Utvandret',
+        },
       },
     }];
 
@@ -85,6 +107,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       isBosattAksjonspunktClosed={false}
       opphold={opphold}
       foreldre={toForeldre}
+      alleKodeverk={{}}
     />);
 
     const radioFields = wrapper.find('RadioOption');

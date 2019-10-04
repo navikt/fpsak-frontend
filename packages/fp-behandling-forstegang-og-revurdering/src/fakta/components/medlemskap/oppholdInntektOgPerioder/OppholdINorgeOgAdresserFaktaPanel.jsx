@@ -11,12 +11,12 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { required } from '@fpsak-frontend/utils';
+import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import {
   ElementWrapper, Image, PeriodLabel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import BostedSokerView from 'behandlingForstegangOgRevurdering/src/fakta/components/BostedSokerView';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 
@@ -76,6 +76,7 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
   isBosattAksjonspunktClosed,
   opphold,
   foreldre,
+  alleKodeverk,
 }) => (
   <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}>
     <Row>
@@ -108,10 +109,16 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.BosattAdresser">
           {foreldre.map((f) => (
             <div key={f.personopplysning.navn}>
-              {f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={f.personopplysning} />}
-              {!f.isApplicant
-              && <BostedSokerView typeSoker={<FormattedMessage id="OppholdINorgeOgAdresserFaktaPanel.Parent" />} soker={f.personopplysning} />}
+              {f.isApplicant && (
+                <BostedSokerFaktaIndex personopplysninger={f.personopplysning} alleKodeverk={alleKodeverk} />
+              )}
+              {!f.isApplicant && (
+                <BostedSokerFaktaIndex
+                  sokerTypeTextId="OppholdINorgeOgAdresserFaktaPanel.Parent"
+                  personopplysninger={f.personopplysning}
+                  alleKodeverk={alleKodeverk}
+                />
+              )}
             </div>
           ))}
         </FaktaGruppe>
@@ -138,6 +145,7 @@ OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
   isBosattAksjonspunktClosed: PropTypes.bool.isRequired,
   opphold: PropTypes.shape(),
   foreldre: PropTypes.arrayOf(PropTypes.shape()),
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {

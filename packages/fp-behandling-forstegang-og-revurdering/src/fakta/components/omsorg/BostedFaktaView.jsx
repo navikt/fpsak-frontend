@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { personopplysningPropType } from '@fpsak-frontend/prop-types';
 import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { FormattedMessage } from 'react-intl';
-import BostedSokerView from 'behandlingForstegangOgRevurdering/src/fakta/components/BostedSokerView';
+import BostedSokerFaktaIndex from '@fpsak-frontend/fakta-bosted-soker';
 import BostedBarnView from './BostedBarnView';
 import styles from './bostedFaktaView.less';
 
@@ -12,6 +11,7 @@ const BostedFaktaView = ({
   personopplysning,
   ektefellePersonopplysning,
   className,
+  alleKodeverk,
 }) => (
   <div className={className}>
     <FaktaGruppe titleCode="BostedFaktaView.BosattAdresser">
@@ -22,9 +22,10 @@ const BostedFaktaView = ({
           ))}
         </Column>
         <Column xs="6">
-          <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.Soker" />} soker={personopplysning} />
-          {ektefellePersonopplysning
-          && <BostedSokerView typeSoker={<FormattedMessage id="BostedFaktaView.ForelderTo" />} soker={ektefellePersonopplysning} />}
+          <BostedSokerFaktaIndex personopplysninger={personopplysning} alleKodeverk={alleKodeverk} />
+          {ektefellePersonopplysning && (
+            <BostedSokerFaktaIndex sokerTypeTextId="BostedFaktaView.ForelderTo" personopplysninger={ektefellePersonopplysning} alleKodeverk={alleKodeverk} />
+          )}
         </Column>
       </Row>
     </FaktaGruppe>
@@ -35,6 +36,7 @@ BostedFaktaView.propTypes = {
   personopplysning: personopplysningPropType.isRequired,
   ektefellePersonopplysning: personopplysningPropType,
   className: PropTypes.string,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 BostedFaktaView.defaultProps = {

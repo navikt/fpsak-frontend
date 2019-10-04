@@ -81,11 +81,11 @@ describe('<BostedsokerView>', () => {
   it('vise navn', () => {
     const wrapper = shallowWithIntl(<BostedSokerView
       intl={intlMock}
-      soker={soker}
-      typeSoker="Søker"
+      personopplysninger={soker}
       regionTypes={regionTypes}
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
+      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
 
     expect(wrapper.find('Element').childAt(0).text()).to.eql('Espen Utvikler');
@@ -94,12 +94,11 @@ describe('<BostedsokerView>', () => {
   it('skal vise  adresse informasjon', () => {
     const wrapper = shallowWithIntl(<BostedSokerView
       intl={intlMock}
-      soker={soker}
-      typeSoker="Søker"
-      className="defaultBostedSoker"
+      personopplysninger={soker}
       regionTypes={regionTypes}
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
+      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
     const adr = wrapper.find(Normaltekst);
     expect(adr).to.have.length(2);
@@ -110,12 +109,11 @@ describe('<BostedsokerView>', () => {
   it('skal vise etiketter', () => {
     const wrapper = shallowWithIntl(<BostedSokerView
       intl={intlMock}
-      soker={soker}
-      typeSoker="Søker"
-      className="defaultBostedSoker"
+      personopplysninger={soker}
       regionTypes={regionTypes}
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
+      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
@@ -126,7 +124,7 @@ describe('<BostedsokerView>', () => {
     expect(sivilstand.prop('title')).to.equal('Sivilstand');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
+    expect(region.prop('title')).to.equal('BostedSokerView.Region');
     expect(region.childAt(0).text()).to.equal('Norden');
   });
 
@@ -138,12 +136,11 @@ describe('<BostedsokerView>', () => {
 
     const wrapper = shallowWithIntl(<BostedSokerView
       intl={intlMock}
-      soker={soker}
-      typeSoker="Søker"
-      className="defaultBostedSoker"
+      personopplysninger={soker}
       regionTypes={regionTypes}
       sivilstandTypes={sivilstandTypes}
       personstatusTypes={personstatusTypes}
+      sokerTypeTextId="BostedSokerFaktaIndex.Soker"
     />);
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
@@ -154,7 +151,7 @@ describe('<BostedsokerView>', () => {
     expect(sivilstand.prop('title')).to.equal('Sivilstand');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('Region');
+    expect(region.prop('title')).to.equal('BostedSokerView.Region');
     expect(region.childAt(0).text()).to.equal('Norden');
   });
 });

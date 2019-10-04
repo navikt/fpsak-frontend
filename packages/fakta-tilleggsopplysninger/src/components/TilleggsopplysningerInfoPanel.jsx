@@ -11,6 +11,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
 
+// TODO (TOR) Fjern redux-form => ingen behov for det her
+
 /**
  * TilleggsopplysningerInfoPanel
  *
