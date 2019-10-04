@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import {
   hasValidDate, hasValidFodselsnummer, hasValidName, required,
 } from '@fpsak-frontend/utils';
@@ -12,6 +11,7 @@ import {
   CheckboxField, DatepickerField, InputField, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './RegistrereVergeFaktaForm.less';
@@ -25,8 +25,9 @@ export const RegistrereVergeFaktaForm = ({
   intl,
   readOnly,
   vergetyper,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE}>
+  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE} merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.OMSORGSOVERTAKELSE]}>
     <div>
       <Row>
         <Column xs="3">
@@ -125,6 +126,22 @@ export const RegistrereVergeFaktaForm = ({
   </FaktaGruppe>
 );
 
+RegistrereVergeFaktaForm.propTypes = {
+  intl: PropTypes.shape().isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  vergetyper: PropTypes.arrayOf(PropTypes.shape({
+    kode: PropTypes.string,
+    name: PropTypes.string,
+  })),
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+};
+
+RegistrereVergeFaktaForm.defaultProps = {
+  vergetyper: [],
+};
+
 RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
   navn: verge.navn,
   gyldigFom: verge.gyldigFom,
@@ -149,19 +166,5 @@ RegistrereVergeFaktaForm.transformValues = (values) => ({
   sokerErUnderTvungenForvaltning: values.sokerErUnderTvungenForvaltning,
   kode: aksjonspunktCodes.AVKLAR_VERGE,
 });
-
-RegistrereVergeFaktaForm.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  vergetyper: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    name: PropTypes.string,
-  })),
-};
-
-RegistrereVergeFaktaForm.defaultProps = {
-  vergetyper: [],
-};
-
 
 export default RegistrereVergeFaktaForm;

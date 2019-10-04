@@ -5,17 +5,13 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { getBehandlingVerge } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, faktaPanelCodes,
+  behandlingForm, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, faktaPanelCodes, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
 
 /**
@@ -33,6 +29,9 @@ export const RegistrereVergeInfoPanelImpl = ({
   initialValues,
   vergetyper,
   aksjonspunkt,
+  behandlingId,
+  behandlingVersjon,
+  alleMerknaderFraBeslutter,
   ...formProps
 }) => {
   if (!aksjonspunkt) {
@@ -55,12 +54,15 @@ export const RegistrereVergeInfoPanelImpl = ({
           readOnly={readOnly}
           intl={intl}
           vergetyper={vergetyper}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
         <VerticalSpacer twentyPx />
         <FaktaBegrunnelseTextField isDirty={formProps.dirty} isSubmittable={submittable} isReadOnly={readOnly} hasBegrunnelse={!!initialValues.begrunnelse} />
         <VerticalSpacer twentyPx />
         <FaktaSubmitButton
           formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           isSubmittable={submittable}
           isReadOnly={readOnly}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
@@ -78,12 +80,17 @@ RegistrereVergeInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkt: aksjonspunktPropType.isRequired,
+  aksjonspunkt: vergeAksjonspunkterPropType.isRequired,
   vergetyper: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     name: PropTypes.string,
   })).isRequired,
   initialValues: PropTypes.shape(),
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 RegistrereVergeInfoPanelImpl.defaultProps = {
@@ -91,7 +98,9 @@ RegistrereVergeInfoPanelImpl.defaultProps = {
   submittable: true,
 };
 
-const buildInitialValues = createSelector([getBehandlingVerge, behandlingSelectors.getAksjonspunkter], (verge, aksjonspunkter) => ({
+const buildInitialValues = createSelector([
+  (ownProps) => ownProps.verge,
+  (ownProps) => ownProps.aksjonspunkter], (verge, aksjonspunkter) => ({
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
   ...RegistrereVergeFaktaForm.buildInitialValues(verge),
 }));
@@ -101,24 +110,20 @@ const transformValues = (values) => ({
   ...{ begrunnelse: values.begrunnelse },
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  return (state, ownProps) => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],
-    initialValues: buildInitialValues(state),
-    vergetyper: getKodeverk(kodeverkTyper.VERGE_TYPE)(state),
+    initialValues: buildInitialValues(ownProps),
+    vergetyper: ownProps.alleKodeverk[kodeverkTyper.VERGE_TYPE],
     onSubmit,
   });
 };
 
 const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
-const RegistrereVergeInfoPanel = withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
-  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingForm({
     form: 'RegistrereVergeInfoPanel',
   })(injectIntl(RegistrereVergeInfoPanelImpl))),
 );
-
-RegistrereVergeInfoPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === vergeAksjonspunkter[0]);
-
-export default RegistrereVergeInfoPanel;

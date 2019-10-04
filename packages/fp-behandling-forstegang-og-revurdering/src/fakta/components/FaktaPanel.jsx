@@ -6,6 +6,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
+import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -19,7 +20,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
-import RegistrereVergeInfoPanel from './verge/RegistrereVergeInfoPanel';
 import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
@@ -43,6 +43,7 @@ const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELS
   fpsakApi.AKSJONSPUNKTER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const adopsjonData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.AKSJONSPUNKTER, fpsakApi.PERSONOPPLYSNINGER];
 const tilleggsopplysningerData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER];
+const vergeData = [fpsakApi.BEHANDLING, fpsakApi.VERGE, fpsakApi.AKSJONSPUNKTER];
 
 /**
  * FaktaPanel
@@ -105,15 +106,23 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           readOnly={readOnly}
         />
       )}
-      {RegistrereVergeInfoPanel.supports(aksjonspunkter)
-      && (
-        <RegistrereVergeInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
+
+      {aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE) && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={vergeData}
+          render={(props) => (
+            <VergeFaktaIndex
+              alleKodeverk={alleKodeverk}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              {...props}
+            />
+          )}
         />
       )}
 

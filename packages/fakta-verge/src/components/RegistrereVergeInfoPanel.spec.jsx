@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
+
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
 
 describe('<RegistrereVergeInfoPanel>', () => {
@@ -24,11 +25,14 @@ describe('<RegistrereVergeInfoPanel>', () => {
         erAktivt: true,
       }}
       vergetyper={[{}]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om verge/fullmektig');
+    expect(panel.prop('title')).to.eql('RegistrereVergeInfoPanel.Info');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('verge');
@@ -51,6 +55,9 @@ describe('<RegistrereVergeInfoPanel>', () => {
         erAktivt: true,
       }}
       vergetyper={[{}]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const panel = wrapper.find('FaktaEkspandertpanel');
