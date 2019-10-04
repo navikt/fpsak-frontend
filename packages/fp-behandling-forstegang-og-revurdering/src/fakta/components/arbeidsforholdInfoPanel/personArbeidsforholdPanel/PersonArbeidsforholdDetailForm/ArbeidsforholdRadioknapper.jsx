@@ -14,6 +14,7 @@ import { FormattedMessage } from 'react-intl';
 import { arbeidsforholdPropType } from '@fpsak-frontend/prop-types';
 import aktivtArbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/aktivtArbeidsforholdHandling';
 import arbeidsforholdHandling from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandling';
+import arbeidsforholdKilder from '@fpsak-frontend/kodeverk/src/arbeidsforholdKilder';
 
 // ----------------------------------------------------------------------------------
 // VARIABLES
@@ -100,7 +101,7 @@ const utledAktivtArbeidsforholdLabel = (arbeidsforhold) => {
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 0) {
     return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivtOgHarPermisjonMenSoekerErIkkePermisjon';
   }
-  if (arbeidsforhold.kilde.navn === 'Inntektsmelding') {
+  if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
     return 'PersonArbeidsforholdDetailForm.OppdaterArbeidsforhold';
   }
   return 'PersonArbeidsforholdDetailForm.ArbeidsforholdErAktivt';

@@ -151,12 +151,7 @@ PersonArbeidsforholdDetailForm.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  let onSubmit;
-  if (ownProps.skalKunneLageArbeidsforholdBasertPaInntektsmelding && ownProps.skalKunneLageArbeidsforholdBasertPaInntektsmelding === true) {
-    onSubmit = (values) => ownProps.updateArbeidsforholdBasertPaInntektsmelding(values);
-  } else {
-    onSubmit = (values) => ownProps.updateArbeidsforhold(values);
-  }
+  const onSubmit = (values) => ownProps.updateArbeidsforhold(values);
   return (state) => ({
     initialValues: ownProps.arbeidsforhold,
     readOnly: ownProps.readOnly || (!ownProps.arbeidsforhold.tilVurdering && !ownProps.arbeidsforhold.erEndret),

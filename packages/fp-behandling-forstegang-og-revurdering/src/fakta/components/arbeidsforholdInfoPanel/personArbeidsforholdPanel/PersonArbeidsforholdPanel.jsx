@@ -184,7 +184,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
     this.cancelArbeidsforhold = this.cancelArbeidsforhold.bind(this);
     this.initializeActivityForm = this.initializeActivityForm.bind(this);
     this.leggTilArbeidsforhold = this.leggTilArbeidsforhold.bind(this);
-    this.updateArbeidsforholdBasertPaInntektsmelding = this.updateArbeidsforholdBasertPaInntektsmelding.bind(this);
   }
 
   UNSAFE_componentWillMount() {
@@ -213,7 +212,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
-    const { arbeidsforhold } = this.props;
+    const { arbeidsforhold, skalKunneLageArbeidsforholdBasertPaInntektsmelding } = this.props;
 
     const brukMedJustertPeriode = values.arbeidsforholdHandlingField === arbeidsforholdHandling.OVERSTYR_TOM;
 
@@ -242,6 +241,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fortsettBehandlingUtenInntektsmelding,
       inntektMedTilBeregningsgrunnlag,
       brukPermisjon,
+      basertPaInntektsmelding: skalKunneLageArbeidsforholdBasertPaInntektsmelding,
     };
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
@@ -267,16 +267,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
     const unresolvedArbeidsforhold = getUnresolvedArbeidsforhold(removeDeleted(other));
     this.setSelectedArbeidsforhold(undefined, undefined, unresolvedArbeidsforhold);
-  }
-
-  updateArbeidsforholdBasertPaInntektsmelding(values) {
-    const basertPaInntektsmelding = true;
-
-    const newValues = {
-      ...values,
-      basertPaInntektsmelding,
-    };
-    this.updateArbeidsforhold(newValues);
   }
 
   cancelArbeidsforhold() {
@@ -364,7 +354,6 @@ export class PersonArbeidsforholdPanelImpl extends Component {
               hasOpenAksjonspunkter={hasOpenAksjonspunkter}
               updateArbeidsforhold={this.updateArbeidsforhold}
               cancelArbeidsforhold={this.cancelArbeidsforhold}
-              updateArbeidsforholdBasertPaInntektsmelding={this.updateArbeidsforholdBasertPaInntektsmelding}
               aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
               skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
               skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
