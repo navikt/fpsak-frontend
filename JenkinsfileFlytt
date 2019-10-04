@@ -84,4 +84,3 @@ def slackInfo(String msg) {
 def slackInfo(String color, String msg) {
     slackSend color: color, message: msg
 }
-
