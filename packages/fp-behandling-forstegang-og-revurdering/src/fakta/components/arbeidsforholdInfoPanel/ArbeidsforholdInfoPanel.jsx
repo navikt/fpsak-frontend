@@ -9,7 +9,10 @@ import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRev
 import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
-import { getBehandlingArbeidsforhold, getSkalKunneLeggeTilNyeArbeidsforhold } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import {
+  getBehandlingArbeidsforhold, getSkalKunneLeggeTilNyeArbeidsforhold,
+  getSkalKunneLageArbeidsforholdBasertPaInntektsmelding,
+} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
@@ -50,6 +53,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
   readOnly,
   hasOpenAksjonspunkter,
   skalKunneLeggeTilNyeArbeidsforhold,
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   ...formProps
 }) => (
   <FaktaEkspandertpanel
@@ -75,6 +79,7 @@ export const ArbeidsforholdInfoPanelImpl = ({
           hasAksjonspunkter={aksjonspunkter.length > 0}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
           skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
+          skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
         />
         { harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
           <BekreftOgForsettKnapp
@@ -94,6 +99,7 @@ ArbeidsforholdInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
 };
 
 const buildInitialValues = createSelector(
@@ -120,6 +126,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
   return (state) => ({
     skalKunneLeggeTilNyeArbeidsforhold: getSkalKunneLeggeTilNyeArbeidsforhold(state),
+    skalKunneLageArbeidsforholdBasertPaInntektsmelding: getSkalKunneLageArbeidsforholdBasertPaInntektsmelding(state),
     initialValues: buildInitialValues(state),
     onSubmit,
   });

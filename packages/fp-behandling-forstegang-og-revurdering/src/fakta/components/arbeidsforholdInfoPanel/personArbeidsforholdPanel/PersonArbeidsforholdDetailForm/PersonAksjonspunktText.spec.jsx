@@ -8,6 +8,9 @@ describe('<PersonAksjonspunktText>', () => {
   const arbeidsforholdTemplate = {
     id: '1',
     navn: 'Test',
+    kilde: {
+      navn: 'Aa-reg',
+    },
     arbeidsgiverIdentifikator: '123423',
     arbeidsgiverIdentifiktorGUI: '123423',
     fomDato: '2018-10-10',

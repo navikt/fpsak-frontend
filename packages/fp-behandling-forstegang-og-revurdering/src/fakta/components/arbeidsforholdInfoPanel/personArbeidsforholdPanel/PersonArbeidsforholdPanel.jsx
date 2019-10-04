@@ -212,7 +212,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
 
   updateArbeidsforhold(values) {
     const { selectedArbeidsforhold } = this.state;
-    const { arbeidsforhold } = this.props;
+    const { arbeidsforhold, skalKunneLageArbeidsforholdBasertPaInntektsmelding } = this.props;
 
     const brukMedJustertPeriode = values.arbeidsforholdHandlingField === arbeidsforholdHandling.OVERSTYR_TOM;
 
@@ -241,6 +241,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fortsettBehandlingUtenInntektsmelding,
       inntektMedTilBeregningsgrunnlag,
       brukPermisjon,
+      basertPaInntektsmelding: skalKunneLageArbeidsforholdBasertPaInntektsmelding,
     };
 
     const cleanedValues = cleanUpArbeidsforhold(newValues, selectedArbeidsforhold);
@@ -318,6 +319,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
       fagsystemer,
       aktivtArbeidsforholdTillatUtenIM,
       skalKunneLeggeTilNyeArbeidsforhold,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding,
     } = this.props;
 
     const {
@@ -354,6 +356,7 @@ export class PersonArbeidsforholdPanelImpl extends Component {
               cancelArbeidsforhold={this.cancelArbeidsforhold}
               aktivtArbeidsforholdTillatUtenIM={aktivtArbeidsforholdTillatUtenIM}
               skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
+              skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
             />
           )}
         </FaktaGruppe>
@@ -374,6 +377,7 @@ PersonArbeidsforholdPanelImpl.propTypes = {
   fagsystemer: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   aktivtArbeidsforholdTillatUtenIM: PropTypes.bool.isRequired,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => {

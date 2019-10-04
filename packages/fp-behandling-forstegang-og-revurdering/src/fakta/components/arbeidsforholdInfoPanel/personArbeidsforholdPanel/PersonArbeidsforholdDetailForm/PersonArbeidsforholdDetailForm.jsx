@@ -56,6 +56,7 @@ export const PersonArbeidsforholdDetailForm = ({
   arbeidsforhold,
   arbeidsforholdHandlingVerdi,
   skalKunneLeggeTilNyeArbeidsforhold,
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding,
   ...formProps
 }) => (
   <ElementWrapper>
@@ -64,6 +65,12 @@ export const PersonArbeidsforholdDetailForm = ({
     <PersonAksjonspunktText arbeidsforhold={arbeidsforhold} />
     <VerticalSpacer eightPx />
     { skalKunneLeggeTilNyeArbeidsforhold && (
+      <LeggTilArbeidsforholdFelter
+        readOnly={readOnly}
+        formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
+      />
+    )}
+    { skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
       <LeggTilArbeidsforholdFelter
         readOnly={readOnly}
         formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
@@ -112,7 +119,8 @@ export const PersonArbeidsforholdDetailForm = ({
             formName={PERSON_ARBEIDSFORHOLD_DETAIL_FORM}
           />
         )}
-        { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere && (
+        { arbeidsforholdHandlingVerdi === arbeidsforholdHandling.AKTIVT_ARBEIDSFORHOLD && harErstattetEttEllerFlere
+          && !skalKunneLageArbeidsforholdBasertPaInntektsmelding && (
           <Normaltekst>
             <FormattedMessage id="PersonArbeidsforholdDetailForm.ErstatteTidligereArbeidsforhod" />
           </Normaltekst>
@@ -133,6 +141,7 @@ PersonArbeidsforholdDetailForm.propTypes = {
   arbeidsforhold: arbeidsforholdPropType.isRequired,
   arbeidsforholdHandlingVerdi: PropTypes.string,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
+  skalKunneLageArbeidsforholdBasertPaInntektsmelding: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 

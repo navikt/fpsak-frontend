@@ -9,6 +9,7 @@ import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import arbeidsforholdKilder from '@fpsak-frontend/kodeverk/src/arbeidsforholdKilder';
 
 const utledPermisjonValues = (permisjon, getKodeverknavn) => {
   const kodeverknavn = getKodeverknavn(permisjon.type);
@@ -54,6 +55,9 @@ const lagAksjonspunktMessage = (arbeidsforhold, getKodeverknavn) => {
   }
   if (arbeidsforhold.permisjoner && arbeidsforhold.permisjoner.length > 1) {
     return <FormattedHTMLMessage key="permisjoner" id="PersonAksjonspunktText.SokerHarFlerePermisjoner" />;
+  }
+  if (arbeidsforhold.kilde.navn === arbeidsforholdKilder.INNTEKTSMELDING) {
+    return <FormattedHTMLMessage key="basertPaInntektsmelding" id="PersonAksjonspunktText.BasertPaInntektsmelding" />;
   }
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
     return <FormattedHTMLMessage key="lagtTilAvSaksbehandler" id="PersonAksjonspunktText.LeggTilArbeidsforhold" />;
