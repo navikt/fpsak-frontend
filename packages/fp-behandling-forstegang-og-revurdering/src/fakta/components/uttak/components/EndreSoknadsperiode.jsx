@@ -60,18 +60,18 @@ export const EndreSoknadsperiode = ({ withGradering, oppholdArsak, førsteUttaks
       </FlexColumn>
       {withGradering
         && (
-        <>
-          <FlexColumn>
-            <DecimalField
-              name="nyArbeidstidsprosent"
-              label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
-              bredde="XS"
-              validate={[required, maxValue100, minValue1, hasValidDecimal]}
-              normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-            />
-          </FlexColumn>
-          <div className={styles.suffix}>%</div>
-        </>
+          <>
+            <FlexColumn>
+              <DecimalField
+                name="nyArbeidstidsprosent"
+                label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
+                bredde="XS"
+                validate={[required, maxValue100, minValue1, hasValidDecimal]}
+                normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+              />
+            </FlexColumn>
+            <div className={styles.suffix}>%</div>
+          </>
         )}
     </FlexRow>
   </ArrowBox>

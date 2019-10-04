@@ -40,7 +40,7 @@ export class LagreSoknadPanel extends Component {
 
   render() {
     const {
-      readOnly, form, submitting, onSubmitUfullstendigsoknad, ufullstendigSoeknad, intl: { formatMessage },
+      readOnly, form, submitting, onSubmitUfullstendigsoknad, ufullstendigSoeknad, intl,
     } = this.props;
     const { showLukkSoknadModal } = this.state;
 
@@ -49,12 +49,12 @@ export class LagreSoknadPanel extends Component {
         <FlexContainer fluid>
           <FlexRow>
             <FlexColumn className={styles.fullWidth}>
-              <Fieldset legend={formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
+              <Fieldset legend={intl.formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
                 <FlexRow>
                   <FlexColumn className={styles.halfWidth}>
                     <TextAreaField
                       name="kommentarEndring"
-                      label={formatMessage({ id: 'Registrering.SaveApplication.Description' })}
+                      label={intl.formatMessage({ id: 'Registrering.SaveApplication.Description' })}
                       textareaClass={styles.textAreaSettings}
                       maxLength={1500}
                       validate={[maxLength1500, hasValidText]}
@@ -65,12 +65,12 @@ export class LagreSoknadPanel extends Component {
                     <CheckboxField
                       name="registrerVerge"
                       onChange={this.toggleVerge}
-                      label={formatMessage({ id: 'Registrering.Verge' })}
+                      label={intl.formatMessage({ id: 'Registrering.Verge' })}
                       readOnly={readOnly}
                     />
                     <CheckboxField
                       name="ufullstendigSoeknad"
-                      label={formatMessage({ id: 'Registrering.SaveApplication.OpplysningspliktErIkkeOverholdt' })}
+                      label={intl.formatMessage({ id: 'Registrering.SaveApplication.OpplysningspliktErIkkeOverholdt' })}
                       readOnly={readOnly}
                     />
                   </FlexColumn>
@@ -85,7 +85,7 @@ export class LagreSoknadPanel extends Component {
                       disabled={readOnly || submitting}
                       onClick={ariaCheck}
                     >
-                      {formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
+                      {intl.formatMessage({ id: 'Registrering.SaveApplication.SaveButton' })}
                     </Hovedknapp>
                     <Hovedknapp
                       id="endButton"
@@ -96,7 +96,7 @@ export class LagreSoknadPanel extends Component {
                       spinner={submitting}
                       disabled={readOnly || submitting}
                     >
-                      {formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
+                      {intl.formatMessage({ id: 'Registrering.SaveApplication.EndButton' })}
                     </Hovedknapp>
                   </FlexColumn>
                 </FlexRow>

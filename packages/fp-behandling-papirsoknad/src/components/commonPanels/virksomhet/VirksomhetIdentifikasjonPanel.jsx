@@ -53,21 +53,21 @@ export const VirksomhetIdentifikasjonPanel = ({
       </RadioGroupField>
       { virksomhetRegistrertINorge
       && (
-      <>
-        <Row>
-          <Column xs="5">
-            <ArrowBox>
-              <InputField
-                name="organisasjonsnummer"
-                readOnly={readOnly}
-                validate={[required, hasValidInteger, hasValidOrgNumber]}
-                label={<FormattedMessage id="Registrering.VirksomhetIdentifikasjonPanel.OrganizationNumber" />}
-              />
-            </ArrowBox>
-          </Column>
-        </Row>
-        <VerticalSpacer sixteenPx />
-      </>
+        <>
+          <Row>
+            <Column xs="5">
+              <ArrowBox>
+                <InputField
+                  name="organisasjonsnummer"
+                  readOnly={readOnly}
+                  validate={[required, hasValidInteger, hasValidOrgNumber]}
+                  label={<FormattedMessage id="Registrering.VirksomhetIdentifikasjonPanel.OrganizationNumber" />}
+                />
+              </ArrowBox>
+            </Column>
+          </Row>
+          <VerticalSpacer sixteenPx />
+        </>
       )}
       { !virksomhetRegistrertINorge && virksomhetRegistrertINorge !== undefined
       && (

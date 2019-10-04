@@ -43,21 +43,21 @@ export const KanIkkeOppgiBegrunnelsePanel = ({
     </RadioGroupField>
     {kanIkkeOppgiBegrunnelse.arsak === kanIkkeOppgiAnnenForelderArsaker.IKKE_NORSK_FNR
     && (
-    <>
-      <SelectField
-        name="land"
-        label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.Land' })}
-        selectValues={countrySelectValues(countryCodes)}
-        bredde="l"
-        readOnly={readOnly}
-      />
-      <InputField
-        name="utenlandskFoedselsnummer"
-        label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.UtenlandsFodselsnummer' })}
-        bredde="S"
-        readOnly={readOnly}
-      />
-    </>
+      <>
+        <SelectField
+          name="land"
+          label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.Land' })}
+          selectValues={countrySelectValues(countryCodes)}
+          bredde="l"
+          readOnly={readOnly}
+        />
+        <InputField
+          name="utenlandskFoedselsnummer"
+          label={formatMessage({ id: 'Registrering.TheOtherParent.CannotSpecifyOtherParent.UtenlandsFodselsnummer' })}
+          bredde="S"
+          readOnly={readOnly}
+        />
+      </>
     )}
   </NavFieldGroup>
 );

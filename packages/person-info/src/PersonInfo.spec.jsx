@@ -33,7 +33,7 @@ describe('<PersonInfo>', () => {
     expect(image.prop('title')).to.have.length.above(1);
 
     const innholdstittel = wrapper.find(Undertittel);
-    expect(innholdstittel.childAt(0).text()).to.eql('frida');
+    expect(innholdstittel.childAt(0).text()).to.eql('frida ');
 
     const aldervisning = wrapper.find(AlderVisning);
     expect(aldervisning.prop('alder')).to.eql(40);

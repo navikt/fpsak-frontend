@@ -20,7 +20,6 @@ const MottattDatoPanel = ({
     <Undertittel><FormattedMessage key="regDatoTittel" id="Registrering.Omsoknaden.Mottattdato" /></Undertittel>
     <VerticalSpacer sixteenPx />
     <Undertekst>
-      {' '}
       <FormattedMessage key="regDatoUnder" id="Registrering.Omsoknaden.MottattDato" />
     </Undertekst>
     <DatepickerField

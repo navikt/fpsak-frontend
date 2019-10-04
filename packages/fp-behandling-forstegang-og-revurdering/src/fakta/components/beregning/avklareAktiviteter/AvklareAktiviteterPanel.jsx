@@ -192,15 +192,15 @@ export class AvklareAktiviteterPanelImpl extends Component {
           )}
             <VerticalSpacer twentyPx />
             {skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt) && (
-            <>
-              <FaktaBegrunnelseTextField
-                name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
-                isDirty={formProps.dirty}
-                isSubmittable={submittable}
-                isReadOnly={readOnly}
-                hasBegrunnelse={hasBegrunnelse}
-              />
-              {skalViseSubmitknappInneforBorderBox
+              <>
+                <FaktaBegrunnelseTextField
+                  name={BEGRUNNELSE_AVKLARE_AKTIVITETER_NAME}
+                  isDirty={formProps.dirty}
+                  isSubmittable={submittable}
+                  isReadOnly={readOnly}
+                  hasBegrunnelse={hasBegrunnelse}
+                />
+                {skalViseSubmitknappInneforBorderBox
               && (
               <FaktaSubmitButton
                 buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'}
@@ -210,21 +210,21 @@ export class AvklareAktiviteterPanelImpl extends Component {
                 hasOpenAksjonspunkter={!isAksjonspunktClosed}
               />
               )}
-            </>
+              </>
             )}
           </BorderBox>
             {!(skalViseSubmitknappInneforBorderBox) && skalViseSubmitKnappEllerBegrunnelse(aksjonspunkter, erOverstyrt)
               && (
-              <>
-                <VerticalSpacer twentyPx />
-                <FaktaSubmitButton
-                  buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
-                  formName={formProps.form}
-                  isSubmittable={submittable && submitEnabled}
-                  isReadOnly={readOnly}
-                  hasOpenAksjonspunkter={!isAksjonspunktClosed}
-                />
-              </>
+                <>
+                  <VerticalSpacer twentyPx />
+                  <FaktaSubmitButton
+                    buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
+                    formName={formProps.form}
+                    isSubmittable={submittable && submitEnabled}
+                    isReadOnly={readOnly}
+                    hasOpenAksjonspunkter={!isAksjonspunktClosed}
+                  />
+                </>
               )}
         </div>
       )}

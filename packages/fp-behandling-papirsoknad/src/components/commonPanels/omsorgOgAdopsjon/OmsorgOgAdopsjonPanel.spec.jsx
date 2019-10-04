@@ -60,13 +60,13 @@ describe('<OmsorgOgAdopsjonPanel>', () => {
       expect(pushSpy).to.have.been.calledOnce;
       expect(props.fields.length).to.eql(1);
 
-      wrapper.instance().componentWillReceiveProps(props);
+      wrapper.instance().UNSAFE_componentWillReceiveProps(props);
       wrapper.update();
 
       expect(pushSpy).to.have.been.calledTwice;
       expect(props.fields.length).to.eql(2);
 
-      wrapper.instance().componentWillReceiveProps(props);
+      wrapper.instance().UNSAFE_componentWillReceiveProps(props);
       wrapper.update();
 
       expect(pushSpy).to.have.been.calledTwice;

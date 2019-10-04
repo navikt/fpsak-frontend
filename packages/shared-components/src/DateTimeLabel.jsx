@@ -17,7 +17,7 @@ const DateTimeLabel = ({
 }) => (
   <div>
     <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateTimeString)} />
-    {' - '}
+     -
     <FormattedTime value={new Date(dateTimeString)} />
   </div>
 );

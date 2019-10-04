@@ -16,7 +16,7 @@ const periode = {
 };
 
 class DokumentertePerioderPeriodePicker extends PureComponent {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { fields, fraDato, tilDato } = this.props;
     if (fields.length === 0) {
       fields.push({ fom: fraDato, tom: tilDato });

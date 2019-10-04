@@ -33,7 +33,7 @@ const buildInitialValues = (soknadData) => {
  * Redux-form-komponent for registrering av papirsøknad for engangsstønad.
  */
 export class EngangsstonadForm extends Component {
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { soknadData } = this.props;
     if (!isEqual(soknadData, nextProps.soknadData)) {
       nextProps.initialize(buildInitialValues(nextProps.soknadData));

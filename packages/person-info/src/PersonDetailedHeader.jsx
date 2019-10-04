@@ -74,38 +74,36 @@ const PersonDetailedHeader = ({
         <div>
           {!hasAktorId
             && (
-            <>
-              <Undertittel>
-                <FormattedMessage id="Person.UkjentNavn" />
-              </Undertittel>
-              <Undertekst>
-                <FormattedMessage id="Person.HarIkkeNorskFnrEllerDnr" />
-              </Undertekst>
-            </>
+              <>
+                <Undertittel>
+                  <FormattedMessage id="Person.UkjentNavn" />
+                </Undertittel>
+                <Undertekst>
+                  <FormattedMessage id="Person.HarIkkeNorskFnrEllerDnr" />
+                </Undertekst>
+              </>
             )}
           {hasAktorId
             && (
-            <>
-              {isPrimaryParent
+              <>
+                {isPrimaryParent
                 && (
                 <Undertittel>
-                  {navn}
-                  {' '}
+                  {`${navn} `}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Undertittel>
                 )}
-              {!isPrimaryParent
+                {!isPrimaryParent
                 && (
                 <Element>
-                  {navn}
-                  {' '}
+                  {`${navn} `}
                   <AlderVisning erDod={isDod} alder={alder} dodsdato={dodsdato} />
                 </Element>
                 )}
-              <Undertekst>
-                {fnr}
-              </Undertekst>
-            </>
+                <Undertekst>
+                  {fnr}
+                </Undertekst>
+              </>
             )}
         </div>
         <MerkePanel erDod={isDod} erVerge={harVerge} diskresjonskode={diskresjonskode ? diskresjonskode.kode : null} />

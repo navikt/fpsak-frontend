@@ -63,79 +63,79 @@ export const FerieOgArbeidsPeriode = ({
     <div>
       {skalViseResultat
     && (
-    <>
-      <FlexContainer>
-        <FlexRow wrap>
-          <FlexColumn className={styles.fieldColumn}>
-            <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
-            <VerticalSpacer fourPx />
-            <RadioGroupField
-              direction="vertical"
-              name="resultat"
-              DOMName={`resultat_${id}`}
-              bredde="M"
-              isEdited={isEdited}
-              validate={[required]}
-              readOnly={readOnly}
-            >
-              <RadioOption
-                label={{ id: 'UttakInfoPanel.PeriodenErOk' }}
-                value={uttakPeriodeVurdering.PERIODE_OK}
-                disabled={periodeOkDisabled}
-              />
-              <RadioOption
-                label={{ id: 'UttakInfoPanel.EndreSoknadsperioden' }}
-                value={uttakPeriodeVurdering.PERIODE_OK_ENDRET}
-                style={inlineStyle.radioOption}
-              />
-              <RadioOption
-                label={{ id: 'UttakInfoPanel.PeriodenKanIkkeAvklares' }}
-                value={uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES}
-              />
-            </RadioGroupField>
-            {resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly
+      <>
+        <FlexContainer>
+          <FlexRow wrap>
+            <FlexColumn className={styles.fieldColumn}>
+              <Undertekst><FormattedMessage id="UttakInfoPanel.FastsettResultat" /></Undertekst>
+              <VerticalSpacer fourPx />
+              <RadioGroupField
+                direction="vertical"
+                name="resultat"
+                DOMName={`resultat_${id}`}
+                bredde="M"
+                isEdited={isEdited}
+                validate={[required]}
+                readOnly={readOnly}
+              >
+                <RadioOption
+                  label={{ id: 'UttakInfoPanel.PeriodenErOk' }}
+                  value={uttakPeriodeVurdering.PERIODE_OK}
+                  disabled={periodeOkDisabled}
+                />
+                <RadioOption
+                  label={{ id: 'UttakInfoPanel.EndreSoknadsperioden' }}
+                  value={uttakPeriodeVurdering.PERIODE_OK_ENDRET}
+                  style={inlineStyle.radioOption}
+                />
+                <RadioOption
+                  label={{ id: 'UttakInfoPanel.PeriodenKanIkkeAvklares' }}
+                  value={uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES}
+                />
+              </RadioGroupField>
+              {resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET && !readOnly
             && (
               <div className={styles.endreSoknadsperiode}>
                 <EndreSoknadsperiode oppholdArsak={oppholdArsak} withGradering={withGradering} førsteUttaksdato={førsteUttaksdato} />
               </div>
             )}
-            <VerticalSpacer twentyPx />
-            <div className={styles.textAreaStyle}>
-              <TextAreaField
-                name="begrunnelse"
-                label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
-                readOnly={readOnly}
-                validate={[required,
-                  minLength3,
-                  maxLength4000,
-                  hasValidText,
-                ]}
-                maxLength={4000}
+              <VerticalSpacer twentyPx />
+              <div className={styles.textAreaStyle}>
+                <TextAreaField
+                  name="begrunnelse"
+                  label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
+                  readOnly={readOnly}
+                  validate={[required,
+                    minLength3,
+                    maxLength4000,
+                    hasValidText,
+                  ]}
+                  maxLength={4000}
+                />
+              </div>
+            </FlexColumn>
+            {skalViseInntektmeldingInfo && (
+            <FlexColumn className={styles.fieldColumn}>
+              <InntektsmeldingInfo
+                inntektsmeldingInfo={inntektsmeldingInfo}
+                uttakPeriodeType={uttakPeriodeType}
+                arbeidsgiver={arbeidsgiver}
               />
-            </div>
-          </FlexColumn>
-          {skalViseInntektmeldingInfo && (
-          <FlexColumn className={styles.fieldColumn}>
-            <InntektsmeldingInfo
-              inntektsmeldingInfo={inntektsmeldingInfo}
-              uttakPeriodeType={uttakPeriodeType}
-              arbeidsgiver={arbeidsgiver}
-            />
-          </FlexColumn>
-          )}
-        </FlexRow>
-      </FlexContainer>
-      <PerioderKnapper
-        resultat={resultat}
-        updatePeriode={formProps.handleSubmit}
-        resetPeriode={formProps.reset}
-        updated={updated}
-        bekreftet={bekreftet}
-        cancelEditPeriode={cancelEditPeriode}
-        id={id}
-        readOnly={readOnly}
-      />
-    </>
+            </FlexColumn>
+            )}
+          </FlexRow>
+        </FlexContainer>
+        <PerioderKnapper
+          resultat={resultat}
+          updatePeriode={formProps.handleSubmit}
+          resetPeriode={formProps.reset}
+          updated={updated}
+          bekreftet={bekreftet}
+          cancelEditPeriode={cancelEditPeriode}
+          id={id}
+          readOnly={readOnly}
+        />
+      </>
     )}
     </div>
   );

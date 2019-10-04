@@ -179,7 +179,7 @@ export class UttakImpl extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.setSelectedDefaultPeriod();
   }
 

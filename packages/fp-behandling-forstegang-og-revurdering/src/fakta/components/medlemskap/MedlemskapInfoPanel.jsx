@@ -70,16 +70,16 @@ export const MedlemskapInfoPanelImpl = ({
     >
       {skalViseAvklarStartdatoPanel(aksjonspunkter, isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter)
         && (
-        <>
-          <StartdatoForForeldrepengerperiodenForm
-            readOnly={readOnly}
-            aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
-            submitCallback={submitCallback}
-            submittable={submittable}
-            hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
-          />
-          <VerticalSpacer twentyPx />
-        </>
+          <>
+            <StartdatoForForeldrepengerperiodenForm
+              readOnly={readOnly}
+              aksjonspunkt={avklarStartdatoAksjonspunkt || avklarStartdatoOverstyring}
+              submitCallback={submitCallback}
+              submittable={submittable}
+              hasOpenMedlemskapAksjonspunkter={hasOpenAksjonspunkter}
+            />
+            <VerticalSpacer twentyPx />
+          </>
         )}
       { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
         && (
