@@ -4,13 +4,12 @@ import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
+import { FaktaGruppe, behandlingForm } from '@fpsak-frontend/fp-felles';
 
 /**
  * StatusForBorgerFaktaPanel
@@ -18,9 +17,17 @@ import { required } from '@fpsak-frontend/utils';
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av borgerstatus (Medlemskapsvilkåret).
  */
 const StatusForBorgerFaktaPanelImpl = ({
-  readOnly, erEosBorger, isBorgerAksjonspunktClosed, apKode,
+  readOnly,
+  erEosBorger,
+  isBorgerAksjonspunktClosed,
+  apKode,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={apKode} titleCode="StatusForBorgerFaktaPanel.ApplicationInformation">
+  <FaktaGruppe
+    aksjonspunktCode={apKode}
+    titleCode="StatusForBorgerFaktaPanel.ApplicationInformation"
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[apKode]}
+  >
     <RadioGroupField name="erEosBorger" validate={[required]} readOnly={readOnly}>
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenEEA' }} value />
       <RadioOption label={{ id: 'StatusForBorgerFaktaPanel.CitizenOutsideEEA' }} value={false} />
@@ -78,6 +85,9 @@ StatusForBorgerFaktaPanelImpl.propTypes = {
   erEosBorger: PropTypes.bool,
   isBorgerAksjonspunktClosed: PropTypes.bool.isRequired,
   apKode: PropTypes.string.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 StatusForBorgerFaktaPanelImpl.defaultProps = {
@@ -85,7 +95,7 @@ StatusForBorgerFaktaPanelImpl.defaultProps = {
 };
 
 const StatusForBorgerFaktaPanel = connect((state, ownProps) => ({
-  ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
+  ...behandlingForm(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
 }))(StatusForBorgerFaktaPanelImpl);
 
 const getApKode = (aksjonspunkter) => aksjonspunkter

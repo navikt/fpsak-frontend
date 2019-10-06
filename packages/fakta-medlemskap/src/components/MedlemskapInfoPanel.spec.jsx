@@ -6,13 +6,13 @@ import sinon from 'sinon';
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { MedlemskapInfoPanelImpl } from './MedlemskapInfoPanel';
+import { MedlemskapInfoPanel } from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise ekspanderbart panel', () => {
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
       intl={intlMock}
       aksjonspunkter={[]}
       aksjonspunkterMinusAvklarStartDato={[]}
@@ -22,11 +22,25 @@ describe('<MedlemskapInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingType={{
+        kode: 'TEst',
+      }}
+      soknad={{}}
+      inntektArbeidYtelse={{}}
+      alleKodeverk={{}}
+      medlemskap={{}}
+      medlemskapV2={{}}
+      fagsakPerson={{}}
+      behandlingPaaVent={false}
+      readOnlyBehandling={false}
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om medlemskap');
+    expect(panel.prop('title')).to.eql('MedlemskapInfoPanel.Medlemskap');
     expect(panel.prop('hasOpenAksjonspunkter')).is.false;
     expect(panel.prop('isInfoPanelOpen')).is.false;
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.MEDLEMSKAPSVILKARET);
@@ -50,7 +64,7 @@ describe('<MedlemskapInfoPanel>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
@@ -60,6 +74,20 @@ describe('<MedlemskapInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingType={{
+        kode: 'TEst',
+      }}
+      soknad={{}}
+      inntektArbeidYtelse={{}}
+      alleKodeverk={{}}
+      medlemskap={{}}
+      medlemskapV2={{}}
+      fagsakPerson={{}}
+      behandlingPaaVent={false}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -83,7 +111,7 @@ describe('<MedlemskapInfoPanel>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
@@ -93,6 +121,20 @@ describe('<MedlemskapInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingType={{
+        kode: 'TEst',
+      }}
+      soknad={{}}
+      inntektArbeidYtelse={{}}
+      alleKodeverk={{}}
+      medlemskap={{}}
+      medlemskapV2={{}}
+      fagsakPerson={{}}
+      behandlingPaaVent={false}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -116,7 +158,7 @@ describe('<MedlemskapInfoPanel>', () => {
       erAktivt: true,
     };
 
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
@@ -126,6 +168,20 @@ describe('<MedlemskapInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingType={{
+        kode: 'TEst',
+      }}
+      soknad={{}}
+      inntektArbeidYtelse={{}}
+      alleKodeverk={{}}
+      medlemskap={{}}
+      medlemskapV2={{}}
+      fagsakPerson={{}}
+      behandlingPaaVent={false}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);
@@ -133,7 +189,7 @@ describe('<MedlemskapInfoPanel>', () => {
   });
 
   it('skal vise panel for avklaring av startdato for foreldrepengerperioden, for å tilate manuell korrigering selvom aksjonspunktet ikke finnes', () => {
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanelImpl
+    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
       intl={intlMock}
       aksjonspunkter={[]}
       aksjonspunkterMinusAvklarStartDato={[]}
@@ -143,6 +199,20 @@ describe('<MedlemskapInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingType={{
+        kode: 'TEst',
+      }}
+      soknad={{}}
+      inntektArbeidYtelse={{}}
+      alleKodeverk={{}}
+      medlemskap={{}}
+      medlemskapV2={{}}
+      fagsakPerson={{}}
+      behandlingPaaVent={false}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(StartdatoForForeldrepengerperiodenForm)).has.length(1);

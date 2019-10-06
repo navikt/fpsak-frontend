@@ -7,32 +7,16 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { bindActionCreators } from 'redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { guid } from '@fpsak-frontend/utils';
+import { getBehandlingFormPrefix, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
-import {
-  getBehandlingMedlemNew,
-  getBehandlingRevurderingAvFortsattMedlemskapFom,
-  isBehandlingRevurderingFortsattMedlemskap,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getFagsakPerson, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OppholdInntektOgPeriodeForm from './OppholdInntektOgPeriodeForm';
 import MedlemskapEndringerTabell from './MedlemskapEndringerTabell';
-
-/**
- * OppholdInntektOgPerioderForm
- *
- * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Medlemskapsvilkåret.
- */
 
 const {
   AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT,
@@ -73,6 +57,11 @@ const createNewPerioder = (perioder, id, values) => {
   ];
 };
 
+/**
+ * OppholdInntektOgPerioderForm
+ *
+ * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Medlemskapsvilkåret.
+ */
 export class OppholdInntektOgPerioderForm extends Component {
   constructor(props) {
     super(props);
@@ -164,6 +153,10 @@ export class OppholdInntektOgPerioderForm extends Component {
       readOnly,
       submitting,
       isRevurdering,
+      behandlingId,
+      behandlingVersjon,
+      alleKodeverk,
+      alleMerknaderFraBeslutter,
       ...formProps
     } = this.props;
 
@@ -177,6 +170,8 @@ export class OppholdInntektOgPerioderForm extends Component {
         <MedlemskapEndringerTabell
           selectedId={valgtPeriode ? valgtPeriode.id : undefined}
           velgPeriodeCallback={this.velgPeriodeCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
         />
         )}
 
@@ -189,6 +184,10 @@ export class OppholdInntektOgPerioderForm extends Component {
           submittable={submittable}
           updateOppholdInntektPeriode={this.updateOppholdInntektPeriode}
           periodeResetCallback={this.periodeResetCallback}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          alleKodeverk={alleKodeverk}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
         )}
 
@@ -245,8 +244,11 @@ export const transformValues = (values, aksjonspunkter) => {
 };
 
 
-const buildInitalValues = createSelector([behandlingSelectors.getSoknad, getFagsakPerson,
-  getBehandlingMedlemNew, getBehandlingRevurderingAvFortsattMedlemskapFom],
+const buildInitalValues = createSelector([
+  (ownProps) => ownProps.soknad,
+  (ownProps) => ownProps.fagsakPerson,
+  (ownProps) => ownProps.medlemskapV2,
+  (ownProps) => ownProps.medlemskap.fom],
 (soknad, person, medlem = {}, gjeldendeFom = undefined) => ({
   soknad,
   person,
@@ -259,20 +261,26 @@ const buildInitalValues = createSelector([behandlingSelectors.getSoknad, getFags
   })),
 }));
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
-  const hasOpenAksjonspunkter = ownProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+export const isBehandlingRevurderingFortsattMedlemskap = createSelector(
+  [(ownProps) => ownProps.behandlingType, (ownProps) => ownProps.medlemskap],
+  (type, medlem = {}) => type.kode === behandlingType.REVURDERING && !!medlem.fom,
+);
+
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
+  const hasOpenAksjonspunkter = initialOwnProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
   const perioder = [];
 
-  return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon } = ownProps;
+    const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
     return {
       behandlingFormPrefix,
       onSubmit,
       hasOpenAksjonspunkter,
-      initialValues: buildInitalValues(state),
-      perioder: behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'perioder') || perioder,
-      isRevurdering: isBehandlingRevurderingFortsattMedlemskap(state),
+      initialValues: buildInitalValues(ownProps),
+      perioder: behandlingFormValueSelector('OppholdInntektOgPerioderForm', behandlingId, behandlingVersjon)(state, 'perioder') || perioder,
+      isRevurdering: isBehandlingRevurderingFortsattMedlemskap(ownProps),
     };
   };
 };
@@ -284,7 +292,7 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(behandlingForm({
   form: 'OppholdInntektOgPerioderForm',
   enableReinitialize: true,
 })(injectIntl(OppholdInntektOgPerioderForm)));

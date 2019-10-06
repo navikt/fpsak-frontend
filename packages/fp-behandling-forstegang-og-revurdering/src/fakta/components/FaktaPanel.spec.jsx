@@ -8,7 +8,6 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
@@ -23,8 +22,6 @@ describe('<FaktaPanel>', () => {
     gjeldendeDekningsgrad: 100,
     ikkeOmsorgPerioder: null,
   };
-
-  const soknadUndefined = undefined;
 
   const soknad = {
     innhold: 'mat',
@@ -125,6 +122,7 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      readOnlyBehandling={false}
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
@@ -132,7 +130,6 @@ describe('<FaktaPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -167,9 +164,9 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -204,9 +201,9 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -241,9 +238,9 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -278,10 +275,10 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for adopsjon og medlemskap når en har aksjonspunkt for disse', () => {
@@ -319,9 +316,9 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -342,6 +339,7 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
   });
@@ -364,28 +362,8 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
-  });
-
-  it('skal IKKE vise faktapanel for medlemskap hvis soknad ikke er satt', () => {
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknadUndefined}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer={false}
-      ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-    />);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(0);
   });
 });

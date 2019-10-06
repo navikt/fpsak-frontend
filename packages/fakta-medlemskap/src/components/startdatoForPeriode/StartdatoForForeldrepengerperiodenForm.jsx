@@ -7,18 +7,15 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getBehandlingStartDatoForPermisjon, getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FaktaGruppe, FaktaSubmitButton, behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
   hasValidDate, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 
 import styles from './startdatoForForeldrepengerperiodenForm.less';
@@ -38,6 +35,9 @@ export const StartdatoForForeldrepengerperiodenForm = ({
   submittable,
   overstyringDisabled,
   readOnly,
+  alleMerknaderFraBeslutter,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <div className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.inactiveAksjonspunkt}>
@@ -51,6 +51,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN}
         titleCode="StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden"
+        merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]}
       >
         <div className={styles.explanationTextarea}>
           <TextAreaField
@@ -84,6 +85,8 @@ export const StartdatoForForeldrepengerperiodenForm = ({
       <FaktaSubmitButton
         buttonTextId={!hasOpenAksjonspunkt ? 'StartdatoForForeldrepengerperiodenForm.Oppdater' : undefined}
         formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         isSubmittable={submittable}
         isReadOnly={readOnly && overstyringDisabled}
         hasOpenAksjonspunkter={hasOpenAksjonspunkt}
@@ -99,18 +102,25 @@ StartdatoForForeldrepengerperiodenForm.propTypes = {
   hasOpenMedlemskapAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   overstyringDisabled: PropTypes.bool,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
 const buildInitialValues = createSelector(
-  [behandlingSelectors.getAksjonspunkter, getBehandlingStartDatoForPermisjon, getInntektsmeldinger],
-  (aksjonspunkter, startdatoForPermisjon, inntektsmeldinger) => {
+  [(ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.soknad.oppgittFordeling,
+    (ownProps) => ownProps.inntektArbeidYtelse],
+  (aksjonspunkter, oppgittFordeling = {}, inntektArbeidYtelse = {}) => {
     const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
     const overstyringAp = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO);
     return {
-      opprinneligDato: startdatoForPermisjon,
-      startdatoFraSoknad: startdatoForPermisjon,
-      arbeidsgivere: inntektsmeldinger,
+      opprinneligDato: oppgittFordeling.startDatoForPermisjon,
+      startdatoFraSoknad: oppgittFordeling.startDatoForPermisjon,
+      arbeidsgivere: inntektArbeidYtelse.inntektsmeldinger,
       begrunnelse: (overstyringAp && overstyringAp.begrunnelse) || (aksjonspunkt && aksjonspunkt.begrunnelse),
     };
   },
@@ -123,18 +133,19 @@ const transformValues = (values, isOverstyring) => ({
   begrunnelse: values.begrunnelse,
 });
 
-const mapStateToProps = (state, ownProps) => {
-  const hasAksjonspunkt = ownProps.aksjonspunkt !== undefined;
-  const isOverstyring = !hasAksjonspunkt || ownProps.aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
-  const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(ownProps.aksjonspunkt.status.kode);
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, isOverstyring)]);
-  return {
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { aksjonspunkt, submitCallback } = initialOwnProps;
+  const hasAksjonspunkt = aksjonspunkt !== undefined;
+  const isOverstyring = !hasAksjonspunkt || aksjonspunkt.definisjon.kode === aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO;
+  const hasOpenAksjonspunkt = hasAksjonspunkt && isAksjonspunktOpen(aksjonspunkt.status.kode);
+  const onSubmit = (values) => submitCallback([transformValues(values, isOverstyring)]);
+  return (state, ownProps) => ({
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
-    overstyringDisabled: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
-    initialValues: buildInitialValues(state),
     onSubmit,
-  };
+    overstyringDisabled: ownProps.readOnlyBehandling,
+    initialValues: buildInitialValues(ownProps),
+  });
 };
 
 const isBefore2019 = (startdato) => (
@@ -158,7 +169,7 @@ const validateDates = (values) => {
   return errors;
 };
 
-export default connect(mapStateToProps)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'StartdatoForForeldrepengerperiodenForm',
   validate: validateDates,
 })(StartdatoForForeldrepengerperiodenForm));

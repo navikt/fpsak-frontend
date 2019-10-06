@@ -13,10 +13,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
+import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -39,6 +36,7 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
   termindato,
   omsorgsovertakelseDato,
   vurderingTypes,
+  alleMerknaderFraBeslutter,
 }) => {
   if (!fixedMedlemskapPerioder || fixedMedlemskapPerioder.length === 0) {
     return (
@@ -51,7 +49,11 @@ export const PerioderMedMedlemskapFaktaPanelImpl = ({
   }
 
   return (
-    <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE} titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation">
+    <FaktaGruppe
+      aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE}
+      titleCode="PerioderMedMedlemskapFaktaPanel.ApplicationInformation"
+      merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]}
+    >
       <Table headerTextCodes={headerTextCodes}>
         {fixedMedlemskapPerioder.map((periode) => {
           const key = periode.fom + periode.tom + periode.dekning + periode.status + periode.beslutningsdato;
@@ -124,6 +126,9 @@ PerioderMedMedlemskapFaktaPanelImpl.propTypes = {
   vurderingTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasPeriodeAksjonspunkt: PropTypes.bool.isRequired,
   isPeriodAksjonspunktClosed: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
@@ -134,11 +139,11 @@ PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(
+  ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`, ownProps.behandlingId, ownProps.behandlingVersjon)(
     state, 'fixedMedlemskapPerioder', 'fodselsdato', 'termindato',
     'omsorgsovertakelseDato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed',
   ),
-  vurderingTypes: getKodeverk(kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE)(state),
+  vurderingTypes: ownProps.alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE],
 });
 
 const PerioderMedMedlemskapFaktaPanel = connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanelImpl);

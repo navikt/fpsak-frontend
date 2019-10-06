@@ -54,6 +54,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       opphold={opphold}
       foreldre={foreldre}
       alleKodeverk={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const felter = wrapper.find(Normaltekst);
     expect(felter).to.have.length(5);
@@ -72,6 +73,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       opphold={opphold}
       foreldre={foreldre}
       alleKodeverk={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
     const foreldreDivs = wrapper.find('div');
     expect(foreldreDivs).to.have.length(3);
@@ -108,6 +110,7 @@ describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
       opphold={opphold}
       foreldre={toForeldre}
       alleKodeverk={{}}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const radioFields = wrapper.find('RadioOption');

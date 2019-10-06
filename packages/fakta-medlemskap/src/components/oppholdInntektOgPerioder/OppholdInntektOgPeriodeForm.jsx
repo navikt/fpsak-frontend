@@ -6,17 +6,14 @@ import { connect } from 'react-redux';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getKodeverknavnFn, FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import {
+  getKodeverknavnFn, FaktaBegrunnelseTextField, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   BorderBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
 import PerioderMedMedlemskapFaktaPanel from './PerioderMedMedlemskapFaktaPanel';
@@ -37,18 +34,43 @@ export const OppholdInntektOgPeriodeForm = ({
   submittable,
   periodeResetCallback,
   alleKodeverk,
+  alleMerknaderFraBeslutter,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <BorderBox>
-    <OppholdINorgeOgAdresserFaktaPanel readOnly={readOnly} id={valgtPeriode.id} alleKodeverk={alleKodeverk} />
+    <OppholdINorgeOgAdresserFaktaPanel
+      readOnly={readOnly}
+      id={valgtPeriode.id}
+      alleKodeverk={alleKodeverk}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+    />
     <VerticalSpacer twentyPx />
-    <InntektOgYtelserFaktaPanel id={valgtPeriode.id} />
-    <PerioderMedMedlemskapFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />
-    { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter))
-    && <StatusForBorgerFaktaPanel readOnly={readOnly} id={valgtPeriode.id} />}
+    <InntektOgYtelserFaktaPanel
+      id={valgtPeriode.id}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+    />
+    <PerioderMedMedlemskapFaktaPanel
+      readOnly={readOnly}
+      id={valgtPeriode.id}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      alleKodeverk={alleKodeverk}
+    />
+    { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
+      <StatusForBorgerFaktaPanel
+        readOnly={readOnly}
+        id={valgtPeriode.id}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      />
+    )}
     <VerticalSpacer twentyPx />
-    { valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0
-    && (
+    { valgtPeriode.aksjonspunkter && valgtPeriode.aksjonspunkter.length > 0 && (
       <FaktaBegrunnelseTextField
         id={valgtPeriode.id}
         isDirty={formProps.dirty}
@@ -94,6 +116,11 @@ OppholdInntektOgPeriodeForm.propTypes = {
   initialValues: PropTypes.shape().isRequired,
   periodeResetCallback: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 OppholdInntektOgPeriodeForm.defaultProps = {
@@ -108,12 +135,13 @@ const transformValues = (values) => ({
 const buildInitialValues = createSelector([
   (state, ownProps) => ownProps.valgtPeriode,
   (state, ownProps) => ownProps.aksjonspunkter,
-  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'soknad'),
-  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'person'),
-  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'inntekter'),
-  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'medlemskapPerioder'),
-  (state) => behandlingFormValueSelector('OppholdInntektOgPerioderForm')(state, 'gjeldendeFom'),
-  getAlleKodeverk,
+  (state, ownProps) => behandlingFormValueSelector('OppholdInntektOgPerioderForm', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'soknad'),
+  (state, ownProps) => behandlingFormValueSelector('OppholdInntektOgPerioderForm', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'person'),
+  (state, ownProps) => behandlingFormValueSelector('OppholdInntektOgPerioderForm', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'inntekter'),
+  (state, ownProps) => behandlingFormValueSelector('OppholdInntektOgPerioderForm', ownProps.behandlingId, ownProps.behandlingVersjon)(state,
+    'medlemskapPerioder'),
+  (state, ownProps) => behandlingFormValueSelector('OppholdInntektOgPerioderForm', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'gjeldendeFom'),
+  (state, ownProps) => ownProps.alleKodeverk,
 ],
 (valgtPeriode, alleAksjonspunkter, soknad, person, inntekter, medlemskapPerioder, gjeldendeFom, alleKodeverk) => {
   const aksjonspunkter = alleAksjonspunkter
@@ -149,11 +177,10 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       form: formName,
       submittable,
       onSubmit,
-      alleKodeverk: getAlleKodeverk(state),
     };
   };
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   enableReinitialize: true,
 })(OppholdInntektOgPeriodeForm)));

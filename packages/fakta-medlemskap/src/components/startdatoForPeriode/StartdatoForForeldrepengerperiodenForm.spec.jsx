@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { StartdatoForForeldrepengerperiodenForm } from './StartdatoForForeldrepengerperiodenForm';
@@ -17,6 +17,9 @@ describe('<StartdatoForForeldrepengerperiodenForm>', () => {
       hasOpenMedlemskapAksjonspunkter
       submittable
       readOnly={false}
+      alleMerknaderFraBeslutter={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);

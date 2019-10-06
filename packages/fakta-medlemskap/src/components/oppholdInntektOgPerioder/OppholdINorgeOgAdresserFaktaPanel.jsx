@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -17,6 +15,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import checkImage from '@fpsak-frontend/assets/images/check.svg';
 import avslaattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
+import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './oppholdINorgeOgAdresserFaktaPanel.less';
 
@@ -77,8 +76,12 @@ const OppholdINorgeOgAdresserFaktaPanelImpl = ({
   opphold,
   foreldre,
   alleKodeverk,
+  alleMerknaderFraBeslutter,
 }) => (
-  <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}>
+  <FaktaGruppe
+    aksjonspunktCode={aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT}
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]}
+  >
     <Row>
       <Column xs="6">
         <FaktaGruppe withoutBorder titleCode="OppholdINorgeOgAdresserFaktaPanel.OppholdINorge">
@@ -146,6 +149,9 @@ OppholdINorgeOgAdresserFaktaPanelImpl.propTypes = {
   opphold: PropTypes.shape(),
   foreldre: PropTypes.arrayOf(PropTypes.shape()),
   alleKodeverk: PropTypes.shape().isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
 };
 
 OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {
@@ -153,12 +159,18 @@ OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {
   foreldre: [],
 };
 
-const OppholdINorgeOgAdresserFaktaPanel = connect((state, ownProps) => ({
-  opphold: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'opphold'),
-  foreldre: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'foreldre'),
-  hasBosattAksjonspunkt: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'hasBosattAksjonspunkt'),
-  isBosattAksjonspunktClosed: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'isBosattAksjonspunktClosed'),
-}))(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl));
+const mapStateToProps = (state, ownProps) => {
+  const { behandlingId, behandlingVerson } = ownProps;
+  const formName = `OppholdInntektOgPeriodeForm-${ownProps.id}`;
+  return {
+    opphold: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'opphold'),
+    foreldre: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'foreldre'),
+    hasBosattAksjonspunkt: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'hasBosattAksjonspunkt'),
+    isBosattAksjonspunktClosed: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'isBosattAksjonspunktClosed'),
+  };
+};
+
+const OppholdINorgeOgAdresserFaktaPanel = connect(mapStateToProps)(injectIntl(OppholdINorgeOgAdresserFaktaPanelImpl));
 
 const createParent = (isApplicant, personopplysning) => ({
   isApplicant,

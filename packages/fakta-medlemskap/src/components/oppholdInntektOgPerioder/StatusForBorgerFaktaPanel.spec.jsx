@@ -12,6 +12,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       erEosBorger
       readOnly={false}
       isBorgerAksjonspunktClosed={false}
+      alleMerknaderFraBeslutter={{}}
     />);
     const groups = wrapper.find('RadioGroupField');
     expect(groups).to.have.length(2);
@@ -33,6 +34,7 @@ describe('<StatusForBorgerFaktaPanel>', () => {
       erEosBorger={false}
       readOnly={false}
       isBorgerAksjonspunktClosed={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const groups = wrapper.find('RadioGroupField');

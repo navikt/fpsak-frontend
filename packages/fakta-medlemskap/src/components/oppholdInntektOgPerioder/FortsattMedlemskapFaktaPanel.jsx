@@ -6,11 +6,6 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import {
-  getBehandlingMedlemEndredeOpplysninger,
-  getBehandlingSkjaringstidspunkt,
-  getBehandlingStartDatoForPermisjon,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
@@ -77,9 +72,10 @@ FortsattMedlemskapFaktaPanelImpl.propTypes = {
 
 const getFirstDate = (date1, date2) => (moment(date1).isSameOrBefore(moment(date2)) ? date1 : date2);
 
-const mapStateToProps = (state) => ({
+const emptyArray = [];
+const mapStateToProps = (state, ownProps) => ({
   skjaringstidspunkt: getFirstDate(getBehandlingSkjaringstidspunkt(state), getBehandlingStartDatoForPermisjon(state)),
-  changedOpplysninger: getBehandlingMedlemEndredeOpplysninger(state),
+  changedOpplysninger: ownProps.medlem && ownProps.medlem.endringer ? ownProps.medlem.endringer : emptyArray,
 });
 
 const FortsattMedlemskapFaktaPanel = connect(mapStateToProps)(FortsattMedlemskapFaktaPanelImpl);

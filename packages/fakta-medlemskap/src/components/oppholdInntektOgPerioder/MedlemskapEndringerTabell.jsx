@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { injectIntl } from 'react-intl';
+
 import {
   DateLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
-import { injectIntl } from 'react-intl';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 const headerTextCodes = [
   'MedlemskapEndringerTabell.GjeldeneFom',
@@ -39,8 +40,9 @@ const MedlemskapEndringerTabellImpl = ({
   </Table>
 );
 
-const mapStateToPropsFactory = (initialState) => {
-  const perioder = (behandlingFormValueSelector('OppholdInntektOgPerioderForm')(initialState, 'perioder') || [])
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { behandlingId, behandlingVersjon } = initialOwnProps;
+  const perioder = (behandlingFormValueSelector('OppholdInntektOgPerioderForm', behandlingId, behandlingVersjon)(initialState, 'perioder') || [])
     .sort((a, b) => a.vurderingsdato.localeCompare(b.vurderingsdato));
   return () => ({
     perioder,

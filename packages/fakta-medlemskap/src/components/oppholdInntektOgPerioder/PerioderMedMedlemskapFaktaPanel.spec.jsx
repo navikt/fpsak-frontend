@@ -29,6 +29,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       fixedMedlemskapPerioder={periods}
       readOnly={false}
       vurderingTypes={manuelleVurderingstyper}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const table = wrapper.find('Table');
@@ -65,6 +66,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       readOnly={false}
       fodselsdato="2016-10-16"
       vurderingTypes={[]}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const message = wrapper.find('FormattedMessage');
@@ -90,6 +92,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       termindato="2016-10-16"
       readOnly={false}
       vurderingTypes={[]}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const message = wrapper.find('FormattedMessage');
@@ -115,6 +118,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       omsorgsovertakelseDato="2016-10-16"
       readOnly={false}
       vurderingTypes={[]}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const message = wrapper.find('FormattedMessage');
@@ -139,6 +143,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       readOnly={false}
       fixedMedlemskapPerioder={perioder}
       vurderingTypes={[]}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const table = wrapper.find('Table');
@@ -156,6 +161,7 @@ describe('<PerioderMedMedlemskapFaktaPanel>', () => {
       fixedMedlemskapPerioder={medlemskapPerioder}
       readOnly={false}
       vurderingTypes={[]}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const table = wrapper.find('Table');

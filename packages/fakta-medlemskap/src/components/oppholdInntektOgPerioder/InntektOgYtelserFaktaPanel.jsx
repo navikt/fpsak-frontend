@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { Normaltekst } from 'nav-frontend-typografi';
 import moment from 'moment';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { Normaltekst } from 'nav-frontend-typografi';
 import Ekspanderbartpanel from 'nav-frontend-ekspanderbartpanel';
+
 import { formatCurrencyWithKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
   PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 const headerTextCodes = [
   'InntektOgYtelserFaktaPanel.Person',
@@ -79,9 +80,11 @@ InntektOgYtelserFaktaPanelImpl.defaultProps = {
   inntekter: [],
 };
 
-const InntektOgYtelserFaktaPanel = connect((state, ownProps) => ({
-  inntekter: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'inntekter'),
-}))(injectIntl(InntektOgYtelserFaktaPanelImpl));
+const mapStateToProps = (state, ownProps) => ({
+  inntekter: behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'inntekter'),
+});
+
+const InntektOgYtelserFaktaPanel = connect(mapStateToProps)(injectIntl(InntektOgYtelserFaktaPanelImpl));
 
 const sortInntekter = (inntekt1, inntekt2) => {
   const nameDiff = inntekt1.person.localeCompare(inntekt2.person);
