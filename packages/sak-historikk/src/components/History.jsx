@@ -91,6 +91,8 @@ const velgHistorikkMal = (histType) => { // NOSONAR
   }
 };
 
+const fptilbakeBrevMaler = [historikkinnslagType.FAKTA_OM_FEILUTBETALING, historikkinnslagType.FORELDELSE, historikkinnslagType.TILBAKEKREVING];
+
 /**
  * History
  *
@@ -98,10 +100,10 @@ const velgHistorikkMal = (histType) => { // NOSONAR
  */
 const History = ({
   historyList,
-  selectedBehandlingId,
   saksNr,
   location,
-  getKodeverknavn,
+  getKodeverknavnFpsak,
+  getKodeverknavnFptilbake,
 }) => (
   <div className={styles.historyContainer}>
     {historyList.map((item, index) => {
@@ -114,13 +116,12 @@ const History = ({
           key={`${item.opprettetTidspunkt}${index}` /* eslint-disable-line react/no-array-index-key */}
           historikkinnslagDeler={item.historikkinnslagDeler}
           rolle={item.aktoer.kode}
-          rolleNavn={getKodeverknavn(item.aktoer)}
+          rolleNavn={getKodeverknavnFpsak(item.aktoer)}
           dato={item.opprettetTidspunkt}
           kjoennKode={item.kjoenn ? item.kjoenn.kode : ''}
           opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : item.opprettetAv}
           histType={item.type}
           dokumentLinks={item.dokumentLinks}
-          selectedBehandlingId={selectedBehandlingId}
         >
           <HistorikkMal
             historikkinnslagDeler={item.historikkinnslagDeler}
@@ -131,7 +132,7 @@ const History = ({
             }}
             originType={item.type}
             saksNr={saksNr}
-            getKodeverknavn={getKodeverknavn}
+            getKodeverknavn={fptilbakeBrevMaler.includes(item.type.kode) ? getKodeverknavnFptilbake : getKodeverknavnFpsak}
           />
         </Snakkeboble>
       );
@@ -141,16 +142,15 @@ const History = ({
 
 History.propTypes = {
   historyList: PropTypes.arrayOf(historikkinnslagPropType).isRequired,
-  selectedBehandlingId: PropTypes.string,
   saksNr: PropTypes.number,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
+  getKodeverknavnFpsak: PropTypes.func.isRequired,
+  getKodeverknavnFptilbake: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {
-  selectedBehandlingId: '',
   saksNr: 0,
 };
 

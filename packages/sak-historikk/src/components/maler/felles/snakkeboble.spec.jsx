@@ -15,7 +15,6 @@ describe('Snakkeboble', () => {
     const kjoenn = 'Kvinne';
     const type = { kode: 'VEDTAK', navn: 'Vedtak fattet' };
     const dokumentLinks = [];
-    const selectedBehandlingId = '212';
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
@@ -28,7 +27,6 @@ describe('Snakkeboble', () => {
         kjoennKode={kjoenn}
         histType={type}
         dokumentLinks={dokumentLinks}
-        selectedBehandlingId={selectedBehandlingId}
         location={location}
       >
         <div />
@@ -46,7 +44,6 @@ describe('Snakkeboble', () => {
     const kjoenn = 'Kvinne';
     const type = { kode: 'VEDTAK', navn: 'Vedtak fattet' };
     const dokumentLinks = [];
-    const selectedBehandlingId = '212';
     const location = { pathname: 'myPath' };
 
     const wrapper = shallow(
@@ -59,7 +56,6 @@ describe('Snakkeboble', () => {
         kjoennKode={kjoenn}
         histType={type}
         dokumentLinks={dokumentLinks}
-        selectedBehandlingId={selectedBehandlingId}
         location={location}
       >
         <div />

@@ -13,7 +13,7 @@ describe('<HistoryIndex>', () => {
       selectedBehandlingId={1}
       saksnummer={12345}
       location={{ pathname: 'test' }}
-      alleKodeverk={{}}
+      alleKodeverkFpsak={{}}
     />);
 
     const history = wrapper.find(HistorikkSakIndex);

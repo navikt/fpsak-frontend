@@ -184,7 +184,7 @@ export const visHistorikk = () => (
       location={{
         pathname: 'historikk',
       }}
-      alleKodeverk={alleKodeverk}
+      alleKodeverkFpsak={alleKodeverk}
     />
   </div>
 );

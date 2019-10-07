@@ -12,44 +12,43 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { getSelectedBehandlingId } from '../../behandling/duck';
+import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getAllHistory } from '../behandlingsupportSelectors';
 
 export const HistoryIndex = ({
   history,
-  selectedBehandlingId,
   saksnummer,
   location,
-  alleKodeverk,
+  alleKodeverkFpsak,
+  alleKodeverkFptilbake,
 }) => (
   <HistorikkSakIndex
     historyList={history}
-    selectedBehandlingId={selectedBehandlingId ? `${selectedBehandlingId}` : null}
     saksnummer={saksnummer}
     location={location}
-    alleKodeverk={alleKodeverk}
+    alleKodeverkFpsak={alleKodeverkFpsak}
+    alleKodeverkFptilbake={alleKodeverkFptilbake}
   />
 );
 
 HistoryIndex.propTypes = {
-  selectedBehandlingId: PropTypes.number,
   saksnummer: PropTypes.number.isRequired,
   history: PropTypes.arrayOf(PropTypes.object).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
+  alleKodeverkFpsak: PropTypes.shape().isRequired,
+  alleKodeverkFptilbake: PropTypes.shape(),
 };
 
 HistoryIndex.defaultProps = {
-  selectedBehandlingId: undefined,
+  alleKodeverkFptilbake: {},
 };
 
 const mapStateToProps = (state) => ({
-  alleKodeverk: getAlleKodeverk(state),
-  selectedBehandlingId: getSelectedBehandlingId(state),
+  alleKodeverkFpsak: fpsakApi.KODEVERK.getRestApiData()(state),
+  alleKodeverkFptilbake: fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state),
   saksnummer: getSelectedSaksnummer(state),
   history: getAllHistory(state),
 });

@@ -18,30 +18,32 @@ const intl = createIntl({
 
 const HistorikkSakIndex = ({
   historyList,
-  selectedBehandlingId,
   saksnummer,
   location,
-  alleKodeverk,
+  alleKodeverkFpsak,
+  alleKodeverkFptilbake,
 }) => (
   <RawIntlProvider value={intl}>
     <History
       historyList={historyList}
-      selectedBehandlingId={selectedBehandlingId}
       saksNr={saksnummer}
       location={location}
-      getKodeverknavn={getKodeverknavnFn(alleKodeverk, kodeverkTyper)}
+      getKodeverknavnFpsak={getKodeverknavnFn(alleKodeverkFpsak, kodeverkTyper)}
+      getKodeverknavnFptilbake={getKodeverknavnFn(alleKodeverkFptilbake, kodeverkTyper)}
+      alleKodeverkFpsak={alleKodeverkFpsak}
+      alleKodeverkFptilbake={alleKodeverkFptilbake}
     />
   </RawIntlProvider>
 );
 
 HistorikkSakIndex.propTypes = {
   historyList: PropTypes.arrayOf(historikkinnslagPropType).isRequired,
-  selectedBehandlingId: PropTypes.string,
   saksnummer: PropTypes.number,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  alleKodeverk: PropTypes.shape().isRequired,
+  alleKodeverkFpsak: PropTypes.shape().isRequired,
+  alleKodeverkFptilbake: PropTypes.shape().isRequired,
 };
 
 export default HistorikkSakIndex;
