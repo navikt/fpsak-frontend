@@ -185,7 +185,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
             toggleInfoPanelCallback={toggleInfoPanelCallback}
             shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
             readOnly={readOnly}
-            isForeldrepengerFagsak={ytelsesType === fagsakYtelseType.FORELDREPENGER}
+            isForeldrepengerFagsak={ytelsesType.kode === fagsakYtelseType.FORELDREPENGER}
             {...props}
           />
         )}
@@ -222,7 +222,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
                 shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
                 submitCallback={submitCallback}
                 readOnly={readOnly}
-                isForeldrepengerFagsak={ytelsesType === fagsakYtelseType.FORELDREPENGER}
+                isForeldrepengerFagsak={ytelsesType.kode === fagsakYtelseType.FORELDREPENGER}
                 fagsakPerson={fagsakPerson}
                 readOnlyBehandling={readOnlyBehandling}
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}

@@ -160,13 +160,13 @@ OppholdINorgeOgAdresserFaktaPanelImpl.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const { behandlingId, behandlingVerson } = ownProps;
+  const { behandlingId, behandlingVersjon } = ownProps;
   const formName = `OppholdInntektOgPeriodeForm-${ownProps.id}`;
   return {
-    opphold: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'opphold'),
-    foreldre: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'foreldre'),
-    hasBosattAksjonspunkt: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'hasBosattAksjonspunkt'),
-    isBosattAksjonspunktClosed: behandlingFormValueSelector(formName, behandlingId, behandlingVerson)(state, 'isBosattAksjonspunktClosed'),
+    opphold: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'opphold'),
+    foreldre: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'foreldre'),
+    hasBosattAksjonspunkt: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'hasBosattAksjonspunkt'),
+    isBosattAksjonspunktClosed: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isBosattAksjonspunktClosed'),
   };
 };
 
