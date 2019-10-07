@@ -1,8 +1,8 @@
 import React from 'react';
 import { PropTypes as PT } from 'prop-types';
+import classNames from 'classnames/bind';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertekst } from 'nav-frontend-typografi';
-import classNames from 'classnames/bind';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 

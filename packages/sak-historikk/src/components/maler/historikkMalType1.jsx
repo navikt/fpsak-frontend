@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
-import BubbleText from './bubbleText';
-import { findHendelseText } from './historikkUtils';
-import HistorikkDokumentLenke from './HistorikkDokumentLenke';
+import BubbleText from './felles/bubbleText';
+import { findHendelseText } from './felles/historikkUtils';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const HistorikkMalType1 = ({
-  historikkinnslagDeler, dokumentLinks, saksNr, getKodeverknavn,
+  historikkinnslagDeler,
+  dokumentLinks,
+  saksNr,
+  getKodeverknavn,
 }) => (
   <div>
     {historikkinnslagDeler[0] && historikkinnslagDeler[0].hendelse
@@ -45,7 +45,7 @@ HistorikkMalType1.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(HistorikkMalType1);
+export default HistorikkMalType1;
 
 /*
  https://confluence.adeo.no/display/MODNAV/OMR-13+SF4+Sakshistorikk+-+UX+og+grafisk+design

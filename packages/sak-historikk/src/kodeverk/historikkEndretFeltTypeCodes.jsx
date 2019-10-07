@@ -35,15 +35,15 @@ const historikkEndretFeltTypeCodes = {
   },
   BRUK_ANTALL_I_SOKNAD: {
     kode: 'BRUK_ANTALL_I_SOKNAD',
-    feltId: 'SjekkFodselDokForm.BrukAntallISoknad',
+    feltId: 'Historikk.Fodsel.BrukAntallISoknad',
   },
   BRUK_ANTALL_I_TPS: {
     kode: 'BRUK_ANTALL_I_TPS',
-    feltId: 'SjekkFodselDokForm.BrukAntallITPS',
+    feltId: 'Historikk.Fodsel.BrukAntallITPS',
   },
   BRUK_ANTALL_I_VEDTAKET: {
     kode: 'BRUK_ANTALL_I_VEDTAKET',
-    feltId: 'SjekkFodselDokForm.BrukAntallIYtelsesvedtaket',
+    feltId: 'Historikk.Fodsel.BrukAntallIYtelsesvedtaket',
   },
   BRUTTO_NAERINGSINNTEKT: {
     kode: 'BRUTTO_NAERINGSINNTEKT',
@@ -51,7 +51,7 @@ const historikkEndretFeltTypeCodes = {
   },
   DOKUMENTASJON_FORELIGGER: {
     kode: 'DOKUMENTASJON_FORELIGGER',
-    feltId: 'SjekkFodselDokForm.DokumentasjonForeligger',
+    feltId: 'Historikk.Fodsel.DokumentasjonForeligger',
   },
   EKTEFELLES_BARN: {
     kode: 'EKTEFELLES_BARN',
@@ -75,7 +75,7 @@ const historikkEndretFeltTypeCodes = {
   },
   FODSELSDATO: {
     kode: 'FODSELSDATO',
-    feltId: 'SjekkFodselDokForm.Fodselsdato',
+    feltId: 'Historikk.Fodsel.Fodselsdato',
   },
   FORELDREANSVARSVILKARET: {
     kode: 'FORELDREANSVARSVILKARET',

@@ -2,8 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
+import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
+
 import { HistoryIndex } from './HistoryIndex';
-import History from './components/History';
 
 describe('<HistoryIndex>', () => {
   it('skal vise historikk', () => {
@@ -12,9 +13,10 @@ describe('<HistoryIndex>', () => {
       selectedBehandlingId={1}
       saksnummer={12345}
       location={{ pathname: 'test' }}
+      alleKodeverk={{}}
     />);
 
-    const history = wrapper.find(History);
+    const history = wrapper.find(HistorikkSakIndex);
     expect(history).to.have.length(1);
   });
 });

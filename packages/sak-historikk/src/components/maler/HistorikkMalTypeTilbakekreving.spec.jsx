@@ -3,9 +3,8 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FormattedHTMLMessage } from 'react-intl';
 
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
-import historikkEndretFeltType from '@fpsak-frontend/kodeverk/src/historikkEndretFeltType';
-
+import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
+import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
 import { HistorikkMalTypeTilbakekreving } from './HistorikkMalTypeTilbakekreving';
 
 describe('HistorikkMalTypeTilbakekreving', () => {

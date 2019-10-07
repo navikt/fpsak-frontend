@@ -4,14 +4,12 @@ import { injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { findHendelseText } from './historikkUtils';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import { findHendelseText } from './felles/historikkUtils';
 
 const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.TERMINBEKREFTELSE]: 'TermindatoFaktaForm.ApplicationInformation',
@@ -36,7 +34,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN]:
     'HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn',
   [aksjonspunktCodes.AVKLAR_VERGE]: 'Verge.AvklarVerge',
-  [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: 'SjekkFodselDokForm.ApplicationInformation',
+  [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: 'Historikk.Fodsel.ApplicationInformation',
   [aksjonspunktCodes.BEHANDLE_KLAGE_NFP]: 'Klage.KlageNFP.Fastsett',
   [aksjonspunktCodes.BEHANDLE_KLAGE_NK]: 'Klage.KlageKA.Fastsett',
   [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP]: 'Klage.KlageNFP.Formkrav',
@@ -164,4 +162,4 @@ HistorikkMalType3.propTypes = {
   intl: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType3));
+export default injectIntl(HistorikkMalType3);

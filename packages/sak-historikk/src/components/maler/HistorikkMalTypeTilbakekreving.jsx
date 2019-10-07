@@ -4,14 +4,12 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
-import historikkEndretFeltType from '@fpsak-frontend/kodeverk/src/historikkEndretFeltType';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
+import historikkEndretFeltType from '../../kodeverk/historikkEndretFeltType';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -99,4 +97,4 @@ HistorikkMalTypeTilbakekreving.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(HistorikkMalTypeTilbakekreving);
+export default HistorikkMalTypeTilbakekreving;

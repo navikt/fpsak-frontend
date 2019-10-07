@@ -5,14 +5,10 @@ import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
-import historikkEndretFeltTypeHeadingCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeHeadingCodes';
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
+import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
+import historikkEndretFeltTypeHeadingCodes from '../../kodeverk/historikkEndretFeltTypeHeadingCodes';
 import {
   findEndretFeltNavn,
   findEndretFeltVerdi,
@@ -20,10 +16,10 @@ import {
   findIdForOpplysningCode,
   findIdForSoeknadsperiodeCode,
   findResultatText,
-} from './historikkUtils';
-import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-
-import BubbleText from './bubbleText';
+} from './felles/historikkUtils';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import BubbleText from './felles/bubbleText';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -235,4 +231,4 @@ HistorikkMalType5.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType5));
+export default injectIntl(HistorikkMalType5);

@@ -9,12 +9,12 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { requireProps } from '@fpsak-frontend/fp-felles';
+import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
-import History from './components/History';
+import { getAlleKodeverk } from 'kodeverk/duck';
+import { getSelectedBehandlingId } from '../../behandling/duck';
+import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getAllHistory } from '../behandlingsupportSelectors';
 
 export const HistoryIndex = ({
@@ -22,12 +22,14 @@ export const HistoryIndex = ({
   selectedBehandlingId,
   saksnummer,
   location,
+  alleKodeverk,
 }) => (
-  <History
+  <HistorikkSakIndex
     historyList={history}
     selectedBehandlingId={selectedBehandlingId ? `${selectedBehandlingId}` : null}
-    saksNr={saksnummer}
+    saksnummer={saksnummer}
     location={location}
+    alleKodeverk={alleKodeverk}
   />
 );
 
@@ -38,6 +40,7 @@ HistoryIndex.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 HistoryIndex.defaultProps = {
@@ -45,6 +48,7 @@ HistoryIndex.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
+  alleKodeverk: getAlleKodeverk(state),
   selectedBehandlingId: getSelectedBehandlingId(state),
   saksnummer: getSelectedSaksnummer(state),
   history: getAllHistory(state),

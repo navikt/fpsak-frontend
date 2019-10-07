@@ -4,15 +4,13 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import BubbleText from './bubbleText';
+import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
+import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
+import BubbleText from './felles/bubbleText';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const scrollUp = () => {
   if (window.innerWidth < 13010) {
@@ -92,4 +90,4 @@ HistorikkMalTypeFeilutbetaling.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(injectIntl(HistorikkMalTypeFeilutbetaling));
+export default injectIntl(HistorikkMalTypeFeilutbetaling);

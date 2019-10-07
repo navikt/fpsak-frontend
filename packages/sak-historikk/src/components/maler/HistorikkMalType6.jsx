@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { findHendelseText } from './historikkUtils';
+import { findHendelseText } from './felles/historikkUtils';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 import styles from './historikkMalType.less';
 
@@ -47,4 +44,4 @@ HistorikkMalType6.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType6));
+export default injectIntl(HistorikkMalType6);

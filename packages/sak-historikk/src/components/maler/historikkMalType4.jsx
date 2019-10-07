@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { findHendelseText } from './historikkUtils';
-
-import BubbleText from './bubbleText';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import { findHendelseText } from './felles/historikkUtils';
+import BubbleText from './felles/bubbleText';
 
 const HistorikkMalType4 = ({ historikkinnslagDeler, getKodeverknavn }) => (
   <div>
@@ -33,4 +29,4 @@ HistorikkMalType4.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(HistorikkMalType4);
+export default HistorikkMalType4;

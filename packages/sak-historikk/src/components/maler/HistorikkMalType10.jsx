@@ -4,17 +4,15 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-import historikkEndretFeltTypeCodes from '@fpsak-frontend/kodeverk/src/historikkEndretFeltTypeCodes';
-import historikkOpplysningTypeCodes from '@fpsak-frontend/kodeverk/src/historikkOpplysningTypeCodes';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { findEndretFeltNavn, findEndretFeltVerdi } from './historikkUtils';
-import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-import BubbleText from './bubbleText';
+import historikkinnslagType from '../../kodeverk/historikkinnslagType';
+import historikkEndretFeltTypeCodes from '../../kodeverk/historikkEndretFeltTypeCodes';
+import historikkOpplysningTypeCodes from '../../kodeverk/historikkOpplysningTypeCodes';
+import { findEndretFeltNavn, findEndretFeltVerdi } from './felles/historikkUtils';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
+import BubbleText from './felles/bubbleText';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const scrollUp = () => {
   if (window.innerWidth < 13010) {
@@ -182,4 +180,4 @@ HistorikkMalType10.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType10));
+export default injectIntl(HistorikkMalType10);

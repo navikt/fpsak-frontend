@@ -4,16 +4,14 @@ import { FormattedHTMLMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   findEndretFeltNavn, findEndretFeltVerdi, findHendelseText, findIdForOpplysningCode, findResultatText,
-} from './historikkUtils';
-import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-import BubbleText from './bubbleText';
+} from './felles/historikkUtils';
+import HistorikkDokumentLenke from './felles/HistorikkDokumentLenke';
+import BubbleText from './felles/bubbleText';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 
 const HistorikkMalType8 = ({
   historikkinnslagDeler, behandlingLocation, dokumentLinks, intl, saksNr, getKodeverknavn,
@@ -113,4 +111,4 @@ HistorikkMalType8.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType8));
+export default injectIntl(HistorikkMalType8);

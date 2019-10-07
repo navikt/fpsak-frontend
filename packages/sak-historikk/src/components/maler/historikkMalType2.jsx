@@ -4,12 +4,8 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-import { historikkinnslagDelPropType } from '@fpsak-frontend/prop-types';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
-import { findHendelseText, findResultatText } from './historikkUtils';
+import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
+import { findHendelseText, findResultatText } from './felles/historikkUtils';
 
 const scrollUp = () => {
   if (window.innerWidth < 1305) {
@@ -19,7 +15,10 @@ const scrollUp = () => {
 };
 
 const HistorikkMalType2 = ({
-  historikkinnslagDeler, behandlingLocation, intl, getKodeverknavn,
+  historikkinnslagDeler,
+  behandlingLocation,
+  intl,
+  getKodeverknavn,
 }) => (
   <div>
     {historikkinnslagDeler[0].skjermlenke
@@ -51,7 +50,7 @@ HistorikkMalType2.propTypes = {
   intl: PropTypes.shape().isRequired,
 };
 
-export default injectIntl(injectKodeverk(getAlleKodeverk)(HistorikkMalType2));
+export default injectIntl(HistorikkMalType2);
 
 /*
 

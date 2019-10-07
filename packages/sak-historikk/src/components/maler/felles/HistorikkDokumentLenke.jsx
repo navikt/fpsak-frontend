@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import styles from './historikkMalType.less';
+
+import styles from '../historikkMalType.less';
 
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
 

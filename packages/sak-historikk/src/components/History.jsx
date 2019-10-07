@@ -1,26 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { injectKodeverk, pathToBehandling } from '@fpsak-frontend/fp-felles';
-import historikkinnslagType from '@fpsak-frontend/kodeverk/src/historikkinnslagType';
-import { historikkinnslagPropType } from '@fpsak-frontend/prop-types';
+import { pathToBehandling } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import Snakkeboble from './snakkeboble';
-import HistorikkMalType1 from './historikkMalType1';
-import HistorikkMalType2 from './historikkMalType2';
-import HistorikkMalType3 from './historikkMalType3';
-import HistorikkMalType4 from './historikkMalType4';
-import HistorikkMalType5 from './historikkMalType5';
-import HistorikkMalType6 from './HistorikkMalType6';
-import HistorikkMalType7 from './HistorikkMalType7';
-import HistorikkMalType8 from './HistorikkMalType8';
-import HistorikkMalType9 from './HistorikkMalType9';
-import HistorikkMalType10 from './HistorikkMalType10';
-import HistorikkMalTypeFeilutbetaling from './HistorikkMalTypeFeilutbetaling';
-import HistorikkMalTypeTilbakekreving from './HistorikkMalTypeTilbakekreving';
-import HistorikkMalTypeForeldelse from './HistorikkMalTypeForeldelse';
-import PlaceholderHistorikkMal from './placeholderHistorikkMal';
+import historikkinnslagPropType from '../propTypes/historikkinnslagPropType';
+import historikkinnslagType from '../kodeverk/historikkinnslagType';
+import Snakkeboble from './maler/felles/snakkeboble';
+import HistorikkMalType1 from './maler/historikkMalType1';
+import HistorikkMalType2 from './maler/historikkMalType2';
+import HistorikkMalType3 from './maler/historikkMalType3';
+import HistorikkMalType4 from './maler/historikkMalType4';
+import HistorikkMalType5 from './maler/historikkMalType5';
+import HistorikkMalType6 from './maler/HistorikkMalType6';
+import HistorikkMalType7 from './maler/HistorikkMalType7';
+import HistorikkMalType8 from './maler/HistorikkMalType8';
+import HistorikkMalType9 from './maler/HistorikkMalType9';
+import HistorikkMalType10 from './maler/HistorikkMalType10';
+import HistorikkMalTypeFeilutbetaling from './maler/HistorikkMalTypeFeilutbetaling';
+import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekreving';
+import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
+import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
 import styles from './history.less';
 
@@ -132,6 +131,7 @@ const History = ({
             }}
             originType={item.type}
             saksNr={saksNr}
+            getKodeverknavn={getKodeverknavn}
           />
         </Snakkeboble>
       );
@@ -154,4 +154,4 @@ History.defaultProps = {
   saksNr: 0,
 };
 
-export default injectKodeverk(getAlleKodeverk)(History);
+export default History;
