@@ -38,6 +38,8 @@ const behandlingpunktToVilkar = {
   [behandlingspunktCodes.OPPTJENING]: vilkarType.OPPTJENINGSVILKARET,
 };
 
+const avslagsarsakerES = ['1002', '1003', '1032'];
+
 const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
   ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
