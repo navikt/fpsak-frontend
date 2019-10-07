@@ -17,7 +17,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
-import { getFagsakYtelseType, getFagsakPerson } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getFagsakYtelseType, getFagsakPerson, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
@@ -225,6 +225,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
                 isForeldrepengerFagsak={ytelsesType === fagsakYtelseType.FORELDREPENGER}
                 fagsakPerson={fagsakPerson}
                 readOnlyBehandling={readOnlyBehandling}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 {...props}
               />
             );

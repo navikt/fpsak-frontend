@@ -9,13 +9,14 @@ import { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 // alle panel nyttar denne. No hentar den ynskja data fra behandling-objektet og lagar props av det.
 export class DataFetcherWithCache extends Component {
   static propTypes = {
-    behandlingData: PropTypes.shape().isRequired,
+    behandlingData: PropTypes.shape(),
     showComponent: PropTypes.bool,
     render: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     showComponent: true,
+    behandlingData: undefined,
   }
 
   render() {
@@ -54,7 +55,7 @@ const mapStateToPropsFactory = () => {
         [format(d.name)]: d.name === BehandlingFpsakApiKeys.BEHANDLING ? behandling : behandling[mapping[d.name]],
       }), {}),
   }));
-  return (state, ownProps) => (ownProps.showComponent ? createProps(state, ownProps) : {});
+  return (state, ownProps) => (ownProps.showComponent !== false ? createProps(state, ownProps) : {});
 };
 
 export default connect(mapStateToPropsFactory)(DataFetcherWithCache);

@@ -212,6 +212,9 @@ OppholdInntektOgPerioderForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitting: PropTypes.bool.isRequired,
   isRevurdering: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
   ...formPropTypes,
 };
 

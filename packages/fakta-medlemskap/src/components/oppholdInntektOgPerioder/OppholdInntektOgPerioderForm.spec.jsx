@@ -24,6 +24,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       isRevurdering={false}
       perioder={perioder}
       readOnly
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const helpText = wrapper.find(AksjonspunktHelpText);
@@ -59,6 +60,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       submittable
       readOnly={false}
       isRevurdering={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
 
@@ -98,6 +100,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       submittable
       readOnly={false}
       isRevurdering={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.GyldigMedlemFolketrygden');
@@ -133,6 +136,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       submittable
       readOnly={false}
       isRevurdering={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.EOSBorgerMedOppholdsrett');
@@ -168,6 +172,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       submittable
       readOnly={false}
       isRevurdering={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold');
@@ -204,6 +209,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       submittable
       readOnly={false}
       isRevurdering={false}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
