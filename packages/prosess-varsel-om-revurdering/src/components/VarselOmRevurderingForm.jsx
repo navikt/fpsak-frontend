@@ -273,7 +273,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => submitCallback([values]);
   const erAutomatiskRevurdering = behandlingArsaker.reduce((result, current) => (result || current.erAutomatiskRevurdering), false);
   const aksjonspunkt = aksjonspunkter[0];
-  const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENTEARSAK];
+  const ventearsaker = ownProps.alleKodeverk[kodeverkTyper.VENT_AARSAK];
   const languageCode = getLanguageCodeFromSprakkode(sprakkode);
 
   return (state) => ({

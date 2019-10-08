@@ -127,7 +127,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
     hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
     hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-    ventearsaker: getKodeverk(kodeverkTyper.VENTEARSAK)(state),
+    ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
     isInSync: behandlingSelectors.isBehandlingInSync(state),
     fagsakInfo,
   });
