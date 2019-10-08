@@ -46,7 +46,7 @@ const VergeFaktaIndex = ({
 
 VergeFaktaIndex.propTypes = {
   behandling: vergeBehandlingPropType.isRequired,
-  verge: vergeVergePropType.isRequired,
+  verge: vergeVergePropType,
   aksjonspunkter: PropTypes.arrayOf(vergeAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
@@ -55,6 +55,10 @@ VergeFaktaIndex.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+};
+
+VergeFaktaIndex.defaultProps = {
+  verge: {},
 };
 
 export default VergeFaktaIndex;

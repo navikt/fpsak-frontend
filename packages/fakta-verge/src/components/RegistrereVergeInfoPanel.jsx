@@ -102,7 +102,7 @@ const buildInitialValues = createSelector([
   (ownProps) => ownProps.verge,
   (ownProps) => ownProps.aksjonspunkter], (verge, aksjonspunkter) => ({
   ...FaktaBegrunnelseTextField.buildInitialValues(aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.AVKLAR_VERGE)[0]),
-  ...RegistrereVergeFaktaForm.buildInitialValues(verge),
+  ...RegistrereVergeFaktaForm.buildInitialValues(verge || {}),
 }));
 
 const transformValues = (values) => ({

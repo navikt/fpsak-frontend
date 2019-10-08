@@ -7,5 +7,7 @@
   "Sivilstand.Hjelpetekst": "Sivilstand",
   "BostedSokerView.Region": "Region",
 
-  "BostedFaktaView.ForelderTo": "Forelder 2"
+  "BostedFaktaView.ForelderTo": "Forelder 2",
+  
+  "OppholdINorgeOgAdresserFaktaPanel.Parent": "Den andre forelderen"
 }
