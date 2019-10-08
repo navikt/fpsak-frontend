@@ -16,7 +16,7 @@ const omsorgOgForeldrePersonopplysningerPropType = PropTypes.shape({
     adresselinje2: PropTypes.string,
     adresselinje3: PropTypes.string,
     land: PropTypes.string,
-    postNummer: PropTypes.number,
+    postNummer: PropTypes.string,
     poststed: PropTypes.string,
   })),
   avklartPersonstatus: PropTypes.shape({

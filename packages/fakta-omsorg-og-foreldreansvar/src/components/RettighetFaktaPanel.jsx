@@ -35,7 +35,7 @@ const RettighetFaktaPanelImpl = ({
           <Normaltekst className={styles.iverksatt}>
             <FormattedMessage
               id="OmsorgOgForeldreansvarFaktaForm.YtelseIverksatt"
-              values={{ ytelseType: relatertYtelseTypes.find((r) => r.kode === ytelse.relatertYtelseType.kode).navn }}
+              values={{ ytelseType: relatertYtelseTypes.find((r) => r.kode === ytelse.relatertYtelseType).navn }}
             />
             <DateLabel className={styles.dato} dateString={y.periodeFraDato} />
           </Normaltekst>

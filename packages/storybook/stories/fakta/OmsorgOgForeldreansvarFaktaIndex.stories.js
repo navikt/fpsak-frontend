@@ -65,9 +65,7 @@ const inntektArbeidYtelse = {
       },
       periodeFraDato: '2019-01-01',
     }],
-    relatertYtelseType: {
-      kode: relatertYtelseType.FORELDREPENGER,
-    },
+    relatertYtelseType: relatertYtelseType.FORELDREPENGER,
   }],
 };
 const merknaderFraBeslutter = {

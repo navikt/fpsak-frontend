@@ -4,7 +4,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const omsorgOgForeldreInntektArbeidYtelsePropType = PropTypes.shape({
   innvilgetRelatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape({
-    relatertYtelseType: kodeverkObjektPropType,
+    relatertYtelseType: PropTypes.string,
     tilgrensendeYtelserListe: PropTypes.arrayOf(PropTypes.shape({
       status: kodeverkObjektPropType,
       periodeFraDato: PropTypes.string,
