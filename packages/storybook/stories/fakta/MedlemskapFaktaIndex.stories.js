@@ -28,8 +28,16 @@ const soknad = {
     oppholdNorgeNa: true,
     oppholdNestePeriode: true,
     oppholdSistePeriode: true,
-    utlandsoppholdFor: true,
-    utlandsoppholdEtter: true,
+    utlandsoppholdFor: [{
+      landNavn: 'SVERIGE',
+      fom: '2010-01-01',
+      tom: '2011-01-01',
+    }],
+    utlandsoppholdEtter: [{
+      landNavn: 'DANMARK',
+      fom: '2018-01-01',
+      tom: '2019-01-01',
+    }],
   },
 };
 
