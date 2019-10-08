@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { Element } from 'nav-frontend-typografi';
 
+import { createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
+
 import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelPropType';
 import { findHendelseText, findResultatText } from './felles/historikkUtils';
 
