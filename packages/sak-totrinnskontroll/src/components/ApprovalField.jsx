@@ -1,14 +1,16 @@
 import React from 'react';
-import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
+
+import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 import ReasonsField from './ReasonsField';
-import styles from './ApprovalField.less';
 
+import styles from './ApprovalField.less';
 
 /*
  * ApprovalField
@@ -53,8 +55,8 @@ export const ApprovalFieldImpl = ({
       ))}
       <NavFieldGroup>
         <RadioGroupField name={`${fieldName}.totrinnskontrollGodkjent`} bredde="M" readOnly={readOnly}>
-          <RadioOption label={{ id: 'InfoPanel.Godkjent' }} value />
-          <RadioOption label={{ id: 'InfoPanel.Vurder' }} value={false} />
+          <RadioOption label={{ id: 'ApprovalField.Godkjent' }} value />
+          <RadioOption label={{ id: 'ApprovalField.Vurder' }} value={false} />
         </RadioGroupField>
         {showReasons
         && (
@@ -89,6 +91,6 @@ ApprovalFieldImpl.defaultProps = {
   klageKA: false,
 };
 
-const mapStateToProps = (state) => ({ getAksjonspunktText: getAksjonspunktTextSelector(state) });
+const mapStateToProps = (state, ownProps) => ({ getAksjonspunktText: getAksjonspunktTextSelector(ownProps) });
 
 export default connect(mapStateToProps)(injectIntl(ApprovalFieldImpl));

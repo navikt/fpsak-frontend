@@ -22,6 +22,7 @@
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/sak-historikk": "1.0.0",
+    "@fpsak-frontend/sak-totrinnskontroll": "1.0.0",
     "@fpsak-frontend/search-form": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
