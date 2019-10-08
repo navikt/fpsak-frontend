@@ -1,5 +1,4 @@
 import { createSelector } from 'reselect';
-import moment from 'moment';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
@@ -60,13 +59,6 @@ export const getEnabledSupportPanels = createSelector(
           return true;
       }
     }),
-);
-
-export const getAllHistory = createSelector(
-  [fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
-  (historyFpsak = [], historyTilbake = []) => (
-    historyFpsak.concat(historyTilbake).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt))
-  ),
 );
 
 export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS.getRestApiData()],

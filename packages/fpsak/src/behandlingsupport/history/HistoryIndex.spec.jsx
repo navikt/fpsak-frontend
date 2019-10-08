@@ -9,7 +9,10 @@ import { HistoryIndex } from './HistoryIndex';
 describe('<HistoryIndex>', () => {
   it('skal vise historikk', () => {
     const wrapper = shallow(<HistoryIndex
-      history={[]}
+      alleHistorikkInnslag={[{
+        opprettetTidspunkt: '2019-01-01',
+        historikkinnslagDeler: [],
+      }]}
       selectedBehandlingId={1}
       saksnummer={12345}
       location={{ pathname: 'test' }}

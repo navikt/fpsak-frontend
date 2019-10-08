@@ -8,6 +8,11 @@
   "Historikk.Fodsel.BrukAntallITPS": "Bruk antall fra folkeregisteret",
   "Historikk.Fodsel.Fodselsdato": "Fødselsdato",
   "Historikk.Fodsel.ApplicationInformation": "Kontroller manglende opplysninger om fødsel",
+  "Historikk.KlageNFP.Formkrav": "Vurder om klagen oppfyller formkravene",
+  "Historikk.godkjent": "er godkjent",
+  "Historikk.ikkeGodkjent": "må vurderes på nytt",
+  "Historikk.godkjentKomplett": "Er godkjent",
+  "Historikk.ikkeGodkjentKomplett": "Må vurderes på nytt",
 
   "Historikk.Utgått": "{tag} (utgått)",
   "Historikk.Template.5.ChangedFromTo": "<b>{fieldName}</b> endret fra {fromValue} til <b>{toValue}</b>",

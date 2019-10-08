@@ -87,7 +87,7 @@ const history = [{
   ],
 },
 {
-  behandlingId: 999951,
+  behandlingId: 999952,
   type: {
     kode: 'BEH_STARTET',
     kodeverk: 'HISTORIKKINNSLAG_TYPE',
@@ -141,8 +141,16 @@ const alleKodeverk = {
     navn: 'Innsynsbehandling opprettet',
     kodeverk: 'HISTORIKKINNSLAG_TYPE',
   }, {
+    kode: 'BEH_VENT',
+    navn: 'Behandling på vent',
+    kodeverk: 'HISTORIKKINNSLAG_TYPE',
+  }, {
     kode: 'BEH_STARTET',
     navn: 'Behandling startet',
+    kodeverk: 'HISTORIKKINNSLAG_TYPE',
+  }, {
+    kode: 'TILBAKEKREVING_OPPR',
+    navn: 'Tilbakekreving opprettet',
     kodeverk: 'HISTORIKKINNSLAG_TYPE',
   }],
   [kodeverkTyper.HISTORIKK_AKTOER]: [{
@@ -168,6 +176,11 @@ const alleKodeverk = {
     navn: 'Saksbehandling starter på nytt',
     kodeverk: 'HISTORIKK_BEGRUNNELSE_TYPE',
   }],
+  [kodeverkTyper.VENT_AARSAK]: [{
+    kode: 'VENT_PÅ_BRUKERTILBAKEMELDING',
+    navn: 'Venter på tilbakemelding fra bruker',
+    kodeverk: 'VENT_AARSAK',
+  }],
 };
 
 export default {
@@ -176,15 +189,21 @@ export default {
 };
 
 export const visHistorikk = () => (
-  <div style={{ width: '600px', margin: '50px' }}>
-    <HistorikkSakIndex
-      historyList={history}
-      selectedBehandlingId="1"
-      saksnummer={2}
-      location={{
-        pathname: 'historikk',
-      }}
-      alleKodeverkFpsak={alleKodeverk}
-    />
+  <div style={{
+    width: '600px', margin: '50px', backgroundColor: 'white', padding: '30px',
+  }}
+  >
+    {history.map((h) => (
+      <HistorikkSakIndex
+        key={h.behandlingId}
+        historieInnslag={h}
+        selectedBehandlingId="1"
+        saksnummer={2}
+        location={{
+          pathname: 'historikk',
+        }}
+        alleKodeverk={alleKodeverk}
+      />
+    ))}
   </div>
 );

@@ -1,12 +1,9 @@
-/**
- * HistoryIndex
- *
- * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import moment from 'moment';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { requireProps } from '@fpsak-frontend/fp-felles';
@@ -14,27 +11,37 @@ import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
 import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
-import { getAllHistory } from '../behandlingsupportSelectors';
 
+import styles from './historyIndex.less';
+
+/**
+ * HistoryIndex
+ *
+ * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
+ */
 export const HistoryIndex = ({
-  history,
+  alleHistorikkInnslag,
   saksnummer,
   location,
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
 }) => (
-  <HistorikkSakIndex
-    historyList={history}
-    saksnummer={saksnummer}
-    location={location}
-    alleKodeverkFpsak={alleKodeverkFpsak}
-    alleKodeverkFptilbake={alleKodeverkFptilbake}
-  />
+  <div className={styles.historyContainer}>
+    {alleHistorikkInnslag.map((innslag) => (
+      <HistorikkSakIndex
+        key={innslag.opprettetTidspunkt}
+        historieInnslag={innslag}
+        saksnummer={saksnummer}
+        location={location}
+        alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
+      />
+    ))}
+  </div>
 );
 
 HistoryIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
-  history: PropTypes.arrayOf(PropTypes.object).isRequired,
+  alleHistorikkInnslag: PropTypes.arrayOf(PropTypes.object).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -46,11 +53,22 @@ HistoryIndex.defaultProps = {
   alleKodeverkFptilbake: {},
 };
 
+export const getAllHistorikk = createSelector(
+  [fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
+  (historyFpsak = [], historyTilbake = []) => {
+    const historikkFraTilbakekrevingMedMarkor = historyTilbake.map((ht) => ({
+      ...ht,
+      erTilbakekreving: true,
+    }));
+    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+  },
+);
+
 const mapStateToProps = (state) => ({
   alleKodeverkFpsak: fpsakApi.KODEVERK.getRestApiData()(state),
   alleKodeverkFptilbake: fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state),
   saksnummer: getSelectedSaksnummer(state),
-  history: getAllHistory(state),
+  alleHistorikkInnslag: getAllHistorikk(state),
 });
 
-export default withRouter(connect(mapStateToProps)(requireProps(['history'], <LoadingPanel />)(HistoryIndex)));
+export default withRouter(connect(mapStateToProps)(requireProps(['alleHistorikkInnslag'], <LoadingPanel />)(HistoryIndex)));

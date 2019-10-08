@@ -37,7 +37,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL]: 'Historikk.Fodsel.ApplicationInformation',
   [aksjonspunktCodes.BEHANDLE_KLAGE_NFP]: 'Klage.KlageNFP.Fastsett',
   [aksjonspunktCodes.BEHANDLE_KLAGE_NK]: 'Klage.KlageKA.Fastsett',
-  [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP]: 'Klage.KlageNFP.Formkrav',
+  [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP]: 'Historikk.KlageNFP.Formkrav',
   [aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA]: 'Klage.KlageKA.Formkrav',
   [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: 'Arbeidsforhold.AvklarArbeidsforhold',
   [aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD]: 'Opphold.Lovlig',
@@ -101,16 +101,16 @@ const formaterAksjonspunkt = (aksjonspunkt, intl) => {
   if (aksjonspunkt.godkjent) {
     return (
       <Normaltekst>
-        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Totrinnskontroll.godkjent' })}`}
-        {!aksjonspktText && formatMessage({ id: 'Totrinnskontroll.godkjentKomplett' })}
+        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.godkjent' })}`}
+        {!aksjonspktText && formatMessage({ id: 'Historikk.godkjentKomplett' })}
       </Normaltekst>
     );
   }
   return (
     <span>
       <Element>
-        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Totrinnskontroll.ikkeGodkjent' })}`}
-        {!aksjonspktText && formatMessage({ id: 'Totrinnskontroll.ikkeGodkjentKomplett' })}
+        {aksjonspktText && `${formatMessage({ id: aksjonspktText })} ${formatMessage({ id: 'Historikk.ikkeGodkjent' })}`}
+        {!aksjonspktText && formatMessage({ id: 'Historikk.ikkeGodkjentKomplett' })}
       </Element>
       <Normaltekst>{aksjonspunkt.aksjonspunktBegrunnelse}</Normaltekst>
     </span>

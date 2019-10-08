@@ -21,8 +21,6 @@ import HistorikkMalTypeTilbakekreving from './maler/HistorikkMalTypeTilbakekrevi
 import HistorikkMalTypeForeldelse from './maler/HistorikkMalTypeForeldelse';
 import PlaceholderHistorikkMal from './maler/placeholderHistorikkMal';
 
-import styles from './history.less';
-
 const velgHistorikkMal = (histType) => { // NOSONAR
   switch (histType.kode) { // NOSONAR
     case historikkinnslagType.BEH_GJEN:
@@ -91,63 +89,54 @@ const velgHistorikkMal = (histType) => { // NOSONAR
   }
 };
 
-const fptilbakeBrevMaler = [historikkinnslagType.FAKTA_OM_FEILUTBETALING, historikkinnslagType.FORELDELSE, historikkinnslagType.TILBAKEKREVING];
-
 /**
  * History
  *
- * Historikken for en behandling -tar emot en liste av historikkobjekt og sprider ut de i historikkbobler
+ * Historikken for en behandling
  */
 const History = ({
-  historyList,
+  historieInnslag,
   saksNr,
   location,
-  getKodeverknavnFpsak,
-  getKodeverknavnFptilbake,
-}) => (
-  <div className={styles.historyContainer}>
-    {historyList.map((item, index) => {
-      const HistorikkMal = velgHistorikkMal(item.type);
-      const aktorIsVL = item.aktoer.kode === 'VL';
-      const aktorIsSOKER = item.aktoer.kode === 'SOKER';
-      const aktorIsArbeidsgiver = item.aktoer.kode === 'ARBEIDSGIVER';
-      return (
-        <Snakkeboble
-          key={`${item.opprettetTidspunkt}${index}` /* eslint-disable-line react/no-array-index-key */}
-          historikkinnslagDeler={item.historikkinnslagDeler}
-          rolle={item.aktoer.kode}
-          rolleNavn={getKodeverknavnFpsak(item.aktoer)}
-          dato={item.opprettetTidspunkt}
-          kjoennKode={item.kjoenn ? item.kjoenn.kode : ''}
-          opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : item.opprettetAv}
-          histType={item.type}
-          dokumentLinks={item.dokumentLinks}
-        >
-          <HistorikkMal
-            historikkinnslagDeler={item.historikkinnslagDeler}
-            dokumentLinks={item.dokumentLinks}
-            behandlingLocation={{
-              ...location,
-              pathname: pathToBehandling(saksNr, item.behandlingId),
-            }}
-            originType={item.type}
-            saksNr={saksNr}
-            getKodeverknavn={fptilbakeBrevMaler.includes(item.type.kode) ? getKodeverknavnFptilbake : getKodeverknavnFpsak}
-          />
-        </Snakkeboble>
-      );
-    })}
-  </div>
-);
+  getKodeverknavn,
+}) => {
+  const HistorikkMal = velgHistorikkMal(historieInnslag.type);
+  const aktorIsVL = historieInnslag.aktoer.kode === 'VL';
+  const aktorIsSOKER = historieInnslag.aktoer.kode === 'SOKER';
+  const aktorIsArbeidsgiver = historieInnslag.aktoer.kode === 'ARBEIDSGIVER';
+  return (
+    <Snakkeboble
+      historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
+      rolle={historieInnslag.aktoer.kode}
+      rolleNavn={getKodeverknavn(historieInnslag.aktoer)}
+      dato={historieInnslag.opprettetTidspunkt}
+      kjoennKode={historieInnslag.kjoenn ? historieInnslag.kjoenn.kode : ''}
+      opprettetAv={(aktorIsSOKER || aktorIsArbeidsgiver || aktorIsVL) ? null : historieInnslag.opprettetAv}
+      histType={historieInnslag.type}
+      dokumentLinks={historieInnslag.dokumentLinks}
+    >
+      <HistorikkMal
+        historikkinnslagDeler={historieInnslag.historikkinnslagDeler}
+        dokumentLinks={historieInnslag.dokumentLinks}
+        behandlingLocation={{
+          ...location,
+          pathname: pathToBehandling(saksNr, historieInnslag.behandlingId),
+        }}
+        originType={historieInnslag.type}
+        saksNr={saksNr}
+        getKodeverknavn={getKodeverknavn}
+      />
+    </Snakkeboble>
+  );
+};
 
 History.propTypes = {
-  historyList: PropTypes.arrayOf(historikkinnslagPropType).isRequired,
+  historieInnslag: historikkinnslagPropType.isRequired,
   saksNr: PropTypes.number,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
-  getKodeverknavnFpsak: PropTypes.func.isRequired,
-  getKodeverknavnFptilbake: PropTypes.func.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 History.defaultProps = {
