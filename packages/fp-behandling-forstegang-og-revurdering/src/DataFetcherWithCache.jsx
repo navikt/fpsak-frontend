@@ -32,6 +32,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
   [BehandlingFpsakApiKeys.VILKAR]: 'vilkar',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
+  [BehandlingFpsakApiKeys.BEREGNINGSGRUNNLAG]: 'beregningsgrunnlag',
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',

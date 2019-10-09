@@ -22,4 +22,4 @@ export const getReadOnly = createSelector([getRettigheter, getNavAnsatt, getBeha
   });
 
 export const getKontrollresultat = createSelector([fpsakApi.KONTROLLRESULTAT.getRestApiData()],
-  (kontrollresultat = {}) => (kontrollresultat || undefined));
+  (kontrollresultat) => kontrollresultat);
