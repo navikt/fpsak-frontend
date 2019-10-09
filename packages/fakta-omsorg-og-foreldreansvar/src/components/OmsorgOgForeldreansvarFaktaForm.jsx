@@ -134,7 +134,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
           </div>
           )}
         <Normaltekst>
-          {`${getDescriptionText(vilkarType)} `}
+          {getDescriptionText(vilkarType)}
         </Normaltekst>
       </FaktaGruppe>
       )}
