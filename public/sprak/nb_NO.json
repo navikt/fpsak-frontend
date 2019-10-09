@@ -345,7 +345,6 @@
   "OmsorgOgForeldreansvarFaktaForm.OmsorgInfo": "Opplysninger om omsorg",
   "OmsorgOgForeldreansvarFaktaForm.CheckInformationForeldreansvar": "Kontroller opplysninger om foreldreansvar og omsorg",
   "OmsorgOgForeldreansvarFaktaForm.ForeldreansvarInfo": "Foreldreansvar og omsorg",
-  "OmsorgOgForeldreansvarFaktaForm.ApplicationInformation": "Omsorgsvilkåret",
   "OmsorgOgForeldreansvarFaktaForm.OmsorgsovertakelseDate": "Dato for omsorgsovertakelse",
   "OmsorgOgForeldreansvarFaktaForm.ForeldreansvarDato": "Dato for foreldreansvar",
   "OmsorgOgForeldreansvarFaktaForm.AdditionalInfo": "Tilleggsopplysninger",
@@ -543,7 +542,6 @@
   "HENLAGT_SØKNAD_MANGLER": "Søknad mangler",
   "MANGLER_BEREGNINGSREGLER": "Mangler beregningsregler (1. jan 2019)",
   "ChangeBehandlendeEnhetModal.ModalDescription": "Endre behandlende enhet",
-  "ChangeBehandlendeEnhetModal.BehandlendeEnhet": "Behandlende enhet",
   "ChangeBehandlendeEnhetModal.Endre": "Endre enhet",
   "ChangeBehandlendeEnhetModal.EndreEnhet": "Endre behandlende enhet for valgt behandling",
   "ChangeBehandlendeEnhetModal.NyEnhetField": "Ny enhet",
@@ -973,7 +971,6 @@
   "Beregningsgrunnlag.Forms.Vurdering": "Vurdering",
   "Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag": "Vurdering av fastsatt beregningsgrunnlag",
   "Beregningsgrunnlag.Forms.Bekreft": "Bekreft og fortsett",
-  "Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndringNæring": "Endring i næringsvirksomhet",
   "Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring": "Ingen varig endring eller nyoppstartet næring",
   "Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering": "Varig endring eller nyoppstartet næring",
   "Beregningsgrunnlag.FastsettSelvstendigNaeringForm.FastsettNaeringsinntekt": "Fastsett næringsinntekt",
@@ -1264,7 +1261,6 @@
   "AdressePanel.utlandSakstype.EøsBosattNorge": "EØS bosatt Norge",
   "AdressePanel.utlandSakstype.BosattUtland": "Bosatt utland",
 
-  "TermindatoFaktaForm.UtstedtDato": "Utstedt dato",
   "TermindatoFaktaForm.Termindato": "Termindato",
 
   "SjekkFodselDokForm.BrukAntallITPS": "Bruk antall fra folkeregisteret",
@@ -1954,10 +1950,6 @@
   "TerminFodselSvpPanel.TerminOgFodsel": "Opplysninger om termin og fødsel",
   "TerminFodselSvpPanel.Termindato": "Termindato",
   "TerminFodselSvpPanel.Fodselsdato": "Fødselsdato",
-
-  "VurderSoknadsfristForeldrepengerForm.GyldigGrunn": "Gyldig grunn for sen fremsetting av søknaden",
-  "VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn": "Ingen gyldig grunn for sen fremsetting av søknaden",
-  "VurderSoknadsfristForeldrepengerForm.NyMottattDato": "Dato for når søknaden kan anses som mottatt",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid"
 }

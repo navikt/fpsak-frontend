@@ -226,11 +226,11 @@ const historikkEndretFeltVerdiTypeCodes = {
   },
   HAR_GYLDIG_GRUNN: {
     kode: 'HAR_GYLDIG_GRUNN',
-    verdiId: 'VurderSoknadsfristForeldrepengerForm.GyldigGrunn',
+    verdiId: 'HistorikkEndretFeltVerdiType.GyldigGrunn',
   },
   HAR_IKKE_GYLDIG_GRUNN: {
     kode: 'HAR_IKKE_GYLDIG_GRUNN',
-    verdiId: 'VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn',
+    verdiId: 'HistorikkEndretFeltVerdiType.IkkeGyldigGrunn',
   },
   FASTSETT_RESULTAT_GRADERING_AVKLARES: {
     kode: 'FASTSETT_RESULTAT_GRADERING_AVKLARES',
@@ -759,11 +759,11 @@ const historikkEndretFeltVerdiTypeCodes = {
   },
   VERGE: {
     kode: 'VERGE',
-    verdiId: 'Verge.VergeFullmektig',
+    verdiId: 'HistorikkEndretFeltVerdiType.VergeFullmektig',
   },
   SOEKER: {
     kode: 'SOEKER',
-    verdiId: 'Verge.Soker',
+    verdiId: 'HistorikkEndretFeltVerdiType.Soker',
   },
   BEGGE: {
     kode: 'BEGGE',

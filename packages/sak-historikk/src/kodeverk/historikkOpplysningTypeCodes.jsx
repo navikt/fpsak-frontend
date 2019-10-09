@@ -6,11 +6,11 @@ const historikkOpplysningTypeCodes = {
   },
   TPS_ANTALL_BARN: {
     kode: 'TPS_ANTALL_BARN',
-    feltId: 'Registrering.AntallBarn',
+    feltId: 'HistorikkEndretFelt.AntallBarn',
   },
   FODSELSDATO: {
     kode: 'FODSELSDATO',
-    feltId: 'Registrering.Fodselsdato',
+    feltId: 'Historikk.Fodselsdato',
   },
   UTTAK_PERIODE_FOM: {
     kode: 'UTTAK_PERIODE_FOM',

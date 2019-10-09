@@ -7,7 +7,7 @@ const historikkEndretFeltTypeCodes = {
   },
   ADOPTERER_ALENE: {
     kode: 'ADOPTERER_ALENE',
-    feltId: 'MannAdoptererAleneFaktaForm.AdoptererAlene',
+    feltId: 'HistorikkEndretFelt.AdoptererAlene',
   },
   AKTIVITET: {
     kode: 'AKTIVITET',
@@ -19,7 +19,7 @@ const historikkEndretFeltTypeCodes = {
   },
   ANTALL_BARN: {
     kode: 'ANTALL_BARN',
-    feltId: 'Registrering.AntallBarn',
+    feltId: 'HistorikkEndretFelt.AntallBarn',
   },
   AVKLARSAKSOPPLYSNINGER: {
     kode: 'AVKLARSAKSOPPLYSNINGER',
@@ -27,7 +27,7 @@ const historikkEndretFeltTypeCodes = {
   },
   BEHANDLENDE_ENHET: {
     kode: 'BEHANDLENDE_ENHET',
-    feltId: 'ChangeBehandlendeEnhetModal.BehandlendeEnhet',
+    feltId: 'HistorikkEndretFelt.BehandlendeEnhet',
   },
   BEHANDLING: {
     kode: 'BEHANDLING',
@@ -47,7 +47,7 @@ const historikkEndretFeltTypeCodes = {
   },
   BRUTTO_NAERINGSINNTEKT: {
     kode: 'BRUTTO_NAERINGSINNTEKT',
-    feltId: 'Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr',
+    feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.BruttoBerGr',
   },
   DOKUMENTASJON_FORELIGGER: {
     kode: 'DOKUMENTASJON_FORELIGGER',
@@ -55,11 +55,11 @@ const historikkEndretFeltTypeCodes = {
   },
   EKTEFELLES_BARN: {
     kode: 'EKTEFELLES_BARN',
-    feltId: 'EktefelleFaktaForm.ApplicationInformation',
+    feltId: 'HistorikkEndretFelt.ApplicationInformation',
   },
   ENDRING_NAERING: {
     kode: 'ENDRING_NAERING',
-    feltId: 'Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndringNæring',
+    feltId: 'HistorikkEndretFelt.FastsettSelvstendigNaeringForm.EndringNæring',
   },
   DAGPENGER_INNTEKT: {
     kode: 'DAGPENGER_INNTEKT',
@@ -95,7 +95,7 @@ const historikkEndretFeltTypeCodes = {
   },
   FRILANS_INNTEKT: {
     kode: 'FRILANS_INNTEKT',
-    feltId: 'Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt',
+    feltId: 'HistorikkEndretFelt.AarsinntektPanel.Frilansinntekt',
   },
   FRILANSVIRKSOMHET: {
     kode: 'FRILANSVIRKSOMHET',
@@ -103,7 +103,7 @@ const historikkEndretFeltTypeCodes = {
   },
   GYLDIG_MEDLEM_FOLKETRYGDEN: {
     kode: 'GYLDIG_MEDLEM_FOLKETRYGDEN',
-    feltId: 'MedlemskapInfoPanel.GyldigMedlemFolketrygden',
+    feltId: 'HistorikkEndretFelt.GyldigMedlemFolketrygden',
   },
   INNTEKT: {
     kode: 'INNTEKT',
@@ -127,7 +127,7 @@ const historikkEndretFeltTypeCodes = {
   },
   MANN_ADOPTERER: {
     kode: 'MANN_ADOPTERER',
-    feltId: 'MannAdoptererAleneFaktaForm.ApplicationInformation',
+    feltId: 'HistorikkEndretFelt.MannAdoptererAleneFaktaForm.ApplicationInformation',
   },
   MOTTAR_YTELSE_ARBEID: {
     kode: 'MOTTAR_YTELSE_ARBEID',
@@ -151,11 +151,11 @@ const historikkEndretFeltTypeCodes = {
   },
   OMSORGSOVERTAKELSESDATO: {
     kode: 'OMSORGSOVERTAKELSESDATO',
-    feltId: 'DokumentasjonFaktaForm.Omsorgsovertakelsesdato',
+    feltId: 'HistorikkEndretFelt.Omsorgsovertakelsesdato',
   },
   OMSORGSVILKAR: {
     kode: 'OMSORGSVILKAR',
-    feltId: 'OmsorgOgForeldreansvarFaktaForm.ApplicationInformation',
+    feltId: 'HistorikkEndretFelt.ApplicationInformation',
   },
   OPPHOLDSRETT_EOS: {
     kode: 'OPPHOLDSRETT_EOS',
@@ -187,7 +187,7 @@ const historikkEndretFeltTypeCodes = {
   },
   SOKNADSFRIST: {
     kode: 'SOKNADSFRIST',
-    feltId: 'ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
+    feltId: 'HistorikkEndretFelt.ErSoknadsfristVilkaretOppfyltForm.ApplicationInformation',
   },
   SOKNADSFRISTVILKARET: {
     kode: 'SOKNADSFRISTVILKARET',
@@ -199,11 +199,11 @@ const historikkEndretFeltTypeCodes = {
   },
   TERMINDATO: {
     kode: 'TERMINDATO',
-    feltId: 'TermindatoFaktaForm.Termindato',
+    feltId: 'HistorikkEndretFelt.Termindato',
   },
   UTSTEDTDATO: {
     kode: 'UTSTEDTDATO',
-    feltId: 'TermindatoFaktaForm.UtstedtDato',
+    feltId: 'HistorikkEndretFelt.UtstedtDato',
   },
   VILKAR_SOM_ANVENDES: {
     kode: 'VILKAR_SOM_ANVENDES',
@@ -211,11 +211,11 @@ const historikkEndretFeltTypeCodes = {
   },
   OMSORG: {
     kode: 'OMSORG',
-    feltId: 'OmsorgFaktaForm.Omsorg',
+    feltId: 'HistorikkEndretFelt.Omsorg',
   },
   ALENEOMSORG: {
     kode: 'ALENEOMSORG',
-    feltId: 'OmsorgFaktaForm.Aleneomsorg',
+    feltId: 'HistorikkEndretFelt.Aleneomsorg',
   },
   IKKE_OMSORG_PERIODEN: {
     kode: 'IKKE_OMSORG_PERIODEN',
@@ -223,7 +223,7 @@ const historikkEndretFeltTypeCodes = {
   },
   MOTTATT_DATO: {
     kode: 'MOTTATT_DATO',
-    feltId: 'VurderSoknadsfristForeldrepengerForm.NyMottattDato',
+    feltId: 'HistorikkEndretFelt.NyMottattDato',
   },
   FASTSETT_RESULTAT_PERIODEN: {
     kode: 'FASTSETT_RESULTAT_PERIODEN',
@@ -295,35 +295,35 @@ const historikkEndretFeltTypeCodes = {
   },
   NAVN: {
     kode: 'NAVN',
-    feltId: 'Verge.Navn',
+    feltId: 'HistorikkEndretFelt.Navn',
   },
   FNR: {
     kode: 'FNR',
-    feltId: 'Verge.FodselsNummer',
+    feltId: 'HistorikkEndretFelt.FodselsNummer',
   },
   PERIODE_FOM: {
     kode: 'PERIODE_FOM',
-    feltId: 'Verge.PeriodeFOM',
+    feltId: 'HistorikkEndretFelt.PeriodeFOM',
   },
   PERIODE_TOM: {
     kode: 'PERIODE_TOM',
-    feltId: 'Verge.PeriodeTOM',
+    feltId: 'HistorikkEndretFelt.PeriodeTOM',
   },
   MANDAT: {
     kode: 'MANDAT',
-    feltId: 'Verge.Mandat',
+    feltId: 'HistorikkEndretFelt.Mandat',
   },
   KONTAKTPERSON: {
     kode: 'KONTAKTPERSON',
-    feltId: 'Verge.KontaktPerson',
+    feltId: 'HistorikkEndretFelt.KontaktPerson',
   },
   BRUKER_TVUNGEN: {
     kode: 'BRUKER_TVUNGEN',
-    feltId: 'Verge.BrukerErUnderTvungenForvaltning',
+    feltId: 'HistorikkEndretFelt.BrukerErUnderTvungenForvaltning',
   },
   TYPE_VERGE: {
     kode: 'TYPE_VERGE',
-    feltId: 'Verge.TypeVerge',
+    feltId: 'HistorikkEndretFelt.TypeVerge',
   },
   KLAGE_RESULTAT_NFP: {
     kode: 'KLAGE_RESULTAT_NFP',
