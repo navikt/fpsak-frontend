@@ -129,7 +129,7 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
       definisjon: {
         kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
       },
-      begrunnelse: 'test',
+      begrunnelse: undefined,
     }])}
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
     tilbakekrevingvalg={object('tilbakekrevingvalg', tilbakekrevingvalg)}
@@ -139,28 +139,6 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
-    featureToggles={toggles}
-  />
-);
-
-export const visAksjonspunktVurderInntrekk = () => (
-  <AvregningProsessIndex
-    fagsak={object('fagsak', fagsak)}
-    behandling={behandling}
-    aksjonspunkter={object('aksjonspunkter', [{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDER_INNTREKK,
-      },
-      begrunnelse: 'test',
-    }])}
-    simuleringResultat={object('simuleringResultat', simuleringResultat)}
-    tilbakekrevingvalg={object('tilbakekrevingvalg', tilbakekrevingvalg)}
-    submitCallback={action('button-click')}
-    previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    isApOpen={boolean('isApOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
-    apCodes={array('apCodes', [aksjonspunktCodes.VURDER_INNTREKK])}
     featureToggles={toggles}
   />
 );
