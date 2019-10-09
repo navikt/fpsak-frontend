@@ -73,6 +73,9 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
         fagsakInfo={fagsakInfo}
         alleKodeverk={alleKodeverk}
+        overrideReadOnly={overrideReadOnly}
+        kanOverstyreAccess={kanOverstyreAccess}
+        toggleOverstyring={toggleOverstyring}
       />
       <VedtakPanels
         behandlingspunkt={selectedBehandlingspunkt}

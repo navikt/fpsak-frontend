@@ -7,30 +7,19 @@ import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import { VilkarResultPicker, behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import {
+  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, behandlingspunktCodes,
+  OverstyrBekreftKnappPanel, OverstyrVurderingVelger,
+} from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
-import {
-  getBehandlingRevurderingAvFortsattMedlemskapFom,
-  isBehandlingRevurderingFortsattMedlemskap,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getFagsakYtelseType, getKodeverk, isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import OverstyrVurderingChecker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrVurderingChecker';
-import OverstyrConfirmationForm from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmationForm';
-import OverstyrConfirmVilkarButton from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/OverstyrConfirmVilkarButton';
-
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
-import { getAllApCodes, getApCode } from './BehandlingspunktToAksjonspunkt';
+import getApCode from '../BehandlingspunktToAksjonspunkt';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
 
@@ -44,12 +33,12 @@ const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) =>
   ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
 
-const getCustomVilkarText = (state, behandlingspunkt, oppfylt) => {
+const getCustomVilkarText = (behandlingspunkt, oppfylt, medlemskapFom, behandlingType) => {
   const customVilkarText = {};
-  if (behandlingspunkt === behandlingspunktCodes.MEDLEMSKAP && isBehandlingRevurderingFortsattMedlemskap(state)) {
-    const fom = getBehandlingRevurderingAvFortsattMedlemskapFom(state);
+  const isBehandlingRevurderingFortsattMedlemskap = behandlingType.kode === BehandlingType.REVURDERING && !!medlem.fom;
+  if (behandlingspunkt === behandlingspunktCodes.MEDLEMSKAP && isBehandlingRevurderingFortsattMedlemskap) {
     customVilkarText.id = oppfylt ? 'VilkarResultPicker.VilkarOppfyltRevurderingFom' : 'VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom';
-    customVilkarText.values = { fom: moment(fom).format(DDMMYYYY_DATE_FORMAT) };
+    customVilkarText.values = { fom: moment(medlemskapFom).format(DDMMYYYY_DATE_FORMAT) };
   }
   return customVilkarText.id ? customVilkarText : undefined;
 };
@@ -60,7 +49,7 @@ const getCustomVilkarText = (state, behandlingspunkt, oppfylt) => {
  * Presentasjonskomponent. Viser resultat av vilkårskjøring når det ikke finnes tilknyttede aksjonspunkter.
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
-export const VilkarresultatMedOverstyringFormImpl = ({
+export const VilkarresultatMedOverstyringForm = ({
   intl,
   behandlingspunktTitleCode,
   isOverstyrt,
@@ -74,6 +63,10 @@ export const VilkarresultatMedOverstyringFormImpl = ({
   behandlingspunkt,
   hasAksjonspunkt,
   avslagsarsaker,
+  overrideReadOnly,
+  kanOverstyreAccess,
+  aksjonspunktCodes,
+  toggleOverstyring,
   ...formProps
 }) => (
   <FadingPanel>
@@ -84,7 +77,14 @@ export const VilkarresultatMedOverstyringFormImpl = ({
           <Normaltekst>{lovReferanse}</Normaltekst>
         </div>
         <div className={styles.checkerAlign}>
-          <OverstyrVurderingChecker aksjonspunktCode={apCode} resetValues={formProps.reset} />
+          <OverstyrVurderingVelger
+            aksjonspunktCode={apCode}
+            resetValues={formProps.reset}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            aksjonspunktCodes={aksjonspunktCodes}
+            toggleOverstyring={toggleOverstyring}
+          />
         </div>
       </div>
       <VilkarresultatMedBegrunnelse
@@ -97,12 +97,16 @@ export const VilkarresultatMedOverstyringFormImpl = ({
         hasAksjonspunkt={hasAksjonspunkt}
         avslagsarsaker={avslagsarsaker}
       />
-      <OverstyrConfirmVilkarButton submitting={formProps.submitting} pristine={!isSolvable || formProps.pristine} />
+      <OverstyrBekreftKnappPanel
+        submitting={formProps.submitting}
+        pristine={!isSolvable || formProps.pristine}
+        overrideReadOnly={overrideReadOnly}
+      />
     </form>
   </FadingPanel>
 );
 
-VilkarresultatMedOverstyringFormImpl.propTypes = {
+VilkarresultatMedOverstyringForm.propTypes = {
   intl: PropTypes.shape().isRequired,
   isOverstyrt: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool.isRequired,
@@ -119,14 +123,17 @@ VilkarresultatMedOverstyringFormImpl.propTypes = {
   }),
   behandlingspunkt: PropTypes.string.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
-  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-    navn: PropTypes.string.isRequired,
-  })).isRequired,
+  avslagsarsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  overrideReadOnly: PropTypes.bool.isRequired,
+  toggleOverstyring: PropTypes.func.isRequired,
+  kanOverstyreAccess: PropTypes.shape({
+    isEnabled: PropTypes.bool.isRequired,
+  }).isRequired,
+  aksjonspunktCodes: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   ...formPropTypes,
 };
 
-VilkarresultatMedOverstyringFormImpl.defaultProps = {
+VilkarresultatMedOverstyringForm.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
   aksjonspunktCode: undefined,
@@ -134,9 +141,12 @@ VilkarresultatMedOverstyringFormImpl.defaultProps = {
 };
 
 const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus, behandlingsprosessSelectors.getSelectedBehandlingspunkt,
-    getFagsakYtelseType, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar],
+  [(ownProps) => ownProps.behandlingsresultat,
+    (ownProps) => ownProps.behandlingspunktAksjonspunkter,
+    (ownProps) => ownProps.behandlingspunktStatus,
+    (ownProps) => ownProps.behandlingspunkt,
+    (ownProps) => ownProps.fagsakYtelseType,
+    (ownProps) => ownProps.behandlingspunktVilkar],
   (behandlingsresultat, aksjonspunkter, status, behandlingspunkt, ytelseType, allVilkar) => {
     const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
     const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === apCode);
@@ -151,71 +161,66 @@ const buildInitialValues = createSelector(
 const transformValues = (values, apCode) => ({
   kode: apCode,
   ...VilkarResultPicker.transformValues(values),
-  ...OverstyrConfirmationForm.transformValues(values),
+  ...VilkarresultatMedBegrunnelse.transformValues(values),
 });
 
 const validate = (values) => VilkarresultatMedBegrunnelse.validate(values);
 
 const getVilkar = createSelector(
-  [behandlingsprosessSelectors.getSelectedBehandlingspunkt, behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar],
+  [(ownProps) => ownProps.behandlingspunkt, (ownProps) => ownProps.behandlingspunktVilkar],
   (behandlingspunkt, allVilkar) => {
     const vtKode = behandlingpunktToVilkar[behandlingspunkt];
     return vtKode ? allVilkar.find((v) => v.vilkarType.kode === vtKode) : allVilkar[0];
   },
 );
 
-const getRelevanteAvslagsarsaker = (vilkarTypeKode, state) => {
-  const vilkartypeAvslagsarsaker = getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state)[vilkarTypeKode];
+const getRelevanteAvslagsarsaker = (vilkarTypeKode, fagsakYtelseType, avslagsarsaker) => {
+  const vilkartypeAvslagsarsaker = avslagsarsaker[vilkarTypeKode];
   if (vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR) {
-    return getFodselVilkarAvslagsarsaker(isForeldrepengerFagsak(state), vilkartypeAvslagsarsaker);
+    return getFodselVilkarAvslagsarsaker(fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER, vilkartypeAvslagsarsaker);
   }
   return vilkartypeAvslagsarsaker;
 };
 
-
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const behandlingspunkt = behandlingsprosessSelectors.getSelectedBehandlingspunkt(initialState);
-  const apCode = getApCode(behandlingspunkt, getFagsakYtelseType(initialState), behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(initialState));
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, apCode)]);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { behandlingspunkt } = initialOwnProps;
+  const apCode = getApCode(behandlingspunkt, initialOwnProps.fagsakYtelseType, initialOwnProps.behandlingspunktVilkar);
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, apCode)]);
   const validateFn = (values) => validate(values);
+  const aksjonspunktCodes = initialOwnProps.aksjonspunkter.map((a) => a.definisjon.kode);
 
-  return (state) => {
-    const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state);
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon } = ownProps;
+    const aksjonspunkter = ownProps.behandlingspunktAksjonspunkter;
     const formName = `VilkarresultatForm_${behandlingspunkt}`;
     const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === apCode);
-    const vilkar = getVilkar(state);
+    const vilkar = getVilkar(ownProps);
     const isSolvable = aksjonspunkt !== undefined
       ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses) : false;
-    const formData = { ...behandlingFormValueSelector(formName)(state, 'isOverstyrt', 'erVilkarOk') };
-    const customVilkarIkkeOppfyltText = getCustomVilkarText(state, behandlingspunkt, false);
-    const customVilkarOppfyltText = getCustomVilkarText(state, behandlingspunkt, true);
+    const formData = { ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk') };
+    const customVilkarIkkeOppfyltText = getCustomVilkarText(behandlingspunkt, false, ownProps.medlemskapFom, ownProps.behandlingType);
+    const customVilkarOppfyltText = getCustomVilkarText(behandlingspunkt, true, ownProps.medlemskapFom, ownProps.behandlingType);
 
     return {
+      aksjonspunktCodes,
       apCode,
       customVilkarOppfyltText,
       customVilkarIkkeOppfyltText,
       lovReferanse: vilkar.lovReferanse,
-      isSolvable: behandlingsprosessSelectors.getIsSelectedBehandlingspunktOverridden(state) || isSolvable,
-      isReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
-      behandlingspunktTitleCode: behandlingsprosessSelectors.getSelectedBehandlingspunktTitleCode(state),
+      isSolvable: ownProps.behandlingspunktOverridden || isSolvable,
+      isReadOnly: ownProps.behandlingspunktOverrideReadOnly,
+      behandlingspunktTitleCode: ownProps.behandlingspunktTitleCode,
       behandlingspunkt,
       hasAksjonspunkt: aksjonspunkt !== undefined,
-      avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, state),
+      avslagsarsaker: getRelevanteAvslagsarsaker(vilkar.vilkarType.kode, ownProps.fagsakYtelseType, ownProps.avslagsarsaker),
       form: formName,
       ...formData,
-      initialValues: buildInitialValues(state),
+      initialValues: buildInitialValues(ownProps),
       validate: validateFn,
       onSubmit,
     };
   };
 };
 
-const form = behandlingFormForstegangOgRevurdering({ enableReinitialize: true })(VilkarresultatMedOverstyringFormImpl);
-const VilkarresultatMedOverstyringForm = injectIntl(connect(mapStateToPropsFactory)(form));
-
-VilkarresultatMedOverstyringForm.supports = (apCodes, behandlingspunkt) => {
-  const bpApCodes = getAllApCodes(behandlingspunkt);
-  return (apCodes.length === 0 && bpApCodes.length > 0) || apCodes.some((apCode) => bpApCodes.includes(apCode));
-};
-
-export default VilkarresultatMedOverstyringForm;
+const form = behandlingForm({ enableReinitialize: true })(VilkarresultatMedOverstyringForm);
+export default injectIntl(connect(mapStateToPropsFactory)(form));

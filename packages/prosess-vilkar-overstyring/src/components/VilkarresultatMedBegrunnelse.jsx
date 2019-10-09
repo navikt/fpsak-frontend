@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
 
-import { getApCode } from './BehandlingspunktToAksjonspunkt';
+import getApCode from '../BehandlingspunktToAksjonspunkt';
 
 
 /**
@@ -73,6 +73,10 @@ VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonsp
     ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
   };
 };
+
+VilkarresultatMedBegrunnelse.transformValues = (values) => ({
+  begrunnelse: values.begrunnelse,
+});
 
 VilkarresultatMedBegrunnelse.validate = (values) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 

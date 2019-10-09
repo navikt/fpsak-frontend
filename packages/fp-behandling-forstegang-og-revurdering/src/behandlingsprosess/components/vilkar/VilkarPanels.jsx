@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
@@ -9,17 +10,19 @@ import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
 import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
+import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 
+import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
-import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
+import getAllApCodes from './BehandlingspunktToAksjonspunkt';
 
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
@@ -28,6 +31,12 @@ const omsorgData = [fpsakApi.BEHANDLING];
 const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 const foreldreansvarData = [fpsakApi.BEHANDLING];
+const vilkarresultatMedOverstyringData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.MEDLEMSKAP];
+
+const harVilkarresultatMedOverstyring = (apCodes, behandlingspunkt) => {
+  const bpApCodes = getAllApCodes(behandlingspunkt);
+  return (apCodes.length === 0 && bpApCodes.length > 0) || apCodes.some((apCode) => bpApCodes.includes(apCode));
+};
 
 /*
  * VilkarPanels
@@ -45,12 +54,41 @@ export const VilkarPanels = ({
   behandlingspunktAksjonspunkter,
   behandlingspunktStatus,
   behandlingspunktVilkar,
+  behandlingspunktOverridden,
+  behandlingspunktOverrideReadOnly,
+  behandlingspunktTitleCode,
+  kanOverstyreAccess,
   alleKodeverk,
   fagsakInfo,
+  overrideReadOnly,
+  toggleOverstyring,
+  avslagsarsaker,
 }) => (
   <ElementWrapper>
-    {VilkarresultatMedOverstyringForm.supports(aksjonspunktCodes, behandlingspunkt) && (
-      <VilkarresultatMedOverstyringForm key={behandlingspunkt} submitCallback={submitCallback} />
+    {harVilkarresultatMedOverstyring(aksjonspunktCodes, behandlingspunkt) && (
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={vilkarresultatMedOverstyringData}
+        render={(props) => (
+          <VilkarresultatMedOverstyringProsessIndex
+            key={behandlingspunkt}
+            submitCallback={submitCallback}
+            overrideReadOnly={overrideReadOnly}
+            kanOverstyreAccess={kanOverstyreAccess}
+            toggleOverstyring={toggleOverstyring}
+            fagsakYtelseType={fagsakInfo.ytelseType}
+            behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
+            behandlingspunktStatus={behandlingspunktStatus}
+            behandlingspunktVilkar={behandlingspunktVilkar}
+            behandlingspunktOverridden={behandlingspunktOverridden}
+            behandlingspunktOverrideReadOnly={behandlingspunktOverrideReadOnly}
+            behandlingspunktTitleCode={behandlingspunktTitleCode}
+            behandlingspunkt={behandlingspunkt}
+            avslagsarsaker={avslagsarsaker}
+            {...props}
+          />
+        )}
+      />
     )}
 
     {behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT && (
@@ -220,12 +258,23 @@ VilkarPanels.propTypes = {
   behandlingspunktVilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
+  kanOverstyreAccess: PropTypes.shape().isRequired,
+  behandlingspunktOverridden: PropTypes.bool.isRequired,
+  behandlingspunktOverrideReadOnly: PropTypes.bool.isRequired,
+  behandlingspunktTitleCode: PropTypes.string.isRequired,
+  overrideReadOnly: PropTypes.bool.isRequired,
+  toggleOverstyring: PropTypes.func.isRequired,
+  avslagsarsaker: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
   vilkarTypeCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
   behandlingspunktStatus: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
   behandlingspunktVilkar: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state),
+  behandlingspunktOverridden: behandlingsprosessSelectors.getIsSelectedBehandlingspunktOverridden(state),
+  behandlingspunktOverrideReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
+  behandlingspunktTitleCode: behandlingsprosessSelectors.getSelectedBehandlingspunktTitleCode(state),
+  avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state),
 });
 
 export default connect(mapStateToProps)(VilkarPanels);

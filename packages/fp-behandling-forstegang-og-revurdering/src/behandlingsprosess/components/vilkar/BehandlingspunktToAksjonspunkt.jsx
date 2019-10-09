@@ -1,6 +1,5 @@
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { isObject } from '@fpsak-frontend/utils';
 
@@ -33,21 +32,7 @@ const behandlingspunktToAksjonspunktSvangerskapspenger = {
 };
 
 
-export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
-  let apCode = null;
-  if (ytelseType && ytelseType.kode === fagsakYtelseType.FORELDREPENGER) {
-    apCode = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
-  } else if (ytelseType && ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-    apCode = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
-  } else {
-    apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
-  }
-  return isObject(apCode)
-    ? apCode[allVilkar.map((v) => v.vilkarType.kode).find((v) => apCode[v])]
-    : apCode;
-};
-
-export const getAllApCodes = (behandlingspunkt) => {
+const getAllApCodes = (behandlingspunkt) => {
   const esAp = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
   let apCodes = esAp ? [esAp] : [];
   const fpAps = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
@@ -64,3 +49,5 @@ export const getAllApCodes = (behandlingspunkt) => {
   }
   return apCodes;
 };
+
+export default getAllApCodes;
