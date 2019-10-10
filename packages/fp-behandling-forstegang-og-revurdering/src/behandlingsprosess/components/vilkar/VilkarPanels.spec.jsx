@@ -32,12 +32,13 @@ describe('<VilkarPanels>', () => {
       overrideReadOnly={false}
       toggleOverstyring={sinon.spy()}
       avslagsarsaker={{}}
+      harVilkarresultatMedOverstyring={false}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
-    expect(dataFetchers).to.have.length(1);
+    expect(dataFetchers).to.have.length(8);
 
-    const sokersOpplysningPanel = dataFetchers.renderProp('render')({
+    const sokersOpplysningPanel = dataFetchers.at(1).renderProp('render')({
       behandling: { id: 1, versjon: 1 },
       soknad: {},
     }).find(SokersOpplysningspliktVilkarProsessIndex);

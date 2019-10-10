@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { useIntl } from 'react-intl';
+import { createSelector } from 'reselect';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
@@ -13,8 +14,8 @@ import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-for
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
@@ -22,7 +23,9 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
-import getAllApCodes from './BehandlingspunktToAksjonspunkt';
+import {
+  hentAlleOverstyringAksjonspunktKoderFor, hentOverstyringAksjonspunktKodeFor, getVilkarKodeFor, getFiltrerteAvslagsarsaker,
+} from './vilkarOverstyringHjelper';
 
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
@@ -31,12 +34,7 @@ const omsorgData = [fpsakApi.BEHANDLING];
 const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 const foreldreansvarData = [fpsakApi.BEHANDLING];
-const vilkarresultatMedOverstyringData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.MEDLEMSKAP];
-
-const harVilkarresultatMedOverstyring = (apCodes, behandlingspunkt) => {
-  const bpApCodes = getAllApCodes(behandlingspunkt);
-  return (apCodes.length === 0 && bpApCodes.length > 0) || apCodes.some((apCode) => bpApCodes.includes(apCode));
-};
+const vilkarresultatMedOverstyringData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP];
 
 /*
  * VilkarPanels
@@ -60,178 +58,173 @@ export const VilkarPanels = ({
   kanOverstyreAccess,
   alleKodeverk,
   fagsakInfo,
-  overrideReadOnly,
   toggleOverstyring,
   avslagsarsaker,
+  harVilkarresultatMedOverstyring,
 }) => (
-  <ElementWrapper>
-    {harVilkarresultatMedOverstyring(aksjonspunktCodes, behandlingspunkt) && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={vilkarresultatMedOverstyringData}
-        render={(props) => (
+  <>
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={vilkarresultatMedOverstyringData}
+      showComponent={harVilkarresultatMedOverstyring}
+      render={(props) => {
+        const vilkarKode = getVilkarKodeFor(behandlingspunkt, behandlingspunktVilkar);
+        const vilkar = vilkarKode ? allVilkar.find((v) => v.vilkarType.kode === vilkarKode) : behandlingspunktVilkar[0];
+        return (
           <VilkarresultatMedOverstyringProsessIndex
             key={behandlingspunkt}
             submitCallback={submitCallback}
-            overrideReadOnly={overrideReadOnly}
             kanOverstyreAccess={kanOverstyreAccess}
             toggleOverstyring={toggleOverstyring}
-            fagsakYtelseType={fagsakInfo.ytelseType}
-            behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
-            behandlingspunktStatus={behandlingspunktStatus}
-            behandlingspunktVilkar={behandlingspunktVilkar}
-            behandlingspunktOverridden={behandlingspunktOverridden}
-            behandlingspunktOverrideReadOnly={behandlingspunktOverrideReadOnly}
-            behandlingspunktTitleCode={behandlingspunktTitleCode}
-            behandlingspunkt={behandlingspunkt}
-            avslagsarsaker={avslagsarsaker}
-            {...props}
-          />
-        )}
-      />
-    )}
-
-    {behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={sokersOpplysningspliktData}
-        render={(props) => (
-          <SokersOpplysningspliktVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
             status={behandlingspunktStatus}
-            alleKodeverk={alleKodeverk}
-            {...props}
-          />
-        )}
-      />
-    )}
-
-    {(aksjonspunktCodes.includes(AksjonspunktCodes.SOKNADSFRISTVILKARET)) && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={soknadsfristData}
-        render={(props) => (
-          <SoknadsfristVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
             aksjonspunkter={behandlingspunktAksjonspunkter}
-            status={behandlingspunktStatus}
-            alleKodeverk={alleKodeverk}
+            erOverstyrt={behandlingspunktOverridden}
+            overrideReadOnly={behandlingspunktOverrideReadOnly}
+            panelTittel={useIntl().formatMessage({ id: behandlingspunktTitleCode })}
+            avslagsarsaker={getFiltrerteAvslagsarsaker(vilkar.vilkarType.kode, fagsakInfo.ytelseType, avslagsarsaker)}
+            lovReferanse={vilkar.lovReferanse}
+            overstyringApKode={hentOverstyringAksjonspunktKodeFor(behandlingspunkt, fagsakInfo.ytelseType, behandlingspunktVilkar)}
+            erMedlemskapsPanel={behandlingspunkt === behandlingspunktCodes.MEDLEMSKAP}
             {...props}
           />
-        )}
-      />
-    )}
+        );
+      }}
+    />
 
-    {(behandlingspunkt === behandlingspunktCodes.OMSORG
-      && (aksjonspunktCodes.includes(AksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)
-      || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-      || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))) && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={omsorgData}
-        render={(props) => (
-          <OmsorgVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
-            status={behandlingspunktStatus}
-            alleKodeverk={alleKodeverk}
-            {...props}
-          />
-        )}
-      />
-    )}
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={sokersOpplysningspliktData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.OPPLYSNINGSPLIKT}
+      render={(props) => (
+        <SokersOpplysningspliktVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
 
-    {behandlingspunkt === behandlingspunktCodes.FORELDREANSVAR && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={foreldreansvarData}
-        render={(props) => (
-          <ForeldreansvarVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
-            isEngangsstonad={fagsakInfo.ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD}
-            status={behandlingspunktStatus}
-            alleKodeverk={alleKodeverk}
-            vilkarTypeCodes={vilkarTypeCodes}
-            {...props}
-          />
-        )}
-      />
-    )}
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={soknadsfristData}
+      showComponent={aksjonspunktCodes.includes(AksjonspunktCodes.SOKNADSFRISTVILKARET)}
+      render={(props) => (
+        <SoknadsfristVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
 
-    {behandlingspunkt === behandlingspunktCodes.SVANGERSKAP && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={svangerskapData}
-        render={(props) => (
-          <SvangerskapVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            isAksjonspunktOpen={isAksjonspunktOpen}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
-            status={behandlingspunktStatus}
-            vilkar={behandlingspunktVilkar}
-            alleKodeverk={alleKodeverk}
-            {...props}
-          />
-        )}
-      />
-    )}
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={omsorgData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.OMSORG
+        && (aksjonspunktCodes.includes(AksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)
+        || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
+        || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))}
+      render={(props) => (
+        <OmsorgVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
 
-    {(behandlingspunkt === behandlingspunktCodes.FOEDSEL
-      && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-      || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))) && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={fodselData}
-        render={(props) => (
-          <FodselVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            isAksjonspunktOpen={isAksjonspunktOpen}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
-            status={behandlingspunktStatus}
-            vilkar={behandlingspunktVilkar}
-            ytelseTypeKode={fagsakInfo.ytelseType.kode}
-            alleKodeverk={alleKodeverk}
-            {...props}
-          />
-        )}
-      />
-    )}
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={foreldreansvarData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.FORELDREANSVAR}
+      render={(props) => (
+        <ForeldreansvarVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          isEngangsstonad={fagsakInfo.ytelseType.kode === FagsakYtelseType.ENGANGSSTONAD}
+          status={behandlingspunktStatus}
+          alleKodeverk={alleKodeverk}
+          vilkarTypeCodes={vilkarTypeCodes}
+          {...props}
+        />
+      )}
+    />
 
-    {(behandlingspunkt === behandlingspunktCodes.ADOPSJON
-    && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-    || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))) && (
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={adopsjonData}
-        render={(props) => (
-          <AdopsjonVilkarProsessIndex
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            isAksjonspunktOpen={isAksjonspunktOpen}
-            aksjonspunkter={behandlingspunktAksjonspunkter}
-            status={behandlingspunktStatus}
-            vilkar={behandlingspunktVilkar}
-            alleKodeverk={alleKodeverk}
-            {...props}
-          />
-        )}
-      />
-    )}
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={svangerskapData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.SVANGERSKA}
+      render={(props) => (
+        <SvangerskapVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          vilkar={behandlingspunktVilkar}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
+
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={fodselData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.FOEDSEL
+        && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
+        || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))}
+      render={(props) => (
+        <FodselVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          vilkar={behandlingspunktVilkar}
+          ytelseTypeKode={fagsakInfo.ytelseType.kode}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
+
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={adopsjonData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.ADOPSJON
+        && (aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
+        || aksjonspunktCodes.includes(AksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN))}
+      render={(props) => (
+        <AdopsjonVilkarProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          vilkar={behandlingspunktVilkar}
+          alleKodeverk={alleKodeverk}
+          {...props}
+        />
+      )}
+    />
 
     {OpptjeningVilkarForm.supports(behandlingspunkt)
       && (
@@ -242,7 +235,7 @@ export const VilkarPanels = ({
         readOnlySubmitButton={readOnlySubmitButton}
       />
       )}
-  </ElementWrapper>
+  </>
 );
 
 VilkarPanels.propTypes = {
@@ -262,19 +255,33 @@ VilkarPanels.propTypes = {
   behandlingspunktOverridden: PropTypes.bool.isRequired,
   behandlingspunktOverrideReadOnly: PropTypes.bool.isRequired,
   behandlingspunktTitleCode: PropTypes.string.isRequired,
-  overrideReadOnly: PropTypes.bool.isRequired,
   toggleOverstyring: PropTypes.func.isRequired,
   avslagsarsaker: PropTypes.shape().isRequired,
+  harVilkarresultatMedOverstyring: PropTypes.bool.isRequired,
 };
 
+const harVilkarresultatMedOverstyring = createSelector(
+  [behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes, behandlingsprosessSelectors.getSelectedBehandlingspunkt],
+  (apKoder, behandlingspunkt) => {
+    const overstyringApKoder = hentAlleOverstyringAksjonspunktKoderFor(behandlingspunkt);
+    const harIngenApOgMulighetTilOverstyring = apKoder.length === 0 && overstyringApKoder.length > 0;
+    const harApSomErOverstyringAp = apKoder.some((apCode) => overstyringApKoder.includes(apCode));
+    return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
+  },
+);
+
 const mapStateToProps = (state) => ({
+  behandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
   vilkarTypeCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
   behandlingspunktStatus: behandlingsprosessSelectors.getSelectedBehandlingspunktStatus(state),
   behandlingspunktVilkar: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state),
   behandlingspunktOverridden: behandlingsprosessSelectors.getIsSelectedBehandlingspunktOverridden(state),
   behandlingspunktOverrideReadOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktOverrideReadOnly(state),
   behandlingspunktTitleCode: behandlingsprosessSelectors.getSelectedBehandlingspunktTitleCode(state),
+  aksjonspunktCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
+  behandlingspunktAksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
   avslagsarsaker: getKodeverk(kodeverkTyper.AVSLAGSARSAK)(state),
+  harVilkarresultatMedOverstyring: harVilkarresultatMedOverstyring(state),
 });
 
 export default connect(mapStateToProps)(VilkarPanels);

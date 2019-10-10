@@ -64,16 +64,12 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
       <VilkarPanels
-        aksjonspunktCodes={apCodes}
-        behandlingspunkt={selectedBehandlingspunkt}
         isAksjonspunktOpen={openAksjonspunkt}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         submitCallback={submitCallback}
-        behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
         fagsakInfo={fagsakInfo}
         alleKodeverk={alleKodeverk}
-        overrideReadOnly={overrideReadOnly}
         kanOverstyreAccess={kanOverstyreAccess}
         toggleOverstyring={toggleOverstyring}
       />

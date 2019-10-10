@@ -19,21 +19,19 @@ const intl = createIntl({
 
 const VilkarresultatMedOverstyringProsessIndex = ({
   behandling,
-  aksjonspunkter,
   medlemskap,
+  aksjonspunkter,
   submitCallback,
   overrideReadOnly,
   kanOverstyreAccess,
   toggleOverstyring,
-  fagsakYtelseType,
   avslagsarsaker,
-  behandlingspunktAksjonspunkter,
-  behandlingspunktStatus,
-  behandlingspunktVilkar,
-  behandlingspunktOverridden,
-  behandlingspunktOverrideReadOnly,
-  behandlingspunktTitleCode,
-  behandlingspunkt,
+  status,
+  erOverstyrt,
+  panelTittel,
+  overstyringApKode,
+  lovReferanse,
+  erMedlemskapsPanel,
 }) => (
   <RawIntlProvider value={intl}>
     <VilkarresultatMedOverstyringForm
@@ -41,48 +39,40 @@ const VilkarresultatMedOverstyringProsessIndex = ({
       behandlingVersjon={behandling.versjon}
       behandlingType={behandling.type}
       behandlingsresultat={behandling.behandlingsresultat}
-      aksjonspunkter={aksjonspunkter}
       medlemskapFom={medlemskap.fom}
+      aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       overrideReadOnly={overrideReadOnly}
       kanOverstyreAccess={kanOverstyreAccess}
       toggleOverstyring={toggleOverstyring}
-      fagsakYtelseType={fagsakYtelseType}
       avslagsarsaker={avslagsarsaker}
-      behandlingspunktAksjonspunkter={behandlingspunktAksjonspunkter}
-      behandlingspunktStatus={behandlingspunktStatus}
-      behandlingspunktVilkar={behandlingspunktVilkar}
-      behandlingspunktOverridden={behandlingspunktOverridden}
-      behandlingspunktOverrideReadOnly={behandlingspunktOverrideReadOnly}
-      behandlingspunktTitleCode={behandlingspunktTitleCode}
-      behandlingspunkt={behandlingspunkt}
+      status={status}
+      erOverstyrt={erOverstyrt}
+      panelTittel={panelTittel}
+      overstyringApKode={overstyringApKode}
+      lovReferanse={lovReferanse}
+      erMedlemskapsPanel={erMedlemskapsPanel}
     />
   </RawIntlProvider>
 );
 
 VilkarresultatMedOverstyringProsessIndex.propTypes = {
   behandling: vilkarOverstyringBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(vilkarOverstyringAksjonspunkterPropType).isRequired,
   medlemskap: vilkarOverstyringMedlemskapPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(vilkarOverstyringAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   overrideReadOnly: PropTypes.bool.isRequired,
   kanOverstyreAccess: PropTypes.shape({
     isEnabled: PropTypes.bool.isRequired,
   }).isRequired,
   toggleOverstyring: PropTypes.func.isRequired,
-  fagsakYtelseType: kodeverkObjektPropType.isRequired,
-  avslagsarsaker: PropTypes.shape().isRequired,
-  behandlingspunktAksjonspunkter: PropTypes.arrayOf(vilkarOverstyringAksjonspunkterPropType).isRequired,
-  behandlingspunktStatus: PropTypes.string.isRequired,
-  behandlingspunktVilkar: PropTypes.arrayOf(PropTypes.shape({
-    vilkarType: PropTypes.shape({
-      kode: PropTypes.string,
-    }),
-  })).isRequired,
-  behandlingspunktOverridden: PropTypes.bool.isRequired,
-  behandlingspunktOverrideReadOnly: PropTypes.bool.isRequired,
-  behandlingspunktTitleCode: PropTypes.string.isRequired,
-  behandlingspunkt: PropTypes.string.isRequired,
+  avslagsarsaker: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
+  status: PropTypes.string.isRequired,
+  lovReferanse: PropTypes.string.isRequired,
+  erOverstyrt: PropTypes.bool.isRequired,
+  panelTittel: PropTypes.string.isRequired,
+  overstyringApKode: PropTypes.string.isRequired,
+  erMedlemskapsPanel: PropTypes.bool.isRequired,
 };
 
 export default VilkarresultatMedOverstyringProsessIndex;
