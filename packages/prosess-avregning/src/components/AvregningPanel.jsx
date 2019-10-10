@@ -237,7 +237,7 @@ export class AvregningPanelImpl extends Component {
                             </RadioOption>
                           )}
                           <RadioOption
-                            label={<FormattedMessage id="Avregning.OpprettMenIkkeSendVarsel" />}
+                            label={<FormattedMessage id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'} />}
                             value={`${tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}${IKKE_SEND}`}
                           />
                           <RadioOption
@@ -314,7 +314,7 @@ const buildInitialValues = createSelector(
     }
 
     return {
-      videreBehandling: tilbakekrevingvalg.videreBehandling.kode,
+      videreBehandling: tilbakekrevingvalg.varseltekst ? tilbakekrevingvalg.videreBehandling.kode : tilbakekrevingvalg.videreBehandling.kode + IKKE_SEND,
       varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };

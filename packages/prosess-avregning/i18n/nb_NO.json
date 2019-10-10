@@ -49,6 +49,7 @@
   "Avregning.videreBehandling": "Fastsett videre behandling",
   "Avregning.gjennomfør": "Opprett tilbakekreving, send varsel",
   "Avregning.OpprettMenIkkeSendVarsel": "Opprett tilbakekreving, ikke send varsel",
+  "Avregning.Opprett": "Opprett tilbakekreving",
   "Avregning.avvent": "Avvent samordning, ingen tilbakekreving",
   "Avregning.formAlternativ.ja": "Ja",
   "Avregning.formAlternativ.nei": "Nei",

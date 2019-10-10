@@ -104,13 +104,6 @@ const simuleringResultat = {
   slåttAvInntrekk: false,
 };
 
-const tilbakekrevingvalg = {
-  videreBehandling: {
-    kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-  },
-  varseltekst: 'varsel-eksempel',
-};
-
 const toggles = {
   'fpsak.simuler-oppdrag-varseltekst': true,
 };
@@ -132,13 +125,34 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
       begrunnelse: undefined,
     }])}
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
-    tilbakekrevingvalg={object('tilbakekrevingvalg', tilbakekrevingvalg)}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
     isApOpen={boolean('isApOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
+    featureToggles={toggles}
+  />
+);
+
+export const visSimuleringspanelUtenAksjonspunkt = () => (
+  <AvregningProsessIndex
+    fagsak={object('fagsak', fagsak)}
+    behandling={behandling}
+    aksjonspunkter={[]}
+    simuleringResultat={object('simuleringResultat', simuleringResultat)}
+    tilbakekrevingvalg={object('tilbakekrevingvalg', {
+      videreBehandling: {
+        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+      },
+      varseltekst: 'varsel-eksempel',
+    })}
+    submitCallback={action('button-click')}
+    previewCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    isApOpen={boolean('isApOpen', true)}
+    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
+    apCodes={array('apCodes', [])}
     featureToggles={toggles}
   />
 );
