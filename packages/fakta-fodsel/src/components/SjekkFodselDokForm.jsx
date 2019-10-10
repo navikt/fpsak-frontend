@@ -105,6 +105,9 @@ SjekkFodselDokForm.propTypes = {
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   dokumentasjonForeliggerIsEdited: PropTypes.bool,
   submittable: PropTypes.bool.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
   ...formPropTypes,
 };
 

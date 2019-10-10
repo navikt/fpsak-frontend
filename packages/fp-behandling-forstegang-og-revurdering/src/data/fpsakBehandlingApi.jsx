@@ -20,7 +20,11 @@ export const BehandlingFpsakApiKeys = {
   SOKNAD: 'SOKNAD',
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
+  MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
+  INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
+  VERGE: 'VERGE',
+  YTELSEFORDELING: 'YTELSEFORDELING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -50,7 +54,11 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('soknad', BehandlingFpsakApiKeys.SOKNAD)
   .withInjectedPath('original-behandling', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
   .withInjectedPath('soeker-medlemskap', BehandlingFpsakApiKeys.MEDLEMSKAP)
+  .withInjectedPath('soeker-medlemskap-v2', BehandlingFpsakApiKeys.MEDLEMSKAP_V2)
   .withInjectedPath('uttak-periode-grense', BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE)
+  .withInjectedPath('inntekt-arbeid-ytelse', BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withInjectedPath('soeker-verge', BehandlingFpsakApiKeys.VERGE)
+  .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
 
   .build();
 
