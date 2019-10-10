@@ -56,7 +56,7 @@ const originalBehandling = {
 };
 
 const alleKodeverk = {
-  [kodeverkTyper.VENTEARSAK]: [{
+  [kodeverkTyper.VENT_AARSAK]: [{
     kode: venteArsakType.AVV_DOK,
     navn: 'Avvent dokumentasjon',
   }, {

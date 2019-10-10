@@ -13,13 +13,12 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { requireProps, BehandlingIdentifier, createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
 import { getNavAnsatt } from 'app/duck';
 import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
-import { createLocationForHistorikkItems } from 'kodeverk/skjermlenkeCodes';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,

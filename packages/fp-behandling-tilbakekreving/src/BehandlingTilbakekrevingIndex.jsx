@@ -160,7 +160,7 @@ const mapStateToProps = (state, ownProps) => ({
   venteArsakKode: behandlingSelectors.getBehandlingVenteArsakKode(state),
   hasManualPaVent: behandlingSelectors.hasBehandlingManualPaVent(state),
   hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
-  ventearsaker: getTilbakekrevingKodeverk(kodeverkTyper.VENTEARSAK)(state),
+  ventearsaker: getTilbakekrevingKodeverk(kodeverkTyper.VENT_AARSAK)(state),
   isInSync: behandlingSelectors.isBehandlingInSync(state),
   showOpenRevurderingModal: showOpenRevurderingModal(state),
   fagsakInfo: createFagsakInfo(state, ownProps),

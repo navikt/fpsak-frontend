@@ -65,3 +65,4 @@ export { default as BehandlingspunktSubmitButton } from './src/behandlingsproses
 export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';
 export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/VilkarResultPanel';
 export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
+export { default as skjermlenkeCodes, createLocationForHistorikkItems } from './src/skjermlenkeCodes';

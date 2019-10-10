@@ -2,7 +2,7 @@ const kodeverkTyper = {
   ARBEID_TYPE: 'ArbeidType',
   AVSLAGSARSAK: 'Avslagsårsak',
   INNVILGET_AARSAK: 'InnvilgetÅrsak',
-  VENTEARSAK: 'Venteårsak',
+  VENT_AARSAK: 'Venteårsak',
   BEHANDLING_AARSAK: 'BehandlingÅrsakType',
   KLAGE_AVVIST_ARSAK: 'KlageAvvistÅrsak',
   KLAGE_MEDHOLD_ARSAK: 'KlageMedholdÅrsak',

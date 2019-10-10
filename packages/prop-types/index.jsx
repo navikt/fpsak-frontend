@@ -13,8 +13,6 @@ export {
 } from './src/beregningresultatMedUttaksplanPropType';
 export { default as beregningsgrunnlagPropType } from './src/beregningsgrunnlagPropType';
 export { default as fagsakPropType } from './src/fagsakPropType';
-export { default as historikkinnslagDelPropType } from './src/historikkinnslagDelPropType';
-export { default as historikkinnslagPropType } from './src/historikkinnslagPropType';
 export { kodeverkPropType, kodeverkObjektPropType } from './src/kodeverkPropType';
 export { default as navAnsattPropType } from './src/navAnsattPropType';
 export { default as personopplysningPropType } from './src/personopplysningPropType';

@@ -101,8 +101,8 @@ PauseBehandlingMenuItem.defaultProps = {
 };
 
 const mapStateToPropsFactory = (initialState) => {
-  const ventearsakerFpsak = getKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
-  const ventearsakerFptilbake = getFpTilbakeKodeverk(kodeverkTyper.VENTEARSAK)(initialState);
+  const ventearsakerFpsak = getKodeverk(kodeverkTyper.VENT_AARSAK)(initialState);
+  const ventearsakerFptilbake = getFpTilbakeKodeverk(kodeverkTyper.VENT_AARSAK)(initialState);
   return (state) => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
