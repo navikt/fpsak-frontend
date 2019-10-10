@@ -3,20 +3,11 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import DataFetcherWithCache from '../../DataFetcherWithCache';
-import MedlemskapInfoPanel from './medlemskap/MedlemskapInfoPanel';
-import TilleggsopplysningerInfoPanel from './tilleggsopplysninger/TilleggsopplysningerInfoPanel';
-import OmsorgInfoPanel from './omsorg/OmsorgInfoPanel';
-import OmsorgOgForeldreansvarInfoPanel from './omsorgOgForeldreansvar/OmsorgOgForeldreansvarInfoPanel';
-import AdopsjonInfoPanel from './adopsjon/AdopsjonInfoPanel';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
@@ -31,8 +22,6 @@ describe('<FaktaPanel>', () => {
     gjeldendeDekningsgrad: 100,
     ikkeOmsorgPerioder: null,
   };
-
-  const soknadUndefined = undefined;
 
   const soknad = {
     innhold: 'mat',
@@ -133,19 +122,15 @@ describe('<FaktaPanel>', () => {
       shouldOpenDefaultInfoPanels
       ytelsesType={ytelsestype}
       readOnly={false}
+      readOnlyBehandling={false}
       fagsakPerson={person}
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(1);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
   });
 
   it('skal vise faktapanel for omsorg(aleneomsorg) og medlemskap når en har aksjonspunkt for medlemskap og aleneomsorg', () => {
@@ -178,14 +163,10 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -219,14 +200,10 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -260,14 +237,10 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(1);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
@@ -301,56 +274,11 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
-  });
-
-
-  it('skal vise faktapanel for foreldreansvar når en har aksjonspunkt for denne', () => {
-    const omsorgAksjonspunkt = {
-      id: 1,
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-        navn: 'TEST',
-      },
-      definisjon: {
-        kode: aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR,
-        navn: 'test',
-      },
-      kanLoses: true,
-      erAktivt: true,
-    };
-
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[medlemAksjonspunkt, omsorgAksjonspunkt]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknad}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer={false}
-      ytelsefordeling={ytelsefordeling}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(1);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
-    expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for adopsjon og medlemskap når en har aksjonspunkt for disse', () => {
@@ -387,80 +315,11 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
 
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(1);
-    expect(wrapper.find(DataFetcherWithCache)).has.length(0);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
-  });
-
-  it('skal vise faktapanel for fødsel og medlemskap når en har aksjonspunkt for disse', () => {
-    const fodselAksjonspunkt = {
-      id: 1,
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-        navn: 'TEST',
-      },
-      definisjon: {
-        kode: aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
-        navn: 'test',
-      },
-      vilkarType: {
-        kode: vilkarType.FODSELSVILKARET_MOR,
-        navn: 'test',
-      },
-      kanLoses: true,
-      erAktivt: true,
-    };
-
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[medlemAksjonspunkt, fodselAksjonspunkt]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknad}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer={false}
-      ytelsefordeling={ytelsefordeling}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
-    expect(wrapper.find(TilleggsopplysningerInfoPanel)).has.length(0);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(1);
-    expect(wrapper.find(OmsorgInfoPanel)).has.length(0);
-    expect(wrapper.find(OmsorgOgForeldreansvarInfoPanel)).has.length(0);
-    expect(wrapper.find(AdopsjonInfoPanel)).has.length(0);
-    expect(wrapper.find(UttakInfoPanel)).has.length(1);
-    const fodselPanel = wrapper.find(DataFetcherWithCache).renderProp('render')({
-      behandling: {
-        id: 1,
-        versjon: 1,
-        type: {
-          kode: behandlingType.FORSTEGANGSSOKNAD,
-        },
-      },
-      soknad: {
-        fodselsdatoer: {},
-        antallBarn: 1,
-        soknadType: {
-          kode: soknadType.FODSEL,
-        },
-      },
-      familiehendelse: {},
-      personopplysninger: {
-        barnSoktFor: [],
-      },
-    }).find(FodselFaktaIndex);
-    expect(fodselPanel).to.have.length(1);
   });
 
   it('skal IKKE vise faktapanel for uttak hvis endringsdato ikke er satt', () => {
@@ -479,6 +338,8 @@ describe('<FaktaPanel>', () => {
       erOverstyrer={false}
       ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
   });
@@ -500,27 +361,9 @@ describe('<FaktaPanel>', () => {
       erOverstyrer
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
+      readOnlyBehandling={false}
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
-  });
-
-  it('skal IKKE vise faktapanel for medlemskap hvis soknad ikke er satt', () => {
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknadUndefined}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer={false}
-      ytelsefordeling={{ ...ytelsefordeling, endringsdato: null }}
-      alleMerknaderFraBeslutter={{}}
-    />);
-    expect(wrapper.find(MedlemskapInfoPanel)).has.length(0);
   });
 });
