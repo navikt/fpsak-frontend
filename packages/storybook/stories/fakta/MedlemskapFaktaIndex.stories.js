@@ -51,35 +51,180 @@ const inntektArbeidYtelse = {
   }],
 };
 const medlemskap = {
-  fom: '2019-01-01',
-  perioder: [{
-    aksjonspunkter: [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT],
-    personopplysninger: {
-      annenPart: {},
-    },
-    vurderingsdato: '2019-02-03',
-    årsaker: ['SKJÆRINGSTIDSPUNKT', 'STATSBORGERSKAP'],
-  }],
   inntekt: [{
-    navn: 'Espen Utvikler',
-    utbetaler: 'NAV',
-    fom: '2019-01-01',
-    tom: '2019-03-01',
-    ytelse: true,
-    belop: 20000,
+    navn: 'MYGG ROBUST',
+    utbetaler: '973861778',
+    fom: '2018-09-01',
+    tom: '2018-09-30',
+    ytelse: false,
+    belop: 35000,
+  }, {
+    navn: 'MYGG ROBUST',
+    utbetaler: '973861778',
+    fom: '2019-02-01',
+    tom: '2019-02-28',
+    ytelse: false,
+    belop: 35000,
   }],
   medlemskapPerioder: [{
     fom: '2019-01-01',
-    tom: '2019-03-01',
+    tom: '2021-10-13',
     medlemskapType: {
-      kode: 'ENDELIG',
+      kode: 'AVKLARES',
       kodeverk: 'MEDLEMSKAP_TYPE',
     },
     dekningType: {
-      kode: 'FTL_2_6',
+      kode: 'OPPHOR',
       kodeverk: 'MEDLEMSKAP_DEKNING',
     },
-    beslutningsdato: '2019-02-02',
+    kildeType: {
+      kode: 'FS22',
+      kodeverk: 'MEDLEMSKAP_KILDE',
+    },
+    beslutningsdato: null,
+  }],
+  perioder: [{
+    vurderingsdato: '2019-11-07',
+    personopplysninger: {
+      fnr: null,
+      aktoerId: '1615078487209',
+      diskresjonskode: null,
+      nummer: null,
+      navBrukerKjonn: {
+        kode: 'K',
+        kodeverk: 'BRUKER_KJOENN',
+      },
+      statsborgerskap: {
+        kode: 'NOR',
+        kodeverk: 'LANDKODER',
+        navn: 'Norge',
+      },
+      avklartPersonstatus: {
+        orginalPersonstatus: {
+          kode: 'BOSA',
+          kodeverk: 'PERSONSTATUS_TYPE',
+        },
+        overstyrtPersonstatus: {
+          kode: 'BOSA',
+          kodeverk: 'PERSONSTATUS_TYPE',
+        },
+      },
+      personstatus: {
+        kode: 'BOSA',
+        kodeverk: 'PERSONSTATUS_TYPE',
+      },
+      sivilstand: {
+        kode: 'UGIF',
+        kodeverk: 'SIVILSTAND_TYPE',
+      },
+      navn: 'Mygg Robust',
+      dodsdato: null,
+      fodselsdato: '1966-08-02',
+      adresser: [{
+        adresseType: {
+          kode: 'BOSTEDSADRESSE',
+          kodeverk: 'ADRESSE_TYPE',
+        },
+        mottakerNavn: 'Mygg Robust',
+        adresselinje1: 'Skogvegen 3',
+        adresselinje2: null,
+        adresselinje3: null,
+        postNummer: '4353',
+        poststed: 'Klepp Stasjon',
+        land: 'NOR',
+      }],
+      region: {
+        kode: 'NORDEN',
+        kodeverk: 'REGION',
+      },
+      annenPart: null,
+      ektefelle: null,
+      barn: [],
+      barnSoktFor: [],
+      barnFraTpsRelatertTilSoknad: [],
+      opplysningsKilde: {
+        kode: 'TPS',
+        kodeverk: 'OPPLYSNINGSKILDE',
+      },
+      harVerge: false,
+    },
+    aksjonspunkter: [
+      '5021',
+    ],
+    årsaker: [
+      'SKJÆRINGSTIDSPUNKT',
+    ],
+    oppholdsrettVurdering: null,
+    erEosBorger: null,
+    lovligOppholdVurdering: null,
+    bosattVurdering: null,
+    medlemskapManuellVurderingType: null,
+    begrunnelse: null,
+  }, {
+    vurderingsdato: '2018-11-07',
+    personopplysninger: {
+      fnr: null,
+      aktoerId: '1615078487209',
+      diskresjonskode: null,
+      nummer: null,
+      navBrukerKjonn: {
+        kode: 'K',
+        kodeverk: 'BRUKER_KJOENN',
+      },
+      statsborgerskap: {
+        kode: 'NOR',
+        kodeverk: 'LANDKODER',
+        navn: 'Norge',
+      },
+      avklartPersonstatus: {
+        orginalPersonstatus: {
+          kode: 'BOSA',
+          kodeverk: 'PERSONSTATUS_TYPE',
+        },
+        overstyrtPersonstatus: {
+          kode: 'BOSA',
+          kodeverk: 'PERSONSTATUS_TYPE',
+        },
+      },
+      personstatus: {
+        kode: 'BOSA',
+        kodeverk: 'PERSONSTATUS_TYPE',
+      },
+      sivilstand: {
+        kode: 'UGIF',
+        kodeverk: 'SIVILSTAND_TYPE',
+      },
+      navn: 'Mygg Robust',
+      dodsdato: null,
+      fodselsdato: '1966-08-02',
+      adresser: [],
+      region: {
+        kode: 'NORDEN',
+        kodeverk: 'REGION',
+      },
+      annenPart: null,
+      ektefelle: null,
+      barn: [],
+      barnSoktFor: [],
+      barnFraTpsRelatertTilSoknad: [],
+      opplysningsKilde: {
+        kode: 'TPS',
+        kodeverk: 'OPPLYSNINGSKILDE',
+      },
+      harVerge: false,
+    },
+    aksjonspunkter: [
+      '5021',
+    ],
+    årsaker: [
+      'SKJÆRINGSTIDSPUNKT',
+    ],
+    oppholdsrettVurdering: null,
+    erEosBorger: null,
+    lovligOppholdVurdering: null,
+    bosattVurdering: null,
+    medlemskapManuellVurderingType: null,
+    begrunnelse: null,
   }],
 };
 const fagsakPerson = {};
@@ -100,6 +245,27 @@ const alleKodeverk = {
   [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: [{
     kode: 'MEDLEM',
     navn: 'Medlem',
+  }, {
+    kode: 'UNNTAK',
+    navn: 'Unntak',
+  }, {
+    kode: 'IKKE_RELEVANT',
+    navn: 'Ikke relevant',
+  }],
+  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
+    kode: 'BOSA',
+    navn: 'Bosatt',
+    kodeverk: 'PERSONSTATUS_TYPE',
+  }],
+  [kodeverkTyper.SIVILSTAND_TYPE]: [{
+    kode: 'UGIF',
+    navn: 'Ugift',
+    kodeverk: 'SIVILSTAND_TYPE',
+  }],
+  [kodeverkTyper.REGION]: [{
+    kode: 'NORDEN',
+    navn: 'Norden',
+    kodeverk: 'REGION',
   }],
 };
 
@@ -145,6 +311,7 @@ export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = (
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
       shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      readOnlyBehandling={boolean('readOnly', false)}
     />
   );
 };
@@ -213,6 +380,7 @@ export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => {
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
       shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      readOnlyBehandling={boolean('readOnly', false)}
     />
   );
 };
