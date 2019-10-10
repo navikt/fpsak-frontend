@@ -9,13 +9,19 @@ import { BehandlingFpsakApiKeys } from './data/fpsakBehandlingApi';
 // alle panel nyttar denne. No hentar den ynskja data fra behandling-objektet og lagar props av det.
 export class DataFetcherWithCache extends Component {
   static propTypes = {
-    behandlingData: PropTypes.shape().isRequired,
+    behandlingData: PropTypes.shape(),
+    showComponent: PropTypes.bool,
     render: PropTypes.func.isRequired,
   };
 
+  static defaultProps = {
+    showComponent: true,
+    behandlingData: undefined,
+  }
+
   render() {
-    const { behandlingData, render } = this.props;
-    return render(behandlingData);
+    const { showComponent, behandlingData, render } = this.props;
+    return showComponent ? render(behandlingData) : null;
   }
 }
 
@@ -30,7 +36,11 @@ const mapping = {
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
   [BehandlingFpsakApiKeys.MEDLEMSKAP]: 'soeker-medlemskap',
+  [BehandlingFpsakApiKeys.MEDLEMSKAP_V2]: 'soeker-medlemskap-v2',
   [BehandlingFpsakApiKeys.UTTAK_PERIODE_GRENSE]: 'uttak-periode-grense',
+  [BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE]: 'inntekt-arbeid-ytelse',
+  [BehandlingFpsakApiKeys.VERGE]: 'soeker-verge',
+  [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
@@ -45,7 +55,7 @@ const mapStateToPropsFactory = () => {
         [format(d.name)]: d.name === BehandlingFpsakApiKeys.BEHANDLING ? behandling : behandling[mapping[d.name]],
       }), {}),
   }));
-  return (state, ownProps) => createProps(state, ownProps);
+  return (state, ownProps) => (ownProps.showComponent !== false ? createProps(state, ownProps) : {});
 };
 
 export default connect(mapStateToPropsFactory)(DataFetcherWithCache);

@@ -1,53 +1,74 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+import moment from 'moment';
+
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { requireProps } from '@fpsak-frontend/fp-felles';
+import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
+
+import fpsakApi from '../../data/fpsakApi';
+import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
+
+import styles from './historyIndex.less';
+
 /**
  * HistoryIndex
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import { requireProps } from '@fpsak-frontend/fp-felles';
-
-import History from './components/History';
-import { getAllHistory } from '../behandlingsupportSelectors';
-
 export const HistoryIndex = ({
-  history,
-  selectedBehandlingId,
+  alleHistorikkInnslag,
   saksnummer,
   location,
+  alleKodeverkFpsak,
+  alleKodeverkFptilbake,
 }) => (
-  <History
-    historyList={history}
-    selectedBehandlingId={selectedBehandlingId ? `${selectedBehandlingId}` : null}
-    saksNr={saksnummer}
-    location={location}
-  />
+  <div className={styles.historyContainer}>
+    {alleHistorikkInnslag.map((innslag) => (
+      <HistorikkSakIndex
+        key={innslag.opprettetTidspunkt}
+        historieInnslag={innslag}
+        saksnummer={saksnummer}
+        location={location}
+        alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
+      />
+    ))}
+  </div>
 );
 
 HistoryIndex.propTypes = {
-  selectedBehandlingId: PropTypes.number,
   saksnummer: PropTypes.number.isRequired,
-  history: PropTypes.arrayOf(PropTypes.object).isRequired,
+  alleHistorikkInnslag: PropTypes.arrayOf(PropTypes.object).isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  alleKodeverkFpsak: PropTypes.shape().isRequired,
+  alleKodeverkFptilbake: PropTypes.shape(),
 };
 
 HistoryIndex.defaultProps = {
-  selectedBehandlingId: undefined,
+  alleKodeverkFptilbake: {},
 };
 
+export const getAllHistorikk = createSelector(
+  [fpsakApi.HISTORY_FPSAK.getRestApiData(), fpsakApi.HISTORY_FPTILBAKE.getRestApiData()],
+  (historyFpsak = [], historyTilbake = []) => {
+    const historikkFraTilbakekrevingMedMarkor = historyTilbake.map((ht) => ({
+      ...ht,
+      erTilbakekreving: true,
+    }));
+    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+  },
+);
+
 const mapStateToProps = (state) => ({
-  selectedBehandlingId: getSelectedBehandlingId(state),
+  alleKodeverkFpsak: fpsakApi.KODEVERK.getRestApiData()(state),
+  alleKodeverkFptilbake: fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state),
   saksnummer: getSelectedSaksnummer(state),
-  history: getAllHistory(state),
+  alleHistorikkInnslag: getAllHistorikk(state),
 });
 
-export default withRouter(connect(mapStateToProps)(requireProps(['history'], <LoadingPanel />)(HistoryIndex)));
+export default withRouter(connect(mapStateToProps)(requireProps(['alleHistorikkInnslag'], <LoadingPanel />)(HistoryIndex)));
