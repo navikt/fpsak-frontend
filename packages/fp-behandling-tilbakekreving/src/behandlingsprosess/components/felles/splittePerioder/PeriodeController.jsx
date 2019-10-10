@@ -42,6 +42,7 @@ export class PeriodeControllerImpl extends Component {
 
     this.state = {
       showDelPeriodeModal: false,
+      finnesBelopMed0Verdi: false,
     };
   }
 
@@ -54,12 +55,18 @@ export class PeriodeControllerImpl extends Component {
   }
 
   hideModal() {
-    this.setState({
+    this.setState((state) => ({
+      ...state,
       showDelPeriodeModal: false,
-    });
+    }));
   }
 
   splitPeriod(formValues) {
+    this.setState((state) => ({
+      ...state,
+      finnesBelopMed0Verdi: false,
+    }));
+
     const {
       periode,
       beregnBelop: callBeregnBelop,
@@ -86,18 +93,26 @@ export class PeriodeControllerImpl extends Component {
     };
 
     callBeregnBelop(params).then((response) => {
-      const forstePeriodeMedBeløp = {
-        fom: forstePeriode.fom,
-        tom: forstePeriode.tom,
-        feilutbetaling: response.perioder[0].belop,
-      };
-      const andrePeriodeMedBeløp = {
-        fom: andrePeriode.fom,
-        tom: andrePeriode.tom,
-        feilutbetaling: response.perioder[1].belop,
-      };
-      this.hideModal();
-      oppdaterSplittedePerioder([forstePeriodeMedBeløp, andrePeriodeMedBeløp]);
+      const harPeriodeMedBelop0 = response.perioder.some((p) => p.belop === 0);
+      if (harPeriodeMedBelop0) {
+        this.setState((state) => ({
+          ...state,
+          finnesBelopMed0Verdi: true,
+        }));
+      } else {
+        const forstePeriodeMedBeløp = {
+          fom: forstePeriode.fom,
+          tom: forstePeriode.tom,
+          feilutbetaling: response.perioder[0].belop,
+        };
+        const andrePeriodeMedBeløp = {
+          fom: andrePeriode.fom,
+          tom: andrePeriode.tom,
+          feilutbetaling: response.perioder[1].belop,
+        };
+        this.hideModal();
+        oppdaterSplittedePerioder([forstePeriodeMedBeløp, andrePeriodeMedBeløp]);
+      }
     });
   }
 
@@ -110,7 +125,7 @@ export class PeriodeControllerImpl extends Component {
       readOnly,
     } = this.props;
 
-    const { showDelPeriodeModal } = this.state;
+    const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
 
     return (
       <Row>
@@ -143,6 +158,7 @@ export class PeriodeControllerImpl extends Component {
               showModal={showDelPeriodeModal}
               periodeData={periode}
               splitPeriod={this.splitPeriod}
+              finnesBelopMed0Verdi={finnesBelopMed0Verdi}
             />
           )}
         </Column>

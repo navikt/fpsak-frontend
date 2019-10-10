@@ -8,6 +8,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 import {
   dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
@@ -23,6 +24,7 @@ export const DelOppPeriodeModalImpl = ({
   showModal,
   cancelEvent,
   intl,
+  finnesBelopMed0Verdi,
   ...formProps
 }) => (
   <Modal
@@ -51,6 +53,11 @@ export const DelOppPeriodeModalImpl = ({
         validate={[required, hasValidDate]}
       />
     </div>
+    {finnesBelopMed0Verdi && (
+      <AlertStripe type="feil">
+        <FormattedMessage id="DelOppPeriodeModalImpl.BelopEr0" />
+      </AlertStripe>
+    )}
     <Row className={styles.marginTop}>
       <Column>
         <Hovedknapp

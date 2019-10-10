@@ -1450,6 +1450,7 @@
   "DelOppPeriodeModalImpl.Ok": "Ok",
   "DelOppPeriodeModalImpl.Avbryt": "Avbryt",
   "DelOppPeriodeModalImpl.DatoUtenforPeriode": "Dato må være innenfor perioden",
+  "DelOppPeriodeModalImpl.BelopEr0": "Periode har 0 virkedager",
   "UttakperiodeType.MØDREKVOTE": "Mødrekvote",
   "UttakperiodeType.FEDREKVOTE": "Fedrekvote",
   "UttakperiodeType.FELLESPERIODE": "Fellesperiode",
