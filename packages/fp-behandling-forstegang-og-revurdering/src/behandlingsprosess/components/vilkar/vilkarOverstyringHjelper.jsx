@@ -1,5 +1,6 @@
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCode from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { isObject } from '@fpsak-frontend/utils';
 
@@ -74,10 +75,10 @@ const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) =>
   ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
 
-export const getFiltrerteAvslagsarsaker = (vilkarTypeKode, fagsakYtelseType, avslagsarsaker) => {
+export const getFiltrerteAvslagsarsaker = (vilkarTypeKode, ytelseType, avslagsarsaker) => {
   const vilkartypeAvslagsarsaker = avslagsarsaker[vilkarTypeKode];
   if (vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR) {
-    return getFodselVilkarAvslagsarsaker(fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER, vilkartypeAvslagsarsaker);
+    return getFodselVilkarAvslagsarsaker(ytelseType.kode === fagsakYtelseType.FORELDREPENGER, vilkartypeAvslagsarsaker);
   }
   return vilkartypeAvslagsarsaker;
 };
