@@ -29,20 +29,21 @@ const finnTomOpplysning = (opplysninger) => {
   return found.tilVerdi;
 };
 
-const buildEndretFeltText = (endredeFelter) => {
+const buildEndretFeltText = (endredeFelter, getKodeverknavn) => {
   const årsakFelt = endredeFelter.filter((felt) => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_AARSAK.kode)[0];
   const underÅrsakFelt = endredeFelter.filter((felt) => felt.endretFeltNavn.kode === historikkEndretFeltTypeCodes.FAKTA_OM_FEILUTBETALING_UNDERAARSAK.kode)[0];
-  const underÅrsakFraVerdi = underÅrsakFelt ? underÅrsakFelt.fraVerdi : null;
-  const underÅrsakTilVerdi = underÅrsakFelt ? underÅrsakFelt.tilVerdi : null;
+  const underÅrsakFraVerdi = underÅrsakFelt ? getKodeverknavn({ kode: underÅrsakFelt.fraVerdi, kodeverk: underÅrsakFelt.klFraVerdi }) : null;
+  const underÅrsakTilVerdi = underÅrsakFelt ? getKodeverknavn({ kode: underÅrsakFelt.tilVerdi, kodeverk: underÅrsakFelt.klTilVerdi }) : null;
   const endret = endredeFelter.filter((felt) => felt.fraVerdi !== null).length > 0;
 
+  const tilVerdiNavn = getKodeverknavn({ kode: årsakFelt.tilVerdi, kodeverk: årsakFelt.klTilVerdi });
   if (endret) {
-    const årsakFraVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
-    const fraVerdi = `${årsakFraVerdi} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''}`;
-    const tilVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
+    const årsakVerdi = årsakFelt.fraVerdi ? årsakFelt.fraVerdi : årsakFelt.tilVerdi;
+    const fraVerdi = `${getKodeverknavn({ kode: årsakVerdi, kodeverk: årsakFelt.klFraVerdi })} ${underÅrsakFraVerdi ? `(${underÅrsakFraVerdi})` : ''}`;
+    const tilVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
     return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.endretFelt" values={{ fraVerdi, tilVerdi }} />;
   }
-  const feltVerdi = `${årsakFelt.tilVerdi} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
+  const feltVerdi = `${tilVerdiNavn} ${underÅrsakTilVerdi ? `(${underÅrsakTilVerdi})` : ''}`;
   return <FormattedHTMLMessage id="Historikk.Template.Feilutbetaling.sattFelt" values={{ feltVerdi }} />;
 };
 
@@ -70,7 +71,7 @@ const HistorikkMalTypeFeilutbetaling = ({
           }}
         />
         <Normaltekst>
-          { buildEndretFeltText(historikkinnslagDel.endredeFelter) }
+          { buildEndretFeltText(historikkinnslagDel.endredeFelter, getKodeverknavn) }
         </Normaltekst>
         <VerticalSpacer eightPx />
       </div>
