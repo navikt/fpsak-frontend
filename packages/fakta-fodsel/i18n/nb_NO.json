@@ -25,6 +25,11 @@
   "AvklartBarnFieldArray.Dodsdato": "Dødsdato",
   "AvklartBarnFieldArray.LeggTilBarn": "Legg til barn",
 
+  "SjekkFodselDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
+  "SjekkFodselDokForm.DokumentasjonForeliggerIkke": "Dokumentasjon foreligger ikke, bruk opplysningene i folkeregisteret",
+  "SjekkFodselDokForm.DokumentasjonAvFodsel": "Dokumentasjon av fødsel",
+  "SjekkFodselDokForm.FyllInnDokumenterteOpplysninger": "Fyll inn dokumenterte opplysninger",
+
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
