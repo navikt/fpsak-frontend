@@ -1118,12 +1118,6 @@
 
   "TermindatoFaktaForm.Termindato": "Termindato",
 
-  "SjekkFodselDokForm.BrukAntallITPS": "Bruk antall fra folkeregisteret",
-  "SjekkFodselDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
-  "SjekkFodselDokForm.BrukAntallISoknad": "Bruk antall fra søknad",
-  "SjekkFodselDokForm.Fodselsdato": "Fødselsdato",
-  "SjekkFodselDokForm.BrukAntallIYtelsesvedtaket": "Bruk antall fra vedtaket",
-
   "PersonYtelserTable.Ytelser": "Ytelser",
   "PersonYtelserTable.Ytelse": "Ytelse",
   "PersonYtelserTable.Periode": "Periode",
