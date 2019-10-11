@@ -6,10 +6,9 @@ import { shallow } from 'enzyme';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 
-import MessagesModal from './components/MessagesModal';
 import { MessagesIndex } from './MessagesIndex';
-import Messages from './components/Messages';
 
 describe('<MessagesIndex>', () => {
   const recipients = ['Søker', 'Annen person'];
@@ -45,6 +44,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const messages = wrapper.find(Messages);
@@ -75,6 +76,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const previewCallback = wrapper.find(Messages).prop('previewCallback');
@@ -106,10 +109,12 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
     wrapper.setState({ showMessagesModal: true });
 
-    wrapper.find(MessagesModal).prop('closeEvent')();
+    wrapper.find(MessagesModalSakIndex).prop('closeEvent')();
 
     expect(resetSubmitMessageFunction).to.have.property('callCount', 1);
     const { args } = resetSubmitMessageFunction.getCalls()[0];
@@ -141,6 +146,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const message = {
@@ -185,6 +192,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const message = {
@@ -232,6 +241,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const message = {
@@ -279,6 +290,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const message = {
@@ -326,6 +339,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
 
     const message = {
@@ -374,6 +389,8 @@ describe('<MessagesIndex>', () => {
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
+      isKontrollerRevurderingApOpen={false}
+      revurderingVarslingArsak={[]}
     />);
     wrapper.setState({ showSettPaVentModal: true });
 

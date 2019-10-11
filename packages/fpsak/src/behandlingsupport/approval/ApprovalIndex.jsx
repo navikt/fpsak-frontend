@@ -4,21 +4,19 @@ import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 
-import fpsakApi from 'data/fpsakApi';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps, BehandlingIdentifier, createLocationForHistorikkItems } from '@fpsak-frontend/fp-felles';
+import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getNavAnsatt } from 'app/duck';
-import { getBehandlingerUuidsMappedById } from 'behandling/selectors/behandlingerSelectors';
+import fpsakApi from '../../data/fpsakApi';
+import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
+import { getNavAnsatt } from '../../app/duck';
+import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
   getBehandlingAnsvarligSaksbehandler,
   getBehandlingIdentifier,
@@ -27,14 +25,14 @@ import {
   previewMessage,
   getBehandlingStatus,
   getBehandlingType,
-} from 'behandling/duck';
-import { getKodeverk, getFpTilbakeKodeverk } from 'kodeverk/duck';
-import FatterVedtakApprovalModal from './components/FatterVedtakApprovalModal';
-import ToTrinnsForm from './components/ToTrinnsForm';
-import ToTrinnsFormReadOnly from './components/ToTrinnsFormReadOnly';
+  getBehandlingKlageVurdering,
+  getBehandlingKlageVurderingResultatNFP,
+  getBehandlingKlageVurderingResultatNK,
+  erArsakTypeBehandlingEtterKlage,
+} from '../../behandling/duck';
+import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
+import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 import { approve, resetApproval } from './duck';
-
-import styles from './ApprovalIndex.less';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -52,68 +50,25 @@ const getArsaker = (approval) => ([{
   .map((arsak) => arsak.code)
 );
 
-export const mapPropsToContext = (toTrinnsBehandling, nextProps, skjemalenkeTyper) => {
-  if (toTrinnsBehandling) {
-    let skjermlenkeContext;
-    if (nextProps.status.kode === behandlingStatus.FATTER_VEDTAK && nextProps.totrinnskontrollSkjermlenkeContext) {
-      skjermlenkeContext = nextProps.totrinnskontrollSkjermlenkeContext;
-    }
-    if (nextProps.status.kode !== behandlingStatus.FATTER_VEDTAK && nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
-      skjermlenkeContext = nextProps.totrinnskontrollReadOnlySkjermlenkeContext;
-    }
-    if (skjermlenkeContext) {
-      const totrinnsContext = skjermlenkeContext.map((context) => {
-        const skjermlenkeTypeKodeverk = skjemalenkeTyper.find((skjemalenkeType) => skjemalenkeType.kode === context.skjermlenkeType);
-        return {
-          contextCode: context.skjermlenkeType,
-          skjermlenke: createLocationForHistorikkItems(nextProps.location, context.skjermlenkeType),
-          skjermlenkeNavn: skjermlenkeTypeKodeverk.navn,
-          aksjonspunkter: context.totrinnskontrollAksjonspunkter,
-        };
-      });
-      return totrinnsContext || null;
-    }
-  }
-  return null;
-};
-
 /**
  * ApprovalIndex
  *
  * Containerklass ansvarlig for att rita opp vilkår og aksjonspunkter med toTrinnskontroll
  */
-export class ApprovalIndexImpl extends Component {
+export class ApprovalIndex extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      approvals: [],
-      allAksjonspunktApproved: undefined,
       showBeslutterModal: false,
+      allAksjonspunktApproved: undefined,
     };
     this.onSubmit = this.onSubmit.bind(this);
     this.goToSearchPage = this.goToSearchPage.bind(this);
     this.forhandsvisVedtaksbrev = this.forhandsvisVedtaksbrev.bind(this);
-
-    const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, toTrinnsBehandling, skjemalenkeTyper,
-    } = props;
-    if (totrinnskontrollSkjermlenkeContext || totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.state = {
-        ...this.state,
-        approvals: mapPropsToContext(toTrinnsBehandling, props, skjemalenkeTyper),
-      };
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.totrinnskontrollSkjermlenkeContext || nextProps.totrinnskontrollReadOnlySkjermlenkeContext) {
-      this.setState({ approvals: mapPropsToContext(nextProps.toTrinnsBehandling, nextProps, nextProps.skjemalenkeTyper) });
-    }
   }
 
   componentWillUnmount() {
     const { resetApproval: reset } = this.props;
-    this.setState({ approvals: [] });
     reset();
   }
 
@@ -178,11 +133,12 @@ export class ApprovalIndexImpl extends Component {
 
   render() {
     const {
-      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, status,
-      location, navAnsatt, ansvarligSaksbehandler,
+      totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, behandlingStatus,
+      location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling, skjemalenkeTyper,
+      behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, behandlingKlageVurdering, erBehandlingEtterKlage,
+      erKlageWithKA, erKlage, isForeldrepenger,
     } = this.props;
-    const { approvals, allAksjonspunktApproved, showBeslutterModal } = this.state;
-    const showModalVedtakStatus = showBeslutterModal;
+    const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
     const readOnly = brukernavn === ansvarligSaksbehandler || kanVeilede;
 
@@ -191,64 +147,47 @@ export class ApprovalIndexImpl extends Component {
     }
 
     return (
-      <div className={styles.approvalContainer}>
-        {approvals && approvals.length > 0
-          ? (
-            <div>
-              {status.kode === behandlingStatus.FATTER_VEDTAK
-                ? (
-                  <div>
-                    {!readOnly && (
-                      <AksjonspunktHelpText isAksjonspunktOpen marginBottom>
-                        {[<FormattedMessage key={1} id="HelpText.ToTrinnsKontroll" />]}
-                      </AksjonspunktHelpText>
-                    )}
-                    <ToTrinnsForm
-                      totrinnskontrollContext={approvals}
-                      initialValues={{ approvals }}
-                      onSubmit={this.onSubmit}
-                      location={location}
-                      forhandsvisVedtaksbrev={this.forhandsvisVedtaksbrev}
-                      readOnly={readOnly}
-                    />
-                  </div>
-                )
-                : (
-                  <div>
-                    <div className={styles.resultatFraGodkjenningTextContainer}>
-                      <FormattedHTMLMessage id="ToTrinnsForm.LøstAksjonspunkt" />
-                    </div>
-                    <div>
-                      <ToTrinnsFormReadOnly
-                        approvalList={approvals}
-                      />
-                    </div>
-                  </div>
-                )}
-            </div>
-          )
-          : null}
+      <>
+        <TotrinnskontrollSakIndex
+          behandlingId={behandlingIdentifier.behandlingId}
+          behandlingVersjon={selectedBehandlingVersjon}
+          behandlingStatus={behandlingStatus}
+          totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+          totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
+          location={location}
+          readOnly={readOnly}
+          onSubmit={this.onSubmit}
+          forhandsvisVedtaksbrev={this.forhandsvisVedtaksbrev}
+          toTrinnsBehandling={toTrinnsBehandling}
+          skjemalenkeTyper={skjemalenkeTyper}
+          isForeldrepengerFagsak={isForeldrepenger}
+          alleKodeverk={alleKodeverk}
+          behandlingKlageVurdering={behandlingKlageVurdering}
+          erBehandlingEtterKlage={erBehandlingEtterKlage}
+          erKlageWithKA={erKlageWithKA}
+          erKlage={erKlage}
+        />
         <FatterVedtakApprovalModal
-          showModal={showModalVedtakStatus}
+          showModal={showBeslutterModal}
           closeEvent={this.goToSearchPage}
           allAksjonspunktApproved={allAksjonspunktApproved}
         />
-      </div>
+      </>
     );
   }
 }
 
 
-ApprovalIndexImpl.propTypes = {
+ApprovalIndex.propTypes = {
   totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   totrinnskontrollReadOnlySkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
   approve: PropTypes.func.isRequired,
   previewMessage: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-  selectedBehandlingVersjon: PropTypes.number.isRequired,
+  selectedBehandlingVersjon: PropTypes.number,
   ansvarligSaksbehandler: PropTypes.string,
-  status: PropTypes.shape().isRequired,
-  toTrinnsBehandling: PropTypes.bool.isRequired,
+  behandlingStatus: PropTypes.shape().isRequired,
+  toTrinnsBehandling: PropTypes.bool,
   push: PropTypes.func.isRequired,
   resetApproval: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
@@ -257,12 +196,22 @@ ApprovalIndexImpl.propTypes = {
   erTilbakekreving: PropTypes.bool.isRequired,
   behandlingUuid: PropTypes.string.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingKlageVurdering: PropTypes.shape(),
+  erBehandlingEtterKlage: PropTypes.bool,
+  erKlageWithKA: PropTypes.bool.isRequired,
+  erKlage: PropTypes.bool.isRequired,
+  isForeldrepenger: PropTypes.bool.isRequired,
 };
 
-ApprovalIndexImpl.defaultProps = {
+ApprovalIndex.defaultProps = {
   ansvarligSaksbehandler: undefined,
   totrinnskontrollSkjermlenkeContext: undefined,
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
+  toTrinnsBehandling: false,
+  selectedBehandlingVersjon: undefined,
+  behandlingKlageVurdering: undefined,
+  erBehandlingEtterKlage: false,
 };
 
 const mapStateToPropsFactory = (initialState) => {
@@ -278,13 +227,19 @@ const mapStateToPropsFactory = (initialState) => {
       totrinnskontrollReadOnlySkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData()(state),
       selectedBehandlingVersjon: getBehandlingVersjon(state),
       ansvarligSaksbehandler: getBehandlingAnsvarligSaksbehandler(state),
-      status: getBehandlingStatus(state),
+      behandlingStatus: getBehandlingStatus(state),
       toTrinnsBehandling: getBehandlingToTrinnsBehandling(state),
       navAnsatt: getNavAnsatt(state),
+      alleKodeverk: erTilbakekreving ? fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()(state) : fpsakApi.KODEVERK.getRestApiData()(state),
       skjemalenkeTyper: erTilbakekreving ? skjermlenkeTyperFptilbake : skjermlenkeTyperFpsak,
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),
+      isForeldrepenger: isForeldrepengerFagsak(state),
+      behandlingKlageVurdering: getBehandlingKlageVurdering(state),
+      erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
+      erKlageWithKA: !!getBehandlingKlageVurderingResultatNK(state),
+      erKlage: !!getBehandlingKlageVurderingResultatNFP(state) || !!getBehandlingKlageVurderingResultatNK(state),
       behandlingIdentifier,
       erTilbakekreving,
     };
@@ -300,6 +255,5 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const ApprovalIndex = withRouter(connect(mapStateToPropsFactory, mapDispatchToProps)(requireProps(['behandlingIdentifier'])(ApprovalIndexImpl)));
-
-export default ApprovalIndex;
+const comp = requireProps(['behandlingIdentifier', 'selectedBehandlingVersjon'])(ApprovalIndex);
+export default withRouter(connect(mapStateToPropsFactory, mapDispatchToProps)(comp));
