@@ -72,6 +72,7 @@ export const setGenerellAndelsinfo = (andel, harKunYtelse, getKodeverknavn) => (
   nyAndel: false,
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: finnnInntektskategorikode(andel),
+  forrigeInntektskategori: finnnInntektskategorikode(andel),
 });
 
 export const starterPaaEllerEtterStp = (bgAndel,

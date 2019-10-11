@@ -133,6 +133,10 @@ FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, s
           refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
           nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
           beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
+          forrigeRefusjonPrAar: andel.refusjonskravPrAar,
+          forrigeArbeidsinntektPrAar: settFastsattBelop(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+          beregningsperiodeFom: bgAndel.beregningsperiodeFom,
+          beregningsperiodeTom: bgAndel.beregningsperiodeTom,
         });
       })
   );

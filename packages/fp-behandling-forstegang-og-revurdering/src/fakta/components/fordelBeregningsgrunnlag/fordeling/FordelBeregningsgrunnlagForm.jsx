@@ -177,9 +177,17 @@ export const mapTilFastsatteVerdier = (aktivitet, skalHaBesteberegning) => ({
 export const mapAndel = (aktivitet) => ({
   andel: aktivitet.andel,
   andelsnr: getAndelsnr(aktivitet),
+  aktivitetStatus: aktivitet.aktivitetStatus,
+  arbeidsgiverId: aktivitet.arbeidsgiverId !== '' ? aktivitet.arbeidsgiverId : null,
   arbeidsforholdId: aktivitet.arbeidsforholdId !== '' ? aktivitet.arbeidsforholdId : null,
   nyAndel: aktivitet.nyAndel,
   lagtTilAvSaksbehandler: aktivitet.lagtTilAvSaksbehandler,
+  arbeidsforholdType: aktivitet.arbeidsforholdType,
+  beregningsperiodeTom: aktivitet.beregningsperiodeTom,
+  beregningsperiodeFom: aktivitet.beregningsperiodeFom,
+  forrigeArbeidsinntektPrÅr: aktivitet.forrigeArbeidsinntektPrAar,
+  forrigeRefusjonPrÅr: aktivitet.forrigeRefusjonPrAar,
+  forrigeInntektskategori: aktivitet.forrigeInntektskategori,
   fastsatteVerdier: mapTilFastsatteVerdier(aktivitet),
 });
 

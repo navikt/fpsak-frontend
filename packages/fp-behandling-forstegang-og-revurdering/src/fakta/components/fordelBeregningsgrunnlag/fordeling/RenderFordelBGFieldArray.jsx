@@ -161,6 +161,9 @@ const setArbeidsforholdInfo = (fields, index, arbeidsforholdList, val) => {
     field.andelsnrRef = arbeidsforhold.andelsnr;
     field.aktivitetStatus = finnAktivitetStatus(fields, val);
     field.nyttArbeidsforhold = arbeidsforhold.nyttArbeidsforhold;
+    field.arbeidsforholdType = arbeidsforhold.arbeidsforholdType;
+    field.beregningsperiodeTom = arbeidsforhold.beregningsperiodeTom;
+    field.beregningsperiodeFom = arbeidsforhold.beregningsperiodeFom;
   }
 };
 

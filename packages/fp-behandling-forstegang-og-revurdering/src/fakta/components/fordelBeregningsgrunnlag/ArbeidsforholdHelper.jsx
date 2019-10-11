@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { getFordelBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+import { getFordelBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
@@ -9,16 +9,23 @@ const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   return arbeidsgiverList.map(({ arbeidsforholdId }) => (arbeidsforholdId)).includes(arbeidsforhold.arbeidsforholdId);
 };
 
-export const getUniqueListOfArbeidsforholdFromAndeler = (andeler) => {
+const finnBgAndelMedSammeArbeidsforhold = (bgAndeler, andel) => bgAndeler.find(({ arbeidsforhold }) => !!arbeidsforhold
+&& arbeidsforhold.arbeidsgiverId === andel.arbeidsforhold.arbeidsgiverId
+&& arbeidsforhold.arbeidsforholdId === andel.arbeidsforhold.arbeidsforholdId);
+
+export const getUniqueListOfArbeidsforholdFromAndeler = (andeler, bgAndeler) => {
   const arbeidsgiverList = [];
   if (andeler === undefined) {
     return arbeidsgiverList;
   }
   andeler.forEach((andel) => {
     if (andel.arbeidsforhold !== null && !arbeidsforholdEksistererIListen(andel.arbeidsforhold, arbeidsgiverList)) {
+      const bgAndel = finnBgAndelMedSammeArbeidsforhold(bgAndeler, andel);
       const arbeidsforholdObject = {
         andelsnr: andel.andelsnr,
         nyttArbeidsforhold: andel.nyttArbeidsforhold,
+        beregningsperiodeTom: bgAndel.beregningsperiodeTom,
+        beregningsperiodeFom: bgAndel.beregningsperiodeFom,
         ...andel.arbeidsforhold,
       };
       arbeidsgiverList.push(arbeidsforholdObject);
@@ -29,9 +36,21 @@ export const getUniqueListOfArbeidsforholdFromAndeler = (andeler) => {
 
 const emptyList = [];
 
-export const getUniqueListOfArbeidsforhold = createSelector([getFordelBeregningsgrunnlagPerioder],
-  (fordelPerioder) => getUniqueListOfArbeidsforholdFromAndeler(fordelPerioder.length > 0
-    ? fordelPerioder.flatMap((p) => p.fordelBeregningsgrunnlagAndeler) : emptyList));
+const finnAndelerFraFordelingperioder = (fordelPerioder) => (fordelPerioder.length > 0
+  ? fordelPerioder.flatMap((p) => p.fordelBeregningsgrunnlagAndeler) : emptyList);
+
+const finnAndelerFraBgperioder = (bgPerioder) => (bgPerioder.length > 0
+  ? bgPerioder.flatMap((p) => p.beregningsgrunnlagPrStatusOgAndel) : emptyList);
+
+const getUniqueListOfArbeidsforholdFromPerioder = (fordelPerioder, bgPerioder) => getUniqueListOfArbeidsforholdFromAndeler(
+  finnAndelerFraFordelingperioder(fordelPerioder),
+  finnAndelerFraBgperioder(bgPerioder),
+);
+
+export const getUniqueListOfArbeidsforhold = createSelector([
+  getFordelBeregningsgrunnlagPerioder,
+  getBeregningsgrunnlagPerioder],
+getUniqueListOfArbeidsforholdFromPerioder);
 
 export const getUniqueListOfArbeidsforholdFields = (fields) => {
   const arbeidsgiverList = [];
