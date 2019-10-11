@@ -37,7 +37,7 @@ export const VilkarresultatMedBegrunnelse = ({
 
 
 VilkarresultatMedBegrunnelse.propTypes = {
-  erVilkarOk: PropTypes.bool.isRequired,
+  erVilkarOk: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   erMedlemskapsPanel: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
@@ -59,6 +59,7 @@ VilkarresultatMedBegrunnelse.propTypes = {
 VilkarresultatMedBegrunnelse.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
+  erVilkarOk: undefined,
   skalViseBegrunnelse: true,
 };
 

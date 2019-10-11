@@ -48,7 +48,7 @@ export const VilkarresultatMedOverstyringForm = ({
       <div className={styles.headerContainer}>
         <div className={styles.textAlign}>
           <Undertittel>{panelTittel}</Undertittel>
-          <Normaltekst>{lovReferanse}</Normaltekst>
+          {lovReferanse && <Normaltekst>{lovReferanse}</Normaltekst>}
         </div>
         <div className={styles.checkerAlign}>
           <OverstyrVurderingVelger
@@ -81,8 +81,8 @@ export const VilkarresultatMedOverstyringForm = ({
 );
 
 VilkarresultatMedOverstyringForm.propTypes = {
-  isOverstyrt: PropTypes.bool.isRequired,
-  erVilkarOk: PropTypes.bool.isRequired,
+  isOverstyrt: PropTypes.bool,
+  erVilkarOk: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
   aksjonspunktCode: PropTypes.string,
   lovReferanse: PropTypes.string,
@@ -111,6 +111,8 @@ VilkarresultatMedOverstyringForm.defaultProps = {
   customVilkarOppfyltText: undefined,
   aksjonspunktCode: undefined,
   lovReferanse: undefined,
+  isOverstyrt: undefined,
+  erVilkarOk: undefined,
 };
 
 const buildInitialValues = createSelector(

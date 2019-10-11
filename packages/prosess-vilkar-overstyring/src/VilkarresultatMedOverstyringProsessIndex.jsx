@@ -68,11 +68,15 @@ VilkarresultatMedOverstyringProsessIndex.propTypes = {
   toggleOverstyring: PropTypes.func.isRequired,
   avslagsarsaker: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
   status: PropTypes.string.isRequired,
-  lovReferanse: PropTypes.string.isRequired,
+  lovReferanse: PropTypes.string,
   erOverstyrt: PropTypes.bool.isRequired,
   panelTittel: PropTypes.string.isRequired,
   overstyringApKode: PropTypes.string.isRequired,
   erMedlemskapsPanel: PropTypes.bool.isRequired,
+};
+
+VilkarresultatMedOverstyringProsessIndex.defaultProps = {
+  lovReferanse: '',
 };
 
 export default VilkarresultatMedOverstyringProsessIndex;

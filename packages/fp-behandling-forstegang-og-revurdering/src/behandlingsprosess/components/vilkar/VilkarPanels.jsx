@@ -168,7 +168,7 @@ export const VilkarPanels = ({
     <DataFetcherWithCache
       behandlingVersjon={1}
       data={svangerskapData}
-      showComponent={behandlingspunkt === behandlingspunktCodes.SVANGERSKA}
+      showComponent={behandlingspunkt === behandlingspunktCodes.SVANGERSKAP}
       render={(props) => (
         <SvangerskapVilkarProsessIndex
           submitCallback={submitCallback}
