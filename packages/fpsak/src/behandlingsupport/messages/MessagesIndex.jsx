@@ -13,24 +13,24 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
+import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 
-import fpsakApi from 'data/fpsakApi';
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
-import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from 'behandling/selectors/behandlingerSelectors';
-import { getKodeverk } from 'kodeverk/duck';
+import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
+import { getBehandlingerUuidsMappedById, getBehandlingerTypesMappedById } from '../../behandling/selectors/behandlingerSelectors';
+import { getKodeverk } from '../../kodeverk/duck';
 import {
   getBehandlingSprak,
   getBehandlingVersjon,
   getBehandlingIdentifier,
   previewMessage,
-} from 'behandling/duck';
-import { setBehandlingOnHold } from 'behandlingmenu/duck';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+  isKontrollerRevurderingAksjonspunkOpen,
+} from '../../behandling/duck';
+import { setBehandlingOnHold } from '../../behandlingmenu/duck';
+import fpsakApi from '../../data/fpsakApi';
 import {
   resetSubmitMessageActionCreator, submitMessageActionCreator,
 } from './duck';
-import Messages from './components/Messages';
-import MessagesModal from './components/MessagesModal';
 
 /**
  * MessagesIndex
@@ -141,30 +141,31 @@ export class MessagesIndex extends Component {
       selectedBehandlingSprak,
       ventearsaker,
       loadingBrevmaler,
+      behandlingIdentifier,
+      isKontrollerRevurderingApOpen,
+      selectedBehandlingVersjon,
+      revurderingVarslingArsak,
     } = this.props;
 
-    if (loadingBrevmaler) {
+    if (loadingBrevmaler || !selectedBehandlingVersjon) {
       return <LoadingPanel />;
     }
 
     const { showMessagesModal, showSettPaVentModal } = this.state;
-    const model = {
-      mottaker: recipients[0] ? recipients[0] : null,
-      brevmalkode: templates[0] ? templates[0].kode : null,
-      fritekst: '',
-      aarsakskode: null,
-    };
 
     return (
       <div>
-        {showMessagesModal && <MessagesModal showModal={submitFinished && showMessagesModal} closeEvent={this.afterSubmit} />}
+        {showMessagesModal && <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={this.afterSubmit} />}
         <Messages
           submitCallback={this.submitCallback}
-          initialValues={model}
           recipients={recipients}
           templates={templates}
           sprakKode={selectedBehandlingSprak}
           previewCallback={this.previewCallback}
+          behandlingId={behandlingIdentifier.behandlingId}
+          behandlingVersjon={selectedBehandlingVersjon}
+          isKontrollerRevurderingApOpen={isKontrollerRevurderingApOpen}
+          revurderingVarslingArsak={revurderingVarslingArsak}
         />
         {submitFinished && showSettPaVentModal
         && (
@@ -184,7 +185,7 @@ export class MessagesIndex extends Component {
 }
 
 MessagesIndex.propTypes = {
-  submitFinished: PropTypes.bool.isRequired,
+  submitFinished: PropTypes.bool,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingUuid: PropTypes.string.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
@@ -202,22 +203,23 @@ MessagesIndex.propTypes = {
   resetReduxForm: PropTypes.func.isRequired,
   resetSubmitMessage: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
-  ventearsaker: PropTypes.arrayOf(PropTypes.shape({
-    kode: PropTypes.string,
-    navn: PropTypes.string,
-  })),
+  ventearsaker: PropTypes.arrayOf(kodeverkObjektPropType),
   fetchBrevmaler: PropTypes.func.isRequired,
   loadingBrevmaler: PropTypes.bool.isRequired,
+  isKontrollerRevurderingApOpen: PropTypes.bool,
   behandlingTypeKode: PropTypes.string.isRequired,
+  revurderingVarslingArsak: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
 };
 
 MessagesIndex.defaultProps = {
+  submitFinished: false,
   behandlingIdentifier: undefined,
   selectedBehandlingVersjon: undefined,
   selectedBehandlingSprak: undefined,
   ventearsaker: [],
   recipients: ['Søker'],
   templates: [],
+  isKontrollerRevurderingApOpen: false,
 };
 
 const mapStateToProps = (state) => ({
@@ -228,9 +230,11 @@ const mapStateToProps = (state) => ({
   selectedBehandlingVersjon: getBehandlingVersjon(state),
   selectedBehandlingSprak: getBehandlingSprak(state),
   ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
+  revurderingVarslingArsak: getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)(state),
   behandlingUuid: getBehandlingerUuidsMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   behandlingTypeKode: getBehandlingerTypesMappedById(state)[getBehandlingIdentifier(state).behandlingId],
   fagsakYtelseType: getFagsakYtelseType(state),
+  isKontrollerRevurderingApOpen: isKontrollerRevurderingAksjonspunkOpen(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

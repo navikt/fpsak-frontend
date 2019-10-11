@@ -12,6 +12,8 @@ import mottaDokumentImageUrl from '@fpsak-frontend/assets/images/motta_dokument.
 import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokument.svg';
 import erIBrukImageUrl from '@fpsak-frontend/assets/images/stjerne.svg';
 
+import dokumentPropType from '../propTypes/dokumentPropType';
+
 import styles from './documentList.less';
 
 const headerTextCodes = [
@@ -118,15 +120,7 @@ const DocumentList = ({
 
 DocumentList.propTypes = {
   intl: PropTypes.shape().isRequired,
-  documents: PropTypes.arrayOf(PropTypes.shape({
-    journalpostId: PropTypes.string.isRequired,
-    dokumentId: PropTypes.string.isRequired,
-    behandlinger: PropTypes.arrayOf(PropTypes.string),
-    tittel: PropTypes.string.isRequired,
-    tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
-    gjelderFor: PropTypes.string,
-  }).isRequired).isRequired,
+  documents: PropTypes.arrayOf(dokumentPropType.isRequired).isRequired,
   selectDocumentCallback: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
 };

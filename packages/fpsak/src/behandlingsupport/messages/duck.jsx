@@ -1,6 +1,6 @@
-import { updateFagsakInfo } from 'fagsak/duck';
-import behandlingUpdater from 'behandling/BehandlingUpdater';
-import fpsakApi from 'data/fpsakApi';
+import { updateFagsakInfo } from '../../fagsak/duck';
+import behandlingUpdater from '../../behandling/BehandlingUpdater';
+import fpsakApi from '../../data/fpsakApi';
 
 export const resetSubmitMessageActionCreator = (behandlingIdentifier) => (dispatch) => {
   dispatch(fpsakApi.SUBMIT_MESSAGE.resetRestApi());
