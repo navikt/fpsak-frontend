@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { useIntl } from 'react-intl';
+import { injectIntl } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -42,6 +42,7 @@ const vilkarresultatMedOverstyringData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSK
  * Presentasjonskomponent.
  */
 export const VilkarPanels = ({
+  intl,
   aksjonspunktCodes,
   vilkarTypeCodes,
   behandlingspunkt,
@@ -80,7 +81,7 @@ export const VilkarPanels = ({
             aksjonspunkter={behandlingspunktAksjonspunkter}
             erOverstyrt={behandlingspunktOverridden}
             overrideReadOnly={behandlingspunktOverrideReadOnly}
-            panelTittel={useIntl().formatMessage({ id: behandlingspunktTitleCode })}
+            panelTittel={intl.formatMessage({ id: behandlingspunktTitleCode })}
             avslagsarsaker={getFiltrerteAvslagsarsaker(vilkar.vilkarType.kode, fagsakInfo.ytelseType, avslagsarsaker)}
             lovReferanse={vilkar.lovReferanse}
             overstyringApKode={hentOverstyringAksjonspunktKodeFor(behandlingspunkt, fagsakInfo.ytelseType, behandlingspunktVilkar)}
@@ -239,6 +240,7 @@ export const VilkarPanels = ({
 );
 
 VilkarPanels.propTypes = {
+  intl: PropTypes.shape().isRequired,
   aksjonspunktCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingspunkt: PropTypes.string.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
@@ -284,4 +286,4 @@ const mapStateToProps = (state) => ({
   harVilkarresultatMedOverstyring: harVilkarresultatMedOverstyring(state),
 });
 
-export default connect(mapStateToProps)(VilkarPanels);
+export default connect(mapStateToProps)(injectIntl(VilkarPanels));

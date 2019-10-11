@@ -33,6 +33,7 @@ describe('<VilkarPanels>', () => {
       toggleOverstyring={sinon.spy()}
       avslagsarsaker={{}}
       harVilkarresultatMedOverstyring={false}
+      intl={{}}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
