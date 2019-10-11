@@ -147,7 +147,7 @@ export class MessagesIndex extends Component {
       revurderingVarslingArsak,
     } = this.props;
 
-    if (loadingBrevmaler) {
+    if (loadingBrevmaler || !selectedBehandlingVersjon) {
       return <LoadingPanel />;
     }
 
@@ -185,7 +185,7 @@ export class MessagesIndex extends Component {
 }
 
 MessagesIndex.propTypes = {
-  submitFinished: PropTypes.bool.isRequired,
+  submitFinished: PropTypes.bool,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingUuid: PropTypes.string.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
@@ -206,18 +206,20 @@ MessagesIndex.propTypes = {
   ventearsaker: PropTypes.arrayOf(kodeverkObjektPropType),
   fetchBrevmaler: PropTypes.func.isRequired,
   loadingBrevmaler: PropTypes.bool.isRequired,
-  isKontrollerRevurderingApOpen: PropTypes.bool.isRequired,
+  isKontrollerRevurderingApOpen: PropTypes.bool,
   behandlingTypeKode: PropTypes.string.isRequired,
   revurderingVarslingArsak: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
 };
 
 MessagesIndex.defaultProps = {
+  submitFinished: false,
   behandlingIdentifier: undefined,
   selectedBehandlingVersjon: undefined,
   selectedBehandlingSprak: undefined,
   ventearsaker: [],
   recipients: ['Søker'],
   templates: [],
+  isKontrollerRevurderingApOpen: false,
 };
 
 const mapStateToProps = (state) => ({
