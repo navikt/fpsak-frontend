@@ -6,11 +6,10 @@ import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
-import { behandlingFormFpsak, behandlingFormValueSelector } from 'behandling/behandlingFormFpsak';
-import { getBehandlingKlageVurderingResultatNFP, getBehandlingKlageVurderingResultatNK, erArsakTypeBehandlingEtterKlage } from 'behandling/duck';
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+
 import ApprovalField from './ApprovalField';
-import { isKlage, isKlageWithKA } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsForm.less';
 
@@ -32,11 +31,15 @@ export const ToTrinnsFormImpl = ({
   handleSubmit,
   formState,
   forhandsvisVedtaksbrev,
-  klageVurderingResultatNFP,
-  klageVurderingResultatNK,
   readOnly,
-  erBehandlingEtterKlage,
   totrinnskontrollContext,
+  erBehandlingEtterKlage,
+  erKlageWithKA,
+  erKlage,
+  behandlingKlageVurdering,
+  behandlingStatus,
+  isForeldrepengerFagsak,
+  alleKodeverk,
   ...formProps
 }) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -61,7 +64,11 @@ export const ToTrinnsFormImpl = ({
                     currentValue={formState[contextIndex].aksjonspunkter[approvalIndex]}
                     approvalIndex={approvalIndex}
                     readOnly={readOnly}
-                    klageKA={!!isKlageWithKA(klageVurderingResultatNK)}
+                    klageKA={erKlageWithKA}
+                    isForeldrepengerFagsak={isForeldrepengerFagsak}
+                    behandlingKlageVurdering={behandlingKlageVurdering}
+                    behandlingStatus={behandlingStatus}
+                    alleKodeverk={alleKodeverk}
                   />
                 </div>
               ))}
@@ -76,7 +83,7 @@ export const ToTrinnsFormImpl = ({
           disabled={!allApproved(formState) || !allSelected(formState) || formProps.submitting}
           spinner={formProps.submitting}
         >
-          <FormattedMessage id="InfoPanel.Godkjenn" />
+          <FormattedMessage id="ToTrinnsForm.Godkjenn" />
         </Hovedknapp>
         <Hovedknapp
           mini
@@ -84,16 +91,16 @@ export const ToTrinnsFormImpl = ({
           spinner={formProps.submitting}
           onClick={ariaCheck}
         >
-          <FormattedMessage id="InfoPanel.SendTilbake" />
+          <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!isKlage(klageVurderingResultatNFP, klageVurderingResultatNK) && !erBehandlingEtterKlage
+        {!erKlage && !erBehandlingEtterKlage
         && (
         <button
           type="button"
           className={styles.buttonLink}
           onClick={forhandsvisVedtaksbrev}
         >
-          <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+          <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
         </button>
         )}
       </div>
@@ -109,6 +116,8 @@ ToTrinnsFormImpl.propTypes = {
   klageVurderingResultatNFP: PropTypes.shape(),
   klageVurderingResultatNK: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool,
+  erKlageWithKA: PropTypes.bool,
+  erKlage: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
 };
 
@@ -137,13 +146,10 @@ const validate = (values) => {
 
 const formName = 'toTrinnForm';
 
-const mapStateToProps = (state) => ({
-  formState: behandlingFormValueSelector(formName)(state, 'approvals'),
-  klageVurderingResultatNFP: getBehandlingKlageVurderingResultatNFP(state),
-  klageVurderingResultatNK: getBehandlingKlageVurderingResultatNK(state),
-  erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
+const mapStateToProps = (state, ownProps) => ({
+  formState: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'approvals'),
 });
-const ToTrinnsForm = behandlingFormFpsak({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
+const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 
 ToTrinnsForm.formName = formName;
 

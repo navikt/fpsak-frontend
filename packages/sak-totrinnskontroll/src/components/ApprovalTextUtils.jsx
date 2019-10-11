@@ -8,26 +8,12 @@ import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import klageVurderingOmgjoerCodes from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
 import aksjonspunktCodes, { isUttakAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { getBehandlingStatus, getBehandlingKlageVurdering } from 'behandling/duck';
-import { isForeldrepengerFagsak } from 'fagsak/fagsakSelectors';
-import { getKodeverk } from 'kodeverk/duck';
 import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
+
 import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspunktTextCodes';
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
-
-export const isKlage = (klageVurderingResultatNFP, klageVurderingResultatNK) => {
-  const meholdIKlageAvNFP = klageVurderingResultatNFP;
-  const meholdIKlageAvNK = klageVurderingResultatNK;
-  return meholdIKlageAvNFP || meholdIKlageAvNK;
-};
-
-export const isKlageWithKA = (klageVurderingResultatNK) => {
-  const meholdIKlageAvNK = klageVurderingResultatNK;
-  return meholdIKlageAvNK;
-};
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
@@ -203,7 +189,10 @@ const erKlageAksjonspunkt = (aksjonspunkt) => aksjonspunkt.aksjonspunktKode === 
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
 export const getAksjonspunktTextSelector = createSelector(
-  [isForeldrepengerFagsak, getBehandlingKlageVurdering, getBehandlingStatus, getKodeverk(kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE)],
+  [(ownProps) => ownProps.isForeldrepengerFagsak,
+    (ownProps) => ownProps.behandlingKlageVurdering,
+    (ownProps) => ownProps.behandlingStatus,
+    (ownProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]],
   (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (aksjonspunkt) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
