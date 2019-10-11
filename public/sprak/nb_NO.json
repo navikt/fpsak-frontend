@@ -1014,12 +1014,6 @@
 
   "TermindatoFaktaForm.Termindato": "Termindato",
 
-  "SjekkFodselDokForm.BrukAntallITPS": "Bruk antall fra folkeregisteret",
-  "SjekkFodselDokForm.DokumentasjonForeligger": "Dokumentasjon foreligger",
-  "SjekkFodselDokForm.BrukAntallISoknad": "Bruk antall fra søknad",
-  "SjekkFodselDokForm.Fodselsdato": "Fødselsdato",
-  "SjekkFodselDokForm.BrukAntallIYtelsesvedtaket": "Bruk antall fra vedtaket",
-
   "PersonYtelserTable.Ytelser": "Ytelser",
   "PersonYtelserTable.Ytelse": "Ytelse",
   "PersonYtelserTable.Periode": "Periode",
@@ -1346,6 +1340,7 @@
   "DelOppPeriodeModalImpl.Ok": "Ok",
   "DelOppPeriodeModalImpl.Avbryt": "Avbryt",
   "DelOppPeriodeModalImpl.DatoUtenforPeriode": "Dato må være innenfor perioden",
+  "DelOppPeriodeModalImpl.BelopEr0": "Periode har 0 virkedager",
   "UttakperiodeType.MØDREKVOTE": "Mødrekvote",
   "UttakperiodeType.FEDREKVOTE": "Fedrekvote",
   "UttakperiodeType.FELLESPERIODE": "Fellesperiode",
