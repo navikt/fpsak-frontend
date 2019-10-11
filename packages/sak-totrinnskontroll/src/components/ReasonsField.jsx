@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
+
 import {
   ArrowBox, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
@@ -37,7 +38,7 @@ const ReasonsField = ({
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
-              <Undertekst className="blokk-xs"><FormattedMessage id="InfoPanel.Arsak" /></Undertekst>
+              <Undertekst className="blokk-xs"><FormattedMessage id="ReasonsField.Arsak" /></Undertekst>
             </FlexColumn>
           </FlexRow>
           <FlexRow>
@@ -46,21 +47,21 @@ const ReasonsField = ({
                 <FlexColumn className={styles.halfColumn}>
                   <CheckboxField
                     name={`${fieldName}.feilFakta`}
-                    label={intl.formatMessage({ id: 'InfoPanel.FeilFakta' })}
+                    label={intl.formatMessage({ id: 'ReasonsField.FeilFakta' })}
                   />
                   <CheckboxField
                     name={`${fieldName}.feilRegel`}
-                    label={intl.formatMessage({ id: 'InfoPanel.FeilRegelForstaelse' })}
+                    label={intl.formatMessage({ id: 'ReasonsField.FeilRegelForstaelse' })}
                   />
                 </FlexColumn>
                 <FlexColumn className={styles.halfColumn}>
                   <CheckboxField
                     name={`${fieldName}.feilLov`}
-                    label={intl.formatMessage({ id: 'InfoPanel.FeilLovanvendelse' })}
+                    label={intl.formatMessage({ id: 'ReasonsField.FeilLovanvendelse' })}
                   />
                   <CheckboxField
                     name={`${fieldName}.annet`}
-                    label={intl.formatMessage({ id: 'InfoPanel.Annet' })}
+                    label={intl.formatMessage({ id: 'ReasonsField.Annet' })}
                   />
                 </FlexColumn>
               </FlexRow>
@@ -70,7 +71,7 @@ const ReasonsField = ({
         )}
       <TextAreaField
         name={`${fieldName}.besluttersBegrunnelse`}
-        label={intl.formatMessage({ id: 'InfoPanel.Begrunnelse' })}
+        label={intl.formatMessage({ id: 'ReasonsField.Begrunnelse' })}
         validate={[required, minLength3, maxLength2000, hasValidText]}
       />
 

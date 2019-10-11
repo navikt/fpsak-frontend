@@ -5,6 +5,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 

@@ -9,6 +9,7 @@ import { ElementWrapper, Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg'; //
 import avslattImg from '@fpsak-frontend/assets/images/avslaatt.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
+
 import { getAksjonspunktTextSelector } from './ApprovalTextUtils';
 
 import styles from './ToTrinnsFormReadOnly.less';
@@ -113,8 +114,8 @@ ToTrinnsFormReadOnlyImpl.propTypes = {
   getAksjonspunktText: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  getAksjonspunktText: getAksjonspunktTextSelector(state),
+const mapStateToProps = (state, ownProps) => ({
+  getAksjonspunktText: getAksjonspunktTextSelector(ownProps),
 });
 
 export default connect(mapStateToProps)(injectIntl(ToTrinnsFormReadOnlyImpl));

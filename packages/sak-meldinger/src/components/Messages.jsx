@@ -13,14 +13,9 @@ import {
 } from '@fpsak-frontend/utils';
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-
-import { behandlingFormFpsak, behandlingFormValueSelector } from 'behandling/behandlingFormFpsak';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
-import { getKodeverk } from 'kodeverk/duck';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './messages.less';
-
 
 const maxLength4000 = maxLength(4000);
 const minLength3 = minLength(3);
@@ -104,7 +99,7 @@ export const MessagesImpl = ({
           label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
           validate={[required, maxLength4000, minLength3, hasValidText]}
           maxLength={4000}
-          badges={[{ type: 'fokus', textId: languageCode, title: 'Malform.Beskrivelse' }]}
+          badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
         />
       </div>
       )}
@@ -150,9 +145,17 @@ MessagesImpl.defaultProps = {
 
 const formName = 'Messages';
 
-const buildInitalValues = (isKontrollerRevurderingApOpen, initialProps) => (isKontrollerRevurderingApOpen
-  ? { ...initialProps.initialValues, brevmalkode: dokumentMalType.REVURDERING_DOK }
-  : { ...initialProps.initialValues });
+const buildInitalValues = (isKontrollerRevurderingApOpen, recipients, templates) => {
+  const initialValues = {
+    mottaker: recipients[0] ? recipients[0] : null,
+    brevmalkode: templates[0] ? templates[0].kode : null,
+    fritekst: '',
+    aarsakskode: null,
+  };
+  return isKontrollerRevurderingApOpen
+    ? { ...initialValues, brevmalkode: dokumentMalType.REVURDERING_DOK }
+    : { ...initialValues };
+};
 
 const transformValues = (values) => {
   const newValues = values;
@@ -162,22 +165,22 @@ const transformValues = (values) => {
   return newValues;
 };
 const getfilteredCauses = createSelector(
-  [getKodeverk(kodeverkTyper.REVURDERING_VARSLING_ÅRSAK)],
+  [(ownProps) => ownProps.revurderingVarslingArsak],
   (causes) => causes.filter((cause) => cause.kode !== ugunstAarsakTyper.BARN_IKKE_REGISTRERT_FOLKEREGISTER),
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
-  return (state) => ({
-    ...behandlingFormValueSelector(formName)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
-    causes: getfilteredCauses(state),
-    initialValues: buildInitalValues(isKontrollerRevurderingAksjonspunkOpen(state), ownProps),
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
+  return (state, ownProps) => ({
+    ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'mottaker', 'brevmalkode', 'fritekst', 'arsakskode'),
+    causes: getfilteredCauses(ownProps),
+    initialValues: buildInitalValues(ownProps.isKontrollerRevurderingApOpen, ownProps.recipients, ownProps.templates),
     onSubmit,
   });
 };
 
 
-const Messages = connect(mapStateToPropsFactory)(injectIntl(behandlingFormFpsak({
+const Messages = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(MessagesImpl)));
 
