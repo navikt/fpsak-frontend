@@ -313,8 +313,11 @@ const buildInitialValues = createSelector(
       return undefined;
     }
 
+    const harTypeIkkeSendt = !tilbakekrevingvalg.varseltekst
+      && tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD;
+
     return {
-      videreBehandling: tilbakekrevingvalg.varseltekst ? tilbakekrevingvalg.videreBehandling.kode : tilbakekrevingvalg.videreBehandling.kode + IKKE_SEND,
+      videreBehandling: harTypeIkkeSendt ? tilbakekrevingvalg.videreBehandling.kode + IKKE_SEND : tilbakekrevingvalg.videreBehandling.kode,
       varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };
