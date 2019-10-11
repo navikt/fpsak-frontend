@@ -69,7 +69,7 @@ export const VilkarPanels = ({
       showComponent={harVilkarresultatMedOverstyring}
       render={(props) => {
         const vilkarKode = getVilkarKodeFor(behandlingspunkt, behandlingspunktVilkar);
-        const vilkar = vilkarKode ? allVilkar.find((v) => v.vilkarType.kode === vilkarKode) : behandlingspunktVilkar[0];
+        const vilkar = vilkarKode ? behandlingspunktVilkar.find((v) => v.vilkarType.kode === vilkarKode) : behandlingspunktVilkar[0];
         return (
           <VilkarresultatMedOverstyringProsessIndex
             key={behandlingspunkt}
