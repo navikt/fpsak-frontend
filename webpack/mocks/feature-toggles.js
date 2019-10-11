@@ -3,7 +3,6 @@ require('dotenv')
 
 const toggles = {
   'featureToggles': {
-    'fpsak.lopende-medlemskap': false,
     'fpsak.aksjonspunkt-marker-utenlandssak': false,
     'fpsak.overstyr_beregningsgrunnlag': false,
     'fpsak.simuler-oppdrag-varseltekst': false,

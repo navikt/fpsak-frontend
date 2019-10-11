@@ -7,6 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+
 import { Image } from '@fpsak-frontend/shared-components';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -14,8 +15,9 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
+import { requireProps } from '@fpsak-frontend/fp-felles';
 
-import { getFagsakYtelseType } from 'fagsak/fagsakSelectors';
+import { getFagsakYtelseType } from '../../fagsak/fagsakSelectors';
 import {
   getBehandlingKlageVurderingResultatNK,
   getBehandlingResultatstruktur,
@@ -25,10 +27,8 @@ import {
   getSelectedBehandlingId,
   getBehandlingStatus,
   getBehandlingType,
-} from 'behandling/duck';
-import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getApproveFinished } from '../duck';
-
+} from '../../behandling/duck';
+import { getApproveFinished } from './duck';
 
 import styles from './fatterVedtakApprovalModal.less';
 
