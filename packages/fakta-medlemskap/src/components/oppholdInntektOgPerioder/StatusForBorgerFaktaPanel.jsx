@@ -9,7 +9,7 @@ import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { FaktaGruppe, behandlingForm } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 /**
  * StatusForBorgerFaktaPanel
@@ -94,9 +94,12 @@ StatusForBorgerFaktaPanelImpl.defaultProps = {
   erEosBorger: undefined,
 };
 
-const StatusForBorgerFaktaPanel = connect((state, ownProps) => ({
-  ...behandlingForm(`OppholdInntektOgPeriodeForm-${ownProps.id}`)(state, 'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
-}))(StatusForBorgerFaktaPanelImpl);
+const mapStateToProps = (state, ownProps) => ({
+  ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
+    'erEosBorger', 'isBorgerAksjonspunktClosed', 'apKode'),
+});
+
+const StatusForBorgerFaktaPanel = connect(mapStateToProps)(StatusForBorgerFaktaPanelImpl);
 
 const getApKode = (aksjonspunkter) => aksjonspunkter
   .map((ap) => ap.definisjon.kode)
