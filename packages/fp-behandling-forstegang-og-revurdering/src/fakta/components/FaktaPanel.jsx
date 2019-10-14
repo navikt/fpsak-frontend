@@ -19,7 +19,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
-import { getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import {
+  getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles,
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
@@ -341,7 +343,7 @@ const mapStateToProps = (state) => {
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),
     readOnlyBehandling: behandlingSelectors.hasReadOnlyBehandling(state),
-    featureToggleUtland = getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK];
+    featureToggleUtland = getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
   };
 };
 

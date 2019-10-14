@@ -113,7 +113,7 @@ export class UtlandImpl extends Component {
                 className={styles.editIcon}
                 src={readOnly ? editUtlandDisabledIcon : editUtlandIcon}
                 onClick={readOnly ? undefined : this.editUtland}
-                alt={intl.formatMessage({ id: 'UttakInfoPanel.EndrePerioden' })}
+                alt={intl.formatMessage({ id: 'Utland.EndrePerioden' })}
               />
             </div>
           </div>

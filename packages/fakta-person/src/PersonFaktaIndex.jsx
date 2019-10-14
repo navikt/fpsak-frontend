@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import PersonInfoPanel from './components/PersonInfoPanel';
-import PersonIndexPanel from './components/PersonIndexPanel';
+import UtfyllendePersoninfoPanel from './components/UtfyllendePersoninfoPanel';
+import GrunnleggendePersoninfoPanel from './components/GrunnleggendePersoninfoPanel';
 import personAksjonspunkterPropType from './propTypes/personAksjonspunkterPropType';
 import personInntektArbeidYtelsePropType from './propTypes/personInntektArbeidYtelsePropType';
+import personFagsakPersonPropType from './propTypes/personFagsakPersonPropType';
 import personPersonopplysningerPropType from './propTypes/personPersonopplysningerPropType';
 import personBehandlingPropType from './propTypes/personBehandlingPropType';
 import messages from '../i18n/nb_NO';
@@ -33,7 +34,7 @@ const PersonFaktaIndex = ({
 }) => (
   <RawIntlProvider value={intl}>
     {personopplysninger && (
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         sprakkode={behandling.sprakkode}
@@ -51,7 +52,7 @@ const PersonFaktaIndex = ({
       />
     )}
     {!personopplysninger && (
-      <PersonIndexPanel
+      <GrunnleggendePersoninfoPanel
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         person={fagsakPerson}
@@ -71,7 +72,7 @@ PersonFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(personAksjonspunkterPropType).isRequired,
   inntektArbeidYtelse: personInntektArbeidYtelsePropType,
   personopplysninger: personPersonopplysningerPropType,
-  fagsakPerson: PropTypes.shape().isRequired,
+  fagsakPerson: personFagsakPersonPropType,
   submitCallback: PropTypes.func.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
@@ -84,6 +85,7 @@ PersonFaktaIndex.propTypes = {
 PersonFaktaIndex.defaultProps = {
   personopplysninger: undefined,
   inntektArbeidYtelse: undefined,
+  fagsakPerson: undefined,
 };
 
 export default PersonFaktaIndex;

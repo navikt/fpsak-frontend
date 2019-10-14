@@ -6,23 +6,24 @@ import Panel from 'nav-frontend-paneler';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   faktaPanelCodes, withDefaultToggling, behandlingForm,
 } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
-import styles from './PersonIndexPanel.less';
+import personAksjonspunkterPropType from '../propTypes/personAksjonspunkterPropType';
+
+import styles from './grunnleggendePersoninfoPanel.less';
 
 const personAksjonspunkter = [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK];
 const erMarkertUtenlandssak = (aksjonspunkter) => aksjonspunkter.some((ap) => ap.definisjon.kode === personAksjonspunkter[0]);
 
 /**
- * Container component. Viser grunnleggende personinformasjon. Dette panelet blir
+ * Viser grunnleggende personinformasjon. Dette panelet blir
  * vist som del av søkeresultatet, når fagsaken ikke har behandling eller ved papirsøknad
  */
-const PersonIndexPanelImpl = ({
+const GrunnleggendePersoninfoPanel = ({
   person,
   aksjonspunkter,
   readOnly,
@@ -35,28 +36,27 @@ const PersonIndexPanelImpl = ({
     {erMarkertUtenlandssak(aksjonspunkter) && (
       <form onSubmit={formProps.handleSubmit}>
         <div className={styles.bekreftAksjonspunktContainer}>
-          <AksjonspunktHelpText isAksjonspunktOpen={erMarkertUtenlandssak(aksjonspunkter)}>
+          <AksjonspunktHelpText isAksjonspunktOpen>
             {[<FormattedMessage key="OpptjeningUtland" id="PersonInfoPanel.OpptjeningUtland" />]}
           </AksjonspunktHelpText>
-          {!readOnly
-            && (
-            <Hovedknapp mini className={styles.button} spinner={formProps.submitting} disabled={readOnly || formProps.submitting}>
-              <FormattedMessage id="OkAvbrytModal.Ok" />
+          {!readOnly && (
+            <Hovedknapp mini className={styles.button} spinner={formProps.submitting} disabled={formProps.submitting}>
+              <FormattedMessage id="PersonIndexPanel.Ok" />
             </Hovedknapp>
-            )}
+          )}
         </div>
       </form>
     )}
   </Panel>
 );
 
-PersonIndexPanelImpl.propTypes = {
+GrunnleggendePersoninfoPanel.propTypes = {
   person: PropTypes.shape(),
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(personAksjonspunkterPropType).isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 
-PersonIndexPanelImpl.defaultProps = {
+GrunnleggendePersoninfoPanel.defaultProps = {
   person: undefined,
 };
 
@@ -72,8 +72,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 
 const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'PersonIndexPanel',
-})(PersonIndexPanelImpl));
+})(GrunnleggendePersoninfoPanel));
 
-const PersonIndexPanel = withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);
-
-export default PersonIndexPanel;
+export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);

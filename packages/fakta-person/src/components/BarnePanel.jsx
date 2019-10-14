@@ -72,7 +72,7 @@ const BarnePanel = ({
             </div>
             {barn.dodsdato && (
             <Normaltekst>
-              <FormattedMessage id="BostedBarnView.DodsDato" />
+              <FormattedMessage id="Barnepanel.DodsDato" />
               <Element><DateLabel dateString={barn.dodsdato} /></Element>
               <VerticalSpacer eightPx />
             </Normaltekst>

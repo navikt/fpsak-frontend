@@ -41,12 +41,20 @@ const personopplysninger = {
   },
   harVerge: false,
 };
+
 const inntektArbeidYtelse = {
-  barnSoktFor: [],
 };
+
 const fagsakPerson = {
-  barnSoktFor: [],
+  erKvinne: false,
+  dodsdato: '2019-01-01',
+  diskresjonskode: diskresjonskodeType.UDEFINERT,
+  erDod: true,
+  alder: 90,
+  navn: 'Espen Utvikler',
+  personnummer: '123456789',
 };
+
 const alleKodeverk = {
   [kodeverkTyper.SIVILSTAND_TYPE]: [{
     kode: sivilstandType.ENKE,
@@ -82,7 +90,7 @@ export default {
 };
 
 export const vis = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ADOPSJONSVILKARET]);
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
       behandling={behandling}
@@ -92,6 +100,56 @@ export const vis = () => {
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
+      }]}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+      featureToggleUtland
+      alleKodeverk={alleKodeverk}
+    />
+  );
+};
+
+export const visPanelForGrunnleggendePersoninfo = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
+  return (
+    <PersonFaktaIndex
+      behandling={behandling}
+      fagsakPerson={fagsakPerson}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+      featureToggleUtland
+      alleKodeverk={alleKodeverk}
+    />
+  );
+};
+
+export const visPanelForMarkertUtenlandssak = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
+  return (
+    <PersonFaktaIndex
+      behandling={behandling}
+      fagsakPerson={{
+        ...fagsakPerson,
+        dodsdato: undefined,
+        erDod: false,
+      }}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const personPersonopplysningerPropType = PropTypes.shape({
-  barn: PropTypes.shape().isRequired,
+  barn: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navn: PropTypes.string.isRequired,
   fodselsdato: PropTypes.string.isRequired,
   fnr: PropTypes.string.isRequired,

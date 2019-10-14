@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
   behandlingForm, faktaPanelCodes, withDefaultToggling, getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
@@ -10,6 +9,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import personAksjonspunkterPropType from '../propTypes/personAksjonspunkterPropType';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './FullPersonInfo';
 import utlandSakstypeKode from './utland/utlandSakstypeKode';
@@ -29,13 +29,13 @@ const getUtlandSakstype = (aksjonspunkter) => {
 };
 
 /**
- * PersonInfoPanel
+ * UtfyllendePersoninfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Tilleggsopplysninger.
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export class PersonInfoPanel extends Component {
+export class UtfyllendePersoninfoPanel extends Component {
   constructor(props) {
     super(props);
 
@@ -143,7 +143,7 @@ export class PersonInfoPanel extends Component {
   }
 }
 
-PersonInfoPanel.propTypes = {
+UtfyllendePersoninfoPanel.propTypes = {
   personopplysninger: PropTypes.shape().isRequired,
   relatertTilgrensendeYtelserForSoker: PropTypes.arrayOf(PropTypes.shape()),
   relatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape()),
@@ -153,14 +153,14 @@ PersonInfoPanel.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(personAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
-PersonInfoPanel.defaultProps = {
+UtfyllendePersoninfoPanel.defaultProps = {
   relatertTilgrensendeYtelserForSoker: undefined,
   relatertTilgrensendeYtelserForAnnenForelder: undefined,
   submitCallback: undefined,
@@ -168,4 +168,4 @@ PersonInfoPanel.defaultProps = {
 
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 
-export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(behandlingForm({ form: 'PersonInfoPanel' })(PersonInfoPanel));
+export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(behandlingForm({ form: 'PersonInfoPanel' })(UtfyllendePersoninfoPanel));

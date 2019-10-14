@@ -11,10 +11,10 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
-import FullPersonInfo from './panelBody/FullPersonInfo';
-import { PersonInfoPanelImpl as PersonInfoPanel } from './PersonInfoPanel';
+import FullPersonInfo from './FullPersonInfo';
+import { UtfyllendePersoninfoPanel } from './UtfyllendePersoninfoPanel';
 
-describe('<PersonInfoPanel>', () => {
+describe('<UtfyllendePersoninfoPanel>', () => {
   const personopplysninger = {
     navn: 'Parent 1',
     fnr: '26041150695',
@@ -85,7 +85,7 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -114,7 +114,7 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -143,7 +143,7 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal vise søkerpanel automatisk når dette er markert i URL (openInfoPanels)', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -196,7 +196,7 @@ describe('<PersonInfoPanel>', () => {
     },
     ];
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -241,7 +241,7 @@ describe('<PersonInfoPanel>', () => {
     },
     ];
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -269,7 +269,7 @@ describe('<PersonInfoPanel>', () => {
   it('skal velge hovedsøker og legge denne i url ved klikk på hovedsøker i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -305,7 +305,7 @@ describe('<PersonInfoPanel>', () => {
   it('skal ikke fjerna personmarkering i url ved bytte fra hovedsøker til annen part', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -340,7 +340,7 @@ describe('<PersonInfoPanel>', () => {
   it('skal fjerne valgt hovedsøker ved nytt klikk på denne i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}

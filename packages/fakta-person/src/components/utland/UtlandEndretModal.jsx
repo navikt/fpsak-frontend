@@ -32,7 +32,7 @@ export const UtlandEndretModalImpl = ({
     <FlexContainer wrap>
       <FlexRow>
         <FlexColumn className={styles.iconContainer}>
-          <Image className={styles.icon} src={innvilgetImageUrl} alt={intl.formatMessage({ id: 'UttakInfoPanel.Ok' })} />
+          <Image className={styles.icon} src={innvilgetImageUrl} alt={intl.formatMessage({ id: 'UtlandEndretModal.Ok' })} />
         </FlexColumn>
         <FlexColumn className={styles.fullWidth}>
           <Normaltekst className={styles.modalLabel}>
@@ -48,7 +48,7 @@ export const UtlandEndretModalImpl = ({
             className={styles.button}
             onClick={formProps.handleSubmit}
           >
-            {intl.formatMessage({ id: 'UttakInfoPanel.Ok' })}
+            {intl.formatMessage({ id: 'UtlandEndretModal.Ok' })}
           </Hovedknapp>
         </FlexColumn>
       </FlexRow>
