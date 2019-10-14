@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import { Panel } from 'nav-frontend-paneler';
 import oransjeTrekant from '@fpsak-frontend/assets/images/advarsel.svg';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import TittelMedDivider from './TittelMedDivider';
 
+import risikoklassifiseringPropType from '../propTypes/risikoklassifiseringPropType';
+import risikoklassifiseringAksjonspunktPropType from '../propTypes/risikoklassifiseringAksjonspunktPropType';
+import TittelMedDivider from './TittelMedDivider';
 import Faresignaler from './Faresignaler';
 import AvklarFaresignalerForm from './AvklarFaresignalerForm';
 
@@ -17,6 +17,8 @@ import AvklarFaresignalerForm from './AvklarFaresignalerForm';
  * Presentasjonskomponent. Statisk visning av panel som tilsier ingen faresignaler funnet i behandlingen.
  */
 const HoyRisikoPanel = ({
+  behandlingId,
+  behandlingVersjon,
   risikoklassifisering,
   aksjonspunkt,
   readOnly,
@@ -32,6 +34,8 @@ const HoyRisikoPanel = ({
     {!!aksjonspunkt
       && (
       <AvklarFaresignalerForm
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         aksjonspunkt={aksjonspunkt}
         readOnly={readOnly}
         submitCallback={submitCallback}
@@ -42,8 +46,10 @@ const HoyRisikoPanel = ({
 );
 
 HoyRisikoPanel.propTypes = {
-  risikoklassifisering: PropTypes.shape().isRequired,
-  aksjonspunkt: aksjonspunktPropType,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  risikoklassifisering: risikoklassifiseringPropType.isRequired,
+  aksjonspunkt: risikoklassifiseringAksjonspunktPropType,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
 };

@@ -6,27 +6,15 @@ import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
 import { getRiskPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
-import { getBehandlingIdentifier, getBehandlingVersjon } from 'behandling/duck';
-
-import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import fpsakApi from '../../data/fpsakApi';
+import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
+
+import { getBehandlingIdentifier, getBehandlingVersjon } from 'behandling/duck';
 import {
   hentKontrollresultat, isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
 } from './duck';
-import IngenRisikoPanel from './components/IngenRisikoPanel';
-import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
-import HoyRisikoTittel from './components/HoyRisikoTittel';
 import { getKontrollresultat, getReadOnly, getRisikoaksjonspunkt } from './kontrollresultatSelectors';
-
-const harResultatkode = (risikoklassifisering, resultatkode) => {
-  if (!risikoklassifisering || !risikoklassifisering.kontrollresultat) {
-    return false;
-  }
-  return risikoklassifisering.kontrollresultat.kode === resultatkode;
-};
 
 /**
  * RisikoklassifiseringIndex
@@ -35,7 +23,6 @@ const harResultatkode = (risikoklassifisering, resultatkode) => {
  * Viser en av tre komponenter avhengig av: Om ingen klassifisering er utført,
  * om klassifisering er utført og ingen faresignaler er funnet og om klassifisering er utført og faresignaler er funnet
  */
-
 export class RisikoklassifiseringIndexImpl extends Component {
   componentDidMount = () => {
     this.finnKontrollresultat();
@@ -113,32 +100,23 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
     const {
       aksjonspunkt,
       risikoklassifisering,
-      harHentetKontrollresultat,
       isPanelOpen,
       readOnly,
+      behandlingIdentifier,
+      behandlingVersjon,
     } = this.props;
-    if (!harHentetKontrollresultat) {
-      return <ManglendeKlassifiseringPanel />;
-    }
-    if (harResultatkode(risikoklassifisering, kontrollresultatKode.IKKE_HOY)) {
-      return (
-        <IngenRisikoPanel />
-      );
-    }
-    if (harResultatkode(risikoklassifisering, kontrollresultatKode.HOY)) {
-      return (
-        <HoyRisikoTittel
-          risikoklassifisering={risikoklassifisering}
-          aksjonspunkt={aksjonspunkt}
-          readOnly={readOnly}
-          submitCallback={this.submitAksjonspunkter}
-          isRiskPanelOpen={isPanelOpen}
-          toggleRiskPanel={this.toggleRiskPanel}
-        />
-      );
-    }
+
     return (
-      <ManglendeKlassifiseringPanel />
+      <RisikoklassifiseringSakIndex
+        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        aksjonspunkt={aksjonspunkt}
+        risikoklassifisering={risikoklassifisering}
+        isPanelOpen={isPanelOpen}
+        readOnly={readOnly}
+        submitAksjonspunkter={this.submitAksjonspunkter}
+        toggleRiskPanel={this.toggleRiskPanel}
+      />
     );
   }
 }
@@ -146,7 +124,6 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
 RisikoklassifiseringIndexImpl.propTypes = {
   hentKontrollresultat: PropTypes.func.isRequired,
   resolveAksjonspunkter: PropTypes.func.isRequired,
-  harHentetKontrollresultat: PropTypes.bool.isRequired,
   push: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
   isPanelOpen: PropTypes.bool.isRequired,
@@ -167,7 +144,6 @@ RisikoklassifiseringIndexImpl.defaultProps = {
 
 const mapStateToProps = (state) => ({
   location: state.router.location,
-  harHentetKontrollresultat: fpsakApi.KONTROLLRESULTAT.getRestApiFinished()(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
   aksjonspunkt: getRisikoaksjonspunkt(state),
