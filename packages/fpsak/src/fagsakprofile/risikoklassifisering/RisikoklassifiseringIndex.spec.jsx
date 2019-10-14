@@ -3,12 +3,11 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import kontrollresultatKode from '@fpsak-frontend/kodeverk/src/kontrollresultatKode';
+import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
+import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
 
 import { RisikoklassifiseringIndexImpl } from './RisikoklassifiseringIndex';
-import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
-import IngenRisikoPanel from './components/IngenRisikoPanel';
-import HoyRisikoTittel from './components/HoyRisikoTittel';
 
 const lagRisikoklassifisering = (kode) => ({
   kontrollresultat: {
@@ -20,75 +19,19 @@ const lagRisikoklassifisering = (kode) => ({
 });
 
 describe('<RisikoklassifiseringIndex>', () => {
-  it('skal rendere korrekt komponent når det mangler klassifisering', () => {
+  it('skal rendere komponent', () => {
     const wrapper = shallow(<RisikoklassifiseringIndexImpl
-      risikoklassifisering={undefined}
-      push={sinon.spy()}
-      location={{}}
-      isRiskPanelOpen
-      setRiskPanelOpen={sinon.spy()}
       hentKontrollresultat={sinon.spy()}
       resolveAksjonspunkter={sinon.spy()}
-      isPanelOpen={false}
-      harHentetKontrollresultat
-      readOnly={false}
-    />);
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
-    expect(wrapper.find(IngenRisikoPanel)).has.length(0);
-    expect(wrapper.find(HoyRisikoTittel)).has.length(0);
-  });
-
-  it('skal rendere korrekt komponent når det ikke er utfør klassifisering', () => {
-    const wrapper = shallow(<RisikoklassifiseringIndexImpl
-      risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_KLASSIFISERT)}
       push={sinon.spy()}
       location={{}}
-      isRiskPanelOpen
       setRiskPanelOpen={sinon.spy()}
-      hentKontrollresultat={sinon.spy()}
-      resolveAksjonspunkter={sinon.spy()}
-      isPanelOpen={false}
       readOnly={false}
-      harHentetKontrollresultat
-    />);
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
-    expect(wrapper.find(IngenRisikoPanel)).has.length(0);
-    expect(wrapper.find(HoyRisikoTittel)).has.length(0);
-  });
-
-  it('skal rendere korrekt komponent når det er ikke_hoy resultat', () => {
-    const wrapper = shallow(<RisikoklassifiseringIndexImpl
-      risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_HOY)}
-      push={sinon.spy()}
-      location={{}}
-      isRiskPanelOpen
-      setRiskPanelOpen={sinon.spy()}
-      hentKontrollresultat={sinon.spy()}
-      resolveAksjonspunkter={sinon.spy()}
-      isPanelOpen={false}
-      readOnly={false}
-      harHentetKontrollresultat
-    />);
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);
-    expect(wrapper.find(IngenRisikoPanel)).has.length(1);
-    expect(wrapper.find(HoyRisikoTittel)).has.length(0);
-  });
-
-  it('skal rendere korrekt komponent når det er hoy resultat', () => {
-    const wrapper = shallow(<RisikoklassifiseringIndexImpl
       risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.HOY)}
-      push={sinon.spy()}
-      location={{}}
-      isRiskPanelOpen
-      setRiskPanelOpen={sinon.spy()}
-      hentKontrollresultat={sinon.spy()}
-      resolveAksjonspunkter={sinon.spy()}
       isPanelOpen={false}
-      readOnly={false}
-      harHentetKontrollresultat
+      behandlingIdentifier={new BehandlingIdentifier(1, 1)}
+      behandlingVersjon={1}
     />);
-    expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);
-    expect(wrapper.find(IngenRisikoPanel)).has.length(0);
-    expect(wrapper.find(HoyRisikoTittel)).has.length(1);
+    expect(wrapper.find(RisikoklassifiseringSakIndex)).has.length(1);
   });
 });

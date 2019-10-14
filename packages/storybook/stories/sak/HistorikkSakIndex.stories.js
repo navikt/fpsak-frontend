@@ -190,7 +190,7 @@ export default {
 
 export const visHistorikk = () => (
   <div style={{
-    width: '600px', margin: '50px', backgroundColor: 'white', padding: '30px',
+    width: '600px', backgroundColor: 'white', padding: '30px',
   }}
   >
     {history.map((h) => (

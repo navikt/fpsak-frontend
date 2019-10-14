@@ -4,6 +4,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { isObject } from '@fpsak-frontend/utils';
 
+// TODO (TOR) Rydd opp
 
 const behandlingspunktToAksjonspunktEngangsstonad = {
   [behandlingspunktCodes.FOEDSEL]: aksjonspunktCode.OVERSTYR_FODSELSVILKAR,
@@ -20,7 +21,6 @@ const behandlingspunktToAksjonspunktForeldrepenger = {
   [behandlingspunktCodes.ADOPSJON]: aksjonspunktCode.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP,
   [behandlingspunktCodes.MEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
   [behandlingspunktCodes.FORTSATTMEDLEMSKAP]: aksjonspunktCode.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR,
-  [behandlingspunktCodes.SOEKNADSFRIST]: aksjonspunktCode.OVERSTYR_SOKNADSFRISTVILKAR,
   [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
 };
 
@@ -28,26 +28,16 @@ const behandlingspunktToAksjonspunktSvangerskapspenger = {
   [behandlingspunktCodes.FOEDSEL]: aksjonspunktCode.OVERSTYR_FODSELSVILKAR,
   [behandlingspunktCodes.MEDLEMSKAP]: aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR,
   [behandlingspunktCodes.FORTSATTMEDLEMSKAP]: aksjonspunktCode.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR,
-  [behandlingspunktCodes.SOEKNADSFRIST]: aksjonspunktCode.OVERSTYR_SOKNADSFRISTVILKAR,
   [behandlingspunktCodes.OPPTJENING]: aksjonspunktCode.OVERSTYRING_AV_OPPTJENINGSVILKARET,
 };
 
-
-export const getApCode = (behandlingspunkt, ytelseType, allVilkar) => {
-  let apCode = null;
-  if (ytelseType && ytelseType.kode === fagsakYtelseType.FORELDREPENGER) {
-    apCode = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
-  } else if (ytelseType && ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
-    apCode = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
-  } else {
-    apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
-  }
-  return isObject(apCode)
-    ? apCode[allVilkar.map((v) => v.vilkarType.kode).find((v) => apCode[v])]
-    : apCode;
+const behandlingpunktToVilkar = {
+  [behandlingspunktCodes.OPPTJENING]: vilkarType.OPPTJENINGSVILKARET,
 };
 
-export const getAllApCodes = (behandlingspunkt) => {
+const avslagsarsakerES = ['1002', '1003', '1032'];
+
+export const hentAlleOverstyringAksjonspunktKoderFor = (behandlingspunkt) => {
   const esAp = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
   let apCodes = esAp ? [esAp] : [];
   const fpAps = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
@@ -64,3 +54,31 @@ export const getAllApCodes = (behandlingspunkt) => {
   }
   return apCodes;
 };
+
+export const hentOverstyringAksjonspunktKodeFor = (behandlingspunkt, ytelseType, allVilkar) => {
+  let apCode = null;
+  if (ytelseType && ytelseType.kode === fagsakYtelseType.FORELDREPENGER) {
+    apCode = behandlingspunktToAksjonspunktForeldrepenger[behandlingspunkt];
+  } else if (ytelseType && ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER) {
+    apCode = behandlingspunktToAksjonspunktSvangerskapspenger[behandlingspunkt];
+  } else {
+    apCode = behandlingspunktToAksjonspunktEngangsstonad[behandlingspunkt];
+  }
+  return isObject(apCode)
+    ? apCode[allVilkar.map((v) => v.vilkarType.kode).find((v) => apCode[v])]
+    : apCode;
+};
+
+const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagskoder) => (isFpFagsak
+  ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
+  : fodselsvilkarAvslagskoder);
+
+export const getFiltrerteAvslagsarsaker = (vilkarTypeKode, ytelseType, avslagsarsaker) => {
+  const vilkartypeAvslagsarsaker = avslagsarsaker[vilkarTypeKode];
+  if (vilkarTypeKode === vilkarType.FODSELSVILKARET_MOR) {
+    return getFodselVilkarAvslagsarsaker(ytelseType.kode === fagsakYtelseType.FORELDREPENGER, vilkartypeAvslagsarsaker);
+  }
+  return vilkartypeAvslagsarsaker;
+};
+
+export const getVilkarKodeFor = (behandlingspunkt) => behandlingpunktToVilkar[behandlingspunkt];
