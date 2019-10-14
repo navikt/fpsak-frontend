@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+
+import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+
+import risikoklassifiseringPropType from '../propTypes/risikoklassifiseringPropType';
+import risikoklassifiseringAksjonspunktPropType from '../propTypes/risikoklassifiseringAksjonspunktPropType';
 import HoyRisikoPanel from './HoyRisikoPanel';
 import TittelMedDivider from './TittelMedDivider';
 
@@ -20,6 +23,8 @@ const HoyRisikoTittel = ({
   submitCallback,
   isRiskPanelOpen,
   toggleRiskPanel,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <EkspanderbartpanelBase
     className={styles.hoyRisikoPanelTittel}
@@ -38,16 +43,20 @@ const HoyRisikoTittel = ({
       aksjonspunkt={aksjonspunkt}
       readOnly={readOnly}
       submitCallback={submitCallback}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
     />
   </EkspanderbartpanelBase>
 );
 HoyRisikoTittel.propTypes = {
-  risikoklassifisering: PropTypes.shape().isRequired,
-  aksjonspunkt: aksjonspunktPropType,
+  risikoklassifisering: risikoklassifiseringPropType.isRequired,
+  aksjonspunkt: risikoklassifiseringAksjonspunktPropType,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   isRiskPanelOpen: PropTypes.bool.isRequired,
   toggleRiskPanel: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 HoyRisikoTittel.defaultProps = {

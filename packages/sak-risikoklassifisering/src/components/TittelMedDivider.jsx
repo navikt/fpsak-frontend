@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, useIntl } from 'react-intl';
-
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import {
   FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';

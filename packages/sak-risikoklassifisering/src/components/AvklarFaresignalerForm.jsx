@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
 import { Normaltekst } from 'nav-frontend-typografi';
-import { behandlingFormFpsak } from 'behandling/behandlingFormFpsak';
+import { Hovedknapp } from 'nav-frontend-knapper';
+
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -14,13 +14,12 @@ import {
 } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { Hovedknapp } from 'nav-frontend-knapper';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import faresignalVurdering from '@fpsak-frontend/kodeverk/src/faresignalVurdering';
 
-import { getKontrollresultat, getRisikoaksjonspunkt } from '../kontrollresultatSelectors';
+import risikoklassifiseringAksjonspunktPropType from '../propTypes/risikoklassifiseringAksjonspunktPropType';
+import faresignalVurdering from '../kodeverk/faresignalVurdering';
+
 import styles from './avklarFaresignalerForm.less';
 
 const maxLength1500 = maxLength(1500);
@@ -46,7 +45,7 @@ export const AvklarFaresignalerForm = ({
         <FlexColumn className={styles.fullWidth}>
           <TextAreaField
             name={begrunnelseFieldName}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+            label={<FormattedMessage id="Risikopanel.Forms.Vurdering" />}
             validate={[required, maxLength1500, minLength3, hasValidText]}
             maxLength={1500}
             readOnly={readOnly}
@@ -95,11 +94,12 @@ export const AvklarFaresignalerForm = ({
   </FlexContainer>
 );
 AvklarFaresignalerForm.propTypes = {
-  aksjonspunkt: aksjonspunktPropType,
+  aksjonspunkt: risikoklassifiseringAksjonspunktPropType,
   readOnly: PropTypes.bool.isRequired,
 };
 
-export const buildInitialValues = createSelector([getKontrollresultat, getRisikoaksjonspunkt], (risikoklassifisering, aksjonspunkt) => {
+export const buildInitialValues = createSelector([
+  (ownProps) => ownProps.risikoklassifisering, (ownProps) => ownProps.aksjonspunkt], (risikoklassifisering, aksjonspunkt) => {
   if (aksjonspunkt && aksjonspunkt.begrunnelse && risikoklassifisering && risikoklassifisering.faresignalVurdering) {
     return {
       [begrunnelseFieldName]: aksjonspunkt.begrunnelse,
@@ -117,11 +117,11 @@ const transformValues = (values) => ({
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  const initialValues = buildInitialValues(initialState);
+  const initialValues = buildInitialValues(ownProps);
   return () => ({
     initialValues,
     onSubmit,
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormFpsak({ form: formName })(AvklarFaresignalerForm));
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(AvklarFaresignalerForm));
