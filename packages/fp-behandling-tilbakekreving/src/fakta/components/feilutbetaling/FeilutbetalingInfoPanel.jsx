@@ -163,15 +163,17 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                     </Normaltekst>
                   )}
                 </Column>
-                <Column xs="6">
-                  <Undertekst className={styles.undertekstMarginBottom}>
-                    <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
-                  </Undertekst>
-                  <Normaltekst className={styles.smallPaddingRight}>
-                    {moment(feilutbetaling.datoForRevurderingsvedtak)
-                      .format(DDMMYYYY_DATE_FORMAT)}
-                  </Normaltekst>
-                </Column>
+                {feilutbetaling.datoForRevurderingsvedtak && (
+                  <Column xs="6">
+                    <Undertekst className={styles.undertekstMarginBottom}>
+                      <FormattedMessage id="FeilutbetalingInfoPanel.DatoForRevurdering" />
+                    </Undertekst>
+                    <Normaltekst className={styles.smallPaddingRight}>
+                      {moment(feilutbetaling.datoForRevurderingsvedtak)
+                        .format(DDMMYYYY_DATE_FORMAT)}
+                    </Normaltekst>
+                  </Column>
+                )}
               </Row>
               <Row className={styles.smallMarginTop}>
                 <Column xs="6">
@@ -286,15 +288,15 @@ const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetaling
         }
 
         const {
-          årsakKode,
-          underÅrsaker,
+          hendelseType,
+          hendelseUndertype,
         } = feilutbetalingÅrsakDto;
 
         return {
           ...period,
-          årsak: årsakKode,
-          [årsakKode]: {
-            underÅrsak: underÅrsaker[0] ? underÅrsaker[0].underÅrsakKode : null,
+          årsak: hendelseType.kode,
+          [hendelseType.kode]: {
+            underÅrsak: hendelseUndertype ? hendelseUndertype.kode : null,
           },
         };
       }),
@@ -304,15 +306,15 @@ const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetaling
 const getSortedFeilutbetalingArsaker = createSelector([behandlingSelectors.getFeilutbetalingAarsaker, getFagsakYtelseType], (
   feilutbetalingArsaker, fagsakYtelseType,
 ) => {
-  const arsaker = feilutbetalingArsaker.find((a) => a.ytelseType === fagsakYtelseType.kode).feilutbetalingÅrsaker;
-  return arsaker.sort((a1, a2) => {
-    const arsak1 = a1.årsak;
-    const arsak2 = a2.årsak;
-    const arsak1ErParagraf = arsak1.startsWith('§');
-    const arsak2ErParagraf = arsak2.startsWith('§');
-    const a1v = arsak1ErParagraf ? arsak1.replace(/\D/g, '') : arsak1;
-    const a2v = arsak2ErParagraf ? arsak2.replace(/\D/g, '') : arsak2;
-    return arsak1ErParagraf && arsak2ErParagraf ? a1v - a2v : a1v.localeCompare(a2v);
+  const { hendelseTyper } = feilutbetalingArsaker.find((a) => a.ytelseType.kode === fagsakYtelseType.kode);
+  return hendelseTyper.sort((ht1, ht2) => {
+    const hendelseType1 = ht1.hendelseType.navn;
+    const hendelseType2 = ht2.hendelseType.navn;
+    const hendelseType1ErParagraf = hendelseType1.startsWith('§');
+    const hendelseType2ErParagraf = hendelseType2.startsWith('§');
+    const ht1v = hendelseType1ErParagraf ? hendelseType1.replace(/\D/g, '') : hendelseType1;
+    const ht2v = hendelseType2ErParagraf ? hendelseType2.replace(/\D/g, '') : hendelseType2;
+    return hendelseType1ErParagraf && hendelseType2ErParagraf ? ht1v - ht2v : ht1v.localeCompare(ht2v);
   });
 });
 
@@ -320,18 +322,16 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
   const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
 
   const feilutbetalingFakta = values.perioder.map((periode) => {
-    const feilutbetalingÅrsak = årsaker.find((el) => el.årsakKode === periode.årsak);
-    const findUnderÅrsakObjekt = (underÅrsak) => feilutbetalingÅrsak.underÅrsaker.find((el) => el.underÅrsakKode === underÅrsak);
+    const feilutbetalingÅrsak = årsaker.find((el) => el.hendelseType.kode === periode.årsak);
+    const findUnderÅrsakObjekt = (underÅrsak) => feilutbetalingÅrsak.hendelseUndertyper.find((el) => el.kode === underÅrsak);
     const feilutbetalingUnderÅrsak = periode[periode.årsak] ? findUnderÅrsakObjekt(periode[periode.årsak].underÅrsak) : false;
 
     return {
       fom: periode.fom,
       tom: periode.tom,
       årsak: {
-        årsakKode: periode.årsak,
-        årsak: feilutbetalingÅrsak.årsak,
-        kodeverk: feilutbetalingÅrsak.kodeverk,
-        underÅrsaker: feilutbetalingUnderÅrsak ? [feilutbetalingUnderÅrsak] : [],
+        hendelseType: feilutbetalingÅrsak.hendelseType,
+        hendelseUndertype: feilutbetalingUnderÅrsak,
       },
     };
   });

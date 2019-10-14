@@ -65,6 +65,8 @@ const kodeverkTyper = {
   PERMISJONSBESKRIVELSE_TYPE: 'PermisjonsbeskrivelseType',
   VURDER_ARBEIDSFORHOLD_HISTORIKKINNSLAG: 'VurderArbeidsforholdHistorikkinnslag',
   TILBAKEKR_VIDERE_BEH: 'VidereBehandling',
+  HENDELSE_TYPE: 'HendelseType',
+  HENDELSE_UNDERTYPE: 'HendelseUnderType',
 };
 
 export default kodeverkTyper;
