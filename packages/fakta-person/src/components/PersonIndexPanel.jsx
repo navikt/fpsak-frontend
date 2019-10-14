@@ -2,14 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { faktaPanelCodes, PersonIndex, withDefaultToggling } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import Panel from 'nav-frontend-paneler';
 import { Hovedknapp } from 'nav-frontend-knapper';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { PersonIndex } from '@fpsak-frontend/person-info';
+import {
+  faktaPanelCodes, withDefaultToggling, behandlingForm,
+} from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+
 import styles from './PersonIndexPanel.less';
 
 const personAksjonspunkter = [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK];
@@ -26,10 +29,10 @@ const PersonIndexPanelImpl = ({
   ...formProps
 }) => (
   <Panel>
-    {person
-    && <PersonIndex person={person} />}
-    {erMarkertUtenlandssak(aksjonspunkter)
-    && (
+    {person && (
+      <PersonIndex person={person} />
+    )}
+    {erMarkertUtenlandssak(aksjonspunkter) && (
       <form onSubmit={formProps.handleSubmit}>
         <div className={styles.bekreftAksjonspunktContainer}>
           <AksjonspunktHelpText isAksjonspunktOpen={erMarkertUtenlandssak(aksjonspunkter)}>
@@ -67,7 +70,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'PersonIndexPanel',
 })(PersonIndexPanelImpl));
 

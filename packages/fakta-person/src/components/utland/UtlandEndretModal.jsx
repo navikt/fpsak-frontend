@@ -2,15 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import Modal from 'nav-frontend-modal';
+
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+
 import styles from './utlandEndretModal.less';
 
 export const UtlandEndretModalImpl = ({
@@ -72,6 +73,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(injectIntl(UtlandEndretModalImpl)));

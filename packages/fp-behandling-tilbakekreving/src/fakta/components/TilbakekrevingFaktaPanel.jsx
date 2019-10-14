@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaTilbake';

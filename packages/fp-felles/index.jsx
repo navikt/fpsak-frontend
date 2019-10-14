@@ -1,5 +1,4 @@
 export { default as reducerRegistry } from './src/ReducerRegistry';
-export { default as PersonIndex } from './src/person/PersonIndex';
 export { default as requireProps } from './src/requireProps';
 export { default as trackRouteParam } from './src/trackRouteParam';
 export { default as featureToggle } from './src/featureToggle';

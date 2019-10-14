@@ -975,17 +975,11 @@
   "Tilgangskontroll.Avslag.Kode6": "Ingen tilgang.",
   "Tilgangskontroll.Avslag.Kode7": "Ingen tilgang.",
   "Tilgangskontroll.Avslag.EgenAnsatt": "Ingen tilgang. Søker har markering <b>Egen ansatt</b>.",
+
   "AdressePanel.bostedsadresse": "Bostedsadresse",
   "AdressePanel.midlertidigAdresse": "Midlertidig adresse",
   "AdressePanel.postadresseNorge": "Postadresse i Norge",
   "AdressePanel.postadresseUtland": "Postadresse i utlandet",
-
-  "AdressePanel.utland": "Utland",
-  "AdressePanel.utland.lagre": "Lagre",
-  "AdressePanel.utland.avbryt": "Avbryt",
-  "AdressePanel.utlandSakstype.Nasjonal": "Nasjonal",
-  "AdressePanel.utlandSakstype.EøsBosattNorge": "EØS bosatt Norge",
-  "AdressePanel.utlandSakstype.BosattUtland": "Bosatt utland",
 
   "TermindatoFaktaForm.Termindato": "Termindato",
 
