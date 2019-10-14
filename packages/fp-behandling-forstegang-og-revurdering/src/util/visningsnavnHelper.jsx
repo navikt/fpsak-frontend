@@ -8,7 +8,7 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
     return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';
   }
   return aktivitet.arbeidsgiverId
-    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.arbeidsforholdEksternId)}`
+    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
     : aktivitet.arbeidsgiverNavn;
 };
 
@@ -17,7 +17,7 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
 // privatperson - KLANG...(18.08.1980)
 const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
-export const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdEksternId) => {
+export const lagVisningsNavn = (arbeidsgiver = {}, eksternArbeidsforholdId) => {
   const {
     navn, fødselsdato, virksomhet, identifikator,
   } = arbeidsgiver;
@@ -25,7 +25,7 @@ export const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdEksternId) => {
   let visningsNavn = `${navn}`;
   if (virksomhet) {
     visningsNavn = identifikator ? `${visningsNavn} (${identifikator})` : visningsNavn;
-    visningsNavn = `${visningsNavn}${getEndCharFromId(arbeidsforholdEksternId)}`;
+    visningsNavn = `${visningsNavn}${getEndCharFromId(eksternArbeidsforholdId)}`;
   } else {
     visningsNavn = `${navn.substr(0, 5)}...(${formatDate(fødselsdato)})`;
   }

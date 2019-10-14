@@ -7,7 +7,7 @@ const andelUtenNavn = {
   },
   arbeidsforholdId: '123',
   arbeidsgiverId: '321',
-  arbeidsforholdEksternId: '09876',
+  eksternArbeidsforholdId: '09876',
 };
 
 const andelUtenArbeidsforholdId = {
@@ -25,7 +25,7 @@ const andelMedAlt = {
   arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
   arbeidsforholdId: '999888777',
-  arbeidsforholdEksternId: '56789',
+  eksternArbeidsforholdId: '56789',
 };
 
 const getKodeverknavn = (kodeverk) => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');

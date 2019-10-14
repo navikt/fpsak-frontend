@@ -48,7 +48,7 @@ const arbeidsforholdList = [
     startDato: '2016-01-01',
     opphoersdato: '2018-04-01',
     arbeidsforholdId: '12142223323',
-    arbeidsforholdEksternId: `345${siste4SifferIArbeidsforholdId}`,
+    eksternArbeidsforholdId: `345${siste4SifferIArbeidsforholdId}`,
     andelsnr: arbeidstakerAndelsnr,
   },
 ];
@@ -357,7 +357,7 @@ describe('<RenderFordelBGFieldArray>', () => {
     arbeidsgiverNavn: 'Test',
     arbeidsgiverId: '14235235235',
     arbeidsforholdId: '82389r32fe9343tr',
-    arbeidsforholdEksternId: '234567',
+    eksternArbeidsforholdId: '234567',
   };
 
   const arbeidsgiverstring = 'Test (14235235235)...4567';

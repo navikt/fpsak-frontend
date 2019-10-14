@@ -14,7 +14,7 @@ describe('<PersonArbeidsforholdTable>', () => {
   const arbeidsforhold = {
     id: '1',
     arbeidsforholdId: '1231-2345',
-    arbeidsforholdEksternId: '23456789',
+    eksternArbeidsforholdId: '23456789',
     navn: 'Svendsen Eksos',
     arbeidsgiverIdentifikator: '1234567',
     arbeidsgiverIdentifiktorGUI: '1234567',
@@ -43,7 +43,7 @@ describe('<PersonArbeidsforholdTable>', () => {
     const arbeidsforhold2 = {
       id: '2',
       arbeidsforholdId: '1231-2345',
-      arbeidsforholdEksternId: '565656565',
+      eksternArbeidsforholdId: '565656565',
       navn: 'Nilsen Eksos',
       arbeidsgiverIdentifikator: '223455667',
       arbeidsgiverIdentifiktorGUI: '223455667',

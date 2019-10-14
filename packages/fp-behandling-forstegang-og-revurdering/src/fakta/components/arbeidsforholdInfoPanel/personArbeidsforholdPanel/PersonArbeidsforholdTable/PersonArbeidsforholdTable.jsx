@@ -27,7 +27,7 @@ const utledNavn = (arbeidsforhold) => {
     return arbeidsforhold.navn;
   }
   return arbeidsforhold.arbeidsforholdId
-    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})${getEndCharFromId(arbeidsforhold.arbeidsforholdEksternId)}`
+    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)}`
     : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
 };
 

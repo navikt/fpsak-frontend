@@ -540,7 +540,7 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverId: '2342353525',
       arbeidsperiodeFom: '2016-01-01',
       arbeidsforholdId: '3r4h3uihr43',
-      arbeidsforholdEksternId: '56789',
+      eksternArbeidsforholdId: '56789',
       beregningsgrunnlagPrAar: '10 000',
       inntektskategori: 'ARBEIDSTAKER',
     },
@@ -552,7 +552,7 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverId: '2342353525',
       arbeidsperiodeFom: '2016-01-01',
       arbeidsforholdId: '3r4h3uihr43',
-      arbeidsforholdEksternId: '56789',
+      eksternArbeidsforholdId: '56789',
       beregningsgrunnlagPrAar: '10 000',
       inntektskategori: 'FRILANSER',
     },
@@ -573,7 +573,7 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
-      arbeidsforholdEksternId: '56789',
+      eksternArbeidsforholdId: '56789',
     };
     const inntektList = [{
       key: 'Arbeidsgiver 1 (2342353525)...6789',

@@ -35,7 +35,7 @@ const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetA
     arbeidsgiverNavn,
     arbeidsgiverId: '123',
     arbeidsforholdId: '123',
-    arbeidsforholdEksternId: '345678',
+    eksternArbeidsforholdId: '345678',
   },
   beregnetPrAar,
   overstyrtPrAar,

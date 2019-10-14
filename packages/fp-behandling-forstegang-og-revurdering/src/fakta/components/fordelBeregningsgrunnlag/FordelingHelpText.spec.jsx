@@ -7,7 +7,7 @@ const arbeidsforhold = {
   arbeidsgiverNavn: 'Sopra Steria',
   arbeidsforholdId: '987654321',
   arbeidsgiverId: '123456789',
-  arbeidsforholdEksternId: '56789',
+  eksternArbeidsforholdId: '56789',
   permisjon: {
     permisjonFom: '2016-01-01',
     permisjonTom: '2018-10-01',

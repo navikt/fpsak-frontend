@@ -64,7 +64,7 @@ describe('<BgFordelingUtils>', () => {
         arbeidsgiverNavn: 'Virksomheten',
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
-        arbeidsforholdEksternId: '345678',
+        eksternArbeidsforholdId: '345678',
       },
       aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
       andelsnr: 3,
