@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 import { SearchForm } from '@fpsak-frontend/search-form';
 import FagsakSearch from './FagsakSearch';
 import FagsakList from './FagsakList';

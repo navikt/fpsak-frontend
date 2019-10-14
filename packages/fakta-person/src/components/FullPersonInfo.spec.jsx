@@ -11,8 +11,11 @@ import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
-import { FullPersonInfoImpl } from './FullPersonInfo';
+
+import { FullPersonInfo } from './FullPersonInfo';
+import AdressePanel from './AdressePanel';
+import BarnePanel from './BarnePanel';
+import PersonYtelserTable from './PersonYtelserTable';
 
 const barnITPS = {
   navn: 'Barn 1',
@@ -159,7 +162,9 @@ const getKodeverknavn = (kodeverk) => {
 describe('<FullPersonInfo>', () => {
   it('Skal sjekke at adressepanel får korrekte props', () => {
     const wrapper = shallow(
-      <FullPersonInfoImpl
+      <FullPersonInfo
+        behandlingId={1}
+        behandlingVersjon={1}
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         ytelser={ytelser}
@@ -190,7 +195,9 @@ describe('<FullPersonInfo>', () => {
 
   it('Skal sjekke at barnepanel får korrekte props', () => {
     const wrapper = shallow(
-      <FullPersonInfoImpl
+      <FullPersonInfo
+        behandlingId={1}
+        behandlingVersjon={1}
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         ytelser={ytelser}
@@ -214,7 +221,9 @@ describe('<FullPersonInfo>', () => {
 
   it('Skal ikke vise hjelpetekst for aksjonspunkt når en har aksjonspunkt og annen part er valgt', () => {
     const wrapper = shallow(
-      <FullPersonInfoImpl
+      <FullPersonInfo
+        behandlingId={1}
+        behandlingVersjon={1}
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         ytelser={ytelser}
@@ -238,7 +247,9 @@ describe('<FullPersonInfo>', () => {
 
   it('Skal vise ytelsepanel når en har ytelser', () => {
     const wrapper = shallow(
-      <FullPersonInfoImpl
+      <FullPersonInfo
+        behandlingId={1}
+        behandlingVersjon={1}
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         ytelser={ytelser}
@@ -262,7 +273,9 @@ describe('<FullPersonInfo>', () => {
 
   it('Skal ikke vise ytelsepanel når en ikke har ytelser', () => {
     const wrapper = shallow(
-      <FullPersonInfoImpl
+      <FullPersonInfo
+        behandlingId={1}
+        behandlingVersjon={1}
         sprakkode={sprakkode}
         personopplysning={personopplysning}
         relatertYtelseTypes={relatertYtelseTypes}

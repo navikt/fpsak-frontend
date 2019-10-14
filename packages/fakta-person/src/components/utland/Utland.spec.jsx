@@ -14,6 +14,8 @@ describe('<Utland>', () => {
         intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
+        behandlingId={1}
+        behandlingVersjon={1}
       />,
     );
 
@@ -36,6 +38,8 @@ describe('<Utland>', () => {
         intl={intlMock}
         submitCallback={sinon.spy()}
         readOnly={false}
+        behandlingId={1}
+        behandlingVersjon={1}
       />,
     );
 

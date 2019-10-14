@@ -2,6 +2,9 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
+import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
+import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
+import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
@@ -26,7 +29,17 @@ const behandling = {
 };
 
 const personopplysninger = {
-  barn: [],
+  barn: [{
+    navn: 'Espen Utvikler jr.',
+    fnr: '12324435',
+    opplysningsKilde: {
+      kode: opplysningsKilde.TPS,
+    },
+    navBrukerKjonn: {
+      kode: navBrukerKjonn.MANN,
+    },
+    soktForBarn: true,
+  }],
   navn: 'Espen Utviklar',
   fodselsdato: '2019-01-01',
   fnr: '123456789',
@@ -40,9 +53,50 @@ const personopplysninger = {
     kode: personstatusType.BOSATT,
   },
   harVerge: false,
+  annenPart: {
+    navn: 'Petra Utviklar',
+    fodselsdato: '2019-01-01',
+    fnr: '123456789',
+    navBrukerKjonn: {
+      kode: navBrukerKjonn.KVINNE,
+    },
+    diskresjonskode: {
+      kode: diskresjonskodeType.UDEFINERT,
+    },
+    personstatus: {
+      kode: personstatusType.BOSATT,
+    },
+    harVerge: false,
+  },
+  adresser: [{
+    adresseType: {
+      kode: opplysningAdresseType.BOSTEDSADRESSE,
+    },
+    adresselinje1: 'veien 1',
+    adresselinje2: '1000',
+    adresselinje3: 'Oslo',
+    land: landkoder.NORGE,
+  }, {
+    adresseType: {
+      kode: opplysningAdresseType.POSTADRESSE,
+    },
+    adresselinje1: 'veien 1',
+    adresselinje2: '1000',
+    adresselinje3: 'Oslo',
+    land: landkoder.NORGE,
+  }],
 };
 
 const inntektArbeidYtelse = {
+  relatertTilgrensendeYtelserForSoker: [{
+    relatertYtelseType: relatertYtelseType.FORELDREPENGER,
+    tilgrensendeYtelserListe: [{
+      periodeTilDato: '2019-01-01',
+      periodeFraDato: '2019-02-02',
+      status: relatertYtelseTilstand.LOPENDE,
+      saksNummer: 1,
+    }],
+  }],
 };
 
 const fagsakPerson = {
@@ -89,7 +143,7 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const vis = () => {
+export const visPanelForBeggeParter = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
@@ -99,7 +153,7 @@ export const vis = () => {
       fagsakPerson={fagsakPerson}
       aksjonspunkter={[{
         definisjon: {
-          kode: aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
+          kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
         },
         status: {
           kode: aksjonspunktStatus.OPPRETTET,

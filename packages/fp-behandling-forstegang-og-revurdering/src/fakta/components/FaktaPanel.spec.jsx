@@ -128,6 +128,7 @@ describe('<FaktaPanel>', () => {
       ytelsefordeling={ytelsefordeling}
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -165,6 +166,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -202,6 +204,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -239,6 +242,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -276,6 +280,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
@@ -317,6 +322,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
@@ -340,6 +346,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
   });
@@ -363,6 +370,7 @@ describe('<FaktaPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
       readOnlyBehandling={false}
+      featureToggleUtland
     />);
     expect(wrapper.find(BeregningInfoPanel)).has.length(1);
   });

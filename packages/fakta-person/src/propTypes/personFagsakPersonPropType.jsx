@@ -4,7 +4,7 @@ const personFagsakPersonPropType = PropTypes.shape({
   navn: PropTypes.string.isRequired,
   personnummer: PropTypes.string.isRequired,
   erKvinne: PropTypes.bool.isRequired,
-  diskresjonskode: PropTypes.string.isRequired,
+  diskresjonskode: PropTypes.string,
   dodsdato: PropTypes.string,
   harVerge: false,
   erDod: PropTypes.bool.isRequired,

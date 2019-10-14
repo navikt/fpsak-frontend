@@ -1,6 +1,25 @@
 import PropTypes from 'prop-types';
 
 
-const personInntektArbeidYtelsePropType = PropTypes.shape();
+const personInntektArbeidYtelsePropType = PropTypes.shape({
+  relatertTilgrensendeYtelserForSoker: PropTypes.arrayOf(PropTypes.shape({
+    relatertYtelseType: PropTypes.string.isRequired,
+    tilgrensendeYtelserListe: PropTypes.arrayOf(PropTypes.shape({
+      periodeTilDato: PropTypes.string.isRequired,
+      periodeFraDato: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      saksNummer: PropTypes.number.isRequired,
+    })),
+  })),
+  relatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape({
+    relatertYtelseType: PropTypes.string.isRequired,
+    tilgrensendeYtelserListe: PropTypes.arrayOf(PropTypes.shape({
+      periodeTilDato: PropTypes.string.isRequired,
+      periodeFraDato: PropTypes.string.isRequired,
+      status: PropTypes.string.isRequired,
+      saksNummer: PropTypes.number.isRequired,
+    })),
+  })),
+});
 
 export default personInntektArbeidYtelsePropType;

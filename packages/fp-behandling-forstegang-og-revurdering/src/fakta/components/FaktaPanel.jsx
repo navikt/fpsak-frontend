@@ -343,7 +343,7 @@ const mapStateToProps = (state) => {
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),
     readOnlyBehandling: behandlingSelectors.hasReadOnlyBehandling(state),
-    featureToggleUtland = getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
+    featureToggleUtland: getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
   };
 };
 

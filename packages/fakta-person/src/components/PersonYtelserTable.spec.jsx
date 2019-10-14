@@ -5,35 +5,28 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 import { PersonYtelserTable } from './PersonYtelserTable';
 
 describe('<PersonYtelserTable>', () => {
-  const ytelser = [
-    {
-      relatertYtelseType: 'FORELDREPENGER',
-      tilgrensendeYtelserListe: [],
-    },
-    {
-      relatertYtelseType: 'ENGANGSSTØNAD',
-      tilgrensendeYtelserListe: [],
-    },
-    {
+  const ytelser = [{
+    relatertYtelseType: 'FORELDREPENGER',
+    tilgrensendeYtelserListe: [],
+  }, {
+    relatertYtelseType: 'ENGANGSSTØNAD',
+    tilgrensendeYtelserListe: [],
+  }, {
+    relatertYtelseType: 'SYKEPENGER',
+    tilgrensendeYtelserListe: [{
       relatertYtelseType: 'SYKEPENGER',
-      tilgrensendeYtelserListe: [
-        {
-          relatertYtelseType: 'SYKEPENGER',
-          periodeFraDato: '2018-05-27',
-          periodeTilDato: '',
-          status: 'LØPENDE_VEDTAK',
-          saksNummer: '1312880731100',
-        },
-        {
-          relatertYtelseType: 'SYKEPENGER',
-          periodeFraDato: '2017-12-27',
-          periodeTilDato: '2017-09-27',
-          status: 'LUKKET_SAK',
-          saksNummer: '1312880731101',
-        },
-      ],
-    },
-  ];
+      periodeFraDato: '2018-05-27',
+      periodeTilDato: '',
+      status: 'LØPENDE_VEDTAK',
+      saksNummer: '1312880731100',
+    }, {
+      relatertYtelseType: 'SYKEPENGER',
+      periodeFraDato: '2017-12-27',
+      periodeTilDato: '2017-09-27',
+      status: 'LUKKET_SAK',
+      saksNummer: '1312880731101',
+    }],
+  }];
 
   const relatertYtelseTypes = [
     { kode: 'ENSLIG_FORSØRGER', navn: 'Enslig forsørger', kodeverk: 'RELATERT_YTELSE_TYPE' },
@@ -75,7 +68,7 @@ describe('<PersonYtelserTable>', () => {
     />);
     const rows = wrapper.find('TableRow');
     expect(rows.find('Normaltekst').first().childAt(0).text()).to.equal('Foreldrepenger');
-    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal('Ingen');
+    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal('PersonYtelserTable.Ingen');
   });
 
   it('skal sjekke at viser ytelse informasjon', () => {
