@@ -28,10 +28,9 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import questionNormalUrl from '@fpsak-frontend/assets/images/question_normal.svg';
 import questionHoverUrl from '@fpsak-frontend/assets/images/question_hover.svg';
 
-
 import avregningSimuleringResultatPropType from '../propTypes/avregningSimuleringResultatPropType';
 import AvregningSummary from './AvregningSummary';
-import AvregningTable, { avregningCodes } from './AvregningTable';
+import AvregningTable from './AvregningTable';
 
 import styles from './avregningPanel.less';
 
@@ -41,44 +40,9 @@ const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const simuleringAksjonspunkter = [
   aksjonspunktCodes.VURDER_FEILUTBETALING,
-  aksjonspunktCodes.VURDER_INNTREKK,
 ];
-const textCodesHelpText = {
-  [aksjonspunktCodes.VURDER_FEILUTBETALING]: 'Avregning.AksjonspunktHelpText.5084',
-  [aksjonspunktCodes.VURDER_INNTREKK]: 'Avregning.AksjonspunktHelpText.5085',
-};
-const textCodesRadioGroup = {
-  [avregningCodes.OPPFYLT]: 'Avregning.RadioGroup.oppfylt',
-  [avregningCodes.REDUKSJON]: 'Avregning.RadioGroup.reduksjon',
-};
-
-
 const formName = 'AvregnigForm';
-const oppfyltTooltipContent = (
-  <span className={styles.tooltipContent}>
-    <FormattedMessage id="Avregning.måVurderes" />
-    <br />
-    <FormattedMessage id="Avregning.feilaktigeOpplysninger" />
-    <br />
-    <FormattedMessage id="Avregning.feilutbetaling" />
-    <br />
-    <FormattedMessage id="Avregning.arbeidsStatus" />
-    <br />
-  </span>
-);
-const tooltipContentReduksjon = (
-  <span className={styles.tooltipContent}>
-    <FormattedMessage id="Avregning.særligeGrunnerForklaring" />
-    <br />
-    <FormattedMessage id="Avregning.uaktsomhet" />
-    <br />
-    <FormattedMessage id="Avregning.feilen" />
-    <br />
-    <FormattedMessage id="Avregning.størrelsenAvBeløp" />
-    <br />
-    <FormattedMessage id="Avregning.tidspunktAvFeilutbetaling" />
-  </span>
-);
+const IKKE_SEND = 'IKKE_SEND';
 
 const createHelptextTooltip = (isForeldrepenger) => ({
   header: (
@@ -86,22 +50,7 @@ const createHelptextTooltip = (isForeldrepenger) => ({
       <FormattedMessage id={isForeldrepenger ? 'Avregning.HjelpetekstForeldrepenger' : 'Avregning.HjelpetekstEngangsstonad'} />
     </Normaltekst>),
 });
-const getApTekst = (apCode) => (apCode ? [<FormattedMessage id={textCodesHelpText[apCode]} key="vurderFeilutbetaling" />] : []);
 
-const tooltipContent = (type) => (type === avregningCodes.OPPFYLT ? oppfyltTooltipContent : tooltipContentReduksjon);
-
-const radioGroupLabel = (contentType, altText) => (
-  <span>
-    <FormattedMessage id={textCodesRadioGroup[contentType]} />
-    <Image
-      className={styles.helpTextImage}
-      src={questionNormalUrl}
-      srcHover={questionHoverUrl}
-      alt={altText}
-      tooltip={{ header: tooltipContent(contentType) }}
-    />
-  </span>
-);
 const getSimuleringResult = (simuleringResultat, feilutbetaling) => {
   if (!simuleringResultat) {
     return simuleringResultat;
@@ -120,18 +69,6 @@ export class AvregningPanelImpl extends Component {
       showDetails: [],
       feilutbetaling: undefined,
     };
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    const { erTilbakekrevingVilkårOppfylt, apCodes } = props;
-    if (state.feilutbetaling !== erTilbakekrevingVilkårOppfylt && apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK) {
-      return {
-        ...state,
-        feilutbetaling: erTilbakekrevingVilkårOppfylt,
-      };
-    }
-
-    return null;
   }
 
   toggleDetails(id) {
@@ -161,7 +98,7 @@ export class AvregningPanelImpl extends Component {
 
   resetFields() {
     const { behandlingFormPrefix, clearFields: clearFormFields } = this.props;
-    const fields = ['videreBehandling', 'grunnerTilReduksjon'];
+    const fields = ['videreBehandling'];
     clearFormFields(`${behandlingFormPrefix}.${formName}`, false, false, ...fields);
   }
 
@@ -179,8 +116,6 @@ export class AvregningPanelImpl extends Component {
       isApOpen,
       apCodes,
       readOnly,
-      erTilbakekrevingVilkårOppfylt,
-      grunnerTilReduksjon,
       sprakkode,
       featureVarseltekst,
       previewCallback,
@@ -196,13 +131,12 @@ export class AvregningPanelImpl extends Component {
           <FormattedMessage id="Avregning.Title" />
         </Undertittel>
         <VerticalSpacer twentyPx />
-        { simuleringResultatOption
-          && (
+        { simuleringResultatOption && (
           <div>
             <Row>
               <Column xs="12">
                 <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
-                  { getApTekst(apCodes[0]) }
+                  {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
                 </AksjonspunktHelpText>
                 <VerticalSpacer twentyPx />
                 <AvregningSummary
@@ -228,12 +162,11 @@ export class AvregningPanelImpl extends Component {
               </Column>
             </Row>
           </div>
-          )}
+        )}
         { !simuleringResultat && (
           <FormattedMessage id="Avregning.ingenData" />
         )}
-        { apCodes[0]
-        && (
+        { apCodes[0] && (
           <div>
             <Row>
               <Column xs="12">
@@ -249,127 +182,69 @@ export class AvregningPanelImpl extends Component {
                         id="avregningVurdering"
                       />
                     </Column>
-                    { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING
-                    && (
+                    { apCodes[0] === aksjonspunktCodes.VURDER_FEILUTBETALING && (
                       <Column sm="6">
                         <Undertekst><FormattedMessage id="Avregning.videreBehandling" /></Undertekst>
                         <VerticalSpacer eightPx />
                         <RadioGroupField name="videreBehandling" validate={[required]} direction="vertical" readOnly={readOnly}>
+                          {featureVarseltekst && (
+                            <RadioOption
+                              label={<FormattedMessage id="Avregning.gjennomfør" />}
+                              value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
+                            >
+                              <div className={styles.varsel}>
+                                <ArrowBox alignOffset={20}>
+                                  <Row>
+                                    <Column sm="10">
+                                      <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
+                                    </Column>
+                                    <Column sm="2">
+                                      <Image
+                                        tabIndex="0"
+                                        src={questionNormalUrl}
+                                        srcHover={questionHoverUrl}
+                                        alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
+                                        tooltip={createHelptextTooltip(isForeldrepenger)}
+                                      />
+                                    </Column>
+                                  </Row>
+                                  <VerticalSpacer eightPx />
+                                  <TextAreaField
+                                    name="varseltekst"
+                                    label={{ id: 'Avregning.fritekst' }}
+                                    validate={[required, minLength3, maxLength1500, hasValidText]}
+                                    maxLength={1500}
+                                    readOnly={readOnly}
+                                    id="avregningFritekst"
+                                    badges={[{
+                                      type: 'fokus',
+                                      textId: getLanguageCodeFromSprakkode(sprakkode),
+                                      title: 'Malform.Beskrivelse',
+                                    }]}
+                                  />
+                                  <VerticalSpacer fourPx />
+                                  <a
+                                    href=""
+                                    onClick={(e) => {
+                                      this.previewMessage(e, previewCallback);
+                                    }}
+                                    className={styles.previewLink}
+                                  >
+                                    <FormattedMessage id="Messages.PreviewText" />
+                                  </a>
+                                </ArrowBox>
+                              </div>
+                            </RadioOption>
+                          )}
                           <RadioOption
-                            label={<FormattedMessage id="Avregning.gjennomfør" />}
-                            value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
-                          >
-                            <>
-                              {featureVarseltekst && (
-                                <div className={styles.varsel}>
-                                  <ArrowBox alignOffset={20}>
-                                    <Row>
-                                      <Column sm="10">
-                                        <Normaltekst className={styles.bold}><FormattedMessage id="Avregning.varseltekst" /></Normaltekst>
-                                      </Column>
-                                      <Column sm="2">
-                                        <Image
-                                          tabIndex="0"
-                                          src={questionNormalUrl}
-                                          srcHover={questionHoverUrl}
-                                          alt={intl.formatMessage({ id: 'Avregning.HjelpetekstForeldrepenger' })}
-                                          tooltip={createHelptextTooltip(isForeldrepenger)}
-                                        />
-                                      </Column>
-                                    </Row>
-                                    <VerticalSpacer eightPx />
-                                    <TextAreaField
-                                      name="varseltekst"
-                                      label={{ id: 'Avregning.fritekst' }}
-                                      validate={[required, minLength3, maxLength1500, hasValidText]}
-                                      maxLength={1500}
-                                      readOnly={readOnly}
-                                      id="avregningFritekst"
-                                      badges={[{
-                                        type: 'fokus',
-                                        textId: getLanguageCodeFromSprakkode(sprakkode),
-                                        title: 'Malform.Beskrivelse',
-                                      }]}
-                                    />
-                                    <VerticalSpacer fourPx />
-                                    <a
-                                      href=""
-                                      onClick={(e) => {
-                                        this.previewMessage(e, previewCallback);
-                                      }}
-                                      className={styles.previewLink}
-                                    >
-                                      <FormattedMessage id="Messages.PreviewText" />
-                                    </a>
-                                  </ArrowBox>
-                                </div>
-                              )}
-                            </>
-                          </RadioOption>
-                          <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER} />
+                            label={<FormattedMessage id={featureVarseltekst ? 'Avregning.OpprettMenIkkeSendVarsel' : 'Avregning.Opprett'} />}
+                            value={`${tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}${IKKE_SEND}`}
+                          />
+                          <RadioOption
+                            label={<FormattedMessage id="Avregning.avvent" />}
+                            value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER}
+                          />
                         </RadioGroupField>
-                      </Column>
-                    )}
-                    { apCodes[0] === aksjonspunktCodes.VURDER_INNTREKK
-                    && (
-                      <Column sm="6">
-                        <RadioGroupField
-                          label={radioGroupLabel(avregningCodes.OPPFYLT, intl.formatMessage({ id: textCodesRadioGroup[avregningCodes.OPPFYLT] }))}
-                          name="erTilbakekrevingVilkårOppfylt"
-                          onChange={this.resetFields}
-                          readOnly={readOnly}
-                        >
-                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                          <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                        </RadioGroupField>
-                        { erTilbakekrevingVilkårOppfylt
-                        && (
-                          <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={20}>
-                              <RadioGroupField
-                                label={radioGroupLabel(avregningCodes.REDUKSJON, intl.formatMessage({ id: textCodesRadioGroup[avregningCodes.REDUKSJON] }))}
-                                validate={[required]}
-                                name="grunnerTilReduksjon"
-                                onChange={this.resetFields}
-                                readOnly={readOnly}
-                              >
-                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.ja" />} value />
-                                <RadioOption label={<FormattedMessage id="Avregning.formAlternativ.nei" />} value={false} />
-                              </RadioGroupField>
-                              { grunnerTilReduksjon
-                              && (
-                                <div className={styles.marginBottom20}>
-                                  <ArrowBox alignOffset={20}>
-                                    <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                      <RadioOption
-                                        label={<FormattedMessage id="Avregning.gjennomfør" />}
-                                        value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
-                                      />
-                                      <RadioOption
-                                        label={<FormattedMessage id="Avregning.avvent" />}
-                                        value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER}
-                                      />
-                                    </RadioGroupField>
-                                  </ArrowBox>
-                                </div>
-                              )}
-                            </ArrowBox>
-                          </div>
-                        )}
-                        { erTilbakekrevingVilkårOppfylt !== undefined && !erTilbakekrevingVilkårOppfylt
-                        && (
-                          <div className={styles.marginBottom20}>
-                            <ArrowBox alignOffset={98}>
-                              <RadioGroupField validate={[required]} name="videreBehandling" direction="vertical" readOnly={readOnly}>
-                                <RadioOption
-                                  label={<FormattedMessage id="Avregning.gjennomfør" />}
-                                  value={tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD}
-                                />
-                                <RadioOption label={<FormattedMessage id="Avregning.avvent" />} value={tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER} />
-                              </RadioGroupField>
-                            </ArrowBox>
-                          </div>
-                        )}
                       </Column>
                     )}
                   </Row>
@@ -410,13 +285,24 @@ AvregningPanelImpl.defaultProps = {
   simuleringResultat: null,
 };
 
-export const transformValues = (values, ap) => [{
-  ...values,
-  kode: ap,
-  grunnerTilReduksjon: values.erTilbakekrevingVilkårOppfylt ? values.grunnerTilReduksjon : undefined,
-  videreBehandling: values.erTilbakekrevingVilkårOppfylt && !values.grunnerTilReduksjon
-    ? tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK : values.videreBehandling,
-}];
+export const transformValues = (values, ap) => {
+  const { videreBehandling, varseltekst, begrunnelse } = values;
+  const info = {
+    kode: ap,
+    begrunnelse,
+    videreBehandling,
+  };
+
+  return videreBehandling.endsWith(IKKE_SEND)
+    ? {
+      ...info,
+      videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD,
+    }
+    : {
+      ...info,
+      varseltekst,
+    };
+};
 
 const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.tilbakekrevingvalg, (state, ownProps) => ownProps.aksjonspunkter], (
@@ -427,25 +313,19 @@ const buildInitialValues = createSelector(
       return undefined;
     }
 
-    let values = {
-      videreBehandling: tilbakekrevingvalg.videreBehandling.kode,
+    const harTypeIkkeSendt = !tilbakekrevingvalg.varseltekst
+      && tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD;
+
+    return {
+      videreBehandling: harTypeIkkeSendt ? tilbakekrevingvalg.videreBehandling.kode + IKKE_SEND : tilbakekrevingvalg.videreBehandling.kode,
       varseltekst: tilbakekrevingvalg.varseltekst,
       begrunnelse: aksjonspunkt.begrunnelse,
     };
-
-    if (aksjonspunkt.definisjon.kode === aksjonspunktCodes.VURDER_INNTREKK) {
-      values = {
-        erTilbakekrevingVilkårOppfylt: tilbakekrevingvalg.grunnerTilReduksjon !== null,
-        grunnerTilReduksjon: tilbakekrevingvalg.grunnerTilReduksjon,
-        ...values,
-      };
-    }
-    return values;
   },
 );
 
 const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
-  const onSubmit = (values) => ownPropsStatic.submitCallback(transformValues(values, ownPropsStatic.apCodes[0]));
+  const onSubmit = (values) => ownPropsStatic.submitCallback([transformValues(values, ownPropsStatic.apCodes[0])]);
 
   return (state, ownProps) => {
     const {
@@ -455,7 +335,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       && tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-        state, 'erTilbakekrevingVilkårOppfylt', 'grunnerTilReduksjon', 'varseltekst',
+        state, 'varseltekst',
       ),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
