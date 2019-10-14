@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 
 import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
 
-import { getApCode } from './BehandlingspunktToAksjonspunkt';
-
-
 /**
  * VIlkarresultatMedBegrunnelse
  *
@@ -17,14 +14,15 @@ export const VilkarresultatMedBegrunnelse = ({
   readOnly,
   avslagsarsaker,
   hasAksjonspunkt,
-  behandlingspunkt,
+  erMedlemskapsPanel,
   skalViseBegrunnelse,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
 }) => (
   <>
-    {skalViseBegrunnelse
-        && <VilkarBegrunnelse isReadOnly={readOnly} />}
+    {skalViseBegrunnelse && (
+      <VilkarBegrunnelse isReadOnly={readOnly} />
+    )}
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -32,16 +30,16 @@ export const VilkarresultatMedBegrunnelse = ({
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt={hasAksjonspunkt}
-      behandlingspunkt={behandlingspunkt}
+      erMedlemskapsPanel={erMedlemskapsPanel}
     />
   </>
 );
 
 
 VilkarresultatMedBegrunnelse.propTypes = {
-  erVilkarOk: PropTypes.bool.isRequired,
+  erVilkarOk: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
-  behandlingspunkt: PropTypes.string.isRequired,
+  erMedlemskapsPanel: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
@@ -61,18 +59,21 @@ VilkarresultatMedBegrunnelse.propTypes = {
 VilkarresultatMedBegrunnelse.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
+  erVilkarOk: undefined,
   skalViseBegrunnelse: true,
 };
 
-VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status,
-  behandlingspunkt, ytelseType, allVilkar) => {
-  const apCode = getApCode(behandlingspunkt, ytelseType, allVilkar);
-  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === apCode);
+VilkarresultatMedBegrunnelse.buildInitialValues = (behandlingsresultat, aksjonspunkter, status, overstyringApKode) => {
+  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === overstyringApKode);
   return {
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...VilkarBegrunnelse.buildInitialValues(aksjonspunkt),
   };
 };
+
+VilkarresultatMedBegrunnelse.transformValues = (values) => ({
+  begrunnelse: values.begrunnelse,
+});
 
 VilkarresultatMedBegrunnelse.validate = (values) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 

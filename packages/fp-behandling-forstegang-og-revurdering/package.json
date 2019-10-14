@@ -29,6 +29,7 @@
     "@fpsak-frontend/prosess-vilkar-fodsel": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-foreldreansvar": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-omsorg": "1.0.0",
+    "@fpsak-frontend/prosess-vilkar-overstyring": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-soknadsfrist": "1.0.0",
     "@fpsak-frontend/prosess-vilkar-svangerskap": "1.0.0",

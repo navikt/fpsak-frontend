@@ -8,7 +8,7 @@ export default {
 };
 
 export const medPilPåToppen = () => (
-  <div style={{ width: '200px', marginTop: '20px' }}>
+  <div style={{ width: '200px' }}>
     <ArrowBox>Dette er en tekst</ArrowBox>
   </div>
 );
