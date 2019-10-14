@@ -4,7 +4,8 @@ import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import faresignalVurdering from '@fpsak-frontend/kodeverk/src/faresignalVurdering';
+
+import faresignalVurdering from '../kodeverk/faresignalVurdering';
 
 import {
   AvklarFaresignalerForm as UnwrappedForm, begrunnelseFieldName, buildInitialValues, radioFieldName,

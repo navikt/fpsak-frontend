@@ -133,7 +133,7 @@ const foreldrepengerBuilders = [
     .withStatus(getStatusFromResultatstruktur),
   new BehandlingspunktProperties.Builder(bpc.AVREGNING, 'Avregning')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
-    .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING, ac.VURDER_INNTREKK)
+    .withAksjonspunktCodes(ac.VURDER_FEILUTBETALING)
     .withStatus(getStatusFromSimulering),
   new BehandlingspunktProperties.Builder(bpc.VEDTAK, 'Vedtak')
     .withAksjonspunktCodes(

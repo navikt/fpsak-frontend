@@ -56,11 +56,12 @@ OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool,
-  lovReferanse: PropTypes.string.isRequired,
+  lovReferanse: PropTypes.string,
 };
 
 OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
   erVilkarOk: undefined,
+  lovReferanse: undefined,
 };
 
 export const buildInitialValues = createSelector(
