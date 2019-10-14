@@ -88,6 +88,10 @@ const historikkResultatTypeCodes = {
     kode: 'MIGRERT_FRA_INFOTRYGD',
     feltId: 'HistorikkResultat.MigrertFraInfotrygd',
   },
+  MIGRERT_FRA_INFOTRYGD_FJERNET: {
+    kode: 'MIGRERT_FRA_INFOTRYGD_FJERNET',
+    feltId: 'HistorikkResultat.MigrertFraInfotrygdFjernet',
+  },
 };
 
 export default historikkResultatTypeCodes;

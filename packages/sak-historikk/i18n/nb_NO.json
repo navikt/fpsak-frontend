@@ -462,6 +462,7 @@
   "HistorikkResultat.DelvisTilbakebetaling": "Delvis tilbakebetaling",
   "HistorikkResultat.IngenTilbakebetaling": "Ingen tilbakebetaling",
   "HistorikkResultat.MigrertFraInfotrygd": "Behandling gjelder flytting av sak fra Infotrygd",
+  "HistorikkResultat.MigrertFraInfotrygdFjernet": "Behandling gjelder ikke lenger flytting av sak fra Infotrygd",
 
   "HistorikkSoeknadsperiode.Gradering": "<b>Uttak: gradering</b> <br>{navnVerdi} <br>{value}",
   "HistorikkSoeknadsperiode.UtsettelseArbeid": "<b>Utsettelse: arbeid</b> <br>{value}",
