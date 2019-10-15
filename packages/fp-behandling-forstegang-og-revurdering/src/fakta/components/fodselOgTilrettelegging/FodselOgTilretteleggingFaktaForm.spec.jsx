@@ -11,7 +11,7 @@ import TilretteleggingArbeidsforholdSection from './tilrettelegging/Tilrettelegg
 
 const arbeidsforhold = [
   {
-    arbeidsforholdReferanse: '0f70f2f2-79f8-4cc0-8929-be25ef2be878',
+    internArbeidsforholdReferanse: '0f70f2f2-79f8-4cc0-8929-be25ef2be878',
     arbeidsgiverIdent: '910909088',
     arbeidsgiverNavn: 'BEDRIFT AS',
     begrunnelse: null,
@@ -25,7 +25,7 @@ const arbeidsforhold = [
     tilretteleggingId: 1000303,
   },
   {
-    arbeidsforholdReferanse: 'fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5',
+    internArbeidsforholdReferanse: 'fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5',
     arbeidsgiverIdent: '910909088',
     arbeidsgiverNavn: 'BEDRIFT AS',
     begrunnelse: null,
