@@ -8,7 +8,7 @@ const personInntektArbeidYtelsePropType = PropTypes.shape({
       periodeTilDato: PropTypes.string.isRequired,
       periodeFraDato: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
-      saksNummer: PropTypes.number.isRequired,
+      saksNummer: PropTypes.string.isRequired,
     })),
   })),
   relatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape({
@@ -17,7 +17,7 @@ const personInntektArbeidYtelsePropType = PropTypes.shape({
       periodeTilDato: PropTypes.string.isRequired,
       periodeFraDato: PropTypes.string.isRequired,
       status: PropTypes.string.isRequired,
-      saksNummer: PropTypes.number.isRequired,
+      saksNummer: PropTypes.string.isRequired,
     })),
   })),
 });

@@ -94,7 +94,7 @@ const inntektArbeidYtelse = {
       periodeTilDato: '2019-01-01',
       periodeFraDato: '2019-02-02',
       status: relatertYtelseTilstand.LOPENDE,
-      saksNummer: 1,
+      saksNummer: '1',
     }],
   }],
 };
