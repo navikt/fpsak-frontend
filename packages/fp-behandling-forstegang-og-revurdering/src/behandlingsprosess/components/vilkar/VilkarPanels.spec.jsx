@@ -8,29 +8,9 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { VilkarPanels } from './VilkarPanels';
-import VilkarresultatMedOverstyringForm from './VilkarresultatMedOverstyringForm';
 import DataFetcherWithCache from '../../../DataFetcherWithCache';
 
 describe('<VilkarPanels>', () => {
-  it('skal rendre panelet med visning av vilkårsresultat når det ikke finnes aksjonspunkter', () => {
-    const wrapper = shallow(<VilkarPanels
-      aksjonspunktCodes={[]}
-      vilkarTypeCodes={[]}
-      behandlingspunkt={behandlingspunktCodes.ADOPSJON}
-      isAksjonspunktOpen={false}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      submitCallback={sinon.spy()}
-      behandlingspunktAksjonspunkter={[]}
-      behandlingspunktStatus=""
-      behandlingspunktVilkar={[]}
-      alleKodeverk={{}}
-      fagsakInfo={{}}
-    />);
-
-    expect(wrapper.find(VilkarresultatMedOverstyringForm)).to.have.length(1);
-  });
-
   it('skal rendre panel for søkers opplysningsplikt når dette finnes', () => {
     const wrapper = shallow(<VilkarPanels
       aksjonspunktCodes={[aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU]}
@@ -43,14 +23,23 @@ describe('<VilkarPanels>', () => {
       behandlingspunktAksjonspunkter={[]}
       behandlingspunktStatus=""
       behandlingspunktVilkar={[]}
+      behandlingspunktOverridden
+      behandlingspunktOverrideReadOnly
+      behandlingspunktTitleCode=""
+      kanOverstyreAccess={{}}
       alleKodeverk={{}}
       fagsakInfo={{}}
+      overrideReadOnly={false}
+      toggleOverstyring={sinon.spy()}
+      avslagsarsaker={{}}
+      harVilkarresultatMedOverstyring={false}
+      intl={{}}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
-    expect(dataFetchers).to.have.length(1);
+    expect(dataFetchers).to.have.length(8);
 
-    const sokersOpplysningPanel = dataFetchers.renderProp('render')({
+    const sokersOpplysningPanel = dataFetchers.at(1).renderProp('render')({
       behandling: { id: 1, versjon: 1 },
       soknad: {},
     }).find(SokersOpplysningspliktVilkarProsessIndex);

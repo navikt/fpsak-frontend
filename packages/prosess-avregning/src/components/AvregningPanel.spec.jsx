@@ -50,8 +50,8 @@ describe('<AvregningPanelImpl>', () => {
     const fadingPanel = wrapper.find(FadingPanel);
     expect(fadingPanel).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
-    expect(formattedMessage).to.have.length(1);
-    expect(formattedMessage.prop('id')).is.eql('Avregning.Title');
+    expect(formattedMessage).to.have.length(2);
+    expect(formattedMessage.first().prop('id')).is.eql('Avregning.Title');
     const undertittel = wrapper.find(Undertittel);
     expect(undertittel).has.length(1);
     const avregningSummary = wrapper.find(AvregningSummary);
@@ -83,33 +83,9 @@ describe('<AvregningPanelImpl>', () => {
     const radioOption = wrapper.find(RadioOption);
     expect(radioOption).has.length(2);
     const radioOptionGjennomfør = radioOption.at(0);
-    expect(radioOptionGjennomfør.prop('label')).is.eql(<FormattedMessage id="Avregning.gjennomfør" />);
+    expect(radioOptionGjennomfør.prop('label')).is.eql(<FormattedMessage id="Avregning.Opprett" />);
     const radioOptionAvvent = radioOption.at(1);
     expect(radioOptionAvvent.prop('label')).is.eql(<FormattedMessage id="Avregning.avvent" />);
-  });
-
-  it('skal rendre form med to RadioGroup, hver med to valg når aksjonspunkt 5085 er aktivt og erTilbakekrevingVilkårOppfylt er true', () => {
-    const props = {
-      ...mockProps,
-      apCodes: ['5085'],
-      erTilbakekrevingVilkårOppfylt: true,
-    };
-    const wrapper = shallowWithIntl(<AvregningPanelImpl
-      {...props}
-    />);
-
-    const form = wrapper.find('form');
-    expect(form).has.length(1);
-    const radioGroupField = wrapper.find(RadioGroupField);
-    expect(radioGroupField).has.length(2);
-    expect(radioGroupField.at(0).prop('name')).is.eql('erTilbakekrevingVilkårOppfylt');
-    expect(radioGroupField.at(1).prop('name')).is.eql('grunnerTilReduksjon');
-    const radioOption = wrapper.find(RadioOption);
-    expect(radioOption).has.length(4);
-    expect(radioOption.at(0).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.ja" />);
-    expect(radioOption.at(1).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.nei" />);
-    expect(radioOption.at(2).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.ja" />);
-    expect(radioOption.at(3).prop('label')).is.eql(<FormattedMessage id="Avregning.formAlternativ.nei" />);
   });
 
   it('method toggleDetails skal oppdatere og toggle tabeler med showDetails state', () => {
@@ -123,24 +99,6 @@ describe('<AvregningPanelImpl>', () => {
     expect(wrapper.state('showDetails')).is.eql([{ id, show: true }]);
     wrapper.instance().toggleDetails(id);
     expect(wrapper.state('showDetails')).is.eql([{ id, show: false }]);
-  });
-
-  it(`gitt aksjonspunt 5085 og erTilbakekrevingVilkårOppfylt er ikke undefined, 
-      state verdi feilutbetaling oppdateres med erTilbakekrevingVilkårOppfylt verdi`, () => {
-    const props = {
-      ...mockProps,
-      apCodes: ['5085'],
-      erTilbakekrevingVilkårOppfylt: undefined,
-    };
-    const wrapper = shallowWithIntl(<AvregningPanelImpl
-      {...props}
-    />);
-
-    expect(wrapper.state('feilutbetaling')).is.eql(undefined);
-    wrapper.setProps({ erTilbakekrevingVilkårOppfylt: true });
-    expect(wrapper.state('feilutbetaling')).is.eql(true);
-    wrapper.setProps({ erTilbakekrevingVilkårOppfylt: false });
-    expect(wrapper.state('feilutbetaling')).is.eql(false);
   });
 
   it('feilutbetaling oppdateres ikke når aksjonspunkt er ikke 5085', () => {
@@ -194,10 +152,9 @@ describe('<AvregningPanelImpl>', () => {
     };
     const apCode = '5084';
 
-    const transformedValues = transformValues(values, apCode)[0];
+    const transformedValues = transformValues(values, apCode);
     expect(transformedValues.kode).is.eql(apCode);
-    expect(transformedValues.grunnerTilReduksjon).is.eql(values.grunnerTilReduksjon);
-    expect(transformedValues.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK);
+    expect(transformedValues.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
   });
 
   it('transform values skal returnere verdi av videre behandling gitt at vilkår er oppfylt og grunnerTilReduksjon er true', () => {
@@ -207,11 +164,10 @@ describe('<AvregningPanelImpl>', () => {
     };
     const apCode = '5084';
 
-    const transformedValuesInfotrygd = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD }, apCode)[0];
+    const transformedValuesInfotrygd = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD }, apCode);
     expect(transformedValuesInfotrygd.kode).is.eql(apCode);
-    expect(transformedValuesInfotrygd.grunnerTilReduksjon).is.eql(values.grunnerTilReduksjon);
     expect(transformedValuesInfotrygd.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD);
-    const transformedValuesIgnorer = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER }, apCode)[0];
+    const transformedValuesIgnorer = transformValues({ ...values, videreBehandling: tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER }, apCode);
     expect(transformedValuesIgnorer.videreBehandling).is.eql(tilbakekrevingVidereBehandling.TILBAKEKR_IGNORER);
   });
 });

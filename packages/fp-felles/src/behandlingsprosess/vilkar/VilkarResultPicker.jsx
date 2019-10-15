@@ -11,10 +11,7 @@ import {
 } from '@fpsak-frontend/form';
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 
-import behandlingspunktCodes from '../../behandlingspunktCodes';
-
 import styles from './vilkarResultPicker.less';
-
 
 const findRadioButtonTextCode = (customVilkarText, isVilkarOk) => {
   if (customVilkarText) {
@@ -35,7 +32,7 @@ const VilkarResultPickerImpl = ({
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   readOnly,
-  behandlingspunkt,
+  erMedlemskapsPanel,
   hasAksjonspunkt,
 }) => (
   <div className={styles.container}>
@@ -52,7 +49,7 @@ const VilkarResultPickerImpl = ({
             id={findRadioButtonTextCode(customVilkarOppfyltText, true)}
             values={customVilkarOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
           />
-)}
+        )}
         value
       />
       <RadioOption
@@ -61,38 +58,34 @@ const VilkarResultPickerImpl = ({
             id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)}
             values={customVilkarIkkeOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
           />
-)}
+        )}
         value={false}
       />
     </RadioGroupField>
-    {(erVilkarOk === false && avslagsarsaker)
-    && (
-    <Row>
-      <Column xs="6">
-        <ArrowBox alignOffset={166} hideBorder={readOnly}>
-          <VerticalSpacer eightPx />
-          <SelectField
-            name="avslagCode"
-            label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-            placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-            selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
-            bredde="xl"
-            readOnly={readOnly}
-          />
-          {behandlingspunkt === behandlingspunktCodes.FORTSATTMEDLEMSKAP
-          && (
-          <DatepickerField
-            name="avslagDato"
-            label={{ id: 'VilkarResultPicker.VilkarDato' }}
-            readOnly={readOnly}
-            // isEdited={!isApOpen}
-            validate={[required, hasValidDate]}
-          />
-          )}
-
-        </ArrowBox>
-      </Column>
-    </Row>
+    {(erVilkarOk === false && avslagsarsaker) && (
+      <Row>
+        <Column xs="6">
+          <ArrowBox alignOffset={166} hideBorder={readOnly}>
+            <VerticalSpacer eightPx />
+            <SelectField
+              name="avslagCode"
+              label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
+              placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+              selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
+              bredde="xl"
+              readOnly={readOnly}
+            />
+            {erMedlemskapsPanel && (
+              <DatepickerField
+                name="avslagDato"
+                label={{ id: 'VilkarResultPicker.VilkarDato' }}
+                readOnly={readOnly}
+                validate={[required, hasValidDate]}
+              />
+            )}
+          </ArrowBox>
+        </Column>
+      </Row>
     )}
   </div>
 );
@@ -114,14 +107,14 @@ VilkarResultPickerImpl.propTypes = {
   erVilkarOk: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   hasAksjonspunkt: PropTypes.bool.isRequired,
-  behandlingspunkt: PropTypes.string,
+  erMedlemskapsPanel: PropTypes.bool,
 };
 
 VilkarResultPickerImpl.defaultProps = {
   erVilkarOk: undefined,
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
-  behandlingspunkt: undefined,
+  erMedlemskapsPanel: false,
   avslagsarsaker: undefined,
 };
 

@@ -11,15 +11,20 @@ import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behand
 
 import styles from './feilutbetalingPerioderTable.less';
 
-const getSubÅrsaker = (årsakNavn, årsaker) => {
-  const årsak = årsaker.find((a) => a.årsakKode === årsakNavn);
-  return årsak && årsak.underÅrsaker.length > 0 ? årsak.underÅrsaker : null;
+const getHendelseUndertyper = (årsakNavn, årsaker) => {
+  const årsak = årsaker.find((a) => a.hendelseType.kode === årsakNavn);
+  return årsak && årsak.hendelseUndertyper.length > 0 ? årsak.hendelseUndertyper : null;
 };
 
 export const FeilutbetalingPerioderFormImpl = ({
-  periode, årsak, elementId, årsaker, readOnly, resetFields,
+  periode,
+  årsak,
+  elementId,
+  årsaker,
+  readOnly,
+  resetFields,
 }) => {
-  const subÅrsaker = getSubÅrsaker(årsak, årsaker);
+  const hendelseUndertyper = getHendelseUndertyper(årsak, årsaker);
   return (
     <TableRow>
       <TableColumn>
@@ -28,18 +33,18 @@ export const FeilutbetalingPerioderFormImpl = ({
       <TableColumn>
         <SelectField
           name={`perioder.${elementId}.årsak`}
-          selectValues={årsaker.map((a) => <option key={a.årsak} value={a.årsakKode}>{a.årsak}</option>)}
+          selectValues={årsaker.map((a) => <option key={a.hendelseType.kode} value={a.hendelseType.kode}>{a.hendelseType.navn}</option>)}
           validate={[required]}
           disabled={readOnly}
           onChange={() => resetFields(elementId, årsak)}
           bredde="m"
           label=""
         />
-        {subÅrsaker
+        {hendelseUndertyper
         && (
           <SelectField
             name={`perioder.${elementId}.${årsak}.underÅrsak`}
-            selectValues={subÅrsaker.map((a) => <option key={a.underÅrsak} value={a.underÅrsakKode}>{a.underÅrsak}</option>)}
+            selectValues={hendelseUndertyper.map((a) => <option key={a.kode} value={a.kode}>{a.navn}</option>)}
             validate={[required]}
             disabled={readOnly}
             bredde="m"
