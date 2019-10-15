@@ -7,6 +7,7 @@ const andelUtenNavn = {
   },
   arbeidsforholdId: '123',
   arbeidsgiverId: '321',
+  eksternArbeidsforholdId: '09876',
 };
 
 const andelUtenArbeidsforholdId = {
@@ -24,6 +25,7 @@ const andelMedAlt = {
   arbeidsgiverNavn: 'Andeby bank',
   arbeidsgiverId: '321',
   arbeidsforholdId: '999888777',
+  eksternArbeidsforholdId: '56789',
 };
 
 const getKodeverknavn = (kodeverk) => (kodeverk.kode === 'A' ? 'Arbeidstaker' : '');
@@ -41,6 +43,6 @@ describe('visningsnavnHelper', () => {
 
   it('skal lage visningsnavn når vi ikke mangler noe', () => {
     const arbeidsgiverNavnOrgnr = createVisningsnavnForAktivitet(andelMedAlt, getKodeverknavn);
-    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321) ...8777');
+    expect(arbeidsgiverNavnOrgnr).to.equal('Andeby bank (321)...6789');
   });
 });

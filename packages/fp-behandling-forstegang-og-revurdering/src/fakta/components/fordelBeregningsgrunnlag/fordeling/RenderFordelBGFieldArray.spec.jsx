@@ -47,14 +47,15 @@ const arbeidsforholdList = [
     arbeidsgiverId,
     startDato: '2016-01-01',
     opphoersdato: '2018-04-01',
-    arbeidsforholdId: `12142${siste4SifferIArbeidsforholdId}`,
+    arbeidsforholdId: '12142223323',
+    eksternArbeidsforholdId: `345${siste4SifferIArbeidsforholdId}`,
     andelsnr: arbeidstakerAndelsnr,
   },
 ];
 
 describe('<RenderFordelBGFieldArray>', () => {
   it('skal ha selectvalues med Ytelse når kun ytelse', () => {
-    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId}) ...${siste4SifferIArbeidsforholdId}`;
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
     const wrapper = shallowWithIntl(<RenderFordelBGFieldArrayImpl
       fields={fields}
       intl={intlMock}
@@ -81,7 +82,7 @@ describe('<RenderFordelBGFieldArray>', () => {
   });
 
   it('skal ikkje selectvalues med Ytelse når ikkje kun ytelse', () => {
-    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId}) ...${siste4SifferIArbeidsforholdId}`;
+    const forventetArbeidstakerString = `${arbeidstakerNavn} (${arbeidsgiverId})...${siste4SifferIArbeidsforholdId}`;
     const wrapper = shallowWithIntl(<RenderFordelBGFieldArrayImpl
       fields={fields}
       intl={intlMock}
@@ -356,9 +357,10 @@ describe('<RenderFordelBGFieldArray>', () => {
     arbeidsgiverNavn: 'Test',
     arbeidsgiverId: '14235235235',
     arbeidsforholdId: '82389r32fe9343tr',
+    eksternArbeidsforholdId: '234567',
   };
 
-  const arbeidsgiverstring = 'Test (14235235235) ...43tr';
+  const arbeidsgiverstring = 'Test (14235235235)...4567';
 
 
   it('skal returnerer errors for refusjonskrav når det ikkje er mottatt refusjonskrav i inntektsmelding', () => {

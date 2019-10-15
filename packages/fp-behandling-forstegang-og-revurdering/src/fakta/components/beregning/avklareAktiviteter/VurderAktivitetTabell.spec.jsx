@@ -22,6 +22,7 @@ const aktivitet2 = {
   arbeidsgiverNavn: 'Arbeidsgiveren2',
   arbeidsgiverId: '334534623342',
   arbeidsforholdId: 'efj8343f34f',
+  eksternArbeidsforholdId: '123456',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: true,
@@ -33,6 +34,7 @@ const aktivitet3 = {
   aktørId: { aktørId: '324234234234' },
   arbeidsgiverId: '1960-01-01',
   arbeidsforholdId: 'efj8343f34f',
+  eksternArbeidsforholdId: '56789',
   fom: '2019-01-01',
   tom: '2019-02-02',
   skalBrukes: false,
@@ -235,12 +237,12 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(initialValues[id1].tom).to.equal(null);
     expect(initialValues[id1].skalBrukes).to.equal(null);
 
-    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342) ...f34f');
+    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342)...3456');
     expect(initialValues[id2].fom).to.equal('2019-01-01');
     expect(initialValues[id2].tom).to.equal('2019-02-02');
     expect(initialValues[id2].skalBrukes).to.equal(true);
 
-    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01) ...f34f');
+    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01)...6789');
     expect(initialValues[id3].fom).to.equal('2019-01-01');
     expect(initialValues[id3].tom).to.equal('2019-02-02');
     expect(initialValues[id3].skalBrukes).to.equal(false);
@@ -258,12 +260,12 @@ describe('<VurderAktiviteterTabell>', () => {
     expect(initialValues[id1].tom).to.equal(null);
     expect(initialValues[id1].skalBrukes).to.equal(true);
 
-    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342) ...f34f');
+    expect(initialValues[id2].beregningAktivitetNavn).to.equal('Arbeidsgiveren2 (334534623342)...3456');
     expect(initialValues[id2].fom).to.equal('2019-01-01');
     expect(initialValues[id2].tom).to.equal('2019-02-02');
     expect(initialValues[id2].skalBrukes).to.equal(true);
 
-    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01) ...f34f');
+    expect(initialValues[id3].beregningAktivitetNavn).to.equal('Arbeidsgiveren3 (1960-01-01)...6789');
     expect(initialValues[id3].fom).to.equal('2019-01-01');
     expect(initialValues[id3].tom).to.equal('2019-02-02');
     expect(initialValues[id3].skalBrukes).to.equal(false);

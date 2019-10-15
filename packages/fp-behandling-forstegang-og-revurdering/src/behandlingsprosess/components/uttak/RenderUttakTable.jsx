@@ -61,7 +61,7 @@ const noMoreThanZeroIfRejectedAndNotUtsettelse = (value, elmnt) => (utsettelse(e
 
 const createTextStrings = (fields) => {
   const {
-    prosentArbeid, stillingsprosent, arbeidsgiver, arbeidsforholdId, uttakArbeidType,
+    prosentArbeid, stillingsprosent, arbeidsgiver, eksternArbeidsforholdId, uttakArbeidType,
   } = fields;
 
   const prosentArbeidText = (typeof prosentArbeid !== 'undefined') ? `${prosentArbeid}%` : '';
@@ -70,7 +70,7 @@ const createTextStrings = (fields) => {
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else if (arbeidsgiver) {
-    arbeidsforhold = lagVisningsNavn(arbeidsgiver, arbeidsforholdId);
+    arbeidsforhold = lagVisningsNavn(arbeidsgiver, eksternArbeidsforholdId);
   }
   return {
     prosentArbeidText,

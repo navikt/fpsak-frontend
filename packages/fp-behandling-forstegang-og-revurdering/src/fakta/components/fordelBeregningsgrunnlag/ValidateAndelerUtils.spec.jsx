@@ -540,6 +540,7 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverId: '2342353525',
       arbeidsperiodeFom: '2016-01-01',
       arbeidsforholdId: '3r4h3uihr43',
+      eksternArbeidsforholdId: '56789',
       beregningsgrunnlagPrAar: '10 000',
       inntektskategori: 'ARBEIDSTAKER',
     },
@@ -551,6 +552,7 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverId: '2342353525',
       arbeidsperiodeFom: '2016-01-01',
       arbeidsforholdId: '3r4h3uihr43',
+      eksternArbeidsforholdId: '56789',
       beregningsgrunnlagPrAar: '10 000',
       inntektskategori: 'FRILANSER',
     },
@@ -560,7 +562,7 @@ describe('<ValidateAndelerUtils>', () => {
     expect(fastsattError['1'].fastsattBelop[0].id).to.equal(tomErrorMessage()[0].id);
     /* eslint no-underscore-dangle: ["error", { "allow": ["_error"] }] */
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold.length).to.equal(1);
-    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].key).to.equal('Arbeidsgiver 1 (2342353525) ...hr43');
+    expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].key).to.equal('Arbeidsgiver 1 (2342353525)...6789');
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].fastsattBelop).to.equal(30000);
     expect(fastsattError._error.props.totalInntektPrArbeidsforhold[0].beregningsgrunnlagPrAar).to.equal(20000);
   });
@@ -571,9 +573,10 @@ describe('<ValidateAndelerUtils>', () => {
       arbeidsgiverNavn: 'Arbeidsgiver 1',
       arbeidsgiverId: '2342353525',
       arbeidsforholdId: '3r4h3uihr43',
+      eksternArbeidsforholdId: '56789',
     };
     const inntektList = [{
-      key: 'Arbeidsgiver 1 (2342353525) ...hr43',
+      key: 'Arbeidsgiver 1 (2342353525)...6789',
       beregningsgrunnlagPrAar: 10000,
       fastsattBelop: 20000,
     }];

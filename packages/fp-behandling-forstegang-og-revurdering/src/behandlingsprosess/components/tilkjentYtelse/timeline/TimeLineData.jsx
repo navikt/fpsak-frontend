@@ -31,8 +31,8 @@ const createVisningNavnForUttakArbeidstaker = (andel, getKodeverknavn) => {
   const andelsObjekt = {
     arbeidsgiverNavn: andel.arbeidsgiverNavn,
     arbeidsgiverId: andel.arbeidsgiverOrgnr,
-    arbeidsforholdId: andel.arbeidsforholdId,
     arbeidsforholType: andel.arbeidsforholdType,
+    eksternArbeidsforholdId: andel.eksternArbeidsforholdId,
   };
   return createVisningsnavnForAktivitet(andelsObjekt, getKodeverknavn);
 };

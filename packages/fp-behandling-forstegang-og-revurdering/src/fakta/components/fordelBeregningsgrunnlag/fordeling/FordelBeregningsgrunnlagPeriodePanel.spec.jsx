@@ -9,6 +9,7 @@ const arbeidsforhold = {
   arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   arbeidsforholdId: '321378huda7e2',
+  eksternArbeidsforholdId: '12345',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
@@ -17,6 +18,7 @@ const arbeidsforhold2 = {
   arbeidsgiverNavn: 'Virksomheten 2',
   arbeidsgiverId: '32847889234234233',
   arbeidsforholdId: '3534gggg4g45',
+  eksternArbeidsforholdId: '234567',
   startdato: '2017-01-01',
   opphoersdato: '2018-01-01',
 };
@@ -25,6 +27,7 @@ const arbeidsforholdEtterStp = {
   arbeidsgiverNavn: 'Virksomheten',
   arbeidsgiverId: '3284788923',
   arbeidsforholdId: '321378huda7e2',
+  eksternArbeidsforholdId: '345678',
   startdato: '2018-05-01',
   opphoersdato: '2019-01-01',
 };
@@ -204,7 +207,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
       .filter(({ aktivitetStatus }) => aktivitetStatus === 'AT');
     expect(arbeidstakerAndelerBeforeStp).to.have.length(5);
     arbeidstakerAndelerBeforeStp.forEach((initialValue) => {
-      expect(initialValue.andel).to.equal('Virksomheten (3284788923) ...a7e2');
+      expect(initialValue.andel).to.equal('Virksomheten (3284788923)...2345');
       expect(initialValue.aktivitetStatus).to.equal('AT');
       expect(initialValue.nyAndel).to.equal(false);
       expect(initialValue.lagtTilAvSaksbehandler).to.equal(false);
@@ -226,7 +229,7 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
     const andelerEtterStp = initialValues.filter(({ nyttArbeidsforhold }) => nyttArbeidsforhold);
 
     expect(andelerEtterStp).to.have.length(1);
-    expect(andelerEtterStp[0].andel).to.equal('Virksomheten (3284788923) ...a7e2');
+    expect(andelerEtterStp[0].andel).to.equal('Virksomheten (3284788923)...5678');
     expect(andelerEtterStp[0].aktivitetStatus).to.equal('AT');
     expect(andelerEtterStp[0].nyAndel).to.equal(false);
     expect(andelerEtterStp[0].lagtTilAvSaksbehandler).to.equal(false);

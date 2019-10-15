@@ -1,17 +1,15 @@
 import moment from 'moment';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 
+const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+
 export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
   if (!aktivitet.arbeidsgiverNavn) {
     return aktivitet.arbeidsforholdType ? getKodeverknavn(aktivitet.arbeidsforholdType) : '';
   }
-  let visningsNavn = `${aktivitet.arbeidsgiverNavn}`;
-  if (aktivitet.arbeidsgiverId && aktivitet.arbeidsforholdId) {
-    visningsNavn = `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId}) ...${aktivitet.arbeidsforholdId.substr(-4)}`;
-  } else if (aktivitet.arbeidsgiverId) {
-    visningsNavn = `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})`;
-  }
-  return visningsNavn;
+  return aktivitet.arbeidsgiverId
+    ? `${aktivitet.arbeidsgiverNavn} (${aktivitet.arbeidsgiverId})${getEndCharFromId(aktivitet.eksternArbeidsforholdId)}`
+    : aktivitet.arbeidsgiverNavn;
 };
 
 
@@ -19,7 +17,7 @@ export const createVisningsnavnForAktivitet = (aktivitet, getKodeverknavn) => {
 // privatperson - KLANG...(18.08.1980)
 const formatDate = (dato) => moment(dato).format(DDMMYYYY_DATE_FORMAT);
 
-export const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdId = undefined) => {
+export const lagVisningsNavn = (arbeidsgiver = {}, eksternArbeidsforholdId) => {
   const {
     navn, fødselsdato, virksomhet, identifikator,
   } = arbeidsgiver;
@@ -27,7 +25,7 @@ export const lagVisningsNavn = (arbeidsgiver = {}, arbeidsforholdId = undefined)
   let visningsNavn = `${navn}`;
   if (virksomhet) {
     visningsNavn = identifikator ? `${visningsNavn} (${identifikator})` : visningsNavn;
-    visningsNavn = arbeidsforholdId ? `${visningsNavn}...${arbeidsforholdId.substr(-4)}` : visningsNavn;
+    visningsNavn = `${visningsNavn}${getEndCharFromId(eksternArbeidsforholdId)}`;
   } else {
     visningsNavn = `${navn.substr(0, 5)}...(${formatDate(fødselsdato)})`;
   }
