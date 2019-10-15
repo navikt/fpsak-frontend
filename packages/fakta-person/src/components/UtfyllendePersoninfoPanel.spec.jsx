@@ -110,6 +110,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
@@ -138,6 +139,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
@@ -166,6 +168,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
@@ -218,6 +221,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={aksjonspunkter}
@@ -262,6 +266,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={aksjonspunkter}
@@ -289,6 +294,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
@@ -324,6 +330,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
@@ -358,6 +365,7 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
         alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}

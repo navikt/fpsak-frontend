@@ -47,6 +47,7 @@ const PersonFaktaIndex = ({
         toggleInfoPanelCallback={toggleInfoPanelCallback}
         shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
         readOnly={readOnly}
+        readOnlyOriginal={readOnly}
         featureToggleUtland={featureToggleUtland}
         alleKodeverk={alleKodeverk}
       />

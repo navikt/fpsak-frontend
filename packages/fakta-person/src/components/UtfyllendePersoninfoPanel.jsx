@@ -85,6 +85,7 @@ export class UtfyllendePersoninfoPanel extends Component {
       personopplysninger,
       hasOpenAksjonspunkter,
       readOnly,
+      readOnlyOriginal,
       submitCallback,
       aksjonspunkter,
       featureToggleUtland,
@@ -127,7 +128,7 @@ export class UtfyllendePersoninfoPanel extends Component {
             hasAksjonspunkter={aksjonspunkter.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             utlandSakstype={getUtlandSakstype(aksjonspunkter)}
-            readOnly={readOnly}
+            readOnly={readOnlyOriginal}
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
@@ -151,7 +152,7 @@ UtfyllendePersoninfoPanel.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   sprakkode: PropTypes.shape().isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  readOnlyOriginal: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func,
   aksjonspunkter: PropTypes.arrayOf(personAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
