@@ -35,6 +35,7 @@ const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetA
     arbeidsgiverNavn,
     arbeidsgiverId: '123',
     arbeidsforholdId: '123',
+    eksternArbeidsforholdId: '345678',
   },
   beregnetPrAar,
   overstyrtPrAar,
@@ -77,9 +78,9 @@ describe('<GrunnlagForAarsinntektPanelAT>', () => {
       getKodeverknavn={getKodeverknavn}
     />);
     const rows = wrapper.find('TableRow');
-    expect(rows.find('Normaltekst').at(0).childAt(0).text()).to.equal('Arbeidsgiver 1 (123) ...123');
+    expect(rows.find('Normaltekst').at(0).childAt(0).text()).to.equal('Arbeidsgiver 1 (123)...5678');
     expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(200000));
-    expect(rows.find('Normaltekst').at(2).childAt(0).text()).to.equal('Arbeidsgiver 2 (123) ...123');
+    expect(rows.find('Normaltekst').at(2).childAt(0).text()).to.equal('Arbeidsgiver 2 (123)...5678');
     expect(rows.find('Normaltekst').at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(100000));
   });
 

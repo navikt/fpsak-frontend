@@ -64,6 +64,8 @@ export const OppholdInntektOgPeriodeForm = ({
     />
     { (hasAksjonspunkt(AVKLAR_OPPHOLDSRETT, valgtPeriode.aksjonspunkter) || hasAksjonspunkt(AVKLAR_LOVLIG_OPPHOLD, valgtPeriode.aksjonspunkter)) && (
       <StatusForBorgerFaktaPanel
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         readOnly={readOnly}
         id={valgtPeriode.id}
         alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}

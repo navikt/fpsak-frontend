@@ -47,7 +47,7 @@ const findAntallUkerOgDager = (saldo) => {
 
 const createTextStrings = (arbforhold) => {
   const {
-    arbeidsgiver, arbeidsforholdId, uttakArbeidType,
+    arbeidsgiver, eksternArbeidsforholdId, uttakArbeidType,
   } = arbforhold;
 
   let arbeidsforhold = <FormattedMessage id="RenderUttakTable.ArbeidType.ANNET" />;
@@ -55,7 +55,7 @@ const createTextStrings = (arbforhold) => {
   if (uttakArbeidType && uttakArbeidType.kode !== uttakArbeidTypeKodeverk.ORDINÆRT_ARBEID) {
     arbeidsforhold = <FormattedMessage id={uttakArbeidTypeTekstCodes[uttakArbeidType.kode]} />;
   } else if (arbeidsgiver) {
-    arbeidsforhold = lagVisningsNavn(arbeidsgiver, arbeidsforholdId);
+    arbeidsforhold = lagVisningsNavn(arbeidsgiver, eksternArbeidsforholdId);
   }
 
   return arbeidsforhold;

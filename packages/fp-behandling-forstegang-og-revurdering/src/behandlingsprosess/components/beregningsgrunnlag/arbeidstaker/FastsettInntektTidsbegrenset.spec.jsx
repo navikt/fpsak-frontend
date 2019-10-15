@@ -88,6 +88,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '123',
+          eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
       },
@@ -102,6 +103,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
           arbeidsforholdId: '456',
+          eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
       },
@@ -123,6 +125,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '123',
+          eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
       },
@@ -137,6 +140,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '456',
           arbeidsforholdId: '456',
+          eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
       },
@@ -157,6 +161,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '123',
+          eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
       },
@@ -171,6 +176,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '456',
+          eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
       },
@@ -191,6 +197,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '123',
+          eksternArbeidsforholdId: '345678',
         },
         andelsnr: 1,
       },
@@ -205,6 +212,7 @@ const beregningsgrunnlagPerioder = [
           arbeidsgiverNavn: 'arbeidsgiver',
           arbeidsgiverId: '123',
           arbeidsforholdId: '456',
+          eksternArbeidsforholdId: '567890',
         },
         andelsnr: 2,
       },
@@ -302,7 +310,7 @@ describe('<FastsettInntektTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (123) ...123',
+            tabellInnhold: 'arbeidsgiver (123)...5678',
             inputfieldKey: '',
           },
           {
@@ -334,7 +342,7 @@ describe('<FastsettInntektTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (456) ...456',
+            tabellInnhold: 'arbeidsgiver (456)...7890',
             inputfieldKey: '',
           },
           {
@@ -375,7 +383,7 @@ describe('<FastsettInntektTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (123) ...123',
+            tabellInnhold: 'arbeidsgiver (123)...5678',
             inputfieldKey: '',
           },
           {
@@ -401,7 +409,7 @@ describe('<FastsettInntektTidsbegrenset>', () => {
           {
             erTidsbegrenset: true,
             isEditable: false,
-            tabellInnhold: 'arbeidsgiver (456) ...456',
+            tabellInnhold: 'arbeidsgiver (456)...7890',
             inputfieldKey: '',
           },
           {

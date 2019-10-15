@@ -64,6 +64,7 @@ describe('<BgFordelingUtils>', () => {
         arbeidsgiverNavn: 'Virksomheten',
         arbeidsgiverId: '3284788923',
         arbeidsforholdId: '321378huda7e2',
+        eksternArbeidsforholdId: '345678',
       },
       aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
       andelsnr: 3,
@@ -72,7 +73,7 @@ describe('<BgFordelingUtils>', () => {
     };
 
     const andelsInfo = setGenerellAndelsinfo(andelValueFromState, false, getKodeverknavn);
-    expect(andelsInfo.andel).to.equal('Virksomheten (3284788923) ...a7e2');
+    expect(andelsInfo.andel).to.equal('Virksomheten (3284788923)...5678');
     expect(andelsInfo.aktivitetStatus).to.equal('AT');
     expect(andelsInfo.andelsnr).to.equal(3);
     expect(andelsInfo.nyAndel).to.equal(false);

@@ -20,14 +20,14 @@ const headerTextCodes = [
   'EMPTY_2',
 ];
 
-const getEndCharFromId = (id) => id.substring(id.length - 4, id.length);
+const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
 
 const utledNavn = (arbeidsforhold) => {
   if (arbeidsforhold.lagtTilAvSaksbehandler) {
     return arbeidsforhold.navn;
   }
   return arbeidsforhold.arbeidsforholdId
-    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})...${getEndCharFromId(arbeidsforhold.arbeidsforholdId)}`
+    ? `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)}`
     : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
 };
 
