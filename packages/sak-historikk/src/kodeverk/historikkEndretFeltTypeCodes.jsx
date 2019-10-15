@@ -169,6 +169,10 @@ const historikkEndretFeltTypeCodes = {
     kode: 'OPPTJENINGSVILKARET',
     feltId: 'HistorikkEndretFelt.Opptjeningsvilkaret',
   },
+  ORGANISASJONSNUMMER: {
+    kode: 'ORGANISASJONSNUMMER',
+    feltId: 'HistorikkEndretFelt.Organisasjonsnummer',
+  },
   OVERSTYRT_BEREGNING: {
     kode: 'OVERSTYRT_BEREGNING',
     feltId: 'Historikk.Template.7.OverstyrtBeregning',
