@@ -10,6 +10,8 @@ export const TilbakekrevingBehandlingApiKeys = {
   BEREGNE_BELØP: 'BEREGNE_BELØP',
   TILBAKE_KODEVERK: 'TILBAKE_KODEVERK',
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
+  VEDTAKSBREV: 'VEDTAKSBREV',
+  BEREGNINGSRESULTAT: 'BEREGNINGSRESULTAT',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -28,6 +30,10 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /api/kodeverk */
   .withGet('/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
+
+  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
+  .withInjectedPath('vedtaksbrev', TilbakekrevingBehandlingApiKeys.VEDTAKSBREV)
+  .withInjectedPath('beregningsresultat', TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT)
 
   .build();
 

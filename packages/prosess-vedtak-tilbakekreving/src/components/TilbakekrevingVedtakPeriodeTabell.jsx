@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-
 import {
   PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';

@@ -8,8 +8,7 @@ import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import { hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
-import { behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 
@@ -71,7 +70,7 @@ TilbakekrevingVedtakUtdypendeTekstPanel.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  isEmpty: behandlingFormValueSelector(ownProps.formName)(state, ownProps.type) === undefined,
+  isEmpty: behandlingFormValueSelector(ownProps.formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, ownProps.type) === undefined,
 });
 
 export default connect(mapStateToProps)(injectIntl(TilbakekrevingVedtakUtdypendeTekstPanel));
