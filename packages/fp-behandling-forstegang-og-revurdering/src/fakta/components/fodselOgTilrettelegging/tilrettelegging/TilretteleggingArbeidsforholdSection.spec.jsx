@@ -12,15 +12,15 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       readOnly={false}
       arbeidsforhold={{
         arbeidsgiverNavn: 'ARB_NAVN_1',
-        arbeidsgiverIdent: '111',
-        arbeidsforholdReferanse: '222444',
+        arbeidsgiverIdent: '111222333',
+        eksternArbeidsforholdReferanse: 'ARB001-001',
       }}
       formSectionName="ARB_NAVN"
       visTilrettelegginger
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(1);
-    expect(normaltekst.props().children).to.eq('ARB_NAVN_1 (111)....2444');
+    expect(normaltekst.props().children).to.eq('ARB_NAVN_1 (111222333)....-001');
     const checkboxField = wrapper.find(CheckboxField);
     expect(checkboxField).has.length(1);
     const datepickerField = wrapper.find(DatepickerField);
@@ -34,7 +34,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       arbeidsforhold={{
         arbeidsgiverNavn: 'FRILANSER',
         arbeidsgiverIdent: '',
-        arbeidsforholdReferanse: '',
+        eksternArbeidsforholdReferanse: '',
       }}
       formSectionName="ARB_NAVN"
       visTilrettelegginger={false}

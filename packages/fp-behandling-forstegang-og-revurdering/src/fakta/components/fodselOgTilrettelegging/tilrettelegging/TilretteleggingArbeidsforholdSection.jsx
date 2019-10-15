@@ -18,8 +18,8 @@ const utledArbeidsforholdTittel = (arbeidsforhold) => {
   if (arbeidsforhold.arbeidsgiverIdent) {
     tittel += ` (${arbeidsforhold.arbeidsgiverIdent})`;
   }
-  if (arbeidsforhold.arbeidsforholdReferanse) {
-    let ref = arbeidsforhold.arbeidsforholdReferanse;
+  if (arbeidsforhold.eksternArbeidsforholdReferanse) {
+    let ref = arbeidsforhold.eksternArbeidsforholdReferanse;
     if (ref.length > 4) {
       ref = ref.slice(-4);
     }

@@ -30,8 +30,8 @@ const utledFormSectionName = (arbeidsforhold) => {
   if (arbeidsforhold.arbeidsgiverIdent) {
     navn += arbeidsforhold.arbeidsgiverIdent;
   }
-  if (arbeidsforhold.arbeidsforholdReferanse) {
-    navn += arbeidsforhold.arbeidsforholdReferanse;
+  if (arbeidsforhold.internArbeidsforholdReferanse) {
+    navn += arbeidsforhold.internArbeidsforholdReferanse;
   }
   return navn;
 };
