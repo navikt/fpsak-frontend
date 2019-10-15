@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { SearchForm } from '@fpsak-frontend/search-form';

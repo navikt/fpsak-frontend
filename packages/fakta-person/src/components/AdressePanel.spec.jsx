@@ -50,9 +50,9 @@ describe('<AdressePanel>', () => {
 
     const etikettfokus = wrapper.find(EtikettFokus);
 
-    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus');
+    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(etikettfokus.at(1).children().text()).to.equal('Ufullstendig fnr');
-    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand');
+    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand.Hjelpetekst');
     expect(etikettfokus.at(2).children().text()).to.equal('Gift, lever adskilt');
     expect(etikettfokus.at(3).prop('title')).to.equal('Foretrukket språk');
     expect(etikettfokus.at(3).children().text()).to.equal('Engelsk');
@@ -79,10 +79,10 @@ describe('<AdressePanel>', () => {
 
     const etikettfokus = wrapper.find(EtikettFokus);
 
-    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap');
+    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap.Hjelpetekst');
     expect(etikettfokus.at(0).children().text()).to.equal(statsborgerskap.navn);
 
-    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus');
+    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(etikettfokus.at(1).children().text()).to.equal('Utvandret');
 
     expect(etikettfokus.at(2).prop('title')).to.equal('Foretrukket språk');
@@ -110,11 +110,11 @@ describe('<AdressePanel>', () => {
     />);
 
     const etikettfokus = wrapper.find(EtikettFokus);
-    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap');
+    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap.Hjelpetekst');
     expect(etikettfokus.at(0).children().text()).to.equal(statsborgerskap.navn);
-    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus');
+    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(etikettfokus.at(1).children().text()).to.equal('Bosatt');
-    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand');
+    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand.Hjelpetekst');
     expect(etikettfokus.at(2).children().text()).to.equal('Skilt');
     expect(etikettfokus.at(3).prop('title')).to.equal('Foretrukket språk');
     expect(etikettfokus.at(3).children().text()).to.equal('Bokmål');
@@ -167,11 +167,11 @@ describe('<AdressePanel>', () => {
 
     const etikettfokus = wrapper.find(EtikettFokus);
     expect(etikettfokus).to.have.length(3);
-    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap');
+    expect(etikettfokus.at(0).prop('title')).to.equal('Statsborgerskap.Hjelpetekst');
     expect(etikettfokus.at(0).children().text()).to.equal(statsborgerskap.navn);
-    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus');
+    expect(etikettfokus.at(1).prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(etikettfokus.at(1).children().text()).to.equal('Bosatt');
-    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand');
+    expect(etikettfokus.at(2).prop('title')).to.equal('Sivilstand.Hjelpetekst');
     expect(etikettfokus.at(2).children().text()).to.equal('Skilt');
   });
 });

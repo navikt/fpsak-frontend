@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 
 import { getFagsakPerson } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 

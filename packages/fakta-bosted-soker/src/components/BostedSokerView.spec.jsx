@@ -118,10 +118,10 @@ describe('<BostedsokerView>', () => {
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
+    expect(personstatus.prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(personstatus.childAt(0).text()).to.equal('Bosatt');
     const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
+    expect(sivilstand.prop('title')).to.equal('Sivilstand.Hjelpetekst');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
     expect(region.prop('title')).to.equal('BostedSokerView.Region');
@@ -145,10 +145,10 @@ describe('<BostedsokerView>', () => {
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus');
+    expect(personstatus.prop('title')).to.equal('Personstatus.Hjelpetekst');
     expect(personstatus.childAt(0).text()).to.equal('Ukjent');
     const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand');
+    expect(sivilstand.prop('title')).to.equal('Sivilstand.Hjelpetekst');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
     expect(region.prop('title')).to.equal('BostedSokerView.Region');

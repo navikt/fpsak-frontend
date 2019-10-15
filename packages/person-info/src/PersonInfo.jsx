@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { injectIntl } from 'react-intl';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import Panel from 'nav-frontend-paneler';
+
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 import { Image } from '@fpsak-frontend/shared-components';
-import { injectIntl } from 'react-intl';
+
 import AlderVisning from './Aldervisning';
 import MerkePanel from './Merkepanel';
 

@@ -9,13 +9,12 @@ import editUtlandIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editUtlandDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { omit, required } from '@fpsak-frontend/utils';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import utlandSakstypeKode from './utlandSakstypeKode';
 import { UtlandEndretModal } from './UtlandEndretModal';
 
@@ -87,6 +86,8 @@ export class UtlandImpl extends Component {
       intl,
       readOnly,
       utlandSakstype,
+      behandlingId,
+      behandlingVersjon,
     } = this.props;
     const {
       currentUtlandStatus,
@@ -112,7 +113,7 @@ export class UtlandImpl extends Component {
                 className={styles.editIcon}
                 src={readOnly ? editUtlandDisabledIcon : editUtlandIcon}
                 onClick={readOnly ? undefined : this.editUtland}
-                alt={intl.formatMessage({ id: 'UttakInfoPanel.EndrePerioden' })}
+                alt={intl.formatMessage({ id: 'Utland.EndrePerioden' })}
               />
             </div>
           </div>
@@ -168,6 +169,8 @@ export class UtlandImpl extends Component {
           </div>
         )}
         <UtlandEndretModal
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           showModal={showModalUtlandEndret}
           closeEvent={this.hideModal}
         />
@@ -182,6 +185,8 @@ UtlandImpl.propTypes = {
   utlandSakstype: PropTypes.string,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 UtlandImpl.defaultProps = {
@@ -196,9 +201,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     ...omit(values, 'nyVerdi'),
   }]);
 
-  return (state) => ({
-    utlandSakstype: behandlingFormValueSelector('PersonInfoPanel')(state, 'utlandSakstype'),
-    readOnly: behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
+  return (state, ownProps) => ({
+    utlandSakstype: behandlingFormValueSelector('PersonInfoPanel', ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'utlandSakstype'),
     onSubmit,
   });
 };

@@ -12,7 +12,7 @@ import urlMann from '@fpsak-frontend/assets/images/barn_gutt.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/barn_jente.svg';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { getAddresses } from '@fpsak-frontend/utils';
-import MerkePanel from './Merkepanel';
+import { MerkePanel } from '@fpsak-frontend/person-info';
 
 import styles from './barnePanel.less';
 
@@ -72,7 +72,7 @@ const BarnePanel = ({
             </div>
             {barn.dodsdato && (
             <Normaltekst>
-              <FormattedMessage id="BostedBarnView.DodsDato" />
+              <FormattedMessage id="Barnepanel.DodsDato" />
               <Element><DateLabel dateString={barn.dodsdato} /></Element>
               <VerticalSpacer eightPx />
             </Normaltekst>

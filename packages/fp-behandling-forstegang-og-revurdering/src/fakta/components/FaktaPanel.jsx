@@ -9,7 +9,9 @@ import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
 import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
+import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -17,14 +19,14 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
-import { getFagsakYtelseType, getFagsakPerson, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import {
+  getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles,
+} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import PersonInfoPanel from './person/PersonInfoPanel';
-import PersonIndexPanel from './person/PersonIndexPanel';
 import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
@@ -48,6 +50,7 @@ const vergeData = [fpsakApi.BEHANDLING, fpsakApi.VERGE, fpsakApi.AKSJONSPUNKTER]
 const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.YTELSEFORDELING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.AKSJONSPUNKTER, fpsakApi.SOKNAD];
 const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER,
   fpsakApi.INNTEKT_ARBEID_YTELSE, fpsakApi.MEDLEMSKAP, fpsakApi.MEDLEMSKAP_V2];
+const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 
 /**
  * FaktaPanel
@@ -71,30 +74,28 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   alleMerknaderFraBeslutter,
   alleKodeverk,
   readOnlyBehandling,
+  featureToggleUtland,
 }) => (
   <>
     <div className={styles.personContainer}>
-      {personopplysninger && (
-        <PersonInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
-        />
-      )}
-      {!personopplysninger && (
-        <PersonIndexPanel
-          person={fagsakPerson}
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
-        />
-      )}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={personData}
+        render={(props) => (
+          <PersonFaktaIndex
+            fagsakPerson={fagsakPerson}
+            aksjonspunkter={aksjonspunkter}
+            submitCallback={submitCallback}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            readOnly={readOnly}
+            featureToggleUtland={featureToggleUtland}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
+      />
     </div>
     <div className={styles.container}>
       {personopplysninger && (
@@ -318,6 +319,7 @@ FaktaPanel.propTypes = {
   readOnlyBehandling: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  featureToggleUtland: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -341,6 +343,7 @@ const mapStateToProps = (state) => {
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),
     readOnlyBehandling: behandlingSelectors.hasReadOnlyBehandling(state),
+    featureToggleUtland: getFeatureToggles(state)[featureToggle.MARKER_UTENLANDSSAK],
   };
 };
 

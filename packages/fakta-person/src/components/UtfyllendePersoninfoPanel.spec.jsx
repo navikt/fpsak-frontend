@@ -3,6 +3,11 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
+
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
+import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
@@ -10,11 +15,12 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
-import FullPersonInfo from './panelBody/FullPersonInfo';
-import { PersonInfoPanelImpl as PersonInfoPanel } from './PersonInfoPanel';
 
-describe('<PersonInfoPanel>', () => {
+import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
+import FullPersonInfo from './FullPersonInfo';
+import { UtfyllendePersoninfoPanel } from './UtfyllendePersoninfoPanel';
+
+describe('<UtfyllendePersoninfoPanel>', () => {
   const personopplysninger = {
     navn: 'Parent 1',
     fnr: '26041150695',
@@ -54,38 +60,47 @@ describe('<PersonInfoPanel>', () => {
     },
   };
 
-  const personstatusTypes = [
-    {
-      kode: personstatusType.UFULLSTENDIGFNR,
-      navn: 'Ufullstendig fnr',
-    },
-    {
-      kode: personstatusType.UTVANDRET,
-      navn: 'Utvandret',
-    },
-    {
-      kode: personstatusType.BOSATT,
-      navn: 'Bosatt',
-    },
-  ];
+  const personstatusTypes = [{
+    kode: personstatusType.UFULLSTENDIGFNR,
+    navn: 'Ufullstendig fnr',
+  }, {
+    kode: personstatusType.UTVANDRET,
+    navn: 'Utvandret',
+  }, {
+    kode: personstatusType.BOSATT,
+    navn: 'Bosatt',
+  }];
 
-  const sivilstandTypes = [
-    {
-      kode: sivilstandType.GIFTLEVERADSKILT,
-      navn: 'Gift, lever adskilt',
-    },
-    {
-      kode: sivilstandType.SKILT,
-      navn: 'Skilt',
-    },
-  ];
+  const sivilstandTypes = [{
+    kode: sivilstandType.GIFTLEVERADSKILT,
+    navn: 'Gift, lever adskilt',
+  }, {
+    kode: sivilstandType.SKILT,
+    navn: 'Skilt',
+  }];
 
-  const relatertYtelseTypes = [];
-  const relatertYtelseStatus = [];
+  const alleKodeverk = {
+    [kodeverkTyper.SIVILSTAND_TYPE]: sivilstandTypes,
+    [kodeverkTyper.PERSONSTATUS_TYPE]: personstatusTypes,
+    [kodeverkTyper.RELATERT_YTELSE_TYPE]: [{
+      kode: relatertYtelseType.FORELDREPENGER,
+      navn: 'Foreldrepenger',
+    }],
+    [kodeverkTyper.FAGSAK_STATUS]: [{
+      kode: fagsakStatus.OPPRETTET,
+      navn: 'Opprettet',
+    }],
+    [kodeverkTyper.RELATERT_YTELSE_TILSTAND]: [{
+      kode: relatertYtelseTilstand.LOPENDE,
+      navn: 'Løpende',
+    }],
+  };
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -95,11 +110,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,
@@ -114,7 +127,9 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal ikke vise åpent panel når ingen av foreldrene er valgt', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -124,11 +139,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,
@@ -143,7 +156,9 @@ describe('<PersonInfoPanel>', () => {
 
   it('skal vise søkerpanel automatisk når dette er markert i URL (openInfoPanels)', () => {
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -153,11 +168,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,
@@ -196,7 +209,9 @@ describe('<PersonInfoPanel>', () => {
     },
     ];
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -206,11 +221,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={aksjonspunkter}
         {...reduxFormPropsMock}
       />,
@@ -241,7 +254,9 @@ describe('<PersonInfoPanel>', () => {
     },
     ];
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -251,11 +266,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={aksjonspunkter}
         {...reduxFormPropsMock}
       />,
@@ -269,7 +282,9 @@ describe('<PersonInfoPanel>', () => {
   it('skal velge hovedsøker og legge denne i url ved klikk på hovedsøker i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -279,11 +294,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,
@@ -305,7 +318,9 @@ describe('<PersonInfoPanel>', () => {
   it('skal ikke fjerna personmarkering i url ved bytte fra hovedsøker til annen part', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -315,11 +330,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,
@@ -340,7 +353,9 @@ describe('<PersonInfoPanel>', () => {
   it('skal fjerne valgt hovedsøker ved nytt klikk på denne i panel-header ', () => {
     const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
-      <PersonInfoPanel
+      <UtfyllendePersoninfoPanel
+        behandlingId={1}
+        behandlingVersjon={1}
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
@@ -350,11 +365,9 @@ describe('<PersonInfoPanel>', () => {
         sprakkode={{}}
         barnFraTps={[]}
         readOnly={false}
+        readOnlyOriginal={false}
         isBekreftButtonReadOnly
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
+        alleKodeverk={alleKodeverk}
         aksjonspunkter={[]}
         {...reduxFormPropsMock}
       />,

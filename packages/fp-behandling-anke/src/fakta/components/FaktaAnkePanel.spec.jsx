@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 
-import { PersonIndex } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 
 import { FaktaAnkePanel } from './FaktaAnkePanel';
 

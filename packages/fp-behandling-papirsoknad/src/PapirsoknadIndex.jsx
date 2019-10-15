@@ -7,8 +7,9 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, rettighetPropType } from '@fpsak-frontend/prop-types';
 import {
-  BehandlingIdentifier, ErrorTypes, PersonIndex, requireProps,
+  BehandlingIdentifier, ErrorTypes, requireProps,
 } from '@fpsak-frontend/fp-felles';
+import { PersonIndex } from '@fpsak-frontend/person-info';
 
 import papirsoknadApi from './data/papirsoknadApi';
 import SoknadData from './SoknadData';

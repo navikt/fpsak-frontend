@@ -5,12 +5,12 @@ import { getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
-import { AdressePanel, BarnePanel, PersonYtelserTable } from '@fpsak-frontend/person-info';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { Utland } from './utland/Utland';
+import AdressePanel from './AdressePanel';
+import BarnePanel from './BarnePanel';
+import PersonYtelserTable from './PersonYtelserTable';
 
 const findPersonStatus = (personopplysning) => {
   if (personopplysning.avklartPersonstatus) {
@@ -27,7 +27,7 @@ export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => ba
  * Presentasjonskomponent. Tar inn et personopplysningsobjekt som brukes til å populere adressepanelet og barnepanelet med data som blir vist
  * når NAV-ansatt utvider nedtrekksfanen med personopplysninger.
  */
-export const FullPersonInfoImpl = ({
+export const FullPersonInfo = ({
   sprakkode,
   personopplysning,
   ytelser,
@@ -39,6 +39,9 @@ export const FullPersonInfoImpl = ({
   personstatusTypes,
   sivilstandTypes,
   getKodeverknavn,
+  behandlingId,
+  behandlingVersjon,
+  readOnly,
 }) => {
   if (!personopplysning) {
     return null;
@@ -66,8 +69,11 @@ export const FullPersonInfoImpl = ({
         personstatusTypes={personstatusTypes}
       >
         <Utland
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           initialValue={utlandSakstype}
           submitCallback={submitCallback}
+          readOnly={readOnly}
         />
       </AdressePanel>
       {harBarnITPSSjekk && (
@@ -86,7 +92,7 @@ export const FullPersonInfoImpl = ({
   );
 };
 
-FullPersonInfoImpl.propTypes = {
+FullPersonInfo.propTypes = {
   sprakkode: PropTypes.shape().isRequired,
   personopplysning: PropTypes.shape({
     adresser: PropTypes.arrayOf(PropTypes.shape({})),
@@ -103,12 +109,14 @@ FullPersonInfoImpl.propTypes = {
   sivilstandTypes: kodeverkPropType.isRequired,
   personstatusTypes: kodeverkPropType.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  readOnly: PropTypes.bool.isRequired,
 };
 
-FullPersonInfoImpl.defaultProps = {
+FullPersonInfo.defaultProps = {
   ytelser: undefined,
   submitCallback: undefined,
 };
 
-export default injectKodeverk(getAlleKodeverk)(FullPersonInfoImpl);
+export default FullPersonInfo;
