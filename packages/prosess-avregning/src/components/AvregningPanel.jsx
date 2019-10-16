@@ -334,9 +334,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
     const hasOpenTilbakekrevingsbehandling = tilbakekrevingvalg !== undefined
       && tilbakekrevingvalg.videreBehandling.kode === tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER;
     return {
-      ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
-        state, 'varseltekst',
-      ),
+      varseltekst: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'varseltekst'),
       initialValues: buildInitialValues(state, ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
       featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
