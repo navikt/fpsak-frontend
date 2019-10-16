@@ -23,6 +23,7 @@
     "@fpsak-frontend/person-info": "1.0.0",
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/prosess-avregning": "1.0.0",
+    "@fpsak-frontend/prosess-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/prosess-beregningsresultat": "1.0.0",
     "@fpsak-frontend/prosess-saksopplysninger": "1.0.0",
     "@fpsak-frontend/prosess-soknadsfrist": "1.0.0",
