@@ -7,6 +7,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
+import vergeType from '@fpsak-frontend/fakta-verge/src/kodeverk/vergeType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -31,11 +32,20 @@ const verge = {};
 
 const alleKodeverk = {
   [kodeverkTyper.VERGE_TYPE]: [{
-    kode: 'BARN',
+    kode: vergeType.BARN,
     navn: 'Barn',
   }, {
-    kode: 'VOKSEN',
+    kode: vergeType.FBARN,
+    navn: 'Foreldreløst barn',
+  }, {
+    kode: vergeType.VOKSEN,
     navn: 'Voksen',
+  }, {
+    kode: vergeType.ADVOKAT,
+    navn: 'Advokat',
+  }, {
+    kode: vergeType.ANNEN_F,
+    navn: 'Annen foreldre',
   },
   ],
 };
