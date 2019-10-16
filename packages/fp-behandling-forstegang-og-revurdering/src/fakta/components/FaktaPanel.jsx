@@ -10,6 +10,7 @@ import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
+import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -27,7 +28,6 @@ import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import ArbeidsforholdInfoPanel from './arbeidsforholdInfoPanel/ArbeidsforholdInfoPanel';
 import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
@@ -51,6 +51,7 @@ const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.YTELSEFORDELING, fpsakApi.PERS
 const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER,
   fpsakApi.INNTEKT_ARBEID_YTELSE, fpsakApi.MEDLEMSKAP, fpsakApi.MEDLEMSKAP_V2];
 const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
+const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 
 /**
  * FaktaPanel
@@ -97,17 +98,29 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         )}
       />
     </div>
+
     <div className={styles.container}>
-      {personopplysninger && (
-        <ArbeidsforholdInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
-        />
-      )}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={arbeidsforholdData}
+        render={(props) => (
+          <>
+            {props.personopplysninger && (
+              <ArbeidsforholdFaktaIndex
+                alleKodeverk={alleKodeverk}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                aksjonspunkter={aksjonspunkter}
+                submitCallback={submitCallback}
+                openInfoPanels={openInfoPanels}
+                toggleInfoPanelCallback={toggleInfoPanelCallback}
+                shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+                readOnly={readOnly}
+                {...props}
+              />
+            )}
+          </>
+        )}
+      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
