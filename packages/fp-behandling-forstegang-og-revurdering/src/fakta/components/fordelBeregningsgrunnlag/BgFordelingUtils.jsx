@@ -37,7 +37,7 @@ const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   return getKodeverknavn(andel.aktivitetStatus);
 };
 
-const finnFastsattPrAar = (fordeltPrAar,
+export const finnFastsattPrAar = (fordeltPrAar,
   fastsattForrigePrAar) => {
   if (!nullOrUndefined(fordeltPrAar)) {
     return fordeltPrAar;
