@@ -13,7 +13,7 @@ describe('<AdvarselModal>', () => {
     const wrapper = shallowWithIntl(
       <AdvarselModal.WrappedComponent
         intl={intlMock}
-        textCode="OpenBehandlingForChangesMenuItem.OpenBehandling"
+        textCode="AdvarselModal.OpenBehandling"
         showModal
         submit={sinon.spy()}
       />,
@@ -22,7 +22,7 @@ describe('<AdvarselModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Åpne behandling for endringer?');
+    expect(modal.prop('contentLabel')).is.eql('AdvarselModal.OpenBehandling');
 
     const image = wrapper.find(Image);
     expect(image).to.have.length(1);
@@ -30,6 +30,6 @@ describe('<AdvarselModal>', () => {
 
     const message = wrapper.find(FormattedMessage);
     expect(message).to.have.length(1);
-    expect(message.prop('id')).is.eql('OpenBehandlingForChangesMenuItem.OpenBehandling');
+    expect(message.prop('id')).is.eql('AdvarselModal.OpenBehandling');
   });
 });

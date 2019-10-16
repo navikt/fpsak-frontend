@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
-import { Undertekst } from 'nav-frontend-typografi';
 
 import {
   hasValidDate, hasValidFodselsnummer, hasValidName, required,
 } from '@fpsak-frontend/utils';
 import {
-  CheckboxField, DatepickerField, InputField, SelectField, TextAreaField,
+  DatepickerField, InputField, SelectField,
 } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import styles from './RegistrereVergeFaktaForm.less';
+import vergeType from '../kodeverk/vergeType';
 
 /**
  * RegistrereVergeFaktaForm
@@ -26,102 +24,76 @@ export const RegistrereVergeFaktaForm = ({
   readOnly,
   vergetyper,
   alleMerknaderFraBeslutter,
+  valgtVergeType,
 }) => (
   <FaktaGruppe aksjonspunktCode={aksjonspunktCodes.AVKLAR_VERGE} merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.AVKLAR_VERGE]}>
     <div>
       <Row>
-        <Column xs="3">
-          <InputField
-            bredde="XXL"
-            name="navn"
-            label={{ id: 'Verge.Navn' }}
-            validate={[required, hasValidName]}
-            readOnly={readOnly}
-          />
-        </Column>
-        <Column xs="3">
-          <InputField
-            bredde="S"
-            name="fnr"
-            label={{ id: 'Verge.FodselsNummer' }}
-            validate={[required, hasValidFodselsnummer]}
-            readOnly={readOnly}
-          />
-        </Column>
-        <Column xs="6">
-          <TextAreaField
-            name="mandatTekst"
-            label={{ id: 'Verge.Mandat' }}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
-      <VerticalSpacer eightPx />
-      <Row>
         <Column xs="5">
-          <div className={styles.horizontalForm}>
-            <DatepickerField
-              name="gyldigFom"
-              label={{ id: 'Verge.PeriodeFOM' }}
-              validate={[required, hasValidDate]}
-              readOnly={readOnly}
-            />
-            <DatepickerField
-              name="gyldigTom"
-              label={{ id: 'Verge.PeriodeTOM' }}
-              validate={[required, hasValidDate]}
-              readOnly={readOnly}
-            />
-          </div>
-        </Column>
-        <Column xs="1" />
-
-        <Column xs="6">
           <SelectField
             name="vergeType"
             label={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             placeholder={intl.formatMessage({ id: 'Verge.TypeVerge' })}
             validate={[required]}
             selectValues={vergetyper.map((vt) => <option key={vt.kode} value={vt.kode}>{vt.navn}</option>)}
-            bredde="xxl"
             readOnly={readOnly}
           />
         </Column>
       </Row>
-      <VerticalSpacer eightPx />
-      <Row>
-        <Column xs="12">
-          <div>
-            <Undertekst>
-              <FormattedMessage id="Verge.KontaktPerson" />
-            </Undertekst>
-          </div>
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <CheckboxField
-            name="sokerErKontaktPerson"
-            label={{ id: 'Verge.Soker' }}
-            readOnly={readOnly}
-          />
-          <CheckboxField
-            name="vergeErKontaktPerson"
-            label={{ id: 'Verge.VergeFullmektig' }}
-            readOnly={readOnly}
-          />
-
-        </Column>
-        <Column xs="6">
-          <CheckboxField
-            name="sokerErUnderTvungenForvaltning"
-            label={{ id: 'Verge.BrukerErUnderTvungenForvaltning' }}
-            readOnly={readOnly}
-          />
-        </Column>
-
-      </Row>
+      {valgtVergeType && (
+        <>
+          <Row>
+            <Column xs="3">
+              <InputField
+                bredde="XXL"
+                name="navn"
+                label={{ id: 'Verge.Navn' }}
+                validate={[required, hasValidName]}
+                readOnly={readOnly}
+              />
+            </Column>
+            <Column xs="3">
+              {valgtVergeType !== vergeType.ADVOKAT && (
+                <InputField
+                  bredde="S"
+                  name="fnr"
+                  label={{ id: 'Verge.FodselsNummer' }}
+                  validate={[required, hasValidFodselsnummer]}
+                  readOnly={readOnly}
+                />
+              )}
+              {valgtVergeType === vergeType.ADVOKAT && (
+                <InputField
+                  bredde="S"
+                  name="organisasjonsnummer"
+                  label={{ id: 'Verge.Organisasjonsnummer' }}
+                  validate={[required]}
+                  readOnly={readOnly}
+                />
+              )}
+            </Column>
+          </Row>
+          <VerticalSpacer eightPx />
+          <Row>
+            <Column xs="2">
+              <DatepickerField
+                name="gyldigFom"
+                label={{ id: 'Verge.PeriodeFOM' }}
+                validate={[required, hasValidDate]}
+                readOnly={readOnly}
+              />
+            </Column>
+            <Column xs="2">
+              <DatepickerField
+                name="gyldigTom"
+                label={{ id: 'Verge.PeriodeTOM' }}
+                validate={[hasValidDate]}
+                readOnly={readOnly}
+              />
+            </Column>
+          </Row>
+        </>
+      )}
     </div>
   </FaktaGruppe>
 );
@@ -136,10 +108,12 @@ RegistrereVergeFaktaForm.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
+  valgtVergeType: PropTypes.string,
 };
 
 RegistrereVergeFaktaForm.defaultProps = {
   vergetyper: [],
+  valgtVergeType: undefined,
 };
 
 RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
@@ -147,10 +121,7 @@ RegistrereVergeFaktaForm.buildInitialValues = (verge) => ({
   gyldigFom: verge.gyldigFom,
   gyldigTom: verge.gyldigTom,
   fnr: verge.fnr,
-  mandatTekst: verge.mandatTekst,
-  sokerErKontaktPerson: verge.sokerErKontaktPerson,
-  vergeErKontaktPerson: verge.vergeErKontaktPerson,
-  sokerErUnderTvungenForvaltning: verge.sokerErUnderTvungenForvaltning,
+  organisasjonsnummer: verge.organisasjonsnummer,
   vergeType: verge.vergeType ? verge.vergeType.kode : undefined,
 });
 
@@ -158,12 +129,9 @@ RegistrereVergeFaktaForm.transformValues = (values) => ({
   vergeType: values.vergeType,
   navn: values.navn,
   fnr: values.fnr,
+  organisasjonsnummer: values.organisasjonsnummer,
   gyldigFom: values.gyldigFom,
   gyldigTom: values.gyldigTom,
-  mandatTekst: values.mandatTekst,
-  sokerErKontaktPerson: values.sokerErKontaktPerson,
-  vergeErKontaktPerson: values.vergeErKontaktPerson,
-  sokerErUnderTvungenForvaltning: values.sokerErUnderTvungenForvaltning,
   kode: aksjonspunktCodes.AVKLAR_VERGE,
 });
 

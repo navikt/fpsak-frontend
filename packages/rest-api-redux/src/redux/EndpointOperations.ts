@@ -23,6 +23,8 @@ class EndpointOperations {
 
   makeRestApiRequest = () => this.reduxApiCreator.makeRequestActionCreator(this.name);
 
+  isEndpointEnabled = () => this.reduxApiCreator.isEndpointEnabled(this.name);
+
   cancelRestApiRequest = () => this.reduxApiCreator.cancelRequest(this.name);
 
   resetRestApi = () => this.reduxApiCreator.makeResetActionCreator(this.name);

@@ -3,10 +3,11 @@ import moment from 'moment';
 
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, reducerRegistry } from '@fpsak-frontend/fp-felles';
-import fpsakApi from 'data/fpsakApi';
-import { updateBehandlinger, updateFagsakInfo } from 'fagsak/duck';
-import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
-import behandlingUpdater from 'behandling/BehandlingUpdater';
+
+import fpsakApi from '../data/fpsakApi';
+import { updateBehandlinger, updateFagsakInfo } from '../fagsak/duck';
+import { updateBehandlingsupportInfo } from '../behandlingsupport/duck';
+import behandlingUpdater from '../behandling/BehandlingUpdater';
 
 const findNewBehandlingId = (behandlingerResponse) => {
   const sortedBehandlinger = behandlingerResponse.payload
@@ -83,6 +84,27 @@ export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispa
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
   fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
 );
+
+export const hentVergeMenyvalg = (params) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
+// TODO (TOR) To neste funksjonar skal flyttast inn i behandling-pakke etter at lenker ikkje lenger blir henta automatisk.
+export const opprettVerge = (push, behandlingIdentifier, versjon) => (dispatch) => dispatch(fpsakApi.VERGE_OPPRETT.makeRestApiRequest()({
+  behandlingId: behandlingIdentifier.behandlingId,
+  behandlingVersjon: versjon,
+})).then(() => Promise.all([
+  dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
+  behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
+])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
+  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+})));
+export const fjernVerge = (push, behandlingIdentifier, versjon) => (dispatch) => dispatch(fpsakApi.VERGE_FJERN.makeRestApiRequest()({
+  behandlingId: behandlingIdentifier.behandlingId,
+  behandlingVersjon: versjon,
+})).then(() => Promise.all([
+  dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
+  behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
+])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
+  pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
+})));
 
 /* Reducer */
 const initialState = {

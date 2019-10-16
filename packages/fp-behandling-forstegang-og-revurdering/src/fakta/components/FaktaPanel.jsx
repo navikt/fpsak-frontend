@@ -359,8 +359,9 @@ FaktaPanel.defaultProps = {
 
 const mapStateToProps = (state) => {
   const rettigheter = behandlingSelectors.getRettigheter(state);
+  const aksjonspunkter = behandlingSelectors.getAksjonspunkter(state);
   return {
-    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
+    aksjonspunkter,
     vilkarCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
     ytelsesType: getFagsakYtelseType(state),
     openInfoPanels: getOpenInfoPanels(state),

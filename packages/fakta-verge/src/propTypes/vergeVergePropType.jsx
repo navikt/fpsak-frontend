@@ -7,10 +7,6 @@ const vergeVergePropType = PropTypes.shape({
   gyldigFom: PropTypes.string,
   gyldigTom: PropTypes.string,
   fnr: PropTypes.string,
-  mandatTekst: PropTypes.string,
-  sokerErKontaktPerson: PropTypes.bool,
-  vergeErKontaktPerson: PropTypes.bool,
-  sokerErUnderTvungenForvaltning: PropTypes.bool,
   vergeType: kodeverkObjektPropType,
 });
 

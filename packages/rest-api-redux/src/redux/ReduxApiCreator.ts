@@ -5,6 +5,10 @@ import { RequestApi } from '@fpsak-frontend/rest-api';
 import ReduxEvents from './ReduxEvents';
 import RestDuck from './RestDuck';
 
+const EMPTY_ENDPOINT = {
+  actionCreators: {}, requestRunner: { stopProcess: () => undefined, getPath: () => undefined }, stateSelector: {},
+};
+
 class ReduxApiCreator {
   ducks: RestDuck[] = []
 
@@ -25,8 +29,9 @@ class ReduxApiCreator {
     return combineReducers(reducers);
   }
 
-  getEndpoint = (endpointName: string) => this.ducks.find((duck) => duck.name === endpointName)
-      || { actionCreators: {}, requestRunner: { stopProcess: () => undefined }, stateSelector: {} }
+  getEndpoint = (endpointName: string) => this.ducks.find((duck) => duck.name === endpointName) || EMPTY_ENDPOINT;
+
+  isEndpointEnabled = (endpointName: string): boolean => !!this.getEndpoint(endpointName).requestRunner.getPath();
 
   makeRequestActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.execRequest
 
