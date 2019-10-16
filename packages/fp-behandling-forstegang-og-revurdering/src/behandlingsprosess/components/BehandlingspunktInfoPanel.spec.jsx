@@ -32,6 +32,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
       alleKodeverk={{}}
+      behandlingspunktVilkar={[]}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
@@ -67,6 +68,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
       alleKodeverk={{}}
+      behandlingspunktVilkar={[]}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
