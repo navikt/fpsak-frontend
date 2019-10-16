@@ -68,6 +68,7 @@ const beregningsresultat = {
     andelAvBeløp: 50,
     renterProsent: 0,
     tilbakekrevingBeløp: 5000,
+    tilbakekrevingBeløpEtterSkatt: 4000,
   }, {
     periode: {
       fom: '2018-01-01',
@@ -81,6 +82,7 @@ const beregningsresultat = {
     andelAvBeløp: 50,
     renterProsent: 80,
     tilbakekrevingBeløp: 500,
+    tilbakekrevingBeløpEtterSkatt: 400,
   }],
   vedtakResultatType: {
     kode: vedtakResultatType.DELVIS_TILBAKEBETALING,

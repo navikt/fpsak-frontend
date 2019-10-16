@@ -12,9 +12,10 @@
   "TilbakekrevingVedtakPeriodeTabell.Vurdering": "Vurdering",
   "TilbakekrevingVedtakPeriodeTabell.AndelAvBelop": "Andel av beløp",
   "TilbakekrevingVedtakPeriodeTabell.Renter": "Renter",
-  "TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves": "Beløp som tilbakekreves",
+  "TilbakekrevingVedtakPeriodeTabell.ForSkatt": "Beløp før skatt",
+  "TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves": "Beløp etter skatt",
   "TilbakekrevingVedtakPeriodeTabell.Sum": "Sum",
-
+  
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
   "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
 
