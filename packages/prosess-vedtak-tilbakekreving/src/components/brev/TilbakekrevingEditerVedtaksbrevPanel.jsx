@@ -6,8 +6,8 @@ import { Element, Normaltekst, Undertittel } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import vedtaksbrevAvsnittPropType from 'behandlingTilbakekreving/src/proptypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
+import vedtaksbrevAvsnittPropType from '../../propTypes/vedtaksbrevAvsnittPropType';
 
 import styles from './tilbakekrevingEditerVedtaksbrevPanel.less';
 
@@ -15,6 +15,8 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
   vedtaksbrevAvsnitt,
   formName,
   readOnly,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
@@ -51,6 +53,8 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
                       type={underavsnitt.underavsnittstype ? `${avsnitt.fom}_${avsnitt.tom}.${underavsnitt.underavsnittstype}` : avsnitt.avsnittstype}
                       formName={formName}
                       readOnly={readOnly}
+                      behandlingId={behandlingId}
+                      behandlingVersjon={behandlingVersjon}
                     />
                   </>
                 )}
@@ -69,6 +73,8 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   vedtaksbrevAvsnitt: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
   formName: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt

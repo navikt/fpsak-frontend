@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-
 import {
   PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
@@ -17,6 +16,7 @@ const headerTextCodes = [
   'TilbakekrevingVedtakPeriodeTabell.Vurdering',
   'TilbakekrevingVedtakPeriodeTabell.AndelAvBelop',
   'TilbakekrevingVedtakPeriodeTabell.Renter',
+  'TilbakekrevingVedtakPeriodeTabell.ForSkatt',
   'TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves',
 ];
 
@@ -32,6 +32,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({
       <TableColumn><Normaltekst>{periode.andelAvBeløp ? `${periode.andelAvBeløp}%` : ''}</Normaltekst></TableColumn>
       <TableColumn><Normaltekst>{periode.renterProsent ? `${periode.renterProsent}%` : ''}</Normaltekst></TableColumn>
       <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.tilbakekrevingBeløp)}</Normaltekst></TableColumn>
+      <TableColumn><Normaltekst>{formatCurrencyNoKr(periode.tilbakekrevingBeløpEtterSkatt)}</Normaltekst></TableColumn>
     </TableRow>
   )).concat(
     <TableRow key="sum">
@@ -41,6 +42,7 @@ const TilbakekrevingVedtakPeriodeTabell = ({
       <TableColumn />
       <TableColumn />
       <TableColumn><Element>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløp, 0))}</Element></TableColumn>
+      <TableColumn><Element>{formatCurrencyNoKr(perioder.reduce((sum, periode) => sum + periode.tilbakekrevingBeløpEtterSkatt, 0))}</Element></TableColumn>
     </TableRow>,
   );
 

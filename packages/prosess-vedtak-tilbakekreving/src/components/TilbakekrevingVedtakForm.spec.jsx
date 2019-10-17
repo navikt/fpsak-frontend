@@ -3,8 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingIdentifier, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import { TilbakekrevingVedtakFormImpl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
@@ -25,6 +24,8 @@ describe('<TilbakekrevingVedtakForm>', () => {
           fritekstTillatt: false,
         }],
       }]}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
@@ -54,6 +55,8 @@ describe('<TilbakekrevingVedtakForm>', () => {
           fritekstTillatt: false,
         }],
       }]}
+      behandlingId={2}
+      behandlingVersjon={1}
     />);
 
     wrapper.find('a').prop('onClick')({ preventDefault: sinon.spy() });

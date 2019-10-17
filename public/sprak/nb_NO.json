@@ -1483,24 +1483,6 @@
   "BelopetMottattIGodTroFormPanel.AngiBelop": "Angi beløp som skal tilbakekreves",
   "BelopetMottattIGodTroFormPanel.IngenTilbakekreving": "Ingen tilbakekreving",
 
-  "TilbakekrevingVedtak.Resultat": "Resultat",
-  "TilbakekrevingVedtak.Vedtaksbrev": "Vedtaksbrev",
-  "TilbakekrevingVedtak.ErHenlagt": "Behandlingen er henlagt",
-
-  "TilbakekrevingVedtakUtdypendeTekstPanel.LeggTilUtdypendeTekst": "Legg til utdypende tekst",
-  "TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst": "Utdypende tekst",
-
-  "TilbakekrevingVedtakPeriodeTabell.Periode": "Periode",
-  "TilbakekrevingVedtakPeriodeTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
-  "TilbakekrevingVedtakPeriodeTabell.Vurdering": "Vurdering",
-  "TilbakekrevingVedtakPeriodeTabell.AndelAvBelop": "Andel av beløp",
-  "TilbakekrevingVedtakPeriodeTabell.Renter": "Renter",
-  "TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves": "Beløp som tilbakekreves",
-  "TilbakekrevingVedtakPeriodeTabell.Sum": "Sum",
-
-  "TilbakekrevingVedtakForm.FritekstIVedtaksbrevet": "Fritekst i vedtaksbrevet",
-  "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
-
   "TilretteleggingTable.IngenTilretteleggingDatoer": "Ingen tilretteleggingsdatoer er spesifisert",
   "TilretteleggingTable.NodvendigTilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",
   "TilretteleggingTable.Dato": "Dato",
@@ -1509,8 +1491,6 @@
   "FatterTilbakekrevingVedtakStatusModal.GoToSearchPage": "Du kommer nå til forsiden.",
   "FatterTilbakekrevingVedtakStatusModal.Ok": "OK",
   "FatterTilbakekrevingVedtakStatusModal.Sendt": "Forslag til vedtak er sendt til beslutter",
-
-  "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
 
   "TilretteleggingDetailForm.Endre": "Endre",
   "TilretteleggingDetailForm.LeggTil": "Legg til",

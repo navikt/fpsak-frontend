@@ -20,6 +20,8 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE]}
       readOnlySubmitButton={false}
       isBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      fetchPreviewVedtaksbrev={() => undefined}
     />);
 
     expect(wrapper.find(ForeldelseForm)).to.have.length(1);
@@ -36,6 +38,8 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING]}
       readOnlySubmitButton={false}
       isBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      fetchPreviewVedtaksbrev={() => undefined}
     />);
 
     expect(wrapper.find(ForeldelseForm)).to.have.length(0);
