@@ -11,7 +11,6 @@ export {
   beregningsresultatPeriodePropType,
   beregningresultatMedUttaksplanPropType,
 } from './src/beregningresultatMedUttaksplanPropType';
-export { default as beregningsgrunnlagPropType } from './src/beregningsgrunnlagPropType';
 export { default as fagsakPropType } from './src/fagsakPropType';
 export { kodeverkPropType, kodeverkObjektPropType } from './src/kodeverkPropType';
 export { default as navAnsattPropType } from './src/navAnsattPropType';

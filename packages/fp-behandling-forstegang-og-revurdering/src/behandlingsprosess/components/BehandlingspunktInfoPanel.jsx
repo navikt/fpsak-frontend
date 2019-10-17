@@ -5,6 +5,7 @@ import classnames from 'classnames/bind';
 import { bindActionCreators } from 'redux';
 
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
+import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
@@ -21,7 +22,6 @@ import TilkjentYtelsePanel from './tilkjentYtelse/TilkjentYtelsePanel';
 import UttakPanel from './uttak/UttakPanel';
 import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './vilkar/VilkarPanels';
-import BeregningFP from './beregningsgrunnlag/BeregningFP';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './behandlingspunktInfoPanel.less';
@@ -29,6 +29,7 @@ import styles from './behandlingspunktInfoPanel.less';
 const classNames = classnames.bind(styles);
 
 const avregningData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.SIMULERING_RESULTAT, fpsakApi.TILBAKEKREVINGVALG];
+const beregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
 const beregningsresultatData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD];
 const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.ORIGINAL_BEHANDLING];
 const sjekkPersonStatusData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP, fpsakApi.PERSONOPPLYSNINGER];
@@ -60,6 +61,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   behandlingspunktAksjonspunkter,
   toggleOverstyring,
   alleKodeverk,
+  behandlingspunktVilkar,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
@@ -131,15 +133,26 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
           )}
         />
       )}
-      {BeregningFP.supports(selectedBehandlingspunkt)
-      && (
-      <BeregningFP
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        apCodes={apCodes}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
+      {selectedBehandlingspunkt === behandlingspunktCodes.BEREGNINGSGRUNNLAG && (
+        <DataFetcherWithCache
+          behandlingVersjon={1}
+          data={beregningsgrunnlagData}
+          render={(props) => (
+            <BeregningsgrunnlagProsessIndex
+              fagsak={fagsakInfo}
+              submitCallback={submitCallback}
+              readOnly={readOnly}
+              readOnlySubmitButton={readOnlySubmitButton}
+              apCodes={apCodes}
+              alleKodeverk={alleKodeverk}
+              isApOpen={openAksjonspunkt}
+              vilkar={behandlingspunktVilkar}
+              {...props}
+            />
+          )}
+        />
       )}
+
       {TilkjentYtelsePanel.supports(selectedBehandlingspunkt)
       && (
       <TilkjentYtelsePanel
@@ -218,6 +231,7 @@ BehandlingspunktInfoPanel.propTypes = {
   kanOverstyreAccess: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   toggleOverstyring: PropTypes.func.isRequired,
+  behandlingspunktVilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 BehandlingspunktInfoPanel.defaultProps = {
@@ -238,6 +252,7 @@ const mapStateToProps = (state) => ({
   alleKodeverk: getAlleKodeverk(state),
   fagsakInfo: getFagsakInfo(state),
   featureToggles: getFeatureToggles(state),
+  behandlingspunktVilkar: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
