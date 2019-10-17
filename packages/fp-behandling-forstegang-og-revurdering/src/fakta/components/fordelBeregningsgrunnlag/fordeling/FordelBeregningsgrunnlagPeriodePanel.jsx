@@ -100,10 +100,10 @@ const finnBeregningsgrunnlagPrAar = (bgAndel) => {
   if (!bgAndel) {
     return null;
   }
-  if (bgAndel.overstyrtPrAar) {
+  if (bgAndel.overstyrtPrAar || bgAndel.overstyrtPrAar === 0) {
     return formatCurrencyNoKr(bgAndel.overstyrtPrAar);
   }
-  if (bgAndel.beregnetPrAar) {
+  if (bgAndel.beregnetPrAar || bgAndel.beregnetPrAar === 0) {
     return formatCurrencyNoKr(bgAndel.beregnetPrAar);
   }
   return null;
