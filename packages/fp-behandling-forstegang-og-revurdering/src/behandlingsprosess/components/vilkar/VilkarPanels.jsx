@@ -227,7 +227,7 @@ export const VilkarPanels = ({
       )}
     />
 
-    {OpptjeningVilkarForm.supports(behandlingspunkt)
+    {OpptjeningVilkarForm.supports(behandlingspunkt, aksjonspunktCodes)
       && (
       <OpptjeningVilkarForm
         submitCallback={submitCallback}
