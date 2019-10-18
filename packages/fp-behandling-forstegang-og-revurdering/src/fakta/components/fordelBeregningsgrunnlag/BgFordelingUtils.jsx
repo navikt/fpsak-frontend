@@ -37,7 +37,7 @@ const createAndelnavn = (andel, harKunYtelse, getKodeverknavn) => {
   return getKodeverknavn(andel.aktivitetStatus);
 };
 
-const finnFastsattPrAar = (fordeltPrAar,
+export const finnFastsattPrAar = (fordeltPrAar,
   fastsattForrigePrAar) => {
   if (!nullOrUndefined(fordeltPrAar)) {
     return fordeltPrAar;
@@ -72,6 +72,7 @@ export const setGenerellAndelsinfo = (andel, harKunYtelse, getKodeverknavn) => (
   nyAndel: false,
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: finnnInntektskategorikode(andel),
+  forrigeInntektskategori: finnnInntektskategorikode(andel),
 });
 
 export const starterPaaEllerEtterStp = (bgAndel,

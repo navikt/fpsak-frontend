@@ -12,7 +12,7 @@ import classnames from 'classnames/bind';
 import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
 import RenderFordelBGFieldArray from './RenderFordelBGFieldArray';
 import {
-  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, starterPaaEllerEtterStp,
+  settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, starterPaaEllerEtterStp, finnFastsattPrAar,
 } from '../BgFordelingUtils';
 
 import styles from './fordelBeregningsgrunnlagPeriodePanel.less';
@@ -133,6 +133,10 @@ FordelBeregningsgrunnlagPeriodePanel.buildInitialValues = (periode, bgPeriode, s
           refusjonskravFraInntektsmelding: andel.refusjonskravFraInntektsmeldingPrAar,
           nyttArbeidsforhold: andel.nyttArbeidsforhold || starterPaaEllerEtterStp(bgAndel, skjaeringstidspunktBeregning),
           beregningsgrunnlagPrAar: finnBeregningsgrunnlagPrAar(bgAndel),
+          forrigeRefusjonPrAar: andel.refusjonskravPrAar,
+          forrigeArbeidsinntektPrAar: finnFastsattPrAar(andel.fordeltPrAar, andel.fastsattForrigePrAar),
+          beregningsperiodeFom: bgAndel.beregningsperiodeFom,
+          beregningsperiodeTom: bgAndel.beregningsperiodeTom,
         });
       })
   );
