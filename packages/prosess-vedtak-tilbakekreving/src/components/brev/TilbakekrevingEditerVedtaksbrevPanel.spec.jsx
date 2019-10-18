@@ -61,6 +61,8 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
       formName="testForm"
       readOnly={false}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
 
     const paneler = wrapper.find(Ekspanderbartpanel);

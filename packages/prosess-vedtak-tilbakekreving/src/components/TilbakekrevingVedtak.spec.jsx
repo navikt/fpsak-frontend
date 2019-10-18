@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import { TilbakekrevingVedtakImpl as TilbakekrevingVedtak } from './TilbakekrevingVedtak';
+import TilbakekrevingVedtak from './TilbakekrevingVedtak';
 import TilbakekrevingVedtakPeriodeTabell from './TilbakekrevingVedtakPeriodeTabell';
 import TilbakekrevingVedtakForm from './TilbakekrevingVedtakForm';
 
@@ -29,7 +29,6 @@ describe('<TilbakekrevingVedtak>', () => {
     andelAvBeløp: 50,
     tilbakekrevingBeløp: 7000,
   }];
-  const getKodeverknavn = () => 'Simpel uaktsomhet';
 
   it('skal vise vedtakspanel for tilbakekreving når behandlingen ikke er henlagt', () => {
     const wrapper = shallow(<TilbakekrevingVedtak
@@ -39,8 +38,13 @@ describe('<TilbakekrevingVedtak>', () => {
       resultat={{ kode: 'testresultat' }}
       konsekvensAvBehandling="testkonsekvens"
       perioder={perioder}
-      getKodeverknavn={getKodeverknavn}
       isBehandlingHenlagt={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      avsnittsliste={[]}
+      fetchPreviewVedtaksbrev={sinon.spy()}
+      aksjonspunktKodeForeslaVedtak="1234"
     />);
 
     expect(wrapper.find(TilbakekrevingVedtakPeriodeTabell)).to.have.length(1);
@@ -56,8 +60,13 @@ describe('<TilbakekrevingVedtak>', () => {
       resultat={{ kode: 'testresultat' }}
       konsekvensAvBehandling="testkonsekvens"
       perioder={perioder}
-      getKodeverknavn={getKodeverknavn}
       isBehandlingHenlagt
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      avsnittsliste={[]}
+      fetchPreviewVedtaksbrev={sinon.spy()}
+      aksjonspunktKodeForeslaVedtak="1234"
     />);
 
     expect(wrapper.find(Systemtittel)).to.have.length(1);
