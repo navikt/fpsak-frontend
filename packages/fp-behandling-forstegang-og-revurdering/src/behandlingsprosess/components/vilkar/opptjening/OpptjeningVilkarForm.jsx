@@ -6,6 +6,7 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
+import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
@@ -59,6 +60,7 @@ const mapStateToPropsFactory = (initialState) => {
 
 const OpptjeningVilkarForm = connect(mapStateToPropsFactory)(OpptjeningVilkarFormImpl);
 
-OpptjeningVilkarForm.supports = (behandlingspunkt) => behandlingspunkt === behandlingspunktCodes.OPPTJENING;
+OpptjeningVilkarForm.supports = (behandlingspunkt, aksjonspunktCodes) => (behandlingspunkt === behandlingspunktCodes.OPPTJENING
+  && aksjonspunktCodes.includes(AksjonspunktCodes.VURDER_OPPTJENINGSVILKARET));
 
 export default OpptjeningVilkarForm;
