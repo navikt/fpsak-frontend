@@ -8,7 +8,7 @@ import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import { VilkarPanels } from './VilkarPanels';
-import DataFetcherWithCache from '../../../DataFetcherWithCache';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 describe('<VilkarPanels>', () => {
   it('skal rendre panel for søkers opplysningsplikt når dette finnes', () => {
@@ -37,7 +37,7 @@ describe('<VilkarPanels>', () => {
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
-    expect(dataFetchers).to.have.length(8);
+    expect(dataFetchers).to.have.length(9);
 
     const sokersOpplysningPanel = dataFetchers.at(1).renderProp('render')({
       behandling: { id: 1, versjon: 1 },

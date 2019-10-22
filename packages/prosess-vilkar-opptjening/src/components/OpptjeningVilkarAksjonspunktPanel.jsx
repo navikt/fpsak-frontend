@@ -2,15 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import { VilkarResultPicker, BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import BpPanelTemplate from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vilkar/BpPanelTemplate';
+import {
+  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
+} from '@fpsak-frontend/fp-felles';
+
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
@@ -26,11 +23,14 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   readOnlySubmitButton,
   readOnly,
   lovReferanse,
+  behandlingId,
+  behandlingVersjon,
+  fastsattOpptjening,
   ...formProps
 }) => (
-  <BpPanelTemplate
+  <ProsessPanelTemplate
     handleSubmit={formProps.handleSubmit}
-    titleCode="Behandlingspunkt.Opptjeningsvilkaret"
+    titleCode="OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret"
     isAksjonspunktOpen={isAksjonspunktOpen}
     aksjonspunktHelpTexts={['OpptjeningVilkarView.VurderOmSøkerHarRett']}
     formProps={formProps}
@@ -38,6 +38,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     isDirty={formProps.dirty}
     readOnly={readOnly}
     lovReferanse={lovReferanse}
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
   >
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
     <VilkarResultPicker
@@ -46,15 +48,24 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       hasAksjonspunkt
     />
     <VerticalSpacer fourPx />
-    <OpptjeningVilkarView />
+    <OpptjeningVilkarView
+      months={fastsattOpptjening.opptjeningperiode.måneder}
+      days={fastsattOpptjening.opptjeningperiode.dager}
+      fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
+      opptjeningFomDate={fastsattOpptjening.opptjeningFom}
+      opptjeningTomDate={fastsattOpptjening.opptjeningTom}
+    />
     <VerticalSpacer twentyPx />
-  </BpPanelTemplate>
+  </ProsessPanelTemplate>
 );
 
 OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
+  fastsattOpptjening: PropTypes.shape().isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   erVilkarOk: PropTypes.bool,
   lovReferanse: PropTypes.string,
 };
@@ -65,8 +76,9 @@ OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingsresultat, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    behandlingsprosessSelectors.getSelectedBehandlingspunktStatus],
+  [(ownProps) => ownProps.behandlingsresultat,
+    (ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -79,19 +91,19 @@ const transformValues = (values, aksjonspunkter) => ({
   ...{ kode: aksjonspunkter[0].definisjon.kode },
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkter = behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState);
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunkter)]);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { aksjonspunkter, submitCallback } = initialOwnProps;
+  const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
 
-  return (state) => ({
+  return (state, ownProps) => ({
     onSubmit,
-    initialValues: buildInitialValues(state),
-    erVilkarOk: behandlingFormValueSelector(FORM_NAME)(state, 'erVilkarOk'),
-    lovReferanse: behandlingsprosessSelectors.getSelectedBehandlingspunktVilkar(state)[0].lovReferanse,
+    initialValues: buildInitialValues(ownProps),
+    erVilkarOk: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'erVilkarOk'),
+    lovReferanse: ownProps.lovReferanse,
   });
 };
 
-const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+const OpptjeningVilkarAksjonspunktPanel = connect(mapStateToPropsFactory)(behandlingForm({
   form: FORM_NAME,
 })(OpptjeningVilkarAksjonspunktPanelImpl));
 

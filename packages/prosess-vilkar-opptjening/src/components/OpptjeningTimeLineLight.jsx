@@ -3,14 +3,16 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
-import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Column, Row } from 'nav-frontend-grid';
 
-import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetKlassifisering';
+import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+
+import opptjeningAktivitetKlassifisering from '../kodeverk/opptjeningAktivitetKlassifisering';
 import DateContainer from './DateContainer';
-import styles from './opptjeningTimeLineLight.less';
 import TimeLineNavigation from './TimeLineNavigation';
 import TimeLineData from './TimeLineData';
+
+import styles from './opptjeningTimeLineLight.less';
 
 // Desse må alltid vare med for rett skala av tidslinjen
 const standardItems = (opptjeningFomDate, opptjeningTomDate) => {

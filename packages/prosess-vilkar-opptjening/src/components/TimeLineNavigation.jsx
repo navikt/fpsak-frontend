@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 
@@ -6,7 +7,6 @@ import { Image } from '@fpsak-frontend/shared-components';
 import arrowDownImageUrl from '@fpsak-frontend/assets/images/arrow_down.svg';
 import arrowDownFilledImageUrl from '@fpsak-frontend/assets/images/arrow_down_filled.svg';
 
-import { useIntl } from 'react-intl';
 import styles from './timeLineNavigation.less';
 
 const TimeLineNavigation = ({
@@ -22,7 +22,7 @@ const TimeLineNavigation = ({
           className={styles.timeLineButton}
           src={arrowDownImageUrl}
           srcHover={arrowDownFilledImageUrl}
-          alt={intl.formatMessage({ id: 'Timeline.openData' })}
+          alt={intl.formatMessage({ id: 'TimeLineNavigation.openData' })}
           onMouseDown={openPeriodInfo}
           onKeyDown={openPeriodInfo}
         />

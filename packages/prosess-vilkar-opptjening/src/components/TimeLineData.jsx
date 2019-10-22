@@ -4,14 +4,15 @@ import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage, useIntl } from 'react-intl';
+
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import { Image } from '@fpsak-frontend/shared-components';
 import checkImg from '@fpsak-frontend/assets/images/check.svg';
 import advarselImg from '@fpsak-frontend/assets/images/remove.svg';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import opptjeningAktivitetKlassifisering from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetKlassifisering';
 
+import opptjeningAktivitetKlassifisering from '../kodeverk/opptjeningAktivitetKlassifisering';
 
 import styles from './timeLineData.less';
 
@@ -89,7 +90,7 @@ const TimeLineData = ({
             className={styles.timeLineButton}
             src={arrowLeftImageUrl}
             srcHover={arrowLeftFilledImageUrl}
-            alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
+            alt={intl.formatMessage({ id: 'TimeLineData.prevPeriod' })}
             onMouseDown={selectPrevPeriod}
             onKeyDown={selectPrevPeriod}
           />
@@ -98,7 +99,7 @@ const TimeLineData = ({
             className={styles.timeLineButton}
             src={arrowLeftImageUrl}
             srcHover={arrowLeftFilledImageUrl}
-            alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
+            alt={intl.formatMessage({ id: 'TimeLineData.nextPeriod' })}
             onMouseDown={selectNextPeriod}
             onKeyDown={selectNextPeriod}
           />

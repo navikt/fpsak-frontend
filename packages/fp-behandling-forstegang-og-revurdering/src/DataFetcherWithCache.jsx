@@ -43,6 +43,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE]: 'inntekt-arbeid-ytelse',
   [BehandlingFpsakApiKeys.VERGE]: 'soeker-verge',
   [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
+  [BehandlingFpsakApiKeys.OPPTJENING]: 'opptjening',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

@@ -27,6 +27,7 @@ export const BehandlingFpsakApiKeys = {
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
   YTELSEFORDELING: 'YTELSEFORDELING',
+  OPPTJENING: 'OPPTJENING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -63,6 +64,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('inntekt-arbeid-ytelse', BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE)
   .withInjectedPath('soeker-verge', BehandlingFpsakApiKeys.VERGE)
   .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
+  .withInjectedPath('opptjening', BehandlingFpsakApiKeys.OPPTJENING)
 
   .build();
 

@@ -11,6 +11,7 @@ import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
 import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
+import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -21,8 +22,7 @@ import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlin
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import OpptjeningVilkarForm from './opptjening/OpptjeningVilkarForm';
-import DataFetcherWithCache from '../../../DataFetcherWithCache';
+import DataFetcherWithCache from '../../DataFetcherWithCache';
 import {
   hentAlleOverstyringAksjonspunktKoderFor, hentOverstyringAksjonspunktKodeFor, getVilkarKodeFor, getFiltrerteAvslagsarsaker,
 } from './vilkarOverstyringHjelper';
@@ -34,6 +34,7 @@ const omsorgData = [fpsakApi.BEHANDLING];
 const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.VILKAR, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE];
 const sokersOpplysningspliktData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD];
 const foreldreansvarData = [fpsakApi.BEHANDLING];
+const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 const vilkarresultatMedOverstyringData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP];
 
 /*
@@ -227,15 +228,24 @@ export const VilkarPanels = ({
       )}
     />
 
-    {OpptjeningVilkarForm.supports(behandlingspunkt, aksjonspunktCodes)
-      && (
-      <OpptjeningVilkarForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        isAksjonspunktOpen={isAksjonspunktOpen}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
+    <DataFetcherWithCache
+      behandlingVersjon={1}
+      data={opptjeningData}
+      showComponent={behandlingspunkt === behandlingspunktCodes.OPPTJENING
+        && aksjonspunktCodes.includes(AksjonspunktCodes.VURDER_OPPTJENINGSVILKARET)}
+      render={(props) => (
+        <OpptjeningVilkarProsessIndex
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          status={behandlingspunktStatus}
+          lovReferanse={behandlingspunktVilkar.lovReferanse}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          isAksjonspunktOpen={isAksjonspunktOpen}
+          readOnlySubmitButton={readOnlySubmitButton}
+          {...props}
+        />
       )}
+    />
   </>
 );
 
