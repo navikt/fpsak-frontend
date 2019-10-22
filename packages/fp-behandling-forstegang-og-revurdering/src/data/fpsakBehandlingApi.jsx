@@ -17,6 +17,7 @@ export const BehandlingFpsakApiKeys = {
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
   BEREGNINGRESULTAT_ENGANGSSTONAD: 'BEREGNINGRESULTAT_ENGANGSSTONAD',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
+  BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
   ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
@@ -26,6 +27,7 @@ export const BehandlingFpsakApiKeys = {
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
   YTELSEFORDELING: 'YTELSEFORDELING',
+  OPPTJENING: 'OPPTJENING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -52,6 +54,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('tilbakekrevingvalg', BehandlingFpsakApiKeys.TILBAKEKREVINGVALG)
   .withInjectedPath('beregningsresultat-engangsstonad', BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD)
   .withInjectedPath('beregningsgrunnlag', BehandlingFpsakApiKeys.BEREGNINGSGRUNNLAG)
+  .withInjectedPath('beregningsresultat-foreldrepenger', BehandlingFpsakApiKeys.BEREGNINGRESULTAT)
   .withInjectedPath('familiehendelse-v2', BehandlingFpsakApiKeys.FAMILIEHENDELSE)
   .withInjectedPath('soknad', BehandlingFpsakApiKeys.SOKNAD)
   .withInjectedPath('original-behandling', BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING)
@@ -61,6 +64,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('inntekt-arbeid-ytelse', BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE)
   .withInjectedPath('soeker-verge', BehandlingFpsakApiKeys.VERGE)
   .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
+  .withInjectedPath('opptjening', BehandlingFpsakApiKeys.OPPTJENING)
 
   .build();
 

@@ -4,9 +4,9 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import Timeline from 'react-visjs-timeline';
 import UttakTimeLine from './UttakTimeLine';
-import TimeLineControl from '../tilkjentYtelse/timeline/TimeLineControl';
-import TimeLineSokerEnsamSoker from '../tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
-import TimeLineSoker from '../tilkjentYtelse/timeline/TimeLineSoker';
+import TimeLineControl from './timeline/TimeLineControl';
+import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
+import TimeLineSoker from './timeline/TimeLineSoker';
 
 describe('<UttakTimeLine>', () => {
   const selectedItem = {

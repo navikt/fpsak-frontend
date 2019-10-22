@@ -5,9 +5,9 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import TimeLineControl from '../tilkjentYtelse/timeline/TimeLineControl';
-import TimeLineSoker from '../tilkjentYtelse/timeline/TimeLineSoker';
-import TimeLineSokerEnsamSoker from '../tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
+import TimeLineControl from './timeline/TimeLineControl';
+import TimeLineSoker from './timeline/TimeLineSoker';
+import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
 
 import styles from './uttakTimeLine.less';
 

@@ -8,12 +8,11 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { getVurderMottarYtelse } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import {
   andelsnrMottarYtelseMap,
   finnFrilansFieldName,

@@ -15,6 +15,8 @@ module.exports = async ({ config, mode }) => {
     return data;
   });
 
+  config.devtool = 'cheap-module-eval-source-map';
+
   // Make whatever fine-grained changes you need
   config.module.rules = config.module.rules.concat({
     test: /\.(tsx?|ts?|jsx?)$/,
@@ -77,7 +79,7 @@ module.exports = async ({ config, mode }) => {
     include: [PACKAGES_DIR],
     exclude: [CSS_DIR],
   }, {
-    test: /\.(less|css)?$/,
+    test: /\.(less)?$/,
     use: [
       {
         loader: MiniCssExtractPlugin.loader,

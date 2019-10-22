@@ -9,9 +9,9 @@ import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidTyp
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import stonadskontoType from '@fpsak-frontend/kodeverk/src/stonadskontoType';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
 import moment from 'moment';
 
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import TimeLineTab from './TimeLineTab';
 import styles from './timeLineInfo.less';
 

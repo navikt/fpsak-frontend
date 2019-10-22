@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import { InputField, SelectField } from '@fpsak-frontend/form';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet, injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { getUniqueListOfArbeidsforholdFields } from '../ArbeidsforholdHelper';
 
 const finnArbeidsforholdForAndel = (arbeidsforholdListe, val) => {

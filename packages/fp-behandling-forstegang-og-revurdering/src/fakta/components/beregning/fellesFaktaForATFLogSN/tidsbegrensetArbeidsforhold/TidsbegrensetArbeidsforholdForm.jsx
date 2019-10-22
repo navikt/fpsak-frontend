@@ -8,10 +8,9 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { createVisningsnavnForAktivitet, injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { getSortedKortvarigeArbeidsforholdList } from '../../ArbeidsforholdHelper';
 
 const kortvarigStringId = 'BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold';

@@ -7,12 +7,12 @@ import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
 import { DecimalField, InputField, SelectField } from '@fpsak-frontend/form';
+import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
 import uttakArbeidTypeKodeverk from '@fpsak-frontend/kodeverk/src/uttakArbeidType';
 import uttakArbeidTypeTekstCodes from '@fpsak-frontend/kodeverk/src/uttakArbeidTypeCodes';
 import {
   hasValidDecimal, hasValidInteger, maxLength, maxValue, minValue, notDash, required,
 } from '@fpsak-frontend/utils';
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import styles from './renderUttakTable.less';
 
 /**
