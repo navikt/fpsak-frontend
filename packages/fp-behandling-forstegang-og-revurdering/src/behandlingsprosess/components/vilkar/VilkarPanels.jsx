@@ -85,7 +85,7 @@ export const VilkarPanels = ({
             avslagsarsaker={getFiltrerteAvslagsarsaker(vilkar.vilkarType.kode, fagsakInfo.ytelseType, avslagsarsaker)}
             lovReferanse={vilkar.lovReferanse}
             overstyringApKode={hentOverstyringAksjonspunktKodeFor(behandlingspunkt, fagsakInfo.ytelseType, behandlingspunktVilkar)}
-            erMedlemskapsPanel={behandlingspunkt === behandlingspunktCodes.MEDLEMSKAP}
+            erMedlemskapsPanel={behandlingspunkt === behandlingspunktCodes.FORTSATTMEDLEMSKAP}
             {...props}
           />
         );
