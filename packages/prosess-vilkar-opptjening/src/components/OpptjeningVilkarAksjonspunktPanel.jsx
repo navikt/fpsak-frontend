@@ -8,6 +8,7 @@ import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 
+import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 
 const FORM_NAME = 'OpptjeningVilkarForm';
@@ -60,7 +61,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
 );
 
 OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
-  fastsattOpptjening: PropTypes.shape().isRequired,
+  fastsattOpptjening: fastsattOpptjeningPropType.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

@@ -5,6 +5,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
 import opptjeningVilkarAksjonspunkterPropType from '../propTypes/opptjeningVilkarAksjonspunkterPropType';
+import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
 import OpptjeningVilkarView from './OpptjeningVilkarView';
 import OpptjeningVilkarAksjonspunktPanel from './OpptjeningVilkarAksjonspunktPanel';
 
@@ -62,7 +63,7 @@ OpptjeningVilkarForm.propTypes = {
   behandlingsresultat: PropTypes.shape({
     avslagsarsak: kodeverkObjektPropType,
   }),
-  fastsattOpptjening: PropTypes.shape().isRequired,
+  fastsattOpptjening: fastsattOpptjeningPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(opptjeningVilkarAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
   lovReferanse: PropTypes.string.isRequired,
