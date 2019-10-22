@@ -6,6 +6,7 @@ import {
 
 export const TIDENES_ENDE = '9999-12-31';
 
+// TODO Denne funksjonen må ut ifrå utils. Dette er uttakslogikk
 const checkDays = (weeks, days) => {
   const weeksDaysObj = {
     weeks,

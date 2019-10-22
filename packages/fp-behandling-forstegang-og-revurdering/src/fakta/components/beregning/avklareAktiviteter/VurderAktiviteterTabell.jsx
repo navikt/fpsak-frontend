@@ -12,9 +12,8 @@ import {
   Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { injectKodeverk, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';

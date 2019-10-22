@@ -33,14 +33,13 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { lagVisningsNavn, injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { getFaktaArbeidsforhold, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   behandlingFormForstegangOgRevurdering,
   behandlingFormValueSelector,
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { lagVisningsNavn } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakNyPeriode.less';
