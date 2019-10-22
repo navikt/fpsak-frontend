@@ -8,7 +8,7 @@ export const fastsattOpptjeningPropType = PropTypes.shape({
     dager: PropTypes.number.isRequired,
   }),
   fastsattOpptjeningAktivitetList: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.number,
     fom: PropTypes.string.isRequired,
     tom: PropTypes.string.isRequired,
     klasse: kodeverkObjektPropType.isRequired,

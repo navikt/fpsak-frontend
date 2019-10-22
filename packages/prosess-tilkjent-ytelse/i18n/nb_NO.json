@@ -25,13 +25,15 @@
   "TilkjentYtelse.PeriodeData.AAP": "Arbeidsavklaringspenger",
   "TilkjentYtelse.PeriodeData.Arbeidstaker": "Arbeidstaker",
   "TilkjentYtelse.PeriodeData.BrukersAndel": "Brukers andel",
-
+  
   "HelpText.Aksjonspunkt": "Aksjonspunkt",
   "Malform.Beskrivelse": "Foretrukket språk",
   "Malform.Bokmal": "Bokmål",
   "Malform.Nynorsk": "Nynorsk",
   "Malform.Engelsk": "Engelsk",
+  "UttakInfoPanel.AntallFlereDagerOgFlereUker": "{weeks} uker {days} dager",
   "UttakInfoPanel.AntallFlereDagerOgEnUke": "{weeks} uke {days} dager",
+  "UttakInfoPanel.AntallEnDagOgFlereUker": "{weeks} uker {days} dag",
   "Beregningsgrunnlag.Forms.Vurdering": "Vurdering",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",

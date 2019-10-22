@@ -66,11 +66,15 @@ OpptjeningVilkarForm.propTypes = {
   fastsattOpptjening: fastsattOpptjeningPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(opptjeningVilkarAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
-  lovReferanse: PropTypes.string.isRequired,
+  lovReferanse: PropTypes.string,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
+};
+
+OpptjeningVilkarForm.defaultProps = {
+  lovReferanse: undefined,
 };
 
 export default OpptjeningVilkarForm;

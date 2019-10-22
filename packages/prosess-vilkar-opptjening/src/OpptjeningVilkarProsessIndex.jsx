@@ -48,11 +48,15 @@ OpptjeningVilkarProsessIndex.propTypes = {
   opptjening: opptjeningVilkarOpptjeningPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(opptjeningVilkarAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
-  lovReferanse: PropTypes.string.isRequired,
+  lovReferanse: PropTypes.string,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+};
+
+OpptjeningVilkarProsessIndex.defaultProps = {
+  lovReferanse: undefined,
 };
 
 export default OpptjeningVilkarProsessIndex;
