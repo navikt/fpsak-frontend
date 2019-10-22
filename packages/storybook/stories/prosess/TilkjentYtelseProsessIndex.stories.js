@@ -45,9 +45,7 @@ const beregningresultat = {
       fom: '2019-01-01',
       tom: '2019-01-10',
       uttak: {
-        stonadskontoType: {
-          kode: stonadskontoType.FELLESPERIODE,
-        },
+        stonadskontoType: stonadskontoType.FELLESPERIODE,
       },
       aktivitetStatus: {
         kode: aktivitetStatus.ARBEIDSTAKER,
