@@ -6,8 +6,8 @@ const tilkjentYtelseSoknadPropType = PropTypes.shape({
   mottattDato: PropTypes.string.isRequired,
   soknadType: kodeverkObjektPropType.isRequired,
   omsorgsovertakelseDato: PropTypes.string,
-  fodselsdatoer: PropTypes.shape().isRequired,
-  adopsjonFodelsedatoer: PropTypes.shape().isRequired,
+  fodselsdatoer: PropTypes.shape(),
+  adopsjonFodelsedatoer: PropTypes.shape(),
   termindato: PropTypes.string,
 });
 

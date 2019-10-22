@@ -8,7 +8,7 @@ const tilkjentYtelseBeregningresultatPropType = PropTypes.shape({
       fom: PropTypes.string,
       tom: PropTypes.string,
       uttak: PropTypes.shape({
-        stonadskontoType: kodeverkObjektPropType.isRequired,
+        stonadskontoType: kodeverkObjektPropType,
       }),
       aktivitetStatus: kodeverkObjektPropType,
     })),
