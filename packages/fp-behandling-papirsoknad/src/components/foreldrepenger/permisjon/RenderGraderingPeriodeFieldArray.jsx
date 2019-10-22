@@ -121,8 +121,8 @@ export const RenderGraderingPeriodeFieldArray = ({
               <FlexRow>
                 <FlexColumn>
                   <SelectField
-                    label={{ id: 'Registrering.Permisjon.ErArbeidstakerLabel' }}
-                    name={`${periodeElementFieldId}.erArbeidstaker`}
+                    label={{ id: 'Registrering.Permisjon.ArbeidskategoriLabel' }}
+                    name={`${periodeElementFieldId}.arbeidskategoriType`}
                     bredde="m"
                     selectValues={mapArbeidskategori(arbeidskategoriTyper)}
                   />

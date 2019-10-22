@@ -85,7 +85,7 @@ export const RenderUtsettelsePeriodeFieldArray = ({
             <FlexRow>
               <FlexColumn>
                 <SelectField
-                  label={index === 0 ? { id: 'Registrering.Permisjon.ErArbeidstakerLabel' } : ''}
+                  label={index === 0 ? { id: 'Registrering.Permisjon.ArbeidskategoriLabel' } : ''}
                   name={`${periodeElementFieldId}.erArbeidstaker`}
                   bredde="xl"
                   selectValues={[
