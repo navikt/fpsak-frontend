@@ -7,7 +7,7 @@ import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-h
 import { TableRow } from '@fpsak-frontend/shared-components';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { TimeLineData } from './TimeLineData';
+import TimeLineData from './TimeLineData';
 
 const startDate = '2018-01-28';
 const endDate = '2018-02-18';
@@ -69,6 +69,7 @@ describe('<TimeLineData>', () => {
       callbackForward={sinon.spy()}
       getKodeverknavn={getKodeverknavn}
       isSoknadSvangerskapspenger={false}
+      alleKodeverk={{}}
     />);
 
     const messages = wrapper.find(FormattedMessage);
@@ -92,6 +93,7 @@ describe('<TimeLineData>', () => {
       callbackForward={sinon.spy()}
       getKodeverknavn={getKodeverknavn}
       isSoknadSvangerskapspenger={false}
+      alleKodeverk={{}}
     />);
 
     const rows = wrapper.find(TableRow);

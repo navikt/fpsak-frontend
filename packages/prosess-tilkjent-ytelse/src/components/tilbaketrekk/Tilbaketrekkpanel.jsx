@@ -3,15 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
-
 import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import {
-  behandlingFormForstegangOgRevurdering,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+
 import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
@@ -19,11 +13,15 @@ import {
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {
+  behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
+  isBehandlingFormSubmitting,
+} from '@fpsak-frontend/fp-felles';
+
 import styles from './tilbaketrekkpanel.less';
 
 const radioFieldName = 'radioVurderTilbaketrekk';
@@ -38,6 +36,8 @@ export const Tilbaketrekkpanel = ({
   readOnly,
   vurderTilbaketrekkAP,
   readOnlySubmitButton,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <div>
@@ -104,9 +104,9 @@ export const Tilbaketrekkpanel = ({
             formName={formProps.form}
             isReadOnly={readOnly}
             isSubmittable={!readOnlySubmitButton}
-            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-            isBehandlingFormDirty={isBehandlingFormDirty}
-            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            isBehandlingFormSubmitting={(fName) => isBehandlingFormSubmitting(fName, behandlingId, behandlingVersjon)}
+            isBehandlingFormDirty={(fName) => isBehandlingFormDirty(fName, behandlingId, behandlingVersjon)}
+            hasBehandlingFormErrorsOfType={(fName, message) => hasBehandlingFormErrorsOfType(fName, behandlingId, behandlingVersjon, message)}
           />
         </Column>
       </Row>
@@ -120,6 +120,8 @@ Tilbaketrekkpanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   vurderTilbaketrekkAP: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 export const transformValues = (values) => {
@@ -132,7 +134,9 @@ export const transformValues = (values) => {
   };
 };
 
-export const buildInitialValues = createSelector([(state, ownProps) => ownProps.vurderTilbaketrekkAP, getBehandlingResultatstruktur], (ap, tilkjentYtelse) => {
+export const buildInitialValues = createSelector([
+  (state, ownProps) => ownProps.vurderTilbaketrekkAP,
+  (state, ownProps) => ownProps.beregningsresultat], (ap, tilkjentYtelse) => {
   const tidligereValgt = tilkjentYtelse.skalHindreTilbaketrekk;
   if (tidligereValgt === undefined || tidligereValgt === null || !ap || !ap.begrunnelse) {
     return undefined;
@@ -151,4 +155,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({ form: formName })(injectIntl(Tilbaketrekkpanel)));
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(injectIntl(Tilbaketrekkpanel)));

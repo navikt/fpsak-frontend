@@ -5,20 +5,20 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import {
   Image, Table, TableColumn, TableRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
 import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
 import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
 import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
-import { beregningsresultatPeriodePropType } from '@fpsak-frontend/prop-types';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+
+import tilkjentYtelseBeregningresultatPropType from '../../propTypes/tilkjentYtelseBeregningresultatPropType';
 
 import styles from './timeLineData.less';
 
@@ -99,17 +99,19 @@ const getGradering = (andel) => {
  *
  * Viser opp data fra valgt periode i tilkjent ytelse-tidslinjen
  */
-export const TimeLineData = ({
+const TimeLineData = ({
   selectedItemStartDate,
   selectedItemEndDate,
   selectedItemData,
   callbackForward,
   callbackBackward,
-  getKodeverknavn,
+  alleKodeverk,
   isSoknadSvangerskapspenger,
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(selectedItemStartDate, selectedItemEndDate);
   const intl = useIntl();
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
   return (
     <Row>
       <Column xs="12">
@@ -219,10 +221,10 @@ export const TimeLineData = ({
 TimeLineData.propTypes = {
   selectedItemStartDate: PropTypes.string.isRequired,
   selectedItemEndDate: PropTypes.string.isRequired,
-  selectedItemData: beregningsresultatPeriodePropType,
+  selectedItemData: tilkjentYtelseBeregningresultatPropType,
   callbackForward: PropTypes.func.isRequired,
   callbackBackward: PropTypes.func.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
 };
 
@@ -230,4 +232,4 @@ TimeLineData.defaultProps = {
   selectedItemData: undefined,
 };
 
-export default injectKodeverk(getAlleKodeverk)(TimeLineData);
+export default TimeLineData;

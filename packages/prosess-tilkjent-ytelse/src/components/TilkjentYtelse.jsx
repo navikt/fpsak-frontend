@@ -9,6 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
+
 import TimeLineData from './timeline/TimeLineData';
 import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
 import TimeLineControl from './timeline/TimeLineControl';
@@ -244,6 +245,7 @@ export class TilkjentYtelse extends Component {
         medsokerKjonnKode,
         intl,
         isSoknadSvangerskapspenger,
+        alleKodeverk,
       },
       selectHandler,
       state: { selectedItem },
@@ -292,6 +294,7 @@ export class TilkjentYtelse extends Component {
         {selectedItem
         && (
           <TimeLineData
+            alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
             selectedItemData={selectedItem}
@@ -314,6 +317,7 @@ TilkjentYtelse.propTypes = {
   medsokerKjonnKode: PropTypes.string,
   intl: PropTypes.shape().isRequired,
   isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 TilkjentYtelse.defaultProps = {

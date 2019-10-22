@@ -4,22 +4,16 @@ import { connect } from 'react-redux';
 import moment from 'moment/moment';
 import { createSelector } from 'reselect';
 import { FormattedMessage, injectIntl } from 'react-intl';
-
 import { Undertittel } from 'nav-frontend-typografi';
-import { beregningresultatMedUttaksplanPropType } from '@fpsak-frontend/prop-types';
-import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
-import {
-  getBehandlingResultatstruktur,
-  getFamiliehendelseGjeldende,
-  getIsFagsakTypeSVP,
-  getPersonopplysning,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import Tilbaketrekkpanel from './tilbaketrekk/Tilbaketrekkpanel';
+import tilkjentYtelseBeregningresultatPropType from '../propTypes/tilkjentYtelseBeregningresultatPropType';
 import TilkjentYtelse from './TilkjentYtelse';
 
 const perioderMedClassName = [];
@@ -48,6 +42,9 @@ export const TilkjentYtelsePanelImpl = ({
   submitCallback,
   readOnlySubmitButton,
   isSoknadSvangerskapspenger,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <FadingPanel>
     <Undertittel>
@@ -63,22 +60,26 @@ export const TilkjentYtelsePanelImpl = ({
         hovedsokerKjonnKode={hovedsokerKjonn}
         medsokerKjonnKode={medsokerKjonn}
         isSoknadSvangerskapspenger={isSoknadSvangerskapspenger}
+        alleKodeverk={alleKodeverk}
       />
       )}
     { vurderTilbaketrekkAP
     && (
     <Tilbaketrekkpanel
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
       readOnly={readOnly}
       vurderTilbaketrekkAP={vurderTilbaketrekkAP}
       submitCallback={submitCallback}
       readOnlySubmitButton={readOnlySubmitButton}
+      beregningsresultat={beregningsresultatMedUttaksplan}
     />
     )}
   </FadingPanel>
 );
 
 TilkjentYtelsePanelImpl.propTypes = {
-  beregningsresultatMedUttaksplan: beregningresultatMedUttaksplanPropType,
+  beregningsresultatMedUttaksplan: tilkjentYtelseBeregningresultatPropType,
   hovedsokerKjonn: PropTypes.string.isRequired,
   medsokerKjonn: PropTypes.string,
   soknadDato: PropTypes.string.isRequired,
@@ -88,6 +89,9 @@ TilkjentYtelsePanelImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   isSoknadSvangerskapspenger: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 TilkjentYtelsePanelImpl.defaultProps = {
@@ -121,19 +125,19 @@ const getCurrentFamiliehendelseDato = (
   return endredomsorgsOvertagelseDato ? parseDateString(endredomsorgsOvertagelseDato) : parseDateString(omsorgsOvertagelseDato);
 };
 
-const finnTilbaketrekkAksjonspunkt = createSelector([behandlingSelectors.getAksjonspunkter], (alleAksjonspunkter) => {
+const finnTilbaketrekkAksjonspunkt = createSelector([
+  (state, ownProps) => ownProps.aksjonspunkter], (alleAksjonspunkter) => {
   if (alleAksjonspunkter) {
     return alleAksjonspunkter.find((ap) => ap.definisjon && ap.definisjon.kode === aksjonspunktCodes.VURDER_TILBAKETREKK);
   }
   return undefined;
 });
 
-const mapStateToProps = (state) => {
-  const person = getPersonopplysning(state);
-  const familiehendelse = getFamiliehendelseGjeldende(state);
-  const beregningsresultat = getBehandlingResultatstruktur(state);
-  const soknad = behandlingSelectors.getSoknad(state);
-  const isSVP = getIsFagsakTypeSVP(state);
+const mapStateToProps = (state, ownProps) => {
+  const person = ownProps.personopplysninger;
+  const familiehendelse = ownProps.gjeldendeFamiliehendelse;
+  const { soknad } = ownProps;
+  const isSVP = ownProps.fagsakYtelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER;
   return {
     hovedsokerKjonn: person ? person.navBrukerKjonn.kode : undefined,
     medsokerKjonn: person.annenPart ? person.annenPart.navBrukerKjonn.kode : undefined,
@@ -146,13 +150,9 @@ const mapStateToProps = (state) => {
       soknad.omsorgsovertakelseDato,
       familiehendelse.omsorgsovertakelseDato,
     ),
-    beregningsresultatMedUttaksplan: beregningsresultat,
-    vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state),
+    beregningsresultatMedUttaksplan: ownProps.beregningresultat,
+    vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
   };
 };
 
-const TilkjentYtelsePanel = connect(mapStateToProps)(injectIntl(TilkjentYtelsePanelImpl));
-
-TilkjentYtelsePanel.supports = (bp) => bp === behandlingspunktCodes.TILKJENT_YTELSE;
-
-export default TilkjentYtelsePanel;
+export default connect(mapStateToProps)(injectIntl(TilkjentYtelsePanelImpl));

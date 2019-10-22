@@ -33,6 +33,9 @@ describe('<TilkjentYtelsePanelImpl>', () => {
       submitCallback={sinon.spy()}
       readOnlySubmitButton
       isSoknadSvangerskapspenger={false}
+      alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     expect(wrapper.find(Undertittel)).to.have.length(1);
     expect(wrapper.find(Undertittel).props().children.props.id).to.equal('TilkjentYtelse.Title');
@@ -54,6 +57,9 @@ describe('<TilkjentYtelsePanelImpl>', () => {
       readOnlySubmitButton
       vurderTilbaketrekkAP={tilbaketrekkAP}
       isSoknadSvangerskapspenger={false}
+      alleKodeverk={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     expect(wrapper.find(Tilbaketrekkpanel)).to.have.length(1);
   });

@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import TimeLineSokerEnsamSoker from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineSokerEnsamSoker';
-import TimeLineControl from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/tilkjentYtelse/timeline/TimeLineControl';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
+import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
+import TimeLineControl from './timeline/TimeLineControl';
 
 import { TilkjentYtelse } from './TilkjentYtelse';
 
@@ -35,6 +37,7 @@ describe('<TilkjentYtelse>', () => {
       hovedsokerKjonnKode="K"
       intl={intlMock}
       isSoknadSvangerskapspenger={false}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(TimeLineSokerEnsamSoker)).to.have.length(1);
     expect(wrapper.find(TimeLineSokerEnsamSoker).props().hovedsokerKjonnKode).to.equal('K');

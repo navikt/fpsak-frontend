@@ -33,6 +33,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.VILKAR]: 'vilkar',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
   [BehandlingFpsakApiKeys.BEREGNINGSGRUNNLAG]: 'beregningsgrunnlag',
+  [BehandlingFpsakApiKeys.BEREGNINGRESULTAT]: 'beregningsresultat-foreldrepenger',
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
