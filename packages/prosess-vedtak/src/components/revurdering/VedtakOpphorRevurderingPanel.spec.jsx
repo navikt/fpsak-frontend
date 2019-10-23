@@ -44,7 +44,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
     expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
 
     const normaltekstFields = wrapper.find('Normaltekst');
@@ -86,7 +86,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
     expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
 
     const normaltekstFields = wrapper.find('Normaltekst');

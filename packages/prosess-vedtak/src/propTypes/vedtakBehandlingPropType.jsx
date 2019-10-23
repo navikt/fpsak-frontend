@@ -8,7 +8,7 @@ const vedtakBehandlingPropType = PropTypes.shape({
   type: kodeverkObjektPropType.isRequired,
   status: kodeverkObjektPropType.isRequired,
   sprakkode: kodeverkObjektPropType.isRequired,
-  behandlingresultat: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape(),
   behandlingPaaVent: PropTypes.bool.isRequired,
   behandlingHenlagt: PropTypes.bool.isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,

@@ -29,7 +29,7 @@ const behandling = {
   sprakkode: {
     kode: 'NO',
   },
-  behandlingresultat: {
+  behandlingsresultat: {
     vedtaksbrev: {
       kode: 'FRITEKST',
     },
@@ -112,7 +112,7 @@ export const visAvslagForForeldrepenger = () => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
-      behandlingresultat: {
+      behandlingsresultat: {
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
@@ -177,7 +177,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
   <VedtakProsessIndex
     behandling={{
       ...behandling,
-      behandlingresultat: {
+      behandlingsresultat: {
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
@@ -286,7 +286,7 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
       type: {
         kode: behandlingType.REVURDERING,
       },
-      behandlingresultat: {
+      behandlingsresultat: {
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
@@ -363,7 +363,7 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
       type: {
         kode: behandlingType.REVURDERING,
       },
-      behandlingresultat: {
+      behandlingsresultat: {
         vedtaksbrev: {
           kode: 'FRITEKST',
         },
