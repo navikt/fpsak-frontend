@@ -11,7 +11,10 @@ import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
 import vedtakAksjonspunkterPropType from './propTypes/vedtakAksjonspunkterPropType';
 import vedtakSimuleringResultatPropType from './propTypes/vedtakSimuleringResultatPropType';
+import vedtakMedlemskapPropType from './propTypes/vedtakMedlemskapPropType';
 import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
+import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
+import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
 
 const cache = createIntlCache();
 
@@ -82,11 +85,11 @@ VedtakProsessIndex.propTypes = {
   beregningresultatEngangsstonad: vedtakBeregningsresultatPropType,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   sendVarselOmRevurdering: PropTypes.bool.isRequired,
-  originalBehandling: PropTypes.shape(),
-  medlemskap: PropTypes.shape().isRequired,
+  originalBehandling: vedtakOriginalBehandlingPropType,
+  medlemskap: vedtakMedlemskapPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
   simuleringResultat: vedtakSimuleringResultatPropType,
-  tilbakekrevingvalg: PropTypes.shape(),
+  tilbakekrevingvalg: vedtakTilbakekrevingvalgPropType,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,

@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
