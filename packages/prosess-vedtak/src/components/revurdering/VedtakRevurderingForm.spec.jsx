@@ -6,8 +6,6 @@ import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-te
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VedtakRevurderingFormImpl as UnwrappedForm } from './VedtakRevurderingForm';
 import VedtakRevurderingSubmitPanel from './VedtakRevurderingSubmitPanel';
@@ -40,37 +38,6 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
     } : null,
     avslagsarsakFritekst: null,
   },
-  vilkar: [{
-    vilkarType: {
-      kode: vilkarType.FODSELSVILKARET_MOR,
-      navn: 'Fødselsvilkåret',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-      navn: 'test',
-    },
-    lovReferanse: '§ 22-13, 2. ledd',
-  }, {
-    vilkarType: {
-      kode: vilkarType.SOKNADFRISTVILKARET,
-      navn: 'Søknadsfristvilkåret',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-      navn: 'test',
-    },
-    lovReferanse: '§ 22-13, 2. ledd',
-  }, {
-    vilkarType: {
-      kode: vilkarType.MEDLEMSKAPSVILKARET,
-      navn: 'Medlemskapsvilkåret',
-    },
-    vilkarStatus: {
-      kode: vilkarUtfallType.OPPFYLT,
-      navn: 'test',
-    },
-    lovReferanse: '§ 22-13, 2. ledd',
-  }],
   status: {
     kode: behandlingStatus.BEHANDLING_UTREDES,
     navn: 'test',
@@ -81,6 +48,10 @@ const createBehandling = (behandlingResultatType, behandlingHenlagt) => ({
   },
   opprettet: '16‎.‎07‎.‎2004‎ ‎17‎:‎35‎:‎21',
 });
+
+const resultatstruktur = {
+  antallBarn: 1,
+};
 
 const createBehandlingAvslag = () => createBehandling(BehandlingResultatType.AVSLATT);
 const createBehandlingOpphor = () => createBehandling(BehandlingResultatType.OPPHOR);
@@ -115,11 +86,13 @@ describe('<VedtakRevurderingForm>', () => {
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
       behandlingsresultat={revurdering.behandlingsresultat}
+      behandlingresultat={revurdering}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       readOnly={false}
-      ytelseType="ES"
+      ytelseType={{ kode: 'ES' }}
       isBehandlingReadOnly={false}
+      resultatstruktur={resultatstruktur}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -159,13 +132,14 @@ describe('<VedtakRevurderingForm>', () => {
       intl={intlMock}
       antallBarn={1}
       behandlingStatusKode={revurdering.status.kode}
-      behandlingsresultat={revurdering.behandlingsresultat}
+      behandlingresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
       readOnly={false}
-      ytelseType="ES"
+      ytelseType={{ kode: 'ES' }}
       isBehandlingReadOnly
+      resultatstruktur={resultatstruktur}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -190,12 +164,13 @@ describe('<VedtakRevurderingForm>', () => {
       intl={intlMock}
       antallBarn={1}
       behandlingStatusKode={revurdering.status.kode}
-      behandlingsresultat={revurdering.behandlingsresultat}
+      behandlingresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       readOnly={false}
-      ytelseType="ES"
+      ytelseType={{ kode: 'ES' }}
       isBehandlingReadOnly
+      resultatstruktur={resultatstruktur}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -220,14 +195,15 @@ describe('<VedtakRevurderingForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
-      behandlingsresultat={revurdering.behandlingsresultat}
+      behandlingresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
       previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
-      ytelseType="ES"
+      ytelseType={{ kode: 'ES' }}
       isBehandlingReadOnly
+      resultatstruktur={resultatstruktur}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);
@@ -245,14 +221,15 @@ describe('<VedtakRevurderingForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
-      behandlingsresultat={revurdering.behandlingsresultat}
+      behandlingresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       antallBarn={1}
       previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
-      ytelseType="ES"
+      ytelseType={{ kode: 'ES' }}
       isBehandlingReadOnly
+      resultatstruktur={resultatstruktur}
     />);
 
     expect(wrapper.find(VedtakAksjonspunktPanel)).to.have.length(1);

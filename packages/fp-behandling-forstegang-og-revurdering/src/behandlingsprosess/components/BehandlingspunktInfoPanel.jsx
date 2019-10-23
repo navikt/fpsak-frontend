@@ -21,7 +21,7 @@ import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/b
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPanel from './uttak/UttakPanel';
-import VilkarPanels from './vilkar/VilkarPanels';
+import VilkarPanels from './VilkarPanels';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './behandlingspunktInfoPanel.less';
@@ -35,10 +35,10 @@ const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi
 const sjekkPersonStatusData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP, fpsakApi.PERSONOPPLYSNINGER];
 const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.UTTAK_PERIODE_GRENSE, fpsakApi.SOKNAD];
 const tilkjentYtelseData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.SOKNAD];
-const vedtakDataES = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD, fpsakApi.TILBAKEKREVINGVALG, 
+const vedtakDataES = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD, fpsakApi.TILBAKEKREVINGVALG,
   fpsakApi.SIMULERING_RESULTAT, fpsakApi.VILKAR, fpsakApi.SEND_VARSEL_OM_REVURDERING, fpsakApi.ORIGINAL_BEHANDLING,
   fpsakApi.MEDLEMSKAP];
-const vedtakDataFpOgSvp = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_FORELDREPENGER, fpsakApi.TILBAKEKREVINGVALG, 
+const vedtakDataFpOgSvp = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_FORELDREPENGER, fpsakApi.TILBAKEKREVINGVALG,
   fpsakApi.SIMULERING_RESULTAT, fpsakApi.VILKAR, fpsakApi.SEND_VARSEL_OM_REVURDERING, fpsakApi.ORIGINAL_BEHANDLING,
   fpsakApi.MEDLEMSKAP];
 

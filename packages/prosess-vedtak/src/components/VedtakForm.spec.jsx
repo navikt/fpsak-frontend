@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { buildInitialValues, VedtakFormImpl as UnwrappedForm } from './VedtakForm';
+import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
@@ -45,7 +45,7 @@ describe('<VedtakForm>', () => {
     };
     const aksjonspunkter = [];
 
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -102,7 +102,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -152,7 +152,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
@@ -205,7 +205,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
@@ -254,7 +254,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -306,7 +306,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -362,7 +362,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
@@ -414,7 +414,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -465,7 +465,7 @@ describe('<VedtakForm>', () => {
       erAktivt: true,
     }];
     const previewCallback = sinon.spy();
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -517,7 +517,7 @@ describe('<VedtakForm>', () => {
       kanLoses: true,
       erAktivt: true,
     }];
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -677,7 +677,7 @@ describe('<VedtakForm>', () => {
 
 
   it('skal vise avkrysningsboks i lesemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -701,7 +701,7 @@ describe('<VedtakForm>', () => {
     expect(overstyringsKnapp.prop('keyName')).to.eql('skalBrukeOverstyrendeFritekstBrev');
   });
   it('skal vise avkrysningsboks i skrivemodus for rolle med overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}
@@ -726,7 +726,7 @@ describe('<VedtakForm>', () => {
   });
 
   it('skal ikke vise avkrysningsboks for rolle uten overstyringstilgang', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
+    const wrapper = shallowWithIntl(<VedtakForm
       {...reduxFormPropsMock}
       intl={intlMock}
       antallBarn={2}

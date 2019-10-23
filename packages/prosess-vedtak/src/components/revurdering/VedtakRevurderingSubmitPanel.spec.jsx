@@ -30,7 +30,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       readOnly={false}
       erBehandlingEtterKlage={false}
       behandlingStatusKode="UTR"
-      ytelseType="ES"
+      ytelseTypeKode="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);
@@ -50,7 +50,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       erBehandlingEtterKlage={false}
       readOnly={false}
       behandlingStatusKode="UTR"
-      ytelseType="ES"
+      ytelseTypeKode="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     expect(wrapper.find(ForhaandsvisningsKnapp)).to.have.length(0);
@@ -68,7 +68,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       behandlingStatusKode="UTR"
       brevStatus={undefined}
       readOnly={false}
-      ytelseType="ES"
+      ytelseTypeKode="ES"
       submitKnappTextId="VedtakForm.TilGodkjenning"
       erBehandlingEtterKlage={false}
     />);
@@ -89,7 +89,7 @@ describe('<VedtakRevurderingSubmitPanel>', () => {
       brevStatus={{ kode: vedtaksbrevStatus.AUTOMATISK }}
       behandlingStatusKode="UTR"
       readOnly={false}
-      ytelseType="FP"
+      ytelseTypeKode="FP"
       submitKnappTextId="VedtakForm.TilGodkjenning"
     />);
     const formattedMessages = wrapper.find(ForhaandsvisningsKnapp);

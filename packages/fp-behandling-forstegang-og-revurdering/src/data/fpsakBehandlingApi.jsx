@@ -67,11 +67,8 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('inntekt-arbeid-ytelse', BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE)
   .withInjectedPath('soeker-verge', BehandlingFpsakApiKeys.VERGE)
   .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
-<<<<<<< Updated upstream
   .withInjectedPath('opptjening', BehandlingFpsakApiKeys.OPPTJENING)
-=======
   .withInjectedPath('sendt-varsel-om-revurdering', BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING)
->>>>>>> Stashed changes
 
   .build();
 
