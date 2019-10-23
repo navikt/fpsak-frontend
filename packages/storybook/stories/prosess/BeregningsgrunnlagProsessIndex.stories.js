@@ -8,6 +8,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -17,6 +18,7 @@ const standardTom = undefined;
 const behandling = {
   id: 1,
   versjon: 1,
+  venteArsakKode: venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG,
 };
 const lagPGIVerdier = () => ([
   {
@@ -397,8 +399,11 @@ export const selvstendigNæringsdrivende = () => {
 };
 
 export const tidsbegrensetArbeidsforholdMedAvvik = () => {
-  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
+  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
+    lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
+  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das');
+  andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
   const perioder = [lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
@@ -433,6 +438,31 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+    />
+  );
+};
+
+export const graderingPåBeregningsgrunnlagUtenPenger = () => {
+  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 154985;
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('AT_FL_SN')];
+  const bg = lagBG(perioder, statuser);
+  bg.andelerMedGraderingUtenBG = [lagAndel('AT', 0, 0, false)];
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}

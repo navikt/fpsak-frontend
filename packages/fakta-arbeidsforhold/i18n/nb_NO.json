@@ -11,6 +11,11 @@
   "PersonArbeidsforholdTable.LeggTilArbeidsforhold": "Legg til arbeidsforhold",
   "FullPersonInfo.Confirm": "Bekreft og fortsett",
   
+  "PersonNyttEllerErstattArbeidsforholdPanel.NyttArbeidsforhold": "Nytt arbeidsforhold",
+  "PersonNyttEllerErstattArbeidsforholdPanel.ErstattArbeidsforhold": "Erstatt annet arbeidsforhold",
+  "PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold": "Erstatter arbeidsforhold",
+  "PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold": "Velg arbeidsforhold",
+
   "PersonArbeidsforholdDetailForm.Header": "Detaljer",
   "PersonArbeidsforholdDetailForm.Arbeidsgiver": "Beskrivelse",
   "PersonArbeidsforholdDetailForm.ArbeidsgiverNavn": "Navn på arbeidsgiver",

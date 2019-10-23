@@ -1386,12 +1386,7 @@
   "SykdomsperiodeFieldArray.LeggTilPeriode": "Legg til periode",
   "OkAvbrytModal.Ok": "OK",
   "OkAvbrytModal.Avbryt": "Avbryt",
-
-  "PersonNyttEllerErstattArbeidsforholdPanel.NyttArbeidsforhold": "Nytt arbeidsforhold",
-  "PersonNyttEllerErstattArbeidsforholdPanel.ErstattArbeidsforhold": "Erstatt annet arbeidsforhold",
-  "PersonNyttEllerErstattArbeidsforholdPanel.SelectArbeidsforhold": "Erstatter arbeidsforhold",
-  "PersonNyttEllerErstattArbeidsforholdPanel.ChooseArbeidsforhold": "Velg arbeidsforhold",
-
+  
   "AktsomhetGradForsettFormPanel.Andel": "Andel som skal tilbakekreves",
   "AktsomhetGradForsettFormPanel.Renter": "Det legges til 10% renter",
 
