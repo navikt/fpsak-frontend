@@ -1,14 +1,15 @@
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { Column, Row } from 'nav-frontend-grid';
+import { Undertittel } from 'nav-frontend-typografi';
+
+import { TextAreaField } from '@fpsak-frontend/form';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import classNames from 'classnames';
-import { Column, Row } from 'nav-frontend-grid';
-import { TextAreaField } from '@fpsak-frontend/form';
-import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { Undertittel } from 'nav-frontend-typografi';
+
 import styles from './vedtakForm.less';
 
 const maxLength200 = maxLength(200);
@@ -20,7 +21,7 @@ const FritekstBrevPanelImpl = ({
   readOnly,
   sprakkode,
 }) => (
-  <ElementWrapper>
+  <>
     <div className={styles.automatiskBrev}>
       <Row>
         <Column xs="12">
@@ -76,7 +77,7 @@ const FritekstBrevPanelImpl = ({
         />
       </Column>
     </Row>
-  </ElementWrapper>
+  </>
 );
 
 FritekstBrevPanelImpl.propTypes = {

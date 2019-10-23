@@ -4,16 +4,15 @@ import moment from 'moment';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
-import { getBehandlingMedlem, getOpphoersdatoFraUttak } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { endringerIBeregningsgrunnlagGirFritekstfelt } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakHelper';
-import VedtakFritekstPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/VedtakFritekstPanel';
+
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+import { endringerIBeregningsgrunnlagGirFritekstfelt } from '../VedtakHelper';
+import VedtakFritekstPanel from '../VedtakFritekstPanel';
 
 export const VedtakOpphorRevurderingPanelImpl = ({
   intl,
@@ -35,20 +34,18 @@ export const VedtakOpphorRevurderingPanelImpl = ({
     </Normaltekst>
     <VerticalSpacer sixteenPx />
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.RevurderingFP.Aarsak' })}</Undertekst>
-    { revurderingsAarsakString !== undefined
-    && (
-    <Normaltekst>
-      {revurderingsAarsakString}
-    </Normaltekst>
+    { revurderingsAarsakString !== undefined && (
+      <Normaltekst>
+        {revurderingsAarsakString}
+      </Normaltekst>
     )}
-    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType)
-    && (
-    <VedtakFritekstPanel
-      readOnly={readOnly}
-      sprakkode={sprakKode}
-      behandlingsresultat={behandlingsresultat}
-      labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
-    />
+    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && (
+      <VedtakFritekstPanel
+        readOnly={readOnly}
+        sprakkode={sprakKode}
+        behandlingsresultat={behandlingsresultat}
+        labelTextCode="VedtakForm.Fritekst.Beregningsgrunnlag"
+      />
     )}
   </div>
 );
@@ -73,24 +70,23 @@ VedtakOpphorRevurderingPanelImpl.defaultProps = {
 };
 
 const getOpphorsdato = createSelector(
-  [getOpphoersdatoFraUttak, getBehandlingMedlem, behandlingSelectors.getBehandlingsresultat],
-  (datoFraUttak, medlemskap, behandlingsresultat) => {
+  [(ownProps) => ownProps.resultatstruktur.opphoersdato,
+    (ownProps) => ownProps.medlemskapFom,
+    (ownProps) => ownProps.behandlingsresultat],
+  (datoFraUttak, medlemskapFom, behandlingsresultat) => {
     if (datoFraUttak) {
       return datoFraUttak;
     }
-    if (medlemskap && medlemskap.fom) {
-      return medlemskap.fom;
+    if (medlemskapFom) {
+      return medlemskapFom;
     }
     return behandlingsresultat.skjaeringstidspunktForeldrepenger
       ? behandlingsresultat.skjaeringstidspunktForeldrepenger : '';
   },
 );
 
-const mapStateToProps = (state) => ({
-  opphoersdato: getOpphorsdato(state),
-  sprakKode: behandlingSelectors.getBehandlingSprak(state),
-  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
+const mapStateToProps = (state, ownProps) => ({
+  opphoersdato: getOpphorsdato(ownProps),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakOpphorRevurderingPanelImpl));

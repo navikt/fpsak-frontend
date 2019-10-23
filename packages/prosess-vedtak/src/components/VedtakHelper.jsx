@@ -12,14 +12,13 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getSimuleringResultat, getTilbakekrevingValg } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-
 const tilbakekrevingMedInntrekk = (tilbakekrevingKode, simuleringResultat) => tilbakekrevingKode === tilbakekrevingVidereBehandling.TILBAKEKR_INFOTRYGD
   && (simuleringResultat.simuleringResultat.sumInntrekk || simuleringResultat.simuleringResultatUtenInntrekk);
 
 export const findTilbakekrevingText = createSelector(
-  [getSimuleringResultat, getTilbakekrevingValg, getAlleKodeverk],
+  [(ownProps) => ownProps.simuleringResultat,
+    (ownProps) => ownProps.tilbakekrevingvalg,
+    (ownProps) => ownProps.alleKodeverk],
   (simuleringResultat, tilbakekrevingValg, alleKodeverk) => {
     if (tilbakekrevingValg) {
       if (tilbakekrevingMedInntrekk(tilbakekrevingValg.videreBehandling.kode, simuleringResultat)) {

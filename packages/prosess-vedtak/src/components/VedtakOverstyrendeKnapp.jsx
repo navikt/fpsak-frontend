@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import { CheckboxField } from '@fpsak-frontend/form';
+
 import styles from './vedtakOverstyrendeKnapp.less';
 
-
 const VedtakOverstyrendeKnapp = ({
-  readOnly, readOnlyHideEmpty, toggleCallback, keyName,
+  readOnly,
+  readOnlyHideEmpty,
+  toggleCallback,
+  keyName,
 }) => (
   <div className={styles.manuell}>
     <CheckboxField

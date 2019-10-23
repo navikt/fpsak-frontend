@@ -4,7 +4,7 @@ import { injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
@@ -22,37 +22,35 @@ const VedtakFritekstPanelImpl = ({
   readOnly,
   labelTextCode,
 }) => (
-  <ElementWrapper>
-    {!readOnly
-    && (
-    <Row>
-      <VerticalSpacer sixteenPx />
-      <Column xs="8">
-        <TextAreaField
-          name="begrunnelse"
-          label={intl.formatMessage({ id: labelTextCode })}
-          validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-          maxLength={1500}
-          readOnly={readOnly}
-          badges={[{
-            type: 'fokus',
-            textId: getLanguageCodeFromSprakkode(sprakkode),
-            title: 'Malform.Beskrivelse',
-          }]}
-        />
-      </Column>
-    </Row>
+  <>
+    {!readOnly && (
+      <Row>
+        <VerticalSpacer sixteenPx />
+        <Column xs="8">
+          <TextAreaField
+            name="begrunnelse"
+            label={intl.formatMessage({ id: labelTextCode })}
+            validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+            badges={[{
+              type: 'fokus',
+              textId: getLanguageCodeFromSprakkode(sprakkode),
+              title: 'Malform.Beskrivelse',
+            }]}
+          />
+        </Column>
+      </Row>
     )}
-    {readOnly && behandlingsresultat.avslagsarsakFritekst !== null
-    && (
-    <span>
-      <VerticalSpacer twentyPx />
-      <Undertekst>{intl.formatMessage({ id: labelTextCode })}</Undertekst>
-      <VerticalSpacer eightPx />
-      <div className={styles.fritekstItem}>{decodeHtmlEntity(behandlingsresultat.avslagsarsakFritekst)}</div>
-    </span>
+    {readOnly && behandlingsresultat.avslagsarsakFritekst !== null && (
+      <span>
+        <VerticalSpacer twentyPx />
+        <Undertekst>{intl.formatMessage({ id: labelTextCode })}</Undertekst>
+        <VerticalSpacer eightPx />
+        <div className={styles.fritekstItem}>{decodeHtmlEntity(behandlingsresultat.avslagsarsakFritekst)}</div>
+      </span>
     )}
-  </ElementWrapper>
+  </>
 );
 
 VedtakFritekstPanelImpl.propTypes = {

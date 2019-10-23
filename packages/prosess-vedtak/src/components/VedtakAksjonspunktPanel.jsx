@@ -2,11 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
-import { connect } from 'react-redux';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
 
 export const getTextCode = (behandlingStatus) => (behandlingStatus === behandlingStatusCode.AVSLUTTET
@@ -16,12 +15,11 @@ export const VedtakAksjonspunktPanelImpl = ({
   intl,
   children,
   behandlingStatusKode,
-  isBehandlingHenlagt,
+  erBehandlingHenlagt,
   aksjonspunktKoder,
-  isBehandlingReadOnly,
   readOnly,
 }) => {
-  if (isBehandlingHenlagt) {
+  if (erBehandlingHenlagt) {
     return (
       <FadingPanel>
         <Systemtittel>{intl.formatMessage({ id: 'VedtakForm.BehandlingHenlagt' })}</Systemtittel>
@@ -33,7 +31,7 @@ export const VedtakAksjonspunktPanelImpl = ({
     <FadingPanel>
       <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
       <VerticalSpacer twentyPx />
-      <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} isBehandlingReadOnly={isBehandlingReadOnly} />
+      <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
       {children}
     </FadingPanel>
   );
@@ -46,16 +44,11 @@ VedtakAksjonspunktPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
-  isBehandlingHenlagt: PropTypes.bool.isRequired,
-  isBehandlingReadOnly: PropTypes.bool.isRequired,
+  erBehandlingHenlagt: PropTypes.bool.isRequired,
 };
 
 VedtakAksjonspunktPanelImpl.defaultProps = {
   children: undefined,
 };
 
-const mapStateToProps = (state) => ({
-  isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(VedtakAksjonspunktPanelImpl));
+export default injectIntl(VedtakAksjonspunktPanelImpl);

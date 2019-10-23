@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
+
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
-import { getIsFagsakTypeSVP } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import { isAvslag, isOpphor } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
-import { createStructuredSelector } from 'reselect';
+
 import styles from './vedtakFritekstbrevModal.less';
 
 const isFritekstbrevRequired = (readOnly, behandlingsresultat, erSVP) => {
@@ -96,8 +95,4 @@ VedtakFritekstbrevModal.propTypes = {
   erSVP: PropTypes.bool.isRequired,
 };
 
-const mapStateToProps = createStructuredSelector({
-  erSVP: getIsFagsakTypeSVP,
-});
-
-export default connect(mapStateToProps)(injectIntl(VedtakFritekstbrevModal));
+export default injectIntl(VedtakFritekstbrevModal);

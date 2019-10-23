@@ -9,22 +9,17 @@ import classNames from 'classnames';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
 
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import { isAvslag, isInnvilget } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
-import { erArsakTypeBehandlingEtterKlage, getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSelectedBehandlingId, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import FritekstBrevPanel from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/FritekstBrevPanel';
+import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
+import FritekstBrevPanel from './FritekstBrevPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakAksjonspunktPanel from './VedtakAksjonspunktPanel';
@@ -68,9 +63,7 @@ ForhaandsvisningsKnapp.propTypes = {
   previewFunction: PropTypes.func.isRequired,
 };
 
-function kanSendesTilGodkjenning(behandlingStatusKode) {
-  return behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
-}
+const kanSendesTilGodkjenning = (behandlingStatusKode) => behandlingStatusKode === behandlingStatusCode.BEHANDLING_UTREDES;
 
 const getPreviewAutomatiskBrevCallback = (begrunnelse, previewCallback) => (e) => {
   const formValues = {
@@ -81,7 +74,7 @@ const getPreviewAutomatiskBrevCallback = (begrunnelse, previewCallback) => (e) =
   e.preventDefault();
 };
 
-export class VedtakFormImpl extends Component {
+export class VedtakForm extends Component {
   constructor(props) {
     super(props);
     this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
@@ -105,7 +98,7 @@ export class VedtakFormImpl extends Component {
       intl,
       readOnly,
       behandlingStatusKode,
-      behandlingsresultat,
+      behandlingresultat,
       aksjonspunkter,
       behandlingPaaVent,
       antallBarn,
@@ -114,108 +107,120 @@ export class VedtakFormImpl extends Component {
       brødtekst,
       overskrift,
       aksjonspunktKoder,
-      isBehandlingReadOnly,
       kanOverstyre,
-      isEngangsstonad,
       sprakkode,
       erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
+      ytelseType,
+      erBehandlingHenlagt,
+      resultatstruktur,
+      alleKodeverk,
+      tilbakekrevingvalg,
+      simuleringResultat,
+      vilkar,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
     const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, true, previewCallback);
     const previewDefaultBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brødtekst, overskrift, false, previewCallback);
-    const skalViseLink = (behandlingsresultat.avslagsarsak === null)
-      || (behandlingsresultat.avslagsarsak && behandlingsresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
+    const skalViseLink = (behandlingresultat.avslagsarsak === null)
+      || (behandlingresultat.avslagsarsak && behandlingresultat.avslagsarsak.kode !== avslagsarsakCodes.INGEN_BEREGNINGSREGLER);
     const visOverstyringKnapp = kanOverstyre || readOnly;
     return (
       <>
         <VedtakFritekstbrevModal
           readOnly={readOnly}
-          behandlingsresultat={behandlingsresultat}
+          behandlingsresultat={behandlingresultat}
+          erSVP={ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER}
         />
         <VedtakAksjonspunktPanel
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          isBehandlingReadOnly={isBehandlingReadOnly}
+          erBehandlingHenlagt={erBehandlingHenlagt}
         >
-          {visOverstyringKnapp
-            && (
-              <VedtakOverstyrendeKnapp
-                toggleCallback={this.onToggleOverstyring}
-                readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
-                keyName="skalBrukeOverstyrendeFritekstBrev"
-                readOnlyHideEmpty={false}
-              />
-            )}
+          {visOverstyringKnapp && (
+            <VedtakOverstyrendeKnapp
+              toggleCallback={this.onToggleOverstyring}
+              readOnly={readOnly || (initialValues.skalBrukeOverstyrendeFritekstBrev === true)}
+              keyName="skalBrukeOverstyrendeFritekstBrev"
+              readOnlyHideEmpty={false}
+            />
+          )}
 
-          {isInnvilget(behandlingsresultat.type.kode)
-            && (
-              <VedtakInnvilgetPanel
-                intl={intl}
-                antallBarn={antallBarn}
-                behandlingsresultat={behandlingsresultat}
-                readOnly={readOnly}
-                skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              />
-            )}
+          {isInnvilget(behandlingresultat.type.kode) && (
+            <VedtakInnvilgetPanel
+              intl={intl}
+              antallBarn={antallBarn}
+              behandlingsresultat={behandlingresultat}
+              readOnly={readOnly}
+              skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
+              ytelseTypeKode={ytelseType.kode}
+              aksjonspunkter={aksjonspunkter}
+              sprakkode={sprakkode}
+              beregningResultat={resultatstruktur}
+              alleKodeverk={alleKodeverk}
+              tilbakekrevingvalg={tilbakekrevingvalg}
+              simuleringResultat={simuleringResultat}
+            />
+          )}
 
-          {isAvslag(behandlingsresultat.type.kode)
-            && (
-              <VedtakAvslagPanel
-                behandlingStatusKode={behandlingStatusKode}
-                aksjonspunkter={aksjonspunkter}
-                behandlingsresultat={behandlingsresultat}
-                readOnly={readOnly}
-              />
-            )}
+          {isAvslag(behandlingresultat.type.kode) && (
+            <VedtakAvslagPanel
+              behandlingStatusKode={behandlingStatusKode}
+              aksjonspunkter={aksjonspunkter}
+              behandlingsresultat={behandlingresultat}
+              readOnly={readOnly}
+              ytelseTypeKode={ytelseType.kode}
+              sprakkode={sprakkode}
+              alleKodeverk={alleKodeverk}
+              tilbakekrevingvalg={tilbakekrevingvalg}
+              simuleringResultat={simuleringResultat}
+              vilkar={vilkar}
+            />
+          )}
 
-          {skalBrukeOverstyrendeFritekstBrev && !isEngangsstonad
-            && (
-              <FritekstBrevPanel
-                intl={intl}
-                readOnly={readOnly}
-                sprakkode={sprakkode}
-                previewBrev={previewAutomatiskBrev}
-              />
-            )}
+          {skalBrukeOverstyrendeFritekstBrev && ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD && (
+            <FritekstBrevPanel
+              intl={intl}
+              readOnly={readOnly}
+              sprakkode={sprakkode}
+              previewBrev={previewAutomatiskBrev}
+            />
+          )}
 
-          {kanSendesTilGodkjenning(behandlingStatusKode)
-            && (
-              <Row>
-                <Column xs="12">
-                  {!readOnly
-                  && (
-                    <Hovedknapp
-                      mini
-                      className={styles.mainButton}
-                      onClick={formProps.handleSubmit}
-                      disabled={behandlingPaaVent || formProps.submitting}
-                      spinner={formProps.submitting}
-                    >
-                      {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
-                    </Hovedknapp>
-                  )}
-                  {skalBrukeOverstyrendeFritekstBrev && skalViseLink
-                  && (
-                    <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
-                  )}
-                  {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage
-                  && (
-                    <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
-                  )}
-                </Column>
-              </Row>
-            )}
+          {kanSendesTilGodkjenning(behandlingStatusKode) && (
+            <Row>
+              <Column xs="12">
+                {!readOnly && (
+                  <Hovedknapp
+                    mini
+                    className={styles.mainButton}
+                    onClick={formProps.handleSubmit}
+                    disabled={behandlingPaaVent || formProps.submitting}
+                    spinner={formProps.submitting}
+                  >
+                    {intl.formatMessage({ id: 'VedtakForm.TilGodkjenning' })}
+                  </Hovedknapp>
+                )}
+                {skalBrukeOverstyrendeFritekstBrev && skalViseLink && (
+                  <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
+                )}
+                {!skalBrukeOverstyrendeFritekstBrev && skalViseLink && !erBehandlingEtterKlage && (
+                  <ForhaandsvisningsKnapp previewFunction={previewDefaultBrev} />
+                )}
+              </Column>
+            </Row>
+          )}
         </VedtakAksjonspunktPanel>
       </>
     );
   }
 }
 
-VedtakFormImpl.propTypes = {
+VedtakForm.propTypes = {
+  resultatstruktur: vedtakBeregningsresultatPropType.isRequired,
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   brødtekst: PropTypes.string,
@@ -223,19 +228,18 @@ VedtakFormImpl.propTypes = {
   antallBarn: PropTypes.number,
   behandlingStatusKode: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  behandlingsresultat: PropTypes.shape().isRequired,
+  behandlingresultat: PropTypes.shape().isRequired,
   behandlingPaaVent: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isBehandlingReadOnly: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
-  sprakkode: PropTypes.shape().isRequired,
+  sprakkode: kodeverkObjektPropType.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
-VedtakFormImpl.defaultProps = {
+VedtakForm.defaultProps = {
   antallBarn: undefined,
   begrunnelse: undefined,
   brødtekst: undefined,
@@ -245,8 +249,12 @@ VedtakFormImpl.defaultProps = {
 };
 
 export const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingStatus, getBehandlingResultatstruktur, behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter,
-    getFagsakYtelseType, behandlingSelectors.getBehandlingsresultat, behandlingSelectors.getBehandlingSprak],
+  [(ownProps) => ownProps.behandlingStatus,
+    (ownProps) => ownProps.resultatstruktur,
+    (ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.ytelseType,
+    (ownProps) => ownProps.behandlingresultat,
+    (ownProps) => ownProps.sprakkode],
   (status, beregningResultat, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => ({
     sprakkode,
     isEngangsstonad: beregningResultat && ytelseType ? ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD : false,
@@ -260,7 +268,7 @@ export const buildInitialValues = createSelector(
 );
 
 export const getAksjonspunktKoder = createSelector(
-  [behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter], (aksjonspunkter) => aksjonspunkter.map((ap) => ap.definisjon.kode),
+  [(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => aksjonspunkter.map((ap) => ap.definisjon.kode),
 );
 
 const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
@@ -274,13 +282,18 @@ const transformValues = (values) => values.aksjonspunktKoder.map((apCode) => ({
 
 const formName = 'VedtakForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
-  return (state) => ({
+const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps.behandlingArsaker], (behandlingArsakTyper = []) => behandlingArsakTyper
+  .map(({ behandlingArsakType }) => behandlingArsakType)
+  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
+
+
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values));
+  return (state, ownProps) => ({
     onSubmit,
-    initialValues: buildInitialValues(state),
-    isBehandlingReadOnly: behandlingSelectors.isBehandlingStatusReadOnly(state),
-    ...behandlingFormValueSelector(formName)(
+    initialValues: buildInitialValues(ownProps),
+    ...behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state,
       'antallBarn',
       'begrunnelse',
@@ -289,16 +302,10 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       'overskrift',
       'brødtekst',
     ),
-    behandlingId: getSelectedBehandlingId(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
-    aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-    behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-    behandlingPaaVent: behandlingSelectors.getBehandlingIsOnHold(state),
-    sprakkode: behandlingSelectors.getBehandlingSprak(state),
-    aksjonspunktKoder: getAksjonspunktKoder(state),
-    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
-    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+    behandlingStatusKode: ownProps.behandlingStatus.kode,
+    aksjonspunktKoder: getAksjonspunktKoder(ownProps),
+    erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
   });
 };
 
@@ -308,8 +315,6 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const VedtakForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: formName,
-})(VedtakFormImpl)));
-
-export default VedtakForm;
+})(VedtakForm)));

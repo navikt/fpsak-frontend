@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { connect } from 'react-redux';
-import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import vedtakResultType from '@fpsak-frontend/kodeverk/src/vedtakResultType';
+
+import vedtakResultType from '../../kodeverk/vedtakResultType';
 import VedtakAvslagArsakOgBegrunnelsePanel from '../VedtakAvslagArsakOgBegrunnelsePanel';
 import { findTilbakekrevingText } from '../VedtakHelper';
 
@@ -46,6 +45,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
   readOnly,
   originaltBeregningResultat,
   tilbakekrevingText,
+  alleKodeverk,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -62,6 +62,7 @@ export const VedtakAvslagRevurderingPanelImpl = ({
       behandlingsresultat={behandlingsresultat}
       sprakkode={sprakkode}
       readOnly={readOnly}
+      alleKodeverk={alleKodeverk}
     />
   </div>
 );
@@ -77,6 +78,7 @@ VedtakAvslagRevurderingPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   originaltBeregningResultat: PropTypes.shape(),
   tilbakekrevingText: PropTypes.string,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 VedtakAvslagRevurderingPanelImpl.defaultProps = {
@@ -86,12 +88,8 @@ VedtakAvslagRevurderingPanelImpl.defaultProps = {
 };
 
 
-const mapStateToProps = (state) => ({
-  beregningResultat: getBehandlingResultatstruktur(state),
-  originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
-  vilkar: behandlingSelectors.getBehandlingVilkar(state),
-  sprakkode: behandlingSelectors.getBehandlingSprak(state),
-  tilbakekrevingText: findTilbakekrevingText(state),
+const mapStateToProps = (state, ownProps) => ({
+  tilbakekrevingText: findTilbakekrevingText(ownProps),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakAvslagRevurderingPanelImpl));

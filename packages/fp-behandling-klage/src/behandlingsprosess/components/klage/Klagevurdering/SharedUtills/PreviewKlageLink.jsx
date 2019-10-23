@@ -51,7 +51,7 @@ const PreviewKlageLink = ({
       onKeyDown={(e) => (e.keyCode === 13 ? previewMessage(e) : null)}
       className={classNames(styles.previewLink, 'lenke lenke--frittstaende')}
     >
-      <FormattedMessage id="VedtakForm.ForhandvisBrev" />
+      <FormattedMessage id="PreviewAnkeLink.ForhandvisBrev" />
     </a>
   );
 };

@@ -7,10 +7,13 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
+
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { Image } from '@fpsak-frontend/shared-components';
+import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 
 import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
@@ -22,9 +25,6 @@ import {
   getResultatstrukturFraOriginalBehandling,
 } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 
-import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-
-import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import styles from './iverksetterVedtakStatusModal.less';
 
 // TODO (TOR) Slå saman med komponent med same navn i fp-behandling-felles

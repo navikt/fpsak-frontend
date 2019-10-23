@@ -5,13 +5,9 @@ import { injectIntl } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { connect } from 'react-redux';
 
+import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import {
-  getBehandlingResultatstruktur, getHaveSentVarsel, erArsakTypeBehandlingEtterKlage,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getResultatstrukturFraOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
 import { ForhaandsvisningsKnapp } from '../VedtakForm';
 
 import styles from '../vedtakForm.less';
@@ -61,7 +57,7 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
 };
 
 export const getSubmitKnappTekst = createSelector(
-  [behandlingSelectors.getAksjonspunkter],
+  [(ownProps) => ownProps.aksjonspunkter],
   (aksjonspunkter) => (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true
     && ap.toTrinnsBehandling === true) ? 'VedtakForm.TilGodkjenning' : 'VedtakForm.FattVedtak'),
 );
@@ -146,12 +142,15 @@ VedtakRevurderingSubmitPanelImpl.defaultProps = {
   overskrift: undefined,
 };
 
-const mapStateToProps = (state) => ({
+const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps.behandlingArsaker], (behandlingArsakTyper = []) => behandlingArsakTyper
+  .map(({ behandlingArsakType }) => behandlingArsakType)
+  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
+
+
+const mapStateToProps = (state, ownProps) => ({
   submitKnappTextId: getSubmitKnappTekst(state),
-  beregningResultat: getBehandlingResultatstruktur(state),
-  originaltBeregningResultat: getResultatstrukturFraOriginalBehandling(state),
-  haveSentVarsel: getHaveSentVarsel(state),
-  erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
+  erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 
 export default connect(mapStateToProps)(injectIntl(VedtakRevurderingSubmitPanelImpl));
