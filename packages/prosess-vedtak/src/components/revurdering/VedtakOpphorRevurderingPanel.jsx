@@ -22,13 +22,13 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   aksjonspunkter,
   readOnly,
   behandlingsresultat,
-  ytelseType,
+  ytelseTypeKode,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
     <Normaltekst>
       {intl.formatMessage({
-        id: ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
+        id: ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER ? 'VedtakForm.RevurderingSVP.SvangerskapspengerOpphoerer'
           : 'VedtakForm.RevurderingFP.ForeldrepengerOpphoerer',
       }, { dato: moment(opphoersdato).format(DDMMYYYY_DATE_FORMAT) })}
     </Normaltekst>
@@ -39,7 +39,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
         {revurderingsAarsakString}
       </Normaltekst>
     )}
-    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && (
+    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode) && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakKode}
@@ -58,7 +58,7 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
-  ytelseType: PropTypes.string.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {

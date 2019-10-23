@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, getKodeverknavnFn,
@@ -124,7 +125,7 @@ export class VedtakRevurderingFormImpl extends Component {
             {isInnvilget(behandlingresultat.type.kode) && (
               <VedtakInnvilgetRevurderingPanel
                 antallBarn={antallBarn}
-                ytelseType={ytelseType}
+                ytelseTypeKode={ytelseType.kode}
                 aksjonspunktKoder={aksjonspunktKoder}
                 revurderingsAarsakString={revurderingsAarsakString}
                 behandlingsresultat={behandlingresultat}
@@ -144,7 +145,6 @@ export class VedtakRevurderingFormImpl extends Component {
                 aksjonspunkter={aksjonspunkter}
                 behandlingsresultat={behandlingresultat}
                 readOnly={readOnly}
-                ytelseType={ytelseType}
                 alleKodeverk={alleKodeverk}
                 beregningResultat={resultatstruktur}
                 sprakkode={sprakkode}
@@ -158,7 +158,7 @@ export class VedtakRevurderingFormImpl extends Component {
               <VedtakOpphorRevurderingPanel
                 aksjonspunkter={aksjonspunkter}
                 revurderingsAarsakString={revurderingsAarsakString}
-                ytelseType={ytelseType}
+                ytelseTypeKode={ytelseType.kode}
                 readOnly={readOnly}
                 behandlingsresultat={behandlingresultat}
                 sprakKode={sprakkode}
@@ -167,7 +167,7 @@ export class VedtakRevurderingFormImpl extends Component {
               />
             )}
 
-            {skalBrukeOverstyrendeFritekstBrev && ytelseType !== ytelseType.ENGANGSSTONAD && (
+            {skalBrukeOverstyrendeFritekstBrev && ytelseType.kode !== ytelseType.ENGANGSSTONAD && (
               <FritekstBrevPanel
                 intl={intl}
                 readOnly={readOnly}
@@ -183,7 +183,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewCallback={previewCallback}
                 formProps={formProps}
                 readOnly={readOnly}
-                ytelseType={ytelseType}
+                ytelseTypeKode={ytelseType.kode}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 beregningResultat={resultatstruktur}
                 haveSentVarsel={sendVarselOmRevurdering}
@@ -208,11 +208,10 @@ VedtakRevurderingFormImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   antallBarn: PropTypes.number,
-  isBehandlingReadOnly: PropTypes.bool.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  ytelseType: PropTypes.string.isRequired,
+  ytelseType: kodeverkObjektPropType.isRequired,
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,

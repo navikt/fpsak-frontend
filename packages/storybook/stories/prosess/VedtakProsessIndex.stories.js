@@ -61,7 +61,6 @@ const resultatstruktur = {
   antallBarn: 1,
   beregnetTilkjentYtelse: 10000,
 };
-const sendVarselOmRevurdering = {};
 const resultatstrukturOriginalBehandling = {};
 
 const alleKodeverk = {
@@ -86,7 +85,7 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[{
@@ -133,7 +132,7 @@ export const visAvslagForForeldrepenger = () => (
       },
     }]}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -151,7 +150,7 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[{
@@ -198,7 +197,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
       },
     }]}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[{
@@ -226,7 +225,7 @@ export const visÅpentAksjonspunktForEngangsstønad = () => (
     behandling={behandling}
     vilkar={vilkar}
     beregningresultatEngangsstonad={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[{
@@ -257,7 +256,7 @@ export const visAtBehandlingErHenlagt = () => (
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[{
@@ -287,10 +286,41 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
       type: {
         kode: behandlingType.REVURDERING,
       },
+      behandlingresultat: {
+        vedtaksbrev: {
+          kode: 'FRITEKST',
+        },
+        type: {
+          kode: behandlingResultatType.OPPHOR,
+        },
+      },
     }}
     vilkar={vilkar}
     beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+    employeeHasAccess={boolean('employeeHasAccess', false)}
+    readOnly={boolean('readOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    alleKodeverk={alleKodeverk}
+  />
+);
+
+export const visOpphørtForForeldrepengerRevurdering = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+      },
+    }}
+    vilkar={vilkar}
+    beregningresultatForeldrepenger={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}
@@ -312,8 +342,48 @@ export const visInnvilgetForEngangsstønadRevurdering = () => (
       },
     }}
     vilkar={vilkar}
-    beregningresultatForeldrepenger={resultatstruktur}
-    sendVarselOmRevurdering={sendVarselOmRevurdering}
+    beregningresultatEngangsstonad={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
+    resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
+    medlemskap={{ fom: '2019-01-01' }}
+    aksjonspunkter={[]}
+    ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
+    employeeHasAccess={boolean('employeeHasAccess', false)}
+    readOnly={boolean('readOnly', false)}
+    previewCallback={action('button-click')}
+    submitCallback={action('button-click')}
+    alleKodeverk={alleKodeverk}
+  />
+);
+
+export const visAvslåttForEngangsstønadRevurdering = () => (
+  <VedtakProsessIndex
+    behandling={{
+      ...behandling,
+      type: {
+        kode: behandlingType.REVURDERING,
+      },
+      behandlingresultat: {
+        vedtaksbrev: {
+          kode: 'FRITEKST',
+        },
+        type: {
+          kode: behandlingResultatType.AVSLATT,
+        },
+        avslagsarsak: {
+          kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
+          kodeverk: kodeverkTyper.AVSLAGSARSAK,
+        },
+      },
+    }}
+    vilkar={[{
+      ...vilkar[0],
+      vilkarStatus: {
+        kode: vilkarUtfallType.IKKE_OPPFYLT,
+      },
+    }]}
+    beregningresultatEngangsstonad={resultatstruktur}
+    sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
     aksjonspunkter={[]}

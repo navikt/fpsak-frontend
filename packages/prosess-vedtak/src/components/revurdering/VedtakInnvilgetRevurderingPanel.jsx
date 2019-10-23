@@ -8,7 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
@@ -49,7 +49,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   antallBarn,
   originaltBeregningResultat,
   beregningResultat,
-  ytelseType,
+  ytelseTypeKode,
   konsekvenserForYtelsen,
   revurderingsAarsakString,
   sprakKode,
@@ -62,7 +62,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <>
-      {ytelseType === fagsakYtelseType.ENGANGSSTONAD && (
+      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
@@ -88,7 +88,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
           </Row>
         </div>
       )}
-      {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) && (
+      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
           <Normaltekst>
@@ -110,7 +110,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
               )}
             </Column>
           </Row>
-          {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseType) && (
+          {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode) && (
             <VedtakFritekstPanel
               readOnly={readOnly}
               sprakkode={sprakKode}
@@ -129,7 +129,7 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   antallBarn: PropTypes.number,
   originaltBeregningResultat: PropTypes.shape(),
   beregningResultat: PropTypes.shape(),
-  ytelseType: PropTypes.string.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),

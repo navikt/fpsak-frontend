@@ -81,7 +81,7 @@ VedtakProsessIndex.propTypes = {
   beregningresultatForeldrepenger: vedtakBeregningsresultatPropType,
   beregningresultatEngangsstonad: vedtakBeregningsresultatPropType,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  sendVarselOmRevurdering: PropTypes.shape().isRequired,
+  sendVarselOmRevurdering: PropTypes.bool.isRequired,
   originalBehandling: PropTypes.shape(),
   medlemskap: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,

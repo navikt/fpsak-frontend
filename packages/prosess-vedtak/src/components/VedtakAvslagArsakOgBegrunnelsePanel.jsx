@@ -8,6 +8,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { TextAreaField } from '@fpsak-frontend/form';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import {
   decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';

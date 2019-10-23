@@ -60,6 +60,8 @@ const VedtakPanels = ({
         sendVarselOmRevurdering={sendVarselOmRevurdering}
         resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
         medlemskapFom={medlemskapFom}
+        erBehandlingHenlagt={erBehandlingHenlagt}
+        vilkar={vilkar}
       />
     );
   }
@@ -107,7 +109,7 @@ VedtakPanels.propTypes = {
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  sendVarselOmRevurdering: PropTypes.shape().isRequired,
+  sendVarselOmRevurdering: PropTypes.bool.isRequired,
   resultatstrukturOriginalBehandling: vedtakBeregningsresultatPropType,
   readOnly: PropTypes.bool.isRequired,
   previewCallback: PropTypes.func.isRequired,

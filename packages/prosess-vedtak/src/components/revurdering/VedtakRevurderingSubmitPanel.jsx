@@ -70,7 +70,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   haveSentVarsel,
   originaltBeregningResultat,
   skalBrukeOverstyrendeFritekstBrev,
-  ytelseType,
+  ytelseTypeKode,
   readOnly,
   erBehandlingEtterKlage,
   submitKnappTextId,
@@ -95,19 +95,19 @@ export const VedtakRevurderingSubmitPanelImpl = ({
           {intl.formatMessage({ id: skalBrukeOverstyrendeFritekstBrev ? 'VedtakForm.TilGodkjenning' : submitKnappTextId })}
         </Hovedknapp>
       )}
-      {ytelseType === fagsakYtelseType.ENGANGSSTONAD
+      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
           && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && skalBrukeOverstyrendeFritekstBrev && (
           <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
       )}
-      {ytelseType === fagsakYtelseType.ENGANGSSTONAD
+      {ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
           && skalViseESBrev(beregningResultat, originaltBeregningResultat, haveSentVarsel) && !skalBrukeOverstyrendeFritekstBrev
           && !erBehandlingEtterKlage && (
           <ForhaandsvisningsKnapp previewFunction={previewBrev} />
       )}
-      {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER) && skalBrukeOverstyrendeFritekstBrev && (
+      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER) && skalBrukeOverstyrendeFritekstBrev && (
         <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
       )}
-      {(ytelseType === fagsakYtelseType.FORELDREPENGER || ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER)
+      {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER)
           && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage && (
           <ForhaandsvisningsKnapp previewFunction={previewBrev} />
       )}
@@ -125,7 +125,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
-  ytelseType: PropTypes.string.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   submitKnappTextId: PropTypes.string.isRequired,
   begrunnelse: PropTypes.string,
   brodtekst: PropTypes.string,
