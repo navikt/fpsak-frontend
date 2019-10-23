@@ -110,6 +110,7 @@ describe('<ApprovalIndex>', () => {
       erKlage={false}
       isForeldrepenger
       behandlingKlageVurdering={{}}
+      disableGodkjennKnapp={false}
     />);
 
     wrapper.setState({ showBeslutterModal: true });
@@ -145,6 +146,7 @@ describe('<ApprovalIndex>', () => {
       erKlage={false}
       isForeldrepenger
       behandlingKlageVurdering={{}}
+      disableGodkjennKnapp={false}
     />);
 
     wrapper.unmount();
