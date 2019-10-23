@@ -102,7 +102,7 @@ VedtakPanels.propTypes = {
   erBehandlingHenlagt: PropTypes.bool.isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
-  resultatstruktur: vedtakBeregningsresultatPropType.isRequired,
+  resultatstruktur: vedtakBeregningsresultatPropType,
   medlemskapFom: PropTypes.string,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
@@ -120,6 +120,7 @@ VedtakPanels.propTypes = {
 VedtakPanels.defaultProps = {
   tilbakekrevingvalg: undefined,
   simuleringResultat: undefined,
+  resultatstruktur: undefined,
 };
 
 export default VedtakPanels;

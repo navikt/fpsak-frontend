@@ -11,7 +11,7 @@ const fodselFamilieHendelsePropType = PropTypes.shape({
     antallBarnTermin: PropTypes.number,
     antallBarnFodsel: PropTypes.number,
     erOverstyrt: PropTypes.bool,
-    vedtaksDatoSomSvangerskapsuke: PropTypes.string,
+    vedtaksDatoSomSvangerskapsuke: PropTypes.number,
     morForSykVedFodsel: PropTypes.bool,
     dokumentasjonForeligger: PropTypes.bool,
     brukAntallBarnFraTps: PropTypes.bool,

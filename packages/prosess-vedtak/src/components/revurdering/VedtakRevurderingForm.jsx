@@ -200,7 +200,6 @@ export class VedtakRevurderingFormImpl extends Component {
 }
 
 VedtakRevurderingFormImpl.propTypes = {
-  resultatstruktur: vedtakBeregningsresultatPropType.isRequired,
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   brødtekst: PropTypes.string,
@@ -212,6 +211,7 @@ VedtakRevurderingFormImpl.propTypes = {
   behandlingresultat: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
+  resultatstruktur: vedtakBeregningsresultatPropType,
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
@@ -225,6 +225,7 @@ VedtakRevurderingFormImpl.defaultProps = {
   antallBarn: undefined,
   revurderingsAarsakString: undefined,
   kanOverstyre: undefined,
+  resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
 };
 
