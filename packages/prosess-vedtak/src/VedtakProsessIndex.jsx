@@ -84,7 +84,7 @@ VedtakProsessIndex.propTypes = {
   beregningresultatForeldrepenger: vedtakBeregningsresultatPropType,
   beregningresultatEngangsstonad: vedtakBeregningsresultatPropType,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
-  sendVarselOmRevurdering: PropTypes.bool.isRequired,
+  sendVarselOmRevurdering: PropTypes.bool,
   originalBehandling: vedtakOriginalBehandlingPropType,
   medlemskap: vedtakMedlemskapPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
@@ -104,6 +104,7 @@ VedtakProsessIndex.defaultProps = {
   originalBehandling: undefined,
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
+  sendVarselOmRevurdering: false,
 };
 
 export default VedtakProsessIndex;

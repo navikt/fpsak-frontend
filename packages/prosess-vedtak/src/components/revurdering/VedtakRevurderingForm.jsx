@@ -230,12 +230,12 @@ VedtakRevurderingFormImpl.defaultProps = {
 
 const buildInitialValues = createSelector(
   [(ownProps) => ownProps.resultatstruktur,
-    (ownProps) => ownProps.behandlingStatus,
+    (ownProps) => ownProps.behandlingStatusKode,
     (ownProps) => ownProps.aksjonspunkter,
     (ownProps) => ownProps.ytelseType,
     (ownProps) => ownProps.behandlingresultat,
     (ownProps) => ownProps.sprakkode],
-  (beregningResultat, behandlingstatus, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => {
+  (beregningResultat, behandlingstatusKode, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter((ap) => ap.erAktivt)
       .filter((ap) => ap.kanLoses)
@@ -248,7 +248,7 @@ const buildInitialValues = createSelector(
           aksjonspunktKoder,
         };
       }
-      if (behandlingstatus.kode !== behandlingStatusCode.AVSLUTTET) {
+      if (behandlingstatusKode !== behandlingStatusCode.AVSLUTTET) {
         return {
           antallBarn: null,
           aksjonspunktKoder,
