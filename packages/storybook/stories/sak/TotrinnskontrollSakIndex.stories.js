@@ -100,6 +100,7 @@ export const visTotrinnskontrollForBeslutter = () => (
       erBehandlingEtterKlage
       erKlageWithKA={false}
       erKlage
+      disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
 );
@@ -130,6 +131,7 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       erBehandlingEtterKlage
       erKlageWithKA={false}
       erKlage
+      disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
 );

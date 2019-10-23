@@ -1,0 +1,81 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.iconHovedsoker {
+  position: absolute;
+  right: 25px;
+  top: 102px;
+  width: 25px;
+}
+
+.iconMedsoker {
+  position: absolute;
+  right: 25px;
+  top: 64px;
+  width: 25px;
+}
+
+.infoPlaceholder {
+  display: flex;
+  margin-left: 50px;
+}
+
+.timelineSokerContatiner {
+  border-bottom: 1px solid lightgrey;
+  border-right: 1px solid darkgrey;
+  height: 141px;
+  margin-bottom: 20px;
+
+  &:after {
+    border-top: 1px solid lightgrey;
+    content: '';
+    height: 10px;
+    position: absolute;
+    top: 56px;
+    width: 84px;
+  }
+}
+
+.scrollButton {
+  background-color: @white;
+  border: 1px solid lightgray;
+  border-bottom: 1px solid lightgrey;
+  border-image: none;
+  color: cornflowerblue;
+  margin-bottom: 2px;
+  margin-top: 20px;
+  padding-left: 0;
+  width: 20px;
+
+  &:focus {
+    background-color: @navOransjeLighten40;
+    border-bottom: 2px solid @navBla;
+    color: @navBla;
+    padding-bottom: 4px;
+    text-decoration: none;
+
+    &:hover {
+      color: @navBla;
+    }
+  }
+}
+
+.chevronLeft {
+  margin-left: -2px;
+}
+
+// IE11 and Edge-specific css
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .timelineSokerContatiner {
+    &:after {
+      top: 58px;
+    }
+  }
+}
+
+@supports (-ms-ime-align: auto) {
+  .timelineSokerContatiner {
+    &:after {
+      top: 58px;
+    }
+  }
+}

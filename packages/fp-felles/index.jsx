@@ -65,3 +65,4 @@ export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/V
 export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/VilkarResultPanel';
 export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
 export { default as skjermlenkeCodes, createLocationForHistorikkItems } from './src/skjermlenkeCodes';
+export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visningsnavnHelper';

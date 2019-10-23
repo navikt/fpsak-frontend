@@ -230,6 +230,7 @@ describe('<ApprovalPanel>', () => {
       location={{ pathname: 'test' }}
       totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      disableGodkjennKnapp={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -270,6 +271,7 @@ describe('<ApprovalPanel>', () => {
       location={{ pathname: 'test' }}
       totrinnskontrollSkjermlenkeContext={undefined}
       skjemalenkeTyper={[]}
+      disableGodkjennKnapp={false}
     />);
 
     const approvals = wrapper.state('approvals');
@@ -317,6 +319,7 @@ describe('<ApprovalPanel>', () => {
       location={{ pathname: 'test' }}
       totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
       skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+      disableGodkjennKnapp={false}
     />);
 
     const approvals = wrapper.state('approvals');

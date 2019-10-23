@@ -69,11 +69,11 @@ export const PermisjonGraderingPanel = ({
 );
 
 export const validateOtherErrors = (values) => values.map(({
-  periodeForGradering, prosentandelArbeid, arbeidsgiverIdentifikator, erArbeidstaker, samtidigUttaksprosent, harSamtidigUttak,
+  periodeForGradering, prosentandelArbeid, arbeidsgiverIdentifikator, arbeidskategoriType, samtidigUttaksprosent, harSamtidigUttak,
 }) => {
   const periodeForGraderingError = required(periodeForGradering);
   const prosentandelArbeidError = validateProsentandel(prosentandelArbeid);
-  const arbeidsgiverShouldBeRequired = erArbeidstaker === 'true';
+  const arbeidsgiverShouldBeRequired = arbeidskategoriType === arbeidskategori.ARBEIDSTAKER;
   const arbeidsgiverError = (arbeidsgiverShouldBeRequired && required(arbeidsgiverIdentifikator))
     || hasValidInteger(arbeidsgiverIdentifikator)
     || ((arbeidsgiverIdentifikator && arbeidsgiverIdentifikator.toString().length) === 11
@@ -102,10 +102,10 @@ PermisjonGraderingPanel.validate = (values) => {
 
 PermisjonGraderingPanel.transformValues = (perioder) => perioder.map((p) => {
   const { ...periode } = p;
-  if (p.erArbeidstaker) {
-    periode.erArbeidstaker = p.erArbeidstaker === arbeidskategori.ARBEIDSTAKER;
-    periode.erFrilanser = p.erArbeidstaker === arbeidskategori.FRILANSER;
-    periode.erSelvstNæringsdrivende = p.erArbeidstaker === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
+  if (p.arbeidskategoriType) {
+    periode.erArbeidstaker = p.arbeidskategoriType === arbeidskategori.ARBEIDSTAKER;
+    periode.erFrilanser = p.arbeidskategoriType === arbeidskategori.FRILANSER;
+    periode.erSelvstNæringsdrivende = p.arbeidskategoriType === arbeidskategori.SELVSTENDIG_NAERINGSDRIVENDE;
   }
   return periode;
 });

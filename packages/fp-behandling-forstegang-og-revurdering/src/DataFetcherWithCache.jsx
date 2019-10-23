@@ -33,6 +33,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.VILKAR]: 'vilkar',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
   [BehandlingFpsakApiKeys.BEREGNINGSGRUNNLAG]: 'beregningsgrunnlag',
+  [BehandlingFpsakApiKeys.BEREGNINGRESULTAT]: 'beregningsresultat-foreldrepenger',
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
   [BehandlingFpsakApiKeys.SOKNAD]: 'soknad',
   [BehandlingFpsakApiKeys.ORIGINAL_BEHANDLING]: 'original-behandling',
@@ -42,6 +43,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.INNTEKT_ARBEID_YTELSE]: 'inntekt-arbeid-ytelse',
   [BehandlingFpsakApiKeys.VERGE]: 'soeker-verge',
   [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
+  [BehandlingFpsakApiKeys.OPPTJENING]: 'opptjening',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
