@@ -165,7 +165,7 @@ ApprovalPanel.propTypes = {
   behandlingKlageVurdering: PropTypes.shape({
     klageVurdering: PropTypes.string,
     klageVurderingOmgjoer: PropTypes.string,
-  }).isRequired,
+  }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   erKlageWithKA: PropTypes.bool.isRequired,
@@ -175,6 +175,7 @@ ApprovalPanel.propTypes = {
 ApprovalPanel.defaultProps = {
   totrinnskontrollSkjermlenkeContext: undefined,
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
+  behandlingKlageVurdering: undefined,
 };
 
 export default ApprovalPanel;

@@ -36,7 +36,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       intl={intlMock}
       vilkar={vilkar}
       readOnly
-      ytelseType={fagsakYtelseType.FORELDREPENGER}
+      ytelseTypeKode={fagsakYtelseType.FORELDREPENGER}
       aksjonspunkter={[]}
       behandlingsresultat={behandlingsresultat}
       revurderingsAarsakString="Test"
@@ -45,7 +45,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
     expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.RevurderingFP.Aarsak');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
@@ -78,7 +78,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
       intl={intlMock}
       vilkar={vilkar}
       readOnly
-      ytelseType={fagsakYtelseType.SVANGERSKAPSPENGER}
+      ytelseTypeKode={fagsakYtelseType.SVANGERSKAPSPENGER}
       aksjonspunkter={[]}
       behandlingsresultat={behandlingsresultat}
       revurderingsAarsakString="Test"
@@ -87,7 +87,7 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
     expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.RevurderingFP.Aarsak');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);

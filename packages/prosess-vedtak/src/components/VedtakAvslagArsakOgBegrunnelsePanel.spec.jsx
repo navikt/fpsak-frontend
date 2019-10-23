@@ -35,18 +35,6 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       },
       avslagsarsakFritekst: null,
     };
-    const getKodeverknavn = (kodeverk) => {
-      if (kodeverk.kode === vilkarType.SOKNADFRISTVILKARET) {
-        return 'Medlemskapsvilkåret';
-      }
-      if (kodeverk.kode === vilkarUtfallType.IKKE_OPPFYLT) {
-        return 'test';
-      }
-      if (kodeverk.kode === '1019') {
-        return 'Manglende dokumentasjon';
-      }
-      return '';
-    };
     const wrapper = shallowWithIntl(<VedtakAvslagArsakOgBegrunnelsePanel
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
@@ -55,17 +43,13 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
       behandlingsresultat={behandlingsresultat}
       sprakkode={sprakkode}
       readOnly
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(1);
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til avslag');
-
-    const normaltekstFields = wrapper.find('Normaltekst');
-    expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.last().childAt(0).text()).to.eql('Medlemskapsvilkåret: Manglende dokumentasjon');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.ArsakTilAvslag');
 
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);

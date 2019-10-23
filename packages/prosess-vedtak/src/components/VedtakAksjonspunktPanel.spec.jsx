@@ -12,13 +12,13 @@ describe('<VedtakAksjonspunktPanel>', () => {
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
       readOnly={false}
-      isBehandlingHenlagt
+      erBehandlingHenlagt
       aksjonspunktKoder={aksjonspunktKoder}
       isBehandlingReadOnly={false}
     />);
 
     const label = wrapper.find('Systemtittel');
     expect(label).to.have.length(1);
-    expect(label.childAt(0).text()).is.eql('Behandlingen er henlagt');
+    expect(label.childAt(0).text()).is.eql('VedtakForm.BehandlingHenlagt');
   });
 });

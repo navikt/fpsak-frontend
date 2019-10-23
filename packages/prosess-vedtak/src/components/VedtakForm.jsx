@@ -220,7 +220,7 @@ export class VedtakForm extends Component {
 }
 
 VedtakForm.propTypes = {
-  resultatstruktur: vedtakBeregningsresultatPropType.isRequired,
+  resultatstruktur: vedtakBeregningsresultatPropType,
   intl: PropTypes.shape().isRequired,
   begrunnelse: PropTypes.string,
   brødtekst: PropTypes.string,
@@ -236,6 +236,12 @@ VedtakForm.propTypes = {
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   sprakkode: kodeverkObjektPropType.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
+  ytelseType: kodeverkObjektPropType.isRequired,
+  erBehandlingHenlagt: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  tilbakekrevingvalg: PropTypes.shape(),
+  simuleringResultat: PropTypes.shape(),
+  vilkar: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -245,6 +251,7 @@ VedtakForm.defaultProps = {
   brødtekst: undefined,
   overskrift: undefined,
   kanOverstyre: undefined,
+  resultatstruktur: undefined,
   skalBrukeOverstyrendeFritekstBrev: false,
 };
 

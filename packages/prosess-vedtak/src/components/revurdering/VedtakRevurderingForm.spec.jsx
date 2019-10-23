@@ -85,8 +85,7 @@ describe('<VedtakRevurderingForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={revurdering.status.kode}
-      behandlingsresultat={revurdering.behandlingsresultat}
-      behandlingresultat={revurdering}
+      behandlingresultat={revurdering.behandlingsresultat}
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       readOnly={false}

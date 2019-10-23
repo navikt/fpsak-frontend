@@ -37,22 +37,22 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       antallBarn={1}
       originaltBeregningResultat={originaltBeregningsresultat}
       beregningResultat={beregningResultat}
-      ytelseType={ytelseType}
+      ytelseTypeKode={ytelseType}
       readOnly
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
     expect(undertekstFields).to.have.length(3);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.at(1).childAt(0).text()).to.eql('Beregnet engangsstønad');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Antall barn');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.at(1).childAt(0).text()).to.eql('VedtakForm.beregnetTilkjentYtelse');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.AntallBarn');
 
     const normaltekstFields = wrapper.find(Normaltekst);
     expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Ingen endring');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat.IngenEndring');
 
     const elementFields = wrapper.find(Element);
     expect(elementFields).to.have.length(2);
@@ -72,21 +72,21 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       intl={intlMock}
       antallBarn={1}
       originaltBeregningResultat={originaltBeregningsresultat}
-      ytelseType={ytelseType}
+      ytelseTypeKode={ytelseType}
       readOnly
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('Antall barn');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.AntallBarn');
 
     const normaltekstFields = wrapper.find(Normaltekst);
     expect(normaltekstFields).to.have.length(1);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Endret til Avslag');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat.EndretTilAvslag');
 
     const elementFields = wrapper.find(Element);
     expect(elementFields).to.have.length(1);

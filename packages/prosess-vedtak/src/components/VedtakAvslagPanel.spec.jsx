@@ -113,8 +113,6 @@ describe('<VedtakAvslagPanel>', () => {
     },
   }];
 
-  const getKodeverknavn = () => undefined;
-
   it('skal rendre avslagspanel for engangsstønad', () => {
     const wrapper = shallowWithIntl(<VedtakAvslagPanelImpl
       intl={intlMock}
@@ -125,17 +123,17 @@ describe('<VedtakAvslagPanel>', () => {
       sprakkode={sprakkode}
       readOnly
       behandlinger={[behandling]}
-      ytelseType={engangsstonad}
-      getKodeverknavn={getKodeverknavn}
+      ytelseTypeKode={engangsstonad}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.EngangsstonadIkkeInnvilget');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });
@@ -150,17 +148,17 @@ describe('<VedtakAvslagPanel>', () => {
       sprakkode={sprakkode}
       readOnly
       behandlinger={[behandling]}
-      ytelseType={engangsstonad}
-      getKodeverknavn={getKodeverknavn}
+      ytelseTypeKode={engangsstonad}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.EngangsstonadIkkeInnvilget');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -175,17 +173,17 @@ describe('<VedtakAvslagPanel>', () => {
       sprakkode={sprakkode}
       readOnly
       behandlinger={[behandling]}
-      ytelseType={foreldrepenger}
-      getKodeverknavn={getKodeverknavn}
+      ytelseTypeKode={foreldrepenger}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.ForeldrepengerIkkeInnvilget');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -200,17 +198,17 @@ describe('<VedtakAvslagPanel>', () => {
       sprakkode={sprakkode}
       readOnly
       behandlinger={[behandling]}
-      ytelseType={foreldrepenger}
-      getKodeverknavn={getKodeverknavn}
+      ytelseTypeKode={foreldrepenger}
+      alleKodeverk={{}}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.ForeldrepengerIkkeInnvilget');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });

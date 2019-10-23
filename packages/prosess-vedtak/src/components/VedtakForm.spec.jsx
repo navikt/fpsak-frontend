@@ -4,11 +4,12 @@ import sinon from 'sinon';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -51,7 +52,7 @@ describe('<VedtakForm>', () => {
       antallBarn={2}
       previewCallback={previewCallback}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       aksjonspunktKoder={aksjonspunktKoder}
       kanOverstyre
@@ -62,6 +63,10 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       erBehandlingEtterKlage={false}
       initialValues={initialValues}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
 
@@ -107,7 +112,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -117,6 +122,10 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
     const label = wrapper.find('Element');
     expect(label).to.have.length(0);
@@ -156,7 +165,7 @@ describe('<VedtakForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -168,6 +177,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
@@ -209,7 +222,7 @@ describe('<VedtakForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -221,6 +234,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       erBehandlingEtterKlage={false}
       initialValues={initialValues}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
@@ -259,7 +276,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -270,11 +287,15 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(1);
   });
@@ -311,7 +332,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -322,11 +343,15 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(0);
   });
@@ -366,7 +391,7 @@ describe('<VedtakForm>', () => {
       {...reduxFormPropsMock}
       intl={intlMock}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -377,11 +402,15 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(1);
   });
@@ -419,7 +448,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.AVSLUTTET}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -430,6 +459,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -470,7 +503,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -481,6 +514,10 @@ describe('<VedtakForm>', () => {
       sprakkode={sprakkode}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -522,7 +559,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.FATTER_VEDTAK}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -533,6 +570,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -682,7 +723,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -694,6 +735,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -706,7 +751,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -718,6 +763,10 @@ describe('<VedtakForm>', () => {
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
       erBehandlingEtterKlage={false}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -731,7 +780,7 @@ describe('<VedtakForm>', () => {
       intl={intlMock}
       antallBarn={2}
       behandlingStatusKode={behandlingStatus.BEHANDLING_UTREDES}
-      behandlingsresultat={behandlingsresultat}
+      behandlingresultat={behandlingsresultat}
       aksjonspunkter={aksjonspunkter}
       behandlingPaaVent={false}
       previewCallback={previewCallback}
@@ -743,6 +792,10 @@ describe('<VedtakForm>', () => {
       erBehandlingEtterKlage={false}
       skalBrukeOverstyrendeFritekstBrev={false}
       initialValues={initialValues}
+      ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
+      erBehandlingHenlagt={false}
+      alleKodeverk={{}}
+      vilkar={{}}
     />);
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
     expect(overstyringsKnapp).to.have.length(0);

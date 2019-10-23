@@ -25,7 +25,11 @@ describe('<BehandlingspunktInfoPanel>', () => {
       isApSolvable={false}
       apCodes={[]}
       readOnlySubmitButton={false}
-      fagsakInfo={{}}
+      fagsakInfo={{
+        ytelseType: {
+          kode: fagsakYtelseType.FORELDREPENGER,
+        },
+      }}
       featureToggles={{}}
       overrideReadOnly={false}
       kanOverstyreAccess={{ isEnabled: false }}
@@ -36,9 +40,9 @@ describe('<BehandlingspunktInfoPanel>', () => {
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCache);
-    expect(dataFetchers.first().prop('showComponent')).to.be.true;
+    expect(dataFetchers.at(1).prop('showComponent')).to.be.true;
 
-    const beregningPanel = dataFetchers.first().renderProp('render')({
+    const beregningPanel = dataFetchers.at(1).renderProp('render')({
       behandling: { id: 1, versjon: 1 },
       beregningresultatEngangsstonad: {},
     }).find(BeregningsresultatProsessIndex);
