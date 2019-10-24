@@ -69,7 +69,7 @@ TotrinnskontrollSakIndex.propTypes = {
   behandlingKlageVurdering: PropTypes.shape({
     klageVurdering: PropTypes.string,
     klageVurderingOmgjoer: PropTypes.string,
-  }).isRequired,
+  }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   erKlageWithKA: PropTypes.bool.isRequired,
@@ -78,6 +78,10 @@ TotrinnskontrollSakIndex.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+};
+
+TotrinnskontrollSakIndex.defaultProps = {
+  behandlingKlageVurdering: undefined,
 };
 
 export default TotrinnskontrollSakIndex;

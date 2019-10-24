@@ -11,6 +11,7 @@ import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-r
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
+import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
@@ -20,7 +21,6 @@ import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/b
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPanel from './uttak/UttakPanel';
-import VedtakPanels from './vedtak/VedtakPanels';
 import VilkarPanels from './VilkarPanels';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
@@ -35,6 +35,12 @@ const revurderingData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi
 const sjekkPersonStatusData = [fpsakApi.BEHANDLING, fpsakApi.MEDLEMSKAP, fpsakApi.PERSONOPPLYSNINGER];
 const soknadsfristData = [fpsakApi.BEHANDLING, fpsakApi.UTTAK_PERIODE_GRENSE, fpsakApi.SOKNAD];
 const tilkjentYtelseData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.SOKNAD];
+const vedtakDataES = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTONAD, fpsakApi.TILBAKEKREVINGVALG,
+  fpsakApi.SIMULERING_RESULTAT, fpsakApi.VILKAR, fpsakApi.SEND_VARSEL_OM_REVURDERING, fpsakApi.ORIGINAL_BEHANDLING,
+  fpsakApi.MEDLEMSKAP];
+const vedtakDataFpOgSvp = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_FORELDREPENGER, fpsakApi.TILBAKEKREVINGVALG,
+  fpsakApi.SIMULERING_RESULTAT, fpsakApi.VILKAR, fpsakApi.SEND_VARSEL_OM_REVURDERING, fpsakApi.ORIGINAL_BEHANDLING,
+  fpsakApi.MEDLEMSKAP];
 
 
 /*
@@ -76,11 +82,23 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         kanOverstyreAccess={kanOverstyreAccess}
         toggleOverstyring={toggleOverstyring}
       />
-      <VedtakPanels
-        behandlingspunkt={selectedBehandlingspunkt}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
-        submitCallback={submitCallback}
+
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        showComponent={selectedBehandlingspunkt === behandlingspunktCodes.VEDTAK}
+        data={fagsakInfo.ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD ? vedtakDataES : vedtakDataFpOgSvp}
+        render={(props) => (
+          <VedtakProsessIndex
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            readOnly={readOnly}
+            previewCallback={previewCallback}
+            submitCallback={submitCallback}
+            ytelseType={fagsakInfo.ytelseType}
+            employeeHasAccess={kanOverstyreAccess.employeeHasAccess}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
       />
 
       <DataFetcherWithCache

@@ -32,6 +32,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.AKSJONSPUNKTER]: 'aksjonspunkter',
   [BehandlingFpsakApiKeys.VILKAR]: 'vilkar',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD]: 'beregningsresultat-engangsstonad',
+  [BehandlingFpsakApiKeys.BEREGNINGRESULTAT_FORELDREPENGER]: 'beregningsresultat-foreldrepenger',
   [BehandlingFpsakApiKeys.BEREGNINGSGRUNNLAG]: 'beregningsgrunnlag',
   [BehandlingFpsakApiKeys.BEREGNINGRESULTAT]: 'beregningsresultat-foreldrepenger',
   [BehandlingFpsakApiKeys.FAMILIEHENDELSE]: 'familiehendelse-v2',
@@ -44,6 +45,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.VERGE]: 'soeker-verge',
   [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
   [BehandlingFpsakApiKeys.OPPTJENING]: 'opptjening',
+  [BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING]: 'sendt-varsel-om-revurdering',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

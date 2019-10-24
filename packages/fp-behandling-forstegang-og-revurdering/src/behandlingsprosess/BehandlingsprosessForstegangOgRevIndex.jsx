@@ -13,7 +13,7 @@ import { BehandlingIdentifier, behandlingspunktCodes, trackRouteParam } from '@f
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import statusIconsBeregningsgrunnlag from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsBeregningsgrunnlag';
 import statusIconsUttak from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsUttak';
-import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
+import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/IverksetterVedtakStatusModal';
 import statusIconsAvregning from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsAvregning';
 import behandlingSelectors from '../selectors/forsteOgRevBehandlingSelectors';
 import {
