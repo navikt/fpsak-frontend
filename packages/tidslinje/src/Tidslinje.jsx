@@ -149,18 +149,18 @@ class Tidslinje extends Component {
         <Row>
           <Column xs="1" className={styles.sokerContainer}>
             {medsokerKjonnKode
-            && (
-              <TimeLineSoker
-                hovedsokerKjonnKode={hovedsokerKjonnKode}
-                medsokerKjonnKode={medsokerKjonnKode}
-              />
-            )}
+              && (
+                <TimeLineSoker
+                  hovedsokerKjonnKode={hovedsokerKjonnKode}
+                  medsokerKjonnKode={medsokerKjonnKode}
+                />
+              )}
             {!medsokerKjonnKode
-            && (
-              <TimeLineSokerEnsamSoker
-                hovedsokerKjonnKode={hovedsokerKjonnKode}
-              />
-            )}
+              && (
+                <TimeLineSokerEnsamSoker
+                  hovedsokerKjonnKode={hovedsokerKjonnKode}
+                />
+              )}
           </Column>
           <Column xs="11">
             <div className={styles.timeLineWrapper}>
