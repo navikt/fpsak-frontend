@@ -2,8 +2,8 @@ import { createSelector } from 'reselect';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import fpsakApi from 'data/fpsakApi';
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
+import fpsakApi from '../data/fpsakApi';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
 
 const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 

@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
-import { getLocationWithDefaultBehandlingspunktAndFakta, injectKodeverk, pathToBehandling } from '@fpsak-frontend/fp-felles';
-import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
+import behandlingVelgerBehandlingPropType from '../propTypes/behandlingVelgerBehandlingPropType';
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
 
 import styles from './behandlingPickerItem.less';
@@ -49,15 +49,16 @@ const renderLinkToBehandling = (saksnummer, behandling, isActive, toggleShowAll,
   </NavLink>
 );
 
-export const BehandlingPickerItem = ({
+const BehandlingPickerItem = ({
   onlyOneBehandling,
   behandling,
   saksnummer,
   isActive,
   showAll,
   toggleShowAll,
-  getKodeverknavn,
+  alleKodeverk,
 }) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   if (onlyOneBehandling && isActive) {
     return renderItemContent(behandling, getKodeverknavn, isActive);
   }
@@ -72,12 +73,12 @@ export const BehandlingPickerItem = ({
 
 BehandlingPickerItem.propTypes = {
   onlyOneBehandling: PropTypes.bool.isRequired,
-  behandling: behandlingIListePropType.isRequired,
+  behandling: behandlingVelgerBehandlingPropType.isRequired,
   saksnummer: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(BehandlingPickerItem);
+export default BehandlingPickerItem;

@@ -1,4 +1,4 @@
-// TODO Endre navn og rydd
+// TODO Denne skal vekk
 /**
  * Denne brukers til å utføre operasjoner på behandling utenfor behandlingskonteksten.
  */

@@ -3,8 +3,32 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Table } from '@fpsak-frontend/shared-components';
-import { FagsakList } from './FagsakList';
+
+import FagsakList from './FagsakList';
+
+const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
+const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
+
+const alleKodeverk = {
+  [kodeverkTyper.FAGSAK_STATUS]: [{
+    kode: fagsakStatus.UNDER_BEHANDLING,
+    navn: 'Under behandling',
+    kodeverk: FAGSAK_STATUS_KODEVERK,
+  }, {
+    kode: fagsakStatus.AVSLUTTET,
+    navn: 'Avsluttet',
+    kodeverk: FAGSAK_STATUS_KODEVERK,
+  }],
+  [kodeverkTyper.FAGSAK_YTELSE]: [{
+    kode: fagsakYtelseType.ENGANGSSTONAD,
+    navn: 'Engangsstønad',
+    kodeverk: FAGSAK_YTELSE_KODEVERK,
+  }],
+};
 
 describe('<FagsakList>', () => {
   const person = {
@@ -18,27 +42,16 @@ describe('<FagsakList>', () => {
     saksnummer: 12345,
     sakstype: {
       kode: 'ES',
+      kodeverk: FAGSAK_YTELSE_KODEVERK,
     },
     status: {
       kode: 'UBEH',
+      kodeverk: FAGSAK_STATUS_KODEVERK,
     },
     barnFodt: null,
     opprettet: '2019-02-17T13:49:18.645',
     endret: '2019-02-17T13:49:18.645',
     person,
-  };
-
-  const getKodeverknavn = ({ kode }) => {
-    if (kode === 'ES') {
-      return 'Engangsstonad';
-    }
-    if (kode === 'UBEH') {
-      return 'Under behandling';
-    }
-    if (kode === 'AVSLU') {
-      return 'Avsluttet';
-    }
-    return '';
   };
 
   const headerTextCodes = [
@@ -50,7 +63,7 @@ describe('<FagsakList>', () => {
 
   it('skal vise en tabell med en rad og tilhørende kolonnedata', () => {
     const clickFunction = sinon.spy();
-    const wrapper = shallow(<FagsakList fagsaker={[fagsak]} selectFagsakCallback={clickFunction} getKodeverknavn={getKodeverknavn} />);
+    const wrapper = shallow(<FagsakList fagsaker={[fagsak]} selectFagsakCallback={clickFunction} alleKodeverk={alleKodeverk} />);
 
     const table = wrapper.find(Table);
     expect(table).to.have.length(1);
@@ -62,7 +75,7 @@ describe('<FagsakList>', () => {
     const tableColumns = tableRows.children();
     expect(tableColumns).to.have.length(4);
     expect(tableColumns.first().childAt(0).text()).to.eql('12345');
-    expect(tableColumns.at(1).childAt(0).text()).to.eql('Engangsstonad');
+    expect(tableColumns.at(1).childAt(0).text()).to.eql('Engangsstønad');
     expect(tableColumns.at(2).childAt(0).text()).to.eql('Under behandling');
     expect(tableColumns.last().childAt(0)).is.empty;
   });
@@ -72,9 +85,11 @@ describe('<FagsakList>', () => {
       saksnummer: 23456,
       sakstype: {
         kode: 'ES',
+        kodeverk: FAGSAK_YTELSE_KODEVERK,
       },
       status: {
         kode: 'UBEH',
+        kodeverk: FAGSAK_STATUS_KODEVERK,
       },
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
@@ -85,9 +100,11 @@ describe('<FagsakList>', () => {
       saksnummer: 34567,
       sakstype: {
         kode: 'ES',
+        kodeverk: FAGSAK_YTELSE_KODEVERK,
       },
       status: {
         kode: 'AVSLU',
+        kodeverk: FAGSAK_STATUS_KODEVERK,
       },
       barnFodt: null,
       opprettet: '2019-02-18T13:49:18.645',
@@ -96,7 +113,7 @@ describe('<FagsakList>', () => {
     };
 
     const fagsaker = [fagsak, fagsak2, fagsak3];
-    const wrapper = shallow(<FagsakList fagsaker={fagsaker} selectFagsakCallback={() => true} getKodeverknavn={getKodeverknavn} />);
+    const wrapper = shallow(<FagsakList fagsaker={fagsaker} selectFagsakCallback={() => true} alleKodeverk={alleKodeverk} />);
 
     const table = wrapper.find(Table);
     const tableRows = table.children();
@@ -105,21 +122,21 @@ describe('<FagsakList>', () => {
     const tableColumnsRow1 = tableRows.first().children();
     expect(tableColumnsRow1).to.have.length(4);
     expect(tableColumnsRow1.first().childAt(0).text()).to.eql('23456');
-    expect(tableColumnsRow1.at(1).childAt(0).text()).to.eql('Engangsstonad');
+    expect(tableColumnsRow1.at(1).childAt(0).text()).to.eql('Engangsstønad');
     expect(tableColumnsRow1.at(2).childAt(0).text()).to.eql('Under behandling');
     expect(tableColumnsRow1.last().childAt(0)).is.empty;
 
     const tableColumnsRow2 = tableRows.at(1).children();
     expect(tableColumnsRow2).to.have.length(4);
     expect(tableColumnsRow2.first().childAt(0).text()).to.eql('12345');
-    expect(tableColumnsRow2.at(1).childAt(0).text()).to.eql('Engangsstonad');
+    expect(tableColumnsRow2.at(1).childAt(0).text()).to.eql('Engangsstønad');
     expect(tableColumnsRow2.at(2).childAt(0).text()).to.eql('Under behandling');
     expect(tableColumnsRow2.last().childAt(0)).is.empty;
 
     const tableColumnsRow3 = tableRows.last().children();
     expect(tableColumnsRow3).to.have.length(4);
     expect(tableColumnsRow3.first().childAt(0).text()).to.eql('34567');
-    expect(tableColumnsRow3.at(1).childAt(0).text()).to.eql('Engangsstonad');
+    expect(tableColumnsRow3.at(1).childAt(0).text()).to.eql('Engangsstønad');
     expect(tableColumnsRow3.at(2).childAt(0).text()).to.eql('Avsluttet');
     expect(tableColumnsRow3.last().childAt(0)).is.empty;
   });
@@ -128,10 +145,12 @@ describe('<FagsakList>', () => {
     const fagsak4 = {
       saksnummer: 23456,
       sakstype: {
-        kode: 'TEST',
+        kode: 'ES',
+        kodeverk: FAGSAK_YTELSE_KODEVERK,
       },
       status: {
         kode: 'UBEH',
+        kodeverk: FAGSAK_STATUS_KODEVERK,
       },
       barnFodt: '2019-02-18T13:49:18.645',
       opprettet: '2019-02-18T13:49:18.645',
@@ -140,7 +159,7 @@ describe('<FagsakList>', () => {
     };
 
     const clickFunction = sinon.spy();
-    const wrapper = shallow(<FagsakList fagsaker={[fagsak, fagsak4]} selectFagsakCallback={clickFunction} getKodeverknavn={getKodeverknavn} />);
+    const wrapper = shallow(<FagsakList fagsaker={[fagsak, fagsak4]} selectFagsakCallback={clickFunction} alleKodeverk={alleKodeverk} />);
 
     const table = wrapper.find(Table);
     const tableRows = table.children();

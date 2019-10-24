@@ -1,12 +1,13 @@
-import { Header } from '@fpsak-frontend/dekorator';
 import { injectIntl } from 'react-intl';
+import PropTypes from 'prop-types';
 import React from 'react';
+import { createSelector } from 'reselect';
+
+import { Header } from '@fpsak-frontend/dekorator';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
-import PropTypes from 'prop-types';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
-import { createSelector } from 'reselect';
 
 const errorMessagesSelector = createSelector([
   (s) => s.intl,

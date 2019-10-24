@@ -16,9 +16,6 @@ import styles from './behandlingPickerItemContent.less';
 // TODO (TOR) Kva er dette for noko? Desse tekstane burde vel komma fra kodeverket? Ein skal uansett ikkje hardkoda kodane her!
 // TODO hente de forksjellige kodeverkene man trenger
 const getÅrsak = (årsak) => {
-  /* if (årsak.manueltOpprettet) {
-    return 'Manuell behandling';
-  } */
   switch (årsak.behandlingArsakType.kode) {
     case 'RE-MF':
     case 'RE-MFIP':
@@ -65,9 +62,8 @@ const getÅrsak = (årsak) => {
     case 'RE-YTELSE':
     case 'RE-TILST-YT-INNVIL':
     case 'RE-TILST-YT-OPPH':
-      return 'Opplysninger annen ytelse';
+      return 'Behandlingspunkt.Årsak.OpplysningerAnnenYtelse';
     case 'RE-HENDELSE-FØDSEL':
-      return 'Behandlingspunkt.Årsak.Fødsel';
     case 'RE-FØDSEL':
       return 'Behandlingspunkt.Årsak.Fødsel';
     case 'RE-HENDELSE-DØD-F':

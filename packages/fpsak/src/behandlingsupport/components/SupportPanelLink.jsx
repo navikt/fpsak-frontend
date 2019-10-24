@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
 
-import SupportPanel from 'behandlingsupport/supportPanels';
+import SupportPanel from '../supportPanels';
 
 import styles from './supportPanelLink.less';
 

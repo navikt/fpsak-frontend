@@ -7,9 +7,9 @@ import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { getBehandlingerTypesMappedById, getBehandlingerStatusMappedById } from 'behandling/selectors/behandlingerSelectors';
-import fpsakApi from 'data/fpsakApi';
+import { getSelectedBehandlingId } from '../behandling/duck';
+import { getBehandlingerTypesMappedById, getBehandlingerStatusMappedById } from '../behandling/selectors/behandlingerSelectors';
+import fpsakApi from '../data/fpsakApi';
 
 // TODO (TOR) Det er i dag behov for å kalle totrinns-endepunkt her fordi BehandlingSupportIndex har behov for datte. Bedre om dette
 // kan flyttast til "approval".

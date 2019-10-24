@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
+
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel.svg';
 import { hasValidSaksnummerOrFodselsnummerFormat } from '@fpsak-frontend/utils';

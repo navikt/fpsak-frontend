@@ -19,6 +19,7 @@ import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
 import vedtakBeregningsresultatPropType from '../propTypes/vedtakBeregningsresultatPropType';
+import vedtakVilkarPropType from '../propTypes/vedtakVilkarPropType';
 import FritekstBrevPanel from './FritekstBrevPanel';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
@@ -241,7 +242,7 @@ VedtakForm.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
-  vilkar: PropTypes.shape().isRequired,
+  vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   ...formPropTypes,
 };
 

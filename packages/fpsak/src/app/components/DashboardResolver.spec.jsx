@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+
 import Dashboard from './Dashboard';
 import { DashboardResolver } from './DashboardResolver';
 

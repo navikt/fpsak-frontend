@@ -3,16 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 
-import BehandlingerIndex from 'behandling/BehandlingerIndex';
-import BehandlingSupportIndex from 'behandlingsupport/BehandlingSupportIndex';
-import FagsakProfileIndex from 'fagsakprofile/FagsakProfileIndex';
 import {
   behandlingerPath, getRequestPollingMessage, requireProps, trackRouteParam,
 } from '@fpsak-frontend/fp-felles';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+
+import BehandlingerIndex from '../behandling/BehandlingerIndex';
+import BehandlingSupportIndex from '../behandlingsupport/BehandlingSupportIndex';
+import FagsakProfileIndex from '../fagsakprofile/FagsakProfileIndex';
 import { setSelectedSaksnummer } from './duck';
 import { getSelectedSaksnummer } from './fagsakSelectors';
 import FagsakResolver from './FagsakResolver';
-import DataFetchPendingModal from './components/DataFetchPendingModal';
 import FagsakGrid from './components/FagsakGrid';
 
 /**

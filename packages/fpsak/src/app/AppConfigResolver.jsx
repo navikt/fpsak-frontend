@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import fpsakApi from 'data/fpsakApi';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { fetchAllFeatureToggles } from 'app/duck';
+
+import fpsakApi from '../data/fpsakApi';
+import { fetchAllFeatureToggles } from './duck';
 
 class AppConfigResolver extends Component {
   static propTypes = {

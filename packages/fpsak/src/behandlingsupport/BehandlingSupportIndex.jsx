@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
-import { isKontrollerRevurderingAksjonspunkOpen } from 'behandling/duck';
+
+import { isKontrollerRevurderingAksjonspunkOpen } from '../behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
-
 import supportPanels from './supportPanels';
 import LinkRow from './components/LinkRow';
 import SupportPanelLink from './components/SupportPanelLink';
@@ -15,6 +15,7 @@ import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
 import ApprovalIndex from './approval/ApprovalIndex';
+
 import styles from './behandlingSupportIndex.less';
 
 const renderSupportPanel = (supportPanel) => {

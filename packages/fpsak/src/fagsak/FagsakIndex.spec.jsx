@@ -2,7 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import DataFetchPendingModal from './components/DataFetchPendingModal';
+import { DataFetchPendingModal } from '@fpsak-frontend/shared-components';
+
 import { FagsakIndex } from './FagsakIndex';
 import FagsakResolver from './FagsakResolver';
 

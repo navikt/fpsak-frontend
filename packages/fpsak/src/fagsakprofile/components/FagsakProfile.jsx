@@ -7,10 +7,10 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 
-import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
-import { getAlleKodeverk } from 'kodeverk/duck';
-import BehandlingPicker from './BehandlingPicker';
+import BehandlingMenuIndex from '../../behandlingmenu/BehandlingMenuIndex';
+import { getAlleKodeverk } from '../../kodeverk/duck';
 
 import styles from './fagsakProfile.less';
 
@@ -33,6 +33,7 @@ export const FagsakProfile = ({
   noExistingBehandlinger,
   annenPartLink,
   getKodeverknavn,
+  alleKodeverk,
 }) => (
   <div>
     <Row>
@@ -62,13 +63,14 @@ export const FagsakProfile = ({
         </div>
       </Column>
     </Row>
-    <BehandlingPicker
+    <BehandlingVelgerSakIndex
       behandlinger={behandlinger}
       saksnummer={saksnummer}
       noExistingBehandlinger={noExistingBehandlinger}
       behandlingId={selectedBehandlingId}
       showAll={showAll}
       toggleShowAll={toggleShowAll}
+      alleKodeverk={alleKodeverk}
     />
   </div>
 );
@@ -84,6 +86,7 @@ FagsakProfile.propTypes = {
   toggleShowAll: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),
   getKodeverknavn: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FagsakProfile.defaultProps = {

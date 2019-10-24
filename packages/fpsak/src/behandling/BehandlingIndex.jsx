@@ -9,15 +9,15 @@ import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
-import { getAllDocuments } from 'behandlingsupport/behandlingsupportSelectors';
-import { getHasSubmittedPaVentForm } from 'behandlingmenu/duck';
+import { getAlleKodeverk } from '../kodeverk/duck';
+import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
+import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
   getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson,
   getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
-} from 'fagsak/fagsakSelectors';
-import { getNavAnsatt, getFeatureToggles } from 'app/duck';
-import { reduxRestApi } from 'data/fpsakApi';
+} from '../fagsak/fagsakSelectors';
+import { getNavAnsatt, getFeatureToggles } from '../app/duck';
+import { reduxRestApi } from '../data/fpsakApi';
 import {
   setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';

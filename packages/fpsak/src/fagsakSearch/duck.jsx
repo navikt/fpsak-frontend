@@ -1,4 +1,4 @@
-import fpsakApi from 'data/fpsakApi';
+import fpsakApi from '../data/fpsakApi';
 
 /* Action creators */
 export const searchFagsaker = fpsakApi.SEARCH_FAGSAK.makeRestApiRequest();

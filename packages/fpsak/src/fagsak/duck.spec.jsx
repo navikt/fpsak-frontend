@@ -3,8 +3,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
-import fpsakApi, { FpsakApiKeys, reduxRestApi } from 'data/fpsakApi';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
+import fpsakApi, { FpsakApiKeys, reduxRestApi } from '../data/fpsakApi';
 import {
   doNotResetWhitelist,
   fagsakReducer,
