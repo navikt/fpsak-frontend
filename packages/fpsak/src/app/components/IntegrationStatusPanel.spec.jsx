@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
 describe('<IntegrationStatusPanel>', () => {

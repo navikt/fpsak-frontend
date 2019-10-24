@@ -1,15 +1,15 @@
 {
-  "name": "@fpsak-frontend/search-form",
+  "name": "@fpsak-frontend/sak-sok",
   "version": "1.0.0",
   "module": "index.jsx",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/assets": "1.0.0",
-    "@fpsak-frontend/form": "1.0.0",
+    "@fpsak-frontend/fp-felles": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "classnames": "^2.2.6",
+    "nav-frontend-core": "4.0.10",
     "nav-frontend-grid": "1.0.22",
     "nav-frontend-grid-style": "0.2.18",
     "nav-frontend-knapper": "1.0.36",
@@ -19,10 +19,13 @@
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-intl": "^3.1.11",
-    "react-redux": "^5.1.1",
-    "redux-form": "^7.4.2"
+    "redux-form": "^7.4.2",
+    "react-redux": "^5.1.1"
   },
   "devDependencies": {
-    "@fpsak-frontend/utils-test": "1.0.0"
+    "@fpsak-frontend/utils-test": "1.0.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.10.0",
+    "sinon": "^7.3.2"
   }
 }

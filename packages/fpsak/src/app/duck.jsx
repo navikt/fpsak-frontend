@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect';
 
-import fpsakApi from 'data/fpsakApi';
-/* import { featureToggle } from '@fpsak-frontend/fp-felles'; */
+import fpsakApi from '../data/fpsakApi';
 
 export const reducerName = 'app';
 

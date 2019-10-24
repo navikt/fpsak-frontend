@@ -4,7 +4,8 @@ import sinon from 'sinon';
 import { Systemtittel } from 'nav-frontend-typografi';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import BehandlingMenuIndex from 'behandlingmenu/BehandlingMenuIndex';
+
+import BehandlingMenuIndex from '../../behandlingmenu/BehandlingMenuIndex';
 
 import { FagsakProfile } from './FagsakProfile';
 
@@ -71,6 +72,7 @@ describe('<FagsakProfile>', () => {
       noExistingBehandlinger
       push={sinon.spy()}
       getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     const h2 = wrapper.find(Systemtittel);

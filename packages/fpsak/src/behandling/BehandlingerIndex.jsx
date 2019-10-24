@@ -5,9 +5,9 @@ import { Route, Switch } from 'react-router-dom';
 
 import { behandlingPath } from '@fpsak-frontend/fp-felles';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
-import { getFagsakPerson } from 'fagsak/fagsakSelectors';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 
+import { getFagsakPerson } from '../fagsak/fagsakSelectors';
 import NoSelectedBehandling from './components/NoSelectedBehandling';
 import BehandlingIndex from './BehandlingIndex';
 import { getNumBehandlinger } from './selectors/behandlingerSelectors';

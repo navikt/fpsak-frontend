@@ -45,6 +45,7 @@ describe('<BehandlingPicker>', () => {
       saksnummer={1}
       showAll={false}
       toggleShowAll={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     const message = wrapper.find(FormattedMessage);
@@ -72,6 +73,7 @@ describe('<BehandlingPicker>', () => {
       saksnummer={1}
       showAll={false}
       toggleShowAll={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     const item = wrapper.find(BehandlingPickerItem);
@@ -102,6 +104,7 @@ describe('<BehandlingPicker>', () => {
       saksnummer={1}
       showAll={false}
       toggleShowAll={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     const item = wrapper.find(BehandlingPickerItem);

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
-import { FpsakApiKeys } from 'data/fpsakApi';
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
+import { FpsakApiKeys } from '../data/fpsakApi';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
 import {
   getAllFagsakInfoResolved, getFetchFagsakInfoFailed, getFetchFagsakInfoFinished, getSelectedFagsak,
 } from './fagsakSelectors';

@@ -4,9 +4,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { PersonIndex } from '@fpsak-frontend/person-info';
-import { SearchForm } from '@fpsak-frontend/search-form';
 import FagsakSearch from './FagsakSearch';
 import FagsakList from './FagsakList';
+import SearchForm from './SearchForm';
 
 
 describe('<FagsakSearch>', () => {
@@ -40,6 +40,7 @@ describe('<FagsakSearch>', () => {
       selectFagsakCallback={sinon.spy()}
       spinner
       searchStarted
+      alleKodeverk={{}}
     />);
 
     const searchComp = wrapper.find(SearchForm);
@@ -57,6 +58,7 @@ describe('<FagsakSearch>', () => {
       selectFagsakCallback={sinon.spy()}
       spinner
       searchStarted
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(SearchForm)).to.have.length(1);
@@ -75,6 +77,7 @@ describe('<FagsakSearch>', () => {
       selectFagsakCallback={selectFagsakFunction}
       spinner
       searchStarted
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(SearchForm)).to.have.length(1);

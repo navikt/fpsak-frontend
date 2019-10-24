@@ -66,7 +66,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
 
@@ -125,7 +125,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
     const label = wrapper.find('Element');
     expect(label).to.have.length(0);
@@ -180,7 +180,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
@@ -237,7 +237,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     expect(wrapper.find(VedtakAvslagPanel)).to.have.length(1);
@@ -290,7 +290,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -346,7 +346,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -405,7 +405,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -462,7 +462,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -517,7 +517,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -573,7 +573,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -738,7 +738,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -766,7 +766,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find(VedtakOverstyrendeKnapp);
     expect(overstyringsKnapp).to.have.length(1);
@@ -795,7 +795,7 @@ describe('<VedtakForm>', () => {
       ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
       erBehandlingHenlagt={false}
       alleKodeverk={{}}
-      vilkar={{}}
+      vilkar={[]}
     />);
     const overstyringsKnapp = wrapper.find('VedtakOverstyrendeKnapp');
     expect(overstyringsKnapp).to.have.length(0);

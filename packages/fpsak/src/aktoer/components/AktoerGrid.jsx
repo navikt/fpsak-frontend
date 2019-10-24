@@ -7,7 +7,7 @@ import { PersonInfo } from '@fpsak-frontend/person-info';
 import { injectKodeverk, pathToFagsak } from '@fpsak-frontend/fp-felles';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 
-import { getAlleKodeverk } from 'kodeverk/duck';
+import { getAlleKodeverk } from '../../kodeverk/duck';
 
 import styles from './aktoerGrid.less';
 

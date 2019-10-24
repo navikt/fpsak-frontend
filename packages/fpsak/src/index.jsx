@@ -8,7 +8,7 @@ import { init, Integrations } from '@sentry/browser';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
-import AppIndex from 'app/AppIndex';
+import AppIndex from './app/AppIndex';
 import configureStore from './configureStore';
 
 

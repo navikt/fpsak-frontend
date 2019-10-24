@@ -4,21 +4,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import moment from 'moment';
-
 import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
 import { ForbiddenPage, UnauthorizedPage } from '@fpsak-frontend/feilsider';
 import { parseQueryString } from '@fpsak-frontend/utils';
+
 import AppConfigResolver from './AppConfigResolver';
 import { getFunksjonellTid, getNavAnsattName, getShowDetailedErrorMessages } from './duck';
 import LanguageProvider from './LanguageProvider';
 import Home from './components/Home';
-
-import '@fpsak-frontend/assets/styles/global.less';
 import Dekorator from './components/Dekorator';
 
+import '@fpsak-frontend/assets/styles/global.less';
 
 /**
  * AppIndex

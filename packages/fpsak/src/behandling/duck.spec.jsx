@@ -5,7 +5,7 @@ import { expect } from 'chai';
 
 import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
-import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
+import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
 import {
   behandlingReducer, setSelectedBehandlingId, getRettigheter,
 } from './duck';

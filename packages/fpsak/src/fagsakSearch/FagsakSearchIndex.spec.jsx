@@ -3,7 +3,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import FagsakSearch from './components/FagsakSearch';
+import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
+
 import FagsakSearchIndex from './FagsakSearchIndex';
 
 describe('<FagsakSearchIndex>', () => {
@@ -37,9 +38,10 @@ describe('<FagsakSearchIndex>', () => {
       searchResultReceived={false}
       searchStarted
       resetFagsakSearch={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
-    const fagsakSearchIndex = wrapper.find(FagsakSearch);
+    const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     expect(fagsakSearchIndex).to.have.length(1);
     expect(fagsakSearchIndex.prop('fagsaker')).to.eql(fagsaker);
   });
@@ -53,9 +55,10 @@ describe('<FagsakSearchIndex>', () => {
       searchResultReceived={false}
       searchStarted
       resetFagsakSearch={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
-    const fagsakSearchIndex = wrapper.find(FagsakSearch);
+    const fagsakSearchIndex = wrapper.find(FagsakSokSakIndex);
     fagsakSearchIndex.prop('selectFagsakCallback')('', fagsak.saksnummer);
 
     expect(pushCallback.calledOnce).to.be.true;
@@ -72,6 +75,7 @@ describe('<FagsakSearchIndex>', () => {
       searchResultReceived={false}
       searchStarted
       resetFagsakSearch={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     wrapper.setProps({
@@ -95,6 +99,7 @@ describe('<FagsakSearchIndex>', () => {
       searchResultReceived={false}
       searchStarted
       resetFagsakSearch={sinon.spy()}
+      alleKodeverk={{}}
     />);
 
     wrapper.setProps({

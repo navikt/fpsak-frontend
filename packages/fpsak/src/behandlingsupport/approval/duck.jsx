@@ -1,4 +1,4 @@
-import fpsakApi from 'data/fpsakApi';
+import fpsakApi from '../../data/fpsakApi';
 
 export const approve = (params) => (dispatch) => (dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest()(params)));
 export const resetApproval = () => (dispatch) => (dispatch(fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi()));

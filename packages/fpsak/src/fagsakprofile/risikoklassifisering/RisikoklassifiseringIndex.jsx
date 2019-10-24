@@ -10,7 +10,7 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
-import { getBehandlingIdentifier, getBehandlingVersjon } from 'behandling/duck';
+import { getBehandlingIdentifier, getBehandlingVersjon } from '../../behandling/duck';
 import {
   hentKontrollresultat, isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
 } from './duck';

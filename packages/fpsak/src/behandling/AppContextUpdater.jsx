@@ -1,4 +1,4 @@
-import { updateFagsakInfo } from 'fagsak/duck';
+import { updateFagsakInfo } from '../fagsak/duck';
 
 class AppContextUpdater {
     updateFagsakInfo = updateFagsakInfo;

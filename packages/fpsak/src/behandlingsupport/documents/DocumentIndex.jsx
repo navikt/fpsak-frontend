@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import { requireProps } from '@fpsak-frontend/fp-felles';
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
 
+import { getSelectedBehandlingId } from '../../behandling/duck';
+import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getAllDocuments } from '../behandlingsupportSelectors';
 
 // TODO (hb) lag linker, ikke callback

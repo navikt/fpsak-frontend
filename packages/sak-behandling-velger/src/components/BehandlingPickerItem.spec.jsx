@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { NavLink } from 'react-router-dom';
 
 import BehandlingPickerItemContent from './BehandlingPickerItemContent';
-import { BehandlingPickerItem } from './BehandlingPickerItem';
+import BehandlingPickerItem from './BehandlingPickerItem';
 
 describe('<BehandlingPickerItem>', () => {
   const behandlingTemplate = {
@@ -38,13 +38,6 @@ describe('<BehandlingPickerItem>', () => {
     gjeldendeVedtak: false,
   };
 
-  const getKodeverknavn = ({ kode }) => {
-    if (kode === 'FVED') {
-      return 'Fatter vedtak';
-    }
-    return '';
-  };
-
   it('skal vise behandling uten lenke når det kun finnes en behandling og denne er valgt', () => {
     const wrapper = shallow(<BehandlingPickerItem
       onlyOneBehandling
@@ -53,7 +46,7 @@ describe('<BehandlingPickerItem>', () => {
       isActive
       showAll
       toggleShowAll={() => undefined}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(BehandlingPickerItemContent)).has.length(1);
@@ -68,7 +61,7 @@ describe('<BehandlingPickerItem>', () => {
       isActive={false}
       showAll
       toggleShowAll={() => undefined}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(BehandlingPickerItemContent)).has.length(1);
@@ -83,7 +76,7 @@ describe('<BehandlingPickerItem>', () => {
       isActive
       showAll={false}
       toggleShowAll={() => undefined}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.find(BehandlingPickerItemContent)).has.length(1);

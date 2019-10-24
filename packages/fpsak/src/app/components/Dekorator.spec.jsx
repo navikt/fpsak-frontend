@@ -4,8 +4,8 @@ import sinon from 'sinon';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Header } from '@fpsak-frontend/dekorator';
-import Dekorator from './Dekorator';
 
+import Dekorator from './Dekorator';
 
 describe('<Dekorator>', () => {
   it('skal vise søkeskjermbildet, men ikke systemstatuser', () => {

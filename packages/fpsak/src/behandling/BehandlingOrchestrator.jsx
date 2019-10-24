@@ -1,7 +1,6 @@
 import errorHandler from '@fpsak-frontend/error-api-redux';
 
-import fpsakApi from 'data/fpsakApi';
-
+import fpsakApi from '../data/fpsakApi';
 import ApplicationContextPath from './ApplicationContextPath';
 
 const kodeverkRestApis = {
@@ -19,7 +18,7 @@ const historyRestApis = {
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
 };
 
-// TODO (TOR) Refaktorer denne etter at LOS er flytta. Bør dele opp kodeverk-tjenesten til fpsak mm
+// TODO (TOR) Denne skal vekk. Lag heller ein wrapper-komponent rundt komponenten som treng data
 
 /**
  * BehandlingOrchestrator

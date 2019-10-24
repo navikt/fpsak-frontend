@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
+import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
 import behandlingOrchestrator from './BehandlingOrchestrator';
 import ApplicationContextPath from './ApplicationContextPath';
 

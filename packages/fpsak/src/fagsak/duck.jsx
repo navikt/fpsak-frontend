@@ -1,11 +1,12 @@
 import { createSelector } from 'reselect';
 
-import fpsakApi, { FpsakApiKeys } from 'data/fpsakApi';
-import { updateBehandlingsupportInfo } from 'behandlingsupport/duck';
-import { updateAnnenPartBehandling } from 'fagsakprofile/duck';
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
-import behandlingUpdater from 'behandling/BehandlingUpdater';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+
+import fpsakApi, { FpsakApiKeys } from '../data/fpsakApi';
+import { updateBehandlingsupportInfo } from '../behandlingsupport/duck';
+import { updateAnnenPartBehandling } from '../fagsakprofile/duck';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
+import behandlingUpdater from '../behandling/BehandlingUpdater';
 
 export const reducerName = 'fagsak';
 

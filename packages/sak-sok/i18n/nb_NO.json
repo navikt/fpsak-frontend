@@ -1,0 +1,17 @@
+{
+  "Search.SearchFagsakOrPerson": "Søk på sak eller person",
+  "Search.SaksnummerOrPersonId": "Saksnummer eller fødselsnummer/D-nummer",
+  "Search.Search": "Søk",
+
+  "FagsakList.Saksnummer": "Saksnummer",
+  "FagsakList.Sakstype": "Sakstype",
+  "FagsakList.Status": "Status",
+  "FagsakList.BarnFodt": "Barnet er født",
+
+  "FagsakSearch.ZeroSearchResults": "Søket ga ingen treff",
+
+  "Person.Age": "{age} år",
+  "Person.Man": "Mann",
+  "Person.ImageText": "Personinformasjon",
+  "ValidationMessage.InvalidSaksnummerOrFodselsnummerFormat": "Ugyldig saksnummer eller fødselsnummer"
+}

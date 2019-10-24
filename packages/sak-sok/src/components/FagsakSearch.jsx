@@ -6,7 +6,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { SearchForm } from '@fpsak-frontend/search-form';
+
+import SearchForm from './SearchForm';
 import FagsakList from './FagsakList';
 
 import styles from './fagsakSearch.less';
@@ -24,6 +25,7 @@ const FagsakSearch = ({
   selectFagsakCallback,
   searchStarted,
   searchResultAccessDenied,
+  alleKodeverk,
 }) => (
   <div className={styles.container}>
     <SearchForm
@@ -32,16 +34,19 @@ const FagsakSearch = ({
       searchResultAccessDenied={searchResultAccessDenied}
     />
 
-    {searchResultReceived && fagsaker.length === 0
-      && <Normaltekst className={styles.label}><FormattedMessage id="FagsakSearch.ZeroSearchResults" /></Normaltekst>}
+    {searchResultReceived && fagsaker.length === 0 && (
+      <Normaltekst className={styles.label}><FormattedMessage id="FagsakSearch.ZeroSearchResults" /></Normaltekst>
+    )}
 
-    {fagsaker.length > 1
-    && <PersonIndex person={fagsaker[0].person} />}
+    {fagsaker.length > 1 && (
+      <PersonIndex person={fagsaker[0].person} />
+    )}
 
     <VerticalSpacer eightPx />
 
-    {fagsaker.length > 1
-    && <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} />}
+    {fagsaker.length > 1 && (
+      <FagsakList fagsaker={fagsaker} selectFagsakCallback={selectFagsakCallback} alleKodeverk={alleKodeverk} />
+    )}
   </div>
 );
 
@@ -54,6 +59,7 @@ FagsakSearch.propTypes = {
   searchResultAccessDenied: PropTypes.shape({
     feilmelding: PropTypes.string.isRequired,
   }),
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FagsakSearch.defaultProps = {

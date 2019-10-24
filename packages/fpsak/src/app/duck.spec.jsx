@@ -2,7 +2,7 @@ import { expect } from 'chai';
 
 import { ApiStateBuilder } from '@fpsak-frontend/utils-test/src/data-test-helper';
 
-import fpsakApi from 'data/fpsakApi';
+import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt } from './duck';
 
 describe('App-reducer', () => {

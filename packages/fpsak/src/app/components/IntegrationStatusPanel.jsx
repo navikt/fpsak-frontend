@@ -6,7 +6,6 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { dateFormat, timeFormat } from '@fpsak-frontend/utils';
-
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
 import infoImageUrl from '@fpsak-frontend/assets/images/behandle.svg';
