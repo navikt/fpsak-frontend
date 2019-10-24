@@ -99,7 +99,6 @@
   "Behandlingsmeny.NyForstegangsbehandling": "Opprett ny behandling",
   "Behandlingsmeny.ReopenBehandling": "Åpne behandling for endringer",
   "OpenBehandlingForChangesMenuItem.OpenBehandling": "Åpne behandling for endringer?",
-  "FagsakSearch.ZeroSearchResults": "Søket ga ingen treff",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
   "BehandlingErPaVentModal.PaVent": "På vent",
   "BehandlingErPaVentModal.SattPaVent": "Behandlingen er satt på vent med frist {frist}",
