@@ -14,8 +14,7 @@ describe('<ForeldelseTidslinjeHjelpetekster>', () => {
         intl={intlMock}
       />,
     );
-    // eslint-disable-next-line no-console
-    console.log(wrapper.debug());
+
     expect(wrapper.find(Image)).has.length(4);
   });
 });
