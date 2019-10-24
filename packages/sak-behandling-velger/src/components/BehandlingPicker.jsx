@@ -4,7 +4,7 @@ import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
-import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
+import behandlingVelgerBehandlingPropType from '../propTypes/behandlingVelgerBehandlingPropType';
 import BehandlingPickerItem from './BehandlingPickerItem';
 
 import styles from './behandlingPicker.less';
@@ -20,7 +20,7 @@ export const sortBehandlinger = (behandlinger) => behandlinger.sort((b1, b2) => 
   return moment(b2.opprettet).diff(moment(b1.opprettet));
 });
 
-const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll) => (
+const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk) => (
   sortBehandlinger(behandlinger)
     .map((behandling) => (
       <li key={behandling.id}>
@@ -31,6 +31,7 @@ const renderListItems = (behandlinger, saksnummer, behandlingId, showAll, toggle
           isActive={behandling.id === behandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
+          alleKodeverk={alleKodeverk}
         />
       </li>
     ))
@@ -48,20 +49,22 @@ const BehandlingPicker = ({
   behandlingId,
   showAll,
   toggleShowAll,
+  alleKodeverk,
 }) => (
   <ul className={styles.behandlingList}>
     {noExistingBehandlinger && <Normaltekst><FormattedMessage id="BehandlingList.ZeroBehandlinger" /></Normaltekst>}
-    {!noExistingBehandlinger && renderListItems(behandlinger, saksnummer, behandlingId, showAll, toggleShowAll)}
+    {!noExistingBehandlinger && renderListItems(behandlinger, saksnummer, behandlingId, showAll, toggleShowAll, alleKodeverk)}
   </ul>
 );
 
 BehandlingPicker.propTypes = {
-  behandlinger: PropTypes.arrayOf(behandlingIListePropType).isRequired,
+  behandlinger: PropTypes.arrayOf(behandlingVelgerBehandlingPropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 BehandlingPicker.defaultProps = {

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { getIntegrationStatusList, getShowDetailedErrorMessages } from 'app/duck';
-import fpsakApi from 'data/fpsakApi';
-import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
+import fpsakApi from '../../data/fpsakApi';
+import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
+import { getIntegrationStatusList, getShowDetailedErrorMessages } from '../duck';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 
 /**

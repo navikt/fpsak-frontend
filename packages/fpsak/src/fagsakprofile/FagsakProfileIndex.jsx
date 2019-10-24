@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
-
-import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
-import { getBehandlinger, getBehandlingerTypesMappedById, getNoExistingBehandlinger } from 'behandling/selectors/behandlingerSelectors';
-import { getSelectedBehandlingId } from 'behandling/duck';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { requireProps } from '@fpsak-frontend/fp-felles';
 import { Panel } from 'nav-frontend-paneler';
 
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { requireProps } from '@fpsak-frontend/fp-felles';
+
+import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from '../fagsak/fagsakSelectors';
+import { getBehandlinger, getBehandlingerTypesMappedById, getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
+import { getSelectedBehandlingId } from '../behandling/duck';
 import {
   getAnnenPartBehandling, getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger,
 } from './duck';
 import FagsakProfile from './components/FagsakProfile';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
+
 import styles from './fagsakProfileIndex.less';
+import { getAlleKodeverk } from '../kodeverk/duck';
 
 export const getSkalViseRisikoklassifisering = createSelector(
   [getSelectedBehandlingId, getBehandlingerTypesMappedById],
@@ -45,7 +47,7 @@ export class FagsakProfileIndex extends Component {
 
   render() {
     const {
-      sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger,
+      sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger, alleKodeverk,
       noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, skalViseRisikoklassifisering,
     } = this.props;
     return (
@@ -60,6 +62,7 @@ export class FagsakProfileIndex extends Component {
           selectedBehandlingId={selectedBehandlingId}
           showAll={showAll}
           toggleShowAll={toggleShowAll}
+          alleKodeverk={alleKodeverk}
         />
         {skalViseRisikoklassifisering
           && (
@@ -84,6 +87,7 @@ FagsakProfileIndex.propTypes = {
   reset: PropTypes.func.isRequired,
   skalViseRisikoklassifisering: PropTypes.bool.isRequired,
   annenPartLink: PropTypes.shape(),
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FagsakProfileIndex.defaultProps = {
@@ -104,6 +108,7 @@ const mapStateToProps = (state) => {
     noExistingBehandlinger: getNoExistingBehandlinger(state),
     showAll: getShowAllBehandlinger(state),
     skalViseRisikoklassifisering: getSkalViseRisikoklassifisering(state),
+    alleKodeverk: getAlleKodeverk(state),
   };
 };
 

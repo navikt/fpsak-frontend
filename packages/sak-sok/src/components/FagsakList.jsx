@@ -6,9 +6,8 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'kodeverk/duck';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import styles from './fagsakList.less';
 
@@ -27,11 +26,12 @@ const lagFagsakSortObj = (fagsak) => ({
  *
  * Presentasjonskomponent. Formaterer fagsak-søkeresultatet for visning i tabell. Sortering av fagsakene blir håndtert her.
  */
-export const FagsakList = ({
+const FagsakList = ({
   fagsaker,
   selectFagsakCallback,
-  getKodeverknavn,
+  alleKodeverk,
 }) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const sortedFagsaker = fagsaker.sort((fagsak1, fagsak2) => {
     const a = lagFagsakSortObj(fagsak1);
     const b = lagFagsakSortObj(fagsak2);
@@ -59,7 +59,7 @@ export const FagsakList = ({
 FagsakList.propTypes = {
   fagsaker: PropTypes.arrayOf(fagsakPropType).isRequired,
   selectFagsakCallback: PropTypes.func.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
-export default injectKodeverk(getAlleKodeverk)(FagsakList);
+export default FagsakList;

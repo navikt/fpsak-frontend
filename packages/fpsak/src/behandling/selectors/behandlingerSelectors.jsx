@@ -3,8 +3,8 @@ import { createSelector } from 'reselect';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import fpsakApi from 'data/fpsakApi';
-import { getSelectedSaksnummer } from 'fagsak/fagsakSelectors';
+import fpsakApi from '../../data/fpsakApi';
+import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 
 const getBehandlingerData = createSelector(
   [fpsakApi.BEHANDLINGER_FPSAK.getRestApiData(), fpsakApi.BEHANDLINGER_FPTILBAKE.getRestApiData()],

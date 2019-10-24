@@ -2,13 +2,13 @@ import { createSelector } from 'reselect';
 
 import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
 
-import { getSelectedSaksnummer } from 'fagsak/duck';
-import fpsakApi from 'data/fpsakApi';
-import { getNavAnsatt } from 'app/duck';
-import { getBehandlinger } from 'behandling/selectors/behandlingerSelectors';
+import { getSelectedSaksnummer } from '../fagsak/duck';
+import fpsakApi from '../data/fpsakApi';
+import { getNavAnsatt } from '../app/duck';
+import { getBehandlinger } from './selectors/behandlingerSelectors';
 import {
   getSelectedFagsakStatus, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd, getFagsakYtelseType,
-} from 'fagsak/fagsakSelectors';
+} from '../fagsak/fagsakSelectors';
 
 const reducerName = 'behandling';
 
