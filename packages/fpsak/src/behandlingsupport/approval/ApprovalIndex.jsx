@@ -9,13 +9,13 @@ import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsa
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { requireProps, featureToggle, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
-import { getNavAnsatt } from '../../app/duck';
+import { getNavAnsatt, getFeatureToggles } from '../../app/duck';
 import { getBehandlingerUuidsMappedById } from '../../behandling/selectors/behandlingerSelectors';
 import {
   getBehandlingAnsvarligSaksbehandler,
@@ -136,7 +136,7 @@ export class ApprovalIndex extends Component {
       totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, behandlingStatus,
       location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling, skjemalenkeTyper,
       behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, behandlingKlageVurdering, erBehandlingEtterKlage,
-      erKlageWithKA, erKlage, isForeldrepenger,
+      erKlageWithKA, erKlage, isForeldrepenger, disableGodkjennKnapp,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -166,6 +166,7 @@ export class ApprovalIndex extends Component {
           erBehandlingEtterKlage={erBehandlingEtterKlage}
           erKlageWithKA={erKlageWithKA}
           erKlage={erKlage}
+          disableGodkjennKnapp={disableGodkjennKnapp}
         />
         <FatterVedtakApprovalModal
           showModal={showBeslutterModal}
@@ -202,6 +203,7 @@ ApprovalIndex.propTypes = {
   erKlageWithKA: PropTypes.bool.isRequired,
   erKlage: PropTypes.bool.isRequired,
   isForeldrepenger: PropTypes.bool.isRequired,
+  disableGodkjennKnapp: PropTypes.bool.isRequired,
 };
 
 ApprovalIndex.defaultProps = {
@@ -240,6 +242,7 @@ const mapStateToPropsFactory = (initialState) => {
       erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
       erKlageWithKA: !!getBehandlingKlageVurderingResultatNK(state),
       erKlage: !!getBehandlingKlageVurderingResultatNFP(state) || !!getBehandlingKlageVurderingResultatNK(state),
+      disableGodkjennKnapp: erTilbakekreving ? !getFeatureToggles(state)[featureToggle.BESLUTT_TILBAKEKREVING] : false,
       behandlingIdentifier,
       erTilbakekreving,
     };

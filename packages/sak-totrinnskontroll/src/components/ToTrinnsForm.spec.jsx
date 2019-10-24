@@ -136,6 +136,7 @@ describe('<ToTrinnsForm>', () => {
       getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
       readOnly={false}
       intl={intlMock}
+      disableGodkjennKnapp={false}
     />);
 
     const form = wrapper.find('form');
@@ -170,6 +171,7 @@ describe('<ToTrinnsForm>', () => {
       getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
       readOnly={false}
       intl={intlMock}
+      disableGodkjennKnapp={false}
     />);
 
     const form = wrapper.find('form');
@@ -230,6 +232,7 @@ describe('<ToTrinnsForm>', () => {
       getAksjonspunktText={getAksjonspunktText.resultFunc(isForeldrepenger, null, null, null, null)}
       readOnly={false}
       intl={intlMock}
+      disableGodkjennKnapp={false}
     />);
 
     const form = wrapper.find('form');

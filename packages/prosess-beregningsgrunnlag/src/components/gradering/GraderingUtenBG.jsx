@@ -25,6 +25,7 @@ import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 
 
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
@@ -61,12 +62,15 @@ const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
 export const GraderingUtenBG = ({
   andelerMedGraderingUtenBG,
   readOnly,
-  aksjonspunkt,
+  aksjonspunkter,
   getKodeverknavn,
   behandlingId,
   behandlingVersjon,
   ...formProps
 }) => {
+  const aksjonspunkt = aksjonspunkter
+    ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+    : undefined;
   if (!aksjonspunkt || !andelerMedGraderingUtenBG || andelerMedGraderingUtenBG.length === 0) {
     return null;
   }
@@ -151,16 +155,11 @@ GraderingUtenBG.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andelerMedGraderingUtenBG: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  aksjonspunkt: PropTypes.shape(),
+  aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };
-
-GraderingUtenBG.defaultProps = {
-  aksjonspunkt: undefined,
-};
-
 
 export const transformValues = (values) => {
   const skalSettesPaaVent = values[radioFieldName];
@@ -173,11 +172,16 @@ export const transformValues = (values) => {
 };
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.venteaarsakKode, (state, ownProps) => ownProps.aksjonspunkter], (
+  [(state, ownProps) => ownProps.venteaarsakKode,
+    (state, ownProps) => ownProps.aksjonspunkter], (
     venteKode, aksjonspunkter,
   ) => {
-    const vurderGraderingUtenBGAP = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
-    const settPaaVentAap = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG);
+    const vurderGraderingUtenBGAP = aksjonspunkter
+      ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+      : undefined;
+    const settPaaVentAap = aksjonspunkter
+      ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
+      : undefined;
     if (!vurderGraderingUtenBGAP || vurderGraderingUtenBGAP.status.kode !== aksjonspunktStatus.UTFORT) {
       return undefined;
     }
@@ -207,7 +211,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
   const getKodeverknavn = getKodeverknavnFn(ownProps.alleKodeverk, kodeverkTyper);
   return (state) => {
-    const initialValues = buildInitialValues(state);
+    const initialValues = buildInitialValues(state, ownProps);
     return ({
       getKodeverknavn,
       onSubmit,

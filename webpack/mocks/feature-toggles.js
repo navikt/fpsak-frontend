@@ -8,6 +8,7 @@ const toggles = {
     'fpsak.simuler-oppdrag-varseltekst': false,
     'fpsak.aktiver-tilbakekrevingbehandling': false,
     'fpsak.svp_flere_arbeidsforhold': false,
+    'fpsak.beslutt-tilbakekreving': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {
