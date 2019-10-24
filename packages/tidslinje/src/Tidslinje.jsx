@@ -99,8 +99,6 @@ class Tidslinje extends Component {
   }
 
   zoomIn() {
-    // eslint-disable-next-line no-console
-    console.log('Tried to zoom in', this.timelineRef.current.$el);
     const timeline = this.timelineRef.current.$el;
     timeline.zoomIn(0.5);
   }
