@@ -1,12 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-
+import { TimeLineControl, TimeLineSokerEnsamSoker } from '@fpsak-frontend/tidslinje';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
-import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
-import TimeLineControl from './timeline/TimeLineControl';
-
 import { TilkjentYtelse } from './TilkjentYtelse';
 
 describe('<TilkjentYtelse>', () => {

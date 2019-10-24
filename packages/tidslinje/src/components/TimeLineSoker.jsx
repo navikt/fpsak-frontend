@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -8,7 +7,7 @@ import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlUkjent from '@fpsak-frontend/assets/images/ukjent.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
-
+import { useIntl } from 'react-intl';
 import styles from './timeLineSoker.less';
 
 /**

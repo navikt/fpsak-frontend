@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
+// eslint-disable-next-line import/extensions
 import TimeLineSoker from './TimeLineSoker';
 
 
