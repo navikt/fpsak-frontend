@@ -1,8 +1,8 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { Image } from '@fpsak-frontend/shared-components';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import { PeriodeControllerImpl } from './PeriodeController';
 
@@ -20,24 +20,11 @@ describe('<PeriodeController>', () => {
       readOnly={false}
     />);
 
-    const knapper = wrapper.find(Image);
+    const knapper = wrapper.find(TimeLineButton);
 
-    expect(knapper).to.have.length(3);
-    expect(knapper.first()
-      .prop('alt'))
-      .is
-      .length
-      .above(3);
-    expect(knapper.at(1)
-      .prop('alt'))
-      .is
-      .length
-      .above(3);
-    expect(knapper.last()
-      .prop('alt'))
-      .is
-      .length
-      .above(3);
+    expect(knapper).to.have.length(2);
+    expect(knapper.first().prop('text')).is.length.above(3);
+    expect(knapper.last().prop('text')).is.length.above(3);
   });
 
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
@@ -52,7 +39,7 @@ describe('<PeriodeController>', () => {
       readOnly
     />);
 
-    expect(wrapper.find(Image)).to.have.length(2);
+    expect(wrapper.find(TimeLineButton)).to.have.length(2);
   });
 
   it('skal splitte periode via modal', async () => {

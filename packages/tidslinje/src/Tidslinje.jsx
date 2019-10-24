@@ -5,40 +5,31 @@ import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import TimeLineControl from './timeline/TimeLineControl';
-import TimeLineSoker from './timeline/TimeLineSoker';
-import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
+import TimeLineControl from './components/TimeLineControl';
+import TimeLineSoker from './components/TimeLineSoker';
+import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
 
-import styles from './uttakTimeLine.less';
-
-const getStartDateForTimeLine = (uttakPeriod, customTimes) => (moment(customTimes.fodsel) < moment(uttakPeriod.fom)
-  ? moment(customTimes.fodsel).subtract(4, 'weeks') : moment(uttakPeriod.fom).subtract(4, 'weeks'));
-const getEndDateForTimeLine = (customTimes) => moment(customTimes.fodsel).add(4, 'years');
-
+import styles from './tidslinje.less';
 
 const getOptions = (customTimes, sortedUttakPeriods, medsoker) => ({
-  height: medsoker ? '140px' : '104px',
-  width: '100%',
-  zoomMin: 1000 * 60 * 60 * 24 * 30,
-  zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-  zoomable: true,
-  moveable: true,
-  min: getStartDateForTimeLine(sortedUttakPeriods[0], customTimes),
-  max: getEndDateForTimeLine(customTimes),
-  start: moment(sortedUttakPeriods[0].fom).subtract(1, 'days'),
   end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
-  margin: {
-    item: 14,
-  },
-  orientation: { axis: 'top' },
-  stack: false,
-  verticalScroll: false,
-  showCurrentTime: false,
+  height: medsoker ? '140px' : '104px',
   locale: moment.locale('nb'),
-  tooltip: {
-    followMouse: true,
-  },
+  margin: { item: 14 },
+  max: moment(customTimes.fodsel).add(4, 'years'),
+  min: moment.min([moment(customTimes.fodsel), moment(sortedUttakPeriods[0].fom)]).subtract(4, 'weeks'),
   moment,
+  moveable: true,
+  orientation: { axis: 'top' },
+  showCurrentTime: false,
+  stack: false,
+  start: moment(sortedUttakPeriods[0].fom).subtract(1, 'days'),
+  tooltip: { followMouse: true },
+  verticalScroll: false,
+  width: '100%',
+  zoomable: true,
+  zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+  zoomMin: 1000 * 60 * 60 * 24 * 30,
 });
 
 const parseDateString = (dateString) => moment(dateString, ISO_DATE_FORMAT).toDate();
@@ -82,12 +73,11 @@ const formatGroups = (periodItems = []) => {
 };
 
 /**
- * UttakTimeLine
+ * Tidslinje
  *
  * Presentationskomponent. Masserer data og populerer felten samt formatterar tidslinjen for uttak
  */
-
-class UttakTimeLine extends Component {
+class Tidslinje extends Component {
   constructor() {
     super();
 
@@ -136,19 +126,19 @@ class UttakTimeLine extends Component {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),
       end: new Date(currentWindowTimes.end).setDate(currentWindowTimes.end.getDate() - 42),
     };
-
     timeline.setWindow(newWindowTimes);
   }
 
   render() {
     const {
-      hovedsokerKjonnKode,
+      children,
       customTimes,
-      uttakPerioder,
-      selectPeriodCallback,
-      selectedPeriod,
-      openPeriodInfo,
+      hovedsokerKjonnKode,
       medsokerKjonnKode,
+      openPeriodInfo,
+      selectedPeriod,
+      selectPeriodCallback,
+      uttakPerioder,
     } = this.props;
     const groups = formatGroups(uttakPerioder);
     const items = formatItems(uttakPerioder);
@@ -157,17 +147,17 @@ class UttakTimeLine extends Component {
         <Row>
           <Column xs="1" className={styles.sokerContainer}>
             {medsokerKjonnKode
-            && (
-            <TimeLineSoker
-              hovedsokerKjonnKode={hovedsokerKjonnKode}
-              medsokerKjonnKode={medsokerKjonnKode}
-            />
-            )}
+              && (
+                <TimeLineSoker
+                  hovedsokerKjonnKode={hovedsokerKjonnKode}
+                  medsokerKjonnKode={medsokerKjonnKode}
+                />
+              )}
             {!medsokerKjonnKode
               && (
-              <TimeLineSokerEnsamSoker
-                hovedsokerKjonnKode={hovedsokerKjonnKode}
-              />
+                <TimeLineSokerEnsamSoker
+                  hovedsokerKjonnKode={hovedsokerKjonnKode}
+                />
               )}
           </Column>
           <Column xs="11">
@@ -195,7 +185,9 @@ class UttakTimeLine extends Component {
               zoomOutCallback={this.zoomOut}
               openPeriodInfo={openPeriodInfo}
               selectedPeriod={selectedPeriod}
-            />
+            >
+              {children}
+            </TimeLineControl>
           </Column>
         </Row>
       </div>
@@ -203,19 +195,20 @@ class UttakTimeLine extends Component {
   }
 }
 
-UttakTimeLine.propTypes = {
-  selectedPeriod: PropTypes.shape(),
+Tidslinje.propTypes = {
   customTimes: PropTypes.shape().isRequired,
-  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  selectPeriodCallback: PropTypes.func.isRequired,
-  openPeriodInfo: PropTypes.func.isRequired,
   hovedsokerKjonnKode: PropTypes.string.isRequired,
   medsokerKjonnKode: PropTypes.string,
+  openPeriodInfo: PropTypes.func.isRequired,
+  selectedPeriod: PropTypes.shape(),
+  selectPeriodCallback: PropTypes.func.isRequired,
+  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  children: PropTypes.node,
 };
 
-UttakTimeLine.defaultProps = {
-  selectedPeriod: undefined,
+Tidslinje.defaultProps = {
   medsokerKjonnKode: undefined,
+  selectedPeriod: undefined,
 };
 
-export default UttakTimeLine;
+export default Tidslinje;

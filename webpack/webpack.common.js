@@ -9,17 +9,18 @@ const config = {
   resolve: {
     alias: {
       //Burde kun brukast av pakke fpsak
-      app: path.join(APP_DIR, 'app'),
       aktoer: path.join(APP_DIR, 'aktoer'),
+      app: path.join(APP_DIR, 'app'),
       behandling: path.join(APP_DIR, 'behandling'),
       behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
       behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
-      fagsak: path.join(APP_DIR, 'fagsak'),
-      fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
-      person: path.join(APP_DIR, 'person'),
-      fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
-      kodeverk: path.join(APP_DIR, 'kodeverk'),
       data: path.join(APP_DIR, 'data'),
+      fagsak: path.join(APP_DIR, 'fagsak'),
+      fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
+      fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
+      kodeverk: path.join(APP_DIR, 'kodeverk'),
+      person: path.join(APP_DIR, 'person'),
+      tidslinje: path.join(APP_DIR, 'tidslinje'),
 
       //Andre pakker
       behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),

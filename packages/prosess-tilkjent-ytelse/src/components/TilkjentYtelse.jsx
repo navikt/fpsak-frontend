@@ -9,10 +9,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { calcDaysAndWeeks, DDMMYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
-
-import TimeLineData from './timeline/TimeLineData';
-import TimeLineSokerEnsamSoker from './timeline/TimeLineSokerEnsamSoker';
-import TimeLineControl from './timeline/TimeLineControl';
+import { TimeLineControl, TimeLineSokerEnsamSoker } from '@fpsak-frontend/tidslinje';
+import TilkjentYtelseTimelineData from './TilkjentYtelseTimelineData';
 
 import styles from './tilkjentYtelse.less';
 
@@ -24,22 +22,18 @@ const getOptions = (nyePerioder) => {
   const lastPeriod = nyePerioder[nyePerioder.length - 1];
 
   return {
-    moment,
-    width: '100%',
-    zoomMin: 1000 * 60 * 60 * 24 * 30,
-    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-    margin: {
-      item: 10,
-    },
-    orientation: { axis: 'top' },
-    stack: false,
-    showCurrentTime: false,
-    locale: moment.locale('nb'),
-    tooltip: {
-      followMouse: true,
-    },
-    start: moment(firstPeriod.fom).subtract(1, 'days'),
     end: moment(lastPeriod.tom).add(2, 'days'),
+    locale: moment.locale('nb'),
+    margin: { item: 10 },
+    moment,
+    orientation: { axis: 'top' },
+    showCurrentTime: false,
+    stack: false,
+    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    tooltip: { followMouse: true },
+    width: '100%',
+    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+    zoomMin: 1000 * 60 * 60 * 24 * 30,
   };
 };
 
@@ -293,7 +287,7 @@ export class TilkjentYtelse extends Component {
         </Row>
         {selectedItem
         && (
-          <TimeLineData
+          <TilkjentYtelseTimelineData
             alleKodeverk={alleKodeverk}
             selectedItemStartDate={selectedItem.fom.toString()}
             selectedItemEndDate={selectedItem.tom.toString()}
