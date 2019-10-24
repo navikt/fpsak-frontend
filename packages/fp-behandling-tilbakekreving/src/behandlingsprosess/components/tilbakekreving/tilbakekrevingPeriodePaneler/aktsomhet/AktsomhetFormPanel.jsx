@@ -10,6 +10,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
+import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
 
 const uaktsomhetCodes = [
   Aktsomhet.GROVT_UAKTSOM,
@@ -29,6 +30,7 @@ const AktsomhetFormPanel = ({
   antallYtelser,
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
+  andelSomTilbakekreves,
 }) => (
   <>
     <Undertekst>
@@ -61,6 +63,7 @@ const AktsomhetFormPanel = ({
           harMerEnnEnYtelse={antallYtelser > 1}
           feilutbetalingBelop={feilutbetalingBelop}
           erTotalBelopUnder4Rettsgebyr={erTotalBelopUnder4Rettsgebyr}
+          andelSomTilbakekreves={andelSomTilbakekreves}
         />
       </FormSection>
     )}
@@ -79,12 +82,14 @@ AktsomhetFormPanel.propTypes = {
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,
   aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
+  andelSomTilbakekreves: PropTypes.string,
 };
 
 AktsomhetFormPanel.defaultProps = {
   erSerligGrunnAnnetValgt: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
+  andelSomTilbakekreves: undefined,
 };
 
 const parseAndelSomTilbakekreves = (andelSomTilbakekreves) => {
@@ -94,6 +99,11 @@ const parseAndelSomTilbakekreves = (andelSomTilbakekreves) => {
 
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
   const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
+
+  const andelSomTilbakekreves = aktsomhet.andelSomTilbakekreves === EGENDEFINERT
+    ? parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell)
+    : parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves);
+
   return {
     harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
     ileggRenter: aktsomhet.skalDetTilleggesRenter,
@@ -101,7 +111,7 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
-    ...parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves),
+    ...andelSomTilbakekreves,
   };
 };
 
@@ -118,11 +128,13 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper, vurderingBegrunnel
 
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
+  const andelSomTilbakekreves = aktsomhetInfo ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
   const aktsomhetData = aktsomhetInfo ? {
     [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
+      andelSomTilbakekreves: ANDELER.includes(andelSomTilbakekreves) ? andelSomTilbakekreves : EGENDEFINERT,
+      andelSomTilbakekrevesManuell: !ANDELER.includes(andelSomTilbakekreves) ? aktsomhetInfo.andelTilbakekreves : undefined,
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
-      andelSomTilbakekreves: `${aktsomhetInfo.andelTilbakekreves}`,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,

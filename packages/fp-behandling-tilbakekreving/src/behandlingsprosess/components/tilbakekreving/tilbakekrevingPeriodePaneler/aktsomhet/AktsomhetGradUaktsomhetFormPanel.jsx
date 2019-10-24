@@ -19,6 +19,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
   harMerEnnEnYtelse,
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
+  andelSomTilbakekreves,
 }) => (
   <ArrowBox alignOffset={handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM ? 120 : 285}>
     {(handletUaktsomhetGrad === aktsomhet.SIMPEL_UAKTSOM && erTotalBelopUnder4Rettsgebyr) && (
@@ -59,6 +60,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
         feilutbetalingBelop={feilutbetalingBelop}
         readOnly={readOnly}
         handletUaktsomhetGrad={handletUaktsomhetGrad}
+        andelSomTilbakekreves={andelSomTilbakekreves}
       />
     )}
   </ArrowBox>
@@ -73,10 +75,12 @@ AktsomhetGradUaktsomhetFormPanel.propTypes = {
   feilutbetalingBelop: PropTypes.number.isRequired,
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
+  andelSomTilbakekreves: PropTypes.string,
 };
 
 AktsomhetGradUaktsomhetFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
+  andelSomTilbakekreves: undefined,
 };
 
 export default AktsomhetGradUaktsomhetFormPanel;
