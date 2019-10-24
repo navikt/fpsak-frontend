@@ -19,9 +19,9 @@ import { getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjening
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getKodeverk, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
-import TimeLineNavigation from './timeline/TimeLineNavigation';
 
 import styles from './opptjeningFaktaForm.less';
 

@@ -1,9 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { AksjonspunktHelpText, Image } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
+import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
+import { Column } from 'nav-frontend-grid';
 import { kalkulerTrekkdager, UttakTimeLineData } from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
@@ -99,18 +101,14 @@ describe('<UttakTimeLineData>', () => {
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
     expect(modal).to.have.length(0);
-    const message = wrapper.find('FormattedMessage');
+    const message = wrapper.find(FormattedMessage);
     expect(message).to.have.length(2);
     expect(message.first().prop('id')).to.eql('UttakTimeLineData.PeriodeData.Detaljer');
     expect(message.at(1).prop('id')).to.eql('UttakTimeLineData.PeriodeData.DelOppPerioden');
-    const uttakActivity = wrapper.find(UttakActivity);
-    expect(uttakActivity).to.have.length(1);
-    const image = wrapper.find(Image);
-    expect(image).to.have.length(3);
-    const rows = wrapper.find('Row');
-    expect(rows).to.have.length(2);
-    const columns = wrapper.find('Column');
-    expect(columns).to.have.length(4);
+    expect(wrapper.find(UttakActivity)).to.have.length(1);
+    expect(wrapper.find(TimeLineButton)).to.have.length(2);
+    expect(wrapper.find(TimeLineDataContainer)).to.have.length(1);
+    expect(wrapper.find(Column)).to.have.length(3);
   });
 
   it('skal rendre UttakTimeLineData med modal og lukke modal', () => {
@@ -168,12 +166,12 @@ describe('<UttakTimeLineData>', () => {
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
     expect(modal).to.have.length(0);
-    const message = wrapper.find('FormattedMessage');
+    const message = wrapper.find(FormattedMessage);
     expect(message).to.have.length(1);
     expect(message.first().prop('id')).to.eql('UttakTimeLineData.PeriodeData.Detaljer');
     const uttakActivity = wrapper.find(UttakActivity);
     expect(uttakActivity).to.have.length(1);
-    const image = wrapper.find(Image);
+    const image = wrapper.find(TimeLineButton);
     expect(image).to.have.length(2);
   });
 
@@ -199,14 +197,12 @@ describe('<UttakTimeLineData>', () => {
       harSoktOmFlerbarnsdager={false}
       getKodeverknavn={getKodeverknavn}
     />);
-    const image = wrapper.find(Image);
-    expect(image).to.have.length(3);
-    expect(image.at(1).prop('onMouseDown')).to.eql(callbackBackward);
-    expect(image.at(1).prop('onKeyDown')).to.eql(callbackBackward);
-    expect(image.at(1).prop('alt')).to.have.length.above(3);
-    expect(image.at(2).prop('onMouseDown')).to.eql(callbackForward);
-    expect(image.at(2).prop('onKeyDown')).to.eql(callbackForward);
-    expect(image.at(2).prop('alt')).to.have.length.above(3);
+    const buttons = wrapper.find(TimeLineButton);
+    expect(buttons).to.have.length(2);
+    expect(buttons.at(0).prop('callback')).to.eql(callbackBackward);
+    expect(buttons.at(0).prop('text')).to.have.length.above(3);
+    expect(buttons.at(1).prop('callback')).to.eql(callbackForward);
+    expect(buttons.at(1).prop('text')).to.have.length.above(3);
   });
 
   it('skal rendre UttakActivity i UttakTimeLineData', () => {

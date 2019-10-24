@@ -51,6 +51,8 @@
     "@babel/register": "^7.5.5",
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@istanbuljs/nyc-config-babel": "^2.1.1",
+    "@storybook/addon-actions": "^5.2.1",
+    "@storybook/addon-centered": "^5.2.1",
     "@storybook/addon-docs": "^5.2.1",
     "@storybook/addon-knobs": "^5.2.1",
     "@storybook/addons": "^5.2.1",

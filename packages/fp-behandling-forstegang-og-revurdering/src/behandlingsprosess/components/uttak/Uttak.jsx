@@ -39,12 +39,13 @@ import {
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import { getAlleKodeverk, getSelectedBehandlingId, getSelectedSaksnummer } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { Tidslinje } from '@fpsak-frontend/tidslinje';
 import TimeLineInfo from './stonadkonto/TimeLineInfo';
 import UttakTimeLineData from './UttakTimeLineData';
-import UttakTimeLine from './UttakTimeLine';
 import UttakMedsokerReadOnly from './UttakMedsokerReadOnly';
 
 import styles from './uttak.less';
+import UttakTidslinjeHjelpetekster from './UttakTidslinjeHjelpetekster';
 
 const ACTIVITY_PANEL_NAME = 'uttaksresultatActivity';
 const STONADSKONTOER_TEMP = 'stonadskonto';
@@ -116,16 +117,16 @@ const fodselsdato = (soknadsType, endredFodselsDato, familiehendelseDate, omsorg
 };
 
 const getCustomTimes = (
-  soknadDate,
-  familiehendelseDate,
-  endringsdato,
-  soknadsType,
-  omsorgsOvertagelseDato,
-  endredFodselsDato,
-  isRevurdering,
   barnFraTps,
-  person,
+  endredFodselsDato,
+  endringsdato,
   familiehendelse,
+  familiehendelseDate,
+  isRevurdering,
+  omsorgsOvertagelseDato,
+  person,
+  soknadDate,
+  soknadsType,
 ) => {
   // TODO: trumfa tps med avklartebarn fra lösningen - blir TPS-barn en del av dem?
   const dodeBarn = familiehendelse && !familiehendelse.brukAntallBarnFraTPS && familiehendelse.avklartBarn && familiehendelse.avklartBarn.length > 0
@@ -156,22 +157,22 @@ const isInnvilget = (uttaksresultatActivity) => uttaksresultatActivity.periodeRe
 export class UttakImpl extends Component {
   constructor(props) {
     super(props);
-    this.initializeActivityForm = this.initializeActivityForm.bind(this);
-    this.openPeriodInfo = this.openPeriodInfo.bind(this);
-    this.nextPeriod = this.nextPeriod.bind(this);
-    this.prevPeriod = this.prevPeriod.bind(this);
-    this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
-    this.setSelectedUttakActivity = this.setSelectedUttakActivity.bind(this);
-    this.updateActivity = this.updateActivity.bind(this);
     this.cancelSelectedActivity = this.cancelSelectedActivity.bind(this);
-    this.isConfirmButtonDisabled = this.isConfirmButtonDisabled.bind(this);
-    this.selectHandler = this.selectHandler.bind(this);
-    this.testForReadOnly = this.testForReadOnly.bind(this);
-    this.isReadOnly = this.isReadOnly.bind(this);
-    this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
-    this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
-    this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
     this.ikkeGyldigForbruk = this.ikkeGyldigForbruk.bind(this);
+    this.initializeActivityForm = this.initializeActivityForm.bind(this);
+    this.isConfirmButtonDisabled = this.isConfirmButtonDisabled.bind(this);
+    this.isReadOnly = this.isReadOnly.bind(this);
+    this.nextPeriod = this.nextPeriod.bind(this);
+    this.onToggleOverstyring = this.onToggleOverstyring.bind(this);
+    this.openPeriodInfo = this.openPeriodInfo.bind(this);
+    this.prevPeriod = this.prevPeriod.bind(this);
+    this.selectHandler = this.selectHandler.bind(this);
+    this.setSelectedDefaultPeriod = this.setSelectedDefaultPeriod.bind(this);
+    this.setSelectedUttakActivity = this.setSelectedUttakActivity.bind(this);
+    this.skalViseCheckbox = this.skalViseCheckbox.bind(this);
+    this.testForReadOnly = this.testForReadOnly.bind(this);
+    this.updateActivity = this.updateActivity.bind(this);
+    this.updateStonadskontoer = this.updateStonadskontoer.bind(this);
 
     this.state = {
       selectedItem: null,
@@ -409,44 +410,44 @@ export class UttakImpl extends Component {
 
   render() {
     const {
-      soknadDate,
-      familiehendelseDate,
-      endringsdato,
-      hovedsokerKjonnKode,
-      medsokerKjonnKode,
-      dekningsgrad,
-      readOnly,
-      uttaksresultatActivity,
-      submitting,
-      behandlingFormPrefix,
-      formName,
-      kanOverstyre,
-      isApOpen,
       aksjonspunkter,
-      soknadsType,
-      omsorgsovertakelseDato,
-      endredFodselsDato,
-      uttakPerioder,
-      isRevurdering,
-      harSoktOmFlerbarnsdager,
       annenForelderSoktOmFlerbarnsdager,
-      reduxFormChange: formChange,
-      person,
       barnFraTps,
+      behandlingFormPrefix,
+      dekningsgrad,
+      endredFodselsDato,
+      endringsdato,
       familiehendelse,
+      familiehendelseDate,
+      formName,
+      harSoktOmFlerbarnsdager,
+      hovedsokerKjonnKode,
+      isApOpen,
+      isRevurdering,
+      kanOverstyre,
+      medsokerKjonnKode,
+      omsorgsovertakelseDato,
+      person,
+      readOnly,
+      reduxFormChange: formChange,
+      soknadDate,
+      soknadsType,
+      submitting,
+      uttakPerioder,
+      uttaksresultatActivity,
     } = this.props;
     const { selectedItem, stonadskonto } = this.state;
     const customTimes = getCustomTimes(
-      soknadDate,
-      familiehendelseDate,
-      endringsdato,
-      soknadsType,
-      omsorgsovertakelseDato,
-      endredFodselsDato,
-      isRevurdering,
       barnFraTps,
-      person,
+      endredFodselsDato,
+      endringsdato,
       familiehendelse,
+      familiehendelseDate,
+      isRevurdering,
+      omsorgsovertakelseDato,
+      person,
+      soknadDate,
+      soknadsType,
     );
     return (
       <div>
@@ -469,23 +470,25 @@ export class UttakImpl extends Component {
         <div>
           <Row>
             <TimeLineInfo
+              dekningsgrad={dekningsgrad}
               maksDatoUttak={stonadskonto.maksDatoUttak}
               stonadskonto={stonadskonto.stonadskontoer}
-              dekningsgrad={dekningsgrad}
             />
           </Row>
           <VerticalSpacer twentyPx />
           <Row>
             <Column xs="12">
-              <UttakTimeLine
+              <Tidslinje
                 customTimes={customTimes}
-                uttakPerioder={uttakPerioder}
-                selectPeriodCallback={this.selectHandler}
-                selectedPeriod={selectedItem}
-                openPeriodInfo={this.openPeriodInfo}
                 hovedsokerKjonnKode={hovedsokerKjonnKode}
                 medsokerKjonnKode={medsokerKjonnKode}
-              />
+                openPeriodInfo={this.openPeriodInfo}
+                selectedPeriod={selectedItem}
+                selectPeriodCallback={this.selectHandler}
+                uttakPerioder={uttakPerioder}
+              >
+                <UttakTidslinjeHjelpetekster />
+              </Tidslinje>
             </Column>
           </Row>
           {selectedItem
@@ -494,21 +497,21 @@ export class UttakImpl extends Component {
               {selectedItem.hovedsoker
               && (
                 <UttakTimeLineData
-                  harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
-                  readOnly={this.isReadOnly()}
-                  selectedItemData={selectedItem}
-                  callbackSetSelected={this.setSelectedUttakActivity}
-                  callbackForward={this.nextPeriod}
-                  callbackBackward={this.prevPeriod}
-                  callbackUpdateActivity={this.updateActivity}
-                  callbackCancelSelectedActivity={this.cancelSelectedActivity}
-                  uttaksresultatActivity={uttaksresultatActivity}
-                  reduxFormChange={formChange}
-                  behandlingFormPrefix={behandlingFormPrefix}
-                  formName={formName}
                   activityPanelName={ACTIVITY_PANEL_NAME}
+                  behandlingFormPrefix={behandlingFormPrefix}
+                  callbackBackward={this.prevPeriod}
+                  callbackCancelSelectedActivity={this.cancelSelectedActivity}
+                  callbackForward={this.nextPeriod}
+                  callbackSetSelected={this.setSelectedUttakActivity}
+                  callbackUpdateActivity={this.updateActivity}
+                  formName={formName}
+                  harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
                   isApOpen={isApOpen}
+                  readOnly={this.isReadOnly()}
+                  reduxFormChange={formChange}
+                  selectedItemData={selectedItem}
                   stonadskonto={stonadskonto}
+                  uttaksresultatActivity={uttaksresultatActivity}
                 />
               )}
               {!selectedItem.hovedsoker
@@ -551,53 +554,53 @@ export class UttakImpl extends Component {
 }
 
 UttakImpl.propTypes = {
-  formName: PropTypes.string.isRequired,
-  soknadDate: PropTypes.string.isRequired,
-  familiehendelseDate: PropTypes.string.isRequired,
-  endringsdato: PropTypes.string.isRequired,
-  hovedsokerKjonnKode: PropTypes.string.isRequired,
-  medsokerKjonnKode: PropTypes.string,
-  readOnly: PropTypes.bool.isRequired,
-  uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()),
+  annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  dekningsgrad: PropTypes.number,
+  endredFodselsDato: PropTypes.string,
+  endringsdato: PropTypes.string.isRequired,
+  familiehendelse: PropTypes.shape(),
+  familiehendelseDate: PropTypes.string.isRequired,
+  formName: PropTypes.string.isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  hovedsokerKjonnKode: PropTypes.string.isRequired,
+  isApOpen: PropTypes.bool,
+  isDirty: PropTypes.bool.isRequired,
+  isRevurdering: PropTypes.bool,
+  kanOverstyre: PropTypes.bool,
+  manuellOverstyring: PropTypes.bool,
+  medsokerKjonnKode: PropTypes.string,
+  omsorgsovertakelseDato: PropTypes.string,
+  person: PropTypes.shape(),
+  readOnly: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool,
-  stonadskonto: PropTypes.shape().isRequired,
-  dekningsgrad: PropTypes.number,
-  manuellOverstyring: PropTypes.bool,
-  kanOverstyre: PropTypes.bool,
-  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()),
-  soknadsType: PropTypes.string.isRequired,
-  omsorgsovertakelseDato: PropTypes.string,
-  endredFodselsDato: PropTypes.string,
-  isRevurdering: PropTypes.bool,
-  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
-  annenForelderSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
-  tempUpdateStonadskontoer: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
   saksnummer: PropTypes.number.isRequired,
-  barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
-  person: PropTypes.shape(),
-  familiehendelse: PropTypes.shape(),
+  soknadDate: PropTypes.string.isRequired,
+  soknadsType: PropTypes.string.isRequired,
+  stonadskonto: PropTypes.shape().isRequired,
+  submitting: PropTypes.bool.isRequired,
+  tempUpdateStonadskontoer: PropTypes.func.isRequired,
+  uttakPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 UttakImpl.defaultProps = {
-  dekningsgrad: undefined,
-  manuellOverstyring: false,
-  kanOverstyre: undefined,
-  isApOpen: false,
   aksjonspunkter: [],
-  omsorgsovertakelseDato: undefined,
-  endredFodselsDato: undefined,
-  isRevurdering: false,
-  medsokerKjonnKode: undefined,
   barnFraTps: [],
-  person: undefined,
+  dekningsgrad: undefined,
+  endredFodselsDato: undefined,
   familiehendelse: undefined,
+  isApOpen: false,
+  isRevurdering: false,
+  kanOverstyre: undefined,
+  manuellOverstyring: false,
+  medsokerKjonnKode: undefined,
+  omsorgsovertakelseDato: undefined,
+  person: undefined,
 };
 
 const determineMottatDato = (soknadsDato, mottatDato) => {
@@ -720,42 +723,39 @@ const mapStateToProps = (state, props) => {
   const medsokerKjonnKode = viseUttakMedsoker && getMedsokerKjonnKode === undefined ? navBrukerKjonn.UDEFINERT : getMedsokerKjonnKode;
   const familiehendelse = getFamiliehendelseGjeldende(state);
   const ytelseFordeling = getBehandlingYtelseFordeling(state);
-  const barnFraTps = getBarnFraTpsRelatertTilSoknad(state);
-
-  const isRevurdering = getBehandlingIsRevurdering(state);
-
-  const uttaksresultatActivity = lagUttaksresultatActivity(state, props);
-  const familiehendelseDate = getFodselTerminDato(state);
-
   const hovedsokerPerioder = addClassNameGroupIdToPerioderHovedsoker(state, props);
   const annenForelderPerioder = addClassNameGroupIdToPerioderAnnenForelder(state, props);
-  const uttakPerioder = slaSammenHovedsokerOgAnnenForelder(state, props);
-  const harSoktOmFlerbarnsdager = hovedsokerPerioder.filter((p) => p.flerbarnsdager === true).length > 0;
-  const annenForelderSoktOmFlerbarnsdager = annenForelderPerioder.filter((p) => p.flerbarnsdager === true).length > 0;
 
+  /*
+  @TODO clean up interface
+  const personer = [person];
+  if (viseUttakMedsoker && person && person.annenPart) {
+    personer.push(person.annenPart.navBrukerKjonn);
+  }
+  */
   return {
-    saksnummer: getSelectedSaksnummer(state),
-    behandlingId: getSelectedBehandlingId(state),
-    soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
-    endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
-    dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
-    stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
+    annenForelderSoktOmFlerbarnsdager: annenForelderPerioder.filter((p) => p.flerbarnsdager === true).length > 0,
+    barnFraTps: getBarnFraTpsRelatertTilSoknad(state),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
-    soknadsType: soknad.soknadType.kode,
-    omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
+    behandlingId: getSelectedBehandlingId(state),
+    dekningsgrad: soknad.dekningsgrad ? soknad.dekningsgrad : undefined,
     endredFodselsDato: familiehendelse.fodselsdato,
-    uttaksresultatActivity,
-    familiehendelseDate,
-    hovedsokerKjonnKode,
-    medsokerKjonnKode,
-    isRevurdering,
-    uttakPerioder,
-    harSoktOmFlerbarnsdager,
-    annenForelderSoktOmFlerbarnsdager,
-    barnFraTps,
-    person,
+    endringsdato: ytelseFordeling.endringsdato ? ytelseFordeling.endringsdato : undefined,
     familiehendelse,
+    familiehendelseDate: getFodselTerminDato(state),
+    harSoktOmFlerbarnsdager: hovedsokerPerioder.filter((p) => p.flerbarnsdager === true).length > 0,
+    hovedsokerKjonnKode,
+    isRevurdering: getBehandlingIsRevurdering(state),
+    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.employeeHasAccess,
+    medsokerKjonnKode,
+    omsorgsovertakelseDato: soknad.omsorgsovertakelseDato,
+    person,
+    saksnummer: getSelectedSaksnummer(state),
+    soknadDate: determineMottatDato(periodeGrenseMottatDato, soknad.mottattDato),
+    soknadsType: soknad.soknadType.kode,
+    stonadskonto: behandlingFormValueSelector(props.formName)(state, STONADSKONTOER_TEMP),
+    uttakPerioder: slaSammenHovedsokerOgAnnenForelder(state, props),
+    uttaksresultatActivity: lagUttaksresultatActivity(state, props),
   };
 };
 

@@ -1,9 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-
-import { Image } from '@fpsak-frontend/shared-components';
-
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { LegendBox } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 
 describe('<TilbakekrevingTidslinjeHjelpetekster>', () => {
@@ -14,6 +12,6 @@ describe('<TilbakekrevingTidslinjeHjelpetekster>', () => {
       />,
     );
 
-    expect(wrapper.find(Image)).has.length(3);
+    expect(wrapper.find(LegendBox)).has.length(1);
   });
 });

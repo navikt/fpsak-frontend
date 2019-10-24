@@ -4,15 +4,13 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
-
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-
-import opptjeningAktivitetKlassifisering from '../kodeverk/opptjeningAktivitetKlassifisering';
+import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
+import opptjeningAktivitetKlassifisering from '@fpsak-frontend/prosess-vilkar-opptjening/src/kodeverk/opptjeningAktivitetKlassifisering';
 import DateContainer from './DateContainer';
-import TimeLineNavigation from './TimeLineNavigation';
-import TimeLineData from './TimeLineData';
-
 import styles from './opptjeningTimeLineLight.less';
+
+import TimeLineData from './TimeLineData';
 
 // Desse må alltid vare med for rett skala av tidslinjen
 const standardItems = (opptjeningFomDate, opptjeningTomDate) => {
@@ -64,27 +62,22 @@ const createItems = (opptjeningPeriods, opptjeningFomDate, opptjeningTomDate) =>
   return items.concat(standardItems(opptjeningFomDate, opptjeningTomDate));
 };
 
-const options = (opptjeningFomDate, opptjeningTomDate) => {
-  const embeddedOptions = {
-    width: '100%',
-    zoomable: false,
-    moveable: false,
-    min: moment(opptjeningFomDate).startOf('month'),
-    max: moment(opptjeningTomDate).endOf('month'),
-    start: moment(opptjeningFomDate).startOf('month'),
-    end: moment(opptjeningTomDate).endOf('month'),
-    margin: {
-      item: 10,
-    },
-    orientation: { axis: 'top' },
-    stack: false,
-    verticalScroll: false,
-    showCurrentTime: true,
-    locale: moment.locale('nb'),
-    moment,
-  };
-  return embeddedOptions;
-};
+const options = (opptjeningFomDate, opptjeningTomDate) => ({
+  end: moment(opptjeningTomDate).endOf('month'),
+  locale: moment.locale('nb'),
+  margin: { item: 10 },
+  max: moment(opptjeningTomDate).endOf('month'),
+  min: moment(opptjeningFomDate).startOf('month'),
+  moment,
+  moveable: false,
+  orientation: { axis: 'top' },
+  showCurrentTime: true,
+  stack: false,
+  start: moment(opptjeningFomDate).startOf('month'),
+  verticalScroll: false,
+  width: '100%',
+  zoomable: false,
+});
 
 class OpptjeningTimeLineLight extends Component {
   constructor() {

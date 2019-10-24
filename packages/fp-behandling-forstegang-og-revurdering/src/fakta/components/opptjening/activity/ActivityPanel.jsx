@@ -15,7 +15,7 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
@@ -36,10 +36,8 @@ import {
 import {
   PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
+
+import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 import styles from './activityPanel.less';
@@ -128,24 +126,8 @@ export const ActivityPanel = ({
         <Element><FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} /></Element>
       </Column>
       <Column xs="2">
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          src={arrowLeftImageUrl}
-          srcHover={arrowLeftFilledImageUrl}
-          alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
-          onMouseDown={selectPrevPeriod}
-          onKeyDown={selectPrevPeriod}
-        />
-        <Image
-          tabIndex="0"
-          className={styles.timeLineButton}
-          src={arrowRightImageUrl}
-          srcHover={arrowRightFilledImageUrl}
-          alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
-          onMouseDown={selectNextPeriod}
-          onKeyDown={selectNextPeriod}
-        />
+        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.prevPeriod' })} type="prev" callback={selectPrevPeriod} />
+        <TimeLineButton text={intl.formatMessage({ id: 'Timeline.nextPeriod' })} type="next" callback={selectNextPeriod} />
       </Column>
     </Row>
     <Row>

@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@fpsak-frontend/assets": "1.0.0",
+    "@fpsak-frontend/tidslinje": "1.0.0",
     "@fpsak-frontend/error-api-redux": "1.0.0",
     "@fpsak-frontend/fakta-adopsjon": "1.0.0",
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",

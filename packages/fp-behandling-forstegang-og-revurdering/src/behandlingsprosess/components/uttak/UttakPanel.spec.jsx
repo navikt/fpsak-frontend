@@ -115,7 +115,7 @@ describe('<UttakPanel>', () => {
 
     const form = wrapper.find('form');
     form.simulate('submit', { preventDefault() { return undefined; } });
-    expect(reduxFormPropsMock.handleSubmit).to.have.property('callCount', 1);
+    expect(reduxFormPropsMock.handleSubmit.called).is.true;
   });
 
 

@@ -1,7 +1,8 @@
 version: '3'
 services:
   frontend:
-    build: .
+    image: navikt/fpsak-frontend:latest
+    # build: .
     ports:
       - 9090:9090
     environment:

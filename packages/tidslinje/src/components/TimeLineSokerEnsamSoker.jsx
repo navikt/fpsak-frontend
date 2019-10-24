@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useIntl } from 'react-intl';
 import { Row } from 'nav-frontend-grid';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import { Image } from '@fpsak-frontend/shared-components';
 import urlMann from '@fpsak-frontend/assets/images/mann.svg';
-import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
+import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
+import { useIntl } from 'react-intl';
 import styles from './timeLineSokerEnsamSoker.less';
 
 /**
@@ -15,6 +15,7 @@ import styles from './timeLineSokerEnsamSoker.less';
  *
  * Presentationskomponent. Viser korrekt ikon for soker/medsoker
  */
+
 const isKvinne = (kode) => kode === navBrukerKjonn.KVINNE;
 
 const TimeLineSokerEnsamSoker = ({

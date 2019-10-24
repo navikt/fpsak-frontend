@@ -79,27 +79,22 @@ const createGroups = (opptjeningPeriods, opptjeningAktivitetTypes) => {
   }));
 };
 
-const options = (opptjeningFomDato, opptjeningTomDato) => {
-  const embeddedOptions = {
-    width: '100%',
-    zoomable: false,
-    moveable: false,
-    min: moment(opptjeningFomDato).startOf('month'),
-    max: moment(opptjeningTomDato).endOf('month'),
-    start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
-    end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
-    margin: {
-      item: 10,
-    },
-    orientation: { axis: 'top' },
-    stack: false,
-    verticalScroll: false,
-    showCurrentTime: false,
-    locale: moment.locale('nb'),
-    moment,
-  };
-  return embeddedOptions;
-};
+const options = (opptjeningFomDato, opptjeningTomDato) => ({
+  end: moment(opptjeningTomDato).add(1, 'months').endOf('month'),
+  locale: moment.locale('nb'),
+  margin: { item: 10 },
+  max: moment(opptjeningTomDato).endOf('month'),
+  min: moment(opptjeningFomDato).startOf('month'),
+  moment,
+  moveable: false,
+  orientation: { axis: 'top' },
+  showCurrentTime: false,
+  stack: false,
+  start: moment(opptjeningFomDato).subtract(1, 'months').startOf('month'),
+  verticalScroll: false,
+  width: '100%',
+  zoomable: false,
+});
 
 /**
  * OpptjeningTimeLine
