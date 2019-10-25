@@ -16,17 +16,47 @@ const behandling = {
   versjon: 1,
 };
 
-const opptjening = {
+const opptjeningUtenAksjonspunkt = {
   fastsattOpptjening: {
-    opptjeningFom: '2019-01-01',
-    opptjeningTom: '2019-10-01',
+    opptjeningFom: '2018-11-30',
+    opptjeningTom: '2019-09-29',
+    opptjeningperiode: {
+      dager: 4,
+      månder: 10,
+    },
   },
   opptjeningAktivitetList: [{
-    opptjeningFom: '2019-01-01',
-    opptjeningTom: '2019-04-01',
+    opptjeningFom: '2017-01-01',
+    opptjeningTom: '9999-12-31',
     aktivitetType: {
       kode: opptjeningAktivitetType.ARBEID,
     },
+    arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
+    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+    arbeidsgiverIdentifikator: '973861778',
+    erEndret: false,
+    erGodkjent: true,
+    erManueltOpprettet: false,
+    erPeriodeEndret: false,
+    aringRegistreringsdato: '1995-09-14',
+    oppdragsgiverOrg: '973861778',
+    stillingsandel: 50,
+  }, {
+    opptjeningFom: '2017-01-01',
+    opptjeningTom: '9999-12-31',
+    aktivitetType: {
+      kode: opptjeningAktivitetType.DAGPENGER,
+    },
+    arbeidsforholdRef: 'bf623ff9-6ffb-4a81-b9f1-2648e5530a47',
+    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+    arbeidsgiverIdentifikator: '973861778',
+    erEndret: false,
+    erGodkjent: true,
+    erManueltOpprettet: false,
+    erPeriodeEndret: false,
+    aringRegistreringsdato: '1995-09-14',
+    oppdragsgiverOrg: '973861778',
+    stillingsandel: 50,
   }],
 };
 
@@ -38,6 +68,9 @@ const alleKodeverk = {
   [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
     kode: opptjeningAktivitetType.ARBEID,
     navn: 'Arbeid',
+  }, {
+    kode: opptjeningAktivitetType.DAGPENGER,
+    navn: 'Dagpenger',
   }],
 };
 
@@ -52,12 +85,12 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForOpptjening = () => {
+export const visAksjonspunktForOpptjeningsvilkåret = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OPPTJENINGSVILKARET]);
   return (
     <OpptjeningFaktaIndex
       behandling={behandling}
-      opptjening={object('opptjening', opptjening)}
+      opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
@@ -73,6 +106,24 @@ export const visAksjonspunktForOpptjening = () => {
       alleMerknaderFraBeslutter={{
         [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+};
+
+export const visPanelUtenAksjonpunkt = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OPPTJENINGSVILKARET]);
+  return (
+    <OpptjeningFaktaIndex
+      behandling={behandling}
+      opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
+      aksjonspunkter={[]}
+      alleKodeverk={alleKodeverk}
+      alleMerknaderFraBeslutter={{}}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
