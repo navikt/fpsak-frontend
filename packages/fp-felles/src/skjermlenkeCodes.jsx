@@ -200,7 +200,7 @@ const skjermlenkeCodes = {
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: '',
   },
-  PUNKT_FOR_MEDLEMSKAP_LOPENDE: {
+  PUNKT_FOR_MEDLEMSKAP_LØPENDE: {
     kode: 'PUNKT_FOR_MEDLEMSKAP_LØPENDE',
     faktaNavn: faktaPanelCodes.DEFAULT,
     punktNavn: behandlingspunktCodes.FORTSATTMEDLEMSKAP,
