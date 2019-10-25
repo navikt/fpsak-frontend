@@ -106,6 +106,38 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: true,
+        andelTilbakekreves: 50,
+        tilbakekrevesBelop: 100,
+        annetBegrunnelse: 'test',
+        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunner: sarligGrunnTyper,
+      },
+    };
+    const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
+
+    expect(initialValues).to.eql({
+      handletUaktsomhetGrad: aktsomhet.GROVT_UAKTSOM,
+      [aktsomhet.GROVT_UAKTSOM]: {
+        [sarligGrunn.GRAD_AV_UAKTSOMHET]: true,
+        [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL]: true,
+        harGrunnerTilReduksjon: true,
+        skalDetTilleggesRenter: true,
+        andelSomTilbakekreves: '50',
+        andelSomTilbakekrevesManuell: undefined,
+        belopSomSkalTilbakekreves: 100,
+        annetBegrunnelse: 'test',
+        tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+      },
+    });
+  });
+
+  it('skal lage form-initialvalues fra struktur når en har andel som skal tilbakekreves som er ulik standardverdier', () => {
+    const vilkarResultatInfo = {
+      begrunnelse: 'test',
+      aktsomhet: { kode: aktsomhet.GROVT_UAKTSOM },
+      aktsomhetInfo: {
+        harGrunnerTilReduksjon: true,
+        ileggRenter: true,
         andelTilbakekreves: 10,
         tilbakekrevesBelop: 100,
         annetBegrunnelse: 'test',
@@ -122,7 +154,8 @@ describe('<AktsomhetFormPanel>', () => {
         [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL]: true,
         harGrunnerTilReduksjon: true,
         skalDetTilleggesRenter: true,
-        andelSomTilbakekreves: '10',
+        andelSomTilbakekreves: 'Egendefinert',
+        andelSomTilbakekrevesManuell: 10,
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
@@ -168,7 +201,7 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhet: aktsomhet.GROVT_UAKTSOM,
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
-        ileggRenter: true,
+        ileggRenter: undefined,
         sarligGrunner: [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL],
         andelTilbakekreves: 70,
         tilbakekrevesBelop: 100,

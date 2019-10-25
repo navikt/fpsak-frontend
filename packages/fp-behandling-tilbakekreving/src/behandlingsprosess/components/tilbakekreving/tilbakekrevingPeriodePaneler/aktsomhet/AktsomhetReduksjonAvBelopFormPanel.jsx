@@ -8,16 +8,19 @@ import {
   ArrowBox, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  InputField, RadioGroupField, RadioOption, SelectField,
+  InputField, RadioGroupField, RadioOption, SelectField, DecimalField,
 } from '@fpsak-frontend/form';
 
-import { formatCurrencyNoKr, minValue, required } from '@fpsak-frontend/utils';
+import {
+  formatCurrencyNoKr, minValue, maxValue, required,
+} from '@fpsak-frontend/utils';
 
 import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 
 import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
 
-const minValue1 = minValue(1);
+const minValue1 = minValue(0.01);
+const maxValue100 = maxValue(99.99);
 
 const parseCurrencyInput = (input) => {
   const inputNoSpace = input.toString().replace(/\s/g, '');
@@ -25,7 +28,8 @@ const parseCurrencyInput = (input) => {
   return Number.isNaN(parsedValue) ? '' : parsedValue;
 };
 
-const andeler = ['30', '50', '70'];
+export const EGENDEFINERT = 'Egendefinert';
+export const ANDELER = ['30', '50', '70', EGENDEFINERT];
 
 const AktsomhetReduksjonAvBelopFormPanel = ({
   harGrunnerTilReduksjon,
@@ -33,6 +37,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
   handletUaktsomhetGrad,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
+  andelSomTilbakekreves,
 }) => (
   <>
     <Row>
@@ -54,7 +59,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
       <ArrowBox alignOffset={24}>
         <Row>
           <Column md="6">
-            {!harMerEnnEnYtelse && (
+            {(!harMerEnnEnYtelse && andelSomTilbakekreves !== EGENDEFINERT) && (
               <>
                 <Undertekst><FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" /></Undertekst>
                 <FlexRow>
@@ -63,7 +68,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                       name="andelSomTilbakekreves"
                       label=""
                       validate={[required]}
-                      selectValues={andeler.map((andel) => <option key={andel} value={andel}>{andel}</option>)}
+                      selectValues={ANDELER.map((andel) => <option key={andel} value={andel}>{andel}</option>)}
                       bredde="s"
                     />
                   </FlexColumn>
@@ -71,7 +76,24 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                 </FlexRow>
               </>
             )}
-            {harMerEnnEnYtelse && (
+            {(!harMerEnnEnYtelse && andelSomTilbakekreves === EGENDEFINERT) && (
+              <>
+                <FlexRow>
+                  <FlexColumn>
+                    <DecimalField
+                      name="andelSomTilbakekrevesManuell"
+                      label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />}
+                      readOnly={readOnly}
+                      validate={[required, minValue1, maxValue100]}
+                      normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                      bredde="S"
+                    />
+                  </FlexColumn>
+                  <FlexColumn className={styles.suffixText}>%</FlexColumn>
+                </FlexRow>
+              </>
+            )}
+            {(harMerEnnEnYtelse) && (
               <InputField
                 name="belopSomSkalTilbakekreves"
                 label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiBelopSomSkalTilbakekreves" />}
@@ -129,10 +151,12 @@ AktsomhetReduksjonAvBelopFormPanel.propTypes = {
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
+  andelSomTilbakekreves: PropTypes.string,
 };
 
 AktsomhetReduksjonAvBelopFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
+  andelSomTilbakekreves: undefined,
 };
 
 export default AktsomhetReduksjonAvBelopFormPanel;
