@@ -53,4 +53,3 @@ FAKE_ERROR_BODY={"error":"dette fikk galt"}
 Interne henvendelser kan sendes via Slack i kanalen **#p2-frontend**.
 
 ##
-
