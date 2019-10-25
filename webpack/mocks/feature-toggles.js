@@ -7,7 +7,6 @@ const toggles = {
     'fpsak.overstyr_beregningsgrunnlag': false,
     'fpsak.simuler-oppdrag-varseltekst': false,
     'fpsak.aktiver-tilbakekrevingbehandling': false,
-    'fpsak.svp_flere_arbeidsforhold': false,
     'fpsak.beslutt-tilbakekreving': false,
   },
 };

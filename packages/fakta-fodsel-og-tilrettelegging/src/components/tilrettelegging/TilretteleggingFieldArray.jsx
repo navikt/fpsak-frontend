@@ -2,15 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { required } from '@fpsak-frontend/utils';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray,
 } from '@fpsak-frontend/shared-components';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
-import { Normaltekst } from 'nav-frontend-typografi';
-import styles from './tilretteleggingFieldArray.less';
+
 import TilretteleggingFieldArrayStillingsprosent from './TilretteleggingFieldArrayStillingsprosent';
+
+import styles from './tilretteleggingFieldArray.less';
 
 /**
  * BehovForTilrettteleggingFieldArray
