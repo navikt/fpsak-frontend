@@ -3,6 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -14,6 +15,63 @@ import withReduxProvider from '../../decorators/withRedux';
 const behandling = {
   id: 1,
   versjon: 1,
+};
+
+const opptjeningNårEnHarAksjonspunkt = {
+  fastsattOpptjening: {
+    opptjeningFom: '2018-12-25',
+    opptjeningTom: '2019-10-24',
+    opptjeningperiode: {
+      måneder: 0,
+      dager: 0,
+    },
+    fastsattOpptjeningAktivitetList: [],
+  },
+  opptjeningAktivitetList: [{
+    aktivitetType: {
+      kode: opptjeningAktivitetType.NARING,
+    },
+    originalFom: null,
+    originalTom: null,
+    opptjeningFom: '1995-09-14',
+    opptjeningTom: '9999-12-31',
+    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+    arbeidsgiverNavn: null,
+    oppdragsgiverOrg: '973861778',
+    arbeidsgiverIdentifikator: '973861778',
+    privatpersonNavn: null,
+    privatpersonFødselsdato: null,
+    arbeidsforholdRef: null,
+    stillingsandel: 100,
+    naringRegistreringsdato: '1995-09-14',
+    erManueltOpprettet: false,
+    erGodkjent: null,
+    erEndret: false,
+    begrunnelse: null,
+    erPeriodeEndret: false,
+  }, {
+    aktivitetType: {
+      kode: opptjeningAktivitetType.ARBEID,
+    },
+    originalFom: null,
+    originalTom: null,
+    opptjeningFom: '2018-01-01',
+    opptjeningTom: '2018-11-01',
+    arbeidsgiver: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
+    arbeidsgiverNavn: null,
+    oppdragsgiverOrg: '973861778',
+    arbeidsgiverIdentifikator: '973861778',
+    privatpersonNavn: null,
+    privatpersonFødselsdato: null,
+    arbeidsforholdRef: 'e5ec2632-0e31-4c8f-8190-d942053f847b',
+    stillingsandel: 100,
+    naringRegistreringsdato: '1995-09-14',
+    erManueltOpprettet: false,
+    erGodkjent: true,
+    erEndret: false,
+    begrunnelse: null,
+    erPeriodeEndret: false,
+  }],
 };
 
 const opptjeningUtenAksjonspunkt = {
@@ -69,8 +127,21 @@ const alleKodeverk = {
     kode: opptjeningAktivitetType.ARBEID,
     navn: 'Arbeid',
   }, {
+    kode: opptjeningAktivitetType.FRILANS,
+    navn: 'Frilans',
+  }, {
     kode: opptjeningAktivitetType.DAGPENGER,
     navn: 'Dagpenger',
+  }, {
+    kode: opptjeningAktivitetType.NARING,
+    navn: 'Næring',
+  }],
+  [kodeverkTyper.ARBEID_TYPE]: [{
+    kode: arbeidType.LONN_UNDER_UTDANNING,
+    navn: 'Lønn under utdanning',
+  }, {
+    kode: arbeidType.FRILANSER,
+    navn: 'Frilanser',
   }],
 };
 
@@ -90,7 +161,7 @@ export const visAksjonspunktForOpptjeningsvilkåret = () => {
   return (
     <OpptjeningFaktaIndex
       behandling={behandling}
-      opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
+      opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
