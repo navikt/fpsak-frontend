@@ -10,16 +10,12 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import {
   AksjonspunktHelpText, DateLabel, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-
-import { getBehandlingFastsattOpptjeningFomDate, getBehandlingFastsattOpptjeningTomDate } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getKodeverk, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
+
 import OpptjeningTimeLine from './timeline/OpptjeningTimeLine';
 import ActivityPanel, { activityPanelName } from './activity/ActivityPanel';
 
@@ -198,7 +194,7 @@ export class OpptjeningFaktaFormImpl extends Component {
   render() {
     const {
       hasAksjonspunkt, hasOpenAksjonspunkter, opptjeningActivities, opptjeningAktivitetTypes, opptjeningFomDato,
-      opptjeningTomDato, readOnly, submitting,
+      opptjeningTomDato, readOnly, submitting, behandlingId, behandlingVersjon, alleMerknaderFraBeslutter, alleKodeverk,
     } = this.props;
     const { selectedOpptjeningActivity } = this.state;
     return (
@@ -232,6 +228,8 @@ export class OpptjeningFaktaFormImpl extends Component {
           <ElementWrapper>
             <ActivityPanel
               key={selectedOpptjeningActivity.id}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               activity={selectedOpptjeningActivity}
               readOnly={readOnly}
               opptjeningAktivitetTypes={opptjeningAktivitetTypes}
@@ -242,6 +240,8 @@ export class OpptjeningFaktaFormImpl extends Component {
               selectNextPeriod={this.selectNextPeriod}
               selectPrevPeriod={this.selectPrevPeriod}
               hasAksjonspunkt={hasAksjonspunkt}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              alleKodeverk={alleKodeverk}
             />
             <VerticalSpacer twentyPx />
           </ElementWrapper>
@@ -291,14 +291,17 @@ OpptjeningFaktaFormImpl.propTypes = {
   isDirty: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-  opptjeningAktivitetTypes: getKodeverk(kodeverkTyper.OPPTJENING_AKTIVITET_TYPE)(state),
-  behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-  opptjeningFomDato: getBehandlingFastsattOpptjeningFomDate(state),
-  opptjeningTomDato: getBehandlingFastsattOpptjeningTomDate(state),
-  opptjeningActivities: sortByFomDate(behandlingFormValueSelector(props.formName)(state, 'opptjeningActivities')),
+const mapStateToProps = (state, ownProps) => ({
+  opptjeningAktivitetTypes: ownProps.alleKodeverk[kodeverkTyper.OPPTJENING_AKTIVITET_TYPE],
+  behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+  opptjeningActivities: sortByFomDate(behandlingFormValueSelector(ownProps.formName, ownProps.behandlingId,
+    ownProps.behandlingVersjon)(state, 'opptjeningActivities')),
 });
 
 const mapDispatchToProps = (dispatch) => ({

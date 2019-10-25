@@ -6,7 +6,9 @@ import Timeline from 'react-visjs-timeline';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { DDMMYYYY_DATE_FORMAT, isEqual } from '@fpsak-frontend/utils';
+
 import DateContainer from './DateContainer';
+
 import styles from './opptjeningTimeLine.less';
 
 // Desse må alltid vare med for rett skala av tidslinjen då den alltid skall vare 10 månader fra skjæringstidpunkten
