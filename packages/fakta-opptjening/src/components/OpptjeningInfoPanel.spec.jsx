@@ -5,18 +5,24 @@ import sinon from 'sinon';
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { buildInitialValues, OpptjeningInfoPanelImpl } from './OpptjeningInfoPanel';
+import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 describe('<OpptjeningInfoPanel>', () => {
   it('skal vise opptjeningspanel', () => {
-    const wrapper = shallowWithIntl(<OpptjeningInfoPanelImpl
+    const wrapper = shallowWithIntl(<OpptjeningInfoPanel
       {...reduxFormPropsMock}
       intl={intlMock}
       openInfoPanels={[faktaPanelCodes.OPPTJENINGSVILKARET]}
       toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly={false}
+      fastsattOpptjening={{
+        opptjeningFom: '2017-01-01',
+        opptjeningTom: '2017-10-01',
+      }}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     const faktaPanel = wrapper.find(FaktaEkspandertpanel);

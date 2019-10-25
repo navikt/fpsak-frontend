@@ -40,6 +40,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const periodevelger = wrapper.find(PeriodpickerField);
@@ -66,6 +67,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const periodevelger = wrapper.find(PeriodpickerField);
@@ -92,6 +94,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const periodevelger = wrapper.find(PeriodpickerField);
@@ -118,6 +121,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt={false}
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const periodevelger = wrapper.find(PeriodpickerField);
@@ -144,6 +148,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt={false}
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const daysInPeriodLabel = wrapper.find(FormattedMessage);
@@ -173,6 +178,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const select = wrapper.find(SelectField);
@@ -201,6 +207,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     const select = wrapper.find(SelectField);
@@ -227,6 +234,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
@@ -253,6 +261,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt={false}
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(Hovedknapp)).to.have.length(0);
@@ -277,6 +286,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
 
     expect(wrapper.find(Hovedknapp)).to.have.length(1);
@@ -303,6 +313,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);
@@ -330,6 +341,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);
@@ -357,6 +369,7 @@ describe('<ActivityPanel>', () => {
       opptjeningTom="2017-12-31"
       hasAksjonspunkt
       activityId={1}
+      alleMerknaderFraBeslutter={{}}
     />);
     const tekstFelt = wrapper.find(TextAreaField);
     expect(tekstFelt).to.have.length(1);

@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Column, Row } from 'nav-frontend-grid';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
+import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+
 import {
   DDMMYYYY_DATE_FORMAT, hasValidDecimal, ISO_DATE_FORMAT, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { DatepickerField, DecimalField, InputField } from '@fpsak-frontend/form';
-import moment from 'moment';
+
 import styles from './activityDataSubPanel.less';
 
 const ytelseTypes = [OAType.SYKEPENGER, OAType.FORELDREPENGER, OAType.PLEIEPENGER, OAType.SVANGERSKAPSPENGER, OAType.UTENLANDSK_ARBEIDSFORHOLD];

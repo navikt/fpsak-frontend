@@ -60,6 +60,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
@@ -95,6 +99,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
@@ -119,6 +127,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     wrapper.setState({ selectedOpptjeningActivity: undefined });
@@ -146,6 +158,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     wrapper.setState({ selectedOpptjeningActivity: undefined });
@@ -175,6 +191,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     expect(wrapper.state().selectedOpptjeningActivity).to.eql(opptjeningActivities[1]);
@@ -200,6 +220,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     const activityPanel = wrapper.find(ActivityPanel);
@@ -242,6 +266,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     wrapper.find(Knapp).simulate('click');
@@ -271,6 +299,10 @@ describe('<OpptjeningFaktaForm>', () => {
       hasOpenAksjonspunkter
       submitting={false}
       isDirty={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleMerknaderFraBeslutter={{}}
+      alleKodeverk={{}}
     />);
 
     const activityPanel = wrapper.find(ActivityPanel);

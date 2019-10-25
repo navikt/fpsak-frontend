@@ -5,14 +5,14 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { getBehandlingFastsattOpptjening, getBehandlingOpptjeningActivities } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
-import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
+import {
+  behandlingForm, faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling,
+} from '@fpsak-frontend/fp-felles';
 import { addDaysToDate, omit } from '@fpsak-frontend/utils';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
 
 export const formName = 'OpptjeningInfoPanel';
@@ -24,7 +24,7 @@ export const formName = 'OpptjeningInfoPanel';
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export const OpptjeningInfoPanelImpl = ({
+export const OpptjeningInfoPanel = ({
   intl,
   openInfoPanels,
   toggleInfoPanelCallback,
@@ -32,6 +32,11 @@ export const OpptjeningInfoPanelImpl = ({
   readOnly,
   aksjonspunkt,
   hasFastsattOpptjening,
+  behandlingId,
+  behandlingVersjon,
+  fastsattOpptjening,
+  alleMerknaderFraBeslutter,
+  alleKodeverk,
   ...formProps
 }) => (
   <FaktaEkspandertpanel
@@ -46,18 +51,24 @@ export const OpptjeningInfoPanelImpl = ({
   >
     <form onSubmit={formProps.handleSubmit}>
       <OpptjeningFaktaForm
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        opptjeningFomDato={fastsattOpptjening.opptjeningFom}
+        opptjeningTomDato={fastsattOpptjening.opptjeningTom}
         readOnly={readOnly}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         hasAksjonspunkt={aksjonspunkt !== undefined}
         formName={formName}
         submitting={formProps.submitting}
         isDirty={formProps.dirty}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
       />
     </form>
   </FaktaEkspandertpanel>
 );
 
-OpptjeningInfoPanelImpl.propTypes = {
+OpptjeningInfoPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -67,11 +78,13 @@ OpptjeningInfoPanelImpl.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkt: aksjonspunktPropType,
+  fastsattOpptjening: PropTypes.shape(),
   ...formPropTypes,
 };
 
-OpptjeningInfoPanelImpl.defaultProps = {
+OpptjeningInfoPanel.defaultProps = {
   aksjonspunkt: undefined,
+  fastsattOpptjening: {},
 };
 
 const addDay = (date) => addDaysToDate(date, 1);
@@ -95,7 +108,9 @@ const buildPeriod = (activity, opptjeningsperiodeFom, opptjeningsperiodeTom) => 
 };
 
 export const buildInitialValues = createSelector(
-  [getBehandlingOpptjeningActivities, getBehandlingFastsattOpptjening, behandlingSelectors.getAksjonspunkter],
+  [(ownProps) => ownProps.opptjeningAktiviteter,
+    (ownProps) => ownProps.fastsattOpptjening,
+    (ownProps) => ownProps.aksjonspunkter],
   (opptjeningActivities, fastsattOpptjening, aksjonspunkter) => fastsattOpptjening
     && ({
       opptjeningActivities: opptjeningActivities
@@ -139,22 +154,17 @@ const mapStateToPropsFactory = (initialState, { submitCallback }) => {
   const onSubmit = (values) => submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     aksjonspunkt: ownProps.aksjonspunkter[0],
-    hasFastsattOpptjening: !!getBehandlingFastsattOpptjening(state),
-    initialValues: buildInitialValues(state, aksjonspunktCodes),
+    hasFastsattOpptjening: !!ownProps.fastsattOpptjening,
+    initialValues: buildInitialValues(ownProps),
     dirty: !ownProps.notSubmittable && ownProps.dirty,
     onSubmit,
   });
 };
 
-
 const opptjeningAksjonspunkter = [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING];
 
-const OpptjeningInfoPanel = withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(
-  connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default withDefaultToggling(faktaPanelCodes.OPPTJENINGSVILKARET, opptjeningAksjonspunkter)(
+  connect(mapStateToPropsFactory)(behandlingForm({
     form: formName,
-  })(injectIntl(OpptjeningInfoPanelImpl))),
+  })(injectIntl(OpptjeningInfoPanel))),
 );
-
-OpptjeningInfoPanel.supports = (vilkarCodes) => vilkarCodes.some((code) => code === vilkarType.OPPTJENINGSVILKARET);
-
-export default OpptjeningInfoPanel;
