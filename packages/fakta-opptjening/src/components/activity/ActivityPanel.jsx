@@ -2,22 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
+import moment from 'moment';
 import { FormattedHTMLMessage, FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
-import moment from 'moment';
 
-import FaktaGruppe from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaGruppe';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -36,8 +30,9 @@ import {
 import {
   PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
-
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
+import { FaktaGruppe, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+
 import ActivityDataSubPanel from './ActivityDataSubPanel';
 
 import styles from './activityPanel.less';
@@ -118,9 +113,14 @@ export const ActivityPanel = ({
   hasAksjonspunkt,
   opptjeningFomDato,
   opptjeningTomDato,
+  alleMerknaderFraBeslutter,
   ...formProps
 }) => (
-  <FaktaGruppe className={styles.panel} aksjonspunktCode={hasMerknad(initialValues) ? aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING : undefined}>
+  <FaktaGruppe
+    className={styles.panel}
+    aksjonspunktCode={hasMerknad(initialValues) ? aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING : undefined}
+    merknaderFraBeslutter={alleMerknaderFraBeslutter[aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]}
+  >
     <Row>
       <Column xs="10">
         <Element><FormattedMessage id={initialValues.id ? 'ActivityPanel.Details' : 'ActivityPanel.NewActivity'} /></Element>
@@ -238,20 +238,26 @@ ActivityPanel.defaultProps = {
   activityId: undefined,
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.updateActivity(values);
-  const arbeidTyper = getKodeverk(kodeverkTyper.ARBEID_TYPE)(initialState);
-  const opptjeningAktivitetTypes = filterActivityType(ownProps.opptjeningAktivitetTypes, ownProps.activity.erManueltOpprettet, arbeidTyper);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const {
+    updateActivity, alleKodeverk, opptjeningAktivitetTypes, activity,
+  } = initialOwnProps;
+  const onSubmit = (values) => updateActivity(values);
+  const arbeidTyper = alleKodeverk[kodeverkTyper.ARBEID_TYPE];
+  const filtrerteOpptjeningAktivitetTypes = filterActivityType(opptjeningAktivitetTypes, activity.erManueltOpprettet, arbeidTyper);
 
-  return (state) => ({
-    onSubmit,
-    opptjeningAktivitetTypes,
-    initialValues: ownProps.activity,
-    selectedActivityType: behandlingFormValueSelector(activityPanelName)(state, 'aktivitetType'),
-    opptjeningFom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningFom'),
-    opptjeningTom: behandlingFormValueSelector(activityPanelName)(state, 'opptjeningTom'),
-    activityId: behandlingFormValueSelector(activityPanelName)(state, 'id'),
-  });
+  return (state, ownProps) => {
+    const { behandlingId, behandlingVersjon } = ownProps;
+    return {
+      onSubmit,
+      initialValues: ownProps.activity,
+      opptjeningAktivitetTypes: filtrerteOpptjeningAktivitetTypes,
+      selectedActivityType: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'aktivitetType'),
+      opptjeningFom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningFom'),
+      opptjeningTom: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'opptjeningTom'),
+      activityId: behandlingFormValueSelector(activityPanelName, behandlingId, behandlingVersjon)(state, 'id'),
+    };
+  };
 };
 
 const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
@@ -267,7 +273,7 @@ const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
   return errors;
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: activityPanelName,
   validate: validateForm,
   enableReinitialize: true,

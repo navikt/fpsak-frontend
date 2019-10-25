@@ -10,10 +10,11 @@ import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
+import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
-import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
@@ -24,7 +25,6 @@ import {
   getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles,
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-import OpptjeningInfoPanel from './opptjening/OpptjeningInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
@@ -52,6 +52,7 @@ const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakA
   fpsakApi.INNTEKT_ARBEID_YTELSE, fpsakApi.MEDLEMSKAP, fpsakApi.MEDLEMSKAP_V2];
 const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
+const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 
 /**
  * FaktaPanel
@@ -248,16 +249,24 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         }}
       />
 
-      { OpptjeningInfoPanel.supports(vilkarCodes) && (
-        <OpptjeningInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
-      )}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={opptjeningData}
+        showComponent={vilkarCodes.some((code) => code === vilkarType.OPPTJENINGSVILKARET)}
+        render={(props) => (
+          <OpptjeningFaktaIndex
+            aksjonspunkter={aksjonspunkter}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            {...props}
+          />
+        )}
+      />
 
       <BeregningInfoPanel
         aksjonspunkter={aksjonspunkter}
