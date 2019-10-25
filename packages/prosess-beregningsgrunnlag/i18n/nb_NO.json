@@ -8,6 +8,11 @@
   "Beregningsgrunnlag.Helptext.NyIArbeidslivetSN": "Fastsett brutto næringsinntekt (årsinntekt)",
   "Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene": "Barnet har dødd i løpet av de første seks leveuker. Søkeren har søkt 80% dekningsgrad. Fastsett ny dekningsgrad.",
   "Beregningsgrunnlag.Inntektsopplysninger.BeregnetAarsinntekt": "Beregnet årsinntekt",
+  "Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation": "Avviksberegning",
+  "Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt": "Omregnet årsinntekt",
+  "Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt": "Rapportert årsinntekt",
+  "Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik": "Beregnet avvik ",
+
   "Beregningsgrunnlag.Inntektsopplysninger.Avvik": "Beregnet avvik er {verdi}%",
   "Beregningsgrunnlag.Inntektsopplysninger.Sammenligningsgrunnlag": "Sammenligningsgrunnlag",
   "Beregningsgrunnlag.Inntektsopplysninger.Sum12Mnd": "(Sum 12 mnd)",
