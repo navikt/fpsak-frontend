@@ -78,11 +78,13 @@ OpptjeningInfoPanel.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkt: aksjonspunktPropType,
+  fastsattOpptjening: PropTypes.shape(),
   ...formPropTypes,
 };
 
 OpptjeningInfoPanel.defaultProps = {
   aksjonspunkt: undefined,
+  fastsattOpptjening: {},
 };
 
 const addDay = (date) => addDaysToDate(date, 1);
