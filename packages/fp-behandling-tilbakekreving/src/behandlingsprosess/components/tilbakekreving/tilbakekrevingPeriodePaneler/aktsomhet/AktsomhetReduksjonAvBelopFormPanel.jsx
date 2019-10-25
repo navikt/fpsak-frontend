@@ -8,7 +8,7 @@ import {
   ArrowBox, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
-  InputField, RadioGroupField, RadioOption, SelectField,
+  InputField, RadioGroupField, RadioOption, SelectField, DecimalField,
 } from '@fpsak-frontend/form';
 
 import {
@@ -80,11 +80,12 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
               <>
                 <FlexRow>
                   <FlexColumn>
-                    <InputField
+                    <DecimalField
                       name="andelSomTilbakekrevesManuell"
                       label={<FormattedMessage id="AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves" />}
-                      validate={[required, minValue1, maxValue100]}
                       readOnly={readOnly}
+                      validate={[required, minValue1, maxValue100]}
+                      normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
                       bredde="S"
                     />
                   </FlexColumn>

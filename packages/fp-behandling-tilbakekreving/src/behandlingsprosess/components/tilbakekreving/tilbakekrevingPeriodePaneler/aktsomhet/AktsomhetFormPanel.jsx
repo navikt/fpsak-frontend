@@ -92,8 +92,13 @@ AktsomhetFormPanel.defaultProps = {
   andelSomTilbakekreves: undefined,
 };
 
-const parseAndelSomTilbakekreves = (andelSomTilbakekreves) => {
+const parseIntAndelSomTilbakekreves = (andelSomTilbakekreves) => {
   const parsedValue = parseInt(andelSomTilbakekreves, 10);
+  return Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
+};
+
+const parseFloatAndelSomTilbakekreves = (andelSomTilbakekreves) => {
+  const parsedValue = parseFloat(andelSomTilbakekreves);
   return Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
 };
 
@@ -101,8 +106,8 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
   const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
 
   const andelSomTilbakekreves = aktsomhet.andelSomTilbakekreves === EGENDEFINERT
-    ? parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell)
-    : parseAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves);
+    ? parseFloatAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell)
+    : parseIntAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves);
 
   return {
     harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
