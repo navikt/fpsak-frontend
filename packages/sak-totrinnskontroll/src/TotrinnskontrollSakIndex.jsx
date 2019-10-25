@@ -30,6 +30,7 @@ const TotrinnskontrollSakIndex = ({
   erBehandlingEtterKlage,
   erKlageWithKA,
   erKlage,
+  disableGodkjennKnapp,
 }) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -50,6 +51,7 @@ const TotrinnskontrollSakIndex = ({
       erBehandlingEtterKlage={erBehandlingEtterKlage}
       erKlageWithKA={erKlageWithKA}
       erKlage={erKlage}
+      disableGodkjennKnapp={disableGodkjennKnapp}
     />
   </RawIntlProvider>
 );
@@ -67,7 +69,7 @@ TotrinnskontrollSakIndex.propTypes = {
   behandlingKlageVurdering: PropTypes.shape({
     klageVurdering: PropTypes.string,
     klageVurderingOmgjoer: PropTypes.string,
-  }).isRequired,
+  }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   erKlageWithKA: PropTypes.bool.isRequired,
@@ -75,6 +77,11 @@ TotrinnskontrollSakIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
+  disableGodkjennKnapp: PropTypes.bool.isRequired,
+};
+
+TotrinnskontrollSakIndex.defaultProps = {
+  behandlingKlageVurdering: undefined,
 };
 
 export default TotrinnskontrollSakIndex;

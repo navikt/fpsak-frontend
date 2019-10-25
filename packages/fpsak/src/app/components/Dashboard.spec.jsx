@@ -3,7 +3,8 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import FagsakSearchIndex from 'fagsakSearch/FagsakSearchIndex';
+
+import FagsakSearchIndex from '../../fagsakSearch/FagsakSearchIndex';
 import IntegrationStatusPanel from './IntegrationStatusPanel';
 import { Dashboard } from './Dashboard';
 

@@ -2,9 +2,9 @@ import { createSelector } from 'reselect';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import fpsakApi from 'data/fpsakApi';
-import { getRettigheter, getBehandlingStatus, getBehandlingIsOnHold } from 'behandling/duck';
-import { getSelectedSaksnummer } from 'fagsak/duck';
+import fpsakApi from '../data/fpsakApi';
+import { getRettigheter, getBehandlingStatus, getBehandlingIsOnHold } from '../behandling/duck';
+import { getSelectedSaksnummer } from '../fagsak/duck';
 import SupportPanel from './supportPanels';
 
 

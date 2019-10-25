@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { injectKodeverk, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber,
@@ -23,7 +23,6 @@ import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-fronte
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
 import { getBehandlingIsRevurdering, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { createVisningsnavnForAktivitet } from 'behandlingForstegangOgRevurdering/src/util/visningsnavnHelper';
 import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import 'core-js/features/array/flat-map';
 

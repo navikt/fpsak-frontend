@@ -23,6 +23,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
   sarligGrunnTyper,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
+  andelSomTilbakekreves,
 }) => (
   <div>
     <Undertekst>
@@ -57,6 +58,7 @@ const AktsomhetSarligeGrunnerFormPanel = ({
       handletUaktsomhetGrad={handletUaktsomhetGrad}
       harMerEnnEnYtelse={harMerEnnEnYtelse}
       feilutbetalingBelop={feilutbetalingBelop}
+      andelSomTilbakekreves={andelSomTilbakekreves}
     />
   </div>
 );
@@ -68,11 +70,13 @@ AktsomhetSarligeGrunnerFormPanel.propTypes = {
   erSerligGrunnAnnetValgt: PropTypes.bool.isRequired,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
+  andelSomTilbakekreves: PropTypes.string,
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AktsomhetSarligeGrunnerFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
+  andelSomTilbakekreves: undefined,
 };
 
 export default AktsomhetSarligeGrunnerFormPanel;

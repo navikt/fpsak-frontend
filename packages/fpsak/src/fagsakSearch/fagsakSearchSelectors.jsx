@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
 
 import { errorOfType, ErrorTypes, getErrorResponseData } from '@fpsak-frontend/fp-felles';
-import fpsakApi from 'data/fpsakApi';
+
+import fpsakApi from '../data/fpsakApi';
 
 export const getFagsaker = fpsakApi.SEARCH_FAGSAK.getRestApiData();
 export const getSearchFagsakerStarted = fpsakApi.SEARCH_FAGSAK.getRestApiStarted();

@@ -9,6 +9,7 @@ import {
   getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
 } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+
 import { FagsakResolver } from './FagsakResolver';
 
 const fagsak = dummyFagsak();

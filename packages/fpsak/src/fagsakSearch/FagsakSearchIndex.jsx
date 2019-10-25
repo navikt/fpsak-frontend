@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import { pathToFagsak } from '@fpsak-frontend/fp-felles';
-
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
+import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
+
+import { getAlleKodeverk } from '../kodeverk/duck';
 import { resetFagsakSearch, searchFagsaker } from './duck';
 import {
   getFagsaker, getSearchFagsakerAccessDenied, getSearchFagsakerFinished, getSearchFagsakerStarted,
 } from './fagsakSearchSelectors';
-import FagsakSearch from './components/FagsakSearch';
 
 /**
  * FagsakSearchIndex
@@ -44,16 +45,17 @@ class FagsakSearchIndex extends Component {
 
   render() {
     const {
-      fagsaker, searchFagsaker: search, searchResultReceived, searchStarted, searchResultAccessDenied,
+      fagsaker, searchFagsaker: search, searchResultReceived, searchStarted, searchResultAccessDenied, alleKodeverk,
     } = this.props;
     return (
-      <FagsakSearch
+      <FagsakSokSakIndex
         fagsaker={fagsaker}
         searchFagsakCallback={search}
         searchResultReceived={searchResultReceived}
         selectFagsakCallback={(e, saksnummer) => this.goToFagsak(saksnummer)}
         searchStarted={searchStarted}
         searchResultAccessDenied={searchResultAccessDenied}
+        alleKodeverk={alleKodeverk}
       />
     );
   }
@@ -66,18 +68,20 @@ FagsakSearchIndex.propTypes = {
   fagsaker: PropTypes.arrayOf(fagsakPropType),
   push: PropTypes.func.isRequired,
   searchFagsaker: PropTypes.func.isRequired,
-  searchResultReceived: PropTypes.bool.isRequired,
+  searchResultReceived: PropTypes.bool,
   searchStarted: PropTypes.bool,
   searchResultAccessDenied: PropTypes.shape({
     feilmelding: PropTypes.string.isRequired,
   }),
   resetFagsakSearch: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FagsakSearchIndex.defaultProps = {
   fagsaker: [],
   searchStarted: false,
   searchResultAccessDenied: null,
+  searchResultReceived: false,
 };
 
 const mapStateToProps = (state) => ({
@@ -85,6 +89,7 @@ const mapStateToProps = (state) => ({
   fagsaker: getFagsaker(state),
   searchStarted: getSearchFagsakerStarted(state),
   searchResultAccessDenied: getSearchFagsakerAccessDenied(state),
+  alleKodeverk: getAlleKodeverk(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

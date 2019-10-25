@@ -6,18 +6,15 @@ import { Element } from 'nav-frontend-typografi';
 
 import { calcDays } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpText, EditedIcon, ElementWrapper, Image, VerticalSpacer,
+  AksjonspunktHelpText, EditedIcon, ElementWrapper, Image, VerticalSpacer, FloatRight,
 } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
 import { injectKodeverk } from '@fpsak-frontend/fp-felles';
 
 import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
@@ -172,33 +169,31 @@ export class UttakTimeLineData extends Component {
 
   render() {
     const {
+      callbackBackward,
+      callbackCancelSelectedActivity,
+      callbackForward,
+      callbackUpdateActivity,
+      getKodeverknavn,
+      harSoktOmFlerbarnsdager,
       intl,
+      isApOpen,
       readOnly,
       selectedItemData,
-      callbackForward,
-      callbackBackward,
-      callbackUpdateActivity,
-      callbackCancelSelectedActivity,
-      isApOpen,
       stonadskonto,
-      harSoktOmFlerbarnsdager,
-      getKodeverknavn,
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
     return (
-      <Row key={`selectedItemData_${selectedItemData.id}`}>
-        <Column xs="12">
-          <div className={styles.showDataContainer}>
-            <Row>
-              <Column xs="3">
-                <Element>
-                  <FormattedMessage id="UttakTimeLineData.PeriodeData.Detaljer" />
-                  {isEdited && <EditedIcon />}
-                </Element>
-              </Column>
-              <Column xs="7">
-                {!readOnly
+      <TimeLineDataContainer key={`selectedItemData_${selectedItemData.id}`}>
+        <Row>
+          <Column xs="3">
+            <Element>
+              <FormattedMessage id="UttakTimeLineData.PeriodeData.Detaljer" />
+              {isEdited && <EditedIcon />}
+            </Element>
+          </Column>
+          <Column xs="7">
+            {!readOnly
                 && (
                   <span className={styles.splitPeriodPosition}>
                     <Image
@@ -213,7 +208,7 @@ export class UttakTimeLineData extends Component {
                     <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
                   </span>
                 )}
-                {showDelPeriodeModal
+            {showDelPeriodeModal
                 && (
                   <DelOppPeriodeModal
                     cancelEvent={this.hideModal}
@@ -222,78 +217,60 @@ export class UttakTimeLineData extends Component {
                     splitPeriod={this.splitPeriod}
                   />
                 )}
-              </Column>
-              <Column xs="2">
-                <span className={styles.navigationPosition}>
-                  <Image
-                    tabIndex="0"
-                    className={styles.timeLineButton}
-                    src={arrowLeftImageUrl}
-                    srcHover={arrowLeftFilledImageUrl}
-                    alt={intl.formatMessage({ id: 'Timeline.prevPeriod' })}
-                    onMouseDown={callbackBackward}
-                    onKeyDown={callbackBackward}
-                  />
-                  <Image
-                    tabIndex="0"
-                    className={styles.timeLineButton}
-                    src={arrowRightImageUrl}
-                    srcHover={arrowRightFilledImageUrl}
-                    alt={intl.formatMessage({ id: 'Timeline.nextPeriod' })}
-                    onMouseDown={callbackForward}
-                    onKeyDown={callbackForward}
-                  />
-                </span>
-              </Column>
-            </Row>
-            {selectedItemData.manuellBehandlingÅrsak && selectedItemData.manuellBehandlingÅrsak.kode !== '-' && (
-            <ElementWrapper>
-              <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
-                {selectedItemData.periodeType
-                  ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
-                  : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
-              </AksjonspunktHelpText>
-              <VerticalSpacer twentyPx />
-            </ElementWrapper>
-            )}
-            <UttakActivity
-              cancelSelectedActivity={callbackCancelSelectedActivity}
-              updateActivity={callbackUpdateActivity}
-              selectedItemData={selectedItemData}
-              readOnly={readOnly}
-              isApOpen={isApOpen}
-              harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
-            />
-          </div>
-        </Column>
-      </Row>
+          </Column>
+          <Column xs="2">
+            <FloatRight>
+              <TimeLineButton text={intl.formatMessage({ id: 'Timeline.prevPeriod' })} type="prev" callback={callbackBackward} />
+              <TimeLineButton text={intl.formatMessage({ id: 'Timeline.nextPeriod' })} type="next" callback={callbackForward} />
+            </FloatRight>
+          </Column>
+        </Row>
+        {selectedItemData.manuellBehandlingÅrsak && selectedItemData.manuellBehandlingÅrsak.kode !== '-' && (
+        <ElementWrapper>
+          <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
+            {selectedItemData.periodeType
+              ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
+              : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
+          </AksjonspunktHelpText>
+          <VerticalSpacer twentyPx />
+        </ElementWrapper>
+        )}
+        <UttakActivity
+          cancelSelectedActivity={callbackCancelSelectedActivity}
+          updateActivity={callbackUpdateActivity}
+          selectedItemData={selectedItemData}
+          readOnly={readOnly}
+          isApOpen={isApOpen}
+          harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
+        />
+      </TimeLineDataContainer>
     );
   }
 }
 
 UttakTimeLineData.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  selectedItemData: uttaksresultatAktivitetPropType,
+  activityPanelName: PropTypes.string.isRequired,
+  behandlingFormPrefix: PropTypes.string.isRequired,
+  callbackBackward: PropTypes.func.isRequired,
+  callbackCancelSelectedActivity: PropTypes.func.isRequired,
   callbackForward: PropTypes.func.isRequired,
   callbackSetSelected: PropTypes.func.isRequired,
-  callbackBackward: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
   callbackUpdateActivity: PropTypes.func.isRequired,
-  callbackCancelSelectedActivity: PropTypes.func.isRequired,
-  uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  reduxFormChange: PropTypes.func.isRequired,
-  behandlingFormPrefix: PropTypes.string.isRequired,
   formName: PropTypes.string.isRequired,
-  activityPanelName: PropTypes.string.isRequired,
-  isApOpen: PropTypes.bool,
-  stonadskonto: PropTypes.shape(),
-  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  intl: PropTypes.shape().isRequired,
+  isApOpen: PropTypes.bool,
+  readOnly: PropTypes.bool.isRequired,
+  reduxFormChange: PropTypes.func.isRequired,
+  selectedItemData: uttaksresultatAktivitetPropType,
+  stonadskonto: PropTypes.shape(),
+  uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 UttakTimeLineData.defaultProps = {
-  selectedItemData: undefined,
   isApOpen: false,
+  selectedItemData: undefined,
   stonadskonto: {},
 };
 

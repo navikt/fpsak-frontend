@@ -5,6 +5,7 @@ import { expect } from 'chai';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+
 import RisikoklassfiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import FagsakProfile from './components/FagsakProfile';
 import { FagsakProfileIndex, getSkalViseRisikoklassifisering } from './FagsakProfileIndex';
@@ -22,6 +23,7 @@ describe('<FagsakProfileIndex>', () => {
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
       skalViseRisikoklassifisering={false}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
     expect(wrapper.find(FagsakProfile)).has.length(1);
@@ -41,6 +43,7 @@ describe('<FagsakProfileIndex>', () => {
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
       skalViseRisikoklassifisering={false}
+      alleKodeverk={{}}
     />);
 
     expect(showAllCallback.getCalls()).has.length(0);
@@ -59,6 +62,7 @@ describe('<FagsakProfileIndex>', () => {
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
       skalViseRisikoklassifisering={false}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
     wrapper.unmount();
@@ -79,6 +83,7 @@ describe('<FagsakProfileIndex>', () => {
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
       skalViseRisikoklassifisering
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(RisikoklassfiseringIndex)).has.length(1);
     wrapper.unmount();

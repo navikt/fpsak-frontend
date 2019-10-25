@@ -90,6 +90,7 @@ export class ApprovalPanel extends Component {
       erBehandlingEtterKlage,
       erKlageWithKA,
       erKlage,
+      disableGodkjennKnapp,
     } = this.props;
     const { approvals } = this.state;
 
@@ -122,6 +123,7 @@ export class ApprovalPanel extends Component {
                       erBehandlingEtterKlage={erBehandlingEtterKlage}
                       erKlageWithKA={erKlageWithKA}
                       erKlage={erKlage}
+                      disableGodkjennKnapp={disableGodkjennKnapp}
                     />
                   </div>
                 )
@@ -165,16 +167,18 @@ ApprovalPanel.propTypes = {
   behandlingKlageVurdering: PropTypes.shape({
     klageVurdering: PropTypes.string,
     klageVurderingOmgjoer: PropTypes.string,
-  }).isRequired,
+  }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   erKlageWithKA: PropTypes.bool.isRequired,
   erKlage: PropTypes.bool.isRequired,
+  disableGodkjennKnapp: PropTypes.bool.isRequired,
 };
 
 ApprovalPanel.defaultProps = {
   totrinnskontrollSkjermlenkeContext: undefined,
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
+  behandlingKlageVurdering: undefined,
 };
 
 export default ApprovalPanel;

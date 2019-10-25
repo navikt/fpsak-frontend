@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { NavLink } from 'react-router-dom';
 
-import SupportPanel from 'behandlingsupport/supportPanels';
+import SupportPanel from '../supportPanels';
 import SupportPanelLink from './SupportPanelLink';
 
 describe('<SupportPanelLink>', () => {

@@ -12,8 +12,8 @@ import urlMann from '@fpsak-frontend/assets/images/mann.svg';
 import urlKvinne from '@fpsak-frontend/assets/images/kvinne.svg';
 
 import { injectIntl } from 'react-intl';
-import TilbakekrevingTimelineController from './TilbakekrevingTimelineController';
 
+import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import styles from './tilbakekrevingTimeline.less';
 
 export const GODKJENT_CLASSNAME = 'godkjentPeriode';
@@ -26,30 +26,24 @@ const getOptions = (sortedPeriods) => {
   const lastPeriod = sortedPeriods[sortedPeriods.length - 1];
 
   return {
-    height: '104px',
-    width: '100%',
-    zoomMin: 1000 * 60 * 60 * 24 * 30,
-    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
-    zoomable: true,
-    moveable: true,
-    min: moment(firstPeriod.fom)
-      .subtract(4, 'weeks'),
-    max: moment(firstPeriod.fom)
-      .add(4, 'years'),
-    start: moment(firstPeriod.fom).subtract(1, 'days'),
     end: moment(lastPeriod.tom).add(2, 'days'),
-    margin: {
-      item: 14,
-    },
-    orientation: { axis: 'top' },
-    stack: false,
-    verticalScroll: false,
-    showCurrentTime: false,
+    height: '104px',
     locale: moment.locale('nb'),
-    tooltip: {
-      followMouse: true,
-    },
+    margin: { item: 14 },
+    max: moment(firstPeriod.fom).add(4, 'years'),
+    min: moment(firstPeriod.fom).subtract(4, 'weeks'),
     moment,
+    moveable: true,
+    orientation: { axis: 'top' },
+    showCurrentTime: false,
+    stack: false,
+    start: moment(firstPeriod.fom).subtract(1, 'days'),
+    tooltip: { followMouse: true },
+    verticalScroll: false,
+    width: '100%',
+    zoomable: true,
+    zoomMax: 1000 * 60 * 60 * 24 * 31 * 40,
+    zoomMin: 1000 * 60 * 60 * 24 * 30,
   };
 };
 
@@ -205,7 +199,7 @@ class TilbakekrevingTimeline extends Component {
         </Row>
         <Row>
           <Column xs="12">
-            <TilbakekrevingTimelineController
+            <TimeLineControl
               goBackwardCallback={this.goBackward}
               goForwardCallback={this.goForward}
               zoomInCallback={this.zoomIn}
@@ -214,7 +208,7 @@ class TilbakekrevingTimeline extends Component {
               selectedPeriod={selectedPeriod}
             >
               {hjelpetekstKomponent}
-            </TilbakekrevingTimelineController>
+            </TimeLineControl>
           </Column>
         </Row>
       </div>

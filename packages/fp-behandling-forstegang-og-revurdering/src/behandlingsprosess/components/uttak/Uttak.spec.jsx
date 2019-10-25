@@ -6,8 +6,13 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import { UttakImpl as Uttak } from './Uttak';
+import { Row } from 'nav-frontend-grid';
+import { CheckboxField } from '@fpsak-frontend/form';
+import { Tidslinje } from '@fpsak-frontend/tidslinje';
+import { Hovedknapp } from 'nav-frontend-knapper';
+import { FormattedMessage } from 'react-intl';
 import UttakTimeLineData from './UttakTimeLineData';
+import { UttakImpl as Uttak } from './Uttak';
 
 describe('<Uttak>', () => {
   const uttakActivities = [{
@@ -83,16 +88,16 @@ describe('<Uttak>', () => {
       behandlingId={999}
     />);
     wrapper.setState({ selectedItem: null });
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find(Row);
     expect(rows).has.length(3);
-    const checkBox = wrapper.find('CheckboxField');
+    const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).has.length(1);
     expect(checkBox.first().prop('name')).to.eql('manuellOverstyring');
-    const uttakTimeLine = wrapper.find('UttakTimeLine');
+    const uttakTimeLine = wrapper.find(Tidslinje);
     expect(uttakTimeLine).has.length(1);
-    const uttakTimeLineData = wrapper.find('UttakTimeLineData');
+    const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).has.length(0);
-    const confirmKnapp = wrapper.find('Hovedknapp');
+    const confirmKnapp = wrapper.find(Hovedknapp);
     expect(confirmKnapp).has.length(0);
   });
 
@@ -126,17 +131,17 @@ describe('<Uttak>', () => {
       behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
-    const checkBox = wrapper.find('CheckboxField');
+    const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(1);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('Uttak.Confirm');
     expect(checkBox.first().prop('name')).to.eql('manuellOverstyring');
-    const uttakTimeLine = wrapper.find('UttakTimeLine');
+    const uttakTimeLine = wrapper.find(Tidslinje);
     expect(uttakTimeLine).to.have.length(1);
     const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
-    const confirmKnapp = wrapper.find('Hovedknapp');
+    const confirmKnapp = wrapper.find(Hovedknapp);
     expect(confirmKnapp).to.have.length(1);
     expect(confirmKnapp.first().prop('disabled')).to.eql(true);
   });
@@ -170,15 +175,15 @@ describe('<Uttak>', () => {
       behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
-    const checkBox = wrapper.find('CheckboxField');
+    const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(0);
-    const uttakTimeLine = wrapper.find('UttakTimeLine');
+    const uttakTimeLine = wrapper.find(Tidslinje);
     expect(uttakTimeLine).to.have.length(1);
     const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
-    const confirmKnapp = wrapper.find('Hovedknapp');
+    const confirmKnapp = wrapper.find(Hovedknapp);
     expect(confirmKnapp).to.have.length(0);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('Uttak.Overstyrt');
   });
@@ -229,16 +234,16 @@ describe('<Uttak>', () => {
       behandlingId={999}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
-    const checkBox = wrapper.find('CheckboxField');
+    const checkBox = wrapper.find(CheckboxField);
     expect(checkBox).to.have.length(0);
-    const formattedMessage = wrapper.find('FormattedMessage');
+    const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(1);
     expect(formattedMessage.first().prop('id')).to.eql('Uttak.Confirm');
-    const uttakTimeLine = wrapper.find('UttakTimeLine');
+    const uttakTimeLine = wrapper.find(Tidslinje);
     expect(uttakTimeLine).to.have.length(1);
     const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
-    const confirmKnapp = wrapper.find('Hovedknapp');
+    const confirmKnapp = wrapper.find(Hovedknapp);
     expect(confirmKnapp).to.have.length(1);
   });
 
@@ -293,7 +298,7 @@ describe('<Uttak>', () => {
     const uttakTimeLineData = wrapper.find(UttakTimeLineData);
     expect(uttakTimeLineData).to.have.length(1);
 
-    const uttakTimeLine = wrapper.find('UttakTimeLine');
+    const uttakTimeLine = wrapper.find(Tidslinje);
     uttakTimeLine.prop('openPeriodInfo', { preventDefault: sinon.spy() });
     wrapper.update();
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);

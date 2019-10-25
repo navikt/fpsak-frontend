@@ -4,10 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
 
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
-import { getFeatureToggles } from 'app/duck';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
 import {
   featureToggle,
   getLocationWithDefaultBehandlingspunktAndFakta,
@@ -16,10 +13,12 @@ import {
   pathToMissingPage,
   requireProps,
 } from '@fpsak-frontend/fp-felles';
-import { getBehandlingerIds } from 'behandling/selectors/behandlingerSelectors';
-import { resetFagsakSearch as resetFagsakSearchActionCreator } from 'fagsakSearch/duck';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
+import { getFeatureToggles } from '../app/duck';
+import { getBehandlingerIds } from '../behandling/selectors/behandlingerSelectors';
+import { resetFagsakSearch as resetFagsakSearchActionCreator } from '../fagsakSearch/duck';
 import { fetchKodeverk as fetchKodeverkActionCreator } from '../kodeverk/duck';
 import { fetchFagsakInfo as fetchFagsakInfoActionCreator, resetFagsakContext as resetFagsakContextActionCreator } from './duck';
 import {

@@ -203,7 +203,7 @@ FodselInfoPanelImpl.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   termindato: PropTypes.string,
-  vedtaksDatoSomSvangerskapsuke: PropTypes.string,
+  vedtaksDatoSomSvangerskapsuke: PropTypes.number,
   soknad: fodselSoknadPropType.isRequired,
   originalBehandling: fodselOriginalBehandlingPropType,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,

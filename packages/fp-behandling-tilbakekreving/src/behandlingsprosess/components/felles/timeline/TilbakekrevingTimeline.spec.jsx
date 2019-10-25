@@ -6,8 +6,8 @@ import Timeline from 'react-visjs-timeline';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
+import { TimeLineControl } from '@fpsak-frontend/tidslinje';
 import TilbakekrevingTimeline from './TilbakekrevingTimeline';
-import TilbakekrevingTimelineController from './TilbakekrevingTimelineController';
 
 
 describe('<TilbakekrevingTimeline>', () => {
@@ -45,7 +45,7 @@ describe('<TilbakekrevingTimeline>', () => {
       />,
     );
 
-    expect(wrapper.find(TilbakekrevingTimelineController)).has.length(1);
+    expect(wrapper.find(TimeLineControl)).has.length(1);
 
     const tidslinje = wrapper.find(Timeline);
     expect(tidslinje.prop('options').min.format(ISO_DATE_FORMAT)).is.eql('2019-09-12');

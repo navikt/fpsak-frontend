@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+
 import fpsakApi from '../data/fpsakApi';
 
 export const getAktoerContext = (state) => state.default.aktoer;

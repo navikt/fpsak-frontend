@@ -6,16 +6,14 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { EditedIcon, Image } from '@fpsak-frontend/shared-components';
+import { EditedIcon, Image, FloatRight } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-import arrowLeftImageUrl from '@fpsak-frontend/assets/images/arrow_left.svg';
-import arrowLeftFilledImageUrl from '@fpsak-frontend/assets/images/arrow_left_filled.svg';
-import arrowRightImageUrl from '@fpsak-frontend/assets/images/arrow_right.svg';
-import arrowRightFilledImageUrl from '@fpsak-frontend/assets/images/arrow_right_filled.svg';
 
 import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
 import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import { TimeLineButton } from '@fpsak-frontend/tidslinje';
+
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
 import styles from './periodeController.less';
@@ -163,26 +161,10 @@ export class PeriodeControllerImpl extends Component {
           )}
         </Column>
         <Column xs="2">
-          <span className={styles.navigationPosition}>
-            <Image
-              tabIndex="0"
-              className={styles.timeLineButton}
-              src={arrowLeftImageUrl}
-              srcHover={arrowLeftFilledImageUrl}
-              alt={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })}
-              onMouseDown={callbackBackward}
-              onKeyDown={callbackBackward}
-            />
-            <Image
-              tabIndex="0"
-              className={styles.timeLineButton}
-              src={arrowRightImageUrl}
-              srcHover={arrowRightFilledImageUrl}
-              alt={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })}
-              onMouseDown={callbackForward}
-              onKeyDown={callbackForward}
-            />
-          </span>
+          <FloatRight>
+            <TimeLineButton text={intl.formatMessage({ id: 'PeriodeController.ForrigePeriode' })} type="prev" callback={callbackBackward} />
+            <TimeLineButton text={intl.formatMessage({ id: 'PeriodeController.NestePeriode' })} type="next" callback={callbackForward} />
+          </FloatRight>
         </Column>
       </Row>
     );

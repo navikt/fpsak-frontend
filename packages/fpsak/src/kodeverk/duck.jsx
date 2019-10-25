@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
-import fpsakApi from 'data/fpsakApi';
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
+import fpsakApi from '../data/fpsakApi';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
 
 export const fetchKodeverk = () => (dispatch) => behandlingOrchestrator.fetchKodeverk(dispatch);
 
