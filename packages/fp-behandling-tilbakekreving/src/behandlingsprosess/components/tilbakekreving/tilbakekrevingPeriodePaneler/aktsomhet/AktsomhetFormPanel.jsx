@@ -92,26 +92,27 @@ AktsomhetFormPanel.defaultProps = {
   andelSomTilbakekreves: undefined,
 };
 
-const parseIntAndelSomTilbakekreves = (andelSomTilbakekreves) => {
+const parseIntAndelSomTilbakekreves = (andelSomTilbakekreves, harGrunnerTilReduksjon) => {
   const parsedValue = parseInt(andelSomTilbakekreves, 10);
-  return Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
+  return !harGrunnerTilReduksjon || Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
 };
 
-const parseFloatAndelSomTilbakekreves = (andelSomTilbakekreves) => {
+const parseFloatAndelSomTilbakekreves = (andelSomTilbakekreves, harGrunnerTilReduksjon) => {
   const parsedValue = parseFloat(andelSomTilbakekreves);
-  return Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
+  return !harGrunnerTilReduksjon || Number.isNaN(parsedValue) ? {} : { andelTilbakekreves: parsedValue };
 };
 
 const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
   const sarligeGrunner = sarligGrunnTyper.reduce((acc, type) => (aktsomhet[type.kode] ? acc.concat(type.kode) : acc), []);
 
+  const { harGrunnerTilReduksjon } = aktsomhet;
   const andelSomTilbakekreves = aktsomhet.andelSomTilbakekreves === EGENDEFINERT
-    ? parseFloatAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell)
-    : parseIntAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves);
+    ? parseFloatAndelSomTilbakekreves(aktsomhet.andelSomTilbakekrevesManuell, harGrunnerTilReduksjon)
+    : parseIntAndelSomTilbakekreves(aktsomhet.andelSomTilbakekreves, harGrunnerTilReduksjon);
 
   return {
-    harGrunnerTilReduksjon: aktsomhet.harGrunnerTilReduksjon,
-    ileggRenter: aktsomhet.skalDetTilleggesRenter,
+    harGrunnerTilReduksjon,
+    ileggRenter: harGrunnerTilReduksjon ? undefined : aktsomhet.skalDetTilleggesRenter,
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
     tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
@@ -133,10 +134,10 @@ AktsomhetFormPanel.transformValues = (info, sarligGrunnTyper, vurderingBegrunnel
 
 AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
   const { aktsomhet, aktsomhetInfo } = vilkarResultatInfo;
-  const andelSomTilbakekreves = aktsomhetInfo ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
+  const andelSomTilbakekreves = aktsomhetInfo && aktsomhetInfo.andelTilbakekreves ? `${aktsomhetInfo.andelTilbakekreves}` : undefined;
   const aktsomhetData = aktsomhetInfo ? {
     [aktsomhet.kode ? aktsomhet.kode : aktsomhet]: {
-      andelSomTilbakekreves: ANDELER.includes(andelSomTilbakekreves) ? andelSomTilbakekreves : EGENDEFINERT,
+      andelSomTilbakekreves: andelSomTilbakekreves === undefined || ANDELER.includes(andelSomTilbakekreves) ? andelSomTilbakekreves : EGENDEFINERT,
       andelSomTilbakekrevesManuell: !ANDELER.includes(andelSomTilbakekreves) ? aktsomhetInfo.andelTilbakekreves : undefined,
       harGrunnerTilReduksjon: aktsomhetInfo.harGrunnerTilReduksjon,
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
