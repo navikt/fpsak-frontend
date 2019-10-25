@@ -50,6 +50,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
     oppdaterPeriode: PropTypes.func.isRequired,
     oppdaterSplittedePerioder: PropTypes.func.isRequired,
     antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
+    andelSomTilbakekreves: PropTypes.string,
     vilkarResultatTyper: PropTypes.arrayOf(PropTypes.shape()),
     aktsomhetTyper: PropTypes.arrayOf(PropTypes.shape()),
     sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
@@ -63,6 +64,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
   static defaultProps = {
     erBelopetIBehold: undefined,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: undefined,
+    andelSomTilbakekreves: undefined,
   }
 
   resetFields = () => {
@@ -126,6 +128,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       setForrigePeriode,
       oppdaterSplittedePerioder,
       data,
+      andelSomTilbakekreves,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
@@ -230,6 +233,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                           antallYtelser={data.ytelser.length}
                           feilutbetalingBelop={data.feilutbetaling}
                           erTotalBelopUnder4Rettsgebyr={data.erTotalBelopUnder4Rettsgebyr}
+                          andelSomTilbakekreves={andelSomTilbakekreves}
                         />
                       )}
                     </FormSection>
@@ -319,6 +323,9 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     return {
       harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
         state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
+      ),
+      andelSomTilbakekreves: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
+        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.andelSomTilbakekreves`,
       ),
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
         state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,

@@ -23,7 +23,7 @@ describe('<AktsomhetReduksjonAvBelopFormPanel>', () => {
     const select = wrapper.find(SelectField);
     expect(select).to.have.length(1);
     expect(select.prop('name')).to.eql('andelSomTilbakekreves');
-    expect(select.prop('selectValues').map((v) => v.key)).to.eql(['30', '50', '70']);
+    expect(select.prop('selectValues').map((v) => v.key)).to.eql(['30', '50', '70', 'Egendefinert']);
 
     expect(wrapper.find(InputField)).to.have.length(0);
   });
