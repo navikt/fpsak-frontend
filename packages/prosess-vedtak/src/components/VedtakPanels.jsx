@@ -62,6 +62,8 @@ const VedtakPanels = ({
         medlemskapFom={medlemskapFom}
         erBehandlingHenlagt={erBehandlingHenlagt}
         vilkar={vilkar}
+        tilbakekrevingvalg={tilbakekrevingvalg}
+        simuleringResultat={simuleringResultat}
       />
     );
   }
