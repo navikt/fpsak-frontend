@@ -201,7 +201,7 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhet: aktsomhet.GROVT_UAKTSOM,
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
-        ileggRenter: true,
+        ileggRenter: undefined,
         sarligGrunner: [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL],
         andelTilbakekreves: 70,
         tilbakekrevesBelop: 100,
