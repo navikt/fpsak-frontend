@@ -15,7 +15,8 @@
   "TimeLineNavigation.openData": "Åpne info om første periode",
   "TimeLineData.nextPeriod": "Neste periode",
   "TimeLineData.prevPeriod": "Forrige periode",
-
+  "Timeline.openData": "Åpne info om første periode",
+  
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",

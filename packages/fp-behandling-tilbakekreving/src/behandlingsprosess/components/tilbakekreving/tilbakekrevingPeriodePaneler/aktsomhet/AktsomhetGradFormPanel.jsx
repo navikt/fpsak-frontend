@@ -14,6 +14,7 @@ const AktsomhetGradFormPanel = ({
   harMerEnnEnYtelse,
   feilutbetalingBelop,
   erTotalBelopUnder4Rettsgebyr,
+  andelSomTilbakekreves,
 }) => (
   <>
     { handletUaktsomhetGrad === aktsomhet.FORSETT && (
@@ -29,6 +30,7 @@ const AktsomhetGradFormPanel = ({
         harMerEnnEnYtelse={harMerEnnEnYtelse}
         feilutbetalingBelop={feilutbetalingBelop}
         erTotalBelopUnder4Rettsgebyr={erTotalBelopUnder4Rettsgebyr}
+        andelSomTilbakekreves={andelSomTilbakekreves}
       />
     )}
   </>
@@ -43,10 +45,12 @@ AktsomhetGradFormPanel.propTypes = {
   feilutbetalingBelop: PropTypes.number.isRequired,
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,
   sarligGrunnTyper: PropTypes.arrayOf(PropTypes.shape()),
+  andelSomTilbakekreves: PropTypes.string,
 };
 
 AktsomhetGradFormPanel.defaultProps = {
   harGrunnerTilReduksjon: undefined,
+  andelSomTilbakekreves: undefined,
 };
 
 export default AktsomhetGradFormPanel;
