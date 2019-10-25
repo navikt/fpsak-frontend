@@ -2,6 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -16,6 +17,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 
 const behandling = {
   id: 1,
@@ -71,6 +74,11 @@ const alleKodeverk = {
       kodeverk: kodeverkTyper.AVSLAGSARSAK,
     }],
   },
+  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
+    kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+    navn: 'Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.',
+    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+  }],
 };
 
 
@@ -88,17 +96,7 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[{
-      definisjon: {
-        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
-      },
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-      },
-      begrunnelse: undefined,
-      kanLoses: true,
-      erAktivt: true,
-    }]}
+    aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     readOnly={boolean('readOnly', false)}
@@ -291,7 +289,7 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
           kode: 'FRITEKST',
         },
         type: {
-          kode: behandlingResultatType.OPPHOR,
+          kode: behandlingResultatType.INNVILGET,
         },
       },
     }}
@@ -300,7 +298,23 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
     sendVarselOmRevurdering={boolean('sendVarselOmRevurdering', false)}
     resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
     medlemskap={{ fom: '2019-01-01' }}
-    aksjonspunkter={[]}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.VURDERE_ANNEN_YTELSE,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    tilbakekrevingvalg={{
+      videreBehandling: {
+        kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
+        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+      },
+    }}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
     readOnly={boolean('readOnly', false)}
@@ -316,6 +330,14 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
       ...behandling,
       type: {
         kode: behandlingType.REVURDERING,
+      },
+      behandlingsresultat: {
+        vedtaksbrev: {
+          kode: 'FRITEKST',
+        },
+        type: {
+          kode: behandlingResultatType.OPPHOR,
+        },
       },
     }}
     vilkar={vilkar}
