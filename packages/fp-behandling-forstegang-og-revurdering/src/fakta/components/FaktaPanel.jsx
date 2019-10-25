@@ -179,7 +179,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={fodselOgTilretteleggingData}
-        showComponent={aksjonspunkter.some((ap) => fodselOgTilretteleggingAksjonspunkt.includes(ap.definisjon.kode))}
+        showComponent={aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)}
         render={(props) => (
           <FodselOgTilretteleggingFaktaIndex
             aksjonspunkter={aksjonspunkter}

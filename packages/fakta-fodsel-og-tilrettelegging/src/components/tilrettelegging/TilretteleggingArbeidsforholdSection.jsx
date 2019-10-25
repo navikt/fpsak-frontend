@@ -87,8 +87,8 @@ TilretteleggingArbeidsforholdSection.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  visTilrettelegginger: behandlingFormValueSelector('FodselOgTilretteleggingForm', 
-  ownProps.behandlingId, ownProps.behandlingVersjon)(state, `${ownProps.formSectionName}.skalBrukes`),
+  visTilrettelegginger: behandlingFormValueSelector('FodselOgTilretteleggingForm',
+    ownProps.behandlingId, ownProps.behandlingVersjon)(state, `${ownProps.formSectionName}.skalBrukes`),
 });
 
 export default connect(mapStateToProps)(TilretteleggingArbeidsforholdSection);

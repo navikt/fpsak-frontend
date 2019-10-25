@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { createStructuredSelector, createSelector } from 'reselect';
-import { connect } from 'react-redux';
 
 import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import fodselOgTilretteleggingAksjonspunkterPropType from '../propTypes/fodselOgTilretteleggingAksjonspunkterPropType';
+import fodselOgTilretteleggingPropType from '../propTypes/fodselOgTilretteleggingPropType';
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
-import FodselOgTilretteleggingFaktaFormOld from './FodselOgTilretteleggingFaktaFormOld';
 
 /**
  * Svangerskapspenger
@@ -57,6 +56,8 @@ FodselOgTilretteleggingInfoPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  svangerskapspengerTilrettelegging: fodselOgTilretteleggingPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(fodselOgTilretteleggingAksjonspunkterPropType).isRequired,
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   readOnly: PropTypes.bool.isRequired,

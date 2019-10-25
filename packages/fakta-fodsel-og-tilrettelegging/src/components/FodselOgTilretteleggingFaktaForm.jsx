@@ -17,6 +17,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
+import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
 
 import styles from './fodselOgTilretteleggingFaktaForm.less';
 
@@ -150,7 +151,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   fødselsdato: PropTypes.string,
   submittable: PropTypes.bool.isRequired,
-  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {
@@ -190,7 +191,7 @@ const getArbeidsforhold = createSelector([
 });
 
 const getInitialArbeidsforholdValues = createSelector([
-  (ownProps) => ownProps.svangerskapspengerTilrettelegging
+  (ownProps) => ownProps.svangerskapspengerTilrettelegging,
 ], (tilrettelegging) => {
   const arbeidsforhold = tilrettelegging ? tilrettelegging.arbeidsforholdListe : [];
   if (arbeidsforhold === undefined || arbeidsforhold === null) {
@@ -202,13 +203,13 @@ const getInitialArbeidsforholdValues = createSelector([
 });
 
 const getFødselsdato = createSelector([
-  (ownProps) => ownProps.svangerskapspengerTilrettelegging
+  (ownProps) => ownProps.svangerskapspengerTilrettelegging,
 ], (tilrettelegging) => (tilrettelegging ? tilrettelegging.fødselsdato : ''));
 
 const getInitialValues = createSelector(
-  [(ownProps) => ownProps.aksjonspunkter, 
-    (ownProps) => ownProps.svangerskapspengerTilrettelegging, 
-    getInitialArbeidsforholdValues, 
+  [(ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.svangerskapspengerTilrettelegging,
+    getInitialArbeidsforholdValues,
     getFødselsdato],
   (aksjonspunkter, tilrettelegging, arbeidsforholdValues, fødselsdato) => ({
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
@@ -224,10 +225,10 @@ const getOnSubmit = createSelector([(ownProps) => ownProps.submitCallback, getAr
 const getValidate = createSelector([getArbeidsforhold], (arbeidsforhold) => (values) => validateForm(values, arbeidsforhold));
 
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: getInitialValues(Props),
-  fødselsdato: getFødselsdato(Props),
+  initialValues: getInitialValues(ownProps),
+  fødselsdato: getFødselsdato(ownProps),
   arbeidsforhold: getArbeidsforhold(ownProps),
-  validate: getValidate(Props),
+  validate: getValidate(ownProps),
   onSubmit: getOnSubmit(ownProps),
 });
 
