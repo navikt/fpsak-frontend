@@ -31,8 +31,8 @@ const OpptjeningFaktaIndex = ({
     <OpptjeningInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      fastsattOpptjening={opptjening.fastsattOpptjening}
-      opptjeningAktiviteter={opptjening.opptjeningAktivitetList}
+      fastsattOpptjening={opptjening ? opptjening.fastsattOpptjening : undefined}
+      opptjeningAktiviteter={opptjening ? opptjening.opptjeningAktivitetList : undefined}
       aksjonspunkter={aksjonspunkter}
       openInfoPanels={openInfoPanels}
       toggleInfoPanelCallback={toggleInfoPanelCallback}
@@ -47,7 +47,7 @@ const OpptjeningFaktaIndex = ({
 
 OpptjeningFaktaIndex.propTypes = {
   behandling: opptjeningBehandlingPropType.isRequired,
-  opptjening: opptjeningPropType.isRequired,
+  opptjening: opptjeningPropType,
   aksjonspunkter: PropTypes.arrayOf(opptjeningAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
@@ -56,6 +56,10 @@ OpptjeningFaktaIndex.propTypes = {
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+};
+
+OpptjeningFaktaIndex.defaultProps = {
+  opptjening: undefined,
 };
 
 export default OpptjeningFaktaIndex;
