@@ -2,9 +2,9 @@ import React from 'react';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import { erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver, GRADERING_RANGE_DENOMINATOR, mapToBelop } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
+import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {

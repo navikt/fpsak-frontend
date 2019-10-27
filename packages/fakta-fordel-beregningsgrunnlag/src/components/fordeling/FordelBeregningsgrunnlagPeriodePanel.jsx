@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { FieldArray } from 'redux-form';
+import { FormattedMessage } from 'react-intl';
+import classnames from 'classnames/bind';
+import { Element } from 'nav-frontend-typografi';
+import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
 import {
   DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT,
   formatCurrencyNoKr,
 } from '@fpsak-frontend/utils';
-import { FieldArray } from 'redux-form';
-import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
-import classnames from 'classnames/bind';
-import { EkspanderbartpanelPure } from 'nav-frontend-ekspanderbartpanel';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+
 import RenderFordelBGFieldArray from './RenderFordelBGFieldArray';
 import {
   settAndelIArbeid, setGenerellAndelsinfo, setArbeidsforholdInitialValues, settFastsattBelop, starterPaaEllerEtterStp, finnFastsattPrAar,
@@ -57,6 +59,9 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
   isAksjonspunktClosed,
   open,
   showPanel,
+  beregningsgrunnlag,
+  alleKodeverk,
+  behandlingType,
 }) => (
   <EkspanderbartpanelPure
     className={readOnly ? styles.statusOk : classNames(`fordelBeregningsgrunnlagPeriode--${fom}`)}
@@ -70,6 +75,9 @@ const FordelBeregningsgrunnlagPeriodePanel = ({
       readOnly={readOnly}
       periodeUtenAarsak={!harPeriodeAarsakGraderingEllerRefusjon}
       isAksjonspunktClosed={isAksjonspunktClosed}
+      alleKodeverk={alleKodeverk}
+      beregningsgrunnlag={beregningsgrunnlag}
+      behandlingType={behandlingType}
     />
   </EkspanderbartpanelPure>
 );
@@ -83,6 +91,9 @@ FordelBeregningsgrunnlagPeriodePanel.propTypes = {
   harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   showPanel: PropTypes.func.isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
 };
 
 FordelBeregningsgrunnlagPeriodePanel.defaultProps = {

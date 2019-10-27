@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsgiverNavn: PropTypes.string,
@@ -6,23 +7,14 @@ const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   startdato: PropTypes.string,
   opphoersdato: PropTypes.string,
   arbeidsforholdId: PropTypes.string,
-  arbeidsforholdType: PropTypes.shape({
-    kode: PropTypes.string,
-    kodeverk: PropTypes.string,
-  }),
+  arbeidsforholdType: kodeverkObjektPropType,
 });
 
 const faktaOmBeregningAndelPropType = PropTypes.shape({
   arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
   andelsnr: PropTypes.number,
-  inntektskategori: PropTypes.shape({
-    kode: PropTypes.string,
-    kodeverk: PropTypes.string,
-  }),
-  aktivitetStatus: PropTypes.shape({
-    kode: PropTypes.string,
-    kodeverk: PropTypes.string,
-  }),
+  inntektskategori: kodeverkObjektPropType,
+  aktivitetStatus: kodeverkObjektPropType,
 });
 
 
@@ -35,12 +27,72 @@ const faktaOmBeregningPropType = PropTypes.shape({
   arbeidsforholdMedLønnsendringUtenIM: faktaOmBeregningAndelPropType,
 });
 
+const perioderMedGraderingEllerRefusjonPropType = PropTypes.shape({
+  erRefusjon: PropTypes.bool,
+  erGradering: PropTypes.bool,
+  fom: PropTypes.string,
+  tom: PropTypes.string,
+});
+
+const arbeidsforholdTilFordelingPropType = PropTypes.shape({
+  aktørId: PropTypes.number,
+  arbeidsforholdId: PropTypes.string,
+  arbeidsforholdType: kodeverkObjektPropType,
+  arbeidsgiverId: PropTypes.string,
+  arbeidsgiverNavn: PropTypes.string,
+  belopFraInntektsmeldingPrMnd: PropTypes.number,
+  eksternArbeidsforholdId: PropTypes.string,
+  naturalytelseBortfaltPrÅr: PropTypes.number,
+  naturalytelseTilkommetPrÅr: PropTypes.number,
+  opphoersdato: PropTypes.number,
+  organisasjonstype: kodeverkObjektPropType,
+  perioderMedGraderingEllerRefusjon: PropTypes.arrayOf(perioderMedGraderingEllerRefusjonPropType),
+  permisjon: PropTypes.shape({
+    permisjonFom: PropTypes.string,
+    permisjonTom: PropTypes.string,
+  }),
+  refusjonPrAar: PropTypes.number,
+  startdato: PropTypes.string,
+});
+
+const fordelBeregningsgrunnlagAndelPropType = PropTypes.shape({
+  aktivitetStatus: kodeverkObjektPropType,
+  andelIArbeid: PropTypes.arrayOf(PropTypes.number),
+  andelsnr: PropTypes.number,
+  arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
+  arbeidsforholdType: kodeverkObjektPropType,
+  belopFraInntektsmeldingPrAar: PropTypes.number,
+  fastsattAvSaksbehandler: PropTypes.bool,
+  fastsattForrigePrAar: PropTypes.number,
+  fordelingForrigeBehandlingPrAar: PropTypes.number,
+  fordeltPrAar: PropTypes.number,
+  inntektskategori: kodeverkObjektPropType,
+  lagtTilAvSaksbehandler: PropTypes.bool,
+  nyttArbeidsforhold: PropTypes.bool,
+  refusjonskravFraInntektsmeldingPrAar: PropTypes.number,
+  refusjonskravPrAar: PropTypes.number,
+});
+
+const fordelBeregningsgrunnlagPeriodePropType = PropTypes.shape({
+  fom: PropTypes.string,
+  fordelBeregningsgrunnlagAndeler: PropTypes.arrayOf(fordelBeregningsgrunnlagAndelPropType),
+  harPeriodeAarsakGraderingEllerRefusjon: PropTypes.bool,
+  skalKunneEndreRefusjon: PropTypes.bool,
+  tom: PropTypes.string,
+});
+
+const fordelBeregningsgrunnlagPropType = PropTypes.shape({
+  arbeidsforholdTilFordeling: PropTypes.arrayOf(arbeidsforholdTilFordelingPropType),
+  fordelBeregningsgrunnlagPerioder: PropTypes.arrayOf(fordelBeregningsgrunnlagPeriodePropType),
+});
+
+const faktaOmFordelingPropType = PropTypes.shape({
+  fordelBeregningsgrunnlag: fordelBeregningsgrunnlagPropType,
+});
+
 const beregningsgrunnlagPropType = PropTypes.shape({
   aktivitetStatus: PropTypes.arrayOf(PropTypes.shape({
-    aktivitetStatus: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      kodeverk: PropTypes.string.isRequired,
-    }),
+    aktivitetStatus: kodeverkObjektPropType,
   })),
   beregningsgrunnlagPeriode: PropTypes.arrayOf(PropTypes.shape({
     avkortetPrAar: PropTypes.number,
@@ -55,19 +107,10 @@ const beregningsgrunnlagPropType = PropTypes.shape({
     ledetekstRedusert: PropTypes.string,
     overstyrtPrAar: PropTypes.number,
     redusertPrAar: PropTypes.number,
-    periodeAarsaker: PropTypes.arrayOf(PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-      kodeverk: PropTypes.string.isRequired,
-    })),
+    periodeAarsaker: PropTypes.arrayOf(kodeverkObjektPropType),
     beregningsgrunnlagPrStatusOgAndel: PropTypes.arrayOf(PropTypes.shape({
-      aktivitetStatus: PropTypes.shape({
-        kode: PropTypes.string.isRequired,
-        kodeverk: PropTypes.string.isRequired,
-      }),
-      arbeidsforholdType: PropTypes.shape({
-        kode: PropTypes.string.isRequired,
-        kodeverk: PropTypes.string.isRequired,
-      }),
+      aktivitetStatus: kodeverkObjektPropType,
+      arbeidsforholdType: kodeverkObjektPropType,
       avkortetPrAar: PropTypes.number,
       beregnetPrAar: PropTypes.number,
       beregningsgrunnlagFom: PropTypes.string,
@@ -101,6 +144,7 @@ const beregningsgrunnlagPropType = PropTypes.shape({
   }),
   skjaeringstidspunktBeregning: PropTypes.string,
   faktaOmBeregning: faktaOmBeregningPropType,
+  faktaOmFordeling: faktaOmFordelingPropType,
 });
 
 export default beregningsgrunnlagPropType;

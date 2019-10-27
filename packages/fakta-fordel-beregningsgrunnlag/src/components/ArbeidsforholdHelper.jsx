@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { getFordelBeregningsgrunnlagPerioder, getBeregningsgrunnlagPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 
 const arbeidsforholdEksistererIListen = (arbeidsforhold, arbeidsgiverList) => {
   if (arbeidsforhold.arbeidsforholdId === null) {
@@ -47,10 +46,14 @@ const getUniqueListOfArbeidsforholdFromPerioder = (fordelPerioder, bgPerioder) =
   finnAndelerFraBgperioder(bgPerioder),
 );
 
-export const getUniqueListOfArbeidsforhold = createSelector([
-  getFordelBeregningsgrunnlagPerioder,
-  getBeregningsgrunnlagPerioder],
-getUniqueListOfArbeidsforholdFromPerioder);
+export const getUniqueListOfArbeidsforhold = createSelector(
+  [(props) => props.beregningsgrunnlag],
+  (beregningsgrunnlag) => {
+    const fordelBGPerioder = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag.fordelBeregningsgrunnlagPerioder;
+    const bgPerioder = beregningsgrunnlag.beregningsgrunnlagPeriode;
+    return getUniqueListOfArbeidsforholdFromPerioder(fordelBGPerioder, bgPerioder);
+  },
+);
 
 export const getUniqueListOfArbeidsforholdFields = (fields) => {
   const arbeidsgiverList = [];

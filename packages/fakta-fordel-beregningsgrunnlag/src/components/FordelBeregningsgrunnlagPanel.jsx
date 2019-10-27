@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { FormattedMessage } from 'react-intl';
 import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import FordelingForm from './FordelingForm';
+import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
@@ -16,6 +15,13 @@ const faktaOmFordelingAksjonspunkter = [FORDEL_BEREGNINGSGRUNNLAG];
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
+const harIkkeFordelInfo = (bg) => {
+  if (!bg) {
+    return true;
+  }
+  return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
+};
+const getFordelAksjonspunkt = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined);
 /**
  * FordelBeregningsgrunnlagPanel
  *
@@ -43,26 +49,31 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
   render() {
     const {
       props: {
-        intl,
         openInfoPanels,
         toggleInfoPanelCallback,
         hasOpenAksjonspunkter,
         readOnly,
-        submittable,
-        isOnHold,
         aksjonspunkter,
         submitCallback,
+        beregningsgrunnlag,
+        behandlingId,
+        behandlingVersjon,
+        alleKodeverk,
+        alleMerknaderFraBeslutter,
+        behandlingType,
+        submittable,
       },
       state: {
         submitEnabled,
       },
     } = this;
-    if (isOnHold) {
+    const fordelAP = getFordelAksjonspunkt(aksjonspunkter);
+    if (harIkkeFordelInfo(beregningsgrunnlag) || !fordelAP) {
       return null;
     }
     return (
       <FaktaEkspandertpanel
-        title={intl.formatMessage({ id: 'FordelBeregningsgrunnlag.Title' })}
+        title={<FormattedMessage id="FordelBeregningsgrunnlag.Title" />}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FORDELING)}
         toggleInfoPanelCallback={toggleInfoPanelCallback}
@@ -76,6 +87,13 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
             submittable={submittable}
             readOnly={readOnly}
             submitCallback={submitCallback}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            beregningsgrunnlag={beregningsgrunnlag}
+            behandlingType={behandlingType}
+            aksjonspunkter={aksjonspunkter}
           />
           )}
       </FaktaEkspandertpanel>
@@ -84,7 +102,6 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
 }
 
 FordelBeregningsgrunnlagPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
    */
@@ -92,22 +109,20 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
-  submittable: PropTypes.bool.isRequired,
-  isOnHold: PropTypes.bool.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType.isRequired).isRequired,
   submitCallback: PropTypes.func.isRequired,
+  submittable: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape({
+    notAccepted: PropTypes.bool,
+  }).isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
 };
 
-
-const mapStateToProps = (state) => ({
-  isOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
-  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-});
-
-
 const FordelBeregningsgrunnlagPanel = withDefaultToggling(faktaPanelCodes.FORDELING,
-  faktaOmFordelingAksjonspunkter)(connect(mapStateToProps)(injectIntl(FordelBeregningsgrunnlagPanelImpl)));
-
-FordelBeregningsgrunnlagPanel.supports = (aksjonspunkter) => aksjonspunkter.some((ap) => faktaOmFordelingAksjonspunkter.includes(ap.definisjon.kode));
+  faktaOmFordelingAksjonspunkter)(FordelBeregningsgrunnlagPanelImpl);
 
 export default FordelBeregningsgrunnlagPanel;

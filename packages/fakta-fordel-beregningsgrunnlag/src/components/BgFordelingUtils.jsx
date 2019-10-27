@@ -2,7 +2,8 @@ import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+
+import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 const nullOrUndefined = (value) => value === null || value === undefined;
 

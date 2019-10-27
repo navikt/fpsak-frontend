@@ -14,6 +14,7 @@ import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-tilrettelegging';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
+import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -29,7 +30,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
 import styles from './faktaPanel.less';
 
@@ -39,6 +39,7 @@ const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktC
   aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
 const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
+const fordelBeregningsgrunnlagAksjonspunkter = [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
 
 const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
@@ -54,6 +55,7 @@ const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.I
 const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
+const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
 
 /**
  * FaktaPanel
@@ -285,16 +287,23 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         erOverstyrer={erOverstyrer}
       />
 
-      {(FordelBeregningsgrunnlagPanel.supports(aksjonspunkter)) && (
-      <FordelBeregningsgrunnlagPanel
-        aksjonspunkter={aksjonspunkter}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={fordelBeregningsgrunnlagData}
+        showComponent={aksjonspunkter.some((ap) => fordelBeregningsgrunnlagAksjonspunkter.includes(ap.definisjon.kode))}
+        render={(props) => (
+          <FordelBeregningsgrunnlagFaktaIndex
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            {...props}
+          />
+        )}
       />
-      )}
 
       <DataFetcherWithCache
         behandlingVersjon={1}

@@ -5,7 +5,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { injectKodeverk, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import {
   formatCurrencyNoKr, isArrayEmpty, parseCurrencyInput, removeSpacesFromNumber,
@@ -13,17 +12,18 @@ import {
 import {
   ElementWrapper, Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
+import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import {
   DecimalField, InputField, NavFieldGroup, PeriodpickerField, SelectField,
 } from '@fpsak-frontend/form';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { arbeidsforholdBeregningProptype, kodeverkPropType } from '@fpsak-frontend/prop-types';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import inntektskategorier, { isSelvstendigNæringsdrivende } from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 
-import { getBehandlingIsRevurdering, getBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+
 import 'core-js/features/array/flat-map';
 
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
@@ -31,6 +31,7 @@ import {
   validateAndeler, validateSumFastsattBelop, validateTotalRefusjonPrArbeidsforhold, validateUlikeAndeler,
 } from '../ValidateAndelerUtils';
 import styles from './renderFordelBGFieldArray.less';
+import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 
 const ENTER_KEY_CODE = 13;
 
@@ -433,7 +434,7 @@ RenderFordelBGFieldArrayImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-const RenderFordelBGFieldArray = injectIntl(injectKodeverk(getAlleKodeverk)(RenderFordelBGFieldArrayImpl));
+const RenderFordelBGFieldArray = injectIntl(RenderFordelBGFieldArrayImpl);
 
 RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
   const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
@@ -460,14 +461,17 @@ RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregni
   return null;
 };
 
-const mapStateToPropsFactory = (initialState) => {
-  const erRevurdering = getBehandlingIsRevurdering(initialState);
-  const inntektskategoriKoder = getKodeverk(kodeverkTyper.INNTEKTSKATEGORI)(initialState);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const { behandlingType } = initialOwnProps;
+  const erRevurdering = behandlingType ? behandlingType.kode === bt.REVURDERING : false;
+  const inntektskategoriKoder = initialOwnProps.alleKodeverk[kodeverkTyper.INNTEKTSKATEGORI];
+  const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
+  return (state, ownProps) => ({
     erRevurdering,
     inntektskategoriKoder,
-    arbeidsforholdList: getUniqueListOfArbeidsforhold(state),
-    harKunYtelse: getBeregningsgrunnlag(state).aktivitetStatus
+    getKodeverknavn,
+    arbeidsforholdList: getUniqueListOfArbeidsforhold(ownProps),
+    harKunYtelse: initialOwnProps.beregningsgrunnlag.aktivitetStatus
       .some((status) => status.kode === aktivitetStatuser.KUN_YTELSE),
   });
 };

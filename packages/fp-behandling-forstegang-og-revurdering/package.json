@@ -12,6 +12,7 @@
     "@fpsak-frontend/fakta-arbeidsforhold": "1.0.0",
     "@fpsak-frontend/fakta-fodsel": "1.0.0",
     "@fpsak-frontend/fakta-fodsel-og-tilrettelegging": "1.0.0",
+    "@fpsak-frontend/fakta-fordel-beregningsgrunnlag": "1.0.0",
     "@fpsak-frontend/fakta-medlemskap": "1.0.0",
     "@fpsak-frontend/fakta-omsorg": "1.0.0",
     "@fpsak-frontend/fakta-omsorg-og-foreldreansvar": "1.0.0",
