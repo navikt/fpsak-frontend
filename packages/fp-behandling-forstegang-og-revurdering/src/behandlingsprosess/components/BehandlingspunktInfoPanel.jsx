@@ -164,6 +164,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
             alleKodeverk={alleKodeverk}
             isApOpen={openAksjonspunkt}
             vilkar={behandlingspunktVilkar}
+            featureToggles={featureToggles}
             {...props}
           />
         )}

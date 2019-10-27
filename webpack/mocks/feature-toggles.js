@@ -9,6 +9,7 @@ const toggles = {
     'fpsak.aktiver-tilbakekrevingbehandling': false,
     'fpsak.svp_flere_arbeidsforhold': false,
     'fpsak.beslutt-tilbakekreving': false,
+    'fpsak.redesign.beregningsgrunnlag': false,
   },
 };
 if (process.env.FEATURE_TOGGLES) {

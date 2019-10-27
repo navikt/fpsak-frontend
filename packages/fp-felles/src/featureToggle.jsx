@@ -5,6 +5,7 @@ const featureToggle = {
   OVERSTYR_BEREGNINGSGRUNNLAG: 'fpsak.overstyr_beregningsgrunnlag',
   SVP_FLERE_ARBEIDSFORHOLD: 'fpsak.svp_flere_arbeidsforhold',
   BESLUTT_TILBAKEKREVING: 'fpsak.beslutt-tilbakekreving',
+  BG_REDESIGN: 'fpsak.redesign.beregningsgrunnlag',
 };
 
 export default featureToggle;
