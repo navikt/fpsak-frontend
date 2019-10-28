@@ -9,17 +9,16 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
-import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
-import { behandlingFormTilbakekreving } from '../../../behandlingFormTilbakekreving';
-import TilbakekrevingTimelineData from '../felles/splittePerioder/TilbakekrevingTimelineData';
+import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 
 import styles from './foreldelsePeriodeForm.less';
 
@@ -51,6 +50,9 @@ export class ForeldelsePeriodeFormImpl extends Component {
       setNestePeriode,
       setForrigePeriode,
       oppdaterSplittedePerioder,
+      behandlingId,
+      behandlingVersjon,
+      beregnBelop,
       ...formProps
     } = this.props;
 
@@ -62,13 +64,16 @@ export class ForeldelsePeriodeFormImpl extends Component {
           callbackBackward={setForrigePeriode}
           oppdaterSplittedePerioder={oppdaterSplittedePerioder}
           readOnly={readOnly}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
         <Row>
           <Column md="6">
             <TextAreaField
               name="begrunnelse"
-              label={{ id: 'Foreldelse.Vurdering' }}
+              label={{ id: 'ForeldelsePeriodeForm.Vurdering' }}
               validate={[required, minLength3, maxLength1500, hasValidText]}
               maxLength={1500}
               readOnly={readOnly}
@@ -76,7 +81,7 @@ export class ForeldelsePeriodeFormImpl extends Component {
             />
           </Column>
           <Column md="6">
-            <Undertekst><FormattedMessage id="Foreldelse.RadioGroup.Foreldet" /></Undertekst>
+            <Undertekst><FormattedMessage id="ForeldelsePeriodeForm.RadioGroup.Foreldet" /></Undertekst>
             <VerticalSpacer eightPx />
             <RadioGroupField
               validate={[required]}
@@ -100,12 +105,12 @@ export class ForeldelsePeriodeFormImpl extends Component {
               readOnly={readOnly}
               spinner={formProps.submitting}
             >
-              <FormattedMessage id="UttakActivity.Oppdater" />
+              <FormattedMessage id="ForeldelsePeriodeForm.Oppdater" />
             </Hovedknapp>
           </FlexColumn>
           <FlexColumn>
             <Knapp mini htmlType="button" onClick={skjulPeriode}>
-              <FormattedMessage id="UttakActivity.Avbryt" />
+              <FormattedMessage id="ForeldelsePeriodeForm.Avbryt" />
             </Knapp>
           </FlexColumn>
         </FlexRow>
@@ -123,6 +128,9 @@ ForeldelsePeriodeFormImpl.propTypes = {
   setNestePeriode: PropTypes.func.isRequired,
   setForrigePeriode: PropTypes.func.isRequired,
   oppdaterSplittedePerioder: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  beregnBelop: PropTypes.func.isRequired,
   ...formPropTypes,
 };
 
@@ -144,7 +152,7 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToPropsFactory = (initialState, ownProps) => {
   const initialValues = buildInitalValues(ownProps.periode);
   const onSubmit = (values) => ownProps.oppdaterPeriode(values);
-  const foreldelseVurderingTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING)(initialState)
+  const foreldelseVurderingTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING]
     .filter((fv) => fv.kode !== foreldelseVurderingType.IKKE_VURDERT);
   return () => ({
     initialValues,
@@ -153,7 +161,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ForeldelsePeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
+const ForeldelsePeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: FORELDELSE_PERIODE_FORM_NAME,
   enableReinitialize: true,
 })(ForeldelsePeriodeFormImpl)));

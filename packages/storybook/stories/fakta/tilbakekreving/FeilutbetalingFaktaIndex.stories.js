@@ -13,7 +13,7 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
-import withReduxProvider from '../../decorators/withRedux';
+import withReduxProvider from '../../../decorators/withRedux';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
@@ -138,7 +138,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/FeilutbetalingFaktaIndex',
+  title: 'fakta/tilbakekreving/FeilutbetalingFaktaIndex',
   component: FeilutbetalingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

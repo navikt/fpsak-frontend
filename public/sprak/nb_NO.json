@@ -41,7 +41,6 @@
   "Behandlingspunkt.AnkeResultat": "Resultat",
   "Behandlingspunkt.Avregning": "Simulering",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
-  "Behandlingspunkt.Foreldelse": "Foreldelse",
 
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
@@ -60,12 +59,6 @@
   "BegrunnelsePanel.readOnly": "Begrunnelse",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
-
-  "Foreldelse.Vurdering": "Vurdering",
-  "Foreldelse.Foreldelsesloven": "Foreldelsesloven §§ 2 og 3",
-  "Foreldelse.AutomatiskVurdert": "Automatisk vurdert",
-  "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
-  "Foreldelse.AksjonspunktHelpText.5003": "Perioden før {dato} kan være foreldet. Del opp perioden ved behov og fastsett foreldelse",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
@@ -185,10 +178,6 @@
   "Historikk.Omsorg.ApplicationInformation": "Manuell kontroll av om søker har omsorg",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
-
-  "TilbakekrevingTimeline.ImageText": "Personinformasjon",
-  "TilbakekrevingTimeline.Woman": "Kvinne",
-  "TilbakekrevingTimeline.Man": "Mann",
 
   "Historikk.Tilleggsopplysninger": "Tilleggsopplysninger",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",

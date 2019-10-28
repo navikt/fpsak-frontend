@@ -30,6 +30,7 @@ const mapping = {
   [TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT]: 'beregningsresultat',
   [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA]: 'feilutbetalingFakta',
   [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK]: 'feilutbetalingAarsak',
+  [TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE]: 'perioderForeldelse',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

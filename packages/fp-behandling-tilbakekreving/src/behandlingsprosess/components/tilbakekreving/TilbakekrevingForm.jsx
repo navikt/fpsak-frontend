@@ -10,14 +10,14 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
-import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
-import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import {
   behandlingFormTilbakekreving,
   behandlingFormValueSelector,

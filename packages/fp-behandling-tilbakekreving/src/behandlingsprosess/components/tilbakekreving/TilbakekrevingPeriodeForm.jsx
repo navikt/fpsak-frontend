@@ -16,12 +16,12 @@ import {
 import {
   AdvarselModal, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
 import { behandlingFormTilbakekreving, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
 import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
 import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
 import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';

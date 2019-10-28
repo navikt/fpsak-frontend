@@ -12,6 +12,9 @@ export const TilbakekrevingBehandlingApiKeys = {
   PREVIEW_VEDTAKSBREV: 'PREVIEW_VEDTAKSBREV',
   VEDTAKSBREV: 'VEDTAKSBREV',
   BEREGNINGSRESULTAT: 'BEREGNINGSRESULTAT',
+  FEILUTBETALING_FAKTA: 'FEILUTBETALING_FAKTA',
+  FEILUTBETALING_AARSAK: 'FEILUTBETALING_AARSAK',
+  PERIODER_FORELDELSE: 'PERIODER_FORELDELSE',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -36,6 +39,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('beregningsresultat', TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT)
   .withInjectedPath('feilutbetalingFakta', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA)
   .withInjectedPath('feilutbetalingAarsak', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK)
+  .withInjectedPath('perioderForeldelse', TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE)
 
   .build();
 

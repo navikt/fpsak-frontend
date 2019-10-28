@@ -8,7 +8,7 @@ import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-til
 import vedtakResultatType from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/vedtakResultatType';
 import aktsomhet from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/aktsomhet';
 
-import withReduxProvider from '../../decorators/withRedux';
+import withReduxProvider from '../../../decorators/withRedux';
 
 const vedtaksbrev = {
   avsnittsliste: [{
@@ -105,7 +105,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/VedtakTilbakekrevingProsessIndex',
+  title: 'prosess/tilbakekreving/VedtakTilbakekrevingProsessIndex',
   component: VedtakTilbakekrevingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

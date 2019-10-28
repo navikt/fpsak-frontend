@@ -8,41 +8,29 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import {
   AksjonspunktHelpText, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-
-import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import {
-  behandlingFormTilbakekreving,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getFagsakPerson, getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+  behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
+
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
-import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
 
 import styles from './foreldelseForm.less';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
-const foreldelseAksjonspunkter = [
-  aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
-];
 
 const sortPeriods = (periode1, periode2) => new Date(periode1.fom) - new Date(periode2.fom);
 
 const getDate = () => moment().subtract(30, 'months').format(DDMMYYYY_DATE_FORMAT);
 const getApTekst = (apCode) => (apCode
-  ? [<FormattedMessage id={`Foreldelse.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
+  ? [<FormattedMessage id={`ForeldelseForm.AksjonspunktHelpText.${apCode}`} key="vurderForeldelse" values={{ dato: getDate() }} />]
   : []);
 
 const harApentAksjonspunkt = (periode) => ((!periode.foreldelseVurderingType || periode.foreldelseVurderingType.kode === foreldelseVurderingType.UDEFINERT)
@@ -57,7 +45,7 @@ const formaterPerioderForTidslinje = (perioder = []) => perioder
     id: index,
   }));
 
-export class ForeldelseFormImpl extends Component {
+export class ForeldelseForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -154,11 +142,15 @@ export class ForeldelseFormImpl extends Component {
     const {
       foreldelsesresultatActivity,
       behandlingFormPrefix,
-      kjonn,
+      navBrukerKjonn,
       apCodes,
       readOnlySubmitButton,
       readOnly,
       merknaderFraBeslutter,
+      alleKodeverk,
+      beregnBelop,
+      behandlingId,
+      behandlingVersjon,
       ...formProps
     } = this.props;
     const {
@@ -180,20 +172,20 @@ export class ForeldelseFormImpl extends Component {
             withoutBorder
           >
             <Undertittel>
-              <FormattedMessage id="Behandlingspunkt.Foreldelse" />
+              <FormattedMessage id="ForeldelseForm.Foreldelse" />
             </Undertittel>
             <VerticalSpacer twentyPx />
             {!apCodes[0] && (
               <div className={styles.bold}>
                 <FlexRow>
                   <FlexColumn>
-                    <FormattedMessage id="Foreldelse.Foreldelsesloven" />
+                    <FormattedMessage id="ForeldelseForm.Foreldelsesloven" />
                   </FlexColumn>
                 </FlexRow>
                 <VerticalSpacer eightPx />
                 <FlexRow>
                   <FlexColumn>
-                    <FormattedMessage id="Foreldelse.AutomatiskVurdert" />
+                    <FormattedMessage id="ForeldelseForm.AutomatiskVurdert" />
                   </FlexColumn>
                 </FlexRow>
               </div>
@@ -210,7 +202,7 @@ export class ForeldelseFormImpl extends Component {
                   setPeriode={this.setPeriode}
                   toggleDetaljevindu={this.togglePeriode}
                   hjelpetekstKomponent={<ForeldelseTidslinjeHjelpetekster />}
-                  kjonn={kjonn}
+                  kjonn={navBrukerKjonn}
                 />
                 {valgtPeriode && (
                   <ForeldelsePeriodeForm
@@ -222,11 +214,17 @@ export class ForeldelseFormImpl extends Component {
                     oppdaterSplittedePerioder={this.oppdaterSplittedePerioder}
                     skjulPeriode={this.togglePeriode}
                     readOnly={readOnly}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    alleKodeverk={alleKodeverk}
+                    beregnBelop={beregnBelop}
                   />
                 )}
                 <VerticalSpacer twentyPx />
                 <BehandlingspunktSubmitButton
                   formName={FORELDELSE_FORM_NAME}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
                   isReadOnly={readOnly}
                   isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
                   isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
@@ -243,21 +241,25 @@ export class ForeldelseFormImpl extends Component {
   }
 }
 
-ForeldelseFormImpl.propTypes = {
+ForeldelseForm.propTypes = {
   foreldelsesresultatActivity: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  kjonn: PropTypes.string.isRequired,
+  navBrukerKjonn: PropTypes.string.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string),
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool.isRequired,
   }).isRequired,
+  beregnBelop: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
-ForeldelseFormImpl.defaultProps = {
+ForeldelseForm.defaultProps = {
   foreldelsesresultatActivity: undefined,
   apCodes: [],
 };
@@ -282,14 +284,14 @@ export const buildInitialValues = (foreldelsePerioder) => ({
   })),
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const submitCallback = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes[0]));
-  return (state) => ({
-    initialValues: buildInitialValues(behandlingSelectors.getForeldelsePerioder(state).perioder),
-    foreldelsesresultatActivity: behandlingFormValueSelector(FORELDELSE_FORM_NAME)(state, 'foreldelsesresultatActivity'),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE)(state),
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.apCodes[0]));
+  return (state, ownProps) => ({
+    initialValues: buildInitialValues(ownProps.perioderForeldelse.perioder),
+    foreldelsesresultatActivity: behandlingFormValueSelector(FORELDELSE_FORM_NAME,
+      ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'foreldelsesresultatActivity'),
+    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+    merknaderFraBeslutter: ownProps.alleMerknaderFraBeslutter[aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE],
     onSubmit: submitCallback,
   });
 };
@@ -301,10 +303,6 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const ForeldelseForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: FORELDELSE_FORM_NAME,
-})(ForeldelseFormImpl)));
-
-ForeldelseForm.supports = (bp, apCodes) => bp === behandlingspunktCodes.FORELDELSE || foreldelseAksjonspunkter.some((ap) => apCodes.includes(ap));
-
-export default ForeldelseForm;
+})(ForeldelseForm)));
