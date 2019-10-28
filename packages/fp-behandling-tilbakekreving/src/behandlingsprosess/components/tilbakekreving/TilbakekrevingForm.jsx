@@ -14,6 +14,7 @@ import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-fell
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import foreldelseVurderingType from 'behandlingTilbakekreving/src/kodeverk/foreldelseVurderingType';
 import tilbakekrevingKodeverkTyper from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingKodeverkTyper';
@@ -27,14 +28,13 @@ import {
 } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
 import { getFagsakPerson, getSelectedBehandlingId, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
 
-const tilbakekrevingAksjonspunkter = [tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING];
+const tilbakekrevingAksjonspunkter = [aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING];
 
 const sortPeriods = (periode1, periode2) => new Date(periode1.fom) - new Date(periode2.fom);
 
@@ -204,7 +204,7 @@ export class TilbakekrevingFormImpl extends Component {
       <form onSubmit={formProps.handleSubmit}>
         <FadingPanel>
           <FaktaGruppe
-            aksjonspunktCode={tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING}
+            aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING}
             merknaderFraBeslutter={merknaderFraBeslutter}
             withoutBorder
           >
@@ -284,7 +284,7 @@ TilbakekrevingFormImpl.propTypes = {
 };
 
 export const transformValues = (values, sarligGrunnTyper) => [{
-  kode: tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING,
+  kode: aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING,
   vilkarsVurdertePerioder: values.vilkarsVurdertePerioder
     .filter((p) => !p.erForeldet)
     .map((p) => TilbakekrevingPeriodeForm.transformValues(p, sarligGrunnTyper)),
@@ -376,7 +376,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
       readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
       antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
-      merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING)(state),
+      merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING)(state),
       onSubmit: submitCallback,
     };
   };

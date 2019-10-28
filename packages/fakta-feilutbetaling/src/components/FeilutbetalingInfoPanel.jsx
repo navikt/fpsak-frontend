@@ -10,20 +10,18 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  faktaPanelCodes, getBehandlingFormPrefix, FaktaGruppe, FaktaEkspandertpanel, withDefaultToggling, injectKodeverk,
+  behandlingForm, getKodeverknavnFn, faktaPanelCodes, getBehandlingFormPrefix, FaktaGruppe, FaktaEkspandertpanel, withDefaultToggling,
 } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getFagsakYtelseType, getSelectedBehandlingId, getAlleTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import { behandlingFormTilbakekreving } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
 import FeilutbetalingPerioderTable from './FeilutbetalingPerioderTable';
-import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 import styles from './feilutbetalingInfoPanel.less';
 
@@ -31,12 +29,12 @@ const formName = 'FaktaFeilutbetalingForm';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 const feilutbetalingAksjonspunkter = [
-  tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+  aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
 ];
 
 export class FeilutbetalingInfoPanelImpl extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.resetFields = this.resetFields.bind(this);
   }
 
@@ -58,9 +56,13 @@ export class FeilutbetalingInfoPanelImpl extends Component {
       årsaker,
       readOnly,
       merknaderFraBeslutter,
-      getKodeverknavn,
+      behandlingId,
+      behandlingVersjon,
+      alleKodeverk,
       ...formProps
     } = this.props;
+
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     return (
       <FaktaEkspandertpanel
@@ -129,11 +131,13 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               <Row className={styles.smallMarginTop}>
                 <Column xs="11">
                   <FaktaGruppe
-                    aksjonspunktCode={tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING}
+                    aksjonspunktCode={aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING}
                     merknaderFraBeslutter={merknaderFraBeslutter}
                     withoutBorder
                   >
                     <FeilutbetalingPerioderTable
+                      behandlingId={behandlingId}
+                      behandlingVersjon={behandlingVersjon}
                       perioder={feilutbetaling.perioder}
                       formName={formName}
                       årsaker={årsaker}
@@ -242,7 +246,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                 readOnly={readOnly}
                 spinner={formProps.submitting}
               >
-                <FormattedMessage id="Uttak.Confirm" />
+                <FormattedMessage id="FeilutbetalingInfoPanel.Confirm" />
               </Hovedknapp>
             </Column>
           </Row>
@@ -259,16 +263,17 @@ FeilutbetalingInfoPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   feilutbetaling: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool,
   }).isRequired,
   ...formPropTypes,
 };
 
-const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetalingFakta, behandlingSelectors.getAksjonspunkter], (
+const buildInitialValues = createSelector([
+  (ownProps) => ownProps.feilutbetalingFakta, (ownProps) => ownProps.aksjonspunkter], (
   feilutbetalingFakta, aksjonspunkter,
 ) => {
   const { perioder } = feilutbetalingFakta.behandlingFakta;
@@ -303,10 +308,9 @@ const buildInitialValues = createSelector([behandlingSelectors.getFeilutbetaling
   };
 });
 
-const getSortedFeilutbetalingArsaker = createSelector([behandlingSelectors.getFeilutbetalingAarsaker, getFagsakYtelseType], (
-  feilutbetalingArsaker, fagsakYtelseType,
-) => {
-  const { hendelseTyper } = feilutbetalingArsaker.find((a) => a.ytelseType.kode === fagsakYtelseType.kode);
+const getSortedFeilutbetalingArsaker = createSelector([
+  (ownProps) => ownProps.feilutbetalingAarsak], (feilutbetalingArsaker) => {
+  const { hendelseTyper } = feilutbetalingArsaker;
   return hendelseTyper.sort((ht1, ht2) => {
     const hendelseType1 = ht1.hendelseType.navn;
     const hendelseType2 = ht2.hendelseType.navn;
@@ -342,16 +346,15 @@ const transformValues = (values, aksjonspunkter, årsaker) => {
     feilutbetalingFakta,
   }];
 };
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const feilutbetaling = behandlingSelectors.getFeilutbetalingFakta(initialState).behandlingFakta;
-  const årsaker = getSortedFeilutbetalingArsaker(initialState);
-  const submitCallback = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter, årsaker));
-  return (state) => ({
-    feilutbetaling,
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const årsaker = getSortedFeilutbetalingArsaker(initialOwnProps);
+  const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunkter, årsaker));
+  return (state, ownProps) => ({
     årsaker,
-    initialValues: buildInitialValues(state),
-    behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.AVKLAR_FAKTA_FOR_FEILUTBETALING)(state),
+    feilutbetaling: initialOwnProps.feilutbetalingFakta,
+    initialValues: buildInitialValues(ownProps),
+    behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
+    merknaderFraBeslutter: ownProps.alleMerknaderFraBeslutter[aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING],
     onSubmit: submitCallback,
   });
 };
@@ -362,11 +365,8 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const feilutbetalingForm = injectIntl(behandlingFormTilbakekreving({
+const FeilutbetalingForm = injectIntl(behandlingForm({
   form: formName,
 })(FeilutbetalingInfoPanelImpl));
-
-const FeilutbetalingInfoPanelMedKodeverk = injectKodeverk(getAlleTilbakekrevingKodeverk)(feilutbetalingForm);
-const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(FeilutbetalingInfoPanelMedKodeverk);
-
+const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(FeilutbetalingForm);
 export default connect(mapStateToPropsFactory, mapDispatchToProps)(FeilutbetalingInfoPanel);

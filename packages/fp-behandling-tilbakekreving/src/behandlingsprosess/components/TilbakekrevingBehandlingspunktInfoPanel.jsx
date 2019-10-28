@@ -5,9 +5,9 @@ import { bindActionCreators } from 'redux';
 import classnames from 'classnames/bind';
 
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import fptilbakeApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
-import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import DataFetcherWithCacheTemp from 'behandlingTilbakekreving/src/DataFetcherWithCacheTemp';
 import {
   fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator,
@@ -62,7 +62,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
     <DataFetcherWithCacheTemp
       behandlingVersjon={1}
       data={vedtakData}
-      showComponent={isBehandlingHenlagt || apCodes.some((ap) => ap === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK)}
+      showComponent={isBehandlingHenlagt || apCodes.some((ap) => ap === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK)}
       render={(props) => (
         <VedtakTilbakekrevingProsessIndex
           submitCallback={submitCallback}
@@ -70,7 +70,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
           isBehandlingHenlagt={isBehandlingHenlagt}
           alleKodeverk={alleKodeverk}
           fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-          aksjonspunktKodeForeslaVedtak={tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK}
+          aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
           {...props}
         />
       )}

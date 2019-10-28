@@ -28,6 +28,8 @@ export class DataFetcherWithCache extends Component {
 const mapping = {
   [TilbakekrevingBehandlingApiKeys.VEDTAKSBREV]: 'vedtaksbrev',
   [TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT]: 'beregningsresultat',
+  [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA]: 'feilutbetalingFakta',
+  [TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK]: 'feilutbetalingAarsak',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

@@ -6,11 +6,11 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { CommonFaktaIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
-import { FaktaTilbakeContainer } from './FaktaTilbakeContainer';
+import { FaktaTilbakeIndex } from './FaktaTilbakeIndex';
 
-describe('FaktaTilbakeContainer', () => {
+describe('FaktaTilbakeIndex', () => {
   it('skal rendre komponent uten feil', () => {
-    const wrapper = shallow(<FaktaTilbakeContainer
+    const wrapper = shallow(<FaktaTilbakeIndex
       location={{}}
       behandlingIdentifier={new BehandlingIdentifier(1, 1)}
       behandlingVersjon={1}

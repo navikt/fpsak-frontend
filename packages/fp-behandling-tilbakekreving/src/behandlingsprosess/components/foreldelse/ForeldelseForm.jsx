@@ -13,6 +13,7 @@ import {
   AksjonspunktHelpText, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
@@ -29,13 +30,12 @@ import { getFagsakPerson, getSelectedBehandlingId } from 'behandlingTilbakekrevi
 import ForeldelsePeriodeForm, { FORELDELSE_PERIODE_FORM_NAME } from './ForeldelsePeriodeForm';
 import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
 import ForeldelseTidslinjeHjelpetekster from './ForeldelseTidslinjeHjelpetekster';
-import tilbakekrevingAksjonspunktCodes from '../../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 import styles from './foreldelseForm.less';
 
 const FORELDELSE_FORM_NAME = 'ForeldelseForm';
 const foreldelseAksjonspunkter = [
-  tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE,
+  aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE,
 ];
 
 const sortPeriods = (periode1, periode2) => new Date(periode1.fom) - new Date(periode2.fom);
@@ -175,7 +175,7 @@ export class ForeldelseFormImpl extends Component {
       <form onSubmit={formProps.handleSubmit}>
         <FadingPanel>
           <FaktaGruppe
-            aksjonspunktCode={tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE}
+            aksjonspunktCode={aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE}
             merknaderFraBeslutter={merknaderFraBeslutter}
             withoutBorder
           >
@@ -289,7 +289,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     foreldelsesresultatActivity: behandlingFormValueSelector(FORELDELSE_FORM_NAME)(state, 'foreldelsesresultatActivity'),
     behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
     kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
-    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE)(state),
+    merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE)(state),
     onSubmit: submitCallback,
   });
 };

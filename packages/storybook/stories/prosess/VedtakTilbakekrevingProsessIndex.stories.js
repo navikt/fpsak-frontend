@@ -3,8 +3,8 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import tilbakekrevingAksjonspunktCodes from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
 import vedtakResultatType from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/vedtakResultatType';
 import aktsomhet from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/aktsomhet';
 
@@ -123,6 +123,6 @@ export const visVedtakspanel = () => (
     isBehandlingHenlagt={boolean('isBehandlingHenlagt', false)}
     alleKodeverk={alleKodeverk}
     fetchPreviewVedtaksbrev={action('button-click')}
-    aksjonspunktKodeForeslaVedtak={tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK}
+    aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
   />
 );

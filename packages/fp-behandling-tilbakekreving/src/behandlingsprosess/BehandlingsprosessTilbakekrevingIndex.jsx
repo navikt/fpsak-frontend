@@ -7,6 +7,7 @@ import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
@@ -15,7 +16,6 @@ import {
   setSelectedBehandlingspunktNavn, getSelectedBehandlingspunktNavn,
 } from './duckBpTilbake';
 import behandlingspunktTilbakekrevingSelectors from './selectors/behandlingsprosessTilbakeSelectors';
-import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
 import FatterTilbakekrevingVedtakStatusModal from './components/FatterTilbakekrevingVedtakStatusModal';
 
@@ -34,7 +34,7 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
 
   submit = (aksjonspunktModels) => {
     const afterAksjonspunktSubmit = () => {
-      const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK);
+      const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
         this.setState((prevState) => ({ ...prevState, showFatterVedtakModal: true }));
       } else {

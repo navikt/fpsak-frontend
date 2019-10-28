@@ -13,11 +13,11 @@ import {
 import TilbakekrevingFaktaPanel from './components/TilbakekrevingFaktaPanel';
 
 /**
- * FaktaTilbakeContainer
+ * FaktaTilbakeIndex
  *
  * Har ansvar for faktadelen av hovedvinduet for Tilbakekreving.
  */
-export const FaktaTilbakeContainer = ({
+export const FaktaTilbakeIndex = ({
   location,
   behandlingIdentifier,
   behandlingVersjon,
@@ -40,7 +40,7 @@ export const FaktaTilbakeContainer = ({
   />
 );
 
-FaktaTilbakeContainer.propTypes = {
+FaktaTilbakeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -65,6 +65,6 @@ const TrackRouteParamFaktaIndex = trackRouteParam({
   getParamFromStore: getOpenInfoPanels,
   isQueryParam: true,
   paramsAreEqual,
-})(connect(mapStateToProps)(FaktaTilbakeContainer));
+})(connect(mapStateToProps)(FaktaTilbakeIndex));
 
 export default TrackRouteParamFaktaIndex;

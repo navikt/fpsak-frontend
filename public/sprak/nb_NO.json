@@ -120,22 +120,6 @@
   "ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
 
-  "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
-  "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
-  "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
-  "FeilutbetalingInfoPanel.Årsaker": "Årsak(er) til revurdering",
-  "FeilutbetalingInfoPanel.DatoForRevurdering": "Dato for revurderingsvedtak",
-  "FeilutbetalingInfoPanel.Konsekvens": "Konsekvens",
-  "FeilutbetalingInfoPanel.Tilbakekrevingsvalg": "Tilbakekrevingsvalg",
-  "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
-  "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
-  "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
-  "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varslet beløp",
-  "FeilutbetalingInfoPanel.Period": "Period",
-  "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
-  "FeilutbetalingInfoPanel.Beløp": "Feilutbetalt beløp",
-  "FeilutbetalingInfoPanel.Resultat": "Resultat",
-  "FeilutbetalingInfoPanel.Begrunnelse": "Begrunn endringene",
   "Header.Foreldrepenger": "Foreldrepenger, engangsstønad og svangerskapspenger",
   "Header.LinkToMainPage": "NAV, forsiden",
   "Header.Rettskilde": "Rettskildene",
@@ -1212,8 +1196,6 @@
   "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",
   "AktsomhetGradUaktsomhetFormPanel.Ja": "Ja",
   "AktsomhetGradUaktsomhetFormPanel.Tilbakekrev": "Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?",
-
-  "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
 
   "TilbakekrevingForm.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-15. Del opp perioden ved behov for ulik vurdering",
 

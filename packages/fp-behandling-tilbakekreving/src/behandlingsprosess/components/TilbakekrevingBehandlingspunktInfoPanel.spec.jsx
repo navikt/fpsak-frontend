@@ -3,11 +3,11 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
 import { TilbakekrevingBehandlingspunktInfoPanel } from './TilbakekrevingBehandlingspunktInfoPanel';
 import ForeldelseForm from './foreldelse/ForeldelseForm';
 import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
-import tilbakekrevingAksjonspunktCodes from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 
 describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
   it('skal vise foreldelsepanel', () => {
@@ -17,7 +17,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       isApSolvable
       submitCallback={() => undefined}
       selectedBehandlingspunkt={behandlingspunktCodes.FORELDELSE}
-      apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_FORELDELSE]}
+      apCodes={[aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE]}
       readOnlySubmitButton={false}
       isBehandlingHenlagt={false}
       alleKodeverk={{}}
@@ -35,7 +35,7 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       isApSolvable
       submitCallback={() => undefined}
       selectedBehandlingspunkt={behandlingspunktCodes.TILBAKEKREVING}
-      apCodes={[tilbakekrevingAksjonspunktCodes.VURDER_TILBAKEKREVING]}
+      apCodes={[aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING]}
       readOnlySubmitButton={false}
       isBehandlingHenlagt={false}
       alleKodeverk={{}}
