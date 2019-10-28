@@ -2,6 +2,10 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
+import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
+import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -10,6 +14,11 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
+const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
+const BEHANDLING_RESULTAT_TYPE_KODEVERK = 'BEHANDLING_RESULTAT_TYPE';
+const KONSEKVENS_FOR_YTELSEN_KODEVERK = 'KONSEKVENS_FOR_YTELSEN';
 
 const behandling = {
   id: 1,
@@ -34,12 +43,34 @@ const feilutbetalingFakta = {
   perioder: [{
     fom: '2018-01-01',
     tom: '2019-01-01',
+    belop: 1000,
   }],
   behandlingÅrsaker: [{
     behandlingArsakType: {
-      kode: 'test',
+      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+      kodeverk: BEHANDLING_AARSAK_KODEVERK,
     },
   }],
+  behandlingsresultat: {
+    type: {
+      kode: behandlingResultatType.INNVILGET,
+      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+    },
+    konsekvenserForYtelsen: [{
+      kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+    }, {
+      kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+    }],
+  },
+  tilbakekrevingValg: {
+    videreBehandling: {
+      kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+      kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+    },
+  },
+  datoForRevurderingsvedtak: '2019-01-01',
 };
 
 const feilutbetalingAarsak = {
@@ -48,11 +79,13 @@ const feilutbetalingAarsak = {
       kode: 'OPPTJENING',
       navn: '§14-6 Opptjening',
     },
+    hendelseUndertyper: [],
   }, {
     hendelseType: {
       kode: 'ANNET',
       navn: 'Annet',
     },
+    hendelseUndertyper: [],
   }, {
     hendelseType: {
       kode: 'MEDLEM',
@@ -73,9 +106,29 @@ const merknaderFraBeslutter = {
 };
 
 const alleKodeverk = {
-  [kodeverkTyper.FAR_SOEKER_TYPE]: [{
-    kode: 'ADOPTERER_ALENE',
-    navn: 'Adopterer alene',
+  [kodeverkTyper.BEHANDLING_AARSAK]: [{
+    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+    navn: 'Feil i lovanvendelse',
+    kodeverk: BEHANDLING_AARSAK_KODEVERK,
+  }],
+  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
+    kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+    navn: 'Tilbakekreving inntrekk',
+    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+  }],
+  [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [{
+    kode: behandlingResultatType.INNVILGET,
+    navn: 'Innvilget',
+    kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+  }],
+  [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [{
+    kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+    navn: 'Foreldrepenger opphører',
+    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+  }, {
+    kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+    navn: 'Endring i beregning',
+    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
   }],
 };
 
@@ -90,7 +143,7 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForAdopsjonsvilkåret = () => {
+export const visAksjonspunktForFeilutbetaling = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FEILUTBETALING]);
   return (
     <FeilutbetalingFaktaIndex

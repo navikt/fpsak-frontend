@@ -1,7 +1,16 @@
 import PropTypes from 'prop-types';
 
-const adopsjonPersonopplysningerPropType = PropTypes.shape({
-  barnSoktFor: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+const feilutbetalingAarsakPropType = PropTypes.shape({
+  hendelseTyper: PropTypes.arrayOf(PropTypes.shape({
+    hendelseType: PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+      navn: PropTypes.string.isRequired,
+    }),
+    hendelseUndertyper: PropTypes.arrayOf(PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+      navn: PropTypes.string.isRequired,
+    })),
+  })).isRequired,
 });
 
-export default adopsjonPersonopplysningerPropType;
+export default feilutbetalingAarsakPropType;

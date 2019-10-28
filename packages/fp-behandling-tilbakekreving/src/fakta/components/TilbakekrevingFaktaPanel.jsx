@@ -40,8 +40,8 @@ export const TilbakekrevingFaktaPanel = ({
       <DataFetcherWithCacheTemp
         behandlingVersjon={1}
         data={feilutbetalingData}
-        render={(props) => {
-          if (props.feilutbetalingFakta) {
+        render={(dataProps) => {
+          if (dataProps.feilutbetalingFakta) {
             return (
               <FeilutbetalingFaktaIndex
                 aksjonspunkter={aksjonspunkter}
@@ -52,14 +52,14 @@ export const TilbakekrevingFaktaPanel = ({
                 readOnly={readOnly}
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
                 alleKodeverk={alleKodeverk}
-                feilutbetalingFakta={props.feilutbetalingFakta}
-                feilutbetalingAarsak={props.feilutbetalingAarsak.find((a) => a.ytelseType.kode === ytelseTypeKode)}
+                behandling={dataProps.behandling}
+                feilutbetalingFakta={dataProps.feilutbetalingFakta}
+                feilutbetalingAarsak={dataProps.feilutbetalingAarsak.find((a) => a.ytelseType.kode === ytelseTypeKode)}
               />
-            )
+            );
           }
           return null;
-          }
-        }
+        }}
       />
     </div>
     <div className={styles.container} />

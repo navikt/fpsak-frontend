@@ -27,6 +27,8 @@ const mockProps = {
   formName: 'FaktaFeilutbetalingForm',
   readOnly: false,
   resetFields: sinon.spy(),
+  behandlingId: 1,
+  behandlingVersjon: 1,
 };
 
 describe('<FeilutbetalingPerioderTable>', () => {

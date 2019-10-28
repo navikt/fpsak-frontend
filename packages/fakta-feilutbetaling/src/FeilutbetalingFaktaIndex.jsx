@@ -6,7 +6,7 @@ import FeilutbetalingInfoPanel from './components/FeilutbetalingInfoPanel';
 import feilutbetalingAksjonspunkterPropType from './propTypes/feilutbetalingAksjonspunkterPropType';
 import feilutbetalingFaktaPropType from './propTypes/feilutbetalingFaktaPropType';
 import feilutbetalingBehandlingPropType from './propTypes/feilutbetalingBehandlingPropType';
-import adopsjonSoknadPropType from './propTypes/adopsjonSoknadPropType';
+import feilutbetalingAarsakPropType from './propTypes/feilutbetalingAarsakPropType';
 import messages from '../i18n/nb_NO';
 
 const cache = createIntlCache();
@@ -50,7 +50,7 @@ const FeilutbetalingFaktaIndex = ({
 FeilutbetalingFaktaIndex.propTypes = {
   behandling: feilutbetalingBehandlingPropType.isRequired,
   feilutbetalingFakta: feilutbetalingFaktaPropType.isRequired,
-  feilutbetalingAarsak: adopsjonFamilieHendelsePropType.isRequired,
+  feilutbetalingAarsak: feilutbetalingAarsakPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(feilutbetalingAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

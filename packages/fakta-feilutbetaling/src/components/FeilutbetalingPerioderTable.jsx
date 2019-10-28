@@ -15,7 +15,13 @@ const headerTextCodes = [
 ];
 
 const FeilutbetalingPerioderTable = ({
-  perioder, formName, årsaker, readOnly, resetFields,
+  perioder,
+  formName,
+  årsaker,
+  readOnly,
+  resetFields,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <div className={styles.feilutbetalingTable}>
     <Table
@@ -24,6 +30,8 @@ const FeilutbetalingPerioderTable = ({
     >
       { perioder.sort((a, b) => moment(a.fom) - moment(b.fom)).map((periode, index) => (
         <FeilutbetalingPerioderForm
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           periode={periode}
           elementId={index}
           formName={formName}
@@ -43,6 +51,8 @@ FeilutbetalingPerioderTable.propTypes = {
   årsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   readOnly: PropTypes.bool.isRequired,
   resetFields: PropTypes.func.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 export default FeilutbetalingPerioderTable;
