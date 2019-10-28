@@ -132,7 +132,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
       ...OppholdINorgePanel.validate(values),
       ...TerminFodselDatoPanel.validate(values),
       [OMSORG_FORM_NAME_PREFIX]: OmsorgOgAdopsjonPanel.validate(values[OMSORG_FORM_NAME_PREFIX], values.rettigheter, values.foedselsDato),
-      ...PermisjonPanel.validate(values, soknadData),
+      ...PermisjonPanel.validate(values),
       [ANNEN_FORELDER_FORM_NAME_PREFIX]: AnnenForelderPanel.validate(sokerPersonnummer, values[ANNEN_FORELDER_FORM_NAME_PREFIX]),
     });
   }
@@ -143,7 +143,7 @@ const getValidation = (soknadData, andreYtelser, sokerPersonnummer) => {
       ...FrilansPanel.validate(values),
       ...OppholdINorgePanel.validate(values),
       [OMSORG_FORM_NAME_PREFIX]: OmsorgOgAdopsjonPanel.validate(values[OMSORG_FORM_NAME_PREFIX], values.rettigheter, values.foedselsDato),
-      ...PermisjonPanel.validate(values, soknadData),
+      ...PermisjonPanel.validate(values),
       [ANNEN_FORELDER_FORM_NAME_PREFIX]: AnnenForelderPanel.validate(sokerPersonnummer, values[ANNEN_FORELDER_FORM_NAME_PREFIX]),
     });
   }
