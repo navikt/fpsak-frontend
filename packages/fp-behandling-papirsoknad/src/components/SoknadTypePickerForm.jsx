@@ -12,7 +12,6 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { ariaCheck, required } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -21,7 +20,6 @@ import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseTyp
 
 import SoknadData from 'papirsoknad/src/SoknadData';
 import { getFagsakYtelseType, getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
-import behandlingSelectors from 'papirsoknad/src/selectors/papirsoknadSelectors';
 
 import styles from './soknadTypePickerForm.less';
 
@@ -64,8 +62,7 @@ export const SoknadTypePickerForm = ({
           <VerticalSpacer fourPx />
           <RadioGroupField
             name="familieHendelseType"
-            validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER
-              || selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? [] : [required]}
+            validate={selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER ? [] : [required]}
             direction="vertical"
           >
             { familieHendelseTyper.filter(({ kode }) => soeknadsTyper.includes(kode)).map((bmt) => (
@@ -73,8 +70,7 @@ export const SoknadTypePickerForm = ({
                 key={bmt.kode}
                 label={bmt.navn}
                 value={bmt.kode}
-                disabled={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER
-                  || selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER}
+                disabled={selectedFagsakYtelseType === fagsakYtelseType.SVANGERSKAPSPENGER}
               />
             ))}
           </RadioGroupField>
@@ -86,7 +82,7 @@ export const SoknadTypePickerForm = ({
           <VerticalSpacer fourPx />
           <RadioGroupField
             name="foreldreType"
-            validate={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER ? [] : [required]}
+            validate={[required]}
             direction="vertical"
           >
             { foreldreTyper.map((ft) => (
@@ -94,7 +90,6 @@ export const SoknadTypePickerForm = ({
                 key={ft.kode}
                 label={ft.navn}
                 value={ft.kode}
-                disabled={selectedFagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER}
               />
             ))}
           </RadioGroupField>
@@ -132,17 +127,11 @@ SoknadTypePickerForm.defaultProps = {
   selectedFagsakYtelseType: null,
 };
 
-const getSakstype = createSelector(
-  [getFagsakYtelseType, behandlingSelectors.getBehandlingType], (sakstype, bt) => (
-    bt.kode === behandlingType.REVURDERING && sakstype.kode === fagsakYtelseType.FORELDREPENGER
-      ? fagsakYtelseType.ENDRING_FORELDREPENGER : sakstype.kode),
-);
-
 const buildInitialValues = createSelector(
-  [getSakstype, getFormValues(SOKNAD_TYPE_PICKER_FORM)],
+  [getFagsakYtelseType, getFormValues(SOKNAD_TYPE_PICKER_FORM)],
   (sakstype, formValues) => {
     const { ...selectedValues } = formValues;
-    const initialFagsakYtelseType = selectedValues.fagsakYtelseType ? selectedValues.fagsakYtelseType : sakstype;
+    const initialFagsakYtelseType = selectedValues.fagsakYtelseType ? selectedValues.fagsakYtelseType : sakstype.kode;
 
     const initialValues = {
       ...selectedValues,
@@ -150,10 +139,6 @@ const buildInitialValues = createSelector(
       familieHendelseType: null,
       foreldreType: null,
     };
-
-    if (selectedValues.fagsakYtelseType === fagsakYtelseType.ENDRING_FORELDREPENGER) {
-      return initialValues;
-    }
 
     const initialFamilieHendelseType = selectedValues.familieHendelseType ? selectedValues.familieHendelseType : null;
     const initialForeldreType = selectedValues.foreldreType ? selectedValues.foreldreType : null;
