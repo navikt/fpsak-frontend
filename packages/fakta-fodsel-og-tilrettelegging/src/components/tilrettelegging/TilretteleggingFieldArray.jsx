@@ -26,6 +26,8 @@ export const TilretteleggingFieldArray = ({
   meta,
   readOnly,
   formSectionName,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <PeriodFieldArray
     fields={fields}
@@ -84,6 +86,8 @@ export const TilretteleggingFieldArray = ({
                 </Normaltekst>
                 )}
                 <TilretteleggingFieldArrayStillingsprosent
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
                   readOnly={readOnly}
                   tilretteleggingFieldId={fieldId}
                   index={index}
@@ -111,6 +115,8 @@ TilretteleggingFieldArray.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   meta: PropTypes.shape().isRequired,
   formSectionName: PropTypes.string.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 export default injectIntl(TilretteleggingFieldArray);

@@ -17,6 +17,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -54,6 +56,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -88,6 +92,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);

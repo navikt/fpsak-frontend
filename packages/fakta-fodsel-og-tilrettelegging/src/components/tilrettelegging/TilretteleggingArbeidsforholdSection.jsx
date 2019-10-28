@@ -35,6 +35,8 @@ export const TilretteleggingArbeidsforholdSection = ({
   arbeidsforhold,
   formSectionName,
   visTilrettelegginger,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <FormSection name={formSectionName}>
     <BorderBox>
@@ -70,6 +72,8 @@ export const TilretteleggingArbeidsforholdSection = ({
                 component={TilrettteleggingFieldArray}
                 readOnly={readOnly}
                 formSectionName={formSectionName}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
               />
             </FlexColumn>
           </>
@@ -84,6 +88,8 @@ TilretteleggingArbeidsforholdSection.propTypes = {
   arbeidsforhold: PropTypes.shape().isRequired,
   formSectionName: PropTypes.string.isRequired,
   visTilrettelegginger: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
