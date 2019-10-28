@@ -17,6 +17,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -27,7 +29,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
+    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');
@@ -54,6 +56,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly={false}
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -64,7 +68,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
+    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');
@@ -88,6 +92,8 @@ describe('<TilretteleggingFieldArray>', () => {
       meta={metaMock}
       readOnly
       formSectionName="FORM_SECTION_NAME"
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const fieldArray = wrapper.find(PeriodFieldArray);
     expect(fieldArray).has.length(1);
@@ -98,7 +104,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
+    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');

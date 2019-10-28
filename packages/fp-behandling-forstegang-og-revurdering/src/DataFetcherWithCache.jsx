@@ -46,6 +46,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
   [BehandlingFpsakApiKeys.OPPTJENING]: 'opptjening',
   [BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING]: 'sendt-varsel-om-revurdering',
+  [BehandlingFpsakApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING]: 'svangerskapspenger-tilrettelegging',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

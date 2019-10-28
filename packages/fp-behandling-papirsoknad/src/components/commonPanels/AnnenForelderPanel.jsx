@@ -4,7 +4,6 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/src/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioGroupField, RadioOption, SelectField,
@@ -18,7 +17,6 @@ import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 
-import SoknadData from '../../SoknadData';
 import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 
 const countrySelectValues = (countryCodes) => countryCodes
@@ -78,7 +76,6 @@ export const AnnenForelderPanelImpl = ({
   countryCodes,
   kanIkkeOppgiAnnenForelder,
   kanIkkeOppgiBegrunnelse,
-  soknadData,
   sokerHarAleneomsorg,
   isForeldrepenger,
 }) => {
@@ -113,7 +110,7 @@ export const AnnenForelderPanelImpl = ({
             </FormSection>
           </ArrowBox>
         )}
-        {(isForeldrepenger && soknadData.getFagsakYtelseType() !== fagsakYtelseType.ENDRING_FORELDREPENGER)
+        {(isForeldrepenger)
           && <PermisjonRettigheterPanel readOnly={readOnly} sokerHarAleneomsorg={sokerHarAleneomsorg} />}
       </Fieldset>
     </BorderBox>
@@ -124,7 +121,6 @@ AnnenForelderPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   isForeldrepenger: PropTypes.bool,
   countryCodes: kodeverkPropType.isRequired,
-  soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   sokerHarAleneomsorg: PropTypes.bool,
   kanIkkeOppgiAnnenForelder: PropTypes.bool,
   kanIkkeOppgiBegrunnelse: PropTypes.shape(),
