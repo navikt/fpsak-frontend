@@ -8,7 +8,6 @@ import { connect } from 'react-redux';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import SoknadData from 'papirsoknad/src/SoknadData';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { CheckboxField } from '@fpsak-frontend/form';
 import { dateRangesNotOverlappingCrossTypes } from '@fpsak-frontend/utils';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
@@ -101,14 +100,11 @@ PermisjonPanel.defaultProps = {
 };
 
 
-const permisjonErrors = (values, soknadData) => {
+const permisjonErrors = (values) => {
   const errors = PermisjonOverforingAvKvoterPanel.validate(values);
 
-  const isEndringForeldrepenger = soknadData.getFagsakYtelseType() === fagsakYtelseType.ENDRING_FORELDREPENGER;
-  if (!isEndringForeldrepenger) {
-    const permisjonPeriodeValues = values ? values[permisjonPeriodeFieldArrayName] : null;
-    errors[permisjonPeriodeFieldArrayName] = RenderPermisjonPeriodeFieldArray.validate(permisjonPeriodeValues);
-  }
+  const permisjonPeriodeValues = values ? values[permisjonPeriodeFieldArrayName] : null;
+  errors[permisjonPeriodeFieldArrayName] = RenderPermisjonPeriodeFieldArray.validate(permisjonPeriodeValues);
 
   if (values.skalUtsette) {
     const utsettelseperiodeValues = values ? values[utsettelsePeriodeFieldArrayName] : null;
@@ -149,7 +145,7 @@ const overLappingError = (values) => {
 };
 
 
-PermisjonPanel.validate = (values, soknadData) => {
+PermisjonPanel.validate = (values) => {
   let errors = {};
   errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = {};
   const permisjonsError = !(values.tidsromPermisjon.skalUtsette
@@ -172,7 +168,7 @@ PermisjonPanel.validate = (values, soknadData) => {
       },
     };
   }
-  errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = permisjonErrors(permisjonValues, soknadData);
+  errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = permisjonErrors(permisjonValues);
   return errors;
 };
 

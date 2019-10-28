@@ -8,7 +8,6 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import SoknadData from 'papirsoknad/src/SoknadData';
 import ForeldrepengerForm from 'papirsoknad/src/components/foreldrepenger/ForeldrepengerForm';
-import EndringForeldrepengerForm from 'papirsoknad/src/components/foreldrepenger/EndringForeldrepengerForm';
 import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
@@ -28,7 +27,6 @@ describe('<RegistrerPapirsoknad>', () => {
     expect(wrapper.find(SoknadTypePickerForm)).to.have.length(1);
     expect(wrapper.find(EngangsstonadForm)).to.have.length(1);
     expect(wrapper.find(ForeldrepengerForm)).to.have.length(0);
-    expect(wrapper.find(EndringForeldrepengerForm)).to.have.length(0);
   });
 
   it('skal vise foreldrepenger-form', () => {
@@ -40,23 +38,6 @@ describe('<RegistrerPapirsoknad>', () => {
       soknadData={new SoknadData(fagsakYtelseType.FORELDREPENGER, 'TEST', 'TEST', [])}
     />);
     expect(wrapper.find(ForeldrepengerForm)).to.have.length(1);
-    expect(wrapper.find(EngangsstonadForm)).to.have.length(0);
-    expect(wrapper.find(EndringForeldrepengerForm)).to.have.length(0);
-    expect(wrapper.find(SvangerskapspengerForm)).to.have.length(0);
-  });
-
-
-  it('skal vise endring-foreldrepenger-form', () => {
-    const wrapper = shallow(<RegistrerPapirsoknad
-      onSubmitUfullstendigsoknad={sinon.spy()}
-      submitPapirsoknad={sinon.spy()}
-      setSoknadData={sinon.spy()}
-      readOnly
-      soknadData={new SoknadData(fagsakYtelseType.ENDRING_FORELDREPENGER, 'TEST', 'TEST', [])}
-    />);
-
-    expect(wrapper.find(ForeldrepengerForm)).to.have.length(0);
-    expect(wrapper.find(EndringForeldrepengerForm)).to.have.length(1);
     expect(wrapper.find(EngangsstonadForm)).to.have.length(0);
     expect(wrapper.find(SvangerskapspengerForm)).to.have.length(0);
   });
@@ -71,7 +52,6 @@ describe('<RegistrerPapirsoknad>', () => {
     />);
     expect(wrapper.find(ForeldrepengerForm)).to.have.length(0);
     expect(wrapper.find(EngangsstonadForm)).to.have.length(0);
-    expect(wrapper.find(EndringForeldrepengerForm)).to.have.length(0);
     expect(wrapper.find(SvangerskapspengerForm)).to.have.length(1);
   });
 });
