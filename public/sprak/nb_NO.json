@@ -1330,18 +1330,18 @@
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
-  "MigreringFraInfotrygdPanel.Migrering": "Migrering fra Infotrygd",
+  "MigreringFraInfotrygdPanel.Migrering": "Flytting fra Infotrygd",
   "MigreringFraInfotrygdPanel.Ja": "Ja",
   "MigreringFraInfotrygdPanel.Nei": "Nei",
-  "MigreringFraInfotrygdPanel.ErDenneSakenMigrert": "Er denne saken migrert fra Infotrygd og skal i utgangspunktet bare fortsette som før?",
+  "MigreringFraInfotrygdPanel.ErDenneSakenMigrert": "Gjelder denne søknaden flytting av en sak fra Infotrygd?",
 
   "BehovForTilretteleggingPanel.BehovForTilrettelegging": "Behov for tilrettelegging",
   "BehovForTilretteleggingPanel.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
-  "BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende": "Søkes det om tilrettelegging som selvstendig næringsdrivende?",
+  "BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende": "Søkes det om svangerskapspenger som selvstendig næringsdrivende?",
   "BehovForTilretteleggingPanel.Ja": "Ja",
   "BehovForTilretteleggingPanel.Nei": "Nei",
-  "BehovForTilretteleggingPanel.SokForFrilans": "Søkes det om tilrettelegging som frilans?",
-  "BehovForTilretteleggingPanel.SokForArbeidsgiver": "Søkes det om tilrettelegging fra arbeidsgiver?",
+  "BehovForTilretteleggingPanel.SokForFrilans": "Søkes det om svangerskapspenger som frilanser?",
+  "BehovForTilretteleggingPanel.SokForArbeidsgiver": "Søkes det om svangerskapspenger som arbeidstaker?",
 
   "BehovForTilrettteleggingFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
   "BehovForTilrettteleggingFieldArray.BehovForTilrettelegging": "Behov for tilrettelegging",
