@@ -1,6 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { createSelector } from 'reselect';
+import { Normaltekst } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
+
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -9,16 +14,12 @@ import {
   hasValidDate, hasValidText, maxLength, required, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getTilrettelegging } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
-import AlertStripe from 'nav-frontend-alertstriper';
-import { createSelector } from 'reselect';
-import styles from './fodselOgTilretteleggingFaktaForm.less';
+import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
+import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
+
+import styles from './fodselOgTilretteleggingFaktaForm.less';
 
 const FODSEL_TILRETTELEGGING_FORM = 'FodselOgTilretteleggingForm';
 const maxLength1500 = maxLength(1500);
@@ -41,6 +42,8 @@ const utledFormSectionName = (arbeidsforhold) => {
  * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
  */
 export const FodselOgTilretteleggingFaktaForm = ({
+  behandlingId,
+  behandlingVersjon,
   readOnly,
   hasOpenAksjonspunkter,
   fødselsdato,
@@ -97,6 +100,8 @@ export const FodselOgTilretteleggingFaktaForm = ({
           { arbeidsforhold.map((a) => (
             <TilretteleggingArbeidsforholdSection
               key={utledFormSectionName(a)}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               readOnly={readOnly}
               arbeidsforhold={a}
               formSectionName={utledFormSectionName(a)}
@@ -125,6 +130,8 @@ export const FodselOgTilretteleggingFaktaForm = ({
           <ElementWrapper>
             <VerticalSpacer twentyPx />
             <FaktaSubmitButton
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               formName={FODSEL_TILRETTELEGGING_FORM}
               isSubmittable={submittable && !formProps.error}
               isReadOnly={readOnly}
@@ -138,11 +145,13 @@ export const FodselOgTilretteleggingFaktaForm = ({
 );
 
 FodselOgTilretteleggingFaktaForm.propTypes = {
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   fødselsdato: PropTypes.string,
   submittable: PropTypes.bool.isRequired,
-  arbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {
@@ -171,7 +180,8 @@ const validateForm = (values, arbeidsforhold) => {
   return errors;
 };
 
-const getArbeidsforhold = createSelector([getTilrettelegging], (tilrettelegging) => {
+const getArbeidsforhold = createSelector([
+  (ownProps) => ownProps.svangerskapspengerTilrettelegging], (tilrettelegging) => {
   const arbeidsforhold = tilrettelegging ? tilrettelegging.arbeidsforholdListe : [];
   if (arbeidsforhold === undefined || arbeidsforhold === null) {
     return EMPTY_LIST;
@@ -180,7 +190,9 @@ const getArbeidsforhold = createSelector([getTilrettelegging], (tilrettelegging)
   return arbeidsforhold;
 });
 
-const getInitialArbeidsforholdValues = createSelector([getTilrettelegging], (tilrettelegging) => {
+const getInitialArbeidsforholdValues = createSelector([
+  (ownProps) => ownProps.svangerskapspengerTilrettelegging,
+], (tilrettelegging) => {
   const arbeidsforhold = tilrettelegging ? tilrettelegging.arbeidsforholdListe : [];
   if (arbeidsforhold === undefined || arbeidsforhold === null) {
     return EMPTY_LIST;
@@ -190,10 +202,15 @@ const getInitialArbeidsforholdValues = createSelector([getTilrettelegging], (til
   return arbeidsforholdValues;
 });
 
-const getFødselsdato = createSelector([getTilrettelegging], (tilrettelegging) => (tilrettelegging ? tilrettelegging.fødselsdato : ''));
+const getFødselsdato = createSelector([
+  (ownProps) => ownProps.svangerskapspengerTilrettelegging,
+], (tilrettelegging) => (tilrettelegging ? tilrettelegging.fødselsdato : ''));
 
 const getInitialValues = createSelector(
-  [behandlingSelectors.getAksjonspunkter, getTilrettelegging, getInitialArbeidsforholdValues, getFødselsdato],
+  [(ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.svangerskapspengerTilrettelegging,
+    getInitialArbeidsforholdValues,
+    getFødselsdato],
   (aksjonspunkter, tilrettelegging, arbeidsforholdValues, fødselsdato) => ({
     termindato: tilrettelegging ? tilrettelegging.termindato : '',
     fødselsdato,
@@ -202,19 +219,19 @@ const getInitialValues = createSelector(
   }),
 );
 
-const getOnSubmit = createSelector([(state, ownProps) => ownProps.submitCallback, getArbeidsforhold],
+const getOnSubmit = createSelector([(ownProps) => ownProps.submitCallback, getArbeidsforhold],
   (submitCallback, arbeidsforhold) => (values) => submitCallback(transformValues(values, arbeidsforhold)));
 
 const getValidate = createSelector([getArbeidsforhold], (arbeidsforhold) => (values) => validateForm(values, arbeidsforhold));
 
 const mapStateToProps = (state, ownProps) => ({
-  initialValues: getInitialValues(state),
-  fødselsdato: getFødselsdato(state),
-  arbeidsforhold: getArbeidsforhold(state),
-  validate: getValidate(state),
-  onSubmit: getOnSubmit(state, ownProps),
+  initialValues: getInitialValues(ownProps),
+  fødselsdato: getFødselsdato(ownProps),
+  arbeidsforhold: getArbeidsforhold(ownProps),
+  validate: getValidate(ownProps),
+  onSubmit: getOnSubmit(ownProps),
 });
 
-export default connect(mapStateToProps)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToProps)(behandlingForm({
   form: FODSEL_TILRETTELEGGING_FORM,
 })(FodselOgTilretteleggingFaktaForm));

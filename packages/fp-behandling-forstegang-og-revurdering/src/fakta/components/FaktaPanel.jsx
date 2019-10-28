@@ -11,6 +11,7 @@ import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
+import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-tilrettelegging';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
@@ -28,7 +29,6 @@ import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandling
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
 import styles from './faktaPanel.less';
@@ -53,6 +53,7 @@ const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakA
 const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
+const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
 
 /**
  * FaktaPanel
@@ -175,16 +176,22 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         )}
       />
 
-      {FodselOgTilretteleggingInfoPanel.supports(aksjonspunkter) && (
-        <FodselOgTilretteleggingInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
-      )}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={fodselOgTilretteleggingData}
+        showComponent={aksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)}
+        render={(props) => (
+          <FodselOgTilretteleggingFaktaIndex
+            aksjonspunkter={aksjonspunkter}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            {...props}
+          />
+        )}
+      />
 
       <DataFetcherWithCache
         behandlingVersjon={1}

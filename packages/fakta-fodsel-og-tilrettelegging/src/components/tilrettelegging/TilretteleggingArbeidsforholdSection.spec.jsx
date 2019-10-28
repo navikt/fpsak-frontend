@@ -17,6 +17,8 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       }}
       formSectionName="ARB_NAVN"
       visTilrettelegginger
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(1);
@@ -38,6 +40,8 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       }}
       formSectionName="ARB_NAVN"
       visTilrettelegginger={false}
+      behandlingId={1}
+      behandlingVersjon={1}
     />);
     const normaltekst = wrapper.find(Normaltekst);
     expect(normaltekst).has.length(1);

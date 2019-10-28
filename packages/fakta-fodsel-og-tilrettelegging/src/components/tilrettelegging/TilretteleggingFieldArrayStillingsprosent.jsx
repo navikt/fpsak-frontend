@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+
 import {
   hasValidDecimal, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
+import { DecimalField } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
-import PropTypes from 'prop-types';
-import DecimalField from '@fpsak-frontend/form/src/DecimalField';
-import { behandlingFormValueSelector } from '../../../../behandlingFormForstegangOgRevurdering';
+
 import styles from './tilretteleggingFieldArrayStillingsprosent.less';
 
 const maxValue100 = maxValue(100);
@@ -39,8 +41,11 @@ TilretteleggingFieldArrayStillingsprosent.propTypes = {
 };
 
 const mapStateToProps = (state, ownProps) => {
-  const tilretteleggingKode = behandlingFormValueSelector('FodselOgTilretteleggingForm')(state,
-    `${ownProps.formSectionName}.tilretteleggingDatoer[${ownProps.index}].type.kode`);
+  const {
+    behandlingId, behandlingVersjon, index, formSectionName,
+  } = ownProps;
+  const tilretteleggingKode = behandlingFormValueSelector('FodselOgTilretteleggingForm', behandlingId, behandlingVersjon)(state,
+    `${formSectionName}.tilretteleggingDatoer[${index}].type.kode`);
   return {
     showStillingsprosent: tilretteleggingKode === tilretteleggingType.DELVIS_TILRETTELEGGING,
   };

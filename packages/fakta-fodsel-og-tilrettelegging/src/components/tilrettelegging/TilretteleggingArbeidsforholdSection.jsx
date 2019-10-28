@@ -1,17 +1,19 @@
 import React from 'react';
 import { PropTypes } from 'prop-types';
-import CheckboxField from '@fpsak-frontend/form/src/CheckboxField';
-import { FieldArray, FormSection } from 'redux-form';
-import { FlexColumn, FlexContainer } from '@fpsak-frontend/shared-components';
-import DatepickerField from '@fpsak-frontend/form/src/DatepickerField';
-import { hasValidDate, required } from '@fpsak-frontend/utils';
-import BorderBox from '@fpsak-frontend/shared-components/src/BorderBox';
-import { Normaltekst } from 'nav-frontend-typografi';
-import VerticalSpacer from '@fpsak-frontend/shared-components/src/VerticalSpacer';
 import { connect } from 'react-redux';
-import styles from './tilretteleggingArbeidsforholdSection.less';
+import { FieldArray, FormSection } from 'redux-form';
+import { Normaltekst } from 'nav-frontend-typografi';
+
+import { DatepickerField, CheckboxField } from '@fpsak-frontend/form';
+import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { hasValidDate, required } from '@fpsak-frontend/utils';
+import {
+  BorderBox, VerticalSpacer, FlexColumn, FlexContainer,
+} from '@fpsak-frontend/shared-components';
+
 import TilrettteleggingFieldArray from './TilretteleggingFieldArray';
-import { behandlingFormValueSelector } from '../../../../behandlingFormForstegangOgRevurdering';
+
+import styles from './tilretteleggingArbeidsforholdSection.less';
 
 const utledArbeidsforholdTittel = (arbeidsforhold) => {
   let tittel = arbeidsforhold.arbeidsgiverNavn;
@@ -33,6 +35,8 @@ export const TilretteleggingArbeidsforholdSection = ({
   arbeidsforhold,
   formSectionName,
   visTilrettelegginger,
+  behandlingId,
+  behandlingVersjon,
 }) => (
   <FormSection name={formSectionName}>
     <BorderBox>
@@ -68,6 +72,8 @@ export const TilretteleggingArbeidsforholdSection = ({
                 component={TilrettteleggingFieldArray}
                 readOnly={readOnly}
                 formSectionName={formSectionName}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
               />
             </FlexColumn>
           </>
@@ -82,10 +88,13 @@ TilretteleggingArbeidsforholdSection.propTypes = {
   arbeidsforhold: PropTypes.shape().isRequired,
   formSectionName: PropTypes.string.isRequired,
   visTilrettelegginger: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  visTilrettelegginger: behandlingFormValueSelector('FodselOgTilretteleggingForm')(state, `${ownProps.formSectionName}.skalBrukes`),
+  visTilrettelegginger: behandlingFormValueSelector('FodselOgTilretteleggingForm',
+    ownProps.behandlingId, ownProps.behandlingVersjon)(state, `${ownProps.formSectionName}.skalBrukes`),
 });
 
 export default connect(mapStateToProps)(TilretteleggingArbeidsforholdSection);

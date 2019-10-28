@@ -127,28 +127,6 @@
   "FortsattMedlemskapFaktaPanel.EndretPersonstatus": "Endret personstatus f.o.m. {dato}",
   "FortsattMedlemskapFaktaPanel.DateNotAfterOrEqual": "Dato kan ikke være før skjæringstidspunktet {limit}",
 
-  "FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging": "Fakta om fødsel og tilrettelegging",
-  "FodselOgTilretteleggingInfoPanel.Aksjonspunkt": "Kontroller opplysninger fra jordmor og arbeidsgiver",
-  "FodselOgTilretteleggingFaktaForm.Termindato": "Termindato",
-  "FodselOgTilretteleggingFaktaForm.Fodselsdato": "Fødselsdato",
-  "FodselOgTilretteleggingFaktaForm.BegrunnEndringene": "Begrunn endringene",
-  "FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor": "Arbeidsforhold det er søkt tilrettelegging for",
-  "FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes": "Minst en tilrettelegging må brukes.",
-
-  "TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
-  "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søkeren skal ha tilrettelegging i dette arbeidsforholdet",
-  "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger": "Arbeidsgiver oppgir nødvendig tilrettelegging",
-  "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger.Dato": "Dato",
-
-  "TilretteleggingFieldArray.VelgTilretteleggingPlaceholder": "- Velg tilretteleggingsbehov -",
-  "TilretteleggingFieldArray.Stillingsprosent": "Stillingsprosent",
-  "TilretteleggingFieldArray.LeggTilTilretteleggingsbehov": "Legg til tilretteleggingsbehov",
-  "TilretteleggingFieldArray.BehovForTilrettelegging": "Arbeidsgiver oppgir nødvendig tilrettelegging",
-  "TilretteleggingFieldArray.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
-  "TilretteleggingFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
-  "TilretteleggingFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
-  "TilretteleggingFieldArray.Dato": "Dato",
-
   "ArbeidsforholdFaktaPanel.Faktagruppe": "Arbeidsforhold som det er søkt for",
   "ArbeidsforholdFaktaPanel.Oppdater": "Oppdater",
   "ArbeidsforholdFaktaPanel.Avbryt": "Avbryt",
