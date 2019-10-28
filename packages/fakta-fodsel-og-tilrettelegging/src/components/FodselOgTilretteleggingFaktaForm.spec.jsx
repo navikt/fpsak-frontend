@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
-import AlertStripe from 'nav-frontend-alertstriper';
 import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFaktaForm';
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
 
@@ -16,7 +16,6 @@ const arbeidsforhold = [
     arbeidsgiverNavn: 'BEDRIFT AS',
     begrunnelse: null,
     kopiertFraTidligereBehandling: false,
-    mottattTidspunkt: '2019-10-09T12:52:10.596311',
     opplysningerOmRisiko: null,
     opplysningerOmTilrettelegging: null,
     skalBrukes: true,
@@ -30,7 +29,6 @@ const arbeidsforhold = [
     arbeidsgiverNavn: 'BEDRIFT AS',
     begrunnelse: null,
     kopiertFraTidligereBehandling: false,
-    mottattTidspunkt: '2019-10-09T12:52:10.596311',
     opplysningerOmRisiko: null,
     opplysningerOmTilrettelegging: null,
     skalBrukes: true,
@@ -47,6 +45,8 @@ const formProps = {
 describe('<FodselOgTilretteleggingFaktaForm>', () => {
   it('skal vise faktaform med begrunnelsefelt og fodseldato', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
+      behandlingId={1}
+      behandlingVersjon={1}
       hasOpenAksjonspunkter={false}
       readOnly
       fødselsdato=""
@@ -67,6 +67,8 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
   });
   it('skal vise faktaform med fødelsedato', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
+      behandlingId={1}
+      behandlingVersjon={1}
       hasOpenAksjonspunkter={false}
       readOnly
       fødselsdato="20.10.2019"
@@ -87,6 +89,8 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
   });
   it('skal vise AlertStripe når formprops.error er satt', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
+      behandlingId={1}
+      behandlingVersjon={1}
       hasOpenAksjonspunkter={false}
       readOnly
       fødselsdato="20.10.2019"
