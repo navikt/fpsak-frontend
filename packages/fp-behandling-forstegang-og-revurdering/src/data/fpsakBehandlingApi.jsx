@@ -30,6 +30,7 @@ export const BehandlingFpsakApiKeys = {
   YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
+  SVANGERSKAPSPENGER_TILRETTELEGGING: 'SVANGERSKAPSPENGER_TILRETTELEGGING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -69,6 +70,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
   .withInjectedPath('opptjening', BehandlingFpsakApiKeys.OPPTJENING)
   .withInjectedPath('sendt-varsel-om-revurdering', BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withInjectedPath('svangerskapspenger-tilrettelegging', BehandlingFpsakApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING)
 
   .build();
 

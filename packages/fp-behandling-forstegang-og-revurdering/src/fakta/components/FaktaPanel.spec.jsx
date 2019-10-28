@@ -10,7 +10,6 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import UttakInfoPanel from './uttak/UttakInfoPanel';
 import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import FodselOgTilretteleggingInfoPanel from './fodselOgTilrettelegging/FodselOgTilretteleggingInfoPanel';
 import { FaktaPanel } from './FaktaPanel';
 
 describe('<FaktaPanel>', () => {
@@ -246,44 +245,6 @@ describe('<FaktaPanel>', () => {
     />);
 
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
-  });
-
-  it('skal vise faktapanel for svangerskapspenger og medlemskap når en har aksjonspunkt for disse', () => {
-    const omsorgAksjonspunkt = {
-      id: 1,
-      status: {
-        kode: aksjonspunktStatus.OPPRETTET,
-        navn: 'TEST',
-      },
-      definisjon: {
-        kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-        navn: 'test',
-      },
-      kanLoses: true,
-      erAktivt: true,
-    };
-
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[omsorgAksjonspunkt]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknad}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer={false}
-      ytelsefordeling={ytelsefordeling}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-      readOnlyBehandling={false}
-      featureToggleUtland
-    />);
-
-    expect(wrapper.find(FodselOgTilretteleggingInfoPanel)).has.length(1);
   });
 
   it('skal vise faktapanel for adopsjon og medlemskap når en har aksjonspunkt for disse', () => {
