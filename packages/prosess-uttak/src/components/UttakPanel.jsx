@@ -168,7 +168,11 @@ UttakPanelImpl.propTypes = {
   behandlingType: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+<<<<<<< HEAD:packages/prosess-uttak/src/components/UttakPanel.jsx
   behandlingVersjon: PropTypes.number.isRequired,
+=======
+  behandlingVersjon: PropTypes.string.isRequired,
+>>>>>>> Flytte uttak:packages/fp-behandling-forstegang-og-revurdering/src/behandlingsprosess/components/uttak/UttakPanel.jsx
   fagsak: PropTypes.shape().isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
@@ -368,7 +372,10 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
 };
 
 const mapStateToPropsFactory = (_initialState, ownProps) => {
+<<<<<<< HEAD:packages/prosess-uttak/src/components/UttakPanel.jsx
   const { behandlingId, behandlingVersjon } = ownProps;
+=======
+>>>>>>> Flytte uttak:packages/fp-behandling-forstegang-og-revurdering/src/behandlingsprosess/components/uttak/UttakPanel.jsx
   const validate = (values) => validateUttakPanelForm(values);
   const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
   const initialValues = buildInitialValues(ownProps);
@@ -377,7 +384,11 @@ const mapStateToPropsFactory = (_initialState, ownProps) => {
     validate,
     onSubmit,
     initialValues,
+<<<<<<< HEAD:packages/prosess-uttak/src/components/UttakPanel.jsx
     manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
+=======
+    manuellOverstyring: behandlingFormValueSelector(formName)(state, 'manuellOverstyring'),
+>>>>>>> Flytte uttak:packages/fp-behandling-forstegang-og-revurdering/src/behandlingsprosess/components/uttak/UttakPanel.jsx
   });
 };
 
