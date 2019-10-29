@@ -46,6 +46,9 @@ const mapping = {
   [BehandlingFpsakApiKeys.YTELSEFORDELING]: 'ytelsefordeling',
   [BehandlingFpsakApiKeys.OPPTJENING]: 'opptjening',
   [BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING]: 'sendt-varsel-om-revurdering',
+  [BehandlingFpsakApiKeys.FAKTA_ARBEIDSFORHOLD]: 'fakta-arbeidsforhold',
+  [BehandlingFpsakApiKeys.UTTAKSRESULTAT_PERIODER]: 'uttaksresultat-perioder',
+  [BehandlingFpsakApiKeys.UTTAK_STONADSKONTOER]: 'uttak-stonadskontoer',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

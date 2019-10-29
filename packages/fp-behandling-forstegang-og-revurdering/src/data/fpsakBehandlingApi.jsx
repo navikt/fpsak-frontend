@@ -30,6 +30,9 @@ export const BehandlingFpsakApiKeys = {
   YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
+  FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
+  UTTAKSRESULTAT_PERIODER: 'UTTAKSRESULTAT_PERIODER',
+  UTTAK_STONADSKONTOER: 'UTTAK_STONADSKONTOER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -69,6 +72,9 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('ytelsefordeling', BehandlingFpsakApiKeys.YTELSEFORDELING)
   .withInjectedPath('opptjening', BehandlingFpsakApiKeys.OPPTJENING)
   .withInjectedPath('sendt-varsel-om-revurdering', BehandlingFpsakApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withInjectedPath('fakta-arbeidsforhold', BehandlingFpsakApiKeys.FAKTA_ARBEIDSFORHOLD)
+  .withInjectedPath('uttaksresultat-perioder', BehandlingFpsakApiKeys.UTTAKSRESULTAT_PERIODER)
+  .withInjectedPath('uttak-stonadskontoer', BehandlingFpsakApiKeys.UTTAK_STONADSKONTOER)
 
   .build();
 
