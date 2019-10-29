@@ -336,7 +336,7 @@ export const buildInitialValues = createSelector([
   slaSammenOriginaleOgLagredePeriode,
   (state, ownProps) => ownProps.perioderForeldelse],
 (perioder, foreldelsePerioder) => ({
-  vilkarsVurdertePerioder: perioder.map((p) => ({
+  vilkarsVurdertePerioder: perioder.perioder.map((p) => ({
     ...TilbakekrevingPeriodeForm.buildInitialValues(p, foreldelsePerioder),
     fom: p.fom,
     tom: p.tom,
@@ -351,7 +351,7 @@ const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagr
   }
 
   return perioderFormState.map((periodeFormState) => {
-    const periode = finnOriginalPeriode(periodeFormState, perioder);
+    const periode = finnOriginalPeriode(periodeFormState, perioder.perioder);
     const erForeldet = periode.foreldelseVurderingType
       ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET : periode.foreldet;
     return {

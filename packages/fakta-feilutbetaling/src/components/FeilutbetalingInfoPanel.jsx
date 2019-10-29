@@ -276,7 +276,7 @@ const buildInitialValues = createSelector([
   (ownProps) => ownProps.feilutbetalingFakta, (ownProps) => ownProps.aksjonspunkter], (
   feilutbetalingFakta, aksjonspunkter,
 ) => {
-  const { perioder } = feilutbetalingFakta.behandlingFakta;
+  const { perioder } = feilutbetalingFakta;
   const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
   return {
     begrunnelse: apCode ? apCode.begrunnelse : null,

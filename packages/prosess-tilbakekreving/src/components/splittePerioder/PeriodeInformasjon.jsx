@@ -57,7 +57,7 @@ const PeriodeInformasjon = ({
               <Column xs="6">
                 {arsak && (
                   <Normaltekst className={styles.resultName}>
-                    {arsak.årsak}
+                    {arsak.hendelseType.navn}
                   </Normaltekst>
                 )}
               </Column>
@@ -74,7 +74,7 @@ PeriodeInformasjon.propTypes = {
   tom: PropTypes.string.isRequired,
   feilutbetaling: PropTypes.number.isRequired,
   arsak: PropTypes.shape({
-    årsak: PropTypes.string.isRequired,
+    hendelseType: PropTypes.shape(),
   }),
 };
 

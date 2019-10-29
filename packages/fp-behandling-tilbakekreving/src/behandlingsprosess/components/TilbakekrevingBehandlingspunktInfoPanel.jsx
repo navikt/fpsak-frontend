@@ -80,10 +80,12 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
         <TilbakekrevingProsessIndex
           submitCallback={submitCallback}
           readOnly={readOnly}
+          apCodes={apCodes}
           readOnlySubmitButton={readOnlySubmitButton}
           navBrukerKjonn={navBrukerKjonn}
           alleKodeverk={alleKodeverk}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          beregnBelop={beregnBelop}
           {...props}
         />
       )}

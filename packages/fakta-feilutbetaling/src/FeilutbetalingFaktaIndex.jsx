@@ -33,7 +33,7 @@ const FeilutbetalingFaktaIndex = ({
     <FeilutbetalingInfoPanel
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
-      feilutbetalingFakta={feilutbetalingFakta}
+      feilutbetalingFakta={feilutbetalingFakta.behandlingFakta}
       feilutbetalingAarsak={feilutbetalingAarsak}
       aksjonspunkter={aksjonspunkter}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
