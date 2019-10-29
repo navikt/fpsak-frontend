@@ -58,6 +58,7 @@ describe('<UttakActivity>', () => {
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
       hasValidationError={false}
+      alleKodeverk={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -91,6 +92,7 @@ describe('<UttakActivity>', () => {
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
       hasValidationError={false}
+      alleKodeverk={{}}
     />);
 
     const row = wrapper.find('Row');
@@ -117,6 +119,7 @@ describe('<UttakActivity>', () => {
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
       hasValidationError={false}
+      alleKodeverk={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -149,6 +152,7 @@ describe('<UttakActivity>', () => {
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
       hasValidationError={false}
+      alleKodeverk={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');
@@ -183,6 +187,7 @@ describe('<UttakActivity>', () => {
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
       hasValidationError={false}
+      alleKodeverk={{}}
     />);
 
     const fieldArray = wrapper.find('FieldArray');

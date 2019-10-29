@@ -500,7 +500,7 @@ UttakImpl.propTypes = {
   barnFraTps: PropTypes.arrayOf(PropTypes.shape()),
   behandlingFormPrefix: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.string.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   dekningsgrad: PropTypes.number,
   endredFodselsDato: PropTypes.string,
   endringsdato: PropTypes.string.isRequired,

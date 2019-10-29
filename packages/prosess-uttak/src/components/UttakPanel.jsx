@@ -171,7 +171,7 @@ UttakPanelImpl.propTypes = {
   behandlingType: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  behandlingVersjon: PropTypes.string.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   fagsak: PropTypes.shape().isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
