@@ -66,6 +66,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   overrideReadOnly,
   kanOverstyreAccess,
   behandlingspunktAksjonspunkter,
+  alleAksjonspunkter,
   toggleOverstyring,
   alleKodeverk,
   behandlingspunktVilkar,
@@ -89,7 +90,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         data={fagsakInfo.ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD ? vedtakDataES : vedtakDataFpOgSvp}
         render={(props) => (
           <VedtakProsessIndex
-            aksjonspunkter={behandlingspunktAksjonspunkter}
+            aksjonspunkter={alleAksjonspunkter}
             readOnly={readOnly}
             previewCallback={previewCallback}
             submitCallback={submitCallback}
@@ -249,6 +250,7 @@ BehandlingspunktInfoPanel.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingspunktAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
   fagsakInfo: PropTypes.shape().isRequired,
   featureToggles: PropTypes.shape().isRequired,
@@ -265,6 +267,7 @@ BehandlingspunktInfoPanel.defaultProps = {
 const mapStateToProps = (state) => ({
   selectedBehandlingspunkt: behandlingsprosessSelectors.getSelectedBehandlingspunkt(state),
   behandlingspunktAksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  alleAksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   openAksjonspunkt: behandlingsprosessSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
   readOnly: behandlingsprosessSelectors.isSelectedBehandlingspunktReadOnly(state),
   isApSolvable: behandlingsprosessSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
