@@ -7,7 +7,6 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
@@ -27,42 +26,34 @@ describe('TilbakekrevingFaktaPanel', () => {
       perioder: [{
         fom: '2018-01-01',
         tom: '2019-01-01',
+        belop: 1000,
       }],
-    },
-    antallBarn: 1,
-    soknadType: {
-      kode: soknadType.FODSEL,
-    },
-    totalPeriodeFom: '2019-01-01',
-    totalPeriodeTom: '2019-01-02',
-    aktuellFeilUtbetaltBeløp: 10000,
-    tidligereVarseltBeløp: 5000,
-    perioder: [{
-      fom: '2018-01-01',
-      tom: '2019-01-01',
-      belop: 1000,
-    }],
-    behandlingÅrsaker: [{
-      behandlingArsakType: {
-        kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-      },
-    }],
-    behandlingsresultat: {
-      type: {
-        kode: behandlingResultatType.INNVILGET,
-      },
-      konsekvenserForYtelsen: [{
-        kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-      }, {
-        kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+      totalPeriodeFom: '2019-01-01',
+      totalPeriodeTom: '2019-01-02',
+      aktuellFeilUtbetaltBeløp: 10000,
+      tidligereVarseltBeløp: 5000,
+      behandlingÅrsaker: [{
+        behandlingArsakType: {
+          kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+        },
       }],
-    },
-    tilbakekrevingValg: {
-      videreBehandling: {
-        kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+      behandlingsresultat: {
+        type: {
+          kode: behandlingResultatType.INNVILGET,
+        },
+        konsekvenserForYtelsen: [{
+          kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+        }, {
+          kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+        }],
       },
+      tilbakekrevingValg: {
+        videreBehandling: {
+          kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+        },
+      },
+      datoForRevurderingsvedtak: '2019-01-01',
     },
-    datoForRevurderingsvedtak: '2019-01-01',
   };
 
 

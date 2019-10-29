@@ -5,8 +5,8 @@ import AlertStripe from 'nav-frontend-alertstriper';
 
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
-import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
+import VilkarResultat from '../kodeverk/vilkarResultat';
 import { slaSammenOriginaleOgLagredePeriode, TilbakekrevingFormImpl } from './TilbakekrevingForm';
 import TilbakekrevingPeriodeForm from './TilbakekrevingPeriodeForm';
 
@@ -23,7 +23,7 @@ describe('<TilbakekrevingForm>', () => {
       dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
-      kjonn={navBrukerKjonn.KVINNE}
+      navBrukerKjonn={navBrukerKjonn.KVINNE}
       readOnly={false}
       readOnlySubmitButton={false}
       reduxFormChange={() => undefined}
@@ -34,6 +34,10 @@ describe('<TilbakekrevingForm>', () => {
       merknaderFraBeslutter={{
         notAccepted: false,
       }}
+      behandlingId={1}
+      behandlingVersjon={2}
+      alleKodeverk={{}}
+      beregnBelop={() => undefined}
     />);
 
     wrapper.setState({ valgtPeriode: perioder[0] });
@@ -49,7 +53,7 @@ describe('<TilbakekrevingForm>', () => {
       dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
-      kjonn={navBrukerKjonn.KVINNE}
+      navBrukerKjonn={navBrukerKjonn.KVINNE}
       readOnly={false}
       readOnlySubmitButton={false}
       reduxFormChange={() => undefined}
@@ -60,6 +64,10 @@ describe('<TilbakekrevingForm>', () => {
       merknaderFraBeslutter={{
         notAccepted: false,
       }}
+      behandlingId={1}
+      behandlingVersjon={2}
+      alleKodeverk={{}}
+      beregnBelop={() => undefined}
     />);
 
     expect(wrapper.find(TilbakekrevingPeriodeForm)).to.have.length(0);
@@ -74,7 +82,7 @@ describe('<TilbakekrevingForm>', () => {
       dataForDetailForm={perioder}
       behandlingFormPrefix="behandling_V1"
       isApOpen
-      kjonn={navBrukerKjonn.KVINNE}
+      navBrukerKjonn={navBrukerKjonn.KVINNE}
       readOnly={false}
       readOnlySubmitButton={false}
       reduxFormChange={() => undefined}
@@ -85,6 +93,10 @@ describe('<TilbakekrevingForm>', () => {
       merknaderFraBeslutter={{
         notAccepted: false,
       }}
+      behandlingId={1}
+      behandlingVersjon={2}
+      alleKodeverk={{}}
+      beregnBelop={() => undefined}
       error="TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr"
     />);
 

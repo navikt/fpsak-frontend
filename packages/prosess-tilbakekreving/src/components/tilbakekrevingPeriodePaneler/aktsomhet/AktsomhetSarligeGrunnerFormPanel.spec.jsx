@@ -4,8 +4,7 @@ import { shallow } from 'enzyme';
 
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
 
-import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
-
+import sarligGrunn from '../../../kodeverk/sarligGrunn';
 import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel';
 
 describe('<AktsomhetSarligeGrunnerFormPanel>', () => {

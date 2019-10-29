@@ -7,7 +7,6 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -30,47 +29,39 @@ const feilutbetalingFakta = {
     perioder: [{
       fom: '2018-01-01',
       tom: '2019-01-01',
+      belop: 1000,
     }],
-  },
-  antallBarn: 1,
-  soknadType: {
-    kode: soknadType.FODSEL,
-  },
-  totalPeriodeFom: '2019-01-01',
-  totalPeriodeTom: '2019-01-02',
-  aktuellFeilUtbetaltBeløp: 10000,
-  tidligereVarseltBeløp: 5000,
-  perioder: [{
-    fom: '2018-01-01',
-    tom: '2019-01-01',
-    belop: 1000,
-  }],
-  behandlingÅrsaker: [{
-    behandlingArsakType: {
-      kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-      kodeverk: BEHANDLING_AARSAK_KODEVERK,
-    },
-  }],
-  behandlingsresultat: {
-    type: {
-      kode: behandlingResultatType.INNVILGET,
-      kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-    },
-    konsekvenserForYtelsen: [{
-      kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-    }, {
-      kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-      kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+    totalPeriodeFom: '2019-01-01',
+    totalPeriodeTom: '2019-01-02',
+    aktuellFeilUtbetaltBeløp: 10000,
+    tidligereVarseltBeløp: 5000,
+    behandlingÅrsaker: [{
+      behandlingArsakType: {
+        kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+        kodeverk: BEHANDLING_AARSAK_KODEVERK,
+      },
     }],
-  },
-  tilbakekrevingValg: {
-    videreBehandling: {
-      kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-      kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+    behandlingsresultat: {
+      type: {
+        kode: behandlingResultatType.INNVILGET,
+        kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+      },
+      konsekvenserForYtelsen: [{
+        kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+      }, {
+        kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+        kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+      }],
     },
+    tilbakekrevingValg: {
+      videreBehandling: {
+        kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+        kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+      },
+    },
+    datoForRevurderingsvedtak: '2019-01-01',
   },
-  datoForRevurderingsvedtak: '2019-01-01',
 };
 
 const feilutbetalingAarsak = {

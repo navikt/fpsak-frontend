@@ -33,21 +33,32 @@ const perioderForeldelse = {
   }],
 };
 
-const vilkarvurderingsperioder = [{
-  fom: '2019-01-01',
-  tom: '2019-04-01',
-  feilutbetaling: 10,
-  redusertBeloper: [],
-  ytelser: [],
-}];
-const vilkarvurdering = {
-  vilkarsVurdertePerioder: [{
+const vilkarvurderingsperioder = {
+  perioder: [{
     fom: '2019-01-01',
     tom: '2019-04-01',
-    feilutbetalingBelop: 1000,
+    foreldet: false,
+    feilutbetaling: 10,
+    hendelseType: {
+      kode: 'MEDLEM',
+      navn: '§22 Medlemskap',
+    },
     redusertBeloper: [],
-    ytelser: [],
+    ytelser: [{
+      aktivitet: 'Arbeidstaker',
+      belop: 1050,
+    }],
+    årsak: {
+      hendelseType: {
+        kode: 'MEDLEM',
+        navn: '§22 Medlemskap',
+      },
+    },
   }],
+  rettsgebyr: 1000,
+};
+const vilkarvurdering = {
+  vilkarsVurdertePerioder: [],
 };
 
 const alleKodeverk = {

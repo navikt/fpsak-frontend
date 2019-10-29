@@ -5,9 +5,10 @@ import { shallow } from 'enzyme';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
+import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 import { TilbakekrevingBehandlingspunktInfoPanel } from './TilbakekrevingBehandlingspunktInfoPanel';
-import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 
 describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
   it('skal vise tilbakekrevingspanel', () => {
@@ -27,6 +28,22 @@ describe('<TilbakekrevingBehandlingspunktInfoPanel>', () => {
       beregnBelop={() => undefined}
     />);
 
-    expect(wrapper.find(TilbakekrevingForm)).to.have.length(1);
+    const dataFetchers = wrapper.find(DataFetcherWithCacheTemp);
+    expect(dataFetchers.at(1).prop('showComponent')).to.be.true;
+
+    const tilbakekrevingPanel = dataFetchers.at(1).renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      perioderForeldelse: {
+        perioder: [],
+      },
+      vilkarvurderingsperioder: {
+        perioder: [],
+        rettsgebyr: 1000,
+      },
+      vilkarvurdering: {
+        vilkarsVurdertePerioder: [],
+      },
+    }).find(TilbakekrevingProsessIndex);
+    expect(tilbakekrevingPanel).to.have.length(1);
   });
 });

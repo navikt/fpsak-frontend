@@ -4,8 +4,8 @@ import { shallow } from 'enzyme';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
+import sarligGrunn from '../kodeverk/sarligGrunn';
+import aktsomhet from '../kodeverk/aktsomhet';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import { TilbakekrevingPeriodeFormImpl } from './TilbakekrevingPeriodeForm';
 
@@ -51,6 +51,9 @@ describe('<TilbakekrevingPeriodeForm>', () => {
       aktsomhetTyper={aktsomhetTyper}
       sarligGrunnTyper={sarligGrunnTyper}
       reduserteBelop={[]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      beregnBelop={() => undefined}
       {...reduxFormPropsMock}
     />);
 

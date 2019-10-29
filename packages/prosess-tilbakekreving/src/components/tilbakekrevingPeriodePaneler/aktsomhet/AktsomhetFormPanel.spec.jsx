@@ -5,8 +5,8 @@ import sinon from 'sinon';
 
 import { RadioOption } from '@fpsak-frontend/form';
 
-import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
+import sarligGrunn from '../../../kodeverk/sarligGrunn';
+import aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 
 import AktsomhetFormPanel from './AktsomhetFormPanel';

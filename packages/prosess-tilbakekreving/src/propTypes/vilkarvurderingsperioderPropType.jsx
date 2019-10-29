@@ -9,8 +9,8 @@ const vilkarvurderingsperioderPropType = PropTypes.shape({
     tom: PropTypes.string.isRequired,
     foreldet: PropTypes.bool.isRequired,
     hendelseType: kodeverkObjektPropType.isRequired,
-    hendelseUndertype: kodeverkObjektPropType.isRequired,
-    oppfyltValg: kodeverkObjektPropType.isRequired,
+    hendelseUndertype: kodeverkObjektPropType,
+    oppfyltValg: kodeverkObjektPropType,
     redusertBeloper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     ytelser: PropTypes.arrayOf(PropTypes.shape({
       aktivitet: PropTypes.string.isRequired,
@@ -18,7 +18,7 @@ const vilkarvurderingsperioderPropType = PropTypes.shape({
     })).isRequired,
     årsak: PropTypes.shape({
       hendelseType: kodeverkObjektPropType.isRequired,
-      hendelseUndertype: kodeverkObjektPropType.isRequired,
+      hendelseUndertype: kodeverkObjektPropType,
     }).isRequired,
   })).isRequired,
   rettsgebyr: PropTypes.number.isRequired,

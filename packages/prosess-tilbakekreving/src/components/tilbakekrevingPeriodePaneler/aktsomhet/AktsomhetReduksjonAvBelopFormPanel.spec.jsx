@@ -6,8 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { InputField, RadioGroupField, SelectField } from '@fpsak-frontend/form';
 
-import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
-
+import aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetReduksjonAvBelopFormPanel from './AktsomhetReduksjonAvBelopFormPanel';
 
 describe('<AktsomhetReduksjonAvBelopFormPanel>', () => {
