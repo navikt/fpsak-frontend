@@ -11,10 +11,9 @@ import {
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
@@ -173,7 +172,6 @@ export class UttakTimeLineData extends Component {
       callbackCancelSelectedActivity,
       callbackForward,
       callbackUpdateActivity,
-      getKodeverknavn,
       harSoktOmFlerbarnsdager,
       alleKodeverk,
       behandlingId,
@@ -188,6 +186,8 @@ export class UttakTimeLineData extends Component {
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
     return (
       <TimeLineDataContainer key={`selectedItemData_${selectedItemData.id}`}>
         <Row>
@@ -269,7 +269,6 @@ UttakTimeLineData.propTypes = {
   callbackSetSelected: PropTypes.func.isRequired,
   callbackUpdateActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   intl: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool,
@@ -279,7 +278,7 @@ UttakTimeLineData.propTypes = {
   stonadskonto: PropTypes.shape(),
   uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  behandlingVersjon: PropTypes.string.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
 };
@@ -290,4 +289,4 @@ UttakTimeLineData.defaultProps = {
   stonadskonto: {},
 };
 
-export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakTimeLineData));
+export default injectIntl(UttakTimeLineData);

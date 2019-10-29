@@ -67,6 +67,7 @@ describe('<Uttak>', () => {
       familiehendelseDate="2018-02-02"
       endringsdato="2018-01-12"
       hovedsokerKjonnKode=""
+      behandlingVersjon={1}
       periodeTyper={[]}
       uttaksresultatActivity={[]}
       reduxFormChange={sinon.spy()}
@@ -86,6 +87,9 @@ describe('<Uttak>', () => {
       tempUpdateStonadskontoer={sinon.spy()}
       saksnummer={123}
       behandlingId={999}
+      alleKodeverk={{}}
+      behandlingsresultat={{}}
+      uttakStonadskontoer={{}}
     />);
     wrapper.setState({ selectedItem: null });
     const rows = wrapper.find(Row);
@@ -129,6 +133,10 @@ describe('<Uttak>', () => {
       tempUpdateStonadskontoer={sinon.spy()}
       saksnummer={123}
       behandlingId={999}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      behandlingsresultat={{}}
+      uttakStonadskontoer={{}}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
@@ -173,6 +181,10 @@ describe('<Uttak>', () => {
       tempUpdateStonadskontoer={sinon.spy()}
       saksnummer={123}
       behandlingId={999}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      behandlingsresultat={{}}
+      uttakStonadskontoer={{}}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
@@ -232,6 +244,10 @@ describe('<Uttak>', () => {
       tempUpdateStonadskontoer={sinon.spy()}
       saksnummer={123}
       behandlingId={999}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      behandlingsresultat={{}}
+      uttakStonadskontoer={{}}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     const checkBox = wrapper.find(CheckboxField);
@@ -291,6 +307,10 @@ describe('<Uttak>', () => {
       tempUpdateStonadskontoer={sinon.spy()}
       saksnummer={123}
       behandlingId={999}
+      behandlingVersjon={1}
+      alleKodeverk={{}}
+      behandlingsresultat={{}}
+      uttakStonadskontoer={{}}
     />);
     wrapper.setState({ selectedItem: uttakActivities[0] });
     expect(wrapper.state('selectedItem')).to.eql(uttakActivities[0]);
