@@ -59,7 +59,6 @@ const canSubmit = (formValues) => {
 // TODO (TOR) Dette skal ikkje hardkodast!!! Hent fra kodeverk
 const formatBehandlingType = (kode) => {
   switch (kode) {
-    case behandlingType.ENDRINGSSOKNAD: return 'Endringssøknad';
     case behandlingType.FORSTEGANGSSOKNAD: return 'Førstegangssøknad';
     case behandlingType.KLAGE: return 'Klage';
     case behandlingType.ANKE: return 'Anke';

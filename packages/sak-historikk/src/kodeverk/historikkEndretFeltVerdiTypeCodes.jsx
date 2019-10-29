@@ -765,6 +765,14 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'SOEKER',
     verdiId: 'HistorikkEndretFeltVerdiType.Soker',
   },
+  ADVOKAT: {
+    kode: 'ADVOKAT',
+    verdiId: 'HistorikkEndretFeltVerdiType.VergeAdvokat',
+  },
+  ANNEN_F: {
+    kode: 'ANNEN_F',
+    verdiId: 'HistorikkEndretFeltVerdiType.VergeAnnenF',
+  },
   BEGGE: {
     kode: 'BEGGE',
     verdiId: 'HistorikkEndretFeltVerdiType.VergeBrevMottakerBegge',

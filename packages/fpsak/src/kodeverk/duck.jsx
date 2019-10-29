@@ -16,6 +16,10 @@ export const getFpTilbakeKodeverk = (kodeverkType) => createSelector(
   (kodeverk = {}) => kodeverk[kodeverkType],
 );
 
+export const getAlleFpSakKodeverk = createSelector([fpsakApi.KODEVERK.getRestApiData()], (kodeverk = {}) => kodeverk);
+export const getAlleFpTilbakeKodeverk = createSelector([fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()], (kodeverk = {}) => kodeverk);
+
+// TODO (TOR) Fjern denne
 export const getAlleKodeverk = createSelector(
   [fpsakApi.KODEVERK.getRestApiData(), fpsakApi.KODEVERK_FPTILBAKE.getRestApiData()],
   (kodeverkFpsak = {}, kodeverkFptilbake = {}) => {

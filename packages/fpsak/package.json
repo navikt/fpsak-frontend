@@ -25,6 +25,7 @@
     "@fpsak-frontend/sak-dokumenter": "1.0.0",
     "@fpsak-frontend/sak-historikk": "1.0.0",
     "@fpsak-frontend/sak-meldinger": "1.0.0",
+    "@fpsak-frontend/sak-meny": "1.0.0",
     "@fpsak-frontend/sak-risikoklassifisering": "1.0.0",
     "@fpsak-frontend/sak-sok": "1.0.0",
     "@fpsak-frontend/sak-totrinnskontroll": "1.0.0",

@@ -7,24 +7,6 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import getCommonBehandlingsprosessSelectors from './behandlingsprosessSelectors';
 
-/* const fagsakYtelseType = {
-  kode: fyt.ENGANGSSTONAD,
-};
-const behandlingType = bt.ENDRINGSSOKNAD;
-const vilkar = [{
-  vilkarType: {
-    kode: vt.OMSORGSVILKARET,
-  },
-  vilkarStatus: {
-    kode: vut.IKKE_VURDERT,
-  },
-}];
-const aksjonspunkter = [];
-const behandlingsresultat = {};
-const innsynResultatType = innsynResultatTypeKV.INNVILGET;
-const resultatstruktur = undefined;
-const stonadskontoer = {}; */
-
 const getSelectors = () => {
   const getBehandlingspunkterProps = () => undefined;
   const getAksjonspunkter = () => undefined;

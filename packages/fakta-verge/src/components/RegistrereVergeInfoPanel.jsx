@@ -7,6 +7,7 @@ import { createSelector } from 'reselect';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   behandlingForm, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, faktaPanelCodes, FaktaSubmitButton,
+  behandlingFormValueSelector,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -32,6 +33,7 @@ export const RegistrereVergeInfoPanelImpl = ({
   behandlingId,
   behandlingVersjon,
   alleMerknaderFraBeslutter,
+  valgtVergeType,
   ...formProps
 }) => {
   if (!aksjonspunkt) {
@@ -54,6 +56,7 @@ export const RegistrereVergeInfoPanelImpl = ({
           readOnly={readOnly}
           intl={intl}
           vergetyper={vergetyper}
+          valgtVergeType={valgtVergeType}
           alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
         />
         <VerticalSpacer twentyPx />
@@ -63,7 +66,7 @@ export const RegistrereVergeInfoPanelImpl = ({
           formName={formProps.form}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
-          isSubmittable={submittable}
+          isSubmittable={submittable && !!valgtVergeType}
           isReadOnly={readOnly}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
           doNotCheckForRequiredFields
@@ -91,11 +94,13 @@ RegistrereVergeInfoPanelImpl.propTypes = {
   }).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  valgtVergeType: PropTypes.string,
 };
 
 RegistrereVergeInfoPanelImpl.defaultProps = {
   initialValues: {},
   submittable: true,
+  valgtVergeType: undefined,
 };
 
 const buildInitialValues = createSelector([
@@ -110,9 +115,12 @@ const transformValues = (values) => ({
   ...{ begrunnelse: values.begrunnelse },
 });
 
+const FORM_NAVN = 'RegistrereVergeInfoPanel';
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
+    valgtVergeType: behandlingFormValueSelector(FORM_NAVN, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'vergeType'),
     aksjonspunkt: ownProps.aksjonspunkter[0],
     initialValues: buildInitialValues(ownProps),
     vergetyper: ownProps.alleKodeverk[kodeverkTyper.VERGE_TYPE],
@@ -124,6 +132,6 @@ const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
 
 export default withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
   connect(mapStateToPropsFactory)(behandlingForm({
-    form: 'RegistrereVergeInfoPanel',
+    form: FORM_NAVN,
   })(injectIntl(RegistrereVergeInfoPanelImpl))),
 );

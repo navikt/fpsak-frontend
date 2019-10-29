@@ -39,6 +39,9 @@ export const FpsakApiKeys = {
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
   KAN_TILBAKEKREVING_OPPRETTES: 'KAN_TILBAKEKREVING_OPPRETTES',
+  VERGE_MENYVALG: 'VERGE_MENYVALG',
+  VERGE_OPPRETT: 'VERGE_OPPRETT',
+  VERGE_FJERN: 'VERGE_FJERN',
 };
 
 
@@ -61,6 +64,9 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('henlegg-behandling', FpsakApiKeys.HENLEGG_BEHANDLING)
   .withInjectedPath('gjenoppta-behandling', FpsakApiKeys.RESUME_BEHANDLING)
   .withInjectedPath('sett-behandling-pa-vent', FpsakApiKeys.BEHANDLING_ON_HOLD)
+  .withInjectedPath('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
+  .withInjectedPath('opprett-verge', FpsakApiKeys.VERGE_OPPRETT, { fetchLinkDataAutomatically: false })
+  .withInjectedPath('fjern-verge', FpsakApiKeys.VERGE_FJERN, { fetchLinkDataAutomatically: false })
 
   /* Totrinnskontroll */
   .withInjectedPath('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)

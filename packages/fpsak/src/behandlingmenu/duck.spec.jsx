@@ -4,10 +4,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
-import behandlingUpdater from 'behandling/BehandlingUpdater';
+
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
+import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
+import behandlingUpdater from '../behandling/BehandlingUpdater';
 import {
   behandlingMenuReducer, createNewBehandling, openBehandlingForChanges, resetBehandlingMenuData, setHasSubmittedPaVentForm,
 } from './duck';
