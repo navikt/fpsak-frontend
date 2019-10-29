@@ -194,8 +194,8 @@ export const getBehandlingAarsaker = createSelector([
   }
 
   if (valgtBehandlingType === bType.REVURDERING) {
-    const isForeldrepenger = ytelseType === fagsakYtelseType.FORELDREPENGER;
-    const isSvangerskap = ytelseType === fagsakYtelseType.SVANGERSKAPSPENGER;
+    const isForeldrepenger = ytelseType.kode === fagsakYtelseType.FORELDREPENGER;
+    const isSvangerskap = ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER;
     let manuelleRevurderingsArsaker = isForeldrepenger ? manuelleRevurderingsArsakerFP : manuelleRevurderingsArsakerES;
     if (isSvangerskap) {
       manuelleRevurderingsArsaker = manuelleRevurderingsArsakerSVP;
