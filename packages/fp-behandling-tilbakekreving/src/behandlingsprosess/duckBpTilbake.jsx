@@ -1,6 +1,7 @@
 import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
-import tilbakekrevingBehandlingApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
+
+import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
 
 const reducerName = 'tilbakekrevingBehandlingsprosess';
 

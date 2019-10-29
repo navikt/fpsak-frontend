@@ -14,8 +14,7 @@ import {
   dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
 import { DatepickerField } from '@fpsak-frontend/form';
-
-import { behandlingFormTilbakekreving } from '../../../../behandlingFormTilbakekreving';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import styles from './delOppPeriodeModal.less';
 
@@ -129,7 +128,7 @@ export const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormTilbakekreving({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

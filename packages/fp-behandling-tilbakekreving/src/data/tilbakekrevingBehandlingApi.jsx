@@ -15,6 +15,8 @@ export const TilbakekrevingBehandlingApiKeys = {
   FEILUTBETALING_FAKTA: 'FEILUTBETALING_FAKTA',
   FEILUTBETALING_AARSAK: 'FEILUTBETALING_AARSAK',
   PERIODER_FORELDELSE: 'PERIODER_FORELDELSE',
+  VILKARVURDERINGSPERIODER: 'VILKARVURDERINGSPERIODER',
+  VILKARVURDERING: 'VILKARVURDERING',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -40,6 +42,8 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('feilutbetalingFakta', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA)
   .withInjectedPath('feilutbetalingAarsak', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK)
   .withInjectedPath('perioderForeldelse', TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE)
+  .withInjectedPath('vilkarvurderingsperioder', TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER)
+  .withInjectedPath('vilkarvurdering', TilbakekrevingBehandlingApiKeys.VILKARVURDERING)
 
   .build();
 

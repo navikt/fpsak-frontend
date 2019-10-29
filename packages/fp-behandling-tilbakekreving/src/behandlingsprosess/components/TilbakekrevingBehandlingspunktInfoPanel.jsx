@@ -6,28 +6,29 @@ import classnames from 'classnames/bind';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
+import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
-import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
-import fptilbakeApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
-import DataFetcherWithCacheTemp from 'behandlingTilbakekreving/src/DataFetcherWithCacheTemp';
+import { beregnBeløp } from '../duckBpTilbake';
+import fptilbakeApi from '../../data/tilbakekrevingBehandlingApi';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 import {
   fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator,
   getAlleTilbakekrevingKodeverk,
   getFagsakPerson,
-} from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+} from '../../duckBehandlingTilbakekreving';
+import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
-import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 
 import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
 const classNames = classnames.bind(styles);
 
-const vedtakData = [fptilbakeApi.BEHANDLING, fptilbakeApi.VEDTAKSBREV, fptilbakeApi.BEREGNINGSRESULTAT];
 const foreldelseData = [fptilbakeApi.BEHANDLING, fptilbakeApi.PERIODER_FORELDELSE];
+const tilbakekrevingData = [fptilbakeApi.BEHANDLING, fptilbakeApi.PERIODER_FORELDELSE, fptilbakeApi.VILKARVURDERINGSPERIODER, fptilbakeApi.VILKARVURDERING];
+const vedtakData = [fptilbakeApi.BEHANDLING, fptilbakeApi.VEDTAKSBREV, fptilbakeApi.BEREGNINGSRESULTAT];
 
 /*
  * TilbakekrevingBehandlingspunktInfoPanel
@@ -70,13 +71,23 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
       )}
     />
 
-    {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes) && (
-      <TilbakekrevingForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-    )}
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={tilbakekrevingData}
+      showComponent={selectedBehandlingspunkt === behandlingspunktCodes.TILBAKEKREVING
+        || apCodes.includes(aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING)}
+      render={(props) => (
+        <TilbakekrevingProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          navBrukerKjonn={navBrukerKjonn}
+          alleKodeverk={alleKodeverk}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          {...props}
+        />
+      )}
+    />
 
     <DataFetcherWithCacheTemp
       behandlingVersjon={1}

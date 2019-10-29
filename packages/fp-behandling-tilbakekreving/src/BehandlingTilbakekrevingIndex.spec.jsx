@@ -5,6 +5,7 @@ import sinon from 'sinon';
 
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
+
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import { BehandlingTilbakekrevingIndex } from './BehandlingTilbakekrevingIndex';
 

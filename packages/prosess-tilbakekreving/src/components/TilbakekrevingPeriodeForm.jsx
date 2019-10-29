@@ -9,7 +9,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import {
   formatCurrencyNoKr, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -18,16 +18,14 @@ import {
 } from '@fpsak-frontend/shared-components';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
-import { behandlingFormTilbakekreving, behandlingFormValueSelector } from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
-import sarligGrunn from 'behandlingTilbakekreving/src/kodeverk/sarligGrunn';
-import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
-import VilkarResultat from 'behandlingTilbakekreving/src/kodeverk/vilkarResultat';
-import { getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import sarligGrunn from '../kodeverk/sarligGrunn';
+import Aktsomhet from '../kodeverk/aktsomhet';
+import VilkarResultat from '../kodeverk/vilkarResultat';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
 import BelopetMottattIGodTroFormPanel from './tilbakekrevingPeriodePaneler/godTro/BelopetMottattIGodTroFormPanel';
 import AktsomhetFormPanel from './tilbakekrevingPeriodePaneler/aktsomhet/AktsomhetFormPanel';
-import TilbakekrevingTimelineData from '../felles/splittePerioder/TilbakekrevingTimelineData';
+import TilbakekrevingTimelineData from './splittePerioder/TilbakekrevingTimelineData';
 
 import styles from './tilbakekrevingPeriodeForm.less';
 
@@ -58,6 +56,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       erTrekk: PropTypes.bool.isRequired,
       belop: PropTypes.number.isRequired,
     })),
+    behandlingId: PropTypes.number.isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
+    beregnBelop: PropTypes.func.isRequired,
     ...formPropTypes,
   };
 
@@ -129,6 +130,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
       oppdaterSplittedePerioder,
       data,
       andelSomTilbakekreves,
+      behandlingId,
+      behandlingVersjon,
+      beregnBelop,
       ...formProps
     } = this.props;
     const { showModal } = this.state;
@@ -140,6 +144,9 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
           callbackBackward={setForrigePeriode}
           oppdaterSplittedePerioder={oppdaterSplittedePerioder}
           readOnly={readOnly}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          beregnBelop={beregnBelop}
         />
         <VerticalSpacer twentyPx />
         {reduserteBelop.map((belop) => (
@@ -312,27 +319,22 @@ const validate = (values, sarligGrunnTyper, data) => {
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
-  const vilkarResultatTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.VILKAR_RESULTAT)(initialState);
-  const aktsomhetTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.AKTSOMHET)(initialState);
+  const sarligGrunnTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.SARLIG_GRUNN];
+  const vilkarResultatTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.VILKAR_RESULTAT];
+  const aktsomhetTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.AKTSOMHET];
   const submitCallback = (values) => ownProps.oppdaterPeriode(values);
   const validateForm = (values) => validate(values, sarligGrunnTyper, ownProps.data);
   return (state, oProps) => {
-    const valgtVilkarResultatType = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, 'valgtVilkarResultatType');
-    const handletUaktsomhetGrad = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
+    const { behandlingId, behandlingVersjon } = oProps;
+    const sel = behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME, behandlingId, behandlingVersjon);
+    const valgtVilkarResultatType = sel(state, 'valgtVilkarResultatType');
+    const handletUaktsomhetGrad = sel(state, `${valgtVilkarResultatType}.handletUaktsomhetGrad`);
     return {
-      harGrunnerTilReduksjon: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`,
-      ),
-      andelSomTilbakekreves: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.andelSomTilbakekreves`,
-      ),
-      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(
-        state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`,
-      ),
-      erSerligGrunnAnnetValgt: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state,
-        `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
-      erBelopetIBehold: behandlingFormValueSelector(TILBAKEKREVING_PERIODE_FORM_NAME)(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
+      harGrunnerTilReduksjon: sel(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.harGrunnerTilReduksjon`),
+      andelSomTilbakekreves: sel(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.andelSomTilbakekreves`),
+      tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: sel(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr`),
+      erSerligGrunnAnnetValgt: sel(state, `${valgtVilkarResultatType}.${handletUaktsomhetGrad}.${sarligGrunn.ANNET}`),
+      erBelopetIBehold: sel(state, `${valgtVilkarResultatType}.erBelopetIBehold`),
       initialValues: oProps.periode,
       reduserteBelop: ownProps.data.redusertBeloper,
       onSubmit: submitCallback,
@@ -346,7 +348,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
+const TilbakekrevingPeriodeForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_PERIODE_FORM_NAME,
   enableReinitialize: true,
 })(TilbakekrevingPeriodeFormImpl)));

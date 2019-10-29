@@ -20,6 +20,9 @@ describe('<TilbakekrevingTimelineData>', () => {
       callbackBackward={sinon.spy()}
       readOnly={false}
       oppdaterSplittedePerioder={sinon.spy()}
+      behandlingId={1}
+      behandlingVersjon={1}
+      beregnBelop={() => undefined}
     />);
 
     expect(wrapper.find(PeriodeController)).to.have.length(1);

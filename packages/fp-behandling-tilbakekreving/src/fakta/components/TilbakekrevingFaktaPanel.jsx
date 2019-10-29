@@ -6,9 +6,9 @@ import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
-import fptilbakeApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
-import DataFetcherWithCacheTemp from 'behandlingTilbakekreving/src/DataFetcherWithCacheTemp';
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import fptilbakeApi from '../../data/tilbakekrevingBehandlingApi';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
+import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaTilbake';
 import { getAlleTilbakekrevingKodeverk, getFagsakYtelseType, getFagsakPerson } from '../../duckBehandlingTilbakekreving';
 

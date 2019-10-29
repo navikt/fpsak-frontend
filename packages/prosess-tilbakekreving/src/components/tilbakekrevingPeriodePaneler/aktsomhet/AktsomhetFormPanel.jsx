@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { FormSection } from 'redux-form';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Undertekst } from 'nav-frontend-typografi';
 
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 
-import Aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
+import Aktsomhet from '../../../kodeverk/aktsomhet';
 import AktsomhetGradFormPanel from './AktsomhetGradFormPanel';
 import { ANDELER, EGENDEFINERT } from './AktsomhetReduksjonAvBelopFormPanel';
 

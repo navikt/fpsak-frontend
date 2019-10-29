@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element } from 'nav-frontend-typografi';
@@ -9,9 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { EditedIcon, Image, FloatRight } from '@fpsak-frontend/shared-components';
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
-
-import { beregnBeløp } from 'behandlingTilbakekreving/src/behandlingsprosess/duckBpTilbake';
-import { getSelectedBehandlingId } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 
 import DelOppPeriodeModal from './DelOppPeriodeModal';
@@ -20,10 +15,11 @@ import styles from './periodeController.less';
 
 const isEdited = false;
 
-export class PeriodeControllerImpl extends Component {
+export class PeriodeController extends Component {
   static propTypes = {
     intl: PropTypes.shape().isRequired,
     behandlingId: PropTypes.number.isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
     beregnBelop: PropTypes.func.isRequired,
     oppdaterSplittedePerioder: PropTypes.func.isRequired,
     callbackForward: PropTypes.func.isRequired,
@@ -121,6 +117,8 @@ export class PeriodeControllerImpl extends Component {
       callbackBackward,
       periode,
       readOnly,
+      behandlingId,
+      behandlingVersjon,
     } = this.props;
 
     const { showDelPeriodeModal, finnesBelopMed0Verdi } = this.state;
@@ -152,6 +150,8 @@ export class PeriodeControllerImpl extends Component {
           {showDelPeriodeModal
           && (
             <DelOppPeriodeModal
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               cancelEvent={this.hideModal}
               showModal={showDelPeriodeModal}
               periodeData={periode}
@@ -171,16 +171,4 @@ export class PeriodeControllerImpl extends Component {
   }
 }
 
-const mapStateToPros = (state) => ({
-  behandlingId: getSelectedBehandlingId(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    beregnBelop: beregnBeløp,
-  }, dispatch),
-});
-
-const PeriodeController = connect(mapStateToPros, mapDispatchToProps)(injectIntl(PeriodeControllerImpl));
-
-export default PeriodeController;
+export default injectIntl(PeriodeController);

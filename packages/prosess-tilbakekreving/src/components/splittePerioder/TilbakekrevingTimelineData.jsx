@@ -11,6 +11,9 @@ export const TilbakekrevingTimelineData = ({
   callbackBackward,
   readOnly,
   oppdaterSplittedePerioder,
+  behandlingId,
+  behandlingVersjon,
+  beregnBelop,
 }) => (
   <Row>
     <Column xs="12">
@@ -20,6 +23,9 @@ export const TilbakekrevingTimelineData = ({
         periode={periode}
         readOnly={readOnly}
         oppdaterSplittedePerioder={oppdaterSplittedePerioder}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        beregnBelop={beregnBelop}
       />
       <PeriodeInformasjon
         feilutbetaling={periode.feilutbetaling}
@@ -37,6 +43,9 @@ TilbakekrevingTimelineData.propTypes = {
   callbackBackward: PropTypes.func.isRequired,
   oppdaterSplittedePerioder: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  beregnBelop: PropTypes.func.isRequired,
 };
 
 export default TilbakekrevingTimelineData;

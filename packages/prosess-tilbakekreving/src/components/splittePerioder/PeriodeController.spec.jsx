@@ -4,14 +4,15 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
-import { PeriodeControllerImpl } from './PeriodeController';
+import { PeriodeController } from './PeriodeController';
 
 
 describe('<PeriodeController>', () => {
   it('skal vise knapp for å dele opp perioden og knapper for å velge forrige eller neste periode', () => {
-    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeController
       intl={intlMock}
       behandlingId={1}
+      behandlingVersjon={1}
       beregnBelop={sinon.spy()}
       oppdaterSplittedePerioder={sinon.spy()}
       callbackForward={sinon.spy()}
@@ -28,9 +29,10 @@ describe('<PeriodeController>', () => {
   });
 
   it('skal ikke vise knapp for å dele opp perioder når readonly', () => {
-    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeController
       intl={intlMock}
       behandlingId={1}
+      behandlingVersjon={1}
       beregnBelop={sinon.spy()}
       oppdaterSplittedePerioder={sinon.spy()}
       callbackForward={sinon.spy()}
@@ -55,9 +57,10 @@ describe('<PeriodeController>', () => {
     const periode = {
       feilutbetaling: 1000,
     };
-    const wrapper = shallowWithIntl(<PeriodeControllerImpl
+    const wrapper = shallowWithIntl(<PeriodeController
       intl={intlMock}
       behandlingId={1}
+      behandlingVersjon={1}
       beregnBelop={beregnBelop}
       oppdaterSplittedePerioder={oppdaterSplittedePerioder}
       callbackForward={sinon.spy()}

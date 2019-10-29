@@ -11,7 +11,7 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
-import DataFetcherWithCacheTemp from 'behandlingTilbakekreving/src/DataFetcherWithCacheTemp';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 import { TilbakekrevingFaktaPanel } from './TilbakekrevingFaktaPanel';
 
 describe('TilbakekrevingFaktaPanel', () => {

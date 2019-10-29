@@ -10,12 +10,11 @@ import {
 import {
   InputField, RadioGroupField, RadioOption, SelectField, DecimalField,
 } from '@fpsak-frontend/form';
-
 import {
   formatCurrencyNoKr, minValue, maxValue, required,
 } from '@fpsak-frontend/utils';
 
-import aktsomhet from 'behandlingTilbakekreving/src/kodeverk/aktsomhet';
+import aktsomhet from '../../../kodeverk/aktsomhet';
 
 import styles from './aktsomhetReduksjonAvBelopFormPanel.less';
 

@@ -9,7 +9,7 @@ import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
+import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingTilbakekreving';
 import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
 import {
   getResolveProsessAksjonspunkterSuccess, resetBehandlingspunkter, resolveProsessAksjonspunkter,

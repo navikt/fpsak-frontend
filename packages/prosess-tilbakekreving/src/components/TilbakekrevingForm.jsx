@@ -9,32 +9,21 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { behandlingspunktCodes, getBehandlingFormPrefix, FaktaGruppe } from '@fpsak-frontend/fp-felles';
+import {
+  behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
+} from '@fpsak-frontend/fp-felles';
 import { omit } from '@fpsak-frontend/utils';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
-import {
-  behandlingFormTilbakekreving,
-  behandlingFormValueSelector,
-  getBehandlingFormValues,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingTilbakekreving/src/behandlingFormTilbakekreving';
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
-import { getFagsakPerson, getSelectedBehandlingId, getTilbakekrevingKodeverk } from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import TilbakekrevingTimelinePanel from '../felles/timeline/TilbakekrevingTimelinePanel';
+import TilbakekrevingTimelinePanel from './timeline/TilbakekrevingTimelinePanel';
 import TilbakekrevingPeriodeForm, { TILBAKEKREVING_PERIODE_FORM_NAME } from './TilbakekrevingPeriodeForm';
 import TilbakekrevingTidslinjeHjelpetekster from './TilbakekrevingTidslinjeHjelpetekster';
 
 const TILBAKEKREVING_FORM_NAME = 'TilbakekrevingForm';
-
-const tilbakekrevingAksjonspunkter = [aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING];
 
 const sortPeriods = (periode1, periode2) => new Date(periode1.fom) - new Date(periode2.fom);
 
@@ -187,7 +176,11 @@ export class TilbakekrevingFormImpl extends Component {
       merknaderFraBeslutter,
       vilkarsVurdertePerioder,
       dataForDetailForm,
-      kjonn,
+      navBrukerKjonn,
+      behandlingId,
+      behandlingVersjon,
+      alleKodeverk,
+      beregnBelop,
       ...formProps
     } = this.props;
     const {
@@ -224,7 +217,7 @@ export class TilbakekrevingFormImpl extends Component {
                   setPeriode={this.setPeriode}
                   toggleDetaljevindu={this.togglePeriode}
                   hjelpetekstKomponent={<TilbakekrevingTidslinjeHjelpetekster />}
-                  kjonn={kjonn}
+                  kjonn={navBrukerKjonn}
                 />
                 {valgtPeriode && (
                   <TilbakekrevingPeriodeForm
@@ -239,6 +232,10 @@ export class TilbakekrevingFormImpl extends Component {
                     skjulPeriode={this.togglePeriode}
                     oppdaterPeriode={this.oppdaterPeriode}
                     oppdaterSplittedePerioder={this.oppdaterSplittedePerioder}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    alleKodeverk={alleKodeverk}
+                    beregnBelop={beregnBelop}
                   />
                 )}
               </>
@@ -254,6 +251,8 @@ export class TilbakekrevingFormImpl extends Component {
             )}
             <BehandlingspunktSubmitButton
               formName={TILBAKEKREVING_FORM_NAME}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               isReadOnly={readOnly}
               isDirty={(isApOpen && valgtPeriode) || formProps.error ? false : undefined}
               isSubmittable={!isApOpen && !valgtPeriode && !readOnlySubmitButton && !formProps.error}
@@ -274,13 +273,17 @@ TilbakekrevingFormImpl.propTypes = {
   behandlingFormPrefix: PropTypes.string.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  kjonn: PropTypes.string.isRequired,
+  navBrukerKjonn: PropTypes.string.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
   antallPerioderMedAksjonspunkt: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool.isRequired,
   }).isRequired,
+  alleKodeverk: PropTypes.shape({}).isRequired,
+  beregnBelop: PropTypes.func.isRequired,
 };
 
 export const transformValues = (values, sarligGrunnTyper) => [{
@@ -301,8 +304,10 @@ const erIkkeLagret = (periode, lagredePerioder) => lagredePerioder
 
 
 export const slaSammenOriginaleOgLagredePeriode = createSelector([
-  behandlingSelectors.getBehandlingVilkarsvurderingsperioder, behandlingSelectors.getBehandlingVilkarsvurdering,
-  behandlingSelectors.getBehandlingVilkarsvurderingsRettsgebyr], (perioder, vilkarsvurdering, rettsgebyr) => {
+  (state, ownProps) => ownProps.perioder,
+  (state, ownProps) => ownProps.vilkarvurdering,
+  (state, ownProps) => ownProps.rettsgebyr,
+], (perioder, vilkarsvurdering, rettsgebyr) => {
   const totalbelop = perioder.reduce((acc, periode) => acc + periode.feilutbetaling, 0);
   const erTotalBelopUnder4Rettsgebyr = totalbelop < (rettsgebyr * 4);
   const lagredeVilkarsvurdertePerioder = vilkarsvurdering.vilkarsVurdertePerioder;
@@ -327,23 +332,26 @@ export const slaSammenOriginaleOgLagredePeriode = createSelector([
   };
 });
 
-export const buildInitialValues = createSelector([slaSammenOriginaleOgLagredePeriode, behandlingSelectors.getForeldelsePerioder],
-  (perioder, foreldelsePerioder) => ({
-    vilkarsVurdertePerioder: perioder.perioder.map((p) => ({
-      ...TilbakekrevingPeriodeForm.buildInitialValues(p, foreldelsePerioder),
-      fom: p.fom,
-      tom: p.tom,
-    })).sort(sortPeriods),
-  }));
+export const buildInitialValues = createSelector([
+  slaSammenOriginaleOgLagredePeriode,
+  (state, ownProps) => ownProps.perioderForeldelse],
+(perioder, foreldelsePerioder) => ({
+  vilkarsVurdertePerioder: perioder.map((p) => ({
+    ...TilbakekrevingPeriodeForm.buildInitialValues(p, foreldelsePerioder),
+    fom: p.fom,
+    tom: p.tom,
+  })).sort(sortPeriods),
+}));
 
 const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagredePeriode,
-  (state) => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')], (perioder, perioderFormState) => {
+  (state, ownProps) => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
+    'vilkarsVurdertePerioder')], (perioder, perioderFormState) => {
   if (!perioder || !perioderFormState) {
     return undefined;
   }
 
   return perioderFormState.map((periodeFormState) => {
-    const periode = finnOriginalPeriode(periodeFormState, perioder.perioder);
+    const periode = finnOriginalPeriode(periodeFormState, perioder);
     const erForeldet = periode.foreldelseVurderingType
       ? periode.foreldelseVurderingType.kode === foreldelseVurderingType.FORELDET : periode.foreldet;
     return {
@@ -360,23 +368,25 @@ const settOppPeriodeDataForDetailForm = createSelector([slaSammenOriginaleOgLagr
   });
 });
 
-const getAntallPerioderMedAksjonspunkt = createSelector([(state) => behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder')],
-  (perioder = []) => perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0));
+const getAntallPerioderMedAksjonspunkt = createSelector([(state, ownProps) => behandlingFormValueSelector(
+  TILBAKEKREVING_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon,
+)(state, 'vilkarsVurdertePerioder')],
+(perioder = []) => perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0));
 
-const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
-  const sarligGrunnTyper = getTilbakekrevingKodeverk(tilbakekrevingKodeverkTyper.SARLIG_GRUNN)(initialState);
-  const submitCallback = (values) => ownPropsStatic.submitCallback(transformValues(values, sarligGrunnTyper));
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const sarligGrunnTyper = initialOwnProps.alleKodeverk[tilbakekrevingKodeverkTyper.SARLIG_GRUNN];
+  const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, sarligGrunnTyper));
   return (state, ownProps) => {
-    const periodFormValues = getBehandlingFormValues(TILBAKEKREVING_PERIODE_FORM_NAME)(state) || {};
+    const periodFormValues = getBehandlingFormValues(TILBAKEKREVING_PERIODE_FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state) || {};
     return {
-      initialValues: buildInitialValues(state),
-      dataForDetailForm: settOppPeriodeDataForDetailForm(state),
-      vilkarsVurdertePerioder: behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME)(state, 'vilkarsVurdertePerioder'),
-      behandlingFormPrefix: getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state)),
-      kjonn: getFagsakPerson(state).erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN,
+      initialValues: buildInitialValues(state, ownProps),
+      dataForDetailForm: settOppPeriodeDataForDetailForm(state, ownProps),
+      vilkarsVurdertePerioder: behandlingFormValueSelector(TILBAKEKREVING_FORM_NAME, ownProps.behandlingId,
+        ownProps.behandlingVersjon)(state, 'vilkarsVurdertePerioder'),
+      behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
       readOnly: ownProps.readOnly || periodFormValues.erForeldet === true,
-      antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state),
-      merknaderFraBeslutter: behandlingSelectors.getMerknaderFraBeslutter(aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING)(state),
+      antallPerioderMedAksjonspunkt: getAntallPerioderMedAksjonspunkt(state, ownProps),
+      merknaderFraBeslutter: ownProps.alleMerknaderFraBeslutter[aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING],
       onSubmit: submitCallback,
     };
   };
@@ -414,11 +424,9 @@ const validateForm = (values) => {
   return errors;
 };
 
-const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingFormTilbakekreving({
+const TilbakekrevingForm = connect(mapStateToPropsFactory, mapDispatchToProps)(injectIntl(behandlingForm({
   form: TILBAKEKREVING_FORM_NAME,
   validate: validateForm,
 })(TilbakekrevingFormImpl)));
-
-TilbakekrevingForm.supports = (bp, apCodes) => bp === behandlingspunktCodes.TILBAKEKREVING || tilbakekrevingAksjonspunkter.some((ap) => apCodes.includes(ap));
 
 export default TilbakekrevingForm;
