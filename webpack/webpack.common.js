@@ -1,27 +1,13 @@
 'use strict';
 const path = require('path');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
-const APP_DIR = path.join(PACKAGES_DIR, 'fpsak/src');
+const APP_DIR = path.join(PACKAGES_DIR, 'sak-app/src');
 
 //TODO (TOR) Dette må delast opp og flyttast inn i kvar pakke.
 const config = {
 
   resolve: {
     alias: {
-      //Burde kun brukast av pakke fpsak
-      aktoer: path.join(APP_DIR, 'aktoer'),
-      app: path.join(APP_DIR, 'app'),
-      behandling: path.join(APP_DIR, 'behandling'),
-      behandlingmenu: path.join(APP_DIR, 'behandlingmenu'),
-      behandlingsupport: path.join(APP_DIR, 'behandlingsupport'),
-      data: path.join(APP_DIR, 'data'),
-      fagsak: path.join(APP_DIR, 'fagsak'),
-      fagsakprofile: path.join(APP_DIR, 'fagsakprofile'),
-      fagsakSearch: path.join(APP_DIR, 'fagsakSearch'),
-      kodeverk: path.join(APP_DIR, 'kodeverk'),
-      person: path.join(APP_DIR, 'person'),
-      tidslinje: path.join(APP_DIR, 'tidslinje'),
-
       //Andre pakker
       behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),
       behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
