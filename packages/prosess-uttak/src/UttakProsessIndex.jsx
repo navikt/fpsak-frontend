@@ -85,7 +85,7 @@ UttakProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  faktaArbeidsforhold: PropTypes.shape().isRequired,
+  faktaArbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   uttaksresultatPerioder: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

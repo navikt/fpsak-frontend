@@ -6,15 +6,117 @@ import sinon from 'sinon';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import AvregningPanel from './components/AvregningPanel';
-import AvregningProsessIndex from './AvregningProsessIndex';
+import UttakPanel from './components/UttakPanel';
+import UttakProsessIndex from './UttakProsessIndex';
 
-describe('<AvregningProsessIndex>', () => {
+describe('<UttakProsessIndex>', () => {
   const fagsak = {
     saksnummer: 123,
     ytelseType: {
       kode: fagsakYtelseType.FORELDREPENGER,
     },
+  };
+
+  const faktaArbeidsforhold = [
+    {
+      arbeidsgiver: {
+        identifikator: '910909088',
+        aktørId: null,
+        fødselsdato: null,
+        navn: 'BEDRIFT AS',
+        virksomhet: true,
+      },
+      arbeidType: {
+        kode: 'ORDINÆRT_ARBEID',
+        kodeverk: 'UTTAK_ARBEID_TYPE',
+      },
+    },
+  ];
+
+  const uttaksresultatPerioder = {
+    perioderSøker: [
+      {
+        fom: '2019-10-05',
+        tom: '2019-10-25',
+        aktiviteter: [
+          {
+            stønadskontoType: {
+              kode: 'FORELDREPENGER_FØR_FØDSEL',
+              kodeverk: 'STOENADSKONTOTYPE',
+            },
+            prosentArbeid: 0,
+            arbeidsforholdId: null,
+            eksternArbeidsforholdId: null,
+            arbeidsgiver: {
+              identifikator: '910909088',
+              aktørId: null,
+              fødselsdato: null,
+              navn: 'BEDRIFT AS',
+              virksomhet: true,
+            },
+            utbetalingsgrad: 100,
+            uttakArbeidType: {
+              kode: 'ORDINÆRT_ARBEID',
+              kodeverk: 'UTTAK_ARBEID_TYPE',
+            },
+            gradering: false,
+            trekkdagerDesimaler: 15,
+            trekkdager: null,
+          },
+        ],
+        periodeResultatType: {
+          kode: 'INNVILGET',
+          kodeverk: 'PERIODE_RESULTAT_TYPE',
+        },
+        begrunnelse: null,
+        periodeResultatÅrsak: {
+          kode: '2006',
+          navn: '§14-10: Innvilget foreldrepenger før fødsel',
+          kodeverk: 'INNVILGET_AARSAK',
+          gyldigFom: '2000-01-01',
+          gyldigTom: '9999-12-31',
+        },
+        manuellBehandlingÅrsak: {
+          kode: '-',
+          kodeverk: 'MANUELL_BEHANDLING_AARSAK',
+        },
+        graderingAvslagÅrsak: {
+          kode: '-',
+          navn: 'Ikke definert',
+          kodeverk: 'GRADERING_AVSLAG_AARSAK',
+          gyldigFom: '2000-01-01',
+          gyldigTom: '9999-12-31',
+        },
+        flerbarnsdager: false,
+        samtidigUttak: false,
+        samtidigUttaksprosent: null,
+        graderingInnvilget: false,
+        periodeType: {
+          kode: 'FORELDREPENGER_FØR_FØDSEL',
+          kodeverk: 'UTTAK_PERIODE_TYPE',
+        },
+        utsettelseType: {
+          kode: '-',
+          kodeverk: 'UTTAK_UTSETTELSE_TYPE',
+        },
+        oppholdÅrsak: {
+          kode: '-',
+          kodeverk: 'OPPHOLD_AARSAK_TYPE',
+        },
+        gradertAktivitet: null,
+        periodeResultatÅrsakLovhjemmel: {
+          fagsakYtelseType: {
+            FP: {
+              lovreferanse: '14-10',
+            },
+          },
+        },
+        graderingsAvslagÅrsakLovhjemmel: null,
+      },
+    ],
+    perioderAnnenpart: [],
+    annenForelderHarRett: true,
+    aleneomsorg: false,
   };
 
   const behandling = {
@@ -33,7 +135,7 @@ describe('<AvregningProsessIndex>', () => {
   }];
 
   it('skal rendre komponent korrekt', () => {
-    const wrapper = shallow(<AvregningProsessIndex
+    const wrapper = shallow(<UttakProsessIndex
       fagsak={fagsak}
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
@@ -43,8 +145,21 @@ describe('<AvregningProsessIndex>', () => {
       apCodes={[]}
       isApOpen
       previewCallback={sinon.spy()}
+      uttakStonadskontoer={{}}
       featureToggles={{}}
+      soknad={{}}
+      familiehendelse={{}}
+      faktaArbeidsforhold={faktaArbeidsforhold}
+      uttaksresultatPerioder={uttaksresultatPerioder}
+      personopplysninger={{}}
+      alleKodeverk={{}}
+      employeeHasAccess
+      simuleringResultat={{}}
+      tempUpdateStonadskontoer={sinon.spy()}
+      tilbakekrevingvalg={{}}
+      uttakPeriodeGrense={{}}
+      ytelsefordeling={{}}
     />);
-    expect(wrapper.find(AvregningPanel)).has.length(1);
+    expect(wrapper.find(UttakPanel)).has.length(1);
   });
 });

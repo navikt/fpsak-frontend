@@ -35,6 +35,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       kanOverstyreAccess={{ isEnabled: false }}
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      tempUpdate={sinon.spy()}
       alleKodeverk={{}}
       behandlingspunktVilkar={[]}
     />);
@@ -71,6 +72,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       kanOverstyreAccess={{ isEnabled: false }}
       behandlingspunktAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      tempUpdate={sinon.spy()}
       alleKodeverk={{}}
       behandlingspunktVilkar={[]}
     />);
