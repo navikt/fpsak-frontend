@@ -109,13 +109,20 @@ describe('<UttakProsessIndex>', () => {
     sprakkode: {
       kode: 'NO',
     },
+    type: {
+      kode: '1',
+      kodeverk: '1',
+    },
+    behandlingsresultat: {
+      skjaeringstidspunktForeldrepenger: '2019-01-01',
+    },
   };
 
   const aksjonspunkter = [{
     definisjon: {
       kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
     },
-    begrunnelse: 'test',
+    status: {},
   }];
 
   it('skal rendre komponent korrekt', () => {
