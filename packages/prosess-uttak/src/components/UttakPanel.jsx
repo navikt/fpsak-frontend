@@ -7,10 +7,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
   AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -57,7 +54,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
       if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
         texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
       } else {
-        texts.push(<FormattedMessage key="aksjonspunktTekst" id={`UttakPanel.Aksjonspunkt.${ap.definisjon.kode}`} />);
+        texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
       }
     });
   }
@@ -371,6 +368,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
 };
 
 const mapStateToPropsFactory = (_initialState, ownProps) => {
+  const { behandlingId, behandlingVersjon } = ownProps;
   const validate = (values) => validateUttakPanelForm(values);
   const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
   const initialValues = buildInitialValues(ownProps);
@@ -379,11 +377,11 @@ const mapStateToPropsFactory = (_initialState, ownProps) => {
     validate,
     onSubmit,
     initialValues,
-    manuellOverstyring: behandlingFormValueSelector(formName)(state, 'manuellOverstyring'),
+    manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
   });
 };
 
-const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
   enableReinitialize: false,
 })(UttakPanelImpl)));
