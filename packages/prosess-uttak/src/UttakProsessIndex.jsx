@@ -34,8 +34,6 @@ const UttakProsessIndex = ({
   tempUpdateStonadskontoer,
   apCodes,
   isApOpen,
-  previewCallback,
-  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     <UttakPanel
@@ -44,6 +42,7 @@ const UttakProsessIndex = ({
       behandlingVersjon={behandling.versjon}
       behandlingType={behandling.type}
       behandlingsresultat={behandling.behandlingsresultat}
+      behandlingStatus={behandling.status}
       sprakkode={behandling.sprakkode}
       uttaksresultat={uttaksresultatPerioder}
       stonadskonto={uttakStonadskontoer}
@@ -55,14 +54,12 @@ const UttakProsessIndex = ({
       uttakPeriodeGrense={uttakPeriodeGrense}
       alleKodeverk={alleKodeverk}
       ytelsefordeling={ytelsefordeling}
-      featureToggles={featureToggles}
       tempUpdateStonadskontoer={tempUpdateStonadskontoer}
       submitCallback={submitCallback}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       apCodes={apCodes}
       isApOpen={isApOpen}
-      previewCallback={previewCallback}
     />
   </RawIntlProvider>
 );
@@ -74,13 +71,11 @@ UttakProsessIndex.propTypes = {
   uttakStonadskontoer: PropTypes.shape().isRequired,
   soknad: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   uttaksresultatPerioder: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  featureToggles: PropTypes.shape().isRequired,
   familiehendelse: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
   uttakPeriodeGrense: PropTypes.shape().isRequired,

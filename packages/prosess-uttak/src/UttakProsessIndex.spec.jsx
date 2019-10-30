@@ -116,13 +116,20 @@ describe('<UttakProsessIndex>', () => {
     behandlingsresultat: {
       skjaeringstidspunktForeldrepenger: '2019-01-01',
     },
+    status: {
+      kode: '1',
+      kodeverk: '1',
+    },
   };
 
   const aksjonspunkter = [{
     definisjon: {
       kode: aksjonspunktCodes.VURDER_FEILUTBETALING,
     },
-    status: {},
+    status: {
+      kode: '1',
+      kodeverk: '1',
+    },
   }];
 
   it('skal rendre komponent korrekt', () => {
@@ -135,9 +142,7 @@ describe('<UttakProsessIndex>', () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen
-      previewCallback={sinon.spy()}
       uttakStonadskontoer={{}}
-      featureToggles={{}}
       soknad={{}}
       familiehendelse={{}}
       uttaksresultatPerioder={uttaksresultatPerioder}

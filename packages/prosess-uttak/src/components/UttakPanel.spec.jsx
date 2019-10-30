@@ -131,6 +131,7 @@ describe('<UttakPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       behandlingsresultat={{}}
+      behandlingStatus={{}}
       employeeHasAccess
       fagsak={{}}
       tempUpdateStonadskontoer={sinon.spy()}
@@ -178,6 +179,7 @@ describe('<UttakPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       behandlingsresultat={{}}
+      behandlingStatus={{}}
       employeeHasAccess
       fagsak={{}}
       tempUpdateStonadskontoer={sinon.spy()}
@@ -185,7 +187,8 @@ describe('<UttakPanel>', () => {
     const uttak = wrapper.find(Uttak);
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
-    expect(formattedMessage).has.length(3);
+    console.log(formattedMessage.debug()); // eslint-disable-line no-console
+    expect(formattedMessage).has.length(2);
     const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
     expect(aksjonspunktHelpText).has.length(1);
 

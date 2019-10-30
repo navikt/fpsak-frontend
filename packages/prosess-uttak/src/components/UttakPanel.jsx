@@ -38,7 +38,7 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
   };
 
   const texts = [];
-  const [helpText] = uttaksresultat.perioderSøker.filter((p) => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
+  const helpText = uttaksresultat.perioderSøker.find((p) => (p.periodeResultatType.kode === periodeResultatType.MANUELL_BEHANDLING));
 
   const overstyrApHelpTextOpen = aksjonspunkter.length === 1
     && aksjonspunkter[0].definisjon.kode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
@@ -49,13 +49,11 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     && aksjonspunkter[0].status.kode === 'UTFO';
 
 
-  if (helptTextAksjonspunkter) {
-    helptTextAksjonspunkter.forEach((ap) => {
-      if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
-        texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
-      }
-    });
-  }
+  helptTextAksjonspunkter.forEach((ap) => {
+    if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
+      texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
+    }
+  });
 
   if (helpText) {
     texts.push(<FormattedMessage key="generellTekst" id="UttakPanel.Aksjonspunkt.Generell" />);
@@ -84,6 +82,7 @@ export const UttakPanelImpl = ({
   ytelsefordeling,
   behandlingId,
   behandlingType,
+  behandlingStatus,
   alleKodeverk,
   behandlingVersjon,
   employeeHasAccess,
@@ -126,6 +125,7 @@ export const UttakPanelImpl = ({
               behandlingId={behandlingId}
               behandlingType={behandlingType}
               behandlingVersjon={behandlingVersjon}
+              behandlingStatus={behandlingStatus}
               fagsak={fagsak}
               alleKodeverk={alleKodeverk}
               readOnly={readOnly}
@@ -139,7 +139,7 @@ export const UttakPanelImpl = ({
               fodselsdatoer={soknad.fodselsdatoer}
               termindato={soknad.termindato}
               adopsjonFodelsedatoer={soknad.adopsjonFodelsedatoer}
-              soknadType={soknad.soknadType.kode}
+              soknadsType={soknad.soknadType.kode}
               omsorgsovertakelseDato={soknad.omsorgsovertakelseDato}
               tempUpdateStonadskontoer={tempUpdateStonadskontoer}
             />
@@ -165,6 +165,7 @@ UttakPanelImpl.propTypes = {
   ytelsefordeling: PropTypes.shape().isRequired,
   behandlingType: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
+  behandlingStatus: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   fagsak: PropTypes.shape().isRequired,
