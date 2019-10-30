@@ -12,17 +12,6 @@
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
 		"paths": {
-			"app/*": ["fpsak/src/app/*"],
-			"aktoer/*": ["fpsak/src/aktoer/*"],
-			"behandling/*": ["fpsak/src/behandling/*"],
-			"behandlingmenu/*": ["fpsak/src/behandlingmenu/*"],
-			"behandlingsupport/*": ["fpsak/src/behandlingsupport/*"],
-			"fagsak/*": ["fpsak/src/fagsak/*"],
-			"fagsakSearch/*": ["fpsak/src/fagsakSearch/*"],
-			"person/*": ["fpsak/src/person/*"],
-			"fagsakprofile/*": ["fpsak/src/fagsakprofile/*"],
-			"kodeverk/*": ["fpsak/src/kodeverk/*"],
-			"data/*": ["fpsak/src/data/*"],
 			"behandlingForstegangOgRevurdering/*": ["fp-behandling-forstegang-og-revurdering/src/*"],
 			"behandlingTilbakekreving/*": ["fp-behandling-tilbakekreving/src/*"],
 			"behandlingInnsyn/*": ["fp-behandling-innsyn/src/*"],
@@ -33,8 +22,7 @@
 	},
 	"include": [
 		"packages/rest-api",
-		"packages/rest-api-redux",
-		"packages/error-api-redux"
+		"packages/rest-api-redux"
 	],
 
 }

@@ -32,6 +32,7 @@ const ErrorPageWrapper = ({ children, titleCode }) => (
     </div>
   </RawIntlProvider>
 );
+
 ErrorPageWrapper.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
@@ -39,7 +40,9 @@ ErrorPageWrapper.propTypes = {
   ]).isRequired,
   titleCode: PropTypes.string,
 };
+
 ErrorPageWrapper.defaultProps = {
   titleCode: 'GenericErrorPage.Header',
 };
+
 export default ErrorPageWrapper;

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { Header } from '@fpsak-frontend/dekorator';
+import { Header } from '@fpsak-frontend/sak-dekorator';
 
 import Dekorator from './Dekorator';
 

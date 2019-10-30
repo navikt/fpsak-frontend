@@ -8,7 +8,7 @@ import { captureException, configureScope, withScope } from '@sentry/browser';
 
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import EventType from '@fpsak-frontend/rest-api/src/requestApi/eventType';
-import { ForbiddenPage, UnauthorizedPage } from '@fpsak-frontend/feilsider';
+import { ForbiddenPage, UnauthorizedPage } from '@fpsak-frontend/sak-feilsider';
 import { parseQueryString } from '@fpsak-frontend/utils';
 
 import AppConfigResolver from './AppConfigResolver';
