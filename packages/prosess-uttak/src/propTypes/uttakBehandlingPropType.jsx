@@ -7,6 +7,7 @@ const uttakBehandlingPropType = PropTypes.shape({
   versjon: PropTypes.number.isRequired,
   sprakkode: kodeverkObjektPropType.isRequired,
   type: kodeverkObjektPropType.isRequired,
+  status: kodeverkObjektPropType.isRequired,
   behandlingsresultat: PropTypes.shape({
     skjaeringstidspunktForeldrepenger: PropTypes.string.isRequired,
   }).isRequired,

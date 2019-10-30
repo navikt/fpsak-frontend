@@ -4,7 +4,7 @@ import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 const uttakAksjonspunkterPropType = PropTypes.shape({
   definisjon: kodeverkObjektPropType.isRequired,
-  status: PropTypes.shape().isRequired,
+  status: kodeverkObjektPropType.isRequired,
 });
 
 export default uttakAksjonspunkterPropType;

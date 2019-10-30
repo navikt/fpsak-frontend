@@ -177,7 +177,6 @@ export class UttakTimeLineData extends Component {
       behandlingId,
       behandlingVersjon,
       behandlingsresultat,
-      formName,
       intl,
       isApOpen,
       readOnly,
@@ -248,7 +247,6 @@ export class UttakTimeLineData extends Component {
           selectedItemData={selectedItemData}
           readOnly={readOnly}
           isApOpen={isApOpen}
-          formName={formName}
           harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
           alleKodeverk={alleKodeverk}
           behandlingId={behandlingId}

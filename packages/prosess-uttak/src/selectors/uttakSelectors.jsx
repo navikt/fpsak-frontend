@@ -2,7 +2,6 @@ import { createSelector } from 'reselect';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import periodeResultatType from '@fpsak-frontend/kodeverk/src/periodeResultatType';
@@ -11,6 +10,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   calcDays, calcDaysAndWeeks, DDMMYY_DATE_FORMAT,
 } from '@fpsak-frontend/utils';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
@@ -154,7 +154,7 @@ export const getFodselTerminDato = createSelector(
 
 export const addClassNameGroupIdToPerioderHovedsoker = createSelector(
   [lagUttakMedOpphold, (_state, props) => props.uttaksresultat,
-    (_state, props) => props.intl, behandlingSelectors.getBehandlingStatus, (_state, props) => props.alleKodeverk],
+    (_state, props) => props.intl, (_state, props) => props.behandlingStatus, (_state, props) => props.alleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, true,
   ),
@@ -162,7 +162,7 @@ export const addClassNameGroupIdToPerioderHovedsoker = createSelector(
 
 export const addClassNameGroupIdToPerioderAnnenForelder = createSelector(
   [lagUttakMedOpphold, (_state, props) => props.uttaksresultat,
-    (_state, props) => props.intl, behandlingSelectors.getBehandlingStatus, (_state, props) => props.alleKodeverk],
+    (_state, props) => props.intl, (_state, props) => props.behandlingStatus, (_state, props) => props.alleKodeverk],
   (hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk) => addClassNameGroupIdToPerioder(
     hovedsokerPerioder, uttakResultatPerioder, intl, bStatus, alleKodeverk, false,
   ),

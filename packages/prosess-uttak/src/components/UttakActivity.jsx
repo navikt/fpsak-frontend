@@ -473,7 +473,7 @@ const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const {
-    behandlingVersjon, behandlingId, formName, behandlingsresultat,
+    behandlingVersjon, behandlingId, behandlingsresultat,
   } = initialOwnProps;
   const avslagAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.UTTAK_AVSLAG_ARSAK];
   const innvilgelseAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.INNVILGET_AARSAK];
@@ -492,9 +492,9 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   ));
 
   return (state, ownProps) => {
-    const erOppfylt = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erOppfylt');
-    const begrunnelse = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'begrunnelse');
-    const arsak = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
+    const erOppfylt = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'erOppfylt');
+    const begrunnelse = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'begrunnelse');
+    const arsak = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
     const hasValidationError = erOppfylt === undefined || !begrunnelse || !arsak;
     return {
       hasValidationError,
@@ -510,9 +510,9 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       initialValues: buildInitialValues(ownProps),
       avslagAarsakKoder: avslagAarsaker,
       innvilgelseAarsakKoder: innvilgelseAarsaker,
-      graderingInnvilget: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'graderingInnvilget'),
-      erSamtidigUttak: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'samtidigUttak'),
-      samtidigUttaksprosent: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'samtidigUttaksprosent'),
+      graderingInnvilget: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'graderingInnvilget'),
+      erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttak'),
+      samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttaksprosent'),
       starttidspunktForeldrepenger: behandlingsresultat.skjaeringstidspunktForeldrepenger,
     };
   };
