@@ -2,7 +2,7 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history';
 
-import configureStore from '../../fpsak/src/configureStore';
+import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
 
 const history = createBrowserHistory({
   basename: '/fpsak/',

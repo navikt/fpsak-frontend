@@ -3,8 +3,8 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import behandlingOrchestrator from 'behandling/BehandlingOrchestrator';
-import fpsakApi, { reduxRestApi } from 'data/fpsakApi';
+import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
+import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
   behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel, updateBehandlingsupportInfo,

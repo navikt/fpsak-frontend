@@ -1,7 +1,7 @@
 # dekorator
 
 ```
-yarn add @fpsak-frontend/dekorator
+yarn add @fpsak-frontend/sak-dekorator
 ```
 
 ### Header

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { createSelector } from 'reselect';
 
-import { Header } from '@fpsak-frontend/dekorator';
+import { Header } from '@fpsak-frontend/sak-dekorator';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
