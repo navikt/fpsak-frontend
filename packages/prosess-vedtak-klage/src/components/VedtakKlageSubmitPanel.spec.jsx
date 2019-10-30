@@ -38,7 +38,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
     expect(wrapper.find('FormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
@@ -61,7 +61,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
   });
@@ -78,7 +78,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
     expect(hovedknapp.prop('disabled')).is.true;
 
     const a = wrapper.find('a');

@@ -24,6 +24,7 @@ describe('<BehandlingspunktKlageInfoPanel>', () => {
       apCodes={[aksjonspunktCodes.BEHANDLE_KLAGE_NFP]}
       readOnlySubmitButton={false}
       featureToggleFormkrav
+      behandlingspunktAksjonspunkter={[]}
     />);
 
     expect(wrapper.find(BehandleKlageFormNfp)).to.have.length(1);
