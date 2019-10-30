@@ -4,24 +4,30 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import classnames from 'classnames/bind';
 
+import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
+import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
+import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 
-import fptilbakeApi from 'behandlingTilbakekreving/src/data/tilbakekrevingBehandlingApi';
-import tilbakekrevingAksjonspunktCodes from 'behandlingTilbakekreving/src/kodeverk/tilbakekrevingAksjonspunktCodes';
-import DataFetcherWithCacheTemp from 'behandlingTilbakekreving/src/DataFetcherWithCacheTemp';
+import { beregnBeløp } from '../duckBpTilbake';
+import fptilbakeApi from '../../data/tilbakekrevingBehandlingApi';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 import {
   fetchPreviewVedtaksbrev as fetchPreviewVedtaksbrevActionCreator,
   getAlleTilbakekrevingKodeverk,
-} from 'behandlingTilbakekreving/src/duckBehandlingTilbakekreving';
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+  getFagsakPerson,
+} from '../../duckBehandlingTilbakekreving';
+import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import behandlingsprosessSelectors from '../selectors/behandlingsprosessTilbakeSelectors';
-import ForeldelseForm from './foreldelse/ForeldelseForm';
-import TilbakekrevingForm from './tilbakekreving/TilbakekrevingForm';
 
 import styles from './tilbakekrevingBehandlingspunktInfoPanel.less';
 
 const classNames = classnames.bind(styles);
 
+const foreldelseData = [fptilbakeApi.BEHANDLING, fptilbakeApi.PERIODER_FORELDELSE];
+const tilbakekrevingData = [fptilbakeApi.BEHANDLING, fptilbakeApi.PERIODER_FORELDELSE, fptilbakeApi.VILKARVURDERINGSPERIODER, fptilbakeApi.VILKARVURDERING];
 const vedtakData = [fptilbakeApi.BEHANDLING, fptilbakeApi.VEDTAKSBREV, fptilbakeApi.BEREGNINGSRESULTAT];
 
 /*
@@ -41,28 +47,54 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
   isBehandlingHenlagt,
   alleKodeverk,
   fetchPreviewVedtaksbrev,
+  navBrukerKjonn,
+  alleMerknaderFraBeslutter,
+  beregnBelop,
 }) => (
   <div className={classNames('behandlingsPunkt', { statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    {ForeldelseForm.supports(selectedBehandlingspunkt, apCodes) && (
-    <ForeldelseForm
-      submitCallback={submitCallback}
-      apCodes={apCodes}
-      readOnly={readOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={foreldelseData}
+      showComponent={selectedBehandlingspunkt === behandlingspunktCodes.FORELDELSE || apCodes.includes(aksjonspunktCodesTilbakekreving.VURDER_FORELDELSE)}
+      render={(props) => (
+        <ForeldelseProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          apCodes={apCodes}
+          readOnlySubmitButton={readOnlySubmitButton}
+          navBrukerKjonn={navBrukerKjonn}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          alleKodeverk={alleKodeverk}
+          beregnBelop={beregnBelop}
+          {...props}
+        />
+      )}
     />
-    )}
-    {TilbakekrevingForm.supports(selectedBehandlingspunkt, apCodes) && (
-    <TilbakekrevingForm
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
+
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={tilbakekrevingData}
+      showComponent={selectedBehandlingspunkt === behandlingspunktCodes.TILBAKEKREVING
+        || apCodes.includes(aksjonspunktCodesTilbakekreving.VURDER_TILBAKEKREVING)}
+      render={(props) => (
+        <TilbakekrevingProsessIndex
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          apCodes={apCodes}
+          readOnlySubmitButton={readOnlySubmitButton}
+          navBrukerKjonn={navBrukerKjonn}
+          alleKodeverk={alleKodeverk}
+          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+          beregnBelop={beregnBelop}
+          {...props}
+        />
+      )}
     />
-    )}
 
     <DataFetcherWithCacheTemp
       behandlingVersjon={1}
       data={vedtakData}
-      showComponent={isBehandlingHenlagt || apCodes.some((ap) => ap === tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK)}
+      showComponent={isBehandlingHenlagt || apCodes.some((ap) => ap === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK)}
       render={(props) => (
         <VedtakTilbakekrevingProsessIndex
           submitCallback={submitCallback}
@@ -70,7 +102,7 @@ export const TilbakekrevingBehandlingspunktInfoPanel = ({
           isBehandlingHenlagt={isBehandlingHenlagt}
           alleKodeverk={alleKodeverk}
           fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-          aksjonspunktKodeForeslaVedtak={tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK}
+          aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
           {...props}
         />
       )}
@@ -89,6 +121,9 @@ TilbakekrevingBehandlingspunktInfoPanel.propTypes = {
   isBehandlingHenlagt: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
+  navBrukerKjonn: PropTypes.string.isRequired,
+  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  beregnBelop: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -99,12 +134,15 @@ const mapStateToProps = (state) => ({
   apCodes: behandlingsprosessSelectors.getBehandlingspunktAksjonspunkterCodes(state),
   isBehandlingHenlagt: behandlingSelectors.getBehandlingHenlagt(state),
   alleKodeverk: getAlleTilbakekrevingKodeverk(state),
+  navBrukerKjonn: getFagsakPerson(state).erKvinne ? NavBrukerKjonn.KVINNE : NavBrukerKjonn.MANN,
+  alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
 });
 
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     fetchPreviewVedtaksbrev: fetchPreviewVedtaksbrevActionCreator,
+    beregnBelop: beregnBeløp,
   }, dispatch),
 });
 

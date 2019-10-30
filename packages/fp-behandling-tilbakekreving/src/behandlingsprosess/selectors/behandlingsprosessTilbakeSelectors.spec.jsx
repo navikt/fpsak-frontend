@@ -5,8 +5,8 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import as from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 import { getBehandlingspunkterProps } from './behandlingsprosessTilbakeSelectors';
 

@@ -40,8 +40,8 @@
   "Behandlingspunkt.ResultatKlage": "Resultat",
   "Behandlingspunkt.AnkeResultat": "Resultat",
   "Behandlingspunkt.Avregning": "Simulering",
-  "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
   "Behandlingspunkt.Foreldelse": "Foreldelse",
+  "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
 
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
@@ -60,12 +60,6 @@
   "BegrunnelsePanel.readOnly": "Begrunnelse",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
-
-  "Foreldelse.Vurdering": "Vurdering",
-  "Foreldelse.Foreldelsesloven": "Foreldelsesloven §§ 2 og 3",
-  "Foreldelse.AutomatiskVurdert": "Automatisk vurdert",
-  "Foreldelse.RadioGroup.Foreldet": "Vurder om perioden er foreldet",
-  "Foreldelse.AksjonspunktHelpText.5003": "Perioden før {dato} kan være foreldet. Del opp perioden ved behov og fastsett foreldelse",
 
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
@@ -120,22 +114,6 @@
   "ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
 
-  "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
-  "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
-  "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
-  "FeilutbetalingInfoPanel.Årsaker": "Årsak(er) til revurdering",
-  "FeilutbetalingInfoPanel.DatoForRevurdering": "Dato for revurderingsvedtak",
-  "FeilutbetalingInfoPanel.Konsekvens": "Konsekvens",
-  "FeilutbetalingInfoPanel.Tilbakekrevingsvalg": "Tilbakekrevingsvalg",
-  "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
-  "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
-  "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
-  "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varslet beløp",
-  "FeilutbetalingInfoPanel.Period": "Period",
-  "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
-  "FeilutbetalingInfoPanel.Beløp": "Feilutbetalt beløp",
-  "FeilutbetalingInfoPanel.Resultat": "Resultat",
-  "FeilutbetalingInfoPanel.Begrunnelse": "Begrunn endringene",
   "Header.Foreldrepenger": "Foreldrepenger, engangsstønad og svangerskapspenger",
   "Header.LinkToMainPage": "NAV, forsiden",
   "Header.Rettskilde": "Rettskildene",
@@ -201,10 +179,6 @@
   "Historikk.Omsorg.ApplicationInformation": "Manuell kontroll av om søker har omsorg",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
-
-  "TilbakekrevingTimeline.ImageText": "Personinformasjon",
-  "TilbakekrevingTimeline.Woman": "Kvinne",
-  "TilbakekrevingTimeline.Man": "Mann",
 
   "Historikk.Tilleggsopplysninger": "Tilleggsopplysninger",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
@@ -1195,61 +1169,6 @@
   "SykdomsperiodeFieldArray.LeggTilPeriode": "Legg til periode",
   "OkAvbrytModal.Ok": "OK",
   "OkAvbrytModal.Avbryt": "Avbryt",
-  
-  "AktsomhetGradForsettFormPanel.Andel": "Andel som skal tilbakekreves",
-  "AktsomhetGradForsettFormPanel.Renter": "Det legges til 10% renter",
-
-  "AktsomhetReduksjonAvBelopFormPanel.AngiAndelSomTilbakekreves": "Angi andel som skal tilbakekreves",
-  "AktsomhetReduksjonAvBelopFormPanel.andelSomTilbakekreves": "Andel som skal tilbakekreves",
-  "AktsomhetReduksjonAvBelopFormPanel.SkalTilleggesRenter": "Skal det tillegges renter?",
-  "AktsomhetReduksjonAvBelopFormPanel.BelopSomSkalTilbakekreves": "Beløp som skal tilbakekreves",
-  "AktsomhetReduksjonAvBelopFormPanel.AngiBelopSomSkalTilbakekreves": "Angi beløp som skal tilbakekreves",
-  "AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon": "Skal særlige grunner gi reduksjon av beløpet?",
-  "AktsomhetReduksjonAvBelopFormPanel.Nei": "Nei",
-  "AktsomhetReduksjonAvBelopFormPanel.Ja": "Ja",
-
-  "AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt": "Når 6. ledd anvendes må alle perioder behandles likt",
-  "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",
-  "AktsomhetGradUaktsomhetFormPanel.Ja": "Ja",
-  "AktsomhetGradUaktsomhetFormPanel.Tilbakekrev": "Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?",
-
-  "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
-
-  "TilbakekrevingForm.AksjonspunktHjelpetekst": "Fastsett tilbakekreving etter §22-15. Del opp perioden ved behov for ulik vurdering",
-
-  "TilbakekrevingPeriodeForm.VilkarForTilbakekreving": "Vilkårene for tilbakekreving",
-  "TilbakekrevingPeriodeForm.oppfylt": "Er vilkårene for tilbakekreving oppfylt?",
-  "TilbakekrevingPeriodeForm.TotalbelopetUnder4Rettsgebyr": "Totalbeløpet er under 4 rettsgebyr. Dersom 6.ledd skal anvendes for å frafalle tilbakekrevingen, må denne anvendes likt på alle periodene.",
-  "TilbakekrevingPeriodeForm.Oppdater": "Oppdater",
-  "TilbakekrevingPeriodeForm.Avbryt": "Avbryt",
-  "TilbakekrevingPeriodeForm.Vurdering": "Vurdering",
-  "TilbakekrevingPeriodeForm.MaVelgeSarligGrunn": "Du må velge minst en Særlig grunn",
-  "TilbakekrevingPeriodeForm.BelopKanIkkeVereStorreEnnFeilutbetalingen": "Beløp kan ikke være større enn feilutbetalingen",
-  "TilbakekrevingPeriodeForm.BelopMaVereMindreEnnFeilutbetalingen": "Beløp må være mindre enn feilutbetalingen",
-  "TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av etterbetaling innen samme periode.",
-  "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
-  "TilbakekrevingPeriodeForm.Aktsomhet": "Aktsomhet",
-  "TilbakekrevingPeriodeForm.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
-
-  "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
-
-  "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",
-  "TilbakekrevingAktivitetTabell.FeilutbetaltBelop": "Feilutbetalt beløp",
-
-  "ForeldetPanel.Vurdering": "Varsel",
-  "ForeldetPanel.VurderOmPeriodenErForeldet": "Vurder om perioden er foreldet",
-  "ForeldetPanel.PeriodenErForeldet": "Perioden er foreldet",
-
-  "AdvarselModal.Ok": "OK",
-
-  "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
-
-  "BelopetMottattIGodTroFormPanel.Vurdering": "Vurdering",
-  "BelopetMottattIGodTroFormPanel.BelopetIBehold": "Er beløpet i behold?",
-  "BelopetMottattIGodTroFormPanel.Ja": "Ja",
-  "BelopetMottattIGodTroFormPanel.Nei": "Nei",
-  "BelopetMottattIGodTroFormPanel.AngiBelop": "Angi beløp som skal tilbakekreves",
-  "BelopetMottattIGodTroFormPanel.IngenTilbakekreving": "Ingen tilbakekreving",
 
   "TilretteleggingTable.IngenTilretteleggingDatoer": "Ingen tilretteleggingsdatoer er spesifisert",
   "TilretteleggingTable.NodvendigTilrettelegging": "Arbeidsgiver oppgir at nødvendig tilrettelegging",

@@ -4,13 +4,17 @@ import { connect } from 'react-redux';
 
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { PersonIndex } from '@fpsak-frontend/person-info';
+import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
-import behandlingSelectors from 'behandlingTilbakekreving/src/selectors/tilbakekrevingBehandlingSelectors';
+import fptilbakeApi from '../../data/tilbakekrevingBehandlingApi';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
+import behandlingSelectors from '../../selectors/tilbakekrevingBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaTilbake';
-import { getFagsakPerson } from '../../duckBehandlingTilbakekreving';
-import FeilutbetalingInfoPanel from './feilutbetaling/FeilutbetalingInfoPanel';
+import { getAlleTilbakekrevingKodeverk, getFagsakYtelseType, getFagsakPerson } from '../../duckBehandlingTilbakekreving';
 
 import styles from './tilbakekrevingFaktaPanel.less';
+
+const feilutbetalingData = [fptilbakeApi.BEHANDLING, fptilbakeApi.FEILUTBETALING_FAKTA, fptilbakeApi.FEILUTBETALING_AARSAK];
 
 /**
  * TilbakekrevingFaktaPanel
@@ -25,22 +29,38 @@ export const TilbakekrevingFaktaPanel = ({
   toggleInfoPanelCallback,
   shouldOpenDefaultInfoPanels,
   readOnly,
-  feilutbetaling,
   fagsakPerson,
+  alleMerknaderFraBeslutter,
+  ytelseTypeKode,
+  alleKodeverk,
 }) => (
   <>
     <div className={styles.personContainer}>
       <PersonIndex medPanel person={fagsakPerson} />
-      {feilutbetaling && (
-        <FeilutbetalingInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          submitCallback={submitCallback}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          readOnly={readOnly}
-        />
-      )}
+      <DataFetcherWithCacheTemp
+        behandlingVersjon={1}
+        data={feilutbetalingData}
+        render={(dataProps) => {
+          if (dataProps.feilutbetalingFakta) {
+            return (
+              <FeilutbetalingFaktaIndex
+                aksjonspunkter={aksjonspunkter}
+                submitCallback={submitCallback}
+                openInfoPanels={openInfoPanels}
+                toggleInfoPanelCallback={toggleInfoPanelCallback}
+                shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+                readOnly={readOnly}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                alleKodeverk={alleKodeverk}
+                behandling={dataProps.behandling}
+                feilutbetalingFakta={dataProps.feilutbetalingFakta}
+                feilutbetalingAarsak={dataProps.feilutbetalingAarsak.find((a) => a.ytelseType.kode === ytelseTypeKode)}
+              />
+            );
+          }
+          return null;
+        }}
+      />
     </div>
     <div className={styles.container} />
   </>
@@ -48,7 +68,6 @@ export const TilbakekrevingFaktaPanel = ({
 
 TilbakekrevingFaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  feilutbetaling: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -57,11 +76,10 @@ TilbakekrevingFaktaPanel.propTypes = {
   toggleInfoPanelCallback: PropTypes.func.isRequired,
   shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-};
-
-TilbakekrevingFaktaPanel.defaultProps = {
-  feilutbetaling: null,
+  alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -69,8 +87,10 @@ const mapStateToProps = (state) => ({
   openInfoPanels: getOpenInfoPanels(state),
   readOnly: !behandlingSelectors.getRettigheter(state).writeAccess.isEnabled
     || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
-  feilutbetaling: behandlingSelectors.getFeilutbetalingFakta(state),
   fagsakPerson: getFagsakPerson(state),
+  alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
+  ytelseTypeKode: getFagsakYtelseType(state).kode,
+  alleKodeverk: getAlleTilbakekrevingKodeverk(state),
 });
 
 export default connect(mapStateToProps)(TilbakekrevingFaktaPanel);

@@ -13,7 +13,7 @@ import behandlingSelectors from './selectors/tilbakekrevingBehandlingSelectors';
 import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import TilbakekrevingDataResolver from './TilbakekrevingDataResolver';
 import BehandlingsprosessTilbakekrevingIndex from './behandlingsprosess/BehandlingsprosessTilbakekrevingIndex';
-import FaktaTilbakeContainer from './fakta/FaktaTilbakeContainer';
+import FaktaTilbakeIndex from './fakta/FaktaTilbakeIndex';
 import {
   fetchBehandling as fetchBehandlingActionCreator,
   getBehandlingIdentifier,
@@ -89,7 +89,7 @@ export const BehandlingTilbakekrevingIndex = ({
           <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
           <BehandlingGrid
             behandlingsprosessContent={<BehandlingsprosessTilbakekrevingIndex />}
-            faktaContent={<FaktaTilbakeContainer />}
+            faktaContent={<FaktaTilbakeIndex />}
           />
           {showModal && (
           <AdvarselModal

@@ -12,6 +12,7 @@
 
   "Person.Age": "{age} år",
   "Person.Man": "Mann",
+  "Person.Woman": "Kvinne",
   "Person.ImageText": "Personinformasjon",
   "ValidationMessage.InvalidSaksnummerOrFodselsnummerFormat": "Ugyldig saksnummer eller fødselsnummer"
 }

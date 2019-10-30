@@ -1,8 +1,8 @@
 import { BehandlingspunktProperties } from '@fpsak-frontend/fp-behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import ac from '../../kodeverk/tilbakekrevingAksjonspunktCodes';
 import VedtakResultatType from '../../kodeverk/vedtakResultatType';
 
 export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT);
