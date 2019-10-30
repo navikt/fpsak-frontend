@@ -25,7 +25,6 @@ describe('<DelOppPeriodeModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('Periode er splittet');
     expect(modal.prop('onRequestClose')).to.eql(cancelEvent);
     const datepicker = wrapper.find('DatepickerField');
     expect(datepicker).to.have.length(1);
