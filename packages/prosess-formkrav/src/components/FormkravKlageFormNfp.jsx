@@ -4,10 +4,8 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
-import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import { behandlingFormKlage } from 'behandlingKlage/src/behandlingFormKlage';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
+
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**
@@ -16,23 +14,34 @@ import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './For
  * Presentasjonskomponent. Setter opp aksjonspunktet for formkrav klage (NFP).
  */
 export const FormkravKlageFormNfpImpl = ({
+  behandlingId,
+  behandlingVersjon,
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
   aksjonspunktCode,
+  alleKodeverk,
+  avsluttedeBehandlinger,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
     <FormkravKlageForm
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      aksjonspunkter={aksjonspunkter}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       aksjonspunktCode={aksjonspunktCode}
       formProps={formProps}
+      alleKodeverk={alleKodeverk}
+      avsluttedeBehandlinger={avsluttedeBehandlinger}
     />
   </form>
 );
 
 FormkravKlageFormNfpImpl.propTypes = {
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
@@ -56,10 +65,10 @@ const transformValues = (values, aksjonspunktCode) => ({
 
 const formName = 'FormkravKlageFormNfp';
 
-const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingKlageFormkravResultatNFP],
-  (klageFormkavResultatNFP) => {
-    const klageFormkavResultatNfp = klageFormkavResultatNFP || null;
+const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering],
+  (klageVurdering) => {
+    const { klageFormkravResultatNFP } = klageVurdering;
+    const klageFormkavResultatNfp = klageFormkravResultatNFP || null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaKlagdVedtak(klageFormkavResultatNfp) : null,
       begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,
@@ -71,21 +80,19 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state, ownProps) => ({
     aksjonspunktCode,
-    initialValues: buildInitialValues(state),
-    readOnly: ownProps.readOnly || behandlingSelectors.isKlageBehandlingInKA(state),
+    initialValues: buildInitialValues(ownProps),
+    readOnly: ownProps.readOnly,
     onSubmit,
   });
 };
 
-const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingFormKlage({
+const FormkravKlageFormNfp = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(FormkravKlageFormNfpImpl));
-
-FormkravKlageFormNfp.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP);
 
 export default FormkravKlageFormNfp;

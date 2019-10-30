@@ -7,43 +7,39 @@ import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
-
-import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
-import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
 import {
-  behandlingFormKlage,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingKlage/src/behandlingFormKlage';
-import KlageVurderingRadioOptionsNfp from './KlageVurderingRadioOptionsNfp';
-import FritekstBrevTextField from '../SharedUtills/FritekstKlageBrevTextField';
-import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
-import styles from '../SharedUtills/behandleKlageForm.less';
-import TempsaveKlageButton from '../SharedUtills/TempsaveKlageButton';
+  BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, 
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, 
+} from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
+import KlageVurderingRadioOptionsKa from './KlageVurderingRadioOptionsKa';
+import FritekstBrevTextField from '../felles/FritekstKlageBrevTextField';
+import PreviewKlageLink from '../felles/PreviewKlageLink';
+import TempsaveKlageButton from '../felles/TempsaveKlageButton';
+
+import styles from './behandleKlageFormKa.less';
 
 /**
  * BehandleklageformNfp
  *
- * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (NFP).
+ * Presentasjonskomponent. Setter opp aksjonspunktet for behandling av klage (KA).
  */
-export const BehandleKlageFormNfpImpl = ({
+export const BehandleKlageFormKaImpl = ({
+  behandlingId,
+  behandlingVersjon,
   readOnly,
   handleSubmit,
-  previewCallback,
   saveKlage,
+  previewCallback,
   readOnlySubmitButton,
   aksjonspunktCode,
   sprakkode,
   formValues,
   intl,
+  alleKodeverk,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -54,17 +50,14 @@ export const BehandleKlageFormNfpImpl = ({
         {[<FormattedMessage id="Klage.ResolveKlage.HelpText" key={aksjonspunktCode} />]}
       </AksjonspunktHelpText>
       <VerticalSpacer sixteenPx />
-      <KlageVurderingRadioOptionsNfp
+      <KlageVurderingRadioOptionsKa
         readOnly={readOnly}
         klageVurdering={formValues.klageVurdering}
         aksjonspunktCode={aksjonspunktCode}
         intl={intl}
+        medholdReasons={alleKodeverk[kodeverkTyper.KLAGE_MEDHOLD_ARSAK]}
       />
       <div className={styles.confirmVilkarForm}>
-        <BehandlingspunktBegrunnelseTextField
-          readOnly={readOnly}
-          textCode="VedtakKlageForm.BegrunnelseForKlage"
-        />
         <VerticalSpacer sixteenPx />
         <FritekstBrevTextField
           sprakkode={sprakkode}
@@ -75,6 +68,8 @@ export const BehandleKlageFormNfpImpl = ({
           <Column xs="8">
             <BehandlingspunktSubmitButton
               formName={formProps.form}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
               isReadOnly={readOnly}
               isSubmittable={!readOnlySubmitButton}
               isBehandlingFormSubmitting={isBehandlingFormSubmitting}
@@ -82,20 +77,21 @@ export const BehandleKlageFormNfpImpl = ({
               hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
             />
             {!readOnly && formValues.klageVurdering && formValues.fritekstTilBrev && (formValues.fritekstTilBrev.length > 2)
-              && (
-                <PreviewKlageLink
-                  previewCallback={previewCallback}
-                  fritekstTilBrev={formValues.fritekstTilBrev}
-                  klageVurdering={formValues.klageVurdering}
-                  aksjonspunktCode={aksjonspunktCode}
-                />
-              )}
+            && (
+              <PreviewKlageLink
+                previewCallback={previewCallback}
+                fritekstTilBrev={formValues.fritekstTilBrev}
+                klageVurdering={formValues.klageVurdering}
+                aksjonspunktCode={aksjonspunktCode}
+              />
+            )}
           </Column>
           <Column xs="2">
             <TempsaveKlageButton
               formValues={formValues}
               saveKlage={saveKlage}
               readOnly={readOnly}
+              aksjonspunktCode={aksjonspunktCode}
             />
           </Column>
         </Row>
@@ -104,7 +100,7 @@ export const BehandleKlageFormNfpImpl = ({
   </form>
 );
 
-BehandleKlageFormNfpImpl.propTypes = {
+BehandleKlageFormKaImpl.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
@@ -114,13 +110,14 @@ BehandleKlageFormNfpImpl.propTypes = {
   ...formPropTypes,
 };
 
-BehandleKlageFormNfpImpl.defaultProps = {
+BehandleKlageFormKaImpl.defaultProps = {
   formValues: {},
   readOnly: true,
   readOnlySubmitButton: true,
 };
 
-export const buildInitialValues = createSelector([behandlingSelectors.getBehandlingKlageVurderingResultatNFP], (klageVurderingResultat) => ({
+export const buildInitialValues = createSelector([
+  (ownProps) => ownProps.klageVurdering.klageVurderingResultatNK], (klageVurderingResultat) => ({
   klageMedholdArsak: klageVurderingResultat ? klageVurderingResultat.klageMedholdArsak : null,
   klageVurderingOmgjoer: klageVurderingResultat ? klageVurderingResultat.klageVurderingOmgjoer : null,
   klageVurdering: klageVurderingResultat ? klageVurderingResultat.klageVurdering : null,
@@ -139,26 +136,22 @@ export const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const formName = 'BehandleKlageNfpForm';
+const formName = 'BehandleKlageKaForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state, ownProps) => ({
     aksjonspunktCode,
-    initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state, 'klageVurdering', 'begrunnelse', 'fritekstTilBrev', 'klageMedholdArsak', 'klageVurderingOmgjoer'),
-    readOnly: behandlingSelectors.isKlageBehandlingInKA(state) || ownProps.readOnly,
-    sprakkode: behandlingSelectors.getBehandlingSprak(state),
+    initialValues: buildInitialValues(ownProps),
+    formValues: behandlingFormValueSelector(formName, ownProps.id, ownProps.behandlingVersjon)(
+      state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak'),
     onSubmit,
   });
 };
 
-const BehandleKlageFormNfp = connect(mapStateToPropsFactory)(behandlingFormKlage({
+const BehandleKlageFormKa = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(BehandleKlageFormNfpImpl));
+})(BehandleKlageFormKaImpl));
 
-BehandleKlageFormNfp.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP);
-
-
-export default injectIntl(BehandleKlageFormNfp);
+export default injectIntl(BehandleKlageFormKa);

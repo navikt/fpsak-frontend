@@ -12,7 +12,7 @@ import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/pr
 
 import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckBehandlingKlage';
 import BehandlingspunktKlageInfoPanel from './components/BehandlingspunktKlageInfoPanel';
-import KlageBehandlingModal from './components/klage/KlageBehandlingModal';
+import KlageBehandlingModal from './components/KlageBehandlingModal';
 import behandlingSelectors from '../selectors/klageBehandlingSelectors';
 import {
   fetchPreviewKlageBrev,
@@ -51,13 +51,15 @@ export class BehandlingsprosessKlageIndex extends Component {
     pushLocation(getLocationWithQueryParams(location, { punkt: 'resultat', fakta: 'default' }));
   }
 
-  saveKlageText = (aksjonspunktModel, shouldReopenAp) => {
-    const { behandlingIdentifier, saveKlage: saveTempKlage, resolveKlageTemp: resolveKlage } = this.props;
+  saveKlageText = (aksjonspunktModel) => {
+    const {
+      behandlingIdentifier, saveKlage: saveTempKlage, resolveKlageTemp: resolveKlage, hasForeslaVedtakAp,
+    } = this.props;
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
       ...aksjonspunktModel,
     };
-    if (shouldReopenAp) {
+    if (hasForeslaVedtakAp) {
       resolveKlage(behandlingIdentifier, data);
     } else {
       saveTempKlage(data);
@@ -159,7 +161,11 @@ BehandlingsprosessKlageIndex.propTypes = {
   push: PropTypes.func.isRequired,
   saveKlage: PropTypes.func.isRequired,
   resolveKlageTemp: PropTypes.func.isRequired,
+  hasForeslaVedtakAp: PropTypes.bool.isRequired,
 };
+
+const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
+  .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
 
 const mapStateToProps = (state) => ({
   behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
@@ -177,6 +183,7 @@ const mapStateToProps = (state) => ({
   behandlingspunkterStatus: behandlingsprosessKlageSelectors.getBehandlingspunkterStatus(state),
   behandlingspunkterTitleCodes: behandlingsprosessKlageSelectors.getBehandlingspunkterTitleCodes(state),
   aksjonspunkterOpenStatus: behandlingsprosessKlageSelectors.getAksjonspunkterOpenStatus(state),
+  hasForeslaVedtakAp: getForeslaVedtakAp(state),
   fetchPreviewBrev: fetchPreviewKlageBrev,
   location: state.router.location,
   resolveProsessAksjonspunkter,

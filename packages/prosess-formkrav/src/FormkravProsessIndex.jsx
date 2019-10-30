@@ -1,0 +1,73 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+
+import messages from '../i18n/nb_NO';
+import FormkravKlageFormNfp from './components/FormkravKlageFormNfp';
+import FormkravKlageFormKa from './components/FormkravKlageFormKa';
+import formkravBehandlingPropType from './propTypes/formkravBehandlingPropType';
+import avsluttetBehandlingPropType from './propTypes/avsluttetBehandlingPropType';
+import formkravAksjonspunktPropType from './propTypes/formkravAksjonspunktPropType';
+import formkravKlageVurderingPropType from './propTypes/formkravKlageVurderingPropType';
+
+const cache = createIntlCache();
+
+const intl = createIntl({
+  locale: 'nb-NO',
+  messages,
+}, cache);
+
+const FormkravProsessIndex = ({
+  behandling,
+  klageVurdering,
+  aksjonspunkter,
+  avsluttedeBehandlinger,
+  apCodes,
+  submitCallback,
+  readOnly,
+  readOnlySubmitButton,
+  alleKodeverk,
+}) => (
+  <RawIntlProvider value={intl}>
+    {apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) && (
+      <FormkravKlageFormNfp
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        klageVurdering={klageVurdering}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        alleKodeverk={alleKodeverk}
+        avsluttedeBehandlinger={avsluttedeBehandlinger}
+      />
+    )}
+    {apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA) && (
+      <FormkravKlageFormKa
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        klageVurdering={klageVurdering}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        alleKodeverk={alleKodeverk}
+        avsluttedeBehandlinger={avsluttedeBehandlinger}
+      />
+    )}
+  </RawIntlProvider>
+);
+
+FormkravProsessIndex.propTypes = {
+  behandling: formkravBehandlingPropType.isRequired,
+  klageVurdering: formkravKlageVurderingPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(formkravAksjonspunktPropType).isRequired,
+  avsluttedeBehandlinger: PropTypes.arrayOf(avsluttetBehandlingPropType).isRequired,
+  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  submitCallback: PropTypes.func.isRequired,
+  readOnly: PropTypes.bool.isRequired,
+  readOnlySubmitButton: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+};
+
+export default FormkravProsessIndex;

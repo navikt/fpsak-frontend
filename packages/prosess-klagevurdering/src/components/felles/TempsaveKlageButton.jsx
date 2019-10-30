@@ -5,11 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-
-import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
 
 const isEqual = (lastSavedVersionValues, formValues) => {
   const formvaluesBegrunnelse = formValues.begrunnelse === '' ? null : formValues.begrunnelse;
@@ -31,20 +27,19 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-export const TempsaveKlageButtonImpl = ({
+export const TempsaveKlageButton = ({
   lastSavedVersionValues,
   formValues,
   saveKlage,
   spinner,
   aksjonspunktCode,
-  hasForeslaVedtakAp,
   readOnly,
 }) => {
   const lagringDisabled = isEqual(lastSavedVersionValues, transformValues(formValues));
 
   const tempSave = (event) => {
     event.preventDefault();
-    saveKlage(transformValues(formValues, aksjonspunktCode), hasForeslaVedtakAp);
+    saveKlage(transformValues(formValues, aksjonspunktCode));
   };
 
   return (
@@ -64,7 +59,22 @@ export const TempsaveKlageButtonImpl = ({
   );
 };
 
-const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomlagringData], (mellomlagringData) => ({
+TempsaveKlageButton.propTypes = {
+  lastSavedVersionValues: PropTypes.shape().isRequired,
+  aksjonspunktCode: PropTypes.string.isRequired,
+  formValues: PropTypes.shape().isRequired,
+  saveKlage: PropTypes.func.isRequired,
+  spinner: PropTypes.bool,
+  readOnly: PropTypes.bool,
+};
+
+TempsaveKlageButton.defaultProps = {
+  spinner: false,
+  readOnly: false,
+};
+
+const getMellomLagringFormData = createSelector([
+  (ownProps) => ownProps.TempsaveKlageButton/*behandlingSelectors.getMellomlagringData*/], (mellomlagringData) => ({
   begrunnelse: mellomlagringData.begrunnelse || null,
   fritekstTilBrev: mellomlagringData.fritekstTilBrev || null,
   klageVurdering: mellomlagringData.klageVurdering || null,
@@ -72,31 +82,9 @@ const getMellomLagringFormData = createSelector([behandlingSelectors.getMellomla
   klageMedholdArsak: mellomlagringData.klageMedholdArsak || null,
 }));
 
-const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
-  .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
-
-const mapStateToProps = (state) => ({
-  lastSavedVersionValues: getMellomLagringFormData(state),
-  aksjonspunktCode: behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].definisjon.kode,
-  spinner: behandlingSelectors.getMellomlagringSpinner(state),
-  hasForeslaVedtakAp: getForeslaVedtakAp(state),
+const mapStateToProps = (state, ownProps) => ({
+  lastSavedVersionValues: getMellomLagringFormData(ownProps),
+  spinner: false, //behandlingSelectors.getMellomlagringSpinner(state),
 });
 
-TempsaveKlageButtonImpl.propTypes = {
-  lastSavedVersionValues: PropTypes.shape().isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
-  formValues: PropTypes.shape().isRequired,
-  saveKlage: PropTypes.func.isRequired,
-  hasForeslaVedtakAp: PropTypes.bool,
-  spinner: PropTypes.bool,
-  readOnly: PropTypes.bool,
-};
-
-TempsaveKlageButtonImpl.defaultProps = {
-  hasForeslaVedtakAp: false,
-  spinner: false,
-  readOnly: false,
-};
-
-
-export default connect(mapStateToProps)(TempsaveKlageButtonImpl);
+export default connect(mapStateToProps)(TempsaveKlageButton);

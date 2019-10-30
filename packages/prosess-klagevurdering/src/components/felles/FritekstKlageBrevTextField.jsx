@@ -1,9 +1,11 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+
 import { getLanguageCodeFromSprakkode, hasValidText, required } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
-import styles from './behandleKlageForm.less';
+
+import styles from './fritekstKlageBrevTextField.less';
 
 
 const FritekstKlageBrevTextField = ({

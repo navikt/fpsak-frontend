@@ -3,22 +3,24 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
+import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
+import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 
-import fpKlageApi from 'behandlingKlage/src/data/klageBehandlingApi';
-import behandlingspunktKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
-import DataFetcherWithCacheTemp from 'behandlingKlage/src/DataFetcherWithCacheTemp';
-import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
-import BehandleKlageFormKa from './klage/Klagevurdering/KA/BehandleKlageFormKa';
-import FormkravKlageFormNfp from './klage/Formkrav/FormkravKlageFormNfp';
-import FormkravKlageFormKa from './klage/Formkrav/FormkravKlageFormKa';
+import { getAlleKodeverk, getAvsluttedeBehandlinger } from '../../duckBehandlingKlage';
+import fpKlageApi from '../../data/klageBehandlingApi';
+import behandlingspunktKlageSelectors from '../selectors/behandlingsprosessKlageSelectors';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 
 import styles from './behandlingspunktKlageInfoPanel.less';
 
 const classNames = classnames.bind(styles);
 
 const vedtakData = [fpKlageApi.BEHANDLING, fpKlageApi.KLAGE_VURDERING];
+const klagevurderingData = [fpKlageApi.BEHANDLING, fpKlageApi.KLAGE_VURDERING];
+const formkravData = [fpKlageApi.BEHANDLING, fpKlageApi.KLAGE_VURDERING];
 
 /*
  * BehandlingspunktKlageInfoPanel
@@ -56,38 +58,44 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         )}
       />
 
-      {BehandleKlageFormKa.supports(apCodes) && (
-        <BehandleKlageFormKa
-          saveKlage={saveTempKlage}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          previewCallback={previewCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
-      )}
-      {BehandleKlageFormNfp.supports(apCodes) && (
-        <BehandleKlageFormNfp
-          saveKlage={saveTempKlage}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          previewCallback={previewCallback}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
-      )}
-      {FormkravKlageFormNfp.supports(apCodes) && (
-        <FormkravKlageFormNfp
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
-      )}
-      {FormkravKlageFormKa.supports(apCodes) && (
-        <FormkravKlageFormKa
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-          readOnlySubmitButton={readOnlySubmitButton}
-        />
-      )}
+      <DataFetcherWithCacheTemp
+        behandlingVersjon={1}
+        data={klagevurderingData}
+        showComponent={apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK) 
+          || apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP)}
+        render={(props) => (
+          <KlagevurderingProsessIndex
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            alleKodeverk={alleKodeverk}
+            saveKlage={saveTempKlage}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            previewCallback={previewCallback}
+            readOnlySubmitButton={readOnlySubmitButton}
+            apCodes={apCodes}
+            {...props}
+          />
+        )}
+      />
+
+      <DataFetcherWithCacheTemp
+        behandlingVersjon={1}
+        data={formkravData}
+        showComponent={apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) 
+          || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)}
+        render={(props) => (
+          <FormkravProsessIndex
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            apCodes={apCodes}
+            alleKodeverk={alleKodeverk}
+            avsluttedeBehandlinger={avsluttedeBehandlinger}
+            {...props}
+          />
+        )}
+      />
     </div>
   </div>
 );
@@ -118,6 +126,8 @@ const mapStateToProps = (state) => ({
   readOnlySubmitButton: behandlingspunktKlageSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktKlageSelectors.getNotAcceptedByBeslutter(state),
   behandlingspunktAksjonspunkter: behandlingsprosessSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  alleKodeverk: getAlleKodeverk(state),
+  avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktKlageInfoPanel);

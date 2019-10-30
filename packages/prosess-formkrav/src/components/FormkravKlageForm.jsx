@@ -1,21 +1,19 @@
 import React from 'react';
 import moment from 'moment';
-import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { BehandlingspunktBegrunnelseTextField, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import {
+  BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton, getKodeverknavnFn,
+  hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting } from 'behandlingKlage/src/behandlingFormKlage';
-import { getAlleKodeverk, getAvsluttedeBehandlinger } from 'behandlingKlage/src/duckBehandlingKlage';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-// TODO komponent skal ha eiga less-fil
-import styles from '../Klagevurdering/SharedUtills/behandleKlageForm.less';
 
 export const IKKE_PA_KLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
@@ -42,14 +40,17 @@ const getLovHjemmeler = (aksjonspunktCode) => (
  * Presentasjonskomponent. Setter opp aksjonspunktet for formkrav klage (NFP og KA).
  */
 export const FormkravKlageForm = ({
+  behandlingId,
+  behandlingVersjon,
   readOnly,
   readOnlySubmitButton,
   aksjonspunktCode,
   avsluttedeBehandlinger,
   intl,
   formProps,
-  getKodeverknavn,
+  alleKodeverk,
 }) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const klageBareVedtakOptions = getKlagBareVedtak(avsluttedeBehandlinger, intl, getKodeverknavn);
 
   return (
@@ -84,7 +85,7 @@ export const FormkravKlageForm = ({
                 {intl.formatMessage({ id: 'Klage.Formkrav.ErKlagerPart' })}
               </Undertekst>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly} className={styles.noWrap}>
+              <RadioGroupField name="erKlagerPart" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
@@ -94,7 +95,7 @@ export const FormkravKlageForm = ({
                 {intl.formatMessage({ id: 'Klage.Formkrav.ErKonkret' })}
               </Undertekst>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly} className={styles.noWrap}>
+              <RadioGroupField name="erKonkret" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
@@ -106,7 +107,7 @@ export const FormkravKlageForm = ({
                 {intl.formatMessage({ id: 'Klage.Formkrav.ErFristOverholdt' })}
               </Undertekst>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly} className={styles.noWrap}>
+              <RadioGroupField name="erFristOverholdt" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
@@ -116,7 +117,7 @@ export const FormkravKlageForm = ({
                 {intl.formatMessage({ id: 'Klage.Formkrav.ErSignert' })}
               </Undertekst>
               <VerticalSpacer sixteenPx />
-              <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly} className={styles.noWrap}>
+              <RadioGroupField name="erSignert" validate={[required]} readOnly={readOnly}>
                 <RadioOption value label={{ id: 'Klage.Formkrav.Ja' }} />
                 <RadioOption value={false} label={{ id: 'Klage.Formkrav.Nei' }} />
               </RadioGroupField>
@@ -127,6 +128,8 @@ export const FormkravKlageForm = ({
       <div className={styles.confirmVilkarForm}>
         <BehandlingspunktSubmitButton
           formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
           isReadOnly={readOnly}
           isSubmittable={!readOnlySubmitButton}
           isBehandlingFormSubmitting={isBehandlingFormSubmitting}
@@ -140,6 +143,8 @@ export const FormkravKlageForm = ({
 };
 
 FormkravKlageForm.propTypes = {
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     type: PropTypes.shape({
@@ -152,7 +157,7 @@ FormkravKlageForm.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 FormkravKlageForm.defaultProps = {
@@ -160,8 +165,4 @@ FormkravKlageForm.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-const mapStateToProps = (state) => ({
-  avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
-});
-
-export default connect(mapStateToProps)(injectIntl(injectKodeverk(getAlleKodeverk)(FormkravKlageForm)));
+export default injectIntl(FormkravKlageForm);

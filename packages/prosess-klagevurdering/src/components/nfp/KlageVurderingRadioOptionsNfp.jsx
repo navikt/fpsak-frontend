@@ -1,17 +1,16 @@
 import React from 'react';
+import { injectIntl } from 'react-intl';
+import PropTypes from 'prop-types';
+
 import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { required } from '@fpsak-frontend/utils';
-import { injectIntl } from 'react-intl';
-import { connect } from 'react-redux';
 import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import PropTypes from 'prop-types';
-import { getKodeverk } from 'behandlingKlage/src/duckBehandlingKlage';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingOmgjoerType from '@fpsak-frontend/kodeverk/src/klageVurderingOmgjoer';
-import styles from '../SharedUtills/behandleKlageForm.less';
 
-export const KlageVurderingRadioOptionsNfpImpl = ({
+import styles from './klageVurderingRadioOptionsNfp.less';
+
+export const KlageVurderingRadioOptionsNfp = ({
   readOnly,
   medholdReasons,
   klageVurdering,
@@ -74,7 +73,7 @@ export const KlageVurderingRadioOptionsNfpImpl = ({
     </div>
   );
 };
-KlageVurderingRadioOptionsNfpImpl.propTypes = {
+KlageVurderingRadioOptionsNfp.propTypes = {
   readOnly: PropTypes.bool,
   medholdReasons: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
@@ -84,15 +83,9 @@ KlageVurderingRadioOptionsNfpImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
 };
 
-export const mapStateToProps = (state) => ({
-  medholdReasons: getKodeverk(kodeverkTyper.KLAGE_MEDHOLD_ARSAK)(state),
-});
-
-
-KlageVurderingRadioOptionsNfpImpl.defaultProps = {
+KlageVurderingRadioOptionsNfp.defaultProps = {
   readOnly: true,
   klageVurdering: null,
 };
 
-
-export default connect(mapStateToProps)(injectIntl(KlageVurderingRadioOptionsNfpImpl));
+export default injectIntl(KlageVurderingRadioOptionsNfp);

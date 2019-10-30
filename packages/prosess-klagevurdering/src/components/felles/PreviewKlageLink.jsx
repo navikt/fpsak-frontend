@@ -1,11 +1,13 @@
 import React from 'react';
-import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import styles from './behandleKlageForm.less';
+
+import klageVurderingType from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import styles from './previewKlageLink.less';
 
 const getBrevKode = (klageVurdering, klageVurdertAvKa) => {
   switch (klageVurdering) {

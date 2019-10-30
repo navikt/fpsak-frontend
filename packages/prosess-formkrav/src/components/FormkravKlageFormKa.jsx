@@ -1,13 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
-import behandlingsprosessKlageSelectors from 'behandlingKlage/src/behandlingsprosess/selectors/behandlingsprosessKlageSelectors';
-import { behandlingFormKlage } from 'behandlingKlage/src/behandlingFormKlage';
-import behandlingSelectors from 'behandlingKlage/src/selectors/klageBehandlingSelectors';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { createSelector } from 'reselect';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
+
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
 
 /**
@@ -15,31 +13,42 @@ import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './For
  *
  * Presentasjonskomponent. Setter opp aksjonspunktet for formkrav klage (KA).
  */
-export const FormkravKlageFormKaImpl = ({
+export const FormkravKlageFormKa = ({
+  behandlingId,
+  behandlingVersjon,
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
   aksjonspunktCode,
+  alleKodeverk,
+  avsluttedeBehandlinger,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
     <FormkravKlageForm
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      aksjonspunkter={aksjonspunkter}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       aksjonspunktCode={aksjonspunktCode}
       formProps={formProps}
+      alleKodeverk={alleKodeverk}
+      avsluttedeBehandlinger={avsluttedeBehandlinger}
     />
   </form>
 );
 
-FormkravKlageFormKaImpl.propTypes = {
+FormkravKlageFormKa.propTypes = {
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   aksjonspunktCode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
 };
 
-FormkravKlageFormKaImpl.defaultProps = {
+FormkravKlageFormKa.defaultProps = {
   readOnly: true,
   readOnlySubmitButton: true,
 };
@@ -56,9 +65,8 @@ export const transformValues = (values, aksjonspunktCode) => ({
 
 const formName = 'FormkravKlageFormKa';
 
-const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingKlageFormkravResultatKA],
-  (klageFormkavResultatKA) => {
+const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurdering) => {
+    const { klageFormkavResultatKA } = klageVurdering;
     const klageFormkavResultatKa = klageFormkavResultatKA || null;
     return {
       vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
@@ -71,20 +79,16 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = behandlingsprosessKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state, ownProps) => ({
     aksjonspunktCode,
-    initialValues: buildInitialValues(state),
+    initialValues: buildInitialValues(ownProps),
     onSubmit,
   });
 };
 
-const FormkravKlageFormKa = connect(mapStateToPropsFactory)(behandlingFormKlage({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(FormkravKlageFormKaImpl));
-
-FormkravKlageFormKa.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA);
-
-export default FormkravKlageFormKa;
+})(FormkravKlageFormKa));
