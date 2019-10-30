@@ -53,8 +53,6 @@ const hentApTekst = (uttaksresultat, isApOpen, aksjonspunkter) => {
     helptTextAksjonspunkter.forEach((ap) => {
       if (uttakPanelAksjonsPunktKoder[ap.definisjon.kode]) {
         texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
-      } else {
-        texts.push(<FormattedMessage key="aksjonspunktTekst" id={uttakPanelAksjonsPunktKoder[ap.definisjon.kode]} />);
       }
     });
   }
