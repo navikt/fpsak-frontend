@@ -253,7 +253,7 @@ ForeldelseForm.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   merknaderFraBeslutter: PropTypes.shape({
     notAccepted: PropTypes.bool.isRequired,
-  }).isRequired,
+  }),
   beregnBelop: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -262,6 +262,7 @@ ForeldelseForm.propTypes = {
 ForeldelseForm.defaultProps = {
   foreldelsesresultatActivity: undefined,
   apCodes: [],
+  merknaderFraBeslutter: undefined,
 };
 
 export const transformValues = (values, apCode) => {
