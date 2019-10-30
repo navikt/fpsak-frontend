@@ -11,10 +11,9 @@ import {
 import splitPeriodImageHoverUrl from '@fpsak-frontend/assets/images/splitt_hover.svg';
 import splitPeriodImageUrl from '@fpsak-frontend/assets/images/splitt.svg';
 import { uttaksresultatAktivitetPropType } from '@fpsak-frontend/prop-types';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import UttakActivity from './UttakActivity';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 
@@ -173,8 +172,11 @@ export class UttakTimeLineData extends Component {
       callbackCancelSelectedActivity,
       callbackForward,
       callbackUpdateActivity,
-      getKodeverknavn,
       harSoktOmFlerbarnsdager,
+      alleKodeverk,
+      behandlingId,
+      behandlingVersjon,
+      behandlingsresultat,
       intl,
       isApOpen,
       readOnly,
@@ -183,6 +185,8 @@ export class UttakTimeLineData extends Component {
     } = this.props;
     const { showDelPeriodeModal } = this.state;
     const isEdited = !!selectedItemData.begrunnelse && !isApOpen;
+    const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
     return (
       <TimeLineDataContainer key={`selectedItemData_${selectedItemData.id}`}>
         <Row>
@@ -194,29 +198,31 @@ export class UttakTimeLineData extends Component {
           </Column>
           <Column xs="7">
             {!readOnly
-                && (
-                  <span className={styles.splitPeriodPosition}>
-                    <Image
-                      tabIndex="0"
-                      className={styles.splitPeriodImage}
-                      src={splitPeriodImageUrl}
-                      srcHover={splitPeriodImageHoverUrl}
-                      alt={intl.formatMessage({ id: 'UttakTimeLineData.PeriodeData.DelOppPerioden' })}
-                      onMouseDown={this.showModal}
-                      onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
-                    />
-                    <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
-                  </span>
-                )}
-            {showDelPeriodeModal
-                && (
-                  <DelOppPeriodeModal
-                    cancelEvent={this.hideModal}
-                    showModal={showDelPeriodeModal}
-                    periodeData={selectedItemData}
-                    splitPeriod={this.splitPeriod}
+              && (
+                <span className={styles.splitPeriodPosition}>
+                  <Image
+                    tabIndex="0"
+                    className={styles.splitPeriodImage}
+                    src={splitPeriodImageUrl}
+                    srcHover={splitPeriodImageHoverUrl}
+                    alt={intl.formatMessage({ id: 'UttakTimeLineData.PeriodeData.DelOppPerioden' })}
+                    onMouseDown={this.showModal}
+                    onKeyDown={(e) => (e.keyCode === 13 ? this.showModal(e) : null)}
                   />
-                )}
+                  <FormattedMessage id="UttakTimeLineData.PeriodeData.DelOppPerioden" />
+                </span>
+              )}
+            {showDelPeriodeModal
+              && (
+                <DelOppPeriodeModal
+                  cancelEvent={this.hideModal}
+                  showModal={showDelPeriodeModal}
+                  periodeData={selectedItemData}
+                  splitPeriod={this.splitPeriod}
+                  behandlingId={behandlingId}
+                  behandlingVersjon={behandlingVersjon}
+                />
+              )}
           </Column>
           <Column xs="2">
             <FloatRight>
@@ -226,14 +232,14 @@ export class UttakTimeLineData extends Component {
           </Column>
         </Row>
         {selectedItemData.manuellBehandlingÅrsak && selectedItemData.manuellBehandlingÅrsak.kode !== '-' && (
-        <ElementWrapper>
-          <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
-            {selectedItemData.periodeType
-              ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
-              : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
-          </AksjonspunktHelpText>
-          <VerticalSpacer twentyPx />
-        </ElementWrapper>
+          <ElementWrapper>
+            <AksjonspunktHelpText isAksjonspunktOpen={selectedItemData.manuellBehandlingÅrsak !== null}>
+              {selectedItemData.periodeType
+                ? hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn, selectedItemData.periodeType.kode)
+                : hentApTekst(selectedItemData.manuellBehandlingÅrsak, stonadskonto, getKodeverknavn)}
+            </AksjonspunktHelpText>
+            <VerticalSpacer twentyPx />
+          </ElementWrapper>
         )}
         <UttakActivity
           cancelSelectedActivity={callbackCancelSelectedActivity}
@@ -242,6 +248,10 @@ export class UttakTimeLineData extends Component {
           readOnly={readOnly}
           isApOpen={isApOpen}
           harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
+          alleKodeverk={alleKodeverk}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          behandlingsresultat={behandlingsresultat}
         />
       </TimeLineDataContainer>
     );
@@ -257,7 +267,6 @@ UttakTimeLineData.propTypes = {
   callbackSetSelected: PropTypes.func.isRequired,
   callbackUpdateActivity: PropTypes.func.isRequired,
   formName: PropTypes.string.isRequired,
-  getKodeverknavn: PropTypes.func.isRequired,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
   intl: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool,
@@ -266,6 +275,10 @@ UttakTimeLineData.propTypes = {
   selectedItemData: uttaksresultatAktivitetPropType,
   stonadskonto: PropTypes.shape(),
   uttaksresultatActivity: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingsresultat: PropTypes.shape().isRequired,
 };
 
 UttakTimeLineData.defaultProps = {
@@ -274,4 +287,4 @@ UttakTimeLineData.defaultProps = {
   stonadskonto: {},
 };
 
-export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakTimeLineData));
+export default injectIntl(UttakTimeLineData);

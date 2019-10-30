@@ -10,6 +10,44 @@ import { buildInitialValues, transformValues, UttakPanelImpl as UttakPanel } fro
 import Uttak from './Uttak';
 
 describe('<UttakPanel>', () => {
+  const soknad = {
+    soknadType: {
+      kode: 'ST-001',
+    },
+    mottattDato: '2019-10-28',
+    soknadsdato: '2019-10-28',
+    tilleggsopplysninger: null,
+    begrunnelseForSenInnsending: null,
+    annenPartNavn: null,
+    antallBarn: 1,
+    dekningsgrad: 100,
+    oppgittTilknytning: {
+      oppholdNorgeNa: true,
+      oppholdSistePeriode: true,
+      oppholdNestePeriode: true,
+      utlandsoppholdFor: [],
+      utlandsoppholdEtter: [],
+    },
+    manglendeVedlegg: [],
+    oppgittRettighet: {
+      omsorgForBarnet: true,
+      aleneomsorgForBarnet: false,
+    },
+    oppgittFordeling: {
+      startDatoForPermisjon: '2019-10-05',
+    },
+    spraakkode: {
+      kode: '-',
+      kodeverk: 'SPRAAK_KODE',
+    },
+    utstedtdato: null,
+    termindato: null,
+    farSokerType: null,
+    fodselsdatoer: {
+      1: '2019-10-26',
+    },
+  };
+
   const uttaksresultat = {
     perioderSøker: [{
       fom: '',
@@ -63,6 +101,16 @@ describe('<UttakPanel>', () => {
     },
   };
 
+  const kodeverk = {
+    BehandlingStatus: [
+      {
+        kode: 'AVSLU',
+        navn: 'Avsluttet',
+        kodeverk: 'BEHANDLING_STATUS',
+      },
+    ],
+  };
+
   it('skal rendre uttakpanel uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<UttakPanel
       {...reduxFormPropsMock}
@@ -72,6 +120,21 @@ describe('<UttakPanel>', () => {
       manuellOverstyring={false}
       isApOpen={false}
       submitCallback={sinon.spy()}
+      stonadskonto={{}}
+      soknad={soknad}
+      familiehendelse={{}}
+      person={{}}
+      uttakPeriodeGrense={{}}
+      ytelsefordeling={{}}
+      behandlingType={{}}
+      alleKodeverk={kodeverk}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingsresultat={{}}
+      behandlingStatus={{}}
+      employeeHasAccess
+      fagsak={{}}
+      tempUpdateStonadskontoer={sinon.spy()}
     />);
     const uttak = wrapper.find(Uttak);
     expect(uttak).has.length(1);
@@ -105,11 +168,27 @@ describe('<UttakPanel>', () => {
       manuellOverstyring={false}
       isApOpen
       submitCallback={sinon.spy()}
+      stonadskonto={{}}
+      soknad={soknad}
+      familiehendelse={{}}
+      person={{}}
+      uttakPeriodeGrense={{}}
+      ytelsefordeling={{}}
+      behandlingType={{}}
+      alleKodeverk={kodeverk}
+      behandlingId={1}
+      behandlingVersjon={1}
+      behandlingsresultat={{}}
+      behandlingStatus={{}}
+      employeeHasAccess
+      fagsak={{}}
+      tempUpdateStonadskontoer={sinon.spy()}
     />);
     const uttak = wrapper.find(Uttak);
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
-    expect(formattedMessage).has.length(3);
+    console.log(formattedMessage.debug()); // eslint-disable-line no-console
+    expect(formattedMessage).has.length(2);
     const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
     expect(aksjonspunktHelpText).has.length(1);
 

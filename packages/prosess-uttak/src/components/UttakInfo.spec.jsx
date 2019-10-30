@@ -39,15 +39,13 @@ describe('<UttakInfo>', () => {
     }],
   };
 
-  const getKodeverknavn = () => undefined;
-
   it('skal rendre uttakinfo med to checkboxes, når flerbarnsdager', () => {
     const wrapper = shallow(<UttakInfo
       selectedItemData={selectedItem}
       readOnly={false}
       harSoktOmFlerbarnsdager
       oppholdArsakTyper={[]}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(2);
@@ -61,7 +59,7 @@ describe('<UttakInfo>', () => {
       readOnly
       oppholdArsakTyper={[]}
       harSoktOmFlerbarnsdager
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(2);
@@ -78,7 +76,7 @@ describe('<UttakInfo>', () => {
       readOnly={false}
       harSoktOmFlerbarnsdager={false}
       oppholdArsakTyper={[]}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={{}}
     />);
     const checkboxField = wrapper.find('CheckboxField');
     expect(checkboxField).to.have.length(1);

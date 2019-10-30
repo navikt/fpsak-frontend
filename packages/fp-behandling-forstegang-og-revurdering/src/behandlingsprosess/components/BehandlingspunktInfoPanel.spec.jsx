@@ -36,6 +36,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       behandlingspunktAksjonspunkter={[]}
       alleAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      tempUpdate={sinon.spy()}
       alleKodeverk={{}}
       behandlingspunktVilkar={[]}
     />);
@@ -73,6 +74,7 @@ describe('<BehandlingspunktInfoPanel>', () => {
       behandlingspunktAksjonspunkter={[]}
       alleAksjonspunkter={[]}
       toggleOverstyring={sinon.spy()}
+      tempUpdate={sinon.spy()}
       alleKodeverk={{}}
       behandlingspunktVilkar={[]}
     />);

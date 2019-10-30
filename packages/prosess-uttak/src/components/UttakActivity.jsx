@@ -36,13 +36,7 @@ import oppholdArsakType, { oppholdArsakMapper } from '@fpsak-frontend/kodeverk/s
 import {
   ArrowBox, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getSkjaeringstidspunktForeldrepenger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
 import RenderUttakTable from './RenderUttakTable';
 import UttakInfo from './UttakInfo';
 
@@ -92,6 +86,7 @@ export const UttakActivity = ({
   kontoIkkeSatt,
   starttidspunktForeldrepenger,
   harSoktOmFlerbarnsdager,
+  alleKodeverk,
   hasValidationError,
   ...formProps
 }) => (
@@ -106,21 +101,22 @@ export const UttakActivity = ({
         graderingInnvilget={graderingInnvilget}
         erSamtidigUttak={erSamtidigUttak}
         harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
+        alleKodeverk={alleKodeverk}
       />
     </Row>
     {selectedItemData.oppholdÅrsak.kode === oppholdArsakType.UDEFINERT
-      && (
-      <Row className={readOnly ? null : styles.marginTop}>
-        <Column xs="12">
-          <FieldArray
-            name="UttakFieldArray"
-            component={RenderUttakTable}
-            periodeTyper={periodeTyper}
-            readOnly={readOnly}
-          />
-        </Column>
-      </Row>
-      )}
+        && (
+          <Row className={readOnly ? null : styles.marginTop}>
+            <Column xs="12">
+              <FieldArray
+                name="UttakFieldArray"
+                component={RenderUttakTable}
+                periodeTyper={periodeTyper}
+                readOnly={readOnly}
+              />
+            </Column>
+          </Row>
+        )}
     <ElementWrapper>
       <div className={styles.marginBottom20}>
         <TextAreaField
@@ -132,89 +128,89 @@ export const UttakActivity = ({
         />
       </div>
       {!readOnly
-      && (
-        <div>
-          {selectedItemData.oppholdÅrsak.kode === oppholdArsakType.UDEFINERT
           && (
-          <div className={styles.marginBottom}>
-            <RadioGroupField validate={[required]} name="erOppfylt" readOnly={readOnly}>
-              <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
-              <RadioOption value={false} label={{ id: 'UttakActivity.IkkeOppfylt' }} />
-            </RadioGroupField>
-            {erOppfylt !== undefined
-            && (
-              <div className={styles.marginBottom20}>
-                <ArrowBox alignOffset={erOppfylt ? 0 : 98}>
-                  {erOppfylt && (
-                    <SelectField
-                      name="innvilgelseAarsak"
-                      selectValues={mapAarsak(innvilgelseAarsakKoder, starttidspunktForeldrepenger)}
-                      validate={[required, notDash]}
-                      label={{ id: 'UttakActivity.InnvilgelseAarsaker' }}
-                      readOnly={readOnly}
-                      bredde="fullbredde"
-                    />
-                  )}
-                  {!erOppfylt && (
-                    <SelectField
-                      name="avslagAarsak"
-                      selectValues={mapAarsak(avslagAarsakKoder, starttidspunktForeldrepenger)}
-                      validate={[required, notDash]}
-                      label={{ id: 'UttakActivity.AvslagAarsak' }}
-                      readOnly={readOnly}
-                      bredde="fullbredde"
-                    />
-                  )}
-                  {(selectedItemData.gradertAktivitet && erOppfylt) && (
-                    <div className={styles.marginTop30}>
-                      <Undertekst>
-                        <FormattedMessage id="UttakActivity.Gradering" />
-                      </Undertekst>
-                      <VerticalSpacer eightPx />
-                      <RadioGroupField validate={[required]} name="graderingInnvilget" readOnly={readOnly}>
-                        <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
-                        <RadioOption value={false} label={{ id: 'UttakActivity.IkkeOppfylt' }} />
-                      </RadioGroupField>
-                      {graderingInnvilget === false && (
-                        <SelectField
-                          name="graderingAvslagAarsak"
-                          selectValues={mapAarsak(graderingAvslagAarsakKoder, starttidspunktForeldrepenger)}
-                          validate={[required, notDash]}
-                          label={{ id: 'UttakActivity.GraderingAvslagAarsaker' }}
-                          readOnly={readOnly}
-                          bredde="fullbredde"
-                        />
+            <div>
+              {selectedItemData.oppholdÅrsak.kode === oppholdArsakType.UDEFINERT
+                && (
+                  <div className={styles.marginBottom}>
+                    <RadioGroupField validate={[required]} name="erOppfylt" readOnly={readOnly}>
+                      <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
+                      <RadioOption value={false} label={{ id: 'UttakActivity.IkkeOppfylt' }} />
+                    </RadioGroupField>
+                    {erOppfylt !== undefined
+                      && (
+                        <div className={styles.marginBottom20}>
+                          <ArrowBox alignOffset={erOppfylt ? 0 : 98}>
+                            {erOppfylt && (
+                              <SelectField
+                                name="innvilgelseAarsak"
+                                selectValues={mapAarsak(innvilgelseAarsakKoder, starttidspunktForeldrepenger)}
+                                validate={[required, notDash]}
+                                label={{ id: 'UttakActivity.InnvilgelseAarsaker' }}
+                                readOnly={readOnly}
+                                bredde="fullbredde"
+                              />
+                            )}
+                            {!erOppfylt && (
+                              <SelectField
+                                name="avslagAarsak"
+                                selectValues={mapAarsak(avslagAarsakKoder, starttidspunktForeldrepenger)}
+                                validate={[required, notDash]}
+                                label={{ id: 'UttakActivity.AvslagAarsak' }}
+                                readOnly={readOnly}
+                                bredde="fullbredde"
+                              />
+                            )}
+                            {(selectedItemData.gradertAktivitet && erOppfylt) && (
+                              <div className={styles.marginTop30}>
+                                <Undertekst>
+                                  <FormattedMessage id="UttakActivity.Gradering" />
+                                </Undertekst>
+                                <VerticalSpacer eightPx />
+                                <RadioGroupField validate={[required]} name="graderingInnvilget" readOnly={readOnly}>
+                                  <RadioOption value label={{ id: 'UttakActivity.Oppfylt' }} />
+                                  <RadioOption value={false} label={{ id: 'UttakActivity.IkkeOppfylt' }} />
+                                </RadioGroupField>
+                                {graderingInnvilget === false && (
+                                  <SelectField
+                                    name="graderingAvslagAarsak"
+                                    selectValues={mapAarsak(graderingAvslagAarsakKoder, starttidspunktForeldrepenger)}
+                                    validate={[required, notDash]}
+                                    label={{ id: 'UttakActivity.GraderingAvslagAarsaker' }}
+                                    readOnly={readOnly}
+                                    bredde="fullbredde"
+                                  />
+                                )}
+                              </div>
+                            )}
+                          </ArrowBox>
+                        </div>
                       )}
-                    </div>
-                  )}
-                </ArrowBox>
-              </div>
-            )}
-          </div>
+                  </div>
+                )}
+              {formProps.error}
+              {formProps.warning}
+              <FlexContainer fluid>
+                <FlexRow>
+                  <FlexColumn>
+                    <Hovedknapp
+                      mini
+                      htmlType="button"
+                      onClick={formProps.handleSubmit}
+                      disabled={formProps.pristine || hasValidationError}
+                    >
+                      <FormattedMessage id="UttakActivity.Oppdater" />
+                    </Hovedknapp>
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
+                      <FormattedMessage id="UttakActivity.Avbryt" />
+                    </Knapp>
+                  </FlexColumn>
+                </FlexRow>
+              </FlexContainer>
+            </div>
           )}
-          {formProps.error}
-          {formProps.warning}
-          <FlexContainer fluid>
-            <FlexRow>
-              <FlexColumn>
-                <Hovedknapp
-                  mini
-                  htmlType="button"
-                  onClick={formProps.handleSubmit}
-                  disabled={formProps.pristine || hasValidationError}
-                >
-                  <FormattedMessage id="UttakActivity.Oppdater" />
-                </Hovedknapp>
-              </FlexColumn>
-              <FlexColumn>
-                <Knapp mini htmlType="button" onClick={cancelSelectedActivity}>
-                  <FormattedMessage id="UttakActivity.Avbryt" />
-                </Knapp>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </div>
-      )}
     </ElementWrapper>
   </div>
 );
@@ -230,6 +226,7 @@ UttakActivity.propTypes = {
   innvilgelseAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   graderingAvslagAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   starttidspunktForeldrepenger: PropTypes.string.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   ...formPropTypes,
 };
 
@@ -451,10 +448,10 @@ export const initialValue = (selectedItem, kontoIkkeSatt) => {
 };
 
 const buildInitialValues = createSelector(
-  [(state, props) => props.selectedItemData],
+  [(props) => props.selectedItemData],
   (selectedItem) => {
     const kontoIkkeSatt = !selectedItem.periodeType
-    && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
+      && (selectedItem.aktiviteter[0].stønadskontoType.kode === '-');
     const erOppfylt = erPeriodeOppfylt(selectedItem, kontoIkkeSatt);
     return {
       UttakFieldArray: initialValue(selectedItem, kontoIkkeSatt),
@@ -474,22 +471,30 @@ const buildInitialValues = createSelector(
   },
 );
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const avslagAarsaker = getKodeverk(kodeverkTyper.UTTAK_AVSLAG_ARSAK)(initialState);
-  const innvilgelseAarsaker = getKodeverk(kodeverkTyper.INNVILGET_AARSAK)(initialState);
-  const graderingAvslagAarsakKoder = getKodeverk(kodeverkTyper.GRADERING_AVSLAG_AARSAK)(initialState);
-  const utsettelseAarsak = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(initialState);
-  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState);
-  const oppholdArsakTyper = getKodeverk(kodeverkTyper.OPPHOLD_ARSAK)(initialState);
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+  const {
+    behandlingVersjon, behandlingId, behandlingsresultat,
+  } = initialOwnProps;
+  const avslagAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.UTTAK_AVSLAG_ARSAK];
+  const innvilgelseAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.INNVILGET_AARSAK];
+  const graderingAvslagAarsakKoder = initialOwnProps.alleKodeverk[kodeverkTyper.GRADERING_AVSLAG_AARSAK];
+  const utsettelseAarsak = initialOwnProps.alleKodeverk[kodeverkTyper.UTSETTELSE_AARSAK_TYPE];
+  const periodeTyper = initialOwnProps.alleKodeverk[kodeverkTyper.UTTAK_PERIODE_TYPE];
+  const oppholdArsakTyper = initialOwnProps.alleKodeverk[kodeverkTyper.OPPHOLD_ARSAK];
 
   const validate = (values) => validateUttakActivity(values);
   const warn = (values) => warningUttakActivity(values);
-  const onSubmit = (values) => initialOwnProps.updateActivity(transformValues(values, avslagAarsaker, innvilgelseAarsaker, graderingAvslagAarsakKoder));
+  const onSubmit = (values) => initialOwnProps.updateActivity(transformValues(
+    values,
+    avslagAarsaker,
+    innvilgelseAarsaker,
+    graderingAvslagAarsakKoder,
+  ));
 
   return (state, ownProps) => {
-    const erOppfylt = behandlingFormValueSelector(uttakActivityForm)(state, 'erOppfylt');
-    const begrunnelse = behandlingFormValueSelector(uttakActivityForm)(state, 'begrunnelse');
-    const arsak = behandlingFormValueSelector(uttakActivityForm)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
+    const erOppfylt = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'erOppfylt');
+    const begrunnelse = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'begrunnelse');
+    const arsak = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
     const hasValidationError = erOppfylt === undefined || !begrunnelse || !arsak;
     return {
       hasValidationError,
@@ -502,18 +507,18 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       graderingAvslagAarsakKoder,
       utsettelseAarsak,
       erOppfylt,
-      initialValues: buildInitialValues(state, ownProps),
+      initialValues: buildInitialValues(ownProps),
       avslagAarsakKoder: avslagAarsaker,
       innvilgelseAarsakKoder: innvilgelseAarsaker,
-      graderingInnvilget: behandlingFormValueSelector(uttakActivityForm)(state, 'graderingInnvilget'),
-      erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttak'),
-      samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm)(state, 'samtidigUttaksprosent'),
-      starttidspunktForeldrepenger: getSkjaeringstidspunktForeldrepenger(state),
+      graderingInnvilget: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'graderingInnvilget'),
+      erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttak'),
+      samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttaksprosent'),
+      starttidspunktForeldrepenger: behandlingsresultat.skjaeringstidspunktForeldrepenger,
     };
   };
 };
 
-export default connect(mapStateToPropsFactory)(injectIntl(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: uttakActivityForm,
   enableReinitialize: true,
 })(UttakActivity)));

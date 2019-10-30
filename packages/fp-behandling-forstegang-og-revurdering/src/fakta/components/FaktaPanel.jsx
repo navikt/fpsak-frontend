@@ -108,17 +108,17 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         render={(props) => (
           <>
             {props.personopplysninger && (
-              <ArbeidsforholdFaktaIndex
-                alleKodeverk={alleKodeverk}
-                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-                aksjonspunkter={aksjonspunkter}
-                submitCallback={submitCallback}
-                openInfoPanels={openInfoPanels}
-                toggleInfoPanelCallback={toggleInfoPanelCallback}
-                shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-                readOnly={readOnly}
-                {...props}
-              />
+            <ArbeidsforholdFaktaIndex
+              alleKodeverk={alleKodeverk}
+              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+              aksjonspunkter={aksjonspunkter}
+              submitCallback={submitCallback}
+              openInfoPanels={openInfoPanels}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+              readOnly={readOnly}
+              {...props}
+            />
             )}
           </>
         )}
@@ -197,7 +197,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         behandlingVersjon={1}
         data={adopsjonData}
         showComponent={aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
-          || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))}
+            || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))}
         render={(props) => (
           <AdopsjonFaktaIndex
             alleKodeverk={alleKodeverk}
@@ -217,7 +217,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         behandlingVersjon={1}
         data={fodselData}
         showComponent={aksjonspunkter.some((ap) => fodselAksjonspunkter.includes(ap.definisjon.kode))
-          || vilkarCodes.some((code) => fodselsvilkarene.includes(code))}
+            || vilkarCodes.some((code) => fodselsvilkarene.includes(code))}
         render={(props) => (
           <FodselFaktaIndex
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -286,14 +286,14 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       />
 
       {(FordelBeregningsgrunnlagPanel.supports(aksjonspunkter)) && (
-        <FordelBeregningsgrunnlagPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
+      <FordelBeregningsgrunnlagPanel
+        aksjonspunkter={aksjonspunkter}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+      />
       )}
 
       <DataFetcherWithCache
@@ -315,14 +315,14 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       />
 
       {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling) && (
-        <UttakInfoPanel
-          aksjonspunkter={aksjonspunkter}
-          openInfoPanels={openInfoPanels}
-          toggleInfoPanelCallback={toggleInfoPanelCallback}
-          shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-          submitCallback={submitCallback}
-          readOnly={readOnly}
-        />
+      <UttakInfoPanel
+        aksjonspunkter={aksjonspunkter}
+        openInfoPanels={openInfoPanels}
+        toggleInfoPanelCallback={toggleInfoPanelCallback}
+        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+      />
       )}
     </div>
   </>

@@ -6,10 +6,7 @@ import {
   calcDaysAndWeeks, dateAfterOrEqual, dateBeforeOrEqual, DDMMYYYY_DATE_FORMAT, hasValidDate, ISO_DATE_FORMAT, required,
 } from '@fpsak-frontend/utils';
 import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
+import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import PropTypes from 'prop-types';
@@ -70,16 +67,16 @@ export const DelOppPeriodeModalImpl = ({
                 />
               </FlexColumn>
               {førstePeriodeTom && (
-              <FlexColumn>
-                <FormattedMessage
-                  id={numberOfDaysAndWeeks.id.toString()}
-                  values={{
-                    weeks: numberOfDaysAndWeeks.weeks.toString(),
-                    days: numberOfDaysAndWeeks.days.toString(),
-                  }}
-                />
+                <FlexColumn>
+                  <FormattedMessage
+                    id={numberOfDaysAndWeeks.id.toString()}
+                    values={{
+                      weeks: numberOfDaysAndWeeks.weeks.toString(),
+                      days: numberOfDaysAndWeeks.days.toString(),
+                    }}
+                  />
 
-              </FlexColumn>
+                </FlexColumn>
               )}
             </FlexRow>
           </FlexColumn>
@@ -150,17 +147,18 @@ const transformValues = (values, periodeData) => {
   };
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+const mapStateToPropsFactory = (_initialState, ownProps) => {
+  const { behandlingId, behandlingVersjon } = ownProps;
   const validate = (values) => validateForm(values, ownProps.periodeData);
   const onSubmit = (values) => ownProps.splitPeriod(transformValues(values, ownProps.periodeData));
   return (state) => ({
-    førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode')(state, 'ForstePeriodeTomDato'),
+    førstePeriodeTom: behandlingFormValueSelector('DelOppPeriode', behandlingId, behandlingVersjon)(state, 'ForstePeriodeTomDato'),
     validate,
     onSubmit,
   });
 };
 
-const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+const DelOppPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   form: 'DelOppPeriode',
 })(DelOppPeriodeModalImpl));
 

@@ -14,13 +14,14 @@ import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse'
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { toggleBehandlingspunktOverstyring } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
+import { toggleBehandlingspunktOverstyring, tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import UttakPanel from './uttak/UttakPanel';
 import VilkarPanels from './VilkarPanels';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
@@ -41,6 +42,29 @@ const vedtakDataES = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_ENGANGSSTO
 const vedtakDataFpOgSvp = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGRESULTAT_FORELDREPENGER, fpsakApi.TILBAKEKREVINGVALG,
   fpsakApi.SIMULERING_RESULTAT, fpsakApi.VILKAR, fpsakApi.SEND_VARSEL_OM_REVURDERING, fpsakApi.ORIGINAL_BEHANDLING,
   fpsakApi.MEDLEMSKAP];
+const uttakData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.FAKTA_ARBEIDSFORHOLD,
+  fpsakApi.UTTAKSRESULTAT_PERIODER,
+  fpsakApi.UTTAK_STONADSKONTOER,
+  fpsakApi.FAMILIEHENDELSE,
+  fpsakApi.SOKNAD,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.UTTAK_PERIODE_GRENSE,
+  fpsakApi.YTELSEFORDELING,
+];
+
+const uttakAksjonspunkter = [
+  aksjonspunktCodes.TILKNYTTET_STORTINGET,
+  aksjonspunktCodes.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_DØD,
+  aksjonspunktCodes.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
+  aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
+  aksjonspunktCodes.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
+  aksjonspunktCodes.FASTSETT_UTTAKPERIODER,
+];
 
 
 /*
@@ -70,6 +94,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
   toggleOverstyring,
   alleKodeverk,
   behandlingspunktVilkar,
+  tempUpdate,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
@@ -187,16 +212,26 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
         )}
       />
 
-      {UttakPanel.supports(selectedBehandlingspunkt, apCodes)
-      && (
-      <UttakPanel
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        readOnlySubmitButton={readOnlySubmitButton}
-        apCodes={apCodes}
-        isApOpen={openAksjonspunkt}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        showComponent={selectedBehandlingspunkt === behandlingspunktCodes.UTTAK || uttakAksjonspunkter.some((ap) => apCodes.includes(ap))}
+        data={uttakData}
+        render={(props) => (
+          <UttakProsessIndex
+            fagsak={fagsakInfo}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            readOnlySubmitButton={readOnlySubmitButton}
+            apCodes={apCodes}
+            alleKodeverk={alleKodeverk}
+            employeeHasAccess={kanOverstyreAccess.employeeHasAccess}
+            tempUpdateStonadskontoer={tempUpdate}
+            isApOpen={openAksjonspunkt}
+            {...props}
+          />
+        )}
       />
-      )}
 
       <DataFetcherWithCache
         behandlingVersjon={1}
@@ -220,7 +255,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
       <DataFetcherWithCache
         behandlingVersjon={1}
         showComponent={selectedBehandlingspunkt === behandlingspunktCodes.SOEKNADSFRIST
-          && fagsakInfo.ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD}
+            && fagsakInfo.ytelseType.kode !== fagsakYtelseType.ENGANGSSTONAD}
         data={soknadsfristData}
         render={(props) => (
           <VurderSoknadsfristForeldrepengerIndex
@@ -258,6 +293,7 @@ BehandlingspunktInfoPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   toggleOverstyring: PropTypes.func.isRequired,
   behandlingspunktVilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  tempUpdate: PropTypes.func.isRequired,
 };
 
 BehandlingspunktInfoPanel.defaultProps = {
@@ -285,6 +321,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     toggleBehandlingspunktOverstyring,
+    tempUpdate: tempUpdateStonadskontoer,
   }, dispatch),
 });
 

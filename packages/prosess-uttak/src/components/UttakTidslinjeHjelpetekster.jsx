@@ -14,44 +14,46 @@ import gradertImage from '@fpsak-frontend/assets/images/periode_gradert.svg';
 import manueltAvklart from '@fpsak-frontend/assets/images/periode_manuelt_avklart.svg';
 
 const UttakTidslinjeHjelpetekster = ({ intl }) => {
-  const t = intl.formatMessage;
+  const { formatMessage } = intl;
   const legends = [
     {
       src: oppfyltUrl,
-      text: t({ id: 'Timeline.OppfyltPeriode' }),
+      text: formatMessage({ id: 'Timeline.OppfyltPeriode' }),
     },
     {
       src: fodselUrl,
-      text: t({ id: 'Timeline.TidspunktFamiliehendelse' }),
+      text: formatMessage({ id: 'Timeline.TidspunktFamiliehendelse' }),
     },
     {
       src: ikkeOppfyltUrl,
-      text: t({ id: 'Timeline.IkkeOppfyltPeriode' }),
+      text: formatMessage({ id: 'Timeline.IkkeOppfyltPeriode' }),
     },
     {
       src: soknadUrl,
-      text: t({ id: 'Timeline.TidspunktMotakSoknad' }),
+      text: formatMessage({ id: 'Timeline.TidspunktMotakSoknad' }),
     },
     {
       src: uavklartUrl,
-      text: t({ id: 'Timeline.IkkeAvklartPeriode' }),
+      text: formatMessage({ id: 'Timeline.IkkeAvklartPeriode' }),
     },
     {
       src: revurderingUrl,
-      text: t({ id: 'Timeline.TidspunktRevurdering' }),
+      text: formatMessage({ id: 'Timeline.TidspunktRevurdering' }),
     },
     {
       src: gradertImage,
-      text: t({ id: 'Timeline.GradertPeriode' }),
+      text: formatMessage({ id: 'Timeline.GradertPeriode' }),
     },
     {
       src: manueltAvklart,
-      text: t({ id: 'Timeline.ManueltAvklart' }),
+      text: formatMessage({ id: 'Timeline.ManueltAvklart' }),
     },
   ];
   return <LegendBox legends={legends} />;
 };
+
 UttakTidslinjeHjelpetekster.propTypes = {
   intl: PropTypes.shape().isRequired,
 };
+
 export default injectIntl(UttakTidslinjeHjelpetekster);

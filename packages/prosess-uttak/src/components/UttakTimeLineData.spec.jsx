@@ -76,7 +76,15 @@ describe('<UttakTimeLineData>', () => {
     },
   };
 
-  const getKodeverknavn = () => undefined;
+  const kodeverk = {
+    BehandlingStatus: [
+      {
+        kode: 'AVSLU',
+        navn: 'Avsluttet',
+        kodeverk: 'BEHANDLING_STATUS',
+      },
+    ],
+  };
 
   it('skal rendre UttakTimeLineData, ikke deloppperiode, ikke readonly', () => {
     const wrapper = shallowWithIntl(<UttakTimeLineData
@@ -96,7 +104,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
@@ -129,7 +140,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     wrapper.setState({ showDelPeriodeModal: true });
     expect(wrapper.state('showDelPeriodeModal')).is.true;
@@ -161,7 +175,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     wrapper.setState({ showDelPeriodeModal: false });
     const modal = wrapper.find(DelOppPeriodeModal);
@@ -195,7 +212,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     const buttons = wrapper.find(TimeLineButton);
     expect(buttons).to.have.length(2);
@@ -226,7 +246,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       stonadskontoer={{}}
       harSoktOmFlerbarnsdager={false}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     const uttakActivity = wrapper.find(UttakActivity);
     expect(uttakActivity).to.have.length(1);
@@ -258,7 +281,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       harSoktOmFlerbarnsdager={false}
       stonadskonto={stonadskonto}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     const uttak = wrapper.find(AksjonspunktHelpText);
     expect(uttak).has.length(1);
@@ -289,7 +315,10 @@ describe('<UttakTimeLineData>', () => {
       activityPanelName=""
       harSoktOmFlerbarnsdager={false}
       stonadskonto={stonadskontoFlerGarTom}
-      getKodeverknavn={getKodeverknavn}
+      alleKodeverk={kodeverk}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingsresultat={{}}
     />);
     const uttak = wrapper.find(AksjonspunktHelpText);
     expect(uttak).has.length(1);
