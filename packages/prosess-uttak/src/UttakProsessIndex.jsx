@@ -4,10 +4,9 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import UttakPanel from './components/UttakPanel';
 import messages from '../i18n/nb_NO';
-import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
-import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
-import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
-import avregningSimuleringResultatPropType from './propTypes/avregningSimuleringResultatPropType';
+import uttakFagsakPropType from './propTypes/uttakFagsakPropType';
+import uttakBehandlingPropType from './propTypes/uttakBehandlingPropType';
+import uttakAksjonspunkterPropType from './propTypes/uttakAksjonspunkterPropType';
 
 const cache = createIntlCache();
 
@@ -19,12 +18,9 @@ const intl = createIntl({
 const UttakProsessIndex = ({
   fagsak,
   behandling,
-  faktaArbeidsforhold,
   uttaksresultatPerioder,
   uttakStonadskontoer,
   aksjonspunkter,
-  simuleringResultat,
-  tilbakekrevingvalg,
   familiehendelse,
   soknad,
   personopplysninger,
@@ -49,7 +45,6 @@ const UttakProsessIndex = ({
       behandlingType={behandling.type}
       behandlingsresultat={behandling.behandlingsresultat}
       sprakkode={behandling.sprakkode}
-      faktaArbeidsforhold={faktaArbeidsforhold}
       uttaksresultat={uttaksresultatPerioder}
       stonadskonto={uttakStonadskontoer}
       aksjonspunkter={aksjonspunkter}
@@ -57,8 +52,6 @@ const UttakProsessIndex = ({
       soknad={soknad}
       person={personopplysninger}
       familiehendelse={familiehendelse}
-      simuleringResultat={simuleringResultat}
-      tilbakekrevingvalg={tilbakekrevingvalg}
       uttakPeriodeGrense={uttakPeriodeGrense}
       alleKodeverk={alleKodeverk}
       ytelsefordeling={ytelsefordeling}
@@ -75,17 +68,14 @@ const UttakProsessIndex = ({
 );
 
 UttakProsessIndex.propTypes = {
-  fagsak: avregningFagsakPropType.isRequired,
-  behandling: avregningBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
+  fagsak: uttakFagsakPropType.isRequired,
+  behandling: uttakBehandlingPropType.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(uttakAksjonspunkterPropType).isRequired,
   uttakStonadskontoer: PropTypes.shape().isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
   soknad: PropTypes.shape().isRequired,
-  tilbakekrevingvalg: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  faktaArbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   uttaksresultatPerioder: PropTypes.shape().isRequired,
   isApOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
@@ -98,11 +88,6 @@ UttakProsessIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   tempUpdateStonadskontoer: PropTypes.func.isRequired,
-};
-
-UttakProsessIndex.defaultProps = {
-  simuleringResultat: undefined,
-  tilbakekrevingvalg: undefined,
 };
 
 export default UttakProsessIndex;

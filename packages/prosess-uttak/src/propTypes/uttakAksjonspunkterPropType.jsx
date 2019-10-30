@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-const avregningAksjonspunkterPropType = PropTypes.shape({
+const uttakAksjonspunkterPropType = PropTypes.shape({
   definisjon: kodeverkObjektPropType.isRequired,
-  begrunnelse: PropTypes.string,
+  status: PropTypes.shape().isRequired,
 });
 
-export default avregningAksjonspunkterPropType;
+export default uttakAksjonspunkterPropType;
