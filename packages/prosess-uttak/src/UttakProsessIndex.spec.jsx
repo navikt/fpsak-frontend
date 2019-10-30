@@ -17,22 +17,6 @@ describe('<UttakProsessIndex>', () => {
     },
   };
 
-  const faktaArbeidsforhold = [
-    {
-      arbeidsgiver: {
-        identifikator: '910909088',
-        aktørId: null,
-        fødselsdato: null,
-        navn: 'BEDRIFT AS',
-        virksomhet: true,
-      },
-      arbeidType: {
-        kode: 'ORDINÆRT_ARBEID',
-        kodeverk: 'UTTAK_ARBEID_TYPE',
-      },
-    },
-  ];
-
   const uttaksresultatPerioder = {
     perioderSøker: [
       {
@@ -149,14 +133,11 @@ describe('<UttakProsessIndex>', () => {
       featureToggles={{}}
       soknad={{}}
       familiehendelse={{}}
-      faktaArbeidsforhold={faktaArbeidsforhold}
       uttaksresultatPerioder={uttaksresultatPerioder}
       personopplysninger={{}}
       alleKodeverk={{}}
       employeeHasAccess
-      simuleringResultat={{}}
       tempUpdateStonadskontoer={sinon.spy()}
-      tilbakekrevingvalg={{}}
       uttakPeriodeGrense={{}}
       ytelsefordeling={{}}
     />);
