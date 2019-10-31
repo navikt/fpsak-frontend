@@ -367,7 +367,7 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
 };
 
 const mapStateToPropsFactory = (_initialState, ownProps) => {
-  const { behandlingId, behandlingVersjon } = ownProps;
+  const { behandlingId, behandlingVersjon, aksjonspunkter } = ownProps;
   const validate = (values) => validateUttakPanelForm(values);
   const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
   const initialValues = buildInitialValues(ownProps);
