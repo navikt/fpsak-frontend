@@ -24,6 +24,7 @@ const feilutbetalingFaktaPropType = PropTypes.shape({
       videreBehandling: kodeverkObjektPropType.isRequired,
     }),
     datoForRevurderingsvedtak: PropTypes.string.isRequired,
+    begrunnelse: PropTypes.string,
   }),
 });
 

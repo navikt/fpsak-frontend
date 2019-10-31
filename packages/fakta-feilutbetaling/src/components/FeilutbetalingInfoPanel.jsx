@@ -273,13 +273,10 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 };
 
 const buildInitialValues = createSelector([
-  (ownProps) => ownProps.feilutbetalingFakta, (ownProps) => ownProps.aksjonspunkter], (
-  feilutbetalingFakta, aksjonspunkter,
-) => {
-  const { perioder } = feilutbetalingFakta;
-  const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  (ownProps) => ownProps.feilutbetalingFakta], (feilutbetalingFakta) => {
+  const { perioder, begrunnelse } = feilutbetalingFakta;
   return {
-    begrunnelse: apCode ? apCode.begrunnelse : null,
+    begrunnelse,
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
       .map((p) => {
         const {
