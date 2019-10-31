@@ -58,13 +58,17 @@ const FormkravProsessIndex = ({
 
 FormkravProsessIndex.propTypes = {
   behandling: formkravBehandlingPropType.isRequired,
-  klageVurdering: formkravKlageVurderingPropType.isRequired,
+  klageVurdering: formkravKlageVurderingPropType,
   avsluttedeBehandlinger: PropTypes.arrayOf(avsluttetBehandlingPropType).isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+};
+
+FormkravProsessIndex.defaultProps = {
+  klageVurdering: {},
 };
 
 export default FormkravProsessIndex;
