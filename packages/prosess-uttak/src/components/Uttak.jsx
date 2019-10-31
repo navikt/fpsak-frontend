@@ -466,6 +466,10 @@ export class UttakImpl extends Component {
                       callbackCancelSelectedActivity={this.cancelSelectedActivity}
                       isApOpen={false}
                       harSoktOmFlerbarnsdager={annenForelderSoktOmFlerbarnsdager}
+                      alleKodeverk={alleKodeverk}
+                      behandlingId={behandlingId}
+                      behandlingVersjon={behandlingVersjon}
+                      behandlingsresultat={behandlingsresultat}
                     />
                   )}
               </>
