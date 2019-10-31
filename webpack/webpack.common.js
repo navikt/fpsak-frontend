@@ -3,14 +3,10 @@ const path = require('path');
 const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.join(PACKAGES_DIR, 'sak-app/src');
 
-//TODO (TOR) Dette må delast opp og flyttast inn i kvar pakke.
 const config = {
-
   resolve: {
     alias: {
-      //Andre pakker
       behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),
-      behandlingTilbakekreving: path.join(PACKAGES_DIR, 'fp-behandling-tilbakekreving'),
       behandlingInnsyn: path.join(PACKAGES_DIR, 'fp-behandling-innsyn'),
       behandlingAnke: path.join(PACKAGES_DIR, 'fp-behandling-anke'),
       papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
