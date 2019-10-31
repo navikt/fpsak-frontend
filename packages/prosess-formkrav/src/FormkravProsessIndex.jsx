@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import messages from '../i18n/nb_NO';
 import FormkravKlageFormNfp from './components/FormkravKlageFormNfp';
 import FormkravKlageFormKa from './components/FormkravKlageFormKa';
 import formkravBehandlingPropType from './propTypes/formkravBehandlingPropType';
 import avsluttetBehandlingPropType from './propTypes/avsluttetBehandlingPropType';
-import formkravAksjonspunktPropType from './propTypes/formkravAksjonspunktPropType';
 import formkravKlageVurderingPropType from './propTypes/formkravKlageVurderingPropType';
 
 const cache = createIntlCache();
@@ -20,7 +21,6 @@ const intl = createIntl({
 const FormkravProsessIndex = ({
   behandling,
   klageVurdering,
-  aksjonspunkter,
   avsluttedeBehandlinger,
   apCodes,
   submitCallback,
@@ -34,7 +34,6 @@ const FormkravProsessIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         klageVurdering={klageVurdering}
-        aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
@@ -47,7 +46,6 @@ const FormkravProsessIndex = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         klageVurdering={klageVurdering}
-        aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
@@ -61,7 +59,6 @@ const FormkravProsessIndex = ({
 FormkravProsessIndex.propTypes = {
   behandling: formkravBehandlingPropType.isRequired,
   klageVurdering: formkravKlageVurderingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(formkravAksjonspunktPropType).isRequired,
   avsluttedeBehandlinger: PropTypes.arrayOf(avsluttetBehandlingPropType).isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   submitCallback: PropTypes.func.isRequired,

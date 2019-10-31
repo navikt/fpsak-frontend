@@ -16,7 +16,7 @@ const FritekstKlageBrevTextField = ({
   <div className={styles.fritekstTilBrevTextArea}>
     <TextAreaField
       name="fritekstTilBrev"
-      label={intl.formatMessage({ id: 'VedtakKlageForm.Fritekst' })}
+      label={intl.formatMessage({ id: 'FritekstKlageBrevTextField.Fritekst' })}
       validate={[required, hasValidText]}
       readOnly={readOnly}
       textareaClass={styles.explanationTextarea}

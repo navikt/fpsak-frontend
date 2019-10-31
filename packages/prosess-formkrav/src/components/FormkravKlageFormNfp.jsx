@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
@@ -19,7 +20,6 @@ export const FormkravKlageFormNfpImpl = ({
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
-  aksjonspunktCode,
   alleKodeverk,
   avsluttedeBehandlinger,
   ...formProps
@@ -28,10 +28,9 @@ export const FormkravKlageFormNfpImpl = ({
     <FormkravKlageForm
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
-      aksjonspunkter={aksjonspunkter}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      aksjonspunktCode={aksjonspunktCode}
+      aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
@@ -42,7 +41,6 @@ export const FormkravKlageFormNfpImpl = ({
 FormkravKlageFormNfpImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
@@ -53,13 +51,13 @@ FormkravKlageFormNfpImpl.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-const transformValues = (values, aksjonspunktCode) => ({
+const transformValues = (values) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
   erKonkret: values.erKonkret,
   erSignert: values.erSignert,
   begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCode,
+  kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
 });
 
@@ -77,14 +75,11 @@ const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering
       erFristOverholdt: klageFormkavResultatNfp ? klageFormkavResultatNfp.erKlagefirstOverholdt : null,
       erSignert: klageFormkavResultatNfp ? klageFormkavResultatNfp.erSignert : null,
     };
-  },
-);
+  });
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
-    aksjonspunktCode,
     initialValues: buildInitialValues(ownProps),
     readOnly: ownProps.readOnly,
     onSubmit,

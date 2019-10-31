@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
+import messages from '../i18n/nb_NO';
 import BehandleKlageFormKa from './components/ka/BehandleKlageFormKa';
 import BehandleKlageFormNfp from './components/nfp/BehandleKlageFormNfp';
-import messages from '../i18n/nb_NO';
-import avregningFagsakPropType from './propTypes/avregningFagsakPropType';
-import avregningBehandlingPropType from './propTypes/avregningBehandlingPropType';
-import avregningAksjonspunkterPropType from './propTypes/avregningAksjonspunkterPropType';
-import avregningSimuleringResultatPropType from './propTypes/avregningSimuleringResultatPropType';
+import klageVurderingPropType from './propTypes/klageVurderingPropType';
+import klagevurderingBehandlingPropType from './propTypes/klagevurderingBehandlingPropType';
 
 const cache = createIntlCache();
 
@@ -20,18 +20,13 @@ const intl = createIntl({
 const KlagevurderingProsessIndex = ({
   behandling,
   klageVurdering,
-  aksjonspunkter,
   alleKodeverk,
-
-  simuleringResultat,
-  tilbakekrevingvalg,
+  saveKlage,
   submitCallback,
   readOnly,
+  previewCallback,
   readOnlySubmitButton,
   apCodes,
-  isApOpen,
-  previewCallback,
-  featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
     {apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK) && (
@@ -40,8 +35,7 @@ const KlagevurderingProsessIndex = ({
         behandlingVersjon={behandling.versjon}
         sprakkode={behandling.sprakkode}
         klageVurdering={klageVurdering}
-        aksjonspunkter={aksjonspunkter}
-        saveKlage={saveTempKlage}
+        saveKlage={saveKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallback}
@@ -55,8 +49,7 @@ const KlagevurderingProsessIndex = ({
         behandlingVersjon={behandling.versjon}
         sprakkode={behandling.sprakkode}
         klageVurdering={klageVurdering}
-        aksjonspunkter={aksjonspunkter}
-        saveKlage={saveTempKlage}
+        saveKlage={saveKlage}
         submitCallback={submitCallback}
         readOnly={readOnly}
         previewCallback={previewCallback}
@@ -68,22 +61,15 @@ const KlagevurderingProsessIndex = ({
 );
 
 KlagevurderingProsessIndex.propTypes = {
-  behandling: avregningBehandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(avregningAksjonspunkterPropType).isRequired,
-  simuleringResultat: avregningSimuleringResultatPropType,
-  tilbakekrevingvalg: PropTypes.shape(),
+  behandling: klagevurderingBehandlingPropType.isRequired,
+  klageVurdering: klageVurderingPropType.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  saveKlage: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  previewCallback: PropTypes.func.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  featureToggles: PropTypes.shape().isRequired,
-};
-
-KlagevurderingProsessIndex.defaultProps = {
-  simuleringResultat: undefined,
-  tilbakekrevingvalg: undefined,
 };
 
 export default KlagevurderingProsessIndex;

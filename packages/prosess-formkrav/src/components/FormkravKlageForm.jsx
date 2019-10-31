@@ -15,6 +15,8 @@ import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-fronte
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import styles from './formkravKlageForm.less';
+
 export const IKKE_PA_KLAGD_VEDTAK = 'ikkePaklagdVedtak';
 
 export const getPaKlagdVedtak = (klageFormkavResultat) => (

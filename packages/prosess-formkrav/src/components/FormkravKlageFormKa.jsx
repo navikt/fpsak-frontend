@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import PropTypes from 'prop-types';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import FormkravKlageForm, { getPaKlagdVedtak, IKKE_PA_KLAGD_VEDTAK } from './FormkravKlageForm';
@@ -19,7 +20,6 @@ export const FormkravKlageFormKa = ({
   handleSubmit,
   readOnly,
   readOnlySubmitButton,
-  aksjonspunktCode,
   alleKodeverk,
   avsluttedeBehandlinger,
   ...formProps
@@ -28,10 +28,9 @@ export const FormkravKlageFormKa = ({
     <FormkravKlageForm
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
-      aksjonspunkter={aksjonspunkter}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      aksjonspunktCode={aksjonspunktCode}
+      aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA}
       formProps={formProps}
       alleKodeverk={alleKodeverk}
       avsluttedeBehandlinger={avsluttedeBehandlinger}
@@ -42,7 +41,6 @@ export const FormkravKlageFormKa = ({
 FormkravKlageFormKa.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  aksjonspunktCode: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ...formPropTypes,
@@ -53,37 +51,34 @@ FormkravKlageFormKa.defaultProps = {
   readOnlySubmitButton: true,
 };
 
-export const transformValues = (values, aksjonspunktCode) => ({
+export const transformValues = (values) => ({
   erKlagerPart: values.erKlagerPart,
   erFristOverholdt: values.erFristOverholdt,
   erKonkret: values.erKonkret,
   erSignert: values.erSignert,
   begrunnelse: values.begrunnelse,
-  kode: aksjonspunktCode,
+  kode: aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA,
   vedtak: values.vedtak === IKKE_PA_KLAGD_VEDTAK ? null : values.vedtak,
 });
 
 const formName = 'FormkravKlageFormKa';
 
 const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurdering) => {
-    const { klageFormkavResultatKA } = klageVurdering;
-    const klageFormkavResultatKa = klageFormkavResultatKA || null;
-    return {
-      vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
-      begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
-      erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
-      erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
-      erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
-      erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
-    };
-  },
-);
+  const { klageFormkavResultatKA } = klageVurdering;
+  const klageFormkavResultatKa = klageFormkavResultatKA || null;
+  return {
+    vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
+    begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
+    erKlagerPart: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagerPart : null,
+    erKonkret: klageFormkavResultatKa ? klageFormkavResultatKa.erKlageKonkret : null,
+    erFristOverholdt: klageFormkavResultatKa ? klageFormkavResultatKa.erKlagefirstOverholdt : null,
+    erSignert: klageFormkavResultatKa ? klageFormkavResultatKa.erSignert : null,
+  };
+});
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
-  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
-    aksjonspunktCode,
     initialValues: buildInitialValues(ownProps),
     onSubmit,
   });

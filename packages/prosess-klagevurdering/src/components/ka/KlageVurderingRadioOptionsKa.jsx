@@ -23,7 +23,7 @@ export const KlageVurderingRadioOptionsKa = ({
     <div>
       <BehandlingspunktBegrunnelseTextField
         readOnly={readOnly}
-        textCode="VedtakKlageForm.VurderingForKlage"
+        textCode="KlageVurderingRadioOptionsKa.VurderingForKlage"
       />
       <VerticalSpacer sixteenPx />
       <Row>

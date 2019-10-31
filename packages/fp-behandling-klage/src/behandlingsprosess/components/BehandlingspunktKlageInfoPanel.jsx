@@ -65,7 +65,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
           || apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP)}
         render={(props) => (
           <KlagevurderingProsessIndex
-            aksjonspunkter={behandlingspunktAksjonspunkter}
             alleKodeverk={alleKodeverk}
             saveKlage={saveTempKlage}
             submitCallback={submitCallback}
@@ -85,7 +84,6 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
           || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)}
         render={(props) => (
           <FormkravProsessIndex
-            aksjonspunkter={behandlingspunktAksjonspunkter}
             submitCallback={submitCallback}
             readOnly={readOnly}
             readOnlySubmitButton={readOnlySubmitButton}
