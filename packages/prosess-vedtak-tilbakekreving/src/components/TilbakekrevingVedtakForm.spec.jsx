@@ -46,6 +46,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           FAKTA: 'dette er faktateksten',
           VILKÅR: 'dette er vilkårteksten',
           SÆRLIGEGRUNNER: 'dette er særligegrunnerteksten',
+          SÆRLIGEGRUNNER_ANNET: 'dette er særligegrunnerteksten for annet',
         },
       }}
       vedtaksbrevAvsnitt={[{
@@ -71,6 +72,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
         faktaAvsnitt: 'dette er faktateksten',
         vilkaarAvsnitt: 'dette er vilkårteksten',
         saerligeGrunnerAvsnitt: 'dette er særligegrunnerteksten',
+        saerligeGrunnerAnnetAvsnitt: 'dette er særligegrunnerteksten for annet',
       }],
     });
   });
