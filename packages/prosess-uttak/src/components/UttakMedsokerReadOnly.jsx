@@ -18,6 +18,10 @@ const UttakMedsokerReadOnly = ({
   callbackCancelSelectedActivity,
   isApOpen,
   harSoktOmFlerbarnsdager,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
+  behandlingsresultat,
 }) => {
   const intl = useIntl();
   return (
@@ -43,6 +47,10 @@ const UttakMedsokerReadOnly = ({
         readOnly={readOnly}
         isApOpen={isApOpen}
         harSoktOmFlerbarnsdager={harSoktOmFlerbarnsdager}
+        alleKodeverk={alleKodeverk}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingsresultat={behandlingsresultat}
       />
     </TimeLineDataContainer>
   );
@@ -57,6 +65,10 @@ UttakMedsokerReadOnly.propTypes = {
   callbackCancelSelectedActivity: PropTypes.func.isRequired,
   isApOpen: PropTypes.bool,
   harSoktOmFlerbarnsdager: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingsresultat: PropTypes.shape().isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 UttakMedsokerReadOnly.defaultProps = {
