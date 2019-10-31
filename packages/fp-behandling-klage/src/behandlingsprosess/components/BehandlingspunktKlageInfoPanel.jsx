@@ -40,6 +40,8 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
   readOnlySubmitButton,
   notAcceptedByBeslutter,
   behandlingspunktAksjonspunkter,
+  alleKodeverk,
+  avsluttedeBehandlinger,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
@@ -110,6 +112,8 @@ BehandlingspunktKlageInfoPanel.propTypes = {
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingspunktAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
+  alleKodeverk: PropTypes.shape().isRequired,
+  avsluttedeBehandlinger: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 BehandlingspunktKlageInfoPanel.defaultProps = {
