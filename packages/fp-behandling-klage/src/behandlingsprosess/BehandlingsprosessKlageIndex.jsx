@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
+import { createSelector } from 'reselect';
 
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
