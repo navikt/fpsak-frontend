@@ -65,8 +65,7 @@ const formName = 'FormkravKlageFormNfp';
 
 const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering],
   (klageVurdering) => {
-    const { klageFormkravResultatNFP } = klageVurdering;
-    const klageFormkavResultatNfp = klageFormkravResultatNFP || null;
+    const klageFormkavResultatNfp = klageVurdering ? klageVurdering.klageFormkravResultatNFP : null;
     return {
       vedtak: klageFormkavResultatNfp ? getPaKlagdVedtak(klageFormkavResultatNfp) : null,
       begrunnelse: klageFormkavResultatNfp ? klageFormkavResultatNfp.begrunnelse : null,

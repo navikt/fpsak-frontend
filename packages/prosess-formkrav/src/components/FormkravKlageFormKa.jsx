@@ -64,8 +64,7 @@ export const transformValues = (values) => ({
 const formName = 'FormkravKlageFormKa';
 
 const buildInitialValues = createSelector([(ownProps) => ownProps.klageVurdering], (klageVurdering) => {
-  const { klageFormkavResultatKA } = klageVurdering;
-  const klageFormkavResultatKa = klageFormkavResultatKA || null;
+  const klageFormkavResultatKa = klageVurdering ? klageVurdering.klageFormkavResultatKA : null;
   return {
     vedtak: klageFormkavResultatKa ? getPaKlagdVedtak(klageFormkavResultatKa) : null,
     begrunnelse: klageFormkavResultatKa ? klageFormkavResultatKa.begrunnelse : null,
