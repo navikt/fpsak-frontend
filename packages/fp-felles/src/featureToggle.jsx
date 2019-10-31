@@ -4,6 +4,7 @@ const featureToggle = {
   MARKER_UTENLANDSSAK: 'fpsak.aksjonspunkt-marker-utenlandssak',
   OVERSTYR_BEREGNINGSGRUNNLAG: 'fpsak.overstyr_beregningsgrunnlag',
   BESLUTT_TILBAKEKREVING: 'fpsak.beslutt-tilbakekreving',
+  BG_REDESIGN: 'fpsak.redesign.beregningsgrunnlag',
 };
 
 export default featureToggle;

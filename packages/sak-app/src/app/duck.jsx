@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi from '../data/fpsakApi';
 
@@ -6,7 +7,7 @@ export const reducerName = 'app';
 
 /* Action creators */
 export const fetchAllFeatureToggles = () => (dispatch) => (
-  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()())
+  dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map((ft) => ({ navn: ft })) }))
 );
 
 /* Selectors */

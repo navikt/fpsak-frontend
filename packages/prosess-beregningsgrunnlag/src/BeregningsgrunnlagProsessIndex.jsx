@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+import { featureToggle } from '@fpsak-frontend/fp-felles';
 
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -26,22 +27,29 @@ const BeregningsgrunnlagProsessIndex = ({
   isApOpen,
   vilkar,
   alleKodeverk,
-}) => (
-  <RawIntlProvider value={intl}>
-    <BeregningFP
-      behandling={behandling}
-      beregningsgrunnlag={beregningsgrunnlag}
-      aksjonspunkter={aksjonspunkter}
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={apCodes}
-      isApOpen={isApOpen}
-      vilkar={vilkar}
-      alleKodeverk={alleKodeverk}
-    />
-  </RawIntlProvider>
-);
+  featureToggles,
+}) => {
+  const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
+  if (skalViseRedesignetGUI) {
+    return null;
+  }
+  return (
+    <RawIntlProvider value={intl}>
+      <BeregningFP
+        behandling={behandling}
+        beregningsgrunnlag={beregningsgrunnlag}
+        aksjonspunkter={aksjonspunkter}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        readOnlySubmitButton={readOnlySubmitButton}
+        apCodes={apCodes}
+        isApOpen={isApOpen}
+        vilkar={vilkar}
+        alleKodeverk={alleKodeverk}
+      />
+    </RawIntlProvider>
+  );
+};
 
 BeregningsgrunnlagProsessIndex.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType.isRequired,
@@ -54,6 +62,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
+  featureToggles: PropTypes.shape().isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {
