@@ -118,12 +118,12 @@ BehandlingspunktKlageInfoPanel.defaultProps = {
 
 const mapStateToProps = (state) => ({
   openAksjonspunkt: behandlingspunktKlageSelectors.hasBehandlingspunktAtLeastOneOpenAksjonspunkt(state),
-  readOnly: behandlingspunktKlageSellectors.isSelectedBehandlingspunktReadOnly(state),
-  isApSolvable: behandlingspunktKlageSSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
+  readOnly: behandlingspunktKlageSelectors.isSelectedBehandlingspunktReadOnly(state),
+  isApSolvable: behandlingspunktKlageSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
   apCodes: behandlingspunktKlageSelectors.getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: behandlingspunktKlageSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktKlageSelectors.getNotAcceptedByBeslutter(state),
-  behandlingspunktAksjonspunkter: behandlingspunktKlageSellectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  behandlingspunktAksjonspunkter: behandlingspunktKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
   alleKodeverk: getAlleKodeverk(state),
   avsluttedeBehandlinger: getAvsluttedeBehandlinger(state),
 });
