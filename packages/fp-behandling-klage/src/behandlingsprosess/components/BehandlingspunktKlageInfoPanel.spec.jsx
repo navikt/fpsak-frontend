@@ -4,8 +4,9 @@ import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 
-import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 import { BehandlingspunktKlageInfoPanel } from './BehandlingspunktKlageInfoPanel';
 
 describe('<BehandlingspunktKlageInfoPanel>', () => {
@@ -28,6 +29,22 @@ describe('<BehandlingspunktKlageInfoPanel>', () => {
       behandlingspunktAksjonspunkter={[]}
     />);
 
-    expect(wrapper.find(BehandleKlageFormNfp)).to.have.length(1);
+    const dataFetchers = wrapper.find(DataFetcherWithCacheTemp);
+    expect(dataFetchers.at(1).prop('showComponent')).to.be.true;
+
+    const tilbakekrevingPanel = dataFetchers.at(1).renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      perioderForeldelse: {
+        perioder: [],
+      },
+      vilkarvurderingsperioder: {
+        perioder: [],
+        rettsgebyr: 1000,
+      },
+      vilkarvurdering: {
+        vilkarsVurdertePerioder: [],
+      },
+    }).find(KlagevurderingProsessIndex);
+    expect(tilbakekrevingPanel).to.have.length(1);
   });
 });

@@ -38,8 +38,6 @@ const getRettigheter = createSelector([
 
 const klageBehandlingSelectors = {
   ...omit(commonBehandlingKlageSelectors, 'getSelectedBehandling'),
-  getMellomlagringData,
-  getMellomlagringSpinner,
   getBehandlingKlageVurdering,
   getBehandlingKlageVurderingResultatNFP,
   getBehandlingKlageVurderingResultatNK,
