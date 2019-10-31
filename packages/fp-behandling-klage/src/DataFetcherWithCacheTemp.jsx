@@ -38,7 +38,7 @@ const mapStateToPropsFactory = () => {
     behandlingData: data
       .reduce((acc, d) => ({
         ...acc,
-        [format(d.name)]: d.name === TilbakekrevingBehandlingApiKeys.BEHANDLING ? behandling : behandling[mapping[d.name]],
+        [format(d.name)]: d.name === KlageBehandlingApiKeys.BEHANDLING ? behandling : behandling[mapping[d.name]],
       }), {}),
   }));
   return (state, ownProps) => (ownProps.showComponent !== false ? createProps(state, ownProps) : {});
