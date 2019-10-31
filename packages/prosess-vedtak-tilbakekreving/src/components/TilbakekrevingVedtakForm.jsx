@@ -30,6 +30,7 @@ const formatVedtakData = (values) => {
       faktaAvsnitt: perioder[key].FAKTA,
       vilkaarAvsnitt: perioder[key].VILKÅR,
       saerligeGrunnerAvsnitt: perioder[key].SÆRLIGEGRUNNER,
+      saerligeGrunnerAnnetAvsnitt: perioder[key].SÆRLIGEGRUNNER_ANNET,
     })),
   };
 };

@@ -55,6 +55,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
                       readOnly={readOnly}
                       behandlingId={behandlingId}
                       behandlingVersjon={behandlingVersjon}
+                      fritekstPakrevet={underavsnitt.fritekstPåkrevet}
                     />
                   </>
                 )}
