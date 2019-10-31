@@ -61,7 +61,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
       <DataFetcherWithCacheTemp
         behandlingVersjon={1}
         data={klagevurderingData}
-        showComponent={apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK) 
+        showComponent={apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK)
           || apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP)}
         render={(props) => (
           <KlagevurderingProsessIndex
@@ -80,7 +80,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
       <DataFetcherWithCacheTemp
         behandlingVersjon={1}
         data={formkravData}
-        showComponent={apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP) 
+        showComponent={apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP)
           || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)}
         render={(props) => (
           <FormkravProsessIndex

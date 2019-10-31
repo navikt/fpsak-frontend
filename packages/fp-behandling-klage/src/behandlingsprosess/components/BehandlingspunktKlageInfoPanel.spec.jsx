@@ -3,9 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { BehandlingspunktKlageInfoPanel } from 'behandlingKlage/src/behandlingsprosess/components/BehandlingspunktKlageInfoPanel';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+
 import BehandleKlageFormNfp from './klage/Klagevurdering/Nfp/BehandleKlageFormNfp';
+import { BehandlingspunktKlageInfoPanel } from './BehandlingspunktKlageInfoPanel';
 
 describe('<BehandlingspunktKlageInfoPanel>', () => {
   it('skal rendre panelet for beregningsresultat', () => {

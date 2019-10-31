@@ -10,7 +10,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingIdentifier, getLocationWithQueryParams, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingKlage/src/duckBehandlingKlage';
+import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingKlage';
 import BehandlingspunktKlageInfoPanel from './components/BehandlingspunktKlageInfoPanel';
 import KlageBehandlingModal from './components/KlageBehandlingModal';
 import behandlingSelectors from '../selectors/klageBehandlingSelectors';
