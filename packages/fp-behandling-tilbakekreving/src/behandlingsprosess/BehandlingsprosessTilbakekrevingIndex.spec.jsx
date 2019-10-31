@@ -5,8 +5,8 @@ import sinon from 'sinon';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
+import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import tilbakekrevingAksjonspunktCodes from '../kodeverk/tilbakekrevingAksjonspunktCodes';
 import { BehandlingsprosessTilbakekrevingIndex } from './BehandlingsprosessTilbakekrevingIndex';
 import TilbakekrevingBehandlingspunktInfoPanel from './components/TilbakekrevingBehandlingspunktInfoPanel';
 
@@ -77,7 +77,7 @@ describe('BehandlingsprosessTilbakekrevingIndex', () => {
 
     const panel = innerWrapper.find(TilbakekrevingBehandlingspunktInfoPanel);
     const apModels = [{
-      kode: tilbakekrevingAksjonspunktCodes.FORESLA_VEDTAK,
+      kode: aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK,
     }];
 
     panel.prop('submitCallback')(apModels);
