@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 const formkravKlageVurderingPropType = PropTypes.shape({
   klageVurderingResultatNK: PropTypes.shape({
     klageVurdertAv: PropTypes.string.isRequired,
-    klageVurdering: PropTypes.string.isRequired,
+    klageVurdering: PropTypes.string,
     fritekstTilBrev: PropTypes.string,
-    klageMedholdArsakNavn: PropTypes.string.isRequired,
+    klageMedholdArsakNavn: PropTypes.string,
     godkjentAvMedunderskriver: PropTypes.bool.isRequired,
   }),
   klageVurderingResultatNFP: PropTypes.shape({
     klageVurdertAv: PropTypes.string.isRequired,
-    klageVurdering: PropTypes.string.isRequired,
+    klageVurdering: PropTypes.string,
     fritekstTilBrev: PropTypes.string,
-    klageMedholdArsakNavn: PropTypes.string.isRequired,
+    klageMedholdArsakNavn: PropTypes.string,
     godkjentAvMedunderskriver: PropTypes.bool.isRequired,
   }),
   klageFormkravResultatKA: PropTypes.shape({
