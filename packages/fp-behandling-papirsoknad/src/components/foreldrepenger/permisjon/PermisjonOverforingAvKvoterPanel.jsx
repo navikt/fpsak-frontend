@@ -52,8 +52,7 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
   intl,
   visFeilMelding,
 }) => {
-  const selectValues = mapArsaker(overtaKvoteReasons, soknadData.getForeldreType() === foreldreType.MOR
-    || soknadData.getForeldreType() === foreldreType.IKKE_RELEVANT, intl);
+  const selectValues = mapArsaker(overtaKvoteReasons, soknadData.getForeldreType() === foreldreType.MOR, intl);
 
   return (
     <ElementWrapper>
