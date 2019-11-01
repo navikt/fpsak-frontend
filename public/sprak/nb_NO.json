@@ -1036,6 +1036,8 @@
   "IntegrationStatusPanel.Stacktrace": "StackTrace:",
   "DataFetchPendingModal.LosningenJobberMedBehandlingen": "Løsningen jobber med behandlingen...",
 
+  "AdvarselModal.Ok": "OK",
+
   "MigreringFraInfotrygdPanel.Migrering": "Flytting fra Infotrygd",
   "MigreringFraInfotrygdPanel.Ja": "Ja",
   "MigreringFraInfotrygdPanel.Nei": "Nei",
