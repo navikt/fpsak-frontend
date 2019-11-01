@@ -22,6 +22,8 @@
   "ValidationMessage.UtsettelseUtenFullArbeid": "Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.MerEn100Prosent": "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%.",
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.MinValue": "Feltet må være større eller lik {length}",
   "Uttak.Confirm": "Bekreft og fortsett",
   "Uttak.ManuellOverstyring": "Manuell overstyring",
   "Uttak.Overstyrt": "Kun overstyrer kan endre på periodene",
