@@ -14,6 +14,10 @@ describe('<FormkravKlageFormNfp>', () => {
       readOnlySubmitButton
       aksjonspunktCode={aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP}
       intl={intlMock}
+      behandlingId={1}
+      behandlingVersjon={2}
+      alleKodeverk={{}}
+      avsluttedeBehandlinger={[]}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find(FormkravKlageForm)).has.length(1);

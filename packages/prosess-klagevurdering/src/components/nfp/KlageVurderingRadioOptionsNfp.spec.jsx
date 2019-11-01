@@ -5,7 +5,7 @@ import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { KlageVurderingRadioOptionsNfpImpl } from './KlageVurderingRadioOptionsNfp';
+import { KlageVurderingRadioOptionsNfp } from './KlageVurderingRadioOptionsNfp';
 
 describe('<KlageVurderingRadioOptionsNfp>', () => {
   const sprakkode = {
@@ -20,7 +20,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   ];
 
   it('skal vise to options når klage opprettholdt', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfpImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfp
       readOnly={false}
       readOnlySubmitButton
       medholdReasons={medholdReasons}
@@ -38,7 +38,7 @@ describe('<KlageVurderingRadioOptionsNfp>', () => {
   });
 
   it('skal vise fem options når klage medhold', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfpImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsNfp
       readOnly={false}
       readOnlySubmitButton
       aksjonspunktCode={aksjonspunktCodes.BEHANDLE_KLAGE_NFP}

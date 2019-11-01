@@ -15,7 +15,7 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-export const TempsaveKlageButton = ({
+const TempsaveKlageButton = ({
   formValues,
   saveKlage,
   spinner,

@@ -7,7 +7,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormKaImpl } from './BehandleKlageFormKa';
-import PreviewKlageLink from '../SharedUtills/PreviewKlageLink';
+import PreviewKlageLink from '../felles/PreviewKlageLink';
 
 describe('<BehandleKlageFormKaImpl>', () => {
   const sprakkode = {
@@ -30,6 +30,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       intl={intlMock}
       formProps={{}}
       sprakkode={sprakkode}
+      alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find('PreviewKlageLink')).to.have.length(1);
@@ -49,6 +50,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       intl={intlMock}
       formProps={{}}
       sprakkode={sprakkode}
+      alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find(PreviewKlageLink)).to.have.length(0);
@@ -68,6 +70,7 @@ describe('<BehandleKlageFormKaImpl>', () => {
       intl={intlMock}
       formProps={{}}
       sprakkode={sprakkode}
+      alleKodeverk={{}}
       {...reduxFormPropsMock}
     />);
     expect(wrapper.find(PreviewKlageLink)).to.have.length(0);

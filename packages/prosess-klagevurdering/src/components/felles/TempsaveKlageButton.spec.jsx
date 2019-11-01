@@ -4,52 +4,10 @@ import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import React from 'react';
 import { shallow } from 'enzyme/build';
-import { TempsaveKlageButtonImpl } from './TempsaveKlageButton';
+import TempsaveKlageButton from './TempsaveKlageButton';
 
 
 describe('<TempsaveKlageButton>', () => {
-  const lastSavedVersionValues = {
-    klageVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-    klageMedholdArsak: null,
-    klageVurderingOmgjoer: null,
-    fritekstTilBrev: null,
-    begrunnelse: null,
-  };
-
-  const formValues = {
-    klageVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
-    fritekstTilBrev: null,
-    begrunnelse: null,
-  };
-
-
-  it('Skal vise knapp i readOnly når lagret versjon er lik form versjon', () => {
-    const wrapper = shallow(<TempsaveKlageButtonImpl
-      lastSavedVersionValues={lastSavedVersionValues}
-      formValues={formValues}
-      saveKlage={sinon.spy()}
-      aksjonspunktCode="123"
-      hasForeslaVedtakAp={false}
-    />);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).to.equal(true);
-  });
-
-  const formValuesWithDiff = {
-    klageVurdering: klageVurderingType.HJEMSENDE_UTEN_Å_OPPHEVE,
-  };
-
-
-  it('Skal vise knapp når lagret versjon er ulik form versjon', () => {
-    const wrapper = shallow(<TempsaveKlageButtonImpl
-      lastSavedVersionValues={lastSavedVersionValues}
-      formValues={formValuesWithDiff}
-      saveKlage={sinon.spy()}
-      aksjonspunktCode="123"
-      hasForeslaVedtakAp={false}
-    />);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).to.equal(false);
-  });
-
   const formValuesWithEmptyStrings = {
     klageVurdering: klageVurderingType.STADFESTE_YTELSESVEDTAK,
     fritekstTilBrev: '',
@@ -57,14 +15,13 @@ describe('<TempsaveKlageButton>', () => {
   };
 
 
-  it('Skal vise knapp i readOnly når lagret tomme strenger blir lagret i tekststrenger', () => {
-    const wrapper = shallow(<TempsaveKlageButtonImpl
-      lastSavedVersionValues={lastSavedVersionValues}
+  it('Skal rendre komponent korrekt', () => {
+    const wrapper = shallow(<TempsaveKlageButton
       formValues={formValuesWithEmptyStrings}
       saveKlage={sinon.spy()}
       aksjonspunktCode="123"
       hasForeslaVedtakAp={false}
     />);
-    expect(wrapper.find(Hovedknapp).prop('disabled')).to.equal(true);
+    expect(wrapper.find(Hovedknapp)).has.length(1);
   });
 });

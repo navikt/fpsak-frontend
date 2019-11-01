@@ -27,24 +27,17 @@ describe('<BehandlingspunktKlageInfoPanel>', () => {
       readOnlySubmitButton={false}
       featureToggleFormkrav
       behandlingspunktAksjonspunkter={[]}
+      alleKodeverk={{}}
+      avsluttedeBehandlinger={[]}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCacheTemp);
     expect(dataFetchers.at(1).prop('showComponent')).to.be.true;
 
-    const tilbakekrevingPanel = dataFetchers.at(1).renderProp('render')({
-      behandling: { id: 1, versjon: 1 },
-      perioderForeldelse: {
-        perioder: [],
-      },
-      vilkarvurderingsperioder: {
-        perioder: [],
-        rettsgebyr: 1000,
-      },
-      vilkarvurdering: {
-        vilkarsVurdertePerioder: [],
-      },
+    const klagevurderingPanel = dataFetchers.at(1).renderProp('render')({
+      behandling: { id: 1, versjon: 1, sprakkode: { kode: 'NO ' } },
+      klageVurdering: {},
     }).find(KlagevurderingProsessIndex);
-    expect(tilbakekrevingPanel).to.have.length(1);
+    expect(klagevurderingPanel).to.have.length(1);
   });
 });

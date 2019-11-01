@@ -6,7 +6,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
-import { KlageVurderingRadioOptionsKaImpl } from './KlageVurderingRadioOptionsKa';
+import { KlageVurderingRadioOptionsKa } from './KlageVurderingRadioOptionsKa';
 
 describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   const sprakkode = {
@@ -21,7 +21,7 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   ];
 
   it('skal vise fire options når klage stadfestet', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKaImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKa
       readOnly={false}
       medholdReasons={medholdReasons}
       readOnlySubmitButton
@@ -41,7 +41,7 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   });
 
   it('skal vise syv options når aksjonspunkt er NK og klage medhold', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKaImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKa
       readOnly={false}
       readOnlySubmitButton
       medholdReasons={medholdReasons}
@@ -65,7 +65,7 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   });
 
   it('skal vise selectfield når klagevurdering er omgjort vedtak', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKaImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKa
       readOnly={false}
       readOnlySubmitButton
       medholdReasons={medholdReasons}
@@ -81,7 +81,7 @@ describe('<KlageVurderingRadioOptionsKaImpl>', () => {
   });
 
   it('skal ikke vise selectfield når klagevurdering er opphev vedtak', () => {
-    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKaImpl
+    const wrapper = shallowWithIntl(<KlageVurderingRadioOptionsKa
       readOnly={false}
       readOnlySubmitButton
       medholdReasons={medholdReasons}
