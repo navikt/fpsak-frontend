@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { PersonIndex } from '@fpsak-frontend/person-info';
 
-import { getFagsakPerson } from 'behandlingKlage/src/duckBehandlingKlage';
+import { getFagsakPerson } from '../../duckBehandlingKlage';
 
 import styles from './faktaKlagePanel.less';
 
