@@ -240,8 +240,16 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   uttakResultArray
     .filter((res) => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
     .forEach((value) => {
-      const gjeldeneStønadskonto = getGjeldendeStønadskonto(value.konto, stonadskonto.stonadskontoer);
-      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
+      const gjeldendeStønadskonto = getGjeldendeStønadskonto(value.konto, stonadskonto.stonadskontoer);
+      if (gjeldendeStønadskonto && !gjeldendeStønadskonto.gyldigForbruk) {
+        const minsteSaldo = gjeldendeStønadskonto.aktivitetSaldoDtoList.reduce((min, akt) => {
+          if (akt.saldo < min) {
+            return akt.saldo;
+          }
+
+          return min;
+        }, 0);
+
         errors = {
           _error: (
             <AlertStripe type="advarsel" className={styles.marginTop}>
@@ -249,7 +257,7 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
                 id="ValidationMessage.NegativeSaldo"
                 values={{
                   periode: uttakPeriodeNavn[value.konto],
-                  days: gjeldeneStønadskonto.saldo * -1,
+                  days: minsteSaldo * -1,
                 }}
               />
             </AlertStripe>
