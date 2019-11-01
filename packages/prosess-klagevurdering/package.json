@@ -5,7 +5,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@fpsak-frontend/assets": "1.0.0",
     "@fpsak-frontend/form": "1.0.0",
     "@fpsak-frontend/fp-felles": "1.0.0",
     "@fpsak-frontend/kodeverk": "1.0.0",
@@ -13,10 +12,6 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "classnames": "^2.2.6",
-    "moment": "^2.24.0",
-    "nav-frontend-chevron": "1.0.10",
-    "nav-frontend-chevron-style": "0.3.5",
-    "nav-frontend-core": "4.0.10",
     "nav-frontend-grid": "1.0.22",
     "nav-frontend-grid-style": "0.2.18",
     "nav-frontend-knapper": "1.0.36",
