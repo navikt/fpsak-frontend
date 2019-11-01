@@ -10,23 +10,6 @@ const beregningsgrunnlagArbeidsforholdProptype = PropTypes.shape({
   arbeidsforholdType: kodeverkObjektPropType,
 });
 
-const faktaOmBeregningAndelPropType = PropTypes.shape({
-  arbeidsforhold: beregningsgrunnlagArbeidsforholdProptype,
-  andelsnr: PropTypes.number,
-  inntektskategori: kodeverkObjektPropType,
-  aktivitetStatus: kodeverkObjektPropType,
-});
-
-
-const faktaOmBeregningPropType = PropTypes.shape({
-  beregningsgrunnlagArbeidsforhold: PropTypes.arrayOf(PropTypes.shape({
-    ...beregningsgrunnlagArbeidsforholdProptype,
-    erTidsbegrensetArbeidsforhold: PropTypes.bool,
-  })),
-  frilansAndel: faktaOmBeregningAndelPropType,
-  arbeidsforholdMedLønnsendringUtenIM: faktaOmBeregningAndelPropType,
-});
-
 const perioderMedGraderingEllerRefusjonPropType = PropTypes.shape({
   erRefusjon: PropTypes.bool,
   erGradering: PropTypes.bool,
@@ -44,7 +27,6 @@ const arbeidsforholdTilFordelingPropType = PropTypes.shape({
   eksternArbeidsforholdId: PropTypes.string,
   naturalytelseBortfaltPrÅr: PropTypes.number,
   naturalytelseTilkommetPrÅr: PropTypes.number,
-  opphoersdato: PropTypes.number,
   organisasjonstype: kodeverkObjektPropType,
   perioderMedGraderingEllerRefusjon: PropTypes.arrayOf(perioderMedGraderingEllerRefusjonPropType),
   permisjon: PropTypes.shape({
@@ -53,6 +35,7 @@ const arbeidsforholdTilFordelingPropType = PropTypes.shape({
   }),
   refusjonPrAar: PropTypes.number,
   startdato: PropTypes.string,
+  opphoersdato: PropTypes.string,
 });
 
 const fordelBeregningsgrunnlagAndelPropType = PropTypes.shape({
@@ -136,14 +119,7 @@ const beregningsgrunnlagPropType = PropTypes.shape({
       besteberegningPrAar: PropTypes.number,
     })),
   })),
-  sammenligningsgrunnlag: PropTypes.shape({
-    avvikPromille: PropTypes.number,
-    rapportertPrAar: PropTypes.number,
-    sammenligningsgrunnlagFom: PropTypes.string,
-    sammenligningsgrunnlagTom: PropTypes.string,
-  }),
   skjaeringstidspunktBeregning: PropTypes.string,
-  faktaOmBeregning: faktaOmBeregningPropType,
   faktaOmFordeling: faktaOmFordelingPropType,
 });
 

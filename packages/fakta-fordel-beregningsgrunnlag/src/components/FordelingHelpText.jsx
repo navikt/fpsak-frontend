@@ -6,13 +6,10 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import { getKodeverknavnFn, createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getFordelBeregningsgrunnlag } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
@@ -25,16 +22,6 @@ export const textCase = {
 };
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
-
-const getEndredeArbeidsforhold = createSelector(
-  [getFordelBeregningsgrunnlag],
-  (fordelBG) => {
-    if (fordelBG) {
-      return fordelBG.arbeidsforholdTilFordeling;
-    }
-    return [];
-  },
-);
 
 export const byggListeSomStreng = (listeMedStrenger) => {
   if (listeMedStrenger.length === 0) {
@@ -145,10 +132,17 @@ const lagHelpTextsFordelBG = (endredeArbeidsforhold, getKodeverknavn) => {
   return helpTexts;
 };
 
-const getHelpTextsFordelBG = createSelector(
-  [getEndredeArbeidsforhold, behandlingSelectors.getAksjonspunkter, getAlleKodeverk],
-  (endredeArbeidsforhold, aksjonspunkter, alleKodeverk) => (hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
-    ? lagHelpTextsFordelBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper)) : []),
+export const getHelpTextsFordelBG = createSelector(
+  [(ownProps) => ownProps.beregningsgrunnlag,
+    (ownProps) => ownProps.alleKodeverk,
+    (ownProps) => ownProps.aksjonspunkter],
+  (beregningsgrunnlag, alleKodeverk, aksjonspunkter) => {
+    const fordelBG = beregningsgrunnlag.faktaOmFordeling.fordelBeregningsgrunnlag;
+    const endredeArbeidsforhold = fordelBG ? fordelBG.arbeidsforholdTilFordeling : [];
+    return hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
+      ? lagHelpTextsFordelBG(endredeArbeidsforhold, getKodeverknavnFn(alleKodeverk, kodeverkTyper))
+      : [];
+  },
 );
 
 export const FordelingHelpTextImpl = ({
@@ -163,8 +157,8 @@ FordelingHelpTextImpl.propTypes = {
   helpText: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  helpText: getHelpTextsFordelBG(state),
+const mapStateToProps = (state, ownProps) => ({
+  helpText: getHelpTextsFordelBG(ownProps),
 });
 
 export default connect(mapStateToProps)(FordelingHelpTextImpl);

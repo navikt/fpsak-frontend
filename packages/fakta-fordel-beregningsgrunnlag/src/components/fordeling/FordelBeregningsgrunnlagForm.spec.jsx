@@ -154,11 +154,18 @@ describe('<FordelBeregningsgrunnlagForm>', () => {
     const perioder = [periode1, periode2, periode3];
     const bgPerioder = [bgPeriode1, bgPeriode2, bgPeriode3];
 
+    const bt = {
+      kode: 'BT-003',
+    };
+
     const wrapper = shallow(<FordelBeregningsgrunnlagForm
       perioder={perioder}
       bgPerioder={bgPerioder}
       isAksjonspunktClosed={false}
       readOnly={false}
+      beregningsgrunnlag={{}}
+      alleKodeverk={{}}
+      behandlingType={bt}
     />);
 
     const periodePanel = wrapper.find(FordelBeregningsgrunnlagPeriodePanel);

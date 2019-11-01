@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-import moment from 'moment';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+
 import FordelBeregningsgrunnlagPeriodePanel from './FordelBeregningsgrunnlagPeriodePanel';
 import { skalValidereMotBeregningsgrunnlag } from '../BgFordelingUtils';
 
@@ -91,6 +93,9 @@ export class FordelBeregningsgrunnlagForm extends Component {
       perioder,
       isAksjonspunktClosed,
       bgPerioder,
+      beregningsgrunnlag,
+      alleKodeverk,
+      behandlingType,
     } = this.props;
     const { openPanels } = this.state;
     return (
@@ -107,6 +112,9 @@ export class FordelBeregningsgrunnlagForm extends Component {
               harPeriodeAarsakGraderingEllerRefusjon={periode.harPeriodeAarsakGraderingEllerRefusjon}
               isAksjonspunktClosed={isAksjonspunktClosed}
               showPanel={this.showPanel}
+              beregningsgrunnlag={beregningsgrunnlag}
+              alleKodeverk={alleKodeverk}
+              behandlingType={behandlingType}
             />
             <VerticalSpacer eightPx />
           </ElementWrapper>
@@ -121,6 +129,9 @@ FordelBeregningsgrunnlagForm.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   bgPerioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
 };
 
 export const finnSumIPeriode = (bgPerioder, fom) => {
