@@ -48,7 +48,7 @@ describe('<RegistrerPapirsoknad>', () => {
       submitPapirsoknad={sinon.spy()}
       setSoknadData={sinon.spy()}
       readOnly
-      soknadData={new SoknadData(fagsakYtelseType.SVANGERSKAPSPENGER, [])}
+      soknadData={new SoknadData(fagsakYtelseType.SVANGERSKAPSPENGER, 'TEST', [])}
     />);
     expect(wrapper.find(ForeldrepengerForm)).to.have.length(0);
     expect(wrapper.find(EngangsstonadForm)).to.have.length(0);

@@ -473,14 +473,14 @@ const buildInitialValues = createSelector(
 
 const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const {
-    behandlingVersjon, behandlingId, behandlingsresultat,
+    behandlingVersjon, behandlingId, behandlingsresultat, alleKodeverk,
   } = initialOwnProps;
-  const avslagAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.UTTAK_AVSLAG_ARSAK];
-  const innvilgelseAarsaker = initialOwnProps.alleKodeverk[kodeverkTyper.INNVILGET_AARSAK];
-  const graderingAvslagAarsakKoder = initialOwnProps.alleKodeverk[kodeverkTyper.GRADERING_AVSLAG_AARSAK];
-  const utsettelseAarsak = initialOwnProps.alleKodeverk[kodeverkTyper.UTSETTELSE_AARSAK_TYPE];
-  const periodeTyper = initialOwnProps.alleKodeverk[kodeverkTyper.UTTAK_PERIODE_TYPE];
-  const oppholdArsakTyper = initialOwnProps.alleKodeverk[kodeverkTyper.OPPHOLD_ARSAK];
+  const avslagAarsaker = alleKodeverk[kodeverkTyper.UTTAK_AVSLAG_ARSAK];
+  const innvilgelseAarsaker = alleKodeverk[kodeverkTyper.INNVILGET_AARSAK];
+  const graderingAvslagAarsakKoder = alleKodeverk[kodeverkTyper.GRADERING_AVSLAG_AARSAK];
+  const utsettelseAarsak = alleKodeverk[kodeverkTyper.UTSETTELSE_AARSAK_TYPE];
+  const periodeTyper = alleKodeverk[kodeverkTyper.UTTAK_PERIODE_TYPE];
+  const oppholdArsakTyper = alleKodeverk[kodeverkTyper.OPPHOLD_ARSAK];
 
   const validate = (values) => validateUttakActivity(values);
   const warn = (values) => warningUttakActivity(values);
