@@ -21,7 +21,6 @@ import {
 import VurderBesteberegningForm, { besteberegningField, vurderBesteberegningTransform } from '../besteberegningFodendeKvinne/VurderBesteberegningForm';
 import InntektFieldArray from '../InntektFieldArray';
 import VurderEtterlonnSluttpakkeForm from './forms/VurderEtterlonnSluttpakkeForm';
-import beregningsgrunnlagPropType from '../../../propTypes/beregningsgrunnlagPropType';
 import beregningAksjonspunkterPropType from '../../../propTypes/beregningAksjonspunkterPropType';
 
 
@@ -263,7 +262,6 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
   return transformed;
 };
 
-
 VurderOgFastsettATFL.transformValues = (faktaOmBeregning, beregningsgrunnlag) => (values) => {
   const inntektVerdier = InntektFieldArray.transformValues(values[INNTEKT_FIELD_ARRAY_NAME]);
   const fastsatteAndelsnr = [];
@@ -286,7 +284,7 @@ VurderOgFastsettATFL.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
-  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
 };
 
 export const skalFastsettInntektForArbeidstaker = createSelector([

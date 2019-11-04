@@ -22,7 +22,10 @@ const {
 
 const aksjonspunkter = [{
   definisjon:
-  { kode: VURDER_FAKTA_FOR_ATFL_SN },
+  {
+    kode: VURDER_FAKTA_FOR_ATFL_SN,
+  },
+  status: { kode: 'OPPR' },
 }];
 
 

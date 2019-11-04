@@ -21,7 +21,6 @@ import VurderEtterlonnSluttpakkeForm from './vurderOgFastsettATFL/forms/VurderEt
 import VurderMottarYtelseForm from './vurderOgFastsettATFL/forms/VurderMottarYtelseForm';
 import VurderBesteberegningForm from './besteberegningFodendeKvinne/VurderBesteberegningForm';
 import VurderRefusjonForm from './vurderrefusjon/VurderRefusjonForm';
-import beregningsgrunnlagPropType, { faktaOmBeregningPropType } from '../../propTypes/beregningsgrunnlagPropType';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
 
@@ -214,9 +213,9 @@ export const FaktaForATFLOgSNPanelImpl = ({
 FaktaForATFLOgSNPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aktivePaneler: PropTypes.arrayOf(PropTypes.string).isRequired,
-  faktaOmBeregning: faktaOmBeregningPropType.isRequired,
+  faktaOmBeregning: PropTypes.shape().isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

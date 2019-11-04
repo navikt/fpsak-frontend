@@ -116,12 +116,11 @@ describe('<AvklareAktiviteterPanel>', () => {
         { tom: '2019-02-02', aktiviteter },
       ],
     };
-    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER } }];
+    const aksjonspunkter = [{ definisjon: { kode: AVKLAR_AKTIVITETER }, status: { kode: 'OPPR' } }];
     const wrapper = shallow(<AvklareAktiviteterPanelImpl
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -136,6 +135,8 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
+      {...behandlingProps}
     />);
     const vurderAktivitetPanel = wrapper.find(VurderAktiviteterPanel);
     expect(vurderAktivitetPanel).has.length(1);
@@ -150,7 +151,6 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -164,7 +164,9 @@ describe('<AvklareAktiviteterPanel>', () => {
       erBgOverstyrt={false}
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const radio = wrapper.find(VurderAktiviteterPanel);
     expect(radio).has.length(0);
@@ -183,7 +185,6 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -197,7 +198,9 @@ describe('<AvklareAktiviteterPanel>', () => {
       erBgOverstyrt={false}
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const checkbox = wrapper.find(CheckboxField);
     expect(checkbox).has.length(1);
@@ -216,7 +219,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -231,6 +234,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const helptext = wrapper.find(AksjonspunktHelpText);
     expect(helptext).has.length(0);
@@ -250,7 +254,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -265,6 +269,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const borderBox = wrapper.find(BorderBox);
     expect(borderBox).has.length(1);
@@ -284,7 +289,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -299,6 +304,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const borderBox = wrapper.find(BorderBox);
     expect(borderBox).has.length(1);
@@ -319,7 +325,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -334,6 +340,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const borderBox = wrapper.find(BorderBox);
     expect(borderBox).has.length(1);
@@ -353,7 +360,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -368,6 +375,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const borderBox = wrapper.find(BorderBox);
     expect(borderBox).has.length(1);
@@ -387,7 +395,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       {...reduxFormPropsMock}
       readOnly={false}
       isAksjonspunktClosed={false}
-      avklarAktiviteter={avklarAktiviteter}
+      beregningsgrunnlag={{ faktaOmBeregning: { avklarAktiviteter } }}
       hasBegrunnelse={false}
       submittable
       isDirty
@@ -402,6 +410,7 @@ describe('<AvklareAktiviteterPanel>', () => {
       behandlingFormPrefix="test"
       alleKodeverk={alleKodeverk}
       reduxFormInitialize={() => {}}
+      {...behandlingProps}
     />);
     const borderBox = wrapper.find(BorderBox);
     expect(borderBox).has.length(1);
@@ -416,7 +425,11 @@ describe('<AvklareAktiviteterPanel>', () => {
       ],
     };
 
-    const initialValues = buildInitialValuesAvklarAktiviteter({ alleKodeverk, aksjonspunkter: apsAvklarAktiviteter, faktaOmBeregning: { avklarAktiviteter } });
+    const initialValues = buildInitialValuesAvklarAktiviteter({
+      alleKodeverk,
+      aksjonspunkter: apsAvklarAktiviteter,
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+    });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
   });
@@ -428,7 +441,11 @@ describe('<AvklareAktiviteterPanel>', () => {
       ],
     };
     const aps = [];
-    const initialValues = buildInitialValuesAvklarAktiviteter({ alleKodeverk, aksjonspunkter: aps, faktaOmBeregning: { avklarAktiviteter } });
+    const initialValues = buildInitialValuesAvklarAktiviteter({
+      alleKodeverk,
+      aksjonspunkter: aps,
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+    });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(false);
   });
@@ -440,7 +457,11 @@ describe('<AvklareAktiviteterPanel>', () => {
       ],
     };
     const aps = [{ definisjon: { kode: OVERSTYRING_AV_BEREGNINGSAKTIVITETER } }];
-    const initialValues = buildInitialValuesAvklarAktiviteter({ alleKodeverk, aksjonspunkter: aps, faktaOmBeregning: { avklarAktiviteter } });
+    const initialValues = buildInitialValuesAvklarAktiviteter({
+      alleKodeverk,
+      aksjonspunkter: aps,
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
+    });
     expect(initialValues !== null).to.equal(true);
     expect(initialValues[MANUELL_OVERSTYRING_FIELD]).to.equal(true);
   });
@@ -510,7 +531,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
       aksjonspunkter: apsAvklarAktiviteter,
-      faktaOmBeregning: { avklarAktiviteter },
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -537,7 +558,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
       aksjonspunkter: apsAvklarAktiviteter,
-      faktaOmBeregning: { avklarAktiviteter },
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -565,7 +586,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
       aksjonspunkter: apsAvklarAktiviteter,
-      faktaOmBeregning: { avklarAktiviteter },
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
     });
     expect(erAvklartOgIkkeEndret).to.equal(true);
   });
@@ -586,7 +607,7 @@ describe('<AvklareAktiviteterPanel>', () => {
     const erAvklartOgIkkeEndret = erAvklartAktivitetEndret(state, {
       ...behandlingProps,
       aksjonspunkter: apsAvklarAktiviteter,
-      faktaOmBeregning: { avklarAktiviteter },
+      beregningsgrunnlag: { faktaOmBeregning: { avklarAktiviteter } },
     });
     expect(erAvklartOgIkkeEndret).to.equal(false);
   });

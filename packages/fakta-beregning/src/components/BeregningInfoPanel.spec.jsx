@@ -22,6 +22,14 @@ const alleKodeverk = {};
 const behandlingId = 1;
 const behandlingVersjon = 1;
 
+
+const beregningsgrunnlag = {
+  faktaOmBeregning: {
+    faktaOmBeregningTilfeller: [],
+    andelerForFaktaOmBeregning: [],
+  },
+};
+
 describe('<BeregningInfoPanel>', () => {
   it('skal vise ekspanderbart panel', () => {
     const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
@@ -33,10 +41,10 @@ describe('<BeregningInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
-      beregningsgrunnlag={{}}
       alleKodeverk={alleKodeverk}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={false}
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
@@ -58,6 +66,7 @@ describe('<BeregningInfoPanel>', () => {
         navn: 's1',
       },
     };
+
     const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
       intl={intlMock}
       aksjonspunkter={[tidsbegrensetAP]}
@@ -70,7 +79,7 @@ describe('<BeregningInfoPanel>', () => {
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       submitCallback={sinon.spy()}
-      beregningsgrunnlag={{}}
+      beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={false}
     />);
     const panel = wrapper.find(VurderFaktaBeregningPanel);
@@ -98,10 +107,10 @@ describe('<BeregningInfoPanel>', () => {
       submittable
       readOnly={false}
       submitCallback={sinon.spy()}
-      beregningsgrunnlag={{}}
       alleKodeverk={alleKodeverk}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={false}
     />);
     const panel = wrapper.find(VurderFaktaBeregningPanel);
@@ -130,10 +139,10 @@ describe('<BeregningInfoPanel>', () => {
       submittable
       readOnly={false}
       submitCallback={sinon.spy()}
-      beregningsgrunnlag={{}}
       alleKodeverk={alleKodeverk}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={false}
     />);
     const panel = wrapper.find(AvklareAktiviteterPanel);
@@ -162,10 +171,10 @@ describe('<BeregningInfoPanel>', () => {
       submittable
       readOnly
       submitCallback={sinon.spy()}
-      beregningsgrunnlag={{}}
       alleKodeverk={alleKodeverk}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      beregningsgrunnlag={beregningsgrunnlag}
       erOverstyrer={false}
     />);
     const panel = wrapper.find(AvklareAktiviteterPanel);

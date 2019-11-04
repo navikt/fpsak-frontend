@@ -51,7 +51,11 @@ const lagFaktaOmBeregning = (tilfeller, arbeidsforholdMedLønnsendringUtenIM,
 });
 
 const lagAndel = (andelsnr, aktivitetStatus, inntektskategori) => (
-  { andelsnr, aktivitetStatus, inntektskategori }
+  {
+    andelsnr,
+    aktivitetStatus: { kode: aktivitetStatus, kodeverk: 'AKTIVITET_STATUS' },
+    inntektskategori: { kode: inntektskategori, kodeverk: 'INNTEKTSKATEGORI' },
+  }
 );
 
 const lagAndelValues = (andelsnr, fastsattBelop, inntektskategori, aktivitetStatus, lagtTilAvSaksbehandler = false,

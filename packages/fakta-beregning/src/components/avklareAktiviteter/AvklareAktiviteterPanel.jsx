@@ -16,7 +16,6 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import { formNameAvklarAktiviteter, getFormInitialValuesForAvklarAktiviteter, getFormValuesForAvklarAktiviteter } from '../BeregningFormUtils';
 import { erOverstyringAvBeregningsgrunnlag } from '../fellesFaktaForATFLogSN/BgFordelingUtils';
 import VurderAktiviteterPanel from './VurderAktiviteterPanel';
-import beregningsgrunnlagPropType, { avklarAktiviteterPropType } from '../../propTypes/beregningsgrunnlagPropType';
 import beregningAksjonspunkterPropType from '../../propTypes/beregningAksjonspunkterPropType';
 
 
@@ -133,7 +132,6 @@ export class AvklareAktiviteterPanelImpl extends Component {
     const {
       props: {
         readOnly,
-        avklarAktiviteter,
         isAksjonspunktClosed,
         submittable,
         hasBegrunnelse,
@@ -156,9 +154,8 @@ export class AvklareAktiviteterPanelImpl extends Component {
     if (!hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) && !kanOverstyre && !erOverstyrt) {
       return null;
     }
-
+    const avklarAktiviteter = getAvklarAktiviteter(this.props);
     const skalViseSubmitknappInneforBorderBox = (harAndreAksjonspunkterIPanel || erOverstyrt || erBgOverstyrt) && !hasOpenAvklarAksjonspunkter(aksjonspunkter);
-
     return (
       <>
         <form onSubmit={formProps.handleSubmit}>
@@ -251,7 +248,6 @@ export class AvklareAktiviteterPanelImpl extends Component {
 AvklareAktiviteterPanelImpl.propTypes = {
   kanOverstyre: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  avklarAktiviteter: avklarAktiviteterPropType.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
@@ -264,7 +260,7 @@ AvklareAktiviteterPanelImpl.propTypes = {
   erOverstyrt: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  beregningsgrunnlag: beregningsgrunnlagPropType.isRequired,
+  beregningsgrunnlag: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   ...formPropTypes,
 };
