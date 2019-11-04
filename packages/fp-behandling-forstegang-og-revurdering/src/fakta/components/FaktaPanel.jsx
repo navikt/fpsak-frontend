@@ -30,8 +30,6 @@ import {
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
-import BeregningInfoPanel from './beregning/BeregningInfoPanel';
-import FordelBeregningsgrunnlagPanel from './fordelBeregningsgrunnlag/FordelBeregningsgrunnlagPanel';
 
 import styles from './faktaPanel.less';
 
