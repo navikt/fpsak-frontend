@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { BehandlingspunktInnsynInfoPanel } from 'behandlingInnsyn/src/behandlingsprosess/components/BehandlingspunktInnsynInfoPanel';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { BehandlingspunktInnsynInfoPanel } from './BehandlingspunktInnsynInfoPanel';
 import InnsynForm from './innsyn/InnsynForm';
 
 describe('<BehandlingspunktInnsynInfoPanel>', () => {

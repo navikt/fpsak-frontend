@@ -16,11 +16,6 @@ const getBehandlingInnsyn = createSelector(
   [commonBehandlingInnsynSelectors.getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.innsyn ? selectedBehandling.innsyn : undefined),
 );
 const getBehandlingInnsynResultatType = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynResultatType);
-const getBehandlingInnsynMottattDato = createSelector([getBehandlingInnsyn], (innsyn = {}) => innsyn.innsynMottattDato);
-const getBehandlingInnsynDokumenter = createSelector([getBehandlingInnsyn], (innsyn = {}) => (innsyn.dokumenter ? innsyn.dokumenter : []));
-const getBehandlingInnsynVedtaksdokumentasjon = createSelector(
-  [getBehandlingInnsyn], (innsyn = {}) => (innsyn.vedtaksdokumentasjon ? innsyn.vedtaksdokumentasjon : []),
-);
 
 const getRettigheter = createSelector([
   getNavAnsatt,
@@ -38,9 +33,6 @@ const getRettigheter = createSelector([
 const innsynBehandlingSelectors = {
   ...omit(commonBehandlingInnsynSelectors, 'getSelectedBehandling'),
   getBehandlingInnsynResultatType,
-  getBehandlingInnsynMottattDato,
-  getBehandlingInnsynDokumenter,
-  getBehandlingInnsynVedtaksdokumentasjon,
   getRettigheter,
 };
 

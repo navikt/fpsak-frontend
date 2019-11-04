@@ -7,7 +7,6 @@ const config = {
   resolve: {
     alias: {
       behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),
-      behandlingInnsyn: path.join(PACKAGES_DIR, 'fp-behandling-innsyn'),
       behandlingAnke: path.join(PACKAGES_DIR, 'fp-behandling-anke'),
       papirsoknad: path.join(PACKAGES_DIR, 'fp-behandling-papirsoknad'),
     },

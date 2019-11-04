@@ -14,27 +14,16 @@ import {
   AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
+import {
+  BehandlingspunktBegrunnelseTextField, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
+} from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import innsynResultatTyperKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 
-import behandlingspunktInnsynSelectors from 'behandlingInnsyn/src/behandlingsprosess/selectors/behandlingsprosessInnsynSelectors';
-import {
-  behandlingFormInnsyn,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingInnsyn/src/behandlingFormInnsyn';
-import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import {
-  getAllDocuments, getFilteredReceivedDocuments, getKodeverk, getSelectedSaksnummer,
-} from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import DocumentListInnsyn from './DocumentListInnsyn';
 import VedtakDocuments from './VedtakDocuments';
-
 
 /**
  * InnsynForm
@@ -83,37 +72,37 @@ export const InnsynFormImpl = ({
       >
         {innsynResultatTyper.map((irt) => <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />)}
       </RadioGroupField>
-      {(innsynResultatType === innsynResultatTyperKV.INNVILGET || innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET)
-      && (
-      <ArrowBox alignOffset={(innsynResultatType === innsynResultatTyperKV.INNVILGET) ? 28 : 176}>
-        <RadioGroupField
-          name="sattPaVent"
-          label={<FormattedMessage id="InnsynForm.VelgVidereAksjon" key="1" />}
-          direction="vertical"
-          readOnly={readOnly}
-          isEdited={!isApOpen}
-          validate={[required]}
-        >
-          <RadioOption label={{ id: 'InnsynForm.SettBehandlingPåVent' }} value />
-          <RadioOption label={{ id: 'InnsynForm.ForeslåOgFatteVedtak' }} value={false} />
-        </RadioGroupField>
-        <Row>
-          {sattPaVent
-          && (
-          <DatepickerField
-            name="fristDato"
-            label={{ id: 'InnsynForm.FristDato' }}
+      {(innsynResultatType === innsynResultatTyperKV.INNVILGET || innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET) && (
+        <ArrowBox alignOffset={(innsynResultatType === innsynResultatTyperKV.INNVILGET) ? 28 : 176}>
+          <RadioGroupField
+            name="sattPaVent"
+            label={<FormattedMessage id="InnsynForm.VelgVidereAksjon" key="1" />}
+            direction="vertical"
             readOnly={readOnly}
             isEdited={!isApOpen}
-            validate={[required, hasValidDate]}
-          />
-          )}
-        </Row>
-      </ArrowBox>
+            validate={[required]}
+          >
+            <RadioOption label={{ id: 'InnsynForm.SettBehandlingPåVent' }} value />
+            <RadioOption label={{ id: 'InnsynForm.ForeslåOgFatteVedtak' }} value={false} />
+          </RadioGroupField>
+          <Row>
+            {sattPaVent && (
+              <DatepickerField
+                name="fristDato"
+                label={{ id: 'InnsynForm.FristDato' }}
+                readOnly={readOnly}
+                isEdited={!isApOpen}
+                validate={[required, hasValidDate]}
+              />
+            )}
+          </Row>
+        </ArrowBox>
       )}
       <VerticalSpacer sixteenPx />
       <BehandlingspunktSubmitButton
         formName={formProps.form}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
         textCode={sattPaVent ? 'SubmitButton.SettPåVent' : undefined}
         isReadOnly={readOnly}
         isSubmittable={!isSubmittable}
@@ -164,9 +153,11 @@ const hentDokumenterMedNavnOgFikkInnsyn = (dokumenter) => dokumenter.reduce((acc
 }, {});
 
 const buildInitialValues = createSelector(
-  [behandlingSelectors.getBehandlingInnsynMottattDato, behandlingSelectors.getBehandlingInnsynResultatType,
-    behandlingSelectors.getBehandlingOnHoldDate, behandlingSelectors.getBehandlingInnsynDokumenter,
-    behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter],
+  [(ownProps) => ownProps.innsynMottattDato,
+    (ownProps) => ownProps.innsynResultatType,
+    (ownProps) => ownProps.behandlingPaaVent,
+    (ownProps) => ownProps.innsynDokumenter,
+    (ownProps) => ownProps.aksjonspunkter],
   (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => ({
     mottattDato: innsynMottattDato,
     innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
@@ -197,29 +188,33 @@ const transformValues = (values, documents) => ({
   ...getFilteredValues(values),
 });
 
+// Samme dokument kan ligge på flere behandlinger under samme fagsak.
+const getFilteredReceivedDocuments = createSelector([(ownProps) => ownProps.alleDokumenter], (allDocuments) => {
+  const filteredDocuments = allDocuments.filter((doc) => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
+  allDocuments.forEach((doc) => !filteredDocuments.some((fd) => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
+  return filteredDocuments;
+});
+
 const formName = 'InnsynForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, getAllDocuments(initialState))]);
-  return (state) => ({
-    documents: getFilteredReceivedDocuments(state),
-    saksNr: getSelectedSaksnummer(state),
-    vedtaksdokumenter: behandlingSelectors.getBehandlingInnsynVedtaksdokumentasjon(state),
-    innsynResultatTyper: getKodeverk(kodeverkTyper.INNSYN_RESULTAT_TYPE)(state),
-    behandlingTypes: getKodeverk(kodeverkTyper.BEHANDLING_TYPE)(state),
-    isApOpen: isAksjonspunktOpen(behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter(state)[0].status.kode),
-    innsynResultatType: behandlingFormValueSelector(formName)(state, 'innsynResultatType'),
-    sattPaVent: behandlingFormValueSelector(formName)(state, 'sattPaVent'),
-    initialValues: buildInitialValues(state),
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, initialOwnProps.alleDokumenter)]);
+  return (state, ownProps) => ({
+    documents: getFilteredReceivedDocuments(ownProps),
+    vedtaksdokumenter: ownProps.vedtaksdokumentasjon,
+    innsynResultatTyper: ownProps.alleKodeverk[kodeverkTyper.INNSYN_RESULTAT_TYPE],
+    behandlingTypes: ownProps.alleKodeverk[kodeverkTyper.BEHANDLING_TYPE],
+    isApOpen: isAksjonspunktOpen(ownProps.aksjonspunkter[0].status.kode),
+    innsynResultatType: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'innsynResultatType'),
+    sattPaVent: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'sattPaVent'),
+    initialValues: buildInitialValues(ownProps),
     onSubmit,
   });
 };
 
-const InnsynForm = connect(mapStateToPropsFactory)(behandlingFormInnsyn({
+const InnsynForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(InnsynFormImpl));
-
-InnsynForm.supports = (apCodes) => apCodes.includes(aksjonspunktCodes.VURDER_INNSYN);
 
 InnsynForm.formName = formName;
 
