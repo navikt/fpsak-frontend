@@ -84,7 +84,7 @@ export const BeregningInfoPanelImpl = ({
   behandlingId,
   behandlingVersjon,
 }) => {
-  if (beregningsgrunnlag === null || beregningsgrunnlag === undefined) {
+  if (!beregningsgrunnlag) {
     return null;
   }
   return (
