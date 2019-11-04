@@ -229,7 +229,7 @@ const getGjeldendeStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
     case stonadskontoType.FEDREKVOTE:
       return stonadskontoer.FEDREKVOTE;
     default:
-      return {};
+      return undefined;
   }
 };
 
