@@ -30,6 +30,7 @@ import {
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
+import UttakFaktaIndex from '../../../../fakta-uttak';
 
 import styles from './faktaPanel.less';
 
@@ -320,6 +321,24 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         showComponent={aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
         render={(props) => (
           <OmsorgFaktaIndex
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            {...props}
+          />
+        )}
+      />
+
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={omsorgData}
+        showComponent={aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
+        render={(props) => (
+          <UttakFaktaIndex
             alleKodeverk={alleKodeverk}
             alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
             openInfoPanels={openInfoPanels}
