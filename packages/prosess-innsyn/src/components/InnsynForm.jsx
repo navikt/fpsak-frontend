@@ -8,6 +8,7 @@ import moment from 'moment';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Row } from 'nav-frontend-grid';
 
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
@@ -41,6 +42,8 @@ export const InnsynFormImpl = ({
   documents,
   vedtaksdokumenter,
   isApOpen,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <FadingPanel>

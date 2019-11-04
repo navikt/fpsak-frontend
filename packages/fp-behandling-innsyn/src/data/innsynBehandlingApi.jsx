@@ -20,7 +20,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
 
   // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
-  .withInjectedPath('innsyn', KlageBehandlingApiKeys.INNSYN)
+  .withInjectedPath('innsyn', InnsynBehandlingApiKeys.INNSYN)
   .build();
 
 

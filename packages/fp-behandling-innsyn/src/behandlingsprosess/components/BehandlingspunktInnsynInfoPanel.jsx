@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 
 import {
   getAllDocuments, getKodeverk, getSelectedSaksnummer,
-} from 'behandlingInnsyn/src/duckBehandlingInnsyn';
+} from '../../duckBehandlingInnsyn';
 import fpInnsynApi from '../../data/innsynBehandlingApi';
 import behandlingspunktInnsynSelectors from '../selectors/behandlingsprosessInnsynSelectors';
 import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
@@ -94,6 +95,10 @@ BehandlingspunktInnsynInfoPanel.propTypes = {
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
   behandlingspunktAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  saksnummer: PropTypes.number.isRequired,
 };
 
 BehandlingspunktInnsynInfoPanel.defaultProps = {

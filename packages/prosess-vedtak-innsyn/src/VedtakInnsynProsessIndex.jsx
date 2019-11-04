@@ -46,7 +46,7 @@ const VedtakInnsynProsessIndex = ({
 VedtakInnsynProsessIndex.propTypes = {
   behandling: vedtakInnsynBehandlingPropType.isRequired,
   innsyn: innsynPropType.isRequired,
-  saksnummer: PropTypes.string.isRequired,
+  saksnummer: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(vedtakInnsynAksjonspunkterPropType).isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,

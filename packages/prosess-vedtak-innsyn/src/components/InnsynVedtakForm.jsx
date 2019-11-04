@@ -7,6 +7,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import {
   BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType,
   isBehandlingFormDirty, isBehandlingFormSubmitting,
@@ -66,6 +67,8 @@ export const InnsynVedtakFormImpl = ({
   apBegrunnelse,
   begrunnelse,
   resultat,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
