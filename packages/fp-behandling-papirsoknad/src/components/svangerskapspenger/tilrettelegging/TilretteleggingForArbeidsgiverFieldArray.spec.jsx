@@ -5,6 +5,7 @@ import { Knapp } from 'nav-frontend-knapper';
 
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
 import TilretteleggingForArbeidsgiverFieldArray from './TilretteleggingForArbeidsgiverFieldArray';
 
 describe('<TilretteleggingForArbeidsgiverFieldArray>', () => {

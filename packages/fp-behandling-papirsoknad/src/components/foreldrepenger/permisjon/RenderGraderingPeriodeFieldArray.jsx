@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getFormValues } from 'redux-form';
 import PropTypes from 'prop-types';
+import moment from 'moment/moment';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import AlertStripe from 'nav-frontend-alertstriper';
+
 import {
   FlexColumn, FlexContainer, FlexRow, PeriodFieldArray, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -15,7 +17,7 @@ import {
 } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
-import moment from 'moment/moment';
+
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderGraderingPeriodeFieldArray.less';

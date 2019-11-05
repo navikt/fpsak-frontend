@@ -1,9 +1,9 @@
 import React from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Link } from 'react-router-dom';
 import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 
 import styles from './soknadRegistrertModal.less';

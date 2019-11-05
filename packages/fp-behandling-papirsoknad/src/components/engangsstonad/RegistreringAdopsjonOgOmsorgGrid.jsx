@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 import { FormSection } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 
-import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';
-import RettigheterPanel from 'papirsoknad/src/components/commonPanels/rettigheter/RettigheterPanel';
-import TilleggsopplysningerPanel from 'papirsoknad/src/components/commonPanels/TilleggsopplysningerPanel';
-import AnnenForelderPanel from 'papirsoknad/src/components/commonPanels/AnnenForelderPanel';
-import OmsorgOgAdopsjonPanel from 'papirsoknad/src/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
-import SoknadData from 'papirsoknad/src/SoknadData';
+import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
+import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
+import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
+import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
+import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+import SoknadData from '../../SoknadData';
 
 
 const ANNEN_FORELDER_FORM_NAME_PREFIX = 'annenForelder';

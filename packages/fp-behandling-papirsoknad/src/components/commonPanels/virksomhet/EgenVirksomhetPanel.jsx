@@ -8,6 +8,7 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { arrayMinLength, required } from '@fpsak-frontend/utils';
 import { Fieldset } from 'nav-frontend-skjema';
+
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
 import styles from './egenVirksomhetPanel.less';

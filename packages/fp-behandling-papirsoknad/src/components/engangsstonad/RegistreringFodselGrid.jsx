@@ -4,13 +4,14 @@ import { FormSection } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
 
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
-import SoknadData from 'papirsoknad/src/SoknadData';
-import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';
-import TilleggsopplysningerPanel from 'papirsoknad/src/components/commonPanels/TilleggsopplysningerPanel';
-import RettigheterPanel from 'papirsoknad/src/components/commonPanels/rettigheter/RettigheterPanel';
-import AnnenForelderPanel from 'papirsoknad/src/components/commonPanels/AnnenForelderPanel';
-import TerminFodselDatoPanel from 'papirsoknad/src/components/commonPanels/fodsel/TerminFodselDatoPanel';
-import OmsorgOgAdopsjonPanel from 'papirsoknad/src/components/commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
+
+import SoknadData from '../../SoknadData';
+import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
+import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
+import RettigheterPanel from '../commonPanels/rettigheter/RettigheterPanel';
+import AnnenForelderPanel from '../commonPanels/AnnenForelderPanel';
+import TerminFodselDatoPanel from '../commonPanels/fodsel/TerminFodselDatoPanel';
+import OmsorgOgAdopsjonPanel from '../commonPanels/omsorgOgAdopsjon/OmsorgOgAdopsjonPanel';
 
 /*
  * RegistreringFodselForm
