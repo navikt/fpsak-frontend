@@ -11,6 +11,7 @@ import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
+import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-tilrettelegging';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
@@ -29,7 +30,6 @@ import {
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import UttakInfoPanel from './uttak/UttakInfoPanel';
-import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 
 import styles from './faktaPanel.less';
 
@@ -40,6 +40,8 @@ const fodselAksjonspunkter = [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktC
 const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
 const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
 const fordelBeregningsgrunnlagAksjonspunkter = [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
+const faktaOmBeregningAksjonspunkter = [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN, aksjonspunktCodes.AVKLAR_AKTIVITETER,
+  aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 const fodselData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.PERSONOPPLYSNINGER,
   fpsakApi.AKSJONSPUNKTER, fpsakApi.ORIGINAL_BEHANDLING];
@@ -54,6 +56,7 @@ const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakA
 const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
+const beregningData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGSGRUNNLAG, fpsakApi.AKSJONSPUNKTER];
 const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
 const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
 
@@ -277,14 +280,23 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         )}
       />
 
-      <BeregningInfoPanel
-        aksjonspunkter={aksjonspunkter}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        erOverstyrer={erOverstyrer}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={beregningData}
+        showComponent={aksjonspunkter.some((ap) => faktaOmBeregningAksjonspunkter.includes(ap.definisjon.kode))}
+        render={(props) => (
+          <BeregningFaktaIndex
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            erOverstyrer={erOverstyrer}
+            {...props}
+          />
+        )}
       />
 
       <DataFetcherWithCache
