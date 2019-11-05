@@ -73,7 +73,7 @@ export const InnsynFormImpl = ({
         label={<FormattedMessage id="InnsynForm.Resultat" key="1" />}
         isEdited={!isApOpen}
       >
-        {innsynResultatTyper.map((irt) => <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />)}
+        {innsynResultatTyper.filter((irt) => irt.kode !== '-').map((irt) => <RadioOption key={irt.kode} value={irt.kode} label={irt.navn} />)}
       </RadioGroupField>
       {(innsynResultatType === innsynResultatTyperKV.INNVILGET || innsynResultatType === innsynResultatTyperKV.DELVISTINNVILGET) && (
         <ArrowBox alignOffset={(innsynResultatType === innsynResultatTyperKV.INNVILGET) ? 28 : 176}>
@@ -135,7 +135,7 @@ InnsynFormImpl.propTypes = {
     dokumentId: PropTypes.string.isRequired,
     tittel: PropTypes.string.isRequired,
     opprettetDato: PropTypes.string.isRequired,
-  }).isRequired).isRequired,
+  }).isRequired),
   innsynResultatType: PropTypes.string,
   sattPaVent: PropTypes.bool,
   isApOpen: PropTypes.bool.isRequired,
@@ -145,6 +145,7 @@ InnsynFormImpl.propTypes = {
 InnsynFormImpl.defaultProps = {
   innsynResultatType: undefined,
   sattPaVent: undefined,
+  vedtaksdokumenter: [],
 };
 
 const hentDokumenterMedNavnOgFikkInnsyn = (dokumenter) => dokumenter.reduce((acc, d) => {
