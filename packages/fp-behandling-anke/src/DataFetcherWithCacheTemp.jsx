@@ -26,7 +26,7 @@ export class DataFetcherWithCache extends Component {
 }
 
 const mapping = {
-  [AnkeBehandlingApiKeys.ANKE_VURDERING]: ' anke-vurdering',
+  [AnkeBehandlingApiKeys.ANKE_VURDERING]: 'anke-vurdering',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

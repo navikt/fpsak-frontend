@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
+import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
 
@@ -22,15 +23,27 @@ describe('<BehandlingspunktAnkeInfoPanel>', () => {
       isApSolvable={false}
       readOnlySubmitButton={false}
       behandlingspunktAksjonspunkter={[]}
-      innstilling={{}}
+      behandlinger={[]}
     />);
 
     const dataFetchers = wrapper.find(DataFetcherWithCacheTemp);
-    expect(dataFetchers.at(0).prop('showComponent')).to.be.true;
+    expect(dataFetchers.at(2).prop('showComponent')).to.be.true;
 
-    const ankePanel = dataFetchers.at(0).renderProp('render')({
-      behandling: { id: 1, versjon: 1, behandlingPaaVent: false },
-      ankeVurdering: { },
+    const ankePanel = dataFetchers.at(2).renderProp('render')({
+      behandling: { id: 1, versjon: 1 },
+      ankeVurdering: {
+        ankeVurderingResultat: {
+          ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
+          ankeVurderingOmgjoer: 'test',
+          ankeOmgjoerArsakNavn: 'test',
+          begrunnelse: 'test',
+          erAnkerIkkePart: false,
+          erIkkeKonkret: false,
+          erFristIkkeOverholdt: false,
+          erIkkeSignert: false,
+          erSubsidiartRealitetsbehandles: false,
+        },
+      },
     }).find(AnkeResultatProsessIndex);
     expect(ankePanel).to.have.length(1);
   });

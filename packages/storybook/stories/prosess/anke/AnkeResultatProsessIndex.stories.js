@@ -17,13 +17,24 @@ const behandling = {
 
 const aksjonspunkter = [{
   definisjon: {
-    kode: aksjonspunktCodes.FORESLA_VEDTAK,
+    kode: aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER,
   },
   status: {
     kode: aksjonspunktStatus.OPPRETTET,
   },
   begrunnelse: undefined,
 }];
+
+const ankeVurderingResultat = {
+  ankeVurdering: ankeVurdering.ANKE_AVVIS,
+  paAnketBehandlingId: 1,
+  erAnkerIkkePart: true,
+  erIkkeKonkret: true,
+  erFristIkkeOverholdt: true,
+  erIkkeSignert: true,
+  erSubsidiartRealitetsbehandles: true,
+  begrunnelse: 'Dette er en begrunnelse',
+};
 
 export default {
   title: 'prosess/anke/AnkeResultatProsessIndex',
@@ -36,8 +47,8 @@ export const visPanelForResultatVedStadfestYtelsesvedtak = () => (
     behandling={behandling}
     ankeVurdering={object('ankeVurdering', {
       ankeVurderingResultat: {
+        ...ankeVurderingResultat,
         ankeVurdering: ankeVurdering.ANKE_STADFESTE_YTELSESVEDTAK,
-        begrunnelse: 'Dette er en begrunnelse',
       },
     })}
     aksjonspunkter={aksjonspunkter}
@@ -55,8 +66,8 @@ export const visPanelForResultatVedOppheveOgHjemsende = () => (
     behandling={behandling}
     ankeVurdering={object('ankeVurdering', {
       ankeVurderingResultat: {
+        ...ankeVurderingResultat,
         ankeVurdering: ankeVurdering.ANKE_OPPHEVE_OG_HJEMSENDE,
-        begrunnelse: 'Dette er en begrunnelse',
       },
     })}
     aksjonspunkter={aksjonspunkter}
@@ -74,10 +85,10 @@ export const visPanelForResultatVedOmgjør = () => (
     behandling={behandling}
     ankeVurdering={object('ankeVurdering', {
       ankeVurderingResultat: {
+        ...ankeVurderingResultat,
         ankeVurdering: ankeVurdering.ANKE_OMGJOER,
         ankeVurderingOmgjoer: ankeVurderingOmgjoer.ANKE_TIL_UGUNST,
-        ankeOmgjoerArsakNavn: 'Dette er en årsak',
-        begrunnelse: 'Dette er en begrunnelse',
+        ankeOmgjoerArsakNavn: 'Testårsak',
       },
     })}
     aksjonspunkter={aksjonspunkter}
@@ -94,16 +105,7 @@ export const visPanelForResultatVedAvvis = () => (
   <AnkeResultatProsessIndex
     behandling={behandling}
     ankeVurdering={object('ankeVurdering', {
-      ankeVurderingResultat: {
-        ankeVurdering: ankeVurdering.ANKE_AVVIS,
-        paAnketBehandlingId: 1,
-        erAnkerIkkePart: true,
-        erIkkeKonkret: true,
-        erFristIkkeOverholdt: true,
-        erIkkeSignert: true,
-        erSubsidiartRealitetsbehandles: true,
-        begrunnelse: 'Dette er en begrunnelse',
-      },
+      ankeVurderingResultat,
     })}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}

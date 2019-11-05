@@ -11,16 +11,6 @@ import {
 
 const commonBehandlingAnkeSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, ankeBehandlingApi);
 
-const getMellomlagringData = createSelector(
-  [ankeBehandlingApi.SAVE_ANKE_VURDERING.getRestApiMeta()],
-  (data) => (data ? data.params : {}),
-);
-
-const getMellomlagringSpinner = createSelector(
-  [ankeBehandlingApi.SAVE_REOPEN_ANKE_VURDERING.getRestApiStarted(), ankeBehandlingApi.SAVE_ANKE_VURDERING.getRestApiStarted()],
-  (reOpenStarted, saveStarted) => (reOpenStarted || saveStarted),
-);
-
 // ANKEVURDERING
 const getBehandlingAnkeVurdering = createSelector(
   [commonBehandlingAnkeSelectors.getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling['anke-vurdering']
@@ -45,8 +35,6 @@ const getRettigheter = createSelector([
 
 const ankeBehandlingSelectors = {
   ...omit(commonBehandlingAnkeSelectors, 'getSelectedBehandling'),
-  getMellomlagringData,
-  getMellomlagringSpinner,
   getBehandlingAnkeVurdering,
   getBehandlingAnkeVurderingResultat,
   getRettigheter,
