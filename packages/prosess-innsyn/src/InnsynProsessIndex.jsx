@@ -48,7 +48,7 @@ const InnsynProsessIndex = ({
 
 InnsynProsessIndex.propTypes = {
   behandling: innsynBehandlingPropType.isRequired,
-  innsyn: innsynPropType.isRequired,
+  innsyn: innsynPropType,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksnummer: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(innsynAksjonspunkterPropType).isRequired,
@@ -56,6 +56,10 @@ InnsynProsessIndex.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+};
+
+InnsynProsessIndex.defaultProps = {
+  innsyn: {},
 };
 
 export default InnsynProsessIndex;

@@ -9,7 +9,7 @@ import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 
 import {
-  getAllDocuments, getKodeverk, getSelectedSaksnummer,
+  getAllDocuments, getAlleKodeverk, getSelectedSaksnummer,
 } from '../../duckBehandlingInnsyn';
 import fpInnsynApi from '../../data/innsynBehandlingApi';
 import behandlingspunktInnsynSelectors from '../selectors/behandlingsprosessInnsynSelectors';
@@ -116,7 +116,7 @@ const mapStateToProps = (state) => ({
   behandlingspunktAksjonspunkter: behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
   aksjonspunkter: behandlingInnsynSelectors.getAksjonspunkter(state),
   alleDokumenter: getAllDocuments(state),
-  alleKodeverk: getKodeverk(state),
+  alleKodeverk: getAlleKodeverk(state),
   saksnummer: getSelectedSaksnummer(state),
 });
 
