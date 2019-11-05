@@ -13,6 +13,7 @@ import {
 } from '../../duckBehandlingInnsyn';
 import fpInnsynApi from '../../data/innsynBehandlingApi';
 import behandlingspunktInnsynSelectors from '../selectors/behandlingsprosessInnsynSelectors';
+import behandlingInnsynSelectors from '../../selectors/innsynBehandlingSelectors';
 import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 
 import styles from './behandlingspunktInnsynInfoPanel.less';
@@ -112,8 +113,8 @@ const mapStateToProps = (state) => ({
   apCodes: behandlingspunktInnsynSelectors.getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: behandlingspunktInnsynSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktInnsynSelectors.getNotAcceptedByBeslutter(state),
-  behandlingspunktAksjonspunkter: behandlingspunktKlageSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
-  aksjonspunkter: behandlingKlageSelectors.getAksjonspunkter(state),
+  behandlingspunktAksjonspunkter: behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  aksjonspunkter: behandlingInnsynSelectors.getAksjonspunkter(state),
   alleDokumenter: getAllDocuments(state),
   alleKodeverk: getKodeverk(state),
   saksnummer: getSelectedSaksnummer(state),
