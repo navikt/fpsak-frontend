@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonFaktaIndex, parseFaktaParam, paramsAreEqual } from '@fpsak-frontend/fp-behandling-felles';
 
-import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
+import { getBehandlingIdentifier } from '../duckBehandlingInnsyn';
+import behandlingSelectors from '../selectors/innsynBehandlingSelectors';
 import { getOpenInfoPanels, resetFakta, setOpenInfoPanels } from './duckFaktaInnsyn';
 
 import FaktaInnsynPanel from './components/FaktaInnsynPanel';

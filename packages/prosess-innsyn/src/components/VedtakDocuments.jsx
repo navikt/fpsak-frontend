@@ -4,11 +4,10 @@ import { FormattedHTMLMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
-import { DateLabel, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-/*
- * TODO Ta i bruk fpsakApi
- */
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+
+/* TODO Ta i bruk fpsakApi - Flytt url ut av komponent */
 const DOCUMENT_SERVER_URL = '/fpsak/api/vedtak/hent-vedtaksdokument';
 const getLink = (document) => `${DOCUMENT_SERVER_URL}?behandlingId=${document.dokumentId}`;
 
@@ -38,32 +37,31 @@ class VedtakDocuments extends Component {
     const { vedtaksdokumenter, behandlingTypes } = this.props;
     const { showDocuments } = this.state;
     return (
-      <ElementWrapper>
+      <>
         <a href="" onClick={this.toggleDocuments} className="lenke lenke--frittstaende">
           <Normaltekst>
             <FormattedHTMLMessage id="DocumentListInnsyn.Vedtaksdokumentasjon" values={{ numberOfDocuments: vedtaksdokumenter.length }} />
             <i className={classNames('nav-frontend-chevron chevronboks ', showDocuments ? 'chevron--ned' : 'chevron--opp')} />
           </Normaltekst>
         </a>
-        {showDocuments
-        && (
-        <ElementWrapper>
-          <VerticalSpacer fourPx />
-          {vedtaksdokumenter.map((document) => (
-            <Row key={document.dokumentId}>
-              <Column xs="2">
-                <DateLabel dateString={document.opprettetDato} />
-              </Column>
-              <Column xs="10">
-                <a href={getLink(document)} className="lenke lenke--frittstaende" target="_blank" rel="noopener noreferrer">
-                  {behandlingTypes.find((bt) => bt.kode === document.tittel).navn}
-                </a>
-              </Column>
-            </Row>
-          ))}
-        </ElementWrapper>
+        {showDocuments && (
+          <>
+            <VerticalSpacer fourPx />
+            {vedtaksdokumenter.map((document) => (
+              <Row key={document.dokumentId}>
+                <Column xs="2">
+                  <DateLabel dateString={document.opprettetDato} />
+                </Column>
+                <Column xs="10">
+                  <a href={getLink(document)} className="lenke lenke--frittstaende" target="_blank" rel="noopener noreferrer">
+                    {behandlingTypes.find((bt) => bt.kode === document.tittel).navn}
+                  </a>
+                </Column>
+              </Row>
+            ))}
+          </>
         )}
-      </ElementWrapper>
+      </>
     );
   }
 }

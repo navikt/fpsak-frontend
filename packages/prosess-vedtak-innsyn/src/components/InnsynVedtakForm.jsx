@@ -7,23 +7,19 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
+import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import {
-  behandlingFormInnsyn,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingInnsyn/src/behandlingFormInnsyn';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+  BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType,
+  isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/fp-felles';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity, getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
-import { getFilteredReceivedDocuments, getSelectedSaksnummer } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
+
 import DocumentListVedtakInnsyn from './DocumentListVedtakInnsyn';
 
 import styles from './innsynVedtakForm.less';
@@ -71,6 +67,8 @@ export const InnsynVedtakFormImpl = ({
   apBegrunnelse,
   begrunnelse,
   resultat,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
@@ -81,51 +79,50 @@ export const InnsynVedtakFormImpl = ({
         <VerticalSpacer eightPx />
         <Undertekst><FormattedMessage id="InnsynVedtakForm.Resultat" /></Undertekst>
         <Normaltekst>
-          <FormattedMessage
-            id={findResultTypeMessage(resultat)}
-          />
+          <FormattedMessage id={findResultTypeMessage(resultat)} />
         </Normaltekst>
         <VerticalSpacer eightPx />
         <Undertekst><FormattedMessage id="InnsynVedtakForm.Vurdering" /></Undertekst>
         <Normaltekst className={styles.wordwrap}>{decodeHtmlEntity(apBegrunnelse)}</Normaltekst>
         <VerticalSpacer twentyPx />
-        {(resultat !== innsynResultatType.INNVILGET)
-        && (
-        <Row>
-          <Column xs="8">
-            <TextAreaField
-              name="begrunnelse"
-              label={intl.formatMessage({ id: 'InnsynVedtakForm.Fritekst' })}
-              validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              badges={[{
-                type: 'fokus',
-                textId: getLanguageCodeFromSprakkode(sprakkode),
-                title: 'Malform.Beskrivelse',
-              }]}
-            />
-          </Column>
-        </Row>
+        {(resultat !== innsynResultatType.INNVILGET) && (
+          <Row>
+            <Column xs="8">
+              <TextAreaField
+                name="begrunnelse"
+                label={intl.formatMessage({ id: 'InnsynVedtakForm.Fritekst' })}
+                validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+                maxLength={1500}
+                readOnly={readOnly}
+                badges={[{
+                  type: 'fokus',
+                  textId: getLanguageCodeFromSprakkode(sprakkode),
+                  title: 'Malform.Beskrivelse',
+                }]}
+              />
+            </Column>
+          </Row>
         )}
         <VerticalSpacer twentyPx />
-        {resultat !== innsynResultatType.AVVIST
-        && <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />}
+        {resultat !== innsynResultatType.AVVIST && (
+          <DocumentListVedtakInnsyn saksNr={saksNr} documents={documents.filter((document) => document.fikkInnsyn === true)} readOnly={readOnly} />
+        )}
         <VerticalSpacer twentyPx />
         <Row>
-          {!readOnly
-          && (
-          <Column xs="3">
-            <BehandlingspunktSubmitButton
-              textCode="SubmitButton.ConfirmInformation"
-              formName={formProps.form}
-              isReadOnly={readOnly}
-              isSubmittable
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </Column>
+          {!readOnly && (
+            <Column xs="3">
+              <BehandlingspunktSubmitButton
+                textCode="SubmitButton.ConfirmInformation"
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                formName={formProps.form}
+                isReadOnly={readOnly}
+                isSubmittable
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+            </Column>
           )}
           <Column xs="4">
             <a
@@ -179,8 +176,15 @@ const transformValues = (values) => ({
   ...values,
 });
 
+// Samme dokument kan ligge på flere behandlinger under samme fagsak.
+const getFilteredReceivedDocuments = createSelector([(ownProps) => ownProps.alleDokumenter], (allDocuments) => {
+  const filteredDocuments = allDocuments.filter((doc) => doc.kommunikasjonsretning === kommunikasjonsretning.INN);
+  allDocuments.forEach((doc) => !filteredDocuments.some((fd) => fd.dokumentId === doc.dokumentId) && filteredDocuments.push(doc));
+  return filteredDocuments;
+});
+
 const getDocumenterMedFikkInnsynVerdi = createSelector(
-  [getFilteredReceivedDocuments, behandlingSelectors.getBehandlingInnsynDokumenter],
+  [getFilteredReceivedDocuments, (ownProps) => ownProps.innsynDokumenter],
   (alleDokumenter, valgteDokumenter) => alleDokumenter
     .filter((dokAlle) => valgteDokumenter.find((dokValgte) => dokValgte.dokumentId === dokAlle.dokumentId))
     .map((dokAlle) => ({
@@ -191,24 +195,19 @@ const getDocumenterMedFikkInnsynVerdi = createSelector(
 
 const formName = 'InnsynVedtakForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
-  return (state) => {
-    const aksjonspunkter = behandlingSelectors.getAksjonspunkter(state);
-    return {
-      saksNr: getSelectedSaksnummer(state),
-      documents: getDocumenterMedFikkInnsynVerdi(state),
-      sprakkode: behandlingSelectors.getBehandlingSprak(state),
-      initialValues: buildInitialValues(behandlingSelectors.getBehandlingInnsynMottattDato(state), aksjonspunkter),
-      apBegrunnelse: aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
-      begrunnelse: behandlingFormValueSelector(formName)(state, 'begrunnelse'),
-      resultat: behandlingSelectors.getBehandlingInnsynResultatType(state).kode,
-      onSubmit,
-    };
-  };
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
+  return (state, ownProps) => ({
+    documents: getDocumenterMedFikkInnsynVerdi(ownProps),
+    initialValues: buildInitialValues(ownProps.innsynMottattDato, ownProps.aksjonspunkter),
+    apBegrunnelse: ownProps.aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_INNSYN).begrunnelse,
+    begrunnelse: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'begrunnelse'),
+    resultat: ownProps.innsynResultatType.kode,
+    onSubmit,
+  });
 };
 
-const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingFormInnsyn({
+const InnsynVedtakForm = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({
   form: formName,
 })(InnsynVedtakFormImpl)));
 

@@ -1,6 +1,7 @@
 import { expect } from 'chai';
 
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
+
 import { getFilteredReceivedDocuments, reducer } from './duckBehandlingInnsyn';
 
 describe('Innsyn-behandling-reducer', () => {

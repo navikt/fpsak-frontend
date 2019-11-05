@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import { InnsynVedtakFormImpl } from './InnsynVedtakForm';

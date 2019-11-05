@@ -41,7 +41,8 @@ class CreateNewBehandlingMenuItem extends Component {
     };
 
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
-    submitNyBehandling(push, saksnummer, behandlingIdentifier !== undefined, isTilbakekreving, data);
+    const erBehandlingValgt = behandlingIdentifier !== undefined && behandlingIdentifier.behandlingId;
+    submitNyBehandling(push, saksnummer, erBehandlingValgt, isTilbakekreving, data);
     this.hideModal();
   }
 

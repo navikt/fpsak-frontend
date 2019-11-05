@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -8,14 +7,15 @@ import { Column, Row } from 'nav-frontend-grid';
 import {
   ElementWrapper, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
+
 import styles from './documentListVedtakInnsyn.less';
 
+// TODO (TOR) Flytt url ut av komponent
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
 const getLink = (document, saksNr) => `${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
 const headerTextCodes = [
   'DocumentListVedtakInnsyn.Dokument',
-
 ];
 
 /**

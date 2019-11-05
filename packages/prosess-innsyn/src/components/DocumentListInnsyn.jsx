@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import {
-  DateTimeLabel, ElementWrapper, Image, Table, TableColumn, TableRow,
+  DateTimeLabel, Image, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 
@@ -16,6 +16,7 @@ import internDokumentImageUrl from '@fpsak-frontend/assets/images/intern_dokumen
 
 import styles from './documentListInnsyn.less';
 
+// TODO (TOR) Flytt url ut av komponent
 const DOCUMENT_SERVER_URL = '/fpsak/api/dokument/hent-dokument';
 const getLink = (document, saksNr) => `${DOCUMENT_SERVER_URL}?saksnummer=${saksNr}&journalpostId=${document.journalpostId}&dokumentId=${document.dokumentId}`;
 
@@ -78,7 +79,7 @@ const DocumentListInnsyn = ({
     ];
 
   return (
-    <ElementWrapper>
+    <>
       <Undertekst className={styles.noDocuments}><FormattedMessage id="DocumentListInnsyn.VelgInnsynsDok" /></Undertekst>
       <Row>
         <Column xs={readOnly ? '6' : '10'}>
@@ -108,7 +109,7 @@ const DocumentListInnsyn = ({
           </Table>
         </Column>
       </Row>
-    </ElementWrapper>
+    </>
   );
 };
 

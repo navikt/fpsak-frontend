@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import behandlingSelectors from 'behandlingInnsyn/src/selectors/innsynBehandlingSelectors';
+import behandlingSelectors from '../../selectors/innsynBehandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadInnsynBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
 import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpInnsyn';

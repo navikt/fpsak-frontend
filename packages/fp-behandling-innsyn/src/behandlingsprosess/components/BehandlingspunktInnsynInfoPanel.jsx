@@ -2,14 +2,26 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
+
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
+import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
+
+import {
+  getAllDocuments, getAlleKodeverk, getSelectedSaksnummer,
+} from '../../duckBehandlingInnsyn';
+import fpInnsynApi from '../../data/innsynBehandlingApi';
 import behandlingspunktInnsynSelectors from '../selectors/behandlingsprosessInnsynSelectors';
-import InnsynVedtakForm from './vedtak/InnsynVedtakForm';
-import InnsynForm from './innsyn/InnsynForm';
+import behandlingInnsynSelectors from '../../selectors/innsynBehandlingSelectors';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
 
 import styles from './behandlingspunktInnsynInfoPanel.less';
 
 const classNames = classnames.bind(styles);
+
+const vedtakData = [fpInnsynApi.BEHANDLING, fpInnsynApi.INNSYN];
+const innsynData = [fpInnsynApi.BEHANDLING, fpInnsynApi.INNSYN];
 
 /*
  * BehandlingspunktInnsynInfoPanel
@@ -27,20 +39,48 @@ export const BehandlingspunktInnsynInfoPanel = ({
   apCodes,
   readOnlySubmitButton,
   notAcceptedByBeslutter,
+  behandlingspunktAksjonspunkter,
+  aksjonspunkter,
+  alleDokumenter,
+  alleKodeverk,
+  saksnummer,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
     <div>
-      { selectedBehandlingspunkt === behandlingspunktCodes.VEDTAK
-      && (
-      <InnsynVedtakForm
-        submitCallback={submitCallback}
-        previewCallback={previewCallback}
-        readOnly={readOnly}
+      <DataFetcherWithCacheTemp
+        behandlingVersjon={1}
+        data={vedtakData}
+        showComponent={selectedBehandlingspunkt === behandlingspunktCodes.VEDTAK}
+        render={(props) => (
+          <VedtakInnsynProsessIndex
+            saksnummer={saksnummer}
+            aksjonspunkter={aksjonspunkter}
+            alleDokumenter={alleDokumenter}
+            submitCallback={submitCallback}
+            previewCallback={previewCallback}
+            readOnly={readOnly}
+            {...props}
+          />
+        )}
       />
-      )}
 
-      {InnsynForm.supports(apCodes)
-      && <InnsynForm submitCallback={submitCallback} readOnly={readOnly} isSubmittable={readOnlySubmitButton} />}
+      <DataFetcherWithCacheTemp
+        behandlingVersjon={1}
+        data={innsynData}
+        showComponent={apCodes.includes(aksjonspunktCodes.VURDER_INNSYN)}
+        render={(props) => (
+          <InnsynProsessIndex
+            saksnummer={saksnummer}
+            alleDokumenter={alleDokumenter}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            isSubmittable={readOnlySubmitButton}
+            aksjonspunkter={behandlingspunktAksjonspunkter}
+            alleKodeverk={alleKodeverk}
+            {...props}
+          />
+        )}
+      />
     </div>
   </div>
 );
@@ -55,6 +95,11 @@ BehandlingspunktInnsynInfoPanel.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
+  behandlingspunktAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  saksnummer: PropTypes.number.isRequired,
 };
 
 BehandlingspunktInnsynInfoPanel.defaultProps = {
@@ -68,6 +113,11 @@ const mapStateToProps = (state) => ({
   apCodes: behandlingspunktInnsynSelectors.getBehandlingspunktAksjonspunkterCodes(state),
   readOnlySubmitButton: behandlingspunktInnsynSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktInnsynSelectors.getNotAcceptedByBeslutter(state),
+  behandlingspunktAksjonspunkter: behandlingspunktInnsynSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  aksjonspunkter: behandlingInnsynSelectors.getAksjonspunkter(state),
+  alleDokumenter: getAllDocuments(state),
+  alleKodeverk: getAlleKodeverk(state),
+  saksnummer: getSelectedSaksnummer(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktInnsynInfoPanel);

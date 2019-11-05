@@ -6,7 +6,7 @@ import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-fel
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
+import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingInnsyn';
 import behandlingSelectors from '../selectors/innsynBehandlingSelectors';
 import {
   fetchPreviewBrev as fetchPreview,
