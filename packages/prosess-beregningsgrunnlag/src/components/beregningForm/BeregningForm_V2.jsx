@@ -6,12 +6,14 @@ import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
+import { Undertittel } from 'nav-frontend-typografi';
 import InntektsopplysningerPanel from '../fellesPaneler/InntektsopplysningerPanel';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel';
@@ -22,6 +24,10 @@ import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPa
 import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
 import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import Beregningsgrunnlag2 from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
+import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
+import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
+import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
 
 // TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
@@ -93,20 +99,20 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpText isAksjonspunktOpen>
+        <AksjonspunktHelpTextV2 isAksjonspunktOpen marginBottom>
           { apneAksjonspunkt.map((ap) => (
             <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
           ))}
-        </AksjonspunktHelpText>
+        </AksjonspunktHelpTextV2>
       )}
       { erDetMinstEttLukketAksjonspunkt && (
         <div>
           <VerticalSpacer sixteenPx />
-          <AksjonspunktHelpText isAksjonspunktOpen={false}>
+          <AksjonspunktHelpTextV2 isAksjonspunktOpen={false}>
             { lukkedeAksjonspunkt.map((ap) => (
               <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
             ))}
-          </AksjonspunktHelpText>
+          </AksjonspunktHelpTextV2>
         </div>
       )}
     </div>
@@ -175,6 +181,14 @@ const getAvviksprosent = (beregningsgrunnlag) => {
   }
   return undefined;
 };
+const getStatusList = (beregningsgrunnlagPeriode) => {
+  const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
+  return statusList;
+};
+const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspunkter) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
+  && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET))
+  && gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
+
 
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningFormImpl
@@ -197,6 +211,7 @@ export const BeregningFormImpl = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
+  isVilkarOppfylt,
   ...formProps
 }) => {
   const {
@@ -206,6 +221,11 @@ export const BeregningFormImpl = ({
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
+  const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
+  console.log('aktivitetStatusListe', aktivitetStatusList);
+  const tisdBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
+  console.log('tidsbegrenset inntekt', tisdBegrensetInntekt);
+
   return (
     <form onSubmit={formProps.handleSubmit}>
 
@@ -216,6 +236,18 @@ export const BeregningFormImpl = ({
           { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent)}
         </ElementWrapper>
         )}
+      <Row>
+        <Column xs="12" md="6">
+          <Undertittel>
+            <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
+          </Undertittel>
+        </Column>
+        <Column xs="12" md="6">
+          <Undertittel>
+            <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
+          </Undertittel>
+        </Column>
+      </Row>
       <Row>
         <Column xs="12" md="6">
           <SkjeringspunktOgStatusPanel
@@ -230,10 +262,25 @@ export const BeregningFormImpl = ({
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
             alleKodeverk={alleKodeverk}
-            aktivitetStatusList={beregningsgrunnlag.aktivitetStatus}
+            aktivitetStatusList={aktivitetStatusList}
             skjeringstidspunktDato={skjaeringstidspunktBeregning}
             gjeldendeDekningsgrad={dekningsgrad}
           />
+          { relevanteStatuser.skalViseBeregningsgrunnlag && (
+          <Beregningsgrunnlag2
+            relevanteStatuser={relevanteStatuser}
+            readOnly={readOnly}
+            submitCallback={submitCallback}
+            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+            readOnlySubmitButton={readOnlySubmitButton}
+            formName={formName}
+            allePerioder={beregningsgrunnlagPeriode}
+            gjelderBesteberegning={gjelderBesteberegning}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+          />
+          )}
         </Column>
         <Column xs="12" md="6">
           <InntektsopplysningerPanel
@@ -248,6 +295,30 @@ export const BeregningFormImpl = ({
             sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
             avvik={avvikProsent}
           />
+          {gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
+          && (
+          <AksjonspunktBehandler
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            formName={formName}
+            allePerioder={beregningsgrunnlagPeriode}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+            aksjonspunkter={gjeldendeAksjonspunkter}
+            relevanteStatuser={relevanteStatuser}
+            tisdBegrensetInntekt={tisdBegrensetInntekt}
+          />
+          )}
+          <BeregningsresultatTable2
+            halvGVerdi={beregningsgrunnlag.halvG}
+            beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
+            ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
+            ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
+            ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
+            isVilkarOppfylt={isVilkarOppfylt}
+          />
+
         </Column>
       </Row>
       { relevanteStatuser.skalViseBeregningsgrunnlag && (
@@ -280,6 +351,7 @@ BeregningFormImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  isVilkarOppfylt: PropTypes.bool.isRequired,
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {

@@ -17,7 +17,7 @@ import {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
-import BeregningForm from './beregningForm/BeregningForm_V2';
+import BeregningForm from './beregningForm/BeregningForm';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';

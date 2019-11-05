@@ -1,0 +1,103 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Column, Row } from 'nav-frontend-grid';
+import Panel from 'nav-frontend-paneler';
+import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import createExternalLink from '../redesign/LinkTilEksterntSystem';
+
+/**
+ * GrunnlagForAarsinntektPanelFL
+ *
+ * Presentasjonskomponent. Viser beregningsgrunnlag for frilansere.
+ * Viser kun én frilanserinntekt og et inputfelt for å oversyre det ved aksjonspunkt.
+ * Vises også hvis status er en kombinasjonsstatus som inkluderer frilanser.
+ */
+export const GrunnlagForAarsinntektPanelFL2 = ({
+  alleAndeler,
+  isKombinasjonsstatus,
+}) => {
+  const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+  const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
+  const startDato = relevanteAndeler[0].beregnetPrAar;
+  return (
+
+    <Panel>
+      { isKombinasjonsstatus
+      && (
+
+      <div>
+        <Element>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
+        </Element>
+        <VerticalSpacer eightPx />
+      </div>
+      )}
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato" />
+            <span className={beregningStyles.semiBoldText}>
+              &nbsp;
+              <DateLabel dateString={startDato} />
+            </span>
+          </Normaltekst>
+        </Column>
+      </Row>
+      <VerticalSpacer eightPx />
+      <Row>
+        <Column xs="4">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
+          </Normaltekst>
+        </Column>
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+          </Normaltekst>
+        </Column>
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+          </Undertekst>
+        </Column>
+        <Column xs="2" />
+      </Row>
+      <Row>
+        <Column xs="4" />
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
+        </Column>
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
+        </Column>
+        <Column xs="2">
+          {createExternalLink('AI')}
+        </Column>
+      </Row>
+    </Panel>
+  );
+};
+GrunnlagForAarsinntektPanelFL2.propTypes = {
+  alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  isKombinasjonsstatus: PropTypes.bool.isRequired,
+};
+
+GrunnlagForAarsinntektPanelFL2.defaultProps = {
+
+};
+
+GrunnlagForAarsinntektPanelFL2.buildInitialValues = (relevanteAndeler) => {
+  if (relevanteAndeler.length === 0) {
+    return undefined;
+  }
+  return {
+    inntektFrilanser: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
+  };
+};
+
+export default GrunnlagForAarsinntektPanelFL2;

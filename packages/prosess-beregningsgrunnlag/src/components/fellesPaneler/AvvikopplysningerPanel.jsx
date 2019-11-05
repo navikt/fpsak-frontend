@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import styles from './avviksopplysningerPanel.less';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
 const AvviksopplysningerPanel = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik,
 }) => (
-  <Panel className={styles.setBoxHeight}>
+  <Panel>
     <Element>
       <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
     </Element>
@@ -24,7 +25,7 @@ const AvviksopplysningerPanel = ({
         </Normaltekst>
       </Column>
 
-      <Column xs="3" className={styles.rightAlignElement}>
+      <Column xs="3" className={beregningStyles.rightAlignElement}>
         <Normaltekst>
           {beregnetAarsinntekt === undefined ? '-' : formatCurrencyNoKr(beregnetAarsinntekt)}
         </Normaltekst>
@@ -38,7 +39,7 @@ const AvviksopplysningerPanel = ({
         </Normaltekst>
       </Column>
 
-      <Column xs="3" className={styles.rightAlignElement}>
+      <Column xs="3" className={beregningStyles.rightAlignElement}>
         <Normaltekst>
           {formatCurrencyNoKr(sammenligningsgrunnlag)}
         </Normaltekst>
@@ -53,19 +54,19 @@ const AvviksopplysningerPanel = ({
     </Row>
     <Row>
       <Column xs="6">
-        <Normaltekst>
+        <Normaltekst className={beregningStyles.semiBoldText}>
           <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
         </Normaltekst>
       </Column>
-      <Column xs="3" className={styles.rightAlignElement}>
+      <Column xs="3" className={beregningStyles.rightAlignElement}>
         <Normaltekst>
           {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
         </Normaltekst>
       </Column>
       <Column xs="3">
-        <Element>
+        <Normaltekst className={`${avvik > 25 ? styles.redError : ''} ${beregningStyles.semiBoldText}`}>
           {`${avvik}%`}
-        </Element>
+        </Normaltekst>
       </Column>
     </Row>
 

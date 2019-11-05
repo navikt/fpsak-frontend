@@ -4,7 +4,7 @@
 yarn add @fpsak-frontend/shared-components
 ```
 
-### AksjonspunktHelpText
+### AksjonspunktHelpText_V2
  Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
  å avklare en eller flere aksjonspunkter.
 
@@ -16,7 +16,7 @@ yarn add @fpsak-frontend/shared-components
 
  ##### Eksempel:
  ```js
- <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
+ <AksjonspunktHelpText_V2 children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
  ```
 
 ### ArrowBox

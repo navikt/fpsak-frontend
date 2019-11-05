@@ -15,7 +15,9 @@ const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-li
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-
+const toggles = {
+  'fpsak.redesign.beregningsgrunnlag': true,
+};
 const behandling = {
   id: 1,
   versjon: 1,
@@ -333,6 +335,28 @@ export const militær = () => {
   const andeler = [lagAndel('MS', 300000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('MS')];
+  const bg = lagBG(perioder, statuser);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
+    />
+  );
+};
+
+export const AAP = () => {
+  const andeler = [lagAndel('AAP', 250000, undefined, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
+  const statuser = [lagStatus('AAP')];
   const bg = lagBG(perioder, statuser);
   return (
     <BeregningsgrunnlagProsessIndex
