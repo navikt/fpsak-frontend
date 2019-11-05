@@ -32,6 +32,7 @@
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
 
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
