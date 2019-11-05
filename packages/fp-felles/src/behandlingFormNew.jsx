@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
 import {
-  reduxForm, formValueSelector, isDirty, getFormSyncErrors, isSubmitting, getFormValues,
+  reduxForm, formValueSelector, isDirty, getFormSyncErrors, isSubmitting, getFormValues, getFormInitialValues,
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -72,6 +72,10 @@ export const isBehandlingFormSubmitting = (formName, behandlingId, behandlingVer
 export const getBehandlingFormValues = (formName, behandlingId, behandlingVersjon) => (
   state,
 ) => getFormValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const getBehandlingFormInitialValues = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
 const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => (
   state,

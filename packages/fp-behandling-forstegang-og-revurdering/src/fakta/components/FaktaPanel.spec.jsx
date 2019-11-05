@@ -7,9 +7,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import UttakInfoPanel from './uttak/UttakInfoPanel';
-import BeregningInfoPanel from './beregning/BeregningInfoPanel';
 import { FaktaPanel } from './FaktaPanel';
 
 describe('<FaktaPanel>', () => {
@@ -310,29 +308,5 @@ describe('<FaktaPanel>', () => {
       featureToggleUtland
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(0);
-  });
-
-
-  it('skal vise faktapanel for beregning når man er overstyrer', () => {
-    const wrapper = shallowWithIntl(<FaktaPanel
-      aksjonspunkter={[]}
-      vilkarCodes={[]}
-      personopplysninger={personopplysninger}
-      soknad={soknad}
-      submitCallback={sinon.spy()}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      shouldOpenDefaultInfoPanels
-      ytelsesType={ytelsestype}
-      readOnly={false}
-      fagsakPerson={person}
-      erOverstyrer
-      ytelsefordeling={ytelsefordeling}
-      alleMerknaderFraBeslutter={{}}
-      alleKodeverk={{}}
-      readOnlyBehandling={false}
-      featureToggleUtland
-    />);
-    expect(wrapper.find(BeregningInfoPanel)).has.length(1);
   });
 });
