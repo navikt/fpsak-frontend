@@ -6,9 +6,7 @@ const innsynPropType = PropTypes.shape({
   dokumenter: PropTypes.arrayOf(PropTypes.shape({
     journalpostId: PropTypes.string.isRequired,
     dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string.isRequired,
     tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
   })).isRequired,
   innsynMottattDato: PropTypes.string,
   innsynResultatType: kodeverkObjektPropType,
