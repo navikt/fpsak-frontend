@@ -4,7 +4,8 @@ import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 
 export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBeregning, bg, fastsatteAndelsnr) => {
-  if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode)
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (!tilfeller.map(({ kode }) => kode)
     .includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING)) {
     return {};
   }
