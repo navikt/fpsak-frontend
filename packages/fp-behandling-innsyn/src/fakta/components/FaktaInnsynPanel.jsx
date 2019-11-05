@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { PersonIndex } from '@fpsak-frontend/person-info';
 
-import { getFagsakPerson } from 'behandlingInnsyn/src/duckBehandlingInnsyn';
+import { getFagsakPerson } from '../../duckBehandlingInnsyn';
 
 import styles from './faktaInnsynPanel.less';
 

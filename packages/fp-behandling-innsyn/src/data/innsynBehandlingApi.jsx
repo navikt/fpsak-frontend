@@ -7,6 +7,7 @@ export const InnsynBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  INNSYN: 'INNSYN',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -17,6 +18,9 @@ const endpoints = new RestApiConfigBuilder()
   })
   // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
+
+  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
+  .withInjectedPath('innsyn', InnsynBehandlingApiKeys.INNSYN)
   .build();
 
 

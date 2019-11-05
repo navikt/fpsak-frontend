@@ -282,6 +282,9 @@ const alleKodeverk = {
   ],
 };
 
+const toggles = {
+  'fpsak.redesign.beregningsgrunnlag': false,
+};
 
 export default {
   title: 'prosess/BeregningsgrunnlagProsessIndex',
@@ -306,6 +309,7 @@ export const arbeidstakerUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -327,6 +331,7 @@ export const arbeidstakerMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -348,6 +353,7 @@ export const arbeidstakerFrilansMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -369,6 +375,7 @@ export const militær = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -394,6 +401,7 @@ export const selvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -421,6 +429,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -445,6 +454,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };
@@ -470,6 +480,7 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={toggles}
     />
   );
 };

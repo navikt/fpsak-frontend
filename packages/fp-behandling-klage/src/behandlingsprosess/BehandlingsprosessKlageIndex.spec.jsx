@@ -26,6 +26,7 @@ describe('BehandlingsprosessKlageIndex', () => {
     push: sinon.spy(),
     saveKlage: sinon.spy(),
     resolveKlageTemp: sinon.spy(),
+    hasForeslaVedtakAp: false,
   };
   const previewCallbackDef = sinon.spy();
   const submitCallbackDef = sinon.spy();

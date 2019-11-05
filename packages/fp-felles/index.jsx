@@ -46,7 +46,7 @@ export {
 } from './src/behandlingForm';
 export {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, getBehandlingFormValues,
+  isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues,
 } from './src/behandlingFormNew';
 export { allAccessRights } from './src/navAnsatt/access';
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';

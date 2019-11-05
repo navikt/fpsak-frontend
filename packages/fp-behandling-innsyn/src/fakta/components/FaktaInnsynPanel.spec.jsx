@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { PersonIndex } from '@fpsak-frontend/person-info';
+
 import { FaktaInnsynPanel } from './FaktaInnsynPanel';
 
 describe('<FaktaInnsynPanel>', () => {

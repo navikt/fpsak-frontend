@@ -35,6 +35,7 @@ export const {
   getFagsakYtelseType,
   getHasShownBehandlingPaVent,
   getKodeverk,
+  getAlleKodeverk,
   getSelectedBehandlingId,
   getSelectedSaksnummer,
   getNavAnsatt,

@@ -10,27 +10,23 @@ export const KlageBehandlingApiKeys = {
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   SAVE_KLAGE_VURDERING: 'SAVE_KLAGE_VURDERING',
   SAVE_REOPEN_KLAGE_VURDERING: 'SAVE_REOPEN_KLAGE_VURDERING',
+  KLAGE_VURDERING: 'KLAGE_VURDERING',
 };
 
 const endpoints = new RestApiConfigBuilder()
-/* /api */
-
-  /* /api/behandlinger */
   .withAsyncPost('/fpsak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING)
   .withPost('/fpsak/api/behandlinger/endre-pa-vent', KlageBehandlingApiKeys.UPDATE_ON_HOLD)
-
-  /* /api/behandling */
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', KlageBehandlingApiKeys.SAVE_AKSJONSPUNKT)
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', KlageBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-
-  /* /api/klage */
   .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-klage', KlageBehandlingApiKeys.SAVE_KLAGE_VURDERING)
   .withAsyncPost('/fpsak/api/behandling/klage/mellomlagre-gjennapne-klage', KlageBehandlingApiKeys.SAVE_REOPEN_KLAGE_VURDERING)
 
-  /* /api/brev */
+  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
+  .withInjectedPath('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)
+
+  /* fpformidling */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', KlageBehandlingApiKeys.PREVIEW_MESSAGE)
 
-/* /api/brev */
   .build();
 
 const reducerName = 'dataContextKlageBehandling';

@@ -163,15 +163,7 @@ export const getBehandlingGjelderBesteberegning = createSelector(
 export const getVurderBesteberegning = createSelector(
   [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderBesteberegning : undefined),
 );
-export const getVurderMottarYtelse = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.vurderMottarYtelse : undefined),
-);
-export const getKunYtelse = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kunYtelse : undefined),
-);
-export const getKortvarigeArbeidsforhold = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.kortvarigeArbeidsforhold : undefined),
-);
+
 export const getSkjæringstidspunktBeregning = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.skjaeringstidspunktBeregning : undefined),
 );
@@ -187,29 +179,9 @@ export const getFordelBeregningsgrunnlag = createSelector(
 export const getFordelBeregningsgrunnlagPerioder = createSelector(
   [getFordelBeregningsgrunnlag], (fordelBG = {}) => (fordelBG ? fordelBG.fordelBeregningsgrunnlagPerioder : []),
 );
-export const getFaktaOmBeregningTilfeller = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = []) => (faktaOmBeregning ? faktaOmBeregning.faktaOmBeregningTilfeller : []),
-);
-export const getFaktaOmBeregningTilfellerKoder = createSelector(
-  [getFaktaOmBeregningTilfeller], (tilfeller = []) => (tilfeller ? tilfeller.map(({ kode }) => kode) : []),
-);
-export const getAvklarAktiviteter = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => (faktaOmBeregning ? faktaOmBeregning.avklarAktiviteter : undefined),
-);
 
 export const getAndelerMedGraderingUtenBG = createSelector(
   [getBeregningsgrunnlag], (beregningsgrunnlag = {}) => (beregningsgrunnlag ? beregningsgrunnlag.andelerMedGraderingUtenBG : undefined),
-);
-
-
-// Refusjonskrav som kommer for sent
-export const getArbeidsgiverInfoForRefusjonskravSomKommerForSent = createSelector(
-  [getFaktaOmBeregning], (faktaOmBeregning = {}) => {
-    if (faktaOmBeregning && faktaOmBeregning.refusjonskravSomKommerForSentListe) {
-      return faktaOmBeregning.refusjonskravSomKommerForSentListe;
-    }
-    return [];
-  },
 );
 
 // Risikoklassifisering
