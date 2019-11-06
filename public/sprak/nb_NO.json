@@ -710,7 +710,6 @@
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
-  "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarDato": "Dato",
   "Vedtak.Fritekstbrev": "Fritekstbrev",
   "Tilgangskontroll.Avslag.Kode6": "Ingen tilgang.",
