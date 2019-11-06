@@ -286,7 +286,8 @@ export const mapStateToProps = (state, ownProps) => {
   const aktivitetStatuser = ownProps.alleKodeverk[kodeverkTyper.AKTIVITET_STATUS];
   const skalHaBesteberegning = skalHaBesteberegningSelector(state, ownProps) === true;
   const skalFastsetteSN = skalFastsetteInntektForSN(state, ownProps);
-  const tilfeller = ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode);
+  const tilfeller = ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
+    ? ownProps.beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode) : [];
   return {
     skalFastsetteSN,
     isBeregningFormDirty,

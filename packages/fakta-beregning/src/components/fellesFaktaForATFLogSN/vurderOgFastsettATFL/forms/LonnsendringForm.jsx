@@ -76,7 +76,8 @@ const findLonnsendringAndeler = (inntektVerdier, fastsatteAndelsnr, faktaOmBereg
     .find((andel) => andel.andelsnr === field.andelsnr || andel.andelsnr === field.andelsnrRef));
 
 LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
-  if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (!tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_LONNSENDRING)) {
     return {};
   }
   if (inntektVerdier === null) {
