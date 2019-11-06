@@ -1,82 +1,38 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Column, Row } from 'nav-frontend-grid';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import styles from './avviksopplysningerPanel.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-
+import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
+import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 
 const AvviksopplysningerPanel = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik,
-}) => (
-  <Panel>
-    <Element>
-      <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
-    </Element>
-    <VerticalSpacer sixteenPx />
-    <Row>
-      <Column xs="6">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt" />
-        </Normaltekst>
-      </Column>
-
-      <Column xs="3" className={beregningStyles.rightAlignElement}>
-        <Normaltekst>
-          {beregnetAarsinntekt === undefined ? '-' : formatCurrencyNoKr(beregnetAarsinntekt)}
-        </Normaltekst>
-      </Column>
-      <Column xs="3" />
-    </Row>
-    <Row>
-      <Column xs="6">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt" />
-        </Normaltekst>
-      </Column>
-
-      <Column xs="3" className={beregningStyles.rightAlignElement}>
-        <Normaltekst>
-          {formatCurrencyNoKr(sammenligningsgrunnlag)}
-        </Normaltekst>
-      </Column>
-      <Column xs="3" />
-
-    </Row>
-    <Row>
-      <Column xs="9">
-        <hr />
-      </Column>
-    </Row>
-    <Row>
-      <Column xs="6">
-        <Normaltekst className={beregningStyles.semiBoldText}>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-        </Normaltekst>
-      </Column>
-      <Column xs="3" className={beregningStyles.rightAlignElement}>
-        <Normaltekst>
-          {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-        </Normaltekst>
-      </Column>
-      <Column xs="3">
-        <Normaltekst className={`${avvik > 25 ? styles.redError : ''} ${beregningStyles.semiBoldText}`}>
-          {`${avvik}%`}
-        </Normaltekst>
-      </Column>
-    </Row>
-
-  </Panel>
-);
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder,
+}) => {
+  console.log('AvviksopplysningerPanel props', beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder);
+  return (
+    <Panel>
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
+      </Element>
+      <VerticalSpacer sixteenPx />
+      {relevanteStatuser.isArbeidstaker && (
+      <AvviksopplysningerAT beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
+      )}
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+        <AvviksopplysningerSN beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
+      )}
+    </Panel>
+  );
+};
 
 AvviksopplysningerPanel.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
+  relevanteStatuser: PropTypes.shape().isRequired,
+  allePerioder: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AvviksopplysningerPanel.defaultProps = {

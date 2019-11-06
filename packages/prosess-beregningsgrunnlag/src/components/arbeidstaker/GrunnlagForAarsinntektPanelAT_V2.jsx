@@ -75,25 +75,35 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
       </Column>
     </Row>
   ));
-
-  const summaryRow = (
-    <>
-      <Row key="bruttoBeregningsgrunnlagLine">
-        <Column xs="11">
-          <hr />
-        </Column>
-      </Row>
-      <Row key="bruttoBeregningsgrunnlag">
-        <Column xs="4"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
-        <Column xs="2" />
-        <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst></Column>
-        <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}><Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element></Column>
-        <Column xs="2" />
-      </Row>
-    </>
-  );
-  rows.push(summaryRow);
-
+  if (relevanteAndeler.length > 1) {
+    const summaryRow = (
+      <>
+        <Row key="bruttoBeregningsgrunnlagLine">
+          <Column xs="11">
+            <hr />
+          </Column>
+        </Row>
+        <Row key="bruttoBeregningsgrunnlag">
+          <Column xs="4"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
+          <Column xs="2" />
+          <Column
+            xs="2"
+            className={beregningStyles.rightAlignElement}
+          >
+            <Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
+          </Column>
+          <Column
+            xs="2"
+            className={beregningStyles.rightAlignElementNoWrap}
+          >
+            <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
+          </Column>
+          <Column xs="2" />
+        </Row>
+      </>
+    );
+    rows.push(summaryRow);
+  }
   return rows;
 };
 

@@ -7,7 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
@@ -29,13 +29,13 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const unikeStatuser = listeMedStatuser.filter((status, index, self) => index === self.findIndex((t) => (
     t.kode === status.kode)));
   console.log('unike statuser', unikeStatuser);
+  /*
   const statuserMedEgneNavn = unikeStatuser.filter((status) => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
     && status.kode !== aktivitetStatus.DAGPENGER
     && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
-
-  statuserMedEgneNavn.forEach((status) => {
+*/
+  unikeStatuser.forEach((status) => {
     const statusName = getKodeverknavn(status);
-
     statusList.push({ visningsNavn: statusName, kode: status.kode, className: `statusFarge${status.kode}` });
   });
   statusList.sort((a, b) => ((a.visningsNavn > b.visningsNavn) ? 1 : -1));

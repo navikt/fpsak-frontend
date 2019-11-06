@@ -1,35 +1,111 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import styles from './grunnlagForAarsinntektPanelSN.less';
+import Panel from 'nav-frontend-paneler';
+import { Column, Row } from 'nav-frontend-grid';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
-const createHeaders = (pgiVerdier, erNyIArbeidslivet) => {
-  const headers = [
-    <FormattedMessage
-      id="Beregningsgrunnlag.AarsinntektPanel.TomString"
-      key="TomStringITabellTittel"
-    />,
-  ];
-  pgiVerdier.forEach(({ årstall }) => {
-    headers.push(
-      <FormattedMessage
-        id="Beregningsgrunnlag.AarsinntektPanel.Aar"
-        values={{ aar: årstall.toString() }}
-        key={`InntektSistseTreÅr_${årstall.toString()}`}
-      />,
-    );
-  });
-  if (!erNyIArbeidslivet) {
-    headers.push(<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.BeregnetAarsinntekt" />);
-  }
-  return headers;
-};
+
+const createHeaderRow = (pgiVerdier) => (
+  <Row key="SNInntektHeader">
+    <Column xs="8">
+      <Undertekst>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
+      </Undertekst>
+    </Column>
+    {pgiVerdier && Object.prototype.hasOwnProperty.call(pgiVerdier[0], 'gJustert') && (
+      <>
+        <Column xs="2">
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
+          </Undertekst>
+        </Column>
+        <Column xs="2">
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalGJustert" />
+          </Undertekst>
+        </Column>
+      </>
+    )}
+    {pgiVerdier && !Object.prototype.hasOwnProperty.call(pgiVerdier[0], 'gJustert') && (
+      <>
+        <Column xs="2" className={beregningStyles.rightAlignElement}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
+          </Undertekst>
+        </Column>
+      </>
+    )}
+  </Row>
+);
+const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
+  <>
+    {pgiSnitt !== undefined && !erNyIArbeidslivet && (
+      <>
+        <Row key="grunnlagAarsinntektSNLine">
+          <Column xs="10">
+            <hr />
+          </Column>
+        </Row>
+        <Row key="grunnlagAarsinntektSN">
+          <Column xs="8" className={beregningStyles.rightAlignTextInDiv}>
+            <FormattedMessage
+              id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
+            />
+          </Column>
+          <Column xs="2" className={beregningStyles.rightAlignElement}>
+            <Element>
+              {formatCurrencyNoKr(pgiSnitt)}
+            </Element>
+          </Column>
+        </Row>
+      </>
+    )}
+  </>
+);
+const createInntektRows = (pgiVerdier) => (
+  <>
+    {pgiVerdier.map((element) => (
+      <Row key={element.årstall}>
+        <Column xs="6">
+          <Normaltekst>
+            {element.årstall}
+          </Normaltekst>
+        </Column>
+        {Object.prototype.hasOwnProperty.call(element, 'gJustert') && (
+          <>
+            <Column xs="2" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(element.gJustert)}
+              </Normaltekst>
+            </Column>
+            <Column xs="2" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(element.beløp)}
+              </Normaltekst>
+            </Column>
+          </>
+        )}
+        {!Object.prototype.hasOwnProperty.call(element, 'gJustert') && (
+          <>
+            <Column xs="4" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(element.beløp)}
+              </Normaltekst>
+            </Column>
+          </>
+        )}
+      </Row>
+    ))}
+  </>
+);
+
 
 /**
  * GrunnlagForAarsinntektPanelSN
@@ -45,27 +121,17 @@ export const GrunnlagForAarsinntektPanelSN = ({
     return null;
   }
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
-  const headers = createHeaders(pgiVerdier, erNyIArbeidslivet);
   return (
+    <Panel>
+      <Element className={beregningStyles.semiBoldText}>
+        <FormattedHTMLMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
+      </Element>
+      <VerticalSpacer eightPx />
+      {createHeaderRow(pgiVerdier)}
+      {createInntektRows(pgiVerdier)}
+      {createSumRow(pgiSnitt, erNyIArbeidslivet)}
 
-    <Table headerTextCodes={headers} allowFormattedHeader classNameTable={styles.inntektTable} noHover>
-      <TableRow>
-        <TableColumn>
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivende" />
-          </Normaltekst>
-        </TableColumn>
-        {pgiVerdier.map((element) => (
-          <TableColumn key={element.årstall}>
-            <Normaltekst>
-              {element.beløp === undefined ? '' : formatCurrencyNoKr(element.beløp)}
-            </Normaltekst>
-          </TableColumn>
-        ))}
-        {pgiSnitt !== undefined && !erNyIArbeidslivet
-        && <TableColumn><Element>{formatCurrencyNoKr(pgiSnitt)}</Element></TableColumn>}
-      </TableRow>
-    </Table>
+    </Panel>
   );
 };
 

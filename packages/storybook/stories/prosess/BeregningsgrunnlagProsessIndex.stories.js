@@ -353,10 +353,10 @@ export const militær = () => {
   );
 };
 
-export const AAP = () => {
-  const andeler = [lagAndel('AAP', 250000, undefined, false)];
+export const arbeidstakerOgAAP = () => {
+  const andeler = [lagAndel('AT', 107232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
-  const statuser = [lagStatus('AAP')];
+  const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const bg = lagBG(perioder, statuser);
   return (
     <BeregningsgrunnlagProsessIndex

@@ -19,7 +19,7 @@ import {
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
-import TilstotendeYtelser from '../tilstotendeYtelser/TilstotendeYtelser';
+import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel from '../militær/MilitaerPanel';
 import styles from './beregningsgrunnlag.less';
 
@@ -101,7 +101,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
-      <TilstotendeYtelser
+      <TilstotendeYtelser2
         alleAndeler={alleAndelerIForstePeriode}
         relevanteStatuser={relevanteStatuser}
         gjelderBesteberegning={gjelderBesteberegning}

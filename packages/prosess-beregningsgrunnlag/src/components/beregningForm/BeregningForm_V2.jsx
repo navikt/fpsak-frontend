@@ -218,6 +218,7 @@ export const BeregningFormImpl = ({
     dekningsgrad, skjaeringstidspunktBeregning,
     årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
+  debugger;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
@@ -294,6 +295,8 @@ export const BeregningFormImpl = ({
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
             sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
             avvik={avvikProsent}
+            relevanteStatuser={relevanteStatuser}
+            allePerioder={beregningsgrunnlagPeriode}
           />
           {gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
           && (
