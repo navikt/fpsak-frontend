@@ -53,7 +53,7 @@ export const getBehandlingerLinksMappedById = createSelector([getBehandlinger], 
   .reduce((a, b) => ({ ...a, [b.id]: b.links }), {}));
 
 export const getBehandlingerErPaaVentStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((a, b) => ({ ...a, [b.id]: b.erPaaVent }), {}));
+  .reduce((a, b) => ({ ...a, [b.id]: b.behandlingPaaVent }), {}));
 
 export const getBehandlingerUuidsMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.uuid }), {}));
