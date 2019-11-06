@@ -122,7 +122,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                         <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
                       </Undertekst>
                       <Normaltekst className={styles.smallPaddingRight}>
-                        {feilutbetaling.tidligereVarseltBeløp}
+                        {feilutbetaling.tidligereVarseltBeløp
+                          ? feilutbetaling.tidligereVarseltBeløp : <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />}
                       </Normaltekst>
                     </Column>
                   </Row>
@@ -215,14 +216,6 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </Row>
             </Column>
           </Row>
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12" md="6">
-              <Element>
-                <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
-              </Element>
-            </Column>
-          </Row>
-          <VerticalSpacer twentyPx />
           <Row>
             <Column md="6">
               <TextAreaField
