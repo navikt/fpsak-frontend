@@ -11,6 +11,8 @@
   "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
   "VilkarResultPanel.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPanel.VilkarIkkeOppfylt": "Vilkåret er ikke oppfylt",
+  "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
+  "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
   "VilkarResultPicker.VilkarDato": "Dato",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
