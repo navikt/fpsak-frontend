@@ -12,7 +12,7 @@ import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedSaksnummer, getFagsakYtelseType } from '../fagsak/fagsakSelectors';
 import {
-  previewMessage, getBehandlingIsOnHold, getBehandlingVersjon, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId,
+  previewMessage, erBehandlingPaVent, getBehandlingVersjon, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
   getBehandlingBehandlendeEnhetNavn, getBehandlingType, getRettigheter, getSelectedBehandlingId,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
@@ -69,7 +69,7 @@ const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk,
     .medFpSakKodeverk(alleFpSakKodeverk)
     .medFpTilbakeKodeverk(alleFpTilbakeKodeverk));
 const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehandlingerUuidsMappedById, getBehandlingVersjon, getBehandlingType,
-  getBehandlingIsOnHold, getBehandlingIsQueued, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn],
+  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn],
 (behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn) => (versjon
   ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn)
   : undefined));

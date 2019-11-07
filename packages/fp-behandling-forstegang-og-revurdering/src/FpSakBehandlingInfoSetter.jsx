@@ -18,23 +18,18 @@ export class FpSakBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingSprak, behandlingVersjon, aksjonspunkter,
-      behandlingAnsvarligSaksbehandler, behandlingToTrinnsBehandling, behandlingResultatstruktur, behandlingsresultat,
-      behandlingIsOnHold, behandlingIsQueued, soknad, behandlingsresultatFraOriginalBehandling,
+      setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingVersjon, aksjonspunkter,
+      behandlingResultatstruktur, behandlingsresultat,
+      soknad, behandlingsresultatFraOriginalBehandling,
       resultatstrukturFraOriginalBehandling, erArsakTypeBehandlingEtterKlage,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
       .withIsKontrollerRevurderingAksjonspunkOpen(isKontrollerRevurderingApOpen)
-      .withBehandlingSprak(behandlingSprak)
       .withBehandlingVersjon(behandlingVersjon)
       .withAksjonspunkter(aksjonspunkter)
-      .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
-      .withBehandlingToTrinnsBehandling(behandlingToTrinnsBehandling)
       .withBehandlingResultatstruktur(behandlingResultatstruktur)
       .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingIsOnHold(behandlingIsOnHold)
-      .withBehandlingIsQueued(behandlingIsQueued)
       .withSoknad(soknad)
       .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
       .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling)
@@ -55,29 +50,21 @@ export class FpSakBehandlingInfoSetter extends Component {
 FpSakBehandlingInfoSetter.propTypes = {
   isKontrollerRevurderingApOpen: PropTypes.bool.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingSprak: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
-  behandlingAnsvarligSaksbehandler: PropTypes.string,
-  behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
   behandlingResultatstruktur: PropTypes.shape(),
   behandlingsresultat: PropTypes.shape(),
-  behandlingIsOnHold: PropTypes.bool.isRequired,
   erArsakTypeBehandlingEtterKlage: PropTypes.bool.isRequired,
-  behandlingIsQueued: PropTypes.bool,
   soknad: PropTypes.shape(),
   behandlingsresultatFraOriginalBehandling: PropTypes.shape(),
   resultatstrukturFraOriginalBehandling: PropTypes.shape(),
 };
 
 FpSakBehandlingInfoSetter.defaultProps = {
-  behandlingSprak: undefined,
   behandlingVersjon: undefined,
   aksjonspunkter: [],
-  behandlingAnsvarligSaksbehandler: undefined,
   behandlingResultatstruktur: undefined,
   behandlingsresultat: undefined,
-  behandlingIsQueued: false,
   soknad: undefined,
   behandlingsresultatFraOriginalBehandling: undefined,
   resultatstrukturFraOriginalBehandling: undefined,
@@ -85,15 +72,10 @@ FpSakBehandlingInfoSetter.defaultProps = {
 
 const mapStateToProps = (state) => ({
   isKontrollerRevurderingApOpen: behandlingSelectors.isKontrollerRevurderingAksjonspunkOpen(state),
-  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
-  behandlingToTrinnsBehandling: behandlingSelectors.getBehandlingToTrinnsBehandling(state),
   behandlingResultatstruktur: getBehandlingResultatstruktur(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
-  behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
   soknad: behandlingSelectors.getSoknad(state),
   behandlingsresultatFraOriginalBehandling: getBehandlingsresultatFraOriginalBehandling(state),
   resultatstrukturFraOriginalBehandling: getResultatstrukturFraOriginalBehandling(state),

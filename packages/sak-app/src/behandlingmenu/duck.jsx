@@ -67,7 +67,7 @@ export const setBehandlingOnHold = (params, behandlingIdentifier) => (dispatch) 
 
 export const resumeBehandling = (behandlingIdentifier, params) => (dispatch) => dispatch(fpsakApi.RESUME_BEHANDLING.makeRestApiRequest()(params))
   .then((response) => Promise.all([
-    dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
+    dispatch(updateFagsakAndBehandlingInfo(behandlingIdentifier)),
     behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }),
   ]));
 
