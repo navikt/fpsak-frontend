@@ -3,15 +3,9 @@
 class BehandlingInfoHolder {
     isKontrollerRevurderingAksjonspunkOpen = false;
 
-    behandlingSprak;
-
     behandlingVersjon;
 
     aksjonspunkter;
-
-    behandlingAnsvarligSaksbehandler;
-
-    behandlingToTrinnsBehandling = false;
 
     behandlingKlageVurdering;
 
@@ -22,10 +16,6 @@ class BehandlingInfoHolder {
     behandlingKlageVurderingResultatNFP;
 
     behandlingKlageVurderingResultatNK;
-
-    behandlingIsOnHold;
-
-    behandlingIsQueued;
 
     soknad;
 
@@ -40,11 +30,6 @@ class BehandlingInfoHolder {
       return this;
     }
 
-    withBehandlingSprak = (behandlingSprak) => {
-      this.behandlingSprak = behandlingSprak;
-      return this;
-    }
-
     withBehandlingVersjon = (behandlingVersjon) => {
       this.behandlingVersjon = behandlingVersjon;
       return this;
@@ -52,16 +37,6 @@ class BehandlingInfoHolder {
 
     withAksjonspunkter = (aksjonspunkter) => {
       this.aksjonspunkter = aksjonspunkter;
-      return this;
-    }
-
-    withBehandlingAnsvarligSaksbehandler = (behandlingAnsvarligSaksbehandler) => {
-      this.behandlingAnsvarligSaksbehandler = behandlingAnsvarligSaksbehandler;
-      return this;
-    }
-
-    withBehandlingToTrinnsBehandling = (behandlingToTrinnsBehandling) => {
-      this.behandlingToTrinnsBehandling = behandlingToTrinnsBehandling;
       return this;
     }
 
@@ -87,16 +62,6 @@ class BehandlingInfoHolder {
 
     withBehandlingKlageVurderingResultatNK = (behandlingKlageVurderingResultatNK) => {
       this.behandlingKlageVurderingResultatNK = behandlingKlageVurderingResultatNK;
-      return this;
-    }
-
-    withBehandlingIsOnHold = (behandlingIsOnHold) => {
-      this.behandlingIsOnHold = behandlingIsOnHold;
-      return this;
-    }
-
-    withBehandlingIsQueued = (behandlingIsQueued) => {
-      this.behandlingIsQueued = behandlingIsQueued;
       return this;
     }
 

@@ -16,19 +16,14 @@ export class PapirsoknadInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter,
-      behandlingAnsvarligSaksbehandler, behandlingsresultat,
-      behandlingIsOnHold, behandlingIsQueued, soknad,
+      setBehandlingInfoHolder, behandlingVersjon, aksjonspunkter, behandlingsresultat,
+      soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
-      .withBehandlingSprak(behandlingSprak)
       .withBehandlingVersjon(behandlingVersjon)
       .withAksjonspunkter(aksjonspunkter)
-      .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
       .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingIsOnHold(behandlingIsOnHold)
-      .withBehandlingIsQueued(behandlingIsQueued)
       .withSoknad(soknad));
   }
 
@@ -45,34 +40,23 @@ export class PapirsoknadInfoSetter extends Component {
 
 PapirsoknadInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingSprak: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
-  behandlingAnsvarligSaksbehandler: PropTypes.string,
   behandlingsresultat: PropTypes.shape(),
-  behandlingIsOnHold: PropTypes.bool.isRequired,
-  behandlingIsQueued: PropTypes.bool,
   soknad: PropTypes.shape(),
 };
 
 PapirsoknadInfoSetter.defaultProps = {
-  behandlingSprak: undefined,
   behandlingVersjon: undefined,
   aksjonspunkter: [],
-  behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
-  behandlingIsQueued: false,
   soknad: undefined,
 };
 
 const mapStateToProps = (state) => ({
-  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
-  behandlingIsQueued: behandlingSelectors.getBehandlingIsQueued(state),
   soknad: behandlingSelectors.getSoknad(state),
 });
 

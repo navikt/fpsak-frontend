@@ -16,18 +16,14 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingSprak, behandlingVersjon, aksjonspunkter, behandlingAnsvarligSaksbehandler,
-      behandlingToTrinnsBehandling, behandlingsresultat, behandlingIsOnHold, soknad,
+      setBehandlingInfoHolder, behandlingVersjon, aksjonspunkter,
+      behandlingsresultat, soknad,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
-      .withBehandlingSprak(behandlingSprak)
       .withBehandlingVersjon(behandlingVersjon)
       .withAksjonspunkter(aksjonspunkter)
-      .withBehandlingAnsvarligSaksbehandler(behandlingAnsvarligSaksbehandler)
-      .withBehandlingToTrinnsBehandling(behandlingToTrinnsBehandling)
       .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingIsOnHold(behandlingIsOnHold)
       .withSoknad(soknad));
   }
 
@@ -44,33 +40,23 @@ export class FpTilbakeBehandlingInfoSetter extends Component {
 
 FpTilbakeBehandlingInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingSprak: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
-  behandlingAnsvarligSaksbehandler: PropTypes.string,
-  behandlingToTrinnsBehandling: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape(),
-  behandlingIsOnHold: PropTypes.bool.isRequired,
   soknad: PropTypes.shape(),
 };
 
 FpTilbakeBehandlingInfoSetter.defaultProps = {
-  behandlingSprak: undefined,
   behandlingVersjon: undefined,
   aksjonspunkter: [],
-  behandlingAnsvarligSaksbehandler: undefined,
   behandlingsresultat: undefined,
   soknad: undefined,
 };
 
 const mapStateToProps = (state) => ({
-  behandlingSprak: behandlingSelectors.getBehandlingSprak(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
-  behandlingAnsvarligSaksbehandler: behandlingSelectors.getBehandlingAnsvarligSaksbehandler(state),
-  behandlingToTrinnsBehandling: behandlingSelectors.getBehandlingToTrinnsBehandling(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingIsOnHold: behandlingSelectors.getBehandlingIsOnHold(state),
   soknad: behandlingSelectors.getSoknad(state),
 });
 
