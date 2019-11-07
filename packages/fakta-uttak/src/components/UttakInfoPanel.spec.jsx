@@ -46,10 +46,19 @@ describe('<UttakInfoPanel>', () => {
       openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
-      isRevurdering={false}
-      hasStatusUtredes={false}
-      behandlingPaaVent={false}
       aksjonspunkter={[]}
+      behandlingType={{}}
+      behandlingArsaker={[]}
+      behandlingStatus={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      uttakPerioder={[]}
+      alleKodeverk={{}}
+      kanOverstyre={false}
+      faktaArbeidsforhold={[]}
+      personopplysninger={{}}
+      familiehendelse={{}}
     />);
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
@@ -68,10 +77,19 @@ describe('<UttakInfoPanel>', () => {
       openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
-      isRevurdering={false}
-      hasStatusUtredes={false}
-      behandlingPaaVent={false}
       aksjonspunkter={avklarAnnenforelderHarRettAp}
+      behandlingType={{}}
+      behandlingArsaker={[]}
+      behandlingStatus={{}}
+      behandlingId={1}
+      behandlingVersjon={1}
+      ytelsefordeling={{}}
+      uttakPerioder={[]}
+      alleKodeverk={{}}
+      kanOverstyre={false}
+      faktaArbeidsforhold={[]}
+      personopplysninger={{}}
+      familiehendelse={{}}
     />);
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);

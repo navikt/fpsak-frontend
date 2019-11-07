@@ -29,7 +29,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import UttakInfoPanel from './uttak/UttakInfoPanel';
 import UttakFaktaIndex from '../../../../fakta-uttak';
 
 import styles from './faktaPanel.less';
@@ -58,6 +57,15 @@ const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 const beregningData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGSGRUNNLAG, fpsakApi.AKSJONSPUNKTER];
 const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
 const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
+const uttakData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.YTELSEFORDELING,
+  fpsakApi.UTTAK_KONTROLLER_FAKTA_PERIODER,
+  fpsakApi.FAKTA_ARBEIDSFORHOLD,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.FAMILIEHENDELSE,
+];
 
 /**
  * FaktaPanel
@@ -68,20 +76,19 @@ const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKT
 export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   aksjonspunkter,
   vilkarCodes,
-  personopplysninger,
   submitCallback,
   openInfoPanels,
   toggleInfoPanelCallback,
   shouldOpenDefaultInfoPanels,
   readOnly,
   ytelsesType,
-  ytelsefordeling,
   fagsakPerson,
   erOverstyrer,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   readOnlyBehandling,
   featureToggleUtland,
+  kanOverstyre,
 }) => (
   <>
     <div className={styles.personContainer}>
@@ -335,7 +342,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
 
       <DataFetcherWithCache
         behandlingVersjon={1}
-        data={omsorgData}
+        data={uttakData}
         showComponent={aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
         render={(props) => (
           <UttakFaktaIndex
@@ -346,21 +353,11 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
             shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
             submitCallback={submitCallback}
             readOnly={readOnly}
+            kanOverstyre={kanOverstyre}
             {...props}
           />
         )}
       />
-
-      {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling) && (
-      <UttakInfoPanel
-        aksjonspunkter={aksjonspunkter}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-      />
-      )}
     </div>
   </>
 );
@@ -386,6 +383,7 @@ FaktaPanel.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   featureToggleUtland: PropTypes.bool.isRequired,
+  kanOverstyre: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -406,6 +404,7 @@ const mapStateToProps = (state) => {
     personopplysninger: getPersonopplysning(state) || null,
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
+    kanOverstyre: rettigheter.kanOverstyreAccess.hasAccess,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),

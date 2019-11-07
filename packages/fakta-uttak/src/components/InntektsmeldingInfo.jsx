@@ -79,7 +79,7 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
   const tidenesEnde = tom === TIDENES_ENDE;
   const intl = useIntl();
   return (
-    <React.Fragment key={guid()}>
+    <>
       <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
@@ -88,8 +88,7 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
         <FlexColumn>
           {!isGradering && (
             <Normaltekst className={classNames('avvik', { hasAvvik: isAvvikUtsettelse })}>
-              {getKodeverknavn(periode.utsettelseArsak)}
-:
+              {`${getKodeverknavn(periode.utsettelseArsak)}:`}
             </Normaltekst>
           )}
           {isGradering && (
@@ -118,14 +117,13 @@ const renderAvvikContent = (periode, avvik, getKodeverknavn) => {
               <VerticalSpacer eightPx />
               <Normaltekst><FormattedMessage id="UttakInfoPanel.AndelIArbeid" /></Normaltekst>
               <Undertekst className={classNames('avvik', { hasAvvik: isAvvikArbeidsprosent })}>
-                {periode.arbeidsprosent}
-%
+                {`${periode.arbeidsprosent}%`}
               </Undertekst>
             </>
           )}
         </FlexColumn>
       </FlexRow>
-    </React.Fragment>
+    </>
   );
 };
 

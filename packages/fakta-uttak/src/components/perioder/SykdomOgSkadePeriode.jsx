@@ -16,13 +16,8 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector, getBehandlingFormSyncErrors } from '@fpsak-frontend/fp-felles';
 
-import { doesVilkarForSykdomOppfyltExist, getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-  getBehandlingFormSyncErrors,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 
@@ -199,10 +194,22 @@ const validateSykdomOgSkadeForm = (
 };
 
 const buildInitialValues = createSelector([
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`),
-  (state, ownProps) => ownProps.id],
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.begrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.resultat`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.dokumentertePerioder`),
+  (_state, ownProps) => ownProps.id],
 (begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
   begrunnelse,
   id,
@@ -210,11 +217,15 @@ const buildInitialValues = createSelector([
   dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
 }));
 
-
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+  const {
+    behandlingId,
+    behandlingVersjon,
+    gjeldendeFamiliehendelse,
+    vilkarForSykdomExists,
+  } = initialOwnProps;
   const formName = `sykdomOgSkadeForm-${initialOwnProps.id}`;
-  const familiehendelse = getFamiliehendelseGjeldende(initialState);
-  const vilkarForSykdomExists = doesVilkarForSykdomOppfyltExist(initialState);
+  const familiehendelse = gjeldendeFamiliehendelse;
   const validate = (values) => validateSykdomOgSkadeForm(values, familiehendelse, initialOwnProps.utsettelseArsak,
     initialOwnProps.overforingArsak, vilkarForSykdomExists);
   const onSubmit = (values) => initialOwnProps.updatePeriode((values));
@@ -222,16 +233,16 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   return (state, ownProps) => ({
     onSubmit,
     validate,
-    formSyncErrors: getBehandlingFormSyncErrors(formName)(state),
-    dokumentertePerioder: behandlingFormValueSelector(formName)(state, 'dokumentertePerioder'),
-    resultat: behandlingFormValueSelector(formName)(state, 'resultat'),
+    formSyncErrors: getBehandlingFormSyncErrors(formName, behandlingId, behandlingVersjon)(state),
+    dokumentertePerioder: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'dokumentertePerioder'),
+    resultat: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'resultat'),
     initialValues: buildInitialValues(state, ownProps),
-    updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
-    bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
+    updated: behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.updated`),
+    bekreftet: behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.bekreftet`),
     form: formName,
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(SykdomOgSkadePeriode));
