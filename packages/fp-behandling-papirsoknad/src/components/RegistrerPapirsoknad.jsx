@@ -5,13 +5,14 @@ import { Container } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
-import SoknadData from 'papirsoknad/src/SoknadData';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
 import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
 import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
 import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
+import SoknadData from '../SoknadData';
 
 import styles from './registrerPapirsoknad.less';
 

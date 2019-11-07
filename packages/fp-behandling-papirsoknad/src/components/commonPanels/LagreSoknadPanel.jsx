@@ -11,6 +11,7 @@ import {
   BorderBox, FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
 import { CheckboxField, TextAreaField } from '@fpsak-frontend/form';
+
 import LukkPapirsoknadModal from './LukkPapirsoknadModal';
 
 import styles from './lagreSoknadPanel.less';

@@ -8,12 +8,12 @@ import { connect } from 'react-redux';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getKodeverk, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
-import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
-import OppholdINorgePanel from 'papirsoknad/src/components/commonPanels/OppholdINorgePanel';
-import TilleggsopplysningerPanel from 'papirsoknad/src/components/commonPanels/TilleggsopplysningerPanel';
-import SoknadData from 'papirsoknad/src/SoknadData';
-import LagreSoknadForm from 'papirsoknad/src/components/commonPanels/LagreSoknadPanel';
+import { getKodeverk, getRegisteredFields } from '../../duckPapirsoknad';
+import SoknadData from '../../SoknadData';
+import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
+import OppholdINorgePanel from '../commonPanels/OppholdINorgePanel';
+import TilleggsopplysningerPanel from '../commonPanels/TilleggsopplysningerPanel';
+import LagreSoknadForm from '../commonPanels/LagreSoknadPanel';
 import EgenVirksomhetPanel from '../commonPanels/virksomhet/EgenVirksomhetPanel';
 import InntektsgivendeArbeidPanel from '../commonPanels/inntektsgivendeArbeid/InntektsgivendeArbeidPanel';
 import AndreYtelserPanel, { ANDRE_YTELSER_FORM_NAME_PREFIX } from '../commonPanels/andreYtelser/AndreYtelserPanel';

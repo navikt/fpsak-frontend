@@ -6,6 +6,7 @@ import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form
 import { SelectField } from '@fpsak-frontend/form';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+
 import BehovForTilrettteleggingFieldArray from './BehovForTilrettteleggingFieldArray';
 
 describe('<TilretteleggingForArbeidsgiverFieldArray>', () => {

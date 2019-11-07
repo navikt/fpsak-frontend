@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-
-import { required } from '@fpsak-frontend/utils';
 import { Fieldset } from 'nav-frontend-skjema';
+
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { required } from '@fpsak-frontend/utils';
 import { BorderBox } from '@fpsak-frontend/shared-components';
+
 import styles from './dekningsgradPanel.less';
 
 /**

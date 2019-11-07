@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { CheckboxField } from '@fpsak-frontend/form';
+
 import { VirksomhetStartetEndretPanel } from './VirksomhetStartetEndretPanel';
 
 describe('<VirksomhetStartetEndretPanel>', () => {

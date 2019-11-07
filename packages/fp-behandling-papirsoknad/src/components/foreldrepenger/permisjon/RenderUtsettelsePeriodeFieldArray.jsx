@@ -8,6 +8,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
+
 import { gyldigeUttakperioder } from './RenderPermisjonPeriodeFieldArray';
 
 import styles from './renderUtsettelsePeriodeFieldArray.less';

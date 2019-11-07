@@ -1,8 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
+
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+
 import { SoknadRegistrertModal } from './SoknadRegistrertModal';
 
 describe('<SoknadRegistrertModal>', () => {

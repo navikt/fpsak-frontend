@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
+import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import { BorderBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 /**
  *

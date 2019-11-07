@@ -2,8 +2,10 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FieldArray } from 'redux-form';
-import SoknadData from 'papirsoknad/src/SoknadData';
+
 import soknadTypeTillegg from '@fpsak-frontend/kodeverk/src/soknadTypeTillegg';
+
+import SoknadData from '../../../SoknadData';
 import { PermisjonPanel } from './PermisjonPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
 import PermisjonUtsettelsePanel from './PermisjonUtsettelsePanel';

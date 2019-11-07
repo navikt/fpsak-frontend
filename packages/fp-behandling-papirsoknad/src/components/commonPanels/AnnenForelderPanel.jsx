@@ -4,6 +4,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
 import { Fieldset } from 'nav-frontend-skjema';
+
 import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/src/kanIkkeOppgiAnnenForelderArsak';
 import {
   CheckboxField, InputField, NavFieldGroup, RadioGroupField, RadioOption, SelectField,
@@ -13,10 +14,10 @@ import {
 } from '@fpsak-frontend/utils';
 import { ArrowBox, BorderBox } from '@fpsak-frontend/shared-components';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 
+import { getKodeverk } from '../../duckPapirsoknad';
 import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 
 const countrySelectValues = (countryCodes) => countryCodes

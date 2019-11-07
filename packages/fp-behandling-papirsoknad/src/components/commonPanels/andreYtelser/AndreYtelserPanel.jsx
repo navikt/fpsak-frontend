@@ -12,7 +12,7 @@ import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import { ArrowBox, BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 import RenderAndreYtelserPerioderFieldArray from './RenderAndreYtelserPerioderFieldArray';
 
 import styles from './andreYtelserPanel.less';

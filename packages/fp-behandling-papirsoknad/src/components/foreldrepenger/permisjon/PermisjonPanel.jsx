@@ -2,14 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
-import { Element, Undertittel } from 'nav-frontend-typografi';
 import { connect } from 'react-redux';
+import { Element, Undertittel } from 'nav-frontend-typografi';
 
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import SoknadData from 'papirsoknad/src/SoknadData';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
-import { CheckboxField } from '@fpsak-frontend/form';
 import { dateRangesNotOverlappingCrossTypes } from '@fpsak-frontend/utils';
+import { CheckboxField } from '@fpsak-frontend/form';
+
+import SoknadData from '../../../SoknadData';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
 import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';

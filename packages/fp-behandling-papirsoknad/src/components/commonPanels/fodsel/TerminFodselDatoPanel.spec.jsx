@@ -4,6 +4,7 @@ import moment from 'moment';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 import TerminFodselDatoPanel, { TerminFodselDatoPanelImpl } from './TerminFodselDatoPanel';
 
 const now = moment();
