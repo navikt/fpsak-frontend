@@ -1,24 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import {
-  BehandlingspunktSubmitButton,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from '@fpsak-frontend/fp-felles';
+
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-import { TextAreaField } from '@fpsak-frontend/form';
-import {
-  hasValidText, maxLength, minLength, removeSpacesFromNumber, required,
-} from '@fpsak-frontend/utils';
+import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 
 import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
-import OppsummeringSN from '../selvstendigNaeringsdrivende/OppsummeringSN';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel from '../militær/MilitaerPanel';
 import styles from './beregningsgrunnlag.less';
@@ -36,11 +26,9 @@ export const TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING = 'begrunnDekningsgradEn
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
-  FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
-const minLength3 = minLength(3);
-const maxLength1500 = maxLength(1500);
+
 
 // ------------------------------------------------------------------------------------------ //
 // Methods
@@ -51,11 +39,6 @@ const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspu
     && gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
 
 
-const isSelvstendigMedKombinasjonsstatus = (relevanteStatuser) => relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus;
-
-const skalViseSNOppsummering = (relevanteStatuser, gjeldendeAksjonspunkter) => isSelvstendigMedKombinasjonsstatus(relevanteStatuser)
-  && (gjeldendeAksjonspunkter ? gjeldendeAksjonspunkter.every((ap) => ap.definisjon.kode !== FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET) : true);
-
 const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(
   (ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
   || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -63,16 +46,6 @@ const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspun
 
 const finnAksjonspunktForVurderDekningsgrad = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter
   && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
-
-const erVurderDekningsgradEnesteAksjonspunkt = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
-  && gjeldendeAksjonspunkter.length === 1;
-
-const harFlereAksjonspunkter = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 1;
-
-const harFlereAksjonspunkterOgVurderDekningsgradErInkludert = (gjeldendeAksjonspunkter) => !!gjeldendeAksjonspunkter
-  && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD)
-  && harFlereAksjonspunkter(gjeldendeAksjonspunkter);
 
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
@@ -92,12 +65,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingVersjon,
   alleKodeverk) => (
     <div>
-      { relevanteStatuser.isSelvstendigNaeringsdrivende
-    && (
-    <GrunnlagForAarsinntektPanelSN2
-      alleAndeler={alleAndelerIForstePeriode}
-    />
-    )}
+
       {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
@@ -128,46 +96,11 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer twentyPx />
       </div>
     )}
-      { relevanteStatuser.isFrilanser
-    && (
-    <div>
-      <GrunnlagForAarsinntektPanelFL2
-        alleAndeler={alleAndelerIForstePeriode}
-        aksjonspunkter={gjeldendeAksjonspunkter}
-        readOnly={readOnly}
-        isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-      />
-      <VerticalSpacer twentyPx />
-    </div>
-    )}
-      <VerticalSpacer eightPx />
       { relevanteStatuser.isArbeidstaker
-    && (
-      <div>
-        {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
-        && (
-        <GrunnlagForAarsinntektPanelAT2
-          alleAndeler={alleAndelerIForstePeriode}
-          aksjonspunkter={gjeldendeAksjonspunkter}
-          allePerioder={allePerioder}
-          readOnly={readOnly}
-          isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-          alleKodeverk={alleKodeverk}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
-        )}
-        { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
-        && (
-          <>
-            <FastsettInntektTidsbegrenset
-              readOnly={readOnly}
-              aksjonspunkter={gjeldendeAksjonspunkter}
-              allePerioder={allePerioder}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              alleKodeverk={alleKodeverk}
-            />
+      && (
+        <div>
+          {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
+          && (
             <GrunnlagForAarsinntektPanelAT2
               alleAndeler={alleAndelerIForstePeriode}
               aksjonspunkter={gjeldendeAksjonspunkter}
@@ -178,16 +111,45 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
             />
-          </>
-        )}
-      </div>
-    )}
-      { skalViseSNOppsummering(relevanteStatuser, gjeldendeAksjonspunkter)
+          )}
+          { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
+          && (
+            <>
+
+              <GrunnlagForAarsinntektPanelAT2
+                alleAndeler={alleAndelerIForstePeriode}
+                aksjonspunkter={gjeldendeAksjonspunkter}
+                allePerioder={allePerioder}
+                readOnly={readOnly}
+                isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+                alleKodeverk={alleKodeverk}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+              />
+            </>
+          )}
+        </div>
+      )}
+      { relevanteStatuser.isFrilanser
     && (
-    <OppsummeringSN
-      alleAndeler={alleAndelerIForstePeriode}
-    />
+    <div>
+      <GrunnlagForAarsinntektPanelFL2
+        alleAndeler={alleAndelerIForstePeriode}
+        aksjonspunkter={gjeldendeAksjonspunkter}
+        readOnly={readOnly}
+        isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+      />
+    </div>
     )}
+      { relevanteStatuser.isSelvstendigNaeringsdrivende
+      && (
+        <GrunnlagForAarsinntektPanelSN2
+          alleAndeler={alleAndelerIForstePeriode}
+        />
+      )}
+      <VerticalSpacer eightPx />
+
+
     </div>
 );
 
@@ -205,29 +167,16 @@ export const BeregningsgrunnlagImpl = ({
   relevanteStatuser,
   gjeldendeAksjonspunkter,
   allePerioder,
-  readOnlySubmitButton,
+
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-  formName,
+
   alleKodeverk,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
     <div className={styles.beregningsgrunnlagPanel}>
-      { harFlereAksjonspunkterOgVurderDekningsgradErInkludert(gjeldendeAksjonspunkter) && (
-        <>
-          <TextAreaField
-            name={TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.BegrunnEndringAvDekningsgrad" />}
-            validate={[required, maxLength1500, minLength3, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-          <VerticalSpacer eightPx />
-        </>
-      )}
-
       {
           createRelevantePaneler(
             alleAndelerIForstePeriode,
@@ -241,34 +190,6 @@ export const BeregningsgrunnlagImpl = ({
             alleKodeverk,
           )
         }
-
-
-      <VerticalSpacer sixteenPx />
-      { erVurderDekningsgradEnesteAksjonspunkt(gjeldendeAksjonspunkter) && (
-      <TextAreaField
-        name={TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING}
-        label={<FormattedMessage id="Beregningsgrunnlag.Forms.BegrunnEndring" />}
-        validate={[required, maxLength1500, minLength3, hasValidText]}
-        maxLength={1500}
-        readOnly={readOnly}
-      />
-      )}
-      { gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
-        && (
-          <>
-            <VerticalSpacer sixteenPx />
-            <BehandlingspunktSubmitButton
-              formName={formName}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnlySubmitButton}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </>
-        )}
     </div>
   );
 };
@@ -278,9 +199,7 @@ BeregningsgrunnlagImpl.propTypes = {
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
-  readOnlySubmitButton: PropTypes.bool.isRequired,
   gjelderBesteberegning: PropTypes.bool.isRequired,
-  formName: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

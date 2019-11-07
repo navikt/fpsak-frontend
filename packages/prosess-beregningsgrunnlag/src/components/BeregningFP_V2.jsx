@@ -16,7 +16,6 @@ import {
   isStatusTilstotendeYtelse,
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import BeregningsresultatTable from './beregningsresultatPanel/BeregningsresultatTable';
 import BeregningForm from './beregningForm/BeregningForm_V2';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
@@ -63,16 +62,6 @@ const getErBgVilkarOppfylt = (vilkar) => {
   return bgVilkar ? bgVilkar.vilkarStatus.kode === vilkarUtfallType.OPPFYLT : false;
 };
 
-const dagsatsErSatt = (beregningsperioder) => {
-  if (!beregningsperioder) {
-    return false;
-  }
-  return beregningsperioder.some((p) => p.dagsats !== undefined && p.dagsats !== null);
-};
-
-const vilkarErAvslaatt = (vilkar) => vilkar && vilkar.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT;
-
-const getErBeregningFastsatt = (vilkar, bg) => dagsatsErSatt(bg.beregningsgrunnlagPeriode) || vilkarErAvslaatt(getBGVilkar(vilkar));
 
 const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspunkter
   ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
@@ -100,7 +89,6 @@ const BeregningFP = ({
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
   const relevanteStatuser = getRelevanteStatuser(beregningsgrunnlag);
   const isVilkarOppfylt = getErBgVilkarOppfylt(vilkar);
-  const beregningErFastsatt = getErBeregningFastsatt(vilkar, beregningsgrunnlag);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
   return (
     <FadingPanel>
@@ -116,17 +104,7 @@ const BeregningFP = ({
         behandlingVersjon={behandling.versjon}
         isVilkarOppfylt={isVilkarOppfylt}
       />
-      { beregningErFastsatt
-        && (
-          <BeregningsresultatTable
-            halvGVerdi={beregningsgrunnlag.halvG}
-            beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-            ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-            ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
-            ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
-            isVilkarOppfylt={isVilkarOppfylt}
-          />
-        )}
+
       {sokerHarGraderingPaaAndelUtenBG
           && (
           <GraderingUtenBG

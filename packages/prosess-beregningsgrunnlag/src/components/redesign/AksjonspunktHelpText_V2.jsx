@@ -27,7 +27,6 @@ const AksjonspunktHelpTextV2 = ({
   marginBottom,
 }) => {
   if (!isAksjonspunktOpen) {
-    debugger;
     return (
       <>
         {children.map((child) => (

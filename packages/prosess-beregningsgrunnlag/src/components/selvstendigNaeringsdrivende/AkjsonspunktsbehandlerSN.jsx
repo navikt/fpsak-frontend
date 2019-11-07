@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import VurderOgFastsettSN from './VurderOgFastsettSN';
+import VurderOgFastsettSN2 from './VurderOgFastsettSN_V2';
 
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
@@ -80,7 +80,7 @@ const AksjonspunktBehandlerSN = ({
     <>
       { skalFastsetteSN(aksjonspunkter)
       && (
-        <VurderOgFastsettSN
+        <VurderOgFastsettSN2
           gjeldendeAksjonspunkter={aksjonspunkter}
           readOnly={readOnly}
           behandlingId={behandlingId}

@@ -14,7 +14,6 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
-import InntektsopplysningerPanel from '../fellesPaneler/InntektsopplysningerPanel';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel';
 import SkjeringspunktOgStatusPanelV2 from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
@@ -218,7 +217,6 @@ export const BeregningFormImpl = ({
     dekningsgrad, skjaeringstidspunktBeregning,
     årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
-  debugger;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
@@ -251,14 +249,6 @@ export const BeregningFormImpl = ({
       </Row>
       <Row>
         <Column xs="12" md="6">
-          <SkjeringspunktOgStatusPanel
-            readOnly={readOnly}
-            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-            alleKodeverk={alleKodeverk}
-            aktivitetStatusList={beregningsgrunnlag.aktivitetStatus}
-            skjeringstidspunktDato={skjaeringstidspunktBeregning}
-            gjeldendeDekningsgrad={dekningsgrad}
-          />
           <SkjeringspunktOgStatusPanelV2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -284,12 +274,7 @@ export const BeregningFormImpl = ({
           )}
         </Column>
         <Column xs="12" md="6">
-          <InntektsopplysningerPanel
-            beregnetAarsinntekt={årsinntektVisningstall}
-            sammenligningsgrunnlag={sammenligningsgrunnlagSum}
-            sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
-            avvik={avvikProsent}
-          />
+
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
@@ -324,22 +309,6 @@ export const BeregningFormImpl = ({
 
         </Column>
       </Row>
-      { relevanteStatuser.skalViseBeregningsgrunnlag && (
-      <Beregningsgrunnlag
-        relevanteStatuser={relevanteStatuser}
-        readOnly={readOnly}
-        submitCallback={submitCallback}
-        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-        readOnlySubmitButton={readOnlySubmitButton}
-        formName={formName}
-        allePerioder={beregningsgrunnlagPeriode}
-        gjelderBesteberegning={gjelderBesteberegning}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        alleKodeverk={alleKodeverk}
-      />
-      )}
-
     </form>
   );
 };

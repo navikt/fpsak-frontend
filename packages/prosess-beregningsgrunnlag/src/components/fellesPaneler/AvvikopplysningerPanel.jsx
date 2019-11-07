@@ -7,6 +7,12 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 
+const finnAlleAndelerIFørstePeriode = (allePerioder) => {
+  if (allePerioder && allePerioder.length > 0) {
+    return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
+  }
+  return undefined;
+};
 const AvviksopplysningerPanel = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder,
 }) => {
@@ -21,7 +27,12 @@ const AvviksopplysningerPanel = ({
       <AvviksopplysningerAT beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
       )}
       {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-        <AvviksopplysningerSN beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
+        <AvviksopplysningerSN
+          beregnetAarsinntekt={beregnetAarsinntekt}
+          avvik={avvik}
+          sammenligningsgrunnlag={sammenligningsgrunnlag}
+          alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
+        />
       )}
     </Panel>
   );

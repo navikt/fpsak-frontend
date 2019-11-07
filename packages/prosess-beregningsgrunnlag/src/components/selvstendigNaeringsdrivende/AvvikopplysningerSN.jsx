@@ -9,9 +9,21 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 
 const AvviksopplysningerSN = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode,
 }) => {
-  debugger;
+  console.log('alleAndelerIForstePeriode', alleAndelerIForstePeriode);
+  const { erNyIArbeidslivet } = alleAndelerIForstePeriode[0];
+  if (erNyIArbeidslivet) {
+    return (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+        Søker er ny i arbeidslivet. Det foretas derfor ingen avviksvurdering.
+          </Normaltekst>
+        </Column>
+      </Row>
+    );
+  }
   return (
     <div>
       <Row>
@@ -74,6 +86,7 @@ AvviksopplysningerSN.propTypes = {
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
   beregnetAarsinntekt: PropTypes.number,
+  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AvviksopplysningerSN.defaultProps = {

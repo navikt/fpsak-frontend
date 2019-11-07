@@ -50,17 +50,13 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
       </Row>
       <VerticalSpacer eightPx />
       <Row>
-        <Column xs="4">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
-          </Normaltekst>
-        </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst>
+        <Column xs="6" />
+        <Column xs="2" className={beregningStyles.rightAlignElement}>
+          <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
-          </Normaltekst>
+          </Undertekst>
         </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
+        <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
@@ -68,11 +64,15 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         <Column xs="2" />
       </Row>
       <Row>
-        <Column xs="4" />
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
+        <Column xs="6">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
+          </Normaltekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
         </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
+        <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
         <Column xs="2">
