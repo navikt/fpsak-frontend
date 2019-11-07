@@ -84,6 +84,9 @@ export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispa
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
   fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
 );
+export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatch) => dispatch(
+  fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
+);
 
 export const hentVergeMenyvalg = (params) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
 // TODO (TOR) To neste funksjonar skal flyttast inn i behandling-pakke etter at lenker ikkje lenger blir henta automatisk.

@@ -73,6 +73,13 @@ const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehand
 (behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn) => (versjon
   ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn)
   : undefined));
+const getTilbakekrevingOpprettes = createSelector([
+  (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+  (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
+], (kanTilbakekrevingOpprettes = { kanBehandlingOpprettes: false }, kanTilbakekrevingRevurderingOpprettes = { kanRevurderingOpprettes: false }) => ({
+  kanBehandlingOpprettes: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
+  kanRevurderingOpprettes: kanTilbakekrevingRevurderingOpprettes.kanRevurderingOpprettes,
+}));
 
 
 const mapStateToProps = (state) => {
@@ -84,7 +91,7 @@ const mapStateToProps = (state) => {
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
     vergeMenyvalg: vergeMenyvalg ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
-    kanTilbakekrevingOpprettes: fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+    kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
     erTilbakekrevingAktivert: getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
     uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
     rettigheter: getMenyRettigheter(state),
@@ -105,6 +112,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   fjernVerge,
   opprettVerge,
   sjekkOmTilbakekrevingKanOpprettes,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
 }, dispatch);
 

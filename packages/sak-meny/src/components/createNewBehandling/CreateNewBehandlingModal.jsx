@@ -46,13 +46,17 @@ export const CreateNewBehandlingModal = ({
   enabledBehandlingstyper,
   behandlingId,
   sjekkOmTilbakekrevingKanOpprettes,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes,
   uuid,
   saksnummer,
   erTilbakekrevingAktivert,
 }) => {
   useEffect(() => {
-    if (erTilbakekrevingAktivert && uuid !== undefined) {
-      sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid, behandlingId });
+    if (erTilbakekrevingAktivert) {
+      if (uuid !== undefined) {
+        sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid });
+      }
+      sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingId });
     }
   }, []);
   return (
@@ -132,6 +136,7 @@ CreateNewBehandlingModal.propTypes = {
   cancelEvent: PropTypes.func.isRequired,
   behandlingId: PropTypes.string,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,
   behandlingTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingType: PropTypes.string,
