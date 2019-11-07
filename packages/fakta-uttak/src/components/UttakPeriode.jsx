@@ -142,6 +142,7 @@ const UttakPeriode = ({
                     farSøkerFør6Uker={farSøkerFør6Uker}
                     familiehendelse={familiehendelse}
                     vilkarForSykdomExists={vilkarForSykdomExists}
+                    getKodeverknavn={getKodeverknavn}
                   />
                 </div>
                 {perioder.length === fields.length

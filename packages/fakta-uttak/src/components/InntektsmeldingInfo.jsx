@@ -11,9 +11,6 @@ import {
   FlexColumn, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 
 import styles from './uttakPeriode.less';
 
@@ -157,7 +154,7 @@ export const InntektsmeldingInfo = ({
   arbeidsgiver,
   getKodeverknavn,
 }) => {
-  const shouldRenderAvvik = shouldRender(inntektsmeldingInfo, getKodeverknavn);
+  const shouldRenderAvvik = shouldRender(inntektsmeldingInfo, getKodeverkNavn);
   return (
     <>
       {shouldRenderAvvik && (
@@ -187,12 +184,12 @@ export const InntektsmeldingInfo = ({
 
 InntektsmeldingInfo.propTypes = {
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  arbeidsgiver: PropTypes.shape(),
   getKodeverknavn: PropTypes.func.isRequired,
+  arbeidsgiver: PropTypes.shape(),
 };
 
 InntektsmeldingInfo.defaultProps = {
   arbeidsgiver: {},
 };
 
-export default injectKodeverk(getAlleKodeverk)(InntektsmeldingInfo);
+export default InntektsmeldingInfo;

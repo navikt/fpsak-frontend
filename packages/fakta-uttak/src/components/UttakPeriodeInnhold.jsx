@@ -32,6 +32,7 @@ export const renderPeriode = (
   behandlingVersjon,
   gjeldendeFamiliehendelse,
   vilkarForSykdomExists,
+  getKodeverknavn,
 ) => {
   switch (utsettelseArsak.kode) {
     case utsettelseArsakCodes.ARBEID:
@@ -53,6 +54,7 @@ export const renderPeriode = (
           behandlingStatusKode={behandlingStatusKode}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          getKodeverknavn={getKodeverknavn}
         />
       );
     case utsettelseArsakCodes.SYKDOM:
@@ -172,6 +174,7 @@ export const renderPeriode = (
           behandlingStatusKode={behandlingStatusKode}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          getKodeverknavn={getKodeverknavn}
         />
       );
     default:
@@ -201,6 +204,7 @@ export const UttakPeriodeInnhold = ({
   behandlingVersjon,
   familiehendelse,
   vilkarForSykdomExists,
+  getKodeverknavn,
 }) => {
   const editable = !(!readOnly && openForm);
 
@@ -228,6 +232,7 @@ export const UttakPeriodeInnhold = ({
         behandlingVersjon,
         familiehendelse.gjeldende,
         vilkarForSykdomExists,
+        getKodeverknavn,
       )}
     </div>
   );
@@ -254,6 +259,7 @@ UttakPeriodeInnhold.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   arbeidstidprosent: PropTypes.number,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
   arbeidsgiver: PropTypes.shape(),
 };
 

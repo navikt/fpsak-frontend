@@ -43,6 +43,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
           },
         }],
       }]}
+      getKodeverknavn={sinon.spy()}
       {...reduxFormPropsMock}
     />);
 
@@ -90,6 +91,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
           },
         }],
       }]}
+      getKodeverknavn={sinon.spy()}
       {...reduxFormPropsMock}
     />);
 

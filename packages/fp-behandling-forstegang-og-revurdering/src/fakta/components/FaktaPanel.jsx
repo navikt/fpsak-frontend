@@ -16,6 +16,7 @@ import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-t
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -29,7 +30,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import UttakFaktaIndex from '../../../../fakta-uttak';
 
 import styles from './faktaPanel.less';
 

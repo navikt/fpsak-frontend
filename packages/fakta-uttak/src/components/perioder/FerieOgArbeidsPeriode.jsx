@@ -43,6 +43,7 @@ export const FerieOgArbeidsPeriode = ({
   originalResultat,
   skalViseInntektmeldingInfo,
   oppholdArsak,
+  getKodeverknavn,
   ...formProps
 }) => {
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
@@ -118,6 +119,7 @@ export const FerieOgArbeidsPeriode = ({
                 inntektsmeldingInfo={inntektsmeldingInfo}
                 uttakPeriodeType={uttakPeriodeType}
                 arbeidsgiver={arbeidsgiver}
+                getKodeverknavn={getKodeverknavn}
               />
             </FlexColumn>
             )}
@@ -157,6 +159,7 @@ FerieOgArbeidsPeriode.propTypes = {
   førsteUttaksdato: PropTypes.string,
   originalResultat: PropTypes.shape().isRequired,
   skalViseInntektmeldingInfo: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 FerieOgArbeidsPeriode.defaultProps = {

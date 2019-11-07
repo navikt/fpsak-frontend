@@ -40,6 +40,7 @@ describe('<UttakPeriodeInnhold>', () => {
       vilkarForSykdomExists={false}
       behandlingId={1}
       behandlingVersjon={1}
+      getKodeverknavn={sinon.spy()}
     />);
 
     const verticalSpacer = wrapper.find(VerticalSpacer);

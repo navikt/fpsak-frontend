@@ -20,8 +20,6 @@ import {
   AksjonspunktHelpText, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
-
-import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -589,7 +587,7 @@ const mapStateToProps = (state, props) => {
     førsteUttaksdato: getFørsteUttaksdato(state, behandlingId, behandlingVersjon),
     endringsdato: getEndringsdato(state, behandlingId, behandlingVersjon),
     uttakPeriodeVurderingTyper: alleKodeverk[kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE],
-    inntektsmeldinger: getInntektsmeldinger(state),
+    inntektsmeldinger: [],
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakFaktaForm`)(state),
     slettedePerioder: slettedePerioder(state, behandlingId, behandlingVersjon),
     perioder: perioder(state, behandlingId, behandlingVersjon),
