@@ -117,8 +117,9 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
 
 
 export const vurderBesteberegningTransform = (faktaOmBeregning) => (values, inntektPrAndel) => {
-  if (!(faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
-      || faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (!(tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+      || tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE))) {
     return {};
   }
   const besteberegningValues = VurderBesteberegningPanelImpl.transformValues(values, faktaOmBeregning, inntektPrAndel);

@@ -217,7 +217,8 @@ VurderMottarYtelseForm.buildInitialValues = (vurderMottarYtelse) => {
 
 VurderMottarYtelseForm.transformValues = (values, inntektVerdier, faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr) => {
   const faktaOmBeregningTilfeller = [];
-  if (!faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
+  const aktiveTilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (!aktiveTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE)) {
     return {};
   }
   return ({

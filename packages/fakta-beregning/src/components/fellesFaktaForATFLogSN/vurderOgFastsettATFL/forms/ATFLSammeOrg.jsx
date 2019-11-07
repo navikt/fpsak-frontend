@@ -6,7 +6,8 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 
 export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning, fastsatteAndelsnr) => {
-  if (faktaOmBeregning.faktaOmBeregningTilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+  const tilfeller = faktaOmBeregning.faktaOmBeregningTilfeller ? faktaOmBeregning.faktaOmBeregningTilfeller : [];
+  if (tilfeller.map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
   && inntektVerdier) {
     const andelsliste = inntektVerdier
       .filter((field) => !fastsatteAndelsnr.includes(field.andelsnr))
@@ -37,8 +38,8 @@ export const transformValuesForATFLISammeOrg = (inntektVerdier, faktaOmBeregning
 
 
 const harRiktigTilfelle = (beregningsgrunnlag) => (
-  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
-    .map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON)
+  beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller ? beregningsgrunnlag.faktaOmBeregning.faktaOmBeregningTilfeller
+    .map(({ kode }) => kode).includes(faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON) : false
 );
 
 export const ATFLSammeOrgTekst = ({ beregningsgrunnlag, manglerInntektsmelding }) => {
