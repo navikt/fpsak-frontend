@@ -225,6 +225,7 @@ export const BeregningFormImpl = ({
   const tisdBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   console.log('tidsbegrenset inntekt', tisdBegrensetInntekt);
 
+
   return (
     <form onSubmit={formProps.handleSubmit}>
 
@@ -298,6 +299,7 @@ export const BeregningFormImpl = ({
             tisdBegrensetInntekt={tisdBegrensetInntekt}
           />
           )}
+
           <BeregningsresultatTable2
             halvGVerdi={beregningsgrunnlag.halvG}
             beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
@@ -305,7 +307,9 @@ export const BeregningFormImpl = ({
             ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
             ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
             isVilkarOppfylt={isVilkarOppfylt}
+            aksjonspunkter={gjeldendeAksjonspunkter}
           />
+
 
         </Column>
       </Row>

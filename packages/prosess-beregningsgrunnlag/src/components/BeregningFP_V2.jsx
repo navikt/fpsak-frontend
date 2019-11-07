@@ -103,6 +103,7 @@ const BeregningFP = ({
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
         isVilkarOppfylt={isVilkarOppfylt}
+        vilkar={vilkar}
       />
 
       {sokerHarGraderingPaaAndelUtenBG

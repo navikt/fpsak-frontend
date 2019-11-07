@@ -354,7 +354,7 @@ export const militær = () => {
 };
 
 export const arbeidstakerOgAAP = () => {
-  const andeler = [lagAndel('AT', 107232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
+  const andeler = [lagAndel('AT', 110232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const bg = lagBG(perioder, statuser);
@@ -377,7 +377,7 @@ export const arbeidstakerOgAAP = () => {
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false)];
-  const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 2000)];
   const statuser = [lagStatus('SN')];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
