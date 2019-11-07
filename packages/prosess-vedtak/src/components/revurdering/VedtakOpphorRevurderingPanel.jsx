@@ -70,12 +70,12 @@ VedtakOpphorRevurderingPanelImpl.defaultProps = {
 };
 
 const getOpphorsdato = createSelector(
-  [(ownProps) => ownProps.resultatstruktur.opphoersdato,
+  [(ownProps) => ownProps.resultatstruktur,
     (ownProps) => ownProps.medlemskapFom,
     (ownProps) => ownProps.behandlingsresultat],
-  (datoFraUttak, medlemskapFom, behandlingsresultat) => {
-    if (datoFraUttak) {
-      return datoFraUttak;
+  (resultatstruktur, medlemskapFom, behandlingsresultat) => {
+    if (resultatstruktur && resultatstruktur.opphoersdato) {
+      return resultatstruktur.opphoersdato;
     }
     if (medlemskapFom) {
       return medlemskapFom;
