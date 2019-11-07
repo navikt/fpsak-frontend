@@ -76,9 +76,9 @@ const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehand
 const getTilbakekrevingOpprettes = createSelector([
   (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
   (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
-], (kanTilbakekrevingOpprettes = { kanBehandlingOpprettes: false }, kanTilbakekrevingRevurderingOpprettes = { kanRevurderingOpprettes: false }) => ({
-  kanBehandlingOpprettes: kanTilbakekrevingOpprettes.kanBehandlingOpprettes,
-  kanRevurderingOpprettes: kanTilbakekrevingRevurderingOpprettes.kanRevurderingOpprettes,
+], (kanBehandlingOpprettes = false, kanRevurderingOpprettes = false) => ({
+  kanBehandlingOpprettes,
+  kanRevurderingOpprettes,
 }));
 
 
