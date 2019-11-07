@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import behandlingSelectors from '../../selectors/ankeBehandlingSelectors';
 import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpAnke';
 import { getFagsakYtelseType } from '../../duckBehandlingAnke';
 import createForeldrepengerAnkeBpDefinition from '../definition/createForeldrepengerAnkeBpDefinition';

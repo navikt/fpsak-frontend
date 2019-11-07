@@ -9,7 +9,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
+import { getRegisteredFields } from '../../../duckPapirsoknad';
 import VirksomhetIdentifikasjonPanel from './VirksomhetIdentifikasjonPanel';
 import VirksomhetRegnskapPanel from './VirksomhetRegnskapPanel';
 import VirksomhetStartetEndretPanel from './VirksomhetStartetEndretPanel';

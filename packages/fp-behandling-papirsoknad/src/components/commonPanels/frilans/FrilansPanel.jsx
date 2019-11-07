@@ -8,6 +8,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';
 import FrilansOppdragForFamiliePanel from './FrilansOppdragForFamiliePanel';
 

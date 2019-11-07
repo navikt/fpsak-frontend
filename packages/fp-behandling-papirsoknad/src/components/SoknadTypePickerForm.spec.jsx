@@ -1,15 +1,15 @@
 import React from 'react';
-import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import soknadTypeTillegg from '@fpsak-frontend/kodeverk/src/soknadTypeTillegg';
-
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+
 import { SoknadTypePickerForm } from './SoknadTypePickerForm';
 
 describe('<SoknadTypePickerForm>', () => {
