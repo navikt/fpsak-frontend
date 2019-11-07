@@ -4,6 +4,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
+
 import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import { BehandlingPapirsoknadIndex } from './BehandlingPapirsoknadIndex';
 

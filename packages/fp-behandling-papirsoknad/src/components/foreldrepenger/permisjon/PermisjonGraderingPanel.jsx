@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
+import { Element } from 'nav-frontend-typografi';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -20,8 +20,9 @@ import {
 } from '@fpsak-frontend/utils';
 import arbeidskategori from '@fpsak-frontend/kodeverk/src/arbeidskategori';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 import RenderGraderingPeriodeFieldArray from './RenderGraderingPeriodeFieldArray';
+
 import styles from './permisjonPanel.less';
 
 export const graderingPeriodeFieldArrayName = 'graderingPeriode';

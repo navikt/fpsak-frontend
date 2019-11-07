@@ -10,18 +10,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
-
-import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
 import {
-  behandlingFormAnke,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingFormAnke';
-import PreviewAnkeLink from '../felles/PreviewAnkeLink';
-import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
+  BehandlingspunktSubmitButton, behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
+} from '@fpsak-frontend/fp-felles';
+
+import PreviewAnkeLink from './PreviewAnkeLink';
 
 const AnkeMerknader = ({
   readOnly,
@@ -30,6 +23,8 @@ const AnkeMerknader = ({
   readOnlySubmitButton,
   aksjonspunktCode,
   formValues,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -65,6 +60,8 @@ const AnkeMerknader = ({
         <Column xs="8">
           <BehandlingspunktSubmitButton
             formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
             isSubmittable={!readOnly}
             hasEmptyRequiredFields={false}
@@ -91,6 +88,8 @@ AnkeMerknader.propTypes = {
   formValues: PropTypes.shape(),
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -108,24 +107,25 @@ const transformValues = (values, aksjonspunktCode) => ({
   kode: aksjonspunktCode,
 });
 
-const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], (resultat) => ({
+const buildInitialValues = createSelector([(ownProps) => ownProps.ankeVurderingResultat], (resultat) => ({
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
   fritekstTilBrev: resultat ? resultat.fritekstTilBrev : null,
 }));
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state, ownProps) => ({
     aksjonspunktCode,
-    initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(ankeMerknaderFormName)(state, 'ankeVurdering', 'fritekstTilBrev'),
+    initialValues: buildInitialValues(ownProps),
+    formValues: behandlingFormValueSelector(ankeMerknaderFormName, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
+      'ankeVurdering', 'fritekstTilBrev'),
     onSubmit,
   });
 };
 
-const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
+const BehandleMerknaderForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: ankeMerknaderFormName,
 })(AnkeMerknader));
 

@@ -1,10 +1,12 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import ModalWrapper from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
+
 import { LukkPapirSoknadModal } from './LukkPapirsoknadModal';
 
 describe('<LukkPapirSoknadModal>', () => {

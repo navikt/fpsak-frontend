@@ -2,10 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
+import { Undertekst } from 'nav-frontend-typografi';
+
 import { MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 
-import { Undertekst } from 'nav-frontend-typografi';
 import { RegistrerVirksomhetPanel } from './RegistrerVirksomhetPanel';
 
 describe('<RegistrerVirksomhetPanel>', () => {

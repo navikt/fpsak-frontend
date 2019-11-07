@@ -7,10 +7,10 @@ import { createSelector } from 'reselect';
 import { isEqual, omit } from '@fpsak-frontend/utils';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
-import { getFagsakPerson, getRegisteredFields } from 'papirsoknad/src/duckPapirsoknad';
-import MottattDatoPanel from 'papirsoknad/src/components/commonPanels/MottattDatoPanel';
-import SoknadData from 'papirsoknad/src/SoknadData';
-import LagreSoknadPanel from 'papirsoknad/src/components/commonPanels/LagreSoknadPanel';
+import { getFagsakPerson, getRegisteredFields } from '../../duckPapirsoknad';
+import SoknadData from '../../SoknadData';
+import MottattDatoPanel from '../commonPanels/MottattDatoPanel';
+import LagreSoknadPanel from '../commonPanels/LagreSoknadPanel';
 import { rettighet } from '../commonPanels/rettigheter/RettigheterPanel';
 import RegistreringAdopsjonOgOmsorgGrid from './RegistreringAdopsjonOgOmsorgGrid';
 import RegistreringFodselGrid from './RegistreringFodselGrid';

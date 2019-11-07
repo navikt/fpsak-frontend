@@ -6,8 +6,8 @@ import sinon from 'sinon';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import SoknadData from 'papirsoknad/src/SoknadData';
-import ForeldrepengerForm from 'papirsoknad/src/components/foreldrepenger/ForeldrepengerForm';
+import SoknadData from '../SoknadData';
+import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
 import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';

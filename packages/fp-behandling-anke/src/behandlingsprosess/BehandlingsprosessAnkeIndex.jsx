@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createSelector } from 'reselect';
 
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingAnke/src/duckBehandlingAnke';
+import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingAnke';
 import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
 import behandlingspunktAnkeSelectors from './selectors/behandlingsprosessAnkeSelectors';
 import {
@@ -32,13 +33,15 @@ export class BehandlingsprosessAnkeIndex extends Component {
     };
   }
 
-  saveAnkeText = (aksjonspunktModel, shouldReopenAp) => {
-    const { behandlingIdentifier, saveAnke: saveTempAnke, resolveAnkeTemp: resolveAnke } = this.props;
+  saveAnkeText = (aksjonspunktModel) => {
+    const {
+      behandlingIdentifier, saveAnke: saveTempAnke, resolveAnkeTemp: resolveAnke, hasForeslaVedtakAp,
+    } = this.props;
     const data = {
       behandlingId: behandlingIdentifier.behandlingId,
       ...aksjonspunktModel,
     };
-    if (shouldReopenAp) {
+    if (hasForeslaVedtakAp) {
       resolveAnke(behandlingIdentifier, data);
     } else {
       saveTempAnke(data);
@@ -137,7 +140,12 @@ BehandlingsprosessAnkeIndex.propTypes = {
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  hasForeslaVedtakAp: PropTypes.bool.isRequired,
 };
+
+const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
+  .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1);
+
 
 const mapStateToProps = (state) => ({
   behandlingUuid: behandlingSelectors.getBehandlingUuid(state),
@@ -155,6 +163,7 @@ const mapStateToProps = (state) => ({
   behandlingspunkterStatus: behandlingspunktAnkeSelectors.getBehandlingspunkterStatus(state),
   behandlingspunkterTitleCodes: behandlingspunktAnkeSelectors.getBehandlingspunkterTitleCodes(state),
   aksjonspunkterOpenStatus: behandlingspunktAnkeSelectors.getAksjonspunkterOpenStatus(state),
+  hasForeslaVedtakAp: getForeslaVedtakAp(state),
   location: state.router.location,
   fetchPreviewBrev: fetchPreviewAnkeBrev,
   resolveProsessAksjonspunkter,

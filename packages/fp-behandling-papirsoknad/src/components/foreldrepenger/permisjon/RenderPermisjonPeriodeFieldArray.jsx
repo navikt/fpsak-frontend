@@ -29,7 +29,7 @@ import {
   CheckboxField, DatepickerField, DecimalField, SelectField,
 } from '@fpsak-frontend/form';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 
 import styles from './renderPermisjonPeriodeFieldArray.less';
 

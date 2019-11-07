@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
@@ -10,7 +11,6 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
 
-import moment from 'moment';
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 
 const maxLength50 = maxLength(50);

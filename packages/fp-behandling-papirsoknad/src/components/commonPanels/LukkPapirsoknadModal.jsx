@@ -6,8 +6,8 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import ModalWrapper from 'nav-frontend-modal';
-import { Image } from '@fpsak-frontend/shared-components';
 
+import { Image } from '@fpsak-frontend/shared-components';
 import advarselImageUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import styles from './lukkPapirsoknadModal.less';

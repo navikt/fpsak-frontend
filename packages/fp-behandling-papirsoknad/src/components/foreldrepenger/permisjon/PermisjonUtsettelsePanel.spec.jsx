@@ -2,6 +2,7 @@ import { expect } from 'chai';
 import moment from 'moment';
 
 import { dateRangesOverlappingMessage, invalidDateMessage, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
+
 import { PermisjonUtsettelsePanel } from './PermisjonUtsettelsePanel';
 
 describe('<PermisjonUtsettelsePanel>', () => {

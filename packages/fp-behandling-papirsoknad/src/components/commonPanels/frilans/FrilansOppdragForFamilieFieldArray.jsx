@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Column, Row } from 'nav-frontend-grid';
 import moment from 'moment';
+import { Column, Row } from 'nav-frontend-grid';
 
 import {
   dateAfterOrEqual, hasValidDate, ISO_DATE_FORMAT, maxLength,

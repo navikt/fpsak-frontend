@@ -15,8 +15,8 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
-import SoknadData from 'papirsoknad/src/SoknadData';
+import { getKodeverk } from '../../../duckPapirsoknad';
+import SoknadData from '../../../SoknadData';
 
 import styles from './permisjonPanel.less';
 

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonFaktaIndex, parseFaktaParam, paramsAreEqual } from '@fpsak-frontend/fp-behandling-felles';
 
-import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingAnke/src/duckBehandlingAnke';
+import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
+import { getBehandlingIdentifier } from '../duckBehandlingAnke';
 import { getOpenInfoPanels, resetFakta, setOpenInfoPanels } from './duckFaktaAnke';
 import FaktaAnkePanel from './components/FaktaAnkePanel';
 

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Element } from 'nav-frontend-typografi';
 import { FieldArray, formValueSelector } from 'redux-form';
+import { Element } from 'nav-frontend-typografi';
 
 import { CheckboxField } from '@fpsak-frontend/form';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -11,11 +11,10 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import { hasValidPeriodIncludingOtherErrors, isRequiredMessage, required } from '@fpsak-frontend/utils';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 import RenderUtsettelsePeriodeFieldArray from './RenderUtsettelsePeriodeFieldArray';
 
 import styles from './permisjonPanel.less';
-
 
 export const utsettelsePeriodeFieldArrayName = 'utsettelsePeriode';
 

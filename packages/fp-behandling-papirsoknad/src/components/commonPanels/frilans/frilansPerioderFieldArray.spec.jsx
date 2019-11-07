@@ -3,9 +3,9 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-
 import { DatepickerField } from '@fpsak-frontend/form';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
+
 import FrilansPerioderFieldArray from './FrilansPerioderFieldArray';
 
 const fields = new MockFields('perioder', 1);

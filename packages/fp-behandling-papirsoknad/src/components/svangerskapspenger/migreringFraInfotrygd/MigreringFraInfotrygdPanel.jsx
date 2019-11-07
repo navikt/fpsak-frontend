@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import { Fieldset } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
-import { Fieldset } from 'nav-frontend-skjema';
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import { required } from '@fpsak-frontend/utils';
 

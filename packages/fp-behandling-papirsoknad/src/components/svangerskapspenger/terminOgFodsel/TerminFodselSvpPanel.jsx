@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl } from 'react-intl';
-
 import { Fieldset } from 'nav-frontend-skjema';
+
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
 import {

@@ -25,10 +25,12 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/anke */
   .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
   .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING)
-  .withGet('/fpsak/api/behandling/anke/anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
   /* /api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
+
+  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
+  .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
 /* /api/brev */
   .build();

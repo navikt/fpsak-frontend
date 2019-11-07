@@ -2,7 +2,6 @@ import { notNull } from '@fpsak-frontend/utils';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 
-
 class SoknadData {
   constructor(selectedFagsakYtelseType, selectedFamilieHendelseType, selectedForeldreType) {
     this.fagsakYtelseType = notNull(selectedFagsakYtelseType);

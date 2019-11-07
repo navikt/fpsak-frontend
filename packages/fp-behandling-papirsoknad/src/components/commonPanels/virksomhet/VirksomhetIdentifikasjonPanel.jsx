@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 
 const countrySelectValues = (countryCodes) => countryCodes
   .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);

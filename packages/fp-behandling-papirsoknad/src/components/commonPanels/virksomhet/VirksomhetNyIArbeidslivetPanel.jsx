@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { formValueSelector } from 'redux-form';
+import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -8,7 +9,6 @@ import { Column, Row } from 'nav-frontend-grid';
 import { ArrowBox, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { hasValidDate, required } from '@fpsak-frontend/utils';
-import PropTypes from 'prop-types';
 
 /**
  * VirksomhetNyIArbeidslivetPanel

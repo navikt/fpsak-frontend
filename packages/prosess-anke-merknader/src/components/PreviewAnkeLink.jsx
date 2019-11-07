@@ -4,9 +4,8 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import dokumentMalType from '@fpsak-frontend/kodeverk/src/dokumentMalType';
-
-
 import ankeVurderingType from '@fpsak-frontend/kodeverk/src/ankeVurdering';
+
 import styles from './previewAnkeLink.less';
 
 const getBrevKode = (ankeVurdering) => {

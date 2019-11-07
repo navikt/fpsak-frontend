@@ -11,7 +11,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, InputField, SelectField } from '@fpsak-frontend/form';
 
-import { getKodeverk } from 'papirsoknad/src/duckPapirsoknad';
+import { getKodeverk } from '../../../duckPapirsoknad';
 
 import styles from './renderInntektsgivendeArbeidFieldArray.less';
 

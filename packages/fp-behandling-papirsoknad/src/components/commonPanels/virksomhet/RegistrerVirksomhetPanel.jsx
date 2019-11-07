@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import {
   arrayPush as dispatchArrayPush, arraySplice as dispatchArraySplice, Field, formValueSelector,
@@ -8,11 +9,11 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
-import PropTypes from 'prop-types';
 import { ElementWrapper, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { NavFieldGroup } from '@fpsak-frontend/form';
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
 import removeIcon from '@fpsak-frontend/assets/images/remove.svg';
+
 import RegistrerVirksomhetModalForm from './RegistrerVirksomhetModalForm';
 
 import styles from './registrerVirksomhetPanel.less';

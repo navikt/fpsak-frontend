@@ -9,20 +9,13 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
+import {
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
+} from '@fpsak-frontend/fp-felles';
 import ankeVurdering from '@fpsak-frontend/kodeverk/src/ankeVurdering';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 
-import {
-  behandlingFormAnke,
-  behandlingFormValueSelector,
-  hasBehandlingFormErrorsOfType,
-  isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
-} from 'behandlingAnke/src/behandlingFormAnke';
-import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
-import behandlingSelectors from '../../../selectors/ankeBehandlingSelectors';
-import PreviewAnkeLink from '../felles/PreviewAnkeLink';
+import PreviewAnkeLink from './PreviewAnkeLink';
 
 const isVedtakUtenToTrinn = (apCodes) => apCodes.includes(aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL); // 5018
 const isMedUnderskriver = (apCodes) => apCodes.includes(aksjonspunktCodes.FORESLA_VEDTAK); // 5015
@@ -118,8 +111,10 @@ const AnkeResultatForm = ({
   previewCallback,
   aksjonspunktCode,
   formValues,
-  ankevurderingresultat,
+  ankeVurderingResultat,
   readOnly,
+  behandlingId,
+  behandlingVersjon,
   ...formProps
 }) => (
   <form onSubmit={handleSubmit}>
@@ -129,7 +124,7 @@ const AnkeResultatForm = ({
       <Row>
         <Column xs="12">
           <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling" /></Undertekst>
-          <AnkeResultat ankevurderingresultat={ankevurderingresultat} />
+          <AnkeResultat ankevurderingresultat={ankeVurderingResultat} />
         </Column>
       </Row>
       <VerticalSpacer sixteenPx />
@@ -137,6 +132,8 @@ const AnkeResultatForm = ({
         <Column xs="12">
           <BehandlingspunktSubmitButton
             formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
             isSubmittable={!readOnly && isMedUnderskriver(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
@@ -148,6 +145,8 @@ const AnkeResultatForm = ({
           <span>&nbsp;</span>
           <BehandlingspunktSubmitButton
             formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
             isSubmittable={!readOnly && isVedtakUtenToTrinn(aksjonspunktCode) && !isFatterVedtak(aksjonspunktCode)}
             hasEmptyRequiredFields={false}
@@ -177,6 +176,8 @@ AnkeResultatForm.propTypes = {
   readOnly: PropTypes.bool,
   readOnlySubmitButton: PropTypes.bool,
   ankevurderingresultat: PropTypes.shape(),
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
 };
 
@@ -212,7 +213,7 @@ const transformValues = (values, aksjonspunktCode) => ({
 const IKKE_PAA_ANKET_BEHANDLING_ID = '0';
 const formatId = (b) => (b === null ? IKKE_PAA_ANKET_BEHANDLING_ID : `${b}`);
 // TODO (TOR) Rydd i dette! Treng neppe senda med alt dette til backend
-const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnkeVurderingResultat], (resultat) => ({
+const buildInitialValues = createSelector([(ownProps) => ownProps.ankeVurderingResultat], (resultat) => ({
   vedtak: resultat ? formatId(resultat.paAnketBehandlingId) : null,
   ankeVurdering: resultat ? resultat.ankeVurdering : null,
   begrunnelse: resultat ? resultat.begrunnelse : null,
@@ -232,18 +233,19 @@ const buildInitialValues = createSelector([behandlingSelectors.getBehandlingAnke
 
 const formName = 'ankeResultatForm';
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunktCode = behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(initialState)[0].definisjon.kode;
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values, aksjonspunktCode)]);
-  return (state) => ({
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const aksjonspunktCode = initialOwnProps.aksjonspunkter[0].definisjon.kode;
+  const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunktCode)]);
+  return (state, ownProps) => ({
     aksjonspunktCode,
-    initialValues: buildInitialValues(state),
-    formValues: behandlingFormValueSelector(formName)(state, 'ankeVurdering', 'fritekstTilBrev', 'gjelderVedtak'),
+    initialValues: buildInitialValues(ownProps),
+    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state,
+      'ankeVurdering', 'fritekstTilBrev', 'gjelderVedtak'),
     onSubmit,
   });
 };
 
-const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingFormAnke({
+const BehandleResultatForm = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
 })(AnkeResultatForm));
 

@@ -2,8 +2,8 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
+
 import FrilansPanel from './FrilansPanel';
 
 describe('<FrilansPanel>', () => {

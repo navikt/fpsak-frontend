@@ -4,15 +4,22 @@ import { connect } from 'react-redux';
 import classnames from 'classnames/bind';
 
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
+import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
+import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
+import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
 
-import behandlingspunktAnkeSelectors from 'behandlingAnke/src/behandlingsprosess/selectors/behandlingsprosessAnkeSelectors';
-import behandlingSelectors from 'behandlingAnke/src/selectors/ankeBehandlingSelectors';
+import { getFagsakBehandlingerInfo } from '../../duckBehandlingAnke';
+import behandlingspunktAnkeSelectors from '../selectors/behandlingsprosessAnkeSelectors';
+import fpAnkeApi from '../../data/ankeBehandlingApi';
+import DataFetcherWithCacheTemp from '../../DataFetcherWithCacheTemp';
+
 import styles from './behandlingspunktAnkeInfoPanel.less';
-import BehandleAnkeForm from './ankebehandling/BehandleAnkeForm';
-import BehandleMerknaderForm from './merknader/BehandleMerknaderForm';
-import BehandleResultatForm from './resultat/BehandleResultatForm';
 
 const classNames = classnames.bind(styles);
+
+const ankeData = [fpAnkeApi.BEHANDLING, fpAnkeApi.ANKE_VURDERING];
+const resultatData = [fpAnkeApi.BEHANDLING, fpAnkeApi.ANKE_VURDERING];
+const merknaderData = [fpAnkeApi.BEHANDLING, fpAnkeApi.ANKE_VURDERING];
 
 /*
  * BehandlingspunktAnkeInfoPanel
@@ -31,44 +38,64 @@ export const BehandlingspunktAnkeInfoPanel = ({ // NOSONAR Kompleksitet er høg,
   isApSolvable,
   readOnlySubmitButton,
   notAcceptedByBeslutter,
-  innstilling,
+  behandlingspunktAksjonspunkter,
+  behandlinger,
 }) => (
   <div className={classNames('behandlingsPunkt', { notAcceptedByBeslutter, statusAksjonspunkt: openAksjonspunkt && isApSolvable && !readOnly })}>
-    {behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt
-    && (
-      <BehandleAnkeForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        saveAnke={saveTempAnke}
-        previewCallback={previewCallback}
-        previewVedtakCallback={previewCallbackAnke}
-        readOnlySubmitButton={readOnlySubmitButton}
-        innstilling={innstilling}
-      />
-    )}
-    {behandlingspunktCodes.ANKE_MERKNADER === selectedBehandlingspunkt
-    && (
-      <BehandleMerknaderForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        saveAnke={saveTempAnke}
-        previewCallback={previewCallback}
-        previewVedtakCallback={previewCallbackAnke}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-    )}
-    {behandlingspunktCodes.ANKE_RESULTAT === selectedBehandlingspunkt
-    && (
-      <BehandleResultatForm
-        submitCallback={submitCallback}
-        readOnly={readOnly}
-        ankevurderingresultat={innstilling}
-        saveAnke={saveTempAnke}
-        previewCallback={previewCallback}
-        previewVedtakCallback={previewCallbackAnke}
-        readOnlySubmitButton={readOnlySubmitButton}
-      />
-    )}
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={ankeData}
+      showComponent={behandlingspunktCodes.ANKEBEHANDLING === selectedBehandlingspunkt}
+      render={(props) => (
+        <AnkeProsessIndex
+          behandlinger={behandlinger}
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          saveAnke={saveTempAnke}
+          previewCallback={previewCallback}
+          previewVedtakCallback={previewCallbackAnke}
+          readOnlySubmitButton={readOnlySubmitButton}
+          {...props}
+        />
+      )}
+    />
+
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={merknaderData}
+      showComponent={behandlingspunktCodes.ANKE_MERKNADER === selectedBehandlingspunkt}
+      render={(props) => (
+        <AnkeMerknaderProsessIndex
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          saveAnke={saveTempAnke}
+          previewCallback={previewCallback}
+          previewVedtakCallback={previewCallbackAnke}
+          readOnlySubmitButton={readOnlySubmitButton}
+          {...props}
+        />
+      )}
+    />
+
+    <DataFetcherWithCacheTemp
+      behandlingVersjon={1}
+      data={resultatData}
+      showComponent={behandlingspunktCodes.ANKE_RESULTAT === selectedBehandlingspunkt}
+      render={(props) => (
+        <AnkeResultatProsessIndex
+          aksjonspunkter={behandlingspunktAksjonspunkter}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          saveAnke={saveTempAnke}
+          previewCallback={previewCallback}
+          previewVedtakCallback={previewCallbackAnke}
+          {...props}
+        />
+      )}
+    />
   </div>
 );
 
@@ -83,12 +110,21 @@ BehandlingspunktAnkeInfoPanel.propTypes = {
   isApSolvable: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   notAcceptedByBeslutter: PropTypes.bool,
-  innstilling: PropTypes.shape({}),
+  behandlingspunktAksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  behandlinger: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    opprettet: PropTypes.string,
+    type: PropTypes.shape({
+      kode: PropTypes.string,
+    }),
+    status: PropTypes.shape({
+      kode: PropTypes.string,
+    }),
+  })).isRequired,
 };
 
 BehandlingspunktAnkeInfoPanel.defaultProps = {
   notAcceptedByBeslutter: false,
-  innstilling: {},
 };
 
 const mapStateToProps = (state) => ({
@@ -97,7 +133,8 @@ const mapStateToProps = (state) => ({
   isApSolvable: behandlingspunktAnkeSelectors.isBehandlingspunktAksjonspunkterSolvable(state),
   readOnlySubmitButton: behandlingspunktAnkeSelectors.isBehandlingspunkterAksjonspunkterNotSolvableOrVilkarIsOppfylt(state),
   notAcceptedByBeslutter: behandlingspunktAnkeSelectors.getNotAcceptedByBeslutter(state),
-  innstilling: behandlingSelectors.getBehandlingAnkeVurderingResultat(state),
+  behandlingspunktAksjonspunkter: behandlingspunktAnkeSelectors.getSelectedBehandlingspunktAksjonspunkter(state),
+  behandlinger: getFagsakBehandlingerInfo(state),
 });
 
 export default connect(mapStateToProps)(BehandlingspunktAnkeInfoPanel);

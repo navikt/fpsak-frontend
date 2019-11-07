@@ -16,7 +16,7 @@ import {
   dateBeforeOrEqualToToday, hasValidDate, hasValidInteger, isDatesEqual, isRequiredMessage, maxValue, minValue, required,
 } from '@fpsak-frontend/utils';
 
-import { isForeldrepengerFagsak } from 'papirsoknad/src/duckPapirsoknad';
+import { isForeldrepengerFagsak } from '../../../duckPapirsoknad';
 import { rettighet } from '../rettigheter/RettigheterPanel';
 
 import styles from './omsorgOgAdopsjonPanel.less';
