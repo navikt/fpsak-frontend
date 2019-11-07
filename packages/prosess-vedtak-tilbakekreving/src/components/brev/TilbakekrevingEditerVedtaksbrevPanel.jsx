@@ -17,6 +17,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
   readOnly,
   behandlingId,
   behandlingVersjon,
+  perioderSomIkkeHarUtfyltObligatoriskVerdi,
 }) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
@@ -26,13 +27,15 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
     <VerticalSpacer eightPx />
     {vedtaksbrevAvsnitt.map((avsnitt) => {
       const underavsnitter = avsnitt.underavsnittsliste;
+      const periode = `${avsnitt.fom}_${avsnitt.tom}`;
+      const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some((p) => p === periode);
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
-            className={styles.panel}
+            className={harPeriodeSomManglerObligatoriskVerdi ? styles.panelMedGulmarkering : styles.panel}
             tittel={avsnitt.overskrift}
             tag="h2"
-            apen={false}
+            apen={harPeriodeSomManglerObligatoriskVerdi}
           >
             {underavsnitter.map((underavsnitt) => (
               <React.Fragment key={underavsnitt.underavsnittstype + avsnitt.fom}>
@@ -50,7 +53,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
                   <>
                     <VerticalSpacer eightPx />
                     <TilbakekrevingVedtakUtdypendeTekstPanel
-                      type={underavsnitt.underavsnittstype ? `${avsnitt.fom}_${avsnitt.tom}.${underavsnitt.underavsnittstype}` : avsnitt.avsnittstype}
+                      type={underavsnitt.underavsnittstype ? `${periode}.${underavsnitt.underavsnittstype}` : avsnitt.avsnittstype}
                       formName={formName}
                       readOnly={readOnly}
                       behandlingId={behandlingId}
@@ -76,6 +79,7 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt
