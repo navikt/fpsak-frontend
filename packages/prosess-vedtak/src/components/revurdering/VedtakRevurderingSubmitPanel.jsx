@@ -149,7 +149,7 @@ const erArsakTypeBehandlingEtterKlage = createSelector([(ownProps) => ownProps.b
 
 
 const mapStateToProps = (state, ownProps) => ({
-  submitKnappTextId: getSubmitKnappTekst(state),
+  submitKnappTextId: getSubmitKnappTekst(ownProps),
   erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(ownProps),
 });
 
