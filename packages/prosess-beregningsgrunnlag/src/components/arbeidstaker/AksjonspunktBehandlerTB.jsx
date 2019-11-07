@@ -260,7 +260,7 @@ const AksjonspunktBehandlerTidsbegrenset = ({
     noHover
     classNameTable={styles.inntektTableTB}
   >
-    {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, bruttoPrPeriodeList, intl)}
+    {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, bruttoPrPeriodeList)}
   </Table>
 );
 

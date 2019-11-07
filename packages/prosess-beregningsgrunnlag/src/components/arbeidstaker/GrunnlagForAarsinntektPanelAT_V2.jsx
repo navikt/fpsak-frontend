@@ -149,7 +149,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
           <Column xs="2" />
         </Row>
 
-        {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn, intl)}
+        {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
 
       </Panel>
       <NaturalytelsePanel
