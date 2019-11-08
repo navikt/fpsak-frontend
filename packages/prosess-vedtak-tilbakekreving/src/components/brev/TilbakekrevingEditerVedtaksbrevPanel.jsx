@@ -33,12 +33,12 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
             className={harPeriodeSomManglerObligatoriskVerdi ? styles.panelMedGulmarkering : styles.panel}
-            tittel={avsnitt.overskrift}
+            tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
             tag="h2"
             apen={harPeriodeSomManglerObligatoriskVerdi}
           >
             {underavsnitter.map((underavsnitt) => (
-              <React.Fragment key={underavsnitt.underavsnittstype + avsnitt.fom}>
+              <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
                 {underavsnitt.overskrift && (
                   <Element>
                     {underavsnitt.overskrift}
