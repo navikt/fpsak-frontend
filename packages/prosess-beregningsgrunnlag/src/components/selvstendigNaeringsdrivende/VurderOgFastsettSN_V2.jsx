@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
-import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
+
 
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -12,8 +10,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import VurderVarigEndretEllerNyoppstartetSN2, { varigEndringRadioname } from './VurderVarigEndretEllerNyoppstartetSN_V2';
 import FastsettSN2 from './FastsettSN_V2';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 const FORM_NAME = 'BeregningForm';
 const {
