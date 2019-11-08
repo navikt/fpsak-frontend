@@ -15,7 +15,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 
 const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
-  const rows = listofAndeler.map((entry, index) => (
+  const rowsAndeler = listofAndeler.map((entry, index) => (
     <Row key={`index${index + 1}`}>
       <Column xs="8" key={`index2${index + 1}`}>
         <Normaltekst>{entry[0]}</Normaltekst>
@@ -63,8 +63,13 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
       </Row>
     </>
   );
+  const rows = [];
 
-  rows.push(lineRow);
+  if (listofAndeler && listofAndeler.length > 1) {
+    rows.push(rowsAndeler);
+    rows.push(lineRow);
+  }
+
   rows.push(rowsRedusert);
   rows.push(lineRow);
   rows.push(summaryRow);

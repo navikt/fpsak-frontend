@@ -23,7 +23,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
-  const startDato = relevanteAndeler[0].beregnetPrAar;
+  const startDato = relevanteAndeler[0].beregningsgrunnlagFom;
   return (
 
     <Panel>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
@@ -25,6 +25,7 @@ import { InputField } from '@fpsak-frontend/form';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 const formPrefix = 'inntektField';
 const {
@@ -157,11 +158,13 @@ export const createTableData = createSelector(
 const createSummaryTableRow = (listOfBruttoPrPeriode) => (
   <TableRow key="bruttoPrPeriodeRad">
     <TableColumn key="bruttoTittel">
-      <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode" />
+      <Normaltekst>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode" />
+      </Normaltekst>
     </TableColumn>
     {listOfBruttoPrPeriode.map((element) => (
       <TableColumn key={element.periode}>
-        <Normaltekst>{formatCurrencyNoKr(element.brutto)}</Normaltekst>
+        <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(element.brutto)}</Normaltekst>
       </TableColumn>
     ))}
   </TableRow>
@@ -191,18 +194,18 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
     <TableRow key="Tabletop">
       <TableColumn key="ombergenetAarBlank" />
 
-      {perioder.map((element) => (
-        <>
+      {perioder.map((element, index) => (
+        <React.Fragment key={`PeriodeWrapper${index + 1}`}>
           <td key={`Col_Tittel_${element.periode}`}>
-            <Undertekst>
+            <Normaltekst>
               <FormattedMessage
                 id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.OmberegnetAar"
                 key={`Tittel_${element.periode}`}
               />
-            </Undertekst>
+            </Normaltekst>
           </td>
 
-        </>
+        </React.Fragment>
       ))}
     </TableRow>,
   );
@@ -223,7 +226,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
             );
           }
           return (
-            <>
+            <React.Fragment key={`ElementWrapper${element.inputfieldKey}`}>
               <td key={`Col-${element.inputfieldKey}`}>
                 <div className={(isAksjonspunktClosed && readOnly) ? styles.adjustedField : undefined}>
                   <InputField
@@ -235,13 +238,13 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
                   />
                 </div>
               </td>
-            </>
+            </React.Fragment>
           );
         })}
       </TableRow>,
     );
   });
-  rows.push(<TableRow key="sdeparator" className={styles.rowSpacer} />);
+  rows.push(<TableRow key="sdeparator" className={styles.rowSpacer}><TableColumn /></TableRow>);
   rows.push(createSummaryTableRow(perioder));
   return rows;
 };

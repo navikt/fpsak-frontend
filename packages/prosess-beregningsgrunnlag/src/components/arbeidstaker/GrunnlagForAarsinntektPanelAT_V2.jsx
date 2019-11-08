@@ -84,32 +84,32 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
     </Row>
   ));
   if (relevanteAndeler.length > 1) {
+    console.log(beregnetAarsinntekt, beregnetMaanedsinntekt);
     const summaryRow = (
-      <>
-        <Row key="bruttoBeregningsgrunnlagLine">
-          <Column xs="11" key="Colline">
-            <hr key="hrLine" />
+      <React.Fragment key="bruttoBeregningsgrunnlag">
+        <Row>
+          <Column xs="11">
+            <hr />
           </Column>
         </Row>
-        <Row key="bruttoBeregningsgrunnlag">
-          <Column key="ColBBTitle" xs="6"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" key="BBTitle" /></Column>
+        <Row>
+          <Column xs="6"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
           <Column
             xs="2"
             key="ColBBgMnd"
             className={beregningStyles.rightAlignElement}
           >
-            <Normaltekst key="BBMndValue">{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
+            <Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
           </Column>
           <Column
             xs="2"
-            key="ColBBgAar"
             className={beregningStyles.rightAlignElementNoWrap}
           >
-            <Element key="BBAarValue">{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
+            <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
           </Column>
-          <Column xs="2" key="BBEmpty2" />
+          <Column xs="2" />
         </Row>
-      </>
+      </React.Fragment>
     );
     rows.push(summaryRow);
   }
@@ -118,13 +118,12 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
 
 
 /**
- * GrunnlagForAarsinntektPanelAT
+ * GrunnlagForAarsinntektPanelAT2
  *
  * Presentasjonskomponent. Viser beregningsgrunnlagstabellen for arbeidstakere.
- * Ved aksjonspunkt vil tabellen ha en kolonne med input felter med en rad per arbeidsgiver.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
-export const GrunnlagForAarsinntektPanelATImpl = ({
+export const GrunnlagForAarsinntektPanelATImpl2 = ({
   readOnly,
   alleAndeler,
   allePerioder,
@@ -166,7 +165,7 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   );
 };
 
-GrunnlagForAarsinntektPanelATImpl.propTypes = {
+GrunnlagForAarsinntektPanelATImpl2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   bruttoFastsattInntekt: PropTypes.number,
@@ -175,7 +174,7 @@ GrunnlagForAarsinntektPanelATImpl.propTypes = {
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-GrunnlagForAarsinntektPanelATImpl.defaultProps = {
+GrunnlagForAarsinntektPanelATImpl2.defaultProps = {
   bruttoFastsattInntekt: 0,
   allePerioder: undefined,
 };
@@ -205,9 +204,9 @@ const mapStateToProps = (state, initialProps) => {
   };
 };
 
-const GrunnlagForAarsinntektPanelAT = connect(mapStateToProps)(GrunnlagForAarsinntektPanelATImpl);
+const GrunnlagForAarsinntektPanelAT2 = connect(mapStateToProps)(GrunnlagForAarsinntektPanelATImpl2);
 
-GrunnlagForAarsinntektPanelAT.buildInitialValues = (alleAndeler) => {
+GrunnlagForAarsinntektPanelAT2.buildInitialValues = (alleAndeler) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const initialValues = { };
   relevanteAndeler.forEach((inntekt, index) => {
@@ -216,7 +215,7 @@ GrunnlagForAarsinntektPanelAT.buildInitialValues = (alleAndeler) => {
   return initialValues;
 };
 
-GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
+GrunnlagForAarsinntektPanelAT2.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
   let inntektPrAndelList = null;
   let frilansInntekt = null;
   if (relevanteStatuser.isArbeidstaker) {
@@ -240,4 +239,4 @@ GrunnlagForAarsinntektPanelAT.transformValues = (values, relevanteStatuser, alle
   };
 };
 
-export default injectIntl(GrunnlagForAarsinntektPanelAT);
+export default injectIntl(GrunnlagForAarsinntektPanelAT2);
