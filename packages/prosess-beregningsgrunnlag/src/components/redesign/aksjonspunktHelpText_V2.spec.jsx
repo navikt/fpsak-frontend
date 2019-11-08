@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst } from 'nav-frontend-typografi';
-import AksjonspunktHelpText from './AksjonspunktHelpText';
+import AksjonspunktHelpText from './AksjonspunktHelpText_V2';
 import Image from './Image';
 
 describe('<AksjonspunktHelpText>', () => {

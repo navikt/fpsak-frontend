@@ -11,7 +11,6 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 const AvviksopplysningerSN = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode,
 }) => {
-  console.log('alleAndelerIForstePeriode', alleAndelerIForstePeriode);
   const { erNyIArbeidslivet } = alleAndelerIForstePeriode[0];
   if (erNyIArbeidslivet) {
     return (

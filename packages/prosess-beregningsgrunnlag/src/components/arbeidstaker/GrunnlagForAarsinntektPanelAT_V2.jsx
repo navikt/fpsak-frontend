@@ -58,20 +58,28 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
   const rows = relevanteAndeler.map((andel, index) => (
     <Row key={`index${index + 1}`}>
-      <Column xs="4">
-        <Normaltekst>
+      <Column xs="4" key={`ColLable${index + 1}`}>
+        <Normaltekst key={`ColLableTxt${index + 1}`}>
           {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
         </Normaltekst>
       </Column>
-      <Column xs="2">
-        <Normaltekst>
+      <Column xs="2" key={`ColSpc${index + 1}`}>
+        <Normaltekst key={`ColSpcTxt${index + 1}`}>
           {createArbeidsPeriodeText(andel.arbeidsforhold)}
         </Normaltekst>
       </Column>
-      <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
-      <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
-      <Column xs="2">
-        {createExternalLink('IM')}
+      <Column xs="2" key={`ColBrgMnd${index + 1}`} className={beregningStyles.rightAlignElement}>
+        <Normaltekst key={`ColBrgMndTxt${index + 1}`}>
+          {formatCurrencyNoKr(andel.beregnetPrAar / 12)}
+        </Normaltekst>
+      </Column>
+      <Column xs="2" key={`ColBrgAar${index + 1}`} className={beregningStyles.rightAlignElement}>
+        <Normaltekst key={`ColBrgAarTxt${index + 1}`}>
+          {formatCurrencyNoKr(andel.beregnetPrAar)}
+        </Normaltekst>
+      </Column>
+      <Column xs="2" key={`ColLink${index + 1}`}>
+        {createExternalLink('IM', `Link${index + 1}`)}
       </Column>
     </Row>
   ));
@@ -79,26 +87,27 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
     const summaryRow = (
       <>
         <Row key="bruttoBeregningsgrunnlagLine">
-          <Column xs="11">
-            <hr />
+          <Column xs="11" key="Colline">
+            <hr key="hrLine" />
           </Column>
         </Row>
         <Row key="bruttoBeregningsgrunnlag">
-          <Column xs="4"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
-          <Column xs="2" />
+          <Column key="ColBBTitle" xs="6"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" key="BBTitle" /></Column>
           <Column
             xs="2"
+            key="ColBBgMnd"
             className={beregningStyles.rightAlignElement}
           >
-            <Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
+            <Normaltekst key="BBMndValue">{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
           </Column>
           <Column
             xs="2"
+            key="ColBBgAar"
             className={beregningStyles.rightAlignElementNoWrap}
           >
-            <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
+            <Element key="BBAarValue">{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
           </Column>
-          <Column xs="2" />
+          <Column xs="2" key="BBEmpty2" />
         </Row>
       </>
     );
@@ -116,7 +125,6 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
 export const GrunnlagForAarsinntektPanelATImpl = ({
-  intl,
   readOnly,
   alleAndeler,
   allePerioder,
@@ -128,27 +136,26 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
   return (
     <>
       <Panel>
-        <Element className={beregningStyles.semiBoldText}>
+        <Normaltekst className={beregningStyles.semiBoldText}>
           <FormattedHTMLMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           {createExternalLink('Aa')}
-        </Element>
+        </Normaltekst>
 
-        <Row>
-          <Column xs="4" />
-          <Column xs="2" />
-          <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Row key="Header">
+          <Column xs="4" key="ATempthy1" />
+          <Column xs="2" key="ATempthy2" />
+          <Column xs="2" key="ATMndHead" className={beregningStyles.rightAlignElement}>
             <Undertekst>
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
             </Undertekst>
           </Column>
-          <Column xs="2" className={beregningStyles.rightAlignElement}>
+          <Column xs="2" key="ATAarHead" className={beregningStyles.rightAlignElement}>
             <Undertekst>
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
             </Undertekst>
           </Column>
-          <Column xs="2" />
+          <Column xs="2" key="ATempthy3" />
         </Row>
-
         {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
 
       </Panel>
@@ -160,7 +167,6 @@ export const GrunnlagForAarsinntektPanelATImpl = ({
 };
 
 GrunnlagForAarsinntektPanelATImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   bruttoFastsattInntekt: PropTypes.number,

@@ -26,7 +26,7 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
     </Row>
   ));
   const lineRow = (
-    <Row>
+    <Row key="separator">
       <Column xs="12">
         <hr />
       </Column>

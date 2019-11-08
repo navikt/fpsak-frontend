@@ -221,9 +221,7 @@ export const BeregningFormImpl = ({
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
-  console.log('aktivitetStatusListe', aktivitetStatusList);
   const tisdBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
-  console.log('tidsbegrenset inntekt', tisdBegrensetInntekt);
 
 
   return (

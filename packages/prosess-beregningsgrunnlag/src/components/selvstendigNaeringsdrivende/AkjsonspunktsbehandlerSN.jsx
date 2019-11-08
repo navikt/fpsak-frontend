@@ -66,19 +66,12 @@ const createRow = (readOnly, isAksjonspunktClosed) => (
  */
 const AksjonspunktBehandlerSN = ({
   readOnly,
-  alleAndelerIForstePeriode,
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
-}) => {
-  // const relevanteAndelerFT = finnAndelerSomSkalVisesFL(alleAndelerIForstePeriode);
-  console.log('alleAndeler første periode', alleAndelerIForstePeriode, readOnly);
-  // const aksjonspunkt = finnSnAksjonspunkt(aksjonspunkter);
-  // const isAksjonspunktClosed = !isAksjonspunktOpen(aksjonspunkt.status.kode);
-
-  return (
-    <>
-      { skalFastsetteSN(aksjonspunkter)
+}) => (
+  <>
+    { skalFastsetteSN(aksjonspunkter)
       && (
         <VurderOgFastsettSN2
           gjeldendeAksjonspunkter={aksjonspunkter}
@@ -87,12 +80,10 @@ const AksjonspunktBehandlerSN = ({
           behandlingVersjon={behandlingVersjon}
         />
       )}
-    </>
-  );
-};
+  </>
+);
 AksjonspunktBehandlerSN.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,

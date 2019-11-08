@@ -213,7 +213,6 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
     rows.push(
       <TableRow key={val}>
         {list.map((element) => {
-          console.log('inputfieldKey===', element.inputfieldKey);
           if (!element.isEditable) {
             return (
               <TableColumn key={element.tabellInnhold}>
@@ -250,7 +249,6 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
 
 const AksjonspunktBehandlerTidsbegrenset = ({
   readOnly,
-  intl,
   tableData,
   isAksjonspunktClosed,
   bruttoPrPeriodeList,
@@ -266,7 +264,6 @@ const AksjonspunktBehandlerTidsbegrenset = ({
 
 AksjonspunktBehandlerTidsbegrenset.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  intl: PropTypes.shape().isRequired,
   tableData: PropTypes.shape().isRequired,
   isAksjonspunktClosed: PropTypes.bool,
   bruttoPrPeriodeList: PropTypes.arrayOf(PropTypes.shape()),
@@ -308,7 +305,6 @@ const mapStateToProps = (state, ownProps) => {
     behandlingId, behandlingVersjon, formName,
   } = ownProps;
   let bruttoPrPeriodeList = [];
-  console.log('ownProps', ownProps);
   if (!harAksjonspunktForFastsettBgTidsbegrensetAT(aksjonspunkter)) {
     bruttoPrPeriodeList = getOppsummertBruttoInntektUtenAP(allePerioder);
   } else {

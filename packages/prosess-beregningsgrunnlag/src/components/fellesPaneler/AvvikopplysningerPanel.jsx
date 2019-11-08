@@ -15,28 +15,25 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
 };
 const AvviksopplysningerPanel = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder,
-}) => {
-  console.log('AvviksopplysningerPanel props', beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder);
-  return (
-    <Panel>
-      <Element>
-        <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
-      </Element>
-      <VerticalSpacer sixteenPx />
-      {relevanteStatuser.isArbeidstaker && (
+}) => (
+  <Panel>
+    <Element>
+      <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
+    </Element>
+    <VerticalSpacer sixteenPx />
+    {relevanteStatuser.isArbeidstaker && (
       <AvviksopplysningerAT beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
-      )}
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-        <AvviksopplysningerSN
-          beregnetAarsinntekt={beregnetAarsinntekt}
-          avvik={avvik}
-          sammenligningsgrunnlag={sammenligningsgrunnlag}
-          alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-        />
-      )}
-    </Panel>
-  );
-};
+    )}
+    {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+    <AvviksopplysningerSN
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      avvik={avvik}
+      sammenligningsgrunnlag={sammenligningsgrunnlag}
+      alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
+    />
+    )}
+  </Panel>
+);
 
 AvviksopplysningerPanel.propTypes = {
   beregnetAarsinntekt: PropTypes.number,

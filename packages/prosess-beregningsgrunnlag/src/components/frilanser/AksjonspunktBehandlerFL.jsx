@@ -41,19 +41,13 @@ const createRowFL = (readOnly) => (
 
 const AksjonspunktBehandlerFL = ({
   readOnly,
-  alleAndelerIForstePeriode,
-}) => {
-  // const relevanteAndelerFT = finnAndelerSomSkalVisesFL(alleAndelerIForstePeriode);
-  console.log('alleAndeler første periode', alleAndelerIForstePeriode);
-  return (
-    <>
-      {createRowFL(readOnly)}
-    </>
-  );
-};
+}) => (
+  <>
+    {createRowFL(readOnly)}
+  </>
+);
 AksjonspunktBehandlerFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AksjonspunktBehandlerFL.defaultProps = {

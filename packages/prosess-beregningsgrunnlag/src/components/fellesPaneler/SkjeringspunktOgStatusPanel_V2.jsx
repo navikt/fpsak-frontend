@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
@@ -28,7 +28,6 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const statusList = [];
   const unikeStatuser = listeMedStatuser.filter((status, index, self) => index === self.findIndex((t) => (
     t.kode === status.kode)));
-  console.log('unike statuser', unikeStatuser);
   /*
   const statuserMedEgneNavn = unikeStatuser.filter((status) => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
     && status.kode !== aktivitetStatus.DAGPENGER
@@ -42,7 +41,7 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   return (
     <>
       {statusList.map((status) => (
-        <EtikettInfo className={styles[status.className]} title={status.visningsNavn}>{status.visningsNavn}</EtikettInfo>
+        <EtikettInfo key={status.visningsNavn} className={styles[status.className]} title={status.visningsNavn}>{status.visningsNavn}</EtikettInfo>
       ))}
     </>
   );
@@ -60,9 +59,9 @@ export const SkjeringspunktOgStatusPanelImpl = ({
   getKodeverknavn,
 }) => (
   <Panel>
-    <Element>
-      {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
-    </Element>
+
+    {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
+
     <VerticalSpacer sixteenPx />
     <Row>
       <Column xs="7">
