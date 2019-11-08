@@ -5,63 +5,64 @@
   border-radius: 3px;
 }
 
-.verticalLine > div > p{
+.verticalLine > div > p {
   border-left: 4px solid @navGra20;
   padding-left: 4px;
-
 }
+
 .verticalAlignMiddle {
-  display: flex;
   align-items: baseline;
+  display: flex;
 
   .inputPadding > div > p {
-    padding-bottom: 0px;
-    margin-bottom: 0px;
     font-size: 16px;
     font-weight: 600;
     height: 22px;
     line-height: 22px;
+    margin-bottom: 0;
+    padding-bottom: 0;
   }
-
 }
+
 .inntektTableTB {
   border: 0;
-
 }
 
-.rowSpacer{
+.rowSpacer {
   height: 10px;
 }
 
 .inntektTableTB > tbody > tr:first-child > td {
-  border-top:0px;
+  border-top: 0;
 }
-.inntektTableTB > tbody > tr:last-child > td {
-  border-top:1px solid #979797;
 
-  border-right: 0px;
+.inntektTableTB > tbody > tr:last-child > td {
+  border-right: 0;
+  border-top: 1px solid #979797;
 }
+
 .inntektTableTB > tbody > tr > td:first-child {
-text-align:left;
+  text-align: left;
 }
 
 .inntektTableTB > tbody > tr > td {
-   padding-bottom: 0;
-   position: relative;
-   top: -1px;
-   vertical-align: middle;
-  text-align: center;
-   border-bottom: 0px;
+  border-bottom: 0;
   border-right: 1px solid #979797;
- }
+  padding-bottom: 0;
+  position: relative;
+  text-align: center;
+  top: -1px;
+  vertical-align: middle;
+}
+
 .inntektTableTB.separator {
   height: 20px;
 }
+
 .inntektTableTB > tbody > tr > td:last-child {
-
-  border-right:0px ;
-
+  border-right: 0;
 }
+
 .inntektTableTB > thead > tr:first-child > td {
-border-bottom:0px;
+  border-bottom: 0;
 }
