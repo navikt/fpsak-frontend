@@ -120,7 +120,7 @@ const finnPerioderSomIkkeHarVerdiForObligatoriskFelt = createSelector([
   if (harObligatoriskTekst) {
     const periode = `${va.fom}_${va.tom}`;
     const friteksterForPeriode = formVerdier[periode];
-    if (!friteksterForPeriode || !friteksterForPeriode['SÆRLIGEGRUNNER_ANNET']) {
+    if (!friteksterForPeriode || (!friteksterForPeriode['SÆRLIGEGRUNNER_ANNET'] && !friteksterForPeriode.FAKTA)) {
       return acc.concat(periode);
     }
   }
