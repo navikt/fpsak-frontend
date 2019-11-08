@@ -111,7 +111,6 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
         </Row>
       </>
     );
-    console.log(summaryRow);
     rows.push(summaryRow);
   }
   return rows;
