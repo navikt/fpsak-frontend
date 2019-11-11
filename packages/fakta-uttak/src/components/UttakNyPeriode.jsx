@@ -321,7 +321,7 @@ const getPeriodeData = (periode, periodeArray) => periodeArray
   .filter(({ kode }) => kode === periode);
 
 const getResultat = (utsettelseÅrsak, uttakPeriodeVurderingTyper) => {
-  if ([utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER, utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET, utsettelseArsakCodes.SYKDOM]
+  if (utsettelseÅrsak && [utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER, utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET, utsettelseArsakCodes.SYKDOM]
     .some((årsak) => årsak === utsettelseÅrsak.kode)) {
     return uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_OK);
   }
@@ -338,16 +338,12 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     kode: utsettelseÅrsakObjekt.kode,
     kodeverk: utsettelseÅrsakObjekt.kodeverk,
     navn: getKodeverknavn(utsettelseÅrsakObjekt),
-  } : {
-    kode: utsettelseArsakCodes.UDEFINERT,
-  };
+  } : undefined;
   const overføringÅrsak = overføringÅrsakObjekt !== undefined ? {
     kode: overføringÅrsakObjekt.kode,
     kodeverk: overføringÅrsakObjekt.kodeverk,
     navn: getKodeverknavn(overføringÅrsakObjekt),
-  } : {
-    kode: overforingArsak.UDEFINERT,
-  };
+  } : undefined;
 
   const resultat = getResultat(utsettelseÅrsak, uttakPeriodeVurderingTyper);
   const arbeidsForhold = values.arbeidsForhold ? values.arbeidsForhold.split('|') : null;
