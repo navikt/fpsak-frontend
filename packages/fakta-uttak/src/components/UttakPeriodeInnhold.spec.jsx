@@ -24,18 +24,23 @@ describe('<UttakPeriodeInnhold>', () => {
     const wrapper = shallowWithIntl(<UttakPeriodeInnhold
       fieldId={fieldId}
       utsettelseArsak={utsettelseArsak}
-      bekreftet
-      uttakPeriodeType={{}}
       overforingArsak={{}}
-      openForm
-      id={id}
       updatePeriode={updatePeriode}
+      id={id}
       cancelEditPeriode={cancelEditPeriode}
       readOnly
       fraDato={periode.fom}
       tilDato={periode.tom}
+      bekreftet
+      openForm
+      uttakPeriodeType={{}}
       behandlingStatusKode={behandlingStatusKode}
       farSøkerFør6Uker={false}
+      familiehendelse={{}}
+      vilkarForSykdomExists={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      getKodeverknavn={sinon.spy()}
     />);
 
     const verticalSpacer = wrapper.find(VerticalSpacer);

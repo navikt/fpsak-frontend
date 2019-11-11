@@ -75,23 +75,22 @@ const andeler = [
 
 const sokerKjonn = navBrukerKjonn.MANN;
 
-const newPeriodeCallback = sinon.spy();
 const newPeriodeResetCallback = sinon.spy();
 const getKodeverknavn = sinon.spy();
 
 describe('<UttakNyPeriode>', () => {
   it('skal vise skjema for ny utakksperiode', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
 
@@ -127,16 +126,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('Skal regne ut og vise antall dager i valgt periode', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
 
@@ -150,16 +149,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('skal vise dropdown for årsak til overføring av kvote hvis søker er kvinne og stønadskonto er FEDREKVOTE', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -173,16 +172,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('skal vise dropdown for årsak for utsettelsen hvis type uttak er satt til utsettelse', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -196,16 +195,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('skal vise graderingandel hvis type uttak er gradert for og validere at graderingen er et heltall', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -219,16 +218,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('skal vise prosentandel for samtidig uttak hvis samtidig uttak er valgt og validere at det er et heltall', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({
@@ -242,16 +241,16 @@ describe('<UttakNyPeriode>', () => {
 
   it('Skal sende inn ny periode når man klikker på Oppdater', () => {
     const wrapper = shallowWithIntl(<UttakNyPeriode
-      newPeriodeCallback={newPeriodeCallback}
       newPeriodeResetCallback={newPeriodeResetCallback}
-      nyPeriode={nyPeriode}
-      periodeTyper={periodeTyper}
       utsettelseÅrsaker={utsettelseÅrsaker}
       overføringÅrsaker={overføringÅrsaker}
       andeler={andeler}
+      nyPeriode={nyPeriode}
       sokerKjonn={sokerKjonn}
       nyPeriodeDisabledDaysFom="2018-05-20"
+      alleKodeverk={{}}
       getKodeverknavn={getKodeverknavn}
+      periodeTyper={periodeTyper}
       {...reduxFormPropsMock}
     />);
     wrapper.setProps({

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { FieldArray } from 'redux-form';
 import { createSelector } from 'reselect';
+import { FieldArray } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import {
   ArrowBox, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
@@ -16,13 +15,8 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
+import { behandlingForm, getBehandlingFormSyncErrors, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
-import { doesVilkarForSykdomOppfyltExist, getFamiliehendelseGjeldende } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-  getBehandlingFormSyncErrors,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
 
@@ -33,16 +27,16 @@ const maxLength4000 = maxLength(4000);
 
 // TODO slå sammen ForeldreAnsvarPeriode, SykdomOgSkadePeriode og InnleggelsePeriode
 
-export const SykdomOgSkadePeriode = ({
-  resultat,
+export const InnleggelsePeriode = ({
   fraDato,
   tilDato,
+  resultat,
   id,
   cancelEditPeriode,
   updated,
   bekreftet,
-  readOnly,
   dokumentertePerioder,
+  readOnly,
   formSyncErrors,
   behandlingStatusKode,
   ...formProps
@@ -52,21 +46,26 @@ export const SykdomOgSkadePeriode = ({
   if (
     Object.keys(formSyncErrors).length !== 0
     && formProps.submitFailed
-    && (formSyncErrors.dokumentertePerioder.length - 1) > 0) {
+    && formSyncErrors.dokumentertePerioder.length - 1 > 0
+  ) {
     formSyncErrors.dokumentertePerioder.forEach((error) => {
-      errorHeight += error !== undefined && error.fom[0].id === 'ValidationMessage.NotEmpty' ? 30 : 52;
+      errorHeight
+        += error !== undefined && error.fom[0].id === 'ValidationMessage.NotEmpty'
+          ? 30
+          : 52;
     });
   }
-
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
-  && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
+    && readOnly
+    && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
 
   // const periodeOkDisabled = !bekreftet;
 
   const inlineheight = dokumentertePerioder
     && resultat === uttakPeriodeVurdering.PERIODE_OK
     && !readOnly
-    ? (dokumentertePerioder.length * 58) + errorHeight + 170 : 'auto';
+    ? dokumentertePerioder.length * 58 + errorHeight + 170
+    : 'auto';
 
   const inlineStyle = {
     radioOption: {
@@ -75,7 +74,6 @@ export const SykdomOgSkadePeriode = ({
   };
   return (
     <FlexContainer wrap>
-      {formProps.error}
       <FlexRow wrap>
         <FlexColumn className={styles.fieldColumn}>
           <Undertekst>
@@ -85,37 +83,41 @@ export const SykdomOgSkadePeriode = ({
           <RadioGroupField
             direction="vertical"
             name="resultat"
+            DOMName={`resultat_${id}`}
             bredde="M"
+            isEdited={isEdited}
             validate={[required]}
             readOnly={readOnly}
-            isEdited={isEdited}
           >
             <RadioOption
-              label={{ id: 'UttakInfoPanel.SykdomSkadenDokumentertAngiAvklartPeriode' }}
+              label={{
+                id:
+                  'UttakInfoPanel.InnleggelsenErDokumentertAngiAvklartPeriode',
+              }}
               value={uttakPeriodeVurdering.PERIODE_OK}
               style={inlineStyle.radioOption}
             />
             <RadioOption
-              label={{ id: 'UttakInfoPanel.SykdomSkadenIkkeDokumentert' }}
+              label={{ id: 'UttakInfoPanel.InnleggelsenErIkkeDokumentert' }}
               value={uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES}
             />
           </RadioGroupField>
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
-          <div className={styles.addPeriodeSykdom}>
-            <ArrowBox>
-              <FieldArray
-                name="dokumentertePerioder"
-                component={DokumentertePerioderPeriodePicker}
-                props={{ fraDato, tilDato, readOnly }}
-              />
-            </ArrowBox>
-          </div>
+            <div className={styles.addPeriodeInnleggelse}>
+              <ArrowBox>
+                <FieldArray
+                  name="dokumentertePerioder"
+                  component={DokumentertePerioderPeriodePicker}
+                  props={{ fraDato, tilDato, readOnly }}
+                />
+              </ArrowBox>
+            </div>
           )}
           <VerticalSpacer twentyPx />
           <div className={styles.textAreaStyle}>
             <TextAreaField
               name="begrunnelse"
-              label={{ id: 'UttakInfoPanel.Vurdering' }}
+              label={{ id: 'UttakInfoPanel.BegrunnEndringene' }}
               readOnly={readOnly}
               validate={[required, minLength3, maxLength4000, hasValidText]}
               textareaClass={styles.textAreaStyle}
@@ -123,6 +125,7 @@ export const SykdomOgSkadePeriode = ({
             />
           </div>
         </FlexColumn>
+
       </FlexRow>
       <FlexRow>
         <FlexColumn>
@@ -142,48 +145,31 @@ export const SykdomOgSkadePeriode = ({
   );
 };
 
-SykdomOgSkadePeriode.propTypes = {
+InnleggelsePeriode.propTypes = {
+  fieldId: PropTypes.string.isRequired,
   resultat: PropTypes.string,
   updatePeriode: PropTypes.func.isRequired,
-  cancelEditPeriode: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   updated: PropTypes.bool.isRequired,
   bekreftet: PropTypes.bool.isRequired,
+  cancelEditPeriode: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   dokumentertePerioder: PropTypes.arrayOf(PropTypes.shape()),
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
-  overforingArsak: PropTypes.shape().isRequired,
   formSyncErrors: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
 };
 
-SykdomOgSkadePeriode.defaultProps = {
+InnleggelsePeriode.defaultProps = {
   dokumentertePerioder: [{}],
   formSyncErrors: {},
   resultat: undefined,
   behandlingStatusKode: undefined,
 };
 
-const validateSykdomOgSkadeForm = (
-  values,
-  familieHendelse,
-  utsettelseArsak,
-  overforingArsak,
-  vilkarForSykdomOppfyltExists,
-) => {
+const validateInnleggelseForm = (values) => {
   const errors = {};
-  const morForSykVedFodsel = familieHendelse.morForSykVedFodsel
-    ? [uttakPeriodeVurdering.PERIODE_OK, uttakPeriodeVurdering.PERIODE_OK_ENDRET]
-    : [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES];
-
-  if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER
-    && !morForSykVedFodsel.includes(values.resultat)
-    && vilkarForSykdomOppfyltExists) {
-    errors.resultat = values.resultat ? [{ id: 'UttakInfoPanel.IkkeDokumentertSykdom' }] : [{ id: 'UttakInfoPanel.DokumentertSykdom' }];
-  }
-
   errors.dokumentertePerioder = [];
   if (values.dokumentertePerioder) {
     values.dokumentertePerioder.forEach((periode, index) => {
@@ -199,39 +185,52 @@ const validateSykdomOgSkadeForm = (
 };
 
 const buildInitialValues = createSelector([
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.dokumentertePerioder`),
-  (state, ownProps) => ownProps.id],
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.begrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.resultat`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.dokumentertePerioder`),
+  (_state, ownProps) => ownProps.id],
 (begrunnelse, initialResultat, initialDokumentertePerioder, id) => ({
   begrunnelse,
   id,
   resultat: initialResultat ? initialResultat.kode : undefined,
-  dokumentertePerioder: initialDokumentertePerioder !== undefined ? initialDokumentertePerioder : [],
+  dokumentertePerioder:
+        initialDokumentertePerioder !== undefined
+          ? initialDokumentertePerioder
+          : [],
 }));
 
-
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const formName = `sykdomOgSkadeForm-${initialOwnProps.id}`;
-  const familiehendelse = getFamiliehendelseGjeldende(initialState);
-  const vilkarForSykdomExists = doesVilkarForSykdomOppfyltExist(initialState);
-  const validate = (values) => validateSykdomOgSkadeForm(values, familiehendelse, initialOwnProps.utsettelseArsak,
-    initialOwnProps.overforingArsak, vilkarForSykdomExists);
-  const onSubmit = (values) => initialOwnProps.updatePeriode((values));
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+  const { behandlingId, behandlingVersjon } = initialOwnProps;
+  const formName = `innleggelseForm-${initialOwnProps.id}`;
+  const onSubmit = (values) => initialOwnProps.updatePeriode(values);
 
   return (state, ownProps) => ({
-    onSubmit,
-    validate,
-    formSyncErrors: getBehandlingFormSyncErrors(formName)(state),
-    dokumentertePerioder: behandlingFormValueSelector(formName)(state, 'dokumentertePerioder'),
-    resultat: behandlingFormValueSelector(formName)(state, 'resultat'),
+    formSyncErrors: getBehandlingFormSyncErrors(formName, behandlingId, behandlingVersjon)(state),
+    dokumentertePerioder: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'dokumentertePerioder'),
+    resultat: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'resultat'),
     initialValues: buildInitialValues(state, ownProps),
-    updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
-    bekreftet: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.bekreftet`),
+    updated: behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.updated`),
+    bekreftet: behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.bekreftet`),
     form: formName,
+    onSubmit,
   });
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
-  enableReinitialize: true,
-})(SykdomOgSkadePeriode));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    enableReinitialize: true,
+    validate: (values) => validateInnleggelseForm(values),
+  })(InnleggelsePeriode),
+);

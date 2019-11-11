@@ -15,14 +15,12 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
+import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
-import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
-import EndreSoknadsperiode from '../components/EndreSoknadsperiode';
+import InntektsmeldingInfo from '../InntektsmeldingInfo';
+import EndreSoknadsperiode from '../EndreSoknadsperiode';
 import PerioderKnapper from './PerioderKnapper';
+
 import styles from './periodeTyper.less';
 
 const minLength3 = minLength(3);
@@ -45,6 +43,7 @@ export const FerieOgArbeidsPeriode = ({
   originalResultat,
   skalViseInntektmeldingInfo,
   oppholdArsak,
+  getKodeverknavn,
   ...formProps
 }) => {
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
@@ -120,6 +119,7 @@ export const FerieOgArbeidsPeriode = ({
                 inntektsmeldingInfo={inntektsmeldingInfo}
                 uttakPeriodeType={uttakPeriodeType}
                 arbeidsgiver={arbeidsgiver}
+                getKodeverknavn={getKodeverknavn}
               />
             </FlexColumn>
             )}
@@ -159,6 +159,7 @@ FerieOgArbeidsPeriode.propTypes = {
   førsteUttaksdato: PropTypes.string,
   originalResultat: PropTypes.shape().isRequired,
   skalViseInntektmeldingInfo: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 FerieOgArbeidsPeriode.defaultProps = {
@@ -184,11 +185,27 @@ const validateForm = ({ nyFom, nyTom }) => {
 };
 
 const buildInitialValues = createSelector([
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`),
-  (state, ownProps) => behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.resultat`),
-  (state, ownProps) => ownProps],
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.begrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.saksebehandlersBegrunnelse`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.oppholdÅrsak`),
+  (state, ownProps) => behandlingFormValueSelector(
+    'UttakFaktaForm',
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, `${ownProps.fieldId}.resultat`),
+  (_state, ownProps) => ownProps],
 (begrunnelse, saksebehandlersBegrunnelse, oppholdArsak, initialResultat, ownProps) => {
   let initialResultatValue = initialResultat ? initialResultat.kode : undefined;
   if (oppholdArsak && oppholdArsak.kode !== oppholdArsakType.UDEFINERT && !begrunnelse) {
@@ -206,16 +223,21 @@ const buildInitialValues = createSelector([
   };
 });
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
+  const { behandlingId, behandlingVersjon } = initialOwnProps;
   const formName = `arbeidOgFerieForm-${initialOwnProps.id}`;
   const onSubmit = (values) => initialOwnProps.updatePeriode(values);
 
   return (state, ownProps) => {
-    const resultat = behandlingFormValueSelector(formName)(state, 'resultat');
-    const førsteUttaksdato = behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato');
-    const originalResultat = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.originalResultat`) || {};
-    const begrunnelse = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.begrunnelse`);
-    const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.oppholdÅrsak`);
+    const resultat = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'resultat');
+    const førsteUttaksdato = behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, 'førsteUttaksdato');
+    const originalResultat = behandlingFormValueSelector(
+      'UttakFaktaForm',
+      behandlingId,
+      behandlingVersjon,
+    )(state, `${ownProps.fieldId}.originalResultat`) || {};
+    const begrunnelse = behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.begrunnelse`);
+    const oppholdArsak = behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.oppholdÅrsak`);
 
     // skal vise inntektsmeldinginfo for søknader mottatt før 4.juni og hvis 5070. https://jira.adeo.no/browse/PFP-7559
     const skalViseInntektmeldingInfo = false; // moment(getSoknad(state).mottattDato).isBefore('2019-06-04');
@@ -233,13 +255,13 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       originalResultat,
       skalViseInntektmeldingInfo,
       initialValues: buildInitialValues(state, ownProps),
-      updated: behandlingFormValueSelector('UttakFaktaForm')(state, `${ownProps.fieldId}.updated`),
+      updated: behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, `${ownProps.fieldId}.updated`),
       form: formName,
     };
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
   validate: validateForm,
 })(FerieOgArbeidsPeriode));
