@@ -16,6 +16,7 @@ import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-t
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
+import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -29,7 +30,6 @@ import {
 } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
-import UttakInfoPanel from './uttak/UttakInfoPanel';
 
 import styles from './faktaPanel.less';
 
@@ -57,6 +57,15 @@ const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 const beregningData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGSGRUNNLAG, fpsakApi.AKSJONSPUNKTER];
 const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
 const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
+const uttakData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.YTELSEFORDELING,
+  fpsakApi.UTTAK_KONTROLLER_FAKTA_PERIODER,
+  fpsakApi.FAKTA_ARBEIDSFORHOLD,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.FAMILIEHENDELSE,
+];
 
 /**
  * FaktaPanel
@@ -67,20 +76,21 @@ const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKT
 export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   aksjonspunkter,
   vilkarCodes,
-  personopplysninger,
   submitCallback,
   openInfoPanels,
   toggleInfoPanelCallback,
   shouldOpenDefaultInfoPanels,
   readOnly,
   ytelsesType,
-  ytelsefordeling,
   fagsakPerson,
   erOverstyrer,
+  personopplysninger,
+  ytelsefordeling,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   readOnlyBehandling,
   featureToggleUtland,
+  kanOverstyre,
 }) => (
   <>
     <div className={styles.personContainer}>
@@ -332,16 +342,29 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         )}
       />
 
-      {UttakInfoPanel.supports(personopplysninger, ytelsesType, ytelsefordeling) && (
-      <UttakInfoPanel
-        aksjonspunkter={aksjonspunkter}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-        submitCallback={submitCallback}
-        readOnly={readOnly}
+      <DataFetcherWithCache
+        behandlingVersjon={1}
+        data={uttakData}
+        showComponent={
+          personopplysninger !== null
+          && personopplysninger !== undefined
+          && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER
+          && ytelsefordeling.endringsdato !== undefined
+        }
+        render={(props) => (
+          <UttakFaktaIndex
+            alleKodeverk={alleKodeverk}
+            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+            openInfoPanels={openInfoPanels}
+            toggleInfoPanelCallback={toggleInfoPanelCallback}
+            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+            submitCallback={submitCallback}
+            readOnly={readOnly}
+            kanOverstyre={kanOverstyre}
+            {...props}
+          />
+        )}
       />
-      )}
     </div>
   </>
 );
@@ -367,6 +390,7 @@ FaktaPanel.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   featureToggleUtland: PropTypes.bool.isRequired,
+  kanOverstyre: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -387,6 +411,7 @@ const mapStateToProps = (state) => {
     personopplysninger: getPersonopplysning(state) || null,
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
+    kanOverstyre: rettigheter.kanOverstyreAccess.employeeHasAccess,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),

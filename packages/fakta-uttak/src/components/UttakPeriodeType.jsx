@@ -12,9 +12,8 @@ import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import { lagVisningsNavn, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = (prosent) => `${prosent}%`;
@@ -208,4 +207,4 @@ UttakPeriodeType.defaultProps = {
   samtidigUttaksprosent: null,
 };
 
-export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakPeriodeType));
+export default injectIntl(UttakPeriodeType);

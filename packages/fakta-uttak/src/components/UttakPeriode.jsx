@@ -71,6 +71,12 @@ const UttakPeriode = ({
   meta,
   openSlettPeriodeModalCallback,
   perioder,
+  getKodeverknavn,
+  behandlingId,
+  behandlingVersjon,
+  behandlingStatus,
+  familiehendelse,
+  vilkarForSykdomExists,
   readOnly,
   updatePeriode,
 }) => (
@@ -107,6 +113,7 @@ const UttakPeriode = ({
                     isAnyFormOpen={isAnyFormOpen}
                     isNyPeriodeFormOpen={isNyPeriodeFormOpen}
                     readOnly={readOnly}
+                    getKodeverknavn={getKodeverknavn}
                     flerbarnsdager={periode.flerbarnsdager}
                     samtidigUttak={periode.samtidigUttak}
                     samtidigUttaksprosent={periode.samtidigUttaksprosent}
@@ -128,8 +135,14 @@ const UttakPeriode = ({
                     updatePeriode={updatePeriode}
                     cancelEditPeriode={cancelEditPeriode}
                     readOnly={readOnly}
+                    behandlingId={behandlingId}
+                    behandlingVersjon={behandlingVersjon}
+                    behandlingStatusKode={behandlingStatus.kode}
                     inntektsmeldingInfo={inntektsmeldingInfo[index]}
                     farSøkerFør6Uker={farSøkerFør6Uker}
+                    familiehendelse={familiehendelse}
+                    vilkarForSykdomExists={vilkarForSykdomExists}
+                    getKodeverknavn={getKodeverknavn}
                   />
                 </div>
                 {perioder.length === fields.length
@@ -156,6 +169,12 @@ UttakPeriode.propTypes = {
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.arrayOf(PropTypes.shape())).isRequired,
+  vilkarForSykdomExists: PropTypes.bool.isRequired,
+  getKodeverknavn: PropTypes.func.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingStatus: PropTypes.shape().isRequired,
+  familiehendelse: PropTypes.shape().isRequired,
   endringsdato: PropTypes.string,
   farSøkerFør6Uker: PropTypes.bool,
 };

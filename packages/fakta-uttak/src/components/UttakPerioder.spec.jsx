@@ -20,23 +20,26 @@ describe('<UttakPerioder>', () => {
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms={false}
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -66,23 +69,26 @@ describe('<UttakPerioder>', () => {
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms={false}
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -107,23 +113,26 @@ describe('<UttakPerioder>', () => {
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -144,23 +153,26 @@ describe('<UttakPerioder>', () => {
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -176,23 +188,26 @@ describe('<UttakPerioder>', () => {
         readOnly
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms={false}
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -208,25 +223,26 @@ describe('<UttakPerioder>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms={false}
-        kanOverstyre={false}
-        isDirty
-        behandlingPaaVent={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -242,16 +258,15 @@ describe('<UttakPerioder>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
+        submitting={false}
         initialValues={{}}
-        slettedePerioder={[]}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
         aksjonspunkter={[
           {
             aksjonspunktType: {
@@ -278,12 +293,16 @@ describe('<UttakPerioder>', () => {
             vurderPaNyttArsaker: [],
           },
         ]}
-        førsteUttaksdato="2018-01-12"
-        submitting={false}
-        openForms={false}
-        kanOverstyre={false}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 
@@ -300,23 +319,26 @@ describe('<UttakPerioder>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         inntektsmeldinger={[]}
-        nyPeriode={{}}
         behandlingFormPrefix="UttakFaktaForm"
         perioder={[]}
+        openForms={false}
         reduxFormChange={reduxFormChange}
         reduxFormReset={reduxFormReset}
-        periodeTyper={[]}
-        utsettelseArsaker={[]}
-        uttakPeriodeVurderingTyper={[]}
-        initialValues={{}}
-        slettedePerioder={[]}
-        aksjonspunkter={[]}
-        førsteUttaksdato="2018-01-12"
         submitting={false}
-        openForms={false}
-        kanOverstyre={false}
+        initialValues={{}}
+        personopplysninger={{}}
+        uttakPeriodeVurderingTyper={[]}
+        aksjonspunkter={[]}
         hasRevurderingOvertyringAp={false}
+        kanOverstyre={false}
         getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={[]}
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={{}}
+        alleKodeverk={{}}
+        familiehendelse={{}}
+        førsteUttaksdato="2018-01-12"
       />,
     );
 

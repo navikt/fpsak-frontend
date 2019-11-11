@@ -50,6 +50,7 @@ const mapping = {
   [BehandlingFpsakApiKeys.FAKTA_ARBEIDSFORHOLD]: 'fakta-arbeidsforhold',
   [BehandlingFpsakApiKeys.UTTAKSRESULTAT_PERIODER]: 'uttaksresultat-perioder',
   [BehandlingFpsakApiKeys.UTTAK_STONADSKONTOER]: 'uttak-stonadskontoer',
+  [BehandlingFpsakApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER]: 'uttak-kontroller-fakta-perioder',
 };
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');

@@ -9,7 +9,7 @@ import {
 } from '@fpsak-frontend/utils';
 import { stonadskontoType, uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 
-import styles from '../perioder/periodeTyper.less';
+import styles from './perioder/periodeTyper.less';
 
 const maxValue100 = maxValue(100);
 const minValue1 = minValue(1);
