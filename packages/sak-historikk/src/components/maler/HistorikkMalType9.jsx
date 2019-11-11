@@ -72,19 +72,20 @@ export const HistorikkMalType9 = ({
               />
             )}
 
-            {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING
-            && (
-              historikkinnslagDel.endredeFelter.map((endretFelt, index) => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK && (
-                <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
-                  <FormattedHTMLMessage
-                    id="Historikk.Template.9.TilbakekrViderebehandling"
-                    values={{
-                      felt: getKodeverknavn(endretFelt.endretFeltNavn),
-                      verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
-                    }}
-                  />
-                </div>
-              ))
+            {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING && (
+              historikkinnslagDel.endredeFelter
+                .filter((endretFelt) => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK)
+                .map((endretFelt, index) => (
+                  <div className={styles.tilbakekrevingTekst} key={`endretFelt${index + 1}`}>
+                    <FormattedHTMLMessage
+                      id="Historikk.Template.9.TilbakekrViderebehandling"
+                      values={{
+                        felt: getKodeverknavn(endretFelt.endretFeltNavn),
+                        verdi: findEndretFeltVerdi(endretFelt, endretFelt.tilVerdi, intl),
+                      }}
+                    />
+                  </div>
+                ))
             )}
             {historikkinnslagDel.begrunnelse && <BubbleText bodyText={getKodeverknavn(historikkinnslagDel.begrunnelse)} className="snakkeboble-panel__tekst" />}
             {historikkinnslagDel.begrunnelseFritekst && <BubbleText bodyText={historikkinnslagDel.begrunnelseFritekst} className="snakkeboble-panel__tekst" />}
