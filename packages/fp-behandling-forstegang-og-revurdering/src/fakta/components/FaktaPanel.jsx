@@ -349,7 +349,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           personopplysninger !== null
           && personopplysninger !== undefined
           && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER
-          && ytelsefordeling.endringsdato
+          && ytelsefordeling.endringsdato !== undefined
         }
         render={(props) => (
           <UttakFaktaIndex
@@ -411,7 +411,7 @@ const mapStateToProps = (state) => {
     personopplysninger: getPersonopplysning(state) || null,
     ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
-    kanOverstyre: rettigheter.kanOverstyreAccess.hasAccess,
+    kanOverstyre: rettigheter.kanOverstyreAccess.employeeHasAccess,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),
