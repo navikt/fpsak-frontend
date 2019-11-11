@@ -1308,3 +1308,55 @@ export const OverstyringAvInntekt = () => {
     />
   );
 };
+
+export const VurderKunYtelseBesteberegning = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
+  const beregningsgrunnlagYtelseAndel = {
+    andelsnr: standardFaktaYtelseAndel.andelsnr,
+    aktivitetStatus: standardFaktaYtelseAndel.aktivitetStatus,
+    inntektskategori: standardFaktaYtelseAndel.inntektskategori,
+  };
+  const andeler = [
+    beregningsgrunnlagYtelseAndel,
+  ];
+  const andelerForFaktaOmBeregning = [
+    standardFaktaYtelseAndel,
+  ];
+  const kunYtelse = {
+    fodendeKvinneMedDP: true,
+    andeler,
+  };
+  const faktaOmBeregning = {
+    faktaOmBeregningTilfeller: mapTilKodeliste([FASTSETT_BG_KUN_YTELSE]),
+    andelerForFaktaOmBeregning,
+    kunYtelse,
+  };
+  const beregningsgrunnlag = lagBeregningsgrunnlag(andeler, faktaOmBeregning);
+  return (
+    <BeregningFaktaIndex
+      behandling={behandling}
+      beregningsgrunnlag={object('beregningsgrunnlag', beregningsgrunnlag)}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
+      }]}
+      erOverstyrer={false}
+      alleKodeverk={alleKodeverk}
+      alleMerknaderFraBeslutter={{
+        [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      }}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      shouldOpenDefaultInfoPanels={false}
+      readOnly={boolean('readOnly', false)}
+    />
+  );
+};
