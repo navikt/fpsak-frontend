@@ -3,7 +3,7 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
 import KunYtelsePanel from './KunYtelsePanel';
 
-const { FASTSETT_BG_KUN_YTELSE, VURDER_BESTEBEREGNING } = faktaOmBeregningTilfelle;
+const { FASTSETT_BG_KUN_YTELSE } = faktaOmBeregningTilfelle;
 
 export const setFaktaPanelForKunYtelse = (faktaPanels,
   tilfeller,
@@ -32,9 +32,6 @@ export const setFaktaPanelForKunYtelse = (faktaPanels,
 export const transformValuesForKunYtelse = (values, kunYtelse, tilfeller) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
     const faktaOmBeregningTilfeller = [FASTSETT_BG_KUN_YTELSE];
-    if (kunYtelse.fodendeKvinneMedDP) {
-      faktaOmBeregningTilfeller.push(VURDER_BESTEBEREGNING);
-    }
     return {
       faktaOmBeregningTilfeller,
       ...KunYtelsePanel.transformValues(values, kunYtelse),
