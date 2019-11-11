@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
+import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, dateFormat, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
