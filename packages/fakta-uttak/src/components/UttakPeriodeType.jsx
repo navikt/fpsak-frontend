@@ -18,7 +18,7 @@ import styles from './uttakPeriodeType.less';
 const formatProsent = (prosent) => `${prosent}%`;
 
 const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn) => {
-  if (overforingArsak !== undefined) {
+  if (overforingArsak && overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.OverføringMedÅrsak"
@@ -27,7 +27,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
     );
   }
 
-  if (utsettelseArsak !== undefined) {
+  if (utsettelseArsak && utsettelseArsak.kode !== utsettelseArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.UtsettelseMedÅrsak"
