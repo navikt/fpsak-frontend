@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
-import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
+import { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, dateFormat, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -19,7 +18,7 @@ import styles from './uttakPeriodeType.less';
 const formatProsent = (prosent) => `${prosent}%`;
 
 const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn) => {
-  if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
+  if (overforingArsak !== undefined) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.OverføringMedÅrsak"
@@ -28,7 +27,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
     );
   }
 
-  if (utsettelseArsak.kode !== utsettelseArsakCodes.UDEFINERT) {
+  if (utsettelseArsak !== undefined) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.UtsettelseMedÅrsak"
