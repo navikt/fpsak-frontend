@@ -165,7 +165,7 @@ const VurderOgFastsettATFL = ({
           alleKodeverk={alleKodeverk}
         />
       )}
-      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING)
+      {tilfeller.includes(faktaOmBeregningTilfelle.VURDER_BESTEBEREGNING) && !tilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)
       && (
         <VurderBesteberegningForm
           readOnly={readOnly}

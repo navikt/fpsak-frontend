@@ -243,8 +243,8 @@ export const UttakPeriodeInnhold = ({
 
 UttakPeriodeInnhold.propTypes = {
   fieldId: PropTypes.string.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
-  overforingArsak: PropTypes.shape().isRequired,
+  utsettelseArsak: PropTypes.shape(),
+  overforingArsak: PropTypes.shape(),
   updatePeriode: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
   cancelEditPeriode: PropTypes.func.isRequired,
@@ -270,6 +270,8 @@ UttakPeriodeInnhold.defaultProps = {
   arbeidstidprosent: null,
   inntektsmeldingInfo: [],
   arbeidsgiver: {},
+  utsettelseArsak: undefined,
+  overforingArsak: undefined,
 };
 
 export default UttakPeriodeInnhold;
