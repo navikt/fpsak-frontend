@@ -6,7 +6,7 @@ import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
 import {
-  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus,
 } from '../duckBehandlingInnsyn';
 
 const commonBehandlingInnsynSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, innsynBehandlingApi);
@@ -20,14 +20,8 @@ const getBehandlingInnsynResultatType = createSelector([getBehandlingInnsyn], (i
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
   commonBehandlingInnsynSelectors.getBehandlingStatus,
-  commonBehandlingInnsynSelectors.getSoknad,
-  commonBehandlingInnsynSelectors.getAksjonspunkter,
   commonBehandlingInnsynSelectors.getBehandlingType,
-  commonBehandlingInnsynSelectors.getBehandlingAnsvarligSaksbehandler,
 ], allAccessRights);
 
 const innsynBehandlingSelectors = {
