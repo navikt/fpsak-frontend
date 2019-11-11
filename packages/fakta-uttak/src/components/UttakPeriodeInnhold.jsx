@@ -34,7 +34,10 @@ export const renderPeriode = (
   vilkarForSykdomExists,
   getKodeverknavn,
 ) => {
-  switch (utsettelseArsak.kode) {
+  const utsettelseSwitch = utsettelseArsak ? utsettelseArsak.kode : utsettelseArsakCodes.UDEFINERT;
+  const overforingSwitch = overforingArsak ? overforingArsak.kode : overforingArsakCodes.UDEFINERT;
+
+  switch (utsettelseSwitch) {
     case utsettelseArsakCodes.ARBEID:
     case utsettelseArsakCodes.LOVBESTEMT_FERIE:
       return (
@@ -96,7 +99,7 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
-      if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER || farSøkerFør6Uker) {
+      if (overforingSwitch === overforingArsakCodes.SYKDOM_ANNEN_FORELDER || farSøkerFør6Uker) {
         return (
           <SykdomOgSkadePeriode
             fieldId={fieldId}
@@ -118,8 +121,8 @@ export const renderPeriode = (
         );
       }
 
-      if (overforingArsak.kode === overforingArsakCodes.IKKE_RETT_ANNEN_FORELDER
-        || overforingArsak.kode === overforingArsakCodes.ALENEOMSORG) {
+      if (overforingSwitch === overforingArsakCodes.IKKE_RETT_ANNEN_FORELDER
+        || overforingSwitch === overforingArsakCodes.ALENEOMSORG) {
         return (
           <ForeldreAnsvarPeriode
             fieldId={fieldId}
@@ -138,7 +141,7 @@ export const renderPeriode = (
         );
       }
 
-      if (overforingArsak.kode === overforingArsakCodes.INSTITUSJONSOPPHOLD_ANNEN_FORELDER) {
+      if (overforingSwitch === overforingArsakCodes.INSTITUSJONSOPPHOLD_ANNEN_FORELDER) {
         return (
           <InnleggelsePeriode
             fieldId={fieldId}
