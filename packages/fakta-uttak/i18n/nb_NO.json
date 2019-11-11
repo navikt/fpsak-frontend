@@ -119,5 +119,8 @@
   "Calendar.Month.8": "September",
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
-  "Calendar.Month.11": "Desember"
+  "Calendar.Month.11": "Desember",
+  "ValidationMessage.NotEmpty": "Feltet må fylles ut",
+  "ValidationMessage.MinValue": "Feltet må være større eller lik {length}",
+  "ValidationMessage.MinLength": "Du må skrive minst {length} tegn"
 }
