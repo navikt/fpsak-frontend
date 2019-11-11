@@ -343,7 +343,12 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={uttakData}
-        showComponent={aksjonspunkter.some((ap) => omsorgAksjonspunkter.includes(ap.definisjon.kode))}
+        showComponent={
+          personopplysninger !== null
+          && personopplysninger !== undefined
+          && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER
+          && ytelsefordeling.endringsdato
+        }
         render={(props) => (
           <UttakFaktaIndex
             alleKodeverk={alleKodeverk}
