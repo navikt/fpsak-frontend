@@ -6,7 +6,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
-import faresignalVurdering from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/faresignalVurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -66,8 +65,11 @@ export const visPanelForHøyRisikoklassifisering = () => (
       kontrollresultat: {
         kode: kontrollresultatKode.HOY,
       },
-      faresignalVurdering: {
-        kode: faresignalVurdering.INNVIRKNING,
+      medlFaresignaler: {
+        faresignaler: ['Søker bor hos foreldre'],
+      },
+      iayFaresignaler: {
+        faresignaler: ['Søkers lønn har runde tall', 'Det er nær relasjon mellom søker og sentral rolle hos Statoil', 'Statoil er nyoppstartet'],
       },
     }}
     readOnly={boolean('readOnly', false)}

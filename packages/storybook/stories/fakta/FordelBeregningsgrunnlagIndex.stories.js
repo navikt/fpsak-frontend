@@ -323,7 +323,7 @@ const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, r
 });
 
 export const aapOgRefusjon = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDEL_BEREGNINGSGRUNNLAG]);
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
   const førstePeriode = lagFordelPeriode(førsteAndeler, '2019-08-05', '2019-11-26', false, false);
   const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 0, 0)];
@@ -358,7 +358,7 @@ export const aapOgRefusjon = () => {
 };
 
 export const kanEndreRefusjonskrav = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDEL_BEREGNINGSGRUNNLAG]);
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
   const førstePeriode = lagFordelPeriode(førsteAndeler, '2019-08-05', '2019-11-26', false, false);
   const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 300000, 0)];
@@ -393,7 +393,7 @@ export const kanEndreRefusjonskrav = () => {
 };
 
 export const skalSlåSammenNaturalytelseperioder = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDEL_BEREGNINGSGRUNNLAG]);
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const arbeidsforholdEn = lagArbeidsforhold('Slottet', '965847123', 'AD-ASD-ADF-SADGF-ASGASDF-ÅTYIUOH', 500000);
   const arbeidsforholdTo = lagArbeidsforhold('Bedrift', '999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
 
