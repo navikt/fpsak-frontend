@@ -22,7 +22,6 @@ import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-fronten
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { getPersonopplysning, getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
 import {
@@ -84,8 +83,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   ytelsesType,
   fagsakPerson,
   erOverstyrer,
-  personopplysninger,
-  ytelsefordeling,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   readOnlyBehandling,
@@ -118,9 +115,9 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={arbeidsforholdData}
-        render={(props) => (
+        render={(componentProps) => (
           <>
-            {props.personopplysninger && (
+            {componentProps.personopplysninger && (
             <ArbeidsforholdFaktaIndex
               alleKodeverk={alleKodeverk}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
@@ -130,7 +127,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
               toggleInfoPanelCallback={toggleInfoPanelCallback}
               shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
               readOnly={readOnly}
-              {...props}
+              {...componentProps}
             />
             )}
           </>
@@ -247,8 +244,8 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={medlemskapData}
-        render={(props) => {
-          if (props.personopplysninger && props.soknad) {
+        render={(componentProps) => {
+          if (componentProps.personopplysninger && componentProps.soknad) {
             return (
               <MedlemskapFaktaIndex
                 alleKodeverk={alleKodeverk}
@@ -261,7 +258,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
                 fagsakPerson={fagsakPerson}
                 readOnlyBehandling={readOnlyBehandling}
                 alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-                {...props}
+                {...componentProps}
               />
             );
           }
@@ -345,24 +342,26 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={uttakData}
-        showComponent={
-          personopplysninger !== null
-          && personopplysninger !== undefined
-          && ytelsesType.kode === fagsakYtelseType.FORELDREPENGER
-          && ytelsefordeling.endringsdato !== undefined
-        }
-        render={(props) => (
-          <UttakFaktaIndex
-            alleKodeverk={alleKodeverk}
-            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-            openInfoPanels={openInfoPanels}
-            toggleInfoPanelCallback={toggleInfoPanelCallback}
-            shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            kanOverstyre={kanOverstyre}
-            {...props}
-          />
+        showComponent={ytelsesType.kode === fagsakYtelseType.FORELDREPENGER}
+        render={(componentProps) => (
+          <>
+            {componentProps.ytelsefordeling.endringsdato !== undefined
+              && componentProps.personopplysninger !== null
+              && componentProps.personopplysninger !== undefined
+              && (
+                <UttakFaktaIndex
+                  alleKodeverk={alleKodeverk}
+                  alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                  openInfoPanels={openInfoPanels}
+                  toggleInfoPanelCallback={toggleInfoPanelCallback}
+                  shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+                  submitCallback={submitCallback}
+                  readOnly={readOnly}
+                  kanOverstyre={kanOverstyre}
+                  {...componentProps}
+                />
+              )}
+          </>
         )}
       />
     </div>
@@ -372,9 +371,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
 FaktaPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   vilkarCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  personopplysninger: PropTypes.shape(),
   soknad: PropTypes.shape(),
-  ytelsefordeling: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
   /**
    * Oversikt over hvilke faktapaneler som er åpne
@@ -394,9 +391,7 @@ FaktaPanel.propTypes = {
 };
 
 FaktaPanel.defaultProps = {
-  personopplysninger: undefined,
   soknad: undefined,
-  ytelsefordeling: undefined,
 };
 
 const mapStateToProps = (state) => {
@@ -408,8 +403,6 @@ const mapStateToProps = (state) => {
     ytelsesType: getFagsakYtelseType(state),
     openInfoPanels: getOpenInfoPanels(state),
     readOnly: !rettigheter.writeAccess.isEnabled || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
-    personopplysninger: getPersonopplysning(state) || null,
-    ytelsefordeling: getBehandlingYtelseFordeling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     kanOverstyre: rettigheter.kanOverstyreAccess.employeeHasAccess,
     fagsakPerson: getFagsakPerson(state),

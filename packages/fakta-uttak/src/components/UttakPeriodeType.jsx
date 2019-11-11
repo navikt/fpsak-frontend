@@ -189,12 +189,12 @@ UttakPeriodeType.propTypes = {
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   openSlettPeriodeModalCallback: PropTypes.func.isRequired,
   oppholdArsak: PropTypes.shape(),
-  overforingArsak: PropTypes.shape().isRequired,
+  overforingArsak: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   samtidigUttak: PropTypes.bool.isRequired,
   samtidigUttaksprosent: PropTypes.string,
   tilDato: PropTypes.string.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
+  utsettelseArsak: PropTypes.shape(),
   uttakPeriodeType: PropTypes.shape().isRequired,
 };
 
@@ -205,6 +205,8 @@ UttakPeriodeType.defaultProps = {
   erSelvstendig: false,
   oppholdArsak: undefined,
   samtidigUttaksprosent: null,
+  utsettelseArsak: undefined,
+  overforingArsak: undefined,
 };
 
 export default injectIntl(UttakPeriodeType);
