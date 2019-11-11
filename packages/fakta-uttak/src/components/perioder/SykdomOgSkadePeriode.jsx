@@ -148,8 +148,8 @@ SykdomOgSkadePeriode.propTypes = {
   dokumentertePerioder: PropTypes.arrayOf(PropTypes.shape()),
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
-  overforingArsak: PropTypes.shape().isRequired,
+  utsettelseArsak: PropTypes.shape(),
+  overforingArsak: PropTypes.shape(),
   formSyncErrors: PropTypes.shape(),
   behandlingStatusKode: PropTypes.string,
 };
@@ -159,6 +159,8 @@ SykdomOgSkadePeriode.defaultProps = {
   formSyncErrors: {},
   resultat: undefined,
   behandlingStatusKode: undefined,
+  utsettelseArsak: undefined,
+  overforingArsak: undefined,
 };
 
 const validateSykdomOgSkadeForm = (
@@ -173,7 +175,7 @@ const validateSykdomOgSkadeForm = (
     ? [uttakPeriodeVurdering.PERIODE_OK, uttakPeriodeVurdering.PERIODE_OK_ENDRET]
     : [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES];
 
-  if (overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER
+  if (overforingArsak && overforingArsak.kode === overforingArsakCodes.SYKDOM_ANNEN_FORELDER
     && !morForSykVedFodsel.includes(values.resultat)
     && vilkarForSykdomOppfyltExists) {
     errors.resultat = values.resultat ? [{ id: 'UttakInfoPanel.IkkeDokumentertSykdom' }] : [{ id: 'UttakInfoPanel.DokumentertSykdom' }];
