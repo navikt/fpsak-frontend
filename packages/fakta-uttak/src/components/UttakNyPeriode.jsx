@@ -33,14 +33,9 @@ import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
-import { lagVisningsNavn, injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { getFaktaArbeidsforhold, getPersonopplysning } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
-  behandlingFormForstegangOgRevurdering,
-  behandlingFormValueSelector,
-} from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAlleKodeverk, getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+  lagVisningsNavn, behandlingForm, behandlingFormValueSelector,
+} from '@fpsak-frontend/fp-felles';
 
 import styles from './uttakNyPeriode.less';
 
@@ -105,12 +100,13 @@ export const UttakNyPeriode = ({
   overføringÅrsaker,
   nyPeriode,
   sokerKjonn,
+  getKodeverknavn,
   nyPeriodeDisabledDaysFom,
   andeler,
-  getKodeverknavn,
   ...formProps
 }) => {
   const numberOfDaysAndWeeks = calcDaysAndWeeks(nyPeriode.fom, nyPeriode.tom, ISO_DATE_FORMAT);
+
   return (
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
@@ -306,14 +302,15 @@ export const UttakNyPeriode = ({
 
 UttakNyPeriode.propTypes = {
   newPeriodeResetCallback: PropTypes.func.isRequired,
-  periodeTyper: PropTypes.arrayOf(PropTypes.shape()),
   utsettelseÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   overføringÅrsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   andeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   nyPeriode: PropTypes.shape().isRequired,
   sokerKjonn: PropTypes.string.isRequired,
   nyPeriodeDisabledDaysFom: PropTypes.string.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  periodeTyper: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 UttakNyPeriode.defaultProps = {
@@ -412,18 +409,27 @@ const validateNyPeriodeForm = (values) => {
 
 const emptyAndelerArray = [];
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const { newPeriodeCallback, uttakPeriodeVurderingTyper, getKodeverknavn } = ownProps;
-  const periodeTyper = getKodeverk(kodeverkTyper.UTTAK_PERIODE_TYPE)(initialState) || null;
-  const utsettelseÅrsaker = getKodeverk(kodeverkTyper.UTSETTELSE_AARSAK_TYPE)(initialState);
-  const overføringÅrsaker = getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(initialState);
+const mapStateToPropsFactory = (_initialState, ownProps) => {
+  const {
+    newPeriodeCallback,
+    uttakPeriodeVurderingTyper,
+    getKodeverknavn,
+    faktaArbeidsforhold,
+    behandlingId,
+    behandlingVersjon,
+    personopplysninger,
+    alleKodeverk,
+  } = ownProps;
+
+  const periodeTyper = alleKodeverk[kodeverkTyper.UTTAK_PERIODE_TYPE] || null;
+  const utsettelseÅrsaker = alleKodeverk[kodeverkTyper.UTSETTELSE_AARSAK_TYPE];
+  const overføringÅrsaker = alleKodeverk[kodeverkTyper.OVERFOERING_AARSAK_TYPE];
   const onSubmit = (values) => newPeriodeCallback(
     transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn),
   );
 
   return (state) => {
-    const personopplysninger = getPersonopplysning(state);
-    const andeler = getFaktaArbeidsforhold(state) || emptyAndelerArray;
+    const andeler = faktaArbeidsforhold || emptyAndelerArray;
 
     return {
       periodeTyper,
@@ -444,7 +450,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
         samtidigUttakNyPeriode: false,
         samtidigUttaksprosentNyPeriode: null,
       },
-      nyPeriode: behandlingFormValueSelector('nyPeriodeForm')(
+      nyPeriode: behandlingFormValueSelector('nyPeriodeForm', behandlingId, behandlingVersjon)(
         state,
         'fom',
         'tom',
@@ -461,8 +467,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'nyPeriodeForm',
   validate: (values) => validateNyPeriodeForm(values),
   enableReinitialize: true,
-})(injectKodeverk(getAlleKodeverk)(UttakNyPeriode)));
+})(UttakNyPeriode));

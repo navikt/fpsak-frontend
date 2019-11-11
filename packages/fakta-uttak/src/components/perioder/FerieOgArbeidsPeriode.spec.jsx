@@ -5,7 +5,7 @@ import { RadioGroupField } from '@fpsak-frontend/form';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import sinon from 'sinon';
 import { FerieOgArbeidsPeriode } from './FerieOgArbeidsPeriode';
-import InntektsmeldingInfo from '../components/InntektsmeldingInfo';
+import InntektsmeldingInfo from '../InntektsmeldingInfo';
 
 const arbeidsgiver = {};
 const behandlingStatusKode = '';
@@ -43,6 +43,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
           },
         }],
       }]}
+      getKodeverknavn={sinon.spy()}
       {...reduxFormPropsMock}
     />);
 
@@ -90,6 +91,7 @@ describe('<FerieOgArbeidsPeriode>', () => {
           },
         }],
       }]}
+      getKodeverknavn={sinon.spy()}
       {...reduxFormPropsMock}
     />);
 

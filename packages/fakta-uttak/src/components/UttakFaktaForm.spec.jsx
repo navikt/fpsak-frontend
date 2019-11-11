@@ -100,10 +100,19 @@ describe('<UttakFaktaForm>', () => {
         readOnly={false}
         hasOpenAksjonspunkter
         behandlingFormPrefix="UttakFaktaForm"
+        submitting={false}
         initialValues={{}}
         aksjonspunkter={[]}
-        submitting={false}
         hasRevurderingOvertyringAp={false}
+        behandlingId={1}
+        behandlingVersjon={1}
+        alleKodeverk={{}}
+        kanOverstyre={false}
+        faktaArbeidsforhold={[]}
+        personopplysninger={{}}
+        behandlingStatus={{}}
+        familiehendelse={{}}
+        vilkarForSykdomExists
         {...formProps}
       />,
     );

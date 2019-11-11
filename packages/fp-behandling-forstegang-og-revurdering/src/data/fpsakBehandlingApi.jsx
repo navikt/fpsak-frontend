@@ -34,6 +34,7 @@ export const BehandlingFpsakApiKeys = {
   FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
   UTTAKSRESULTAT_PERIODER: 'UTTAKSRESULTAT_PERIODER',
   UTTAK_STONADSKONTOER: 'UTTAK_STONADSKONTOER',
+  UTTAK_KONTROLLER_FAKTA_PERIODER: 'UTTAK_KONTROLLER_FAKTA_PERIODER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -77,6 +78,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('fakta-arbeidsforhold', BehandlingFpsakApiKeys.FAKTA_ARBEIDSFORHOLD)
   .withInjectedPath('uttaksresultat-perioder', BehandlingFpsakApiKeys.UTTAKSRESULTAT_PERIODER)
   .withInjectedPath('uttak-stonadskontoer', BehandlingFpsakApiKeys.UTTAK_STONADSKONTOER)
+  .withInjectedPath('uttak-kontroller-fakta-perioder', BehandlingFpsakApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
 
   .build();
 

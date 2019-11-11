@@ -1,8 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
+import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { AnnenForelderHarRettForm } from './AnnenForelderHarRettForm';
 
 
@@ -37,16 +36,15 @@ const avklarAnnenforelderHarRettAp = [{
 describe('<AnnenForelderHarRettForm>', () => {
   it('skal vise AnnenForelderHarRettForm', () => {
     const wrapper = shallow(<AnnenForelderHarRettForm
+      readOnly={false}
       hasOpenAksjonspunkter
       hasOpenUttakAksjonspunkter
       aksjonspunkter={avklarAnnenforelderHarRettAp}
-      readOnly={false}
+      behandlingVersjon={1}
+      behandlingId={1}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
-    expect(helpText).has.length(1);
-    expect(helpText.children()).has.length(1);
-    expect(helpText.childAt(0).prop('id')).is.eql('UttakInfoPanel.Aksjonspunkt.5086');
+    expect(wrapper.find('[id="UttakInfoPanel.Aksjonspunkt.5086"]')).to.have.lengthOf(1);
 
     const panel = wrapper.find('div').first();
     expect(panel.find(FaktaSubmitButton)).has.length(1);

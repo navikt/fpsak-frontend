@@ -3,15 +3,13 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import FaktaSubmitButton from 'behandlingForstegangOgRevurdering/src/fakta/components/FaktaSubmitButton';
-import { getBehandlingYtelseFordeling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import styles from './annenForelderHarRettForm.less';
 
@@ -22,6 +20,8 @@ export const AnnenForelderHarRettForm = ({
   hasOpenAksjonspunkter,
   hasOpenUttakAksjonspunkter,
   aksjonspunkter,
+  behandlingId,
+  behandlingVersjon,
   readOnly,
   ...formProps
 }) => (
@@ -58,6 +58,8 @@ export const AnnenForelderHarRettForm = ({
           isSubmittable={!readOnly}
           isReadOnly={readOnly}
           hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
         />
       </div>
       {formProps.error
@@ -75,10 +77,9 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => (
   kode: ap.definisjon.kode,
   begrunnelse: values.begrunnelse,
   annenforelderHarRett: values.annenForelderHarRett,
-
 }));
 
-const buildInitialValues = createSelector([getBehandlingYtelseFordeling], (ytelseFordeling) => {
+const buildInitialValues = createSelector([(props) => props.ytelsefordeling], (ytelseFordeling) => {
   const annenForelderHarRett = ytelseFordeling && ytelseFordeling.annenforelderHarRettDto;
   if (ytelseFordeling) {
     return ({
@@ -90,11 +91,11 @@ const buildInitialValues = createSelector([getBehandlingYtelseFordeling], (ytels
   return undefined;
 });
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.aksjonspunkter));
+const mapStateToPropsFactory = (_initialState, props) => {
+  const onSubmit = (values) => props.submitCallback(transformValues(values, props.aksjonspunkter));
 
-  return (state) => ({
-    initialValues: buildInitialValues(state),
+  return () => ({
+    initialValues: buildInitialValues(props),
     onSubmit,
   });
 };
@@ -102,15 +103,13 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 AnnenForelderHarRettForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   hasOpenUttakAksjonspunkter: PropTypes.bool.isRequired,
+  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number.isRequired,
 };
 
-AnnenForelderHarRettForm.defaultProps = {
-  aksjonspunkter: [],
-};
-
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'AnnenForelderHarRettForm',
   enableReinitialize: true,
 })(AnnenForelderHarRettForm));

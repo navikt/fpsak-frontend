@@ -6,51 +6,69 @@ import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 
 import { dateFormat, guid } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, behandlingForm, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getBehandlingYtelseFordeling, getUttakPerioder } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import UttakPerioder from './UttakPerioder';
 import {
   sjekkArbeidsprosentOver100,
   sjekkEndretFørsteUttaksdato,
   sjekkOmfaktaOmUttakAksjonspunkt,
   sjekkOverlappendePerioder,
-} from './components/UttakPeriodeValidering';
+} from './utils/uttakPeriodeValidering';
 
 export const UttakFaktaForm = ({
   readOnly,
   hasOpenAksjonspunkter,
   aksjonspunkter,
   hasRevurderingOvertyringAp,
+  behandlingId,
+  behandlingVersjon,
+  kanOverstyre,
+  faktaArbeidsforhold,
+  alleKodeverk,
+  personopplysninger,
+  behandlingStatus,
+  familiehendelse,
+  vilkarForSykdomExists,
   ...formProps
-}) => (
-  <form onSubmit={formProps.handleSubmit}>
-    {formProps.warning
+}) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+
+  return (
+    <form onSubmit={formProps.handleSubmit}>
+      {formProps.warning
       && (
       <span>
         {formProps.warning}
       </span>
       )}
-    <UttakPerioder
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      readOnly={readOnly}
-      aksjonspunkter={aksjonspunkter}
-      submitting={formProps.submitting}
-      hasRevurderingOvertyringAp={hasRevurderingOvertyringAp}
-    />
-    {formProps.error
+      <UttakPerioder
+        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        readOnly={readOnly}
+        aksjonspunkter={aksjonspunkter}
+        submitting={formProps.submitting}
+        hasRevurderingOvertyringAp={hasRevurderingOvertyringAp}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+        kanOverstyre={kanOverstyre}
+        getKodeverknavn={getKodeverknavn}
+        faktaArbeidsforhold={faktaArbeidsforhold}
+        personopplysninger={personopplysninger}
+        behandlingStatus={behandlingStatus}
+        familiehendelse={familiehendelse}
+        vilkarForSykdomExists={vilkarForSykdomExists}
+      />
+      {formProps.error
       && (
       <span>
         {formProps.error}
       </span>
       )}
-  </form>
-
-);
+    </form>
+  );
+};
 
 UttakFaktaForm.propTypes = {
   readOnly: PropTypes.bool.isRequired,
@@ -60,6 +78,15 @@ UttakFaktaForm.propTypes = {
   initialValues: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  kanOverstyre: PropTypes.bool.isRequired,
+  faktaArbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
+  behandlingStatus: PropTypes.shape().isRequired,
+  familiehendelse: PropTypes.shape().isRequired,
+  vilkarForSykdomExists: PropTypes.bool.isRequired,
 };
 
 const warningsUttakForm = (values) => {
@@ -123,7 +150,7 @@ const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOS
 };
 
 const buildInitialValues = createSelector(
-  [getUttakPerioder, getBehandlingYtelseFordeling],
+  [(props) => props.uttakPerioder, (props) => props.ytelsefordeling],
   (perioder, ytelseFordeling) => {
     if (perioder) {
       return {
@@ -196,17 +223,18 @@ export const transformValues = (values, initialValues, aksjonspunkter) => { // N
   }));
 };
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const orginalePerioder = getUttakPerioder(initialState);
-  const initialValues = buildInitialValues(initialState);
+const mapStateToPropsFactory = (_state, props) => {
+  const { behandlingId, behandlingVersjon, uttakPerioder } = props;
+  const orginalePerioder = uttakPerioder;
+  const initialValues = buildInitialValues(props);
 
-  const validate = (values) => validateUttakForm(values, orginalePerioder, initialOwnProps.aksjonspunkter);
+  const validate = (values) => validateUttakForm(values, orginalePerioder, props.aksjonspunkter);
   const warn = (values) => warningsUttakForm(values);
-  const onSubmit = (values) => initialOwnProps.submitCallback(transformValues(values, initialValues, initialOwnProps.aksjonspunkter));
+  const onSubmit = (values) => props.submitCallback(transformValues(values, initialValues, props.aksjonspunkter));
 
-  return (state) => {
-    const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
-    const hasRevurderingOvertyringAp = !!initialOwnProps.aksjonspunkter.includes(
+  return () => {
+    const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+    const hasRevurderingOvertyringAp = !!props.aksjonspunkter.includes(
       (ap) => ap.definisjon.kode === aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
     );
     return {
@@ -220,7 +248,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'UttakFaktaForm',
   enableReinitialize: true,
 })(UttakFaktaForm));

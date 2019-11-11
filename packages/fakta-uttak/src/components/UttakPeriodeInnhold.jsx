@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
@@ -29,6 +28,11 @@ export const renderPeriode = (
   arbeidsgiver,
   behandlingStatusKode,
   farSøkerFør6Uker,
+  behandlingId,
+  behandlingVersjon,
+  gjeldendeFamiliehendelse,
+  vilkarForSykdomExists,
+  getKodeverknavn,
 ) => {
   switch (utsettelseArsak.kode) {
     case utsettelseArsakCodes.ARBEID:
@@ -48,6 +52,9 @@ export const renderPeriode = (
           uttakPeriodeType={uttakPeriodeType}
           arbeidsgiver={arbeidsgiver}
           behandlingStatusKode={behandlingStatusKode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          getKodeverknavn={getKodeverknavn}
         />
       );
     case utsettelseArsakCodes.SYKDOM:
@@ -64,6 +71,10 @@ export const renderPeriode = (
           utsettelseArsak={utsettelseArsak}
           bekreftet={bekreftet}
           behandlingStatusKode={behandlingStatusKode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          gjeldendeFamiliehendelse={gjeldendeFamiliehendelse}
+          vilkarForSykdomExists={vilkarForSykdomExists}
         />
       );
     case utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER:
@@ -80,6 +91,8 @@ export const renderPeriode = (
           tilDato={tilDato}
           bekreftet={bekreftet}
           behandlingStatusKode={behandlingStatusKode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
@@ -97,6 +110,10 @@ export const renderPeriode = (
             overforingArsak={overforingArsak}
             bekreftet={bekreftet}
             behandlingStatusKode={behandlingStatusKode}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            gjeldendeFamiliehendelse={gjeldendeFamiliehendelse}
+            vilkarForSykdomExists={vilkarForSykdomExists}
           />
         );
       }
@@ -115,6 +132,8 @@ export const renderPeriode = (
             tilDato={tilDato}
             bekreftet={bekreftet}
             behandlingStatusKode={behandlingStatusKode}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
           />
         );
       }
@@ -132,6 +151,8 @@ export const renderPeriode = (
             tilDato={tilDato}
             bekreftet={bekreftet}
             behandlingStatusKode={behandlingStatusKode}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
           />
         );
       }
@@ -151,6 +172,9 @@ export const renderPeriode = (
           uttakPeriodeType={uttakPeriodeType}
           arbeidsgiver={arbeidsgiver}
           behandlingStatusKode={behandlingStatusKode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          getKodeverknavn={getKodeverknavn}
         />
       );
     default:
@@ -176,6 +200,11 @@ export const UttakPeriodeInnhold = ({
   arbeidsgiver,
   behandlingStatusKode,
   farSøkerFør6Uker,
+  behandlingId,
+  behandlingVersjon,
+  familiehendelse,
+  vilkarForSykdomExists,
+  getKodeverknavn,
 }) => {
   const editable = !(!readOnly && openForm);
 
@@ -199,6 +228,11 @@ export const UttakPeriodeInnhold = ({
         arbeidsgiver,
         behandlingStatusKode,
         farSøkerFør6Uker,
+        behandlingId,
+        behandlingVersjon,
+        familiehendelse.gjeldende,
+        vilkarForSykdomExists,
+        getKodeverknavn,
       )}
     </div>
   );
@@ -212,16 +246,21 @@ UttakPeriodeInnhold.propTypes = {
   id: PropTypes.string.isRequired,
   cancelEditPeriode: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  arbeidstidprosent: PropTypes.number,
   fraDato: PropTypes.string.isRequired,
   tilDato: PropTypes.string.isRequired,
-  inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   bekreftet: PropTypes.bool.isRequired,
   openForm: PropTypes.bool.isRequired,
   uttakPeriodeType: PropTypes.shape().isRequired,
-  arbeidsgiver: PropTypes.shape(),
-  farSøkerFør6Uker: PropTypes.bool.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
+  farSøkerFør6Uker: PropTypes.bool.isRequired,
+  familiehendelse: PropTypes.shape().isRequired,
+  vilkarForSykdomExists: PropTypes.bool.isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  arbeidstidprosent: PropTypes.number,
+  inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
+  arbeidsgiver: PropTypes.shape(),
 };
 
 UttakPeriodeInnhold.defaultProps = {
@@ -230,8 +269,4 @@ UttakPeriodeInnhold.defaultProps = {
   arbeidsgiver: {},
 };
 
-const mapStateToProps = (state) => ({
-  behandlingStatusKode: behandlingSelectors.getBehandlingStatus(state).kode,
-});
-
-export default connect(mapStateToProps)(UttakPeriodeInnhold);
+export default UttakPeriodeInnhold;
