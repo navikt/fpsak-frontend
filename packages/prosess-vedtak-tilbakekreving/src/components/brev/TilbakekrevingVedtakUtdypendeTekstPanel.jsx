@@ -5,7 +5,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import addCircleIcon from '@fpsak-frontend/assets/images/add-circle.svg';
-import { hasValidText, maxLength, minLength } from '@fpsak-frontend/utils';
+import {
+  required, hasValidText, maxLength, minLength,
+} from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
@@ -15,13 +17,17 @@ import styles from './tilbakekrevingVedtakUtdypendeTekstPanel.less';
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
+const valideringsregler = [minLength3, maxLength1500, hasValidText];
+const valideringsreglerPakrevet = [required, minLength3, maxLength1500, hasValidText];
+
 export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
   intl,
   isEmpty,
   type,
   readOnly,
+  fritekstPakrevet,
 }) => {
-  const [isTextfieldHidden, hideTextField] = useState(isEmpty);
+  const [isTextfieldHidden, hideTextField] = useState(isEmpty && !fritekstPakrevet);
   return (
     <>
       {(isTextfieldHidden && !readOnly) && (
@@ -52,7 +58,7 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
             <TextAreaField
               name={type}
               label={intl.formatMessage({ id: 'TilbakekrevingVedtakUtdypendeTekstPanel.UtdypendeTekst' })}
-              validate={[minLength3, maxLength1500, hasValidText]}
+              validate={fritekstPakrevet ? valideringsreglerPakrevet : valideringsregler}
               maxLength={1500}
               readOnly={readOnly}
             />
@@ -63,10 +69,11 @@ export const TilbakekrevingVedtakUtdypendeTekstPanel = ({
 };
 
 TilbakekrevingVedtakUtdypendeTekstPanel.propTypes = {
+  intl: PropTypes.shape().isRequired,
   type: PropTypes.string.isRequired,
   isEmpty: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  intl: PropTypes.shape().isRequired,
+  fritekstPakrevet: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => ({

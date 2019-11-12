@@ -63,13 +63,34 @@ describe('<TilbakekrevingEditerVedtaksbrevPanel>', () => {
       readOnly={false}
       behandlingId={1}
       behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
     />);
 
     const paneler = wrapper.find(Ekspanderbartpanel);
     expect(paneler).to.have.length(3);
     expect(paneler.first().prop('tittel')).to.eql('Du må betale tilbake foreldrepenger');
+    expect(paneler.first().prop('apen')).is.false;
     expect(paneler.at(1).prop('tittel')).to.eql('Perioden fra og med 10. april 2019 til og med 14. april 2019');
+    expect(paneler.at(1).prop('apen')).is.false;
     expect(paneler.last().prop('tittel')).to.eql('Hvordan betale tilbake pengene du skylder');
+    expect(paneler.last().prop('apen')).is.false;
+  });
+
+  it('skal automatisk åpne panel som ikke har obligatorisk verdi utfylt', () => {
+    const wrapper = shallow(<TilbakekrevingEditerVedtaksbrevPanel
+      vedtaksbrevAvsnitt={vedtaksbrevAvsnitt}
+      formName="testForm"
+      readOnly={false}
+      behandlingId={1}
+      behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-10-10_2019-11-10']}
+    />);
+
+    const paneler = wrapper.find(Ekspanderbartpanel);
+    expect(paneler).to.have.length(3);
+    expect(paneler.at(0).prop('apen')).is.false;
+    expect(paneler.at(1).prop('apen')).is.true;
+    expect(paneler.at(2).prop('apen')).is.false;
   });
 
   it('skal sette opp initial values for form', () => {

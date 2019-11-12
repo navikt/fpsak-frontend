@@ -26,10 +26,14 @@ describe('<TilbakekrevingVedtakForm>', () => {
       }]}
       behandlingId={1}
       behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
     />);
 
     expect(wrapper.find(TilbakekrevingEditerVedtaksbrevPanel)).to.have.length(1);
-    expect(wrapper.find(BehandlingspunktSubmitButton)).to.have.length(1);
+    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    expect(knapp).to.have.length(1);
+    expect(knapp.prop('isSubmittable')).is.true;
+    expect(wrapper.find('a')).to.have.length(1);
   });
 
   it('skal formatere data for forhåndsvisning av vedtaksbrevet', () => {
@@ -46,6 +50,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
           FAKTA: 'dette er faktateksten',
           VILKÅR: 'dette er vilkårteksten',
           SÆRLIGEGRUNNER: 'dette er særligegrunnerteksten',
+          SÆRLIGEGRUNNER_ANNET: 'dette er særligegrunnerteksten for annet',
         },
       }}
       vedtaksbrevAvsnitt={[{
@@ -57,6 +62,7 @@ describe('<TilbakekrevingVedtakForm>', () => {
       }]}
       behandlingId={2}
       behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
     />);
 
     wrapper.find('a').prop('onClick')({ preventDefault: sinon.spy() });
@@ -71,7 +77,34 @@ describe('<TilbakekrevingVedtakForm>', () => {
         faktaAvsnitt: 'dette er faktateksten',
         vilkaarAvsnitt: 'dette er vilkårteksten',
         saerligeGrunnerAvsnitt: 'dette er særligegrunnerteksten',
+        saerligeGrunnerAnnetAvsnitt: 'dette er særligegrunnerteksten for annet',
       }],
     });
+  });
+
+  it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatoriske verdier ikke er utfylt', () => {
+    const wrapper = shallow(<TilbakekrevingVedtakForm
+      submitCallback={sinon.spy()}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      fetchPreviewVedtaksbrev={sinon.spy()}
+      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+      formVerdier={{}}
+      vedtaksbrevAvsnitt={[{
+        avsnittstype: 'test',
+        overskrift: 'Dette er en overskrift',
+        underavsnittsliste: [{
+          fritekstTillatt: false,
+        }],
+      }]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={['2019-01-01_2019-02-02']}
+    />);
+
+    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    expect(knapp).to.have.length(1);
+    expect(knapp.prop('isSubmittable')).is.false;
+    expect(wrapper.find('a')).to.have.length(0);
   });
 });
