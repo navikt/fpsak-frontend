@@ -10,7 +10,7 @@ import moment from 'moment';
 import { Element } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { getBehandlingFormPrefix, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import { CheckboxField } from '@fpsak-frontend/form';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -20,10 +20,6 @@ import {
   AksjonspunktHelpText, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
-import { behandlingFormValueSelector } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getInntektsmeldinger } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getAlleKodeverk, getKodeverk, getSelectedBehandlingId } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import UttakPeriode from './UttakPeriode';
 import UttakNyPeriode from './UttakNyPeriode';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
@@ -370,6 +366,14 @@ export class UttakPerioder extends PureComponent {
       isManuellOverstyring,
       uttakPeriodeVurderingTyper,
       getKodeverknavn,
+      faktaArbeidsforhold,
+      behandlingId,
+      behandlingVersjon,
+      behandlingStatus,
+      personopplysninger,
+      familiehendelse,
+      alleKodeverk,
+      vilkarForSykdomExists,
     } = this.props;
     const {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
@@ -377,6 +381,7 @@ export class UttakPerioder extends PureComponent {
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
     const farSøkerFør6Uker = (perioder[0] || []).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
             && moment((perioder[0] || []).fom).isBefore(moment(førsteUttaksdato).add(6, 'weeks'));
+
     return (
       <>
         {!readOnly && (
@@ -434,6 +439,13 @@ export class UttakPerioder extends PureComponent {
           inntektsmeldingInfo={inntektsmeldingInfo}
           endringsdato={endringsdato}
           farSøkerFør6Uker={farSøkerFør6Uker}
+          getKodeverknavn={getKodeverknavn}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          alleKodeverk={alleKodeverk}
+          behandlingStatus={behandlingStatus}
+          familiehendelse={familiehendelse}
+          vilkarForSykdomExists={vilkarForSykdomExists}
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>
@@ -471,6 +483,11 @@ export class UttakPerioder extends PureComponent {
             nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
             uttakPeriodeVurderingTyper={uttakPeriodeVurderingTyper}
             getKodeverknavn={getKodeverknavn}
+            faktaArbeidsforhold={faktaArbeidsforhold}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            personopplysninger={personopplysninger}
+            alleKodeverk={alleKodeverk}
           />
         </div>
         )}
@@ -479,6 +496,9 @@ export class UttakPerioder extends PureComponent {
           periode={periodeSlett}
           cancelEvent={this.hideModal}
           closeEvent={this.removePeriode}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          getKodeverknavn={getKodeverknavn}
         />
 
       </>
@@ -497,8 +517,8 @@ UttakPerioder.propTypes = {
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormReset: PropTypes.func.isRequired,
   submitting: PropTypes.bool.isRequired,
-  slettedePerioder: PropTypes.arrayOf(PropTypes.shape()),
   initialValues: PropTypes.shape().isRequired,
+  personopplysninger: PropTypes.shape().isRequired,
   uttakPeriodeVurderingTyper: PropTypes.arrayOf(
     PropTypes.shape({
       kode: PropTypes.string,
@@ -506,12 +526,20 @@ UttakPerioder.propTypes = {
     }),
   ).isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  førsteUttaksdato: PropTypes.string,
-  endringsdato: PropTypes.string,
-  isManuellOverstyring: PropTypes.bool,
   hasRevurderingOvertyringAp: PropTypes.bool.isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
+  faktaArbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
+  behandlingStatus: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
+  familiehendelse: PropTypes.shape().isRequired,
+  førsteUttaksdato: PropTypes.string,
+  slettedePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  endringsdato: PropTypes.string,
+  isManuellOverstyring: PropTypes.bool,
+  vilkarForSykdomExists: PropTypes.bool,
 };
 
 UttakPerioder.defaultProps = {
@@ -522,26 +550,47 @@ UttakPerioder.defaultProps = {
   perioder: [],
 };
 
-const getFørsteUttaksdato = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'førsteUttaksdato') || undefined;
-const getEndringsdato = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'endringsdato') || undefined;
-const slettedePerioder = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'slettedePerioder');
-const perioder = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'perioder');
-const manuellOverstyring = (state) => behandlingFormValueSelector('UttakFaktaForm')(state, 'faktaUttakManuellOverstyring') || false;
+const getFørsteUttaksdato = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
+  'UttakFaktaForm',
+  behandlingId,
+  behandlingVersjon,
+)(state, 'førsteUttaksdato') || undefined;
+const getEndringsdato = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
+  'UttakFaktaForm',
+  behandlingId,
+  behandlingVersjon,
+)(state, 'endringsdato') || undefined;
+const slettedePerioder = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
+  'UttakFaktaForm',
+  behandlingId,
+  behandlingVersjon,
+)(state, 'slettedePerioder');
+const perioder = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
+  'UttakFaktaForm',
+  behandlingId,
+  behandlingVersjon,
+)(state, 'perioder');
+const manuellOverstyring = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
+  'UttakFaktaForm',
+  behandlingId,
+  behandlingVersjon,
+)(state, 'faktaUttakManuellOverstyring') || false;
 
-const mapStateToProps = (state) => {
-  const behandlingFormPrefix = getBehandlingFormPrefix(getSelectedBehandlingId(state), behandlingSelectors.getBehandlingVersjon(state));
+const mapStateToProps = (state, props) => {
+  const { behandlingId, behandlingVersjon, alleKodeverk } = props;
+  const behandlingFormPrefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+
   return {
     behandlingFormPrefix,
-    isManuellOverstyring: manuellOverstyring(state),
-    kanOverstyre: behandlingSelectors.getRettigheter(state).kanOverstyreAccess.isEnabled,
-    openForms: !!perioder(state).find((periode) => periode.openForm === true),
-    førsteUttaksdato: getFørsteUttaksdato(state),
-    endringsdato: getEndringsdato(state),
-    uttakPeriodeVurderingTyper: getKodeverk(kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE)(state),
-    inntektsmeldinger: getInntektsmeldinger(state),
+    isManuellOverstyring: manuellOverstyring(state, behandlingId, behandlingVersjon),
+    openForms: !!perioder(state, behandlingId, behandlingVersjon).find((periode) => periode.openForm === true),
+    førsteUttaksdato: getFørsteUttaksdato(state, behandlingId, behandlingVersjon),
+    endringsdato: getEndringsdato(state, behandlingId, behandlingVersjon),
+    uttakPeriodeVurderingTyper: alleKodeverk[kodeverkTyper.UTTAK_PERIODE_VURDERING_TYPE],
+    inntektsmeldinger: [],
     initialValues: getFormInitialValues(`${behandlingFormPrefix}.UttakFaktaForm`)(state),
-    slettedePerioder: slettedePerioder(state),
-    perioder: perioder(state),
+    slettedePerioder: slettedePerioder(state, behandlingId, behandlingVersjon),
+    perioder: perioder(state, behandlingId, behandlingVersjon),
   };
 };
 
@@ -552,4 +601,4 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(injectKodeverk(getAlleKodeverk)(UttakPerioder));
+export default connect(mapStateToProps, mapDispatchToProps)(UttakPerioder);

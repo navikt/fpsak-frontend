@@ -51,9 +51,9 @@ const perioder = [{
   flerbarnsdager: false,
   arbeidsgiver: {},
 }];
-const inntektsmeldinger = [{
-  arbeidsgiver: '',
-}];
+// const inntektsmeldinger = [{
+//   arbeidsgiver: '',
+// }];
 const openSlettPeriodeModalCallback = sinon.spy();
 const updatePeriode = sinon.spy();
 const editPeriode = sinon.spy();
@@ -69,21 +69,26 @@ describe('<UttakPeriode>', () => {
     const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
       intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
-      inntektsmeldinger={inntektsmeldinger}
+      meta={meta}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
       updatePeriode={updatePeriode}
       editPeriode={editPeriode}
       cancelEditPeriode={cancelEditPeriode}
       isAnyFormOpen={isAnyFormOpen}
-      isNyPeriodeFormOpen
-      perioder={perioder}
-      isFromSøknad={perioder[0].isFromSøknad}
-      meta={meta}
-      inntektsmeldingInfo={[]}
       readOnly
-      samtidigUttak={perioder[0].samtidigUttak}
-      flerbarnsdager={perioder[0].flerbarnsdager}
+      perioder={perioder}
+      isNyPeriodeFormOpen
+      inntektsmeldingInfo={[]}
+      vilkarForSykdomExists={false}
       endringsdato={endringsdato}
+      getKodeverknavn={sinon.spy()}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingStatus={{
+        kode: '1',
+        kodeverk: '1',
+      }}
+      familiehendelse={{}}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
     expect(uttakPeriodeType).to.have.length(2);
@@ -95,21 +100,26 @@ describe('<UttakPeriode>', () => {
     const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
       intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
-      inntektsmeldinger={inntektsmeldinger}
+      meta={meta}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
       updatePeriode={updatePeriode}
       editPeriode={editPeriode}
       cancelEditPeriode={cancelEditPeriode}
       isAnyFormOpen={isAnyFormOpen}
-      isNyPeriodeFormOpen
-      perioder={perioder}
-      meta={meta}
-      inntektsmeldingInfo={[]}
       readOnly
-      isFromSøknad={perioder[0].isFromSøknad}
-      samtidigUttak={perioder[0].samtidigUttak}
-      flerbarnsdager={perioder[0].flerbarnsdager}
+      perioder={perioder}
+      isNyPeriodeFormOpen
+      inntektsmeldingInfo={[]}
+      vilkarForSykdomExists={false}
       endringsdato={endringsdato}
+      getKodeverknavn={sinon.spy()}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingStatus={{
+        kode: '1',
+        kodeverk: '1',
+      }}
+      familiehendelse={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -120,21 +130,26 @@ describe('<UttakPeriode>', () => {
     const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
       intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
-      inntektsmeldinger={inntektsmeldinger}
+      meta={meta}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
       updatePeriode={updatePeriode}
       editPeriode={editPeriode}
       cancelEditPeriode={cancelEditPeriode}
       isAnyFormOpen={isAnyFormOpen}
-      isNyPeriodeFormOpen
-      perioder={perioder}
-      meta={meta}
-      isFromSøknad={perioder[0].isFromSøknad}
-      inntektsmeldingInfo={[]}
       readOnly={false}
-      samtidigUttak={perioder[0].samtidigUttak}
-      flerbarnsdager={perioder[0].flerbarnsdager}
+      perioder={perioder}
+      isNyPeriodeFormOpen
+      inntektsmeldingInfo={[]}
+      vilkarForSykdomExists={false}
       endringsdato={endringsdato}
+      getKodeverknavn={sinon.spy()}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingStatus={{
+        kode: '1',
+        kodeverk: '1',
+      }}
+      familiehendelse={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -150,21 +165,26 @@ describe('<UttakPeriode>', () => {
     const wrapper = shallowWithIntl(<UttakPeriode.WrappedComponent
       intl={intlMock}
       fields={getMockedFields(fieldNames, perioder)}
-      inntektsmeldinger={inntektsmeldinger}
+      meta={meta}
       openSlettPeriodeModalCallback={openSlettPeriodeModalCallback}
       updatePeriode={updatePeriode}
       editPeriode={editPeriode}
       cancelEditPeriode={cancelEditPeriode}
       isAnyFormOpen={isAnyFormOpen}
-      perioder={perioder}
-      meta={meta}
-      isFromSøknad={perioder[0].isFromSøknad}
-      inntektsmeldingInfo={[]}
-      isNyPeriodeFormOpen
       readOnly={false}
+      perioder={perioder}
+      isNyPeriodeFormOpen
+      inntektsmeldingInfo={[]}
+      vilkarForSykdomExists={false}
       endringsdato={endringsdato}
-      samtidigUttak={perioder[0].samtidigUttak}
-      flerbarnsdager={perioder[0].flerbarnsdager}
+      getKodeverknavn={sinon.spy()}
+      behandlingVersjon={1}
+      behandlingId={1}
+      behandlingStatus={{
+        kode: '1',
+        kodeverk: '1',
+      }}
+      familiehendelse={{}}
       {...otherProps}
     />);
 
