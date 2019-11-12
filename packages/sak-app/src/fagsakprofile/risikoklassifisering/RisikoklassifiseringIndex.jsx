@@ -56,10 +56,10 @@ export class RisikoklassifiseringIndexImpl extends Component {
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,
-      bekreftedeAksjonspunktDtoer: {
+      bekreftedeAksjonspunktDtoer: [{
         '@type': aksjonspunkt.kode,
         ...aksjonspunkt,
-      },
+      }],
     };
 
     return resolveAp(params, behandlingIdentifier);
@@ -103,7 +103,7 @@ RisikoklassifiseringIndexImpl.propTypes = {
   resolveAksjonspunkter: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
-  isPanelOpen: PropTypes.bool.isRequired,
+  isPanelOpen: PropTypes.bool,
   setRiskPanelOpen: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.shape(),
@@ -117,6 +117,7 @@ RisikoklassifiseringIndexImpl.defaultProps = {
   risikoAksjonspunkt: undefined,
   behandlingVersjon: undefined,
   behandlingIdentifier: undefined,
+  isPanelOpen: false,
 };
 
 const getRettigheter = createSelector([
