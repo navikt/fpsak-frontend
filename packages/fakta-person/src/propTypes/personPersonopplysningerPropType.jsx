@@ -36,7 +36,7 @@ const personPersonopplysningerPropType = PropTypes.shape({
       navBrukerKjonn: kodeverkObjektPropType.isRequired,
       soktForBarn: PropTypes.bool.isRequired,
     })),
-    navn: PropTypes.string.isRequired,
+    navn: PropTypes.string,
     fodselsdato: PropTypes.string.isRequired,
     fnr: PropTypes.string.isRequired,
     navBrukerKjonn: kodeverkObjektPropType.isRequired,
