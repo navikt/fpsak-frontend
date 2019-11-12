@@ -50,6 +50,8 @@ export const DelOppPeriodeModalImpl = ({
         name="ForstePeriodeTomDato"
         className={styles.datePicker}
         validate={[required, hasValidDate]}
+        disabledDays={{ before: moment(periodeData.fom).toDate(), after: moment(periodeData.tom).toDate() }}
+        initialMonth={moment(periodeData.tom).toDate()}
       />
     </div>
     {finnesBelopMed0Verdi && (
