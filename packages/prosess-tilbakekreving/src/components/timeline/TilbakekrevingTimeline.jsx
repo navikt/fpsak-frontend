@@ -27,7 +27,6 @@ const getOptions = (sortedPeriods) => {
 
   return {
     end: moment(lastPeriod.tom).add(2, 'days'),
-    height: '104px',
     locale: moment.locale('nb'),
     margin: { item: 14 },
     max: moment(firstPeriod.fom).add(4, 'years'),
