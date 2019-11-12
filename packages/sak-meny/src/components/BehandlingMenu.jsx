@@ -153,7 +153,7 @@ class BehandlingMenu extends Component {
       behandlingData, behandlendeEnheter, setBehandlingOnHold, rettigheter, openBehandlingForChanges,
       previewHenleggBehandling, shelveBehandling, push, nyBehandlendeEnhet, saksnummer, createNewBehandling,
       fjernVerge, opprettVerge, menyKodeverk, ytelseType, kanTilbakekrevingOpprettes,
-      sjekkOmTilbakekrevingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
+      sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
     } = this.props;
     const { menuVisible } = this.state;
     const behandlingIdentifier = new BehandlingIdentifier(saksnummer, behandlingData.id);
@@ -247,6 +247,7 @@ class BehandlingMenu extends Component {
                 menyKodeverk={menyKodeverk}
                 kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
                 sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+                sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
                 uuidForSistLukkede={uuidForSistLukkede}
                 erTilbakekrevingAktivert={erTilbakekrevingAktivert}
                 ytelseType={ytelseType}
@@ -292,6 +293,7 @@ BehandlingMenu.propTypes = {
   setBehandlingOnHold: PropTypes.func.isRequired,
   openBehandlingForChanges: PropTypes.func.isRequired,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   fjernVerge: PropTypes.func,

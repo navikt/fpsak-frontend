@@ -38,6 +38,7 @@ const MenySakIndex = ({
   fjernVerge,
   opprettVerge,
   sjekkOmTilbakekrevingKanOpprettes,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
 }) => (
   <RawIntlProvider value={intl}>
@@ -62,6 +63,7 @@ const MenySakIndex = ({
       fjernVerge={fjernVerge}
       opprettVerge={opprettVerge}
       sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
       push={push}
     />
   </RawIntlProvider>
@@ -92,6 +94,7 @@ MenySakIndex.propTypes = {
   setBehandlingOnHold: PropTypes.func.isRequired,
   openBehandlingForChanges: PropTypes.func.isRequired,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   fjernVerge: PropTypes.func,
   opprettVerge: PropTypes.func,

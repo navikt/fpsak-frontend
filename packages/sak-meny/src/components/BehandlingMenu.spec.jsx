@@ -78,6 +78,7 @@ describe('<BehandlingMenu>', () => {
       setBehandlingOnHold={behandlingOnHoldCallback}
       openBehandlingForChanges={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       push={pushCallback}
       navAnsatt={navAnsatt}
     />);
@@ -116,6 +117,7 @@ describe('<BehandlingMenu>', () => {
       setBehandlingOnHold={behandlingOnHoldCallback}
       openBehandlingForChanges={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       push={pushCallback}
       navAnsatt={navAnsatt}
     />);
@@ -148,6 +150,7 @@ describe('<BehandlingMenu>', () => {
       setBehandlingOnHold={behandlingOnHoldCallback}
       openBehandlingForChanges={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       push={pushCallback}
       navAnsatt={navAnsatt}
     />);
@@ -178,6 +181,7 @@ describe('<BehandlingMenu>', () => {
       setBehandlingOnHold={behandlingOnHoldCallback}
       openBehandlingForChanges={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       push={pushCallback}
       navAnsatt={navAnsatt}
     />);
