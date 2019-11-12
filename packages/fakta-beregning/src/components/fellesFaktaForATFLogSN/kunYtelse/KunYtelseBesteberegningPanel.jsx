@@ -30,6 +30,7 @@ const KunYtelseBesteberegningImpl = ({
   erBesteberegning,
   brukersAndelFieldArrayName,
   skalViseInntektstabell,
+  alleKodeverk,
 }) => (
   <div>
     <RadioGroupField
@@ -72,6 +73,7 @@ const KunYtelseBesteberegningImpl = ({
               name={brukersAndelFieldArrayName}
               component={BrukersAndelFieldArray}
               readOnly={readOnly}
+              alleKodeverk={alleKodeverk}
             />
           </Column>
         </Row>
@@ -87,6 +89,7 @@ KunYtelseBesteberegningImpl.propTypes = {
   brukersAndelFieldArrayName: PropTypes.string.isRequired,
   erBesteberegning: PropTypes.bool,
   skalViseInntektstabell: PropTypes.bool,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 KunYtelseBesteberegningImpl.defaultProps = {
