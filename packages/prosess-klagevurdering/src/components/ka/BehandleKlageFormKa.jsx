@@ -141,7 +141,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values)]);
   return (state, ownProps) => ({
     initialValues: buildInitialValues(ownProps),
-    formValues: behandlingFormValueSelector(formName, ownProps.id, ownProps.behandlingVersjon)(
+    formValues: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(
       state, 'begrunnelse', 'fritekstTilBrev', 'klageVurdering', 'klageVurderingOmgjoer', 'klageMedholdArsak',
     ),
     onSubmit,
