@@ -116,7 +116,7 @@ const transformValues = (values) => ({
 });
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.submitCallback([transformValues(values)]);
+  const onSubmit = (values) => ownProps.submitCallback(transformValues(values));
   const initialValues = buildInitialValues(ownProps);
   return () => ({
     initialValues,

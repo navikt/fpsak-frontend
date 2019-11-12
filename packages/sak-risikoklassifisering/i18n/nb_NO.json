@@ -12,6 +12,7 @@
   "Risikopanel.Form.Bekreft": "Bekreft og fortsett",
   "Risikopanel.Forms.Vurdering": "Vurdering",
   
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.MaxLength": "Du kan skrive maksimalt {length} tegn",

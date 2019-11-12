@@ -5,7 +5,7 @@ import { getCommonBehandlingSelectors } from '@fpsak-frontend/fp-behandling-fell
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import {
-  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus,
 } from '../duckPapirsoknad';
 import papirsoknadApi from '../data/papirsoknadApi';
 
@@ -14,14 +14,8 @@ const commonBehandlingSelectors = getCommonBehandlingSelectors(getSelectedBehand
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
   commonBehandlingSelectors.getBehandlingStatus,
-  commonBehandlingSelectors.getSoknad,
-  commonBehandlingSelectors.getAksjonspunkter,
   commonBehandlingSelectors.getBehandlingType,
-  commonBehandlingSelectors.getBehandlingAnsvarligSaksbehandler,
 ], allAccessRights);
 
 const papirsoknadBehandlingSelectors = {

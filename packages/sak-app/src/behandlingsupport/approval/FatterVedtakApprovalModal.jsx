@@ -98,13 +98,14 @@ FatterVedtakApprovalModal.propTypes = {
   infoTextCode: PropTypes.string.isRequired,
   altImgTextCode: PropTypes.string.isRequired,
   modalDescriptionTextCode: PropTypes.string.isRequired,
-  resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  resolveProsessAksjonspunkterSuccess: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
   showModal: PropTypes.bool,
 };
 
 FatterVedtakApprovalModal.defaultProps = {
   showModal: undefined,
+  resolveProsessAksjonspunkterSuccess: false,
 };
 
 export const isKlageWithKA = (klageVurderingResultatNK) => {

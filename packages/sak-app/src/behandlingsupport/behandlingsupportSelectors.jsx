@@ -2,11 +2,23 @@ import { createSelector } from 'reselect';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
+import { getNavAnsatt } from '../app/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getRettigheter, getBehandlingStatus, erBehandlingPaVent } from '../behandling/duck';
+import {
+  getBehandlingStatus, getBehandlingType, erBehandlingPaVent, getBehandlingAnsvarligSaksbehandler,
+} from '../behandling/duck';
 import { getSelectedSaksnummer } from '../fagsak/duck';
+import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
 import SupportPanel from './supportPanels';
+import allSupportPanelAccessRights from './accessSupport';
 
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getBehandlingStatus,
+  getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+], allSupportPanelAccessRights);
 
 const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, erBehandlingPaVent],
   (fagsakSaksnummer, isOnHold) => (fagsakSaksnummer && !isOnHold));

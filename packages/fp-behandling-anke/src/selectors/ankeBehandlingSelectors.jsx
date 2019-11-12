@@ -6,7 +6,7 @@ import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import ankeBehandlingApi from '../data/ankeBehandlingApi';
 import {
-  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus,
 } from '../duckBehandlingAnke';
 
 const commonBehandlingAnkeSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, ankeBehandlingApi);
@@ -23,14 +23,8 @@ const getBehandlingAnkeVurderingResultat = createSelector(
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
   commonBehandlingAnkeSelectors.getBehandlingStatus,
-  commonBehandlingAnkeSelectors.getSoknad,
-  commonBehandlingAnkeSelectors.getAksjonspunkter,
   commonBehandlingAnkeSelectors.getBehandlingType,
-  commonBehandlingAnkeSelectors.getBehandlingAnsvarligSaksbehandler,
 ], allAccessRights);
 
 const ankeBehandlingSelectors = {

@@ -2,35 +2,26 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 import { Panel } from 'nav-frontend-paneler';
 
 import { behandlingIListePropType } from '@fpsak-frontend/prop-types';
-import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { requireProps } from '@fpsak-frontend/fp-felles';
+import { requireProps, DataFetcher } from '@fpsak-frontend/fp-felles';
 
+import fpsakApi from '../data/fpsakApi';
 import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from '../fagsak/fagsakSelectors';
-import { getBehandlinger, getBehandlingerTypesMappedById, getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
-import { getSelectedBehandlingId } from '../behandling/duck';
+import { getBehandlinger, getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
+import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import {
   getAnnenPartBehandling, getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger,
 } from './duck';
 import FagsakProfile from './components/FagsakProfile';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-
-import styles from './fagsakProfileIndex.less';
 import { getAlleKodeverk } from '../kodeverk/duck';
 
-export const getSkalViseRisikoklassifisering = createSelector(
-  [getSelectedBehandlingId, getBehandlingerTypesMappedById],
-  (selectedBehandlingId, behandlingTypeMap) => {
-    if (!selectedBehandlingId || !behandlingTypeMap) {
-      return false;
-    }
-    return behandlingTypeMap[selectedBehandlingId] === behandlingType.FORSTEGANGSSOKNAD;
-  },
-);
+import styles from './fagsakProfileIndex.less';
+
+const risikoklassifiseringData = [fpsakApi.RISIKO_AKSJONSPUNKT, fpsakApi.KONTROLLRESULTAT];
 
 export class FagsakProfileIndex extends Component {
   componentDidMount() {
@@ -47,8 +38,8 @@ export class FagsakProfileIndex extends Component {
 
   render() {
     const {
-      sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlinger, alleKodeverk,
-      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer, skalViseRisikoklassifisering,
+      sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlingVersjon, behandlinger, alleKodeverk,
+      noExistingBehandlinger, fagsakStatus, annenPartLink, saksnummer,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -64,12 +55,17 @@ export class FagsakProfileIndex extends Component {
           toggleShowAll={toggleShowAll}
           alleKodeverk={alleKodeverk}
         />
-        {skalViseRisikoklassifisering
-          && (
-          <RisikoklassifiseringIndex />
+        <DataFetcher
+          behandlingId={selectedBehandlingId}
+          behandlingVersjon={behandlingVersjon}
+          showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
+          data={risikoklassifiseringData}
+          render={(props) => (
+            <RisikoklassifiseringIndex
+              {...props}
+            />
           )}
-
-
+        />
       </Panel>
     );
   }
@@ -85,13 +81,14 @@ FagsakProfileIndex.propTypes = {
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   reset: PropTypes.func.isRequired,
-  skalViseRisikoklassifisering: PropTypes.bool.isRequired,
   annenPartLink: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
+  behandlingVersjon: PropTypes.number,
 };
 
 FagsakProfileIndex.defaultProps = {
   selectedBehandlingId: null,
+  behandlingVersjon: null,
   annenPartLink: {},
 };
 
@@ -107,8 +104,8 @@ const mapStateToProps = (state) => {
     behandlinger: getBehandlinger(state),
     noExistingBehandlinger: getNoExistingBehandlinger(state),
     showAll: getShowAllBehandlinger(state),
-    skalViseRisikoklassifisering: getSkalViseRisikoklassifisering(state),
     alleKodeverk: getAlleKodeverk(state),
+    behandlingVersjon: getBehandlingVersjon(state),
   };
 };
 

@@ -38,7 +38,7 @@ const RisikoklassifiseringSakIndex = ({
   risikoklassifisering,
   isPanelOpen,
   readOnly,
-  submitAksjonspunkter,
+  submitAksjonspunkt,
   toggleRiskPanel,
 }) => {
   const harIkkeHoyRisikoklassifisering = harResultatkode(risikoklassifisering, kontrollresultatKode.IKKE_HOY);
@@ -56,7 +56,7 @@ const RisikoklassifiseringSakIndex = ({
           aksjonspunkt={aksjonspunkt}
           readOnly={readOnly}
           isRiskPanelOpen={isPanelOpen}
-          submitCallback={submitAksjonspunkter}
+          submitCallback={submitAksjonspunkt}
           toggleRiskPanel={toggleRiskPanel}
         />
       )}
@@ -74,7 +74,7 @@ RisikoklassifiseringSakIndex.propTypes = {
   risikoklassifisering: risikoklassifiseringPropType,
   isPanelOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  submitAksjonspunkter: PropTypes.func.isRequired,
+  submitAksjonspunkt: PropTypes.func.isRequired,
   toggleRiskPanel: PropTypes.func.isRequired,
 };
 

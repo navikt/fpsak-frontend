@@ -6,7 +6,7 @@ import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import klageBehandlingApi from '../data/klageBehandlingApi';
 import {
-  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus,
 } from '../duckBehandlingKlage';
 
 const commonBehandlingKlageSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, klageBehandlingApi);
@@ -26,14 +26,8 @@ const getBehandlingKlageVurderingResultatNK = createSelector(
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
   commonBehandlingKlageSelectors.getBehandlingStatus,
-  commonBehandlingKlageSelectors.getSoknad,
-  commonBehandlingKlageSelectors.getAksjonspunkter,
   commonBehandlingKlageSelectors.getBehandlingType,
-  commonBehandlingKlageSelectors.getBehandlingAnsvarligSaksbehandler,
 ], allAccessRights);
 
 const klageBehandlingSelectors = {

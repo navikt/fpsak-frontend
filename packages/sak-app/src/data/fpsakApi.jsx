@@ -29,7 +29,8 @@ export const FpsakApiKeys = {
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   KONTROLLRESULTAT: 'KONTROLLRESULTAT',
-  SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
+  RISIKO_AKSJONSPUNKT: 'RISIKO_AKSJONSPUNKT',
+  LAGRE_RISIKO_AKSJONSPUNKT: 'LAGRE_RISIKO_AKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER: 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
@@ -43,6 +44,7 @@ export const FpsakApiKeys = {
   VERGE_MENYVALG: 'VERGE_MENYVALG',
   VERGE_OPPRETT: 'VERGE_OPPRETT',
   VERGE_FJERN: 'VERGE_FJERN',
+  MENYHANDLING_RETTIGHETER: 'MENYHANDLING_RETTIGHETER',
 };
 
 
@@ -65,6 +67,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
   .withInjectedPath('opprett-verge', FpsakApiKeys.VERGE_OPPRETT, { fetchLinkDataAutomatically: false })
   .withInjectedPath('fjern-verge', FpsakApiKeys.VERGE_FJERN, { fetchLinkDataAutomatically: false })
+  .withInjectedPath('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
 
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE, { fetchLinkDataAutomatically: false })
@@ -81,9 +84,10 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('brev-maler', FpsakApiKeys.BREVMALER)
   .withInjectedPath('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
 
-  /* /api/behandling/kontrollresultat */
-  .withGet('/fpsak/api/behandling/kontrollresultat/resultat', FpsakApiKeys.KONTROLLRESULTAT)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpsakApiKeys.SAVE_AKSJONSPUNKT)
+  /* Kontrollresultat */
+  .withInjectedPath('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
+  .withInjectedPath('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
+  .withInjectedPath('lagre-risikoklassifisering-aksjonspunkt', FpsakApiKeys.LAGRE_RISIKO_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)

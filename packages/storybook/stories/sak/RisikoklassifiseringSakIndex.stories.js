@@ -27,7 +27,7 @@ export const visPanelUtenInformasjon = () => (
     behandlingVersjon={1}
     isPanelOpen={boolean('isPanelOpen', false)}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     toggleRiskPanel={action('button-click')}
   />
 );
@@ -43,7 +43,7 @@ export const visPanelForLavRisikoklassifisering = () => (
     }}
     isPanelOpen={boolean('isPanelOpen', false)}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     toggleRiskPanel={action('button-click')}
   />
 );
@@ -73,7 +73,7 @@ export const visPanelForHøyRisikoklassifisering = () => (
       },
     }}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     isPanelOpen
     toggleRiskPanel={action('button-click')}
   />

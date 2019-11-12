@@ -21,8 +21,6 @@ const resolveAksjonspunktStarted = () => ({
   type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED, // Bedre navn for denne?
 });
 
-export const hentKontrollresultat = (params) => (dispatch) => dispatch(fpsakApi.KONTROLLRESULTAT.makeRestApiRequest()(params));
-
 const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({
     type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS,
@@ -33,7 +31,7 @@ const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch
 
 export const resolveAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
   dispatch(resolveAksjonspunktStarted());
-  return dispatch(fpsakApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
+  return dispatch(fpsakApi.LAGRE_RISIKO_AKSJONSPUNKT.makeRestApiRequest()(params))
     .then((response) => dispatch(resolveAksjonspunktSuccess(response, behandlingIdentifier)));
 };
 
