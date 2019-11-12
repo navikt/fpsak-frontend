@@ -31,7 +31,7 @@ const vedtaksbrev = {
     }, {
       brødtekst: 'Derfor har du fått 51000 kroner for mye utbetalt i denne perioden.',
       fritekstTillatt: true,
-      fritekstPåkrevet: false,
+      fritekstPåkrevet: true,
       underavsnittstype: 'FAKTA',
     }, {
       overskrift: 'Hvordan har vi kommet fram til at du må betale tilbake?',

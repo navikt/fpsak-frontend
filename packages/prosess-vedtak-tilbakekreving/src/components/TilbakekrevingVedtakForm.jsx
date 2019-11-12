@@ -21,17 +21,25 @@ import styles from './tilbakekrevingVedtakForm.less';
 
 const formName = 'TilbakekrevingVedtakForm';
 
+const UNDERAVSNITT_TYPE = {
+  OPPSUMMERING: 'OPPSUMMERING',
+  FAKTA: 'FAKTA',
+  VILKAR: 'VILKÅR',
+  SARLIGEGRUNNER: 'SÆRLIGEGRUNNER',
+  SARLIGEGRUNNER_ANNET: 'SÆRLIGEGRUNNER_ANNET',
+};
+
 const formatVedtakData = (values) => {
-  const perioder = omit(values, 'OPPSUMMERING');
+  const perioder = omit(values, UNDERAVSNITT_TYPE.OPPSUMMERING);
   return {
-    oppsummeringstekst: values.OPPSUMMERING,
+    oppsummeringstekst: values[UNDERAVSNITT_TYPE.OPPSUMMERING],
     perioderMedTekst: Object.keys(perioder).map((key) => ({
       fom: key.split('_')[0],
       tom: key.split('_')[1],
-      faktaAvsnitt: perioder[key].FAKTA,
-      vilkaarAvsnitt: perioder[key].VILKÅR,
-      saerligeGrunnerAvsnitt: perioder[key].SÆRLIGEGRUNNER,
-      saerligeGrunnerAnnetAvsnitt: perioder[key].SÆRLIGEGRUNNER_ANNET,
+      faktaAvsnitt: perioder[key][UNDERAVSNITT_TYPE.FAKTA],
+      vilkaarAvsnitt: perioder[key][UNDERAVSNITT_TYPE.VILKAR],
+      saerligeGrunnerAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER],
+      saerligeGrunnerAnnetAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET],
     })),
   };
 };
@@ -116,13 +124,18 @@ const transformValues = (values, apKode) => [{
 
 const finnPerioderSomIkkeHarVerdiForObligatoriskFelt = createSelector([
   (ownProps) => ownProps.vedtaksbrevAvsnitt, (ownProps) => ownProps.formVerdier], (vedtaksbrevAvsnitt, formVerdier) => vedtaksbrevAvsnitt.reduce((acc, va) => {
-  const harObligatoriskTekst = va.underavsnittsliste.some((ua) => ua.fritekstPåkrevet);
-  if (harObligatoriskTekst) {
-    const periode = `${va.fom}_${va.tom}`;
-    const friteksterForPeriode = formVerdier[periode];
-    if (!friteksterForPeriode || (!friteksterForPeriode['SÆRLIGEGRUNNER_ANNET'] && !friteksterForPeriode.FAKTA)) {
-      return acc.concat(periode);
-    }
+  const periode = `${va.fom}_${va.tom}`;
+  const friteksterForPeriode = formVerdier[periode];
+
+  const harObligatoriskFaktaTekst = va.underavsnittsliste.some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.FAKTA);
+  if (harObligatoriskFaktaTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.FAKTA])) {
+    return acc.concat(periode);
+  }
+
+  const harObligatoriskSarligeGrunnerAnnetTekst = va.underavsnittsliste
+    .some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET);
+  if (harObligatoriskSarligeGrunnerAnnetTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET])) {
+    return acc.concat(periode);
   }
   return acc;
 }, []));
