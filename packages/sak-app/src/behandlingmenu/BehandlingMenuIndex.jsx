@@ -24,7 +24,7 @@ import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes,
+  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
@@ -136,6 +136,13 @@ const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehand
 (behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn) => (versjon
   ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn)
   : undefined));
+const getTilbakekrevingOpprettes = createSelector([
+  (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+  (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
+], (kanBehandlingOpprettes = false, kanRevurderingOpprettes = false) => ({
+  kanBehandlingOpprettes,
+  kanRevurderingOpprettes,
+}));
 
 
 const mapStateToProps = (state) => {
@@ -147,7 +154,7 @@ const mapStateToProps = (state) => {
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
     vergeMenyvalg: vergeMenyvalg ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
-    kanTilbakekrevingOpprettes: fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+    kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
     erTilbakekrevingAktivert: getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
     uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
     menyKodeverk: getMenyKodeverk(state),
@@ -172,6 +179,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   fjernVerge,
   opprettVerge,
   sjekkOmTilbakekrevingKanOpprettes,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
 }, dispatch);
 
