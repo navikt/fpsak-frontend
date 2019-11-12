@@ -12,45 +12,106 @@ import withReduxProvider from '../../../decorators/withRedux';
 
 const vedtaksbrev = {
   avsnittsliste: [{
-    avsnittstype: 'PERIODE',
-    fom: '2018-01-01',
-    tom: '2019-01-01',
-    overskrift: 'Periode 1',
+    overskrift: 'Du må betale tilbake foreldrepenger',
     underavsnittsliste: [{
-      brødtekst: 'Dette er en brødtekst',
-      fritekst: undefined,
+      brødtekst: 'Vi varslet deg 31. oktober 2019 om at du har fått 49863 kroner for mye. Du må betale tilbake 22950 kroner, '
+      + 'som er deler av det feilutbetalte beløpet.',
       fritekstTillatt: true,
-      overskrift: 'Dette er en overskrift',
-      underavsnittstype: 'Underavsnittstype 1',
+      fritekstPåkrevet: false,
+    }],
+    avsnittstype: 'OPPSUMMERING',
+  }, {
+    overskrift: 'Gjelder perioden fra og med 16. mars 2016 til og med 26. mai 2016',
+    underavsnittsliste: [{
+      brødtekst: 'Du er ikke medlem av folketrygden. Fordi du ikke har jobbet eller hatt familie som forsørget deg i Norge, har '
+       + 'du ikke rett til opphold etter EØS avtalen. Derfor har du ikke rett til foreldrepenger.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+      underavsnittstype: 'FAKTA',
     }, {
-      brødtekst: 'Dette er en brødtekst',
-      fritekstTillatt: false,
-      overskrift: 'Dette er en overskrift',
-      underavsnittstype: 'Underavsnittstype 2',
-    }],
-  }, {
-    avsnittstype: 'PERIODE',
-    fom: '2018-10-01',
-    tom: '2019-01-01',
-    overskrift: 'Periode 2',
-    underavsnittsliste: [{
-      brødtekst: 'Dette er en brødtekst',
-      fritekst: 'Dette er en fritekst',
+      brødtekst: 'Derfor har du fått 51000 kroner for mye utbetalt i denne perioden.',
       fritekstTillatt: true,
-      overskrift: 'Dette er en overskrift',
-      underavsnittstype: 'Dette er en underavsnittstype',
-    }],
-  }, {
-    avsnittstype: 'FAKTA',
-    fom: '2018-10-01',
-    tom: '2019-01-01',
-    overskrift: 'Fakta',
-    underavsnittsliste: [{
-      brødtekst: 'Dette er en brødtekst',
+      fritekstPåkrevet: true,
+      underavsnittstype: 'FAKTA',
+    }, {
+      overskrift: 'Hvordan har vi kommet fram til at du må betale tilbake?',
+      brødtekst: 'Du har fått vite om du har rett til foreldrepenger og hvor mye du har rett til. Selv om du har meldt fra til oss, kan '
+       + 'vi kreve tilbake det du har fått for mye dersom du må ha forstått at beløpet var feil.',
+      fritekstTillatt: true,
+      fritekstPåkrevet: false,
+      underavsnittstype: 'VILKÅR',
+    }, {
+      brødtekst: 'Ut fra informasjonen du har fått, må du etter vår vurdering ha forstått at du fikk for mye utbetalt. Derfor kan vi kreve tilbake.',
       fritekstTillatt: false,
-      overskrift: 'Dette er en overskrift',
-      underavsnittstype: 'Dette er en underavsnittstype',
+      fritekstPåkrevet: false,
+      underavsnittstype: 'VILKÅR',
+    }, {
+      overskrift: 'Er det særlige grunner til å redusere beløpet?',
+      fritekstTillatt: true,
+      fritekstPåkrevet: false,
+      underavsnittstype: 'SÆRLIGEGRUNNER',
+    }, {
+      brødtekst: 'Vi har lagt vekt på at du må ha forstått at du fikk penger du ikke har rett til. Vi vurderer likevel at uaktsomheten din '
+      + 'har vært så liten at vi har redusert beløpet du må betale tilbake. Det er i vurderingen også lagt vekt på ',
+      fritekstTillatt: true,
+      fritekstPåkrevet: true,
+      underavsnittstype: 'SÆRLIGEGRUNNER_ANNET',
+    }, {
+      brødtekst: 'Du må betale 22950 kroner.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+      underavsnittstype: 'SÆRLIGEGRUNNER_ANNET',
     }],
+    avsnittstype: 'PERIODE',
+    fom: '2016-03-16',
+    tom: '2016-05-26',
+  }, {
+    underavsnittsliste: [{
+      brødtekst: 'Vedtaket er gjort etter folketrygdloven § 22-15 og foreldelsesloven §§ 2 og 3.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      overskrift: 'Skatt',
+      brødtekst: 'NAV gir opplysninger til skatteetaten når det feilutbetalte beløpet er tilbakebetalt. Skatteetaten vil da vurdere om det er '
+      + 'grunnlag for å endre tidligere skatteoppgjør.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      overskrift: 'Hvordan betale tilbake pengene du skylder',
+      brødtekst: 'Vi har overført beløpet du skylder til NAV Innkreving, som vil sende deg et krav om å betale tilbake det feilutbetalte beløpet. '
+      + 'Har du spørsmål om dette, kan du kontakte NAV Innkreving på telefon 21 05 11 00.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      overskrift: 'Du har rett til å klage',
+      brødtekst: 'Du kan klage innen 6 uker fra den datoen du mottok vedtaket. Du finner skjema og informasjon på nav.no/klage.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      brødtekst: 'Du må som hovedregel begynne å betale beløpet tilbake, selv om du klager på dette vedtaket. Dette følger av forvaltningsloven § 42. '
+      + 'Hvis du får vedtak om at du ikke trengte å betale tilbake hele eller deler av beløpet du skyldte, betaler vi pengene tilbake til deg.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      overskrift: 'Du har rett til innsyn',
+      brødtekst: 'På nav.no/dittnav kan du se dokumentene i saken din.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      overskrift: 'Har du spørsmål?',
+      brødtekst: 'Du finner nyttig informasjon på nav.no/familie. Du kan også kontakte oss på telefon 55 55 33 33.',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      brødtekst: 'Med vennlig hilsen',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }, {
+      brødtekst: 'NAV Familie- og pensjonsytelser',
+      fritekstTillatt: false,
+      fritekstPåkrevet: false,
+    }],
+    avsnittstype: 'TILLEGGSINFORMASJON',
   }],
 };
 
