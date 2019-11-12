@@ -31,8 +31,9 @@ export const setFaktaPanelForKunYtelse = (faktaPanels,
 
 export const transformValuesForKunYtelse = (values, kunYtelse, tilfeller) => {
   if (tilfeller.includes(FASTSETT_BG_KUN_YTELSE)) {
+    const faktaOmBeregningTilfeller = [FASTSETT_BG_KUN_YTELSE];
     return {
-      faktaOmBeregningTilfeller: [FASTSETT_BG_KUN_YTELSE],
+      faktaOmBeregningTilfeller,
       ...KunYtelsePanel.transformValues(values, kunYtelse),
     };
   }

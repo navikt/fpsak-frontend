@@ -77,7 +77,7 @@ export const getBehandlingFormInitialValues = (formName, behandlingId, behandlin
   state,
 ) => getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
 
-const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => (
+export const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => (
   state,
 ) => getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
 

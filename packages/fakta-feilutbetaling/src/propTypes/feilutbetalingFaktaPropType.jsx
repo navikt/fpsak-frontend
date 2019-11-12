@@ -12,7 +12,7 @@ const feilutbetalingFaktaPropType = PropTypes.shape({
     totalPeriodeFom: PropTypes.string.isRequired,
     totalPeriodeTom: PropTypes.string.isRequired,
     aktuellFeilUtbetaltBeløp: PropTypes.number.isRequired,
-    tidligereVarseltBeløp: PropTypes.number.isRequired,
+    tidligereVarseltBeløp: PropTypes.number,
     behandlingÅrsaker: PropTypes.arrayOf(PropTypes.shape({
       behandlingArsakType: kodeverkObjektPropType.isRequired,
     })),

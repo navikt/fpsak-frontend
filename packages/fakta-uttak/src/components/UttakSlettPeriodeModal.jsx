@@ -15,10 +15,7 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { injectKodeverk } from '@fpsak-frontend/fp-felles';
-
-import { behandlingFormForstegangOgRevurdering } from 'behandlingForstegangOgRevurdering/src/behandlingFormForstegangOgRevurdering';
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 
 import styles from './uttakSlettPeriodeModal.less';
 
@@ -115,7 +112,7 @@ UttakSlettPeriodeModalImpl.defaultProps = {
   showModal: false,
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
+const mapStateToPropsFactory = (_initialState, ownProps) => {
   const onSubmit = (values) => ownProps.closeEvent(values);
 
   return () => {
@@ -127,8 +124,8 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   };
 };
 
-const UttakSlettPeriodeModal = connect(mapStateToPropsFactory)(behandlingFormForstegangOgRevurdering({
+const UttakSlettPeriodeModal = connect(mapStateToPropsFactory)(behandlingForm({
   enableReinitialize: true,
 })(injectIntl(UttakSlettPeriodeModalImpl)));
 
-export default injectKodeverk(getAlleKodeverk)(UttakSlettPeriodeModal);
+export default UttakSlettPeriodeModal;

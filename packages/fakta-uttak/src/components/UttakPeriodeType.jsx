@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsakCodes, { overforingArsakTexts } from '@fpsak-frontend/kodeverk/src/overforingArsakCodes';
+import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import oppholdArsakType from '@fpsak-frontend/kodeverk/src/oppholdArsakType';
 import { Image } from '@fpsak-frontend/shared-components';
 import { calcDaysAndWeeks, dateFormat, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
@@ -12,15 +12,14 @@ import editPeriodeIcon from '@fpsak-frontend/assets/images/endre.svg';
 import editPeriodeDisabledIcon from '@fpsak-frontend/assets/images/endre_disablet.svg';
 import removePeriod from '@fpsak-frontend/assets/images/remove.svg';
 import removePeriodDisabled from '@fpsak-frontend/assets/images/remove_disabled.svg';
-import { lagVisningsNavn, injectKodeverk } from '@fpsak-frontend/fp-felles';
+import { lagVisningsNavn } from '@fpsak-frontend/fp-felles';
 
-import { getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
 import styles from './uttakPeriodeType.less';
 
 const formatProsent = (prosent) => `${prosent}%`;
 
 const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, oppholdArsak, getKodeverknavn) => {
-  if (overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
+  if (overforingArsak && overforingArsak.kode !== overforingArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.OverføringMedÅrsak"
@@ -29,7 +28,7 @@ const getUttakTypeTitle = (utsettelseArsak, overforingArsak, arbeidstidprosent, 
     );
   }
 
-  if (utsettelseArsak.kode !== utsettelseArsakCodes.UDEFINERT) {
+  if (utsettelseArsak && utsettelseArsak.kode !== utsettelseArsakCodes.UDEFINERT) {
     return (
       <FormattedMessage
         id="UttakInfoPanel.UtsettelseMedÅrsak"
@@ -190,12 +189,12 @@ UttakPeriodeType.propTypes = {
   isNyPeriodeFormOpen: PropTypes.bool.isRequired,
   openSlettPeriodeModalCallback: PropTypes.func.isRequired,
   oppholdArsak: PropTypes.shape(),
-  overforingArsak: PropTypes.shape().isRequired,
+  overforingArsak: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   samtidigUttak: PropTypes.bool.isRequired,
   samtidigUttaksprosent: PropTypes.string,
   tilDato: PropTypes.string.isRequired,
-  utsettelseArsak: PropTypes.shape().isRequired,
+  utsettelseArsak: PropTypes.shape(),
   uttakPeriodeType: PropTypes.shape().isRequired,
 };
 
@@ -206,6 +205,8 @@ UttakPeriodeType.defaultProps = {
   erSelvstendig: false,
   oppholdArsak: undefined,
   samtidigUttaksprosent: null,
+  utsettelseArsak: undefined,
+  overforingArsak: undefined,
 };
 
-export default injectKodeverk(getAlleKodeverk)(injectIntl(UttakPeriodeType));
+export default injectIntl(UttakPeriodeType);

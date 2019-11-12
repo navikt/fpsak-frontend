@@ -109,16 +109,16 @@ const permisjonErrors = (values) => {
 
   if (values.skalUtsette) {
     const utsettelseperiodeValues = values ? values[utsettelsePeriodeFieldArrayName] : null;
-    errors[utsettelsePeriodeFieldArrayName] = PermisjonUtsettelsePanel.validate(utsettelseperiodeValues, isEndringForeldrepenger);
+    errors[utsettelsePeriodeFieldArrayName] = PermisjonUtsettelsePanel.validate(utsettelseperiodeValues);
   }
 
   if (values.skalGradere) {
     const graderingperiodeValues = values ? values[graderingPeriodeFieldArrayName] : null;
-    errors[graderingPeriodeFieldArrayName] = PermisjonGraderingPanel.validate(graderingperiodeValues, isEndringForeldrepenger);
+    errors[graderingPeriodeFieldArrayName] = PermisjonGraderingPanel.validate(graderingperiodeValues);
   }
   if (values.skalHaOpphold) {
     const oppholdPerioderValues = values ? values[oppholdPeriodeFieldArrayName] : null;
-    errors[oppholdPeriodeFieldArrayName] = PermisjonOppholdPanel.validate(oppholdPerioderValues, isEndringForeldrepenger);
+    errors[oppholdPeriodeFieldArrayName] = PermisjonOppholdPanel.validate(oppholdPerioderValues);
   }
   return errors;
 };
