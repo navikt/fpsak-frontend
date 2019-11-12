@@ -22,9 +22,11 @@ const minLength3 = minLength(3);
 
 const getFritekstMessage = (brevmalkode) => (brevmalkode === dokumentMalType.INNHENT_DOK ? 'Messages.DocumentList' : 'Messages.Fritekst');
 
+// TODO (TOR) Bør erstattast av ein markør fra backend
 const showFritekst = (brevmalkode, arsakskode) => (brevmalkode === dokumentMalType.INNHENT_DOK
   || brevmalkode === dokumentMalType.KORRIGVARS
   || brevmalkode === dokumentMalType.FRITKS
+  || brevmalkode === dokumentMalType.VARSEL_OM_TILBAKEKREVING
   || (brevmalkode === dokumentMalType.REVURDERING_DOK && arsakskode === ugunstAarsakTyper.ANNET));
 
 /**
