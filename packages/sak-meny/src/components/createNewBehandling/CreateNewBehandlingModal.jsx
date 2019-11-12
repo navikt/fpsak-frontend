@@ -56,7 +56,9 @@ export const CreateNewBehandlingModal = ({
       if (uuid !== undefined) {
         sjekkOmTilbakekrevingKanOpprettes({ saksnummer, uuid });
       }
-      sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingId });
+      if (behandlingId !== undefined) {
+        sjekkOmTilbakekrevingRevurderingKanOpprettes({ behandlingId });
+      }
     }
   }, []);
   return (
