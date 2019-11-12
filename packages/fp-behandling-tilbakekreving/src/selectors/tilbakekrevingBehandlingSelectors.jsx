@@ -6,7 +6,7 @@ import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
 import {
-  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus, getFagsakYtelseType, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedBehandlingId, getNavAnsatt, getFagsakStatus,
 } from '../duckBehandlingTilbakekreving';
 
 const commonBehandlingSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, tilbakekrevingBehandlingApi);
@@ -24,14 +24,8 @@ const getBeregningsresultat = createSelector([commonBehandlingSelectors.getSelec
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
   commonBehandlingSelectors.getBehandlingStatus,
-  commonBehandlingSelectors.getSoknad,
-  commonBehandlingSelectors.getAksjonspunkter,
   commonBehandlingSelectors.getBehandlingType,
-  commonBehandlingSelectors.getBehandlingAnsvarligSaksbehandler,
 ], allAccessRights);
 
 const tilbakekrevingBehandlingSelectors = {

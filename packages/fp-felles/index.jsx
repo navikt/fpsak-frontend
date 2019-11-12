@@ -48,7 +48,6 @@ export {
   behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
   isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors,
 } from './src/behandlingFormNew';
-export { allAccessRights } from './src/navAnsatt/access';
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
 export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';
@@ -66,3 +65,5 @@ export { default as VilkarResultPanel } from './src/behandlingsprosess/vilkar/Vi
 export { default as ProsessPanelTemplate } from './src/behandlingsprosess/vilkar/ProsessPanelTemplate';
 export { default as skjermlenkeCodes, createLocationForHistorikkItems } from './src/skjermlenkeCodes';
 export { createVisningsnavnForAktivitet, lagVisningsNavn } from './src/util/visningsnavnHelper';
+export { default as allAccessRights } from './src/navAnsatt/access';
+export { default as DataFetcher } from './src/DataFetcher';

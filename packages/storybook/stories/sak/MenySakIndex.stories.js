@@ -181,6 +181,7 @@ export const visMenyDerIngenBehandlingErValgt = () => (
     setBehandlingOnHold={action('button-click')}
     openBehandlingForChanges={action('button-click')}
     sjekkOmTilbakekrevingKanOpprettes={action('button-click')}
+    sjekkOmTilbakekrevingRevurderingKanOpprettes={action('button-click')}
     push={action('button-click')}
   />
 );
@@ -215,6 +216,7 @@ export const visMenyDerEnHarValgtFørstegangsbehandling = () => (
     openBehandlingForChanges={action('button-click')}
     opprettVerge={action('button-click')}
     sjekkOmTilbakekrevingKanOpprettes={action('button-click')}
+    sjekkOmTilbakekrevingRevurderingKanOpprettes={action('button-click')}
     push={action('button-click')}
   />
 );
@@ -253,6 +255,7 @@ export const visMenyDerEnHarValgtTilbakekreving = () => (
     setBehandlingOnHold={action('button-click')}
     openBehandlingForChanges={action('button-click')}
     sjekkOmTilbakekrevingKanOpprettes={action('button-click')}
+    sjekkOmTilbakekrevingRevurderingKanOpprettes={action('button-click')}
     push={action('button-click')}
   />
 );

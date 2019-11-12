@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import classNames from 'classnames';
+import { createSelector } from 'reselect';
 
 import { omit } from '@fpsak-frontend/utils';
 import {
@@ -20,16 +21,25 @@ import styles from './tilbakekrevingVedtakForm.less';
 
 const formName = 'TilbakekrevingVedtakForm';
 
+const UNDERAVSNITT_TYPE = {
+  OPPSUMMERING: 'OPPSUMMERING',
+  FAKTA: 'FAKTA',
+  VILKAR: 'VILKÅR',
+  SARLIGEGRUNNER: 'SÆRLIGEGRUNNER',
+  SARLIGEGRUNNER_ANNET: 'SÆRLIGEGRUNNER_ANNET',
+};
+
 const formatVedtakData = (values) => {
-  const perioder = omit(values, 'OPPSUMMERING');
+  const perioder = omit(values, UNDERAVSNITT_TYPE.OPPSUMMERING);
   return {
-    oppsummeringstekst: values.OPPSUMMERING,
+    oppsummeringstekst: values[UNDERAVSNITT_TYPE.OPPSUMMERING],
     perioderMedTekst: Object.keys(perioder).map((key) => ({
       fom: key.split('_')[0],
       tom: key.split('_')[1],
-      faktaAvsnitt: perioder[key].FAKTA,
-      vilkaarAvsnitt: perioder[key].VILKÅR,
-      saerligeGrunnerAvsnitt: perioder[key].SÆRLIGEGRUNNER,
+      faktaAvsnitt: perioder[key][UNDERAVSNITT_TYPE.FAKTA],
+      vilkaarAvsnitt: perioder[key][UNDERAVSNITT_TYPE.VILKAR],
+      saerligeGrunnerAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER],
+      saerligeGrunnerAnnetAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET],
     })),
   };
 };
@@ -49,6 +59,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   formVerdier,
   behandlingId,
   behandlingVersjon,
+  perioderSomIkkeHarUtfyltObligatoriskVerdi,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -59,6 +70,7 @@ export const TilbakekrevingVedtakFormImpl = ({
       readOnly={readOnly}
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={perioderSomIkkeHarUtfyltObligatoriskVerdi}
     />
     <VerticalSpacer twentyPx />
     <FlexContainer fluid>
@@ -70,24 +82,26 @@ export const TilbakekrevingVedtakFormImpl = ({
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
-            isSubmittable
+            isSubmittable={perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
         </FlexColumn>
-        <FlexColumn>
-          <div className={styles.padding}>
-            <a
-              href=""
-              onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)}
-              onKeyDown={(e) => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)(e) : null)}
-              className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
-            >
-              <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
-            </a>
-          </div>
-        </FlexColumn>
+        { perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && (
+          <FlexColumn>
+            <div className={styles.padding}>
+              <a
+                href=""
+                onClick={fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)}
+                onKeyDown={(e) => (e.keyCode === 13 ? fetchPreview(fetchPreviewVedtaksbrev, behandlingId, formVerdier)(e) : null)}
+                className={classNames(styles.buttonLink, 'lenke lenke--frittstaende')}
+              >
+                <FormattedMessage id="TilbakekrevingVedtakForm.ForhandvisBrev" />
+              </a>
+            </div>
+          </FlexColumn>
+        )}
       </FlexRow>
     </FlexContainer>
   </form>
@@ -100,6 +114,7 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   formVerdier: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 const transformValues = (values, apKode) => [{
@@ -107,15 +122,37 @@ const transformValues = (values, apKode) => [{
   ...formatVedtakData(values),
 }];
 
+const finnPerioderSomIkkeHarVerdiForObligatoriskFelt = createSelector([
+  (ownProps) => ownProps.vedtaksbrevAvsnitt, (ownProps) => ownProps.formVerdier], (vedtaksbrevAvsnitt, formVerdier) => vedtaksbrevAvsnitt.reduce((acc, va) => {
+  const periode = `${va.fom}_${va.tom}`;
+  const friteksterForPeriode = formVerdier[periode];
+
+  const harObligatoriskFaktaTekst = va.underavsnittsliste.some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.FAKTA);
+  if (harObligatoriskFaktaTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.FAKTA])) {
+    return acc.concat(periode);
+  }
+
+  const harObligatoriskSarligeGrunnerAnnetTekst = va.underavsnittsliste
+    .some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET);
+  if (harObligatoriskSarligeGrunnerAnnetTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET])) {
+    return acc.concat(periode);
+  }
+  return acc;
+}, []));
+
+
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunktKodeForeslaVedtak));
   return (state, ownProps) => {
     const vedtaksbrevAvsnitt = ownProps.avsnittsliste;
+    const initialValues = TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt);
+    const formVerdier = getBehandlingFormValues(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state) || {};
     return {
-      initialValues: TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt),
-      onSubmit: submitCallback,
-      formVerdier: getBehandlingFormValues(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state) || {},
+      initialValues,
+      formVerdier,
       vedtaksbrevAvsnitt,
+      onSubmit: submitCallback,
+      perioderSomIkkeHarUtfyltObligatoriskVerdi: finnPerioderSomIkkeHarVerdiForObligatoriskFelt({ vedtaksbrevAvsnitt, formVerdier }),
     };
   };
 };
