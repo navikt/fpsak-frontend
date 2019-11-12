@@ -72,7 +72,7 @@ export const HistorikkMalType9 = ({
               />
             )}
 
-            {originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING && (
+            {(originType.kode === historikkinnslagType.TILBAKEKR_VIDEREBEHANDLING && historikkinnslagDel.endredeFelter) && (
               historikkinnslagDel.endredeFelter
                 .filter((endretFelt) => endretFelt.tilVerdi !== tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK)
                 .map((endretFelt, index) => (
