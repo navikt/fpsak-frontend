@@ -15,7 +15,7 @@ import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/for
 import {
   hasValidPeriod, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { behandlingForm, getBehandlingFormSyncErrors } from '@fpsak-frontend/fp-felles';
+import { behandlingForm, getBehandlingFormSyncErrors, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import PerioderKnapper from './PerioderKnapper';
 import DokumentertePerioderPeriodePicker from './DokumentertePerioderPeriodePicker';
