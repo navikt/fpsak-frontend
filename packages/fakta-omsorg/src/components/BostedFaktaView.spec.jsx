@@ -34,10 +34,6 @@ describe('<BostedFaktaView>', () => {
       kode: '',
       navn: '',
     },
-    opplysningsKilde: {
-      kode: '',
-      navn: '',
-    },
     adresser: [],
   };
 
@@ -69,10 +65,6 @@ describe('<BostedFaktaView>', () => {
       navn: 'Ugift',
     },
     region: {
-      kode: '',
-      navn: '',
-    },
-    opplysningsKilde: {
       kode: '',
       navn: '',
     },
@@ -126,10 +118,6 @@ describe('<BostedFaktaView>', () => {
         navn: 'Ugift',
       },
       region: {
-        kode: '',
-        navn: '',
-      },
-      opplysningsKilde: {
         kode: '',
         navn: '',
       },

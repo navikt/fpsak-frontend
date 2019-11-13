@@ -46,10 +46,6 @@ describe('<BostedBarnView>', () => {
       kode: '',
       navn: '',
     },
-    opplysningsKilde: {
-      kode: '',
-      navn: '',
-    },
     adresser: [{
       adresselinje1: 'Ringeriksveien 182',
       postNummer: '1339',

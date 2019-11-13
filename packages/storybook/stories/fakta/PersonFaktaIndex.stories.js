@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -32,9 +31,6 @@ const personopplysninger = {
   barn: [{
     navn: 'Espen Utvikler jr.',
     fnr: '12324435',
-    opplysningsKilde: {
-      kode: opplysningsKilde.TPS,
-    },
     navBrukerKjonn: {
       kode: navBrukerKjonn.MANN,
     },

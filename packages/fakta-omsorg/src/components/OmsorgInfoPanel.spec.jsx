@@ -39,10 +39,6 @@ describe('<OmsorgInfoPanel>', () => {
       kode: '',
       navn: '',
     },
-    opplysningsKilde: {
-      kode: '',
-      navn: '',
-    },
     adresser: [],
   };
   const aleneomsorgAp = {

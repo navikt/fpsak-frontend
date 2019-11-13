@@ -90,6 +90,7 @@ export class UtfyllendePersoninfoPanel extends Component {
       aksjonspunkter,
       featureToggleUtland,
       alleKodeverk,
+      familiehendelseRegister,
       ...formProps
     } = this.props;
 
@@ -120,6 +121,7 @@ export class UtfyllendePersoninfoPanel extends Component {
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             personopplysning={selected}
+            familiehendelseRegister={familiehendelseRegister}
             isPrimaryParent={isPrimaryParent}
             ytelser={this.getYtelser(personopplysninger)}
             sprakkode={sprakkode}

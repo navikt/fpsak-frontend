@@ -163,7 +163,7 @@ BarnPanel.buildInitialValues = (personopplysning, soknad) => {
       navn: b.navn,
       fodselsdato: b.fodselsdato,
       dodsdato: b.dodsdato,
-      opplysningsKilde: b.opplysningsKilde.kode,
+      opplysningsKilde: undefined,
     }))
     : [];
 

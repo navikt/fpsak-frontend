@@ -50,10 +50,6 @@ describe('<FaktaPanel>', () => {
       kode: '',
       navn: '',
     },
-    opplysningsKilde: {
-      kode: '',
-      navn: '',
-    },
   };
 
   const ytelsestype = {
