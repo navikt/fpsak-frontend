@@ -7,7 +7,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import behandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
 import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import BehandlingsprosessForstegangOgRevIndex from './behandlingsprosess/BehandlingsprosessForstegangOgRevIndex';
 import FaktaIndex from './fakta/FaktaIndex';

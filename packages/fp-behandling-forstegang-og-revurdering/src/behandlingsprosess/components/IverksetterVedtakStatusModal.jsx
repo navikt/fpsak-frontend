@@ -15,15 +15,15 @@ import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 
-import { getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import { getResolveProsessAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
-import { getResolveFaktaAksjonspunkterSuccess } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
-import { getBehandlingResultatstruktur } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getFagsakYtelseType } from '../../duckBehandlingForstegangOgRev';
+import { getResolveProsessAksjonspunkterSuccess } from '../duckBpForstegangOgRev';
+import { getResolveFaktaAksjonspunkterSuccess } from '../../fakta/duckFaktaForstegangOgRev';
+import { getBehandlingResultatstruktur } from '../../behandlingSelectors';
+import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingsresultatFraOriginalBehandling,
   getResultatstrukturFraOriginalBehandling,
-} from 'behandlingForstegangOgRevurdering/src/selectors/originalBehandlingSelectors';
+} from '../../selectors/originalBehandlingSelectors';
 
 import styles from './iverksetterVedtakStatusModal.less';
 

@@ -1,15 +1,11 @@
 import { expect } from 'chai';
 
 import { isRequiredMessage } from '@fpsak-frontend/utils';
-import { getBehandlingFormPrefix, getBehandlingFormSelectors } from './behandlingForm';
+import { getBehandlingFormPrefix, getBehandlingFormRegisteredFields, hasBehandlingFormErrorsOfType } from './behandlingForm';
 
 describe('behandlingForm', () => {
   const behandlingId = 1;
   const behandlingVersjon = 2;
-
-  const getSelectedBehandlingId = () => behandlingId;
-  const getBehandlingVersjon = () => behandlingVersjon;
-  const selectors = getBehandlingFormSelectors(getSelectedBehandlingId, getBehandlingVersjon);
 
   it('skal hente formens behandlingsprefix', () => {
     const prefix = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
@@ -26,7 +22,8 @@ describe('behandlingForm', () => {
       },
     };
 
-    const registeredFields = selectors.getBehandlingFormRegisteredFields(formName).resultFunc(behandlingId, behandlingVersjon, formState);
+    const registeredFields = getBehandlingFormRegisteredFields(formName, behandlingId, behandlingVersjon)
+      .resultFunc(formState);
 
     expect(registeredFields).is.eql('test');
   });
@@ -45,7 +42,7 @@ describe('behandlingForm', () => {
       }],
     };
 
-    const hasError = selectors.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())
+    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
       .resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;
@@ -65,7 +62,7 @@ describe('behandlingForm', () => {
       }],
     };
 
-    const hasError = selectors.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())
+    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
       .resultFunc(registeredFields, errors);
 
     expect(hasError).is.false;
@@ -85,7 +82,7 @@ describe('behandlingForm', () => {
       }],
     };
 
-    const hasError = selectors.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())
+    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
       .resultFunc(registeredFields, errors);
 
     expect(hasError).is.false;
@@ -108,7 +105,7 @@ describe('behandlingForm', () => {
       },
     };
 
-    const hasError = selectors.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())
+    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
       .resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;
@@ -131,7 +128,7 @@ describe('behandlingForm', () => {
       }],
     };
 
-    const hasError = selectors.hasBehandlingFormErrorsOfType(formName, isRequiredMessage())
+    const hasError = hasBehandlingFormErrorsOfType(formName, behandlingId, behandlingVersjon, isRequiredMessage())
       .resultFunc(registeredFields, errors);
 
     expect(hasError).is.true;

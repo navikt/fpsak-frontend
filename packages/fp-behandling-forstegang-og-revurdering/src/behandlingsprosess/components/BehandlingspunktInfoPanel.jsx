@@ -17,11 +17,11 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { toggleBehandlingspunktOverstyring, tempUpdateStonadskontoer } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/duckBpForstegangOgRev';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import { toggleBehandlingspunktOverstyring, tempUpdateStonadskontoer } from '../duckBpForstegangOgRev';
+import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
+import behandlingsprosessSelectors from '../selectors/behandlingsprosessForstegangOgRevSelectors';
+import fpsakApi from '../../data/fpsakBehandlingApi';
+import { getFeatureToggles, getFagsakInfo, getAlleKodeverk } from '../../duckBehandlingForstegangOgRev';
 import VilkarPanels from './VilkarPanels';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 

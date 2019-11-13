@@ -42,12 +42,9 @@ export {
   getRequestPollingMessage,
 } from './src/pollingMessageDuck';
 export {
-  getBehandlingForm, getBehandlingFormSelectors, getBehandlingFormPrefix, getBehandlingFormName,
+  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty, getBehandlingFormName,
+  isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors, getBehandlingFormPrefix,
 } from './src/behandlingForm';
-export {
-  behandlingForm, behandlingFormValueSelector, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting, getBehandlingFormValues, getBehandlingFormInitialValues, getBehandlingFormSyncErrors,
-} from './src/behandlingFormNew';
 export { default as VilkarBegrunnelse } from './src/VilkarBegrunnelse';
 export { default as OverstyrBegrunnelsePanel } from './src/overstyr/OverstyrBegrunnelsePanel';
 export { default as OverstyrBekreftKnappPanel } from './src/overstyr/OverstyrBekreftKnappPanel';

@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 
-import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-
+import fpsakApi from './data/fpsakBehandlingApi';
 import { format } from './DataFetcherWithCache';
 
 describe('DataFetcherWithCache', () => {

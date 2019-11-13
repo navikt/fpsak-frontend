@@ -9,7 +9,7 @@ import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-sokna
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import { BehandlingspunktInfoPanel } from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/BehandlingspunktInfoPanel';
+import { BehandlingspunktInfoPanel } from './BehandlingspunktInfoPanel';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 describe('<BehandlingspunktInfoPanel>', () => {

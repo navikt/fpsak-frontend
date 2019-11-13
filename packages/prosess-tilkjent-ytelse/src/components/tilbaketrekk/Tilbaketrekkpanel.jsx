@@ -15,11 +15,10 @@ import {
 } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-behandling-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
   behandlingForm, hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
-  isBehandlingFormSubmitting,
+  isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
 import styles from './tilbaketrekkpanel.less';
@@ -102,11 +101,13 @@ export const Tilbaketrekkpanel = ({
           <VerticalSpacer eightPx />
           <BehandlingspunktSubmitButton
             formName={formProps.form}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
             isSubmittable={!readOnlySubmitButton}
-            isBehandlingFormSubmitting={(fName) => isBehandlingFormSubmitting(fName, behandlingId, behandlingVersjon)}
-            isBehandlingFormDirty={(fName) => isBehandlingFormDirty(fName, behandlingId, behandlingVersjon)}
-            hasBehandlingFormErrorsOfType={(fName, message) => hasBehandlingFormErrorsOfType(fName, behandlingId, behandlingVersjon, message)}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
           />
         </Column>
       </Row>

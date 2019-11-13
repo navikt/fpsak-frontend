@@ -30,7 +30,11 @@ const DokumenterSakIndex = ({
 DokumenterSakIndex.propTypes = {
   documents: PropTypes.arrayOf(dokumentPropType.isRequired).isRequired,
   selectDocumentCallback: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number,
+};
+
+DokumenterSakIndex.defaultProps = {
+  behandlingId: undefined,
 };
 
 export default DokumenterSakIndex;

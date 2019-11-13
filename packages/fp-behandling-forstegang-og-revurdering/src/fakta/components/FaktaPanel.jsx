@@ -22,12 +22,12 @@ import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-fronten
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getOpenInfoPanels } from 'behandlingForstegangOgRevurdering/src/fakta/duckFaktaForstegangOgRev';
+import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
+import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
   getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles,
-} from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
+} from '../../duckBehandlingForstegangOgRev';
+import fpsakApi from '../../data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './faktaPanel.less';

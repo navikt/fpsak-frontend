@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { connect } from 'react-redux';
 import {
-  formValueSelector, getFormInitialValues, getFormSyncErrors, getFormValues, isDirty, isSubmitting, reduxForm,
+  reduxForm, formValueSelector, isDirty, getFormSyncErrors, isSubmitting, getFormValues, getFormInitialValues,
 } from 'redux-form';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-
 import requireProps from './requireProps';
 
 export const getBehandlingFormPrefix = (behandlingId, behandlingVersjon) => `behandling_${behandlingId}_v${behandlingVersjon}`;
@@ -19,7 +18,7 @@ export const getBehandlingFormName = (behandlingId, behandlingVersjon, form) => 
  * Higher-order component som lager forms innen konteksten av en gitt behandling. BehandlingIndex har ansvaret for å styre livssyklusen til disse skjemaene.
  * @see BehandlingIndex
  */
-export const getBehandlingForm = (config, WrappedComponent, getSelectedBehandlingId, getBehandlingVersjon) => {
+export const behandlingForm = (config = {}) => (WrappedComponent) => {
   const { form, ...reduxFormConfig } = config;
   // Default configuration lets BehandlingIndex manage the lifecycle of the forms
   const defaultReduxFormConfig = {
@@ -40,79 +39,70 @@ export const getBehandlingForm = (config, WrappedComponent, getSelectedBehandlin
   );
 
   WithBehandlingForm.propTypes = {
-    selectedBehandlingId: PropTypes.number.isRequired,
-    selectedBehandlingVersjon: PropTypes.number.isRequired,
+    behandlingId: PropTypes.number.isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
     behandlingFormName: PropTypes.string.isRequired,
   };
 
-  const mapStateToProps = (state) => ({
-    selectedBehandlingId: getSelectedBehandlingId(state),
-    selectedBehandlingVersjon: getBehandlingVersjon(state),
+  const mapStateToProps = (state, ownProps) => ({
+    behandlingFormName: getBehandlingFormName(ownProps.behandlingId, ownProps.behandlingVersjon, form || ownProps.form),
   });
 
-  const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-    ...stateProps,
-    ...dispatchProps,
-    ...ownProps,
-    behandlingFormName: getBehandlingFormName(stateProps.selectedBehandlingId, stateProps.selectedBehandlingVersjon, form || ownProps.form),
-  });
-
-  return connect(mapStateToProps, null, mergeProps)(requireProps(['selectedBehandlingId'], <LoadingPanel />)(WithBehandlingForm));
+  return connect(mapStateToProps)(requireProps(['behandlingId', 'behandlingVersjon'], <LoadingPanel />)(WithBehandlingForm));
 };
 
+const getFormName = (formName, behandlingId, behandlingVersjon) => (behandlingId && behandlingVersjon
+  ? getBehandlingFormName(behandlingId, behandlingVersjon, formName)
+  : {});
 
-export const getBehandlingFormSelectors = (getSelectedBehandlingId, getBehandlingVersjon) => {
-  const getFormName = (formName) => createSelector([getSelectedBehandlingId, getBehandlingVersjon],
-    (selectedBehandlingId, selectedBehandlingVersjon) => {
-      if (!selectedBehandlingId || !selectedBehandlingVersjon) {
-        return {};
-      }
-      return getBehandlingFormName(selectedBehandlingId, selectedBehandlingVersjon, formName);
+export const behandlingFormValueSelector = (formName, behandlingId, behandlingVersjon) => (
+  state, ...fieldNames
+) => formValueSelector(getFormName(formName, behandlingId, behandlingVersjon))(state, ...fieldNames);
+
+export const isBehandlingFormDirty = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => isDirty(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const isBehandlingFormSubmitting = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => isSubmitting(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const getBehandlingFormValues = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => getFormValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const getBehandlingFormInitialValues = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => getFormInitialValues(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+export const getBehandlingFormSyncErrors = (formName, behandlingId, behandlingVersjon) => (
+  state,
+) => getFormSyncErrors(getFormName(formName, behandlingId, behandlingVersjon))(state);
+
+const getFormState = (state) => state.form;
+export const getBehandlingFormRegisteredFields = (formName, behandlingId, behandlingVersjon) => createSelector(
+  [getFormState], (formState = {}) => {
+    const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
+    return (formState[behandlingFormId] && formState[behandlingFormId][formName]
+      ? formState[behandlingFormId][formName].registeredFields : {});
+  },
+);
+
+const traverseAndFindValue = (error, idParts) => idParts.reduce((o, i) => (o[i] ? o[i] : []), error);
+
+export const hasBehandlingFormErrorsOfType = (formName, behandlingId, behandlingVersjon, errorMsg) => createSelector(
+  [getBehandlingFormRegisteredFields(formName, behandlingId, behandlingVersjon),
+    getBehandlingFormSyncErrors(formName, behandlingId, behandlingVersjon)],
+  (registeredFields = {}, errors = {}) => {
+    const shownFieldIds = Object.keys(registeredFields).filter((rf) => registeredFields[rf].count > 0);
+
+    return shownFieldIds.some((id) => {
+      const idParts = id.split(/[.|\[|\]]/).filter((parts) => parts && parts !== ''); /* eslint-disable-line no-useless-escape */
+      return Object.keys(errors)
+        .some((errorKey) => {
+          const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
+          return Array.isArray(value) ? value.some((eo) => eo && eo.id === errorMsg[0].id) : false;
+        });
     });
-
-  const behandlingFormValueSelector = (formName) => (state, ...fieldNames) => formValueSelector(getFormName(formName)(state))(state, ...fieldNames);
-  const getBehandlingFormSyncErrors = (formName) => (state) => getFormSyncErrors(getFormName(formName)(state))(state);
-  const isBehandlingFormDirty = (formName) => (state) => isDirty(getFormName(formName)(state))(state);
-  const isBehandlingFormSubmitting = (formName) => (state) => isSubmitting(getFormName(formName)(state))(state);
-  const getBehandlingFormValues = (formName) => (state) => getFormValues(getFormName(formName)(state))(state);
-  const getBehandlingFormInitialValues = (formName) => (state) => getFormInitialValues(getFormName(formName)(state))(state);
-
-  const getFormState = (state) => state.form;
-  const getBehandlingFormRegisteredFields = (formName) => createSelector(
-    [getSelectedBehandlingId, getBehandlingVersjon, getFormState],
-    (behandlingId, behandlingVersjon, formState = {}) => {
-      const behandlingFormId = getBehandlingFormPrefix(behandlingId, behandlingVersjon);
-      return (formState[behandlingFormId] && formState[behandlingFormId][formName]
-        ? formState[behandlingFormId][formName].registeredFields : {});
-    },
-  );
-
-  const traverseAndFindValue = (error, idParts) => idParts.reduce((o, i) => (o[i] ? o[i] : []), error);
-
-  const hasBehandlingFormErrorsOfType = (formName, errorMsg) => createSelector(
-    [getBehandlingFormRegisteredFields(formName), getBehandlingFormSyncErrors(formName)],
-    (registeredFields = {}, errors = {}) => {
-      const shownFieldIds = Object.keys(registeredFields).filter((rf) => registeredFields[rf].count > 0);
-
-      return shownFieldIds.some((id) => {
-        const idParts = id.split(/[.|\[|\]]/).filter((parts) => parts && parts !== ''); /* eslint-disable-line no-useless-escape */
-        return Object.keys(errors)
-          .some((errorKey) => {
-            const value = traverseAndFindValue({ [errorKey]: errors[errorKey] }, idParts);
-            return Array.isArray(value) ? value.some((eo) => eo && eo.id === errorMsg[0].id) : false;
-          });
-      });
-    },
-  );
-
-  return {
-    behandlingFormValueSelector,
-    getBehandlingFormSyncErrors,
-    isBehandlingFormDirty,
-    isBehandlingFormSubmitting,
-    getBehandlingFormValues,
-    getBehandlingFormInitialValues,
-    getBehandlingFormRegisteredFields,
-    hasBehandlingFormErrorsOfType,
-  };
-};
+  },
+);

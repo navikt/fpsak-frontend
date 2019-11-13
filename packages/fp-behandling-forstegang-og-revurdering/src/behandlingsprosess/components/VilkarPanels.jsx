@@ -18,10 +18,10 @@ import AksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
 import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
-import { getKodeverk } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import behandlingsprosessSelectors from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/selectors/behandlingsprosessForstegangOgRevSelectors';
-import fpsakApi from 'behandlingForstegangOgRevurdering/src/data/fpsakBehandlingApi';
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import { getKodeverk } from '../../duckBehandlingForstegangOgRev';
+import behandlingsprosessSelectors from '../selectors/behandlingsprosessForstegangOgRevSelectors';
+import fpsakApi from '../../data/fpsakBehandlingApi';
+import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 import {
   hentAlleOverstyringAksjonspunktKoderFor, hentOverstyringAksjonspunktKodeFor, getVilkarKodeFor, getFiltrerteAvslagsarsaker,

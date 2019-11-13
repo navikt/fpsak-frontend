@@ -122,7 +122,11 @@ DocumentList.propTypes = {
   intl: PropTypes.shape().isRequired,
   documents: PropTypes.arrayOf(dokumentPropType.isRequired).isRequired,
   selectDocumentCallback: PropTypes.func.isRequired,
-  behandlingId: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number,
+};
+
+DocumentList.defaultProps = {
+  behandlingId: undefined,
 };
 
 export default injectIntl(DocumentList);
