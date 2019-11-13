@@ -11,14 +11,6 @@
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
-		"paths": {
-			"behandlingForstegangOgRevurdering/*": ["fp-behandling-forstegang-og-revurdering/src/*"],
-			"behandlingTilbakekreving/*": ["fp-behandling-tilbakekreving/src/*"],
-			"behandlingInnsyn/*": ["fp-behandling-innsyn/src/*"],
-			"behandlingKlage/*": ["fp-behandling-klage/src/*"],
-			"behandlingAnke/*": ["fp-behandling-anke/src/*"],
-			"papirsoknad/*": ["fp-behandling-papirsoknad/src/*"],
-		  }
 	},
 	"include": [
 		"packages/rest-api",
