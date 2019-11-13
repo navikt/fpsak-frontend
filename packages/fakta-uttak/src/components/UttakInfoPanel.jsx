@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
+import moment from 'moment';
 import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { isVilkarForSykdomOppfylt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -30,6 +31,8 @@ const getBehandlingArsakTyper = (behandlingArsaker) => {
 const getErManueltOpprettet = (behandlingArsaker = []) => behandlingArsaker.some((ba) => ba.manueltOpprettet === true);
 
 const getErArsakTypeHendelseFodsel = (behandlingArsakTyper = []) => behandlingArsakTyper.some((bt) => bt.kode === 'RE-HENDELSE-FØDSEL');
+
+const sortUttaksperioder = (p1, p2) => moment(p1.tom).diff(moment(p2.tom));
 
 export const UttakInfoPanelImpl = ({
   intl,
@@ -64,6 +67,7 @@ export const UttakInfoPanelImpl = ({
   const erArsakTypeHendelseFodsel = getErArsakTypeHendelseFodsel(behandlingArsakTyper);
   const isRevurdering = behandlingIsRevurdering && (erManueltOpprettet || erArsakTypeHendelseFodsel);
   const behandlingUtredes = behandlingStatus === behandlingStatuser.BEHANDLING_UTREDES;
+  const sortedUttakPerioder = [...uttakPerioder.sort(sortUttaksperioder)];
 
   return (
     <FaktaEkspandertpanel
@@ -105,7 +109,7 @@ export const UttakInfoPanelImpl = ({
         behandlingVersjon={behandlingVersjon}
         behandlingStatus={behandlingStatus}
         ytelsefordeling={ytelsefordeling}
-        uttakPerioder={uttakPerioder}
+        uttakPerioder={sortedUttakPerioder}
         alleKodeverk={alleKodeverk}
         kanOverstyre={kanOverstyre}
         faktaArbeidsforhold={faktaArbeidsforhold}

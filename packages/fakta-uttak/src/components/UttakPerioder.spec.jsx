@@ -12,6 +12,24 @@ import UttakNyPeriode from './UttakNyPeriode';
 const reduxFormChange = sinon.spy();
 const reduxFormReset = sinon.spy();
 const getKodeverknavn = sinon.spy();
+const familiehendelse = {
+  gjeldende: {
+    skjaringstidspunkt: '2019-08-01',
+    avklartBarn: [
+      {
+        fodselsdato: '2019-08-01',
+        dodsdato: null,
+      },
+    ],
+    brukAntallBarnFraTps: false,
+    dokumentasjonForeligger: true,
+    termindato: '2019-08-01',
+    antallBarnTermin: 1,
+    utstedtdato: null,
+    morForSykVedFodsel: null,
+    vedtaksDatoSomSvangerskapsuke: null,
+  },
+};
 
 describe('<UttakPerioder>', () => {
   it('skal vise uttak UttakPerioder', () => {
@@ -38,7 +56,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -87,7 +105,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -131,7 +149,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -171,7 +189,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -206,7 +224,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -241,7 +259,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -301,7 +319,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
@@ -337,7 +355,7 @@ describe('<UttakPerioder>', () => {
         behandlingVersjon={1}
         behandlingStatus={{}}
         alleKodeverk={{}}
-        familiehendelse={{}}
+        familiehendelse={familiehendelse}
         førsteUttaksdato="2018-01-12"
       />,
     );
