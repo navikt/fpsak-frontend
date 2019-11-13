@@ -3,13 +3,13 @@ import { createSelector } from 'reselect';
 import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
+import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import {
   getBehandlingResultatstruktur,
   getSimuleringResultat,
   getStonadskontoer,
   getUttaksresultatPerioder,
-} from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
+} from '../../behandlingSelectors';
 import createEngangsstonadBpProps from '../definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerBpDefinition';
 import createSvangerskapspengerBpProps from '../definition/svangerskapspengerBpDefinition';

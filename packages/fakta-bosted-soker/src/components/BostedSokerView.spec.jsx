@@ -47,10 +47,6 @@ describe('<BostedsokerView>', () => {
       kode: 'NORDEN',
       navn: 'Norden',
     },
-    opplysningsKilde: {
-      kode: '',
-      navn: '',
-    },
     adresser: [{
       adresselinje1: 'Vei 1',
       postNummer: '1000',

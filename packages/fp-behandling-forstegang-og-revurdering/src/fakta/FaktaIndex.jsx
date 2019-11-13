@@ -6,8 +6,8 @@ import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles
 import { CommonFaktaIndex, parseFaktaParam, paramsAreEqual } from '@fpsak-frontend/fp-behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import { getBehandlingIdentifier } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
+import behandlingSelectors from '../selectors/forsteOgRevBehandlingSelectors';
+import { getBehandlingIdentifier } from '../duckBehandlingForstegangOgRev';
 import {
   getOpenInfoPanels, setOpenInfoPanels, resetFakta, resolveFaktaAksjonspunkter, resolveFaktaOverstyrAksjonspunkter,
 } from './duckFaktaForstegangOgRev';
