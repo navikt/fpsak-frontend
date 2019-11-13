@@ -90,7 +90,7 @@ const buildSokerPersonopplysning = (sokerPersonopplysninger) => {
     dodsdato: sokerPersonopplysninger.dodsdato,
     originalDodsdato: sokerPersonopplysninger.dodsdato,
     adresse: addresses[opplysningAdresseType.POSTADRESSE] || addresses[opplysningAdresseType.BOSTEDSADRESSE],
-    opplysningsKilde: sokerPersonopplysninger.opplysningsKilde.kode,
+    opplysningsKilde: undefined,
     erMor: sokerPersonopplysninger.navBrukerKjonn.kode === navBrukerKjonn.KVINNE,
     erDod: sokerPersonopplysninger.personstatus.kode === personstatusType.DOD || isAvklartPersonstatusDod,
   };
@@ -108,7 +108,7 @@ const buildAnnenPartPersonopplysning = (annenPartPersonopplysninger) => {
     dodsdato: annenPartPersonopplysninger.dodsdato,
     originalDodsdato: annenPartPersonopplysninger.dodsdato,
     adresse: secondaryParentAddresses[opplysningAdresseType.POSTADRESSE] || secondaryParentAddresses[opplysningAdresseType.BOSTEDSADRESSE],
-    opplysningsKilde: annenPartPersonopplysninger.opplysningsKilde.kode,
+    opplysningsKilde: undefined,
     erMor: annenPartPersonopplysninger.navBrukerKjonn.kode === navBrukerKjonn.KVINNE,
     erDod: annenPartPersonopplysninger.personstatus.kode === personstatusType.DOD || isAvklartPersonstatusDod,
   };

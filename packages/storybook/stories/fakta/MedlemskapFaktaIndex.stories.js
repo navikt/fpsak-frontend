@@ -142,10 +142,6 @@ const medlemskap = {
       barn: [],
       barnSoktFor: [],
       barnFraTpsRelatertTilSoknad: [],
-      opplysningsKilde: {
-        kode: 'TPS',
-        kodeverk: 'OPPLYSNINGSKILDE',
-      },
       harVerge: false,
     },
     aksjonspunkter: [
@@ -207,10 +203,6 @@ const medlemskap = {
       barn: [],
       barnSoktFor: [],
       barnFraTpsRelatertTilSoknad: [],
-      opplysningsKilde: {
-        kode: 'TPS',
-        kodeverk: 'OPPLYSNINGSKILDE',
-      },
       harVerge: false,
     },
     aksjonspunkter: [

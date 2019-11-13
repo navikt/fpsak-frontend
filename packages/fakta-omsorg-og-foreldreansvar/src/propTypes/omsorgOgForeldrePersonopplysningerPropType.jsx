@@ -6,7 +6,6 @@ const omsorgOgForeldrePersonopplysningerPropType = PropTypes.shape({
   aktoerId: PropTypes.string.isRequired,
   navn: PropTypes.string.isRequired,
   dodsdato: PropTypes.string,
-  opplysningsKilde: kodeverkObjektPropType.isRequired,
   navBrukerKjonn: kodeverkObjektPropType.isRequired,
   personstatus: kodeverkObjektPropType.isRequired,
   barnSoktFor: PropTypes.arrayOf(PropTypes.shape()),
