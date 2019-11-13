@@ -25,6 +25,7 @@ describe('<CreateNewBehandlingMenuItem>', () => {
       opprettRevurderingEnabled
       ikkeVisOpprettNyBehandling
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
@@ -46,6 +47,7 @@ describe('<CreateNewBehandlingMenuItem>', () => {
       opprettRevurderingEnabled
       ikkeVisOpprettNyBehandling
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}

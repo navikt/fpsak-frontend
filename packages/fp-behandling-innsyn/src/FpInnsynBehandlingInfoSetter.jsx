@@ -2,7 +2,6 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { BehandlingInfoHolder } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from './selectors/innsynBehandlingSelectors';
@@ -16,15 +15,12 @@ export class FpInnsynBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingVersjon, aksjonspunkter,
-      behandlingsresultat, soknad,
+      setBehandlingInfoHolder, behandlingVersjon, behandlingsresultat,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
       .withBehandlingVersjon(behandlingVersjon)
-      .withAksjonspunkter(aksjonspunkter)
-      .withBehandlingsresultat(behandlingsresultat)
-      .withSoknad(soknad));
+      .withBehandlingsresultat(behandlingsresultat));
   }
 
   componentDidUpdate = (prevProps) => {
@@ -41,23 +37,17 @@ export class FpInnsynBehandlingInfoSetter extends Component {
 FpInnsynBehandlingInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired),
   behandlingsresultat: PropTypes.shape(),
-  soknad: PropTypes.shape(),
 };
 
 FpInnsynBehandlingInfoSetter.defaultProps = {
   behandlingVersjon: undefined,
-  aksjonspunkter: [],
   behandlingsresultat: undefined,
-  soknad: undefined,
 };
 
 const mapStateToProps = (state) => ({
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-  aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  soknad: behandlingSelectors.getSoknad(state),
 });
 
 export default connect(mapStateToProps)(FpInnsynBehandlingInfoSetter);

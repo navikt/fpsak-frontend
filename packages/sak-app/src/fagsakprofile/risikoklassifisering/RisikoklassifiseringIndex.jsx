@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { setSubmitFailed as dispatchSubmitFailed } from 'redux-form';
 
-import { getRiskPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
+import { allAccessRights, getRiskPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 
-import { getBehandlingIdentifier, getBehandlingVersjon } from '../../behandling/duck';
+import { getBehandlingerErPaaVentStatusMappedById } from '../../behandling/selectors/behandlingerSelectors';
+import { getNavAnsatt } from '../../app/duck';
+import { getSelectedFagsakStatus } from '../../fagsak/fagsakSelectors';
 import {
-  hentKontrollresultat, isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
+  getBehandlingIdentifier, getBehandlingVersjon, getSelectedBehandlingId, getBehandlingStatus, getBehandlingType,
+} from '../../behandling/duck';
+import {
+  isRiskPanelOpen, resolveAksjonspunkter, setRiskPanelOpen,
 } from './duck';
-import { getKontrollresultat, getReadOnly, getRisikoaksjonspunkt } from './kontrollresultatSelectors';
 
 /**
  * RisikoklassifiseringIndex
@@ -25,66 +30,39 @@ import { getKontrollresultat, getReadOnly, getRisikoaksjonspunkt } from './kontr
  */
 export class RisikoklassifiseringIndexImpl extends Component {
   componentDidMount = () => {
-    this.finnKontrollresultat();
     this.apnePanelVedAksjonspunkt();
   }
 
-  componentDidUpdate = (prevProps) => {
+  componentDidUpdate = () => {
     this.apnePanelVedAksjonspunkt();
-    this.updateVedNyVersjon(prevProps.behandlingVersjon);
   }
-
-  finnKontrollresultat = () => {
-    const { behandlingIdentifier, hentKontrollresultat: hentResultat } = this.props;
-
-    if (behandlingIdentifier) {
-      const params = {
-        ...behandlingIdentifier.toJson(),
-      };
-      hentResultat(params);
-    }
-  }
-
-updateVedNyVersjon = (prevBehandlingversjon) => {
-  const { behandlingVersjon, behandlingIdentifier, hentKontrollresultat: hentResultat } = this.props;
-  if (behandlingIdentifier && behandlingVersjon !== prevBehandlingversjon) {
-    const params = {
-      ...behandlingIdentifier.toJson(),
-    };
-    hentResultat(params);
-  }
-}
 
   apnePanelVedAksjonspunkt = () => {
-    const { aksjonspunkt, isPanelOpen } = this.props;
-    if (aksjonspunkt && aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
+    const { risikoAksjonspunkt, isPanelOpen } = this.props;
+    if (risikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
       if (!isPanelOpen) {
         this.toggleRiskPanel();
       }
     }
   }
 
-  submitAksjonspunkter = (aksjonspunkter) => {
+  submitAksjonspunkt = (aksjonspunkt) => {
     const {
       behandlingIdentifier,
       behandlingVersjon,
       resolveAksjonspunkter: resolveAp,
     } = this.props;
-    const model = aksjonspunkter.map((ap) => ({
-      '@type': ap.kode,
-      ...ap,
-    }));
 
     const params = {
       ...behandlingIdentifier.toJson(),
       behandlingVersjon,
-      bekreftedeAksjonspunktDtoer: model,
+      bekreftedeAksjonspunktDtoer: [{
+        '@type': aksjonspunkt.kode,
+        ...aksjonspunkt,
+      }],
     };
 
-    return resolveAp(
-      params,
-      behandlingIdentifier,
-    );
+    return resolveAp(params, behandlingIdentifier);
   }
 
   toggleRiskPanel = () => {
@@ -98,8 +76,8 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
 
   render() {
     const {
-      aksjonspunkt,
-      risikoklassifisering,
+      risikoAksjonspunkt,
+      kontrollresultat,
       isPanelOpen,
       readOnly,
       behandlingIdentifier,
@@ -110,11 +88,11 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
       <RisikoklassifiseringSakIndex
         behandlingId={behandlingIdentifier.behandlingId}
         behandlingVersjon={behandlingVersjon}
-        aksjonspunkt={aksjonspunkt}
-        risikoklassifisering={risikoklassifisering}
+        aksjonspunkt={risikoAksjonspunkt}
+        risikoklassifisering={kontrollresultat}
         isPanelOpen={isPanelOpen}
         readOnly={readOnly}
-        submitAksjonspunkter={this.submitAksjonspunkter}
+        submitAksjonspunkt={this.submitAksjonspunkt}
         toggleRiskPanel={this.toggleRiskPanel}
       />
     );
@@ -122,32 +100,47 @@ updateVedNyVersjon = (prevBehandlingversjon) => {
 }
 
 RisikoklassifiseringIndexImpl.propTypes = {
-  hentKontrollresultat: PropTypes.func.isRequired,
   resolveAksjonspunkter: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
-  isPanelOpen: PropTypes.bool.isRequired,
+  isPanelOpen: PropTypes.bool,
   setRiskPanelOpen: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,
-  risikoklassifisering: PropTypes.shape(),
-  aksjonspunkt: aksjonspunktPropType,
+  kontrollresultat: PropTypes.shape(),
+  risikoAksjonspunkt: aksjonspunktPropType,
 };
 
 RisikoklassifiseringIndexImpl.defaultProps = {
-  risikoklassifisering: undefined,
-  aksjonspunkt: undefined,
+  kontrollresultat: undefined,
+  risikoAksjonspunkt: undefined,
   behandlingVersjon: undefined,
   behandlingIdentifier: undefined,
+  isPanelOpen: false,
 };
+
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getBehandlingStatus,
+  getBehandlingType,
+], allAccessRights);
+
+const getReadOnly = createSelector([getRettigheter, getNavAnsatt, getBehandlingerErPaaVentStatusMappedById, getSelectedBehandlingId],
+  (rettigheter, navAnsatt, erPaaVentMap, selectedBehandlingId) => {
+    const erPaaVent = erPaaVentMap && getSelectedBehandlingId ? erPaaVentMap[selectedBehandlingId] : false;
+    if (erPaaVent) {
+      return true;
+    }
+    const { kanSaksbehandle } = navAnsatt;
+    return !kanSaksbehandle || !rettigheter.writeAccess.isEnabled;
+  });
 
 const mapStateToProps = (state) => ({
   location: state.router.location,
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: getBehandlingVersjon(state),
-  aksjonspunkt: getRisikoaksjonspunkt(state),
-  risikoklassifisering: getKontrollresultat(state),
   isPanelOpen: isRiskPanelOpen(state),
   readOnly: getReadOnly(state),
 });
@@ -155,7 +148,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
-    hentKontrollresultat,
     dispatchSubmitFailed,
     resolveAksjonspunkter,
     setRiskPanelOpen,

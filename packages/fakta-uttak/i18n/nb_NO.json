@@ -134,5 +134,6 @@
   "ValidationMessage.InvalidText": "Feltet inneholder ugyldige tegn: {text}",
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
-  "PeriodFieldArray.LeggTilBarn": "Legg til barn"
+  "PeriodFieldArray.LeggTilBarn": "Legg til barn",
+  "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
 }

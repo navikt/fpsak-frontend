@@ -1,14 +1,10 @@
 import { createSelector } from 'reselect';
 
-import { reducerRegistry, BehandlingIdentifier, allAccessRights } from '@fpsak-frontend/fp-felles';
+import { reducerRegistry, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import { getSelectedSaksnummer } from '../fagsak/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt } from '../app/duck';
 import { getBehandlinger } from './selectors/behandlingerSelectors';
-import {
-  getSelectedFagsakStatus, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd, getFagsakYtelseType,
-} from '../fagsak/fagsakSelectors';
 
 const reducerName = 'behandling';
 
@@ -51,6 +47,7 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
       return {
         ...state,
         behandlingId: action.data,
+        behandlingInfoHolder: {},
       };
     case SET_BEHANDLING_INFO_HOLDER:
       return {
@@ -80,13 +77,11 @@ export const getBehandlingIdentifier = createSelector(
 const getBehandlingInfoHolder = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingInfoHolder);
 export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], (data) => data.behandlingVersjon);
 export const isKontrollerRevurderingAksjonspunkOpen = createSelector([getBehandlingInfoHolder], (data) => data.isKontrollerRevurderingAksjonspunkOpen);
-export const getAksjonspunkter = createSelector([getBehandlingInfoHolder], (data) => data.aksjonspunkter);
 export const getBehandlingKlageVurdering = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurdering);
 export const getBehandlingResultatstruktur = createSelector([getBehandlingInfoHolder], (data) => data.behandlingResultatstruktur);
 export const getBehandlingsresultat = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultat);
 export const getBehandlingKlageVurderingResultatNFP = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNFP);
 export const getBehandlingKlageVurderingResultatNK = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNK);
-export const getSoknad = createSelector([getBehandlingInfoHolder], (data) => data.soknad);
 export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
 export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
 export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], (data) => data.erArsakTypeBehandlingEtterKlage);
@@ -106,16 +101,4 @@ export const erBehandlingKoet = createSelector([getBehandling], (behandling) => 
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling
   ? behandling.ansvarligSaksbehandler : undefined));
 export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (behandling) => behandling.toTrinnsBehandling);
-
-export const getRettigheter = createSelector([
-  getNavAnsatt,
-  getSelectedFagsakStatus,
-  getKanRevurderingOpprettes,
-  getSkalBehandlesAvInfotrygd,
-  getFagsakYtelseType,
-  getBehandlingStatus,
-  getSoknad,
-  getAksjonspunkter,
-  getBehandlingType,
-  getBehandlingAnsvarligSaksbehandler,
-], allAccessRights);
+export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (behandling ? behandling.erAktivPapirsoknad : false));

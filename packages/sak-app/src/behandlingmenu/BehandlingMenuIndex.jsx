@@ -6,24 +6,46 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { BehandlingIdentifier, featureToggle } from '@fpsak-frontend/fp-felles';
+import { DataFetcher, BehandlingIdentifier, featureToggle } from '@fpsak-frontend/fp-felles';
 import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from '@fpsak-frontend/sak-meny';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
-import { getSelectedSaksnummer, getFagsakYtelseType } from '../fagsak/fagsakSelectors';
+import {
+  getSelectedSaksnummer, getFagsakYtelseType, getSkalBehandlesAvInfotrygd, getKanRevurderingOpprettes, getSelectedFagsakStatus,
+} from '../fagsak/fagsakSelectors';
 import {
   previewMessage, erBehandlingPaVent, getBehandlingVersjon, erBehandlingKoet, getBehandlingBehandlendeEnhetId,
-  getBehandlingBehandlendeEnhetNavn, getBehandlingType, getRettigheter, getSelectedBehandlingId,
+  getBehandlingBehandlendeEnhetNavn, getBehandlingType, getSelectedBehandlingId,
+  getBehandlingStatus, getBehandlingErPapirsoknad,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
+import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes,
+  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
+const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER];
+const menyData = [];
+
+// TODO (TOR) Flytt rettigheter til server
+const getMenyRettigheter = createSelector([
+  (ownProps) => ownProps.navAnsatt,
+  (ownProps) => ownProps.fagsakStatus,
+  (ownProps) => ownProps.kanRevurderingOpprettes,
+  (ownProps) => ownProps.skalBehandlesAvInfotrygd,
+  (ownProps) => ownProps.ytelseType,
+  (ownProps) => ownProps.behandlingStatus,
+  (ownProps) => ownProps.harSoknad,
+  (ownProps) => ownProps.erIInnhentSoknadopplysningerSteg,
+  (ownProps) => ownProps.behandlingType,
+], (navAnsatt, fagsakStatus, kanRevurderingOpprettes, skalBehandlesAvInfotrygd, sakstype, behandlingStatus, harSoknad,
+  erIInnhentSoknadopplysningerSteg, behandlingType) => new MenyRettigheter(allMenuAccessRights(navAnsatt, fagsakStatus,
+  kanRevurderingOpprettes, skalBehandlesAvInfotrygd,
+  sakstype, behandlingStatus, harSoknad, erIInnhentSoknadopplysningerSteg, behandlingType)));
 
 class BehandlingMenuIndex extends Component {
   componentDidUpdate = (prevProps) => {
@@ -47,7 +69,41 @@ class BehandlingMenuIndex extends Component {
   }
 
   render() {
-    return (<MenySakIndex {...this.props} />);
+    const {
+      behandlingData,
+      navAnsatt,
+      fagsakStatus,
+      kanRevurderingOpprettes,
+      skalBehandlesAvInfotrygd,
+      ytelseType,
+      behandlingStatus,
+      erIInnhentSoknadopplysningerSteg,
+    } = this.props;
+
+    return (
+      <DataFetcher
+        behandlingId={behandlingData.id}
+        behandlingVersjon={behandlingData.versjon}
+        showComponentDuringFetch
+        data={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
+        render={(dataProps) => (
+          <MenySakIndex
+            rettigheter={getMenyRettigheter({
+              navAnsatt,
+              fagsakStatus,
+              kanRevurderingOpprettes,
+              skalBehandlesAvInfotrygd,
+              ytelseType,
+              behandlingStatus,
+              erIInnhentSoknadopplysningerSteg,
+              harSoknad: dataProps.menyhandlingRettigheter ? dataProps.menyhandlingRettigheter.harSoknad : false,
+              behandlingType: behandlingData.harValgtBehandling ? behandlingData.type : undefined,
+            })}
+            {...this.props}
+          />
+        )}
+      />
+    );
   }
 }
 
@@ -56,14 +112,21 @@ BehandlingMenuIndex.propTypes = {
   resetBehandlingMenuData: PropTypes.func.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   hentVergeMenyvalg: PropTypes.func,
+  navAnsatt: PropTypes.shape().isRequired,
+  fagsakStatus: PropTypes.shape().isRequired,
+  kanRevurderingOpprettes: PropTypes.bool.isRequired,
+  skalBehandlesAvInfotrygd: PropTypes.bool.isRequired,
+  ytelseType: PropTypes.shape().isRequired,
+  behandlingStatus: PropTypes.shape(),
+  erIInnhentSoknadopplysningerSteg: PropTypes.bool.isRequired,
 };
 
 BehandlingMenuIndex.defaultProps = {
   behandlingData: MenyBehandlingData.lagIngenValgtBehandling(),
   hentVergeMenyvalg: undefined,
+  behandlingStatus: undefined,
 };
 
-const getMenyRettigheter = createSelector([getRettigheter], (rettigheter) => new MenyRettigheter(rettigheter));
 const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk],
   (behandlingType, alleFpSakKodeverk, alleFpTilbakeKodeverk) => new MenyKodeverk(behandlingType)
     .medFpSakKodeverk(alleFpSakKodeverk)
@@ -73,6 +136,13 @@ const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehand
 (behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn) => (versjon
   ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn)
   : undefined));
+const getTilbakekrevingOpprettes = createSelector([
+  (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+  (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
+], (kanBehandlingOpprettes = false, kanRevurderingOpprettes = false) => ({
+  kanBehandlingOpprettes,
+  kanRevurderingOpprettes,
+}));
 
 
 const mapStateToProps = (state) => {
@@ -84,11 +154,15 @@ const mapStateToProps = (state) => {
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
     navAnsatt: getNavAnsatt(state),
     vergeMenyvalg: vergeMenyvalg ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
-    kanTilbakekrevingOpprettes: fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
+    kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
     erTilbakekrevingAktivert: getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
     uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
-    rettigheter: getMenyRettigheter(state),
     menyKodeverk: getMenyKodeverk(state),
+    fagsakStatus: getSelectedFagsakStatus(state),
+    behandlingStatus: getBehandlingStatus(state),
+    kanRevurderingOpprettes: getKanRevurderingOpprettes(state),
+    skalBehandlesAvInfotrygd: getSkalBehandlesAvInfotrygd(state),
+    erIInnhentSoknadopplysningerSteg: getBehandlingErPapirsoknad(state),
   };
 };
 
@@ -105,6 +179,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   fjernVerge,
   opprettVerge,
   sjekkOmTilbakekrevingKanOpprettes,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
 }, dispatch);
 

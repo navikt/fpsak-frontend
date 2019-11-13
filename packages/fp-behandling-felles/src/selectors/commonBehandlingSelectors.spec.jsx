@@ -164,24 +164,6 @@ describe('commonBehandlingSelectors', () => {
     });
   });
 
-  describe('språk', () => {
-    it('skal hente språktekst fra behandlingens språk-kode', () => {
-      const sprakkode = {
-        kode: 'NN',
-      };
-
-      const languageCode = selectors.getBehandlingLanguageCode.resultFunc(sprakkode);
-
-      expect(languageCode).is.eql('Malform.Nynorsk');
-    });
-
-    it('skal hente standard språktekst når behandlingens ikke har språk-kode', () => {
-      const sprakkode = undefined;
-      const languageCode = selectors.getBehandlingLanguageCode.resultFunc(sprakkode);
-      expect(languageCode).is.eql('Malform.Bokmal');
-    });
-  });
-
   describe('vilkår', () => {
     it('skal hente vilkartype-koder fra vilkårene', () => {
       const vilkar = [{
@@ -271,23 +253,6 @@ describe('commonBehandlingSelectors', () => {
           notAccepted: false,
         },
       });
-    });
-  });
-
-  describe('getMerknaderFraBeslutter', () => {
-    it('skal hente merknad fra beslutter for ett bestemt aksjonspunkt', () => {
-      const allMerknaderFraBeslutter = {
-        [aksjonspunktCodes.VURDER_INNSYN]: {
-          notAccepted: true,
-        },
-        [aksjonspunktCodes.VURDERE_DOKUMENT]: {
-          notAccepted: false,
-        },
-      };
-
-      const notAccepted = selectors.getMerknaderFraBeslutter(aksjonspunktCodes.VURDER_INNSYN).resultFunc(allMerknaderFraBeslutter);
-
-      expect(notAccepted).is.eql(allMerknaderFraBeslutter[aksjonspunktCodes.VURDER_INNSYN]);
     });
   });
 });

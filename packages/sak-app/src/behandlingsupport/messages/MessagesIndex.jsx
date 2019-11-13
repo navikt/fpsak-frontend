@@ -108,9 +108,14 @@ export class MessagesIndex extends Component {
 
   previewCallback(mottaker, dokumentMal, fritekst, aarsakskode) {
     const {
-      behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode,
+      behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode, behandlingIdentifier,
     } = this.props;
-    const data = {
+    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
+    const data = erTilbakekreving ? {
+      behandlingId: behandlingIdentifier.behandlingId,
+      fritekst: fritekst || ' ',
+      brevmalkode: dokumentMal,
+    } : {
       behandlingUuid,
       ytelseType: fagsakYtelseType,
       fritekst: fritekst || ' ',
@@ -118,7 +123,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(BehandlingType.TILBAKEKREVING === behandlingTypeKode, data);
+    fetchPreview(erTilbakekreving, data);
   }
 
   afterSubmit() {

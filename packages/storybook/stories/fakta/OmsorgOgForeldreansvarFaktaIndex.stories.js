@@ -6,7 +6,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
@@ -46,9 +45,6 @@ const soknad = {
 const personopplysninger = {
   aktoerId: '1',
   navn: 'Espen Utvikler',
-  opplysningsKilde: {
-    kode: opplysningsKilde.TPS,
-  },
   navBrukerKjonn: {
     kode: navBrukerKjonn.KVINNE,
   },
