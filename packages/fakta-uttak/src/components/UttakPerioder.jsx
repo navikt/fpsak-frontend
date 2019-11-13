@@ -103,6 +103,16 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   return relevant;
 };
 
+const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
+  const { termindato, avklartBarn } = gjeldendeFamiliehendelse;
+
+  if (avklartBarn && avklartBarn.length > 0) {
+    return avklartBarn[0].fodselsdato;
+  }
+
+  return termindato;
+};
+
 const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updatedIndex, periode) => ([
   ...inntektsmeldingInfo.slice(0, updatedIndex),
   findRelevantInntektsmeldingInfo(inntektsmeldinger, periode),
@@ -379,8 +389,9 @@ export class UttakPerioder extends PureComponent {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
-    const farSøkerFør6Uker = (perioder[0] || []).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
-            && moment((perioder[0] || []).fom).isBefore(moment(førsteUttaksdato).add(6, 'weeks'));
+    const familiehendelseDato = findFamiliehendelseDato(familiehendelse.gjeldende);
+    const farSøkerFør6Uker = (perioder[0] || {}).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
+            && moment((perioder[0] || {}).fom).isBefore(moment(familiehendelseDato).add(6, 'weeks'));
 
     return (
       <>
