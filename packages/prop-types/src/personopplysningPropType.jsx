@@ -51,9 +51,6 @@ const personopplysningPropType = PropTypes.shape({
   harVerge: PropTypes.bool,
   barnSoktFor: PropTypes.arrayOf(PropTypes.shape()),
   barnFraTpsRelatertTilSoknad: PropTypes.arrayOf(PropTypes.shape()),
-  opplysningsKilde: PropTypes.shape({
-    kode: PropTypes.string.isRequired,
-  }).isRequired,
 });
 
 export default personopplysningPropType;

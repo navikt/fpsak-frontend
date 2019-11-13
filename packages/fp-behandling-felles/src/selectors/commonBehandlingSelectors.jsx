@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-import { getLanguageCodeFromSprakkode } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
@@ -25,16 +24,12 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   const getBehandlingUuid = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.uuid);
   const getBehandlingVersjon = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.versjon);
   const getBehandlingStatus = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.status);
-  const getBehandlingBehandlendeEnhetId = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetId);
-  const getBehandlingBehandlendeEnhetNavn = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlendeEnhetNavn);
   const getBehandlingType = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.type);
 
   const getBehandlingIsOnHold = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingPaaVent);
-  const getBehandlingIsQueued = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingKoet);
   const getBehandlingOnHoldDate = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.fristBehandlingPaaVent);
   const getBehandlingsresultat = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingsresultat);
   const getBehandlingHenlagt = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.behandlingHenlagt);
-  const getBehandlingToTrinnsBehandling = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.toTrinnsBehandling);
 
   const getBehandlingVenteArsakKode = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.venteArsakKode);
   const getBehandlingAnsvarligSaksbehandler = createSelector(
@@ -53,10 +48,6 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
   const hasBehandlingManualPaVent = createSelector(
     [getOpenAksjonspunkter], (openAksjonspunkter = []) => openAksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT),
   );
-
-  // SPRÅK
-  const getBehandlingSprak = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.sprakkode);
-  const getBehandlingLanguageCode = createSelector([getBehandlingSprak], (sprakkode = {}) => getLanguageCodeFromSprakkode(sprakkode));
 
   // SØKNAD
   const getSoknad = createSelector([getSelectedBehandling], (selectedBehandling = {}) => selectedBehandling.soknad);
@@ -79,10 +70,6 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     (behandlingPaaVent, isBehandlingReadOnly, hasLukketStatus) => hasLukketStatus || behandlingPaaVent || isBehandlingReadOnly,
   );
 
-  const hasBehandlingUtredesStatus = createSelector(
-    [getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.BEHANDLING_UTREDES,
-  );
-
   const getAllMerknaderFraBeslutter = createSelector([getBehandlingStatus, getAksjonspunkter], (status, aksjonspunkter = []) => {
     let merknader = {};
     if (status && status.kode === behandlingStatus.BEHANDLING_UTREDES) {
@@ -92,10 +79,6 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     return merknader;
   });
 
-  const getMerknaderFraBeslutter = (aksjonspunktCode) => createSelector(getAllMerknaderFraBeslutter, (allMerknaderFraBeslutter) => (
-    allMerknaderFraBeslutter[aksjonspunktCode] || {}
-  ));
-
   return {
     getSelectedBehandling,
     isBehandlingInSync,
@@ -103,31 +86,23 @@ const getCommonBehandlingSelectors = (getSelectedBehandlingId, behandlingApi) =>
     getBehandlingUuid,
     getBehandlingVersjon,
     getBehandlingStatus,
-    getBehandlingBehandlendeEnhetId,
-    getBehandlingBehandlendeEnhetNavn,
     getBehandlingType,
     getBehandlingIsOnHold,
-    getBehandlingIsQueued,
     getBehandlingOnHoldDate,
     getBehandlingsresultat,
     getBehandlingHenlagt,
-    getBehandlingToTrinnsBehandling,
     getBehandlingVenteArsakKode,
     getBehandlingAnsvarligSaksbehandler,
     getAksjonspunkter,
     getOpenAksjonspunkter,
     isKontrollerRevurderingAksjonspunkOpen,
     hasBehandlingManualPaVent,
-    getBehandlingSprak,
-    getBehandlingLanguageCode,
     getSoknad,
     getBehandlingHasSoknad,
     getBehandlingVilkar,
     getBehandlingVilkarCodes,
-    hasBehandlingUtredesStatus,
     isBehandlingStatusReadOnly,
     getAllMerknaderFraBeslutter,
-    getMerknaderFraBeslutter,
   };
 };
 

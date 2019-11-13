@@ -10,7 +10,7 @@ import {
 import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
   isBehandlingFormSubmitting,
-} from '../../behandlingFormNew';
+} from '../../behandlingForm';
 import VilkarResultPanel from './VilkarResultPanel';
 import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
 
