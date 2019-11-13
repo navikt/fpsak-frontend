@@ -6,7 +6,6 @@ const personPersonopplysningerPropType = PropTypes.shape({
   barn: PropTypes.arrayOf(PropTypes.shape({
     navn: PropTypes.string.isRequired,
     fnr: PropTypes.string.isRequired,
-    opplysningsKilde: kodeverkObjektPropType.isRequired,
     navBrukerKjonn: kodeverkObjektPropType.isRequired,
     soktForBarn: PropTypes.bool.isRequired,
   })),
@@ -32,7 +31,6 @@ const personPersonopplysningerPropType = PropTypes.shape({
     barn: PropTypes.arrayOf(PropTypes.shape({
       navn: PropTypes.string.isRequired,
       fnr: PropTypes.string.isRequired,
-      opplysningsKilde: kodeverkObjektPropType.isRequired,
       navBrukerKjonn: kodeverkObjektPropType.isRequired,
       soktForBarn: PropTypes.bool.isRequired,
     })),
