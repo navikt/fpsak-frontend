@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { TextAreaField } from '@fpsak-frontend/form';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakSlettPeriodeModalImpl } from './UttakSlettPeriodeModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const periode = {
   arbeidstidsprosent: null,

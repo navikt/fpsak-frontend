@@ -18,34 +18,43 @@ export { default as messages } from '../../../public/sprak/nb_NO.json';
 // Create the IntlProvider to retrieve context for wrapping around.
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  defaultLocale: 'nb-NO',
-  messages,
-}, cache);
+const getIntlObject = (moduleMessages) => {
+  const selectedMessages = moduleMessages || messages;
+
+  return createIntl({
+    locale: 'nb-NO',
+    defaultLocale: 'nb-NO',
+    messages: selectedMessages,
+  }, cache);
+};
 
 /**
  * When using React-Intl `injectIntl` on components, props.intl is required.
  */
-function nodeWithIntlProp(node) {
-  return React.cloneElement(node, { intl });
+function nodeWithIntlProp(node, moduleMessages) {
+  const selectedMessages = moduleMessages || messages;
+  return React.cloneElement(node, { intl: getIntlObject(selectedMessages) });
 }
 
-const intlOptions = {
-  wrappingComponent: IntlProvider,
-  wrappingComponentProps: {
-    locale: 'nb-NO',
-    defaultLocale: 'nb-NO',
-    messages,
-  },
+const getOptions = (moduleMessages) => {
+  const selectedMessages = moduleMessages || messages;
+
+  return {
+    wrappingComponent: IntlProvider,
+    wrappingComponentProps: {
+      locale: 'nb-NO',
+      defaultLocale: 'nb-NO',
+      messages: selectedMessages,
+    },
+  };
 };
 
-export function shallowWithIntl(node, options) {
-  return shallow(nodeWithIntlProp(node), { ...intlOptions, ...options });
+export function shallowWithIntl(node, options, moduleMessages = undefined) {
+  return shallow(nodeWithIntlProp(node, moduleMessages), { ...getOptions(moduleMessages), ...options });
 }
 
-export function mountWithIntl(node, options) {
-  return mount(nodeWithIntlProp(node), { ...intlOptions, ...options });
+export function mountWithIntl(node, options, moduleMessages = undefined) {
+  return mount(nodeWithIntlProp(node), { ...getOptions(moduleMessages), ...options });
 }
 
 /* Lagt til for a hindre warnings i tester */

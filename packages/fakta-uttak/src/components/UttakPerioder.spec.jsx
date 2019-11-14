@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
@@ -8,6 +7,7 @@ import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakPerioder } from './UttakPerioder';
 import UttakSlettPeriodeModal from './UttakSlettPeriodeModal';
 import UttakNyPeriode from './UttakNyPeriode';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const reduxFormChange = sinon.spy();
 const reduxFormReset = sinon.spy();
