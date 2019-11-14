@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { TextAreaField } from '@fpsak-frontend/form';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { UttakSlettPeriodeModalImpl } from './UttakSlettPeriodeModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const periode = {
   arbeidstidsprosent: null,
@@ -59,12 +60,12 @@ describe('<UttakSlettPeriodeModal>', () => {
     const okKnapp = wrapper.find(Hovedknapp);
     expect(okKnapp).to.have.length(1);
     expect(okKnapp.prop('mini')).is.true;
-    expect(okKnapp.childAt(0).text()).is.eql('UttakInfoPanel.Ok');
+    expect(okKnapp.childAt(0).text()).is.eql('OK');
 
     const avbrytKnapp = wrapper.find(Knapp);
     expect(avbrytKnapp).to.have.length(1);
     expect(avbrytKnapp.prop('mini')).is.true;
-    expect(avbrytKnapp.childAt(0).text()).is.eql('UttakInfoPanel.Avbryt');
+    expect(avbrytKnapp.childAt(0).text()).is.eql('Avbryt');
   });
   it('skal rendre lukket modal', () => {
     const wrapper = shallowWithIntl(<UttakSlettPeriodeModalImpl
