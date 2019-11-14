@@ -19,7 +19,6 @@ const arbeidsgiver = {
 
 const arbeidstakerIkkeFastsatt = {
   lagtTilAvSaksbehandler: false,
-  fastsattAvSaksbehandler: false,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
 };
@@ -37,9 +36,8 @@ const getKodeverknavn = (kodeverk) => {
 describe('<BgFordelingUtils>', () => {
   it('skal sette riktig fastsatt beløp for andel i periode med gradering eller refusjon og fastsatt beregnetPrÅr', () => {
     const beregnetPrMnd = 10000;
-    const fastsattAvSaksbehandler = true;
     const fastsattForrige = 50000;
-    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige, fastsattAvSaksbehandler);
+    const fastsattBelop = settFastsattBelop(beregnetPrMnd, fastsattForrige);
     expect(fastsattBelop).to.equal(formatCurrencyNoKr(beregnetPrMnd));
   });
 

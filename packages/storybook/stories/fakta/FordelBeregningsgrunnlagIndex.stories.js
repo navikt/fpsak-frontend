@@ -280,7 +280,6 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
   },
   andelIArbeid: [0],
   belopFraInntektsmeldingPrAar: null,
-  fastsattAvSaksbehandler: false,
   fastsattForrigePrAar: null,
   fordelingForrigeBehandlingPrAar: null,
   fordeltPrAar: fordelt,

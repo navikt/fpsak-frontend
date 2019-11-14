@@ -25,7 +25,6 @@ const arbeidsgiver = {
 
 const arbeidstakerIkkeFastsatt = {
   lagtTilAvSaksbehandler: false,
-  fastsattAvSaksbehandler: false,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER },
   inntektskategori: { kode: 'ARBEIDSTAKER' },
 };
@@ -46,7 +45,6 @@ describe('<BgFordelingUtils>', () => {
     skalKunneEndreAktivitet: false,
     lagtTilAvSaksbehandler: true,
     inntektskategori: { kode: 'DAGPENGER' },
-    fastsattAvSaksbehandler: true,
     beregnetPrAar: 240000,
     fastsattBelop: 20000,
     belopReadOnly: 0,
@@ -76,7 +74,6 @@ describe('<BgFordelingUtils>', () => {
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AAP' },
-      fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       fastsattBelop: null,
       belopReadOnly: 10000,
@@ -102,7 +99,6 @@ describe('<BgFordelingUtils>', () => {
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AT' },
-      fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
     };
@@ -125,7 +121,6 @@ describe('<BgFordelingUtils>', () => {
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'FL' },
-      fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
     };
@@ -148,7 +143,6 @@ describe('<BgFordelingUtils>', () => {
       skalKunneEndreAktivitet: false,
       lagtTilAvSaksbehandler: false,
       inntektskategori: { kode: 'AT' },
-      fastsattAvSaksbehandler: false,
       beregnetPrAar: null,
       belopFraMeldekortPrMnd: null,
       fastsattBelop: null,

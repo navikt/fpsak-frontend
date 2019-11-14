@@ -68,7 +68,6 @@ describe('<ATFLSammeOrg>', () => {
     inntektskategori: { kode: inntektskategorier.FRILANSER },
     aktivitetStatus: { kode: aktivitetStatus.FRILANSER },
     lagtTilAvSaksbehandler: false,
-    fastsattAvSaksbehandler: false,
     andelIArbeid: [],
   };
 
@@ -78,7 +77,6 @@ describe('<ATFLSammeOrg>', () => {
     inntektskategori: { kode: inntektskategorier.ARBEIDSTAKER },
     aktivitetStatus: { kode: aktivitetStatus.ARBEIDSTAKER },
     lagtTilAvSaksbehandler: false,
-    fastsattAvSaksbehandler: false,
     andelIArbeid: [],
   };
 

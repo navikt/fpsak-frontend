@@ -33,7 +33,7 @@ const arbeidsforholdEtterStp = {
 };
 
 const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, fastsattAvSaksbehandler, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
+  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
   arbeidsforhold: arbeidsforholdEtterStp,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
@@ -44,7 +44,6 @@ const lagArbeidstakerAndelEtterStp = (andelsnr, lagtTilAvSaksbehandler, fordelin
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
   fastsattForrigePrAar,
-  fastsattAvSaksbehandler,
   refusjonskravPrAar,
   belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar,
@@ -65,7 +64,7 @@ const getKodeverknavn = (kodeverk) => {
 };
 
 const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, fastsattAvSaksbehandler, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
+  beregnetPrAar, fastsattForrigePrAar, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.ARBEIDSTAKER, navn: 'Arbeidstaker' },
@@ -76,15 +75,13 @@ const lagArbeidstakerAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrige
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
   fastsattForrigePrAar,
-  fastsattAvSaksbehandler,
   refusjonskravPrAar,
   belopFraInntektsmeldingPrAar,
   refusjonskravFraInntektsmeldingPrAar,
 });
 
 const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, fastsattAvSaksbehandler, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
+  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
   arbeidsforhold,
   aktivitetStatus: { kode: aktivitetStatuser.SELVSTENDIG_NAERINGSDRIVENDE, navn: 'Selvstendig næringsdrivende' },
   inntektskategori: { kode: 'SN' },
@@ -94,16 +91,14 @@ const lagSNAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
   fastsattForrigePrAar,
-  fastsattAvSaksbehandler,
-  refusjonskravPrAar,
-  belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar,
+  refusjonskravPrAar: null,
+  belopFraInntektsmeldingPrAar: null,
+  refusjonskravFraInntektsmeldingPrAar: null,
 });
 
 
 const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandlingPrAar,
-  beregnetPrAar, fastsattForrigePrAar, fastsattAvSaksbehandler, refusjonskravPrAar, belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar, andelIArbeid) => ({
+  beregnetPrAar, fastsattForrigePrAar, andelIArbeid) => ({
   aktivitetStatus: { kode: aktivitetStatuser.FRILANSER, navn: 'Frilanser' },
   inntektskategori: { kode: 'SN' },
   andelIArbeid,
@@ -112,10 +107,9 @@ const lagFLAndel = (andelsnr, lagtTilAvSaksbehandler, fordelingForrigeBehandling
   fordelingForrigeBehandlingPrAar,
   beregnetPrAar,
   fastsattForrigePrAar,
-  fastsattAvSaksbehandler,
-  refusjonskravPrAar,
-  belopFraInntektsmeldingPrAar,
-  refusjonskravFraInntektsmeldingPrAar,
+  refusjonskravPrAar: null,
+  belopFraInntektsmeldingPrAar: null,
+  refusjonskravFraInntektsmeldingPrAar: null,
 });
 
 describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
@@ -124,15 +118,15 @@ describe('<FordelBeregningsgrunnlagPeriodePanel>', () => {
       harPeriodeAarsakGraderingEllerRefusjon: true,
       skalKunneEndreRefusjon: true,
       fordelBeregningsgrunnlagAndeler: [
-        lagArbeidstakerAndel(1, false, 10000, 10000, null, false, 10000, 10000, 10000, [0, 20]),
-        lagArbeidstakerAndel(2, false, 20000, 10000, 10000, true, 10000, 20000, 10000, [0]),
-        lagArbeidstakerAndel(3, false, 30000, 10000, 30000, false, 0, 30000, 0, [0, 20, 80]),
-        lagArbeidstakerAndel(4, false, null, 1000, null, false, 0, null, null, [0, 20]),
-        lagArbeidstakerAndelEtterStp(5, false, 20000, null, 10000, true, 10000, 20000, 10000, [0]),
-        lagSNAndel(6, false, null, 10000, 10000, true, null, null, null, [0]),
-        lagArbeidstakerAndel(7, false, null, 1000, null, false, null, null, null, [0]),
-        lagFLAndel(8, false, null, null, null, false, null, null, null, [0], null),
-        lagFLAndel(9, false, null, 0, null, false, null, null, null, [0], null)],
+        lagArbeidstakerAndel(1, false, 10000, 10000, null, 10000, 10000, 10000, [0, 20]),
+        lagArbeidstakerAndel(2, false, 20000, 10000, 10000, 10000, 20000, 10000, [0]),
+        lagArbeidstakerAndel(3, false, 30000, 10000, 30000, 0, 30000, 0, [0, 20, 80]),
+        lagArbeidstakerAndel(4, false, null, 1000, null, 0, null, null, [0, 20]),
+        lagArbeidstakerAndelEtterStp(5, false, 20000, null, 10000, 10000, 20000, 10000, [0]),
+        lagSNAndel(6, false, null, 10000, 10000, [0]),
+        lagArbeidstakerAndel(7, false, null, 1000, null, null, null, null, [0]),
+        lagFLAndel(8, false, null, null, null, [0]),
+        lagFLAndel(9, false, null, 0, null, [0])],
     };
 
     const bgPeriode = {
