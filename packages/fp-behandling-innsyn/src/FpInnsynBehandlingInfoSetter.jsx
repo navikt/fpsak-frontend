@@ -15,12 +15,11 @@ export class FpInnsynBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, behandlingVersjon, behandlingsresultat,
+      setBehandlingInfoHolder, behandlingVersjon,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
-      .withBehandlingVersjon(behandlingVersjon)
-      .withBehandlingsresultat(behandlingsresultat));
+      .withBehandlingVersjon(behandlingVersjon));
   }
 
   componentDidUpdate = (prevProps) => {
@@ -37,17 +36,14 @@ export class FpInnsynBehandlingInfoSetter extends Component {
 FpInnsynBehandlingInfoSetter.propTypes = {
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number,
-  behandlingsresultat: PropTypes.shape(),
 };
 
 FpInnsynBehandlingInfoSetter.defaultProps = {
   behandlingVersjon: undefined,
-  behandlingsresultat: undefined,
 };
 
 const mapStateToProps = (state) => ({
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
 });
 
 export default connect(mapStateToProps)(FpInnsynBehandlingInfoSetter);

@@ -15,16 +15,11 @@ export class FpSakBehandlingInfoSetter extends Component {
 
   setBehandlingInfo = () => {
     const {
-      setBehandlingInfoHolder, isKontrollerRevurderingApOpen, behandlingVersjon, behandlingsresultat,
-      behandlingsresultatFraOriginalBehandling, resultatstrukturFraOriginalBehandling,
+      setBehandlingInfoHolder, behandlingVersjon,
     } = this.props;
 
     setBehandlingInfoHolder(new BehandlingInfoHolder()
-      .withIsKontrollerRevurderingAksjonspunkOpen(isKontrollerRevurderingApOpen)
-      .withBehandlingVersjon(behandlingVersjon)
-      .withBehandlingsresultat(behandlingsresultat)
-      .withBehandlingsresultatFraOriginalBehandling(behandlingsresultatFraOriginalBehandling)
-      .withResultatstrukturFraOriginalBehandling(resultatstrukturFraOriginalBehandling));
+      .withBehandlingVersjon(behandlingVersjon));
   }
 
   componentDidUpdate = (prevProps) => {
@@ -39,27 +34,16 @@ export class FpSakBehandlingInfoSetter extends Component {
 }
 
 FpSakBehandlingInfoSetter.propTypes = {
-  isKontrollerRevurderingApOpen: PropTypes.bool.isRequired,
   setBehandlingInfoHolder: PropTypes.func.isRequired,
   behandlingVersjon: PropTypes.number,
-  behandlingsresultat: PropTypes.shape(),
-  behandlingsresultatFraOriginalBehandling: PropTypes.shape(),
-  resultatstrukturFraOriginalBehandling: PropTypes.shape(),
 };
 
 FpSakBehandlingInfoSetter.defaultProps = {
   behandlingVersjon: undefined,
-  behandlingsresultat: undefined,
-  behandlingsresultatFraOriginalBehandling: undefined,
-  resultatstrukturFraOriginalBehandling: undefined,
 };
 
 const mapStateToProps = (state) => ({
-  isKontrollerRevurderingApOpen: behandlingSelectors.isKontrollerRevurderingAksjonspunkOpen(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
-  behandlingAnkeVurdering: behandlingSelectors.getBehandlingAnkeVurdering(state),
-  behandlingsresultat: behandlingSelectors.getBehandlingsresultat(state),
-  behandlingAnkeVurderingResultat: behandlingSelectors.getBehandlingAnkeVurderingResultat(state),
 });
 
 export default connect(mapStateToProps)(FpSakBehandlingInfoSetter);

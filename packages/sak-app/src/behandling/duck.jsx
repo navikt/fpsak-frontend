@@ -76,15 +76,6 @@ export const getBehandlingIdentifier = createSelector(
 // Fjern:Start
 const getBehandlingInfoHolder = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingInfoHolder);
 export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], (data) => data.behandlingVersjon);
-export const isKontrollerRevurderingAksjonspunkOpen = createSelector([getBehandlingInfoHolder], (data) => data.isKontrollerRevurderingAksjonspunkOpen);
-export const getBehandlingKlageVurdering = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurdering);
-export const getBehandlingResultatstruktur = createSelector([getBehandlingInfoHolder], (data) => data.behandlingResultatstruktur);
-export const getBehandlingsresultat = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultat);
-export const getBehandlingKlageVurderingResultatNFP = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNFP);
-export const getBehandlingKlageVurderingResultatNK = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNK);
-export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
-export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
-export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], (data) => data.erArsakTypeBehandlingEtterKlage);
 // Fjern:Stopp
 
 
@@ -102,3 +93,5 @@ export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling
   ? behandling.ansvarligSaksbehandler : undefined));
 export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (behandling) => behandling.toTrinnsBehandling);
 export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (behandling ? behandling.erAktivPapirsoknad : false));
+export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
+export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);

@@ -6,8 +6,8 @@ import { shallow } from 'enzyme';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FatterVedtakApprovalModal } from '@fpsak-frontend/sak-totrinnskontroll';
 
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 import { ApprovalIndex } from './ApprovalIndex';
 
 describe('<ApprovalIndex>', () => {
