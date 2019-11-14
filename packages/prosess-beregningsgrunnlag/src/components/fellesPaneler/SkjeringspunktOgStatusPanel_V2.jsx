@@ -53,12 +53,12 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
  * Viser skjæringstidspunkt for beregningen og en liste med aktivitetsstatuser.
  */
 
-export const SkjeringspunktOgStatusPanelImpl = ({
+export const SkjeringspunktOgStatusPanelImpl2 = ({
   skjeringstidspunktDato,
   aktivitetStatusList,
   getKodeverknavn,
 }) => (
-  <Panel>
+  <Panel className={beregningStyles.panel}>
 
     {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
 
@@ -80,13 +80,13 @@ export const SkjeringspunktOgStatusPanelImpl = ({
   </Panel>
 );
 
-SkjeringspunktOgStatusPanelImpl.propTypes = {
+SkjeringspunktOgStatusPanelImpl2.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 
-SkjeringspunktOgStatusPanelImpl.defaultProps = {
+SkjeringspunktOgStatusPanelImpl2.defaultProps = {
 
 };
 
@@ -97,12 +97,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-const SkjeringspunktOgStatusPanel = connect(mapStateToProps)(SkjeringspunktOgStatusPanelImpl);
+const SkjeringspunktOgStatusPanel2 = connect(mapStateToProps)(SkjeringspunktOgStatusPanelImpl2);
 
-SkjeringspunktOgStatusPanel.buildInitialValues = (gjeldendeDekningsgrad, gjeldendeAksjonspunkter) => {
+SkjeringspunktOgStatusPanel2.buildInitialValues = (gjeldendeDekningsgrad, gjeldendeAksjonspunkter) => {
   const aksjonspunkt = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_DEKNINGSGRAD);
   const initialDekningsgrad = aksjonspunkt && gjeldendeDekningsgrad === 100 ? gjeldendeDekningsgrad : undefined;
   return { [RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN]: initialDekningsgrad };
 };
 
-export default SkjeringspunktOgStatusPanel;
+export default SkjeringspunktOgStatusPanel2;

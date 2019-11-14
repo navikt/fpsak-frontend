@@ -17,61 +17,19 @@ const skalFastsetteSN = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.som
     || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
 );
 
-/*
-const finnSnAksjonspunkt = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
-  (ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
-    || ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-);
-const createRowVarig = (readOnly, isAksjonspunktClosed) => (
-  <>
-    <Row>
-      <Column xs="12">
-        <RadioGroupField
-          name={varigEndringRadioname}
-          validate={[required]}
-          direction="horizontal"
-          readOnly={readOnly}
-          isEdited={isAksjonspunktClosed}
-        >
-          <RadioOption
-            label={<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />}
-            value={false}
-          />
-          <RadioOption
-            label={<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />}
-            value
-          />
-        </RadioGroupField>
-      </Column>
-    </Row>
-  </>
-
-);
-const createRow = (readOnly, isAksjonspunktClosed) => (
-  <Row>
-    <Column xs="12" className={styles.rightAlignInput}>
-      <InputField
-        name={fastsettInntektFieldname}
-        label={{ id: 'Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr' }}
-        bredde="S"
-        validate={[required]}
-        parse={parseCurrencyInput}
-        isEdited={isAksjonspunktClosed}
-        readOnly={readOnly}
-      />
-    </Column>
-  </Row>
-);
-
- */
 const AksjonspunktBehandlerSN = ({
   readOnly,
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
-}) => (
-  <>
-    { skalFastsetteSN(aksjonspunkter)
+}) => {
+  console.log('AksjonspunktBehandlerSN aksjonspunkter=', aksjonspunkter); // eslint-disable-line no-console
+  const jib = skalFastsetteSN(aksjonspunkter);
+  console.log('AksjonspunktBehandlerSN jib=', jib); // eslint-disable-line no-console
+
+  return (
+    <>
+      { skalFastsetteSN(aksjonspunkter)
       && (
         <VurderOgFastsettSN2
           gjeldendeAksjonspunkter={aksjonspunkter}
@@ -80,8 +38,9 @@ const AksjonspunktBehandlerSN = ({
           behandlingVersjon={behandlingVersjon}
         />
       )}
-  </>
-);
+    </>
+  );
+};
 AksjonspunktBehandlerSN.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,

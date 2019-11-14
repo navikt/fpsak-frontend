@@ -32,61 +32,64 @@ const {
  * Presentasjonskomponent. Setter opp inputfelt som lar saksbehandler fastsette
  * næringsinntekt for selvstendig næringsdrivende. Opprettes enten hvis det er varig endret / nyoppstartet næring eller søker er ny i arbeidslivet.
  */
-const FastsettSN = ({
+const FastsettSN2 = ({
   readOnly,
   isAksjonspunktClosed,
-}) => (
-  <>
-    <Row className={styles.verticalAlignMiddle}>
-      <Column xs="7">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
-        </Normaltekst>
-      </Column>
-      <Column xs="5">
-        <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
-          <InputField
-            name={fastsettInntektFieldname}
-            bredde="XS"
-            validate={[required]}
-            parse={parseCurrencyInput}
+}) => {
+  console.log('FastsettSN2 isAksjonspunktClosed', isAksjonspunktClosed); // eslint-disable-line no-console
+  return (
+    <>
+      <Row className={styles.verticalAlignMiddle}>
+        <Column xs="7">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
+          </Normaltekst>
+        </Column>
+        <Column xs="5">
+          <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
+            <InputField
+              name={fastsettInntektFieldname}
+              bredde="XS"
+              validate={[required]}
+              parse={parseCurrencyInput}
 
-            readOnly={readOnly}
-          />
-        </div>
-      </Column>
-    </Row>
-    <VerticalSpacer eightPx />
-    <Row>
-      <Column xs="12" className={styles.marginTop}>
-        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
-          <TextAreaField
-            name={begrunnelseFieldname}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
-            validate={[required, maxLength1500, minLength3, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-            isEdited={isAksjonspunktClosed}
-          />
-          {isAksjonspunktClosed && (
-          <span>
+              readOnly={readOnly}
+            />
+          </div>
+        </Column>
+      </Row>
+      <VerticalSpacer eightPx />
+      <Row>
+        <Column xs="12" className={styles.marginTop}>
+          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
+            <TextAreaField
+              name={begrunnelseFieldname}
+              label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
+              validate={[required, maxLength1500, minLength3, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+              isEdited={isAksjonspunktClosed}
+            />
+            {isAksjonspunktClosed && (
+            <span>
 her
-            {isAksjonspunktClosed}
-          </span>
-          )}
-        </div>
-      </Column>
-    </Row>
+              {isAksjonspunktClosed}
+            </span>
+            )}
+          </div>
+        </Column>
+      </Row>
 
-  </>
-);
+    </>
+  );
+};
 
-FastsettSN.propTypes = {
+FastsettSN2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
 };
 
-FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
+FastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
   }
@@ -109,9 +112,9 @@ FastsettSN.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
   return undefined;
 };
 
-FastsettSN.transformValues = (values) => ({
+FastsettSN2.transformValues = (values) => ({
   begrunnelse: values[begrunnelseFieldname],
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 
-export default FastsettSN;
+export default FastsettSN2;

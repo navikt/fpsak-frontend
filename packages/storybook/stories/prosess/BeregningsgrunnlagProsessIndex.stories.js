@@ -377,7 +377,7 @@ export const arbeidstakerOgAAP = () => {
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 2000)];
+  const perioder = [lagPeriodeMedDagsats(andeler, null)];
   const statuser = [lagStatus('SN')];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
@@ -394,7 +394,7 @@ export const selvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={toggles}
     />

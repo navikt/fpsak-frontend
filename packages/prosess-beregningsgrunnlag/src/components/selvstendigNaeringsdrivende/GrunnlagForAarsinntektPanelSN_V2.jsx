@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -113,7 +113,7 @@ const createInntektRows = (pgiVerdier) => (
  * Presentasjonskomponent. Viser PGI-verdier for selvstendig næringsdrivende.
  * Vises også hvis status er en kombinasjonsstatus som inkluderer selvstendig næringsdrivende.
  */
-export const GrunnlagForAarsinntektPanelSN = ({
+export const GrunnlagForAarsinntektPanelSN2 = ({
   alleAndeler,
 }) => {
   const snAndel = alleAndeler.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
@@ -122,9 +122,9 @@ export const GrunnlagForAarsinntektPanelSN = ({
   }
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
   return (
-    <Panel>
+    <Panel className={beregningStyles.panel}>
       <Element className={beregningStyles.semiBoldText}>
-        <FormattedHTMLMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
       <VerticalSpacer eightPx />
       {createHeaderRow(pgiVerdier)}
@@ -135,8 +135,8 @@ export const GrunnlagForAarsinntektPanelSN = ({
   );
 };
 
-GrunnlagForAarsinntektPanelSN.propTypes = {
+GrunnlagForAarsinntektPanelSN2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-export default GrunnlagForAarsinntektPanelSN;
+export default GrunnlagForAarsinntektPanelSN2;

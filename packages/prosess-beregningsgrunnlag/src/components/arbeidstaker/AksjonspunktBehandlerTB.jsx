@@ -27,6 +27,7 @@ import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
+
 const formPrefix = 'inntektField';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
@@ -169,6 +170,7 @@ const createSummaryTableRow = (listOfBruttoPrPeriode) => (
     ))}
   </TableRow>
 );
+
 const createPerioderRow = (relevantePerioder) => (
 
   <TableRow key="PeriodeHeaderRad">
@@ -186,14 +188,12 @@ const createPerioderRow = (relevantePerioder) => (
 
 
 );
-const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPeriode) => {
+const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
   const rows = [];
-  const perioder = listOfBruttoPrPeriode.slice(1);
   rows.push(createPerioderRow(perioder));
   rows.push(
     <TableRow key="Tabletop">
       <TableColumn key="ombergenetAarBlank" />
-
       {perioder.map((element, index) => (
         <React.Fragment key={`PeriodeWrapper${index + 1}`}>
           <td key={`Col_Tittel_${element.periode}`}>
@@ -250,29 +250,34 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, listOfBruttoPrPer
 };
 
 
-const AksjonspunktBehandlerTidsbegrenset = ({
+export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   readOnly,
   tableData,
   isAksjonspunktClosed,
   bruttoPrPeriodeList,
+}) => {
+  const perioder = bruttoPrPeriodeList.slice(1);
+  return (
+    <>
+      <Table
+        noHover
+        classNameTable={styles.inntektTableTB}
+      >
+        {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, perioder)}
+      </Table>
 
-}) => (
-  <Table
-    noHover
-    classNameTable={styles.inntektTableTB}
-  >
-    {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, bruttoPrPeriodeList)}
-  </Table>
-);
+    </>
+  );
+};
 
-AksjonspunktBehandlerTidsbegrenset.propTypes = {
+AksjonspunktBehandlerTidsbegrensetImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   tableData: PropTypes.shape().isRequired,
   isAksjonspunktClosed: PropTypes.bool,
   bruttoPrPeriodeList: PropTypes.arrayOf(PropTypes.shape()),
 };
 
-AksjonspunktBehandlerTidsbegrenset.defaultProps = {
+AksjonspunktBehandlerTidsbegrensetImpl.defaultProps = {
   isAksjonspunktClosed: false,
   bruttoPrPeriodeList: undefined,
 };
@@ -344,6 +349,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+const AksjonspunktBehandlerTidsbegrenset = connect(mapStateToProps)(AksjonspunktBehandlerTidsbegrensetImpl);
 
 AksjonspunktBehandlerTidsbegrenset.buildInitialValues = (allePerioder) => {
   const initialValues = {};
@@ -381,4 +387,4 @@ AksjonspunktBehandlerTidsbegrenset.transformValues = (values, perioder) => {
   return fastsattePerioder;
 };
 
-export default connect(mapStateToProps)(injectIntl(AksjonspunktBehandlerTidsbegrenset));
+export default injectIntl(AksjonspunktBehandlerTidsbegrenset);

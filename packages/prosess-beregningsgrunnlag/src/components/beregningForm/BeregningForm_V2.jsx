@@ -15,15 +15,13 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
-import SkjeringspunktOgStatusPanel, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel';
-import SkjeringspunktOgStatusPanelV2 from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
-import Beregningsgrunnlag, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from '../beregningsgrunnlagPanel/Beregningsgrunnlag';
-import VurderOgFastsettSN from '../selvstendigNaeringsdrivende/VurderOgFastsettSN';
-import GrunnlagForAarsinntektPanelFL from '../frilanser/GrunnlagForAarsinntektPanelFL';
-import GrunnlagForAarsinntektPanelAT from '../arbeidstaker/GrunnlagForAarsinntektPanelAT';
-import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
+import SkjeringspunktOgStatusPanel2, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
+import VurderOgFastsettSN2 from '../selvstendigNaeringsdrivende/VurderOgFastsettSN_V2';
+import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
+import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
+import AksjonsbehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
-import Beregningsgrunnlag2 from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
+import Beregningsgrunnlag2, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
@@ -67,17 +65,6 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
     default:
       return 'Beregningsgrunnlag.Helptext.Ukjent';
   }
-};
-
-const findSammenligningsgrunnlagTekst = (relevanteStatuser) => {
-  const tekster = [];
-  if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.OppgittInntekt');
-  } else {
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sammenligningsgrunnlag');
-    tekster.push('Beregningsgrunnlag.Inntektsopplysninger.Sum12Mnd');
-  }
-  return tekster;
 };
 
 const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
@@ -132,12 +119,12 @@ const buildInitialValues = createSelector(
     const frilanserAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
     const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
     return {
-      ...Beregningsgrunnlag.buildInitialValues(gjeldendeAksjonspunkter),
-      ...FastsettInntektTidsbegrenset.buildInitialValues(allePerioder),
-      ...VurderOgFastsettSN.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
-      ...GrunnlagForAarsinntektPanelFL.buildInitialValues(frilanserAndeler),
-      ...GrunnlagForAarsinntektPanelAT.buildInitialValues(arbeidstakerAndeler),
-      ...SkjeringspunktOgStatusPanel.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
+      ...Beregningsgrunnlag2.buildInitialValues(gjeldendeAksjonspunkter),
+      ...AksjonsbehandlerTB.buildInitialValues(allePerioder),
+      ...VurderOgFastsettSN2.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
+      ...GrunnlagForAarsinntektPanelFL2.buildInitialValues(frilanserAndeler),
+      ...GrunnlagForAarsinntektPanelAT2.buildInitialValues(arbeidstakerAndeler),
+      ...SkjeringspunktOgStatusPanel2.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
     };
   },
 );
@@ -156,14 +143,14 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
     aksjonspunkter.push(vurderDekningsgradAksjonspunkt);
   }
   if (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter)) {
-    return aksjonspunkter.concat(GrunnlagForAarsinntektPanelAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
+    return aksjonspunkter.concat(GrunnlagForAarsinntektPanelAT2.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
   }
   if (harAksjonspunkt(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)
     || harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
-    return aksjonspunkter.concat(VurderOgFastsettSN.transformValues(values, gjeldendeAksjonspunkter));
+    return aksjonspunkter.concat(VurderOgFastsettSN2.transformValues(values, gjeldendeAksjonspunkter));
   }
   if (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD, gjeldendeAksjonspunkter)) {
-    return aksjonspunkter.concat(Beregningsgrunnlag.transformValues(values, allePerioder));
+    return aksjonspunkter.concat(Beregningsgrunnlag2.transformValues(values, allePerioder));
   }
   return aksjonspunkter;
 };
@@ -200,7 +187,7 @@ const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspu
  * relatert til beregning.
  *
  */
-export const BeregningFormImpl = ({
+export const BeregningFormImpl2 = ({
   readOnly,
   beregningsgrunnlag,
   gjeldendeAksjonspunkter,
@@ -210,18 +197,19 @@ export const BeregningFormImpl = ({
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  isVilkarOppfylt,
+  vilkaarBG,
   ...formProps
 }) => {
   const {
     dekningsgrad, skjaeringstidspunktBeregning,
     årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
+
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
-  const tisdBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
+  const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
 
 
   return (
@@ -248,7 +236,7 @@ export const BeregningFormImpl = ({
       </Row>
       <Row>
         <Column xs="12" md="6">
-          <SkjeringspunktOgStatusPanelV2
+          <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
             alleKodeverk={alleKodeverk}
@@ -273,11 +261,9 @@ export const BeregningFormImpl = ({
           )}
         </Column>
         <Column xs="12" md="6">
-
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
-            sammenligningsgrunnlagTekst={findSammenligningsgrunnlagTekst(relevanteStatuser)}
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
@@ -294,17 +280,16 @@ export const BeregningFormImpl = ({
             alleKodeverk={alleKodeverk}
             aksjonspunkter={gjeldendeAksjonspunkter}
             relevanteStatuser={relevanteStatuser}
-            tisdBegrensetInntekt={tisdBegrensetInntekt}
+            tidsBegrensetInntekt={tidsBegrensetInntekt}
           />
           )}
-
           <BeregningsresultatTable2
             halvGVerdi={beregningsgrunnlag.halvG}
             beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
             ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
             ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
             ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
-            isVilkarOppfylt={isVilkarOppfylt}
+            vilkaarBG={vilkaarBG}
             aksjonspunkter={gjeldendeAksjonspunkter}
           />
 
@@ -315,7 +300,7 @@ export const BeregningFormImpl = ({
   );
 };
 
-BeregningFormImpl.propTypes = {
+BeregningFormImpl2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
@@ -325,7 +310,7 @@ BeregningFormImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  isVilkarOppfylt: PropTypes.bool.isRequired,
+  vilkaarBG: PropTypes.shape().isRequired,
 };
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
@@ -343,8 +328,8 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const BeregningForm = connect(mapStateToPropsFactory)(behandlingForm({
+const BeregningForm2 = connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
-})(BeregningFormImpl));
+})(BeregningFormImpl2));
 
-export default BeregningForm;
+export default BeregningForm2;

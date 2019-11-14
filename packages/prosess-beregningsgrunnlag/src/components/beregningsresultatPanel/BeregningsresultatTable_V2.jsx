@@ -11,11 +11,37 @@ import { Column, Row } from 'nav-frontend-grid';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 
-
-const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
-  const rowsAndeler = listofAndeler.map((entry, index) => (
+const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
+  <Row key={`index${index + 1}`}>
+    <Column xs="8" key={`index2${index + 1}`}>
+      <Normaltekst>{entry[0]}</Normaltekst>
+    </Column>
+    {!ikkeVurdert && (
+      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+        <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
+      </Column>
+    )}
+    {ikkeVurdert && (
+      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+        <Normaltekst className={beregningStyles.redError}>Må fastsettes</Normaltekst>
+      </Column>
+    )}
+  </Row>
+))
+);
+const lineRow = () => (
+  <Row key="separator">
+    <Column xs="12">
+      <hr />
+    </Column>
+  </Row>
+);
+const createRowsRedusert = (listOfEntries) => (
+  listOfEntries.map((entry, index) => (
     <Row key={`index${index + 1}`}>
       <Column xs="8" key={`index2${index + 1}`}>
         <Normaltekst>{entry[0]}</Normaltekst>
@@ -24,55 +50,58 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     </Row>
-  ));
-  const lineRow = (
-    <Row key="separator">
-      <Column xs="12">
-        <hr />
+  ))
+);
+const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
+  <>
+    <Row key="beregningOppsummering">
+      <Column xs="8">
+        <Normaltekst>
+          <span className={beregningStyles.semiBoldText}>
+            { !ikkeVurdert && (
+            <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats" values={{ dagSats: listOfEntries[listOfEntries.length - 1][1] }} />
+            )}
+            { ikkeVurdert && (
+              <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
+            )}
+          </span>
+
+
+        </Normaltekst>
       </Column>
-    </Row>
-  );
-  const rowsRedusert = listOfEntries.map((entry, index) => (
-    <Row key={`index${index + 1}`}>
-      <Column xs="8" key={`index2${index + 1}`}>
-        <Normaltekst>{entry[0]}</Normaltekst>
-      </Column>
-      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
-        <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
-      </Column>
-    </Row>
-  ));
-  const summaryRow = (
-    <>
-      <Row key="beregningOppsummering">
-        <Column xs="8">
-          <Normaltekst>
-            <span className={beregningStyles.semiBoldText}>
-              <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats" />
-            </span>
-            <span>
-              {` (${listOfEntries[listOfEntries.length - 1][1]}/260)`}
-            </span>
-          </Normaltekst>
+      {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
+        <Column xs="4" key={`index${index + 1}`} className={beregningStyles.rightAlignElement}>
+          <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
         </Column>
-        {listOfDagsatser.map((dag, index) => (
-          <Column xs="4" key={`index${index + 1}`} className={beregningStyles.rightAlignElement}>
-            <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
-          </Column>
-        ))}
-      </Row>
-    </>
-  );
+      ))}
+      {ikkeVurdert && (
+        <Column xs="4" className={beregningStyles.rightAlignElement}>
+          <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
+        </Column>
+      )}
+    </Row>
+  </>
+);
+const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
   const rows = [];
 
   if (listofAndeler && listofAndeler.length > 1) {
-    rows.push(rowsAndeler);
-    rows.push(lineRow);
+    rows.push(createRowsAndeler(listofAndeler));
+    rows.push(lineRow());
   }
 
-  rows.push(rowsRedusert);
+  rows.push(createRowsRedusert(listOfEntries));
   rows.push(lineRow);
-  rows.push(summaryRow);
+  rows.push(summaryRow(listOfDagsatser, listOfEntries));
+  return rows;
+};
+const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
+  const rows = [];
+  if (listofAndeler && listofAndeler.length > 0) {
+    rows.push(createRowsAndeler(listofAndeler, true));
+    rows.push(lineRow());
+  }
+  rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
   return rows;
 };
 
@@ -164,24 +193,26 @@ const createBeregningTableData = createSelector(
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
 const BeregningsresultatTable2 = ({
-  isVilkarOppfylt,
+  vilkaarBG,
   halvGVerdi,
   tableData,
 }) => (
-  <Panel>
+  <Panel className={beregningStyles.panel}>
     <Element>
       <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
     </Element>
-    { isVilkarOppfylt
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
       && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-    { !isVilkarOppfylt
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
+      && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
       && (
-      <Normaltekst>
-        <FormattedHTMLMessage
-          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt"
-          values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
-        />
-      </Normaltekst>
+        <Normaltekst>
+          <FormattedHTMLMessage
+            id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt"
+            values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
+          />
+        </Normaltekst>
       )}
 
   </Panel>
@@ -189,7 +220,7 @@ const BeregningsresultatTable2 = ({
 
 BeregningsresultatTable2.propTypes = {
   halvGVerdi: PropTypes.number,
-  isVilkarOppfylt: PropTypes.bool.isRequired,
+  vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   tableData: PropTypes.shape().isRequired,
 
 };

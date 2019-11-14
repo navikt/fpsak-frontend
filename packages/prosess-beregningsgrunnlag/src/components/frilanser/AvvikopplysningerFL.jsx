@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import styles from '../fellesPaneler/avviksopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
@@ -60,7 +59,7 @@ const AvviksopplysningerFL = ({
           </Normaltekst>
         </Column>
         <Column xs="3">
-          <Normaltekst className={`${avvik > 25 ? styles.redError : ''} ${beregningStyles.semiBoldText}`}>
+          <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
             {`${avvik}%`}
           </Normaltekst>
         </Column>

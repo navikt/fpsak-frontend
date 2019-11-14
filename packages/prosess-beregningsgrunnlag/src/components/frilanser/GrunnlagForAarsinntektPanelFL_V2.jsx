@@ -21,12 +21,13 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   alleAndeler,
   isKombinasjonsstatus,
 }) => {
+  console.log('GrunnlagForAarsinntektPanelFL2 props', alleAndeler, isKombinasjonsstatus); // eslint-disable-line no-console
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].beregningsgrunnlagFom;
   return (
 
-    <Panel>
+    <Panel className={beregningStyles.panel}>
       { isKombinasjonsstatus
       && (
 
@@ -76,7 +77,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
         <Column xs="2">
-          {createExternalLink('AI')}
+          {createExternalLink('AI', 'AI')}
         </Column>
       </Row>
     </Panel>

@@ -6,6 +6,7 @@ import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -16,13 +17,16 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
 const AvviksopplysningerPanel = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder,
 }) => (
-  <Panel>
+  <Panel className={beregningStyles.panel}>
     <Element>
       <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
     </Element>
-    <VerticalSpacer sixteenPx />
+    <VerticalSpacer eightPx />
     {relevanteStatuser.isArbeidstaker && (
       <AvviksopplysningerAT beregnetAarsinntekt={beregnetAarsinntekt} avvik={avvik} sammenligningsgrunnlag={sammenligningsgrunnlag} />
+    )}
+    {relevanteStatuser.isArbeidstaker && relevanteStatuser.isSelvstendigNaeringsdrivende && (
+    <VerticalSpacer eightPx />
     )}
     {relevanteStatuser.isSelvstendigNaeringsdrivende && (
     <AvviksopplysningerSN

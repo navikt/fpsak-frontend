@@ -8,8 +8,6 @@ import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/
 import Panel from 'nav-frontend-paneler';
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { Column, Row } from 'nav-frontend-grid';
@@ -53,7 +51,7 @@ const createArbeidsPeriodeText = (arbeidsForhold) => {
   return periodeArr.join(' ');
 };
 
-const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn) => {
+const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
   const rows = relevanteAndeler.map((andel, index) => (
@@ -84,7 +82,6 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
     </Row>
   ));
   if (relevanteAndeler.length > 1) {
-    console.log(beregnetAarsinntekt, beregnetMaanedsinntekt);
     const summaryRow = (
       <React.Fragment key="bruttoBeregningsgrunnlag">
         <Row>
@@ -128,13 +125,12 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   alleAndeler,
   allePerioder,
   bruttoFastsattInntekt,
-  isAksjonspunktClosed,
   getKodeverknavn,
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   return (
     <>
-      <Panel>
+      <Panel className={beregningStyles.panel}>
         <Normaltekst className={beregningStyles.semiBoldText}>
           <FormattedHTMLMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           {createExternalLink('Aa')}
@@ -155,7 +151,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           </Column>
           <Column xs="2" key="ATempthy3" />
         </Row>
-        {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, isAksjonspunktClosed, getKodeverknavn)}
+        {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn)}
 
       </Panel>
       <NaturalytelsePanel
@@ -169,7 +165,6 @@ GrunnlagForAarsinntektPanelATImpl2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   bruttoFastsattInntekt: PropTypes.number,
-  isAksjonspunktClosed: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   getKodeverknavn: PropTypes.func.isRequired,
 };
@@ -182,10 +177,8 @@ GrunnlagForAarsinntektPanelATImpl2.defaultProps = {
 const mapStateToProps = (state, initialProps) => {
   const getKodeverknavn = getKodeverknavnFn(initialProps.alleKodeverk, kodeverkTyper);
   const {
-    alleAndeler, aksjonspunkter, behandlingId, behandlingVersjon, readOnlySubmitButton,
+    alleAndeler, behandlingId, behandlingVersjon, readOnlySubmitButton,
   } = initialProps;
-  const aksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
-  const closedAps = aksjonspunkt ? !isAksjonspunktOpen(aksjonspunkt.status.kode) : false;
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const overstyrteInntekter = relevanteAndeler.map((inntekt, index) => {
     const overstyrtInntekt = behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(
@@ -195,7 +188,6 @@ const mapStateToProps = (state, initialProps) => {
   });
   const bruttoFastsattInntekt = overstyrteInntekter.reduce((a, b) => a + b);
   return {
-    isAksjonspunktClosed: closedAps,
     bruttoFastsattInntekt,
     getKodeverknavn,
     behandlingId,
@@ -215,28 +207,5 @@ GrunnlagForAarsinntektPanelAT2.buildInitialValues = (alleAndeler) => {
   return initialValues;
 };
 
-GrunnlagForAarsinntektPanelAT2.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
-  let inntektPrAndelList = null;
-  let frilansInntekt = null;
-  if (relevanteStatuser.isArbeidstaker) {
-    inntektPrAndelList = finnAndelerSomSkalVises(alleAndelerIForstePeriode)
-      .map(({ andelsnr }, index) => {
-        const overstyrtInntekt = values[`inntekt${index}`];
-        return {
-          inntekt: (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt),
-          andelsnr,
-        };
-      });
-  }
-  if (relevanteStatuser.isFrilanser) {
-    frilansInntekt = removeSpacesFromNumber(values.inntektFrilanser);
-  }
-  return {
-    kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
-    begrunnelse: values.ATFLVurdering,
-    inntektFrilanser: frilansInntekt,
-    inntektPrAndelList,
-  };
-};
 
 export default injectIntl(GrunnlagForAarsinntektPanelAT2);

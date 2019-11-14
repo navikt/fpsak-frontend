@@ -12,8 +12,7 @@ import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/Grunn
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel from '../militær/MilitaerPanel';
 import styles from './beregningsgrunnlag.less';
-
-import FastsettInntektTidsbegrenset from '../arbeidstaker/FastsettInntektTidsbegrenset';
+import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
@@ -101,21 +100,21 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <div>
           {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
-            <GrunnlagForAarsinntektPanelAT2
-              alleAndeler={alleAndelerIForstePeriode}
-              aksjonspunkter={gjeldendeAksjonspunkter}
-              allePerioder={allePerioder}
-              readOnly={readOnly}
-              isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-              alleKodeverk={alleKodeverk}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-            />
+          <GrunnlagForAarsinntektPanelAT2
+            alleAndeler={alleAndelerIForstePeriode}
+            aksjonspunkter={gjeldendeAksjonspunkter}
+            allePerioder={allePerioder}
+            readOnly={readOnly}
+            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+            alleKodeverk={alleKodeverk}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+          />
+
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
             <>
-
               <GrunnlagForAarsinntektPanelAT2
                 alleAndeler={alleAndelerIForstePeriode}
                 aksjonspunkter={gjeldendeAksjonspunkter}
@@ -162,7 +161,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
  * Presentasjonsskomponent. Holder på alle komponenter relatert til å vise beregningsgrunnlaget til de forskjellige
  * statusene og viser disse samlet i en faktagruppe.
  */
-export const BeregningsgrunnlagImpl = ({
+export const BeregningsgrunnlagImpl2 = ({
   readOnly,
   relevanteStatuser,
   gjeldendeAksjonspunkter,
@@ -194,7 +193,7 @@ export const BeregningsgrunnlagImpl = ({
   );
 };
 
-BeregningsgrunnlagImpl.propTypes = {
+BeregningsgrunnlagImpl2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
@@ -205,13 +204,13 @@ BeregningsgrunnlagImpl.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
 };
 
-BeregningsgrunnlagImpl.defaultProps = {
+BeregningsgrunnlagImpl2.defaultProps = {
   allePerioder: undefined,
 };
 
-const Beregningsgrunnlag = BeregningsgrunnlagImpl;
+const Beregningsgrunnlag2 = BeregningsgrunnlagImpl2;
 
-Beregningsgrunnlag.buildInitialValues = (gjeldendeAksjonspunkter) => {
+Beregningsgrunnlag2.buildInitialValues = (gjeldendeAksjonspunkter) => {
   const aksjonspunktATFL = finnAksjonspunktForATFL(gjeldendeAksjonspunkter);
   const aksjonspunktVurderDekninsgrad = finnAksjonspunktForVurderDekningsgrad(gjeldendeAksjonspunkter);
   return {
@@ -220,11 +219,11 @@ Beregningsgrunnlag.buildInitialValues = (gjeldendeAksjonspunkter) => {
   };
 };
 
-Beregningsgrunnlag.transformValues = (values, allePerioder) => ({
+Beregningsgrunnlag2.transformValues = (values, allePerioder) => ({
   kode: FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   begrunnelse: values.ATFLVurdering,
-  fastsatteTidsbegrensedePerioder: FastsettInntektTidsbegrenset.transformValues(values, allePerioder),
+  fastsatteTidsbegrensedePerioder: AksjonspunktBehandlerTB.transformValues(values, allePerioder),
   frilansInntekt: values.inntektFrilanser ? removeSpacesFromNumber(values.inntektFrilanser) : null,
 });
 
-export default Beregningsgrunnlag;
+export default Beregningsgrunnlag2;

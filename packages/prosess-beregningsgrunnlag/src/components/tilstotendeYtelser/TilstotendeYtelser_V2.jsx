@@ -84,7 +84,7 @@ const TilstotendeYtelser = ({
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   const skalViseOppjustertGrunnlag = relevanteStatuser.isSelvstendigNaeringsdrivende && !gjelderBesteberegning;
   return (
-    <Panel>
+    <Panel className={beregningStyles.panel}>
       {relevanteStatuser.isKombinasjonsstatus
       && (
         <>

@@ -15,8 +15,8 @@ import {
   isStatusSNOrKombinasjon,
   isStatusTilstotendeYtelse,
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import BeregningForm from './beregningForm/BeregningForm_V2';
+
+import BeregningForm2 from './beregningForm/BeregningForm_V2';
 import GraderingUtenBG from './gradering/GraderingUtenBG';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
@@ -57,11 +57,6 @@ const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
 
 const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
 
-const getErBgVilkarOppfylt = (vilkar) => {
-  const bgVilkar = getBGVilkar(vilkar);
-  return bgVilkar ? bgVilkar.vilkarStatus.kode === vilkarUtfallType.OPPFYLT : false;
-};
-
 
 const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspunkter
   ? aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)
@@ -73,7 +68,7 @@ const getAksjonspunktForGraderingPaaAndelUtenBG = (aksjonspunkter) => (aksjonspu
  * Presentasjonskomponent. Holder på alle komponenter relatert til beregning av foreldrepenger.
  * Finner det gjeldende aksjonspunktet hvis vi har et.
  */
-const BeregningFP = ({
+const BeregningFP2 = ({
   behandling,
   beregningsgrunnlag,
   aksjonspunkter,
@@ -88,11 +83,11 @@ const BeregningFP = ({
   }
   const gjeldendeAksjonspunkter = getAksjonspunkterForBeregning(aksjonspunkter);
   const relevanteStatuser = getRelevanteStatuser(beregningsgrunnlag);
-  const isVilkarOppfylt = getErBgVilkarOppfylt(vilkar);
+  const vilkaarBG = getBGVilkar(vilkar);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
   return (
     <FadingPanel>
-      <BeregningForm
+      <BeregningForm2
         readOnly={readOnly}
         beregningsgrunnlag={beregningsgrunnlag}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -102,8 +97,7 @@ const BeregningFP = ({
         alleKodeverk={alleKodeverk}
         behandlingId={behandling.id}
         behandlingVersjon={behandling.versjon}
-        isVilkarOppfylt={isVilkarOppfylt}
-        vilkar={vilkar}
+        vilkaarBG={vilkaarBG}
       />
 
       {sokerHarGraderingPaaAndelUtenBG
@@ -123,7 +117,7 @@ const BeregningFP = ({
   );
 };
 
-BeregningFP.propTypes = {
+BeregningFP2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
@@ -134,8 +128,8 @@ BeregningFP.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType,
 };
 
-BeregningFP.defaultProps = {
+BeregningFP2.defaultProps = {
   beregningsgrunnlag: undefined,
 };
 
-export default BeregningFP;
+export default BeregningFP2;

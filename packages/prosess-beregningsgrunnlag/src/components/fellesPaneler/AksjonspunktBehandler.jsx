@@ -52,9 +52,14 @@ const AksjonspunktBehandler = ({
   allePerioder,
   alleKodeverk,
   relevanteStatuser,
-  tisdBegrensetInntekt,
+  tidsBegrensetInntekt,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+  if (!aksjonspunkter || aksjonspunkter.length === 0) {
+    return null;
+  }
+  console.log('aksjonspunkter', aksjonspunkter); // eslint-disable-line no-console
+  console.log('tidsBegrensetInntekt', tidsBegrensetInntekt); // eslint-disable-line no-console
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : undefined}>
@@ -66,7 +71,7 @@ const AksjonspunktBehandler = ({
           </Column>
         </Row>
         <VerticalSpacer eightPx />
-        {tisdBegrensetInntekt && (
+        {tidsBegrensetInntekt && (
         <AksjonspunktBehandlerTB
           readOnly={readOnly}
           readOnlySubmitButton={readOnlySubmitButton}
@@ -78,7 +83,7 @@ const AksjonspunktBehandler = ({
           aksjonspunkter={aksjonspunkter}
         />
         )}
-        {!tisdBegrensetInntekt && (
+        {!tidsBegrensetInntekt && relevanteStatuser.isArbeidstaker && (
         <AksjonspunktBehandlerAT
           readOnly={readOnly}
           allePerioder={allePerioder}
@@ -86,7 +91,7 @@ const AksjonspunktBehandler = ({
           alleKodeverk={alleKodeverk}
         />
         )}
-        {relevanteStatuser.isFrilanser && (
+        {!tidsBegrensetInntekt && relevanteStatuser.isFrilanser && (
         <AksjonspunktBehandlerFT
           readOnly={readOnly}
           allePerioder={allePerioder}
@@ -108,25 +113,19 @@ const AksjonspunktBehandler = ({
             </div>
           </Column>
         </Row>
-
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="12">
-            {aksjonspunkter && aksjonspunkter.length > 0
-          && (
-            <>
-              <VerticalSpacer sixteenPx />
-              <BehandlingspunktSubmitButton
-                formName={formName}
-                behandlingId={behandlingId}
-                behandlingVersjon={behandlingVersjon}
-                isReadOnly={readOnly}
-                isSubmittable={!readOnlySubmitButton}
-                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-                isBehandlingFormDirty={isBehandlingFormDirty}
-                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-              />
-            </>
-          )}
+            <BehandlingspunktSubmitButton
+              formName={formName}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
           </Column>
         </Row>
         <VerticalSpacer sixteenPx />
@@ -165,7 +164,7 @@ AksjonspunktBehandler.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   formName: PropTypes.string.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  tisdBegrensetInntekt: PropTypes.bool.isRequired,
+  tidsBegrensetInntekt: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
 };
