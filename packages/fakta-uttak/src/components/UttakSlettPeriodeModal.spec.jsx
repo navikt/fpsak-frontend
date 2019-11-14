@@ -59,12 +59,12 @@ describe('<UttakSlettPeriodeModal>', () => {
     const okKnapp = wrapper.find(Hovedknapp);
     expect(okKnapp).to.have.length(1);
     expect(okKnapp.prop('mini')).is.true;
-    expect(okKnapp.childAt(0).text()).is.eql('OK');
+    expect(okKnapp.childAt(0).text()).is.eql('UttakInfoPanel.Ok');
 
     const avbrytKnapp = wrapper.find(Knapp);
     expect(avbrytKnapp).to.have.length(1);
     expect(avbrytKnapp.prop('mini')).is.true;
-    expect(avbrytKnapp.childAt(0).text()).is.eql('Avbryt');
+    expect(avbrytKnapp.childAt(0).text()).is.eql('UttakInfoPanel.Avbryt');
   });
   it('skal rendre lukket modal', () => {
     const wrapper = shallowWithIntl(<UttakSlettPeriodeModalImpl
