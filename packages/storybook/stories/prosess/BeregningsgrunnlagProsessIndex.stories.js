@@ -120,7 +120,6 @@ const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegr
     naturalytelseBortfaltPrÅr: null,
     naturalytelseTilkommetPrÅr: null,
   },
-  fastsattAvSaksbehandler: null,
   lagtTilAvSaksbehandler: false,
   belopPrMndEtterAOrdningen: 30000,
   belopPrAarEtterAOrdningen: 360000,
