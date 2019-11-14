@@ -14,19 +14,20 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
+import messages from '../../../i18n/nb_NO';
 
 const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`index${index + 1}`}>
-    <Column xs="8" key={`index2${index + 1}`}>
+    <Column xs="9" key={`index2${index + 1}`}>
       <Normaltekst>{entry[0]}</Normaltekst>
     </Column>
     {!ikkeVurdert && (
-      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="3" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     )}
     {ikkeVurdert && (
-      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="3" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst className={beregningStyles.redError}>Må fastsettes</Normaltekst>
       </Column>
     )}
@@ -129,12 +130,11 @@ const createBeregningTableData = createSelector(
   (allePerioder, ledetekstBrutto, ledetekstRedusert, ledetekstAvkortet) => {
     const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
     const bruttoRad = [ledetekstBrutto];
-    const atRad = ['Beregningsgrunnlag - omregnet årsinntekt arbeid'];
-    const flRad = ['Beregningsgrunnlag - omregnet årsinntekt frilans'];
-    const snRad = ['Beregningsgrunnlag - omregnet årsinntekt sn'];
-    const aapRad = ['Beregningsgrunnlag - omregnet årsinntekt aap'];
-    const dpRad = ['Beregningsgrunnlag - omregnet årsinntekt dagpenger'];
-
+    const atRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.AT']];
+    const flRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.FL']];
+    const snRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.SN']];
+    const aapRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.aap']];
+    const dpRad = [messages['Beregningsgrunnlag.Beregningsresultat.Dagpenger']];
 
     // const bruttoRad = [`<Column xs="8"> ${ledetekstBrutto} </Column>`];
     const avkortetRad = [ledetekstAvkortet];

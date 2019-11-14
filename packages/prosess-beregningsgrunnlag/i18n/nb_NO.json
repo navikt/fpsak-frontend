@@ -21,6 +21,14 @@
   "Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt": "Rapportert årsinntekt",
   "Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik": "Beregnet avvik ",
 
+  "Beregningsgrunnlag.Beregningsresultat.Dagpenger": "Beregningsgrunnlag - Dagpenger",
+  "Beregningsgrunnlag.Beregningsresultat.Fastsatt.AT": "Beregningsgrunnlag - fastsatt årsinntekt",
+  "Beregningsgrunnlag.Beregningsresultat.Omberegnet.AT": "Beregningsgrunnlag - omberegnet årsinntekt",
+  "Beregningsgrunnlag.Beregningsresultat.Fastsatt.FL": "Beregningsgrunnlag - fastsatt årsinntekt frilans",
+  "Beregningsgrunnlag.Beregningsresultat.Omberegnet.FL": "Beregningsgrunnlag - omberegnet årsinntekt frilans",
+
+  "Beregningsgrunnlag.Beregningsresultat.Fastsatt.SN": "Beregningsgrunnlag - fastsatt årsinntekt",
+
   "Beregningsgrunnlag.Inntektsopplysninger.Avvik": "Beregnet avvik er {verdi}%",
   "Beregningsgrunnlag.Inntektsopplysninger.Sammenligningsgrunnlag": "Sammenligningsgrunnlag",
   "Beregningsgrunnlag.Inntektsopplysninger.Sum12Mnd": "(Sum 12 mnd)",
