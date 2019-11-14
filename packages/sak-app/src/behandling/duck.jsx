@@ -11,7 +11,7 @@ const reducerName = 'behandling';
 /* Action types */
 const actionType = (name) => `${reducerName}/${name}`;
 const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
-const SET_BEHANDLING_INFO_HOLDER = actionType('SET_BEHANDLING_INFO_HOLDER');
+const OPPDATER_BEHANDLING_VERSJON = actionType('OPPDATER_BEHANDLING_VERSJON');
 const RESET_BEHANDLING_CONTEXT = actionType('RESET_BEHANDLING_CONTEXT');
 
 export const setSelectedBehandlingId = (behandlingId) => ({
@@ -19,9 +19,9 @@ export const setSelectedBehandlingId = (behandlingId) => ({
   data: behandlingId,
 });
 
-export const setBehandlingInfoHolder = (behandlingInfoHolder) => ({
-  type: SET_BEHANDLING_INFO_HOLDER,
-  data: behandlingInfoHolder,
+export const oppdaterBehandlingVersjon = (behandlingVersjon) => ({
+  type: OPPDATER_BEHANDLING_VERSJON,
+  data: behandlingVersjon,
 });
 
 export const resetBehandlingContext = () => ({
@@ -38,7 +38,7 @@ export const previewMessage = (erTilbakekreving, data) => (dispatch) => {
 /* Reducer */
 const initialState = {
   behandlingId: undefined,
-  behandlingInfoHolder: {},
+  behandlingVersjon: undefined,
 };
 
 export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
@@ -47,12 +47,12 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
       return {
         ...state,
         behandlingId: action.data,
-        behandlingInfoHolder: {},
+        behandlingVersjon: undefined,
       };
-    case SET_BEHANDLING_INFO_HOLDER:
+    case OPPDATER_BEHANDLING_VERSJON:
       return {
         ...state,
-        behandlingInfoHolder: action.data,
+        behandlingVersjon: action.data,
       };
     case RESET_BEHANDLING_CONTEXT:
       return initialState;
@@ -71,12 +71,7 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-
-// TODO (TOR) Fjern dette. Ikkje legg til fleire selectorar her. Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
-// Fjern:Start
-const getBehandlingInfoHolder = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingInfoHolder);
-export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], (data) => data.behandlingVersjon);
-// Fjern:Stopp
+export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
 
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],

@@ -176,8 +176,8 @@ const getInfoTextCode = createSelector(
   },
 );
 
-const isStatusFatterVedtak = createSelector([(ownProps) => ownProps.behandlingStatus], (behandlingstatus) => behandlingstatus
-  .kode === behandlingStatus.FATTER_VEDTAK);
+const isStatusFatterVedtak = createSelector([(ownProps) => ownProps.behandlingStatusKode], (behandlingStatusKode) => behandlingStatusKode
+=== behandlingStatus.FATTER_VEDTAK);
 
 const mapStateToProps = (state, ownProps) => {
   if (!ownProps.allAksjonspunktApproved) {

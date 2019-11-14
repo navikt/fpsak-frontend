@@ -14,7 +14,7 @@ import {
   DataFetcher, requireProps, featureToggle, BehandlingIdentifier,
 } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import TotrinnskontrollSakIndex, { FatterVedtakApprovalModal } from '@fpsak-frontend/sak-totrinnskontroll';
+import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import fpsakApi from '../../data/fpsakApi';
@@ -31,6 +31,7 @@ import {
   getBehandlingType,
   getBehandlingArsaker,
   getSelectedBehandlingId,
+  getBehandlingsresultat,
 } from '../../behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
 import { approve, resetApproval, getApproveFinished } from './duck';
@@ -183,14 +184,14 @@ export class ApprovalIndex extends Component {
                 behandlingVersjon={selectedBehandlingVersjon}
                 data={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
                 render={(modalProps) => (
-                  <FatterVedtakApprovalModal
+                  <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}
                     closeEvent={this.goToSearchPage}
                     allAksjonspunktApproved={allAksjonspunktApproved}
                     fagsakYtelseType={fagsakYtelseType}
                     erGodkjenningFerdig={erGodkjenningFerdig}
                     erKlageWithKA={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
-                    klageVurderingResultatNK={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
+                    klageVurderingResultatNK={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : false}
                     behandlingsresultat={behandlingsresultat}
                     behandlingId={behandlingId}
                     behandlingStatusKode={behandlingStatus.kode}

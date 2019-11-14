@@ -6,7 +6,7 @@ import { shallow } from 'enzyme';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FatterVedtakApprovalModal } from '@fpsak-frontend/sak-totrinnskontroll';
+import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
 
 import { ApprovalIndex } from './ApprovalIndex';
 
@@ -115,7 +115,7 @@ describe('<ApprovalIndex>', () => {
 
     wrapper.setState({ showBeslutterModal: true });
 
-    const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
+    const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModalSakIndex);
     expect(vedtakStatusModal).to.have.length(1);
   });
 

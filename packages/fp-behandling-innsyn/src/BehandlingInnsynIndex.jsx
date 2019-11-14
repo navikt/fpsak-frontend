@@ -8,7 +8,6 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from './selectors/innsynBehandlingSelectors';
-import FpInnsynBehandlingInfoSetter from './FpInnsynBehandlingInfoSetter';
 import BehandlingsprosessInnsynIndex from './behandlingsprosess/BehandlingsprosessInnsynIndex';
 import FaktaInnsynIndex from './fakta/FaktaInnsynIndex';
 import {
@@ -32,7 +31,7 @@ export const BehandlingInnsynIndex = ({
   behandlingId,
   behandlingIdentifier,
   behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -73,8 +72,8 @@ export const BehandlingInnsynIndex = ({
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={fpInnsynBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
+    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
   >
-    <FpInnsynBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessInnsynIndex />}
       faktaContent={<FaktaInnsynIndex />}
@@ -84,7 +83,7 @@ export const BehandlingInnsynIndex = ({
 
 BehandlingInnsynIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
