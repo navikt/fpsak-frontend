@@ -191,7 +191,6 @@ export class ApprovalIndex extends Component {
                     fagsakYtelseType={fagsakYtelseType}
                     erGodkjenningFerdig={erGodkjenningFerdig}
                     erKlageWithKA={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
-                    klageVurderingResultatNK={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : false}
                     behandlingsresultat={behandlingsresultat}
                     behandlingId={behandlingId}
                     behandlingStatusKode={behandlingStatus.kode}

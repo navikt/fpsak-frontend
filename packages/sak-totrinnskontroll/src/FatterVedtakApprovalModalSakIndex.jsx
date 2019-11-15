@@ -21,7 +21,6 @@ const FatterVedtakApprovalModalSakIndex = ({
   fagsakYtelseType,
   erGodkjenningFerdig,
   erKlageWithKA,
-  klageVurderingResultatNK,
   behandlingsresultat,
   behandlingId,
   behandlingStatusKode,
@@ -36,7 +35,6 @@ const FatterVedtakApprovalModalSakIndex = ({
       fagsakYtelseType={fagsakYtelseType}
       erGodkjenningFerdig={erGodkjenningFerdig}
       erKlageWithKA={erKlageWithKA}
-      klageVurderingResultatNK={klageVurderingResultatNK}
       behandlingsresultat={behandlingsresultat}
       behandlingId={behandlingId}
       behandlingStatusKode={behandlingStatusKode}
@@ -53,7 +51,6 @@ FatterVedtakApprovalModalSakIndex.propTypes = {
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   erGodkjenningFerdig: PropTypes.bool.isRequired,
   erKlageWithKA: PropTypes.bool,
-  klageVurderingResultatNK: PropTypes.bool,
   behandlingsresultat: PropTypes.shape().isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
@@ -63,7 +60,6 @@ FatterVedtakApprovalModalSakIndex.propTypes = {
 
 FatterVedtakApprovalModalSakIndex.defaultProps = {
   erKlageWithKA: undefined,
-  klageVurderingResultatNK: false,
   harSammeResultatSomOriginalBehandling: false,
 };
 

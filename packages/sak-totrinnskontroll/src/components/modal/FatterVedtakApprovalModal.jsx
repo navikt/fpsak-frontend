@@ -93,11 +93,6 @@ FatterVedtakApprovalModal.defaultProps = {
   resolveProsessAksjonspunkterSuccess: false,
 };
 
-export const isKlageWithKA = (klageVurderingResultatNK) => {
-  const meholdIKlageAvNK = klageVurderingResultatNK;
-  return meholdIKlageAvNK;
-};
-
 const isBehandlingsresultatOpphor = createSelector(
   [(ownProps) => ownProps.behandlingsresultat], (behandlingsresultat) => behandlingsresultat && behandlingsresultat.type.kode === behandlingResultatType.OPPHOR,
 );
@@ -105,11 +100,11 @@ const isBehandlingsresultatOpphor = createSelector(
 const getModalDescriptionTextCode = createSelector([
   isBehandlingsresultatOpphor,
   (ownProps) => ownProps.fagsakYtelseType,
-  (ownProps) => ownProps.klageVurderingResultatNK,
+  (ownProps) => ownProps.erKlageWithKA,
   (ownProps) => ownProps.behandlingTypeKode],
 (isOpphor, ytelseType, behandlingTypeKode) => {
   if (behandlingTypeKode === BehandlingType.KLAGE) {
-    if (isKlageWithKA(klageVurderingResultatNK)) {
+    if (erKlageWithKA) {
       return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
     }
     return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
@@ -136,17 +131,17 @@ const getInfoTextCode = createSelector(
     (ownProps) => ownProps.behandlingsresultat,
     (ownProps) => ownProps.harSammeResultatSomOriginalBehandling,
     (ownProps) => ownProps.fagsakYtelseType,
-    (ownProps) => ownProps.klageVurderingResultatNK,
+    (ownProps) => ownProps.erKlageWithKA,
     isBehandlingsresultatOpphor],
   (
     behandlingtypeKode, behandlingsresultat, harSammeResultatSomOriginalBehandling,
-    ytelseType, klageVurderingResultatNK, isOpphor,
+    ytelseType, erKlageWithKA, isOpphor,
   ) => {
     if (behandlingtypeKode === BehandlingType.TILBAKEKREVING) {
       return 'FatterVedtakApprovalModal.Tilbakekreving';
     }
     if (behandlingtypeKode === BehandlingType.KLAGE) {
-      if (isKlageWithKA(klageVurderingResultatNK)) {
+      if (erKlageWithKA) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
       }
       return 'FatterVedtakApprovalModal.ModalDescriptionKlage';
@@ -179,6 +174,7 @@ const getInfoTextCode = createSelector(
 const isStatusFatterVedtak = createSelector([(ownProps) => ownProps.behandlingStatusKode], (behandlingStatusKode) => behandlingStatusKode
 === behandlingStatus.FATTER_VEDTAK);
 
+// TODO (TOR) Fjern connect (brukar ikkje state)
 const mapStateToProps = (state, ownProps) => {
   if (!ownProps.allAksjonspunktApproved) {
     return {
