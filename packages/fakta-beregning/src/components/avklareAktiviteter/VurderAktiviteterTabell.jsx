@@ -11,10 +11,7 @@ import {
 import {
   Table, TableRow, TableColumn, PeriodLabel, EditedIcon,
 } from '@fpsak-frontend/shared-components';
-
 import { createVisningsnavnForAktivitet } from '../ArbeidsforholdHelper';
-
-
 import beregningAktivitetPropType from './beregningAktivitetPropType';
 
 import styles from './vurderAktiviteterTabell.less';
@@ -160,9 +157,6 @@ VurderAktiviteterTabell.propTypes = {
 };
 
 
-export const måHaMinstEnAktivitet = () => ([{ id: 'VurderAktiviteterTabell.VentelonnVartpenger.Validation.MåHaMinstEnAktivitet' }]);
-
-
 VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   const errors = {};
   let harError = false;
@@ -186,7 +180,7 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
     })
     .length > 0;
   if (!harAktiviteterSomSkalBrukes) {
-    return { _error: 'VurderAktiviteterTabell.VentelonnVartpenger.Validation.MåHaMinstEnAktivitet' };
+    return { _error: 'VurderAktiviteterTabell.Validation.MåHaMinstEnAktivitet' };
   }
   return errors;
 };
