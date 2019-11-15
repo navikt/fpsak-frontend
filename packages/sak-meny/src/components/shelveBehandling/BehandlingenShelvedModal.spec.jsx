@@ -20,12 +20,12 @@ describe('<BehandlingenShelvedModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('BehandlingenShelvedModal.ModalDescription');
+    expect(modal.prop('contentLabel')).to.eql('Behandlingen er henlagt');
 
     const okKnapp = modal.find('Hovedknapp');
     expect(okKnapp).to.have.length(1);
     expect(okKnapp.prop('mini')).is.true;
-    expect(okKnapp.childAt(0).text()).is.eql('BehandlingenShelvedModal.Ok');
+    expect(okKnapp.childAt(0).text()).is.eql('OK');
   });
 
   it('skal rendre lukket modal', () => {

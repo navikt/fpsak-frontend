@@ -45,7 +45,7 @@ describe('<CreateNewBehandlingModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).to.eql('CreateNewBehandlingModal.ModalDescription');
+    expect(modal.prop('contentLabel')).to.eql('Ny behandling');
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
   });

@@ -31,7 +31,7 @@ describe('<ChangeBehandlendeEnhetModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('ChangeBehandlendeEnhetModal.ModalDescription');
+    expect(modal.prop('contentLabel')).to.eql('Endre behandlende enhet');
 
     const button = wrapper.find('Hovedknapp');
     expect(button).to.have.length(1);

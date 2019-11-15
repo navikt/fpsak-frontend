@@ -81,7 +81,7 @@ describe('<Messages>', () => {
 
     const previewLink = wrapper.find('a');
     expect(previewLink).to.have.length(1);
-    expect(previewLink.text()).to.eql('Messages.Preview');
+    expect(previewLink.text()).to.eql('Forhåndsvis');
 
     expect(previewEventCallback.called).is.false;
     previewLink.simulate('click', { preventDefault: sinon.spy() });
