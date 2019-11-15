@@ -4,8 +4,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 import { isObject } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FlexColumn, FlexContainer, FlexRow } from '../../../../shared-components/src/flexGrid';
-import Image from '../../../../shared-components/src/Image';
+import {
+  FlexColumn, FlexContainer, FlexRow, Image,
+} from '@fpsak-frontend/shared-components';
 
 import styles from './aksjonspunktHelpText_V2.less';
 

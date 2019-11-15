@@ -35,8 +35,8 @@ const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((en
   </Row>
 ))
 );
-const lineRow = () => (
-  <Row key="separator">
+const lineRow = (key) => (
+  <Row key={key || 'separator'}>
     <Column xs="12">
       <hr />
     </Column>
@@ -91,20 +91,18 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
 
   if (listofAndeler && listofAndeler.length > 0) {
     rows.push(createRowsAndeler(listofAndeler));
-    rows.push(lineRow());
+    rows.push(lineRow('andelLinje'));
   }
   rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow());
+  rows.push(lineRow('redusertLinje'));
   rows.push(summaryRow(listOfDagsatser, listOfEntries));
-  console.log('createTableRows returning rows', rows); // eslint-disable-line no-console
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
   const rows = [];
   if (listofAndeler && listofAndeler.length > 0) {
     rows.push(createRowsAndeler(listofAndeler, true));
-    rows.push(lineRow());
+    rows.push(lineRow('redusertAndelLinje'));
   }
   rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
   return rows;
@@ -145,8 +143,6 @@ const createBeregningTableData = createSelector(
     const redusertRad = [ledetekstRedusert];
     const dagsatserRad = [];
 
-
-    console.log('createBeregningTableData allePerioder', allePerioder); // eslint-disable-line no-console
     // Kun dersom periodeårsaken kan endre dagsatsen på beregningsresultatet er
     // vi interessert i å vise den tilhørende perioden i resultattabellen.
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
@@ -201,19 +197,16 @@ const BeregningsresultatTable2 = ({
   vilkaarBG,
   halvGVerdi,
   tableData,
-}) => {
-  console.log('BeregningsresultatTable2 vilkaarBG', vilkaarBG); // eslint-disable-line no-console
-  console.log('BeregningsresultatTable2 tableData', tableData); // eslint-disable-line no-console
-  return (
-    <Panel className={beregningStyles.panel}>
-      <Element>
-        <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
-      </Element>
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
+}) => (
+  <Panel className={beregningStyles.panel}>
+    <Element>
+      <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
+    </Element>
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
       && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
       && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
+    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
       && (
         <Normaltekst>
           <FormattedHTMLMessage
@@ -223,9 +216,8 @@ const BeregningsresultatTable2 = ({
         </Normaltekst>
       )}
 
-    </Panel>
-  );
-};
+  </Panel>
+);
 
 BeregningsresultatTable2.propTypes = {
   halvGVerdi: PropTypes.number,

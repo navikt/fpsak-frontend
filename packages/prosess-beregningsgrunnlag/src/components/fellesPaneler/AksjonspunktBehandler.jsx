@@ -60,7 +60,7 @@ const AksjonspunktBehandler = ({
   }
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : undefined}>
+      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panel}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
@@ -132,7 +132,7 @@ const AksjonspunktBehandler = ({
   }
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : undefined}>
+      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panel}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
