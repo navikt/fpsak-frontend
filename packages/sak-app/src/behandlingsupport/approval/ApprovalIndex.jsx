@@ -4,14 +4,18 @@ import { withRouter } from 'react-router-dom';
 import { push } from 'connected-react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import vurderPaNyttArsakType from '@fpsak-frontend/kodeverk/src/vurderPaNyttArsakType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { requireProps, featureToggle, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import {
+  DataFetcher, requireProps, featureToggle, BehandlingIdentifier,
+} from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
+import TotrinnskontrollSakIndex, { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
 import fpsakApi from '../../data/fpsakApi';
 import { getFagsakYtelseType, isForeldrepengerFagsak } from '../../fagsak/fagsakSelectors';
@@ -25,14 +29,12 @@ import {
   previewMessage,
   getBehandlingStatus,
   getBehandlingType,
-  getBehandlingKlageVurdering,
-  getBehandlingKlageVurderingResultatNFP,
-  getBehandlingKlageVurderingResultatNK,
-  erArsakTypeBehandlingEtterKlage,
+  getBehandlingArsaker,
+  getSelectedBehandlingId,
+  getBehandlingsresultat,
 } from '../../behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
-import { approve, resetApproval } from './duck';
+import { approve, resetApproval, getApproveFinished } from './duck';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -49,6 +51,10 @@ const getArsaker = (approval) => ([{
 }].filter((arsak) => arsak.isSet)
   .map((arsak) => arsak.code)
 );
+
+const klageData = [fpsakApi.TOTRINNS_KLAGE_VURDERING];
+const revurderingData = [fpsakApi.HAR_REVURDERING_SAMME_RESULTAT];
+const ingenData = [];
 
 /**
  * ApprovalIndex
@@ -135,8 +141,9 @@ export class ApprovalIndex extends Component {
     const {
       totrinnskontrollSkjermlenkeContext, totrinnskontrollReadOnlySkjermlenkeContext, behandlingStatus,
       location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling, skjemalenkeTyper,
-      behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, behandlingKlageVurdering, erBehandlingEtterKlage,
-      erKlageWithKA, erKlage, isForeldrepenger, disableGodkjennKnapp,
+      behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, erBehandlingEtterKlage,
+      isForeldrepenger, disableGodkjennKnapp, fagsakYtelseType, erGodkjenningFerdig,
+      behandlingsresultat, behandlingId, behandlingTypeKode,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -147,37 +154,58 @@ export class ApprovalIndex extends Component {
     }
 
     return (
-      <>
-        <TotrinnskontrollSakIndex
-          behandlingId={behandlingIdentifier.behandlingId}
-          behandlingVersjon={selectedBehandlingVersjon}
-          behandlingStatus={behandlingStatus}
-          totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
-          totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
-          location={location}
-          readOnly={readOnly}
-          onSubmit={this.onSubmit}
-          forhandsvisVedtaksbrev={this.forhandsvisVedtaksbrev}
-          toTrinnsBehandling={toTrinnsBehandling}
-          skjemalenkeTyper={skjemalenkeTyper}
-          isForeldrepengerFagsak={isForeldrepenger}
-          alleKodeverk={alleKodeverk}
-          behandlingKlageVurdering={behandlingKlageVurdering}
-          erBehandlingEtterKlage={erBehandlingEtterKlage}
-          erKlageWithKA={erKlageWithKA}
-          erKlage={erKlage}
-          disableGodkjennKnapp={disableGodkjennKnapp}
-        />
-        <FatterVedtakApprovalModal
-          showModal={showBeslutterModal}
-          closeEvent={this.goToSearchPage}
-          allAksjonspunktApproved={allAksjonspunktApproved}
-        />
-      </>
+      <DataFetcher
+        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingVersjon={selectedBehandlingVersjon}
+        data={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
+        render={(props) => (
+          <>
+            <TotrinnskontrollSakIndex
+              behandlingId={behandlingIdentifier.behandlingId}
+              behandlingVersjon={selectedBehandlingVersjon}
+              behandlingStatus={behandlingStatus}
+              totrinnskontrollSkjermlenkeContext={totrinnskontrollSkjermlenkeContext}
+              totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollReadOnlySkjermlenkeContext}
+              location={location}
+              readOnly={readOnly}
+              onSubmit={this.onSubmit}
+              forhandsvisVedtaksbrev={this.forhandsvisVedtaksbrev}
+              toTrinnsBehandling={toTrinnsBehandling}
+              skjemalenkeTyper={skjemalenkeTyper}
+              isForeldrepengerFagsak={isForeldrepenger}
+              alleKodeverk={alleKodeverk}
+              behandlingKlageVurdering={props.totrinnsKlageVurdering}
+              erBehandlingEtterKlage={erBehandlingEtterKlage}
+              disableGodkjennKnapp={disableGodkjennKnapp}
+            />
+            {showBeslutterModal && (
+              <DataFetcher
+                behandlingId={behandlingIdentifier.behandlingId}
+                behandlingVersjon={selectedBehandlingVersjon}
+                data={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
+                render={(modalProps) => (
+                  <FatterVedtakApprovalModalSakIndex
+                    showModal={showBeslutterModal}
+                    closeEvent={this.goToSearchPage}
+                    allAksjonspunktApproved={allAksjonspunktApproved}
+                    fagsakYtelseType={fagsakYtelseType}
+                    erGodkjenningFerdig={erGodkjenningFerdig}
+                    erKlageWithKA={props.totrinnsKlageVurdering ? !!props.totrinnsKlageVurdering.klageVurderingResultatNK : undefined}
+                    behandlingsresultat={behandlingsresultat}
+                    behandlingId={behandlingId}
+                    behandlingStatusKode={behandlingStatus.kode}
+                    behandlingTypeKode={behandlingTypeKode}
+                    harSammeResultatSomOriginalBehandling={modalProps.harRevurderingSammeResultat}
+                  />
+                )}
+              />
+            )}
+          </>
+        )}
+      />
     );
   }
 }
-
 
 ApprovalIndex.propTypes = {
   totrinnskontrollSkjermlenkeContext: PropTypes.arrayOf(PropTypes.shape()),
@@ -198,12 +226,13 @@ ApprovalIndex.propTypes = {
   behandlingUuid: PropTypes.string.isRequired,
   fagsakYtelseType: kodeverkObjektPropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  behandlingKlageVurdering: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool,
-  erKlageWithKA: PropTypes.bool.isRequired,
-  erKlage: PropTypes.bool.isRequired,
   isForeldrepenger: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  erGodkjenningFerdig: PropTypes.bool,
+  behandlingsresultat: PropTypes.shape(),
+  behandlingId: PropTypes.number,
+  behandlingTypeKode: PropTypes.string,
 };
 
 ApprovalIndex.defaultProps = {
@@ -212,9 +241,16 @@ ApprovalIndex.defaultProps = {
   totrinnskontrollReadOnlySkjermlenkeContext: undefined,
   toTrinnsBehandling: false,
   selectedBehandlingVersjon: undefined,
-  behandlingKlageVurdering: undefined,
   erBehandlingEtterKlage: false,
+  erGodkjenningFerdig: false,
+  behandlingId: undefined,
+  behandlingTypeKode: undefined,
 };
+
+const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsaker], (behandlingArsaker = {}) => behandlingArsaker
+  .map(({ behandlingArsakType }) => behandlingArsakType)
+  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
+    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
 
 const mapStateToPropsFactory = (initialState) => {
   const skjermlenkeTyperFpsak = getKodeverk(kodeverkTyper.SKJERMLENKE_TYPE)(initialState);
@@ -237,14 +273,15 @@ const mapStateToPropsFactory = (initialState) => {
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),
+      erGodkjenningFerdig: getApproveFinished(state),
       isForeldrepenger: isForeldrepengerFagsak(state),
-      behandlingKlageVurdering: getBehandlingKlageVurdering(state),
       erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
-      erKlageWithKA: !!getBehandlingKlageVurderingResultatNK(state),
-      erKlage: !!getBehandlingKlageVurderingResultatNFP(state) || !!getBehandlingKlageVurderingResultatNK(state),
+      behandlingsresultat: getBehandlingsresultat(state),
+      behandlingId: getSelectedBehandlingId(state),
       disableGodkjennKnapp: erTilbakekreving ? !getFeatureToggles(state)[featureToggle.BESLUTT_TILBAKEKREVING] : false,
       behandlingIdentifier,
       erTilbakekreving,
+      behandlingTypeKode,
     };
   };
 };

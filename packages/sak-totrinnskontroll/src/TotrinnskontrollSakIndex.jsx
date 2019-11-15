@@ -28,8 +28,6 @@ const TotrinnskontrollSakIndex = ({
   behandlingKlageVurdering,
   alleKodeverk,
   erBehandlingEtterKlage,
-  erKlageWithKA,
-  erKlage,
   disableGodkjennKnapp,
 }) => (
   <RawIntlProvider value={intl}>
@@ -49,8 +47,6 @@ const TotrinnskontrollSakIndex = ({
       behandlingKlageVurdering={behandlingKlageVurdering}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage={erBehandlingEtterKlage}
-      erKlageWithKA={erKlageWithKA}
-      erKlage={erKlage}
       disableGodkjennKnapp={disableGodkjennKnapp}
     />
   </RawIntlProvider>
@@ -69,11 +65,11 @@ TotrinnskontrollSakIndex.propTypes = {
   behandlingKlageVurdering: PropTypes.shape({
     klageVurdering: PropTypes.string,
     klageVurderingOmgjoer: PropTypes.string,
+    klageVurderingResultatNFP: PropTypes.shape(),
+    klageVurderingResultatNK: PropTypes.shape(),
   }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
-  erKlageWithKA: PropTypes.bool.isRequired,
-  erKlage: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,

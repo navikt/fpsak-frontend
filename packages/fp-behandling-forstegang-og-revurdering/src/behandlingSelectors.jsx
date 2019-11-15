@@ -1,21 +1,9 @@
 import { createSelector } from 'reselect';
 
-import klageBehandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import commonBehandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
 import { getFagsakYtelseType } from './duckBehandlingForstegangOgRev';
-
-// TODO (TOR) Dette skal vekk
-
-export const getBehandlingArsakTyper = createSelector(
-  [commonBehandlingSelectors.getSelectedBehandling], (selectedBehandling = {}) => (selectedBehandling.behandlingArsaker
-    ? selectedBehandling.behandlingArsaker.map(({ behandlingArsakType }) => behandlingArsakType) : undefined),
-);
-
-export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingArsakTyper], (behandlingArsakTyper = []) => behandlingArsakTyper
-  .some((bt) => bt.kode === klageBehandlingArsakType.ETTER_KLAGE || bt.kode === klageBehandlingArsakType.KLAGE_U_INNTK
-    || bt.kode === klageBehandlingArsakType.KLAGE_M_INNTK));
 
 export const getBehandlingResultatstruktur = createSelector(
   [getFagsakYtelseType, commonBehandlingSelectors.getSelectedBehandling], (fagsakType, selectedBehandling = {}) => (

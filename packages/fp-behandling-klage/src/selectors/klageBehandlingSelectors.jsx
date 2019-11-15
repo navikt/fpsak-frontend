@@ -11,18 +11,6 @@ import {
 
 const commonBehandlingKlageSelectors = getCommonBehandlingSelectors(getSelectedBehandlingId, klageBehandlingApi);
 
-// KLAGEVURDERING
-const getBehandlingKlageVurdering = createSelector(
-  [commonBehandlingKlageSelectors.getSelectedBehandling], (selectedBehandling = {}) => (
-    selectedBehandling['klage-vurdering'] ? selectedBehandling['klage-vurdering'] : undefined),
-);
-const getBehandlingKlageVurderingResultatNFP = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNFP,
-);
-const getBehandlingKlageVurderingResultatNK = createSelector(
-  [getBehandlingKlageVurdering], (klageVurdering = {}) => klageVurdering.klageVurderingResultatNK,
-);
-
 const getRettigheter = createSelector([
   getNavAnsatt,
   getFagsakStatus,
@@ -32,9 +20,6 @@ const getRettigheter = createSelector([
 
 const klageBehandlingSelectors = {
   ...omit(commonBehandlingKlageSelectors, 'getSelectedBehandling'),
-  getBehandlingKlageVurdering,
-  getBehandlingKlageVurderingResultatNFP,
-  getBehandlingKlageVurderingResultatNK,
   getRettigheter,
 };
 
