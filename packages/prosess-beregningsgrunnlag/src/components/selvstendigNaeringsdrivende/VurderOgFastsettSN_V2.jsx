@@ -34,8 +34,8 @@ export const VurderOgFastsettSNImpl2 = ({
   isAksjonspunktClosed,
   gjeldendeAksjonspunkter,
 }) => {
-  const isNArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
-  if (isNArbLivet) {
+  const isNyArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
+  if (isNyArbLivet) {
     return (
       <FastsettSN2
         readOnly={readOnly}
@@ -95,11 +95,11 @@ VurderOgFastsettSN2.transformValues = (values, gjeldendeAksjonspunkter) => {
       ...FastsettSN2.transformValues(values),
     }];
   }
-  const losteAksjonspunkt = [];
-  losteAksjonspunkt.push({
+  const varigEndretTransformed = {
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
-  });
+  };
+  const losteAksjonspunkt = [varigEndretTransformed];
   if (values[varigEndringRadioname]) {
     losteAksjonspunkt.push({
       kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,

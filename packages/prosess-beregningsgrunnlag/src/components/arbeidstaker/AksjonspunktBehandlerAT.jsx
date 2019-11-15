@@ -69,10 +69,8 @@ const AksjonspunktBehandlerAT = ({
 
 AksjonspunktBehandlerAT.propTypes = {
   readOnly: PropTypes.bool.isRequired,
-  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 
-AksjonspunktBehandlerAT.defaultProps = {
-};
 export default AksjonspunktBehandlerAT;

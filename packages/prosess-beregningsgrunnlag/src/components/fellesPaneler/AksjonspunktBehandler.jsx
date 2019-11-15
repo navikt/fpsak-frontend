@@ -168,5 +168,6 @@ AksjonspunktBehandler.propTypes = {
 };
 
 AksjonspunktBehandler.defaultProps = {
+  allePerioder: undefined,
 };
 export default AksjonspunktBehandler;

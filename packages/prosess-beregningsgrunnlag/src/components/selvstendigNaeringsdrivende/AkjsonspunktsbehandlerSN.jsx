@@ -42,6 +42,4 @@ AksjonspunktBehandlerSN.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
 };
 
-AksjonspunktBehandlerSN.defaultProps = {
-};
 export default AksjonspunktBehandlerSN;

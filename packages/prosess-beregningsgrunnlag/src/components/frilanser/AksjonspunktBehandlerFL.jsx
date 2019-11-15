@@ -35,6 +35,4 @@ AksjonspunktBehandlerFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
 };
 
-AksjonspunktBehandlerFL.defaultProps = {
-};
 export default AksjonspunktBehandlerFL;

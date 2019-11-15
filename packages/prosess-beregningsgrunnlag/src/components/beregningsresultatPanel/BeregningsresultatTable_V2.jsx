@@ -141,8 +141,6 @@ const createBeregningTableData = createSelector(
     const snRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.SN`} />];
     const aapRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AT`} />];
     const dpRad = [<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagpenger" />];
-
-    // const bruttoRad = [`<Column xs="8"> ${ledetekstBrutto} </Column>`];
     const avkortetRad = [ledetekstAvkortet];
     const redusertRad = [ledetekstRedusert];
     const dagsatserRad = [];
@@ -170,8 +168,8 @@ const createBeregningTableData = createSelector(
       flRad.push(flInntekt);
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.push(formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar));
-      avkortetRad.push(formatCurrencyNoKr(periode.avkortetPrAar)); // redusert til 6g
-      redusertRad.push(formatCurrencyNoKr(periode.redusertPrAar)); // Redusert til 89%
+      avkortetRad.push(formatCurrencyNoKr(periode.avkortetPrAar));
+      redusertRad.push(formatCurrencyNoKr(periode.redusertPrAar));
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
     });
     const rowsAndeler = [];
