@@ -4,11 +4,12 @@ import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getHenleggArsaker, ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
+import shallowWithIntl from '../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<ShelveBehandlingModal>', () => {
   const henleggArsaker = [{

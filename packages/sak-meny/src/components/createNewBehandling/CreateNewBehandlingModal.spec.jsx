@@ -7,7 +7,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
@@ -15,6 +15,7 @@ import MenyKodeverk from '../../MenyKodeverk';
 import {
   CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper, getEnabledBehandlingstyper,
 } from './CreateNewBehandlingModal';
+import shallowWithIntl from '../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();

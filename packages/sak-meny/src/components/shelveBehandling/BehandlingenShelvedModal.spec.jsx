@@ -3,9 +3,10 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import BehandlingenShelvedModal from './BehandlingenShelvedModal';
+import shallowWithIntl from '../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<BehandlingenShelvedModal>', () => {
   it('skal rendre åpen modal', () => {
