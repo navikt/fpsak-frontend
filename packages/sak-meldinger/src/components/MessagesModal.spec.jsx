@@ -2,9 +2,10 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import Modal from 'nav-frontend-modal';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import MessagesModal from './MessagesModal';
+import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<MessagesModal>', () => {
   it('skal vise modal', () => {

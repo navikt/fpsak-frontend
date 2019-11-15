@@ -2,10 +2,11 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { MessagesImpl as Messages } from './Messages';
+import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const mockProps = {
   setRecipient: () => undefined,
