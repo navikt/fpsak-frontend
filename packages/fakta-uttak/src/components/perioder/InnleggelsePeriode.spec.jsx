@@ -1,11 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { RadioGroupField } from '@fpsak-frontend/form';
 import sinon from 'sinon';
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
 import { InnleggelsePeriode } from './InnleggelsePeriode';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const periode = {
   tom: '10-10-2017',
