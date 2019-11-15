@@ -1,7 +1,9 @@
-import { Component } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
@@ -18,9 +20,11 @@ export class DataFetcher extends Component {
     behandlingVersjon: PropTypes.number,
     showComponent: PropTypes.bool,
     showComponentDuringFetch: PropTypes.bool,
+    showLoadingIcon: PropTypes.bool,
     isFetchFinished: PropTypes.bool.isRequired,
     data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     render: PropTypes.func.isRequired,
+    forceRefreshWhenPropChanged: PropTypes.number,
   };
 
   static defaultProps = {
@@ -28,6 +32,8 @@ export class DataFetcher extends Component {
     behandlingVersjon: undefined,
     showComponent: true,
     showComponentDuringFetch: false,
+    showLoadingIcon: false,
+    forceRefreshWhenPropChanged: undefined,
   }
 
   fetchData = () => {
@@ -45,17 +51,19 @@ export class DataFetcher extends Component {
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, behandlingId, behandlingVersjon,
+      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged,
     } = this.props;
     if (showComponent && behandlingId && behandlingVersjon
-      && (behandlingId !== prevProps.behandlingId || behandlingVersjon !== prevProps.behandlingVersjon)) {
+      && (behandlingId !== prevProps.behandlingId
+        || behandlingVersjon !== prevProps.behandlingVersjon
+        || forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged)) {
       this.fetchData();
     }
   }
 
   render() {
     const {
-      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon,
+      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon, showLoadingIcon,
     } = this.props;
 
     if (showComponentDuringFetch || (showComponent && behandlingId && behandlingVersjon && isFetchFinished)) {
@@ -70,7 +78,7 @@ export class DataFetcher extends Component {
       return render(dataProps);
     }
 
-    return null;
+    return showLoadingIcon ? <LoadingPanel /> : null;
   }
 }
 

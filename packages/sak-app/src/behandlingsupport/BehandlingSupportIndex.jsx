@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { getSupportPanelLocationCreator, trackRouteParam } from '@fpsak-frontend/fp-felles';
 
-import { isKontrollerRevurderingAksjonspunkOpen } from '../behandling/duck';
 import { getAccessibleSupportPanels, getEnabledSupportPanels } from './behandlingsupportSelectors';
 import { getSelectedSupportPanel, setSelectedSupportPanel } from './duck';
 import BehandlingsupportDataResolver from './BehandlingsupportDataResolver';
@@ -74,19 +73,16 @@ BehandlingSupportIndex.propTypes = {
   getSupportPanelLocation: PropTypes.func.isRequired,
 };
 
-const getDefaultSupportPanel = (hasKontrollerRevurderingAp, enabledSupportPanels) => (
-  hasKontrollerRevurderingAp && enabledSupportPanels.includes(supportPanels.MESSAGES)
-    ? supportPanels.MESSAGES
-    : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
+const getDefaultSupportPanel = (enabledSupportPanels) => (
+  enabledSupportPanels.find(() => true) || supportPanels.HISTORY
 );
 
 const mapStateToProps = (state) => {
   const acccessibleSupportPanels = getAccessibleSupportPanels(state);
   const enabledSupportPanels = getEnabledSupportPanels(state);
   const selectedSupportPanel = getSelectedSupportPanel(state);
-  const hasKontrollerRevurderingAp = isKontrollerRevurderingAksjonspunkOpen(state);
 
-  const defaultSupportPanel = getDefaultSupportPanel(hasKontrollerRevurderingAp, enabledSupportPanels);
+  const defaultSupportPanel = getDefaultSupportPanel(enabledSupportPanels);
   const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel) ? selectedSupportPanel : defaultSupportPanel;
   return {
     acccessibleSupportPanels, enabledSupportPanels, activeSupportPanel,

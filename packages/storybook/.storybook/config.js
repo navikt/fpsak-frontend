@@ -14,7 +14,6 @@ addDecorator(withGlobalStyle);
 addParameters({
   options: {
     theme: themes.dark,
-    panelPosition: 'right',
   },
 });
 

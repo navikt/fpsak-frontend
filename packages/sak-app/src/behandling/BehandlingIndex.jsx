@@ -19,7 +19,7 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setSelectedBehandlingId, getSelectedBehandlingId, setBehandlingInfoHolder, resetBehandlingContext as resetBehandlingContextActionCreator,
+  setSelectedBehandlingId, getSelectedBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
   getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
@@ -50,7 +50,7 @@ export class BehandlingIndex extends Component {
     behandlingType: PropTypes.string.isRequired,
     behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     location: PropTypes.shape().isRequired,
-    setHolder: PropTypes.func.isRequired,
+    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     erAktivPapirsoknad: PropTypes.bool,
     resetBehandlingContext: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
@@ -115,7 +115,7 @@ export class BehandlingIndex extends Component {
       behandlingType,
       behandlingerVersjonMappedById,
       location,
-      setHolder,
+      oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
       featureToggles,
       hasSubmittedPaVentForm,
@@ -134,7 +134,7 @@ export class BehandlingIndex extends Component {
             behandlingId={behandlingId}
             behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
-            setBehandlingInfoHolder={setHolder}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
             appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
@@ -155,7 +155,7 @@ export class BehandlingIndex extends Component {
             behandlingId={behandlingId}
             behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
-            setBehandlingInfoHolder={setHolder}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
             appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
@@ -176,7 +176,7 @@ export class BehandlingIndex extends Component {
             behandlingId={behandlingId}
             behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
-            setBehandlingInfoHolder={setHolder}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
             appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
@@ -199,7 +199,7 @@ export class BehandlingIndex extends Component {
             behandlingId={behandlingId}
             behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
-            setBehandlingInfoHolder={setHolder}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
             appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
@@ -223,7 +223,7 @@ export class BehandlingIndex extends Component {
             behandlingId={behandlingId}
             behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
-            setBehandlingInfoHolder={setHolder}
+            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
             appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
@@ -246,7 +246,7 @@ export class BehandlingIndex extends Component {
           behandlingId={behandlingId}
           behandlingerVersjonMappedById={behandlingerVersjonMappedById}
           location={location}
-          setBehandlingInfoHolder={setHolder}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
           behandlingUpdater={behandlingUpdater}
           appContextUpdater={appContextUpdater}
           featureToggles={featureToggles}
@@ -293,7 +293,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  setHolder: setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon: oppdaterVersjon,
   resetBehandlingContext: resetBehandlingContextActionCreator,
 }, dispatch);
 

@@ -8,7 +8,6 @@ import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behand
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
-import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import BehandlingsprosessForstegangOgRevIndex from './behandlingsprosess/BehandlingsprosessForstegangOgRevIndex';
 import FaktaIndex from './fakta/FaktaIndex';
 import {
@@ -32,7 +31,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
   behandlingId,
   behandlingIdentifier,
   behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -73,8 +72,8 @@ export const BehandlingForstegangOgRevurderingIndex = ({
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={FpSakBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
+    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
   >
-    <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessForstegangOgRevIndex />}
       faktaContent={<FaktaIndex />}
@@ -84,7 +83,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
 
 BehandlingForstegangOgRevurderingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,

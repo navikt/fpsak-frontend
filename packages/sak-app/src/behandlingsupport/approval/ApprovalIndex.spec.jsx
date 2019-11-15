@@ -3,11 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { shallow } from 'enzyme';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { DataFetcher, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnskontroll';
+import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
-import FatterVedtakApprovalModal from './FatterVedtakApprovalModal';
 import { ApprovalIndex } from './ApprovalIndex';
 
 describe('<ApprovalIndex>', () => {
@@ -111,11 +112,16 @@ describe('<ApprovalIndex>', () => {
       isForeldrepenger
       behandlingKlageVurdering={{}}
       disableGodkjennKnapp={false}
+      behandlingsresultat={{}}
+      behandlingId={1}
+      behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
     />);
 
-    wrapper.setState({ showBeslutterModal: true });
+    wrapper.setState({ showBeslutterModal: true, allAksjonspunktApproved: true });
 
-    const vedtakStatusModal = wrapper.find(FatterVedtakApprovalModal);
+    const dataFetcher = wrapper.find(DataFetcher);
+    const innerDataFetcher = dataFetcher.renderProp('render')({ }).find(DataFetcher);
+    const vedtakStatusModal = innerDataFetcher.renderProp('render')({ }).find(FatterVedtakApprovalModalSakIndex);
     expect(vedtakStatusModal).to.have.length(1);
   });
 

@@ -11,7 +11,7 @@ const reducerName = 'behandling';
 /* Action types */
 const actionType = (name) => `${reducerName}/${name}`;
 const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
-const SET_BEHANDLING_INFO_HOLDER = actionType('SET_BEHANDLING_INFO_HOLDER');
+const OPPDATER_BEHANDLING_VERSJON = actionType('OPPDATER_BEHANDLING_VERSJON');
 const RESET_BEHANDLING_CONTEXT = actionType('RESET_BEHANDLING_CONTEXT');
 
 export const setSelectedBehandlingId = (behandlingId) => ({
@@ -19,9 +19,9 @@ export const setSelectedBehandlingId = (behandlingId) => ({
   data: behandlingId,
 });
 
-export const setBehandlingInfoHolder = (behandlingInfoHolder) => ({
-  type: SET_BEHANDLING_INFO_HOLDER,
-  data: behandlingInfoHolder,
+export const oppdaterBehandlingVersjon = (behandlingVersjon) => ({
+  type: OPPDATER_BEHANDLING_VERSJON,
+  data: behandlingVersjon,
 });
 
 export const resetBehandlingContext = () => ({
@@ -38,7 +38,7 @@ export const previewMessage = (erTilbakekreving, data) => (dispatch) => {
 /* Reducer */
 const initialState = {
   behandlingId: undefined,
-  behandlingInfoHolder: {},
+  behandlingVersjon: undefined,
 };
 
 export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
@@ -47,12 +47,12 @@ export const behandlingReducer = (state = initialState, action = {}) => { // NOS
       return {
         ...state,
         behandlingId: action.data,
-        behandlingInfoHolder: {},
+        behandlingVersjon: undefined,
       };
-    case SET_BEHANDLING_INFO_HOLDER:
+    case OPPDATER_BEHANDLING_VERSJON:
       return {
         ...state,
-        behandlingInfoHolder: action.data,
+        behandlingVersjon: action.data,
       };
     case RESET_BEHANDLING_CONTEXT:
       return initialState;
@@ -71,21 +71,7 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-
-// TODO (TOR) Fjern dette. Ikkje legg til fleire selectorar her. Komponentane utanfor behandlingskonteksten skal sjølv ha ansvar for å henta data
-// Fjern:Start
-const getBehandlingInfoHolder = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingInfoHolder);
-export const getBehandlingVersjon = createSelector([getBehandlingInfoHolder], (data) => data.behandlingVersjon);
-export const isKontrollerRevurderingAksjonspunkOpen = createSelector([getBehandlingInfoHolder], (data) => data.isKontrollerRevurderingAksjonspunkOpen);
-export const getBehandlingKlageVurdering = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurdering);
-export const getBehandlingResultatstruktur = createSelector([getBehandlingInfoHolder], (data) => data.behandlingResultatstruktur);
-export const getBehandlingsresultat = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultat);
-export const getBehandlingKlageVurderingResultatNFP = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNFP);
-export const getBehandlingKlageVurderingResultatNK = createSelector([getBehandlingInfoHolder], (data) => data.behandlingKlageVurderingResultatNK);
-export const getBehandlingsresultatFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.behandlingsresultatFraOriginalBehandling);
-export const getResultatstrukturFraOriginalBehandling = createSelector([getBehandlingInfoHolder], (data) => data.resultatstrukturFraOriginalBehandling);
-export const erArsakTypeBehandlingEtterKlage = createSelector([getBehandlingInfoHolder], (data) => data.erArsakTypeBehandlingEtterKlage);
-// Fjern:Stopp
+export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
 
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
@@ -102,3 +88,5 @@ export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling
   ? behandling.ansvarligSaksbehandler : undefined));
 export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (behandling) => behandling.toTrinnsBehandling);
 export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (behandling ? behandling.erAktivPapirsoknad : false));
+export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
+export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);

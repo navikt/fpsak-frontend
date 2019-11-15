@@ -8,7 +8,6 @@ import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behand
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import behandlingSelectors from './selectors/papirsoknadSelectors';
-import PapirsoknadInfoSetter from './PapirsoknadInfoSetter';
 import PapirsoknadIndex from './PapirsoknadIndex';
 import {
   fetchBehandling as fetchBehandlingActionCreator,
@@ -31,7 +30,7 @@ export const BehandlingPapirsoknadIndex = ({
   behandlingId,
   behandlingIdentifier,
   behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -72,15 +71,15 @@ export const BehandlingPapirsoknadIndex = ({
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={PapirsoknadUpdater}
     behandlingUpdater={behandlingUpdater}
+    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
   >
-    <PapirsoknadInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid papirsoknadContent={<PapirsoknadIndex />} />
   </CommonBehandlingIndex>
 );
 
 BehandlingPapirsoknadIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,

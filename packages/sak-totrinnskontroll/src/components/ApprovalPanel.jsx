@@ -88,8 +88,6 @@ export class ApprovalPanel extends Component {
       isForeldrepengerFagsak,
       alleKodeverk,
       erBehandlingEtterKlage,
-      erKlageWithKA,
-      erKlage,
       disableGodkjennKnapp,
     } = this.props;
     const { approvals } = this.state;
@@ -121,8 +119,6 @@ export class ApprovalPanel extends Component {
                       behandlingStatus={behandlingStatus}
                       alleKodeverk={alleKodeverk}
                       erBehandlingEtterKlage={erBehandlingEtterKlage}
-                      erKlageWithKA={erKlageWithKA}
-                      erKlage={erKlage}
                       disableGodkjennKnapp={disableGodkjennKnapp}
                     />
                   </div>
@@ -170,8 +166,6 @@ ApprovalPanel.propTypes = {
   }),
   alleKodeverk: PropTypes.shape().isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
-  erKlageWithKA: PropTypes.bool.isRequired,
-  erKlage: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
 };
 

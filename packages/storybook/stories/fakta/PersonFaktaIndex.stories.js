@@ -1,6 +1,6 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
@@ -54,7 +54,7 @@ const personopplysninger = {
     fodselsdato: '2019-01-01',
     fnr: '123456789',
     navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
+      kode: navBrukerKjonn.UDEFINERT,
     },
     diskresjonskode: {
       kode: diskresjonskodeType.UDEFINERT,
@@ -143,10 +143,10 @@ export const visPanelForBeggeParter = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      personopplysninger={personopplysninger}
-      inntektArbeidYtelse={inntektArbeidYtelse}
-      fagsakPerson={fagsakPerson}
+      behandling={object('behandling', behandling)}
+      personopplysninger={object('personopplysninger', personopplysninger)}
+      inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+      fagsakPerson={object('fagsakPerson', fagsakPerson)}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
@@ -173,8 +173,8 @@ export const visPanelForGrunnleggendePersoninfo = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      fagsakPerson={fagsakPerson}
+      behandling={object('behandling', behandling)}
+      fagsakPerson={object('fagsakPerson', fagsakPerson)}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
@@ -191,12 +191,12 @@ export const visPanelForMarkertUtenlandssak = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      fagsakPerson={{
+      behandling={object('behandling', behandling)}
+      fagsakPerson={object('fagsakPerson', {
         ...fagsakPerson,
         dodsdato: undefined,
         erDod: false,
-      }}
+      })}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,

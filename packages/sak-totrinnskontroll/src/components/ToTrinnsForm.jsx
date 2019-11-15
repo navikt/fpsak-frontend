@@ -34,8 +34,6 @@ export const ToTrinnsFormImpl = ({
   readOnly,
   totrinnskontrollContext,
   erBehandlingEtterKlage,
-  erKlageWithKA,
-  erKlage,
   behandlingKlageVurdering,
   behandlingStatus,
   isForeldrepengerFagsak,
@@ -46,6 +44,9 @@ export const ToTrinnsFormImpl = ({
   if (formState.length !== totrinnskontrollContext.length) {
     return null;
   }
+
+  const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
+
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
       {totrinnskontrollContext.map(({
@@ -65,7 +66,7 @@ export const ToTrinnsFormImpl = ({
                     currentValue={formState[contextIndex].aksjonspunkter[approvalIndex]}
                     approvalIndex={approvalIndex}
                     readOnly={readOnly}
-                    klageKA={erKlageWithKA}
+                    klageKA={!!behandlingKlageVurdering.klageVurderingResultatNK}
                     isForeldrepengerFagsak={isForeldrepengerFagsak}
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
@@ -116,9 +117,8 @@ ToTrinnsFormImpl.propTypes = {
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
   klageVurderingResultatNFP: PropTypes.shape(),
   klageVurderingResultatNK: PropTypes.shape(),
+  behandlingKlageVurdering: PropTypes.shape(),
   erBehandlingEtterKlage: PropTypes.bool,
-  erKlageWithKA: PropTypes.bool,
-  erKlage: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
 };
@@ -128,6 +128,7 @@ ToTrinnsFormImpl.defaultProps = {
   klageVurderingResultatNK: undefined,
   totrinnskontrollContext: [],
   formState: [{ aksjonspunkter: [] }],
+  behandlingKlageVurdering: {},
 };
 
 const validate = (values) => {

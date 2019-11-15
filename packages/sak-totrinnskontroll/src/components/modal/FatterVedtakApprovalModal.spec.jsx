@@ -24,7 +24,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescription');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
@@ -44,7 +44,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescriptionESApproval');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
@@ -64,7 +64,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Foreldrepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescriptionFPApproval');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);

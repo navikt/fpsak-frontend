@@ -98,8 +98,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
@@ -129,8 +127,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
