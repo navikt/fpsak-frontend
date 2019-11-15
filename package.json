@@ -128,7 +128,7 @@
     "webpack-merge": "^4.2.1"
   },
   "resolutions": {
-    "react-test-renderer": "^16.9.0"
+    "react-test-renderer": "^16.12.0"
   },
   "nyc": {
     "branches": 40,
