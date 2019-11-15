@@ -1,6 +1,5 @@
 import React from 'react';
 import sinon from 'sinon';
-import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import { FormattedMessage } from 'react-intl';
 
@@ -9,12 +8,13 @@ import { OkAvbrytModal } from '@fpsak-frontend/shared-components';
 
 import OpprettEllerFjernVergeMenuItem from './OpprettEllerFjernVergeMenuItem';
 import MenuButton from '../MenuButton';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<OpprettEllerFjernVergeMenuItem>', () => {
   const behandlingIdentifier = new BehandlingIdentifier(123, 1);
 
   it('skal rendre komponent når menyvalg er opprettet', () => {
-    const wrapper = shallow(<OpprettEllerFjernVergeMenuItem
+    const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       opprettVerge={sinon.spy()}
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}
@@ -26,7 +26,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
   });
 
   it('skal rendre komponent når menyvalg er fjern', () => {
-    const wrapper = shallow(<OpprettEllerFjernVergeMenuItem
+    const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={sinon.spy()}
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}
@@ -39,7 +39,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
 
 
   it('skal ikke vise modal for om en vil opprette/fjerne som standard', () => {
-    const wrapper = shallow(<OpprettEllerFjernVergeMenuItem
+    const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={sinon.spy()}
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}
@@ -51,7 +51,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
 
   it('skal vise modal og opprette aksjonspunkt for verge ved trykk på opprett-knapp og bekrefte i modal', () => {
     const opprettVergeCallback = sinon.spy();
-    const wrapper = shallow(<OpprettEllerFjernVergeMenuItem
+    const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       opprettVerge={opprettVergeCallback}
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}
@@ -73,7 +73,7 @@ describe('<OpprettEllerFjernVergeMenuItem>', () => {
 
   it('skal fjerne aksjonspunkt for verge ved trykk på slett-knapp', () => {
     const fjernVergeCallback = sinon.spy();
-    const wrapper = shallow(<OpprettEllerFjernVergeMenuItem
+    const wrapper = shallowWithIntl(<OpprettEllerFjernVergeMenuItem
       fjernVerge={fjernVergeCallback}
       behandlingIdentifier={behandlingIdentifier}
       behandlingVersjon={2}

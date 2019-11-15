@@ -8,7 +8,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { getAvvisningsAarsaker, getIsAvvist, VedtakKlageFormImpl } from './VedtakKlageForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
 
-const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjort';
+const KLAGE_OMGJORT_TEKST = 'VedtakKlageForm.KlageOmgjortGunst';
 
 
 describe('<VedtakKlageForm>', () => {

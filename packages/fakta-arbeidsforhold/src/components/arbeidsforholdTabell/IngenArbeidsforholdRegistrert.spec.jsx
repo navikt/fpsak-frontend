@@ -1,9 +1,10 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import { expect } from 'chai';
 import TableColumn from '@fpsak-frontend/shared-components/src/table/TableColumn';
 import { FormattedMessage } from 'react-intl';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
+
 
 describe('<IngenArbeidsforholdRegistrert>', () => {
   const headerTextCodes = [
@@ -15,7 +16,7 @@ describe('<IngenArbeidsforholdRegistrert>', () => {
     'EMPTY_2',
   ];
   it('Skal sjekke at IngenArbeidsforholdRegistrert rendrer korrekt', () => {
-    const wrapper = shallow(
+    const wrapper = shallowWithIntl(
       <IngenArbeidsforholdRegistrert
         headerTextCodes={headerTextCodes}
       />,

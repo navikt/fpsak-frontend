@@ -187,7 +187,6 @@ describe('<UttakPanel>', () => {
     const uttak = wrapper.find(Uttak);
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
-    console.log(formattedMessage.debug()); // eslint-disable-line no-console
     expect(formattedMessage).has.length(2);
     const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
     expect(aksjonspunktHelpText).has.length(1);
