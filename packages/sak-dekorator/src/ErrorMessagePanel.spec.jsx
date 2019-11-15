@@ -3,9 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Undertekst } from 'nav-frontend-typografi';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import { ErrorMessagePanel } from './ErrorMessagePanel';
+import shallowWithIntl from '../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<ErrorMessagePanel>', () => {
   it('skal vise feilmelding med ikke lenke for å vise detaljert info', () => {
