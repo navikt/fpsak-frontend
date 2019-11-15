@@ -4,9 +4,10 @@ import sinon from 'sinon';
 
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
 import OpptjeningFaktaForm from './OpptjeningFaktaForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-opptjening';
 
 describe('<OpptjeningInfoPanel>', () => {
   it('skal vise opptjeningspanel', () => {
