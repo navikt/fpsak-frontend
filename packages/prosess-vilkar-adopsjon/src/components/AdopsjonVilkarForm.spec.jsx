@@ -1,5 +1,5 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
@@ -10,6 +10,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { AdopsjonVilkarFormImpl as UnwrappedForm, buildInitialValues } from './AdopsjonVilkarForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-adopsjon';
 
 describe('<AdopsjonVilkarForm>', () => {
   it('skal vise readonly-form med utgråete knapper når readonly og vilkåret ikke er vurdert', () => {
