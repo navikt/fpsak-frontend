@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
+import shallowWithIntl from '../../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const saksNr = 123;
 const dokumentLenke = {
