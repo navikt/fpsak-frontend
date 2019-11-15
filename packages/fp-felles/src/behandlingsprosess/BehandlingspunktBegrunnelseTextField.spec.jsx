@@ -46,7 +46,7 @@ describe('<BehandlingspunktBegrunnelseTextField>', () => {
     />);
 
     const textField = wrapper.find(TextAreaField);
-    expect(textField.prop('label')).is.eql('Klage.ResolveKlage.ExplanationRequiredBrev');
+    expect(textField.prop('label')).is.eql('Begrunnelse/tekst i brev');
   });
 
   it('skal hente begrunnelse fra første aksjonspunkt', () => {

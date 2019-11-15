@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import Modal from 'nav-frontend-modal';
 import { VedtakFritekstbrevModal } from './VedtakFritekstbrevModal';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 
 describe('<VedtakFritekstbrevModal>', () => {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { VedtakOpphorRevurderingPanelImpl } from './VedtakOpphorRevurderingPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 
 describe('<VedtakOpphorRevurderingPanel>', () => {
@@ -44,8 +45,8 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.RevurderingFP.Aarsak');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
@@ -86,8 +87,8 @@ describe('<VedtakOpphorRevurderingPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
-    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.RevurderingFP.Aarsak');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til revurdering');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);

@@ -6,10 +6,11 @@ import { Knapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { DatepickerField } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { DelOppPeriodeModalImpl, mapStateToPropsFactory } from './DelOppPeriodeModal';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilbakekreving';
 
 describe('<DelOppPeriodeModal>', () => {
   const periodeData = {

@@ -2,13 +2,14 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
 import { TimeLineButton, TimeLineDataContainer } from '@fpsak-frontend/tidslinje';
 import { Column } from 'nav-frontend-grid';
 import { kalkulerTrekkdager, UttakTimeLineData } from './UttakTimeLineData';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import UttakActivity from './UttakActivity';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
 
 
 describe('<UttakTimeLineData>', () => {

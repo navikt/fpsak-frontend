@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
@@ -9,6 +9,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { MedlemskapInfoPanel } from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise ekspanderbart panel', () => {
@@ -40,7 +41,7 @@ describe('<MedlemskapInfoPanel>', () => {
 
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('MedlemskapInfoPanel.Medlemskap');
+    expect(panel.prop('title')).to.eql('Fakta om medlemskap');
     expect(panel.prop('hasOpenAksjonspunkter')).is.false;
     expect(panel.prop('isInfoPanelOpen')).is.false;
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.MEDLEMSKAPSVILKARET);

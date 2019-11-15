@@ -2,10 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { RegistrereVergeInfoPanelImpl } from './RegistrereVergeInfoPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-verge';
 
 describe('<RegistrereVergeInfoPanel>', () => {
   it('skal vise faktapanel og form for registrere verge', () => {
@@ -32,7 +33,7 @@ describe('<RegistrereVergeInfoPanel>', () => {
 
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('RegistrereVergeInfoPanel.Info');
+    expect(panel.prop('title')).to.eql('Fakta om verge/fullmektig');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('verge');

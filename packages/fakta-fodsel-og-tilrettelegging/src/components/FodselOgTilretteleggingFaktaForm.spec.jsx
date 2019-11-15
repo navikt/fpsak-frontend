@@ -2,12 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import AlertStripe from 'nav-frontend-alertstriper';
 
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFaktaForm';
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const arbeidsforhold = [
   {

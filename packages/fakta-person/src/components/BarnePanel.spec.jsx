@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import Image from '@fpsak-frontend/shared-components/src/Image';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import BarnePanel from './BarnePanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-person';
 
 describe('<BarnePanel>', () => {
   const barn1 = {

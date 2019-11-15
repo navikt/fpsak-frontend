@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { RadioOption } from '@fpsak-frontend/form';
 import ArbeidsforholdRadioknapper from './ArbeidsforholdRadioknapper';
 import arbeidsforholdHandling from '../../kodeverk/arbeidsforholdHandling';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
 const arbeidsforhold = {
   id: '1',

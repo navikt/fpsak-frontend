@@ -1,11 +1,12 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { FormkravKlageForm } from './FormkravKlageForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-formkrav';
 
 describe('<FormkravKlageForm>', () => {
   const behandlinger = [{
@@ -49,7 +50,7 @@ describe('<FormkravKlageForm>', () => {
     const vedtakSelect = wrapper.find('SelectField');
     expect(vedtakSelect).to.have.length(1);
     expect(vedtakSelect.prop('selectValues')).to.have.length(3);
-    expect(vedtakSelect.prop('selectValues')[0].props.children).to.equal('Klage.Formkrav.IkkePåklagdVedtak');
+    expect(vedtakSelect.prop('selectValues')[0].props.children).to.equal('Ikke påklagd et vedtak');
     expect(vedtakSelect.prop('selectValues')[1].props.children).to.equal('Førstegangssøknad 25.10.2018');
   });
 });

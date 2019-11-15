@@ -2,7 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedMessage } from 'react-intl';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
@@ -10,6 +9,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import { buildInitialValues, GraderingUtenBG as UnwrappedForm } from './GraderingUtenBG';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
   definisjon: {

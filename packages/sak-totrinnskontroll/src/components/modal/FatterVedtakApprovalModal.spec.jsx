@@ -4,9 +4,10 @@ import sinon from 'sinon';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import Modal from 'nav-frontend-modal';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { FatterVedtakApprovalModal } from './FatterVedtakApprovalModal';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 describe('<FatterVedtakApprovalModal>', () => {
   const closeEventCallback = sinon.spy();
@@ -15,7 +16,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       intl={intlMock}
       showModal
       infoTextCode="testInfo"
-      altImgTextCode="testAlt"
+      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
       modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescription"
       closeEvent={closeEventCallback}
       resolveProsessAksjonspunkterSuccess
@@ -24,7 +25,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescription');
+    expect(modal.prop('contentLabel')).is.eql('Forslag til vedtak er sendt til beslutter. Du kommer nå til forsiden.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
@@ -35,7 +36,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       intl={intlMock}
       showModal
       infoTextCode="testInfo"
-      altImgTextCode="testAlt"
+      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
       modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionESApproval"
       closeEvent={closeEventCallback}
       resolveProsessAksjonspunkterSuccess
@@ -44,7 +45,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescriptionESApproval');
+    expect(modal.prop('contentLabel')).is.eql('Engangsstønad er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
@@ -55,7 +56,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       intl={intlMock}
       showModal
       infoTextCode="testInfo"
-      altImgTextCode="testAlt"
+      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
       modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
       closeEvent={closeEventCallback}
       resolveProsessAksjonspunkterSuccess
@@ -64,7 +65,7 @@ describe('<FatterVedtakApprovalModal>', () => {
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('FatterVedtakApprovalModal.ModalDescriptionFPApproval');
+    expect(modal.prop('contentLabel')).is.eql('Foreldrepenger er innvilget og vedtaket blir iverksatt. Du kommer nå til forsiden.');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
@@ -75,7 +76,7 @@ describe('<FatterVedtakApprovalModal>', () => {
       intl={intlMock}
       showModal={false}
       infoTextCode="testInfo"
-      altImgTextCode="testAlt"
+      altImgTextCode="HelpText.Aksjonspunkt" // random intl ID
       modalDescriptionTextCode="FatterVedtakApprovalModal.ModalDescriptionFPApproval"
       closeEvent={closeEventCallback}
       resolveProsessAksjonspunkterSuccess

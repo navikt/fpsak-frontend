@@ -1,7 +1,7 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 const lagOpptjeningAktivitetArbeidMedNavn = (resultat) => ({
   erEndring: resultat === 'ENDRING',

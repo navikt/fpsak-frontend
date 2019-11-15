@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { DecimalField } from '@fpsak-frontend/form';
 import { TilretteleggingFieldArrayStillingsprosent } from './TilretteleggingFieldArrayStillingsprosent';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 describe('<TilretteleggingFieldArrayStillingsprosent>', () => {
   it('skal vise felt for stillingsprosent', () => {

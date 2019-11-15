@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -14,6 +14,7 @@ import { AndelRow } from './InntektFieldArrayRow';
 import SummaryRow from './SummaryRow';
 import InntektFieldArray, { InntektFieldArrayImpl, leggTilDagpengerOmBesteberegning, mapStateToProps } from './InntektFieldArray';
 import { formNameVurderFaktaBeregning } from '../BeregningFormUtils';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
 const aksjonspunkter = [
   {

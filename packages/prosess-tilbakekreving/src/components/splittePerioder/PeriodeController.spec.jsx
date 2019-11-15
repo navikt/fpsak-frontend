@@ -1,10 +1,11 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import { PeriodeController } from './PeriodeController';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilbakekreving';
 
 
 describe('<PeriodeController>', () => {

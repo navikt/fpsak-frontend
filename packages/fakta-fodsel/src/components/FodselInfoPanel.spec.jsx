@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -12,6 +12,7 @@ import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
 import TermindatoFaktaForm from './TermindatoFaktaForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel';
 
 const soknad = {
   fodselsdatoer: { 1: '2019-01-01' },
@@ -67,7 +68,7 @@ describe('<FodselInfoPanel>', () => {
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('FodselInfoPanel.Fodsel');
+    expect(panel.prop('title')).to.eql('Fakta om fødsel');
 
     expect(wrapper.find(SjekkFodselDokForm)).has.length(1);
   });
@@ -112,7 +113,7 @@ describe('<FodselInfoPanel>', () => {
     />);
 
     const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('FodselInfoPanel.Fodsel');
+    expect(panel.prop('title')).to.eql('Fakta om fødsel');
 
     expect(wrapper.find(TermindatoFaktaForm)).has.length(1);
   });

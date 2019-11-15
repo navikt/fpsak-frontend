@@ -1,5 +1,5 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
@@ -8,6 +8,7 @@ import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { BehandleKlageFormKaImpl } from './BehandleKlageFormKa';
 import PreviewKlageLink from '../felles/PreviewKlageLink';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-klagevurdering';
 
 describe('<BehandleKlageFormKaImpl>', () => {
   const sprakkode = {

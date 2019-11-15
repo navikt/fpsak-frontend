@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd from './YtelserFraInfotrygd';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 describe('<YtelserFraInfotrygd>', () => {
   it('Skal teste at de korrekte verdier for ytelse', () => {

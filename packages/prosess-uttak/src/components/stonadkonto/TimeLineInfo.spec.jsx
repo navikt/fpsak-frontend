@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import TimeLineInfo from './TimeLineInfo';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-proses-uttak';
 
 const stonadskonto = {
   FORELDREPENGER_FØR_FØDSEL: {

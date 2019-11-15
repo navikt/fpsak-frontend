@@ -1,9 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFieldsWithContent } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { RenderUttakTableImpl } from './RenderUttakTable';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
 
 const uttakFields1 = [
   {

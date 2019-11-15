@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
@@ -10,6 +10,7 @@ import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { FormattedMessage } from 'react-intl';
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 import { OmsorgInfoPanel } from './OmsorgInfoPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg';
 
 describe('<OmsorgInfoPanel>', () => {
   const personopplysning = {
@@ -90,7 +91,7 @@ describe('<OmsorgInfoPanel>', () => {
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('OmsorgInfoPanel.Omsorg');
+    expect(panel.prop('title')).to.eql('Fakta om omsorg');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('omsorg');

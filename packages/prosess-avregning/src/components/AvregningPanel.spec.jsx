@@ -11,10 +11,11 @@ import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Column, Row } from 'nav-frontend-grid';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import AvregningSummary from './AvregningSummary';
 import AvregningTable from './AvregningTable';
 import { AvregningPanelImpl, transformValues } from './AvregningPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-avregning';
 
 const simuleringResultat = {
   simuleringResultat: {

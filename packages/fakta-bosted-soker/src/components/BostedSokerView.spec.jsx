@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
@@ -8,6 +8,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { Normaltekst } from 'nav-frontend-typografi';
 import EtikettBase from 'nav-frontend-etiketter';
 import { BostedSokerView } from './BostedSokerView';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-bosted-soker';
 
 describe('<BostedsokerView>', () => {
   const soker = {
@@ -114,13 +115,13 @@ describe('<BostedsokerView>', () => {
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus.Hjelpetekst');
+    expect(personstatus.prop('title')).to.equal('Personstatus');
     expect(personstatus.childAt(0).text()).to.equal('Bosatt');
     const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand.Hjelpetekst');
+    expect(sivilstand.prop('title')).to.equal('Sivilstand');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('BostedSokerView.Region');
+    expect(region.prop('title')).to.equal('Region');
     expect(region.childAt(0).text()).to.equal('Norden');
   });
 
@@ -141,13 +142,13 @@ describe('<BostedsokerView>', () => {
     const etikettfokus = wrapper.find(EtikettBase);
     expect(etikettfokus).to.have.length(3);
     const personstatus = etikettfokus.at(0);
-    expect(personstatus.prop('title')).to.equal('Personstatus.Hjelpetekst');
+    expect(personstatus.prop('title')).to.equal('Personstatus');
     expect(personstatus.childAt(0).text()).to.equal('Ukjent');
     const sivilstand = etikettfokus.at(1);
-    expect(sivilstand.prop('title')).to.equal('Sivilstand.Hjelpetekst');
+    expect(sivilstand.prop('title')).to.equal('Sivilstand');
     expect(sivilstand.childAt(0).text()).to.equal('Ugift');
     const region = etikettfokus.at(2);
-    expect(region.prop('title')).to.equal('BostedSokerView.Region');
+    expect(region.prop('title')).to.equal('Region');
     expect(region.childAt(0).text()).to.equal('Norden');
   });
 });

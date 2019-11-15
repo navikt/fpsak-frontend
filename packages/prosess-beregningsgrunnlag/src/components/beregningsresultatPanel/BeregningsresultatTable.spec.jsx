@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import BeregningsresultatTable from './BeregningsresultatTable';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const tableData = {
   rows: [['Brutto', 400], ['Avkortet', 400], ['Redusert', 400]],

@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import InntektOgYtelserFaktaPanel from './InntektOgYtelserFaktaPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
 describe('<InntektOgYtelserFaktaPanel>', () => {
   it('skal vise tabell med inntekter', () => {

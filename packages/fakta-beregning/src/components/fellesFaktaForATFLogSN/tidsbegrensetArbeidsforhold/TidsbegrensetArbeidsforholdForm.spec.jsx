@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { TidsbegrensetArbeidsforholdFormImpl } from './TidsbegrensetArbeidsforholdForm';
+import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
 const andeler = [
   {

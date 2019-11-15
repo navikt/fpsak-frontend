@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import NyIArbeidslivetSNForm from './NyIArbeidslivetSNForm';
+import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
 describe('<NyIArbeidslivetSNForm>', () => {
   it('skal teste at korrekt antall radioknapper vises med korrekte props', () => {

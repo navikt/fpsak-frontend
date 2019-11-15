@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { TilleggsopplysningerInfoPanel } from './TilleggsopplysningerInfoPanel';
 import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-tilleggsopplysninger';
 
 describe('<TilleggsopplysningerInfoPanel>', () => {
   it('skal vise faktapanel og form for tilleggsopplysninger', () => {
@@ -22,7 +23,7 @@ describe('<TilleggsopplysningerInfoPanel>', () => {
 
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('TilleggsopplysningerInfoPanel.Tilleggsopplysninger');
+    expect(panel.prop('title')).to.eql('Tilleggsopplysninger');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('tilleggsopplysninger');

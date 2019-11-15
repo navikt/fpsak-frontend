@@ -719,6 +719,7 @@
   "Calendar.Month.11": "Desember",
   
   "Skjermlenke.Klage.ResolveKlage.Title": "Behandle klage",
+  "Klage.ResolveKlage.ExplanationRequiredBrev": "Begrunnelse/tekst i brev",
 
   "KlageVurderingModal.VedtakOversendt": "Innstilling er sendt til NAV Klageinstans.",
   "KlageVurderingModal.ModalDescription": "Vedtaket er stadfestet. Du kommer nå til forsiden",
