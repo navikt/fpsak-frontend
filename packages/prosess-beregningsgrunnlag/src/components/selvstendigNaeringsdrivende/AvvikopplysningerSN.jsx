@@ -16,7 +16,7 @@ const AvviksopplysningerSN = ({
       <Row>
         <Column xs="12">
           <Normaltekst>
-        Søker er ny i arbeidslivet. Det foretas derfor ingen avviksvurdering.
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.NyIArbeidslivet" />
           </Normaltekst>
         </Column>
       </Row>

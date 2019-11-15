@@ -35,54 +35,45 @@ const {
 const FastsettSN2 = ({
   readOnly,
   isAksjonspunktClosed,
-}) => {
-  console.log('FastsettSN2 isAksjonspunktClosed', isAksjonspunktClosed); // eslint-disable-line no-console
-  return (
-    <>
-      <Row className={styles.verticalAlignMiddle}>
-        <Column xs="7">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
-          </Normaltekst>
-        </Column>
-        <Column xs="5">
-          <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
-            <InputField
-              name={fastsettInntektFieldname}
-              bredde="XS"
-              validate={[required]}
-              parse={parseCurrencyInput}
+}) => (
+  <>
+    <Row className={styles.verticalAlignMiddle}>
+      <Column xs="7">
+        <Normaltekst>
+          <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
+        </Normaltekst>
+      </Column>
+      <Column xs="5">
+        <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
+          <InputField
+            name={fastsettInntektFieldname}
+            bredde="XS"
+            validate={[required]}
+            parse={parseCurrencyInput}
 
-              readOnly={readOnly}
-            />
-          </div>
-        </Column>
-      </Row>
-      <VerticalSpacer eightPx />
-      <Row>
-        <Column xs="12" className={styles.marginTop}>
-          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
-            <TextAreaField
-              name={begrunnelseFieldname}
-              label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
-              validate={[required, maxLength1500, minLength3, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              isEdited={isAksjonspunktClosed}
-            />
-            {isAksjonspunktClosed && (
-            <span>
-her
-              {isAksjonspunktClosed}
-            </span>
-            )}
-          </div>
-        </Column>
-      </Row>
+            readOnly={readOnly}
+          />
+        </div>
+      </Column>
+    </Row>
+    <VerticalSpacer eightPx />
+    <Row>
+      <Column xs="12" className={styles.marginTop}>
+        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
+          <TextAreaField
+            name={begrunnelseFieldname}
+            label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
+            validate={[required, maxLength1500, minLength3, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+            isEdited={isAksjonspunktClosed}
+          />
+        </div>
+      </Column>
+    </Row>
 
-    </>
-  );
-};
+  </>
+);
 
 FastsettSN2.propTypes = {
   readOnly: PropTypes.bool.isRequired,

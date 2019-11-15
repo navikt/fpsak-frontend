@@ -386,7 +386,6 @@ describe('<Beregningsgrunnlag2>', () => {
     expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
     expect(wrapper.find(MilitaerPanel)).to.have.length(1);
   });
-  // TODO: Hva med dekningsgrad ???
   it('Skal teste buildInitialValues med ATFL og vurderDekningsgrad aksjonspunkt', () => {
     const aksjonspunkter = [vurderAksjonspunktDekningsgrad, atflAksjonspunkt];
     const values = Beregningsgrunnlag2.buildInitialValues(aksjonspunkter);

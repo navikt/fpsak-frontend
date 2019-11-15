@@ -51,13 +51,10 @@ export const VurderOgFastsettSNImpl2 = ({
       />
       {erVarigEndretNaering
         && (
-          <>
-
-            <FastsettSN2
-              readOnly={readOnly}
-              isAksjonspunktClosed={isAksjonspunktClosed}
-            />
-          </>
+        <FastsettSN2
+          readOnly={readOnly}
+          isAksjonspunktClosed={isAksjonspunktClosed}
+        />
         )}
     </>
   );

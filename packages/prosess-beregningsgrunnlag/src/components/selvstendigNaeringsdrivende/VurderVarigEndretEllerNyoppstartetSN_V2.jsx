@@ -33,8 +33,6 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
   <>
     <Row>
       <Column xs="12">
-
-        <span>hva brukes denne til petter</span>
         <TextAreaField
           name={begrunnelseFieldname}
           label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}

@@ -1,18 +1,19 @@
 import React from 'react';
 import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import BeregningsresultatTable2 from './BeregningsresultatTable_V2';
 
 const tableData = {
-  rows: [['Brutto', 400], ['Avkortet', 400], ['Redusert', 400]],
+  rows: [['Brutto beregningsgrunnlag', 400], ['Avkortet beregningsgrunnlag (6G=599148)', 400], ['Redusert beregningsgrunnlag (100%)', 400]],
   dagsatser: ['Dagsats', 100],
   headers: ['Beregningsgrunnlag.AarsinntektPanel.TomString'],
+  rowsAndeler: [['Beregningsgrunnlag - fastsatt årsinntekt', 130250]],
 };
 const vilkaarBG = {
   vilkarStatus: {
-    kode: 'IKKE_VURDERT',
-    kodeverk: 'vilkarStatus',
+    kode: vilkarUtfallType.IKKE_VURDERT,
+    kodeverk: 'VILKAR_UTFALL_TYPE',
   },
   vilkarType: {
     kode: 'FP_VK_41',
@@ -20,7 +21,7 @@ const vilkaarBG = {
   },
 };
 describe('<BeregningsresultatTable2>', () => {
-  it('Skal se tabellen får korrekt antall rader', () => {
+  it('Skal se tabellen får korrekt antall rader ved vilkarStatus:IKKE VURDERT', () => {
     const wrapper = shallowWithIntl(<BeregningsresultatTable2.WrappedComponent
       intl={intlMock}
       isVilkarOppfylt
@@ -29,7 +30,41 @@ describe('<BeregningsresultatTable2>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    // TODO: Denne testen returnerer true, her må det teatet på mer
-    expect(rows).to.have.length(1);
+    expect(rows).to.have.length(3);
+    const andelRow = rows.first();
+    const andelText = andelRow.find('Normaltekst').first().childAt(0).text();
+    const andelVerdi = andelRow.find('FormattedMessage').props().id;
+    expect(andelText).to.equal(tableData.rowsAndeler[0][0]);
+    expect(andelVerdi).to.equal('Beregningsgrunnlag.BeregningTable.MåFastsettes');
+    const sumRow = rows.last();
+    const sumText = sumRow.find('FormattedMessage').props().id;
+    const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
+    expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt');
+    expect(sumVerdi).to.equal('-');
+  });
+  it('Skal se tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
+    vilkaarBG.vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
+    vilkaarBG.vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
+    const wrapper = shallowWithIntl(<BeregningsresultatTable2.WrappedComponent
+      intl={intlMock}
+      isVilkarOppfylt
+      tableData={tableData}
+      vilkaarBG={vilkaarBG}
+    />);
+    const panel = wrapper.find('PanelBase');
+    const rows = panel.find('Row');
+    expect(rows).to.have.length(5);
+    const andelRow = rows.first();
+    const andelText = andelRow.find('Normaltekst').first().childAt(0).text();
+    const andelVerdi = andelRow.find('Normaltekst').at(1).childAt(0).text();
+    console.log('andelText', andelText); // eslint-disable-line no-console
+    console.log('andelVerdi', andelVerdi); // eslint-disable-line no-console
+    expect(andelText).to.equal(tableData.rowsAndeler[0][0]);
+    expect(andelVerdi).to.equal(tableData.rowsAndeler[0][1]);
+    const sumRow = rows.last();
+    const sumText = sumRow.find('FormattedMessage').props().id;
+    const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
+    expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt');
+    expect(sumVerdi).to.equal('-');
   });
 });

@@ -5,8 +5,6 @@ import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 
-
-// const tidsBegrensetInntekt = true;
 const relevanteStatuser = {
   isFrilanser: false,
   isSelvstendigNaeringsdrivende: false,

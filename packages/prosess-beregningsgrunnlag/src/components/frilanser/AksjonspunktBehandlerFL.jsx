@@ -5,20 +5,13 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { InputField } from '@fpsak-frontend/form';
 import { parseCurrencyInput, required } from '@fpsak-frontend/utils';
-// import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
-/*
-const finnAndelerSomSkalVisesFL = (andeler) => {
-  if (!andeler) {
-    return [];
-  }
-  return andeler
-    .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER)
-    .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
-};
-*/
-const createRowFL = (readOnly) => (
+
+const AksjonspunktBehandlerFL = ({
+  readOnly,
+}) => (
   <Row className={styles.verticalAlignMiddle}>
     <Column xs="7">
       <Normaltekst>
@@ -37,14 +30,6 @@ const createRowFL = (readOnly) => (
       </div>
     </Column>
   </Row>
-);
-
-const AksjonspunktBehandlerFL = ({
-  readOnly,
-}) => (
-  <>
-    {createRowFL(readOnly)}
-  </>
 );
 AksjonspunktBehandlerFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,

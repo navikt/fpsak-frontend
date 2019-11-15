@@ -22,14 +22,9 @@ const AksjonspunktBehandlerSN = ({
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
-}) => {
-  console.log('AksjonspunktBehandlerSN aksjonspunkter=', aksjonspunkter); // eslint-disable-line no-console
-  const jib = skalFastsetteSN(aksjonspunkter);
-  console.log('AksjonspunktBehandlerSN jib=', jib); // eslint-disable-line no-console
-
-  return (
-    <>
-      { skalFastsetteSN(aksjonspunkter)
+}) => (
+  <>
+    { skalFastsetteSN(aksjonspunkter)
       && (
         <VurderOgFastsettSN2
           gjeldendeAksjonspunkter={aksjonspunkter}
@@ -38,9 +33,8 @@ const AksjonspunktBehandlerSN = ({
           behandlingVersjon={behandlingVersjon}
         />
       )}
-    </>
-  );
-};
+  </>
+);
 AksjonspunktBehandlerSN.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,

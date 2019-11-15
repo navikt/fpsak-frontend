@@ -3,8 +3,6 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
-// import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
-// import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 
 const beregnetAarsinntekt = 360000;
 const sammenligningsgrunnlag = 330000;

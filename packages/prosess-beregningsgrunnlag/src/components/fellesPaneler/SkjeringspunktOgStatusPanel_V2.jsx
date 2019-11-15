@@ -28,11 +28,6 @@ const createStatusEtiketter = (listeMedStatuser, getKodeverknavn) => {
   const statusList = [];
   const unikeStatuser = listeMedStatuser.filter((status, index, self) => index === self.findIndex((t) => (
     t.kode === status.kode)));
-  /*
-  const statuserMedEgneNavn = unikeStatuser.filter((status) => status.kode !== aktivitetStatus.ARBEIDSAVKLARINGSPENGER
-    && status.kode !== aktivitetStatus.DAGPENGER
-    && status.kode !== aktivitetStatus.MILITAER_ELLER_SIVIL);
-*/
   unikeStatuser.forEach((status) => {
     const statusName = getKodeverknavn(status);
     statusList.push({ visningsNavn: statusName, kode: status.kode, className: `statusFarge${status.kode}` });
@@ -84,10 +79,6 @@ SkjeringspunktOgStatusPanelImpl2.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
-};
-
-SkjeringspunktOgStatusPanelImpl2.defaultProps = {
-
 };
 
 const mapStateToProps = (state, ownProps) => {

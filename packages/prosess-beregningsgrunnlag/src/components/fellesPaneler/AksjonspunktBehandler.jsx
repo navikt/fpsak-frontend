@@ -58,8 +58,6 @@ const AksjonspunktBehandler = ({
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
-  console.log('aksjonspunkter', aksjonspunkter); // eslint-disable-line no-console
-  console.log('tidsBegrensetInntekt', tidsBegrensetInntekt); // eslint-disable-line no-console
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : undefined}>

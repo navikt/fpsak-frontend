@@ -14,21 +14,22 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
-import messages from '../../../i18n/nb_NO';
 
 const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
-  <Row key={`index${index + 1}`}>
-    <Column xs="9" key={`index2${index + 1}`}>
-      <Normaltekst>{entry[0]}</Normaltekst>
+  <Row key={`indeAx${index + 1}`}>
+    <Column xs="9" key={`indexAl2${index + 1}`}>
+      <Normaltekst>
+        {entry[0]}
+      </Normaltekst>
     </Column>
     {!ikkeVurdert && (
-      <Column xs="3" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="3" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     )}
     {ikkeVurdert && (
-      <Column xs="3" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
-        <Normaltekst className={beregningStyles.redError}>Må fastsettes</Normaltekst>
+      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElement}>
+        <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
       </Column>
     )}
   </Row>
@@ -43,24 +44,26 @@ const lineRow = () => (
 );
 const createRowsRedusert = (listOfEntries) => (
   listOfEntries.map((entry, index) => (
-    <Row key={`index${index + 1}`}>
-      <Column xs="8" key={`index2${index + 1}`}>
-        <Normaltekst>{entry[0]}</Normaltekst>
+    <Row key={`indexR${index + 1}`}>
+      <Column xs="8" key={`indexR2${index + 1}`}>
+        <Normaltekst>
+          {entry[0]}
+        </Normaltekst>
       </Column>
-      <Column xs="4" key={`index2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="4" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     </Row>
   ))
 );
 const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
-  <>
+  <React.Fragment key="beregningOppsummeringWrapper">
     <Row key="beregningOppsummering">
-      <Column xs="8">
+      <Column xs="8" key="beregningOppsummeringLedetekst">
         <Normaltekst>
           <span className={beregningStyles.semiBoldText}>
             { !ikkeVurdert && (
-            <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats" values={{ dagSats: listOfEntries[listOfEntries.length - 1][1] }} />
+            <FormattedMessage id="Beregningsgrunnlag.BeregningTable.DagsatsNy" values={{ dagSats: listOfEntries[listOfEntries.length - 1][1] }} />
             )}
             { ikkeVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
@@ -71,29 +74,30 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
         </Normaltekst>
       </Column>
       {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
-        <Column xs="4" key={`index${index + 1}`} className={beregningStyles.rightAlignElement}>
+        <Column xs="4" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
           <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
         </Column>
       ))}
       {ikkeVurdert && (
-        <Column xs="4" className={beregningStyles.rightAlignElement}>
+        <Column xs="4" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
       )}
     </Row>
-  </>
+  </React.Fragment>
 );
 const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
   const rows = [];
 
-  if (listofAndeler && listofAndeler.length > 1) {
+  if (listofAndeler && listofAndeler.length > 0) {
     rows.push(createRowsAndeler(listofAndeler));
     rows.push(lineRow());
   }
-
   rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow);
+  rows.push(lineRow());
   rows.push(summaryRow(listOfDagsatser, listOfEntries));
+  console.log('createTableRows returning rows', rows); // eslint-disable-line no-console
+
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
@@ -126,27 +130,30 @@ const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.ledetekstBrutto,
     (state, ownProps) => ownProps.ledetekstRedusert,
-    (state, ownProps) => ownProps.ledetekstAvkortet],
-  (allePerioder, ledetekstBrutto, ledetekstRedusert, ledetekstAvkortet) => {
+    (state, ownProps) => ownProps.ledetekstAvkortet,
+    (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
+  (allePerioder, ledetekstBrutto, ledetekstRedusert, ledetekstAvkortet, vilkarStatus) => {
     const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
     const bruttoRad = [ledetekstBrutto];
-    const atRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.AT']];
-    const flRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.FL']];
-    const snRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.SN']];
-    const aapRad = [messages['Beregningsgrunnlag.Beregningsresultat.Fastsatt.aap']];
-    const dpRad = [messages['Beregningsgrunnlag.Beregningsresultat.Dagpenger']];
+    const strKey = vilkarStatus && vilkarStatus.kode === vilkarUtfallType.OPPFYLT ? 'Omberegnet' : 'Fastsatt';
+    const atRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AT`} />];
+    const flRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.FL`} />];
+    const snRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.SN`} />];
+    const aapRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AT`} />];
+    const dpRad = [<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagpenger" />];
 
     // const bruttoRad = [`<Column xs="8"> ${ledetekstBrutto} </Column>`];
     const avkortetRad = [ledetekstAvkortet];
     const redusertRad = [ledetekstRedusert];
     const dagsatserRad = [];
 
+
+    console.log('createBeregningTableData allePerioder', allePerioder); // eslint-disable-line no-console
     // Kun dersom periodeårsaken kan endre dagsatsen på beregningsresultatet er
     // vi interessert i å vise den tilhørende perioden i resultattabellen.
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
     perioderSomSkalVises.forEach((periode) => {
       const atAndeleler = periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
-
       const flAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
       const dpAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER);
       const aapAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER);
@@ -196,16 +203,19 @@ const BeregningsresultatTable2 = ({
   vilkaarBG,
   halvGVerdi,
   tableData,
-}) => (
-  <Panel className={beregningStyles.panel}>
-    <Element>
-      <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
-    </Element>
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
+}) => {
+  console.log('BeregningsresultatTable2 vilkaarBG', vilkaarBG); // eslint-disable-line no-console
+  console.log('BeregningsresultatTable2 tableData', tableData); // eslint-disable-line no-console
+  return (
+    <Panel className={beregningStyles.panel}>
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
+      </Element>
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
       && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
       && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
       && (
         <Normaltekst>
           <FormattedHTMLMessage
@@ -215,8 +225,9 @@ const BeregningsresultatTable2 = ({
         </Normaltekst>
       )}
 
-  </Panel>
-);
+    </Panel>
+  );
+};
 
 BeregningsresultatTable2.propTypes = {
   halvGVerdi: PropTypes.number,
