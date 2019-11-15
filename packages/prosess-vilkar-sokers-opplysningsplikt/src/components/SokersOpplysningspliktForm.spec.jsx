@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Table, TableRow } from '@fpsak-frontend/shared-components';
 import { buildInitialValues, getSortedManglendeVedlegg, SokersOpplysningspliktFormImpl } from './SokersOpplysningspliktForm';
-import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-sokers-opplysningsplikt';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;

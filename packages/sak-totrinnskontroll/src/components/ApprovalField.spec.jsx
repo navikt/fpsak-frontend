@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
-import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 
 describe('<ApprovalField>', () => {

@@ -5,7 +5,7 @@ import Modal from 'nav-frontend-modal';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import MessagesModal from './MessagesModal';
-import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meldinger';
 
 describe('<MessagesModal>', () => {
   it('skal vise modal', () => {

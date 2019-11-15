@@ -8,7 +8,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 import { ApprovalPanel, mapPropsToContext } from './ApprovalPanel';
-import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 describe('<ApprovalPanel>', () => {
   const getBehandling = () => ({

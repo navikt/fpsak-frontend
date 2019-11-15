@@ -6,7 +6,7 @@ import { Undertekst } from 'nav-frontend-typografi';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
 import { ErrorMessagePanel } from './ErrorMessagePanel';
-import shallowWithIntl from '../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-dekorator';
 
 describe('<ErrorMessagePanel>', () => {
   it('skal vise feilmelding med ikke lenke for å vise detaljert info', () => {

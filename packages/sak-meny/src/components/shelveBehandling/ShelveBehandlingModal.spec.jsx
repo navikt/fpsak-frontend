@@ -9,7 +9,7 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getHenleggArsaker, ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
-import shallowWithIntl from '../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<ShelveBehandlingModal>', () => {
   const henleggArsaker = [{

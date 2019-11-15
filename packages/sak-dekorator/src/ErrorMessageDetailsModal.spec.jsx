@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import ErrorMessageDetailsModal from './ErrorMessageDetailsModal';
-import shallowWithIntl from '../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../i18n/intl-enzyme-test-helper-sak-dekorator';
 
 describe('<ErrorMessageDetailsModal>', () => {
   it('skal vise feildetaljer', () => {

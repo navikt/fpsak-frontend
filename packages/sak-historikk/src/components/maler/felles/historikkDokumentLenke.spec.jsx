@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import HistorikkDokumentLenke from './HistorikkDokumentLenke';
-import shallowWithIntl from '../../../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../../../i18n/intl-enzyme-test-helper-sak-historikk';
 
 const saksNr = 123;
 const dokumentLenke = {

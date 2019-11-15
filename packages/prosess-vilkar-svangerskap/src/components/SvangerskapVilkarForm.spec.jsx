@@ -7,7 +7,7 @@ import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import { SvangerskapVilkarFormImpl as UnwrappedForm } from './SvangerskapVilkarForm';
-import shallowWithIntl from '../../../fakta-uttak/i18n/intl-enzyme-test-helper-fakta-uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-svangerskap';
 
 describe('<SvangerskapVilkarForm>', () => {
   it('skal vise readonly-form med utgråete knapper når readonly og vilkåret ikke er vurdert', () => {
