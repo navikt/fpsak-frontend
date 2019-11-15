@@ -3,9 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import { isMedholdIKlage, VedtakKlageSubmitPanelImpl } from './VedtakKlageSubmitPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-vedtak-klage';
 
 describe('<VedtakKlageSubmitPanel>', () => {
   const forhandsvisVedtaksbrevFunc = sinon.spy();
@@ -38,7 +39,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
     expect(wrapper.find('FormattedMessage').first().prop('id')).to.eql('VedtakKlageForm.ForhandvisBrev');
@@ -61,7 +62,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('a');
     expect(a).to.have.length(1);
   });
@@ -78,7 +79,7 @@ describe('<VedtakKlageSubmitPanel>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakKlageForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     expect(hovedknapp.prop('disabled')).is.true;
 
     const a = wrapper.find('a');
