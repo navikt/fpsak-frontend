@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
@@ -10,6 +10,7 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { SelectField } from '@fpsak-frontend/form';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg-og-foreldreansvar';
 
 describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
   const getKodeverknavn = (kodeverk) => {

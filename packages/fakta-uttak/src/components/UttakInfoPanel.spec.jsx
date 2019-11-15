@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { UttakInfoPanelImpl } from './UttakInfoPanel';
 import UttakFaktaForm from './UttakFaktaForm';
 import AnnenForelderHarRettForm from './AnnenForelderHarRettForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const avklarAnnenforelderHarRettAp = [{
   aksjonspunktType: {

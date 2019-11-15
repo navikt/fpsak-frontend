@@ -7,10 +7,11 @@ import { FormattedMessage } from 'react-intl';
 import {
   PeriodpickerField, RadioGroupField, SelectField, TextAreaField,
 } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { ActivityPanel } from './ActivityPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-opptjening';
 
 describe('<ActivityPanel>', () => {
   const opptjeningAktivitetTypes = [{

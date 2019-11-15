@@ -2,10 +2,11 @@ import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { MessagesImpl as Messages } from './Messages';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-meldinger';
 
 const mockProps = {
   setRecipient: () => undefined,
@@ -80,7 +81,7 @@ describe('<Messages>', () => {
 
     const previewLink = wrapper.find('a');
     expect(previewLink).to.have.length(1);
-    expect(previewLink.text()).to.eql('Messages.Preview');
+    expect(previewLink.text()).to.eql('Forhåndsvis');
 
     expect(previewEventCallback.called).is.false;
     previewLink.simulate('click', { preventDefault: sinon.spy() });

@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { CheckboxField, DatepickerField } from '@fpsak-frontend/form';
 import { FieldArray } from 'redux-form';
 import { TilretteleggingArbeidsforholdSection } from './TilretteleggingArbeidsforholdSection';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 describe('<TilretteleggingArbeidsforholdSection>', () => {
   it('skal rendre tilrettelegginger korrekt når visTilrettelegginer er true', () => {
