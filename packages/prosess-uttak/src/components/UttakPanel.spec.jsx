@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -8,6 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { buildInitialValues, transformValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
 
 describe('<UttakPanel>', () => {
   const soknad = {
