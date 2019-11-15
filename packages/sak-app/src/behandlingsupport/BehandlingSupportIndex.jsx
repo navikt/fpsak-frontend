@@ -74,9 +74,7 @@ BehandlingSupportIndex.propTypes = {
 };
 
 const getDefaultSupportPanel = (enabledSupportPanels) => (
-  enabledSupportPanels.includes(supportPanels.MESSAGES)
-    ? supportPanels.MESSAGES
-    : enabledSupportPanels.find(() => true) || supportPanels.HISTORY
+  enabledSupportPanels.find(() => true) || supportPanels.HISTORY
 );
 
 const mapStateToProps = (state) => {
