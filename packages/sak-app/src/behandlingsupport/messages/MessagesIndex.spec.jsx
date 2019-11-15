@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
+import { DataFetcher, BehandlingIdentifier, SettBehandlingPaVentForm } from '@fpsak-frontend/fp-felles';
 import Messages, { MessagesModalSakIndex } from '@fpsak-frontend/sak-meldinger';
 
 import { MessagesIndex } from './MessagesIndex';
@@ -30,25 +30,23 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates2}
       fetchPreview={sinon.spy()}
       submitMessage={sinon.spy()}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
-    const messages = wrapper.find(Messages);
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates2,
+    }).find(Messages);
     expect(messages).to.have.length(1);
     expect(messages.prop('recipients')).to.eql(recipients);
     expect(messages.prop('templates')).to.eql(templates2);
@@ -62,25 +60,24 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={fetchPreviewFunction}
       submitMessage={sinon.spy()}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
-    const previewCallback = wrapper.find(Messages).prop('previewCallback');
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+    const previewCallback = messages.prop('previewCallback');
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
@@ -95,21 +92,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={sinon.spy()}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={resetSubmitMessageFunction}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
     wrapper.setState({ showMessagesModal: true });
@@ -132,21 +124,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={submitMessageCallback}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
@@ -156,7 +143,12 @@ describe('<MessagesIndex>', () => {
       fritekst: 'Dette er en tekst',
       arsakskode: undefined,
     };
-    wrapper.find(Messages).prop('submitCallback')(message);
+
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+    messages.prop('submitCallback')(message);
 
     expect(submitMessageCallback).to.have.property('callCount', 1);
     const { args } = submitMessageCallback.getCalls()[0];
@@ -178,21 +170,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={submitMessageCallback}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
@@ -203,7 +190,12 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+
+    return messages.prop('submitCallback')(message).then(() => {
       expect(wrapper.state().showMessagesModal).is.true;
       expect(wrapper.state().showSettPaVentModal).is.false;
       expect(submitMessageCallback).to.have.property('callCount', 1);
@@ -227,21 +219,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={submitMessageCallback}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
@@ -252,7 +239,11 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+    return messages.prop('submitCallback')(message).then(() => {
       expect(wrapper.state().showMessagesModal).is.false;
       expect(wrapper.state().showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
@@ -276,21 +267,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={submitMessageCallback}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
@@ -301,7 +287,11 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+    return messages.prop('submitCallback')(message).then(() => {
       expect(wrapper.state().showMessagesModal).is.false;
       expect(wrapper.state().showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
@@ -325,21 +315,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={submitMessageCallback}
       setBehandlingOnHold={sinon.spy()}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={sinon.spy()}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
 
@@ -350,7 +335,12 @@ describe('<MessagesIndex>', () => {
       arsakskode: undefined,
     };
 
-    return wrapper.find(Messages).prop('submitCallback')(message).then(() => {
+    const dataFetcher = wrapper.find(DataFetcher);
+    const messages = dataFetcher.renderProp('render')({
+      brevmaler: templates,
+    }).find(Messages);
+
+    return messages.prop('submitCallback')(message).then(() => {
       expect(wrapper.state().showMessagesModal).is.false;
       expect(wrapper.state().showSettPaVentModal).is.true;
       expect(submitMessageCallback).to.have.property('callCount', 1);
@@ -375,21 +365,16 @@ describe('<MessagesIndex>', () => {
       selectedBehandlingVersjon={123}
       selectedBehandlingSprak={{}}
       recipients={recipients}
-      templates={templates}
       fetchPreview={sinon.spy()}
       submitMessage={sinon.spy()}
       setBehandlingOnHold={setBehandlingOnHoldCallback}
-      resetReduxForm={sinon.spy()}
       resetSubmitMessage={sinon.spy()}
       push={pushCallback}
-      fetchBrevmaler={sinon.spy()}
-      loadingBrevmaler={false}
       fagsakYtelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
       behandlingTypeKode={BehandlingType.FORSTEGANGSSOKNAD}
-      isKontrollerRevurderingApOpen={false}
       revurderingVarslingArsak={[]}
     />);
     wrapper.setState({ showSettPaVentModal: true });

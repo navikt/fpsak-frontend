@@ -115,30 +115,6 @@ describe('commonBehandlingSelectors', () => {
       expect(openAps[0].id).is.eql(1);
     });
 
-    it('skal ha åpent aksjonspunkt for kontrollering av revurdering', () => {
-      const openAksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-        },
-      }];
-
-      const isApOpen = selectors.isKontrollerRevurderingAksjonspunkOpen.resultFunc(openAksjonspunkter);
-
-      expect(isApOpen).is.true;
-    });
-
-    it('skal ikke ha åpent aksjonspunkt for kontrollering av revurdering', () => {
-      const openAksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
-        },
-      }];
-
-      const isApOpen = selectors.isKontrollerRevurderingAksjonspunkOpen.resultFunc(openAksjonspunkter);
-
-      expect(isApOpen).is.false;
-    });
-
     it('skal ha behandling som manuelt er satt på vent', () => {
       const openAksjonspunkter = [{
         definisjon: {

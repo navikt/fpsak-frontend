@@ -8,7 +8,6 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from './selectors/ankeBehandlingSelectors';
-import FpAnkeBehandlingInfoSetter from './FpAnkeBehandlingInfoSetter';
 import BehandlingsprosessAnkeIndex from './behandlingsprosess/BehandlingsprosessAnkeIndex';
 import FaktaAnkeIndex from './fakta/FaktaAnkeIndex';
 import {
@@ -33,7 +32,7 @@ export const BehandlingAnkeIndex = ({
   behandlingId,
   behandlingIdentifier,
   behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -74,8 +73,8 @@ export const BehandlingAnkeIndex = ({
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={fpAnkeBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
+    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
   >
-    <FpAnkeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessAnkeIndex />}
       faktaContent={<FaktaAnkeIndex />}
@@ -85,7 +84,7 @@ export const BehandlingAnkeIndex = ({
 
 BehandlingAnkeIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,

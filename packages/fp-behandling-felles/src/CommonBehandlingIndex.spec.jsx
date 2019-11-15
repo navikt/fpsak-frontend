@@ -71,6 +71,7 @@ describe('<CommonBehandlingIndex>', () => {
         isInSync
         fetchBehandling={sinon.spy()}
         fpBehandlingUpdater={{}}
+        oppdaterBehandlingVersjon={sinon.spy()}
         fagsakInfo={{
           fagsakSaksnummer: 2,
           behandlingId: 1,
@@ -106,6 +107,7 @@ describe('<CommonBehandlingIndex>', () => {
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
+      oppdaterBehandlingVersjon={sinon.spy()}
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -145,6 +147,7 @@ describe('<CommonBehandlingIndex>', () => {
       isInSync
       fetchBehandling={sinon.spy()}
       fpBehandlingUpdater={{}}
+      oppdaterBehandlingVersjon={sinon.spy()}
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -192,6 +195,7 @@ describe('<CommonBehandlingIndex>', () => {
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
+      oppdaterBehandlingVersjon={sinon.spy()}
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -232,6 +236,7 @@ describe('<CommonBehandlingIndex>', () => {
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
+      oppdaterBehandlingVersjon={sinon.spy()}
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
