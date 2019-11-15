@@ -62,7 +62,6 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
         readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
-        validate={[required]}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.bruk`} value />]}
       </RadioGroupField>
@@ -71,7 +70,6 @@ const lagTableRow = (readOnly, isAksjonspunktClosed, aktivitet, alleKodeverk, er
       <RadioGroupField
         name={`${lagAktivitetFieldId(aktivitet)}.skalBrukes`}
         readOnly={readOnly || !skalVurdereAktivitet(aktivitet, erOverstyrt, harAksjonspunkt)}
-        validate={[required]}
       >
         {[<RadioOption key={`${lagAktivitetFieldId(aktivitet)}.ikkeBruk`} value={false} />]}
       </RadioGroupField>
@@ -159,6 +157,38 @@ VurderAktiviteterTabell.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   erOverstyrt: PropTypes.bool.isRequired,
   harAksjonspunkt: PropTypes.bool.isRequired,
+};
+
+
+export const måHaMinstEnAktivitet = () => ([{ id: 'VurderAktiviteterTabell.VentelonnVartpenger.Validation.MåHaMinstEnAktivitet' }]);
+
+
+VurderAktiviteterTabell.validate = (values, aktiviteter) => {
+  const errors = {};
+  let harError = false;
+  aktiviteter
+    .forEach((aktivitet) => {
+      const fieldId = lagAktivitetFieldId(aktivitet);
+      const e = required(values[fieldId].skalBrukes);
+      if (e) {
+        errors[fieldId] = e;
+        harError = true;
+      }
+    });
+  if (harError) {
+    return errors;
+  }
+  const harAktiviteterSomSkalBrukes = aktiviteter
+    .filter((aktivitet) => {
+      const fieldId = lagAktivitetFieldId(aktivitet);
+      const { skalBrukes } = values[fieldId];
+      return skalBrukes;
+    })
+    .length > 0;
+  if (!harAktiviteterSomSkalBrukes) {
+    return { _error: 'VurderAktiviteterTabell.VentelonnVartpenger.Validation.MåHaMinstEnAktivitet' };
+  }
+  return errors;
 };
 
 
