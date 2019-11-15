@@ -1,10 +1,12 @@
 import React from 'react';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
-import { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import AktivitetStatus, { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import { erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver, GRADERING_RANGE_DENOMINATOR, mapToBelop } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
+
+const convertToNumber = (n) => (n == null || undefined ? null : Number(removeSpacesFromNumber(n)));
 
 export const compareAndeler = (andel1, andel2) => {
   if (andel1.andelsinfo === andel2.andelsinfo) {
@@ -113,6 +115,7 @@ const skalIkkjeVereHogareEnn = (
   value, registerInntekt, errorMessage,
 ) => ((value > Math.round(registerInntekt)) ? errorMessage() : undefined);
 
+
 export const skalVereLikFordelingMessage = (fordeling) => (
   [{ id: 'BeregningInfoPanel.FordelBG.Validation.LikFordeling' },
     { fordeling }]);
@@ -122,6 +125,29 @@ export const kanIkkjeHaNullBeregningsgrunnlagError = () => (
 
 export const tomErrorMessage = () => (
   [{ id: ' ' }]);
+
+
+export const totalRefusjonMåVereLavereEnn = (seksG) => (
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalRefusjonSkalIkkeOverstige' }, { seksG }]);
+
+const totalRefusjonSkalVereLavereEnn = (
+  value, seksG,
+) => ((value >= Math.round(seksG)) ? totalRefusjonMåVereLavereEnn(formatCurrencyNoKr(seksG)) : undefined);
+
+
+export const totalFordelingForArbeidstakerMåVereLavereEnn = (seksG) => (
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidstakerLavereEnn' }, { seksG }]);
+
+export const totalFordelingForArbeidstakerOgFrilanserMåVereLavereEnn = (seksG) => (
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalFordelingForArbeidstakerOgFrilanserLavereEnn' }, { seksG }]);
+
+export const totalFordelingForFrilanserMåVereLavereEnn = (seksG) => (
+  [{ id: 'BeregningInfoPanel.FordelBG.Validation.TotalFordelingForFrilanserLavereEnn' }, { seksG }]);
+
+
+const totalFordelingSkalVereLavereEnn = (
+  value, seksG, errorMessage,
+) => ((value >= Math.round(seksG)) ? errorMessage(formatCurrencyNoKr(seksG)) : undefined);
 
 
 export const likFordeling = (
@@ -244,4 +270,52 @@ export const validateSumFastsattBelop = (values, fordeling) => {
   const sumFastsattBelop = values.map(mapToBelop)
     .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
   return fordeling !== undefined && fordeling !== null ? likFordeling(sumFastsattBelop, fordeling) : null;
+};
+
+export const validateSumRefusjon = (values, grunnbeløp) => {
+  const harGraderingUtenRefusjon = !!values.find((v) => v.andelIArbeid !== '0.00' && convertToNumber(v.refusjonskrav) === 0);
+  const sumRefusjon = values.map(({ refusjonskrav }) => convertToNumber(refusjonskrav))
+    .reduce((sum, refusjonskrav) => sum + refusjonskrav, 0);
+  const seksG = 6 * grunnbeløp;
+  return harGraderingUtenRefusjon ? totalRefusjonSkalVereLavereEnn(sumRefusjon, seksG) : null;
+};
+
+export const validateSumFastsattArbeidstaker = (values, seksG) => {
+  const sumFastsattBelop = values.filter((v) => v.aktivitetStatus === AktivitetStatus.ARBEIDSTAKER).map(mapToBelop)
+    .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
+  return totalFordelingSkalVereLavereEnn(sumFastsattBelop, seksG, totalFordelingForArbeidstakerMåVereLavereEnn);
+};
+
+const finnRiktigErrorMessage = (values) => {
+  const harFrilans = !!values.find((v) => v.aktivitetStatus === AktivitetStatus.FRILANSER);
+  const harArbeidstaker = !!values.find((v) => v.aktivitetStatus === AktivitetStatus.ARBEIDSTAKER);
+  if (harArbeidstaker && harFrilans) {
+    return totalFordelingForArbeidstakerOgFrilanserMåVereLavereEnn;
+  } if (harArbeidstaker && !harFrilans) {
+    return totalFordelingForArbeidstakerMåVereLavereEnn;
+  } if (harFrilans && !harArbeidstaker) {
+    return totalFordelingForFrilanserMåVereLavereEnn;
+  }
+  return totalFordelingForArbeidstakerOgFrilanserMåVereLavereEnn;
+};
+
+export const validateSumFastsattArbeidstakerOgFrilanser = (values, seksG) => {
+  const sumFastsattBelop = values.filter((v) => v.aktivitetStatus === AktivitetStatus.ARBEIDSTAKER || v.aktivitetStatus === AktivitetStatus.FRILANSER)
+    .map(mapToBelop)
+    .reduce((sum, fastsattBelop) => sum + fastsattBelop, 0);
+  const errorMessageFunc = finnRiktigErrorMessage(values);
+  return totalFordelingSkalVereLavereEnn(sumFastsattBelop, seksG, errorMessageFunc);
+};
+
+export const validateSumFastsattForUgraderteAktiviteter = (values, grunnbeløp) => {
+  const skalGradereFL = !!values.find((v) => v.andelIArbeid !== '0.00' && v.aktivitetStatus === AktivitetStatus.FRILANSER);
+  const seksG = 6 * grunnbeløp;
+  if (skalGradereFL) {
+    return validateSumFastsattArbeidstaker(values, seksG);
+  }
+  const skalGradereSN = !!values.find((v) => v.andelIArbeid !== '0.00' && v.aktivitetStatus === AktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  if (skalGradereSN) {
+    return validateSumFastsattArbeidstakerOgFrilanser(values, seksG);
+  }
+  return null;
 };
