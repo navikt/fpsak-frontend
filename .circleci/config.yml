@@ -217,7 +217,7 @@ jobs:
             --resource=/tmp/workspace/k8s/app.yaml
       - slack/notify:
           color: '#117007'
-          message: "_Deploy av fpsak-frontend:${VERSION} til t4 var suksessfult._"
+          message: "_Deploy av fpsak-frontend:${VERSION} til t4 var vellykket._"
           webhook: ${SLACK_WEBHOOK}
 
 workflows:
