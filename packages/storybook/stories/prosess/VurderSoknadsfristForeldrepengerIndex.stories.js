@@ -26,7 +26,7 @@ const uttakPeriodeGrense = {
 };
 
 export default {
-  title: 'prosess/VurderSoknadsfristForeldrepengerIndex',
+  title: 'prosess/prosess-soknadsfrist',
   component: VurderSoknadsfristForeldrepengerIndex,
   decorators: [withKnobs, withReduxProvider],
 };

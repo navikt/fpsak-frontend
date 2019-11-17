@@ -255,7 +255,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/BeregningFaktaIndex',
+  title: 'fakta/fakta-beregning',
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

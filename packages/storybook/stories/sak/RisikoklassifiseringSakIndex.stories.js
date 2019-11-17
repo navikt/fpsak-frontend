@@ -16,7 +16,7 @@ const withWidthProvider = (story) => (
 );
 
 export default {
-  title: 'sak/RisikoklassifiseringSakIndex',
+  title: 'sak/sak-risikoklassifisering',
   component: RisikoklassifiseringSakIndex,
   decorators: [withKnobs, withReduxProvider, withWidthProvider],
 };

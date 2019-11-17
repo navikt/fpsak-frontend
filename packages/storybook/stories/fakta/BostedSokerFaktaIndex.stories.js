@@ -50,7 +50,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'fakta/BostedSokerFaktaIndex',
+  title: 'fakta/fakta-bosted-soker',
   component: BostedSokerFaktaIndex,
   decorators: [withKnobs],
 };

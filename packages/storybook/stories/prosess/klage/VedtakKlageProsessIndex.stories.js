@@ -32,7 +32,7 @@ const aksjonspunkter = [{
 }];
 
 export default {
-  title: 'prosess/klage/VedtakKlageProsessIndex',
+  title: 'prosess/klage/prosess-vedtak-klage',
   component: VedtakKlageProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

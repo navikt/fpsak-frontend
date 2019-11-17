@@ -1,6 +1,5 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
-import centered from '@storybook/addon-centered/react';
+
 import { LegendBox } from '@fpsak-frontend/tidslinje';
 import oppfyltUrl from '@fpsak-frontend/assets/images/oppfylt.svg';
 import fodselUrl from '@fpsak-frontend/assets/images/fodsel.svg';
@@ -11,8 +10,10 @@ import revurderingUrl from '@fpsak-frontend/assets/images/endringstidspunkt.svg'
 import gradertImage from '@fpsak-frontend/assets/images/periode_gradert.svg';
 import manueltAvklart from '@fpsak-frontend/assets/images/periode_manuelt_avklart.svg';
 
-const stories = storiesOf('tidslinje/Legendbox', module)
-  .addDecorator(centered);
+export default {
+  title: 'tidslinje/Legendbox',
+  component: LegendBox,
+};
 
 const legends = [
   {
@@ -48,6 +49,9 @@ const legends = [
     text: 'Manuell periode',
   },
 ];
-stories.add('Viser legendbox', () => (
-  <LegendBox legends={legends} />
-));
+
+export const normal = () => (
+  <div style={{ width: '200px' }}>
+    <LegendBox legends={legends} />
+  </div>
+);

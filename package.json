@@ -25,7 +25,8 @@
     "lint": "./node_modules/.bin/eslint ./packages/**/*.jsx",
     "remove-node-modules": "find . -name \"node_modules\" -exec rm -rf '{}' +",
     "lint:config": "node -e 'console.dir(require(\"./.eslintrc.js\"))'",
-    "storybook": "start-storybook -c packages/storybook/.storybook"
+    "storybook": "start-storybook -p 9001 -c packages/storybook/.storybook",
+    "deploy-storybook": "build-storybook -c packages/storybook/.storybook -o .static_storybook && storybook-to-ghpages --existing-output-dir=.static_storybook"
   },
   "workspaces": [
     "packages/*"
@@ -52,12 +53,12 @@
     "@commercetools/enzyme-extensions": "^5.0.0",
     "@istanbuljs/nyc-config-babel": "^2.1.1",
     "@storybook/addon-actions": "^5.2.1",
-    "@storybook/addon-centered": "^5.2.1",
     "@storybook/addon-docs": "^5.2.1",
     "@storybook/addon-knobs": "^5.2.1",
     "@storybook/addons": "^5.2.1",
     "@storybook/cli": "^5.2.1",
     "@storybook/react": "^5.2.1",
+    "@storybook/storybook-deployer": "^2.8.1",
     "@storybook/theming": "^5.2.1",
     "@types/chai": "^4.1.7",
     "@types/classnames": "^2.2.8",

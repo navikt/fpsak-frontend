@@ -24,7 +24,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/AdopsjonVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-adopsjon',
   component: AdopsjonVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

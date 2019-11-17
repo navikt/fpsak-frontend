@@ -76,7 +76,7 @@ const aksjonspunkter = [{
 }];
 
 export default {
-  title: 'prosess/VarselOmRevurderingProsessIndex',
+  title: 'prosess/prosess-varsel-om-revurdering',
   component: VarselOmRevurderingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

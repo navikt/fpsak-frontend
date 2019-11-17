@@ -47,7 +47,7 @@ const familiehendelse = {
 
 
 export default {
-  title: 'prosess/SoknadsfristVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-soknadsfrist',
   component: SoknadsfristVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

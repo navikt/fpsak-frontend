@@ -12,7 +12,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
-  title: 'fakta/FordelBeregningsgrunnlagFaktaIndex',
+  title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

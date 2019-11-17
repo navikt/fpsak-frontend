@@ -35,7 +35,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/TilleggsopplysningerFaktaIndex',
+  title: 'fakta/fakta-tilleggsopplysninger',
   component: TilleggsopplysningerFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
