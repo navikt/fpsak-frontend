@@ -2722,9 +2722,9 @@
     "@types/history" "*"
     "@types/react" "*"
 
-"@types/react-collapse@^4.0.2":
-  version "4.0.2"
-  resolved "https://registry.npmjs.org/@types/react-collapse/-/react-collapse-4.0.2.tgz#891ebb8598a10d2168d5b3bfe5dedb4fb05e6537"
+"@types/react-collapse@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.npmjs.org/@types/react-collapse/-/react-collapse-5.0.0.tgz#ffe6173db457b4b147319e1bd522b5b9d3d68fac"
   dependencies:
     "@types/react" "*"
 
