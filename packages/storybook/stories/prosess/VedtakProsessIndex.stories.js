@@ -83,7 +83,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/VedtakProsessIndex',
+  title: 'prosess/prosess-vedtak',
   component: VedtakProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

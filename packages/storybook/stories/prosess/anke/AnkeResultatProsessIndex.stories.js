@@ -37,7 +37,7 @@ const ankeVurderingResultat = {
 };
 
 export default {
-  title: 'prosess/anke/AnkeResultatProsessIndex',
+  title: 'prosess/anke/prosess-anke-resultat',
   component: AnkeResultatProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

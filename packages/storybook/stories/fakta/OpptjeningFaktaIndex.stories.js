@@ -151,7 +151,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/OpptjeningFaktaIndex',
+  title: 'fakta/fakta-opptjening',
   component: OpptjeningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

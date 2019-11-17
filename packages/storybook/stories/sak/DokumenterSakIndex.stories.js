@@ -36,7 +36,7 @@ const dokumenter = [{
 }];
 
 export default {
-  title: 'sak/DokumenterSakIndex',
+  title: 'sak/sak-dokumenter',
   component: DokumenterSakIndex,
   decorators: [withKnobs, withReduxProvider],
 };

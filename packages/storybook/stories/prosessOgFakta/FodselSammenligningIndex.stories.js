@@ -32,7 +32,7 @@ const originalBehandling = {
 };
 
 export default {
-  title: 'prosessOgFakta/FodselSammenligningIndex',
+  title: 'prosessOgFakta/prosess-fakta-fodsel-sammenligning',
   component: FodselSammenligningIndex,
   decorators: [withKnobs, withReduxProvider],
 };

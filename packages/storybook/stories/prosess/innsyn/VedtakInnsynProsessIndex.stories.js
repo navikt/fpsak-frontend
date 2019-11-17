@@ -38,7 +38,7 @@ const aksjonspunkter = [{
 }];
 
 export default {
-  title: 'prosess/innsyn/VedtakInnsynProsessIndex',
+  title: 'prosess/innsyn/prosess-vedtak-innsyn',
   component: VedtakInnsynProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -25,7 +25,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/FodselVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-fodsel',
   component: FodselVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

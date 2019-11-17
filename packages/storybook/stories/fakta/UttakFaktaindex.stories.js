@@ -530,7 +530,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/UttakFaktaIndex',
+  title: 'fakta/fakta-uttak',
   component: UttakFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -30,7 +30,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'prosess/klage/KlagevurderingProsessIndex',
+  title: 'prosess/klage/prosess-klagevurdering',
   component: KlagevurderingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

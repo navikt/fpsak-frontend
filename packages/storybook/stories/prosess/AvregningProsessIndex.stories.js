@@ -109,7 +109,7 @@ const toggles = {
 };
 
 export default {
-  title: 'prosess/AvregningProsessIndex',
+  title: 'prosess/prosess-avregning',
   component: AvregningProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

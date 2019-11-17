@@ -57,7 +57,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/CheckPersonStatusIndex',
+  title: 'prosess/prosess-saksopplysninger',
   component: CheckPersonStatusIndex,
   decorators: [withKnobs, withReduxProvider],
 };

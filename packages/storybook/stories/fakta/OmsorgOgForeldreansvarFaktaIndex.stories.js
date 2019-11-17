@@ -98,7 +98,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/OmsorgOgForeldreansvarFaktaIndex',
+  title: 'fakta/fakta-omsorg-og-foreldreansvar',
   component: OmsorgOgForeldreansvarFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

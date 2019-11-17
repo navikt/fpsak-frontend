@@ -27,7 +27,7 @@ const avsluttedeBehandlinger = [{
 }];
 
 export default {
-  title: 'prosess/klage/FormkravProsessIndex',
+  title: 'prosess/klage/prosess-formkrav',
   component: FormkravProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -85,7 +85,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/TilkjentYtelseProsessIndex',
+  title: 'prosess/prosess-tilkjent-ytelse',
   component: TilkjentYtelseProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

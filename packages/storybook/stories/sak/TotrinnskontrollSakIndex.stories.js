@@ -69,7 +69,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'sak/TotrinnskontrollSakIndex',
+  title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };

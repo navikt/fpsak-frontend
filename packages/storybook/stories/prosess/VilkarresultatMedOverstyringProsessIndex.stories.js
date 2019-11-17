@@ -19,7 +19,7 @@ const avslagsarsaker = [{
 }];
 
 export default {
-  title: 'prosess/VilkarresultatMedOverstyringProsessIndex',
+  title: 'prosess/prosess-vilkar-overstyring',
   component: VilkarresultatMedOverstyringProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

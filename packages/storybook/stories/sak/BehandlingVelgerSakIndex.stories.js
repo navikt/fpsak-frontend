@@ -97,7 +97,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'sak/BehandlingVelgerSakIndex',
+  title: 'sak/sak-behandling-velger',
   component: BehandlingVelgerSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };

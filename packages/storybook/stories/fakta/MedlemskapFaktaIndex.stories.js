@@ -267,7 +267,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/MedlemskapFaktaIndex',
+  title: 'fakta/fakta-medlemskap',
   component: MedlemskapFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

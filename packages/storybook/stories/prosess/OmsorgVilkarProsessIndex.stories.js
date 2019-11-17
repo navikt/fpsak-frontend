@@ -23,7 +23,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'prosess/OmsorgVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-omsorg',
   component: OmsorgVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

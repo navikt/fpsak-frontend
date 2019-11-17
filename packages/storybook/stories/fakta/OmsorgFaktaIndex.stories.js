@@ -82,7 +82,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/OmsorgFaktaIndex',
+  title: 'fakta/fakta-omsorg',
   component: OmsorgFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

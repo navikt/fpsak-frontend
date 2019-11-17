@@ -83,7 +83,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'sak/FagsakSokSakIndex',
+  title: 'sak/sak-sok',
   component: FagsakSokSakIndex,
   decorators: [withKnobs, withReduxProvider],
 };

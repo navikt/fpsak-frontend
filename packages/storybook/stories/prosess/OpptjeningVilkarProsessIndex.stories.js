@@ -30,7 +30,7 @@ const opptjening = {
 };
 
 export default {
-  title: 'prosess/OpptjeningVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-opptjening',
   component: OpptjeningVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

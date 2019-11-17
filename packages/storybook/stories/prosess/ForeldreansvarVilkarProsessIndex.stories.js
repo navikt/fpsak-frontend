@@ -29,7 +29,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/ForeldreansvarVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-foreldreansvar',
   component: ForeldreansvarVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

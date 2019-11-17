@@ -60,7 +60,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/VergeFaktaIndex',
+  title: 'fakta/fakta-verge',
   component: VergeFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -47,7 +47,7 @@ const merknaderFraBeslutter = {
 };
 
 export default {
-  title: 'prosess/tilbakekreving/ForeldelseProsessIndex',
+  title: 'prosess/tilbakekreving/prosess-foreldelse',
   component: ForeldelseProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

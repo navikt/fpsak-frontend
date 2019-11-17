@@ -52,7 +52,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'prosess/innsyn/InnsynProsessIndex',
+  title: 'prosess/innsyn/prosess-innsyn',
   component: InnsynProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -184,7 +184,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'sak/HistorikkSakIndex',
+  title: 'sak/sak-historikk',
   component: HistorikkSakIndex,
 };
 

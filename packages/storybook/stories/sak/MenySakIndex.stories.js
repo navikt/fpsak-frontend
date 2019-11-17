@@ -156,7 +156,7 @@ const withStyle = (story) => (
 );
 
 export default {
-  title: 'sak/MenySakIndex',
+  title: 'sak/sak-meny',
   component: MenySakIndex,
   decorators: [withKnobs, withReduxProvider, withStyle],
 };

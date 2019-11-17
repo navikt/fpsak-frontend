@@ -25,7 +25,7 @@ const aksjonspunkter = [{
 }];
 
 export default {
-  title: 'prosess/anke/AnkeMerknaderProsessIndex',
+  title: 'prosess/anke/prosess-anke-merknader',
   component: AnkeMerknaderProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

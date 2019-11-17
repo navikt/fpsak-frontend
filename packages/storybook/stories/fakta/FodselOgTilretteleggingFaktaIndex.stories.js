@@ -89,7 +89,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/FodselOgTilretteleggingFaktaIndex',
+  title: 'fakta/fakta-fodsel-og-tilrettelegging',
   component: FodselOgTilretteleggingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

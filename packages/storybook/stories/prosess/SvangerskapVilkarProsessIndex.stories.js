@@ -24,7 +24,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/SvangerskapVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-svangerskap',
   component: SvangerskapVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

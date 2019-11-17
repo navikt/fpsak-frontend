@@ -34,7 +34,7 @@ const soknad = {
 };
 
 export default {
-  title: 'prosess/SokersOpplysningspliktVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-sokers-opplysningsplikt',
   component: SokersOpplysningspliktVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

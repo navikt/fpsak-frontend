@@ -121,7 +121,7 @@ const merknaderFraBeslutter = {
 };
 
 export default {
-  title: 'prosess/tilbakekreving/TilbakekrevingProsessIndex',
+  title: 'prosess/tilbakekreving/prosess-tilbakekreving',
   component: TilbakekrevingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
