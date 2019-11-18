@@ -129,7 +129,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/tilbakekreving/FeilutbetalingFaktaIndex',
+  title: 'fakta/fakta-feilutbetaling',
   component: FeilutbetalingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -12,7 +12,7 @@ import { FatterVedtakApprovalModalSakIndex } from '@fpsak-frontend/sak-totrinnsk
 import withReduxProvider from '../../decorators/withRedux';
 
 export default {
-  title: 'sak/FatterVedtakApprovalModalSakIndex',
+  title: 'sak/sak-totrinnskontroll-fatter-vedtak-modal',
   component: FatterVedtakApprovalModalSakIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -29,6 +29,7 @@ import 'core-js/features/array/flat-map';
 import { getUniqueListOfArbeidsforhold } from '../ArbeidsforholdHelper';
 import {
   validateAndeler, validateSumFastsattBelop, validateTotalRefusjonPrArbeidsforhold, validateUlikeAndeler,
+  validateSumRefusjon, validateSumFastsattForUgraderteAktiviteter,
 } from '../ValidateAndelerUtils';
 import styles from './renderFordelBGFieldArray.less';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
@@ -436,7 +437,7 @@ RenderFordelBGFieldArrayImpl.propTypes = {
 
 const RenderFordelBGFieldArray = injectIntl(RenderFordelBGFieldArrayImpl);
 
-RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp) => {
   const fieldErrors = validateAndeler(values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
   if (fieldErrors != null) {
     return fieldErrors;
@@ -447,6 +448,14 @@ RenderFordelBGFieldArray.validate = (values, sumIPeriode, skalValidereMotBeregni
   const ulikeAndelerError = validateUlikeAndeler(values);
   if (ulikeAndelerError) {
     return { _error: <FormattedMessage id={ulikeAndelerError[0].id} /> };
+  }
+  const fastsattForUgraderteAktiviteterError = validateSumFastsattForUgraderteAktiviteter(values, grunnbeløp);
+  if (fastsattForUgraderteAktiviteterError) {
+    return { _error: <FormattedMessage id={fastsattForUgraderteAktiviteterError[0].id} values={fastsattForUgraderteAktiviteterError[1]} /> };
+  }
+  const totalRefusjonError = validateSumRefusjon(values, grunnbeløp);
+  if (totalRefusjonError) {
+    return { _error: <FormattedMessage id={totalRefusjonError[0].id} values={totalRefusjonError[1]} /> };
   }
   const refusjonPrArbeidsforholdError = validateTotalRefusjonPrArbeidsforhold(values, getKodeverknavn);
   if (refusjonPrArbeidsforholdError) {

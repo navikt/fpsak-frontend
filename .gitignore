@@ -5,6 +5,7 @@
 /tmp/
 /.happypack/
 /.nyc_output/
+/.static_storybook/
 /.eslint_loader_cache/
 /.uglify_plugin_cache/
 .env

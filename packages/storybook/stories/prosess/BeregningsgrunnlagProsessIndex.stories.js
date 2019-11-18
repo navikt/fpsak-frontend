@@ -286,7 +286,7 @@ const toggles = {
 };
 
 export default {
-  title: 'prosess/BeregningsgrunnlagProsessIndex',
+  title: 'prosess/prosess-beregningsgrunnlag',
   component: BeregningsgrunnlagProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

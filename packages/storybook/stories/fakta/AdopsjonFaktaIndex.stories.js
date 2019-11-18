@@ -63,7 +63,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/AdopsjonFaktaIndex',
+  title: 'fakta/fakta-adopsjon',
   component: AdopsjonFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
