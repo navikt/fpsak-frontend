@@ -8,7 +8,14 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
-const getStatusFromResultatstruktur = ({ resultatstruktur }) => (resultatstruktur && resultatstruktur.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT);
+const harMinstEnPeriodeMedInnvilgedePenger = (resultatstruktur) => resultatstruktur.perioder.filter((p) => p.dagsats > 0).length > 0;
+
+const getStatusFromResultatstruktur = ({ resultatstruktur }) => {
+  if (!resultatstruktur || !resultatstruktur.perioder) {
+    return vut.IKKE_VURDERT;
+  }
+  return harMinstEnPeriodeMedInnvilgedePenger(resultatstruktur) ? vut.OPPFYLT : vut.IKKE_VURDERT;
+};
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 

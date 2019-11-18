@@ -213,4 +213,92 @@ describe('Definisjon av behandlingspunkter - Svangerskapspenger', () => {
 
     expect(bpPropList).to.eql([]);
   });
+
+  it('skal alltid vise behandlingspunktene for beregning, tilkjent-ytelse og vedtak når det finnes minst ett annet behandlingspunkt', () => {
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      resultatstruktur: undefined,
+      stonadskontoer: undefined,
+      featureToggles,
+    };
+
+    const bpPropList = createSvangerskapspengerBpProps(builderData);
+
+    expect(bpPropList).to.eql([sokersOpplysningspliktBehandlingspunkt, ...defaultBehandlingspunkter]);
+  });
+
+  it('skal ikke vise tilkjent ytelse når ingen perioder har tildelt dagsats', () => {
+    const resultatstruktur = {
+      perioder: [
+        {
+          status: 'INNVILGET',
+          dagsats: 0,
+        },
+        {
+          status: 'INNVILGET',
+          dagsats: 0,
+        },
+        {
+          status: 'INNVILGET',
+          dagsats: 0,
+        },
+      ],
+    };
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      stonadskontoer: undefined,
+      featureToggles,
+      resultatstruktur,
+    };
+
+    const bpPropList = createSvangerskapspengerBpProps(builderData);
+
+    expect(bpPropList).to.eql([sokersOpplysningspliktBehandlingspunkt, ...defaultBehandlingspunkter]);
+  });
+
+  it('skal vise tilkjent ytelse når minst en periode har tildelt dagsats', () => {
+    const resultatstruktur = {
+      perioder: [
+        {
+          status: 'INNVILGET',
+          dagsats: 0,
+        },
+        {
+          status: 'INNVILGET',
+          dagsats: 0,
+        },
+        {
+          status: 'INNVILGET',
+          dagsats: 1,
+        },
+      ],
+    };
+    const builderData = {
+      behandlingType: {
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      },
+      vilkar: [sokersOpplysningspliktVilkar],
+      aksjonspunkter: [],
+      behandlingsresultat: {},
+      stonadskontoer: undefined,
+      featureToggles,
+      resultatstruktur,
+    };
+
+    const bpPropList = createSvangerskapspengerBpProps(builderData);
+
+    defaultBehandlingspunkter[1].status = vilkarUtfallType.OPPFYLT;
+
+    expect(bpPropList).to.eql([sokersOpplysningspliktBehandlingspunkt, ...defaultBehandlingspunkter]);
+  });
 });
