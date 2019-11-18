@@ -87,7 +87,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
   alleKodeverk,
   readOnlyBehandling,
   featureToggleUtland,
-  kanOverstyre,
 }) => (
   <>
     <div className={styles.personContainer}>
@@ -357,7 +356,7 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
                   shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
                   submitCallback={submitCallback}
                   readOnly={readOnly}
-                  kanOverstyre={kanOverstyre}
+                  kanOverstyre={erOverstyrer}
                   {...componentProps}
                 />
               )}
@@ -387,7 +386,6 @@ FaktaPanel.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   featureToggleUtland: PropTypes.bool.isRequired,
-  kanOverstyre: PropTypes.bool.isRequired,
 };
 
 FaktaPanel.defaultProps = {
@@ -404,7 +402,6 @@ const mapStateToProps = (state) => {
     openInfoPanels: getOpenInfoPanels(state),
     readOnly: !rettigheter.writeAccess.isEnabled || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
-    kanOverstyre: rettigheter.kanOverstyreAccess.employeeHasAccess,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
     alleKodeverk: getAlleKodeverk(state),

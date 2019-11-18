@@ -226,7 +226,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
             readOnlySubmitButton={readOnlySubmitButton}
             apCodes={apCodes}
             alleKodeverk={alleKodeverk}
-            employeeHasAccess={kanOverstyreAccess.employeeHasAccess}
+            employeeHasAccess={kanOverstyreAccess.isEnabled}
             tempUpdateStonadskontoer={tempUpdate}
             isApOpen={openAksjonspunkt}
             {...props}
