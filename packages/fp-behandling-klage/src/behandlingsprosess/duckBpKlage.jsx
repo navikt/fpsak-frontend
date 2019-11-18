@@ -1,4 +1,4 @@
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import klageBehandlingApi from '../data/klageBehandlingApi';
@@ -19,25 +19,21 @@ export const saveKlage = (params) => (dispatch) => (
   dispatch(klageBehandlingApi.SAVE_KLAGE_VURDERING.makeRestApiRequest()(params))
 );
 
-const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, shouldUpdateInfo) => (dispatch) => {
+const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterSuccess());
-  if (shouldUpdateInfo) {
-    return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-      .then(() => dispatch(klageBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
-  }
-  return true;
+  return dispatch(klageBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true }));
 };
 
-export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
+export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(klageBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
-export const overrideProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
+export const overrideProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(klageBehandlingApi.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 export const fetchPreviewKlageBrev = klageBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

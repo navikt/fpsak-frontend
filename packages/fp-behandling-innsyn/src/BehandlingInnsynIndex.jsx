@@ -30,7 +30,6 @@ import fpInnsynBehandlingUpdater from './FpInnsynBehandlingUpdater';
 export const BehandlingInnsynIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
   oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
@@ -42,7 +41,6 @@ export const BehandlingInnsynIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
@@ -67,8 +65,6 @@ export const BehandlingInnsynIndex = ({
     fagsakInfo={fagsakInfo}
     fetchBehandling={fetchBehandling}
     resetBehandlingFpsakContext={resetBehandling}
-    behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-    appContextUpdater={appContextUpdater}
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={fpInnsynBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
@@ -84,7 +80,6 @@ export const BehandlingInnsynIndex = ({
 BehandlingInnsynIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -104,7 +99,6 @@ BehandlingInnsynIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
 };
 

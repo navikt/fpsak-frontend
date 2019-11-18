@@ -25,6 +25,9 @@ export class DataFetcher extends Component {
     data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     render: PropTypes.func.isRequired,
     forceRefreshWhenPropChanged: PropTypes.number,
+    behandlingNotRequired: PropTypes.bool,
+    keepDataWhenRefetching: PropTypes.bool,
+    dataParams: PropTypes.shape(),
   };
 
   static defaultProps = {
@@ -34,39 +37,46 @@ export class DataFetcher extends Component {
     showComponentDuringFetch: false,
     showLoadingIcon: false,
     forceRefreshWhenPropChanged: undefined,
+    behandlingNotRequired: true,
+    keepDataWhenRefetching: false,
+    dataParams: {},
   }
 
-  fetchData = () => {
+  fetchData = (dataParams, keepDataWhenRefetching) => {
     const { data } = this.props;
     // eslint-disable-next-line react/destructuring-assignment
-    data.forEach((d) => this.props[`${FETCH_PREFIX}${d.name}`]());
+    data.forEach((d) => this.props[`${FETCH_PREFIX}${d.name}`](dataParams, { keepData: keepDataWhenRefetching }));
   }
 
   componentDidMount = () => {
-    const { showComponent, behandlingId, behandlingVersjon } = this.props;
-    if (showComponent && behandlingId && behandlingVersjon) {
-      this.fetchData();
+    const {
+      showComponent, behandlingId, behandlingVersjon, behandlingNotRequired, dataParams, keepDataWhenRefetching,
+    } = this.props;
+    const shouldFetch = behandlingNotRequired || (behandlingId && behandlingVersjon);
+    if (showComponent && shouldFetch) {
+      this.fetchData(dataParams, keepDataWhenRefetching);
     }
   }
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged,
+      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged, dataParams, keepDataWhenRefetching,
     } = this.props;
     if (showComponent && behandlingId && behandlingVersjon
       && (behandlingId !== prevProps.behandlingId
         || behandlingVersjon !== prevProps.behandlingVersjon
         || forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged)) {
-      this.fetchData();
+      this.fetchData(dataParams, keepDataWhenRefetching);
     }
   }
 
   render() {
     const {
-      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon, showLoadingIcon,
+      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon, showLoadingIcon, behandlingNotRequired,
     } = this.props;
 
-    if (showComponentDuringFetch || (showComponent && behandlingId && behandlingVersjon && isFetchFinished)) {
+    const shouldShow = behandlingNotRequired || (behandlingId && behandlingVersjon);
+    if (showComponentDuringFetch || (showComponent && shouldShow && isFetchFinished)) {
       const dataProps = data.reduce((acc, d) => {
         const propName = format(d.name);
         return {

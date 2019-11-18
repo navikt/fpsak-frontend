@@ -63,10 +63,8 @@ describe('<CommonBehandlingIndex>', () => {
         hasSubmittedPaVentForm
         hasManualPaVent={false}
         setBehandlingInfo={sinon.spy()}
-        behandlingerVersjonMappedById={{}}
         behandlingUpdater={{ setUpdater: sinon.spy() }}
         resetBehandlingFpsakContext={sinon.spy()}
-        appContextUpdater={{}}
         behandlingIdentifier={new BehandlingIdentifier(2, 1)}
         isInSync
         fetchBehandling={sinon.spy()}
@@ -99,10 +97,8 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}
@@ -139,10 +135,8 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
@@ -187,10 +181,8 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}
@@ -228,10 +220,8 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}

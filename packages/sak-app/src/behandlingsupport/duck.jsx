@@ -1,7 +1,5 @@
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
-
 const reducerName = 'behandlingSupport';
 
 /* Action types */
@@ -18,8 +16,6 @@ export const setSelectedSupportPanel = (panelName) => ({
 export const resetBehandlingSupport = () => ({
   type: RESET_BEHANDLING_SUPPORT,
 });
-
-export const updateBehandlingsupportInfo = (saksnummer) => (dispatch) => (behandlingOrchestrator.fetchBehandlingSupportInfo(saksnummer, dispatch));
 
 /* Reducer */
 const initialState = {

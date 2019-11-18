@@ -3,9 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 import { Systemtittel } from 'nav-frontend-typografi';
 
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
-import BehandlingMenuIndex from '../../behandlingmenu/BehandlingMenuIndex';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
 
 import { FagsakProfile } from './FagsakProfile';
 
@@ -82,7 +80,5 @@ describe('<FagsakProfile>', () => {
     const p = wrapper.find('Normaltekst');
     expect(p).to.have.length(1);
     expect(p.childAt(0).text()).is.eql('12345 - Opprettet');
-
-    expect(wrapper.find(BehandlingMenuIndex)).to.have.length(1);
   });
 });

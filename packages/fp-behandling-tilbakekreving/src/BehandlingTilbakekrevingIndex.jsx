@@ -34,7 +34,6 @@ import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 export const BehandlingTilbakekrevingIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
   oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
@@ -46,7 +45,6 @@ export const BehandlingTilbakekrevingIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
@@ -78,8 +76,6 @@ export const BehandlingTilbakekrevingIndex = ({
         fagsakInfo={fagsakInfo}
         fetchBehandling={fetchBehandling}
         resetBehandlingFpsakContext={resetBehandling}
-        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-        appContextUpdater={appContextUpdater}
         setBehandlingInfo={setBehandlingInfo}
         fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
         behandlingUpdater={behandlingUpdater}
@@ -107,7 +103,6 @@ export const BehandlingTilbakekrevingIndex = ({
 BehandlingTilbakekrevingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -127,7 +122,6 @@ BehandlingTilbakekrevingIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   showOpenRevurderingModal: PropTypes.bool.isRequired,
 };

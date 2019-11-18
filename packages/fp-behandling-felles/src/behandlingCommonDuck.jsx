@@ -1,18 +1,11 @@
 import { createSelector } from 'reselect';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import sakOperations from './SakOperations';
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo i resolver i staden?
 const getUpdateBehandling = (behandlingApi) => (
-  behandlingIdentifier, behandlingerVersjonMappedById,
-) => (dispatch) => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
-  .then((response) => {
-    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
-    }
-    return Promise.resolve(response);
-  });
+  behandlingIdentifier,
+) => (dispatch) => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }));
 
 const getResetBehandling = (behandlingApi, resetBehandlingContext) => (dispatch) => Promise.all([
   dispatch(behandlingApi.BEHANDLING.resetRestApi()()),
@@ -24,9 +17,7 @@ const getFetchBehandling = (behandlingApi, updateBehandling) => (behandlingIdent
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const getUpdateFagsakAndBehandling = (updateBehandling) => (behandlingIdentifier) => (dispatch) => dispatch(
-  sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer),
-).then(() => dispatch(updateBehandling(behandlingIdentifier)));
+const getUpdateFagsakAndBehandling = (updateBehandling) => (behandlingIdentifier) => (dispatch) => dispatch(updateBehandling(behandlingIdentifier));
 
 const getUpdateOnHold = (behandlingApi, updateFagsakAndBehandling) => (
   params, behandlingIdentifier,

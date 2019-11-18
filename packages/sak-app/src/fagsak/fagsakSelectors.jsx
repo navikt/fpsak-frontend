@@ -3,7 +3,6 @@ import { createSelector } from 'reselect';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import fpsakApi from '../data/fpsakApi';
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
 
 const getFetchFagsakResult = fpsakApi.FETCH_FAGSAK.getRestApiData();
 
@@ -25,19 +24,3 @@ export const isForeldrepengerFagsak = createSelector(getFagsakYtelseType, (ytels
 export const isSvangerskapFagsak = createSelector(getFagsakYtelseType, (ytelseType = {}) => (ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER));
 export const getKanRevurderingOpprettes = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.kanRevurderingOpprettes : undefined));
 export const getSkalBehandlesAvInfotrygd = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.skalBehandlesAvInfotrygd : undefined));
-
-// TODO (TOR) Endre tre funksjonane under til selectors
-export const getFetchFagsakInfoFinished = (state) => {
-  const finished = [fpsakApi.FETCH_FAGSAK.getRestApiFinished()(state), ...behandlingOrchestrator.getRestApisFinished(state)];
-  return !finished.some((f) => !f);
-};
-
-export const getFetchFagsakInfoFailed = (state) => {
-  const error = [fpsakApi.FETCH_FAGSAK.getRestApiError()(state), ...behandlingOrchestrator.getRestApisErrors(state)];
-  return error.some((e) => e !== undefined);
-};
-
-export const getAllFagsakInfoResolved = (state) => {
-  const data = [fpsakApi.FETCH_FAGSAK.getRestApiData()(state), ...behandlingOrchestrator.getRestApisData(state)];
-  return !data.some((d) => d === undefined);
-};

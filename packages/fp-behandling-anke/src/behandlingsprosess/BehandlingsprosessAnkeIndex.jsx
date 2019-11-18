@@ -53,7 +53,6 @@ export class BehandlingsprosessAnkeIndex extends Component {
       .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
-    const shouldUpdateInfo = !skalTilMedunderskriver;
 
     const afterAksjonspunktSubmit = () => {
       if (skalTilMedunderskriver || skalFerdigstilles) {
@@ -63,7 +62,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
       }
     };
 
-    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit);
   }
 
   getSubmit = (submitCallback, goToDefaultPage) => {

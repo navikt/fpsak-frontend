@@ -6,7 +6,6 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  featureToggle,
   getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,
   pathToBehandlinger,
@@ -15,14 +14,11 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
-import { getFeatureToggles } from '../app/duck';
+import fpsakApi from '../data/fpsakApi';
 import { getBehandlingerIds } from '../behandling/selectors/behandlingerSelectors';
-import { resetFagsakSearch as resetFagsakSearchActionCreator } from '../fagsakSearch/duck';
-import { fetchKodeverk as fetchKodeverkActionCreator } from '../kodeverk/duck';
-import { fetchFagsakInfo as fetchFagsakInfoActionCreator, resetFagsakContext as resetFagsakContextActionCreator } from './duck';
+import { resetFagsakContext as resetFagsakContextActionCreator } from './duck';
 import {
-  getAllFagsakInfoResolved, getFetchFagsakInfoFailed, getFetchFagsakInfoFinished, getSelectedFagsak, getSelectedSaksnummer,
+  getSelectedFagsak, getSelectedSaksnummer,
 } from './fagsakSelectors';
 
 /**
@@ -41,22 +37,16 @@ export class FagsakResolver extends Component {
   }
 
   componentWillUnmount() {
-    const { resetFagsakContext, resetFagsakSearch } = this.props;
+    const { resetFagsakContext } = this.props;
     resetFagsakContext();
-    resetFagsakSearch();
   }
 
   resolveFagsakInfo() {
     const {
-      selectedSaksnummer, fetchFagsakInfo, fetchKodeverk, disableTilbakekreving,
+      selectedSaksnummer, fetchFagsak,
     } = this.props;
 
-    if (disableTilbakekreving) {
-      behandlingOrchestrator.disableTilbakekreving();
-    }
-
-    fetchKodeverk();
-    fetchFagsakInfo(selectedSaksnummer);
+    fetchFagsak({ saksnummer: selectedSaksnummer }, { keepData: true });
   }
 
   pathToBehandling() {
@@ -69,10 +59,10 @@ export class FagsakResolver extends Component {
 
   render() {
     const {
-      fetchFagsakInfoPending, allFagsakInfoResolved, shouldRedirectToBehandlinger, children, selectedFagsak,
+      fetchFagsakPending, fagsakResolved, shouldRedirectToBehandlinger, children, selectedFagsak,
     } = this.props;
-    if (!allFagsakInfoResolved) {
-      if (fetchFagsakInfoPending) {
+    if (!fagsakResolved) {
+      if (fetchFagsakPending) {
         return <LoadingPanel />;
       }
       return <Redirect to={pathToMissingPage()} />;
@@ -91,16 +81,13 @@ FagsakResolver.propTypes = {
   selectedSaksnummer: PropTypes.number.isRequired,
   selectedFagsak: fagsakPropType,
   behandlingerIds: PropTypes.arrayOf(PropTypes.number),
-  fetchFagsakInfo: PropTypes.func.isRequired,
+  fetchFagsak: PropTypes.func.isRequired,
   resetFagsakContext: PropTypes.func.isRequired,
-  resetFagsakSearch: PropTypes.func.isRequired,
-  fetchKodeverk: PropTypes.func.isRequired,
-  fetchFagsakInfoPending: PropTypes.bool.isRequired,
-  allFagsakInfoResolved: PropTypes.bool.isRequired,
+  fetchFagsakPending: PropTypes.bool.isRequired,
+  fagsakResolved: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   children: PropTypes.node,
-  disableTilbakekreving: PropTypes.bool.isRequired,
 };
 
 FagsakResolver.defaultProps = {
@@ -113,16 +100,13 @@ const mapStateToProps = (state) => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
   selectedFagsak: getSelectedFagsak(state),
   behandlingerIds: getBehandlingerIds(state),
-  fetchFagsakInfoPending: !getFetchFagsakInfoFinished(state) || !getFetchFagsakInfoFailed(state),
-  allFagsakInfoResolved: getAllFagsakInfoResolved(state),
-  disableTilbakekreving: !getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
+  fetchFagsakPending: !fpsakApi.FETCH_FAGSAK.getRestApiFinished()(state) || !fpsakApi.FETCH_FAGSAK.getRestApiError()(state),
+  fagsakResolved: fpsakApi.FETCH_FAGSAK.getRestApiData()(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchFagsakInfo: fetchFagsakInfoActionCreator,
+  fetchFagsak: fpsakApi.FETCH_FAGSAK.makeRestApiRequest(),
   resetFagsakContext: resetFagsakContextActionCreator,
-  resetFagsakSearch: resetFagsakSearchActionCreator,
-  fetchKodeverk: fetchKodeverkActionCreator,
 }, dispatch);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({

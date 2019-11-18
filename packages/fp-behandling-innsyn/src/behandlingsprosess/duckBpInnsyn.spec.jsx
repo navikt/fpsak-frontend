@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { ignoreRestErrors, withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-helper';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
@@ -43,8 +43,6 @@ describe('Behandlingsprosess-innsyn-reducer', () => {
     mockAxios
       .onGet(headers.location)
       .reply(200, [{ personstatus: 'test' }]);
-
-    sakOperations.withUpdateFagsakInfo(() => () => undefined);
 
     const store = mockStore();
     const behandlingIdentifier = new BehandlingIdentifier('123', '456');

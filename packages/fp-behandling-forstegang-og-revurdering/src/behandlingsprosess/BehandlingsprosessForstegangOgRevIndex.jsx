@@ -69,7 +69,6 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
 
   submit = (aksjonspunktModels) => {
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
-    const shouldUpdateInfo = !submitIsRevurdering;
 
     const afterAksjonspunktSubmit = () => {
       const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
@@ -82,7 +81,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       }
     };
 
-    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit);
   }
 
   getSubmit = (submitCallback, goToDefaultPage, goToSearchPage) => {

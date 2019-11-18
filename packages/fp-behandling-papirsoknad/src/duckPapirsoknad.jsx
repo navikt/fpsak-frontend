@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect';
 
-import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier, reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
@@ -39,26 +38,19 @@ export const resetRegistreringData = papirsoknadApi.SAVE_AKSJONSPUNKT.resetRestA
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo og original-behandling i resolver i staden?
 export const updateBehandling = (
-  behandlingIdentifier, behandlingerVersjonMappedById,
-) => (dispatch) => dispatch(papirsoknadApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
-  .then((response) => {
-    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
-    }
-    return Promise.resolve(response);
-  });
+  behandlingIdentifier,
+) => (dispatch) => dispatch(papirsoknadApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }));
 
 export const resetBehandling = (dispatch) => Promise.all([
   dispatch(papirsoknadApi.BEHANDLING.resetRestApi()()),
 ]);
 
-export const fetchBehandling = (behandlingIdentifier, allBehandlinger) => (dispatch) => {
+export const fetchBehandling = (behandlingIdentifier) => (dispatch) => {
   resetBehandling(dispatch);
-  dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
+  dispatch(updateBehandling(behandlingIdentifier));
 };
 
-const updateFagsakAndBehandling = (behandlingIdentifier) => (dispatch) => dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-  .then(() => dispatch(updateBehandling(behandlingIdentifier)));
+const updateFagsakAndBehandling = (behandlingIdentifier) => (dispatch) => dispatch(updateBehandling(behandlingIdentifier));
 
 export const updateOnHold = (params, behandlingIdentifier) => (dispatch) => dispatch(papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(updateFagsakAndBehandling(behandlingIdentifier)));

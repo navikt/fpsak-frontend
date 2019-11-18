@@ -22,11 +22,10 @@ import {
   setSelectedBehandlingId, getSelectedBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
+  getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
-import appContextUpdater from './AppContextUpdater';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-innsyn'));
@@ -48,7 +47,6 @@ export class BehandlingIndex extends Component {
     saksnummer: PropTypes.number.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingType: PropTypes.string.isRequired,
-    behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     erAktivPapirsoknad: PropTypes.bool,
@@ -113,7 +111,6 @@ export class BehandlingIndex extends Component {
       saksnummer,
       behandlingId,
       behandlingType,
-      behandlingerVersjonMappedById,
       location,
       oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
@@ -132,11 +129,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             kodeverk={kodeverk}
             fagsak={fagsak}
@@ -153,11 +148,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             fagsak={fagsak}
             fagsakBehandlingerInfo={fagsakBehandlingerInfo}
@@ -174,11 +167,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -197,11 +188,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -221,11 +210,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -244,11 +231,9 @@ export class BehandlingIndex extends Component {
           key={behandlingId}
           saksnummer={saksnummer}
           behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
           location={location}
           oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
           behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
           featureToggles={featureToggles}
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
           kodeverk={kodeverk}
@@ -277,7 +262,6 @@ const mapStateToProps = (state) => {
   return {
     behandlingId,
     saksnummer: getSelectedSaksnummer(state),
-    behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
     behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
@@ -303,4 +287,4 @@ export default trackRouteParam({
   paramPropType: PropTypes.number,
   storeParam: setSelectedBehandlingId,
   getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));

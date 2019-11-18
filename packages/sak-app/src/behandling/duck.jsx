@@ -71,11 +71,13 @@ export const getBehandlingIdentifier = createSelector(
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
 
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
-  (behandlinger, behandlingId) => behandlinger.find((b) => b.id === behandlingId));
+  (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));
+
+export const getBehandlingVersjon = createSelector([getBehandlingContext, getBehandling], (behandlingContext, valgtBehandling = {}) => (behandlingContext
+  .behandlingVersjon ? behandlingContext.behandlingVersjon : valgtBehandling.versjon));
 
 export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);

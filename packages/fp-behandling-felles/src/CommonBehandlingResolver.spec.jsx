@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import CommonBehandlingResolver from './CommonBehandlingResolver';
@@ -20,9 +19,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted
       >
         <div>test</div>
@@ -42,9 +39,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted={false}
       >
         <div>test</div>
@@ -72,9 +67,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ }}
         isInSync
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted
       >
         <div>test</div>
