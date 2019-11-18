@@ -153,7 +153,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
           <>
             <Normaltekst>
               <FormattedHTMLMessage
-                id={belop.erTrekk ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling' : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk'}
+                id={belop.erTrekk ? 'TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk' : 'TilbakekrevingPeriodeForm.FeilutbetaltBelopEtterbetaling'}
                 values={{ belop: formatCurrencyNoKr(belop.belop) }}
               />
             </Normaltekst>
