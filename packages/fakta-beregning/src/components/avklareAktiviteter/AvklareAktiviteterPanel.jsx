@@ -6,6 +6,7 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { FormattedMessage } from 'react-intl';
 import { Element } from 'nav-frontend-typografi';
+import AlertStripe from 'nav-frontend-alertstriper';
 import {
   getBehandlingFormPrefix, FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
@@ -182,6 +183,15 @@ export class AvklareAktiviteterPanelImpl extends Component {
           </Element>
           )}
 
+          {formProps.error && (
+            <>
+              <VerticalSpacer sixteenPx />
+              <AlertStripe type="feil">
+                <FormattedMessage id={formProps.error} />
+              </AlertStripe>
+            </>
+          )}
+
           <VerticalSpacer twentyPx />
           <BorderBox>
             {avklarAktiviteter && avklarAktiviteter.aktiviteterTomDatoMapping
@@ -210,7 +220,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
               <FaktaSubmitButton
                 buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : 'AvklarAktivitetPanel.ButtonText'}
                 formName={formProps.form}
-                isSubmittable={submittable && submitEnabled}
+                isSubmittable={submittable && submitEnabled && !formProps.error}
                 isReadOnly={readOnly}
                 hasOpenAksjonspunkter={!isAksjonspunktClosed}
                 behandlingId={behandlingId}
@@ -227,7 +237,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
                   <FaktaSubmitButton
                     buttonTextId={erOverstyrt ? 'AvklarAktivitetPanel.OverstyrText' : undefined}
                     formName={formProps.form}
-                    isSubmittable={submittable && submitEnabled}
+                    isSubmittable={submittable && submitEnabled && !formProps.error}
                     isReadOnly={readOnly}
                     hasOpenAksjonspunkter={!isAksjonspunktClosed}
                     behandlingId={behandlingId}
@@ -267,6 +277,11 @@ AvklareAktiviteterPanelImpl.propTypes = {
 
 const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOverstyre || hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
 
+const validate = (values) => {
+  const { avklarAktiviteter } = values;
+  return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+};
+
 export const transformValues = (values) => {
   const { aksjonspunkter, avklarAktiviteter } = values;
   const skalOverstyre = values[MANUELL_OVERSTYRING_FIELD];
@@ -304,6 +319,7 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
       initialValues,
       values,
       onSubmit,
+      validate,
       kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.aksjonspunkter),
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),
