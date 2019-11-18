@@ -40,10 +40,11 @@ VurderAktiviteterPanel.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
 };
 
+VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping) => VurderAktiviteterTabell.validate(values, aktiviteterTomDatoMapping[0].aktiviteter);
+
 VurderAktiviteterPanel.transformValues = (values, aktiviteterTomDatoMapping) => ({
   beregningsaktivitetLagreDtoList: VurderAktiviteterTabell.transformValues(values, aktiviteterTomDatoMapping[0].aktiviteter),
 });
-
 
 VurderAktiviteterPanel.hasValueChangedFromInitial = (aktiviteterTomDatoMapping, values, initialValues) => {
   if (!aktiviteterTomDatoMapping) {

@@ -47,6 +47,7 @@
   "VurderAktiviteterTabell.Header.Periode": "Periode",
   "VurderAktiviteterTabell.Header.Benytt": "Benytt",
   "VurderAktiviteterTabell.Header.IkkeBenytt": "Ikke benytt",
+  "VurderAktiviteterTabell.Validation.MåHaMinstEnAktivitet": "Må ha minst én aktivitet for å kunne fastsette beregningsgrunnlag",
 
   "BeregningInfoPanel.AksjonspunktHelpText.VurderAktiviteter": "Vurder hvilke aktiviteter som skal benyttes i beregningsgrunnlaget.",
   "VurderFaktaBeregning.ManuellOverstyring": "Overstyring av rapporterte inntekter",
