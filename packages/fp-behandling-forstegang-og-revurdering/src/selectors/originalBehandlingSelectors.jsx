@@ -1,13 +1,7 @@
 import { createSelector } from 'reselect';
 
-import { getOriginalBehandling } from 'behandlingForstegangOgRevurdering/src/behandlingSelectors';
-import { isForeldrepengerFagsak } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-
-export const getFamiliehendelseFraOriginalBehandling = createSelector(
-  [getOriginalBehandling], (originalBehandling = {}) => originalBehandling.familiehendelse,
-);
-
-export const getSoknadFraOriginalBehandling = createSelector([getOriginalBehandling], (originalBehandling = {}) => originalBehandling.soknad);
+import { getOriginalBehandling } from '../behandlingSelectors';
+import { isForeldrepengerFagsak } from '../duckBehandlingForstegangOgRev';
 
 export const getBehandlingsresultatFraOriginalBehandling = createSelector(
   [getOriginalBehandling], (originalBehandling = {}) => originalBehandling.behandlingsresultat,

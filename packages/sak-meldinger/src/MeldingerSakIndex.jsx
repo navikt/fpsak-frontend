@@ -52,8 +52,12 @@ MeldingerSakIndex.propTypes = {
   previewCallback: PropTypes.func.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  isKontrollerRevurderingApOpen: PropTypes.bool.isRequired,
+  isKontrollerRevurderingApOpen: PropTypes.bool,
   revurderingVarslingArsak: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
+};
+
+MeldingerSakIndex.defaultProps = {
+  isKontrollerRevurderingApOpen: false,
 };
 
 export default MeldingerSakIndex;

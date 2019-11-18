@@ -50,7 +50,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/ArbeidsforholdFaktaIndex',
+  title: 'fakta/fakta-arbeidsforhold',
   component: ArbeidsforholdFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

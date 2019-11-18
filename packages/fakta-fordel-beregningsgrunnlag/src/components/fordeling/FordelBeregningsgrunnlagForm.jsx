@@ -6,7 +6,6 @@ import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-
 import FordelBeregningsgrunnlagPeriodePanel from './FordelBeregningsgrunnlagPeriodePanel';
 import { skalValidereMotBeregningsgrunnlag } from '../BgFordelingUtils';
 
@@ -144,11 +143,12 @@ FordelBeregningsgrunnlagForm.validate = (values, fordelBGPerioder, beregningsgru
   if (fordelBGPerioder && fordelBGPerioder.length > 0) {
     const skalValidereMotBeregningsgrunnlagPrAar = (andel) => skalValidereMotBeregningsgrunnlag(beregningsgrunnlag)(andel);
     const perioderSlattSammen = slaaSammenPerioder(fordelBGPerioder, beregningsgrunnlag.beregningsgrunnlagPeriode);
+    const grunnbeløp = Number(beregningsgrunnlag.halvG) * 2;
     for (let i = 0; i < perioderSlattSammen.length; i += 1) {
       const sumIPeriode = finnSumIPeriode(beregningsgrunnlag.beregningsgrunnlagPeriode, perioderSlattSammen[i].fom);
       const periode = values[getFieldNameKey(i)];
       errors[getFieldNameKey(i)] = FordelBeregningsgrunnlagPeriodePanel.validate(periode, sumIPeriode,
-        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+        skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, grunnbeløp);
     }
   }
   return errors;

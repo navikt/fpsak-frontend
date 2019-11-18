@@ -120,7 +120,6 @@ const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegr
     naturalytelseBortfaltPrÅr: null,
     naturalytelseTilkommetPrÅr: null,
   },
-  fastsattAvSaksbehandler: null,
   lagtTilAvSaksbehandler: false,
   belopPrMndEtterAOrdningen: 30000,
   belopPrAarEtterAOrdningen: 360000,
@@ -287,7 +286,7 @@ const toggles = {
 };
 
 export default {
-  title: 'prosess/BeregningsgrunnlagProsessIndex',
+  title: 'prosess/prosess-beregningsgrunnlag',
   component: BeregningsgrunnlagProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

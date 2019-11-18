@@ -22,7 +22,7 @@ const templates = [{
 const sprakKode = {};
 
 export default {
-  title: 'sak/MeldingerSakIndex',
+  title: 'sak/sak-meldinger',
   component: MeldingerSakIndex,
   decorators: [withKnobs, withReduxProvider],
 };

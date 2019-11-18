@@ -3,10 +3,11 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 
 import { FodselOgTilretteleggingInfoPanel } from './FodselOgTilretteleggingInfoPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const svangerskapspengerTilrettelegging = {
   termindato: '2020-02-27',
@@ -45,7 +46,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
     expect(faktaEkspandertpanel).to.have.length(1);
-    expect(faktaEkspandertpanel.prop('title')).to.eql('FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging');
+    expect(faktaEkspandertpanel.prop('title')).to.eql('Fakta om fødsel og tilrettelegging');
     expect(faktaEkspandertpanel.prop('faktaId')).to.eql(faktaPanelCodes.FODSELTILRETTELEGGING);
 
     const faktaForm = faktaEkspandertpanel.find('Connect(Connect(ComponentWithRequiredProps(WithBehandlingForm)))');
@@ -69,7 +70,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
 
     const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
     expect(faktaEkspandertpanel).to.have.length(1);
-    expect(faktaEkspandertpanel.prop('title')).to.eql('FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging');
+    expect(faktaEkspandertpanel.prop('title')).to.eql('Fakta om fødsel og tilrettelegging');
     expect(faktaEkspandertpanel.prop('faktaId')).to.eql(faktaPanelCodes.FODSELTILRETTELEGGING);
 
     const faktaForm = faktaEkspandertpanel.find('Connect(Connect(ComponentWithRequiredProps(WithBehandlingForm)))');

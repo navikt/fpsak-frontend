@@ -10,7 +10,6 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from './selectors/tilbakekrevingBehandlingSelectors';
-import FpTilbakeBehandlingInfoSetter from './FpTilbakeBehandlingInfoSetter';
 import TilbakekrevingDataResolver from './TilbakekrevingDataResolver';
 import BehandlingsprosessTilbakekrevingIndex from './behandlingsprosess/BehandlingsprosessTilbakekrevingIndex';
 import FaktaTilbakeIndex from './fakta/FaktaTilbakeIndex';
@@ -36,7 +35,7 @@ export const BehandlingTilbakekrevingIndex = ({
   behandlingId,
   behandlingIdentifier,
   behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -84,9 +83,9 @@ export const BehandlingTilbakekrevingIndex = ({
         setBehandlingInfo={setBehandlingInfo}
         fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
         behandlingUpdater={behandlingUpdater}
+        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       >
         <TilbakekrevingDataResolver>
-          <FpTilbakeBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
           <BehandlingGrid
             behandlingsprosessContent={<BehandlingsprosessTilbakekrevingIndex />}
             faktaContent={<FaktaTilbakeIndex />}
@@ -107,7 +106,7 @@ export const BehandlingTilbakekrevingIndex = ({
 
 BehandlingTilbakekrevingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,

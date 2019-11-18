@@ -166,7 +166,7 @@ const alleKodeverk = {
 
 
 export default {
-  title: 'prosess/tilbakekreving/VedtakTilbakekrevingProsessIndex',
+  title: 'prosess/tilbakekreving/prosess-vedtak-tilbakekreving',
   component: VedtakTilbakekrevingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

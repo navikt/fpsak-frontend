@@ -69,7 +69,7 @@ const alleKodeverk = {
 };
 
 export default {
-  title: 'sak/TotrinnskontrollSakIndex',
+  title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
@@ -98,8 +98,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
@@ -129,8 +127,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>

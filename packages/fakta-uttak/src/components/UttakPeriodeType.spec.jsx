@@ -2,8 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { Image } from '@fpsak-frontend/shared-components';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { UttakPeriodeType } from './UttakPeriodeType';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 describe('<UttakPeriodeType>', () => {
   const tilDato = '2018-01-10';

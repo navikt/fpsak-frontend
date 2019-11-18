@@ -1,12 +1,13 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VedtakAvslagArsakOgBegrunnelsePanel } from './VedtakAvslagArsakOgBegrunnelsePanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 
 describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
@@ -49,7 +50,7 @@ describe('<VedtakAvslagArsakOgBegrunnelsePanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(1);
-    expect(undertekstFields.last().childAt(0).text()).to.eql('VedtakForm.ArsakTilAvslag');
+    expect(undertekstFields.last().childAt(0).text()).to.eql('Årsak til avslag');
 
     const textArea = wrapper.find('TextAreaField');
     expect(textArea).to.have.length(1);

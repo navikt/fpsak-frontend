@@ -4,14 +4,13 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { BehandlingGrid } from '@fpsak-frontend/fp-behandling-felles';
-import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
 import { BehandlingForstegangOgRevurderingIndex } from './BehandlingForstegangOgRevurderingIndex';
 
 describe('BehandlingForstegangOgRevurderingIndex', () => {
   it('skal rendre komponent uten feil', () => {
     const wrapper = shallow(
       <BehandlingForstegangOgRevurderingIndex
-        setBehandlingInfoHolder={sinon.spy()}
+        oppdaterBehandlingVersjon={sinon.spy()}
         behandlingId={1}
         hasShownBehandlingPaVent
         setHasShownBehandlingPaVent={sinon.spy()}
@@ -29,7 +28,6 @@ describe('BehandlingForstegangOgRevurderingIndex', () => {
         behandlingUpdater={{}}
       />,
     );
-    expect(wrapper.find(FpSakBehandlingInfoSetter)).to.have.length(1);
     expect(wrapper.find(BehandlingGrid)).to.have.length(1);
   });
 });

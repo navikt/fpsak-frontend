@@ -1,8 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import VurderEtterlonnSluttpakkeForm from './VurderEtterlonnSluttpakkeForm';
+import shallowWithIntl from '../../../../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
 describe('<VurderEtterlonnSluttpakkeForm>', () => {
   it('Skal teste at komponenten vises korrekt', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
@@ -11,6 +11,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { RadioOption } from '@fpsak-frontend/form';
 import { buildInitialValues, CheckPersonStatusFormImpl as UnwrappedForm } from './CheckPersonStatusForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-saksopplysninger';
 
 describe('<CheckPersonStatusForm>', () => {
   const alleKodeverk = {
@@ -43,7 +44,7 @@ describe('<CheckPersonStatusForm>', () => {
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).to.have.length(1);
     expect(helpText.childAt(0).text())
-      .is.eql('CheckPersonStatusForm.PersonStatus');
+      .is.eql('Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus');
 
     const submit = wrapper.find(BehandlingspunktBegrunnelseTextField);
     expect(submit).to.have.length(1);
