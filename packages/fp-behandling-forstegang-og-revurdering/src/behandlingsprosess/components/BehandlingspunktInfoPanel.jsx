@@ -120,7 +120,7 @@ export const BehandlingspunktInfoPanel = ({ // NOSONAR Kompleksitet er høg, men
             previewCallback={previewCallback}
             submitCallback={submitCallback}
             ytelseType={fagsakInfo.ytelseType}
-            employeeHasAccess={kanOverstyreAccess.employeeHasAccess}
+            employeeHasAccess={kanOverstyreAccess.isEnabled}
             alleKodeverk={alleKodeverk}
             {...props}
           />
