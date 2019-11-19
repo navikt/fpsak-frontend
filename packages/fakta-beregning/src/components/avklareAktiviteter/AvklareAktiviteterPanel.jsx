@@ -279,7 +279,10 @@ const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOversty
 
 const validate = (values) => {
   const { avklarAktiviteter } = values;
-  return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+  if (avklarAktiviteter) {
+    return VurderAktiviteterPanel.validate(values, avklarAktiviteter.aktiviteterTomDatoMapping);
+  }
+  return {};
 };
 
 export const transformValues = (values) => {
