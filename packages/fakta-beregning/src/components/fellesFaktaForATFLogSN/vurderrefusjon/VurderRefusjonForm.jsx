@@ -14,7 +14,7 @@ const {
 
 const erRefusjonskravGyldigFieldPrefix = 'erKravGyldig_';
 
-export const lagFieldName = (arbeidsgiverVisningsnavn) => erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn;
+export const lagFieldName = (arbeidsgiverVisningsnavn) => erRefusjonskravGyldigFieldPrefix + arbeidsgiverVisningsnavn.replace('.', '');
 
 const lagRefusjonskravRadios = (senRefusjonkravListe, readOnly, isAksjonspunktClosed) => senRefusjonkravListe.map((kravPerArbeidsgiver) => {
   const { arbeidsgiverVisningsnavn } = kravPerArbeidsgiver;
