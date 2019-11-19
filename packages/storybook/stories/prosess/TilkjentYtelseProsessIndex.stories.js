@@ -15,6 +15,8 @@ import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse'
 
 import withReduxProvider from '../../decorators/withRedux';
 
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const fagsak = {
   ytelseType: {
     kode: fagsakYtelseType.FORELDREPENGER,
@@ -75,14 +77,6 @@ const soknad = {
   },
   termindato: '2019-02-01',
 };
-
-const alleKodeverk = {
-  [kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]: [{
-    kode: arbeidsforholdHandlingType.NYTT_ARBEIDSFORHOLD,
-    navn: 'Nytt arbeidsforhold',
-  }],
-};
-
 
 export default {
   title: 'prosess/prosess-tilkjent-ytelse',

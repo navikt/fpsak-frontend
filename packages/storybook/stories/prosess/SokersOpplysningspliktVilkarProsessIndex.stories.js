@@ -5,20 +5,13 @@ import { withKnobs, boolean } from '@storybook/addon-knobs';
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = {
-  [kodeverkTyper.DOKUMENT_TYPE_ID]: [{
-    kode: dokumentTypeId.INNTEKTSMELDING,
-    navn: 'Inntektsmelding',
-    kodeverk: kodeverkTyper.DOKUMENT_TYPE_ID,
-  }],
-};
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const soknad = {
   manglendeVedlegg: [{

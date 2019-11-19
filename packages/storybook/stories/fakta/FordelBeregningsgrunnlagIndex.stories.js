@@ -3,13 +3,14 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
@@ -28,38 +29,6 @@ const behandling = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.INNTEKTSKATEGORI]: [
-    {
-      kode: 'ARBEIDSAVKLARINGSPENGER',
-      navn: 'Arbeidsavklaringspenger',
-    },
-    {
-      kode: 'ARBEIDSTAKER',
-      navn: 'Arbeidstaker',
-    },
-  ],
-  [kodeverkTyper.AKTIVITET_STATUS]: [
-    {
-      kode: 'AAP',
-      navn: 'Arbeidsavklaringspenger',
-    },
-    {
-      kode: 'AT',
-      navn: 'Arbeidstaker',
-    },
-    {
-      kode: 'FL',
-      navn: 'Frilanser',
-    },
-    {
-      kode: 'SN',
-      navn: 'Selvstendig næringsdrivende',
-    },
-  ],
-
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

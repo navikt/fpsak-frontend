@@ -1,7 +1,8 @@
 import React from 'react';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const history = [{
   behandlingId: 999951,
@@ -134,54 +135,6 @@ const history = [{
     },
   ],
 }];
-
-const alleKodeverk = {
-  [kodeverkTyper.HISTORIKKINNSLAG_TYPE]: [{
-    kode: 'INNSYN_OPPR',
-    navn: 'Innsynsbehandling opprettet',
-    kodeverk: 'HISTORIKKINNSLAG_TYPE',
-  }, {
-    kode: 'BEH_VENT',
-    navn: 'Behandling på vent',
-    kodeverk: 'HISTORIKKINNSLAG_TYPE',
-  }, {
-    kode: 'BEH_STARTET',
-    navn: 'Behandling startet',
-    kodeverk: 'HISTORIKKINNSLAG_TYPE',
-  }, {
-    kode: 'TILBAKEKREVING_OPPR',
-    navn: 'Tilbakekreving opprettet',
-    kodeverk: 'HISTORIKKINNSLAG_TYPE',
-  }],
-  [kodeverkTyper.HISTORIKK_AKTOER]: [{
-    kode: 'VL',
-    navn: 'Vedtaksløsningen',
-    kodeverk: 'HISTORIKK_AKTOER',
-  }, {
-    kode: 'SBH',
-    navn: 'Saksbehandler',
-    kodeverk: 'HISTORIKK_AKTOER',
-  }, {
-    kode: 'SOKER',
-    navn: 'Søker',
-    kodeverk: 'HISTORIKK_AKTOER',
-  }],
-  [kodeverkTyper.HISTORIKKINNSLAG_TYPE]: [{
-    kode: 'NYE_REGOPPLYSNINGER',
-    navn: 'Nye registeropplysninger',
-    kodeverk: 'HISTORIKKINNSLAG_TYPE',
-  }],
-  [kodeverkTyper.HISTORIKK_BEGRUNNELSE_TYPE]: [{
-    kode: 'SAKSBEH_START_PA_NYTT',
-    navn: 'Saksbehandling starter på nytt',
-    kodeverk: 'HISTORIKK_BEGRUNNELSE_TYPE',
-  }],
-  [kodeverkTyper.VENT_AARSAK]: [{
-    kode: 'VENT_PÅ_BRUKERTILBAKEMELDING',
-    navn: 'Venter på tilbakemelding fra bruker',
-    kodeverk: 'VENT_AARSAK',
-  }],
-};
 
 export default {
   title: 'sak/sak-historikk',

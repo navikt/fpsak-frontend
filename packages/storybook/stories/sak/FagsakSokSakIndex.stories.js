@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, object, boolean } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
@@ -13,6 +12,8 @@ import withReduxProvider from '../../decorators/withRedux';
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
 const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
 const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const fagsaker = [{
   saksnummer: 1,
@@ -59,28 +60,6 @@ const fagsaker = [{
   },
   opprettet: '2017-08-02T00:54:25.455',
 }];
-
-const alleKodeverk = {
-  [kodeverkTyper.FAGSAK_STATUS]: [{
-    kode: fagsakStatus.OPPRETTET,
-    navn: 'Opprettet',
-    kodeverk: FAGSAK_STATUS_KODEVERK,
-  }],
-  [kodeverkTyper.FAGSAK_YTELSE]: [{
-    kode: fagsakYtelseType.FORELDREPENGER,
-    navn: 'Foreldrepenger',
-    kodeverk: FAGSAK_YTELSE_KODEVERK,
-  }, {
-    kode: fagsakYtelseType.ENGANGSSTONAD,
-    navn: 'Engangsstønad',
-    kodeverk: FAGSAK_YTELSE_KODEVERK,
-  }],
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-    kodeverk: PERSONSTATUS_TYPE_KODEVERK,
-  }],
-};
 
 export default {
   title: 'sak/sak-sok',

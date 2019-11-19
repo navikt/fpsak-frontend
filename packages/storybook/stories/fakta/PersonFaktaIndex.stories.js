@@ -4,12 +4,9 @@ import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -18,6 +15,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -103,29 +102,6 @@ const fagsakPerson = {
   alder: 90,
   navn: 'Espen Utvikler',
   personnummer: '123456789',
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.SIVILSTAND_TYPE]: [{
-    kode: sivilstandType.ENKE,
-    navn: 'Enke',
-  }],
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-  }],
-  [kodeverkTyper.RELATERT_YTELSE_TYPE]: [{
-    kode: relatertYtelseType.FORELDREPENGER,
-    navn: 'Foreldrepenger',
-  }],
-  [kodeverkTyper.FAGSAK_STATUS]: [{
-    kode: fagsakStatus.OPPRETTET,
-    navn: 'Opprettet',
-  }],
-  [kodeverkTyper.RELATERT_YTELSE_TILSTAND]: [{
-    kode: relatertYtelseTilstand.LOPENDE,
-    navn: 'Løpende',
-  }],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

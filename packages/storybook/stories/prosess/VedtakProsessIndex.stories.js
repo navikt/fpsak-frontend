@@ -20,6 +20,8 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const behandling = {
   id: 1,
   versjon: 1,
@@ -65,22 +67,6 @@ const resultatstruktur = {
   beregnetTilkjentYtelse: 10000,
 };
 const resultatstrukturOriginalBehandling = {};
-
-const alleKodeverk = {
-  [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.ADOPSJONSVILKARET]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-  },
-  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
-    kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-    navn: 'Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.',
-    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-  }],
-};
-
 
 export default {
   title: 'prosess/prosess-vedtak',

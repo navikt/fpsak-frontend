@@ -2,8 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import innsynResultatType from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsretning';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -11,6 +9,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import withReduxProvider from '../../../decorators/withRedux';
+
+const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -27,29 +27,6 @@ const aksjonspunkter = [{
   },
   begrunnelse: undefined,
 }];
-
-const alleKodeverk = {
-  [kodeverkTyper.INNSYN_RESULTAT_TYPE]: [{
-    kode: innsynResultatType.INNVILGET,
-    navn: 'Innvilget',
-  }, {
-    kode: innsynResultatType.DELVISTINNVILGET,
-    navn: 'Delvis innvilget',
-  }, {
-    kode: innsynResultatType.AVVIST,
-    navn: 'Avvist',
-  }],
-  [kodeverkTyper.BEHANDLING_TYPE]: [{
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    navn: 'Førstegangssøknad',
-  }, {
-    kode: innsynResultatType.REVURDERING,
-    navn: 'Revurdering',
-  }, {
-    kode: innsynResultatType.KLAGE,
-    navn: 'Klage',
-  }],
-};
 
 export default {
   title: 'prosess/innsyn/prosess-innsyn',

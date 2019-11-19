@@ -4,8 +4,6 @@ import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -13,8 +11,9 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 
-
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -172,81 +171,6 @@ const standardFaktaAAPAndel = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
-    kode: opptjeningAktivitetType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: opptjeningAktivitetType.FRILANS,
-    navn: 'Frilans',
-  }, {
-    kode: opptjeningAktivitetType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: opptjeningAktivitetType.NARING,
-    navn: 'Næring',
-  },
-  {
-    kode: opptjeningAktivitetType.AAP,
-    navn: 'Arbeidsavklaringspenger',
-  },
-  {
-    kode: opptjeningAktivitetType.MILITAR_ELLER_SIVILTJENESTE,
-    navn: 'Militær- eller sivilforsvarstjeneste',
-  },
-  ],
-  [kodeverkTyper.ARBEID_TYPE]: [{
-    kode: arbeidType.LONN_UNDER_UTDANNING,
-    navn: 'Lønn under utdanning',
-  }, {
-    kode: arbeidType.FRILANSER,
-    navn: 'Frilanser',
-  }],
-  [kodeverkTyper.INNTEKTSKATEGORI]: [{
-    kode: inntektskategorier.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
-  }, {
-    kode: inntektskategorier.FRILANSER,
-    navn: 'Frilanser',
-  },
-  {
-    kode: inntektskategorier.DAGPENGER,
-    navn: 'Dagpenger',
-  },
-  {
-    kode: inntektskategorier.ARBEIDSTAKER_UTEN_FERIEPENGER,
-    navn: 'Arbeidstaker uten feriepenger',
-  },
-  {
-    kode: inntektskategorier.ARBEIDSAVKLARINGSPENGER,
-    navn: 'Arbeidsavklaringspenger',
-  },
-  {
-    kode: inntektskategorier.SELVSTENDIG_NÆRINGSDRIVENDE,
-    navn: 'Selvstendig næringsdrivende',
-  }],
-  [kodeverkTyper.AKTIVITET_STATUS]: [{
-    kode: aktivitetStatuser.ARBEIDSTAKER,
-    navn: 'Arbeidstaker',
-  }, {
-    kode: aktivitetStatuser.FRILANSER,
-    navn: 'Frilanser',
-  },
-  {
-    kode: aktivitetStatuser.DAGPENGER,
-    navn: 'Dagpenger',
-  },
-  {
-    kode: aktivitetStatuser.SELVSTENDIG_NÆRINGSDRIVENDE,
-    navn: 'Selvstendig næringsdrivende',
-  },
-  {
-    kode: aktivitetStatuser.BRUKERS_ANDEL,
-    navn: 'Brukers andel',
-  },
-  ],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

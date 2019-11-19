@@ -5,28 +5,13 @@ import { withKnobs, boolean } from '@storybook/addon-knobs';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = {
-  [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.FORELDREANSVARSVILKARET_2_LEDD]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler 2 ledd',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-    [vilkarType.FORELDREANSVARSVILKARET_4_LEDD]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler 4 ledd',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-  },
-};
-
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 export default {
   title: 'prosess/prosess-vilkar-foreldreansvar',

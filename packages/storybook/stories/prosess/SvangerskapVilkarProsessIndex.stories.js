@@ -2,26 +2,15 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = {
-  [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.SVANGERSKAPVILKARET]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-  },
-};
-
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 export default {
   title: 'prosess/prosess-vilkar-svangerskap',

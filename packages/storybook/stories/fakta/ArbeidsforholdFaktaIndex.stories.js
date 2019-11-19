@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -10,6 +9,8 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import arbeidsforholdKilder from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/arbeidsforholdKilder';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -35,13 +36,6 @@ const arbeidsforhold = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.PERMISJONSBESKRIVELSE_TYPE]: [{
-    kode: 'PERMISJON',
-    navn: 'Permisjon',
-  }],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

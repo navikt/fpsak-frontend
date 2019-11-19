@@ -9,6 +9,8 @@ import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
+const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const behandling = {
   id: 1,
   versjon: 1,
@@ -17,7 +19,6 @@ const behandling = {
   },
 };
 
-const alleKodeverk = {};
 const avsluttedeBehandlinger = [{
   id: 1,
   type: {

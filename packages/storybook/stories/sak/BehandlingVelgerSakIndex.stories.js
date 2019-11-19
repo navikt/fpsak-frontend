@@ -3,7 +3,6 @@ import {
   withKnobs, object, number, boolean,
 } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
@@ -12,6 +11,8 @@ import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandlinger = [{
   id: 1,
@@ -74,27 +75,6 @@ const behandlinger = [{
     manueltOpprettet: true,
   },
 }];
-
-const alleKodeverk = {
-  [kodeverkTyper.BEHANDLING_STATUS]: [{
-    kode: behandlingStatus.AVSLUTTET,
-    navn: 'Avsluttet',
-    kodeverk: BEHANDLING_STATUS_KODEVERK,
-  }, {
-    kode: behandlingStatus.OPPRETTET,
-    navn: 'Opprettet',
-    kodeverk: BEHANDLING_STATUS_KODEVERK,
-  }],
-  [kodeverkTyper.BEHANDLING_TYPE]: [{
-    kode: behandlingType.FORSTEGANGSSOKNAD,
-    navn: 'Førstegangssøknad',
-    kodeverk: BEHANDLING_TYPE_KODEVERK,
-  }, {
-    kode: behandlingType.DOKUMENTINNSYN,
-    navn: 'Dokumentinnsyn',
-    kodeverk: BEHANDLING_TYPE_KODEVERK,
-  }],
-};
 
 export default {
   title: 'sak/sak-behandling-velger',
