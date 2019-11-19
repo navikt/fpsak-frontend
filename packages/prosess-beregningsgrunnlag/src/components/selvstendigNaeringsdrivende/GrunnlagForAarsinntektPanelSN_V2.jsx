@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -12,36 +14,19 @@ import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
-const createHeaderRow = (pgiVerdier) => (
+const createHeaderRow = () => (
   <Row key="SNInntektHeader">
     <Column xs="8">
-      <Undertekst>
+      <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
-      </Undertekst>
+      </EtikettLiten>
     </Column>
-    {pgiVerdier && Object.prototype.hasOwnProperty.call(pgiVerdier[0], 'gJustert') && (
-      <>
-        <Column xs="2">
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
-          </Undertekst>
-        </Column>
-        <Column xs="2">
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalGJustert" />
-          </Undertekst>
-        </Column>
-      </>
-    )}
-    {pgiVerdier && !Object.prototype.hasOwnProperty.call(pgiVerdier[0], 'gJustert') && (
-      <>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
-          </Undertekst>
-        </Column>
-      </>
-    )}
+    <Column xs="2" className={beregningStyles.rightAlignElement}>
+
+      <EtikettLiten className={beregningStyles.etikettLiten}>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
+      </EtikettLiten>
+    </Column>
   </Row>
 );
 const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
@@ -74,33 +59,15 @@ const createInntektRows = (pgiVerdier) => (
     {pgiVerdier.map((element) => (
       <Row key={element.årstall}>
         <Column xs="6">
-          <Normaltekst>
+          <EtikettLiten>
             {element.årstall}
-          </Normaltekst>
+          </EtikettLiten>
         </Column>
-        {Object.prototype.hasOwnProperty.call(element, 'gJustert') && (
-          <>
-            <Column xs="2" className={beregningStyles.rightAlignElement}>
-              <Normaltekst>
-                {formatCurrencyNoKr(element.gJustert)}
-              </Normaltekst>
-            </Column>
-            <Column xs="2" className={beregningStyles.rightAlignElement}>
-              <Normaltekst>
-                {formatCurrencyNoKr(element.beløp)}
-              </Normaltekst>
-            </Column>
-          </>
-        )}
-        {!Object.prototype.hasOwnProperty.call(element, 'gJustert') && (
-          <>
-            <Column xs="4" className={beregningStyles.rightAlignElement}>
-              <Normaltekst>
-                {formatCurrencyNoKr(element.beløp)}
-              </Normaltekst>
-            </Column>
-          </>
-        )}
+        <Column xs="4" className={beregningStyles.rightAlignElement}>
+          <EtikettLiten>
+            {formatCurrencyNoKr(element.beløp)}
+          </EtikettLiten>
+        </Column>
       </Row>
     ))}
   </>
@@ -126,7 +93,15 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
       <Element className={beregningStyles.semiBoldText}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
-      <VerticalSpacer eightPx />
+      <VerticalSpacer fourPx />
+      <Row key="SNInntektIngress">
+        <Column xs="8">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.SN.sisteTreAar" />
+          </Normaltekst>
+        </Column>
+      </Row>
+      <VerticalSpacer fourPx />
       {createHeaderRow(pgiVerdier)}
       {createInntektRows(pgiVerdier)}
       {createSumRow(pgiSnitt, erNyIArbeidslivet)}

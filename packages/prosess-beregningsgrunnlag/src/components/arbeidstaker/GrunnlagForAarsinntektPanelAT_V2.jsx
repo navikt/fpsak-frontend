@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
@@ -57,7 +57,7 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
   const rows = relevanteAndeler.map((andel, index) => (
     <Row key={`index${index + 1}`}>
       <Column xs="4" key={`ColLable${index + 1}`}>
-        <Normaltekst key={`ColLableTxt${index + 1}`}>
+        <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
           {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
         </Normaltekst>
       </Column>
@@ -131,10 +131,10 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   return (
     <>
       <Panel className={beregningStyles.panel}>
-        <Normaltekst className={beregningStyles.semiBoldText}>
-          <FormattedHTMLMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
+        <Element>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           {createExternalLink('Aa')}
-        </Normaltekst>
+        </Element>
 
         <Row key="Header">
           <Column xs="4" key="ATempthy1" />

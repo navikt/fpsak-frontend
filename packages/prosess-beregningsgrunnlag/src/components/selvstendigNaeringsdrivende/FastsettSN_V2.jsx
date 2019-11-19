@@ -50,7 +50,7 @@ const FastsettSN2 = ({
             bredde="XS"
             validate={[required]}
             parse={parseCurrencyInput}
-
+            className={styles['input--xs']}
             readOnly={readOnly}
           />
         </div>

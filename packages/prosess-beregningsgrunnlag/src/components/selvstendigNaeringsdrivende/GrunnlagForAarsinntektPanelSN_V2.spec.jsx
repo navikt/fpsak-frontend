@@ -45,7 +45,7 @@ describe('<GrunnlagForAarsinntektPanelSN_V2>', () => {
 
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    expect(rows).to.have.length(6);
+    expect(rows).to.have.length(7);
   });
   it('Skal teste tabellen får korrekt innhold', () => {
     const wrapper = shallowWithIntl(<GrunnlagForAarsinntektPanelSN2
@@ -55,20 +55,20 @@ describe('<GrunnlagForAarsinntektPanelSN_V2>', () => {
     const rows = panel.find('Row');
     const formattedMessage = panel.find('FormattedMessage');
     expect(formattedMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt');
-    expect(formattedMessage.at(1).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.AarHeader');
-    expect(formattedMessage.at(2).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende');
+    expect(formattedMessage.at(1).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SN.sisteTreAar');
+    expect(formattedMessage.at(2).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.AarHeader');
+    expect(formattedMessage.at(3).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende');
 
     beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel[0].pgiVerdier.forEach((pgi, index) => {
-      const normaltekst = rows.at(index + 1).find('Normaltekst');
+      const etikettLiten = rows.at(index + 2).find('EtikettLiten');
       const expectedBelop = formatCurrencyNoKr(pgi.beløp);
       const expectedAar = pgi.årstall.toString();
-      expect(normaltekst.at(0).childAt(0).text()).to.equal(expectedAar);
-      expect(normaltekst.at(1).childAt(0).text()).to.equal(expectedBelop);
+      expect(etikettLiten.at(0).childAt(0).text()).to.equal(expectedAar);
+      expect(etikettLiten.at(1).childAt(0).text()).to.equal(expectedBelop);
     });
-
-    const resultMessage = rows.at(5).find('FormattedMessage');
+    const resultMessage = rows.at(6).find('FormattedMessage');
     expect(resultMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende');
-    const resultSnitt = rows.at(5).find('Element');
+    const resultSnitt = rows.at(6).find('Element');
     const expectedSnitt = formatCurrencyNoKr(beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel[0].pgiSnitt);
     expect(resultSnitt.first().childAt(0).text()).to.equal(expectedSnitt);
   });

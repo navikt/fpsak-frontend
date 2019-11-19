@@ -149,6 +149,21 @@ const AksjonspunktBehandler = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
+        <VerticalSpacer sixteenPx />
+        <Row>
+          <Column xs="12">
+            <BehandlingspunktSubmitButton
+              formName={formName}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              isReadOnly={readOnly}
+              isSubmittable={!readOnlySubmitButton}
+              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+              isBehandlingFormDirty={isBehandlingFormDirty}
+              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            />
+          </Column>
+        </Row>
       </Panel>
     );
   }

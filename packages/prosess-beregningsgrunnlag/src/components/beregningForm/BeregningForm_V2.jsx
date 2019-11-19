@@ -25,6 +25,7 @@ import Beregningsgrunnlag2, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from 
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
+import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 
 // TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
@@ -143,7 +144,9 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
     aksjonspunkter.push(vurderDekningsgradAksjonspunkt);
   }
   if (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter)) {
-    return aksjonspunkter.concat(GrunnlagForAarsinntektPanelAT2.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
+    // todo: refactoreres til å bruke transform values from Aksjonspunkt behandler
+    // return aksjonspunkter.concat(GrunnlagForAarsinntektPanelAT2.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
+    return aksjonspunkter.concat(AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
   }
   if (harAksjonspunkt(VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)
     || harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
@@ -210,7 +213,6 @@ export const BeregningFormImpl2 = ({
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
-
 
   return (
     <form onSubmit={formProps.handleSubmit}>

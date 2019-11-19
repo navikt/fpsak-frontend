@@ -124,7 +124,7 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   return aarsaker.filter((aarsak) => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
 
-const createBeregningTableData = createSelector(
+export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.ledetekstBrutto,
     (state, ownProps) => ownProps.ledetekstRedusert,
@@ -142,10 +142,10 @@ const createBeregningTableData = createSelector(
     const avkortetRad = [ledetekstAvkortet];
     const redusertRad = [ledetekstRedusert];
     const dagsatserRad = [];
-
     // Kun dersom periodeårsaken kan endre dagsatsen på beregningsresultatet er
     // vi interessert i å vise den tilhørende perioden i resultattabellen.
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
+
     perioderSomSkalVises.forEach((periode) => {
       const atAndeleler = periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
       const flAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
@@ -156,7 +156,8 @@ const createBeregningTableData = createSelector(
       const dpInntekt = dpAndel ? dpAndel.bruttoPrAar : undefined;
       const aapInntekt = aapAndel ? aapAndel.bruttoPrAar : undefined;
       const snInntekt = snAndel ? snAndel.bruttoPrAar : undefined;
-      const atInntekt = atAndeleler && atAndeleler.length > 0 ? atAndeleler.reduce((a, b) => +a + +b.bruttoPrAar, 0) : undefined;
+      const atInntekt = atAndeleler && atAndeleler.length > 0 ? atAndeleler.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
+
       atRad.push(atInntekt);
       dpRad.push(dpInntekt);
       aapRad.push(aapInntekt);
@@ -175,7 +176,6 @@ const createBeregningTableData = createSelector(
     if (snRad[1] !== undefined) { rowsAndeler.push(snRad); }
     if (aapRad[1] !== undefined) { rowsAndeler.push(aapRad); }
     if (dpRad[1] !== undefined) { rowsAndeler.push(dpRad); }
-
     const rows = [bruttoRad, avkortetRad, redusertRad];
     return {
       headers,
@@ -187,7 +187,7 @@ const createBeregningTableData = createSelector(
 );
 
 /**
- * BeregningsresultatTable
+ * BeregningsresultatTable2
  *
  * Presentasjonskomponent. Viser faktagruppe med beregningstabellen som viser inntekter brukt i
  * beregningen og hva dagsatsen ble.
