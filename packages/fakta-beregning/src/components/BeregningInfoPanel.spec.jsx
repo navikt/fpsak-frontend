@@ -50,7 +50,6 @@ describe('<BeregningInfoPanel>', () => {
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om beregning');
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.BEREGNING);
     expect(panel.prop('readOnly')).is.true;
