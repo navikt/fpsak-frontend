@@ -11,9 +11,8 @@ import TimeLineSokerEnsamSoker from './components/TimeLineSokerEnsamSoker';
 
 import styles from './tidslinje.less';
 
-const getOptions = (customTimes, sortedUttakPeriods, medsoker) => ({
+const getOptions = (customTimes, sortedUttakPeriods) => ({
   end: moment(sortedUttakPeriods[sortedUttakPeriods.length - 1].tom).add(2, 'days'),
-  height: medsoker ? '140px' : '104px',
   locale: moment.locale('nb'),
   margin: { item: 14 },
   max: moment(customTimes.fodsel).add(4, 'years'),
@@ -165,7 +164,7 @@ class Tidslinje extends Component {
               <div className="uttakTimeline">
                 <Timeline
                   ref={this.timelineRef}
-                  options={getOptions(customTimes, uttakPerioder.sort(sortByDate), medsokerKjonnKode)}
+                  options={getOptions(customTimes, uttakPerioder.sort(sortByDate))}
                   items={items}
                   groups={groups}
                   customTimes={customTimes}
