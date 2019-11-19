@@ -60,9 +60,10 @@ export class DataFetcher extends Component {
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged, dataParams, keepDataWhenRefetching,
+      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged, dataParams, keepDataWhenRefetching, behandlingNotRequired,
     } = this.props;
-    if (showComponent && behandlingId && behandlingVersjon
+    const shouldFetch = behandlingNotRequired ? prevProps.behandlingId && prevProps.behandlingVersjon : true;
+    if (showComponent && behandlingId && behandlingVersjon && shouldFetch
       && (behandlingId !== prevProps.behandlingId
         || behandlingVersjon !== prevProps.behandlingVersjon
         || forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged)) {
