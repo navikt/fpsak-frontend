@@ -66,7 +66,7 @@ export const UttakInfoPanelImpl = ({
   const erManueltOpprettet = getErManueltOpprettet(behandlingArsaker);
   const erArsakTypeHendelseFodsel = getErArsakTypeHendelseFodsel(behandlingArsakTyper);
   const isRevurdering = behandlingIsRevurdering && (erManueltOpprettet || erArsakTypeHendelseFodsel);
-  const behandlingUtredes = behandlingStatus === behandlingStatuser.BEHANDLING_UTREDES;
+  const behandlingUtredes = behandlingStatus.kode === behandlingStatuser.BEHANDLING_UTREDES;
   const sortedUttakPerioder = [...uttakPerioder.sort(sortUttaksperioder)];
 
   return (
