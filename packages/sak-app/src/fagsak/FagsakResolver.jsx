@@ -16,6 +16,7 @@ import { fagsakPropType } from '@fpsak-frontend/prop-types';
 
 import fpsakApi from '../data/fpsakApi';
 import { getBehandlingerIds } from '../behandling/selectors/behandlingerSelectors';
+import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
 import { resetFagsakContext as resetFagsakContextActionCreator } from './duck';
 import {
   getSelectedFagsak, getSelectedSaksnummer,
@@ -30,10 +31,8 @@ import {
 export class FagsakResolver extends Component {
   constructor(props) {
     super(props);
-    this.resolveFagsakInfo = this.resolveFagsakInfo.bind(this);
+    this.resolveFagsak = this.resolveFagsak.bind(this);
     this.pathToBehandling = this.pathToBehandling.bind(this);
-
-    this.resolveFagsakInfo();
   }
 
   componentWillUnmount() {
@@ -41,7 +40,22 @@ export class FagsakResolver extends Component {
     resetFagsakContext();
   }
 
-  resolveFagsakInfo() {
+  componentDidMount = () => {
+    this.resolveFagsak();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      behandlingId, behandlingVersjon,
+    } = this.props;
+    const hasBehandlingIdChanged = prevProps.behandlingId && prevProps.behandlingId !== behandlingId;
+    const hasBehandlingVersjonChanged = prevProps.behandlingVersjon && prevProps.behandlingVersjon !== behandlingVersjon;
+    if (hasBehandlingIdChanged || hasBehandlingVersjonChanged) {
+      this.resolveFagsak();
+    }
+  }
+
+  resolveFagsak() {
     const {
       selectedSaksnummer, fetchFagsak,
     } = this.props;
@@ -79,6 +93,8 @@ export class FagsakResolver extends Component {
 
 FagsakResolver.propTypes = {
   selectedSaksnummer: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number,
+  behandlingVersjon: PropTypes.number,
   selectedFagsak: fagsakPropType,
   behandlingerIds: PropTypes.arrayOf(PropTypes.number),
   fetchFagsak: PropTypes.func.isRequired,
@@ -94,14 +110,18 @@ FagsakResolver.defaultProps = {
   behandlingerIds: [],
   selectedFagsak: null,
   children: null,
+  behandlingId: undefined,
+  behandlingVersjon: undefined,
 };
 
 const mapStateToProps = (state) => ({
   selectedSaksnummer: getSelectedSaksnummer(state),
   selectedFagsak: getSelectedFagsak(state),
   behandlingerIds: getBehandlingerIds(state),
+  behandlingId: getSelectedBehandlingId(state),
+  behandlingVersjon: getBehandlingVersjon(state),
   fetchFagsakPending: !fpsakApi.FETCH_FAGSAK.getRestApiFinished()(state) || !fpsakApi.FETCH_FAGSAK.getRestApiError()(state),
-  fagsakResolved: fpsakApi.FETCH_FAGSAK.getRestApiData()(state),
+  fagsakResolved: !!fpsakApi.FETCH_FAGSAK.getRestApiData()(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
