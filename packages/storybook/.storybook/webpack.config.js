@@ -112,5 +112,5 @@ module.exports = async ({ config, mode }) => {
   }));
 
   // Return the altered config
-  return console.dir(config, { depth: null }) || config;
+  return config;
 };

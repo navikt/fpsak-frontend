@@ -52,6 +52,7 @@ class AppIndex extends Component {
         captureException(error);
       });
     });
+
     showCrashMsg([
       error.toString(),
       info.componentStack
@@ -59,6 +60,9 @@ class AppIndex extends Component {
         .map((line) => line.trim())
         .find((line) => !!line),
     ].join(' '));
+
+    // eslint-disable-next-line no-console
+    console.error(error);
   }
 
   render() {
@@ -74,7 +78,8 @@ class AppIndex extends Component {
     const queryStrings = parseQueryString(location.search);
     const forbiddenErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_FORBIDDEN);
     const unauthorizedErrors = errorMessages.filter((o) => o.type === EventType.REQUEST_UNAUTHORIZED);
-    const shouldRenderHome = (!crashMessage && !forbiddenErrors.length > 0 && !unauthorizedErrors.length > 0);
+    const hasForbiddenOrUnauthorizedErrors = forbiddenErrors.length > 0 || unauthorizedErrors.length > 0;
+    const shouldRenderHome = (!crashMessage && !hasForbiddenOrUnauthorizedErrors);
     const nrOfErrorMessages = queryStrings.errorcode || queryStrings.errormessage ? 1 : errorMessages.length;
 
     return (
@@ -82,7 +87,7 @@ class AppIndex extends Component {
         <LanguageProvider>
           <Dekorator
             errorMessages={errorMessages}
-            hideErrorMessages={!shouldRenderHome}
+            hideErrorMessages={hasForbiddenOrUnauthorizedErrors}
             navAnsattName={navAnsattName}
             queryStrings={queryStrings}
             removeErrorMessage={removeErrorMsg}
