@@ -589,7 +589,6 @@ export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
   );
 };
 
-
 export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
