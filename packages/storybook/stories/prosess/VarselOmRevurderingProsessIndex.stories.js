@@ -2,14 +2,14 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -53,16 +53,6 @@ const originalBehandling = {
     antallBarnTermin: 1,
     antallBarnFodsel: 1,
   },
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.VENT_AARSAK]: [{
-    kode: venteArsakType.AVV_DOK,
-    navn: 'Avvent dokumentasjon',
-  }, {
-    kode: venteArsakType.UTV_FRIST,
-    navn: 'Utvid frist',
-  }],
 };
 
 const aksjonspunkter = [{

@@ -7,6 +7,8 @@ import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const aksjonspunkter = [
   {
     definisjon: {
@@ -335,112 +337,6 @@ const uttakKontrollerFaktaPerioder = {
         kode: 'SØKNAD',
         kodeverk: 'FORDELING_PERIODE_KILDE',
       },
-    },
-  ],
-};
-
-const alleKodeverk = {
-  UttakPeriodeType: [
-    {
-      kode: 'FELLESPERIODE',
-      navn: 'Fellesperioden',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-    {
-      kode: 'MØDREKVOTE',
-      navn: 'Mødrekvoten',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-    {
-      kode: 'FEDREKVOTE',
-      navn: 'Fedrekvoten',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-    {
-      kode: 'FORELDREPENGER',
-      navn: 'Foreldrepenger',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-    {
-      kode: 'FORELDREPENGER_FØR_FØDSEL',
-      navn: 'Foreldrepenger før fødsel',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-    {
-      kode: 'ANNET',
-      navn: 'Andre typer som f.eks utsettelse',
-      kodeverk: 'UTTAK_PERIODE_TYPE',
-    },
-  ],
-  UtsettelseÅrsak: [
-    {
-      kode: 'ARBEID',
-      navn: 'Arbeid',
-      kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-    },
-    {
-      kode: 'LOVBESTEMT_FERIE',
-      navn: 'Lovbestemt ferie',
-      kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-    },
-    {
-      kode: 'SYKDOM',
-      navn: 'Avhengig av hjelp grunnet sykdom',
-      kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-    },
-    {
-      kode: 'INSTITUSJONSOPPHOLD_SØKER',
-      navn: 'Søker er innlagt i helseinstitusjon',
-      kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-    },
-    {
-      kode: 'INSTITUSJONSOPPHOLD_BARNET',
-      navn: 'Barn er innlagt i helseinstitusjon',
-      kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-    },
-  ],
-  OverføringÅrsak: [
-    {
-      kode: 'INSTITUSJONSOPPHOLD_ANNEN_FORELDER',
-      navn: 'Den andre foreldren er innlagt i helseinstitusjon',
-      kodeverk: 'OVERFOERING_AARSAK_TYPE',
-    },
-    {
-      kode: 'SYKDOM_ANNEN_FORELDER',
-      navn: 'Den andre foreldren er pga sykdom avhengig av hjelp for å ta seg av barnet/barna',
-      kodeverk: 'OVERFOERING_AARSAK_TYPE',
-    },
-    {
-      kode: 'IKKE_RETT_ANNEN_FORELDER',
-      navn: 'Den andre foreldren har ikke rett på foreldrepenger',
-      kodeverk: 'OVERFOERING_AARSAK_TYPE',
-    },
-    {
-      kode: 'ALENEOMSORG',
-      navn: 'Aleneomsorg for barnet/barna',
-      kodeverk: 'OVERFOERING_AARSAK_TYPE',
-    },
-  ],
-  UttakPeriodeVurderingType: [
-    {
-      kode: 'PERIODE_OK',
-      navn: 'Periode er OK',
-      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-    },
-    {
-      kode: 'PERIODE_OK_ENDRET',
-      navn: 'Periode er OK med endringer',
-      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-    },
-    {
-      kode: 'PERIODE_KAN_IKKE_AVKLARES',
-      navn: 'Perioden kan ikke avklares',
-      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-    },
-    {
-      kode: 'PERIODE_IKKE_VURDERT',
-      navn: 'Perioden er ikke vurdert',
-      kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
     },
   ],
 };

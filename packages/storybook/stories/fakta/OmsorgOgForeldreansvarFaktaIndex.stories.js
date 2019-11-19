@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
@@ -14,6 +13,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -66,30 +67,6 @@ const inntektArbeidYtelse = {
 };
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.OMSORGSOVERTAKELSE_VILKAR_TYPE]: [{
-    kode: 'FP_VK_5',
-    navn: 'Omsorgsvilkåret',
-  }, {
-    kode: 'FP_VK_8',
-    navn: 'Foreldreansvarsvilkåret 2.ledd',
-  }, {
-    kode: 'FP_VK_33',
-    navn: 'Foreldreansvarsvilkåret 4.ledd',
-  }],
-  [kodeverkTyper.RELATERT_YTELSE_TYPE]: [{
-    kode: relatertYtelseType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: relatertYtelseType.FORELDREPENGER,
-    navn: 'Foreldrepenger',
-  }],
-  [kodeverkTyper.FAR_SOEKER_TYPE]: [{
-    kode: 'ADOPTERER_ALENE',
-    navn: 'Adopterer alene',
-  }],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

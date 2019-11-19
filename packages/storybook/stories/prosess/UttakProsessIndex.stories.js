@@ -12,6 +12,8 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const aksjonspunkter = [
   {
     definisjon: {
@@ -530,15 +532,6 @@ const ytelsefordeling = {
   endringsdato: '2019-10-14',
   gjeldendeDekningsgrad: 100,
   førsteUttaksdato: '2019-10-14',
-};
-
-const alleKodeverk = {
-  IkkeOppfyltÅrsak: [],
-  InnvilgetÅrsak: [],
-  GraderingAvslagÅrsak: [],
-  UtsettelseÅrsak: [],
-  UttakPeriodeType: [],
-  OppholdÅrsak: [],
 };
 
 export const visProsessUttak = () => (

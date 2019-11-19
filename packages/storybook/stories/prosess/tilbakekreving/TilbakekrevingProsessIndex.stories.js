@@ -3,15 +3,13 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
-import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
-import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
-import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
 
 import withReduxProvider from '../../../decorators/withRedux';
+
+const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const perioderForeldelse = {
   perioder: [{
@@ -59,61 +57,6 @@ const vilkarvurderingsperioder = {
 };
 const vilkarvurdering = {
   vilkarsVurdertePerioder: [],
-};
-
-const alleKodeverk = {
-  [tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING]: [{
-    kode: foreldelseVurderingType.FORELDET,
-    navn: 'Foreldet',
-    kodeverk: 'FORELDELSE_VURDERING',
-  }, {
-    kode: foreldelseVurderingType.IKKE_FORELDET,
-    navn: 'Ikke foreldet',
-    kodeverk: 'FORELDELSE_VURDERING',
-  }, {
-    kode: foreldelseVurderingType.TILLEGGSFRIST,
-    navn: 'Tilleggsfrist',
-    kodeverk: 'FORELDELSE_VURDERING',
-  }],
-  [tilbakekrevingKodeverkTyper.SARLIG_GRUNN]: [{
-    kode: sarligGrunn.GRAD_AV_UAKTSOMHET,
-    navn: 'Grad av uaktsomhet',
-  }, {
-    kode: sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL,
-    navn: 'Helt eller delvis NAVs feil',
-  }, {
-    kode: sarligGrunn.STOERRELSE_BELOEP,
-    navn: 'Størrelse beløp',
-  }, {
-    kode: sarligGrunn.TID_FRA_UTBETALING,
-    navn: 'Tid fra utbetaling',
-  }, {
-    kode: sarligGrunn.ANNET,
-    navn: 'Annet',
-  }],
-  [tilbakekrevingKodeverkTyper.VILKAR_RESULTAT]: [{
-    kode: vilkarResultat.FORSTO_BURDE_FORSTAATT,
-    navn: 'Forsto eller burde forstått',
-  }, {
-    kode: vilkarResultat.FEIL_OPPLYSNINGER,
-    navn: 'Feil opplysninger',
-  }, {
-    kode: vilkarResultat.MANGELFULL_OPPLYSNING,
-    navn: 'Mangelfull opplysning',
-  }, {
-    kode: vilkarResultat.GOD_TRO,
-    navn: 'God tro',
-  }],
-  [tilbakekrevingKodeverkTyper.AKTSOMHET]: [{
-    kode: aktsomhet.FORSETT,
-    navn: 'Forsett',
-  }, {
-    kode: aktsomhet.GROVT_UAKTSOM,
-    navn: 'Grovt uaktsom',
-  }, {
-    kode: aktsomhet.SIMPEL_UAKTSOM,
-    navn: 'Simpel uaktsom',
-  }],
 };
 
 const merknaderFraBeslutter = {

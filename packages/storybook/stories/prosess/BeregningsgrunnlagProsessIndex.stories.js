@@ -6,11 +6,12 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
@@ -250,35 +251,6 @@ const lagBG = (perioder, statuser) => {
     årsinntektVisningstall: 360000,
   };
   return beregningsgrunnlag;
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.AKTIVITET_STATUS]: [
-    {
-      kode: 'AT',
-      navn: 'Arbeidstaker',
-    },
-    {
-      kode: 'FL',
-      navn: 'Frilans',
-    },
-    {
-      kode: 'AT_FL',
-      navn: 'Arbeidstaker og frilanser',
-    },
-    {
-      kode: 'MS',
-      navn: 'Militær eller siviltjeneste',
-    },
-    {
-      kode: 'SN',
-      navn: 'Selvstendig næringsdrivende',
-    },
-    {
-      kode: 'AT_FL_SN',
-      navn: 'Kombinert arbeidtaker, frilanser og selvstendig næringsdrivende',
-    },
-  ],
 };
 
 const toggles = {

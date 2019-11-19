@@ -3,12 +3,13 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const personstatusKodeverk = 'PERSONSTATUS_TYPE';
 
@@ -38,23 +39,6 @@ const personopplysninger = {
     },
   },
 };
-
-const alleKodeverk = {
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: personstatusType.DOD,
-    navn: 'Død',
-    kodeverk: personstatusKodeverk,
-  }, {
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-    kodeverk: personstatusKodeverk,
-  }, {
-    kode: personstatusType.UTVANDRET,
-    navn: 'Utvandret',
-    kodeverk: personstatusKodeverk,
-  }],
-};
-
 
 export default {
   title: 'prosess/prosess-saksopplysninger',

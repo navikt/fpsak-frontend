@@ -2,16 +2,15 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
-import region from '@fpsak-frontend/kodeverk/src/region';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -56,24 +55,6 @@ const ytelsefordeling = {};
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-  }, {
-    kode: personstatusType.DOD,
-    navn: 'Død',
-  }],
-  [kodeverkTyper.SIVILSTAND_TYPE]: [{
-    kode: sivilstandType.UOPPGITT,
-    navn: 'Uoppgitt',
-  }],
-  [kodeverkTyper.REGION]: [{
-    kode: region.NORDEN,
-    navn: 'Norden',
-  }],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {

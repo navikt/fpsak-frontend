@@ -6,7 +6,6 @@ import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakTyp
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -18,6 +17,8 @@ const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 const BEHANDLING_RESULTAT_TYPE_KODEVERK = 'BEHANDLING_RESULTAT_TYPE';
 const KONSEKVENS_FOR_YTELSEN_KODEVERK = 'KONSEKVENS_FOR_YTELSEN';
+
+const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -94,33 +95,6 @@ const feilutbetalingAarsak = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.BEHANDLING_AARSAK]: [{
-    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
-    navn: 'Feil i lovanvendelse',
-    kodeverk: BEHANDLING_AARSAK_KODEVERK,
-  }],
-  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
-    kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
-    navn: 'Tilbakekreving inntrekk',
-    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-  }],
-  [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [{
-    kode: behandlingResultatType.INNVILGET,
-    navn: 'Innvilget',
-    kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
-  }],
-  [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [{
-    kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
-    navn: 'Foreldrepenger opphører',
-    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-  }, {
-    kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
-    navn: 'Endring i beregning',
-    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
-  }],
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {
