@@ -79,7 +79,6 @@ describe('<RenderFordelBGFieldArray>', () => {
     expect(selectValuesArbeidsforhold[0].props.value).to.equal(arbeidstakerAndelsnr.toString());
     expect(selectValuesArbeidsforhold[0].props.children).to.equal(forventetArbeidstakerString);
     expect(selectValuesArbeidsforhold[1].props.value).to.equal(beregningsgrunnlagAndeltyper.BRUKERS_ANDEL);
-    expect(selectValuesArbeidsforhold[1].props.children).to.equal('Ytelse');
   });
 
   it('skal ikkje selectvalues med Ytelse når ikkje kun ytelse', () => {
