@@ -28,6 +28,7 @@ export class DataFetcher extends Component {
     behandlingNotRequired: PropTypes.bool,
     keepDataWhenRefetching: PropTypes.bool,
     dataParams: PropTypes.shape(),
+    cacheParams: PropTypes.shape(),
   };
 
   static defaultProps = {
@@ -40,40 +41,71 @@ export class DataFetcher extends Component {
     behandlingNotRequired: true,
     keepDataWhenRefetching: false,
     dataParams: {},
+    cacheParams: undefined,
+  }
+
+  hasFetchedLatestData = () => {
+    const { behandlingId, behandlingVersjon, cacheParams } = this.props;
+    return cacheParams && cacheParams.behandlingId === behandlingId && cacheParams.behandlingVersjon === behandlingVersjon;
   }
 
   fetchData = (dataParams, keepDataWhenRefetching) => {
-    const { data } = this.props;
+    const { data, behandlingId, behandlingVersjon } = this.props;
     // eslint-disable-next-line react/destructuring-assignment
-    data.forEach((d) => this.props[`${FETCH_PREFIX}${d.name}`](dataParams, { keepData: keepDataWhenRefetching }));
+    data.forEach((d) => this.props[`${FETCH_PREFIX}${d.name}`](dataParams, {
+      keepData: keepDataWhenRefetching,
+      cacheParams: { behandlingId, behandlingVersjon },
+    }));
   }
 
   componentDidMount = () => {
     const {
-      showComponent, behandlingId, behandlingVersjon, behandlingNotRequired, dataParams, keepDataWhenRefetching,
+      showComponent,
+      behandlingNotRequired,
+      behandlingId,
+      behandlingVersjon,
+      dataParams,
+      keepDataWhenRefetching,
     } = this.props;
-    const shouldFetch = behandlingNotRequired || (behandlingId && behandlingVersjon);
-    if (showComponent && shouldFetch) {
+
+    const hasRequiredInput = behandlingNotRequired || (behandlingId && behandlingVersjon);
+    if (showComponent && hasRequiredInput && !this.hasFetchedLatestData()) {
       this.fetchData(dataParams, keepDataWhenRefetching);
     }
   }
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged, dataParams, keepDataWhenRefetching, behandlingNotRequired,
+      showComponent,
+      behandlingId,
+      behandlingVersjon,
+      dataParams,
+      keepDataWhenRefetching,
+      forceRefreshWhenPropChanged,
+      behandlingNotRequired,
     } = this.props;
-    const shouldFetch = behandlingNotRequired ? prevProps.behandlingId && prevProps.behandlingVersjon : true;
-    if (showComponent && behandlingId && behandlingVersjon && shouldFetch
-      && (behandlingId !== prevProps.behandlingId
-        || behandlingVersjon !== prevProps.behandlingVersjon
-        || forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged)) {
+
+    const forceRefresh = forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged;
+    const hasBehandlingChanged = behandlingId !== prevProps.behandlingId || behandlingVersjon !== prevProps.behandlingVersjon;
+    const shouldRefetchOnlyWhenBehandlingChanges = behandlingNotRequired ? prevProps.behandlingId && prevProps.behandlingVersjon : true;
+    const hasNotFetchedLatest = shouldRefetchOnlyWhenBehandlingChanges && hasBehandlingChanged && !this.hasFetchedLatestData();
+
+    if (showComponent && (hasNotFetchedLatest || forceRefresh)) {
       this.fetchData(dataParams, keepDataWhenRefetching);
     }
   }
 
   render() {
     const {
-      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon, showLoadingIcon, behandlingNotRequired,
+      showComponent,
+      showComponentDuringFetch,
+      isFetchFinished,
+      render,
+      data,
+      behandlingId,
+      behandlingVersjon,
+      showLoadingIcon,
+      behandlingNotRequired,
     } = this.props;
 
     const shouldShow = behandlingNotRequired || (behandlingId && behandlingVersjon);
@@ -98,9 +130,11 @@ const mapStateToProps = (state, ownProps) => {
     ...acc,
     [format(dataApi.name)]: dataApi.getRestApiData()(state),
   }), {});
+  const cacheParams = ownProps.data.map((dataApi) => dataApi.getRestApiCacheParams()(state));
 
   return {
     ...data,
+    cacheParams: cacheParams.length > 0 ? cacheParams[0] : undefined,
     isFetchFinished: ownProps.data.every((dataApi) => dataApi.getRestApiFinished()(state)),
   };
 };
