@@ -57,8 +57,8 @@ class RequestErrorEventHandler {
       }
     }
 
-    if (formattedError.isGatewayTimeout) {
-      this.notify(EventType.REQUEST_GATEWAY_TIMEOUT, { location: formattedError.location }, this.isPollingRequest);
+    if (formattedError.isGatewayTimeoutOrNotFound) {
+      this.notify(EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND, { location: formattedError.location }, this.isPollingRequest);
     } else if (formattedError.isUnauthorized) {
       this.notify(EventType.REQUEST_UNAUTHORIZED, { message: error.message }, this.isPollingRequest);
     } else if (formattedError.isForbidden) {
@@ -85,7 +85,7 @@ class RequestErrorEventHandler {
       isForbidden: response ? response.status === 403 : undefined,
       isUnauthorized: response ? response.status === 401 : undefined,
       is418: response ? response.status === 418 : undefined,
-      isGatewayTimeout: response ? response.status === 504 : undefined,
+      isGatewayTimeoutOrNotFound: response ? response.status === 504 || response.status === 404 : undefined,
       location: response && response.config ? response.config.url : undefined,
     };
   };

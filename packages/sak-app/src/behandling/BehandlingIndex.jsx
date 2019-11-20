@@ -9,7 +9,7 @@ import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
-import { getAlleKodeverk } from '../kodeverk/duck';
+import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
 import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
@@ -33,6 +33,8 @@ const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/fp-behandl
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
+
+const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
 
 /**
  * BehandlingIndex
@@ -141,7 +143,7 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    if (erTilbakekreving(behandlingType)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingTilbakekrevingIndex
@@ -259,15 +261,16 @@ export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakP
 
 const mapStateToProps = (state) => {
   const behandlingId = getSelectedBehandlingId(state);
+  const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
+    behandlingType,
     saksnummer: getSelectedSaksnummer(state),
-    behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     featureToggles: getFeatureToggles(state),
     hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
-    kodeverk: getAlleKodeverk(state),
+    kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
     allDocuments: getAllDocuments(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],

@@ -53,9 +53,10 @@ export const HistoryIndex = ({
       behandlingVersjon={behandlingVersjon}
       showLoadingIcon
       behandlingNotRequired
-      dataParams={{ saksnummer }}
+      endpointParams={{ saksnummer }}
       keepDataWhenRefetching
-      data={enabledContexts}
+      endpoints={enabledContexts}
+      allowErrors
       render={(props) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex

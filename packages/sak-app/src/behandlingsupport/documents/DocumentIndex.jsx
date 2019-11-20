@@ -46,9 +46,9 @@ export const DocumentIndex = ({
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
     showLoadingIcon
-    data={dokumentData}
+    endpoints={dokumentData}
     behandlingNotRequired
-    dataParams={{ saksnummer: saksNr }}
+    endpointParams={{ saksnummer: saksNr }}
     keepDataWhenRefetching
     render={(dataProps) => (
       <DokumenterSakIndex

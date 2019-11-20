@@ -21,7 +21,7 @@ export const fetchAllFeatureToggles = () => (dispatch) => (
   dispatch(fpsakApi.FEATURE_TOGGLE.makeRestApiRequest()({ toggles: Object.values(featureToggle).map((ft) => ({ navn: ft })) }))
 );
 
-export const fetchAlleKodeverk = (featureToggles) => (dispatch) => {
+export const fetchAlleKodeverk = (featureToggles = {}) => (dispatch) => {
   dispatch(fpsakApi.KODEVERK.makeRestApiRequest()());
   if (featureToggles[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING]) {
     dispatch(fpsakApi.KODEVERK_FPTILBAKE.makeRestApiRequest()())

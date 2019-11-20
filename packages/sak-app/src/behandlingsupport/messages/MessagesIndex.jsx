@@ -149,9 +149,9 @@ export class MessagesIndex extends Component {
         <DataFetcher
           behandlingId={behandlingIdentifier.behandlingId}
           behandlingVersjon={selectedBehandlingVersjon}
-          forceRefreshWhenPropChanged={submitCounter}
+          valueThatWillTriggerRefetchWhenChanged={submitCounter}
           showLoadingIcon
-          data={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
+          endpoints={fpsakApi.HAR_APENT_KONTROLLER_REVURDERING_AP.isEndpointEnabled() ? revurderingData : meldingData}
           render={(props) => (
             <MeldingerSakIndex
               submitCallback={this.submitCallback}

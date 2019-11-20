@@ -156,7 +156,7 @@ export class ApprovalIndex extends Component {
       <DataFetcher
         behandlingId={behandlingIdentifier.behandlingId}
         behandlingVersjon={selectedBehandlingVersjon}
-        data={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
+        endpoints={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
         render={(props) => (
           <>
             <TotrinnskontrollSakIndex
@@ -181,7 +181,7 @@ export class ApprovalIndex extends Component {
               <DataFetcher
                 behandlingId={behandlingIdentifier.behandlingId}
                 behandlingVersjon={selectedBehandlingVersjon}
-                data={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
+                endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
                 render={(modalProps) => (
                   <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}

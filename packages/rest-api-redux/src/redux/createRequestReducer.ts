@@ -97,6 +97,7 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         ...state,
         data: undefined,
         started: false,
+        finished: true,
         error: action.payload,
         pollingMessage: undefined,
       };

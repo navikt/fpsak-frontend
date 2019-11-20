@@ -86,7 +86,7 @@ class BehandlingMenuIndex extends Component {
         behandlingId={behandlingData.id}
         behandlingVersjon={behandlingData.versjon}
         showComponentDuringFetch
-        data={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
+        endpoints={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
         render={(dataProps) => (
           <MenySakIndex
             rettigheter={getMenyRettigheter({

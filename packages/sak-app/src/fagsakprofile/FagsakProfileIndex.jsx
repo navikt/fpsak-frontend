@@ -64,9 +64,10 @@ export class FagsakProfileIndex extends Component {
           behandlingVersjon={behandlingVersjon}
           showLoadingIcon
           behandlingNotRequired
-          dataParams={{ saksnummer }}
+          endpointParams={{ saksnummer }}
           keepDataWhenRefetching
-          data={enabledApis}
+          endpoints={enabledApis}
+          allowErrors
           render={(props) => (
             <FagsakProfilSakIndex
               annenPartLink={props.annenPartBehandling}
@@ -97,7 +98,7 @@ export class FagsakProfileIndex extends Component {
           behandlingId={selectedBehandlingId}
           behandlingVersjon={behandlingVersjon}
           showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
-          data={risikoklassifiseringData}
+          endpoints={risikoklassifiseringData}
           render={(props) => (
             <RisikoklassifiseringIndex
               {...props}

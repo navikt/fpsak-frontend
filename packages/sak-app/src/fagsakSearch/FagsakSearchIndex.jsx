@@ -10,7 +10,7 @@ import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import fpsakApi from '../data/fpsakApi';
-import { getAlleKodeverk } from '../kodeverk/duck';
+import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 
 /**
  * FagsakSearchIndex
@@ -97,7 +97,7 @@ const mapStateToProps = (state) => ({
   fagsaker: fpsakApi.SEARCH_FAGSAK.getRestApiData()(state),
   searchStarted: fpsakApi.SEARCH_FAGSAK.getRestApiStarted()(state),
   searchResultAccessDenied: getSearchFagsakerAccessDenied(state),
-  alleKodeverk: getAlleKodeverk(state),
+  alleKodeverk: getAlleFpSakKodeverk(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
