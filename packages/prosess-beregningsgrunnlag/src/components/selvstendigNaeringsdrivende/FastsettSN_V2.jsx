@@ -59,7 +59,7 @@ const FastsettSN2 = ({
     <VerticalSpacer eightPx />
     <Row>
       <Column xs="12" className={styles.marginTop}>
-        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
+        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
           <TextAreaField
             name={begrunnelseFieldname}
             label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}

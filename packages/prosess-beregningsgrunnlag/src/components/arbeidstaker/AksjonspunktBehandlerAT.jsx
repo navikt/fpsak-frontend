@@ -73,6 +73,7 @@ AksjonspunktBehandlerAT.propTypes = {
 };
 
 AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
+  console.log('AksjonspunktBehandlerAT.transformValues', values, relevanteStatuser, alleAndelerIForstePeriode);
   let inntektPrAndelList = null;
   let frilansInntekt = null;
   if (relevanteStatuser.isArbeidstaker) {

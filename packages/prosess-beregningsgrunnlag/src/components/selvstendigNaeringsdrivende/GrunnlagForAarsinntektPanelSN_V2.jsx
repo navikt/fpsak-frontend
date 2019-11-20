@@ -16,7 +16,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 const createHeaderRow = () => (
   <Row key="SNInntektHeader">
-    <Column xs="8">
+    <Column xs="9">
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
       </EtikettLiten>
@@ -34,12 +34,12 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
     {pgiSnitt !== undefined && !erNyIArbeidslivet && (
       <>
         <Row key="grunnlagAarsinntektSNLine">
-          <Column xs="10">
+          <Column xs="11">
             <hr />
           </Column>
         </Row>
         <Row key="grunnlagAarsinntektSN">
-          <Column xs="8" className={beregningStyles.rightAlignTextInDiv}>
+          <Column xs="9" className={beregningStyles.rightAlignTextInDiv}>
             <FormattedMessage
               id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
             />
@@ -58,7 +58,7 @@ const createInntektRows = (pgiVerdier) => (
   <>
     {pgiVerdier.map((element) => (
       <Row key={element.årstall}>
-        <Column xs="6">
+        <Column xs="7">
           <EtikettLiten>
             {element.årstall}
           </EtikettLiten>

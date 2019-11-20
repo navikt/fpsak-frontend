@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import Panel from 'nav-frontend-paneler';
-import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import createExternalLink from '../redesign/LinkTilEksterntSystem';
 
@@ -23,7 +23,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
-  const startDato = relevanteAndeler[0].beregningsgrunnlagFom;
+  const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   return (
 
     <Panel className={beregningStyles.panel}>
@@ -37,20 +37,21 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         <VerticalSpacer eightPx />
       </div>
       )}
+      {startDato && (
       <Row>
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato" />
             <span className={beregningStyles.semiBoldText}>
-              &nbsp;
-              <DateLabel dateString={startDato} />
+              {dateFormat(startDato)}
             </span>
           </Normaltekst>
         </Column>
       </Row>
+      )}
       <VerticalSpacer eightPx />
       <Row>
-        <Column xs="6" />
+        <Column xs="7" />
         <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
@@ -61,10 +62,10 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
         </Column>
-        <Column xs="2" />
+        <Column xs="1" />
       </Row>
       <Row>
-        <Column xs="6">
+        <Column xs="7">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
           </Normaltekst>
@@ -75,7 +76,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column xs="2">
+        <Column xs="1">
           {createExternalLink('AI', 'AI')}
         </Column>
       </Row>

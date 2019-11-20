@@ -97,10 +97,10 @@ const AksjonspunktBehandler = ({
         />
         )}
 
-        <VerticalSpacer eightPx />
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="12">
-            <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : undefined}>
+            <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
               <TextAreaField
                 name="ATFLVurdering"
                 label={finnATFLVurderingLabel(aksjonspunkter)}

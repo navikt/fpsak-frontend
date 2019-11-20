@@ -12,6 +12,7 @@ import {
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
+import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -33,13 +34,15 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
   <>
     <Row>
       <Column xs="12">
-        <TextAreaField
-          name={begrunnelseFieldname}
-          label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
-          validate={[required, maxLength1500, minLength3, hasValidText]}
-          maxLength={1500}
-          readOnly={readOnly}
-        />
+        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
+          <TextAreaField
+            name={begrunnelseFieldname}
+            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+            validate={[required, maxLength1500, minLength3, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+          />
+        </div>
       </Column>
     </Row>
     <Row>

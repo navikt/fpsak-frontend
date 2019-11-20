@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import { Normaltekst } from 'nav-frontend-typografi';
+
+import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
-  DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+  dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
 import {
   Table, TableColumn, TableRow,
@@ -157,18 +157,18 @@ export const createTableData = createSelector(
 );
 // Konstruerer oppsummeringsraden i tabellen
 const createSummaryTableRow = (listOfBruttoPrPeriode) => (
-  <TableRow key="bruttoPrPeriodeRad">
-    <TableColumn key="bruttoTittel">
+  <tr key="bruttoPrPeriodeRad">
+    <td key="bruttoTittel" colSpan="2">
       <Normaltekst>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode" />
       </Normaltekst>
-    </TableColumn>
+    </td>
     {listOfBruttoPrPeriode.map((element) => (
-      <TableColumn key={element.periode}>
+      <td key={element.periode} colSpan="2">
         <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(element.brutto)}</Normaltekst>
-      </TableColumn>
+      </td>
     ))}
-  </TableRow>
+  </tr>
 );
 
 const createPerioderRow = (relevantePerioder) => (
@@ -177,13 +177,13 @@ const createPerioderRow = (relevantePerioder) => (
     <td />
     {relevantePerioder.map((element) => {
       const fraDato = element.periode.split('_')[0];
-      const fraOgMed = moment(fraDato).format(DDMMYYYY_DATE_FORMAT);
       return (
-        <td key={`periodeittel${fraDato}`}>
-          {fraOgMed}
+        <td key={`periodeittel${fraDato}`} colSpan="2">
+          <Undertekst>{dateFormat(fraDato)}</Undertekst>
         </td>
       );
     })}
+    <td />
   </TableRow>
 
 
@@ -192,11 +192,11 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
   const rows = [];
   rows.push(createPerioderRow(perioder));
   rows.push(
-    <TableRow key="Tabletop">
-      <TableColumn key="ombergenetAarBlank" />
+    <tr key="Tabletop">
+      <td key="ombergenetAarBlank" colSpan="2" />
       {perioder.map((element, index) => (
         <React.Fragment key={`PeriodeWrapper${index + 1}`}>
-          <td key={`Col_Tittel_${element.periode}`}>
+          <td key={`Col_Tittel_${element.periode}`} colSpan="2">
             <Normaltekst>
               <FormattedMessage
                 id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.OmberegnetAar"
@@ -207,27 +207,27 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
 
         </React.Fragment>
       ))}
-    </TableRow>,
+    </tr>,
   );
 
 
   Object.keys(tableData).forEach((val) => {
     const list = tableData[val];
     rows.push(
-      <TableRow key={val}>
+      <tr key={val}>
         {list.map((element) => {
           if (!element.isEditable) {
             return (
-              <TableColumn key={element.tabellInnhold}>
+              <td key={element.tabellInnhold} colSpan="2">
                 <Normaltekst>
                   {element.tabellInnhold}
                 </Normaltekst>
-              </TableColumn>
+              </td>
             );
           }
           return (
             <React.Fragment key={`ElementWrapper${element.inputfieldKey}`}>
-              <td key={`Col-${element.inputfieldKey}`}>
+              <td key={`Col-${element.inputfieldKey}`} colSpan="2">
                 <div className={(isAksjonspunktClosed && readOnly) ? styles.adjustedField : undefined}>
                   <InputField
                     name={element.inputfieldKey}
@@ -241,10 +241,10 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
             </React.Fragment>
           );
         })}
-      </TableRow>,
+      </tr>,
     );
   });
-  rows.push(<TableRow key="sdeparator" className={styles.rowSpacer}><TableColumn /></TableRow>);
+  rows.push(<tr key="sdeparator" className={styles.rowSpacer}><TableColumn /></tr>);
   rows.push(createSummaryTableRow(perioder));
   return rows;
 };
@@ -257,6 +257,9 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   bruttoPrPeriodeList,
 }) => {
   const perioder = bruttoPrPeriodeList.slice(1);
+  const colWidth = Math.floor(8 / perioder.length);
+  const colWidth2 = Math.floor(12 / (perioder.length + 1));
+  console.log(colWidth, colWidth2);
   return (
     <>
       <Table
