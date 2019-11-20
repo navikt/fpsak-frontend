@@ -15,7 +15,10 @@ const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-li
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-const toggles = {
+const togglesFalse = {
+  'fpsak.redesign.beregningsgrunnlag': false,
+};
+const togglesTrue = {
   'fpsak.redesign.beregningsgrunnlag': true,
 };
 const behandling = {
@@ -255,10 +258,6 @@ const lagBG = (perioder, statuser) => {
   return beregningsgrunnlag;
 };
 
-const toggles = {
-  'fpsak.redesign.beregningsgrunnlag': false,
-};
-
 export default {
   title: 'prosess/prosess-beregningsgrunnlag',
   component: BeregningsgrunnlagProsessIndex,
@@ -282,7 +281,7 @@ export const arbeidstakerUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -304,7 +303,7 @@ export const arbeidstakerMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -326,7 +325,7 @@ export const arbeidstakerFrilansMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -348,7 +347,7 @@ export const militær = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -370,7 +369,7 @@ export const arbeidstakerOgAAP = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -396,7 +395,7 @@ export const selvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -424,7 +423,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -449,7 +448,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -475,7 +474,31 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => {
+  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 154985;
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('AT_FL_SN')];
+  const bg = lagBG(perioder, statuser);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
     />
   );
 };

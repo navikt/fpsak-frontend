@@ -259,7 +259,6 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
   const perioder = bruttoPrPeriodeList.slice(1);
   const colWidth = Math.floor(8 / perioder.length);
   const colWidth2 = Math.floor(12 / (perioder.length + 1));
-  console.log(colWidth, colWidth2);
   return (
     <>
       <Table
