@@ -21,13 +21,25 @@ const historyRestApis = {
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
 };
 
+const sortAndTagTilbakekreving = createSelector(
+  [(props) => props.historyFpsak, (props) => props.historyFptilbake],
+  (historyFpsak = [], historyFptilbake = []) => {
+    const historikkFraTilbakekrevingMedMarkor = historyFptilbake.map((ht) => ({
+      ...ht,
+      erTilbakekreving: true,
+    }));
+    return historyFpsak.concat(historikkFraTilbakekrevingMedMarkor).sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt));
+  },
+);
+
+
 /**
  * HistoryIndex
  *
  * Container komponent. Har ansvar for å hente historiken for en fagsak fra state og vise den
  */
 export const HistoryIndex = ({
-  restApis,
+  enabledContexts,
   saksnummer,
   behandlingId,
   behandlingVersjon,
@@ -43,10 +55,8 @@ export const HistoryIndex = ({
       behandlingNotRequired
       dataParams={{ saksnummer }}
       keepDataWhenRefetching
-      data={restApis}
-      render={(props) => Object.values(props)
-        .reduce((acc, value) => acc.concat(value), [])
-        .sort((a, b) => moment(b.opprettetTidspunkt) - moment(a.opprettetTidspunkt))
+      data={enabledContexts}
+      render={(props) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex
             key={innslag.opprettetTidspunkt}
@@ -61,7 +71,7 @@ export const HistoryIndex = ({
 );
 
 HistoryIndex.propTypes = {
-  restApis: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  enabledContexts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksnummer: PropTypes.number.isRequired,
   behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
@@ -78,13 +88,13 @@ HistoryIndex.defaultProps = {
   behandlingVersjon: undefined,
 };
 
-export const getEnabledRestApis = createSelector(
+const getEnabledContexts = createSelector(
   [getEnabledApplicationContexts],
   (enabledApplicationContexts) => enabledApplicationContexts.map((c) => historyRestApis[c]),
 );
 
 const mapStateToProps = (state) => ({
-  restApis: getEnabledRestApis(state),
+  enabledContexts: getEnabledContexts(state),
   saksnummer: getSelectedSaksnummer(state),
   behandlingId: getSelectedBehandlingId(state),
   behandlingVersjon: getBehandlingVersjon(state),

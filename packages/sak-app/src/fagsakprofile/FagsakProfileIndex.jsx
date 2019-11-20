@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 import { Panel } from 'nav-frontend-paneler';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -9,6 +10,8 @@ import { requireProps, DataFetcher } from '@fpsak-frontend/fp-felles';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 
+import { getEnabledApplicationContexts } from '../app/duck';
+import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
 import fpsakApi from '../data/fpsakApi';
 import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from '../fagsak/fagsakSelectors';
@@ -23,7 +26,16 @@ import { getAlleKodeverk } from '../kodeverk/duck';
 import styles from './fagsakProfileIndex.less';
 
 const risikoklassifiseringData = [fpsakApi.RISIKO_AKSJONSPUNKT, fpsakApi.KONTROLLRESULTAT];
-const behandlingerData = [fpsakApi.BEHANDLINGER_FPSAK, fpsakApi.ANNEN_PART_BEHANDLING];
+
+const behandlingerRestApis = {
+  [ApplicationContextPath.FPSAK]: fpsakApi.BEHANDLINGER_FPSAK,
+  [ApplicationContextPath.FPTILBAKE]: fpsakApi.BEHANDLINGER_FPTILBAKE,
+};
+
+export const getEnabledContexts = createSelector(
+  [(props) => props.behandlingerFpsak, (props) => props.behandlingerFptilbake],
+  (behandlingerFpsak = [], behandlingerFptilbake = []) => behandlingerFpsak.concat(behandlingerFptilbake),
+);
 
 const createLink = (link) => `/fagsak/${link.saksnr.verdi}/behandling/${link.behandlingId}/?punkt=uttak`;
 
@@ -43,7 +55,7 @@ export class FagsakProfileIndex extends Component {
   render() {
     const {
       sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlingVersjon, alleKodeverk,
-      noExistingBehandlinger, fagsakStatus, saksnummer,
+      noExistingBehandlinger, fagsakStatus, saksnummer, enabledApis,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -54,7 +66,7 @@ export class FagsakProfileIndex extends Component {
           behandlingNotRequired
           dataParams={{ saksnummer }}
           keepDataWhenRefetching
-          data={behandlingerData}
+          data={enabledApis}
           render={(props) => (
             <FagsakProfilSakIndex
               annenPartLink={props.annenPartBehandling}
@@ -69,7 +81,7 @@ export class FagsakProfileIndex extends Component {
               )}
               renderBehandlingVelger={() => (
                 <BehandlingVelgerSakIndex
-                  behandlinger={props.behandlingerFpsak}
+                  behandlinger={getEnabledContexts(props)}
                   saksnummer={saksnummer}
                   noExistingBehandlinger={noExistingBehandlinger}
                   behandlingId={selectedBehandlingId}
@@ -98,6 +110,7 @@ export class FagsakProfileIndex extends Component {
 }
 
 FagsakProfileIndex.propTypes = {
+  enabledApis: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   saksnummer: PropTypes.number.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
@@ -115,7 +128,13 @@ FagsakProfileIndex.defaultProps = {
   behandlingVersjon: null,
 };
 
+export const getEnabledApis = createSelector(
+  [getEnabledApplicationContexts],
+  (enabledApplicationContexts) => [fpsakApi.ANNEN_PART_BEHANDLING].concat(enabledApplicationContexts.map((c) => behandlingerRestApis[c])),
+);
+
 const mapStateToProps = (state) => ({
+  enabledApis: getEnabledApis(state),
   saksnummer: getSelectedSaksnummer(state),
   sakstype: getFagsakYtelseType(state),
   fagsakStatus: getSelectedFagsakStatus(state),

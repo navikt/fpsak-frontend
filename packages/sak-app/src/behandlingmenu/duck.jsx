@@ -39,9 +39,9 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
   return resetOrDoNothing
     .then(() => dispatch((isTilbakekreving ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params)))
     .then((response) => {
+      const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
       if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
-        const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
-        return dispatch(updateBehandlinger.makeRestApiRequest()(saksnummer))
+        return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
           .then((behandlingerResponse) => {
             const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
             push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
@@ -49,8 +49,8 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
           });
       }
       // NEW_BEHANDLING har returnert behandling
-      push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) }));
-      return Promise.resolve(response.payload);
+      return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
+        .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
     });
 };
 
