@@ -3,11 +3,10 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
 import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
-  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel, updateBehandlingsupportInfo,
+  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel,
 } from './duck';
 
 const middlewares = [thunk];
@@ -17,7 +16,6 @@ describe('Behandlingsupport-reducer', () => {
   let mockAxios;
 
   before(() => {
-    behandlingOrchestrator.disableTilbakekreving();
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
@@ -27,7 +25,6 @@ describe('Behandlingsupport-reducer', () => {
 
   after(() => {
     mockAxios.restore();
-    behandlingOrchestrator.reset();
   });
 
   it('skal markere i state at godkjenningsfanen er valgt', () => {

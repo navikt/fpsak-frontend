@@ -6,8 +6,7 @@ import { ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import { getSearchFagsakerAccessDenied } from './fagsakSearchSelectors';
-import FagsakSearchIndex from './FagsakSearchIndex';
+import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak = {

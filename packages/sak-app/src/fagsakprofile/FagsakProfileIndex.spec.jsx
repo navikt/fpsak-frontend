@@ -3,11 +3,11 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
 
+import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import { DataFetcher } from '@fpsak-frontend/fp-felles';
 
-import FagsakProfile from './components/FagsakProfile';
 import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 describe('<FagsakProfileIndex>', () => {
@@ -25,7 +25,7 @@ describe('<FagsakProfileIndex>', () => {
       alleKodeverk={{}}
     />);
     expect(wrapper.find(DataFetcher).prop('showComponent')).is.false;
-    expect(wrapper.find(FagsakProfile)).has.length(1);
+    expect(wrapper.find(FagsakProfilSakIndex)).has.length(1);
     expect(showAllCallback.getCalls()).has.length(1);
   });
 
