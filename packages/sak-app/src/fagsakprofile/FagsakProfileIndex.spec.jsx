@@ -17,15 +17,20 @@ describe('<FagsakProfileIndex>', () => {
       saksnummer={123}
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll={false}
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
       alleKodeverk={{}}
+      enabledApis={[]}
     />);
-    expect(wrapper.find(DataFetcher).prop('showComponent')).is.false;
-    expect(wrapper.find(FagsakProfilSakIndex)).has.length(1);
+
+    const dataFetchers = wrapper.find(DataFetcher);
+    expect(dataFetchers.at(1).prop('showComponent')).is.false;
+
+    const fagsakProfile = dataFetchers.at(0).renderProp('render')({
+    }).find(FagsakProfilSakIndex);
+    expect(fagsakProfile).has.length(1);
     expect(showAllCallback.getCalls()).has.length(1);
   });
 
@@ -36,12 +41,12 @@ describe('<FagsakProfileIndex>', () => {
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
       alleKodeverk={{}}
+      enabledApis={[]}
     />);
 
     expect(showAllCallback.getCalls()).has.length(0);
@@ -54,14 +59,14 @@ describe('<FagsakProfileIndex>', () => {
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
       alleKodeverk={{}}
+      enabledApis={[]}
     />);
-    expect(wrapper.find(DataFetcher).prop('showComponent')).is.false;
+
     wrapper.unmount();
 
     expect(resetCallback.getCalls()).has.length(1);

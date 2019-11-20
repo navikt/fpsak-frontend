@@ -20,13 +20,13 @@ const locationForBehandling = getLocationWithDefaultBehandlingspunktAndFakta({ .
 
 const getRequiredProps = () => ({
   selectedSaksnummer: fagsak.saksnummer,
-  fetchFagsakInfo: sinon.spy(),
+  fetchFagsak: sinon.spy(),
   resetFagsakContext: sinon.spy(),
   resetFagsakSearch: sinon.spy(),
   removeErrorMessage: sinon.spy(),
   fetchKodeverk: sinon.spy(),
-  fetchFagsakInfoPending: false,
-  allFagsakInfoResolved: false,
+  fetchFagsakPending: false,
+  fagsakResolved: false,
   shouldRedirectToBehandlinger: false,
   disableTilbakekreving: true,
   location,
@@ -35,14 +35,14 @@ const getRequiredProps = () => ({
 describe('<FagsakResolver>', () => {
   it('skal hente fagsak fra server når den mountes', () => {
     const props = getRequiredProps();
-    const { fetchFagsakInfo } = props;
+    const { fetchFagsak } = props;
 
     shallow(<FagsakResolver {...props} />);
 
-    expect(fetchFagsakInfo).to.have.property('callCount', 1);
-    const { args } = fetchFagsakInfo.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(12345);
+    expect(fetchFagsak).to.have.property('callCount', 1);
+    const { args } = fetchFagsak.getCalls()[0];
+    expect(args).to.have.length(2);
+    expect(args[0]).to.eql({ saksnummer: 12345 });
   });
 
   it('skal rendre children når all informasjon er hentet', () => {
@@ -53,7 +53,7 @@ describe('<FagsakResolver>', () => {
 
     expect(wrapper.find(ChildComponent)).to.have.length(0);
 
-    wrapper.setProps({ allFagsakInfoResolved: true, selectedFagsak: fagsak });
+    wrapper.setProps({ fagsakResolved: true, selectedFagsak: fagsak });
 
     expect(wrapper.find(ChildComponent)).to.have.length(1);
   });
@@ -71,18 +71,18 @@ describe('<FagsakResolver>', () => {
     expect(resetFagsakContext).to.have.property('callCount', 1);
   });
 
-  it('skal vise spinner mens fagsak-info lastes', () => {
+  it('skal vise spinner mens fagsak lastes', () => {
     const props = getRequiredProps();
 
     const wrapper = shallow(<FagsakResolver {...props} />);
 
     expect(wrapper.find(LoadingPanel)).to.have.length(0);
 
-    wrapper.setProps({ fetchFagsakInfoPending: true });
+    wrapper.setProps({ fetchFagsakPending: true });
 
     expect(wrapper.find(LoadingPanel)).to.have.length(1);
 
-    wrapper.setProps({ allFagsakInfoResolved: true });
+    wrapper.setProps({ fagsakResolved: true });
 
     expect(wrapper.find(LoadingPanel)).to.have.length(0);
   });
@@ -90,8 +90,8 @@ describe('<FagsakResolver>', () => {
   it('skal omdirigere hvis henting er ferdig, men ikke all påkrevd informasjon er tilgjengelig', () => {
     const props = {
       ...getRequiredProps(),
-      fetchFagsakInfoPending: true,
-      allFagsakInfoResolved: false,
+      fetchFagsakPending: true,
+      fagsakResolved: false,
     };
 
     const wrapper = shallow(<FagsakResolver {...props} />);
@@ -99,7 +99,7 @@ describe('<FagsakResolver>', () => {
     let redirect = wrapper.find(Redirect);
     expect(redirect).to.have.length(0);
 
-    wrapper.setProps({ fetchFagsakInfoPending: false });
+    wrapper.setProps({ fetchFagsakPending: false });
 
     redirect = wrapper.find(Redirect);
     expect(redirect).to.have.length(1);
@@ -109,8 +109,8 @@ describe('<FagsakResolver>', () => {
   it('skal omdirigere hvis all påkrevd informasjon er tilgjengelig, men selectedFagsak ikke finnes', () => {
     const props = {
       ...getRequiredProps(),
-      fetchFagsakInfoPending: true,
-      allFagsakInfoResolved: false,
+      fetchFagsakPending: true,
+      fagsakResolved: false,
       selectedFagsak: undefined,
     };
 
@@ -119,7 +119,7 @@ describe('<FagsakResolver>', () => {
     let redirect = wrapper.find(Redirect);
     expect(redirect).to.have.length(0);
 
-    wrapper.setProps({ allFagsakInfoResolved: true });
+    wrapper.setProps({ fagsakResolved: true });
 
     redirect = wrapper.find(Redirect);
     expect(redirect).to.have.length(1);
@@ -129,7 +129,7 @@ describe('<FagsakResolver>', () => {
   it('skal omdirigere til behandling hvis flagget er satt', () => {
     const props = {
       ...getRequiredProps(),
-      allFagsakInfoResolved: true,
+      fagsakResolved: true,
       shouldRedirectToBehandlinger: false,
       selectedFagsak: fagsak,
       behandlingerIds: [behandlingId, behandlingId],

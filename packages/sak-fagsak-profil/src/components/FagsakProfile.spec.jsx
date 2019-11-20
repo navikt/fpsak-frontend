@@ -1,84 +1,65 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { Systemtittel } from 'nav-frontend-typografi';
+import { NavLink } from 'react-router-dom';
+import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
-
 import { FagsakProfile } from './FagsakProfile';
 
 describe('<FagsakProfile>', () => {
-  const behandling = {
-    id: 1,
-    versjon: 1,
-    type: {
-      kode: 'BT-001',
+  const alleKodeverk = {
+    [kodeverkTyper.FAGSAK_YTELSE]: [{
+      kode: 'ES',
+      navn: 'Engangsstønad',
+      kodeverk: 'FAGSAK_YTELSE',
     },
-    fagsakId: 2,
-    opprettet: '2017-06-07T10:36:29.845',
-    avsluttet: '2017-06-07T10:36:29.845',
-    endret: '2017-06-07T10:36:29.845',
-    aksjonspunkter: [
-      {
-        id: 1,
-        definisjon: {
-          kode: '5012',
-        },
-        status: {
-          kode: 'OPPR',
-        },
-        kanLoses: true,
-      },
     ],
-    status: {
+    [kodeverkTyper.FAGSAK_STATUS]: [{
       kode: 'OPPR',
-    },
-    behandlingPaaVent: false,
-  };
-
-  const getKodeverknavn = ({ kode }) => {
-    if (kode === 'BT-001') {
-      return 'Endringssøknad';
-    }
-    if (kode === 'ES') {
-      return 'Engangsstønad';
-    }
-    if (kode === '5012') {
-      return 'Registrer papirsøknad';
-    }
-    if (kode === 'OPPR') {
-      return 'Opprettet';
-    }
-    return '';
+      navn: 'Opprettet',
+      kodeverk: 'FAGSAK_STATUS',
+    }],
   };
 
   it('skal vise en fagsak med tilhørende informasjon', () => {
     const sakstype = {
       kode: 'ES',
+      kodeverk: 'FAGSAK_YTELSE',
     };
     const status = {
       kode: 'OPPR',
+      kodeverk: 'FAGSAK_STATUS',
     };
     const wrapper = shallowWithIntl(<FagsakProfile
       saksnummer={12345}
       sakstype={sakstype}
       fagsakStatus={status}
-      behandlinger={[]}
-      selectedBehandlingId={behandling.id}
-      showAll
       toggleShowAll={sinon.spy()}
-      noExistingBehandlinger
-      push={sinon.spy()}
-      getKodeverknavn={getKodeverknavn}
-      alleKodeverk={{}}
+      alleKodeverk={alleKodeverk}
+      createLink={() => 'lenke'}
+      renderBehandlingMeny={sinon.spy()}
+      renderBehandlingVelger={sinon.spy()}
+      annenPartLink={{
+        saksnr: {
+          verdi: 9876,
+        },
+        behandlingId: 123,
+      }}
     />);
 
-    const h2 = wrapper.find(Systemtittel);
-    expect(h2).to.have.length(1);
-    expect(h2.childAt(0).text()).is.eql('Engangsstønad');
+    const systemtittel = wrapper.find(Systemtittel);
+    expect(systemtittel).to.have.length(1);
+    expect(systemtittel.childAt(0).text()).is.eql('Engangsstønad');
 
-    const p = wrapper.find('Normaltekst');
-    expect(p).to.have.length(1);
-    expect(p.childAt(0).text()).is.eql('12345 - Opprettet');
+    const normaltekst = wrapper.find(Normaltekst);
+    expect(normaltekst).to.have.length(1);
+    expect(normaltekst.childAt(0).text()).is.eql('12345 - Opprettet');
+
+    const lenke = wrapper.find(NavLink);
+    expect(lenke).to.have.length(1);
+    expect(lenke.prop('to')).is.eql('lenke');
   });
 });

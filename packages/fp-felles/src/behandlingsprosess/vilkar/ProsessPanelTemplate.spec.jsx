@@ -10,7 +10,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import ProsessPanelTemplate from './ProsessPanelTemplate';
 import VilkarResultPanel from './VilkarResultPanel';
 
-describe('<BpPanelTemplate>', () => {
+describe('<ProsessPanelTemplate>', () => {
   it('skal ikke vise lovreferanse når dette ikke finnes', () => {
     const wrapper = shallowWithIntl(
       <ProsessPanelTemplate.WrappedComponent
