@@ -33,7 +33,7 @@ export class DataFetcher extends Component {
   };
 
   static defaultProps = {
-    behandlingNotRequired: true,
+    behandlingNotRequired: false,
     behandlingId: undefined,
     behandlingVersjon: undefined,
     showComponent: true,

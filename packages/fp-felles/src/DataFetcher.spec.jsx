@@ -9,21 +9,20 @@ describe('<DataFetcher>', () => {
   it('skal ikke hente data når en ikke har behandling-id', () => {
     const renderComponent = sinon.spy();
     const fetchKodeverk = sinon.spy();
-    const data = [{
+    const endpoints = [{
       name: 'HENT_KODEVERK',
     }];
 
     shallow(<DataFetcher
       behandlingVersjon={1}
-      showComponent
-      showComponentDuringFetch={false}
       isFetchFinished={false}
-      data={data}
+      endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
 
     expect(fetchKodeverk.called).is.false;
+    console.log('test');
     expect(renderComponent.called).is.false;
   });
 
@@ -40,7 +39,7 @@ describe('<DataFetcher>', () => {
       showComponent={false}
       showComponentDuringFetch={false}
       isFetchFinished={false}
-      data={data}
+      endpoints={data}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -62,7 +61,7 @@ describe('<DataFetcher>', () => {
       showComponent
       showComponentDuringFetch={false}
       isFetchFinished
-      data={data}
+      endpoints={data}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);
@@ -88,7 +87,7 @@ describe('<DataFetcher>', () => {
       showComponent
       showComponentDuringFetch={false}
       isFetchFinished
-      data={data}
+      endpoints={data}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
     />);

@@ -94,13 +94,6 @@ describe('BehandlingMenu-reducer', () => {
     mockAxios
       .onGet(headers.location)
       .reply(200, fagsak);
-
-    mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
-      .replyOnce(200, { dokId: 10 });
-    mockAxios
-      .onGet(fpsakApi.HISTORY_FPSAK.path)
-      .replyOnce(200, { histId: 1 });
     mockAxios
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
@@ -114,7 +107,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewBehandling(push, fagsak.saksnummer, true, isTilbakekreving, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(13);
+        expect(store.getActions()).to.have.length(7);
         const [requestStartedAction, requestStatusStartedAction, requestStatusFinishedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
@@ -139,9 +132,6 @@ describe('BehandlingMenu-reducer', () => {
   });
 
   it('skal ved opprettelse av ny behandling returnere behandling og så velge denne', () => {
-    const fagsak = {
-      id: 1,
-    };
     const behandling = {
       id: 2,
     };
@@ -162,20 +152,8 @@ describe('BehandlingMenu-reducer', () => {
       .onPut(fpsakApi.NEW_BEHANDLING_FPSAK.path)
       .reply(200, behandling);
     mockAxios
-      .onGet(fpsakApi.FETCH_FAGSAK.path)
-      .replyOnce(200, fagsak);
-    mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
-      .replyOnce(200, { dokId: 10 });
-    mockAxios
-      .onGet(fpsakApi.HISTORY_FPSAK.path)
-      .replyOnce(200, { histId: 1 });
-    mockAxios
       .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
       .replyOnce(200, behandlinger);
-    mockAxios
-      .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
-      .replyOnce(200, { url: '' });
 
     const store = mockStore();
 
@@ -185,7 +163,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(createNewBehandling(push, 1, true, isTilbakekreving, params))
       .then(() => {
-        expect(store.getActions()).to.have.length(12);
+        expect(store.getActions()).to.have.length(4);
         const [requestStartedAction, requestFinishedAction] = store.getActions();
 
         expect(requestStartedAction.type).to.contain('fpsak/api/behandlinger STARTED');
@@ -207,17 +185,6 @@ describe('BehandlingMenu-reducer', () => {
   });
 
   it('skal åpne behandling for endringer', () => {
-    const fagsak = {
-      id: 1,
-    };
-    const behandlinger = [{
-      id: 1,
-      opprettet: '2017-04-15',
-    }, {
-      id: 2,
-      opprettet: '2017-08-15',
-    }];
-
     const updater = {
       setBehandlingResult: () => () => () => Promise.resolve(sinon.spy()),
     };
@@ -226,21 +193,6 @@ describe('BehandlingMenu-reducer', () => {
     mockAxios
       .onGet(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
       .replyOnce(200);
-    mockAxios
-      .onGet(fpsakApi.FETCH_FAGSAK.path)
-      .replyOnce(200, fagsak);
-    mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
-      .replyOnce(200, { dokId: 10 });
-    mockAxios
-      .onGet(fpsakApi.HISTORY_FPSAK.path)
-      .replyOnce(200, { histId: 1 });
-    mockAxios
-      .onGet(fpsakApi.BEHANDLINGER_FPSAK.path)
-      .replyOnce(200, behandlinger);
-    mockAxios
-      .onGet(fpsakApi.ANNEN_PART_BEHANDLING.path)
-      .replyOnce(200, { url: '' });
 
     const store = mockStore();
 
@@ -249,7 +201,7 @@ describe('BehandlingMenu-reducer', () => {
 
     return store.dispatch(openBehandlingForChanges(params, id))
       .then(() => {
-        expect(store.getActions()).to.have.length(12);
+        expect(store.getActions()).to.have.length(2);
         const [startOpenForChanges] = store.getActions();
         expect(startOpenForChanges.type).to.contain('@@REST/OPEN_BEHANDLING_FOR_CHANGES');
         expect(startOpenForChanges.payload.params).is.eql({
