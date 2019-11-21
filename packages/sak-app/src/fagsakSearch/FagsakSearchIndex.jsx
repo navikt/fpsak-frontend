@@ -5,7 +5,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createSelector } from 'reselect';
 
-import { pathToFagsak, errorOfType, ErrorTypes } from '@fpsak-frontend/fp-felles';
+import {
+  pathToFagsak, errorOfType, ErrorTypes, getErrorResponseData,
+} from '@fpsak-frontend/fp-felles';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 

@@ -50,9 +50,8 @@ describe('CommonBehandlingResolver', () => {
 
     expect(fetchBehandling.getCalls()).has.length(1);
     const { args } = fetchBehandling.getCalls()[0];
-    expect(args).has.length(2);
+    expect(args).has.length(1);
     expect(args[0]).is.eql(identifier);
-    expect(args[1]).is.eql({ test: 'test' });
 
     expect(wrapper.find(LoadingPanel)).to.have.length(1);
   });

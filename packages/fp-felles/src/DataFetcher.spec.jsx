@@ -22,7 +22,6 @@ describe('<DataFetcher>', () => {
     />);
 
     expect(fetchKodeverk.called).is.false;
-    console.log('test');
     expect(renderComponent.called).is.false;
   });
 

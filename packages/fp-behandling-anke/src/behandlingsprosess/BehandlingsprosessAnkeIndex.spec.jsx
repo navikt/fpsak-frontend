@@ -59,7 +59,7 @@ describe('BehandlingsprosessAnkeIndex', () => {
 
     expect(submit.called).is.true;
     const { args } = submit.getCalls()[0];
-    expect(args).has.length(3);
+    expect(args).has.length(2);
     expect(args[0]).is.eql(apModels);
 
     args[1]();
@@ -87,57 +87,13 @@ describe('BehandlingsprosessAnkeIndex', () => {
 
     expect(submit.called).is.true;
     const { args } = submit.getCalls()[0];
-    expect(args).has.length(3);
+    expect(args).has.length(2);
     expect(args[0]).is.eql(apModels);
 
     args[1]();
 
     expect(wrapper.state().showModalAnkeBehandling).is.true;
     expect(goToDefaultPage.called).is.false;
-  });
-
-  it('skal oppdatere info når behandlingen ikke skal til medunderskriver', () => {
-    const submit = sinon.spy();
-    const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      {...defaultProps}
-    />);
-
-    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
-      .renderProp('render')(previewCallbackDef, submit, goToDefaultPageDef, goToSearchPageDef);
-
-    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
-    const apModels = [{
-      kode: aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL,
-    }];
-
-    panel.prop('submitCallback')(apModels);
-
-    expect(submit.called).is.true;
-    const { args } = submit.getCalls()[0];
-    expect(args).has.length(3);
-    expect(args[2]).is.true;
-  });
-
-  it('skal oppdatere info når behandlingen skal til medunderskriver', () => {
-    const submit = sinon.spy();
-    const wrapper = shallow(<BehandlingsprosessAnkeIndex
-      {...defaultProps}
-    />);
-
-    const innerWrapper = wrapper.find(CommonBehandlingsprosessIndex)
-      .renderProp('render')(previewCallbackDef, submit, goToDefaultPageDef, goToSearchPageDef);
-
-    const panel = innerWrapper.find(BehandlingspunktAnkeInfoPanel);
-    const apModels = [{
-      kode: aksjonspunktCodes.FORESLA_VEDTAK,
-    }];
-
-    panel.prop('submitCallback')(apModels);
-
-    expect(submit.called).is.true;
-    const { args } = submit.getCalls()[0];
-    expect(args).has.length(3);
-    expect(args[2]).is.false;
   });
 
   it('skal mellomlagre anketekst', () => {

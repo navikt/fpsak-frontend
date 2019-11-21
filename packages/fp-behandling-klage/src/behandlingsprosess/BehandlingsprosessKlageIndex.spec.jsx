@@ -59,7 +59,6 @@ describe('BehandlingsprosessKlageIndex', () => {
 
     expect(submit.called).is.true;
     const { args } = submit.getCalls()[0];
-    expect(args).has.length(3);
-    expect(args[2]).is.true;
+    expect(args).has.length(2);
   });
 });
