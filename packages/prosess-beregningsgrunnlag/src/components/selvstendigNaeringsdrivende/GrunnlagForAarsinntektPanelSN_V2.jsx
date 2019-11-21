@@ -40,14 +40,18 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
         </Row>
         <Row key="grunnlagAarsinntektSN">
           <Column xs="9" className={beregningStyles.rightAlignTextInDiv}>
-            <FormattedMessage
-              id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
-            />
+            <Normaltekst>
+              <FormattedMessage
+                id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
+              />
+            </Normaltekst>
           </Column>
           <Column xs="2" className={beregningStyles.rightAlignElement}>
-            <Element>
-              {formatCurrencyNoKr(pgiSnitt)}
-            </Element>
+            <Normaltekst>
+              <Element>
+                {formatCurrencyNoKr(pgiSnitt)}
+              </Element>
+            </Normaltekst>
           </Column>
         </Row>
       </>
