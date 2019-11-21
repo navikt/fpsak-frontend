@@ -2,14 +2,13 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
 import vedtakResultatType from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/vedtakResultatType';
 import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
 
 import withReduxProvider from '../../../decorators/withRedux';
-
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const vedtaksbrev = {
   avsnittsliste: [{
@@ -150,6 +149,19 @@ const beregningsresultat = {
     kode: vedtakResultatType.DELVIS_TILBAKEBETALING,
     kodeverk: 'VEDTAK_RESULTAT_TYPE',
   },
+};
+
+const alleKodeverk = {
+  [kodeverkTyper.VEDTAK_RESULTAT_TYPE]: [{
+    kode: vedtakResultatType.DELVIS_TILBAKEBETALING,
+    navn: 'Delvis tilbakebetaling',
+    kodeverk: 'VEDTAK_RESULTAT_TYPE',
+  }],
+  [kodeverkTyper.AKTSOMHET]: [{
+    kode: aktsomhet.FORSETT,
+    navn: 'Forsett',
+    kodeverk: 'AKTSOMHET',
+  }],
 };
 
 export default {

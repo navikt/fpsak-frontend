@@ -88,7 +88,7 @@ const AktsomhetReduksjonAvBelopFormPanel = ({
                       bredde="S"
                     />
                   </FlexColumn>
-                  <FlexColumn className={styles.suffixText}>%</FlexColumn>
+                  <FlexColumn className={handletUaktsomhetGrad === aktsomhet.GROVT_UAKTSOM ? styles.suffixGrovText : styles.suffixSimpelText}>%</FlexColumn>
                 </FlexRow>
               </>
             )}
