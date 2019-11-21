@@ -44,7 +44,7 @@ const createTidsbegrensetText = (erTidsbegrensetArbeidsforhold) => {
   if (erTidsbegrensetArbeidsforhold) {
     return (<EtikettLiten className={beregningStyles.tekstOverflow}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" /></EtikettLiten>);
   }
-  return null;
+  return ' ';
 };
 const createArbeidsPeriodeText = (arbeidsForhold) => {
   const periodeArr = [];
@@ -68,14 +68,17 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'stillingsProsent') && arbeidsForhold.stillingsProsent) {
     stillingArr.push(arbeidsForhold.stillingsProsent);
   }
-  return stillingArr.join(' ');
+  if (stillingArr.length !== 0) {
+    return stillingArr.join(' ');
+  }
+  return ' ';
 };
 
 const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
   const rows = relevanteAndeler.map((andel, index) => (
-    <>
+    <React.Fragment key={`ArbInntektWrapper${index + 1}`}>
       <Row key={`index${index + 1}`}>
         <Column xs="4" key={`ColLable${index + 1}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
@@ -83,9 +86,7 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
           </Normaltekst>
         </Column>
         <Column xs="3" key={`ColSpc${index + 1}`}>
-          <Normaltekst key={`ColSpcTxt${index + 1}`}>
-            {createTidsbegrensetText(andel.erTidsbegrensetArbeidsforhold)}
-          </Normaltekst>
+          {createTidsbegrensetText(andel.erTidsbegrensetArbeidsforhold)}
         </Column>
         <Column xs="2" key={`ColBrgMnd${index + 1}`} className={beregningStyles.rightAlignElement}>
           <Normaltekst key={`ColBrgMndTxt${index + 1}`}>
@@ -102,18 +103,18 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
         </Column>
       </Row>
       <Row key={`indexD${index + 1}`}>
-        <Column xs="4" key={`ColLable${index + 1}`}>
-          <Normaltekst key={`ColBrgAarTxt${index + 1}`}>
+        <Column xs="4" key={`ColArbSt${index + 1}`}>
+          <Normaltekst>
             {createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}
           </Normaltekst>
         </Column>
-        <Column xs="3" key={`ColSpc${index + 1}`}>
-          <Undertekst key={`ColSpcTxt${index + 1}`}>
+        <Column xs="3" key={`ColArbPer${index + 1}`}>
+          <Undertekst>
             {createArbeidsPeriodeText(andel.arbeidsforhold)}
           </Undertekst>
         </Column>
       </Row>
-    </>
+    </React.Fragment>
   ));
   if (relevanteAndeler.length > 1) {
     const summaryRow = (
@@ -169,7 +170,6 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           {createExternalLink('Aa')}
         </Element>
-
         <Row key="Header">
           <Column xs="4" key="ATempthy1" />
           <Column xs="3" key="ATempthy2" />
@@ -186,7 +186,6 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           <Column xs="1" key="ATempthy3" />
         </Row>
         {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn)}
-
       </Panel>
       <NaturalytelsePanel
         allePerioder={allePerioder}

@@ -6,9 +6,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   dateFormat, formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
 } from '@fpsak-frontend/utils';
-import {
-  Table, TableColumn, TableRow,
-} from '@fpsak-frontend/shared-components';
+
 import {
   behandlingFormValueSelector,
   getKodeverknavnFn,
@@ -157,7 +155,7 @@ export const createTableData = createSelector(
 );
 // Konstruerer oppsummeringsraden i tabellen
 const createSummaryTableRow = (listOfBruttoPrPeriode) => (
-  <tr key="bruttoPrPeriodeRad">
+  <tr id="bruttoPrPeriodeRad">
     <td key="bruttoTittel" colSpan="2">
       <Normaltekst>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode" />
@@ -172,8 +170,7 @@ const createSummaryTableRow = (listOfBruttoPrPeriode) => (
 );
 
 const createPerioderRow = (relevantePerioder) => (
-
-  <TableRow key="PeriodeHeaderRad">
+  <tr key="PeriodeHeaderRad">
     <td />
     {relevantePerioder.map((element) => {
       const fraDato = element.periode.split('_')[0];
@@ -184,7 +181,7 @@ const createPerioderRow = (relevantePerioder) => (
       );
     })}
     <td />
-  </TableRow>
+  </tr>
 
 
 );
@@ -244,7 +241,7 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
       </tr>,
     );
   });
-  rows.push(<tr key="sdeparator" className={styles.rowSpacer}><TableColumn /></tr>);
+  rows.push(<tr key="sdeparator" className={styles.rowSpacer}><td /></tr>);
   rows.push(createSummaryTableRow(perioder));
   return rows;
 };
@@ -258,15 +255,11 @@ export const AksjonspunktBehandlerTidsbegrensetImpl = ({
 }) => {
   const perioder = bruttoPrPeriodeList.slice(1);
   return (
-    <>
-      <Table
-        noHover
-        classNameTable={styles.inntektTableTB}
-      >
+    <table className={styles.inntektTableTB}>
+      <tbody>
         {createRows(tableData.arbeidsforholdPeriodeMap, readOnly, isAksjonspunktClosed, perioder)}
-      </Table>
-
-    </>
+      </tbody>
+    </table>
   );
 };
 

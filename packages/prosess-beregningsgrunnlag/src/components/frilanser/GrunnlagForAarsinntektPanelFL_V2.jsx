@@ -25,7 +25,6 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   return (
-
     <Panel className={beregningStyles.panel}>
       { isKombinasjonsstatus
       && (

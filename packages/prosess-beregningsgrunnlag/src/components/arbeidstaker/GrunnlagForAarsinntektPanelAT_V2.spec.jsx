@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import GrunnlagForAarsinntektPanelAT2, { GrunnlagForAarsinntektPanelATImpl2 as UnwrappedForm } from './GrunnlagForAarsinntektPanelAT_V2';
 
 const mockAndel = (arbeidsgiverNavn, overstyrtPrAar, beregnetPrAar, erTilkommetAndel) => ({
@@ -44,7 +44,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
 
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    expect(rows).to.have.length(5);
+    expect(rows).to.have.length(7);
   });
 
   it('Skal teste at korrekte verdier settes i tabellen med EN arbeidsandel med opphørsdato', () => {
@@ -64,13 +64,21 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    expect(rows).to.have.length(2);
-    andeler.forEach((andel, index) => {
-      const teksterAndel = rows.at(index + 1).find('Normaltekst');
+    expect(rows).to.have.length(3);
+    let rowNr = 1;
+    andeler.forEach((andel) => {
+      const teksterAndel = rows.at(rowNr).find('Normaltekst');
       expect(teksterAndel.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`);
-      expect(teksterAndel.at(1).childAt(0).text()).to.equal(`${andel.arbeidsforhold.startdato} - ${andel.arbeidsforhold.opphoersdato}`);
-      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
-      expect(teksterAndel.at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
+      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      rowNr += 1;
+      // const teksterArbForhold = rows.at(rowNr).find('Normaltekst');
+      const teksterArbForholdTid = rows.at(rowNr).find('Undertekst');
+      // expect(teksterArbForhold.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.startdato} - ${andel.arbeidsforhold.opphoersdato}`);
+
+      expect(teksterArbForholdTid.at(0).childAt(0).text()).to
+        .equal(`${dateFormat(andel.arbeidsforhold.startdato)} - ${dateFormat(andel.arbeidsforhold.opphoersdato)}`);
+      rowNr += 1;
     });
   });
 
@@ -91,18 +99,28 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
 
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-
-
-    andeler.forEach((andel, index) => {
-      const teksterAndel = rows.at(index + 1).find('Normaltekst');
+    let rowNr = 1;
+    andeler.forEach((andel) => {
+      const teksterAndel = rows.at(rowNr).find('Normaltekst');
       expect(teksterAndel.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`);
-      expect(teksterAndel.at(1).childAt(0).text()).to.equal((andel.arbeidsforhold.startdato));
-      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
-      expect(teksterAndel.at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
+      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      rowNr += 1;
+      const teksterArbForholdTid = rows.at(rowNr).find('Undertekst');
+      let expectedDato;
+      const { arbeidsforhold } = andel;
+      if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'opphoersdato') && arbeidsforhold.opphoersdato) {
+        expectedDato = `${dateFormat(arbeidsforhold.startdato)} - ${dateFormat(arbeidsforhold.opphoersdato)}`;
+      } else {
+        expectedDato = `${dateFormat(arbeidsforhold.startdato)} -`;
+      }
+      expect(teksterArbForholdTid.at(0).childAt(0).text()).to.equal(expectedDato);
+      rowNr += 1;
     });
-    const mndSum = rows.at(4).find('Normaltekst');
-    const aarSum = rows.at(4).find('Element');
-    const ledetextSum = rows.at(4).find('FormattedMessage');
+    rowNr += 1;
+    const mndSum = rows.at(rowNr).find('Normaltekst');
+    const aarSum = rows.at(rowNr).find('Element');
+    const ledetextSum = rows.at(rowNr).find('FormattedMessage');
     const beregnetAarsinntekt = andeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
     const beregnetMaanedsinntekt = andeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
     expect(ledetextSum.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt');

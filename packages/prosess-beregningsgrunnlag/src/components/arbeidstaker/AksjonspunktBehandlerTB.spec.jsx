@@ -222,14 +222,13 @@ describe('<AksjonspunktBehandlerTidsbegrenset>', () => {
       isAksjonspunktClosed={false}
       bruttoPrPeriodeList={mockbruttoPerodeList}
     />);
-
     const dataRows = wrapper.findWhere((node) => node.key() === 'arbeidsgiver1');
     const arbeidsgiverNavn = dataRows.first().find('Normaltekst');
     expect(arbeidsgiverNavn.first().childAt(0).text()).to.equal(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1[0].tabellInnhold);
     const editableFields = mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.filter((periode) => periode.isEditable === true);
     expect(editableFields).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length - 1);
-    const sumRows = wrapper.findWhere((node) => node.key() === 'bruttoPrPeriodeRad');
-    const sumCols = sumRows.first().find('TableColumn');
+    const sumRows = wrapper.find('#bruttoPrPeriodeRad');
+    const sumCols = sumRows.first().find('td');
     expect(sumCols).to.have.length(mockTableData.arbeidsforholdPeriodeMap.arbeidsgiver1.length);
     expect(sumCols.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode');
   });
