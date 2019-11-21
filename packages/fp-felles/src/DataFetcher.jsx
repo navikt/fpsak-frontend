@@ -145,7 +145,7 @@ export class DataFetcher extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   const dataMappedByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
     ...acc,
     [format(dataApi.name)]: dataApi.getRestApiData()(state),
@@ -159,11 +159,13 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
+export const createFetchForEachEndpoint = (endpoints) => endpoints.reduce((acc, dataApi) => ({
+  ...acc,
+  [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
+}), {});
+
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
-  ownProps.endpoints.reduce((acc, dataApi) => ({
-    ...acc,
-    [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
-  }), {}), dispatch,
+  createFetchForEachEndpoint(ownProps.endpoints), dispatch,
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataFetcher);
