@@ -6,6 +6,7 @@
   "FodselOgTilretteleggingFaktaForm.BegrunnEndringene": "Begrunn endringene",
   "FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor": "Arbeidsforhold det er søkt tilrettelegging for",
   "FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes": "Minst en tilrettelegging må brukes.",
+  "FodselOgTilretteleggingFaktaForm.DuplikateDatoer": "Flere like datoer.",
 
   "TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
   "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søkeren skal ha tilrettelegging i dette arbeidsforholdet",
