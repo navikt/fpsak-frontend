@@ -91,7 +91,7 @@ export class DataFetcher extends Component {
       showComponent, behandlingNotRequired, behandlingId, behandlingVersjon, endpointParams, keepDataWhenRefetching,
     } = this.props;
 
-    const hasRequiredInput = behandlingNotRequired || (behandlingId && behandlingVersjon);
+    const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
     if (showComponent && hasRequiredInput && !this.hasFetchedLatestData()) {
       this.fetchData(endpointParams, keepDataWhenRefetching);
     }
@@ -101,7 +101,7 @@ export class DataFetcher extends Component {
     const {
       behandlingNotRequired,
     } = this.props;
-    const shouldRefetchOnlyWhenBehandlingChanges = behandlingNotRequired ? prevProps.behandlingId && prevProps.behandlingVersjon : true;
+    const shouldRefetchOnlyWhenBehandlingChanges = behandlingNotRequired ? !!prevProps.behandlingId && !!prevProps.behandlingVersjon : true;
     return shouldRefetchOnlyWhenBehandlingChanges && !this.hasFetchedLatestData();
   }
 
@@ -124,9 +124,9 @@ export class DataFetcher extends Component {
     } = this.props;
     const { nrOfErrors } = this.state;
 
-    const hasRequiredInput = behandlingNotRequired || (behandlingId && behandlingVersjon);
+    const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
     const showWhenFinished = showComponent && hasRequiredInput && isFetchFinished;
-    const hasFailed = nrOfErrors === endpoints.length;
+    const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
 
     if (!hasFailed && (showComponentDuringFetch || showWhenFinished)) {
       const dataProps = endpoints.reduce((acc, d) => {
