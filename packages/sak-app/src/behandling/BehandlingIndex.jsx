@@ -19,7 +19,8 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setSelectedBehandlingId, getSelectedBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
+  setTempBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getTempBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
+  resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
   getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
@@ -49,10 +50,12 @@ export class BehandlingIndex extends Component {
     saksnummer: PropTypes.number.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingType: PropTypes.string.isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     erAktivPapirsoknad: PropTypes.bool,
     resetBehandlingContext: PropTypes.func.isRequired,
+    setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
     allDocuments: PropTypes.arrayOf(PropTypes.shape({
@@ -93,13 +96,18 @@ export class BehandlingIndex extends Component {
 
   constructor(props) {
     super(props);
+    const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
     reduxRestApi.injectPaths(props.behandlingLinks);
+    setBehandlingIdOgVersjon(behandlingVersjon);
   }
 
   componentDidUpdate(prevProps) {
-    const { behandlingId, behandlingLinks } = this.props;
+    const {
+      behandlingId, behandlingLinks, setBehandlingIdOgVersjon, behandlingVersjon,
+    } = this.props;
     if (behandlingId !== prevProps.behandlingId) {
       reduxRestApi.injectPaths(behandlingLinks);
+      setBehandlingIdOgVersjon(behandlingVersjon);
     }
   }
 
@@ -260,11 +268,12 @@ export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakP
 }));
 
 const mapStateToProps = (state) => {
-  const behandlingId = getSelectedBehandlingId(state);
+  const behandlingId = getTempBehandlingId(state);
   const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
     behandlingType,
+    behandlingVersjon: getTempBehandlingVersjon(state),
     saksnummer: getSelectedSaksnummer(state),
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
@@ -282,12 +291,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   oppdaterBehandlingVersjon: oppdaterVersjon,
   resetBehandlingContext: resetBehandlingContextActionCreator,
+  setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
 }, dispatch);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
   parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
-  storeParam: setSelectedBehandlingId,
-  getParamFromStore: getSelectedBehandlingId,
+  storeParam: setTempBehandlingId,
+  getParamFromStore: getTempBehandlingId,
 })(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));
