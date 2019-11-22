@@ -40,6 +40,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
               feilutbetalingBelop={feilutbetalingBelop}
               readOnly={readOnly}
               handletUaktsomhetGrad={handletUaktsomhetGrad}
+              andelSomTilbakekreves={andelSomTilbakekreves}
             />
           </RadioOption>
           <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Nei" />} value={false}>
