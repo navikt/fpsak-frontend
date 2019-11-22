@@ -69,6 +69,10 @@ const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKe
     notificationMapper.addRequestErrorEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
   }
 
+  if (!requestRunner.getPath()) {
+    throw new Error(`Missing URL for endpoint: ${requestRunner.getName()}`);
+  }
+
   return requestRunner.startProcess(params, notificationMapper);
 };
 

@@ -190,8 +190,15 @@ describe('BehandlingMenu-reducer', () => {
     };
     behandlingUpdater.setUpdater(updater);
 
+    reduxRestApi.injectPaths([{
+      href: '/fpsak/api/behandlinger/opne-for-endringer',
+      rel: 'opne-for-endringer',
+      requestPayload: { behandlingId: null, behandlingVersjon: null },
+      type: 'POST',
+    }]);
+
     mockAxios
-      .onGet(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
+      .onPost(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
       .replyOnce(200);
 
     const store = mockStore();
