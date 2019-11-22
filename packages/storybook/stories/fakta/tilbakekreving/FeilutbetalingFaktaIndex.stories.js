@@ -2,6 +2,7 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -17,8 +18,6 @@ const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 const BEHANDLING_RESULTAT_TYPE_KODEVERK = 'BEHANDLING_RESULTAT_TYPE';
 const KONSEKVENS_FOR_YTELSEN_KODEVERK = 'KONSEKVENS_FOR_YTELSEN';
-
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandling = {
   id: 1,
@@ -93,6 +92,33 @@ const feilutbetalingAarsak = {
   }],
 };
 
+const alleKodeverk = {
+  [kodeverkTyper.BEHANDLING_AARSAK]: [{
+    kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
+    navn: 'Feil i lovanvendelse',
+    kodeverk: BEHANDLING_AARSAK_KODEVERK,
+  }],
+  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
+    kode: tilbakekrevingVidereBehandling.TILBAKEKR_INNTREKK,
+    navn: 'Tilbakekreving inntrekk',
+    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
+  }],
+  [kodeverkTyper.BEHANDLING_RESULTAT_TYPE]: [{
+    kode: behandlingResultatType.INNVILGET,
+    navn: 'Innvilget',
+    kodeverk: BEHANDLING_RESULTAT_TYPE_KODEVERK,
+  }],
+  [kodeverkTyper.KONSEKVENS_FOR_YTELSEN]: [{
+    kode: konsekvensForYtelsen.FORELDREPENGER_OPPHØRER,
+    navn: 'Foreldrepenger opphører',
+    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+  }, {
+    kode: konsekvensForYtelsen.ENDRING_I_BEREGNING,
+    navn: 'Endring i beregning',
+    kodeverk: KONSEKVENS_FOR_YTELSEN_KODEVERK,
+  }],
+};
+
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
@@ -103,7 +129,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/fakta-feilutbetaling',
+  title: 'fakta/tilbakekreving/fakta-feilutbetaling',
   component: FeilutbetalingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

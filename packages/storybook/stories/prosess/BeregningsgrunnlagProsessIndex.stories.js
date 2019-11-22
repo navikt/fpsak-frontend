@@ -15,7 +15,12 @@ const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-li
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-
+const togglesFalse = {
+  'fpsak.redesign.beregningsgrunnlag': false,
+};
+const togglesTrue = {
+  'fpsak.redesign.beregningsgrunnlag': true,
+};
 const behandling = {
   id: 1,
   versjon: 1,
@@ -253,10 +258,6 @@ const lagBG = (perioder, statuser) => {
   return beregningsgrunnlag;
 };
 
-const toggles = {
-  'fpsak.redesign.beregningsgrunnlag': false,
-};
-
 export default {
   title: 'prosess/prosess-beregningsgrunnlag',
   component: BeregningsgrunnlagProsessIndex,
@@ -280,7 +281,7 @@ export const arbeidstakerUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -302,7 +303,7 @@ export const arbeidstakerMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -324,7 +325,7 @@ export const arbeidstakerFrilansMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -346,14 +347,36 @@ export const militær = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+
+export const arbeidstakerOgAAP = () => {
+  const andeler = [lagAndel('AT', 110232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
+  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const bg = lagBG(perioder, statuser);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false)];
-  const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, null)];
   const statuser = [lagStatus('SN')];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
@@ -370,9 +393,9 @@ export const selvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -400,7 +423,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -425,7 +448,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -451,7 +474,58 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={toggles}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => {
+  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 154985;
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('AT_FL_SN')];
+  const bg = lagBG(perioder, statuser);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const tidsbegrensetArbeidsforholdMedAvvikRedesign = () => {
+  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
+    lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
+  andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
+  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das');
+  andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
+  const perioder = [lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
+    lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
+    lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
+  const statuser = [lagStatus('AT_FL')];
+  const bg = lagBG(perioder, statuser);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
     />
   );
 };

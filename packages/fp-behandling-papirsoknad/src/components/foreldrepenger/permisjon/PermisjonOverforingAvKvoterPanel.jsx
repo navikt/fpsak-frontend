@@ -2,21 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { FormSection, formValueSelector } from 'redux-form';
+import { formValueSelector, FieldArray } from 'redux-form';
 import { Element } from 'nav-frontend-typografi';
 
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import {
-  ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
-import { CheckboxField, DatepickerField, SelectField } from '@fpsak-frontend/form';
-import { dateAfterOrEqual, hasValidDate, required } from '@fpsak-frontend/utils';
+import { CheckboxField } from '@fpsak-frontend/form';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import foreldreType from '@fpsak-frontend/kodeverk/src/foreldreType';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
 
+import { hasValidPeriodIncludingOtherErrors } from '@fpsak-frontend/utils';
 import { getKodeverk } from '../../../duckPapirsoknad';
 import SoknadData from '../../../SoknadData';
+
+import RenderOverforingAvKvoterFieldArray from './RenderOverforingAvKvoterFieldArray';
 
 import styles from './permisjonPanel.less';
 
@@ -34,8 +36,7 @@ const mapArsaker = (arsaker, sokerErMor, intl) => arsaker.map(({ kode, navn }) =
   ? <option value={kode} key={kode}>{getText(intl, kode, navn)}</option>
   : <option value={kode} key={kode}>{navn}</option>));
 
-const showPeriod = (arsakForOverforingCode) => arsakForOverforingCode === overforingArsak.SYKDOM_ANNEN_FORELDER
-    || arsakForOverforingCode === overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER;
+export const overforingPeriodeFieldArrayName = 'overforingsperioder';
 
 /**
  * PermisjonOverforingAvKvoterPanel
@@ -47,7 +48,6 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
   overtaKvoteReasons,
   soknadData,
   skalOvertaKvote,
-  arsakForOverforingCode,
   readOnly,
   intl,
   visFeilMelding,
@@ -64,46 +64,14 @@ export const PermisjonOverforingAvKvoterPanelImpl = ({
         name="skalOvertaKvote"
         label={intl.formatMessage({ id: 'Registrering.Permisjon.OverforingAvKvote.OvertaKvote' })}
       />
-      { skalOvertaKvote
+      {skalOvertaKvote
         && (
-        <FormSection name="overforingsperiode">
-          <VerticalSpacer space={1} />
-          <FlexContainer wrap>
-            <FlexRow>
-              <FlexColumn>
-                <SelectField
-                  name="overforingArsak"
-                  bredde="xxl"
-                  label={{ id: 'Registrering.Permisjon.OverforingAvKvote.Arsak.AngiArsak' }}
-                  selectValues={selectValues}
-                  validate={[required]}
-                  readOnly={readOnly}
-                />
-              </FlexColumn>
-              {showPeriod(arsakForOverforingCode)
-              && (
-              <ElementWrapper>
-                <FlexColumn>
-                  <DatepickerField
-                    readOnly={readOnly}
-                    name="fomDato"
-                    validate={[required, hasValidDate]}
-                    label={<FormattedMessage id="Registrering.Permisjon.OverforingAvKvote.fomDato" />}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <DatepickerField
-                    readOnly={readOnly}
-                    name="tomDato"
-                    validate={[required, hasValidDate]}
-                    label={<FormattedMessage id="Registrering.Permisjon.OverforingAvKvote.tomDato" />}
-                  />
-                </FlexColumn>
-              </ElementWrapper>
-              )}
-            </FlexRow>
-          </FlexContainer>
-        </FormSection>
+          <FieldArray
+            name="overforingsperioder"
+            component={RenderOverforingAvKvoterFieldArray}
+            selectValues={selectValues}
+            readOnly={readOnly}
+          />
         )}
     </ElementWrapper>
   );
@@ -113,36 +81,23 @@ PermisjonOverforingAvKvoterPanelImpl.propTypes = {
   overtaKvoteReasons: kodeverkPropType.isRequired,
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,
   skalOvertaKvote: PropTypes.bool.isRequired,
-  arsakForOverforingCode: PropTypes.string,
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   visFeilMelding: PropTypes.bool.isRequired,
 };
 
-PermisjonOverforingAvKvoterPanelImpl.defaultProps = {
-  arsakForOverforingCode: undefined,
-};
-
 const mapStateToProps = (state, ownProps) => ({
   overtaKvoteReasons: getKodeverk(kodeverkTyper.OVERFOERING_AARSAK_TYPE)(state),
   skalOvertaKvote: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalOvertaKvote,
-  arsakForOverforingCode: formValueSelector(ownProps.form)(state, ownProps.namePrefix).overforingsperiode.overforingArsak,
 });
 
 const PermisjonOverforingAvKvoterPanel = connect(mapStateToProps)(injectIntl(PermisjonOverforingAvKvoterPanelImpl));
 
 PermisjonOverforingAvKvoterPanel.initialValues = {
   skalOvertaKvote: false,
-  overforingsperiode: {},
+  overforingsperioder: [{}],
 };
 
-PermisjonOverforingAvKvoterPanel.validate = (values) => {
-  const validate = showPeriod(values.overforingsperiode.overforingArsak);
-  if (validate) {
-    const error = dateAfterOrEqual(values.overforingsperiode.fomDato)(values.overforingsperiode.tomDato);
-    return error ? { overforingsperiode: { tomDato: error } } : {};
-  }
-  return {};
-};
+PermisjonOverforingAvKvoterPanel.validate = (values) => hasValidPeriodIncludingOtherErrors(values);
 
 export default PermisjonOverforingAvKvoterPanel;

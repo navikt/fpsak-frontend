@@ -13,7 +13,7 @@ import { CheckboxField } from '@fpsak-frontend/form';
 import SoknadData from '../../../SoknadData';
 import PermisjonUtsettelsePanel, { utsettelsePeriodeFieldArrayName } from './PermisjonUtsettelsePanel';
 import PermisjonGraderingPanel, { graderingPeriodeFieldArrayName } from './PermisjonGraderingPanel';
-import PermisjonOverforingAvKvoterPanel from './PermisjonOverforingAvKvoterPanel';
+import PermisjonOverforingAvKvoterPanel, { overforingPeriodeFieldArrayName } from './PermisjonOverforingAvKvoterPanel';
 import RenderPermisjonPeriodeFieldArray from './RenderPermisjonPeriodeFieldArray';
 import PermisjonOppholdPanel, { oppholdPeriodeFieldArrayName } from './PermisjonOppholdPanel';
 
@@ -125,18 +125,18 @@ const permisjonErrors = (values) => {
 
 const overLappingError = (values) => {
   if (values) {
-    const allOverlappingErrors = [];
     const permisjonPeriodeValues = values.fulltUttak ? values[permisjonPeriodeFieldArrayName] : [];
     const utsettelseperiodeValues = values.skalUtsette ? values[utsettelsePeriodeFieldArrayName] : [];
     const graderingperiodeValues = values.skalGradere ? values[graderingPeriodeFieldArrayName] : [];
     const oppholdPerioderValues = values.skalHaOpphold ? values[oppholdPeriodeFieldArrayName] : [];
-    const overforingsperiodeValue = values.skalOvertaKvote ? values.overforingsperiode : {};
-    const mappedOveforingsPeriodeValue = Object.keys(overforingsperiodeValue).length ? {
-      periodeFom: overforingsperiodeValue.fomDato || null,
-      periodeTom: overforingsperiodeValue.tomDato || null,
-    } : {};
-    const errorArrayRaw = allOverlappingErrors.concat(permisjonPeriodeValues, utsettelseperiodeValues, graderingperiodeValues, oppholdPerioderValues);
-    if (Object.keys(overforingsperiodeValue).length) { errorArrayRaw.push(mappedOveforingsPeriodeValue); }
+    const overforingsperiodeValues = values.skalOvertaKvote ? values[overforingPeriodeFieldArrayName] : [];
+    const errorArrayRaw = [
+      ...permisjonPeriodeValues,
+      ...utsettelseperiodeValues,
+      ...graderingperiodeValues,
+      ...oppholdPerioderValues,
+      ...overforingsperiodeValues,
+    ];
     const errorArray = errorArrayRaw.filter((value) => Object.keys(value).length !== 0);
     if (errorArray.length > 0 && PermisjonPanel.validateXrossPeriodTypes(errorArray)) {
       return true;
