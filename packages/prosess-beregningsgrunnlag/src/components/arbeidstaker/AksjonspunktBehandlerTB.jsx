@@ -153,9 +153,9 @@ export const createTableData = createSelector(
     };
   },
 );
-// Konstruerer oppsummeringsraden i tabellen
+
 const createSummaryTableRow = (listOfBruttoPrPeriode) => (
-  <tr id="bruttoPrPeriodeRad">
+  <tr id="bruttoPrPeriodeRad" key="bruttoPrPeriodeRad">
     <td key="bruttoTittel" colSpan="2">
       <Normaltekst>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerTB.SumPeriode" />
@@ -207,7 +207,6 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
     </tr>,
   );
 
-
   Object.keys(tableData).forEach((val) => {
     const list = tableData[val];
     rows.push(
@@ -241,8 +240,11 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
       </tr>,
     );
   });
+
+
   rows.push(<tr key="sdeparator" className={styles.rowSpacer}><td /></tr>);
   rows.push(createSummaryTableRow(perioder));
+
   return rows;
 };
 
