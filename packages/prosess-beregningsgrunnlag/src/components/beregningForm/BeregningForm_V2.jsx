@@ -26,6 +26,7 @@ import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 // TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
@@ -213,10 +214,9 @@ export const BeregningFormImpl2 = ({
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
-
+  const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   return (
     <form onSubmit={formProps.handleSubmit}>
-
       { gjeldendeAksjonspunkter
         && (
         <ElementWrapper>
@@ -231,10 +231,13 @@ export const BeregningFormImpl2 = ({
           </Undertittel>
         </Column>
         <Column xs="12" md="6">
-          <Undertittel>
-            <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
-          </Undertittel>
+          <div className={beregningStyles.panelRight}>
+            <Undertittel>
+              <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
+            </Undertittel>
+          </div>
         </Column>
+
       </Row>
       <Row>
         <Column xs="12" md="6">
@@ -247,19 +250,19 @@ export const BeregningFormImpl2 = ({
             gjeldendeDekningsgrad={dekningsgrad}
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
-          <Beregningsgrunnlag2
-            relevanteStatuser={relevanteStatuser}
-            readOnly={readOnly}
-            submitCallback={submitCallback}
-            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-            readOnlySubmitButton={readOnlySubmitButton}
-            formName={formName}
-            allePerioder={beregningsgrunnlagPeriode}
-            gjelderBesteberegning={gjelderBesteberegning}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-          />
+            <Beregningsgrunnlag2
+              relevanteStatuser={relevanteStatuser}
+              readOnly={readOnly}
+              submitCallback={submitCallback}
+              gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+              readOnlySubmitButton={readOnlySubmitButton}
+              formName={formName}
+              allePerioder={beregningsgrunnlagPeriode}
+              gjelderBesteberegning={gjelderBesteberegning}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              alleKodeverk={alleKodeverk}
+            />
           )}
         </Column>
         <Column xs="12" md="6">
@@ -269,8 +272,9 @@ export const BeregningFormImpl2 = ({
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
+            harAksjonspunkter={harAksjonspunkter}
           />
-          {gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
+          {harAksjonspunkter
           && (
           <AksjonspunktBehandler
             readOnly={readOnly}

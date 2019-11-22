@@ -53,7 +53,7 @@ export const SkjeringspunktOgStatusPanelImpl2 = ({
   aktivitetStatusList,
   getKodeverknavn,
 }) => (
-  <Panel className={beregningStyles.panel}>
+  <Panel className={beregningStyles.panelLeft}>
 
     {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
 
