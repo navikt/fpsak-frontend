@@ -68,13 +68,11 @@ const AvviksopplysningerAT = ({
       <Row>
         <Column xs="6">
           <Normaltekst className={beregningStyles.semiBoldText}>
-            {!relevanteStatuser.isKombinasjonsstatus && (
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-                )}
+            {!relevanteStatuser.isKombinasjonsstatus && (<FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
+          )}
                 {relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
-                )}
-          </Normaltekst>
+                )}</Normaltekst>
         </Column>
         <Column xs="3" className={beregningStyles.rightAlignElement}>
           <Normaltekst>
@@ -91,6 +89,7 @@ const AvviksopplysningerAT = ({
     )}
   </>
   );
+};
 };
 };
 
