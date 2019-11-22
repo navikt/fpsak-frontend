@@ -4,19 +4,45 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
 const AvviksopplysningerSN = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, harAksjonspunkter,
 }) => {
-  const { erNyIArbeidslivet } = alleAndelerIForstePeriode[0];
+  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const { pgiSnitt, erNyIArbeidslivet } = snAndel;
+  // TODO: Når pullet master backen hent ut om varig endring fra snAndel.næringer
+  const erVarigEndring = undefined;
   if (erNyIArbeidslivet) {
     return (
       <Row>
         <Column xs="12">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.NyIArbeidslivet" />
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet" />
+          </Normaltekst>
+        </Column>
+      </Row>
+    );
+  }
+  if (erVarigEndring) {
+    return (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.VarigEndring" />
+          </Normaltekst>
+        </Column>
+      </Row>
+    );
+  }
+  if (!harAksjonspunkter) {
+    return (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring" />
           </Normaltekst>
         </Column>
       </Row>
@@ -33,7 +59,7 @@ const AvviksopplysningerSN = ({
 
         <Column xs="3" className={beregningStyles.rightAlignElement}>
           <Normaltekst>
-            {beregnetAarsinntekt === undefined ? '-' : formatCurrencyNoKr(beregnetAarsinntekt)}
+            {pgiSnitt === undefined ? '-' : formatCurrencyNoKr(pgiSnitt)}
           </Normaltekst>
         </Column>
         <Column xs="3" />
@@ -85,11 +111,13 @@ AvviksopplysningerSN.propTypes = {
   avvik: PropTypes.number,
   beregnetAarsinntekt: PropTypes.number,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  harAksjonspunkter: PropTypes.bool,
 };
 
 AvviksopplysningerSN.defaultProps = {
   sammenligningsgrunnlag: undefined,
   avvik: undefined,
   beregnetAarsinntekt: undefined,
+  harAksjonspunkter: false,
 };
 export default AvviksopplysningerSN;
