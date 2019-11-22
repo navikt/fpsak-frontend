@@ -8,6 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
 const FETCH_PREFIX = 'FETCH_';
+const CACHE_PREFIX = 'CACHE_';
 
 /**
  * DataFetcher
@@ -19,8 +20,6 @@ export class DataFetcher extends Component {
     render: PropTypes.func.isRequired,
     endpoints: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     isFetchFinished: PropTypes.bool.isRequired,
-    cacheParamsByApi: PropTypes.shape().isRequired,
-    dataMappedByApi: PropTypes.shape().isRequired,
     behandlingNotRequired: PropTypes.bool,
     behandlingId: PropTypes.number,
     behandlingVersjon: PropTypes.number,
@@ -54,8 +53,9 @@ export class DataFetcher extends Component {
   }
 
   hasFetchedLatestData = (endpoint) => {
-    const { behandlingId, behandlingVersjon, cacheParamsByApi } = this.props;
-    const cacheParams = cacheParamsByApi[endpoint.name];
+    const { behandlingId, behandlingVersjon } = this.props;
+    // eslint-disable-next-line react/destructuring-assignment
+    const cacheParams = this.props[CACHE_PREFIX + endpoint.name];
     return cacheParams && cacheParams.behandlingId === behandlingId && cacheParams.behandlingVersjon === behandlingVersjon;
   }
 
@@ -114,7 +114,7 @@ export class DataFetcher extends Component {
   render() {
     const {
       showComponent, showComponentDuringFetch, isFetchFinished, render, endpoints, behandlingId, behandlingVersjon,
-      showLoadingIcon, behandlingNotRequired, dataMappedByApi,
+      showLoadingIcon, behandlingNotRequired,
     } = this.props;
     const { nrOfErrors } = this.state;
 
@@ -127,7 +127,8 @@ export class DataFetcher extends Component {
         const propName = format(d.name);
         return {
           ...acc,
-          [propName]: dataMappedByApi[propName],
+          // eslint-disable-next-line react/destructuring-assignment
+          [propName]: this.props[propName],
         };
       }, {});
       return render(dataProps);
@@ -144,12 +145,12 @@ export const mapStateToProps = (state, ownProps) => {
   }), {});
   const cacheParamsByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
     ...acc,
-    [dataApi.name]: dataApi.getRestApiCacheParams()(state),
+    [CACHE_PREFIX + dataApi.name]: dataApi.getRestApiCacheParams()(state),
   }), {});
 
   return {
-    dataMappedByApi,
-    cacheParamsByApi,
+    ...dataMappedByApi,
+    ...cacheParamsByApi,
     isFetchFinished: ownProps.endpoints.every((dataApi) => dataApi.getRestApiFinished()(state)),
   };
 };
