@@ -19,6 +19,8 @@ describe('<DataFetcher>', () => {
       endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
+      cacheParamsByApi={{ }}
+      dataMappedByApi={{}}
     />);
 
     expect(fetchKodeverk.called).is.false;
@@ -40,6 +42,8 @@ describe('<DataFetcher>', () => {
       endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
+      cacheParamsByApi={{ }}
+      dataMappedByApi={{}}
     />);
 
     expect(fetchKodeverk.called).is.false;
@@ -60,10 +64,10 @@ describe('<DataFetcher>', () => {
       endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
-      cacheParams={{
-        behandlingId: 1,
-        behandlingVersjon: 1,
+      cacheParamsByApi={{
+        HENT_KODEVERK: { behandlingId: 1, behandlingVersjon: 1 },
       }}
+      dataMappedByApi={{}}
     />);
 
     expect(fetchKodeverk.called).is.false;
@@ -83,6 +87,8 @@ describe('<DataFetcher>', () => {
       endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
+      cacheParamsByApi={{ }}
+      dataMappedByApi={{}}
     />);
 
     expect(renderComponent.called).is.true;
@@ -119,6 +125,8 @@ describe('<DataFetcher>', () => {
       FETCH_HENT_KODEVERK={fetchKodeverk}
       keepDataWhenRefetching
       endpointParams={{ saksnummer: 1 }}
+      cacheParamsByApi={{ }}
+      dataMappedByApi={{}}
     />);
 
     expect(fetchKodeverk.called).is.true;
@@ -147,6 +155,8 @@ describe('<DataFetcher>', () => {
       endpoints={endpoints}
       render={renderComponent}
       FETCH_HENT_KODEVERK={fetchKodeverk}
+      cacheParamsByApi={{ }}
+      dataMappedByApi={{}}
     />);
 
     expect(fetchKodeverk.called).is.false;
@@ -181,7 +191,11 @@ describe('<DataFetcher>', () => {
       showComponent
       allowErrors
       showLoadingIcon
-      cacheParams={{ behandlingId: 1, behandlingVersjon: 1 }}
+      cacheParamsByApi={{
+        BEHANDLING_FPSAK: { behandlingId: 1, behandlingVersjon: 1 },
+        BEHANDLING_FPTILBAKE: { behandlingId: 1, behandlingVersjon: 1 },
+      }}
+      dataMappedByApi={{}}
     />);
 
     expect(wrapper.html()).is.eql('<div>test</div>');
@@ -199,9 +213,17 @@ describe('<DataFetcher>', () => {
     };
     const props = mapStateToProps(state, ownProps);
     expect(props).is.eql({
-      behandlingFpsak: { id: 1 },
-      cacheParams: { id: 2 },
       isFetchFinished: true,
+      dataMappedByApi: {
+        behandlingFpsak: {
+          id: 1,
+        },
+      },
+      cacheParamsByApi: {
+        BEHANDLING_FPSAK: {
+          id: 2,
+        },
+      },
     });
   });
 

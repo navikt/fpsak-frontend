@@ -19,6 +19,8 @@ export class DataFetcher extends Component {
     render: PropTypes.func.isRequired,
     endpoints: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     isFetchFinished: PropTypes.bool.isRequired,
+    cacheParamsByApi: PropTypes.shape().isRequired,
+    dataMappedByApi: PropTypes.shape().isRequired,
     behandlingNotRequired: PropTypes.bool,
     behandlingId: PropTypes.number,
     behandlingVersjon: PropTypes.number,
@@ -29,7 +31,6 @@ export class DataFetcher extends Component {
     keepDataWhenRefetching: PropTypes.bool,
     endpointParams: PropTypes.shape(),
     allowErrors: PropTypes.bool,
-    cacheParams: PropTypes.shape(),
   };
 
   static defaultProps = {
@@ -43,7 +44,6 @@ export class DataFetcher extends Component {
     keepDataWhenRefetching: false,
     endpointParams: {},
     allowErrors: false,
-    cacheParams: undefined,
   }
 
   constructor(props) {
@@ -53,8 +53,9 @@ export class DataFetcher extends Component {
     };
   }
 
-  hasFetchedLatestData = () => {
-    const { behandlingId, behandlingVersjon, cacheParams } = this.props;
+  hasFetchedLatestData = (endpoint) => {
+    const { behandlingId, behandlingVersjon, cacheParamsByApi } = this.props;
+    const cacheParams = cacheParamsByApi[endpoint.name];
     return cacheParams && cacheParams.behandlingId === behandlingId && cacheParams.behandlingVersjon === behandlingVersjon;
   }
 
@@ -70,9 +71,9 @@ export class DataFetcher extends Component {
       cacheParams: { behandlingId, behandlingVersjon },
     };
 
-    const requests = endpoints.map((d) => {
+    const requests = endpoints.filter((endpoint) => !this.hasFetchedLatestData(endpoint)).map((endpoint) => {
       // eslint-disable-next-line react/destructuring-assignment
-      const request = this.props[`${FETCH_PREFIX}${d.name}`];
+      const request = this.props[`${FETCH_PREFIX}${endpoint.name}`];
       return () => request(endpointParams, meta);
     });
 
@@ -92,27 +93,20 @@ export class DataFetcher extends Component {
     } = this.props;
 
     const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
-    if (showComponent && hasRequiredInput && !this.hasFetchedLatestData()) {
+    if (showComponent && hasRequiredInput) {
       this.fetchData(endpointParams, keepDataWhenRefetching);
     }
   }
 
-  shouldRefetchData = (prevProps) => {
-    const {
-      behandlingNotRequired,
-    } = this.props;
-    const shouldRefetchOnlyWhenBehandlingChanges = behandlingNotRequired ? !!prevProps.behandlingId && !!prevProps.behandlingVersjon : true;
-    return shouldRefetchOnlyWhenBehandlingChanges && !this.hasFetchedLatestData();
-  }
-
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged,
+      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
     } = this.props;
 
     const forcedRefresh = valueThatWillTriggerRefetchWhenChanged !== prevProps.valueThatWillTriggerRefetchWhenChanged;
+    const shouldRefetchData = behandlingNotRequired ? !!prevProps.behandlingId && !!prevProps.behandlingVersjon : true;
 
-    if (showComponent && (forcedRefresh || this.shouldRefetchData(prevProps))) {
+    if (showComponent && (forcedRefresh || shouldRefetchData)) {
       this.fetchData(endpointParams, keepDataWhenRefetching);
     }
   }
@@ -120,7 +114,7 @@ export class DataFetcher extends Component {
   render() {
     const {
       showComponent, showComponentDuringFetch, isFetchFinished, render, endpoints, behandlingId, behandlingVersjon,
-      showLoadingIcon, behandlingNotRequired,
+      showLoadingIcon, behandlingNotRequired, dataMappedByApi,
     } = this.props;
     const { nrOfErrors } = this.state;
 
@@ -133,8 +127,7 @@ export class DataFetcher extends Component {
         const propName = format(d.name);
         return {
           ...acc,
-          // eslint-disable-next-line react/destructuring-assignment
-          [propName]: this.props[propName],
+          [propName]: dataMappedByApi[propName],
         };
       }, {});
       return render(dataProps);
@@ -149,11 +142,14 @@ export const mapStateToProps = (state, ownProps) => {
     ...acc,
     [format(dataApi.name)]: dataApi.getRestApiData()(state),
   }), {});
-  const cacheParams = ownProps.endpoints.map((dataApi) => dataApi.getRestApiCacheParams()(state));
+  const cacheParamsByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
+    ...acc,
+    [dataApi.name]: dataApi.getRestApiCacheParams()(state),
+  }), {});
 
   return {
-    ...dataMappedByApi,
-    cacheParams: cacheParams.length > 0 ? cacheParams[0] : undefined,
+    dataMappedByApi,
+    cacheParamsByApi,
     isFetchFinished: ownProps.endpoints.every((dataApi) => dataApi.getRestApiFinished()(state)),
   };
 };
