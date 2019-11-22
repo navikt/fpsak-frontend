@@ -23,6 +23,7 @@ export const doNotResetWhitelist = [
   FpsakApiKeys.LANGUAGE_FILE,
   FpsakApiKeys.BEHANDLENDE_ENHETER,
   FpsakApiKeys.KODEVERK,
+  FpsakApiKeys.KODEVERK_FPTILBAKE,
   FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
   FpsakApiKeys.FEATURE_TOGGLE,
 ];
