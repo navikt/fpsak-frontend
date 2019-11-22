@@ -1,5 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
+import { FieldArray } from 'redux-form';
 
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { SelectField } from '@fpsak-frontend/form';
@@ -24,11 +25,10 @@ describe('<PermisjonOverforingAvKvoterPanel>', () => {
       visFeilMelding={false}
     />);
 
-    const selectField = wrapper.find(SelectField);
-    expect(selectField).has.length(1);
+    const fieldArray = wrapper.find(FieldArray);
+    expect(fieldArray).has.length(1);
 
-
-    const values = selectField.prop('selectValues');
+    const values = fieldArray.prop('selectValues');
 
     expect(values).has.length(overforingAvKvoterArsaker.length);
     expect(values[0].props.value).is.eql('INSTITUSJONSOPPHOLD_ANNEN_FORELDER');
