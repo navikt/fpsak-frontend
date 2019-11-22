@@ -116,6 +116,10 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
         {' '}
         <VerticalSpacer fourPx />
       </Row>
+      <Row key={`indexSp${index + 1}`}>
+        {' '}
+        <VerticalSpacer fourPx />
+      </Row>
     </React.Fragment>
   ));
   if (relevanteAndeler.length > 1) {

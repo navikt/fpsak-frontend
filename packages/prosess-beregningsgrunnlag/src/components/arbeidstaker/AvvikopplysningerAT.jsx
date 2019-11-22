@@ -45,53 +45,53 @@ const AvviksopplysningerAT = ({
         <Column xs="3" />
       </Row>
       {sammenligningsgrunnlag && (
-        <>
-          <Row>
-            <Column xs="6">
-              <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
-              </Normaltekst>
-            </Column>
+        <><Row>
+        <Column xs="6">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
+          </Normaltekst>
+        </Column>
 
-            <Column xs="3" className={beregningStyles.rightAlignElement}>
-              <Normaltekst>
-                {formatCurrencyNoKr(sammenligningsgrunnlag)}
-              </Normaltekst>
-            </Column>
-            <Column xs="3" />
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Normaltekst>
+            {formatCurrencyNoKr(sammenligningsgrunnlag)}
+          </Normaltekst>
+        </Column>
+        <Column xs="3" />
 
-          </Row>
-          <Row>
-            <Column xs="9">
-              <hr />
-            </Column>
-          </Row>
-          <Row>
-            <Column xs="6">
-              <Normaltekst className={beregningStyles.semiBoldText}>
-                {!relevanteStatuser.isKombinasjonsstatus && (
+      </Row>
+      <Row>
+        <Column xs="9">
+          <hr />
+        </Column>
+      </Row>
+      <Row>
+        <Column xs="6">
+          <Normaltekst className={beregningStyles.semiBoldText}>
+            {!relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
                 )}
                 {relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
                 )}
-              </Normaltekst>
-            </Column>
-            <Column xs="3" className={beregningStyles.rightAlignElement}>
-              <Normaltekst>
-                {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-              </Normaltekst>
-            </Column>
-            <Column xs="3">
-              <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                {`${avvik}%`}
-              </Normaltekst>
-            </Column>
-          </Row>
-        </>
-      )}
-    </>
+          </Normaltekst>
+        </Column>
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Normaltekst>
+            {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
+          </Normaltekst>
+        </Column>
+        <Column xs="3">
+          <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+            {`${avvik}%`}
+          </Normaltekst>
+        </Column>
+      </Row>
+</>
+    )}
+  </>
   );
+};
 };
 
 AvviksopplysningerAT.propTypes = {

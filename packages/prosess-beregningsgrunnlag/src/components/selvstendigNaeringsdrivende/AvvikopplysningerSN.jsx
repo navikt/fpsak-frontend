@@ -116,6 +116,7 @@ AvviksopplysningerSN.propTypes = {
   erNyArbLivet: PropTypes.bool,
   harAksjonspunkter: PropTypes.bool,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  harAksjonspunkter: PropTypes.bool,
 };
 
 AvviksopplysningerSN.defaultProps = {
