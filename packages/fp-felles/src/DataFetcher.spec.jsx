@@ -163,29 +163,6 @@ describe('<DataFetcher>', () => {
     });
   });
 
-  it('skal vise ingenting kun når alle kall har feilet', async () => {
-    const endpoints = [{
-      name: 'BEHANDLING_FPSAK',
-    }, {
-      name: 'BEHANDLING_FPTILBAKE',
-    }];
-
-    const wrapper = await shallow(<DataFetcher
-      behandlingId={1}
-      behandlingVersjon={1}
-      isFetchFinished
-      endpoints={endpoints}
-      render={() => <div>test</div>}
-      FETCH_BEHANDLING_FPSAK={() => Promise.reject()}
-      FETCH_BEHANDLING_FPTILBAKE={() => Promise.reject()}
-      showComponent
-      allowErrors
-      showLoadingIcon
-    />);
-
-    expect(wrapper.html()).is.null;
-  });
-
   it('skal vise data når kun ett kall feiler', async () => {
     const endpoints = [{
       name: 'BEHANDLING_FPSAK',
@@ -204,6 +181,7 @@ describe('<DataFetcher>', () => {
       showComponent
       allowErrors
       showLoadingIcon
+      cacheParams={{ behandlingId: 1, behandlingVersjon: 1 }}
     />);
 
     expect(wrapper.html()).is.eql('<div>test</div>');

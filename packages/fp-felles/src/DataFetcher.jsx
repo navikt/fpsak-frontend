@@ -99,11 +99,10 @@ export class DataFetcher extends Component {
 
   shouldRefetchData = (prevProps) => {
     const {
-      behandlingId, behandlingVersjon, behandlingNotRequired,
+      behandlingNotRequired,
     } = this.props;
-    const hasBehandlingChanged = behandlingId !== prevProps.behandlingId || behandlingVersjon !== prevProps.behandlingVersjon;
     const shouldRefetchOnlyWhenBehandlingChanges = behandlingNotRequired ? prevProps.behandlingId && prevProps.behandlingVersjon : true;
-    return hasBehandlingChanged && shouldRefetchOnlyWhenBehandlingChanges && !this.hasFetchedLatestData();
+    return shouldRefetchOnlyWhenBehandlingChanges && !this.hasFetchedLatestData();
   }
 
   componentDidUpdate = (prevProps) => {
@@ -141,7 +140,7 @@ export class DataFetcher extends Component {
       return render(dataProps);
     }
 
-    return showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;
+    return showComponent && showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;
   }
 }
 
