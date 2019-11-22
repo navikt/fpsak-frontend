@@ -289,7 +289,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
     approve: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest(),
-    resetApproval: psakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi(),
+    resetApproval: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi(),
     previewMessage,
   }, dispatch),
 });
