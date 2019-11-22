@@ -13,6 +13,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { Column, Row } from 'nav-frontend-grid';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import NaturalytelsePanel from './NaturalytelsePanel';
 import createExternalLink from '../redesign/LinkTilEksterntSystem';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
@@ -60,7 +61,7 @@ const createArbeidsPeriodeText = (arbeidsForhold) => {
 };
 const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   // her må stillingsnavn og stillingsprosent hentest når vi får disse dataene
-  const stillingArr = [];
+  const stillingArr = ['Butikkmedarbeider 60%'];
 
   if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'stillingsNavn') && arbeidsForhold.stillingsNavn) {
     stillingArr.push(arbeidsForhold.stillingsNavn);
@@ -80,12 +81,12 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment key={`ArbInntektWrapper${index + 1}`}>
       <Row key={`index${index + 1}`}>
-        <Column xs="4" key={`ColLable${index + 1}`}>
+        <Column xs="5" key={`ColLable${index + 1}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
             {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
           </Normaltekst>
         </Column>
-        <Column xs="3" key={`ColSpc${index + 1}`}>
+        <Column xs="2" key={`ColSpc${index + 1}`}>
           {createTidsbegrensetText(andel.erTidsbegrensetArbeidsforhold)}
         </Column>
         <Column xs="2" key={`ColBrgMnd${index + 1}`} className={beregningStyles.rightAlignElement}>
@@ -103,7 +104,7 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
         </Column>
       </Row>
       <Row key={`indexD${index + 1}`}>
-        <Column xs="4" key={`ColArbSt${index + 1}`}>
+        <Column xs="5" key={`ColArbSt${index + 1}`}>
           <Normaltekst>
             {createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}
           </Normaltekst>
@@ -113,6 +114,10 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
             {createArbeidsPeriodeText(andel.arbeidsforhold)}
           </Undertekst>
         </Column>
+      </Row>
+      <Row key={`indexSp${index + 1}`}>
+        {' '}
+        <VerticalSpacer fourPx />
       </Row>
     </React.Fragment>
   ));

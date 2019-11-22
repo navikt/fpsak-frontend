@@ -198,7 +198,7 @@ const BeregningsresultatTable2 = ({
   halvGVerdi,
   tableData,
 }) => (
-  <Panel className={beregningStyles.panel}>
+  <Panel className={beregningStyles.panelRight}>
     <Element>
       <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
     </Element>
