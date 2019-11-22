@@ -6,6 +6,7 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import BeregningFP from './components/BeregningFP';
+import BeregningFP2 from './components/BeregningFP_V2';
 
 import messages from '../i18n/nb_NO';
 
@@ -31,7 +32,22 @@ const BeregningsgrunnlagProsessIndex = ({
 }) => {
   const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
   if (skalViseRedesignetGUI) {
-    return null;
+    return (
+      <RawIntlProvider value={intl}>
+        <BeregningFP2
+          behandling={behandling}
+          beregningsgrunnlag={beregningsgrunnlag}
+          aksjonspunkter={aksjonspunkter}
+          submitCallback={submitCallback}
+          readOnly={readOnly}
+          readOnlySubmitButton={readOnlySubmitButton}
+          apCodes={apCodes}
+          isApOpen={isApOpen}
+          vilkar={vilkar}
+          alleKodeverk={alleKodeverk}
+        />
+      </RawIntlProvider>
+    );
   }
   return (
     <RawIntlProvider value={intl}>
