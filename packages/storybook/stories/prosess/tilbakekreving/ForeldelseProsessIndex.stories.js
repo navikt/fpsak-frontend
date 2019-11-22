@@ -2,14 +2,13 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 
 import withReduxProvider from '../../../decorators/withRedux';
-
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const perioderForeldelse = {
   perioder: [{
@@ -30,6 +29,19 @@ const perioderForeldelse = {
     },
   }],
 };
+
+const alleKodeverk = {
+  [tilbakekrevingKodeverkTyper.FORELDELSE_VURDERING]: [{
+    kode: foreldelseVurderingType.IKKE_FORELDET,
+    navn: 'Ikke foreldet',
+    kodeverk: 'FORELDELSE_VURDERING',
+  }, {
+    kode: foreldelseVurderingType.FORELDET,
+    navn: 'Foreldet',
+    kodeverk: 'FORELDELSE_VURDERING',
+  }],
+};
+
 
 const merknaderFraBeslutter = {
   notAccepted: false,
