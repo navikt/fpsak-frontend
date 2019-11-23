@@ -168,15 +168,37 @@ const transformValues = (values, arbeidsforhold) => {
   }]);
 };
 
-const validateForm = (values, arbeidsforhold) => {
+const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
+  ...acc,
+  [dato]: (acc[dato] || 0) + 1,
+}), {});
+
+export const validateForm = (values, arbeidsforhold) => {
   const errors = {};
-  const validerArbeidsforholdList = [];
-  arbeidsforhold.forEach((a) => { validerArbeidsforholdList.push(values[utledFormSectionName(a)]); });
+  const formSectionNames = arbeidsforhold.map((a) => utledFormSectionName(a));
+  const validerArbeidsforholdList = formSectionNames.map((name) => values[name]);
   const ingenTilretteleggingSkalBrukes = validerArbeidsforholdList.every((a) => (a.skalBrukes === false));
   if (ingenTilretteleggingSkalBrukes) {
     // eslint-disable-next-line no-underscore-dangle
     errors._error = 'FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes';
   }
+
+  Object.keys(values)
+    .filter((key) => formSectionNames.includes(key))
+    .forEach((key) => {
+      const td = values[key].tilretteleggingDatoer;
+      const antallMappedByDato = finnAntallDatoerMappedByDato(td.map((d) => d.fom));
+      const harDuplikat = Object.keys(antallMappedByDato).some((k) => antallMappedByDato[k] > 1);
+      if (harDuplikat) {
+        const tilretteleggingDatoerErrors = td
+          .reduce((acc, t) => (antallMappedByDato[t.fom] > 1
+            ? acc.concat({ fom: [{ id: 'FodselOgTilretteleggingFaktaForm.DuplikateDatoer' }] }) : acc.concat({})), []);
+        errors[key] = {
+          tilretteleggingDatoer: tilretteleggingDatoerErrors,
+        };
+      }
+    });
+
   return errors;
 };
 

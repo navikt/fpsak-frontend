@@ -5,7 +5,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
-import { FodselOgTilretteleggingFaktaForm } from './FodselOgTilretteleggingFaktaForm';
+import { FodselOgTilretteleggingFaktaForm, validateForm } from './FodselOgTilretteleggingFaktaForm';
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
@@ -65,6 +65,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     const alertStripe = wrapper.find(AlertStripe);
     expect(alertStripe).has.length(0);
   });
+
   it('skal vise faktaform med fødelsedato', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
       behandlingId={1}
@@ -87,6 +88,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     const alertStripe = wrapper.find(AlertStripe);
     expect(alertStripe).has.length(0);
   });
+
   it('skal vise AlertStripe når formprops.error er satt', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingFaktaForm
       behandlingId={1}
@@ -109,5 +111,82 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
     expect(submitButton).has.length(1);
     const alertStripe = wrapper.find(AlertStripe);
     expect(alertStripe).has.length(1);
+  });
+
+  it('skal validere OK', () => {
+    const values = {
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: true,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+      'BEDRIFT AS910909088fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5': {
+        skalBrukes: true,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    expect(errors).is.eql({});
+  });
+
+  it('skal vise feilmelding når ingen arbeidsforhold skal brukes', () => {
+    const values = {
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: false,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+      'BEDRIFT AS910909088fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5': {
+        skalBrukes: false,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-02',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    // eslint-disable-next-line no-underscore-dangle
+    expect(errors._error).is.eql('FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes');
+  });
+
+  it('skal finne duplikate datoer innenfor et arbeidsforhold', () => {
+    const values = {
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: true,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }, {
+          fom: '2019-01-01',
+        }],
+      },
+      'BEDRIFT AS910909088fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5': {
+        skalBrukes: true,
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }, {
+          fom: '2019-01-04',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    expect(errors).is.eql({
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        tilretteleggingDatoer: [{
+          fom: [{
+            id: 'FodselOgTilretteleggingFaktaForm.DuplikateDatoer',
+          }],
+        }, {
+          fom: [{
+            id: 'FodselOgTilretteleggingFaktaForm.DuplikateDatoer',
+          }],
+        }],
+      },
+    });
   });
 });
