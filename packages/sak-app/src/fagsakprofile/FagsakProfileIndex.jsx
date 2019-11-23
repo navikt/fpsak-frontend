@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Panel } from 'nav-frontend-paneler';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { requireProps, DataFetcher } from '@fpsak-frontend/fp-felles';
+import {
+  requireProps, DataFetcher, getLocationWithDefaultBehandlingspunktAndFakta,
+  pathToBehandling,
+  pathToBehandlinger,
+} from '@fpsak-frontend/fp-felles';
 import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 
@@ -52,10 +57,18 @@ export class FagsakProfileIndex extends Component {
     reset();
   }
 
+  pathToBehandling = (alleBehandlinger) => {
+    const { saksnummer, location } = this.props;
+    if (alleBehandlinger.length === 1) {
+      return getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id) });
+    }
+    return pathToBehandlinger(saksnummer);
+  }
+
   render() {
     const {
       sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlingVersjon, alleKodeverk,
-      noExistingBehandlinger, fagsakStatus, saksnummer, enabledApis,
+      noExistingBehandlinger, fagsakStatus, saksnummer, enabledApis, shouldRedirectToBehandlinger,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -68,31 +81,37 @@ export class FagsakProfileIndex extends Component {
           keepDataWhenRefetching
           endpoints={enabledApis}
           allowErrors
-          render={(props) => (
-            <FagsakProfilSakIndex
-              annenPartLink={props.annenPartBehandling}
-              saksnummer={saksnummer}
-              sakstype={sakstype}
-              fagsakStatus={fagsakStatus}
-              toggleShowAll={toggleShowAll}
-              createLink={createLink}
-              alleKodeverk={alleKodeverk}
-              renderBehandlingMeny={() => (
-                <BehandlingMenuIndex />
-              )}
-              renderBehandlingVelger={() => (
-                <BehandlingVelgerSakIndex
-                  behandlinger={getEnabledContexts(props)}
-                  saksnummer={saksnummer}
-                  noExistingBehandlinger={noExistingBehandlinger}
-                  behandlingId={selectedBehandlingId}
-                  showAll={showAll}
-                  toggleShowAll={toggleShowAll}
-                  alleKodeverk={alleKodeverk}
-                />
-              )}
-            />
-          )}
+          render={(props) => {
+            const alleBehandlinger = getEnabledContexts(props);
+            if (shouldRedirectToBehandlinger) {
+              return <Redirect to={this.pathToBehandling(alleBehandlinger)} />;
+            }
+            return (
+              <FagsakProfilSakIndex
+                annenPartLink={props.annenPartBehandling}
+                saksnummer={saksnummer}
+                sakstype={sakstype}
+                fagsakStatus={fagsakStatus}
+                toggleShowAll={toggleShowAll}
+                createLink={createLink}
+                alleKodeverk={alleKodeverk}
+                renderBehandlingMeny={() => (
+                  <BehandlingMenuIndex />
+                )}
+                renderBehandlingVelger={() => (
+                  <BehandlingVelgerSakIndex
+                    behandlinger={alleBehandlinger}
+                    saksnummer={saksnummer}
+                    noExistingBehandlinger={noExistingBehandlinger}
+                    behandlingId={selectedBehandlingId}
+                    showAll={showAll}
+                    toggleShowAll={toggleShowAll}
+                    alleKodeverk={alleKodeverk}
+                  />
+                )}
+              />
+            );
+          }}
         />
         <DataFetcher
           behandlingId={selectedBehandlingId}
@@ -122,6 +141,8 @@ FagsakProfileIndex.propTypes = {
   reset: PropTypes.func.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   behandlingVersjon: PropTypes.number,
+  shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
+  location: PropTypes.shape().isRequired,
 };
 
 FagsakProfileIndex.defaultProps = {
@@ -151,4 +172,11 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   reset: resetFagsakProfile,
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex));
+const mergeProps = (stateProps, dispatchProps, ownProps) => ({
+  ...ownProps,
+  ...stateProps,
+  ...dispatchProps,
+  shouldRedirectToBehandlinger: ownProps.match.isExact,
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex)));

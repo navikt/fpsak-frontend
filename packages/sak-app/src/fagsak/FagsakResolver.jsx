@@ -6,9 +6,6 @@ import { Redirect, withRouter } from 'react-router-dom';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  getLocationWithDefaultBehandlingspunktAndFakta,
-  pathToBehandling,
-  pathToBehandlinger,
   pathToMissingPage,
   requireProps,
 } from '@fpsak-frontend/fp-felles';
@@ -32,7 +29,6 @@ export class FagsakResolver extends Component {
   constructor(props) {
     super(props);
     this.resolveFagsak = this.resolveFagsak.bind(this);
-    this.pathToBehandling = this.pathToBehandling.bind(this);
   }
 
   componentWillUnmount() {
@@ -63,17 +59,9 @@ export class FagsakResolver extends Component {
     fetchFagsak({ saksnummer: selectedSaksnummer }, { keepData: true });
   }
 
-  pathToBehandling() {
-    const { selectedSaksnummer, behandlingerIds, location } = this.props;
-    if (behandlingerIds.length === 1) {
-      return getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(selectedSaksnummer, behandlingerIds[0]) });
-    }
-    return pathToBehandlinger(selectedSaksnummer);
-  }
-
   render() {
     const {
-      fetchFagsakPending, fagsakResolved, shouldRedirectToBehandlinger, children, selectedFagsak,
+      fetchFagsakPending, fagsakResolved, children, selectedFagsak,
     } = this.props;
     if (!fagsakResolved) {
       if (fetchFagsakPending) {
@@ -84,9 +72,7 @@ export class FagsakResolver extends Component {
     if (!selectedFagsak) {
       return <Redirect to={pathToMissingPage()} />;
     }
-    if (shouldRedirectToBehandlinger) {
-      return <Redirect to={this.pathToBehandling()} />;
-    }
+
     return children;
   }
 }
@@ -96,18 +82,14 @@ FagsakResolver.propTypes = {
   behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
   selectedFagsak: fagsakPropType,
-  behandlingerIds: PropTypes.arrayOf(PropTypes.number),
   fetchFagsak: PropTypes.func.isRequired,
   resetFagsakContext: PropTypes.func.isRequired,
   fetchFagsakPending: PropTypes.bool.isRequired,
   fagsakResolved: PropTypes.bool.isRequired,
-  location: PropTypes.shape().isRequired,
-  shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   children: PropTypes.node,
 };
 
 FagsakResolver.defaultProps = {
-  behandlingerIds: [],
   selectedFagsak: null,
   children: null,
   behandlingId: undefined,
@@ -129,11 +111,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   resetFagsakContext: resetFagsakContextActionCreator,
 }, dispatch);
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => ({
-  ...ownProps,
-  ...stateProps,
-  ...dispatchProps,
-  shouldRedirectToBehandlinger: ownProps.match.isExact,
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(requireProps(['selectedSaksnummer'], <LoadingPanel />)(FagsakResolver)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(requireProps(['selectedSaksnummer'], <LoadingPanel />)(FagsakResolver)));

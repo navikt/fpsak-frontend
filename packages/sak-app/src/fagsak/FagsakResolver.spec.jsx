@@ -5,18 +5,13 @@ import { expect } from 'chai';
 import { Redirect } from 'react-router-dom';
 
 import { dummyFagsak } from '@fpsak-frontend/utils-test/src/data-test-helper';
-import {
-  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, pathToMissingPage,
-} from '@fpsak-frontend/fp-felles';
+import { pathToMissingPage } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import { FagsakResolver } from './FagsakResolver';
 
 const fagsak = dummyFagsak();
-const behandlingId = 67890;
 const location = {};
-const pathToBehandlingerForFagsak = pathToBehandlinger(fagsak.saksnummer);
-const locationForBehandling = getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(fagsak.saksnummer, behandlingId) });
 
 const getRequiredProps = () => ({
   selectedSaksnummer: fagsak.saksnummer,
@@ -124,32 +119,5 @@ describe('<FagsakResolver>', () => {
     redirect = wrapper.find(Redirect);
     expect(redirect).to.have.length(1);
     expect(redirect.at(0).props()).to.have.property('to', pathToMissingPage());
-  });
-
-  it('skal omdirigere til behandling hvis flagget er satt', () => {
-    const props = {
-      ...getRequiredProps(),
-      fagsakResolved: true,
-      shouldRedirectToBehandlinger: false,
-      selectedFagsak: fagsak,
-      behandlingerIds: [behandlingId, behandlingId],
-    };
-
-    const wrapper = shallow(<FagsakResolver {...props} />);
-
-    let redirect = wrapper.find(Redirect);
-    expect(redirect).to.have.length(0);
-
-    wrapper.setProps({ shouldRedirectToBehandlinger: true });
-
-    redirect = wrapper.find(Redirect);
-    expect(redirect).to.have.length(1);
-    expect(redirect.at(0).props()).to.have.property('to').that.eql(pathToBehandlingerForFagsak);
-
-    wrapper.setProps({ behandlingerIds: [behandlingId] });
-
-    redirect = wrapper.find(Redirect);
-    expect(redirect).to.have.length(1);
-    expect(redirect.at(0).props()).to.have.property('to').that.eql(locationForBehandling);
   });
 });
