@@ -46,6 +46,7 @@
   "HistorikkAksjonpunktMapping.SokersStonadGjelderSammeBarn": "Vurder om engangsstønad eller foreldrepenger utbetalt til søker gjelder samme barn",
   "HistorikkAksjonpunktMapping.AnnenForeldersStonadGjelderSammeBarn": "Avklar om engangsstønad eller foreldrepenger utbetalt til annen forelder gjelder samme barn",
   "Historikk.Fodselsdato": "Når ble barnet født?",
+  "Historikk.Vedtak.Fritekstbrev": "Fritekstbrev",
 
   "HistorikkAarsak.AvvDok": "Avventer dokumentasjon",
   "HistorikkAarsak.AvvFodsel": "Avventer fødsel",

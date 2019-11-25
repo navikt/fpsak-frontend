@@ -42,7 +42,7 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
       };
     case actionTypes.DO_NOT_UPDATE_FAGSAK:
       return {
-        ...initialState,
+        ...state,
         shouldUpdateFagsak: false,
       };
     case actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT:

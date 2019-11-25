@@ -12,7 +12,7 @@ const ankeVurderingPropType = PropTypes.shape({
     erFristIkkeOverholdt: PropTypes.bool.isRequired,
     erIkkeSignert: PropTypes.bool.isRequired,
     erSubsidiartRealitetsbehandles: PropTypes.bool.isRequired,
-  }).isRequired,
+  }),
 });
 
 export default ankeVurderingPropType;

@@ -14,7 +14,7 @@ describe('Innsyn-behandling-reducer', () => {
       kodeverk: {},
       fagsak: {},
       allDocuments: [],
-      shouldUpdateFagsak: false,
+      shouldUpdateFagsak: true,
     });
   });
 
