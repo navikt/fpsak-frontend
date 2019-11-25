@@ -74,9 +74,12 @@ export class BehandlingsprosessKlageIndex extends Component {
     const erKlageHjemsendt = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
 
+    if (skalByttTilKlageinstans) {
+      setDoNoUpdateFagsak();
+    }
+
     const afterAksjonspunktSubmit = () => {
       if (skalByttTilKlageinstans) {
-        setDoNoUpdateFagsak();
         this.setShowModalKlageBehandling(true);
       } else if (erKlageHjemsendt) {
         this.goToKlageResultat();

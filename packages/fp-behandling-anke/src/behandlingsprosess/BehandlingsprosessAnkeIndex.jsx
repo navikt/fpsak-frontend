@@ -55,9 +55,12 @@ export class BehandlingsprosessAnkeIndex extends Component {
     const skalFerdigstilles = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
 
+    if (skalTilMedunderskriver || skalFerdigstilles) {
+      setDoNoUpdateFagsak();
+    }
+
     const afterAksjonspunktSubmit = () => {
       if (skalTilMedunderskriver || skalFerdigstilles) {
-        setDoNoUpdateFagsak();
         this.setState((state) => ({ ...state, showModalAnkeBehandling: true }));
       } else {
         this.goToDefaultPage();

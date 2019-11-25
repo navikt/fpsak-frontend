@@ -34,10 +34,13 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
 
   submit = (aksjonspunktModels) => {
     const { setDoNoUpdateFagsak } = this.props;
+    const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+    if (isFatterVedtakAp) {
+      setDoNoUpdateFagsak();
+    }
+
     const afterAksjonspunktSubmit = () => {
-      const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
-        setDoNoUpdateFagsak();
         this.setState((prevState) => ({ ...prevState, showFatterVedtakModal: true }));
       } else {
         this.goToDefaultPage();

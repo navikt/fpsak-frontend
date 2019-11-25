@@ -43,7 +43,7 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
     case actionTypes.DO_NOT_UPDATE_FAGSAK:
       return {
         ...initialState,
-        shouldNotUpdateFagsak: true,
+        shouldUpdateFagsak: false,
       };
     case actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT:
       return {
@@ -98,7 +98,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     kodeverk: {},
     fagsak: {},
     hasShownBehandlingPaVent: false,
-    shouldNotUpdateFagsak: false,
+    shouldUpdateFagsak: true,
     ...additionalInitalState,
   };
 
@@ -115,7 +115,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
       (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined),
     ),
     getFagsakStatus: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus),
-    shouldUpdateFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.shouldNotUpdateFagsak),
+    shouldUpdateFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.shouldUpdateFagsak),
     getFagsakPerson: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson),
     getFagsakYtelseType: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType),
     getKanRevurderingOpprettes: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.kanRevurderingOpprettes),

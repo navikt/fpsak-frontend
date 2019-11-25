@@ -71,13 +71,15 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
     const { setDoNoUpdateFagsak } = this.props;
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
 
+    const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+    if (showModal || submitIsRevurdering) {
+      setDoNoUpdateFagsak();
+    }
+
     const afterAksjonspunktSubmit = () => {
-      const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
       if (showModal) {
-        setDoNoUpdateFagsak();
         this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
-        setDoNoUpdateFagsak();
         this.goToSearchPage();
       } else {
         this.goToDefaultPage();
