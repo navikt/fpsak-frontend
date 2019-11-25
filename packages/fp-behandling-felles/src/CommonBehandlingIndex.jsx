@@ -20,9 +20,11 @@ export class CommonBehandlingIndex extends Component {
   }
 
   componentDidUpdate = (prevProps) => {
-    const { oppdaterBehandlingVersjon, behandlingVersjon } = this.props;
+    const { oppdaterBehandlingVersjon, behandlingVersjon, shouldUpdateFagsak } = this.props;
     if (this.didGetNewBehandlingVersion(prevProps)) {
-      oppdaterBehandlingVersjon(behandlingVersjon);
+      if (shouldUpdateFagsak) {
+        oppdaterBehandlingVersjon(behandlingVersjon);
+      }
       this.cleanUp(prevProps.behandlingId, prevProps.behandlingVersjon);
     }
   }
@@ -106,6 +108,7 @@ CommonBehandlingIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,

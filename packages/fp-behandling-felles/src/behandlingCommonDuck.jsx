@@ -40,6 +40,11 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
         ...initialState,
         ...action.data,
       };
+    case actionTypes.DO_NOT_UPDATE_FAGSAK:
+      return {
+        ...initialState,
+        shouldNotUpdateFagsak: true,
+      };
     case actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT:
       return {
         ...state,
@@ -56,6 +61,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
   const actionType = (name) => `${reducerName}/${name}`;
   const actionTypes = {
     SET_BEHANDLING_INFO: actionType('SET_BEHANDLING_INFO'),
+    DO_NOT_UPDATE_FAGSAK: actionType('DO_NOT_UPDATE_FAGSAK'),
     HAS_SHOWN_BEHANDLING_PA_VENT: actionType('HAS_SHOWN_BEHANDLING_PA_VENT'),
     RESET_FPSAK_BEHANDLING: actionType('RESET_FPSAK_BEHANDLING'),
   };
@@ -76,6 +82,9 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     setHasShownBehandlingPaVent: () => ({
       type: actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT,
     }),
+    setDoNoUpdateFagsak: () => ({
+      type: actionTypes.DO_NOT_UPDATE_FAGSAK,
+    }),
     resetBehandling: getResetBehandling(behandlingApi, resetBehandlingContext),
     fetchBehandling: getFetchBehandling(behandlingApi, updateBehandling),
     updateOnHold: getUpdateOnHold(behandlingApi, updateFagsakAndBehandling),
@@ -89,6 +98,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     kodeverk: {},
     fagsak: {},
     hasShownBehandlingPaVent: false,
+    shouldNotUpdateFagsak: false,
     ...additionalInitalState,
   };
 
@@ -105,6 +115,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
       (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined),
     ),
     getFagsakStatus: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus),
+    shouldUpdateFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.shouldNotUpdateFagsak),
     getFagsakPerson: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson),
     getFagsakYtelseType: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType),
     getKanRevurderingOpprettes: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.kanRevurderingOpprettes),

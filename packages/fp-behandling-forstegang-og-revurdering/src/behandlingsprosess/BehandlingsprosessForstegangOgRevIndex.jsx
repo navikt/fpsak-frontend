@@ -10,7 +10,7 @@ import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-fel
 
 import { BehandlingIdentifier, behandlingspunktCodes, trackRouteParam } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingForstegangOgRev';
+import { getBehandlingIdentifier, getFagsakYtelseType, setDoNoUpdateFagsak as setDoNoUpdateFagsakAC } from '../duckBehandlingForstegangOgRev';
 import statusIconsBeregningsgrunnlag from './statusIconsBeregningsgrunnlag';
 import statusIconsUttak from './statusIconsUttak';
 import IverksetterVedtakStatusModal from './components/IverksetterVedtakStatusModal';
@@ -68,11 +68,13 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
   }
 
   submit = (aksjonspunktModels) => {
+    const { setDoNoUpdateFagsak } = this.props;
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
 
     const afterAksjonspunktSubmit = () => {
       const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
       if (showModal) {
+        setDoNoUpdateFagsak();
         this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
         this.goToSearchPage();
@@ -165,6 +167,7 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  setDoNoUpdateFagsak: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -190,6 +193,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
     fetchFptilbakePreview,
+    setDoNoUpdateFagsak: setDoNoUpdateFagsakAC,
   }, dispatch),
 });
 

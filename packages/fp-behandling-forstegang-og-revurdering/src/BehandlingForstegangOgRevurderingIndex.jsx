@@ -19,6 +19,7 @@ import {
   setBehandlingInfo as setBehandlingInfoFunc,
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   updateOnHold as updateOnHoldFunc,
+  shouldUpdateFagsak as shouldUpdateFagsakSel,
 } from './duckBehandlingForstegangOgRev';
 import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 
@@ -47,6 +48,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
   setHasShownBehandlingPaVent,
   setBehandlingInfo,
   hasSubmittedPaVentForm,
+  shouldUpdateFagsak,
 }) => (
   <CommonBehandlingIndex
     behandlingId={behandlingId}
@@ -69,6 +71,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
     fpBehandlingUpdater={FpSakBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
     oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+    shouldUpdateFagsak={shouldUpdateFagsak}
   >
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessForstegangOgRevIndex />}
@@ -100,6 +103,7 @@ BehandlingForstegangOgRevurderingIndex.propTypes = {
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
@@ -121,6 +125,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
     ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
     isInSync: behandlingSelectors.isBehandlingInSync(state),
+    shouldUpdateFagsak: shouldUpdateFagsakSel(state),
     fagsakInfo,
   });
 };

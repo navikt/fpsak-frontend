@@ -11,6 +11,7 @@ describe('Førstegang-og-revurdering-behandling-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
+      shouldNotUpdateFagsak: false,
     });
   });
 });
