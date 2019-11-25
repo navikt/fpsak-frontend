@@ -64,6 +64,7 @@ export const reduxFormPropsMock = Object.assign(metaMock, {
   resetSection: sinon.spy(),
   clearFields: sinon.spy(),
   clearSubmitErrors: sinon.spy(),
+  submitAsSideEffect: false,
 });
 
 export class MockFields {

@@ -104,7 +104,7 @@ export class PapirsoknadIndex extends Component {
           submitPapirsoknad={this.onSubmit}
           setSoknadData={setData}
           onSubmitUfullstendigsoknad={this.onSubmitUfullstendigsoknad}
-          readOnly={!writeAccess.isEnabled || behandlingPaaVent}
+          readOnly={!writeAccess.employeeHasAccess || behandlingPaaVent}
           soknadData={soknadData}
         />
         <SoknadRegistrertModal isOpen={submitRegistreringSuccess} />

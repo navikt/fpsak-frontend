@@ -133,6 +133,9 @@ ToTrinnsFormImpl.defaultProps = {
 
 const validate = (values) => {
   const errors = {};
+  if (!values.approvals) {
+    return errors;
+  }
 
   errors.approvals = values.approvals.map((kontekst) => ({
     aksjonspunkter: kontekst.aksjonspunkter.map((ap) => {

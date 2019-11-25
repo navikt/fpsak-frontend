@@ -85,7 +85,7 @@
     "redux-form": "^8.2.6",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "vis-timeline": "^6.2.5"
+    "vis-timeline": "^6.2.7"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",

@@ -175,6 +175,9 @@ const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
 
 export const validateForm = (values, arbeidsforhold) => {
   const errors = {};
+  if (Object.keys(values).length === 0) {
+    return errors;
+  }
   const formSectionNames = arbeidsforhold.map((a) => utledFormSectionName(a));
   const validerArbeidsforholdList = formSectionNames.map((name) => values[name]);
   const ingenTilretteleggingSkalBrukes = validerArbeidsforholdList.every((a) => (a.skalBrukes === false));

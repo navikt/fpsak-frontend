@@ -3434,9 +3434,9 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
-"@types/react@^16.9.12":
-  version "16.9.12"
-  resolved "https://registry.npmjs.org/@types/react/-/react-16.9.12.tgz#be562c2701300355af98ed5028e9ccfdfb0bf36e"
+"@types/react@^16.9.13":
+  version "16.9.13"
+  resolved "https://registry.npmjs.org/@types/react/-/react-16.9.13.tgz#b3ea5dd443f4a680599e2abba8cc66f5e1ce0059"
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -15517,9 +15517,9 @@ vis-data@6.1.1:
   dependencies:
     vis-util "^1.1.0"
 
-vis-timeline@^6.2.5:
-  version "6.2.5"
-  resolved "https://registry.npmjs.org/vis-timeline/-/vis-timeline-6.2.5.tgz#8c7189ed4086dd3a900dda77cd5182db4eebabab"
+vis-timeline@^6.2.7:
+  version "6.2.7"
+  resolved "https://registry.npmjs.org/vis-timeline/-/vis-timeline-6.2.7.tgz#83acf064efe9790174d6edd477fa3e00ace29989"
   dependencies:
     "@egjs/hammerjs" "2.0.15"
     emitter-component "1.1.1"

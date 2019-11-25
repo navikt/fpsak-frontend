@@ -401,6 +401,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const validateForm = (values) => {
   const errors = {};
+  if (!values.vilkarsVurdertePerioder) {
+    return errors;
+  }
   const perioder = values.vilkarsVurdertePerioder;
   const antallPerioderMedAksjonspunkt = perioder.reduce((sum, periode) => (!periode.erForeldet ? sum + 1 : sum), 0);
   if (antallPerioderMedAksjonspunkt < 2) {
