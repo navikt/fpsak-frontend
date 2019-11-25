@@ -108,7 +108,7 @@ CommonBehandlingIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  shouldUpdateFagsak: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool,
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
@@ -127,6 +127,7 @@ CommonBehandlingIndex.defaultProps = {
   venteArsakKode: undefined,
   ventearsaker: [],
   behandlingIdentifier: undefined,
+  shouldUpdateFagsak: true,
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
