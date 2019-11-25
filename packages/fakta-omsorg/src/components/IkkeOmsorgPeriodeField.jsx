@@ -131,8 +131,12 @@ const hasValidPeriodOrOnlyStartDate = (values) => {
   return null;
 };
 
-IkkeOmsorgPeriodeField.validate = ({ omsorg, ikkeOmsorgPerioder }) => {
+IkkeOmsorgPeriodeField.validate = (values) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
+  const { omsorg, ikkeOmsorgPerioder } = values;
   if (omsorg === false) {
     errors.ikkeOmsorgPerioder = hasValidPeriodOrOnlyStartDate(ikkeOmsorgPerioder);
   }
