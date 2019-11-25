@@ -27,6 +27,7 @@ describe('BehandlingTilbakekrevingIndex', () => {
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
         showOpenRevurderingModal={false}
+        shouldUpdateFagsak
       />,
     );
 
@@ -52,6 +53,7 @@ describe('BehandlingTilbakekrevingIndex', () => {
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
         showOpenRevurderingModal
+        shouldUpdateFagsak
       />,
     );
     expect(wrapper.find(AdvarselModal)).to.have.length(1);

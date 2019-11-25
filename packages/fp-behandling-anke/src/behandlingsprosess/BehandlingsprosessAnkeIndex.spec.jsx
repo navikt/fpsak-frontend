@@ -26,6 +26,7 @@ describe('BehandlingsprosessAnkeIndex', () => {
     location: {},
     isSelectedBehandlingHenlagt: true,
     hasForeslaVedtakAp: false,
+    setDoNoUpdateFagsak: sinon.spy(),
   };
   const previewCallbackDef = sinon.spy();
   const submitCallbackDef = sinon.spy();

@@ -77,6 +77,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
         setDoNoUpdateFagsak();
         this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
+        setDoNoUpdateFagsak();
         this.goToSearchPage();
       } else {
         this.goToDefaultPage();

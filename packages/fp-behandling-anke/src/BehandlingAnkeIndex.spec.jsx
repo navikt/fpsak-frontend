@@ -24,6 +24,7 @@ describe('BehandlingAnkeIndex', () => {
         setBehandlingInfo={sinon.spy()}
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
+        shouldUpdateFagsak
       />,
     );
     expect(wrapper.find(BehandlingGrid)).to.have.length(1);

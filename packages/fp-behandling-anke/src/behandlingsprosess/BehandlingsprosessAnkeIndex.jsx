@@ -9,7 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-felles';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingAnke';
+import { getBehandlingIdentifier, getFagsakYtelseType, setDoNoUpdateFagsak as setDoNoUpdateFagsakAC } from '../duckBehandlingAnke';
 import behandlingSelectors from '../selectors/ankeBehandlingSelectors';
 import behandlingspunktAnkeSelectors from './selectors/behandlingsprosessAnkeSelectors';
 import {
@@ -49,6 +49,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
   }
 
   submit = (aksjonspunktModels) => {
+    const { setDoNoUpdateFagsak } = this.props;
     const skalTilMedunderskriver = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
@@ -56,6 +57,7 @@ export class BehandlingsprosessAnkeIndex extends Component {
 
     const afterAksjonspunktSubmit = () => {
       if (skalTilMedunderskriver || skalFerdigstilles) {
+        setDoNoUpdateFagsak();
         this.setState((state) => ({ ...state, showModalAnkeBehandling: true }));
       } else {
         this.goToDefaultPage();
@@ -140,6 +142,7 @@ BehandlingsprosessAnkeIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   hasForeslaVedtakAp: PropTypes.bool.isRequired,
+  setDoNoUpdateFagsak: PropTypes.func.isRequired,
 };
 
 const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
@@ -172,6 +175,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     saveAnke,
     resolveAnkeTemp,
+    setDoNoUpdateFagsak: setDoNoUpdateFagsakAC,
   }, dispatch),
 });
 

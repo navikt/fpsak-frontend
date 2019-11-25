@@ -23,6 +23,7 @@ import {
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   updateOnHold as updateOnHoldFunc,
   hasOpenRevurdering,
+  shouldUpdateFagsak as shouldUpdateFagsakSel,
 } from './duckBehandlingTilbakekreving';
 import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 
@@ -52,6 +53,7 @@ export const BehandlingTilbakekrevingIndex = ({
   setBehandlingInfo,
   hasSubmittedPaVentForm,
   showOpenRevurderingModal,
+  shouldUpdateFagsak,
 }) => {
   const [showModal, setShowModal] = useState(showOpenRevurderingModal);
   useEffect(() => {
@@ -80,6 +82,7 @@ export const BehandlingTilbakekrevingIndex = ({
         fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
         behandlingUpdater={behandlingUpdater}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        shouldUpdateFagsak={shouldUpdateFagsak}
       >
         <TilbakekrevingDataResolver>
           <BehandlingGrid
@@ -124,6 +127,7 @@ BehandlingTilbakekrevingIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   showOpenRevurderingModal: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
 };
 
 const showOpenRevurderingModal = createSelector([hasOpenRevurdering, behandlingSelectors.getBehandlingIsOnHold], (
@@ -157,6 +161,7 @@ const mapStateToProps = (state, ownProps) => ({
   isInSync: behandlingSelectors.isBehandlingInSync(state),
   showOpenRevurderingModal: showOpenRevurderingModal(state),
   fagsakInfo: createFagsakInfo(state, ownProps),
+  shouldUpdateFagsak: shouldUpdateFagsakSel(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
