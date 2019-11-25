@@ -72,7 +72,8 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
 
     const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
-    if (showModal || submitIsRevurdering) {
+    const isVedtakAp = aksjonspunktModels.some((a) => a.isVedtakSubmission);
+    if (showModal || submitIsRevurdering || isVedtakAp) {
       setDoNoUpdateFagsak();
     }
 
