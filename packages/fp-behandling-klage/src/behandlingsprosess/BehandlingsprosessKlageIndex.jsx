@@ -73,7 +73,7 @@ export class BehandlingsprosessKlageIndex extends Component {
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
     const erKlageHjemsendt = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
-    const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+    const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
     if (skalByttTilKlageinstans || erFatterVedtak) {
       setDoNoUpdateFagsak();
