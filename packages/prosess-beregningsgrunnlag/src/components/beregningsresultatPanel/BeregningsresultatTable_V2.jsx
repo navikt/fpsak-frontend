@@ -157,12 +157,12 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     rows.push(createRowsRedusert(listOfEntries));
     rows.push(lineRow('redusertLinje'));
   }
+  }
   if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
   } else {
     rows.push(summaryRow(listOfDagsatser, listOfEntries));
   }
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
