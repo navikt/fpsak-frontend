@@ -376,11 +376,12 @@ export const arbeidstakerOgAAP = () => {
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false)];
-  const perioder = [lagPeriodeMedDagsats(andeler, null)];
+  const perioder = [lagPeriodeMedDagsats(andeler, null, true)];
   const statuser = [lagStatus('SN')];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
+  andeler[0].erNyIArbeidslivet = true;
 
   const bg = lagBG(perioder, statuser);
   return (
