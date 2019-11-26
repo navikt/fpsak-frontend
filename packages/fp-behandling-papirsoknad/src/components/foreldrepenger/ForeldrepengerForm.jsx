@@ -40,11 +40,13 @@ const OMSORG_FORM_NAME_PREFIX = 'omsorg';
 export class ForeldrepengerForm extends React.Component {
   shouldComponentUpdate(nextProps) {
     // Dette er gjort for å hindra rerender for testetrykk på alle underformene
-    const notRerenderIfChangedProps = ['blur', 'change', 'dirty', 'error', 'pristine', 'valuesForRegisteredFieldsOnly'];
+    const notRerenderIfChangedProps = ['array', 'blur', 'change', 'clearSubmit', 'destroy', 'dirty', 'initialize', 'error', 'pristine', 'reset',
+      'resetSection', 'touch', 'untouch', 'valuesForRegisteredFieldsOnly', 'autofill', 'clearFields', 'clearSubmitErrors', 'clearAsyncError', 'submit'];
     const changedPropsList = Object.entries(this.props)
       .filter(([key, val]) => nextProps[key] !== val)
       .map(([key]) => key);
-    return changedPropsList.some((changedProp) => !notRerenderIfChangedProps.includes(changedProp));
+    const test = changedPropsList.some((changedProp) => !notRerenderIfChangedProps.includes(changedProp));
+    return test;
   }
 
   render() {

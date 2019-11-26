@@ -107,6 +107,9 @@ const warningsUttakForm = (values) => {
 
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
+  if (!values.perioder) {
+    return errors;
+  }
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.faktaUttakManuellOverstyring) {
     // const originalStartDato = (originalPerioder[0] || []).fom;

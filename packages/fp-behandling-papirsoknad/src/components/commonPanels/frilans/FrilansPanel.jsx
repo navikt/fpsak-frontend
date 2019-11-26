@@ -87,6 +87,9 @@ FrilansPanel.buildInitialValues = () => ({
 });
 
 FrilansPanel.validate = (values) => {
+  if (!values[FRILANS_FORM_NAME_PREFIX]) {
+    return null;
+  }
   const errors = {
     [FRILANS_FORM_NAME_PREFIX]: {
       ...FrilansOppdragForFamiliePanel.validate(values[FRILANS_FORM_NAME_PREFIX]),

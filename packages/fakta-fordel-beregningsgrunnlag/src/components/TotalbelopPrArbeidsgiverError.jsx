@@ -38,17 +38,19 @@ const leggTilGrunnlagvalidering = (totalInntektArbeidsforholdList, andel, identi
 
 export const lagTotalInntektArbeidsforholdList = (values, skalValidereMotBeregningsgunnlagPrAar, skalValidereMellomAAPOgArbeidsgiver, getKodeverknavn) => {
   let totalInntektArbeidsforholdList = [];
-  values.forEach((andel) => {
-    if (skalValidereMotBeregningsgunnlagPrAar(andel) || skalValidereMellomAAPOgArbeidsgiver(andel)) {
-      if (skalValidereMellomAAPOgArbeidsgiver(andel)) {
-        totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, AAP_ARBEIDSGIVER_KEY, getKodeverknavn);
+  if (values) {
+    values.forEach((andel) => {
+      if (skalValidereMotBeregningsgunnlagPrAar(andel) || skalValidereMellomAAPOgArbeidsgiver(andel)) {
+        if (skalValidereMellomAAPOgArbeidsgiver(andel)) {
+          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, AAP_ARBEIDSGIVER_KEY, getKodeverknavn);
+        }
+        if (!andel.nyttArbeidsforhold) {
+          const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
+          totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, navn, getKodeverknavn);
+        }
       }
-      if (!andel.nyttArbeidsforhold) {
-        const navn = createVisningsnavnForAktivitet(andel, getKodeverknavn);
-        totalInntektArbeidsforholdList = leggTilGrunnlagvalidering(totalInntektArbeidsforholdList, andel, navn, getKodeverknavn);
-      }
-    }
-  });
+    });
+  }
   return totalInntektArbeidsforholdList;
 };
 

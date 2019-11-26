@@ -124,7 +124,7 @@ VirksomhetIdentifikasjonPanel.defaultProps = {
 
 VirksomhetIdentifikasjonPanel.validate = (values) => {
   const errors = {};
-  if (values.fom && values.tom) {
+  if (values && values.fom && values.tom) {
     errors.fom = validPeriodeFomTom(values.fom, values.tom);
   }
   return errors;

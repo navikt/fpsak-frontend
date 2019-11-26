@@ -148,6 +148,9 @@ const overLappingError = (values) => {
 
 PermisjonPanel.validate = (values) => {
   let errors = {};
+  if (!values.tidsromPermisjon) {
+    return errors;
+  }
   errors[TIDSROM_PERMISJON_FORM_NAME_PREFIX] = {};
   const permisjonsError = !(values.tidsromPermisjon.skalUtsette
     || values.tidsromPermisjon.skalGradere

@@ -83,6 +83,9 @@ export const RenderInntektsgivendeArbeidAmbassadeFieldArray = ({
 
 
 RenderInntektsgivendeArbeidAmbassadeFieldArray.validate = (values) => {
+  if (!values) {
+    return null;
+  }
   const arrayErrors = values.map(({ arbeidsgiver, periodeFom, periodeTom }) => {
     const periodeFomDate = moment(periodeFom, ISO_DATE_FORMAT);
     const periodeTomDate = moment(periodeTom, ISO_DATE_FORMAT);

@@ -245,6 +245,9 @@ export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforhold
 
 
 export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+  if (!values) {
+    return null;
+  }
   const skalValidereMellomAAPOgArbeidsgiver = (andel) => erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver(andel, values);
   const totalInntektPrArbeidsforhold = lagTotalInntektArbeidsforholdList(values, skalValidereMotBeregningsgrunnlagPrAar,
     skalValidereMellomAAPOgArbeidsgiver, getKodeverknavn);

@@ -260,8 +260,12 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   };
 };
 
-const validateForm = ({ opptjeningFom, opptjeningTom }, props) => {
+const validateForm = (values, props) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
+  const { opptjeningFom, opptjeningTom } = values;
   // TODO (TOR) Denne valideringa bør ligga i PeriodpickerField
   errors.opptjeningFom = required(opptjeningFom) || hasValidPeriod(opptjeningFom, opptjeningTom);
   errors.opptjeningTom = required(opptjeningTom) || hasValidPeriod(opptjeningFom, opptjeningTom);

@@ -283,6 +283,9 @@ const mapDispatchToProps = (dispatch) => ({
 
 const validate = (values, sarligGrunnTyper, data) => {
   let errors = {};
+  if (!values) {
+    return errors;
+  }
   const vilkarResultatInfo = values[values.valgtVilkarResultatType];
   if (vilkarResultatInfo && vilkarResultatInfo.handletUaktsomhetGrad && vilkarResultatInfo.handletUaktsomhetGrad !== Aktsomhet.FORSETT) {
     const aktsomhetInfo = vilkarResultatInfo[vilkarResultatInfo.handletUaktsomhetGrad];

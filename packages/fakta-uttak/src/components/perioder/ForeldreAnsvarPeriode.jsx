@@ -169,7 +169,7 @@ ForeldreAnsvarPeriode.defaultProps = {
 const validateForeldreAnsvarForm = (values) => {
   const errors = {};
   errors.dokumentertePerioder = [];
-  if (values.dokumentertePerioder) {
+  if (values && values.dokumentertePerioder) {
     values.dokumentertePerioder.forEach((periode, index) => {
       const invalid = required(periode.fom) || hasValidPeriod(periode.fom, periode.tom);
       if (invalid) {

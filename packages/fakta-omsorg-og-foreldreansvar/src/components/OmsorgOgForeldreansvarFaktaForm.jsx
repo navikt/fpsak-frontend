@@ -191,8 +191,12 @@ OmsorgOgForeldreansvarFaktaForm.buildInitialValues = (soknad, familiehendelse, p
   ...RettighetFaktaPanel.buildInitialValues(soknad, innvilgetRelatertTilgrensendeYtelserForAnnenForelder, getKodeverknavn),
 });
 
-OmsorgOgForeldreansvarFaktaForm.validate = ({ originalAntallBarn, antallBarn }) => {
+OmsorgOgForeldreansvarFaktaForm.validate = (values) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
+  const { originalAntallBarn, antallBarn } = values;
   if (antallBarn < 1 || antallBarn > originalAntallBarn) {
     errors.antallBarn = ([{ id: 'OmsorgOgForeldreansvarFaktaForm.AntallBarnValidation' }]);
   }

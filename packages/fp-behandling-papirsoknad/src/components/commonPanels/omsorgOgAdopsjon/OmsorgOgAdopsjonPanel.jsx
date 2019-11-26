@@ -242,8 +242,12 @@ const validateFodselsdatoer = (foedselsDato, otherFodselsdato) => {
   return undefined;
 };
 
-OmsorgOgAdopsjonPanel.validate = ({ omsorgsovertakelsesdato, antallBarn, foedselsDato }, rettigheter, otherFodselsdato) => {
+OmsorgOgAdopsjonPanel.validate = (values, rettigheter, otherFodselsdato) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
+  const { omsorgsovertakelsesdato, antallBarn, foedselsDato } = values;
 
   const omsorgsovertakelsesdatoError = validateOmsorgsovertakelsesdato(omsorgsovertakelsesdato, rettigheter);
   if (omsorgsovertakelsesdatoError) {
