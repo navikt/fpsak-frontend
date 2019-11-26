@@ -9,13 +9,13 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 
 const AvviksopplysningerSN = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, harAksjonspunkter,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, erNyArbLivet, harAksjonspunkter,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  const { pgiSnitt, erNyIArbeidslivet } = snAndel;
+  const { pgiSnitt } = snAndel;
   // TODO: Når pullet master backen hent ut om varig endring fra snAndel.næringer
   const erVarigEndring = undefined;
-  if (erNyIArbeidslivet) {
+  if (erNyArbLivet) {
     return (
       <Row>
         <Column xs="12">
@@ -110,8 +110,9 @@ AvviksopplysningerSN.propTypes = {
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
   beregnetAarsinntekt: PropTypes.number,
-  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  erNyArbLivet: PropTypes.bool,
   harAksjonspunkter: PropTypes.bool,
+  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AvviksopplysningerSN.defaultProps = {
@@ -119,5 +120,6 @@ AvviksopplysningerSN.defaultProps = {
   avvik: undefined,
   beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
+  erNyArbLivet: undefined,
 };
 export default AvviksopplysningerSN;

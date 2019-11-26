@@ -53,6 +53,7 @@ const AksjonspunktBehandler = ({
   alleKodeverk,
   relevanteStatuser,
   tidsBegrensetInntekt,
+  erNyArbLivet,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
@@ -136,7 +137,12 @@ const AksjonspunktBehandler = ({
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
+              {erNyArbLivet && (
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet" />
+              )}
+              {!erNyArbLivet && (
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
+              )}
             </Normaltekst>
           </Column>
         </Row>
@@ -148,6 +154,7 @@ const AksjonspunktBehandler = ({
           aksjonspunkter={aksjonspunkter}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          erNyArbLivet={erNyArbLivet}
         />
         <VerticalSpacer sixteenPx />
         <Row>
@@ -180,9 +187,11 @@ AksjonspunktBehandler.propTypes = {
   tidsBegrensetInntekt: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
+  erNyArbLivet: PropTypes.bool,
 };
 
 AksjonspunktBehandler.defaultProps = {
   allePerioder: undefined,
+  erNyArbLivet: undefined,
 };
 export default AksjonspunktBehandler;

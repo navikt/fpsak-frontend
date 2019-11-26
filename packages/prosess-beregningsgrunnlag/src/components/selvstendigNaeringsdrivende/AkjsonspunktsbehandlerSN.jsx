@@ -22,6 +22,7 @@ const AksjonspunktBehandlerSN = ({
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
+  erNyArbLivet,
 }) => (
   <>
     { skalFastsetteSN(aksjonspunkter)
@@ -31,6 +32,7 @@ const AksjonspunktBehandlerSN = ({
           readOnly={readOnly}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          erNyArbLivet={erNyArbLivet}
         />
       )}
   </>
@@ -40,6 +42,10 @@ AksjonspunktBehandlerSN.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
+  erNyArbLivet: PropTypes.bool,
+};
+AksjonspunktBehandlerSN.defaultProps = {
+  erNyArbLivet: false,
 };
 
 export default AksjonspunktBehandlerSN;

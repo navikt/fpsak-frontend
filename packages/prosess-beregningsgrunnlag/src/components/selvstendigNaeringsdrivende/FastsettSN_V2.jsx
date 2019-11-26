@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
@@ -35,6 +35,7 @@ const {
 const FastsettSN2 = ({
   readOnly,
   isAksjonspunktClosed,
+  intl,
 }) => (
   <>
     <Row className={styles.verticalAlignMiddle}>
@@ -67,6 +68,7 @@ const FastsettSN2 = ({
             maxLength={1500}
             readOnly={readOnly}
             isEdited={isAksjonspunktClosed}
+            placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
           />
         </div>
       </Column>
@@ -76,6 +78,7 @@ const FastsettSN2 = ({
 );
 
 FastsettSN2.propTypes = {
+  intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
 };
@@ -108,4 +111,4 @@ FastsettSN2.transformValues = (values) => ({
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 
-export default FastsettSN2;
+export default injectIntl(FastsettSN2);

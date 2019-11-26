@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -61,7 +61,7 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
     case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
       return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold';
     case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
-      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN';
+      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
     case VURDER_DEKNINGSGRAD:
       return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
     default:
@@ -215,6 +215,7 @@ export const BeregningFormImpl2 = ({
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
+  const erNyArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
   return (
     <form onSubmit={formProps.handleSubmit}>
       { gjeldendeAksjonspunkter
@@ -273,6 +274,7 @@ export const BeregningFormImpl2 = ({
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
+            erNyArbLivet={erNyArbLivet}
           />
           {harAksjonspunkter
           && (
@@ -287,6 +289,7 @@ export const BeregningFormImpl2 = ({
             aksjonspunkter={gjeldendeAksjonspunkter}
             relevanteStatuser={relevanteStatuser}
             tidsBegrensetInntekt={tidsBegrensetInntekt}
+            erNyArbLivet={erNyArbLivet}
           />
           )}
           <BeregningsresultatTable2
