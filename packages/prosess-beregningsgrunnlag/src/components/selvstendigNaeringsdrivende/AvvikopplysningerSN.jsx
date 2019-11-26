@@ -117,6 +117,7 @@ AvviksopplysningerSN.propTypes = {
   harAksjonspunkter: PropTypes.bool,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
+  alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 AvviksopplysningerSN.defaultProps = {
