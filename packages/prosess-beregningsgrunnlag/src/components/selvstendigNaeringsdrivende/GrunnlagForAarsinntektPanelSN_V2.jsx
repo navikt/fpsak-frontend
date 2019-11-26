@@ -91,6 +91,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   if (!snAndel) {
     return null;
   }
+
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
   return (
     <Panel className={beregningStyles.panel}>

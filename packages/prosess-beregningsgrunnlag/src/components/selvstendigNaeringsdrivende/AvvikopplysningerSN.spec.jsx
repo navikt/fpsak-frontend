@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from './AvvikopplysningerSN';
 
 
@@ -12,11 +13,20 @@ const avvik = 25;
 
 describe('<AvviksopplysningerSN>', () => {
   it('Skal teste tabellen får korrekte rader med innhold', () => {
+    const forstePeriode = [
+      {
+        aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE },
+        pgiSnitt: 100,
+      },
+    ];
+
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlag={sammenligningsgrunnlag}
       avvik={avvik}
-      alleAndelerIForstePeriode={[{ erNyIArbeidslivet: null }]}
+      alleAndelerIForstePeriode={forstePeriode}
+      erNyArbLivet={false}
+      harAksjonspunkter
     />);
 
     const rows = wrapper.find('Row');
@@ -25,7 +35,7 @@ describe('<AvviksopplysningerSN>', () => {
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt');
     const omregnetAarsinntektVerdi = rows.first().find('Normaltekst');
-    expect(omregnetAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetAarsinntekt));
+    expect(omregnetAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(forstePeriode[0].pgiSnitt));
 
     const rapportertAarsinntektText = rows.at(1).find('FormattedMessage');
     expect(rapportertAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt');

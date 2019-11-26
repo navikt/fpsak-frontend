@@ -381,7 +381,7 @@ export const selvstendigNæringsdrivende = () => {
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
-  andeler[0].erNyIArbeidslivet = true;
+  andeler[0].erNyIArbeidslivet = false;
 
   const bg = lagBG(perioder, statuser);
   return (

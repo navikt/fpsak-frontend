@@ -30,12 +30,11 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
 
 describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
   it('Skal vise korrekte komponenter når det er aksjonspunkt for å fastsette inntekt for bruker ny i arbeidslivet', () => {
-    const snNyIArb = mockAksjonspunktMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, undefined, 'OPPR');
     const wrapper = shallowWithIntl(<VurderOgFastsettSNImpl2
       readOnly={false}
       erVarigEndretNaering={undefined}
       isAksjonspunktClosed={false}
-      gjeldendeAksjonspunkter={[snNyIArb]}
+      erNyArbLivet
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(1);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(0);
@@ -48,6 +47,7 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       erVarigEndretNaering={undefined}
       isAksjonspunktClosed={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
+      erNyArbLivet={false}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(0);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(1);
@@ -59,6 +59,7 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       readOnly={false}
       erVarigEndretNaering={false}
       isAksjonspunktClosed={false}
+      erNyArbLivet={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(0);
@@ -71,6 +72,7 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       readOnly={false}
       erVarigEndretNaering
       isAksjonspunktClosed={false}
+      erNyArbLivet={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(1);

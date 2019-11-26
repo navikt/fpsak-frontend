@@ -15,6 +15,7 @@ describe('<AvviksopplysningerAT>', () => {
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlag={sammenligningsgrunnlag}
       avvik={avvik}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
     const rows = wrapper.find('Row');
 
