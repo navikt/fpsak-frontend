@@ -44,7 +44,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
 
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    expect(rows).to.have.length(7);
+    expect(rows).to.have.length(9);
   });
 
   it('Skal teste at korrekte verdier settes i tabellen med EN arbeidsandel med opphørsdato', () => {
@@ -64,7 +64,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
     />);
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
-    expect(rows).to.have.length(3);
+    expect(rows).to.have.length(4);
     let rowNr = 1;
     andeler.forEach((andel) => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
@@ -115,7 +115,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
         expectedDato = `${dateFormat(arbeidsforhold.startdato)} -`;
       }
       expect(teksterArbForholdTid.at(0).childAt(0).text()).to.equal(expectedDato);
-      rowNr += 1;
+      rowNr += 2;
     });
     rowNr += 1;
     const mndSum = rows.at(rowNr).find('Normaltekst');
