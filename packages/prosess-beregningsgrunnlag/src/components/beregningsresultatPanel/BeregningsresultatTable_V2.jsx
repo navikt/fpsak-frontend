@@ -51,6 +51,17 @@ const lineRow = (key) => (
 );
 
 
+const erRedusereVerdierLike = (listOfEntries) => {
+  let alleLike = true;
+  let lastEntry;
+  listOfEntries.forEach((entry) => {
+    if (lastEntry && lastEntry[1] !== entry[1]) {
+      alleLike = false;
+    }
+    lastEntry = entry;
+  });
+  return alleLike;
+};
 const createRowsRedusert = (listOfEntries, verdierLike) => {
   if (!verdierLike) {
     return (
@@ -143,8 +154,10 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
       rows.push(lineRow('andelLinje'));
     }
   }
-  rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow('redusertLinje'));
+  if (!erRedusereVerdierLike(listOfEntries)) {
+    rows.push(createRowsRedusert(listOfEntries));
+    rows.push(lineRow('redusertLinje'));
+  }
   if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
   if (listOfEntries.length === 0) {
@@ -152,7 +165,6 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   } else {
     rows.push(summaryRow(listOfDagsatser, listOfEntries));
   }
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
