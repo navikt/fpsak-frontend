@@ -42,6 +42,17 @@ const lineRow = (key) => (
     </Column>
   </Row>
 );
+const erRedusereVerdierLike = (listOfEntries) => {
+  let alleLike = true;
+  let lastEntry;
+  listOfEntries.forEach((entry) => {
+    if (lastEntry && lastEntry[1] !== entry[1]) {
+      alleLike = false;
+    }
+    lastEntry = entry;
+  });
+  return alleLike;
+};
 const createRowsRedusert = (listOfEntries) => (
   listOfEntries.map((entry, index) => (
     <Row key={`indexR${index + 1}`}>
@@ -56,6 +67,7 @@ const createRowsRedusert = (listOfEntries) => (
     </Row>
   ))
 );
+
 const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
   <React.Fragment key="beregningOppsummeringWrapper">
     <Row key="beregningOppsummering">
@@ -93,8 +105,10 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
     rows.push(createRowsAndeler(listofAndeler));
     rows.push(lineRow('andelLinje'));
   }
-  rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow('redusertLinje'));
+  if (!erRedusereVerdierLike(listOfEntries)) {
+    rows.push(createRowsRedusert(listOfEntries));
+    rows.push(lineRow('redusertLinje'));
+  }
   rows.push(summaryRow(listOfDagsatser, listOfEntries));
   return rows;
 };
