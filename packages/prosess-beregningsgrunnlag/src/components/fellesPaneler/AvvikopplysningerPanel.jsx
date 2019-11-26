@@ -16,7 +16,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   return undefined;
 };
 const AvviksopplysningerPanel = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder, harAksjonspunkter,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder, harAksjonspunkter, erNyArbLivet,
 }) => (
   <Panel className={beregningStyles.panelRight}>
     <Element>
@@ -43,13 +43,14 @@ const AvviksopplysningerPanel = ({
       <VerticalSpacer sixteenPx />
     )}
     {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-      <AvviksopplysningerSN
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvik={avvik}
-        sammenligningsgrunnlag={sammenligningsgrunnlag}
-        alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-        harAksjonspunkter={harAksjonspunkter}
-      />
+    <AvviksopplysningerSN
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      avvik={avvik}
+      sammenligningsgrunnlag={sammenligningsgrunnlag}
+      alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
+      erNyArbLivet={erNyArbLivet}
+      harAksjonspunkter={harAksjonspunkter}
+    />
     )}
   </Panel>
 );
@@ -58,6 +59,7 @@ AvviksopplysningerPanel.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
+  erNyArbLivet: PropTypes.bool,
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
@@ -68,5 +70,6 @@ AvviksopplysningerPanel.defaultProps = {
   avvik: undefined,
   beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
+  erNyArbLivet: undefined,
 };
 export default AvviksopplysningerPanel;
