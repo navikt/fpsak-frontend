@@ -61,7 +61,7 @@ const createArbeidsPeriodeText = (arbeidsForhold) => {
 };
 const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   // her må stillingsnavn og stillingsprosent hentest når vi får disse dataene
-  const stillingArr = ['Butikkmedarbeider 60%'];
+  const stillingArr = [''];
 
   if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'stillingsNavn') && arbeidsForhold.stillingsNavn) {
     stillingArr.push(arbeidsForhold.stillingsNavn);
