@@ -90,7 +90,6 @@ const AvviksopplysningerAT = ({
           </Row>
         </>
       )}
-;
     </>
   );
 };
