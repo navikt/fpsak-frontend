@@ -10,13 +10,19 @@ const reducerName = 'behandling';
 
 /* Action types */
 const actionType = (name) => `${reducerName}/${name}`;
-const SET_BEHANDLING_ID = actionType('SET_BEHANDLING_ID');
+const SET_TEMP_BEHANDLING_ID = actionType('SET_TEMP_BEHANDLING_ID');
+const SET_BEHANDLING_ID_OG_VERSJON = actionType('SET_BEHANDLING_ID_OG_VERSJON');
 const OPPDATER_BEHANDLING_VERSJON = actionType('OPPDATER_BEHANDLING_VERSJON');
 const RESET_BEHANDLING_CONTEXT = actionType('RESET_BEHANDLING_CONTEXT');
 
-export const setSelectedBehandlingId = (behandlingId) => ({
-  type: SET_BEHANDLING_ID,
+export const setTempBehandlingId = (behandlingId) => ({
+  type: SET_TEMP_BEHANDLING_ID,
   data: behandlingId,
+});
+
+export const setSelectedBehandlingIdOgVersjon = (versjon) => ({
+  type: SET_BEHANDLING_ID_OG_VERSJON,
+  data: versjon,
 });
 
 export const oppdaterBehandlingVersjon = (behandlingVersjon) => ({
@@ -37,17 +43,23 @@ export const previewMessage = (erTilbakekreving, data) => (dispatch) => {
 
 /* Reducer */
 const initialState = {
+  tempBehandlingId: undefined,
   behandlingId: undefined,
   behandlingVersjon: undefined,
 };
 
 export const behandlingReducer = (state = initialState, action = {}) => { // NOSONAR Switch brukes som standard i reducers
   switch (action.type) {
-    case SET_BEHANDLING_ID:
+    case SET_TEMP_BEHANDLING_ID:
       return {
         ...state,
-        behandlingId: action.data,
-        behandlingVersjon: undefined,
+        tempBehandlingId: action.data,
+      };
+    case SET_BEHANDLING_ID_OG_VERSJON:
+      return {
+        ...state,
+        behandlingId: state.tempBehandlingId,
+        behandlingVersjon: action.data,
       };
     case OPPDATER_BEHANDLING_VERSJON:
       return {
@@ -65,17 +77,21 @@ reducerRegistry.register(reducerName, behandlingReducer);
 
 // Selectors (Kun de knyttet til reducer)
 const getBehandlingContext = (state) => state.default[reducerName];
+export const getTempBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.tempBehandlingId);
 export const getSelectedBehandlingId = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingId);
 export const getBehandlingIdentifier = createSelector(
   [getSelectedBehandlingId, getSelectedSaksnummer],
   (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined
   ),
 );
-export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
 
 const getBehandling = createSelector([getBehandlinger, getSelectedBehandlingId],
-  (behandlinger, behandlingId) => behandlinger.find((b) => b.id === behandlingId));
+  (behandlinger = [], behandlingId) => behandlinger.find((b) => b.id === behandlingId));
+
+export const getTempBehandlingVersjon = createSelector([getBehandlinger, getTempBehandlingId],
+  (behandlinger = [], behandlingId) => (behandlinger.some((b) => b.id === behandlingId) ? behandlinger.find((b) => b.id === behandlingId).versjon : undefined));
+export const getBehandlingVersjon = createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.behandlingVersjon);
 
 export const getBehandlingStatus = createSelector([getBehandling], (behandling = {}) => behandling.status);
 export const getBehandlingType = createSelector([getBehandling], (behandling = {}) => behandling.type);

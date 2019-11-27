@@ -82,7 +82,7 @@ const aksjonspunktCodesToTextCode = {
   [aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET]:
     'Historikk.BeregningsgrunnlagManueltSNNYIArbeidslivet',
   [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: 'Historikk.VurderFaktaATFLSN',
-  [aksjonspunktCodes.FORESLA_VEDTAK]: 'Vedtak.Fritekstbrev',
+  [aksjonspunktCodes.FORESLA_VEDTAK]: 'Historikk.Vedtak.Fritekstbrev',
   [aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO]: 'Historikk.FaktaUttak.ForsteUttakDato',
   [aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT]: 'Historikk.FaktaUttak.VurderAnnenForelder',
 };

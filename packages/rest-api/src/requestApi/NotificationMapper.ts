@@ -20,6 +20,7 @@ class NotificationMapper {
     [EventType.STATUS_REQUEST_FINISHED]: [],
     [EventType.STATUS_REQUEST_STARTED]: [],
     [EventType.UPDATE_POLLING_MESSAGE]: [],
+    [EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND]: [],
   };
 
   addEventHandler = (eventType: string, callback: EventCallback) => {
@@ -37,6 +38,7 @@ class NotificationMapper {
     this.addEventHandler(EventType.REQUEST_ERROR, callback);
     this.addEventHandler(EventType.REQUEST_FORBIDDEN, callback);
     this.addEventHandler(EventType.REQUEST_UNAUTHORIZED, callback);
+    this.addEventHandler(EventType.REQUEST_GATEWAY_TIMEOUT_OR_NOT_FOUND, callback);
   };
 
   addStatusRequestStartedEventHandler = (callback: EventCallback) => this.addEventHandler(EventType.STATUS_REQUEST_STARTED, callback);

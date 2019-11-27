@@ -23,10 +23,6 @@ export class AktoerResolver extends Component {
     updateAktoer(aktoerId);
   }
 
-  componentWillUnmount() {
-    // removeErrorMsg();
-  }
-
   render() {
     const { children, allAktoerInfoResolved } = this.props;
     if (!allAktoerInfoResolved) {

@@ -22,6 +22,7 @@
     "@fpsak-frontend/sak-behandling-velger": "1.0.0",
     "@fpsak-frontend/sak-dekorator": "1.0.0",
     "@fpsak-frontend/sak-dokumenter": "1.0.0",
+    "@fpsak-frontend/sak-fagsak-profil": "1.0.0",
     "@fpsak-frontend/sak-historikk": "1.0.0",
     "@fpsak-frontend/sak-meldinger": "1.0.0",
     "@fpsak-frontend/sak-meny": "1.0.0",

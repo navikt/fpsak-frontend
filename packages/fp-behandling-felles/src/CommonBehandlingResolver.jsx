@@ -7,7 +7,6 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 class CommonBehandlingResolver extends Component {
   static propTypes = {
     behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier).isRequired,
-    behandlingerVersjonMappedById: PropTypes.shape().isRequired,
     fetchBehandling: PropTypes.func.isRequired,
     isInSync: PropTypes.bool.isRequired,
     children: PropTypes.node.isRequired,
@@ -20,10 +19,10 @@ class CommonBehandlingResolver extends Component {
 
   resolveBehandlingInfo = () => {
     const {
-      isInSync, fetchBehandling, behandlingIdentifier, behandlingerVersjonMappedById,
+      isInSync, fetchBehandling, behandlingIdentifier,
     } = this.props;
     if (!isInSync) {
-      fetchBehandling(behandlingIdentifier, behandlingerVersjonMappedById);
+      fetchBehandling(behandlingIdentifier);
     }
   }
 

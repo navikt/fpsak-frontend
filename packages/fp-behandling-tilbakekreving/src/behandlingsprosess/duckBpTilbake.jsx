@@ -1,4 +1,4 @@
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingBehandlingApi from '../data/tilbakekrevingBehandlingApi';
@@ -11,8 +11,7 @@ reducerRegistry.register(reducerName, behandlingsprosessRedux.reducer);
 
 const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterSuccess());
-  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(tilbakekrevingBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
+  return dispatch(tilbakekrevingBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true }));
 };
 
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {

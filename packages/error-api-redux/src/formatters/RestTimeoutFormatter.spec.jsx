@@ -20,6 +20,6 @@ describe('RestTimeoutFormatter', () => {
       location: 'url',
     };
     expect(new RestTimeoutFormatter().format(errorData))
-      .to.eql(ErrorMessage.withMessageCode('Rest.ErrorMessage.Timeout', errorData));
+      .to.eql(ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorData));
   });
 });

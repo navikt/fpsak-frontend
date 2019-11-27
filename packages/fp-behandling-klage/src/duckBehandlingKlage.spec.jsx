@@ -12,6 +12,7 @@ describe('Klage-behandling-reducer', () => {
       kodeverk: {},
       fagsak: {},
       fagsakBehandlingerInfo: [],
+      shouldUpdateFagsak: true,
     });
   });
 });

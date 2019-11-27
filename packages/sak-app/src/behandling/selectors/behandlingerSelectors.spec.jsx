@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 
 import {
-  getBehandlinger, getBehandlingerIds, getBehandlingerVersjonMappedById, getNoExistingBehandlinger,
+  getBehandlinger, getBehandlingerIds, getNoExistingBehandlinger,
 } from './behandlingerSelectors';
 
 describe('behandlingerSelectors', () => {
@@ -50,25 +50,6 @@ describe('behandlingerSelectors', () => {
       const behandlingerIds = getBehandlingerIds.resultFunc(behandlinger);
 
       expect(behandlingerIds).is.eql([1, 2]);
-    });
-  });
-
-  describe('getBehandlingerVersjonMappedById', () => {
-    it('skal hente behandlingsidene', () => {
-      const behandlinger = [{
-        id: 1,
-        versjon: 10,
-      }, {
-        id: 2,
-        versjon: 11,
-      }];
-
-      const behandlingerIds = getBehandlingerVersjonMappedById.resultFunc(behandlinger);
-
-      expect(behandlingerIds).is.eql({
-        [behandlinger[0].id]: behandlinger[0].versjon,
-        [behandlinger[1].id]: behandlinger[1].versjon,
-      });
     });
   });
 

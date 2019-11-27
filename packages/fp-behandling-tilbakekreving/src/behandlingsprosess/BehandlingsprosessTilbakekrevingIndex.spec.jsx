@@ -23,6 +23,7 @@ describe('BehandlingsprosessTilbakekrevingIndex', () => {
     location: {},
     isSelectedBehandlingHenlagt: true,
     dispatchSubmitFailed: sinon.spy(),
+    setDoNoUpdateFagsak: sinon.spy(),
   };
   const previewCallbackDef = sinon.spy();
   const submitCallbackDef = sinon.spy();

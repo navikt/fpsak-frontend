@@ -25,6 +25,7 @@ describe('BehandlingsprosessForstegangOgRevIndex', () => {
     dispatchSubmitFailed: sinon.spy(),
     fetchFptilbakePreview: sinon.spy(),
     fetchVedtaksbrevPreview: sinon.spy(),
+    setDoNoUpdateFagsak: sinon.spy(),
   };
   const previewCallbackDef = sinon.spy();
   const submitCallbackDef = sinon.spy();

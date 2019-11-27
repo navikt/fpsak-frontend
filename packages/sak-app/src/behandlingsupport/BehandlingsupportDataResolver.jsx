@@ -42,7 +42,7 @@ export class BehandlingsupportDataResolver extends Component {
       resetTotrinnsaksjonspunkterReadonly, behandlingId, behandlingStatusKode, isInnsyn,
     } = this.props;
 
-    if (behandlingStatusKode && behandlingId !== prevProps.behandlingId) {
+    if (behandlingId && (behandlingStatusKode !== prevProps.behandlingStatusKode || behandlingId !== prevProps.behandlingId)) {
       resetTotrinnsaksjonspunkter();
       resetTotrinnsaksjonspunkterReadonly();
       if (!isInnsyn && behandlingStatusKode === BehandlingStatus.FATTER_VEDTAK) {

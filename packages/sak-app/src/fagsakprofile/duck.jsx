@@ -1,9 +1,4 @@
-import { createSelector } from 'reselect';
-
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
-
-import { getSelectedSaksnummer } from '../fagsak/fagsakSelectors';
-import fpsakApi from '../data/fpsakApi';
 
 const reducerName = 'fagsakProfile';
 
@@ -20,10 +15,6 @@ export const toggleShowAllBehandlinger = () => ({
 export const resetFagsakProfile = () => ({
   type: RESET_FAGSAK_PROFILE,
 });
-
-export const updateAnnenPartBehandling = (saksnummer) => (dispatch) => (
-  dispatch(fpsakApi.ANNEN_PART_BEHANDLING.makeRestApiRequest()({ saksnummer }, { keepData: true }))
-);
 
 /* Reducer */
 const initialState = {
@@ -49,13 +40,3 @@ reducerRegistry.register(reducerName, fagsakProfileReducer);
 /* Selectors */
 const getFagsakProfileContext = (state) => state.default[reducerName];
 export const getShowAllBehandlinger = (state) => getFagsakProfileContext(state).showAllBehandlinger;
-
-const getAnnenPartBehandlingData = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiData();
-const getAnnenPartBehandlingMeta = fpsakApi.ANNEN_PART_BEHANDLING.getRestApiMeta();
-
-export const getAnnenPartBehandling = createSelector(
-  [getSelectedSaksnummer, getAnnenPartBehandlingData, getAnnenPartBehandlingMeta],
-  (
-    selectedSaksnummer, annenPartBehandlingData, annenPartBehandlingMeta = { params: {} },
-  ) => (annenPartBehandlingMeta.params.saksnummer === selectedSaksnummer ? annenPartBehandlingData : undefined),
-);

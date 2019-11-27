@@ -8,6 +8,7 @@ import { LoadingPanel } from '@fpsak-frontend/shared-components';
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
 const FETCH_PREFIX = 'FETCH_';
+const CACHE_PREFIX = 'CACHE_';
 
 /**
  * DataFetcher
@@ -16,58 +17,121 @@ const FETCH_PREFIX = 'FETCH_';
  */
 export class DataFetcher extends Component {
   static propTypes = {
+    render: PropTypes.func.isRequired,
+    endpoints: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+    isFetchFinished: PropTypes.bool.isRequired,
+    behandlingNotRequired: PropTypes.bool,
     behandlingId: PropTypes.number,
     behandlingVersjon: PropTypes.number,
     showComponent: PropTypes.bool,
     showComponentDuringFetch: PropTypes.bool,
     showLoadingIcon: PropTypes.bool,
-    isFetchFinished: PropTypes.bool.isRequired,
-    data: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-    render: PropTypes.func.isRequired,
-    forceRefreshWhenPropChanged: PropTypes.number,
+    valueThatWillTriggerRefetchWhenChanged: PropTypes.number,
+    keepDataWhenRefetching: PropTypes.bool,
+    endpointParams: PropTypes.shape(),
+    allowErrors: PropTypes.bool,
   };
 
   static defaultProps = {
+    behandlingNotRequired: false,
     behandlingId: undefined,
     behandlingVersjon: undefined,
     showComponent: true,
     showComponentDuringFetch: false,
     showLoadingIcon: false,
-    forceRefreshWhenPropChanged: undefined,
+    valueThatWillTriggerRefetchWhenChanged: undefined,
+    keepDataWhenRefetching: false,
+    endpointParams: {},
+    allowErrors: false,
   }
 
-  fetchData = () => {
-    const { data } = this.props;
+  constructor(props) {
+    super(props);
+    this.state = {
+      nrOfErrors: 0,
+      fakeCache: {},
+    };
+  }
+
+  hasFetchedLatestData = (endpoint) => {
+    const { behandlingId, behandlingVersjon } = this.props;
     // eslint-disable-next-line react/destructuring-assignment
-    data.forEach((d) => this.props[`${FETCH_PREFIX}${d.name}`]());
+    const cacheParams = this.props[CACHE_PREFIX + endpoint.name];
+    return cacheParams && cacheParams.behandlingId === behandlingId && cacheParams.behandlingVersjon === behandlingVersjon;
+  }
+
+  fetchData = (endpointParams, keepDataWhenRefetching) => {
+    const {
+      endpoints, behandlingId, behandlingVersjon, allowErrors,
+    } = this.props;
+    if (endpoints.length === 0) {
+      return;
+    }
+    const meta = {
+      keepData: keepDataWhenRefetching,
+      cacheParams: { behandlingId, behandlingVersjon },
+    };
+
+    const requests = endpoints.filter((endpoint) => !this.hasFetchedLatestData(endpoint)).map((endpoint) => {
+      // eslint-disable-next-line react/destructuring-assignment
+      const request = this.props[`${FETCH_PREFIX}${endpoint.name}`];
+      return () => request(endpointParams, meta);
+    });
+
+    if (allowErrors) {
+      requests.forEach((request) => {
+        request().catch(() => this.setState((state) => ({ ...state, nrOfErrors: state.nrOfErrors + 1 })));
+      });
+    } else {
+      Promise.all(requests.map((request) => request()))
+        .catch(() => this.setState((state) => ({ ...state, nrOfErrors: endpoints.length })));
+    }
   }
 
   componentDidMount = () => {
-    const { showComponent, behandlingId, behandlingVersjon } = this.props;
-    if (showComponent && behandlingId && behandlingVersjon) {
-      this.fetchData();
+    const {
+      showComponent, behandlingNotRequired, behandlingId, behandlingVersjon, endpointParams, keepDataWhenRefetching,
+    } = this.props;
+
+    const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
+    if (showComponent && hasRequiredInput) {
+      this.fetchData(endpointParams, keepDataWhenRefetching);
     }
+  }
+
+  hasBehandlingsdataChanged = (prevProps) => {
+    const { behandlingId, behandlingVersjon } = this.props;
+    const hasPreviousBehandlingdata = !!prevProps.behandlingId && !!prevProps.behandlingVersjon;
+    const hasBehandlingdataChanged = prevProps.behandlingId !== behandlingId || prevProps.behandlingVersjon !== behandlingVersjon;
+    return hasPreviousBehandlingdata && hasBehandlingdataChanged;
   }
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, behandlingId, behandlingVersjon, forceRefreshWhenPropChanged,
+      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
     } = this.props;
-    if (showComponent && behandlingId && behandlingVersjon
-      && (behandlingId !== prevProps.behandlingId
-        || behandlingVersjon !== prevProps.behandlingVersjon
-        || forceRefreshWhenPropChanged !== prevProps.forceRefreshWhenPropChanged)) {
-      this.fetchData();
+
+    const forcedRefresh = valueThatWillTriggerRefetchWhenChanged !== prevProps.valueThatWillTriggerRefetchWhenChanged;
+    const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : true;
+
+    if (showComponent && (forcedRefresh || shouldRefetchData)) {
+      this.fetchData(endpointParams, keepDataWhenRefetching);
     }
   }
 
   render() {
     const {
-      showComponent, showComponentDuringFetch, isFetchFinished, render, data, behandlingId, behandlingVersjon, showLoadingIcon,
+      showComponent, showComponentDuringFetch, isFetchFinished, render, endpoints, behandlingId, behandlingVersjon,
+      showLoadingIcon, behandlingNotRequired,
     } = this.props;
+    const { nrOfErrors } = this.state;
 
-    if (showComponentDuringFetch || (showComponent && behandlingId && behandlingVersjon && isFetchFinished)) {
-      const dataProps = data.reduce((acc, d) => {
+    const hasRequiredInput = behandlingNotRequired || (!!behandlingId && !!behandlingVersjon);
+    const showWhenFinished = showComponent && hasRequiredInput && isFetchFinished;
+    const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
+
+    if (!hasFailed && (showComponentDuringFetch || showWhenFinished)) {
+      const dataProps = endpoints.reduce((acc, d) => {
         const propName = format(d.name);
         return {
           ...acc,
@@ -78,27 +142,34 @@ export class DataFetcher extends Component {
       return render(dataProps);
     }
 
-    return showLoadingIcon ? <LoadingPanel /> : null;
+    return showComponent && showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const data = ownProps.data.reduce((acc, dataApi) => ({
+export const mapStateToProps = (state, ownProps) => {
+  const dataMappedByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
     ...acc,
     [format(dataApi.name)]: dataApi.getRestApiData()(state),
   }), {});
+  const cacheParamsByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
+    ...acc,
+    [CACHE_PREFIX + dataApi.name]: dataApi.getRestApiCacheParams()(state),
+  }), {});
 
   return {
-    ...data,
-    isFetchFinished: ownProps.data.every((dataApi) => dataApi.getRestApiFinished()(state)),
+    ...dataMappedByApi,
+    ...cacheParamsByApi,
+    isFetchFinished: ownProps.endpoints.every((dataApi) => dataApi.getRestApiFinished()(state)),
   };
 };
 
+export const createFetchForEachEndpoint = (endpoints) => endpoints.reduce((acc, dataApi) => ({
+  ...acc,
+  [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
+}), {});
+
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
-  ownProps.data.reduce((acc, dataApi) => ({
-    ...acc,
-    [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
-  }), {}), dispatch,
+  createFetchForEachEndpoint(ownProps.endpoints), dispatch,
 );
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataFetcher);

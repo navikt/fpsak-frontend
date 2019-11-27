@@ -34,7 +34,6 @@ export const FpsakApiKeys = {
   TOTRINNSAKSJONSPUNKT_ARSAKER: 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
-  BEHANDLING: 'BEHANDLING',
   BREVMALER: 'BREVMALER',
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
@@ -59,7 +58,6 @@ const endpoints = new RestApiConfigBuilder()
 
   /* /fpsak/api/behandlinger */
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
-  .withAsyncPost('/fpsak/api/behandlinger', FpsakApiKeys.BEHANDLING)
   .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
   .withInjectedPath('bytt-behandlende-enhet', FpsakApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

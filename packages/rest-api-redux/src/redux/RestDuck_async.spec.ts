@@ -91,6 +91,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
@@ -106,6 +107,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
       });
   });
@@ -150,6 +152,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
@@ -163,6 +166,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           statusRequestStarted: true,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
         const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, requestStatusFinishedAction);
         expect(stateAfterRequestStatusFinished).to.eql({
@@ -175,6 +179,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, requestFinishedAction);
@@ -190,6 +195,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
       });
   });
@@ -244,6 +250,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestStatusStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, firstStatusRequestStartedAction);
@@ -257,6 +264,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           statusRequestStarted: true,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
         const stateAfterRequestStatusFinished = asyncGetRessursDuck.reducer(stateAfterRequestStatusStarted, firstStatusRequestFinishedAction);
         expect(stateAfterRequestStatusFinished).to.eql({
@@ -269,6 +277,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterUpdatePollingMessageAction = asyncGetRessursDuck.reducer(stateAfterRequestStatusFinished, updatePollingMessageAction);
@@ -282,6 +291,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterSecondStatusRequestStartedAction = asyncGetRessursDuck
@@ -296,6 +306,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           statusRequestStarted: true,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
         const stateAfterSecondStatusRequestFinishedAction = asyncGetRessursDuck
           .reducer(stateAfterSecondStatusRequestStartedAction, secondStatusRequestFinishedAction);
@@ -309,6 +320,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterSecondStatusRequestFinishedAction, requestFinishedAction);
@@ -324,6 +336,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: true,
           statusRequestStarted: false,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
       });
   });
@@ -377,6 +390,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
         const stateAfterRequestFinished = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestFinishedAction);
 
@@ -396,6 +410,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
       });
   });
@@ -458,6 +473,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestErrorAction);
@@ -466,11 +482,12 @@ describe('RestDuck (async)', () => {
           meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
           error: stateAfterRequestError.error,
           started: false,
-          finished: false,
+          finished: true,
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         expect(stateAfterRequestError.error ? stateAfterRequestError.error.message : '').is.eql('Request failed with status code 500');
@@ -516,6 +533,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterStatusRequestStarted = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestStatusStartedAction);
@@ -529,6 +547,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterStatusRequestStarted, requestErrorAction);
@@ -537,11 +556,12 @@ describe('RestDuck (async)', () => {
           meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
           error: stateAfterRequestError.error,
           started: false,
-          finished: false,
+          finished: true,
           statusRequestStarted: true,
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         expect(stateAfterRequestError.error).is.eql('Request failed with status code 418');
@@ -600,6 +620,7 @@ describe('RestDuck (async)', () => {
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
 
         const stateAfterRequestError = asyncGetRessursDuck.reducer(stateAfterRequestStarted, requestErrorAction);
@@ -608,11 +629,12 @@ describe('RestDuck (async)', () => {
           meta: { params, timestamp: stateAfterRequestStarted.meta.timestamp },
           error: stateAfterRequestError.error,
           started: false,
-          finished: false,
+          finished: true,
           statusRequestStarted: false,
           statusRequestFinished: false,
           pollingMessage: undefined,
           pollingTimeout: false,
+          cacheParams: undefined,
         });
       });
   });

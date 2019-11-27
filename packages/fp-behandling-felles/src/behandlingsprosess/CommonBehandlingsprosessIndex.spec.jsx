@@ -18,8 +18,8 @@ describe('<CommonBehandlingsprosessIndex>', () => {
   it('skal bekrefte aksjonspunkter', async () => {
     const dummyFn = () => () => Promise.resolve();
     let apData = {};
-    const resolveProsessAksjonspunkter = (bi, params, shouldUpdateInfo) => {
-      apData = { behandlingIdentifier: bi, params, shouldUpdateInfo };
+    const resolveProsessAksjonspunkter = (bi, params) => {
+      apData = { behandlingIdentifier: bi, params };
       return Promise.resolve();
     };
 
@@ -71,15 +71,13 @@ describe('<CommonBehandlingsprosessIndex>', () => {
       kode: ac.VURDER_INNSYN,
     }];
     const afterSubmitCallback = sinon.spy();
-    const shouldUpdateInfo = true;
 
-    await panel.prop('submitCallback')(aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo);
+    await panel.prop('submitCallback')(aksjonspunktModels, afterSubmitCallback);
     expect(apData).is.eql({
       behandlingIdentifier: {
         $$behandlingId: 1,
         $$saksnummer: 1,
       },
-      shouldUpdateInfo: true,
       params: {
         behandlingId: 1,
         behandlingVersjon: 1,

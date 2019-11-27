@@ -9,7 +9,7 @@ import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
-import { getAlleKodeverk } from '../kodeverk/duck';
+import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
 import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
@@ -19,14 +19,14 @@ import {
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setSelectedBehandlingId, getSelectedBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon, resetBehandlingContext as resetBehandlingContextActionCreator,
+  setTempBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getTempBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
+  resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerVersjonMappedById, getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
+  getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
-import appContextUpdater from './AppContextUpdater';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-innsyn'));
@@ -34,6 +34,8 @@ const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/fp-behandl
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
+
+const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
 
 /**
  * BehandlingIndex
@@ -48,11 +50,12 @@ export class BehandlingIndex extends Component {
     saksnummer: PropTypes.number.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingType: PropTypes.string.isRequired,
-    behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+    behandlingVersjon: PropTypes.number.isRequired,
     location: PropTypes.shape().isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     erAktivPapirsoknad: PropTypes.bool,
     resetBehandlingContext: PropTypes.func.isRequired,
+    setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
     allDocuments: PropTypes.arrayOf(PropTypes.shape({
@@ -93,13 +96,18 @@ export class BehandlingIndex extends Component {
 
   constructor(props) {
     super(props);
+    const { setBehandlingIdOgVersjon, behandlingVersjon } = props;
     reduxRestApi.injectPaths(props.behandlingLinks);
+    setBehandlingIdOgVersjon(behandlingVersjon);
   }
 
   componentDidUpdate(prevProps) {
-    const { behandlingId, behandlingLinks } = this.props;
+    const {
+      behandlingId, behandlingLinks, setBehandlingIdOgVersjon, behandlingVersjon,
+    } = this.props;
     if (behandlingId !== prevProps.behandlingId) {
       reduxRestApi.injectPaths(behandlingLinks);
+      setBehandlingIdOgVersjon(behandlingVersjon);
     }
   }
 
@@ -113,7 +121,6 @@ export class BehandlingIndex extends Component {
       saksnummer,
       behandlingId,
       behandlingType,
-      behandlingerVersjonMappedById,
       location,
       oppdaterBehandlingVersjon,
       erAktivPapirsoknad,
@@ -132,11 +139,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             kodeverk={kodeverk}
             fagsak={fagsak}
@@ -146,18 +151,16 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    if (erTilbakekreving(behandlingType)) {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingTilbakekrevingIndex
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             fagsak={fagsak}
             fagsakBehandlingerInfo={fagsakBehandlingerInfo}
@@ -174,11 +177,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -197,11 +198,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -221,11 +220,9 @@ export class BehandlingIndex extends Component {
             key={behandlingId}
             saksnummer={saksnummer}
             behandlingId={behandlingId}
-            behandlingerVersjonMappedById={behandlingerVersjonMappedById}
             location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            appContextUpdater={appContextUpdater}
             featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
             allDocuments={allDocuments}
@@ -244,11 +241,9 @@ export class BehandlingIndex extends Component {
           key={behandlingId}
           saksnummer={saksnummer}
           behandlingId={behandlingId}
-          behandlingerVersjonMappedById={behandlingerVersjonMappedById}
           location={location}
           oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
           behandlingUpdater={behandlingUpdater}
-          appContextUpdater={appContextUpdater}
           featureToggles={featureToggles}
           hasSubmittedPaVentForm={hasSubmittedPaVentForm}
           kodeverk={kodeverk}
@@ -273,17 +268,18 @@ export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakP
 }));
 
 const mapStateToProps = (state) => {
-  const behandlingId = getSelectedBehandlingId(state);
+  const behandlingId = getTempBehandlingId(state);
+  const behandlingType = getBehandlingerTypesMappedById(state)[behandlingId];
   return {
     behandlingId,
+    behandlingType,
+    behandlingVersjon: getTempBehandlingVersjon(state),
     saksnummer: getSelectedSaksnummer(state),
-    behandlingerVersjonMappedById: getBehandlingerVersjonMappedById(state),
-    behandlingType: getBehandlingerTypesMappedById(state)[behandlingId],
     location: state.router.location,
     erAktivPapirsoknad: getBehandlingerAktivPapirsoknadMappedById(state)[behandlingId],
     featureToggles: getFeatureToggles(state),
     hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
-    kodeverk: getAlleKodeverk(state),
+    kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
     allDocuments: getAllDocuments(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
@@ -295,12 +291,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   oppdaterBehandlingVersjon: oppdaterVersjon,
   resetBehandlingContext: resetBehandlingContextActionCreator,
+  setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
 }, dispatch);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
   parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
   paramPropType: PropTypes.number,
-  storeParam: setSelectedBehandlingId,
-  getParamFromStore: getSelectedBehandlingId,
-})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId'])(BehandlingIndex)));
+  storeParam: setTempBehandlingId,
+  getParamFromStore: getTempBehandlingId,
+})(connect(mapStateToProps, mapDispatchToProps)(requireProps(['behandlingId', 'behandlingType'])(BehandlingIndex)));

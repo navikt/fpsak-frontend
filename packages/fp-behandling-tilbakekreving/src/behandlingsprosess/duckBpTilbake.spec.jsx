@@ -4,7 +4,7 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
 import { ignoreRestErrors, withoutRestActions } from '@fpsak-frontend/utils-test/src/data-test-helper';
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import tilbakekrevingBehandlingApi, { reduxRestApi } from '../data/tilbakekrevingBehandlingApi';
@@ -43,8 +43,6 @@ describe('Behandlingsprosess-tilbakekreving-reducer', () => {
     mockAxios
       .onGet(headers.location)
       .reply(200, [{ personstatus: 'test' }]);
-
-    sakOperations.withUpdateFagsakInfo(() => () => Promise.resolve());
 
     const store = mockStore();
     const behandlingIdentifier = new BehandlingIdentifier('123', '456');

@@ -2,10 +2,11 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
+import { ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import FagsakSearchIndex from './FagsakSearchIndex';
+import FagsakSearchIndex, { getSearchFagsakerAccessDenied } from './FagsakSearchIndex';
 
 describe('<FagsakSearchIndex>', () => {
   const fagsak = {
@@ -110,5 +111,35 @@ describe('<FagsakSearchIndex>', () => {
     wrapper.update();
 
     expect(pushCallback.calledOnce).to.be.false;
+  });
+
+  describe('getSearchFagsakerAccessDenied', () => {
+    it('skal hente response-data når feilen er at en mangler tilgang', () => {
+      const error = {
+        response: {
+          data: {
+            type: ErrorTypes.MANGLER_TILGANG_FEIL,
+          },
+        },
+      };
+
+      const res = getSearchFagsakerAccessDenied.resultFunc(error);
+
+      expect(res).is.eql(error.response.data);
+    });
+
+    it('skal ikke hente response-data når feilen er noe annet enn mangler tilgang', () => {
+      const error = {
+        response: {
+          data: {
+            type: ErrorTypes.TOMT_RESULTAT_FEIL,
+          },
+        },
+      };
+
+      const res = getSearchFagsakerAccessDenied.resultFunc(error);
+
+      expect(res).is.undefined;
+    });
   });
 });

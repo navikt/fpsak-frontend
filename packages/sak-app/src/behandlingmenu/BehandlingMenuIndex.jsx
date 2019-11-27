@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { DataFetcher, BehandlingIdentifier, featureToggle } from '@fpsak-frontend/fp-felles';
+import { DataFetcher, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from '@fpsak-frontend/sak-meny';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
@@ -19,8 +19,9 @@ import {
   getBehandlingStatus, getBehandlingErPapirsoknad,
 } from '../behandling/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getNavAnsatt, getFeatureToggles } from '../app/duck';
+import { getNavAnsatt, getEnabledApplicationContexts } from '../app/duck';
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
+import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
@@ -84,8 +85,9 @@ class BehandlingMenuIndex extends Component {
       <DataFetcher
         behandlingId={behandlingData.id}
         behandlingVersjon={behandlingData.versjon}
+        behandlingNotRequired
         showComponentDuringFetch
-        data={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
+        endpoints={behandlingData.harValgtBehandling ? menyDataBehandlingValgt : menyData}
         render={(dataProps) => (
           <MenySakIndex
             rettigheter={getMenyRettigheter({
@@ -155,7 +157,7 @@ const mapStateToProps = (state) => {
     navAnsatt: getNavAnsatt(state),
     vergeMenyvalg: vergeMenyvalg ? vergeMenyvalg.vergeBehandlingsmeny : undefined,
     kanTilbakekrevingOpprettes: getTilbakekrevingOpprettes(state),
-    erTilbakekrevingAktivert: getFeatureToggles(state)[featureToggle.AKTIVER_TILBAKEKREVINGBEHANDLING],
+    erTilbakekrevingAktivert: getEnabledApplicationContexts(state).includes(ApplicationContextPath.FPTILBAKE),
     uuidForSistLukkede: getUuidForSisteLukkedeForsteEllerRevurd(state),
     menyKodeverk: getMenyKodeverk(state),
     fagsakStatus: getSelectedFagsakStatus(state),

@@ -5,6 +5,7 @@ export type ErrorType = Readonly<{
     data?: any;
     statusText?: string;
     status?: number;
+    config?: any;
   };
   message?: string;
   type?: string;

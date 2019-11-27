@@ -1,4 +1,4 @@
-import { getFaktaRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getFaktaRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 import fpsakBehandlingApi from '../data/fpsakBehandlingApi';
 
@@ -10,8 +10,7 @@ export const { resetFakta, setOpenInfoPanels } = faktaRedux.actionCreators;
 
 const resolveFaktaAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch(faktaRedux.actionCreators.resolveFaktaAksjonspunkterSuccess());
-  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
+  return dispatch(fpsakBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true }));
 };
 
 export const resolveFaktaAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {

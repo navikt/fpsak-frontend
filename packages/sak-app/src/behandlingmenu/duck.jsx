@@ -5,8 +5,6 @@ import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi from '../data/fpsakApi';
-import { updateBehandlinger, updateFagsakInfo } from '../fagsak/duck';
-import { updateBehandlingsupportInfo } from '../behandlingsupport/duck';
 import behandlingUpdater from '../behandling/BehandlingUpdater';
 
 const findNewBehandlingId = (behandlingerResponse) => {
@@ -31,6 +29,8 @@ export const resetBehandlingMenuData = () => ({
   type: RESET_BEHANDLING_MENU,
 });
 
+// TODO (TOR) Det meste av kode under skal refaktorerast/flyttast til behandlingskontekst. (Må få vekk auto-henting av data i behandlingskontekst først)
+
 export const shelveBehandling = (params) => (dispatch) => dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
 
 // TODO (TOR) Refaktorer denne! Og burde heller kalla dispatch(resetBehandlingContext()) enn behandlingUpdater.resetBehandling(dispatch) (ta vekk if/else)
@@ -39,10 +39,9 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
   return resetOrDoNothing
     .then(() => dispatch((isTilbakekreving ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params)))
     .then((response) => {
+      const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
       if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
-        return dispatch(updateBehandlingsupportInfo(saksnummer))
-          .then(() => dispatch(fpsakApi.FETCH_FAGSAK.setDataRestApi()(response.payload, { saksnummer }, { keepData: true })))
-          .then(() => dispatch(updateBehandlinger(saksnummer)))
+        return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
           .then((behandlingerResponse) => {
             const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
             push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
@@ -50,16 +49,12 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
           });
       }
       // NEW_BEHANDLING har returnert behandling
-      return dispatch(updateFagsakInfo(saksnummer))
-        .then(() => {
-          push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) }));
-          return Promise.resolve(response.payload);
-        });
+      return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
+        .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
     });
 };
 
-const updateFagsakAndBehandlingInfo = (behandlingIdentifier) => (dispatch) => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer))
-  .then(() => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier));
+const updateFagsakAndBehandlingInfo = (behandlingIdentifier) => (dispatch) => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
 
 export const setBehandlingOnHold = (params, behandlingIdentifier) => (dispatch) => dispatch(fpsakApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
   .then(() => dispatch(setHasSubmittedPaVentForm()))
@@ -78,8 +73,7 @@ export const nyBehandlendeEnhet = (params, behandlingIdentifier) => (dispatch) =
 
 export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispatch) => dispatch(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES
   .makeRestApiRequest()(params))
-  .then((response) => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }))
-  .then(() => dispatch(updateFagsakInfo(behandlingIdentifier.saksnummer)));
+  .then((response) => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }));
 
 export const sjekkOmTilbakekrevingKanOpprettes = (params) => (dispatch) => dispatch(
   fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.makeRestApiRequest()(params),
@@ -94,7 +88,6 @@ export const opprettVerge = (push, behandlingIdentifier, versjon) => (dispatch) 
   behandlingId: behandlingIdentifier.behandlingId,
   behandlingVersjon: versjon,
 })).then(() => Promise.all([
-  dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
   behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
 ])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
   pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
@@ -103,7 +96,6 @@ export const fjernVerge = (push, behandlingIdentifier, versjon) => (dispatch) =>
   behandlingId: behandlingIdentifier.behandlingId,
   behandlingVersjon: versjon,
 })).then(() => Promise.all([
-  dispatch(updateBehandlingsupportInfo(behandlingIdentifier.saksnummer)),
   behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
 ])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
   pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),

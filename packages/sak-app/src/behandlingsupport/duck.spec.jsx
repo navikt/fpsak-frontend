@@ -3,11 +3,10 @@ import thunk from 'redux-thunk';
 import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
-import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
+import { reduxRestApi } from '../data/fpsakApi';
 import SupportPanels from './supportPanels';
 import {
-  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel, updateBehandlingsupportInfo,
+  behandlingSupportReducer, getSelectedSupportPanel, resetBehandlingSupport, setSelectedSupportPanel,
 } from './duck';
 
 const middlewares = [thunk];
@@ -17,7 +16,6 @@ describe('Behandlingsupport-reducer', () => {
   let mockAxios;
 
   before(() => {
-    behandlingOrchestrator.disableTilbakekreving();
     mockAxios = new MockAdapter(reduxRestApi.getHttpClientApi().axiosInstance);
   });
 
@@ -27,7 +25,6 @@ describe('Behandlingsupport-reducer', () => {
 
   after(() => {
     mockAxios.restore();
-    behandlingOrchestrator.reset();
   });
 
   it('skal markere i state at godkjenningsfanen er valgt', () => {
@@ -40,42 +37,6 @@ describe('Behandlingsupport-reducer', () => {
     expect(behandlingSupportReducer(undefined, store.getActions()[0])).to.eql({
       selectedSupportPanel: SupportPanels.APPROVAL,
     });
-  });
-
-  it('skal hente dokumenter og historie fra server', () => {
-    const documents = [];
-    mockAxios
-      .onGet(fpsakApi.ALL_DOCUMENTS.path)
-      .reply(200, documents);
-    const history = {};
-    mockAxios
-      .onGet(fpsakApi.HISTORY_FPSAK.path)
-      .reply(200, history);
-
-    const store = mockStore();
-
-    const saksnummer = '1234';
-    return store.dispatch(updateBehandlingsupportInfo(saksnummer))
-      .then(() => {
-        expect(store.getActions()).to.have.length(4);
-        const [requestDocumentStarted, requestDocumentFinished, requestHistoryStarted, requestHistoryFinished] = store.getActions();
-
-        expect(requestDocumentStarted.type).to.contain('fpsak/api/dokument/hent-dokumentliste STARTED');
-        expect(requestDocumentStarted.payload.params).is.eql({ saksnummer });
-        expect(requestDocumentStarted.meta).is.eql({ options: { keepData: true } });
-
-        expect(requestDocumentFinished.type).to.contain('fpsak/api/dokument/hent-dokumentliste FINISHED');
-        expect(requestDocumentFinished.payload).is.eql([]);
-        expect(requestDocumentFinished.meta).is.undefined;
-
-        expect(requestHistoryStarted.type).to.contain('fpsak/api/historikk STARTED');
-        expect(requestHistoryStarted.payload.params).is.eql({ saksnummer });
-        expect(requestHistoryStarted.meta).is.eql({ options: { keepData: true } });
-
-        expect(requestHistoryFinished.type).to.contain('fpsak/api/historikk FINISHED');
-        expect(requestHistoryFinished.payload).is.eql({});
-        expect(requestHistoryFinished.meta).is.undefined;
-      });
   });
 
   it('skal markere i state at godkjenningsfanen ikke lenger er valgt', () => {

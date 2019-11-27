@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
 import DokumenterSakIndex from '@fpsak-frontend/sak-dokumenter';
+import { DataFetcher } from '@fpsak-frontend/fp-felles';
 
 import { DocumentIndex } from './DocumentIndex';
 
@@ -16,9 +17,12 @@ describe('<DocumentIndex>', () => {
   }];
 
   it('skal vise documentList med dokumenter', () => {
-    const wrapper = shallow(<DocumentIndex documents={documents} behandlingId={1} saksNr={123} />);
+    const wrapper = shallow(<DocumentIndex behandlingId={1} saksNr={123} />);
 
-    const documentList = wrapper.find(DokumenterSakIndex);
+    const dataFetcher = wrapper.find(DataFetcher);
+    const documentList = dataFetcher.renderProp('render')({
+      allDocuments: documents,
+    }).find(DokumenterSakIndex);
     expect(documentList).to.have.length(1);
     expect(documentList.prop('documents')).to.eql(documents);
     expect(documentList.prop('selectDocumentCallback')).is.not.null;
