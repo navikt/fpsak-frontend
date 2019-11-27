@@ -28,6 +28,7 @@ import {
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
+import behandlingEventHandler from './BehandlingEventHandler';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
@@ -183,8 +184,7 @@ export class BehandlingIndex extends Component {
           <BehandlingInnsynIndex
             behandlingId={behandlingId}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingUpdater={behandlingUpdater}
-            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
+            behandlingEventHandler={behandlingEventHandler}
             alleDokumenter={allDocuments}
             kodeverk={kodeverk}
             fagsak={fagsak}

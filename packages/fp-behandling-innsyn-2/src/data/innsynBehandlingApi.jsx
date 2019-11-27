@@ -7,6 +7,10 @@ export const InnsynBehandlingApiKeys = {
   AKSJONSPUNKTER: 'AKSJONSPUNKTER',
   VILKAR: 'VILKAR',
   INNSYN: 'INNSYN',
+  BEHANDLING_NY_BEHANDLENDE_ENHET: 'BEHANDLING_NY_BEHANDLENDE_ENHET',
+  HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
+  RESUME_BEHANDLING: 'RESUME_BEHANDLING',
+  BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
@@ -17,6 +21,20 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('aksjonspunkter', InnsynBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', InnsynBehandlingApiKeys.VILKAR)
   .withInjectedPath('innsyn', InnsynBehandlingApiKeys.INNSYN)
+
+  .withPost('/fpsak/api/behandlinger/bytt-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withPost('/fpsak/api/behandlinger/henlegg', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', InnsynBehandlingApiKeys.RESUME_BEHANDLING, {
+    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
+  })
+  .withPost('/fpsak/api/behandlinger/sett-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
+
+/*
+  .withInjectedPath('bytt-behandlende-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withInjectedPath('henlegg-behandling', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withInjectedPath('gjenoppta-behandling', InnsynBehandlingApiKeys.RESUME_BEHANDLING)
+  .withInjectedPath('sett-behandling-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  */
 
   .withPost('/fpsak/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, {

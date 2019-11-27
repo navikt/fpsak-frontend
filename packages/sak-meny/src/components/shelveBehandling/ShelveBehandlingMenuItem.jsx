@@ -32,14 +32,16 @@ class ShelveBehandlingMenuItem extends Component {
   }
 
   submit(formValues) {
-    const { behandlingIdentifier, behandlingVersjon, shelveBehandling } = this.props;
+    const {
+      behandlingIdentifier, behandlingVersjon, shelveBehandling, behandlingType,
+    } = this.props;
     const henleggBehandlingDto = {
       behandlingVersjon,
       behandlingId: behandlingIdentifier.behandlingId,
       årsakKode: formValues.årsakKode,
       begrunnelse: formValues.begrunnelse,
     };
-    shelveBehandling(henleggBehandlingDto).then(() => {
+    shelveBehandling(henleggBehandlingDto, behandlingType).then(() => {
       this.setState({ showBehandlingErHenlagtModal: true });
     });
     this.hideModal();

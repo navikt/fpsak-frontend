@@ -23,14 +23,29 @@ const BehandlingInnsynIndex = ({
   location,
   oppdaterLocation,
   oppdaterBehandlingVersjon,
+  behandlingEventHandler,
 }) => {
   const dispatch = useDispatch();
-  useEffect(() => () => {
-    Object.values(InnsynBehandlingApiKeys)
-      .forEach((value) => {
-        dispatch(innsynApi[value].resetRestApi()());
-      });
+  useEffect(() => {
+    behandlingEventHandler.setHandler({
+      endreBehandlendeEnhet: (params) => dispatch(innsynApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest()(params))
+        .then(() => dispatch(innsynApi.BEHANDLING_INNSYN.makeRestApiRequest()({ behandlingId }))),
+      settBehandlingPaVent: (params) => dispatch(innsynApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
+        .then(() => dispatch(innsynApi.BEHANDLING_INNSYN.makeRestApiRequest()({ behandlingId }))),
+      taBehandlingAvVent: (params) => dispatch(innsynApi.RESUME_BEHANDLING.makeRestApiRequest()(params)),
+      henleggBehandling: (params) => dispatch(innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params))
+        .then(() => dispatch(innsynApi.BEHANDLING_INNSYN.makeRestApiRequest()({ behandlingId }))),
+    });
+
+    return () => {
+      behandlingEventHandler.clear();
+      return Object.values(InnsynBehandlingApiKeys)
+        .forEach((value) => {
+          dispatch(innsynApi[value].resetRestApi()());
+        });
+    };
   }, []);
+
   return (
     <DataFetcher
       showLoadingIcon
@@ -77,6 +92,7 @@ BehandlingInnsynIndex.propTypes = {
   location: PropTypes.shape().isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
+  behandlingEventHandler: PropTypes.shape().isRequired,
 };
 
 export default BehandlingInnsynIndex;

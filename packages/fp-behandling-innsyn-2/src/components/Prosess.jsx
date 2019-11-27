@@ -18,6 +18,7 @@ import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import fpInnsynApi from '../data/innsynBehandlingApi';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
 import ProsessMeny from './ProsessMeny';
+import BehandlingPaVent from './BehandlingPaVent';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -128,6 +129,7 @@ const Prosess = ({
 
   return (
     <>
+      <BehandlingPaVent behandling={behandling} aksjonspunkter={aksjonspunkter} kodeverk={kodeverk} />
       <ProsessMeny steps={steps} onClick={setValgtSteg} />
       {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
         <InnsynProsessIndex
