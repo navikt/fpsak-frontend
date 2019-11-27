@@ -43,13 +43,9 @@ describe('<GrunnlagForAarsinntektPanelFL_V2>', () => {
     const ledeText = rows.at(1).find('FormattedMessage');
     const mndAndelFL = rows.at(1).find('Normaltekst');
     const aarAndelFL = rows.at(1).find('Element');
-    const extLinkFL = rows.at(1).find('Column').at(3).childAt(0)
-      .childAt(0)
-      .props();
     expect(ledeText.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans');
     expect(mndAndelFL.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar / 12)));
     expect(aarAndelFL.childAt(0).text()).to.equal(formatCurrencyNoKr(periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar));
-    expect(extLinkFL.href).to.equal('http://alink');
   });
   it('Skal teste tabellen får korrekt antall rader ved arbeidsforhold startdato', () => {
     periode.beregningsgrunnlagPrStatusOgAndel[0].arbeidsforhold.startdato = '2011-12-12';
@@ -71,12 +67,9 @@ describe('<GrunnlagForAarsinntektPanelFL_V2>', () => {
     const ledeText = rows.at(2).find('FormattedMessage');
     const mndAndelFL = rows.at(2).find('Normaltekst');
     const aarAndelFL = rows.at(2).find('Element');
-    const extLinkFL = rows.at(2).find('Column').at(3).childAt(0)
-      .childAt(0)
-      .props();
+
     expect(ledeText.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans');
     expect(mndAndelFL.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar / 12)));
     expect(aarAndelFL.childAt(0).text()).to.equal(formatCurrencyNoKr(periode.beregningsgrunnlagPrStatusOgAndel[0].beregnetPrAar));
-    expect(extLinkFL.href).to.equal('http://alink');
   });
 });
