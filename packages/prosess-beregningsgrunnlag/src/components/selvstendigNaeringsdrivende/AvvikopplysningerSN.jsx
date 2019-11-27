@@ -13,8 +13,7 @@ const AvviksopplysningerSN = ({
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const { pgiSnitt } = snAndel;
-  // TODO: Når pullet master backen hent ut om varig endring fra snAndel.næringer
-  const erVarigEndring = undefined;
+  const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   if (erNyArbLivet) {
     return (
       <Row>
@@ -26,7 +25,7 @@ const AvviksopplysningerSN = ({
       </Row>
     );
   }
-  if (erVarigEndring) {
+  if (!erVarigEndring && !harAksjonspunkter) {
     return (
       <Row>
         <Column xs="12">
@@ -64,43 +63,47 @@ const AvviksopplysningerSN = ({
         </Column>
         <Column xs="3" />
       </Row>
-      <Row>
-        <Column xs="6">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt" />
-          </Normaltekst>
-        </Column>
+      {sammenligningsgrunnlag && (
+        <>
+          <Row>
+            <Column xs="6">
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt" />
+              </Normaltekst>
+            </Column>
 
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst>
-            {formatCurrencyNoKr(sammenligningsgrunnlag)}
-          </Normaltekst>
-        </Column>
-        <Column xs="3" />
+            <Column xs="3" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(sammenligningsgrunnlag)}
+              </Normaltekst>
+            </Column>
+            <Column xs="3" />
 
-      </Row>
-      <Row>
-        <Column xs="9">
-          <hr />
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="6">
-          <Normaltekst className={beregningStyles.semiBoldText}>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-          </Normaltekst>
-        </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst>
-            {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-          </Normaltekst>
-        </Column>
-        <Column xs="3">
-          <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-            {`${avvik}%`}
-          </Normaltekst>
-        </Column>
-      </Row>
+          </Row>
+          <Row>
+            <Column xs="9">
+              <hr />
+            </Column>
+          </Row>
+          <Row>
+            <Column xs="6">
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
+              </Normaltekst>
+            </Column>
+            <Column xs="3" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
+              </Normaltekst>
+            </Column>
+            <Column xs="3">
+              <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+                {`${avvik}%`}
+              </Normaltekst>
+            </Column>
+          </Row>
+        </>
+      )}
     </div>
   );
 };
@@ -117,7 +120,7 @@ AvviksopplysningerSN.propTypes = {
 
 AvviksopplysningerSN.defaultProps = {
   sammenligningsgrunnlag: undefined,
-  avvik: undefined,
+  avvik: '',
   beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
   erNyArbLivet: undefined,
