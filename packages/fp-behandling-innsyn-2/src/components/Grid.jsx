@@ -12,11 +12,13 @@ const Grid = ({
   behandling,
   aksjonspunkter,
   vilkar,
+  innsyn,
   kodeverk,
   alleDokumenter,
   navAnsatt,
   location,
   oppdaterLocation,
+  oppdaterBehandlingVersjon,
 }) => (
   <>
     <Prosess
@@ -24,11 +26,13 @@ const Grid = ({
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
       vilkar={vilkar}
+      innsyn={innsyn}
       kodeverk={kodeverk}
       alleDokumenter={alleDokumenter}
       navAnsatt={navAnsatt}
       location={location}
       oppdaterLocation={oppdaterLocation}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
     />
     <VerticalSpacer sixteenPx />
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
@@ -40,11 +44,13 @@ Grid.propTypes = {
   behandling: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  innsyn: PropTypes.shape().isRequired,
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   location: PropTypes.shape().isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };
 
 export default Grid;

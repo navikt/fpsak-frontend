@@ -10,18 +10,14 @@ import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
-import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  allAccessRights, DataFetcher, behandlingspunktCodes as bpc, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  allAccessRights, behandlingspunktCodes as bpc, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
 } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import fpInnsynApi from '../data/innsynBehandlingApi';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
 import ProsessMeny from './ProsessMeny';
-
-const innsynData = [fpInnsynApi.INNSYN];
-const vedtakData = [fpInnsynApi.INNSYN];
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
@@ -58,8 +54,6 @@ const submitAksjonspunkter = (dispatch, saksnummer, behandlingId, behandlingVers
     .then(() => oppdaterLocation(getLocationWithDefaultBehandlingspunktAndFakta(location)));
 };
 
-const isSaveStarted = createSelector([fpInnsynApi.SAVE_AKSJONSPUNKT.getRestApiStarted()], (isStarted) => (isStarted));
-
 const hasReadOnlyBehandling = createSelector(
   [fpInnsynApi.BEHANDLING_INNSYN.getRestApiError()], (behandlingFetchError) => (!!behandlingFetchError),
 );
@@ -89,11 +83,13 @@ const Prosess = ({
   behandling,
   aksjonspunkter,
   vilkar,
+  innsyn,
   kodeverk,
   alleDokumenter,
   navAnsatt,
   location,
   oppdaterLocation,
+  oppdaterBehandlingVersjon,
 }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -103,7 +99,6 @@ const Prosess = ({
 
   const submitCallback = useCallback(submitAksjonspunkter(dispatch, fagsak.saksnummer, behandling.id, behandling.versjon, oppdaterLocation, location));
   const previewCallback = useCallback(previewCallbackFunc(dispatch, behandling.uuid, fagsak.fagsakYtelseType));
-  const isStarted = useSelector(isSaveStarted);
 
   const steps = punkter.map((p) => ({ label: intl.formatMessage({ id: p.titleCode }), code: p.code }));
 
@@ -115,14 +110,15 @@ const Prosess = ({
   const valgtSteg = steps[valgtStegNummer];
   const valgtP = punkter[valgtStegNummer];
 
-
   useEffect(() => {
     if (valgtP) {
       const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(valgtP.code));
       oppdaterLocation(newLocation);
     }
   }, [valgtStegNummer]);
-
+  useEffect(() => {
+    oppdaterBehandlingVersjon(behandling.versjon);
+  }, [behandling.versjon]);
 
   const apForBp = valgtP ? aksjonspunkter.filter((a) => valgtP.apCodes.includes(a.definisjon.kode)) : [];
   const vilkarForBp = valgtP ? vilkar.filter((v) => valgtP.vilkarene.includes(v)) : [];
@@ -130,57 +126,34 @@ const Prosess = ({
     [behandling, apForBp, vilkarForBp, navAnsatt, fagsak, hasFetchError]);
   const isSubmittable = valgtP ? apForBp.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === valgtP.status : false;
 
-  if (isStarted) {
-    return (
-      <>
-        <ProsessMeny steps={steps} onClick={setValgtSteg} />
-        <LoadingPanel />
-      </>
-    );
-  }
-
   return (
     <>
       <ProsessMeny steps={steps} onClick={setValgtSteg} />
-      <DataFetcher
-        showComponent={!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        showLoadingIcon
-        endpoints={innsynData}
-        render={(dataProps) => (
-          <InnsynProsessIndex
-            saksnummer={fagsak.saksnummer}
-            alleDokumenter={alleDokumenter}
-            submitCallback={submitCallback}
-            readOnly={isReadOnly}
-            isSubmittable={isSubmittable}
-            aksjonspunkter={apForBp}
-            alleKodeverk={kodeverk}
-            behandling={behandling}
-            innsyn={dataProps.innsyn}
-          />
-        )}
-      />
-      <DataFetcher
-        showComponent={!!valgtSteg && valgtSteg.code === bpc.VEDTAK}
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        showLoadingIcon
-        endpoints={vedtakData}
-        render={(dataProps) => (
-          <VedtakInnsynProsessIndex
-            saksnummer={fagsak.saksnummer}
-            aksjonspunkter={aksjonspunkter}
-            alleDokumenter={alleDokumenter}
-            submitCallback={submitCallback}
-            previewCallback={previewCallback}
-            readOnly={isReadOnly}
-            behandling={behandling}
-            innsyn={dataProps.innsyn}
-          />
-        )}
-      />
+      {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
+        <InnsynProsessIndex
+          saksnummer={fagsak.saksnummer}
+          alleDokumenter={alleDokumenter}
+          submitCallback={submitCallback}
+          readOnly={isReadOnly}
+          isSubmittable={isSubmittable}
+          aksjonspunkter={apForBp}
+          alleKodeverk={kodeverk}
+          behandling={behandling}
+          innsyn={innsyn}
+        />
+      )}
+      {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK) && (
+        <VedtakInnsynProsessIndex
+          saksnummer={fagsak.saksnummer}
+          aksjonspunkter={aksjonspunkter}
+          alleDokumenter={alleDokumenter}
+          submitCallback={submitCallback}
+          previewCallback={previewCallback}
+          readOnly={isReadOnly}
+          behandling={behandling}
+          innsyn={innsyn}
+        />
+      )}
     </>
   );
 };
@@ -188,6 +161,7 @@ const Prosess = ({
 Prosess.propTypes = {
   fagsak: PropTypes.shape().isRequired,
   behandling: PropTypes.shape().isRequired,
+  innsyn: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   kodeverk: PropTypes.shape().isRequired,
@@ -195,6 +169,7 @@ Prosess.propTypes = {
   navAnsatt: navAnsattPropType.isRequired,
   location: PropTypes.shape().isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };
 
 export default Prosess;

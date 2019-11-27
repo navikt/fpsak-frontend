@@ -9,7 +9,7 @@ import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynB
 import Grid from './components/Grid';
 
 const behandlingData = [innsynApi.BEHANDLING_INNSYN];
-const aksjonspunktOgVilkarData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR];
+const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN];
 
 /**
  * BehandlingInnsynIndex
@@ -22,6 +22,7 @@ const BehandlingInnsynIndex = ({
   navAnsatt,
   location,
   oppdaterLocation,
+  oppdaterBehandlingVersjon,
 }) => {
   const dispatch = useDispatch();
   useEffect(() => () => {
@@ -44,18 +45,20 @@ const BehandlingInnsynIndex = ({
             behandlingId={dataProps.behandlingInnsyn.id}
             behandlingVersjon={dataProps.behandlingInnsyn.versjon}
             showLoadingIcon
-            endpoints={aksjonspunktOgVilkarData}
+            endpoints={innsynData}
             render={(dProps) => (
               <Grid
                 fagsak={fagsak}
                 behandling={dataProps.behandlingInnsyn}
                 aksjonspunkter={dProps.aksjonspunkter}
                 vilkar={dProps.vilkar}
+                innsyn={dProps.innsyn}
                 kodeverk={kodeverk}
                 alleDokumenter={alleDokumenter}
                 navAnsatt={navAnsatt}
                 location={location}
                 oppdaterLocation={oppdaterLocation}
+                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               />
             )}
           />
@@ -73,6 +76,7 @@ BehandlingInnsynIndex.propTypes = {
   navAnsatt: navAnsattPropType.isRequired,
   location: PropTypes.shape().isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };
 
 export default BehandlingInnsynIndex;

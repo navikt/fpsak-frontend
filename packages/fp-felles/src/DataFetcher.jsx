@@ -122,7 +122,7 @@ export class DataFetcher extends Component {
   render() {
     const {
       showComponent, showComponentDuringFetch, isFetchFinished, render, endpoints, behandlingId, behandlingVersjon,
-      showLoadingIcon, behandlingNotRequired,
+      showLoadingIcon, behandlingNotRequired, keepDataWhenRefetching,
     } = this.props;
     const { nrOfErrors } = this.state;
 
@@ -130,7 +130,7 @@ export class DataFetcher extends Component {
     const showWhenFinished = showComponent && hasRequiredInput && isFetchFinished;
     const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
 
-    if (!hasFailed && (showComponentDuringFetch || showWhenFinished)) {
+    if (!hasFailed && (showComponentDuringFetch || keepDataWhenRefetching || showWhenFinished)) {
       const dataProps = endpoints.reduce((acc, d) => {
         const propName = format(d.name);
         return {
@@ -139,7 +139,11 @@ export class DataFetcher extends Component {
           [propName]: this.props[propName],
         };
       }, {});
-      return render(dataProps);
+
+      const hasData = Object.values(dataProps).some((vp) => vp);
+      if (hasData) {
+        return render(dataProps);
+      }
     }
 
     return showComponent && showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;
