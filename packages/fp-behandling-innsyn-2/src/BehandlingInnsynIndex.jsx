@@ -33,8 +33,7 @@ const BehandlingInnsynIndex = ({
       settBehandlingPaVent: (params) => dispatch(innsynApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
         .then(() => dispatch(innsynApi.BEHANDLING_INNSYN.makeRestApiRequest()({ behandlingId }))),
       taBehandlingAvVent: (params) => dispatch(innsynApi.RESUME_BEHANDLING.makeRestApiRequest()(params)),
-      henleggBehandling: (params) => dispatch(innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params))
-        .then(() => dispatch(innsynApi.BEHANDLING_INNSYN.makeRestApiRequest()({ behandlingId }))),
+      henleggBehandling: (params) => dispatch(innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params)),
     });
 
     return () => {
