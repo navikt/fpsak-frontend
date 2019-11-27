@@ -73,22 +73,23 @@ const AvviksopplysningerAT = ({
           )}
                 {relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
-                )}</Normaltekst>
-        </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst>
-            {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-          </Normaltekst>
-        </Column>
-        <Column xs="3">
-          <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-            {`${avvik}%`}
-          </Normaltekst>
-        </Column>
-      </Row>
-</>
-    )}
-  </>
+                )}
+              </Normaltekst>
+            </Column>
+            <Column xs="3" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
+              </Normaltekst>
+            </Column>
+            <Column xs="3">
+              <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+                {`${avvik}%`}
+              </Normaltekst>
+            </Column>
+          </Row>
+        </>
+      )}
+    </>
   );
 };
 };
