@@ -45,14 +45,32 @@ const AvviksopplysningerPanel = ({
       <VerticalSpacer sixteenPx />
     )}
     {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-    <AvviksopplysningerSN
-      beregnetAarsinntekt={beregnetAarsinntekt}
-      avvik={avvik}
-      sammenligningsgrunnlag={sammenligningsgrunnlag}
-      alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-      erNyArbLivet={erNyArbLivet}
-      harAksjonspunkter={harAksjonspunkter}
-    />
+      <AvviksopplysningerSN
+        beregnetAarsinntekt={beregnetAarsinntekt}
+        avvik={avvik}
+        sammenligningsgrunnlag={sammenligningsgrunnlag}
+        alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
+        erNyArbLivet={erNyArbLivet}
+        harAksjonspunkter={harAksjonspunkter}
+      />
+    )}
+    {relevanteStatuser.isAAP && (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
+          </Normaltekst>
+        </Column>
+      </Row>
+    )}
+    {relevanteStatuser.isDagpenger && (
+    <Row>
+      <Column xs="12">
+        <Normaltekst>
+          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+        </Normaltekst>
+      </Column>
+    </Row>
     )}
     {relevanteStatuser.isAAP && (
       <Row>

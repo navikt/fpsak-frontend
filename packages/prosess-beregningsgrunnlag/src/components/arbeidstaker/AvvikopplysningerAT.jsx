@@ -45,19 +45,20 @@ const AvviksopplysningerAT = ({
         <Column xs="3" />
       </Row>
       {sammenligningsgrunnlag && (
-        <><Row>
-        <Column xs="6">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
-          </Normaltekst>
-        </Column>
+        <>
+          <Row>
+            <Column xs="6">
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
+              </Normaltekst>
+            </Column>
 
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst>
-            {formatCurrencyNoKr(sammenligningsgrunnlag)}
-          </Normaltekst>
-        </Column>
-        <Column xs="3" />
+            <Column xs="3" className={beregningStyles.rightAlignElement}>
+              <Normaltekst>
+                {formatCurrencyNoKr(sammenligningsgrunnlag)}
+              </Normaltekst>
+            </Column>
+            <Column xs="3" />
 
       </Row>
       <Row>
