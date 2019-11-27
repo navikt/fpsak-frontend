@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
-import { Element } from 'nav-frontend-typografi';
+import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { Column, Row } from 'nav-frontend-grid';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
@@ -15,6 +16,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   }
   return undefined;
 };
+// TODO: Legg til test for kombinasjon AT FL når vi får splitting fra marianne
 const AvviksopplysningerPanel = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder, harAksjonspunkter, erNyArbLivet,
 }) => (
@@ -43,14 +45,32 @@ const AvviksopplysningerPanel = ({
       <VerticalSpacer sixteenPx />
     )}
     {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-    <AvviksopplysningerSN
-      beregnetAarsinntekt={beregnetAarsinntekt}
-      avvik={avvik}
-      sammenligningsgrunnlag={sammenligningsgrunnlag}
-      alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-      erNyArbLivet={erNyArbLivet}
-      harAksjonspunkter={harAksjonspunkter}
-    />
+      <AvviksopplysningerSN
+        beregnetAarsinntekt={beregnetAarsinntekt}
+        avvik={avvik}
+        sammenligningsgrunnlag={sammenligningsgrunnlag}
+        alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
+        erNyArbLivet={erNyArbLivet}
+        harAksjonspunkter={harAksjonspunkter}
+      />
+    )}
+    {relevanteStatuser.isAAP && (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
+          </Normaltekst>
+        </Column>
+      </Row>
+    )}
+    {relevanteStatuser.isDagpenger && (
+    <Row>
+      <Column xs="12">
+        <Normaltekst>
+          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+        </Normaltekst>
+      </Column>
+    </Row>
     )}
   </Panel>
 );
