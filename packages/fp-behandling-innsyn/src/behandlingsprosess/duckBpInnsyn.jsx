@@ -1,4 +1,4 @@
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import innsynBehandlingApi from '../data/innsynBehandlingApi';
@@ -9,15 +9,12 @@ const behandlingsprosessRedux = getBehandlingsprosessRedux(reducerName);
 
 reducerRegistry.register(reducerName, behandlingsprosessRedux.reducer);
 
-const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
-  dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterSuccess());
-  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
-};
+const resolveProsessAksjonspunkterSuccess = () => (dispatch) => dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterSuccess());
 
 export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(innsynBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
+    .then(() => dispatch(resolveProsessAksjonspunkterSuccess()));
 };
 
 export const fetchPreviewBrev = innsynBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

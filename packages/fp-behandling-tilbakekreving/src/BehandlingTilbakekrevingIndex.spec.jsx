@@ -23,12 +23,11 @@ describe('BehandlingTilbakekrevingIndex', () => {
         fagsakInfo={{}}
         fetchBehandling={sinon.spy()}
         resetBehandling={sinon.spy()}
-        behandlingerVersjonMappedById={{}}
-        appContextUpdater={{}}
         setBehandlingInfo={sinon.spy()}
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
         showOpenRevurderingModal={false}
+        shouldUpdateFagsak
       />,
     );
 
@@ -50,12 +49,11 @@ describe('BehandlingTilbakekrevingIndex', () => {
         fagsakInfo={{}}
         fetchBehandling={sinon.spy()}
         resetBehandling={sinon.spy()}
-        behandlingerVersjonMappedById={{}}
-        appContextUpdater={{}}
         setBehandlingInfo={sinon.spy()}
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
         showOpenRevurderingModal
+        shouldUpdateFagsak
       />,
     );
     expect(wrapper.find(AdvarselModal)).to.have.length(1);

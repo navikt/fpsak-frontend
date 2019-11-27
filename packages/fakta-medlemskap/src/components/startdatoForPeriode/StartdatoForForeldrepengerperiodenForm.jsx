@@ -154,6 +154,9 @@ const isBefore2019 = (startdato) => (
 
 const validateDates = (values) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
   const { arbeidsgivere, startdatoFraSoknad } = values;
 
   const isStartdatoEtterArbeidsgiverdato = arbeidsgivere && arbeidsgivere

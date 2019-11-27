@@ -66,7 +66,6 @@
   "ConfirmInformationVilkarReadOnly.ConditionMet": "Vilkåret er oppfylt",
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
   
-  "FagsakProfile.AnnenPartSak": "Åpne den annen parts sak",
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
   "FagsakGrid.PleaseSelectBehandling": "Velg behandling",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
@@ -648,5 +647,6 @@
 
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv og behandle saken litt senere. Om feilen oppstår igjen meld den inn via porten.",
   "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}",
-  "Rest.ErrorMessage.Timeout": "Serverkall har gått ut på tid: {location}"
+  "Rest.ErrorMessage.PollingTimeout": "Serverkall har gått ut på tid: {location}",
+  "Rest.ErrorMessage.GatewayTimeoutOrNotFound": "Får ikke kontakt med {contextPath} ({location})"
 }

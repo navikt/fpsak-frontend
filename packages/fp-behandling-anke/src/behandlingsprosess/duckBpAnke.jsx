@@ -1,4 +1,4 @@
-import { getBehandlingsprosessRedux, sakOperations } from '@fpsak-frontend/fp-behandling-felles';
+import { getBehandlingsprosessRedux } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import ankeBehandlingApi from '../data/ankeBehandlingApi';
@@ -9,13 +9,9 @@ const behandlingsprosessRedux = getBehandlingsprosessRedux(reducerName);
 
 reducerRegistry.register(reducerName, behandlingsprosessRedux.reducer);
 
-const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier, shouldUpdateInfo) => (dispatch) => {
+const resolveProsessAksjonspunkterSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterSuccess());
-  if (shouldUpdateInfo) {
-    return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-      .then(() => dispatch(ankeBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
-  }
-  return true;
+  return dispatch(ankeBehandlingApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true }));
 };
 
 export const resolveAnkeTemp = (behandlingIdentifier, params) => (dispatch) => {
@@ -28,10 +24,10 @@ export const saveAnke = (params) => (dispatch) => (
   dispatch(ankeBehandlingApi.SAVE_ANKE_VURDERING.makeRestApiRequest()(params))
 );
 
-export const resolveProsessAksjonspunkter = (behandlingIdentifier, params, shouldUpdateInfo) => (dispatch) => {
+export const resolveProsessAksjonspunkter = (behandlingIdentifier, params) => (dispatch) => {
   dispatch(behandlingsprosessRedux.actionCreators.resolveProsessAksjonspunkterStarted());
   return dispatch(ankeBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier, shouldUpdateInfo)));
+    .then((response) => dispatch(resolveProsessAksjonspunkterSuccess(response, behandlingIdentifier)));
 };
 
 export const fetchPreviewAnkeBrev = ankeBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest();

@@ -63,15 +63,14 @@ describe('<CommonBehandlingIndex>', () => {
         hasSubmittedPaVentForm
         hasManualPaVent={false}
         setBehandlingInfo={sinon.spy()}
-        behandlingerVersjonMappedById={{}}
         behandlingUpdater={{ setUpdater: sinon.spy() }}
         resetBehandlingFpsakContext={sinon.spy()}
-        appContextUpdater={{}}
         behandlingIdentifier={new BehandlingIdentifier(2, 1)}
         isInSync
         fetchBehandling={sinon.spy()}
         fpBehandlingUpdater={{}}
         oppdaterBehandlingVersjon={sinon.spy()}
+        shouldUpdateFagsak
         fagsakInfo={{
           fagsakSaksnummer: 2,
           behandlingId: 1,
@@ -99,15 +98,14 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
       oppdaterBehandlingVersjon={sinon.spy()}
+      shouldUpdateFagsak
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -139,15 +137,14 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fetchBehandling={sinon.spy()}
       fpBehandlingUpdater={{}}
       oppdaterBehandlingVersjon={sinon.spy()}
+      shouldUpdateFagsak
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -187,15 +184,14 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
       oppdaterBehandlingVersjon={sinon.spy()}
+      shouldUpdateFagsak
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,
@@ -228,15 +224,14 @@ describe('<CommonBehandlingIndex>', () => {
       hasManualPaVent={false}
       behandlingPaaVent
       setBehandlingInfo={sinon.spy()}
-      behandlingerVersjonMappedById={{}}
       behandlingUpdater={{ setUpdater: sinon.spy() }}
       resetBehandlingFpsakContext={sinon.spy()}
-      appContextUpdater={{}}
       behandlingIdentifier={new BehandlingIdentifier(2, 1)}
       isInSync
       fpBehandlingUpdater={{}}
       fetchBehandling={sinon.spy()}
       oppdaterBehandlingVersjon={sinon.spy()}
+      shouldUpdateFagsak
       fagsakInfo={{
         fagsakSaksnummer: 2,
         behandlingId: 1,

@@ -9,7 +9,7 @@ import { BehandlingIdentifier, trackRouteParam } from '@fpsak-frontend/fp-felles
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingTilbakekreving';
+import { getBehandlingIdentifier, getFagsakYtelseType, setDoNoUpdateFagsak as setDoNoUpdateFagsakAC } from '../duckBehandlingTilbakekreving';
 import behandlingSelectors from '../selectors/tilbakekrevingBehandlingSelectors';
 import {
   getResolveProsessAksjonspunkterSuccess, resetBehandlingspunkter, resolveProsessAksjonspunkter,
@@ -33,8 +33,13 @@ export class BehandlingsprosessTilbakekrevingIndex extends Component {
   }
 
   submit = (aksjonspunktModels) => {
+    const { setDoNoUpdateFagsak } = this.props;
+    const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+    if (isFatterVedtakAp) {
+      setDoNoUpdateFagsak();
+    }
+
     const afterAksjonspunktSubmit = () => {
-      const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
       if (isFatterVedtakAp) {
         this.setState((prevState) => ({ ...prevState, showFatterVedtakModal: true }));
       } else {
@@ -114,6 +119,7 @@ BehandlingsprosessTilbakekrevingIndex.propTypes = {
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
   selectedBehandlingspunkt: PropTypes.string,
   dispatchSubmitFailed: PropTypes.func.isRequired,
+  setDoNoUpdateFagsak: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -138,6 +144,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
+    setDoNoUpdateFagsak: setDoNoUpdateFagsakAC,
   }, dispatch),
 });
 

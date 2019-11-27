@@ -26,6 +26,7 @@ export const {
   setHasShownBehandlingPaVent,
   updateBehandling,
   updateOnHold,
+  setDoNoUpdateFagsak,
 } = behandlingRedux.actionCreators;
 export const {
   getBehandlingIdentifier,
@@ -38,6 +39,7 @@ export const {
   getNavAnsatt,
   getKanRevurderingOpprettes,
   getSkalBehandlesAvInfotrygd,
+  shouldUpdateFagsak,
 } = behandlingRedux.selectors;
 
 export const getFagsakBehandlingerInfo = createSelector([behandlingRedux.selectors.getBehandlingContext],

@@ -29,7 +29,6 @@ import PapirsoknadUpdater from './PapirsoknadUpdater';
 export const BehandlingPapirsoknadIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
   oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
@@ -41,7 +40,6 @@ export const BehandlingPapirsoknadIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
@@ -66,8 +64,6 @@ export const BehandlingPapirsoknadIndex = ({
     fagsakInfo={fagsakInfo}
     fetchBehandling={fetchBehandling}
     resetBehandlingFpsakContext={resetBehandling}
-    behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-    appContextUpdater={appContextUpdater}
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={PapirsoknadUpdater}
     behandlingUpdater={behandlingUpdater}
@@ -80,7 +76,6 @@ export const BehandlingPapirsoknadIndex = ({
 BehandlingPapirsoknadIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -100,7 +95,6 @@ BehandlingPapirsoknadIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
 };
 

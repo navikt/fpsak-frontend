@@ -23,6 +23,7 @@ import {
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   updateOnHold as updateOnHoldFunc,
   hasOpenRevurdering,
+  shouldUpdateFagsak as shouldUpdateFagsakSel,
 } from './duckBehandlingTilbakekreving';
 import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 
@@ -34,7 +35,6 @@ import FpTilbakeBehandlingUpdater from './FpTilbakeBehandlingUpdater';
 export const BehandlingTilbakekrevingIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
   oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
@@ -46,7 +46,6 @@ export const BehandlingTilbakekrevingIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
@@ -54,6 +53,7 @@ export const BehandlingTilbakekrevingIndex = ({
   setBehandlingInfo,
   hasSubmittedPaVentForm,
   showOpenRevurderingModal,
+  shouldUpdateFagsak,
 }) => {
   const [showModal, setShowModal] = useState(showOpenRevurderingModal);
   useEffect(() => {
@@ -78,12 +78,11 @@ export const BehandlingTilbakekrevingIndex = ({
         fagsakInfo={fagsakInfo}
         fetchBehandling={fetchBehandling}
         resetBehandlingFpsakContext={resetBehandling}
-        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-        appContextUpdater={appContextUpdater}
         setBehandlingInfo={setBehandlingInfo}
         fpBehandlingUpdater={FpTilbakeBehandlingUpdater}
         behandlingUpdater={behandlingUpdater}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        shouldUpdateFagsak={shouldUpdateFagsak}
       >
         <TilbakekrevingDataResolver>
           <BehandlingGrid
@@ -107,7 +106,6 @@ export const BehandlingTilbakekrevingIndex = ({
 BehandlingTilbakekrevingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -127,9 +125,9 @@ BehandlingTilbakekrevingIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
   showOpenRevurderingModal: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
 };
 
 const showOpenRevurderingModal = createSelector([hasOpenRevurdering, behandlingSelectors.getBehandlingIsOnHold], (
@@ -163,6 +161,7 @@ const mapStateToProps = (state, ownProps) => ({
   isInSync: behandlingSelectors.isBehandlingInSync(state),
   showOpenRevurderingModal: showOpenRevurderingModal(state),
   fagsakInfo: createFagsakInfo(state, ownProps),
+  shouldUpdateFagsak: shouldUpdateFagsakSel(state),
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

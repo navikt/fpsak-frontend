@@ -15,6 +15,7 @@ const initialState = {
 export interface State {
   data: any;
   meta: any;
+  cacheParams: any;
   error?: any;
   started: boolean;
   finished: boolean;
@@ -29,6 +30,7 @@ interface Action {
   meta?: {
     options: {
       keepData: boolean;
+      cacheParams: {};
     };
   };
   payload?: any;
@@ -56,6 +58,7 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
         started: true,
         meta: action.payload,
+        cacheParams: action.meta.options.cacheParams,
       };
     }
     case actionTypes.statusRequestStarted():
@@ -94,6 +97,7 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         ...state,
         data: undefined,
         started: false,
+        finished: true,
         error: action.payload,
         pollingMessage: undefined,
       };

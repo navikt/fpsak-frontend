@@ -393,6 +393,9 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
 
 const validateNyPeriodeForm = (values) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
 
   const invalid = required(values.fom) || hasValidPeriod(values.fom, values.tom);
 

@@ -34,7 +34,6 @@ import {
   getBehandlingsresultat,
 } from '../../behandling/duck';
 import { getKodeverk, getFpTilbakeKodeverk } from '../../kodeverk/duck';
-import { approve, resetApproval, getApproveFinished } from './duck';
 
 const getArsaker = (approval) => ([{
   code: vurderPaNyttArsakType.FEIL_FAKTA,
@@ -157,7 +156,7 @@ export class ApprovalIndex extends Component {
       <DataFetcher
         behandlingId={behandlingIdentifier.behandlingId}
         behandlingVersjon={selectedBehandlingVersjon}
-        data={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
+        endpoints={klageData.some((kd) => kd.isEndpointEnabled()) ? klageData : ingenData}
         render={(props) => (
           <>
             <TotrinnskontrollSakIndex
@@ -182,7 +181,7 @@ export class ApprovalIndex extends Component {
               <DataFetcher
                 behandlingId={behandlingIdentifier.behandlingId}
                 behandlingVersjon={selectedBehandlingVersjon}
-                data={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
+                endpoints={revurderingData.some((rd) => rd.isEndpointEnabled()) ? revurderingData : ingenData}
                 render={(modalProps) => (
                   <FatterVedtakApprovalModalSakIndex
                     showModal={showBeslutterModal}
@@ -273,7 +272,7 @@ const mapStateToPropsFactory = (initialState) => {
       location: state.router.location,
       behandlingUuid: getBehandlingerUuidsMappedById(state)[behandlingIdentifier.behandlingId],
       fagsakYtelseType: getFagsakYtelseType(state),
-      erGodkjenningFerdig: getApproveFinished(state),
+      erGodkjenningFerdig: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.getRestApiFinished()(state),
       isForeldrepenger: isForeldrepengerFagsak(state),
       erBehandlingEtterKlage: erArsakTypeBehandlingEtterKlage(state),
       behandlingsresultat: getBehandlingsresultat(state),
@@ -289,8 +288,8 @@ const mapStateToPropsFactory = (initialState) => {
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     push,
-    approve,
-    resetApproval,
+    approve: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.makeRestApiRequest(),
+    resetApproval: fpsakApi.SAVE_TOTRINNSAKSJONSPUNKT.resetRestApi(),
     previewMessage,
   }, dispatch),
 });

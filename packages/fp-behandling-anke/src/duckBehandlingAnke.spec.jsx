@@ -12,6 +12,7 @@ describe('Anke-behandling-reducer', () => {
       kodeverk: {},
       fagsak: {},
       fagsakBehandlingerInfo: [],
+      shouldUpdateFagsak: true,
     });
   });
 });

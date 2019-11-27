@@ -7,24 +7,24 @@ import { destroy } from 'redux-form';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { BehandlingErPaVentModal, BehandlingIdentifier, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 
-import sakOperations from './SakOperations';
 import CommonBehandlingResolver from './CommonBehandlingResolver';
 
 export class CommonBehandlingIndex extends Component {
   componentDidMount = () => {
     const {
-      setBehandlingInfo: setInfo, behandlingUpdater, appContextUpdater, fagsakInfo, fpBehandlingUpdater,
+      setBehandlingInfo: setInfo, behandlingUpdater, fagsakInfo, fpBehandlingUpdater,
     } = this.props;
 
     setInfo(fagsakInfo);
     behandlingUpdater.setUpdater(fpBehandlingUpdater);
-    sakOperations.withUpdateFagsakInfo(appContextUpdater.updateFagsakInfo);
   }
 
   componentDidUpdate = (prevProps) => {
-    const { oppdaterBehandlingVersjon, behandlingVersjon } = this.props;
+    const { oppdaterBehandlingVersjon, behandlingVersjon, shouldUpdateFagsak } = this.props;
     if (this.didGetNewBehandlingVersion(prevProps)) {
-      oppdaterBehandlingVersjon(behandlingVersjon);
+      if (shouldUpdateFagsak) {
+        oppdaterBehandlingVersjon(behandlingVersjon);
+      }
       this.cleanUp(prevProps.behandlingId, prevProps.behandlingVersjon);
     }
   }
@@ -59,7 +59,6 @@ export class CommonBehandlingIndex extends Component {
       hasManualPaVent,
       ventearsaker,
       behandlingIdentifier,
-      behandlingerVersjonMappedById,
       isInSync,
       fetchBehandling,
       children,
@@ -72,7 +71,6 @@ export class CommonBehandlingIndex extends Component {
         isInSync={isInSync}
         fetchBehandling={fetchBehandling}
         behandlingIdentifier={behandlingIdentifier}
-        behandlingerVersjonMappedById={behandlingerVersjonMappedById}
       >
         {children}
         {!hasSubmittedPaVentForm
@@ -96,7 +94,6 @@ export class CommonBehandlingIndex extends Component {
 CommonBehandlingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   fristBehandlingPaaVent: PropTypes.string,
   setBehandlingInfo: PropTypes.func.isRequired,
   behandlingPaaVent: PropTypes.bool,
@@ -111,7 +108,7 @@ CommonBehandlingIndex.propTypes = {
   behandlingUpdater: PropTypes.shape().isRequired,
   resetBehandlingFpsakContext: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
+  shouldUpdateFagsak: PropTypes.bool,
   ventearsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string,
     navn: PropTypes.string,
@@ -130,6 +127,7 @@ CommonBehandlingIndex.defaultProps = {
   venteArsakKode: undefined,
   ventearsaker: [],
   behandlingIdentifier: undefined,
+  shouldUpdateFagsak: true,
 };
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

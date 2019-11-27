@@ -11,7 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { BehandlingIdentifier, getLocationWithQueryParams, trackRouteParam } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from '../duckBehandlingKlage';
+import { getBehandlingIdentifier, getFagsakYtelseType, setDoNoUpdateFagsak as setDoNoUpdateFagsakAC } from '../duckBehandlingKlage';
 import BehandlingspunktKlageInfoPanel from './components/BehandlingspunktKlageInfoPanel';
 import KlageBehandlingModal from './components/KlageBehandlingModal';
 import behandlingSelectors from '../selectors/klageBehandlingSelectors';
@@ -68,12 +68,16 @@ export class BehandlingsprosessKlageIndex extends Component {
   }
 
   submit = (aksjonspunktModels) => {
+    const { setDoNoUpdateFagsak } = this.props;
     const skalByttTilKlageinstans = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
     const erKlageHjemsendt = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
+    const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
 
-    const shouldUpdateInfo = !skalByttTilKlageinstans;
+    if (skalByttTilKlageinstans || erFatterVedtak) {
+      setDoNoUpdateFagsak();
+    }
 
     const afterAksjonspunktSubmit = () => {
       if (skalByttTilKlageinstans) {
@@ -85,7 +89,7 @@ export class BehandlingsprosessKlageIndex extends Component {
       }
     };
 
-    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit);
   }
 
   getSubmit = (submitCallback, goToDefaultPage) => {
@@ -163,6 +167,7 @@ BehandlingsprosessKlageIndex.propTypes = {
   saveKlage: PropTypes.func.isRequired,
   resolveKlageTemp: PropTypes.func.isRequired,
   hasForeslaVedtakAp: PropTypes.bool.isRequired,
+  setDoNoUpdateFagsak: PropTypes.func.isRequired,
 };
 
 const getForeslaVedtakAp = createSelector([behandlingSelectors.getOpenAksjonspunkter], (openAksjonspunkter) => openAksjonspunkter
@@ -195,6 +200,7 @@ const mapDispatchToProps = (dispatch) => ({
     push,
     saveKlage,
     resolveKlageTemp,
+    setDoNoUpdateFagsak: setDoNoUpdateFagsakAC,
   }, dispatch),
 });
 

@@ -19,6 +19,7 @@ import {
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   getHasShownBehandlingPaVent,
   updateOnHold as updateOnHoldFunc,
+  shouldUpdateFagsak as shouldUpdateFagsakSel,
 } from './duckBehandlingAnke';
 import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
 
@@ -31,7 +32,6 @@ import fpAnkeBehandlingUpdater from './FpAnkeBehandlingUpdater';
 export const BehandlingAnkeIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
   oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
@@ -43,13 +43,13 @@ export const BehandlingAnkeIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
   setHasShownBehandlingPaVent,
   setBehandlingInfo,
   hasSubmittedPaVentForm,
+  shouldUpdateFagsak,
 }) => (
   <CommonBehandlingIndex
     behandlingId={behandlingId}
@@ -68,12 +68,11 @@ export const BehandlingAnkeIndex = ({
     fagsakInfo={fagsakInfo}
     fetchBehandling={fetchBehandling}
     resetBehandlingFpsakContext={resetBehandling}
-    behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-    appContextUpdater={appContextUpdater}
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={fpAnkeBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
     oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+    shouldUpdateFagsak={shouldUpdateFagsak}
   >
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessAnkeIndex />}
@@ -85,7 +84,6 @@ export const BehandlingAnkeIndex = ({
 BehandlingAnkeIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -105,8 +103,8 @@ BehandlingAnkeIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
 };
 
 BehandlingAnkeIndex.defaultProps = {
@@ -138,6 +136,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
     ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
     isInSync: behandlingSelectors.isBehandlingInSync(state),
+    shouldUpdateFagsak: shouldUpdateFagsakSel(state),
     fagsakInfo,
   });
 };

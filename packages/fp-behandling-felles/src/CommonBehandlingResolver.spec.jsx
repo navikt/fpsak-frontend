@@ -4,7 +4,6 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 
 import CommonBehandlingResolver from './CommonBehandlingResolver';
@@ -20,9 +19,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted
       >
         <div>test</div>
@@ -42,9 +39,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ test: 'test' }}
         isInSync={false}
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted={false}
       >
         <div>test</div>
@@ -55,9 +50,8 @@ describe('CommonBehandlingResolver', () => {
 
     expect(fetchBehandling.getCalls()).has.length(1);
     const { args } = fetchBehandling.getCalls()[0];
-    expect(args).has.length(2);
+    expect(args).has.length(1);
     expect(args[0]).is.eql(identifier);
-    expect(args[1]).is.eql({ test: 'test' });
 
     expect(wrapper.find(LoadingPanel)).to.have.length(1);
   });
@@ -72,9 +66,7 @@ describe('CommonBehandlingResolver', () => {
       <CommonBehandlingResolver
         behandlingIdentifier={identifier}
         fetchBehandling={fetchBehandling}
-        behandlingerVersjonMappedById={{ }}
         isInSync
-        behandlingerTyperMappedById={{ 1: BehandlingType.FORSTEGANGSSOKNAD }}
         hasFetchStarted
       >
         <div>test</div>

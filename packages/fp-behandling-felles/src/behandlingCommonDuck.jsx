@@ -1,18 +1,11 @@
 import { createSelector } from 'reselect';
 
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-import sakOperations from './SakOperations';
 
 // TODO (TOR) Rydd opp i dette. Kan ein legge rehenting av fagsakInfo i resolver i staden?
 const getUpdateBehandling = (behandlingApi) => (
-  behandlingIdentifier, behandlingerVersjonMappedById,
-) => (dispatch) => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }))
-  .then((response) => {
-    if (behandlingerVersjonMappedById && behandlingerVersjonMappedById[response.payload.id] !== response.payload.versjon) {
-      dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer));
-    }
-    return Promise.resolve(response);
-  });
+  behandlingIdentifier,
+) => (dispatch) => dispatch(behandlingApi.BEHANDLING.makeRestApiRequest()(behandlingIdentifier.toJson(), { keepData: true }));
 
 const getResetBehandling = (behandlingApi, resetBehandlingContext) => (dispatch) => Promise.all([
   dispatch(behandlingApi.BEHANDLING.resetRestApi()()),
@@ -24,9 +17,7 @@ const getFetchBehandling = (behandlingApi, updateBehandling) => (behandlingIdent
   dispatch(updateBehandling(behandlingIdentifier, allBehandlinger));
 };
 
-const getUpdateFagsakAndBehandling = (updateBehandling) => (behandlingIdentifier) => (dispatch) => dispatch(
-  sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer),
-).then(() => dispatch(updateBehandling(behandlingIdentifier)));
+const getUpdateFagsakAndBehandling = (updateBehandling) => (behandlingIdentifier) => (dispatch) => dispatch(updateBehandling(behandlingIdentifier));
 
 const getUpdateOnHold = (behandlingApi, updateFagsakAndBehandling) => (
   params, behandlingIdentifier,
@@ -49,6 +40,11 @@ const getBehandlingReducer = (initialState, actionTypes) => (state = initialStat
         ...initialState,
         ...action.data,
       };
+    case actionTypes.DO_NOT_UPDATE_FAGSAK:
+      return {
+        ...state,
+        shouldUpdateFagsak: false,
+      };
     case actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT:
       return {
         ...state,
@@ -65,6 +61,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
   const actionType = (name) => `${reducerName}/${name}`;
   const actionTypes = {
     SET_BEHANDLING_INFO: actionType('SET_BEHANDLING_INFO'),
+    DO_NOT_UPDATE_FAGSAK: actionType('DO_NOT_UPDATE_FAGSAK'),
     HAS_SHOWN_BEHANDLING_PA_VENT: actionType('HAS_SHOWN_BEHANDLING_PA_VENT'),
     RESET_FPSAK_BEHANDLING: actionType('RESET_FPSAK_BEHANDLING'),
   };
@@ -85,6 +82,9 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     setHasShownBehandlingPaVent: () => ({
       type: actionTypes.HAS_SHOWN_BEHANDLING_PA_VENT,
     }),
+    setDoNoUpdateFagsak: () => ({
+      type: actionTypes.DO_NOT_UPDATE_FAGSAK,
+    }),
     resetBehandling: getResetBehandling(behandlingApi, resetBehandlingContext),
     fetchBehandling: getFetchBehandling(behandlingApi, updateBehandling),
     updateOnHold: getUpdateOnHold(behandlingApi, updateFagsakAndBehandling),
@@ -98,6 +98,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
     kodeverk: {},
     fagsak: {},
     hasShownBehandlingPaVent: false,
+    shouldUpdateFagsak: true,
     ...additionalInitalState,
   };
 
@@ -114,6 +115,7 @@ const getBehandlingRedux = (reducerName, behandlingApi, behandlingApiKeys, addit
       (behandlingId, saksnummer) => (behandlingId ? new BehandlingIdentifier(saksnummer, behandlingId) : undefined),
     ),
     getFagsakStatus: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakStatus),
+    shouldUpdateFagsak: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.shouldUpdateFagsak),
     getFagsakPerson: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakPerson),
     getFagsakYtelseType: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.fagsakYtelseType),
     getKanRevurderingOpprettes: createSelector([getBehandlingContext], (behandlingContext) => behandlingContext.fagsak.kanRevurderingOpprettes),

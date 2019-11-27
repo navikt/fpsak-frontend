@@ -21,11 +21,10 @@ describe('BehandlingKlageIndex', () => {
         fagsakInfo={{}}
         fetchBehandling={sinon.spy()}
         resetBehandling={sinon.spy()}
-        behandlingerVersjonMappedById={{}}
-        appContextUpdater={{}}
         setBehandlingInfo={sinon.spy()}
         fpBehandlingUpdater={{}}
         behandlingUpdater={{}}
+        shouldUpdateFagsak
       />,
     );
     expect(wrapper.find(BehandlingGrid)).to.have.length(1);
