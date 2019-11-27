@@ -3,6 +3,7 @@ import { createSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { push } from 'connected-react-router';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
@@ -13,7 +14,7 @@ import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck
 import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
-  getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson,
+  getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
   getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
@@ -29,7 +30,7 @@ import {
 import behandlingUpdater from './BehandlingUpdater';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
-const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-innsyn'));
+const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
@@ -88,6 +89,7 @@ export class BehandlingIndex extends Component {
       type: PropTypes.string.isRequired,
     })).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
+    push: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -115,6 +117,11 @@ export class BehandlingIndex extends Component {
     const { resetBehandlingContext } = this.props;
     resetBehandlingContext();
   }
+
+  goToLocation = (location) => {
+    const { push: pushLocation } = this.props;
+    pushLocation(location);
+  };
 
   render() {
     const {
@@ -174,18 +181,16 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingInnsynIndex
-            key={behandlingId}
-            saksnummer={saksnummer}
             behandlingId={behandlingId}
-            location={location}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingUpdater={behandlingUpdater}
-            featureToggles={featureToggles}
             hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-            allDocuments={allDocuments}
+            alleDokumenter={allDocuments}
             kodeverk={kodeverk}
             fagsak={fagsak}
             navAnsatt={navAnsatt}
+            oppdaterLocation={this.goToLocation}
+            location={location}
           />
         </Suspense>
       );
@@ -256,9 +261,11 @@ export class BehandlingIndex extends Component {
   }
 }
 
-export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
-  getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd], (fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger,
-  kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
+export const getFagsakInfo = createSelector([
+  getSaksnummer, getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
+  getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd],
+(saksnummer, fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger, kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
+  saksnummer,
   fagsakStatus,
   fagsakPerson,
   fagsakYtelseType,
@@ -292,6 +299,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   oppdaterBehandlingVersjon: oppdaterVersjon,
   resetBehandlingContext: resetBehandlingContextActionCreator,
   setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
+  push,
 }, dispatch);
 
 export default trackRouteParam({
