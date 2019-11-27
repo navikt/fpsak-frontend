@@ -14,7 +14,6 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { Column, Row } from 'nav-frontend-grid';
 import NaturalytelsePanel from './NaturalytelsePanel';
-import createExternalLink from '../redesign/LinkTilEksterntSystem';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -98,9 +97,7 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
-        <Column xs="1" key={`ColLink${index + 1}`}>
-          {createExternalLink('IM', `Link${index + 1}`)}
-        </Column>
+        <Column xs="1" key={`ColLink${index + 1}`} />
       </Row>
       <Row key={`indexD${index + 1}`}>
         <Column xs="4" key={`ColArbSt${index + 1}`}>
@@ -168,7 +165,6 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
       <Panel className={beregningStyles.panel}>
         <Element>
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
-          {createExternalLink('Aa')}
         </Element>
         <Row key="Header">
           <Column xs="4" key="ATempthy1" />

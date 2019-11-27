@@ -152,9 +152,7 @@ const TilstotendeYtelser = ({
               <Column xs="2" />
               <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
               <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
-              <Column xs="2">
-                <Undertekst>Kilde LLL</Undertekst>
-              </Column>
+              <Column xs="2" />
             </>
           )}
             <VerticalSpacer eightPx />

@@ -8,7 +8,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-import createExternalLink from '../redesign/LinkTilEksterntSystem';
+
 
 /**
  * GrunnlagForAarsinntektPanelFL
@@ -75,9 +75,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         <Column xs="2" className={beregningStyles.rightAlignElement}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column xs="1">
-          {createExternalLink('AI', 'AI')}
-        </Column>
+        <Column xs="1" />
       </Row>
     </Panel>
   );
