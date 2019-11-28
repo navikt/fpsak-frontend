@@ -100,11 +100,11 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
     };
   }
   const transformedValues = inntektPrAndel
+    .filter(({nyAndel}) => nyAndel !== true)
     .map((verdi) => ({
       andelsnr: verdi.andelsnr,
       nyAndel: verdi.nyAndel,
       lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
-      aktivitetStatus: verdi.nyAndel ? AktivitetStatus.DAGPENGER : null,
       fastsatteVerdier: {
         fastsattBeløp: verdi.fastsattBelop,
         inntektskategori: verdi.inntektskategori,
