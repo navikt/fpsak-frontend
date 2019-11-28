@@ -5,7 +5,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { PeriodpickerField } from '@fpsak-frontend/form';
 import { FlexColumn, FlexRow, PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import {
-  dateAfterOrEqual, dateRangesNotOverlapping, hasValidDate, required,
+  dateRangesNotOverlapping, hasValidDate, required,
 } from '@fpsak-frontend/utils';
 
 import styles from './dokumentertePerioderPeriodePicker.less';
@@ -36,7 +36,7 @@ class DokumentertePerioderPeriodePicker extends PureComponent {
                     <PeriodpickerField
                       names={[`${fieldId}.fom`, `${fieldId}.tom`]}
                       label={index === 0 ? { id: 'UttakInfoPanel.AvklartPeriode' } : ''}
-                      validate={[required, hasValidDate, dateRangesNotOverlapping, dateAfterOrEqual]}
+                      validate={[required, hasValidDate, dateRangesNotOverlapping]}
                       defaultValue={null}
                       readOnly={readOnly}
                     />

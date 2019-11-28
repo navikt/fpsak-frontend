@@ -133,6 +133,7 @@
   "ValidationMessage.DateRangesOverlapping": "Perioder kan ikke overlappe i tid",
   "ValidationMessage.InvalidText": "Feltet inneholder ugyldige tegn: {text}",
   "ValidationMessage.InvalidDate": "Dato må skrives slik : dd.mm.åååå",
+  "ValidationMessage.InvalidPeriod": "Startdato må være før eller lik sluttdato",
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett"
