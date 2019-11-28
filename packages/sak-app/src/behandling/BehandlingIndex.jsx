@@ -128,6 +128,7 @@ export class BehandlingIndex extends Component {
     const {
       saksnummer,
       behandlingId,
+      behandlingVersjon,
       behandlingType,
       location,
       oppdaterBehandlingVersjon,
@@ -183,6 +184,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingInnsynIndex
             behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingEventHandler={behandlingEventHandler}
             alleDokumenter={allDocuments}

@@ -19,10 +19,11 @@ import fpInnsynApi from '../data/innsynBehandlingApi';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
 import ProsessMeny from './ProsessMeny';
 import BehandlingPaVent from './BehandlingPaVent';
+import MargMarkering from './MargMarkering';
 
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
-const getBehandlingspunkterProps = (fagsak, behandling, aksjonspunkter, vilkar) => {
+const getBehandlingspunkterProps = (fagsak, behandling, aksjonspunkter, vilkar, innsyn) => {
   if (!behandling.type) {
     return undefined;
   }
@@ -31,7 +32,7 @@ const getBehandlingspunkterProps = (fagsak, behandling, aksjonspunkter, vilkar) 
     behandlingType: behandling.type,
     aksjonspunkter,
     vilkar,
-    innsynResultatType: {},
+    innsynResultatType: innsyn.innsynResultatType,
   };
 
   const liste = createForeldrepengerBpProps(builderData);
@@ -94,7 +95,7 @@ const Prosess = ({
 }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
-  const punkter = useMemo(() => getBehandlingspunkterProps(fagsak, behandling, aksjonspunkter, vilkar), [fagsak, behandling]);
+  const punkter = useMemo(() => getBehandlingspunkterProps(fagsak, behandling, aksjonspunkter, vilkar, innsyn), [fagsak, behandling, aksjonspunkter, vilkar, innsyn]);
 
   const hasFetchError = useSelector(hasReadOnlyBehandling);
 
@@ -117,6 +118,7 @@ const Prosess = ({
       oppdaterLocation(newLocation);
     }
   }, [valgtStegNummer]);
+
   useEffect(() => {
     oppdaterBehandlingVersjon(behandling.versjon);
   }, [behandling.versjon]);
@@ -130,8 +132,9 @@ const Prosess = ({
   return (
     <>
       <BehandlingPaVent behandling={behandling} aksjonspunkter={aksjonspunkter} kodeverk={kodeverk} />
-      <ProsessMeny steps={steps} onClick={setValgtSteg} />
-      {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
+      <MargMarkering behandlingStatus={behandling.status} aksjonspunkter={apForBp} isReadOnly={isReadOnly}>
+        <ProsessMeny steps={steps} onClick={setValgtSteg} />
+        {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
         <InnsynProsessIndex
           saksnummer={fagsak.saksnummer}
           alleDokumenter={alleDokumenter}
@@ -143,8 +146,8 @@ const Prosess = ({
           behandling={behandling}
           innsyn={innsyn}
         />
-      )}
-      {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK) && (
+        )}
+        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK) && (
         <VedtakInnsynProsessIndex
           saksnummer={fagsak.saksnummer}
           aksjonspunkter={aksjonspunkter}
@@ -155,7 +158,8 @@ const Prosess = ({
           behandling={behandling}
           innsyn={innsyn}
         />
-      )}
+        )}
+      </MargMarkering>
     </>
   );
 };

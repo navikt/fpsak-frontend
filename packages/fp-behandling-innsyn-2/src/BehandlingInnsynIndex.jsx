@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { destroy } from 'redux-form';
 
-import { DataFetcher } from '@fpsak-frontend/fp-felles';
+import { DataFetcher, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import Grid from './components/Grid';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const behandlingData = [innsynApi.BEHANDLING_INNSYN];
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN];
@@ -16,6 +18,7 @@ const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN
  */
 const BehandlingInnsynIndex = ({
   behandlingId,
+  behandlingVersjon,
   fagsak,
   kodeverk,
   alleDokumenter,
@@ -38,6 +41,9 @@ const BehandlingInnsynIndex = ({
 
     return () => {
       behandlingEventHandler.clear();
+      // Delay destruction to after potentially expensive transition
+      setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon)), 1000));
+
       return Object.values(InnsynBehandlingApiKeys)
         .forEach((value) => {
           dispatch(innsynApi[value].resetRestApi()());
@@ -45,45 +51,57 @@ const BehandlingInnsynIndex = ({
     };
   }, []);
 
+  const forrigeVersjon = useRef();
+  useEffect(() => {
+    if (forrigeVersjon.current) {
+      setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, forrigeVersjon.current)), 1000));
+    }
+    forrigeVersjon.current = behandlingVersjon;
+  }, [behandlingVersjon]);
+
   return (
-    <DataFetcher
-      showLoadingIcon
-      keepDataWhenRefetching
-      endpoints={behandlingData}
-      behandlingNotRequired
-      endpointParams={{ behandlingId }}
-      render={(dataProps) => {
-        reduxRestApi.injectPaths(dataProps.behandlingInnsyn.links);
-        return (
-          <DataFetcher
-            behandlingId={dataProps.behandlingInnsyn.id}
-            behandlingVersjon={dataProps.behandlingInnsyn.versjon}
-            showLoadingIcon
-            endpoints={innsynData}
-            render={(dProps) => (
-              <Grid
-                fagsak={fagsak}
-                behandling={dataProps.behandlingInnsyn}
-                aksjonspunkter={dProps.aksjonspunkter}
-                vilkar={dProps.vilkar}
-                innsyn={dProps.innsyn}
-                kodeverk={kodeverk}
-                alleDokumenter={alleDokumenter}
-                navAnsatt={navAnsatt}
-                location={location}
-                oppdaterLocation={oppdaterLocation}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-              />
-            )}
-          />
-        );
-      }}
-    />
+    <ErrorBoundary>
+      <DataFetcher
+        showLoadingIcon
+        keepDataWhenRefetching
+        endpoints={behandlingData}
+        behandlingNotRequired
+        endpointParams={{ behandlingId }}
+        render={(dataProps) => {
+          const { behandlingInnsyn } = dataProps;
+          reduxRestApi.injectPaths(behandlingInnsyn.links);
+          return (
+            <DataFetcher
+              behandlingId={behandlingInnsyn.id}
+              behandlingVersjon={behandlingInnsyn.versjon}
+              showLoadingIcon
+              endpoints={innsynData}
+              render={(dProps) => (
+                <Grid
+                  fagsak={fagsak}
+                  behandling={behandlingInnsyn}
+                  aksjonspunkter={dProps.aksjonspunkter}
+                  vilkar={dProps.vilkar}
+                  innsyn={dProps.innsyn}
+                  kodeverk={kodeverk}
+                  alleDokumenter={alleDokumenter}
+                  navAnsatt={navAnsatt}
+                  location={location}
+                  oppdaterLocation={oppdaterLocation}
+                  oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                />
+              )}
+            />
+          );
+        }}
+      />
+    </ErrorBoundary>
   );
 };
 
 BehandlingInnsynIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
+  behandlingVersjon: PropTypes.number.isRequired,
   fagsak: PropTypes.shape().isRequired,
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,

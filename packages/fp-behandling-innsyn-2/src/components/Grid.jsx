@@ -21,19 +21,24 @@ const Grid = ({
   oppdaterBehandlingVersjon,
 }) => (
   <>
-    <Prosess
-      fagsak={fagsak}
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
-      vilkar={vilkar}
-      innsyn={innsyn}
-      kodeverk={kodeverk}
-      alleDokumenter={alleDokumenter}
-      navAnsatt={navAnsatt}
-      location={location}
-      oppdaterLocation={oppdaterLocation}
-      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-    />
+    {behandling.behandlingHenlagt && (
+      <span>Henlagt</span>
+    )}
+    {!behandling.behandlingHenlagt && (
+      <Prosess
+        fagsak={fagsak}
+        behandling={behandling}
+        aksjonspunkter={aksjonspunkter}
+        vilkar={vilkar}
+        innsyn={innsyn}
+        kodeverk={kodeverk}
+        alleDokumenter={alleDokumenter}
+        navAnsatt={navAnsatt}
+        location={location}
+        oppdaterLocation={oppdaterLocation}
+        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      />
+    )}
     <VerticalSpacer sixteenPx />
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
