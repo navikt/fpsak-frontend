@@ -141,7 +141,7 @@ export class DataFetcher extends Component {
       }, {});
 
       const hasData = Object.values(dataProps).some((vp) => vp);
-      if (hasData) {
+      if (showComponentDuringFetch || hasData) {
         return render(dataProps);
       }
     }
