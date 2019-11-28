@@ -30,6 +30,7 @@
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinValue": "Feltet må være større eller lik {length}",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
+  "ValidationMessage.trekkdagerErMerEnnNullUtsettelse": "Ingen trekkdager for utsettelse",
   "Uttak.Confirm": "Bekreft og fortsett",
   "Uttak.ManuellOverstyring": "Manuell overstyring",
   "Uttak.Overstyrt": "Kun overstyrer kan endre på periodene",
