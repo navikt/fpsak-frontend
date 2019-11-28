@@ -41,25 +41,22 @@ export const shelveBehandling = (params, behandlingType) => (dispatch) => {
 };
 
 // TODO (TOR) Refaktorer denne! Og burde heller kalla dispatch(resetBehandlingContext()) enn behandlingUpdater.resetBehandling(dispatch) (ta vekk if/else)
-export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => (dispatch) => {
-  const resetOrDoNothing = erBehandlingValgt ? behandlingUpdater.resetBehandling(dispatch) : Promise.resolve();
-  return resetOrDoNothing
-    .then(() => dispatch((isTilbakekreving ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params)))
-    .then((response) => {
-      const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
-      if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
-        return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
-          .then((behandlingerResponse) => {
-            const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
-            push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
-            return Promise.resolve(behandlingerResponse);
-          });
-      }
-      // NEW_BEHANDLING har returnert behandling
+export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilbakekreving, params) => (dispatch) => dispatch((isTilbakekreving
+  ? fpsakApi.NEW_BEHANDLING_FPTILBAKE : fpsakApi.NEW_BEHANDLING_FPSAK).makeRestApiRequest()(params))
+  .then((response) => {
+    const updateBehandlinger = isTilbakekreving ? fpsakApi.BEHANDLINGER_FPTILBAKE : fpsakApi.BEHANDLINGER_FPSAK;
+    if (response.payload.saksnummer) { // NEW_BEHANDLING har returnert fagsak
       return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
-        .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
-    });
-};
+        .then((behandlingerResponse) => {
+          const pathname = pathToBehandling(saksnummer, findNewBehandlingId(behandlingerResponse));
+          push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname }));
+          return Promise.resolve(behandlingerResponse);
+        });
+    }
+    // NEW_BEHANDLING har returnert behandling
+    return dispatch(updateBehandlinger.makeRestApiRequest()({ saksnummer }))
+      .then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({ pathname: pathToBehandling(saksnummer, response.payload.id) })));
+  });
 
 const updateFagsakAndBehandlingInfo = (behandlingIdentifier) => (dispatch) => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
 

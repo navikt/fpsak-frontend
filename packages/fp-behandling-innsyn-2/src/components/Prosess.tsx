@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
 import { useIntl } from 'react-intl';
+import ProcessMenu from '@navikt/nap-process-menu';
 
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
@@ -17,7 +18,6 @@ import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import fpInnsynApi from '../data/innsynBehandlingApi';
 import createForeldrepengerBpProps from '../definition/foreldrepengerInnsynBpDefinition';
-import ProsessMeny from './ProsessMeny';
 import BehandlingPaVent from './BehandlingPaVent';
 import MargMarkering from './MargMarkering';
 
@@ -35,8 +35,7 @@ const getBehandlingspunkterProps = (fagsak, behandling, aksjonspunkter, vilkar, 
     innsynResultatType: innsyn.innsynResultatType,
   };
 
-  const liste = createForeldrepengerBpProps(builderData);
-  return liste;
+  return createForeldrepengerBpProps(builderData);
 };
 
 const submitAksjonspunkter = (dispatch, saksnummer, behandlingId, behandlingVersjon, oppdaterLocation, location) => (aksjonspunktModels) => {
@@ -79,6 +78,16 @@ const previewCallbackFunc = (dispatch, behandlingUuid, ytelseType) => (data) => 
   return dispatch(fpInnsynApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
 
+const finnStatus = (status, harApentAp) => {
+  if (status === vilkarUtfallType.OPPFYLT) {
+    return 'success';
+  } if (status === vilkarUtfallType.IKKE_VURDERT && harApentAp) {
+    return 'warning';
+  } if (status === vilkarUtfallType.IKKE_OPPFYLT) {
+    return 'danger';
+  }
+  return 'default';
+};
 
 const Prosess = ({
   fagsak,
@@ -102,12 +111,24 @@ const Prosess = ({
   const submitCallback = useCallback(submitAksjonspunkter(dispatch, fagsak.saksnummer, behandling.id, behandling.versjon, oppdaterLocation, location));
   const previewCallback = useCallback(previewCallbackFunc(dispatch, behandling.uuid, fagsak.fagsakYtelseType));
 
-  const steps = punkter.map((p) => ({ label: intl.formatMessage({ id: p.titleCode }), code: p.code }));
-
   const defaultStegNummer = punkter.findIndex((p) => p.code === location.query.punkt);
-  const stegMedApentAp = punkter.findIndex((p) => aksjonspunkter.filter((ap) => p.apCodes.includes(ap.definisjon.kode)).some((ap) => ap.status.kode === 'OPPR'));
+  const stegMedApentApNr = punkter.findIndex((p) => aksjonspunkter.filter((ap) => p.apCodes.includes(ap.definisjon.kode)).some((ap) => ap.status.kode === 'OPPR'));
 
-  const [valgtStegNummer, setValgtSteg] = useState(defaultStegNummer !== -1 ? defaultStegNummer : stegMedApentAp);
+  const [valgtStegNummer, setValgtSteg] = useState(defaultStegNummer !== -1 ? defaultStegNummer : stegMedApentApNr);
+
+  const steps = punkter.map((p, index) => {
+    const harApentAp = stegMedApentApNr === index;
+    const status = finnStatus(p.status, harApentAp);
+    return {
+      label: intl.formatMessage({ id: p.titleCode }),
+      type: status,
+      isFinished: status === 'success',
+      isActive: valgtStegNummer === index,
+      code: p.code,
+      isDisabled: true,
+    };
+  });
+
 
   const valgtSteg = steps[valgtStegNummer];
   const valgtP = punkter[valgtStegNummer];
@@ -132,32 +153,35 @@ const Prosess = ({
   return (
     <>
       <BehandlingPaVent behandling={behandling} aksjonspunkter={aksjonspunkter} kodeverk={kodeverk} />
+      <ProcessMenu steps={steps} onClick={setValgtSteg} />
       <MargMarkering behandlingStatus={behandling.status} aksjonspunkter={apForBp} isReadOnly={isReadOnly}>
-        <ProsessMeny steps={steps} onClick={setValgtSteg} />
         {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
-        <InnsynProsessIndex
-          saksnummer={fagsak.saksnummer}
-          alleDokumenter={alleDokumenter}
-          submitCallback={submitCallback}
-          readOnly={isReadOnly}
-          isSubmittable={isSubmittable}
-          aksjonspunkter={apForBp}
-          alleKodeverk={kodeverk}
-          behandling={behandling}
-          innsyn={innsyn}
-        />
+          <InnsynProsessIndex
+            saksnummer={fagsak.saksnummer}
+            alleDokumenter={alleDokumenter}
+            submitCallback={submitCallback}
+            readOnly={isReadOnly}
+            isSubmittable={isSubmittable}
+            aksjonspunkter={apForBp}
+            alleKodeverk={kodeverk}
+            behandling={behandling}
+            innsyn={innsyn}
+          />
         )}
-        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK) && (
-        <VedtakInnsynProsessIndex
-          saksnummer={fagsak.saksnummer}
-          aksjonspunkter={aksjonspunkter}
-          alleDokumenter={alleDokumenter}
-          submitCallback={submitCallback}
-          previewCallback={previewCallback}
-          readOnly={isReadOnly}
-          behandling={behandling}
-          innsyn={innsyn}
-        />
+        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length > 0) && (
+          <VedtakInnsynProsessIndex
+            saksnummer={fagsak.saksnummer}
+            aksjonspunkter={aksjonspunkter}
+            alleDokumenter={alleDokumenter}
+            submitCallback={submitCallback}
+            previewCallback={previewCallback}
+            readOnly={isReadOnly}
+            behandling={behandling}
+            innsyn={innsyn}
+          />
+        )}
+        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length === 0) && (
+          <div>Ingenting</div>
         )}
       </MargMarkering>
     </>

@@ -5,6 +5,7 @@ import classnames from 'classnames/bind';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import styles from './margMarkering.less';
 
@@ -16,6 +17,9 @@ const MargMarkering = ({
   isReadOnly,
   children,
 }) => {
+  if (aksjonspunkter.length === 0) {
+    return children;
+  }
   const ikkeAkseptertAvBeslutter = behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES
     && aksjonspunkter[0].toTrinnsBehandling && aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
@@ -33,7 +37,7 @@ const MargMarkering = ({
 };
 
 MargMarkering.propTypes = {
-  behandlingStatus: PropTypes.shape().isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,

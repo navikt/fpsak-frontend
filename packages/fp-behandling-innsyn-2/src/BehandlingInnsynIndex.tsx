@@ -6,6 +6,9 @@ import { destroy } from 'redux-form';
 import { DataFetcher, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
+import { Kodeverk } from './types/kodeverkTsType';
+import { FagsakInfo } from './types/fagsakInfoTsType';
+import fagsakInfoPropType from './propTypes/fagsakInfoPropType';
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import Grid from './components/Grid';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -13,10 +16,25 @@ import ErrorBoundary from './components/ErrorBoundary';
 const behandlingData = [innsynApi.BEHANDLING_INNSYN];
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN];
 
-/**
- * BehandlingInnsynIndex
- */
-const BehandlingInnsynIndex = ({
+type InnsynProps = Readonly<{
+  behandlingId: number;
+  behandlingVersjon: number;
+  fagsak: FagsakInfo;
+  kodeverk: Kodeverk;
+  alleDokumenter: [{
+    id: number;
+  }];
+  navAnsatt: {};
+  location: {};
+  oppdaterLocation: () => {};
+  oppdaterBehandlingVersjon: () => number;
+  behandlingEventHandler: {
+    setHandler: ({}) => void;
+    clear: () => void;
+  };
+}>;
+
+const BehandlingInnsynIndex: React.FunctionComponent<InnsynProps> = ({
   behandlingId,
   behandlingVersjon,
   fagsak,
@@ -102,7 +120,7 @@ const BehandlingInnsynIndex = ({
 BehandlingInnsynIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
-  fagsak: PropTypes.shape().isRequired,
+  fagsak: fagsakInfoPropType.isRequired,
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navAnsatt: navAnsattPropType.isRequired,

@@ -1,6 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, ReactNode } from 'react';
+import PropTypes from 'prop-types';
 
-export class ErrorBoundary extends Component {
+type Props = { children: ReactNode };
+type State = { hasError: boolean };
+
+export class ErrorBoundary extends Component<Props, State> {
+  static propTypes: {
+    children: PropTypes.node.isRequired;
+  };
+
   constructor(props) {
     super(props);
     this.state = { hasError: false };
