@@ -64,7 +64,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingVersjon,
   alleKodeverk) => (
     <div>
-
       {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
@@ -73,44 +72,50 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         relevanteStatuser={relevanteStatuser}
         gjelderBesteberegning={gjelderBesteberegning}
       />
-      <VerticalSpacer twentyPx />
+      <VerticalSpacer thirtyTwoPx />
+      <VerticalSpacer eightPx />
     </div>
     )}
-      <VerticalSpacer eightPx />
       {(relevanteStatuser.isMilitaer)
       && (
-        <div>
+        <>
           <MilitaerPanel
             alleAndeler={alleAndelerIForstePeriode}
           />
           <VerticalSpacer twentyPx />
-        </div>
+          <VerticalSpacer thirtyTwoPx />
+          <VerticalSpacer eightPx />
+        </>
       )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
     && (
-      <div>
+      <>
         <YtelserFraInfotrygd
           bruttoPrAar={allePerioder[0].bruttoPrAar}
         />
-        <VerticalSpacer twentyPx />
-      </div>
+        <VerticalSpacer thirtyTwoPx />
+        <VerticalSpacer eightPx />
+      </>
     )}
       { relevanteStatuser.isArbeidstaker
       && (
-        <div>
+        <>
           {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
-          <GrunnlagForAarsinntektPanelAT2
-            alleAndeler={alleAndelerIForstePeriode}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-            allePerioder={allePerioder}
-            readOnly={readOnly}
-            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-            alleKodeverk={alleKodeverk}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-
+            <>
+              <GrunnlagForAarsinntektPanelAT2
+                alleAndeler={alleAndelerIForstePeriode}
+                aksjonspunkter={gjeldendeAksjonspunkter}
+                allePerioder={allePerioder}
+                readOnly={readOnly}
+                isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+                alleKodeverk={alleKodeverk}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+              />
+              <VerticalSpacer thirtyTwoPx />
+              <VerticalSpacer eightPx />
+            </>
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
@@ -125,20 +130,24 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
+              <VerticalSpacer thirtyTwoPx />
+              <VerticalSpacer eightPx />
             </>
           )}
-        </div>
+        </>
       )}
       { relevanteStatuser.isFrilanser
     && (
-    <div>
-      <GrunnlagForAarsinntektPanelFL2
-        alleAndeler={alleAndelerIForstePeriode}
-        aksjonspunkter={gjeldendeAksjonspunkter}
-        readOnly={readOnly}
-        isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-      />
-    </div>
+      <>
+        <GrunnlagForAarsinntektPanelFL2
+          alleAndeler={alleAndelerIForstePeriode}
+          aksjonspunkter={gjeldendeAksjonspunkter}
+          readOnly={readOnly}
+          isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+        />
+        <VerticalSpacer thirtyTwoPx />
+        <VerticalSpacer eightPx />
+      </>
     )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
@@ -146,9 +155,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           alleAndeler={alleAndelerIForstePeriode}
         />
       )}
-      <VerticalSpacer eightPx />
-
-
     </div>
 );
 

@@ -6,7 +6,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-
+import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 
 const AvviksopplysningerSN = ({
   beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, erNyArbLivet, harAksjonspunkter,
@@ -50,53 +50,53 @@ const AvviksopplysningerSN = ({
   return (
     <div>
       <Row>
-        <Column xs="6">
+        <Column className={styles.colLable}>
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt" />
           </Normaltekst>
         </Column>
 
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
+        <Column className={styles.colValue}>
           <Normaltekst>
             {pgiSnitt === undefined ? '-' : formatCurrencyNoKr(pgiSnitt)}
           </Normaltekst>
         </Column>
-        <Column xs="3" />
+
       </Row>
       {sammenligningsgrunnlag && (
         <>
           <Row>
-            <Column xs="6">
+            <Column className={styles.colLable}>
               <Normaltekst>
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OppgittAarsinntekt" />
               </Normaltekst>
             </Column>
 
-            <Column xs="3" className={beregningStyles.rightAlignElement}>
+            <Column className={styles.colValue}>
               <Normaltekst>
                 {formatCurrencyNoKr(sammenligningsgrunnlag)}
               </Normaltekst>
             </Column>
-            <Column xs="3" />
+            <Column xs="5" />
 
           </Row>
           <Row>
-            <Column xs="9">
+            <Column className={styles.colLine}>
               <hr />
             </Column>
           </Row>
           <Row>
-            <Column xs="6">
+            <Column className={styles.colLable}>
               <Normaltekst className={beregningStyles.semiBoldText}>
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
               </Normaltekst>
             </Column>
-            <Column xs="3" className={beregningStyles.rightAlignElement}>
+            <Column className={styles.colValue}>
               <Normaltekst>
                 {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
               </Normaltekst>
             </Column>
-            <Column xs="3">
+            <Column className={styles.colAvvik}>
               <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
                 {`${avvik}%`}
               </Normaltekst>

@@ -26,6 +26,7 @@ import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
+
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 // TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
@@ -217,7 +218,7 @@ export const BeregningFormImpl2 = ({
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const erNyArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
   return (
-    <form onSubmit={formProps.handleSubmit}>
+    <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
         <ElementWrapper>
@@ -227,21 +228,10 @@ export const BeregningFormImpl2 = ({
         )}
       <Row>
         <Column xs="12" md="6">
-          <Undertittel>
+          <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-        </Column>
-        <Column xs="12" md="6">
-          <div className={beregningStyles.panelRight}>
-            <Undertittel>
-              <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
-            </Undertittel>
-          </div>
-        </Column>
-
-      </Row>
-      <Row>
-        <Column xs="12" md="6">
+          <VerticalSpacer thirtyTwoPx />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -251,22 +241,30 @@ export const BeregningFormImpl2 = ({
             gjeldendeDekningsgrad={dekningsgrad}
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
-            <Beregningsgrunnlag2
-              relevanteStatuser={relevanteStatuser}
-              readOnly={readOnly}
-              submitCallback={submitCallback}
-              gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-              readOnlySubmitButton={readOnlySubmitButton}
-              formName={formName}
-              allePerioder={beregningsgrunnlagPeriode}
-              gjelderBesteberegning={gjelderBesteberegning}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              alleKodeverk={alleKodeverk}
-            />
+            <>
+              <VerticalSpacer thirtyTwoPx />
+              <VerticalSpacer eightPx />
+              <Beregningsgrunnlag2
+                relevanteStatuser={relevanteStatuser}
+                readOnly={readOnly}
+                submitCallback={submitCallback}
+                gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+                readOnlySubmitButton={readOnlySubmitButton}
+                formName={formName}
+                allePerioder={beregningsgrunnlagPeriode}
+                gjelderBesteberegning={gjelderBesteberegning}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                alleKodeverk={alleKodeverk}
+              />
+            </>
           )}
         </Column>
         <Column xs="12" md="6">
+          <Undertittel className={beregningStyles.panelRight}>
+            <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
+          </Undertittel>
+          <VerticalSpacer thirtyTwoPx />
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
@@ -278,30 +276,37 @@ export const BeregningFormImpl2 = ({
           />
           {harAksjonspunkter
           && (
-          <AksjonspunktBehandler
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            formName={formName}
-            allePerioder={beregningsgrunnlagPeriode}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-            relevanteStatuser={relevanteStatuser}
-            tidsBegrensetInntekt={tidsBegrensetInntekt}
-            erNyArbLivet={erNyArbLivet}
-          />
+            <>
+              <VerticalSpacer thirtyTwoPx />
+              <VerticalSpacer eightPx />
+              <AksjonspunktBehandler
+                readOnly={readOnly}
+                readOnlySubmitButton={readOnlySubmitButton}
+                formName={formName}
+                allePerioder={beregningsgrunnlagPeriode}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                alleKodeverk={alleKodeverk}
+                aksjonspunkter={gjeldendeAksjonspunkter}
+                relevanteStatuser={relevanteStatuser}
+                tidsBegrensetInntekt={tidsBegrensetInntekt}
+                erNyArbLivet={erNyArbLivet}
+              />
+            </>
           )}
-          <BeregningsresultatTable2
-            halvGVerdi={beregningsgrunnlag.halvG}
-            beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-            ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-            ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
-            ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
-            vilkaarBG={vilkaarBG}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-          />
-
+          <>
+            <VerticalSpacer thirtyTwoPx />
+            <VerticalSpacer eightPx />
+            <BeregningsresultatTable2
+              halvGVerdi={beregningsgrunnlag.halvG}
+              beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
+              ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
+              ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
+              ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
+              vilkaarBG={vilkaarBG}
+              aksjonspunkter={gjeldendeAksjonspunkter}
+            />
+          </>
 
         </Column>
       </Row>

@@ -14,9 +14,10 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
 import NaturalytelsePanel from './NaturalytelsePanel';
-import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+
 
 const formName = 'BeregningForm';
 
@@ -40,23 +41,30 @@ const finnAndelerSomSkalVises = (andeler) => {
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
-const createTidsbegrensetText = (erTidsbegrensetArbeidsforhold) => {
-  if (erTidsbegrensetArbeidsforhold) {
-    return (<EtikettLiten className={beregningStyles.tekstOverflow}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" /></EtikettLiten>);
-  }
-  return ' ';
-};
+
 const createArbeidsPeriodeText = (arbeidsForhold) => {
   const periodeArr = [];
 
   if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'startdato') && arbeidsForhold.startdato) {
     periodeArr.push(dateFormat(arbeidsForhold.startdato));
-    periodeArr.push('-');
   }
   if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'opphoersdato') && arbeidsForhold.opphoersdato) {
+    periodeArr.push('-');
     periodeArr.push(dateFormat(arbeidsForhold.opphoersdato));
   }
   return periodeArr.join(' ');
+};
+const getEndCharFromId = (id) => (id ? `...${id.substring(id.length - 4, id.length)}` : '');
+const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
+  const seen = new Set();
+  return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
+};
+const createArbeidsGiverNavn = (arbeidsForhold, harAndelerFraSammeArbeidsgiver) => {
+  if (!arbeidsForhold.arbeidsgiverNavn) {
+    return arbeidsForhold.arbeidsforholdType ? getKodeverknavn(arbeidsForhold.arbeidsforholdType) : '';
+  }
+  return harAndelerFraSammeArbeidsgiver ? `${arbeidsForhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsForhold.eksternArbeidsforholdId)})`
+    : arbeidsForhold.arbeidsgiverNavn;
 };
 const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   // her må stillingsnavn og stillingsprosent hentest når vi får disse dataene
@@ -74,39 +82,45 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   return ' ';
 };
 
-const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn) => {
+const createArbeidsIntektRows = (relevanteAndeler, erTidsbegrensetArbeidsforhold) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
+  const harAndelerFraSammeArbeidsgiver = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
+  // TODO: Denne må refaktorres så den viser korrekt tekst for arbeidsforhold, sjekk med cecilie
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment key={`ArbInntektWrapper${index + 1}`}>
       <Row key={`index${index + 1}`}>
-        <Column xs="5" key={`ColLable${index + 1}`}>
+        <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${index + 1}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createVisningsnavnForAktivitet(andel.arbeidsforhold, getKodeverknavn)}
+            {createArbeidsGiverNavn(andel.arbeidsforhold, harAndelerFraSammeArbeidsgiver)}
           </Normaltekst>
         </Column>
-        <Column xs="2" key={`ColSpc${index + 1}`}>
-          {createTidsbegrensetText(andel.erTidsbegrensetArbeidsforhold)}
+        {erTidsbegrensetArbeidsforhold && (
+        <Column className={beregningStyles.colTidsbegrenset} key={`ColSpc${index + 1}`}>
+          {andel.erTidsbegrensetArbeidsforhold && (
+          <EtikettLiten className={beregningStyles.tekstOverflow}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" /></EtikettLiten>
+          )}
         </Column>
-        <Column xs="2" key={`ColBrgMnd${index + 1}`} className={beregningStyles.rightAlignElement}>
+        )}
+        <Column key={`ColBrgMnd${index + 1}`} className={beregningStyles.colMaanedText}>
           <Normaltekst key={`ColBrgMndTxt${index + 1}`}>
             {formatCurrencyNoKr(andel.beregnetPrAar / 12)}
           </Normaltekst>
         </Column>
-        <Column xs="2" key={`ColBrgAar${index + 1}`} className={beregningStyles.rightAlignElement}>
+        <Column key={`ColBrgAar${index + 1}`} className={beregningStyles.colAarText}>
           <Normaltekst key={`ColBrgAarTxt${index + 1}`}>
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
-        <Column xs="1" key={`ColLink${index + 1}`} />
+        <Column className={beregningStyles.colLink} key={`ColLink${index + 1}`} />
       </Row>
       <Row key={`indexD${index + 1}`}>
-        <Column xs="5" key={`ColArbSt${index + 1}`}>
+        <Column xs={erTidsbegrensetArbeidsforhold ? '3' : '4'} key={`ColArbSt${index + 1}`}>
           <Normaltekst>
             {createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}
           </Normaltekst>
         </Column>
-        <Column xs="3" key={`ColArbPer${index + 1}`}>
+        <Column xs="2" key={`ColArbPer${index + 1}`}>
           <Undertekst>
             {createArbeidsPeriodeText(andel.arbeidsforhold)}
           </Undertekst>
@@ -122,26 +136,27 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
     const summaryRow = (
       <React.Fragment key="bruttoBeregningsgrunnlag">
         <Row>
-          <Column xs="12">
+          <Column className={beregningStyles.colDevider}>
             <hr />
           </Column>
         </Row>
         <Row>
-          <Column xs="7"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
+          <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
+          {erTidsbegrensetArbeidsforhold && (
+            <Column className={beregningStyles.colTidsbegrenset} />
+          )}
           <Column
-            xs="2"
             key="ColBBgMnd"
-            className={beregningStyles.rightAlignElement}
+            className={beregningStyles.colMaanedText}
           >
             <Normaltekst>{formatCurrencyNoKr(beregnetMaanedsinntekt)}</Normaltekst>
           </Column>
           <Column
-            xs="2"
-            className={beregningStyles.rightAlignElementNoWrap}
+            className={beregningStyles.colAarText}
           >
             <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
           </Column>
-          <Column xs="1" />
+          <Column className={beregningStyles.colLink} />
         </Row>
       </React.Fragment>
     );
@@ -150,7 +165,6 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
   return rows;
 };
 
-
 /**
  * GrunnlagForAarsinntektPanelAT2
  *
@@ -158,13 +172,11 @@ const createArbeidsIntektRows = (relevanteAndeler, bruttoFastsattInntekt, readOn
  * Vises også hvis status er en kombinasjonsstatus som inkluderer arbeidstaker.
  */
 export const GrunnlagForAarsinntektPanelATImpl2 = ({
-  readOnly,
   alleAndeler,
   allePerioder,
-  bruttoFastsattInntekt,
-  getKodeverknavn,
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
+  const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
   return (
     <>
       <Panel className={beregningStyles.panel}>
@@ -172,21 +184,23 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
         </Element>
         <Row key="Header">
-          <Column xs="4" key="ATempthy1" />
-          <Column xs="3" key="ATempthy2" />
-          <Column xs="2" key="ATMndHead" className={beregningStyles.rightAlignElement}>
+          <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'} key="ATempthy1" />
+          {erTidsbegrensetArbeidsforhold && (
+            <Column className={beregningStyles.colTidsbegrenset} key="ATempthy1" />
+          )}
+          <Column key="ATMndHead" className={beregningStyles.colMaanedText}>
             <Undertekst>
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
             </Undertekst>
           </Column>
-          <Column xs="2" key="ATAarHead" className={beregningStyles.rightAlignElement}>
+          <Column key="ATAarHead" className={beregningStyles.colAarText}>
             <Undertekst>
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
             </Undertekst>
           </Column>
-          <Column xs="1" key="ATempthy3" />
+          <Column className={beregningStyles.colLink} />
         </Row>
-        {createArbeidsIntektRows(relevanteAndeler, bruttoFastsattInntekt, readOnly, getKodeverknavn)}
+        {createArbeidsIntektRows(relevanteAndeler, erTidsbegrensetArbeidsforhold)}
       </Panel>
       <NaturalytelsePanel
         allePerioder={allePerioder}
@@ -196,15 +210,11 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 };
 
 GrunnlagForAarsinntektPanelATImpl2.propTypes = {
-  readOnly: PropTypes.bool.isRequired,
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  bruttoFastsattInntekt: PropTypes.number,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
-  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 GrunnlagForAarsinntektPanelATImpl2.defaultProps = {
-  bruttoFastsattInntekt: 0,
   allePerioder: undefined,
 };
 
