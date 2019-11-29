@@ -100,7 +100,7 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
     };
   }
   const transformedValues = inntektPrAndel
-    .filter(({ nyAndel }) => !nyAndel)
+    .filter(({ nyAndel }) => nyAndel !== true)
     .map((verdi) => ({
       andelsnr: verdi.andelsnr,
       nyAndel: verdi.nyAndel,
