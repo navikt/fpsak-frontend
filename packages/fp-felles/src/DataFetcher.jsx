@@ -108,11 +108,12 @@ export class DataFetcher extends Component {
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
+      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired, behandlingVersjon, behandlingId,
     } = this.props;
 
+    const hasBehandlingdataChanged = prevProps.behandlingId !== behandlingId || prevProps.behandlingVersjon !== behandlingVersjon;
     const forcedRefresh = valueThatWillTriggerRefetchWhenChanged !== prevProps.valueThatWillTriggerRefetchWhenChanged;
-    const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : true;
+    const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : hasBehandlingdataChanged;
 
     if (showComponent && (forcedRefresh || shouldRefetchData)) {
       this.fetchData(endpointParams, keepDataWhenRefetching);

@@ -16,7 +16,7 @@ const Grid = ({
   kodeverk,
   alleDokumenter,
   navAnsatt,
-  location,
+  valgtPunkt,
   oppdaterLocation,
   oppdaterBehandlingVersjon,
 }) => (
@@ -34,7 +34,7 @@ const Grid = ({
         kodeverk={kodeverk}
         alleDokumenter={alleDokumenter}
         navAnsatt={navAnsatt}
-        location={location}
+        valgtPunkt={valgtPunkt}
         oppdaterLocation={oppdaterLocation}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       />
@@ -53,7 +53,7 @@ Grid.propTypes = {
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  location: PropTypes.shape().isRequired,
+  valgtPunkt: PropTypes.string.isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };

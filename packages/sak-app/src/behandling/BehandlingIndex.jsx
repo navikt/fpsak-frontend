@@ -5,8 +5,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 
+import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
-import { trackRouteParam, requireProps } from '@fpsak-frontend/fp-felles';
+import {
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+} from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
@@ -38,6 +41,7 @@ const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandli
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
+const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
  * BehandlingIndex
@@ -119,9 +123,10 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext();
   }
 
-  goToLocation = (location) => {
-    const { push: pushLocation } = this.props;
-    pushLocation(location);
+  goToLocation = (prosessId) => {
+    const { push: pushLocation, location } = this.props;
+    const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId));
+    pushLocation(newLocation);
   };
 
   render() {
@@ -192,7 +197,7 @@ export class BehandlingIndex extends Component {
             fagsak={fagsak}
             navAnsatt={navAnsatt}
             oppdaterLocation={this.goToLocation}
-            location={location}
+            valgtPunkt={location.query.punkt}
           />
         </Suspense>
       );
@@ -275,6 +280,7 @@ export const getFagsakInfo = createSelector([
   skalBehandlesAvInfotrygd,
   isForeldrepengerFagsak: isForeldrepenger,
 }));
+
 
 const mapStateToProps = (state) => {
   const behandlingId = getTempBehandlingId(state);

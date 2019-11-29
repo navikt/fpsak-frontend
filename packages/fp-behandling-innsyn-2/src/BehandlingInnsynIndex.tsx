@@ -41,7 +41,7 @@ const BehandlingInnsynIndex: React.FunctionComponent<InnsynProps> = ({
   kodeverk,
   alleDokumenter,
   navAnsatt,
-  location,
+  valgtPunkt,
   oppdaterLocation,
   oppdaterBehandlingVersjon,
   behandlingEventHandler,
@@ -104,7 +104,7 @@ const BehandlingInnsynIndex: React.FunctionComponent<InnsynProps> = ({
                   kodeverk={kodeverk}
                   alleDokumenter={alleDokumenter}
                   navAnsatt={navAnsatt}
-                  location={location}
+                  valgtPunkt={valgtPunkt}
                   oppdaterLocation={oppdaterLocation}
                   oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
                 />
@@ -124,7 +124,7 @@ BehandlingInnsynIndex.propTypes = {
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  location: PropTypes.shape().isRequired,
+  valgtPunkt: PropTypes.string.isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingEventHandler: PropTypes.shape().isRequired,
