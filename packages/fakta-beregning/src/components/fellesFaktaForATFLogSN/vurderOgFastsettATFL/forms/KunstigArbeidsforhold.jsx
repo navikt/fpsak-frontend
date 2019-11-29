@@ -28,6 +28,8 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
         fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
         inntektskategori: field.inntektskategori,
       },
+      fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
+      inntektskategori: field.inntektskategori,
     }));
   if (fastsattInntekt.length > 0) {
     return ({

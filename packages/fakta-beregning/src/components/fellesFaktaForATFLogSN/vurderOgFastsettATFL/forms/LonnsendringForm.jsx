@@ -94,6 +94,7 @@ LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fa
       fastsatteVerdier: {
         fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
       },
+      fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
     }));
   return ({
     faktaOmBeregningTilfeller: [faktaOmBeregningTilfelle.VURDER_LONNSENDRING, faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING],
