@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import { isObject } from '@fpsak-frontend/utils';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import {
