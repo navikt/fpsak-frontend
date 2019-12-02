@@ -6,6 +6,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
+import { Aksjonspunkt } from '../types/aksjonspunktTsType';
 import { Kodeverk } from '../types/kodeverkTsType';
 
 import styles from './margMarkering.less';
@@ -14,12 +15,7 @@ const classNames = classnames.bind(styles);
 
 type MargMarkeringProps = Readonly<{
   behandlingStatus: Kodeverk;
-  aksjonspunkter: [{
-    toTrinnsBehandling: boolean;
-    toTrinnsBehandlingGodkjent: boolean;
-    status: Kodeverk;
-    kanLoses: boolean;
-  }];
+  aksjonspunkter: [Aksjonspunkt];
   isReadOnly: boolean;
   children: ReactNode;
 }>;

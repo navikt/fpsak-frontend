@@ -7,7 +7,7 @@ import { PersonIndex } from '@fpsak-frontend/person-info';
 
 import Prosess from './Prosess';
 
-const Grid = ({
+const InnsynGrid = ({
   fagsak,
   behandling,
   aksjonspunkter,
@@ -19,6 +19,8 @@ const Grid = ({
   valgtPunkt,
   oppdaterLocation,
   oppdaterBehandlingVersjon,
+  lageAksjonspunkt,
+  forhandsvisMelding,
 }) => (
   <>
     {behandling.behandlingHenlagt && (
@@ -37,6 +39,8 @@ const Grid = ({
         valgtPunkt={valgtPunkt}
         oppdaterLocation={oppdaterLocation}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        lageAksjonspunkt={lageAksjonspunkt}
+        forhandsvisMelding={forhandsvisMelding}
       />
     )}
     <VerticalSpacer sixteenPx />
@@ -44,7 +48,7 @@ const Grid = ({
   </>
 );
 
-Grid.propTypes = {
+InnsynGrid.propTypes = {
   fagsak: PropTypes.shape().isRequired,
   behandling: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -58,4 +62,4 @@ Grid.propTypes = {
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };
 
-export default Grid;
+export default InnsynGrid;

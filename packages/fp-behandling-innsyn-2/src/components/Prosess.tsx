@@ -1,11 +1,8 @@
-import React, {
-  useState, useMemo, useCallback, useEffect,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 import { createSelector } from 'reselect';
-import { useIntl } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
+import { injectIntl } from 'react-intl';
 
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -15,6 +12,14 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
+import { Kodeverk } from '../types/kodeverkTsType';
+import { Behandling } from '../types/behandlingTsType';
+import { FagsakInfo } from '../types/fagsakInfoTsType';
+import { Vilkar } from '../types/vilkarTsType';
+import { NavAnsatt } from '../types/navAnsattTsType';
+import { Aksjonspunkt } from '../types/aksjonspunktTsType';
+import { Innsyn } from '../types/innsynTsType';
+import { Dokument } from '../types/dokumentTsType';
 import fpInnsynApi from '../data/innsynBehandlingApi';
 import createInnsynStegProps from '../definition/innsynStegDefinition';
 import BehandlingPaVent from './BehandlingPaVent';
@@ -66,7 +71,8 @@ const getBehandlingspunkterProps = (behandling, aksjonspunkter, vilkar, innsyn, 
   });
 };
 
-const submitAksjonspunkter = (dispatch, saksnummer, behandlingId, behandlingVersjon, oppdaterLocation, valgtPunkt) => (aksjonspunktModels) => {
+
+const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandlingId, behandlingVersjon, oppdaterLocation, valgtPunkt) => (aksjonspunktModels) => {
   const models = aksjonspunktModels.map((ap) => ({
     '@type': ap.kode,
     ...ap,
@@ -79,8 +85,8 @@ const submitAksjonspunkter = (dispatch, saksnummer, behandlingId, behandlingVers
     bekreftedeAksjonspunktDtoer: models,
   };
 
-  return dispatch(fpInnsynApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(() => oppdaterLocation(valgtPunkt));
+  return lagreAksjonspunkt(params, { keepData: true })
+    .then(() => oppdaterLocation());
 };
 
 const hasReadOnlyBehandling = createSelector(
@@ -96,65 +102,90 @@ const erReadOnly = (behandling, aksjonspunkterForPunkt, vilkarlisteForPunkt, nav
   return !rettigheter.writeAccess.isEnabled || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar;
 };
 
-const previewCallbackFunc = (dispatch, behandlingUuid, ytelseType) => (data) => {
+const previewCallbackFunc = (forhandsvisMelding, behandlingUuid, ytelseType) => (data) => {
   const brevData = {
     ...data,
     behandlingUuid,
     ytelseType,
   };
 
-  return dispatch(fpInnsynApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+  return forhandsvisMelding(brevData);
 };
 
-const Prosess = ({
-  fagsak,
-  behandling,
-  aksjonspunkter,
-  vilkar,
-  innsyn,
-  kodeverk,
-  alleDokumenter,
-  navAnsatt,
-  valgtPunkt,
-  oppdaterLocation,
-  oppdaterBehandlingVersjon,
-}) => {
-  const intl = useIntl();
-  const dispatch = useDispatch();
-  const punkter = useMemo(() => getBehandlingspunkterProps(behandling, aksjonspunkter, vilkar, innsyn, valgtPunkt, intl), [behandling, aksjonspunkter, vilkar, innsyn, valgtPunkt]);
 
-  const hasFetchError = useSelector(hasReadOnlyBehandling);
+type Props = {
+  intl: {};
+  fagsak: FagsakInfo;
+  behandling: Behandling;
+  aksjonspunkter: [Aksjonspunkt];
+  vilkar: [Vilkar];
+  innsyn: Innsyn;
+  kodeverk: Kodeverk;
+  alleDokumenter: [Dokument];
+  navAnsatt: NavAnsatt;
+  valgtPunkt: string;
+  lagreAksjonspunkt: ({}, { keepData: boolean }) => Promise<any>;
+  forhandsvisMelding: ({}, { keepData: boolean }) => Promise<any>;
+  oppdaterLocation: (punktnavn: string) => void;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
+};
 
-  const submitCallback = useCallback(submitAksjonspunkter(dispatch, fagsak.saksnummer, behandling.id, behandling.versjon, oppdaterLocation, valgtPunkt));
-  const previewCallback = useCallback(previewCallbackFunc(dispatch, behandling.uuid, fagsak.fagsakYtelseType));
-
-  const [valgtStegNummer, setValgtSteg] = useState(punkter.findIndex((p) => p.step.isActive));
-
-
-  const valgtSteg = punkter[valgtStegNummer];
-
-  useEffect(() => {
-    if (valgtPunkt !== valgtSteg.code) {
-      oppdaterLocation(valgtSteg.code);
+export class Prosess extends Component<Props> {
+  componentDidUpdate = (prevProps) => {
+    const {
+      behandling, oppdaterBehandlingVersjon,
+    } = this.props;
+    if (behandling.versjon !== prevProps.behandling.versjon) {
+      oppdaterBehandlingVersjon(behandling.versjon);
     }
-  }, [valgtStegNummer]);
+  }
 
-  useEffect(() => {
-    oppdaterBehandlingVersjon(behandling.versjon);
-  }, [behandling.versjon]);
+  oppdaterSteg = (punkt) => {
+    const {
+      oppdaterLocation,
+    } = this.props;
+    oppdaterLocation(punkt);
+  }
 
-  const apForBp = valgtSteg ? aksjonspunkter.filter((a) => valgtSteg.apCodes.includes(a.definisjon.kode)) : [];
-  const vilkarForBp = valgtSteg ? vilkar.filter((v) => valgtSteg.vilkarene.includes(v)) : [];
-  const isReadOnly = useMemo(() => erReadOnly(behandling, apForBp, vilkarForBp, navAnsatt, fagsak, hasFetchError),
-    [behandling, apForBp, vilkarForBp, navAnsatt, fagsak, hasFetchError]);
-  const isSubmittable = valgtSteg ? apForBp.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === valgtSteg.status : false;
 
-  return (
-    <>
-      <BehandlingPaVent behandling={behandling} aksjonspunkter={aksjonspunkter} kodeverk={kodeverk} />
-      <ProcessMenu steps={punkter.map((p) => p.step)} onClick={setValgtSteg} />
-      <MargMarkering behandlingStatus={behandling.status} aksjonspunkter={apForBp} isReadOnly={isReadOnly}>
-        {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
+  render() {
+    const {
+      intl,
+      fagsak,
+      behandling,
+      aksjonspunkter,
+      vilkar,
+      innsyn,
+      kodeverk,
+      alleDokumenter,
+      navAnsatt,
+      valgtPunkt,
+      lagreAksjonspunkt,
+      forhandsvisMelding,
+      oppdaterLocation,
+    } = this.props;
+
+    const punkter = getBehandlingspunkterProps(behandling, aksjonspunkter, vilkar, innsyn, valgtPunkt, intl);
+
+    const hasFetchError = false;// useSelector(hasReadOnlyBehandling);
+
+    const submitCallback = submitAksjonspunkter(lagreAksjonspunkt, fagsak.saksnummer, behandling.id, behandling.versjon, oppdaterLocation, valgtPunkt);
+    const previewCallback = previewCallbackFunc(forhandsvisMelding, behandling.uuid, fagsak.fagsakYtelseType);
+
+    const valgtSteg = punkter[(punkter.findIndex((p) => p.step.isActive))];
+
+    const apForBp = valgtSteg ? aksjonspunkter.filter((a) => valgtSteg.apCodes.includes(a.definisjon.kode)) : [];
+    const vilkarForBp = valgtSteg ? vilkar.filter((v) => valgtSteg.vilkarene.includes(v)) : [];
+    const isReadOnly = erReadOnly(behandling, apForBp, vilkarForBp, navAnsatt, fagsak, hasFetchError);
+    const isSubmittable = valgtSteg ? apForBp.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === valgtSteg.status : false;
+
+
+    return (
+      <>
+        <BehandlingPaVent behandling={behandling} aksjonspunkter={aksjonspunkter} kodeverk={kodeverk} />
+        <ProcessMenu steps={punkter.map((p) => p.step)} onClick={(nr) => this.oppdaterSteg(punkter[nr].code)} />
+        <MargMarkering behandlingStatus={behandling.status} aksjonspunkter={apForBp} isReadOnly={isReadOnly}>
+          {(!!valgtSteg && valgtSteg.code === bpc.BEHANDLE_INNSYN) && (
           <InnsynProsessIndex
             saksnummer={fagsak.saksnummer}
             alleDokumenter={alleDokumenter}
@@ -166,8 +197,8 @@ const Prosess = ({
             behandling={behandling}
             innsyn={innsyn}
           />
-        )}
-        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length > 0) && (
+          )}
+          {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length > 0) && (
           <VedtakInnsynProsessIndex
             saksnummer={fagsak.saksnummer}
             aksjonspunkter={aksjonspunkter}
@@ -178,27 +209,30 @@ const Prosess = ({
             behandling={behandling}
             innsyn={innsyn}
           />
-        )}
-        {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length === 0) && (
+          )}
+          {(!!valgtSteg && valgtSteg.code === bpc.VEDTAK && apForBp.length === 0) && (
           <div>Ingenting</div>
-        )}
-      </MargMarkering>
-    </>
-  );
-};
+          )}
+        </MargMarkering>
+      </>
+    );
+  }
+}
 
 Prosess.propTypes = {
+  intl: PropTypes.shape().isRequired,
   fagsak: PropTypes.shape().isRequired,
   behandling: PropTypes.shape().isRequired,
-  innsyn: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  innsyn: PropTypes.shape().isRequired,
   kodeverk: PropTypes.shape().isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   valgtPunkt: PropTypes.string.isRequired,
+  lagreAksjonspunkt: PropTypes.func.isRequired,
+  forhandsvisMelding: PropTypes.func.isRequired,
   oppdaterLocation: PropTypes.func.isRequired,
-  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
 };
 
-export default Prosess;
+export default injectIntl(Prosess);

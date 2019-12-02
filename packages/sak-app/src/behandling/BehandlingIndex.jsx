@@ -125,8 +125,12 @@ export class BehandlingIndex extends Component {
 
   goToLocation = (prosessId) => {
     const { push: pushLocation, location } = this.props;
-    const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId));
-    pushLocation(newLocation);
+    if (prosessId) {
+      const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId));
+      pushLocation(newLocation);
+    } else {
+      pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
+    }
   };
 
   render() {
