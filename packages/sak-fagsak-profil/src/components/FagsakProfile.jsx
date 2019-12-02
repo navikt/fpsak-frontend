@@ -19,7 +19,6 @@ const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behan
  */
 export const FagsakProfile = ({
   saksnummer,
-  sakstype,
   fagsakStatus,
   toggleShowAll,
   annenPartLink,
@@ -35,7 +34,7 @@ export const FagsakProfile = ({
         <Column xs="6">
           <div className={styles.bottomMargin}>
             <Systemtittel>
-              {getKodeverknavn(sakstype)}
+              Pleiepenger
             </Systemtittel>
           </div>
           <Normaltekst>

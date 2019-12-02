@@ -108,7 +108,6 @@ export const MedlemskapInfoPanel = ({
       { (!hasOpen(avklarStartdatoAksjonspunkt) && !hasOpen(avklarStartdatoOverstyring))
         && (
         <OppholdInntektOgPerioderForm
-          soknad={soknad}
           readOnly={readOnly}
           submitCallback={submitCallback}
           submittable={submittable}
@@ -120,6 +119,7 @@ export const MedlemskapInfoPanel = ({
           alleKodeverk={alleKodeverk}
           medlemskap={medlemskap}
           medlemskapV2={medlemskapV2}
+          soknad={soknad}
           fagsakPerson={fagsakPerson}
         />
         )}

@@ -65,7 +65,7 @@
   "ConfirmInformationVilkarReadOnly.Reasoning": "Begrunnelse",
   "ConfirmInformationVilkarReadOnly.ConditionMet": "Vilkåret er oppfylt",
   "ConfirmInformationVilkarReadOnly.ConditionNotMet": "Vilkåret er ikke oppfylt",
-  
+
   "Fagsak.NoFagsakWithReferenceNr": "Det finnes ingen sak med saksnummer: {saksnummer}",
   "FagsakGrid.PleaseSelectBehandling": "Velg behandling",
   "BehandlingErPaVentModal.ModalDescription": "Behandlingen er satt på vent",
@@ -97,7 +97,7 @@
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanGjennomfores": "a) kan gjennomføres slik at arbeidstakeren kan fortsette med samme stilling fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "ArbeidsforholdCheckboxes.Arbeidsgiver.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
-  "Header.Foreldrepenger": "Foreldrepenger, engangsstønad og svangerskapspenger",
+  "Header.Foreldrepenger": "Pleiepenger",
   "Header.LinkToMainPage": "NAV, forsiden",
   "Header.Rettskilde": "Rettskildene",
   "Header.Systemrutine": "Systemrutine",
@@ -221,7 +221,7 @@
   "FatterVedtakStatusModal.SendtBeslutter": "Forslag til vedtak er sendt til beslutter",
   "FatterVedtakStatusModal.SendtKlageResultatTilBeslutter": "Forslag til klageresultat er sendt til beslutter",
   "FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver": "Forslag til klageresultat er sendt til medunderskriver",
-  
+
   "SettBehandlingPaVentModal.ModalDescription": "Behandlingen settes på vent med frist",
   "SettBehandlingPaVentModal.PaVent": "På vent",
   "SettBehandlingPaVentModal.SettesPaVent": "Behandlingen settes på vent med frist",
@@ -232,7 +232,7 @@
   "SettBehandlingPaVentModal.SelectPlaceholder": "Velg årsak",
   "SettBehandlingPaVentModal.Avbryt": "Avbryt",
   "SettBehandlingPaVentModal.Lukk": "Lukk",
-  
+
   "ModalLukkPapirSoknad.ModalDescription": "Registrering av søknaden avsluttes",
   "ModalLukkPapirSoknad.Avslutt": "Avslutt registrering av søknaden",
   "ModalLukkPapirSoknad.AvslutterRegistrering": "Avslutter registrering av søknaden. Det er ikke mulig å innhente ytterligere opplysninger.",
@@ -524,7 +524,7 @@
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
   "Calendar.Month.11": "Desember",
-  
+
   "Skjermlenke.Klage.ResolveKlage.Title": "Behandle klage",
   "Klage.ResolveKlage.ExplanationRequiredBrev": "Begrunnelse/tekst i brev",
 

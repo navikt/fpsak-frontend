@@ -8,30 +8,6 @@ import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 import getStatusFromSimulering from './simuleringStatusUtleder';
 import getVedtakStatus from './vedtakStatusUtleder';
 
-const faktaUttakAp = [
-  ac.AVKLAR_UTTAK,
-  ac.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
-  ac.AVKLAR_FØRSTE_UTTAKSDATO,
-  ac.AVKLAR_ANNEN_FORELDER_RETT,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-];
-
-const getStatusFromUttakresultat = ({ uttaksresultat, aksjonspunkter }) => {
-  if (!uttaksresultat || aksjonspunkter.some((ap) => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
-    return vut.IKKE_VURDERT;
-  }
-  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some((p) => (
-      p.periodeResultatType.kode !== prt.AVSLATT
-    ));
-    if (oppfylt) {
-      return vut.OPPFYLT;
-    }
-  }
-  return vut.IKKE_OPPFYLT;
-};
-
 const getStatusFromResultatstruktur = ({ resultatstruktur, uttaksresultat }) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
@@ -112,21 +88,6 @@ const foreldrepengerBuilders = [
     .withVilkarTypes(vt.MEDLEMSKAPSVILKÅRET_LØPENDE)
     .withAksjonspunktCodes(ac.OVERSTYR_LØPENDE_MEDLEMSKAPSVILKAR),
 
-  new BehandlingspunktProperties.Builder(bpc.UTTAK, 'Uttak')
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
-    .withStatus(getStatusFromUttakresultat)
-    .withAksjonspunktCodes(
-      ac.FASTSETT_UTTAKPERIODER,
-      ac.OVERSTYRING_AV_UTTAKPERIODER,
-      ac.TILKNYTTET_STORTINGET,
-      ac.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
-      ac.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP,
-      ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN,
-      ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
-      ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST,
-      ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET,
-      ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT,
-    ),
   new BehandlingspunktProperties.Builder(bpc.TILKJENT_YTELSE, 'TilkjentYtelse')
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withAksjonspunktCodes(ac.VURDER_TILBAKETREKK)
