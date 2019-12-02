@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 
+import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
@@ -95,6 +96,7 @@ export class BehandlingIndex extends Component {
     })).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
     push: PropTypes.func.isRequired,
+    visFeilmelding: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
@@ -149,6 +151,7 @@ export class BehandlingIndex extends Component {
       fagsak,
       fagsakBehandlingerInfo,
       navAnsatt,
+      visFeilmelding,
     } = this.props;
     if (erAktivPapirsoknad) {
       return (
@@ -200,8 +203,9 @@ export class BehandlingIndex extends Component {
             kodeverk={kodeverk}
             fagsak={fagsak}
             navAnsatt={navAnsatt}
-            oppdaterLocation={this.goToLocation}
-            valgtPunkt={location.query.punkt}
+            oppdaterProsessStegIUrl={this.goToLocation}
+            valgtProsessSteg={location.query.punkt}
+            visFeilmelding={visFeilmelding}
           />
         </Suspense>
       );
@@ -311,6 +315,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   oppdaterBehandlingVersjon: oppdaterVersjon,
   resetBehandlingContext: resetBehandlingContextActionCreator,
   setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
+  visFeilmelding: errorHandler.getErrorActionCreator(),
   push,
 }, dispatch);
 

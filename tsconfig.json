@@ -15,7 +15,8 @@
 	"include": [
 		"packages/rest-api",
 		"packages/rest-api-redux",
-		"packages/fp-behandling-innsyn-2"
+		"packages/behandling-felles",
+		"packages/behandling-innsyn"
 	],
 
 }
