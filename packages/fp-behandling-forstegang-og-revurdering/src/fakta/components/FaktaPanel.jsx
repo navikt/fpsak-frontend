@@ -15,7 +15,6 @@ import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-t
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
-import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -24,42 +23,70 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
-  getFagsakYtelseType, getFagsakPerson, getAlleKodeverk, getFeatureToggles,
+  getFagsakYtelseType,
+  getFagsakPerson,
+  getAlleKodeverk,
+  getFeatureToggles,
 } from '../../duckBehandlingForstegangOgRev';
 import fpsakApi from '../../data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './faktaPanel.less';
 
-const adopsjonAksjonspunkter = [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
-  aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN];
-const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
-const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
+const adopsjonAksjonspunkter = [
+  aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE,
+  aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
+  aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN,
+];
+const omsorgOgForeldreansvarAksjonspunkter = [
+  aksjonspunktCodes.OMSORGSOVERTAKELSE,
+  aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR,
+];
+const omsorgAksjonspunkter = [
+  aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG,
+  aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG,
+];
 const fordelBeregningsgrunnlagAksjonspunkter = [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG];
 
-const omsorgOgForeldreansvarData = [fpsakApi.BEHANDLING, fpsakApi.FAMILIEHENDELSE, fpsakApi.SOKNAD, fpsakApi.PERSONOPPLYSNINGER,
-  fpsakApi.AKSJONSPUNKTER, fpsakApi.INNTEKT_ARBEID_YTELSE];
-const adopsjonData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.FAMILIEHENDELSE, fpsakApi.AKSJONSPUNKTER, fpsakApi.PERSONOPPLYSNINGER];
+const omsorgOgForeldreansvarData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.FAMILIEHENDELSE,
+  fpsakApi.SOKNAD,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.INNTEKT_ARBEID_YTELSE,
+];
+const adopsjonData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.SOKNAD,
+  fpsakApi.FAMILIEHENDELSE,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.PERSONOPPLYSNINGER,
+];
 const tilleggsopplysningerData = [fpsakApi.BEHANDLING, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER];
 const vergeData = [fpsakApi.BEHANDLING, fpsakApi.VERGE, fpsakApi.AKSJONSPUNKTER];
-const omsorgData = [fpsakApi.BEHANDLING, fpsakApi.YTELSEFORDELING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.AKSJONSPUNKTER, fpsakApi.SOKNAD];
-const medlemskapData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.SOKNAD, fpsakApi.AKSJONSPUNKTER,
-  fpsakApi.INNTEKT_ARBEID_YTELSE, fpsakApi.MEDLEMSKAP, fpsakApi.MEDLEMSKAP_V2];
+const omsorgData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.YTELSEFORDELING,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.SOKNAD,
+];
+const medlemskapData = [
+  fpsakApi.BEHANDLING,
+  fpsakApi.PERSONOPPLYSNINGER,
+  fpsakApi.SOKNAD,
+  fpsakApi.AKSJONSPUNKTER,
+  fpsakApi.INNTEKT_ARBEID_YTELSE,
+  fpsakApi.MEDLEMSKAP,
+  fpsakApi.MEDLEMSKAP_V2,
+];
 const personData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const arbeidsforholdData = [fpsakApi.BEHANDLING, fpsakApi.PERSONOPPLYSNINGER, fpsakApi.INNTEKT_ARBEID_YTELSE];
 const opptjeningData = [fpsakApi.BEHANDLING, fpsakApi.OPPTJENING];
 const beregningData = [fpsakApi.BEHANDLING, fpsakApi.BEREGNINGSGRUNNLAG, fpsakApi.AKSJONSPUNKTER];
 const fodselOgTilretteleggingData = [fpsakApi.BEHANDLING, fpsakApi.SVANGERSKAPSPENGER_TILRETTELEGGING];
 const fordelBeregningsgrunnlagData = [fpsakApi.BEHANDLING, fpsakApi.AKSJONSPUNKTER, fpsakApi.BEREGNINGSGRUNNLAG];
-const uttakData = [
-  fpsakApi.BEHANDLING,
-  fpsakApi.AKSJONSPUNKTER,
-  fpsakApi.YTELSEFORDELING,
-  fpsakApi.UTTAK_KONTROLLER_FAKTA_PERIODER,
-  fpsakApi.FAKTA_ARBEIDSFORHOLD,
-  fpsakApi.PERSONOPPLYSNINGER,
-  fpsakApi.FAMILIEHENDELSE,
-];
 
 /**
  * FaktaPanel
@@ -67,7 +94,8 @@ const uttakData = [
  * Presentasjonskomponent. Har ansvar for visningen av de ulike faktapanelene. Dette gjøres
  * ved å gå gjennom aksjonspunktene og en gjør så en mapping mellom aksjonspunktene og panelene.
  */
-export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel lesbart
+export const FaktaPanel = ({
+  // NOSONAR Kompleksitet er høg, men det er likevel lesbart
   aksjonspunkter,
   vilkarCodes,
   submitCallback,
@@ -112,17 +140,17 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
         render={(componentProps) => (
           <>
             {componentProps.personopplysninger && (
-            <ArbeidsforholdFaktaIndex
-              alleKodeverk={alleKodeverk}
-              alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-              aksjonspunkter={aksjonspunkter}
-              submitCallback={submitCallback}
-              openInfoPanels={openInfoPanels}
-              toggleInfoPanelCallback={toggleInfoPanelCallback}
-              shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-              readOnly={readOnly}
-              {...componentProps}
-            />
+              <ArbeidsforholdFaktaIndex
+                alleKodeverk={alleKodeverk}
+                alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+                aksjonspunkter={aksjonspunkter}
+                submitCallback={submitCallback}
+                openInfoPanels={openInfoPanels}
+                toggleInfoPanelCallback={toggleInfoPanelCallback}
+                shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
+                readOnly={readOnly}
+                {...componentProps}
+              />
             )}
           </>
         )}
@@ -200,8 +228,10 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
       <DataFetcherWithCache
         behandlingVersjon={1}
         data={adopsjonData}
-        showComponent={aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
-            || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))}
+        showComponent={
+          aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
+          || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code))
+        }
         render={(props) => (
           <AdopsjonFaktaIndex
             alleKodeverk={alleKodeverk}
@@ -314,32 +344,6 @@ export const FaktaPanel = ({ // NOSONAR Kompleksitet er høg, men det er likevel
           />
         )}
       />
-
-      <DataFetcherWithCache
-        behandlingVersjon={1}
-        data={uttakData}
-        showComponent={ytelsesType.kode === fagsakYtelseType.FORELDREPENGER}
-        render={(componentProps) => (
-          <>
-            {componentProps.ytelsefordeling.endringsdato !== undefined
-              && componentProps.personopplysninger !== null
-              && componentProps.personopplysninger !== undefined
-              && (
-                <UttakFaktaIndex
-                  alleKodeverk={alleKodeverk}
-                  alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-                  openInfoPanels={openInfoPanels}
-                  toggleInfoPanelCallback={toggleInfoPanelCallback}
-                  shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
-                  submitCallback={submitCallback}
-                  readOnly={readOnly}
-                  kanOverstyre={erOverstyrer}
-                  {...componentProps}
-                />
-              )}
-          </>
-        )}
-      />
     </div>
   </>
 );
@@ -377,7 +381,10 @@ const mapStateToProps = (state) => {
     vilkarCodes: behandlingSelectors.getBehandlingVilkarCodes(state),
     ytelsesType: getFagsakYtelseType(state),
     openInfoPanels: getOpenInfoPanels(state),
-    readOnly: !rettigheter.writeAccess.isEnabled || behandlingSelectors.getBehandlingIsOnHold(state) || behandlingSelectors.hasReadOnlyBehandling(state),
+    readOnly:
+      !rettigheter.writeAccess.isEnabled
+      || behandlingSelectors.getBehandlingIsOnHold(state)
+      || behandlingSelectors.hasReadOnlyBehandling(state),
     erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled,
     fagsakPerson: getFagsakPerson(state),
     alleMerknaderFraBeslutter: behandlingSelectors.getAllMerknaderFraBeslutter(state),
