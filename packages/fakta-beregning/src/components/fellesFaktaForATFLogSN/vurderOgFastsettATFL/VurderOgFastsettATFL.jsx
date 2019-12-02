@@ -240,6 +240,9 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
     // Besteberegning
     transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, inntektVerdier));
     const allInntektErFastsatt = values[besteberegningField] === true;
+    // Kunstig arbeidsforhold
+    transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
     // Nyoppstartet FL
     transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
@@ -255,9 +258,6 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
     // ATFL i samme org
     transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
-    // Kunstig arbeidsforhold
-    transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
-      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
   }
   return transformed;
 };
