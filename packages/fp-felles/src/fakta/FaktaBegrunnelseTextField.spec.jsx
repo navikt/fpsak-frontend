@@ -6,17 +6,6 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import FaktaBegrunnelseTextField from './FaktaBegrunnelseTextField';
 
 describe('<FaktaBegrunnelseTextField>', () => {
-  it('skal ikke vise tekstfelt når en ikke har gjort endringer', () => {
-    const wrapper = shallow(<FaktaBegrunnelseTextField
-      isReadOnly={false}
-      isSubmittable
-      isDirty={false}
-      hasBegrunnelse={false}
-    />);
-
-    expect(wrapper.find(TextAreaField)).to.have.length(0);
-  });
-
   it('skal ikke vise tekstfelt når en ikke har lov til å løse aksjonspunkt', () => {
     const wrapper = shallow(<FaktaBegrunnelseTextField
       isReadOnly={false}
