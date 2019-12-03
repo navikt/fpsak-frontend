@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BehandlingspunktProperties } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
@@ -8,9 +9,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
-const getVedtakStatus = ({ aksjonspunkter, innsynResultatType }) => {
-  const akp = aksjonspunkter.find((ap) => ap.definisjon.kode === ac.FORESLA_VEDTAK);
-  if (!akp) {
+const getVedtakStatus = ({ innsynResultatType }, bpAksjonspunkter) => {
+  const harApentAksjonpunkt = bpAksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+  if (bpAksjonspunkter.length === 0 || harApentAksjonpunkt) {
     return vilkarUtfallType.IKKE_VURDERT;
   }
   return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
