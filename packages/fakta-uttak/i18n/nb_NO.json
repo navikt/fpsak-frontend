@@ -68,7 +68,7 @@
   "UttakInfoPanel.PeriodenharTommeDagerFremTilNestePeriode": "Perioden har tomme dager frem til neste periode",
   "UttakInfoPanel.DokumentertSykdom": "Sykdommen/skaden er vurdert som dokumentert i Fakta om fødsel. Vurderingene må være like.",
   "UttakInfoPanel.IkkeDokumentertSykdom": "Sykdommen/skaden er vurdert som ikke dokumentert i Fakta om fødsel. Vurderingene må være like.",
-  "UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato": "Endringstidspunktet i denne behandlingen er {endringsdato}. Perioder før endringstidspunktet vises først i uttaksresultat fordi de i utgangspunktet ikke skal vurderes på nytt i denne behandlingen. Ved behov legg inn søknadsperioder før endringsdato. De nye periodene vil medføre flytting av endringsdatoen og ny vurdering av tidligere vedtatte perioder. Du kan ikke legge inn perioder som er før første uttaksdag {førsteuttaksdato}.",
+  "UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato": "Denne behandlingen revurderer perioder fra og med {endringsdato}. Perioder før dette er de samme som i forrige behandling og vises først i uttak.",
   "UttakInfoPanel.OrginaleStartdatoKanIkkeEndres": "Den originale startdatoen til søknadsperioden må ikke endres.\nOriginal startdato: {originalStartDato}",
   "UttakInfoPanel.manglerPeriodeEtterFørsteuttaksdato": "Mangler periode etter første uttaksdag: {førsteuttaksdato}",
   "UttakInfoPanel.periodeFørFørsteuttaksdato": "Første søknadsperiode {nyStartDato} kan ikke starte før første uttaksdag {førsteUttaksdato}",
