@@ -11,11 +11,12 @@ import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel from '../militær/MilitaerPanel';
-import styles from './beregningsgrunnlag.less';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
+
+import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -151,9 +152,16 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
     )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
-        <GrunnlagForAarsinntektPanelSN2
-          alleAndeler={alleAndelerIForstePeriode}
-        />
+        <>
+          <GrunnlagForAarsinntektPanelSN2
+            alleAndeler={alleAndelerIForstePeriode}
+          />
+          <VerticalSpacer thirtyTwoPx />
+          <VerticalSpacer eightPx />
+          <NaeringsopplysningsPanel
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          />
+        </>
       )}
     </div>
 );
@@ -181,7 +189,7 @@ export const BeregningsgrunnlagImpl2 = ({
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
-    <div className={styles.beregningsgrunnlagPanel}>
+    <>
       {
           createRelevantePaneler(
             alleAndelerIForstePeriode,
@@ -195,7 +203,7 @@ export const BeregningsgrunnlagImpl2 = ({
             alleKodeverk,
           )
         }
-    </div>
+    </>
   );
 };
 

@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import VurderOgFastsettSN2 from './VurderOgFastsettSN_V2';
 
@@ -23,6 +21,8 @@ const AksjonspunktBehandlerSN = ({
   behandlingId,
   behandlingVersjon,
   erNyArbLivet,
+  erVarigEndring,
+  erNyoppstartet,
 }) => (
   <>
     { skalFastsetteSN(aksjonspunkter)
@@ -33,16 +33,22 @@ const AksjonspunktBehandlerSN = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
           erNyArbLivet={erNyArbLivet}
+          erVarigEndring={erVarigEndring}
+          erNyoppstartet={erNyoppstartet}
         />
       )}
   </>
 );
+
 AksjonspunktBehandlerSN.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erNyArbLivet: PropTypes.bool,
+  erVarigEndring: PropTypes.bool,
+  erNyoppstartet: PropTypes.bool,
+
 };
 AksjonspunktBehandlerSN.defaultProps = {
   erNyArbLivet: false,

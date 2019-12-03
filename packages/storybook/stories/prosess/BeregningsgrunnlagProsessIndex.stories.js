@@ -382,6 +382,24 @@ export const selvstendigNæringsdrivende = () => {
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
   andeler[0].erNyIArbeidslivet = false;
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
 
   const bg = lagBG(perioder, statuser);
   return (
