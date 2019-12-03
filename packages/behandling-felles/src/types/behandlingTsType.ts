@@ -7,8 +7,10 @@ export type Behandling = Readonly<{
   versjon: number;
   uuid: string;
   status: Kodeverk;
+  type: Kodeverk;
   fristBehandlingPaaVent?: string;
   venteArsakKode?: string;
   behandlingPaaVent: boolean;
   behandlingHenlagt: boolean;
+  behandlingsresultat?: {};
 }>

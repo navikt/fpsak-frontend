@@ -2,6 +2,7 @@ export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlin
 export { default as BehandlingPaVent, SettPaVentParams } from './src/components/BehandlingPaVent';
 export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
+export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 
 export { default as BehandlingspunktProperties } from './src/definisjon/behandlingspunktBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';

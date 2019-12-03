@@ -10,7 +10,7 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, MargMarkering, byggProsessmenySteg,
+  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, SettPaVentParams, MargMarkering, byggProsessmenySteg,
   fagsakInfoPropType, behandlingPropType,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
@@ -70,8 +70,6 @@ type StateProps = Readonly<{
 type DispatchProps = Readonly<{
   lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
   forhandsvisMelding: (brevData: {}) => Promise<any>;
-  settPaVent: (SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }>
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -131,8 +129,6 @@ export class InnsynProsess extends Component<Props> {
       lagreAksjonspunkt,
       forhandsvisMelding,
       oppdaterProsessStegIUrl,
-      settPaVent,
-      hentBehandling,
       hasFetchError,
     } = this.props;
 
@@ -150,13 +146,6 @@ export class InnsynProsess extends Component<Props> {
 
     return (
       <>
-        <BehandlingPaVent
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          kodeverk={kodeverk}
-          settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
-        />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
           onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
@@ -208,8 +197,6 @@ const mapDispatchToProps = (dispatch): DispatchProps => ({
   ...bindActionCreators({
     lagreAksjonspunkt: innsynApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
     forhandsvisMelding: innsynApi.PREVIEW_MESSAGE.makeRestApiRequest(),
-    settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
-    hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
   }, dispatch),
 });
 

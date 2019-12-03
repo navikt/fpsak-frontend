@@ -5,10 +5,10 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType,
+  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
+  IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import InnsynProsess from './InnsynProsess';
@@ -27,6 +27,8 @@ type OwnProps = Readonly<{
   valgtProsessSteg: string;
   oppdaterProsessStegIUrl: (punktnavn: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
+  settPaVent: (SettPaVentParams) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }>;
 
 const InnsynGrid: FunctionComponent<OwnProps> = ({
@@ -41,6 +43,8 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   oppdaterProsessStegIUrl,
   oppdaterBehandlingVersjon,
+  settPaVent,
+  hentBehandling,
 }) => (
   <>
     {behandling.behandlingHenlagt && (
@@ -49,19 +53,36 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
       </Undertittel>
     )}
     {!behandling.behandlingHenlagt && (
-      <InnsynProsess
-        fagsak={fagsak}
-        behandling={behandling}
-        aksjonspunkter={aksjonspunkter}
-        vilkar={vilkar}
-        innsyn={innsyn}
-        kodeverk={kodeverk}
-        alleDokumenter={alleDokumenter}
-        navAnsatt={navAnsatt}
-        valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-        oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-      />
+      <>
+        <BehandlingPaVent
+          behandling={behandling}
+          aksjonspunkter={aksjonspunkter}
+          kodeverk={kodeverk}
+          settPaVent={settPaVent}
+          hentBehandling={hentBehandling}
+        />
+        <IverksetterVedtakStatusModal
+          closeEvent={() => undefined}
+          behandlingsresultat={behandling.behandlingsresultat}
+          behandlingStatusKode={behandling.status.kode}
+          behandlingType={behandling.type}
+          fagsakYtelseType={fagsak.fagsakYtelseType}
+          resolveFaktaAksjonspunkterSuccess
+        />
+        <InnsynProsess
+          fagsak={fagsak}
+          behandling={behandling}
+          aksjonspunkter={aksjonspunkter}
+          vilkar={vilkar}
+          innsyn={innsyn}
+          kodeverk={kodeverk}
+          alleDokumenter={alleDokumenter}
+          navAnsatt={navAnsatt}
+          valgtProsessSteg={valgtProsessSteg}
+          oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+        />
+      </>
     )}
     <VerticalSpacer sixteenPx />
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
@@ -86,6 +107,8 @@ InnsynGrid.propTypes = {
   valgtProsessSteg: PropTypes.string.isRequired,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
+  settPaVent: PropTypes.func.isRequired,
+  hentBehandling: PropTypes.func.isRequired,
 };
 
 export default InnsynGrid;

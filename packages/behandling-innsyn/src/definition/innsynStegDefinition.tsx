@@ -2,9 +2,19 @@ import { createSelector } from 'reselect';
 
 import { BehandlingspunktProperties } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatType';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
+
+const getVedtakStatus = ({ aksjonspunkter, innsynResultatType }) => {
+  const akp = aksjonspunkter.find((ap) => ap.definisjon.kode === ac.FORESLA_VEDTAK);
+  if (!akp) {
+    return vilkarUtfallType.IKKE_VURDERT;
+  }
+  return innsynResultatType.kode === innsynResultatTypeKV.INNVILGET ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_OPPFYLT;
+};
 
 /**
  * Rekkefølgen i listene under bestemmer behandlingspunkt-rekkefølgen i GUI.
@@ -18,7 +28,8 @@ const innsynBuilders = [
       ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,
       ac.VURDERE_DOKUMENT, ac.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST, ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
     )
-    .withVisibilityWhen(hasNonDefaultBehandlingspunkt),
+    .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
+    .withStatus(getVedtakStatus),
 ];
 
 const createInnsynStegProps = (builderData) => innsynBuilders.reduce((currentFbs, fb) => {

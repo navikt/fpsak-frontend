@@ -42,6 +42,8 @@ type DispatchProps = Readonly<{
   taBehandlingAvVent: (params: {}) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
   destroyReduxForms: (formPrefix: string) => void;
+  settPaVent: (SettPaVentParams) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }>
 
 type Props = DispatchProps & OwnProps;
@@ -69,6 +71,8 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
     valgtProsessSteg: PropTypes.string.isRequired,
     visFeilmelding: PropTypes.func.isRequired,
+    settPaVent: PropTypes.func.isRequired,
+    hentBehandling: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -117,6 +121,8 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
       oppdaterProsessStegIUrl,
       valgtProsessSteg,
       visFeilmelding,
+      settPaVent,
+      hentBehandling,
     } = this.props;
     const { fetchCounter } = this.state;
     return (
@@ -149,6 +155,8 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
                     valgtProsessSteg={valgtProsessSteg}
                     oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
                     oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                    settPaVent={settPaVent}
+                    hentBehandling={hentBehandling}
                   />
                 )}
               />
@@ -168,6 +176,8 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     settBehandlingPaVent: innsynApi.BEHANDLING_ON_HOLD.makeRestApiRequest(),
     taBehandlingAvVent: innsynApi.RESUME_BEHANDLING.makeRestApiRequest(),
     henleggBehandling: innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
+    settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
+    hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
     destroyReduxForms: destroy,
   }, dispatch),
 });

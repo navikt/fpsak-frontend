@@ -56,6 +56,7 @@ const byggProsessmenySteg = createSelector(
       const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
       const isReadOnly = erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
+      const erSisteSteg = alleSteg.length - 1 === mapIndex;
 
       return {
         kode: steg.code,
@@ -64,7 +65,7 @@ const byggProsessmenySteg = createSelector(
         isSubmittable,
         prosessmenySteg: {
           label: intl.formatMessage({ id: steg.titleCode }),
-          isActive: valgtStegIndex === mapIndex,
+          isActive: (valgtStegIndex === -1 && erSisteSteg) || valgtStegIndex === mapIndex,
           isDisabled: false,
           isFinished: type === SUCCESS,
           type,
