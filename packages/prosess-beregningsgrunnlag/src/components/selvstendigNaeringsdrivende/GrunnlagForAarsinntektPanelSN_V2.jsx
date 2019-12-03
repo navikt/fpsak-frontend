@@ -47,11 +47,9 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
             </Element>
           </Column>
           <Column xs="2" className={beregningStyles.rightAlignElement}>
-            <Normaltekst>
-              <Element>
-                {formatCurrencyNoKr(pgiSnitt)}
-              </Element>
-            </Normaltekst>
+            <Element>
+              {formatCurrencyNoKr(pgiSnitt)}
+            </Element>
           </Column>
         </Row>
       </>

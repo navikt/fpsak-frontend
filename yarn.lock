@@ -10839,6 +10839,16 @@ nav-frontend-lenker-style@0.2.24:
   version "0.2.24"
   resolved "https://registry.npmjs.org/nav-frontend-lenker-style/-/nav-frontend-lenker-style-0.2.24.tgz#c4ea13384d0257520cdc6c3f526eb0f0dae81a95"
 
+nav-frontend-lesmerpanel-style@0.0.27:
+  version "0.0.27"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel-style/-/nav-frontend-lesmerpanel-style-0.0.27.tgz#dbd22ee50a9a5feabe7cfcc70457b0d2e8505d78"
+  integrity sha512-YEcB5D2Hy8mZvfXq5olW+aCt0Q2mZ+o4CN8hFxQKNQcxfaSaiHvf1rxqqCVFLic7EPSTfDBrEGbAnfWSji7kPA==
+
+nav-frontend-lesmerpanel@0.0.32:
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel/-/nav-frontend-lesmerpanel-0.0.32.tgz#c6ecfa7ea7217a301a5884a03c69a0ea3acba651"
+  integrity sha512-pvA13rTc+NDeixDrWJi+JrFR6n3zUdzN/vfU7sqH/Ewojs++fc/2sJ21RweJ22LYFdhayzl2drV9aJPs5xyWdg==
+
 nav-frontend-lukknapp-style@0.2.21:
   version "0.2.21"
   resolved "https://registry.npmjs.org/nav-frontend-lukknapp-style/-/nav-frontend-lukknapp-style-0.2.21.tgz#6fdd8b61428a5def9181fc77cffea688e3bfd13f"

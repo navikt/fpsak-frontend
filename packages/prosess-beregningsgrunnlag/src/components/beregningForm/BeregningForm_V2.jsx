@@ -41,10 +41,8 @@ const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
-
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
@@ -53,57 +51,36 @@ const gjelderBehandlingenBesteberegning = (faktaOmBeregning) => (faktaOmBeregnin
   ? faktaOmBeregning.faktaOmBeregningTilfeller.some((tilfelle) => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
   : false);
 
-const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
-  switch (gjeldendeAksjonspunkt.definisjon.kode) {
-    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
-      return 'Beregningsgrunnlag.Helptext.Arbeidstaker';
-    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
-      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende';
-    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
-      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold';
-    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
-      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
-    case VURDER_DEKNINGSGRAD:
-      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
-    default:
-      return 'Beregningsgrunnlag.Helptext.Ukjent';
-  }
-};
 
-const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
+const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, erNyArbLivet, alleAndelerIForstePeriode) => {
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
     return undefined;
   }
   const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
 
   // Aksjonspunkt FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE håndteres sammen med andre og skal ikke ha egen tekst
-  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD)
-    .filter((ap) => ap.definisjon.kode !== FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE);
+  // const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD)
+  //  .filter((ap) => ap.definisjon.kode !== FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE);
 
-  const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(andreAksjonspunkter);
+  const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(gjeldendeAksjonspunkter);
   const apneAksjonspunkt = sorterteAksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
-  const lukkedeAksjonspunkt = sorterteAksjonspunkter.filter((ap) => !isAksjonspunktOpen(ap.status.kode));
-  const erDetMinstEttLukketAksjonspunkt = lukkedeAksjonspunkt.length > 0;
+  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextV2 isAksjonspunktOpen marginBottom>
-          { apneAksjonspunkt.map((ap) => (
-            <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
-          ))}
-        </AksjonspunktHelpTextV2>
+        <AksjonspunktHelpTextV2
+          apneAksjonspunkt={apneAksjonspunkt}
+          avvikProsent={avvikProsent}
+          erVarigEndring={erVarigEndring}
+          erNyArbLivet={erNyArbLivet}
+          erNyoppstartet={erNyoppstartet}
+        />
       )}
-      { erDetMinstEttLukketAksjonspunkt && (
-        <div>
-          <VerticalSpacer sixteenPx />
-          <AksjonspunktHelpTextV2 isAksjonspunktOpen={false}>
-            { lukkedeAksjonspunkt.map((ap) => (
-              <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
-            ))}
-          </AksjonspunktHelpTextV2>
-        </div>
-      )}
+
     </div>
   );
 };
@@ -161,7 +138,12 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
 };
 
 const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
-
+const finnAlleAndelerIFørstePeriode = (allePerioder) => {
+  if (allePerioder && allePerioder.length > 0) {
+    return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
+  }
+  return undefined;
+};
 const getAvviksprosent = (beregningsgrunnlag) => {
   if (!beregningsgrunnlag.sammenligningsgrunnlag) {
     return undefined;
@@ -217,13 +199,14 @@ export const BeregningFormImpl2 = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const erNyArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
+  const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
         <ElementWrapper>
           <VerticalSpacer eightPx />
-          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent)}
+          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, erNyArbLivet, alleAndelerIForstePeriode)}
         </ElementWrapper>
         )}
       <Row>

@@ -25,7 +25,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   return (
-    <Panel className={beregningStyles.panel}>
+    <Panel className={beregningStyles.panelLeft}>
       { isKombinasjonsstatus
       && (
         <>
@@ -60,7 +60,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
         </Column>
-        <Column xs="1" />
+        <Column className={beregningStyles.colLink} />
       </Row>
       <Row>
         <Column xs="7">
@@ -74,7 +74,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         <Column className={beregningStyles.colAarText}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column xs="1" />
+        <Column className={beregningStyles.colLink} />
       </Row>
     </Panel>
   );

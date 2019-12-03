@@ -187,7 +187,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
   return (
     <>
-      <Panel className={beregningStyles.panel}>
+      <Panel className={beregningStyles.panelLeft}>
         <Element>
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
         </Element>
