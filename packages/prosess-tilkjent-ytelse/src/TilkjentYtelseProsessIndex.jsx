@@ -22,7 +22,6 @@ const intl = createIntl({
 const TilkjentYtelseProsessIndex = ({
   behandling,
   beregningresultat,
-  familiehendelse,
   personopplysninger,
   soknad,
   fagsak,
@@ -37,7 +36,6 @@ const TilkjentYtelseProsessIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       beregningresultat={beregningresultat}
-      gjeldendeFamiliehendelse={familiehendelse.gjeldende}
       personopplysninger={personopplysninger}
       soknad={soknad}
       fagsakYtelseTypeKode={fagsak.ytelseType.kode}
@@ -53,7 +51,6 @@ const TilkjentYtelseProsessIndex = ({
 TilkjentYtelseProsessIndex.propTypes = {
   behandling: tilkjentYtelseBehandlingPropType.isRequired,
   beregningresultat: tilkjentYtelseBeregningresultatPropType.isRequired,
-  familiehendelse: tilkjentYtelseFamilieHendelsePropType.isRequired,
   personopplysninger: tilkjentYtelsePersonopplysningerPropType.isRequired,
   soknad: tilkjentYtelseSoknadPropType.isRequired,
   fagsak: tilkjentYtelseFagsakPropType.isRequired,

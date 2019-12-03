@@ -135,7 +135,6 @@ const finnTilbaketrekkAksjonspunkt = createSelector([
 
 const mapStateToProps = (state, ownProps) => {
   const person = ownProps.personopplysninger;
-  const familiehendelse = ownProps.gjeldendeFamiliehendelse;
   const { soknad } = ownProps;
   const isSVP = ownProps.fagsakYtelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER;
   return {
@@ -146,9 +145,9 @@ const mapStateToProps = (state, ownProps) => {
     familiehendelseDato: getCurrentFamiliehendelseDato(
       soknad.soknadType.kode,
       getFamiliehendelsedatoFraSoknad(soknad),
-      familiehendelse.fodselsdato,
+      getFamiliehendelsedatoFraSoknad(soknad),
       soknad.omsorgsovertakelseDato,
-      familiehendelse.omsorgsovertakelseDato,
+      getFamiliehendelsedatoFraSoknad(soknad),
     ),
     beregningsresultatMedUttaksplan: ownProps.beregningresultat,
     vurderTilbaketrekkAP: finnTilbaketrekkAksjonspunkt(state, ownProps),
