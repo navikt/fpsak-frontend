@@ -3,27 +3,25 @@ import { createSelector } from 'reselect';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import ac, { isKlageAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
 const getVedtakStatus = ({
-  aksjonspunkter,
   behandlingsresultat,
-}) => {
-  const allAksjonspunkterIkkeUtfort = aksjonspunkter
-    .filter((ap) => isKlageAksjonspunkt(ap.definisjon.kode))
-    .some((ak) => ak.status.kode !== aksjonspunktStatus.UTFORT);
-  if (!allAksjonspunkterIkkeUtfort) {
-    const resultatTypeCode = behandlingsresultat.type.kode;
-    if (resultatTypeCode === behandlingResultatType.KLAGE_AVVIST || resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
-      return vilkarUtfallType.IKKE_OPPFYLT;
-    }
-    return vilkarUtfallType.OPPFYLT;
+}, bpAksjonspunkter) => {
+  const harApentAksjonpunkt = bpAksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+  if (bpAksjonspunkter.length === 0 || harApentAksjonpunkt) {
+    return vilkarUtfallType.IKKE_VURDERT;
   }
-  return vilkarUtfallType.IKKE_VURDERT;
+
+  const resultatTypeCode = behandlingsresultat.type.kode;
+  if (resultatTypeCode === behandlingResultatType.KLAGE_AVVIST || resultatTypeCode === behandlingResultatType.KLAGE_YTELSESVEDTAK_OPPHEVET) {
+    return vilkarUtfallType.IKKE_OPPFYLT;
+  }
+  return vilkarUtfallType.OPPFYLT;
 };
 
 

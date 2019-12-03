@@ -36,10 +36,11 @@ const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdate
   };
 
   return lagreAksjonspunkt(params, { keepData: true })
-    .then(() => oppdaterProsessStegIUrl())
     .then(() => {
       if (vedtakStegVises) {
         toggleIverksetterVedtakModal();
+      } else {
+        oppdaterProsessStegIUrl();
       }
     });
 };

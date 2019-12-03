@@ -5,7 +5,7 @@ import classnames from 'classnames/bind';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes } from '@fpsak-frontend/fp-felles';
-import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
+import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 
@@ -50,7 +50,7 @@ export const BehandlingspunktKlageInfoPanel = ({ // NOSONAR Kompleksitet er høg
         data={vedtakData}
         showComponent={selectedBehandlingspunkt === behandlingspunktCodes.KLAGE_RESULTAT}
         render={(props) => (
-          <VedtakTilbakekrevingProsessIndex
+          <VedtakKlageProsessIndex
             aksjonspunkter={behandlingspunktAksjonspunkter}
             submitCallback={submitCallback}
             previewVedtakCallback={previewCallback}

@@ -11,7 +11,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
+import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -23,6 +23,8 @@ import {
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
+
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 
 const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdaterProsessStegIUrl, toggleIverksetterVedtakModal,
@@ -62,10 +64,11 @@ const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdate
   };
 
   return lagreAksjonspunkt(params, { keepData: true })
-    .then(() => oppdaterProsessStegIUrl())
     .then(() => {
       if (vedtakStegVises) {
         toggleIverksetterVedtakModal();
+      } else {
+        oppdaterProsessStegIUrl();
       }
     });
 };
@@ -203,9 +206,9 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     });
 
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
-    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
+    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.KLAGE_RESULTAT;
     const submitCallback = submitAksjonspunkter(lagreAksjonspunkt, fagsak.saksnummer, behandling, oppdaterProsessStegIUrl,
-      this.toggleIverksetterVedtakModal, false);
+      this.toggleIverksetterVedtakModal, vedtakStegVises);
     const previewCallback = previewCallbackFunc(forhandsvisMelding, behandling.uuid, fagsak.fagsakYtelseType);
     const apCodes = valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
 
@@ -226,14 +229,17 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
           aksjonspunkter={valgtSteg.aksjonspunkter}
           isReadOnly={valgtSteg.isReadOnly}
         >
-          {(!!valgtSteg && valgtSteg.kode === bpc.KLAGE_RESULTAT) && (
-            <VedtakTilbakekrevingProsessIndex
+          {(apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP)
+          || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)) && (
+            <FormkravProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
-              aksjonspunkter={valgtSteg.aksjonspunkter}
               submitCallback={submitCallback}
-              previewVedtakCallback={previewCallback}
               readOnly={valgtSteg.isReadOnly}
+              readOnlySubmitButton
+              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+              alleKodeverk={kodeverk}
+              avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
             />
           )}
           {(apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK)
@@ -250,17 +256,15 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
             />
           )}
-          {(apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP)
-          || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)) && (
-            <FormkravProsessIndex
+          {(!!valgtSteg && valgtSteg.kode === bpc.KLAGE_RESULTAT) && (
+            <VedtakKlageProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
               submitCallback={submitCallback}
+              previewVedtakCallback={previewCallback}
               readOnly={valgtSteg.isReadOnly}
-              readOnlySubmitButton
-              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
               alleKodeverk={kodeverk}
-              avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
             />
           )}
           {(vedtakStegVises && valgtSteg.aksjonspunkter.length === 0) && (
