@@ -125,7 +125,7 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext();
   }
 
-  goToLocation = (prosessId) => {
+  goToValgtProsessSteg = (prosessId) => {
     const { push: pushLocation, location } = this.props;
     if (prosessId) {
       const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId));
@@ -133,6 +133,11 @@ export class BehandlingIndex extends Component {
     } else {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
     }
+  };
+
+  goToSearchPage = () => {
+    const { push: pushLocation } = this.props;
+    pushLocation('/');
   };
 
   render() {
@@ -199,13 +204,13 @@ export class BehandlingIndex extends Component {
             behandlingVersjon={behandlingVersjon}
             oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
             behandlingEventHandler={behandlingEventHandler}
-            alleDokumenter={allDocuments}
             kodeverk={kodeverk}
             fagsak={fagsak}
             navAnsatt={navAnsatt}
-            oppdaterProsessStegIUrl={this.goToLocation}
+            oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
             valgtProsessSteg={location.query.punkt}
             visFeilmelding={visFeilmelding}
+            opneSokeside={this.goToSearchPage}
           />
         </Suspense>
       );

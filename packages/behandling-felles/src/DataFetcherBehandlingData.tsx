@@ -67,21 +67,22 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     };
   }
 
-  fetchData = (endpointParams, showOldDataWhenRefetching) => {
+  fetchData = () => {
     const {
-      endpoints, allowErrors,
+      endpoints, endpointParams, allowErrors, keepDataWhenRefetching,
     } = this.props;
     if (endpoints.length === 0) {
       return;
     }
     const meta = {
-      keepData: showOldDataWhenRefetching,
+      keepData: keepDataWhenRefetching,
     };
 
     const requests = endpoints.map((endpoint) => {
       // eslint-disable-next-line react/destructuring-assignment
       const request = this.props[`${FETCH_PREFIX}${endpoint.name}`];
-      return () => request(endpointParams, meta);
+      const params = endpoints.length === 1 ? endpointParams : endpointParams[endpoint.name];
+      return () => request(params || {}, meta);
     });
 
     if (allowErrors) {
@@ -96,17 +97,17 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
 
   componentDidMount = () => {
     const {
-      showComponent, endpointParams, showOldDataWhenRefetching,
+      showComponent,
     } = this.props;
 
     if (showComponent) {
-      this.fetchData(endpointParams, showOldDataWhenRefetching);
+      this.fetchData();
     }
   }
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, endpointParams, keepDataWhenRefetching, fetchTrigger, isFetchFinished, endpoints,
+      showComponent, fetchTrigger, isFetchFinished, endpoints,
     } = this.props;
 
     if (isFetchFinished && prevProps.isFetchFinished !== isFetchFinished) {
@@ -123,7 +124,7 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     }
 
     if (showComponent && prevProps.fetchTrigger !== fetchTrigger) {
-      this.fetchData(endpointParams, keepDataWhenRefetching);
+      this.fetchData();
     }
   }
 

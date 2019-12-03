@@ -45,6 +45,9 @@
 
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
+  "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",
+  "IverksetterVedtakStatusModal.VedtakAvslatt": "Vedtak er avslått.",
+  "IverksetterVedtakStatusModal.VedtakInnvilet": "Vedtaket ble fattet og blir nå iverksatt",
   "IverksetterVedtakStatusModal.ModalDescription": "Engangsstønaden er innvilget. Du kommer nå til forsiden.",
   "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
   "IverksetterVedtakStatusModal.Avslatt": "Avslått",

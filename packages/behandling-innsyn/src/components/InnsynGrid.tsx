@@ -8,7 +8,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
-  IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import InnsynProsess from './InnsynProsess';
@@ -29,6 +28,7 @@ type OwnProps = Readonly<{
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  opneSokeside: () => void;
 }>;
 
 const InnsynGrid: FunctionComponent<OwnProps> = ({
@@ -45,6 +45,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
+  opneSokeside,
 }) => (
   <>
     {behandling.behandlingHenlagt && (
@@ -61,14 +62,6 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
           settPaVent={settPaVent}
           hentBehandling={hentBehandling}
         />
-        <IverksetterVedtakStatusModal
-          closeEvent={() => undefined}
-          behandlingsresultat={behandling.behandlingsresultat}
-          behandlingStatusKode={behandling.status.kode}
-          behandlingType={behandling.type}
-          fagsakYtelseType={fagsak.fagsakYtelseType}
-          resolveFaktaAksjonspunkterSuccess
-        />
         <InnsynProsess
           fagsak={fagsak}
           behandling={behandling}
@@ -81,6 +74,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
           valgtProsessSteg={valgtProsessSteg}
           oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
           oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+          opneSokeside={opneSokeside}
         />
       </>
     )}
@@ -109,6 +103,7 @@ InnsynGrid.propTypes = {
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   settPaVent: PropTypes.func.isRequired,
   hentBehandling: PropTypes.func.isRequired,
+  opneSokeside: PropTypes.func.isRequired,
 };
 
 export default InnsynGrid;

@@ -8,20 +8,19 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData,
+  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi, { reduxRestApi } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
 
 const behandlingData = [innsynApi.BEHANDLING_INNSYN];
-const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN];
+const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
 
 type OwnProps = Readonly<{
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: [Kodeverk]};
-  alleDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
   location: {};
   oppdaterProsessStegIUrl: (punktnavn: string) => void;
@@ -32,6 +31,7 @@ type OwnProps = Readonly<{
     clear: () => void;
   };
   visFeilmelding: (error: {}) => void;
+  opneSokeside: () => void;
 }>;
 
 type StateProps = {}
@@ -58,13 +58,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     behandlingVersjon: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
-    alleDokumenter: PropTypes.arrayOf(PropTypes.shape({
-      journalpostId: PropTypes.string.isRequired,
-      dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string,
-      tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
-    })).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     behandlingEventHandler: PropTypes.shape({}).isRequired,
@@ -73,6 +66,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     visFeilmelding: PropTypes.func.isRequired,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
+    opneSokeside: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -114,7 +108,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     const {
       behandlingId,
       oppdaterBehandlingVersjon,
-      alleDokumenter,
       kodeverk,
       fagsak,
       navAnsatt,
@@ -123,6 +116,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
       visFeilmelding,
       settPaVent,
       hentBehandling,
+      opneSokeside,
     } = this.props;
     const { fetchCounter } = this.state;
     return (
@@ -142,6 +136,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
                 showOldDataWhenRefetching
                 fetchTrigger={behandlingInnsyn.versjon}
                 endpoints={innsynData}
+                endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
                 render={(dProps) => (
                   <InnsynGrid
                     fagsak={fagsak}
@@ -149,14 +144,15 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
                     aksjonspunkter={dProps.aksjonspunkter}
                     vilkar={dProps.vilkar}
                     innsyn={dProps.innsyn}
+                    alleDokumenter={dProps.innsynDokumenter}
                     kodeverk={kodeverk}
-                    alleDokumenter={alleDokumenter}
                     navAnsatt={navAnsatt}
                     valgtProsessSteg={valgtProsessSteg}
                     oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
                     oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
                     settPaVent={settPaVent}
                     hentBehandling={hentBehandling}
+                    opneSokeside={opneSokeside}
                   />
                 )}
               />

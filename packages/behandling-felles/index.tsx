@@ -4,7 +4,7 @@ export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 
-export { default as BehandlingspunktProperties } from './src/definisjon/behandlingspunktBuilder';
+export { default as ProsessStegProperties } from './src/definisjon/prosessStegBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';
 
 export { default as fagsakInfoPropType } from './src/propTypes/fagsakInfoPropType';

@@ -2,7 +2,7 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { notNull } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-class BehandlingspunktProperties {
+class ProsessStegProperties {
   constructor(code, titleCode, isVisible, status, bpVilkar, bpAksjonspunkter) {
     this.code = code;
     this.titleCode = titleCode;
@@ -121,15 +121,15 @@ class BehandlingspunktProperties {
           isVisible = this.$$isVisible(bpVilkar, bpAksjonspunkter);
         }
         if (!isVisible) {
-          return new BehandlingspunktProperties(this.bpCode, this.titleCode, isVisible);
+          return new ProsessStegProperties(this.bpCode, this.titleCode, isVisible);
         }
 
         const status = this.statusFunction ? this.statusFunction(builderData, bpAksjonspunkter) : this.$$findStatus(bpVilkar, bpAksjonspunkter);
-        return new BehandlingspunktProperties(this.bpCode, this.titleCode, isVisible, status, bpVilkar, bpAksjonspunkter);
+        return new ProsessStegProperties(this.bpCode, this.titleCode, isVisible, status, bpVilkar, bpAksjonspunkter);
       }
     }
     return Builder;
   }
 }
 
-export default BehandlingspunktProperties;
+export default ProsessStegProperties;

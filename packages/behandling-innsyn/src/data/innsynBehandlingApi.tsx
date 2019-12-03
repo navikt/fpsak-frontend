@@ -14,6 +14,7 @@ export const InnsynBehandlingApiKeys = {
   UPDATE_ON_HOLD: 'UPDATE_ON_HOLD',
   SAVE_AKSJONSPUNKT: 'SAVE_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
+  INNSYN_DOKUMENTER: 'INNSYN_DOKUMENTER',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -28,6 +29,7 @@ const endpoints = new RestApiConfigBuilder()
     storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
   })
   .withPost('/fpsak/api/behandlinger/sett-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withGet('/fpsak/api/dokument/hent-dokumentliste', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
 
 /*
   .withInjectedPath('bytt-behandlende-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
