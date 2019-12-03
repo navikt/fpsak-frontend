@@ -63,7 +63,6 @@ export const FagsakProfile = ({
 
 FagsakProfile.propTypes = {
   saksnummer: PropTypes.number.isRequired,
-  sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   toggleShowAll: PropTypes.func.isRequired,
   annenPartLink: PropTypes.shape(),

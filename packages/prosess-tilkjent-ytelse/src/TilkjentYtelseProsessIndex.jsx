@@ -6,7 +6,6 @@ import tilkjentYtelseBehandlingPropType from './propTypes/tilkjentYtelseBehandli
 import tilkjentYtelseFagsakPropType from './propTypes/tilkjentYtelseFagsakPropType';
 import tilkjentYtelseBeregningresultatPropType from './propTypes/tilkjentYtelseBeregningresultatPropType';
 import tilkjentYtelseAksjonspunkterPropType from './propTypes/tilkjentYtelseAksjonspunkterPropType';
-import tilkjentYtelseFamilieHendelsePropType from './propTypes/tilkjentYtelseFamilieHendelsePropType';
 import tilkjentYtelsePersonopplysningerPropType from './propTypes/tilkjentYtelsePersonopplysningerPropType';
 import tilkjentYtelseSoknadPropType from './propTypes/tilkjentYtelseSoknadPropType';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
