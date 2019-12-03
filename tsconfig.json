@@ -16,7 +16,8 @@
 		"packages/rest-api",
 		"packages/rest-api-redux",
 		"packages/behandling-felles",
-		"packages/behandling-innsyn"
+		"packages/behandling-innsyn",
+		"packages/behandling-klage"
 	],
 
 }

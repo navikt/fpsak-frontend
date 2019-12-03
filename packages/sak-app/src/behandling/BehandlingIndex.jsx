@@ -36,7 +36,7 @@ import behandlingEventHandler from './BehandlingEventHandler';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
-const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-klage'));
+const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
@@ -196,22 +196,24 @@ export class BehandlingIndex extends Component {
       );
     }
 
+    const defaultProps = {
+      behandlingId,
+      behandlingVersjon,
+      oppdaterBehandlingVersjon,
+      behandlingEventHandler,
+      kodeverk,
+      fagsak,
+      navAnsatt,
+      visFeilmelding,
+      oppdaterProsessStegIUrl: this.goToValgtProsessSteg,
+      valgtProsessSteg: location.query.punkt,
+      opneSokeside: this.goToSearchPage,
+    };
+
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <BehandlingInnsynIndex
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingEventHandler={behandlingEventHandler}
-            kodeverk={kodeverk}
-            fagsak={fagsak}
-            navAnsatt={navAnsatt}
-            oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
-            valgtProsessSteg={location.query.punkt}
-            visFeilmelding={visFeilmelding}
-            opneSokeside={this.goToSearchPage}
-          />
+          <BehandlingInnsynIndex {...defaultProps} />
         </Suspense>
       );
     }
@@ -220,19 +222,9 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingKlageIndex
-            key={behandlingId}
-            saksnummer={saksnummer}
-            behandlingId={behandlingId}
-            location={location}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingUpdater={behandlingUpdater}
             featureToggles={featureToggles}
-            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-            allDocuments={allDocuments}
-            kodeverk={kodeverk}
-            fagsak={fagsak}
-            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
-            navAnsatt={navAnsatt}
+            alleBehandlinger={fagsakBehandlingerInfo}
+            {...defaultProps}
           />
         </Suspense>
       );
