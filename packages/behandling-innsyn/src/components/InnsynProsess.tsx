@@ -10,7 +10,7 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, SettPaVentParams, MargMarkering, byggProsessmenySteg,
+  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
   fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
@@ -18,6 +18,7 @@ import finnInnsynSteg from '../definition/innsynStegDefinition';
 import { Innsyn } from '../types/innsynTsType';
 import innsynPropType from '../propTypes/innsynPropType';
 
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdaterProsessStegIUrl, toggleIverksetterVedtakModal,
   vedtakStegVises) => (aksjonspunktModels) => {
@@ -61,7 +62,7 @@ type OwnProps = Readonly<{
   aksjonspunkter: [Aksjonspunkt];
   vilkar: [Vilkar];
   innsyn: Innsyn;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: { [key: string]: [Kodeverk] };
   alleDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
@@ -81,7 +82,7 @@ type DispatchProps = Readonly<{
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-type InnsynProsessState= Readonly<{
+type InnsynProsessState = Readonly<{
   visIverksetterVedtakModal: boolean;
 }>
 
@@ -216,7 +217,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
             />
           )}
           {(vedtakStegVises && valgtSteg.aksjonspunkter.length === 0) && (
-          <div>Ingenting</div>
+            <div>Ingenting</div>
           )}
         </MargMarkering>
       </>
