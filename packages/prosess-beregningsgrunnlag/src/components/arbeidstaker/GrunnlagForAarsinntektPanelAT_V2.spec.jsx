@@ -68,7 +68,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
     let rowNr = 1;
     andeler.forEach((andel) => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
-      expect(teksterAndel.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`);
+      expect(teksterAndel.at(0).childAt(0).text()).to.equal(andel.arbeidsforhold.arbeidsgiverNavn);
       expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
       expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
       rowNr += 1;
@@ -102,7 +102,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
     let rowNr = 1;
     andeler.forEach((andel) => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
-      expect(teksterAndel.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.arbeidsgiverNavn} (123)...5678`);
+      expect(teksterAndel.at(0).childAt(0).text()).to.equal(andel.arbeidsforhold.arbeidsgiverNavn);
       expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
       expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
       rowNr += 1;
@@ -112,7 +112,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'opphoersdato') && arbeidsforhold.opphoersdato) {
         expectedDato = `${dateFormat(arbeidsforhold.startdato)} - ${dateFormat(arbeidsforhold.opphoersdato)}`;
       } else {
-        expectedDato = `${dateFormat(arbeidsforhold.startdato)} -`;
+        expectedDato = dateFormat(arbeidsforhold.startdato);
       }
       expect(teksterArbForholdTid.at(0).childAt(0).text()).to.equal(expectedDato);
       rowNr += 2;

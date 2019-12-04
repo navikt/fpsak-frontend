@@ -57,9 +57,13 @@ const AksjonspunktBehandler = ({
   erNyArbLivet,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
-  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
-  const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  let erVarigEndring = false;
+  let erNyoppstartet = false;
+  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode, 'aktivitetStatus')) {
+    const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+    erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }

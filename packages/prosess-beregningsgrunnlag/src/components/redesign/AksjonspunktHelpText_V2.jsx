@@ -22,11 +22,7 @@ const {
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
 
-
 const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyArbLivet, erNyoppstartet) => {
-  console.log('erNyI', erNyArbLivet);
-  console.log('erVarigEndring', erVarigEndring);
-  console.log('erNyoppstartet', erNyoppstartet);
   switch (gjeldendeAksjonspunkt.definisjon.kode) {
     case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
       return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
@@ -61,6 +57,9 @@ const AksjonspunktHelpTextV2 = ({
   erNyoppstartet,
 }) => {
   const elementStyle = apneAksjonspunkt.length === 1 ? styles.oneElement : styles.severalElements;
+  if (!apneAksjonspunkt || apneAksjonspunkt.length === 0) {
+    return null;
+  }
   return (
     <div className={styles.container}>
       <FlexContainer>
