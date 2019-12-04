@@ -155,7 +155,7 @@ describe('<AksjonspunktBehandler>', () => {
     const submitButton = rows.at(2).first().childAt(0);
     expect(submitButton).to.have.length(1);
   });
-  it('Skal teste at riktig componenter blir renderet for SN readOnly false', () => {
+  it('Skal teste at riktig componenter blir renderet for SN NyIArbeidslivet==true', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     relevanteStatuser.isArbeidstaker = false;
@@ -171,9 +171,10 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
+      erNyArbLivet
     />);
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet');
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');

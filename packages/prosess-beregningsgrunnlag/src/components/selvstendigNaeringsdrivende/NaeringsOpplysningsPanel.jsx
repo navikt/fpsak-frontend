@@ -3,11 +3,12 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
@@ -49,41 +50,27 @@ const revisorDetaljer = (naringsAndel) => {
 
 const lagBeskrivelsePanel = (naringsAndel) => (
   <>
-    <EkspanderbartpanelBase
-      className={styles.lesMer}
-      apen
-      heading={(
-        <>
-          <div className={styles.lesMer__heading}>
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse" values={{ endringsDato: naringsAndel.endringsdato }} />
-            </Normaltekst>
-          </div>
-          <Normaltekst className={styles.lesMer_Mer}>Skjul beskrivelse</Normaltekst>
-        </>
-      )}
-    >
-      <Normaltekst className={styles.beskrivelse}>
-        {naringsAndel.begrunnelse}
-      </Normaltekst>
-      <div />
-    </EkspanderbartpanelBase>
     <Lesmerpanel
       intro={(
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse" values={{ endringsDato: naringsAndel.endringsdato }} />
-        </Normaltekst>
+        <>
+          <FlexContainer>
+            <FlexRow>
+              <FlexColumn>
+                <Normaltekst>
+                  <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse" />
+                </Normaltekst>
+              </FlexColumn>
+              <FlexColumn>
+                <Normaltekst className={beregningStyles.semiBoldText}>
+                  <DateLabel dateString={naringsAndel.endringsdato} />
+                </Normaltekst>
+              </FlexColumn>
+            </FlexRow>
+          </FlexContainer>
+        </>
 )}
-      lukkTekst={(
-        <Normaltekst>
-          <span>Skjul beskrivelse</span>
-        </Normaltekst>
-      )}
-      apneTekst={(
-        <Normaltekst>
-          <span>Vis beskrivelse</span>
-        </Normaltekst>
-      )}
+      lukkTekst="Skjul beskrivelse"
+      apneTekst="Vis beskrivelse"
       defaultApen
     >
       <Normaltekst className={styles.beskrivelse}>
@@ -97,9 +84,7 @@ const lagBeskrivelsePanel = (naringsAndel) => (
 export const NaeringsopplysningsPanel = ({
   alleAndelerIForstePeriode,
 }) => {
-  console.log('alleAndelerIForstePeriode', alleAndelerIForstePeriode);
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  console.log('næringer', snAndel.næringer);
   return (
     <Panel className={beregningStyles.panel}>
       <Element className={beregningStyles.semiBoldText}>
@@ -115,7 +100,7 @@ export const NaeringsopplysningsPanel = ({
       </Row>
       <VerticalSpacer fourPx />
       {snAndel.næringer.map((naring, index) => (
-        <>
+        <React.Fragment key={`NaringsWrapper${index + 1}`}>
           <Row key={`NaringsNavn${index + 1}`}>
             <Column xs="6">
               <Normaltekst>
@@ -155,7 +140,7 @@ export const NaeringsopplysningsPanel = ({
           <Row>
             {lagBeskrivelsePanel(naring)}
           </Row>
-        </>
+        </React.Fragment>
       ))}
     </Panel>
   );

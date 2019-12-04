@@ -94,7 +94,7 @@
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar": "Oppgitt år",
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.RevisorKanKontaktes": "- Kan kontaktes",
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.RevisorKanIkkeKontaktes": "- Kan ikke kontaktes",
-  "Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse": "Søker har oppgitt varig endring i næring fra {endringsDato}",
+  "Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse": "Søker har oppgitt varig endring i næring fra",
   "Beregningsgrunnlag.Forms.BegrunnEndring": "Begrunn endring",
   "Beregningsgrunnlag.Forms.BegrunnEndringAvDekningsgrad": "Begrunnelse for endring av dekningsgrad",
   "Beregningsgrunnlag.Forms.Vurdering": "Vurdering",

@@ -35,6 +35,8 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       erVarigEndretNaering={undefined}
       isAksjonspunktClosed={false}
       erNyArbLivet
+      erVarigEndring
+      erNyoppstartet={false}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(1);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(0);
@@ -48,6 +50,8 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       isAksjonspunktClosed={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
       erNyArbLivet={false}
+      erVarigEndring
+      erNyoppstartet={false}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(0);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(1);
@@ -61,6 +65,8 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       isAksjonspunktClosed={false}
       erNyArbLivet={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
+      erVarigEndring
+      erNyoppstartet={false}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(0);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(1);
@@ -74,6 +80,8 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       isAksjonspunktClosed={false}
       erNyArbLivet={false}
       gjeldendeAksjonspunkter={[vurderEndring]}
+      erVarigEndring
+      erNyoppstartet={false}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(1);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(1);

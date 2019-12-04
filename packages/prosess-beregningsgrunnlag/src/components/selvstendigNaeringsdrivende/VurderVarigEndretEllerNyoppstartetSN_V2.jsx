@@ -34,8 +34,6 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
   erVarigEndring,
   erNyoppstartet,
 }) => {
-  console.log('erVarigEndring', erVarigEndring);
-  console.log('erNyoppstartet', erNyoppstartet);
   let radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />);
   let radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />);
   if (erNyoppstartet && !erVarigEndring) {
