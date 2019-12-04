@@ -4,7 +4,9 @@ import { shallow } from 'enzyme';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
+
 
 const andelerForstePeriode = {
   aktivitetStatus:
@@ -37,18 +39,15 @@ const andelerForstePeriode = {
 
 describe('NaeringsopplysningsPanel', () => {
   it('Skal teste at komponenten renderer riktige verdier', () => {
-    const wrapper = shallow(<NaeringsopplysningsPanel
+    const wrapper = shallow(<NaeringsopplysningsPanel.WrappedComponent
       alleAndelerIForstePeriode={[andelerForstePeriode]}
+      intl={intlMock}
     />);
     const formattedMessages = wrapper.find('FormattedMessage');
-    expect(formattedMessages).to.be.lengthOf(3);
+    expect(formattedMessages).to.be.lengthOf(2);
     expect(formattedMessages.first().props().id).to.equal('Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift');
     expect(formattedMessages.at(1).props().id).to.equal('Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar');
-    if (andelerForstePeriode.næringer[0].kanRegnskapsførerKontaktes) {
-      expect(formattedMessages.at(2).props().id).to.equal('Beregningsgrunnlag.NaeringsOpplysningsPanel.RevisorKanKontaktes');
-    } else {
-      expect(formattedMessages.at(2).props().id).to.equal('Beregningsgrunnlag.NaeringsOpplysningsPanel.RevisorKanIkkeKontaktes');
-    }
+
     const messages = wrapper.find('Normaltekst');
     expect(messages).to.be.lengthOf(8);
     expect(messages.at(2).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].virksomhetType.kode);

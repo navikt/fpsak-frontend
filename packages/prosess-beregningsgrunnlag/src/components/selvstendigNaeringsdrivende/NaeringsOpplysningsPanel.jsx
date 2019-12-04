@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
@@ -33,24 +33,14 @@ const revisorDetaljer = (naringsAndel) => {
   if (Object.prototype.hasOwnProperty.call(naringsAndel, 'regnskapsførerTlf') && naringsAndel.regnskapsførerTlf) {
     detaljer += ` ${naringsAndel.regnskapsførerTlf}`;
   }
-  if (Object.prototype.hasOwnProperty.call(naringsAndel, 'kanRegnskapsførerKontaktes')) {
-    detaljer = (
-      <span>
-        {detaljer}
-        {' '}
-        <FormattedMessage
-          id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.${naringsAndel.kanRegnskapsførerKontaktes ? 'RevisorKanKontaktes' : 'RevisorKanIkkeKontaktes'}`}
-        />
-      </span>
-    );
-  }
   return detaljer;
 };
 
 
-const lagBeskrivelsePanel = (naringsAndel) => (
+const lagBeskrivelsePanel = (naringsAndel, intl) => (
   <>
     <Lesmerpanel
+      className={styles.lesMer}
       intro={(
         <>
           <FlexContainer>
@@ -69,8 +59,8 @@ const lagBeskrivelsePanel = (naringsAndel) => (
           </FlexContainer>
         </>
 )}
-      lukkTekst="Skjul beskrivelse"
-      apneTekst="Vis beskrivelse"
+      lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.SkjulBegrunnelse' })}
+      apneTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VisBegrunnelse' })}
       defaultApen
     >
       <Normaltekst className={styles.beskrivelse}>
@@ -83,8 +73,12 @@ const lagBeskrivelsePanel = (naringsAndel) => (
 
 export const NaeringsopplysningsPanel = ({
   alleAndelerIForstePeriode,
+  intl,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  if (!Object.prototype.hasOwnProperty.call(snAndel, 'næringer')) {
+    return null;
+  }
   return (
     <Panel className={beregningStyles.panel}>
       <Element className={beregningStyles.semiBoldText}>
@@ -138,7 +132,7 @@ export const NaeringsopplysningsPanel = ({
             </Column>
           </Row>
           <Row>
-            {lagBeskrivelsePanel(naring)}
+            {lagBeskrivelsePanel(naring, intl)}
           </Row>
         </React.Fragment>
       ))}
@@ -148,10 +142,11 @@ export const NaeringsopplysningsPanel = ({
 
 NaeringsopplysningsPanel.propTypes = {
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  intl: PropTypes.shape().isRequired,
 };
 NaeringsopplysningsPanel.defaultProps = {
   alleAndelerIForstePeriode: undefined,
 };
 
 
-export default NaeringsopplysningsPanel;
+export default injectIntl(NaeringsopplysningsPanel);

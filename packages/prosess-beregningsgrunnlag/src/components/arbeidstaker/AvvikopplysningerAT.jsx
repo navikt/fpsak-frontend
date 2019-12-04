@@ -91,6 +91,7 @@ const AvviksopplysningerAT = ({
   );
 };
 
+
 AvviksopplysningerAT.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlag: PropTypes.number,
