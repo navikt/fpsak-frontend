@@ -120,13 +120,16 @@ const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregn
     faktaOmBeregning.vurderMottarYtelse.arbeidstakerAndelerUtenIM.forEach((andel) => {
       if (mottarYtelseMap[andel.andelsnr] && !fastsatteAndelsnr.includes(andel.andelsnr)) {
         const inntektUtenFormat = inntektVerdier.find((field) => field.andelsnr === andel.andelsnr).fastsattBelop;
-        listeMedFastsatteMaanedsinntekter.push({
-          andelsnr: andel.andelsnr,
-          fastsatteVerdier: {
-            fastsattBeløp: inntektUtenFormat || inntektUtenFormat === 0 ? removeSpacesFromNumber(inntektUtenFormat) : undefined,
-          },
-        });
-        fastsatteAndelsnr.push(andel.andelsnr);
+        if (inntektUtenFormat || inntektUtenFormat === 0) {
+          listeMedFastsatteMaanedsinntekter.push({
+            andelsnr: andel.andelsnr,
+            fastsatteVerdier: {
+              fastsattBeløp: removeSpacesFromNumber(inntektUtenFormat),
+            },
+            fastsattBeløp: removeSpacesFromNumber(inntektUtenFormat),
+          });
+          fastsatteAndelsnr.push(andel.andelsnr);
+        }
       }
     });
     if (listeMedFastsatteMaanedsinntekter.length > 0) {
