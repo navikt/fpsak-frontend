@@ -100,11 +100,11 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
     };
   }
   const transformedValues = inntektPrAndel
+    .filter(({ nyAndel }) => nyAndel !== true)
     .map((verdi) => ({
       andelsnr: verdi.andelsnr,
       nyAndel: verdi.nyAndel,
       lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
-      aktivitetStatus: verdi.nyAndel ? AktivitetStatus.DAGPENGER : null,
       fastsatteVerdier: {
         fastsattBeløp: verdi.fastsattBelop,
         inntektskategori: verdi.inntektskategori,
@@ -112,18 +112,16 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
       },
     }));
   const nyDagpengeAndel = inntektPrAndel
-    .filter(({ nyAndel }) => nyAndel)
-    .filter(({ aktivitetStatus }) => aktivitetStatus === AktivitetStatus.DAGPENGER)
-    .map((verdi) => ({
-      fastsatteVerdier: {
-        fastsattBeløp: verdi.fastsattBelop,
-        inntektskategori: verdi.inntektskategori,
-      },
-    }));
+    .find((a) => a.nyAndel && a.aktivitetStatus === AktivitetStatus.DAGPENGER);
   return {
     besteberegningAndeler: {
       besteberegningAndelListe: transformedValues,
-      nyDagpengeAndel,
+      nyDagpengeAndel: nyDagpengeAndel ? {
+        fastsatteVerdier: {
+          fastsattBeløp: nyDagpengeAndel.fastsattBelop,
+          inntektskategori: nyDagpengeAndel.inntektskategori,
+        },
+      } : null,
     },
   };
 };

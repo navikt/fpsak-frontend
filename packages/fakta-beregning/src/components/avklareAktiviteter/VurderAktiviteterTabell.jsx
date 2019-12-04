@@ -165,7 +165,7 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
       const fieldId = lagAktivitetFieldId(aktivitet);
       const e = required(values[fieldId].skalBrukes);
       if (e) {
-        errors[fieldId] = e;
+        errors[fieldId] = { skalBrukes: e };
         harError = true;
       }
     });
