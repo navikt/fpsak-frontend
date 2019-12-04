@@ -12,7 +12,7 @@ import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokna
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const vilkar = [{
   vilkarType: {

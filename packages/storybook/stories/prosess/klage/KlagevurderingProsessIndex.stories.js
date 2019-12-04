@@ -8,7 +8,7 @@ import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,

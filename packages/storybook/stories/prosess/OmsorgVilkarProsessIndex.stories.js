@@ -10,7 +10,7 @@ import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
   title: 'prosess/prosess-vilkar-omsorg',
