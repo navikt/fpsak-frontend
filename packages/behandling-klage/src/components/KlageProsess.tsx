@@ -14,7 +14,6 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
-import klageVurdering from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
   fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal,
@@ -23,6 +22,8 @@ import {
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
+import klageVurderingPropType from '../propTypes/klageVurderingPropType';
+import { KlageVurdering } from '../types/klageVurderingTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -99,6 +100,12 @@ type OwnProps = Readonly<{
   oppdaterProsessStegIUrl: (punktnavn: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
+  klageVurdering: KlageVurdering;
+  alleBehandlinger: [{
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
+  }];
 }>;
 
 type StateProps = Readonly<{
@@ -108,6 +115,8 @@ type StateProps = Readonly<{
 type DispatchProps = Readonly<{
   lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
   forhandsvisMelding: (brevData: {}) => Promise<any>;
+  saveKlage: (params: {}) => Promise<any>;
+  resolveKlageTemp: (params: {}) => Promise<any>;
 }>
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -131,6 +140,10 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
+    saveKlage: PropTypes.func.isRequired,
+    resolveKlageTemp: PropTypes.func.isRequired,
+    klageVurdering: klageVurderingPropType.isRequired,
+    alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }
 
   constructor(props) {
@@ -210,7 +223,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     const submitCallback = submitAksjonspunkter(lagreAksjonspunkt, fagsak.saksnummer, behandling, oppdaterProsessStegIUrl,
       this.toggleIverksetterVedtakModal, vedtakStegVises);
     const previewCallback = previewCallbackFunc(forhandsvisMelding, behandling.uuid, fagsak.fagsakYtelseType);
-    const apCodes = valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
+    const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
     return (
       <>
@@ -229,8 +242,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
           aksjonspunkter={valgtSteg.aksjonspunkter}
           isReadOnly={valgtSteg.isReadOnly}
         >
-          {(apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP)
-          || apCodes.includes(aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA)) && (
+          {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
             <FormkravProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
@@ -242,8 +254,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
             />
           )}
-          {(apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NK)
-          || apCodes.includes(aksjonspunktCodes.BEHANDLE_KLAGE_NFP)) && (
+          {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
             <KlagevurderingProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
@@ -256,7 +267,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
             />
           )}
-          {(!!valgtSteg && valgtSteg.kode === bpc.KLAGE_RESULTAT) && (
+          {valgtStegKode === bpc.KLAGE_RESULTAT && (
             <VedtakKlageProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
