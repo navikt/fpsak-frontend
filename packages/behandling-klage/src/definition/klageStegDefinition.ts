@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
+import {
+  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -51,10 +53,16 @@ const createKlageStegProps = (builderData) => klageBuilders.reduce((currentFbs, 
   return res.isVisible ? currentFbs.concat([res]) : currentFbs;
 }, []);
 
+interface OwnProps {
+  behandling: Behandling;
+  aksjonspunkter: [Aksjonspunkt];
+  vilkar: [Vilkar];
+}
+
 const finnKlageSteg = createSelector(
-  [(ownProps) => ownProps.behandling,
-    (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.vilkar],
+  [(ownProps: OwnProps) => ownProps.behandling,
+    (ownProps: OwnProps) => ownProps.aksjonspunkter,
+    (ownProps: OwnProps) => ownProps.vilkar],
   (behandling, aksjonspunkter, vilkar) => {
     if (!behandling.type) {
       return undefined;

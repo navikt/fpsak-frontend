@@ -3,11 +3,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
-import { createSelector } from 'reselect';
 import ProcessMenu from '@navikt/nap-process-menu';
 
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
@@ -16,79 +15,20 @@ import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal,
+  fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal,
 
 } from '@fpsak-frontend/behandling-felles';
+import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
 import klageVurderingPropType from '../propTypes/klageVurderingPropType';
+import KlageBehandlingModal from './KlageBehandlingModal';
 import { KlageVurdering } from '../types/klageVurderingTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-
-const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdaterProsessStegIUrl, toggleIverksetterVedtakModal,
-  vedtakStegVises) => (aksjonspunktModels) => {
-  /* const { setDoNoUpdateFagsak } = this.props;
-  const skalByttTilKlageinstans = aksjonspunktModels
-    .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP && apValue.klageVurdering === klageVurdering.STADFESTE_YTELSESVEDTAK);
-  const erKlageHjemsendt = aksjonspunktModels
-    .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NK && apValue.klageVurdering === klageVurdering.HJEMSENDE_UTEN_Å_OPPHEVE);
-  const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
-
-  if (skalByttTilKlageinstans || erFatterVedtak) {
-    setDoNoUpdateFagsak();
-  }
-
-  const afterAksjonspunktSubmit = () => {
-    if (skalByttTilKlageinstans) {
-      this.setShowModalKlageBehandling(true);
-    } else if (erKlageHjemsendt) {
-      this.goToKlageResultat();
-    } else {
-      this.goToDefaultPage();
-    }
-  }; */
-
-  const { id, versjon } = behandling;
-  const models = aksjonspunktModels.map((ap) => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
-
-  const params = {
-    saksnummer,
-    behandlingId: id,
-    behandlingVersjon: versjon,
-    bekreftedeAksjonspunktDtoer: models,
-  };
-
-  return lagreAksjonspunkt(params, { keepData: true })
-    .then(() => {
-      if (vedtakStegVises) {
-        toggleIverksetterVedtakModal();
-      } else {
-        oppdaterProsessStegIUrl();
-      }
-    });
-};
-
-const previewCallbackFunc = (forhandsvisMelding, behandlingUuid, ytelseType) => (data) => {
-  const brevData = {
-    ...data,
-    behandlingUuid,
-    ytelseType,
-  };
-
-  return forhandsvisMelding(brevData);
-};
-
-const getForeslaVedtakAp = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => (aksjonspunkter
-  .filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET)
-  .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK).length === 1));
-
-type OwnProps = Readonly<{
+interface OwnProps {
   intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
@@ -97,7 +37,7 @@ type OwnProps = Readonly<{
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
   klageVurdering: KlageVurdering;
@@ -106,24 +46,26 @@ type OwnProps = Readonly<{
     type: Kodeverk;
     avsluttet?: string;
   }];
-}>;
+}
 
-type StateProps = Readonly<{
+interface StateProps {
   hasFetchError: boolean;
-}>
+}
 
-type DispatchProps = Readonly<{
+interface DispatchProps {
   lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
   forhandsvisMelding: (brevData: {}) => Promise<any>;
   saveKlage: (params: {}) => Promise<any>;
   resolveKlageTemp: (params: {}) => Promise<any>;
-}>
+}
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-type KlageProsessState= Readonly<{
-  visIverksetterVedtakModal: boolean;
-}>
+interface KlageProsessState{
+  visFatterVedtakModal: boolean;
+  visModalKlageBehandling: boolean;
+  skalOppdatereFagsakKontekst: boolean;
+}
 
 export class KlageProsess extends Component<Props, KlageProsessState> {
   static propTypes = {
@@ -148,14 +90,21 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
 
   constructor(props) {
     super(props);
-    this.state = { visIverksetterVedtakModal: false };
+    this.state = {
+      visFatterVedtakModal: false,
+      visModalKlageBehandling: false,
+      skalOppdatereFagsakKontekst: true,
+    };
   }
 
   componentDidUpdate = (prevProps) => {
     const {
       behandling, oppdaterBehandlingVersjon,
     } = this.props;
-    if (behandling.versjon !== prevProps.behandling.versjon) {
+    const {
+      skalOppdatereFagsakKontekst,
+    } = this.state;
+    if (skalOppdatereFagsakKontekst && behandling.versjon !== prevProps.behandling.versjon) {
       oppdaterBehandlingVersjon(behandling.versjon);
     }
   }
@@ -167,14 +116,28 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     oppdaterProsessStegIUrl(punkt);
   }
 
-  toggleIverksetterVedtakModal = () => {
+  toggleFatterVedtakModal = () => {
     const { opneSokeside } = this.props;
-    const { visIverksetterVedtakModal } = this.state;
+    const { visFatterVedtakModal } = this.state;
 
-    if (visIverksetterVedtakModal) {
+    if (visFatterVedtakModal) {
       opneSokeside();
     }
-    this.setState((state) => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
+    this.setState((state) => ({ ...state, visFatterVedtakModal: !state.visFatterVedtakModal }));
+  }
+
+  toggleKlageModal = () => {
+    const { opneSokeside } = this.props;
+    const { visModalKlageBehandling } = this.state;
+
+    if (visModalKlageBehandling) {
+      opneSokeside();
+    }
+    this.setState((state) => ({ ...state, visModalKlageBehandling: !state.visModalKlageBehandling }));
+  }
+
+  slaAvOppdateringAvFagsak = () => {
+    this.setState((state) => ({ ...state, skalOppdatereFagsakKontekst: false }));
   }
 
   saveKlageText = (aksjonspunktModel) => {
@@ -185,12 +148,70 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       behandlingId: behandling.id,
       ...aksjonspunktModel,
     };
-    if (getForeslaVedtakAp({ aksjonspunkter })) {
+
+    const getForeslaVedtakAp = aksjonspunkter
+      .filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+      .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+
+    if (getForeslaVedtakAp.length === 1) {
       resolveKlageTemp(data);
     } else {
       saveKlage(data);
     }
   }
+
+  submitAksjonspunkter = (aksjonspunktModels) => {
+    const {
+      fagsak,
+      behandling,
+      lagreAksjonspunkt,
+      oppdaterProsessStegIUrl,
+      valgtProsessSteg,
+    } = this.props;
+    const skalByttTilKlageinstans = aksjonspunktModels
+      .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
+      && apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK);
+    const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+
+    if (skalByttTilKlageinstans || erFatterVedtak) {
+      this.slaAvOppdateringAvFagsak();
+    }
+
+    const { id, versjon } = behandling;
+    const models = aksjonspunktModels.map((ap) => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
+
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: id,
+      behandlingVersjon: versjon,
+      bekreftedeAksjonspunktDtoer: models,
+    };
+
+    return lagreAksjonspunkt(params, { keepData: true })
+      .then(() => {
+        if (skalByttTilKlageinstans) {
+          this.toggleKlageModal();
+        }
+        if (valgtProsessSteg === bpc.KLAGE_RESULTAT) {
+          this.toggleFatterVedtakModal();
+        } else {
+          oppdaterProsessStegIUrl();
+        }
+      });
+  };
+
+  previewCallback = (data) => {
+    const { fagsak, behandling, forhandsvisMelding } = this.props;
+    const brevData = {
+      ...data,
+      behandlingUuid: behandling.uuid,
+      ytelseType: fagsak.fagsakYtelseType,
+    };
+    return forhandsvisMelding(brevData);
+  };
 
   render() {
     const {
@@ -203,13 +224,10 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       kodeverk,
       navAnsatt,
       valgtProsessSteg,
-      lagreAksjonspunkt,
-      forhandsvisMelding,
-      oppdaterProsessStegIUrl,
       hasFetchError,
       alleBehandlinger,
     } = this.props;
-    const { visIverksetterVedtakModal } = this.state;
+    const { visFatterVedtakModal, visModalKlageBehandling } = this.state;
 
     const alleSteg = finnKlageSteg({
       behandling, aksjonspunkter, vilkar,
@@ -219,19 +237,19 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     });
 
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
-    const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.KLAGE_RESULTAT;
-    const submitCallback = submitAksjonspunkter(lagreAksjonspunkt, fagsak.saksnummer, behandling, oppdaterProsessStegIUrl,
-      this.toggleIverksetterVedtakModal, vedtakStegVises);
-    const previewCallback = previewCallbackFunc(forhandsvisMelding, behandling.uuid, fagsak.fagsakYtelseType);
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
+    /* isKlageWithKA ? 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver' : */
     return (
       <>
-        <IverksetterVedtakStatusModal
-          visModal={visIverksetterVedtakModal}
-          lukkModal={this.toggleIverksetterVedtakModal}
-          behandlingsresultat={behandling.behandlingsresultat}
-          behandlingStatusKode={behandling.status.kode}
+        <KlageBehandlingModal
+          visModal={visModalKlageBehandling}
+          lukkModal={this.toggleKlageModal}
+        />
+        <FatterVedtakStatusModal
+          visModal={visFatterVedtakModal}
+          lukkModal={this.toggleFatterVedtakModal}
+          tekstkode="FatterVedtakStatusModal.SendtKlageResultatTilBeslutter"
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
@@ -246,7 +264,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
             <FormkravProsessIndex
               behandling={behandling}
               klageVurdering={klageVurdering}
-              submitCallback={submitCallback}
+              submitCallback={this.submitAksjonspunkter}
               readOnly={valgtSteg.isReadOnly}
               readOnlySubmitButton
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
@@ -260,9 +278,9 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               klageVurdering={klageVurdering}
               alleKodeverk={kodeverk}
               saveKlage={this.saveKlageText}
-              submitCallback={submitCallback}
+              submitCallback={this.submitAksjonspunkter}
               readOnly={valgtSteg.isReadOnly}
-              previewCallback={previewCallback}
+              previewCallback={this.previewCallback}
               readOnlySubmitButton
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
             />
@@ -272,13 +290,13 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               behandling={behandling}
               klageVurdering={klageVurdering}
               aksjonspunkter={valgtSteg.aksjonspunkter}
-              submitCallback={submitCallback}
-              previewVedtakCallback={previewCallback}
+              submitCallback={this.submitAksjonspunkter}
+              previewVedtakCallback={this.previewCallback}
               readOnly={valgtSteg.isReadOnly}
               alleKodeverk={kodeverk}
             />
           )}
-          {(vedtakStegVises && valgtSteg.aksjonspunkter.length === 0) && (
+          {valgtSteg.aksjonspunkter.length === 0 && (
           <div>Ingenting</div>
           )}
         </MargMarkering>

@@ -11,7 +11,7 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal,
+  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, dokumentPropType,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
 import finnInnsynSteg from '../definition/innsynStegDefinition';
@@ -20,43 +20,7 @@ import innsynPropType from '../propTypes/innsynPropType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
-const submitAksjonspunkter = (lagreAksjonspunkt, saksnummer, behandling, oppdaterProsessStegIUrl, toggleIverksetterVedtakModal,
-  vedtakStegVises) => (aksjonspunktModels) => {
-  const { id, versjon } = behandling;
-  const models = aksjonspunktModels.map((ap) => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
-
-  const params = {
-    saksnummer,
-    behandlingId: id,
-    behandlingVersjon: versjon,
-    bekreftedeAksjonspunktDtoer: models,
-  };
-
-  return lagreAksjonspunkt(params, { keepData: true })
-    .then(() => {
-      if (vedtakStegVises) {
-        toggleIverksetterVedtakModal();
-      } else {
-        oppdaterProsessStegIUrl();
-      }
-    });
-};
-
-const previewCallbackFunc = (forhandsvisMelding, behandlingUuid, ytelseType) => (data) => {
-  const brevData = {
-    ...data,
-    behandlingUuid,
-    ytelseType,
-  };
-
-  return forhandsvisMelding(brevData);
-};
-
-
-type OwnProps = Readonly<{
+interface OwnProps {
   intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
@@ -67,25 +31,25 @@ type OwnProps = Readonly<{
   alleDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
-}>;
+}
 
-type StateProps = Readonly<{
+interface StateProps {
   hasFetchError: boolean;
-}>
+}
 
-type DispatchProps = Readonly<{
+interface DispatchProps {
   lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
   forhandsvisMelding: (brevData: {}) => Promise<any>;
-}>
+}
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = OwnProps & StateProps & DispatchProps
 
-type InnsynProsessState = Readonly<{
+interface InnsynProsessState {
   visIverksetterVedtakModal: boolean;
-}>
+}
 
 export class InnsynProsess extends Component<Props, InnsynProsessState> {
   static propTypes = {
@@ -96,13 +60,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     innsyn: innsynPropType.isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
-    alleDokumenter: PropTypes.arrayOf(PropTypes.shape({
-      journalpostId: PropTypes.string.isRequired,
-      dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string,
-      tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
-    })).isRequired,
+    alleDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
     valgtProsessSteg: PropTypes.string.isRequired,
     lagreAksjonspunkt: PropTypes.func.isRequired,
@@ -143,6 +101,53 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     this.setState((state) => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
   }
 
+  submitAksjonspunkter = (aksjonspunktModels) => {
+    const {
+      fagsak,
+      behandling,
+      oppdaterProsessStegIUrl,
+      lagreAksjonspunkt,
+      valgtProsessSteg,
+    } = this.props;
+
+    const { id, versjon } = behandling;
+    const models = aksjonspunktModels.map((ap) => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
+  
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: id,
+      behandlingVersjon: versjon,
+      bekreftedeAksjonspunktDtoer: models,
+    };
+  
+    return lagreAksjonspunkt(params, { keepData: true })
+      .then(() => {
+        if (valgtProsessSteg === bpc.VEDTAK) {
+          this.toggleIverksetterVedtakModal();
+        } else {
+          oppdaterProsessStegIUrl();
+        }
+      });
+  };
+  
+  previewCallback = (data) => {
+    const {
+      fagsak,
+      behandling,
+      forhandsvisMelding,
+    } = this.props;
+    const brevData = {
+      ...data,
+      behandlingUuid: behandling.uuid,
+      ytelseType: fagsak.fagsakYtelseType,
+    };
+  
+    return forhandsvisMelding(brevData);
+  };
+
   render() {
     const {
       intl,
@@ -155,9 +160,6 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
       alleDokumenter,
       navAnsatt,
       valgtProsessSteg,
-      lagreAksjonspunkt,
-      forhandsvisMelding,
-      oppdaterProsessStegIUrl,
       hasFetchError,
     } = this.props;
     const { visIverksetterVedtakModal } = this.state;
@@ -171,9 +173,6 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
 
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
-    const submitCallback = submitAksjonspunkter(lagreAksjonspunkt, fagsak.saksnummer, behandling, oppdaterProsessStegIUrl,
-      this.toggleIverksetterVedtakModal, vedtakStegVises);
-    const previewCallback = previewCallbackFunc(forhandsvisMelding, behandling.uuid, fagsak.fagsakYtelseType);
 
     return (
       <>
@@ -196,7 +195,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
             <InnsynProsessIndex
               saksnummer={fagsak.saksnummer}
               alleDokumenter={alleDokumenter}
-              submitCallback={submitCallback}
+              submitCallback={this.submitAksjonspunkter}
               readOnly={valgtSteg.isReadOnly}
               isSubmittable={valgtSteg.isSubmittable}
               aksjonspunkter={valgtSteg.aksjonspunkter}
@@ -210,8 +209,8 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
               saksnummer={fagsak.saksnummer}
               aksjonspunkter={aksjonspunkter}
               alleDokumenter={alleDokumenter}
-              submitCallback={submitCallback}
-              previewCallback={previewCallback}
+              submitCallback={this.submitAksjonspunkter}
+              previewCallback={this.previewCallback}
               readOnly={valgtSteg.isReadOnly}
               behandling={behandling}
               innsyn={innsyn}

@@ -16,14 +16,14 @@ import InnsynGrid from './components/InnsynGrid';
 const behandlingData = [innsynApi.BEHANDLING_INNSYN];
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
 
-type OwnProps = Readonly<{
+interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
   location: {};
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -32,11 +32,9 @@ type OwnProps = Readonly<{
   };
   visFeilmelding: (error: {}) => void;
   opneSokeside: () => void;
-}>;
+}
 
-type StateProps = {}
-
-type DispatchProps = Readonly<{
+interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}) => Promise<void>;
@@ -44,7 +42,7 @@ type DispatchProps = Readonly<{
   destroyReduxForms: (formPrefix: string) => void;
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
-}>
+}
 
 type Props = DispatchProps & OwnProps;
 
@@ -164,7 +162,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
   }
 }
 
-const mapStateToProps = (): StateProps => ({});
+const mapStateToProps = () => {};
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
@@ -178,4 +176,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingInnsynIndex);
+export default connect<{}, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingInnsynIndex);

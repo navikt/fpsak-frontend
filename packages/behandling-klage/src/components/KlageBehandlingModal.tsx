@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {FunctionComponent} from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
@@ -11,6 +11,14 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 
 import styles from './klageBehandlingModal.less';
 
+interface OwnProps {
+  intl: {
+    formatMessage: (o: {}) => string;
+  };
+  visModal?: boolean;
+  lukkModal: () => void;
+}
+
 /**
  * KlageVurderingModal
  *
@@ -18,16 +26,16 @@ import styles from './klageBehandlingModal.less';
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const KlageVurderingModal = ({
-  showModal,
-  closeEvent,
+const KlageVurderingModal: FunctionComponent<OwnProps> = ({
+  visModal,
+  lukkModal,
   intl,
 }) => (
   <Modal
     className={styles.modal}
-    isOpen={showModal}
+    isOpen={visModal}
     contentLabel={intl.formatMessage({ id: 'KlageVurderingModal.ModalDescription' })}
-    onRequestClose={closeEvent}
+    onRequestClose={lukkModal}
     closeButton={false}
     shouldCloseOnOverlayClick={false}
     ariaHideApp={false}
@@ -45,7 +53,7 @@ const KlageVurderingModal = ({
         <Hovedknapp
           mini
           className={styles.button}
-          onClick={closeEvent}
+          onClick={lukkModal}
           autoFocus
         >
           {intl.formatMessage({ id: 'KlageVurderingModal.Ok' })}
@@ -57,13 +65,15 @@ const KlageVurderingModal = ({
 
 
 KlageVurderingModal.propTypes = {
-  showModal: PropTypes.bool,
-  closeEvent: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
+  visModal: PropTypes.bool,
+  lukkModal: PropTypes.func.isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 KlageVurderingModal.defaultProps = {
-  showModal: false,
+  visModal: false,
 };
 
 export default injectIntl(KlageVurderingModal);

@@ -7,25 +7,29 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
 } from '@fpsak-frontend/behandling-felles';
 
 import KlageProsess from './KlageProsess';
+import { KlageVurdering } from '../types/klageVurderingTsType';
+import klageVurderingPropType from '../propTypes/klageVurderingPropType';
 
-type OwnProps = Readonly<{
+interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: [Aksjonspunkt];
   vilkar: [Vilkar];
+  klageVurdering: KlageVurdering;
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
   opneSokeside: () => void;
-}>;
+  alleBehandlinger: [{}];
+}
 
 const KlageGrid: FunctionComponent<OwnProps> = ({
   fagsak,
@@ -92,6 +96,8 @@ KlageGrid.propTypes = {
   settPaVent: PropTypes.func.isRequired,
   hentBehandling: PropTypes.func.isRequired,
   opneSokeside: PropTypes.func.isRequired,
+  klageVurdering: klageVurderingPropType,
+  alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
 };
 
 export default KlageGrid;

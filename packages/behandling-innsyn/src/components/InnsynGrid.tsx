@@ -8,13 +8,14 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
+  dokumentPropType,
 } from '@fpsak-frontend/behandling-felles';
 
 import InnsynProsess from './InnsynProsess';
 import { Innsyn } from '../types/innsynTsType';
 import innsynPropType from '../propTypes/innsynPropType';
 
-type OwnProps = Readonly<{
+interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: [Aksjonspunkt];
@@ -24,12 +25,12 @@ type OwnProps = Readonly<{
   alleDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
   opneSokeside: () => void;
-}>;
+}
 
 const InnsynGrid: FunctionComponent<OwnProps> = ({
   fagsak,
@@ -90,13 +91,7 @@ InnsynGrid.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   innsyn: innsynPropType.isRequired,
   kodeverk: PropTypes.shape({}).isRequired,
-  alleDokumenter: PropTypes.arrayOf(PropTypes.shape({
-    journalpostId: PropTypes.string.isRequired,
-    dokumentId: PropTypes.string.isRequired,
-    tittel: PropTypes.string,
-    tidspunkt: PropTypes.string,
-    kommunikasjonsretning: PropTypes.string.isRequired,
-  })).isRequired,
+  alleDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   valgtProsessSteg: PropTypes.string.isRequired,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,

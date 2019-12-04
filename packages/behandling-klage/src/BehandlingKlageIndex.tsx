@@ -16,13 +16,13 @@ import KlageGrid from './components/KlageGrid';
 const behandlingData = [klageApi.BEHANDLING_KLAGE];
 const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURDERING];
 
-type OwnProps = Readonly<{
+interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
-  oppdaterProsessStegIUrl: (punktnavn: string) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
@@ -31,11 +31,12 @@ type OwnProps = Readonly<{
   };
   visFeilmelding: (error: {}) => void;
   opneSokeside: () => void;
-}>;
+  alleBehandlinger: [{}];
+}
 
-type StateProps = {}
+interface StateProps {}
 
-type DispatchProps = Readonly<{
+interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}) => Promise<void>;
@@ -43,13 +44,13 @@ type DispatchProps = Readonly<{
   destroyReduxForms: (formPrefix: string) => void;
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
-}>
+}
 
 type Props = DispatchProps & OwnProps;
 
-type KlageState = Readonly<{
+interface KlageState {
   fetchCounter: number;
-}>
+}
 
 class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
   static propTypes = {
@@ -67,7 +68,7 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape({}).isRequired,
-    fagsakBehandlingerInfo: PropTypes.shape({}).isRequired,
+    alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }
 
   constructor(props) {

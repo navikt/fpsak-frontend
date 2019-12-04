@@ -3,6 +3,7 @@ export { default as BehandlingPaVent, SettPaVentParams } from './src/components/
 export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
+export { default as FatterVedtakStatusModal } from './src/components/vedtak/FatterVedtakStatusModal';
 
 export { default as ProsessStegProperties } from './src/definisjon/prosessStegBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';
@@ -10,6 +11,7 @@ export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmeny
 export { default as fagsakInfoPropType } from './src/propTypes/fagsakInfoPropType';
 export { default as fagsakPersonPropType } from './src/propTypes/fagsakPersonPropType';
 export { default as behandlingPropType } from './src/propTypes/behandlingPropType';
+export { default as dokumentPropType } from './src/propTypes/dokumentPropType';
 
 export { Aksjonspunkt } from './src/types/aksjonspunktTsType';
 export { Behandling } from './src/types/behandlingTsType';
