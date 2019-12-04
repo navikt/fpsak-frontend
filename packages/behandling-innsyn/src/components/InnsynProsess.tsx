@@ -11,7 +11,7 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, dokumentPropType,
+  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, dokumentPropType, ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
 import finnInnsynSteg from '../definition/innsynStegDefinition';
@@ -174,6 +174,16 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const vedtakStegVises = !!valgtSteg && valgtSteg.kode === bpc.VEDTAK;
 
+    const fellesProps = {
+      saksnummer: fagsak.saksnummer,
+      submitCallback: this.submitAksjonspunkter,
+      readOnly: valgtSteg.isReadOnly,
+      aksjonspunkter,
+      alleDokumenter,
+      behandling,
+      innsyn,
+    };
+
     return (
       <>
         <IverksetterVedtakStatusModal
@@ -193,33 +203,22 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
         >
           {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
             <InnsynProsessIndex
-              saksnummer={fagsak.saksnummer}
-              alleDokumenter={alleDokumenter}
-              submitCallback={this.submitAksjonspunkter}
-              readOnly={valgtSteg.isReadOnly}
               isSubmittable={valgtSteg.isSubmittable}
-              aksjonspunkter={valgtSteg.aksjonspunkter}
               alleKodeverk={kodeverk}
-              behandling={behandling}
-              innsyn={innsyn}
+              {...fellesProps}
             />
           )}
           {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
             <VedtakInnsynProsessIndex
-              saksnummer={fagsak.saksnummer}
-              aksjonspunkter={aksjonspunkter}
               alleDokumenter={alleDokumenter}
-              submitCallback={this.submitAksjonspunkter}
               previewCallback={this.previewCallback}
-              readOnly={valgtSteg.isReadOnly}
-              behandling={behandling}
-              innsyn={innsyn}
+              {...fellesProps}
             />
           )}
-          {(vedtakStegVises && valgtSteg.aksjonspunkter.length === 0) && (
-            <div>Ingenting</div>
-          )}
         </MargMarkering>
+        {vedtakStegVises && valgtSteg.aksjonspunkter.length === 0 && (
+          <ProsessStegIkkeBehandletPanel />
+        )}
       </>
     );
   }

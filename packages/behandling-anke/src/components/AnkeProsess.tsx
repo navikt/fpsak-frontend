@@ -1,0 +1,303 @@
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { injectIntl } from 'react-intl';
+import ProcessMenu from '@navikt/nap-process-menu';
+
+import AnkeResultatProsessIndex from '@fpsak-frontend/prosess-anke-resultat';
+import AnkeProsessIndex from '@fpsak-frontend/prosess-anke';
+import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import {
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
+  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
+} from '@fpsak-frontend/behandling-felles';
+
+import ankeApi from '../data/ankeBehandlingApi';
+import finnAnkeSteg from '../definition/ankeStegDefinition';
+import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
+import AnkeBehandlingModal from './AnkeBehandlingModal';
+import { AnkeVurdering } from '../types/ankeVurderingTsType';
+
+import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+
+interface OwnProps {
+  intl: {};
+  fagsak: FagsakInfo;
+  behandling: Behandling;
+  aksjonspunkter: [Aksjonspunkt];
+  vilkar: [Vilkar];
+  navAnsatt: NavAnsatt;
+  valgtProsessSteg: string;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
+  opneSokeside: () => void;
+  ankeVurdering?: AnkeVurdering;
+  alleBehandlinger: [{
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
+  }];
+}
+
+interface StateProps {
+  hasFetchError: boolean;
+}
+
+interface DispatchProps {
+  lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
+  forhandsvisMelding: (brevData: {}) => Promise<any>;
+  saveAnke: (params: {}) => Promise<any>;
+  resolveAnkeTemp: (params: {}) => Promise<any>;
+}
+
+type Props = OwnProps & StateProps & DispatchProps;
+
+interface AnkeProsessState{
+  visIverksetterVedtakModal: boolean;
+  visModalAnkeBehandling: boolean;
+  skalOppdatereFagsakKontekst: boolean;
+}
+
+export class AnkeProsess extends Component<Props, AnkeProsessState> {
+  static propTypes = {
+    intl: PropTypes.shape({}).isRequired,
+    fagsak: fagsakInfoPropType.isRequired,
+    behandling: behandlingPropType.isRequired,
+    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
+    vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    navAnsatt: navAnsattPropType.isRequired,
+    valgtProsessSteg: PropTypes.string.isRequired,
+    lagreAksjonspunkt: PropTypes.func.isRequired,
+    forhandsvisMelding: PropTypes.func.isRequired,
+    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
+    opneSokeside: PropTypes.func.isRequired,
+    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
+    saveAnke: PropTypes.func.isRequired,
+    resolveAnkeTemp: PropTypes.func.isRequired,
+    ankeVurdering: ankeVurderingPropType.isRequired,
+    alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  }
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      visIverksetterVedtakModal: false,
+      visModalAnkeBehandling: false,
+      skalOppdatereFagsakKontekst: true,
+    };
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      behandling, oppdaterBehandlingVersjon,
+    } = this.props;
+    const {
+      skalOppdatereFagsakKontekst,
+    } = this.state;
+    if (skalOppdatereFagsakKontekst && behandling.versjon !== prevProps.behandling.versjon) {
+      oppdaterBehandlingVersjon(behandling.versjon);
+    }
+  }
+
+  setSteg = (punkt) => {
+    const {
+      oppdaterProsessStegIUrl,
+    } = this.props;
+    oppdaterProsessStegIUrl(punkt);
+  }
+
+  toggleIverksetterVedtakModal = () => {
+    const { opneSokeside } = this.props;
+    const { visIverksetterVedtakModal } = this.state;
+
+    if (visIverksetterVedtakModal) {
+      opneSokeside();
+    }
+    this.setState((state) => ({ ...state, visIverksetterVedtakModal: !state.visIverksetterVedtakModal }));
+  }
+
+  toggleAnkeModal = () => {
+    const { opneSokeside } = this.props;
+    const { visModalAnkeBehandling } = this.state;
+
+    if (visModalAnkeBehandling) {
+      opneSokeside();
+    }
+    this.setState((state) => ({ ...state, visModalAnkeBehandling: !state.visModalAnkeBehandling }));
+  }
+
+  slaAvOppdateringAvFagsak = () => {
+    this.setState((state) => ({ ...state, skalOppdatereFagsakKontekst: false }));
+  }
+
+  saveAnkeText = (aksjonspunktModel) => {
+    const {
+      behandling, saveAnke, resolveAnkeTemp, aksjonspunkter,
+    } = this.props;
+    const data = {
+      behandlingId: behandling.id,
+      ...aksjonspunktModel,
+    };
+
+    const getForeslaVedtakAp = aksjonspunkter
+      .filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET)
+      .filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+
+    if (getForeslaVedtakAp.length === 1) {
+      resolveAnkeTemp(data);
+    } else {
+      saveAnke(data);
+    }
+  }
+
+  submitAksjonspunkter = (aksjonspunktModels) => {
+    const {
+      fagsak,
+      behandling,
+      lagreAksjonspunkt,
+      oppdaterProsessStegIUrl,
+      valgtProsessSteg,
+    } = this.props;
+    const skalTilMedunderskriver = aksjonspunktModels
+      .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+    const skalFerdigstilles = aksjonspunktModels
+      .some((apValue) => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
+
+    if (skalTilMedunderskriver || skalFerdigstilles) {
+      this.slaAvOppdateringAvFagsak();
+    }
+
+    const { id, versjon } = behandling;
+    const models = aksjonspunktModels.map((ap) => ({
+      '@type': ap.kode,
+      ...ap,
+    }));
+
+    const params = {
+      saksnummer: fagsak.saksnummer,
+      behandlingId: id,
+      behandlingVersjon: versjon,
+      bekreftedeAksjonspunktDtoer: models,
+    };
+
+    return lagreAksjonspunkt(params, { keepData: true })
+      .then(() => {
+        if (skalTilMedunderskriver || skalFerdigstilles) {
+          this.toggleAnkeModal();
+        }
+        if (valgtProsessSteg === bpc.ANKE_RESULTAT) {
+          this.toggleIverksetterVedtakModal();
+        } else {
+          oppdaterProsessStegIUrl();
+        }
+      });
+  };
+
+  previewCallback = (data) => {
+    const { fagsak, behandling, forhandsvisMelding } = this.props;
+    const brevData = {
+      ...data,
+      behandlingUuid: behandling.uuid,
+      ytelseType: fagsak.fagsakYtelseType,
+    };
+    return forhandsvisMelding(brevData);
+  };
+
+  render() {
+    const {
+      intl,
+      fagsak,
+      behandling,
+      aksjonspunkter,
+      vilkar,
+      ankeVurdering,
+      navAnsatt,
+      valgtProsessSteg,
+      hasFetchError,
+      alleBehandlinger,
+    } = this.props;
+    const { visIverksetterVedtakModal, visModalAnkeBehandling } = this.state;
+
+    const alleSteg = finnAnkeSteg({
+      behandling, aksjonspunkter, vilkar,
+    });
+    const alleProsessMenySteg = byggProsessmenySteg({
+      alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
+    });
+
+    const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
+    const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
+
+    const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
+
+    const fellesProps = {
+      behandling,
+      ankeVurdering,
+      aksjonspunkter: valgtSteg.aksjonspunkter,
+      submitCallback: this.submitAksjonspunkter,
+      readOnly: valgtSteg.isReadOnly,
+      previewCallback: this.previewCallback,
+      previewVedtakCallback: this.previewCallback,
+      readOnlySubmitButton,
+      saveAnke: this.saveAnkeText,
+    };
+
+    return (
+      <>
+        <IverksetterVedtakStatusModal
+          visModal={visIverksetterVedtakModal}
+          lukkModal={this.toggleIverksetterVedtakModal}
+          behandlingsresultat={behandling.behandlingsresultat}
+          behandlingStatusKode={behandling.status.kode}
+        />
+        <AnkeBehandlingModal
+          visModal={visModalAnkeBehandling}
+          lukkModal={this.toggleAnkeModal}
+        />
+        <ProcessMenu
+          steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
+          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
+        />
+        <MargMarkering
+          behandlingStatus={behandling.status}
+          aksjonspunkter={valgtSteg.aksjonspunkter}
+          isReadOnly={valgtSteg.isReadOnly}
+        >
+          {(valgtStegKode === bpc.ANKEBEHANDLING && valgtSteg.aksjonspunkter.length > 0) && (
+            <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
+          )}
+          {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
+            <AnkeMerknaderProsessIndex {...fellesProps} />
+          )}
+          {(valgtStegKode === bpc.ANKE_RESULTAT && valgtSteg.aksjonspunkter.length > 0) && (
+            <AnkeResultatProsessIndex {...fellesProps} />
+          )}
+        </MargMarkering>
+        {valgtSteg.aksjonspunkter.length === 0 && (
+          <ProsessStegIkkeBehandletPanel />
+        )}
+      </>
+    );
+  }
+}
+
+const mapStateToProps = (state): StateProps => ({
+  hasFetchError: !!ankeApi.BEHANDLING_ANKE.getRestApiError()(state),
+});
+
+const mapDispatchToProps = (dispatch): DispatchProps => ({
+  ...bindActionCreators({
+    lagreAksjonspunkt: ankeApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+    forhandsvisMelding: ankeApi.PREVIEW_MESSAGE.makeRestApiRequest(),
+    saveAnke: ankeApi.SAVE_ANKE_VURDERING.makeRestApiRequest(),
+    resolveAnkeTemp: ankeApi.SAVE_REOPEN_ANKE_VURDERING.makeRestApiRequest(),
+  }, dispatch),
+});
+
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(injectIntl(AnkeProsess));

@@ -15,7 +15,6 @@ import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck';
-import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
   getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson, getSaksnummer,
@@ -38,7 +37,7 @@ const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-f
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
-const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-anke'));
+const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
@@ -65,13 +64,6 @@ export class BehandlingIndex extends Component {
     setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
-    allDocuments: PropTypes.arrayOf(PropTypes.shape({
-      journalpostId: PropTypes.string.isRequired,
-      dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string,
-      tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
-    })).isRequired,
     kodeverk: PropTypes.shape().isRequired,
     fagsak: PropTypes.shape({
       fagsakStatus: PropTypes.shape().isRequired,
@@ -151,7 +143,6 @@ export class BehandlingIndex extends Component {
       erAktivPapirsoknad,
       featureToggles,
       hasSubmittedPaVentForm,
-      allDocuments,
       kodeverk,
       fagsak,
       fagsakBehandlingerInfo,
@@ -222,7 +213,6 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingKlageIndex
-            featureToggles={featureToggles}
             alleBehandlinger={fagsakBehandlingerInfo}
             {...defaultProps}
           />
@@ -234,19 +224,8 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <BehandlingAnkeIndex
-            key={behandlingId}
-            saksnummer={saksnummer}
-            behandlingId={behandlingId}
-            location={location}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingUpdater={behandlingUpdater}
-            featureToggles={featureToggles}
-            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-            allDocuments={allDocuments}
-            kodeverk={kodeverk}
-            fagsak={fagsak}
-            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
-            navAnsatt={navAnsatt}
+            alleBehandlinger={fagsakBehandlingerInfo}
+            {...defaultProps}
           />
         </Suspense>
       );
@@ -300,7 +279,6 @@ const mapStateToProps = (state) => {
     featureToggles: getFeatureToggles(state),
     hasSubmittedPaVentForm: getHasSubmittedPaVentForm(state),
     kodeverk: erTilbakekreving(behandlingType) ? getAlleFpTilbakeKodeverk(state) : getAlleFpSakKodeverk(state),
-    allDocuments: getAllDocuments(state),
     fagsakBehandlingerInfo: getBehandlingerInfo(state),
     behandlingLinks: getBehandlingerLinksMappedById(state)[behandlingId],
     navAnsatt: getNavAnsatt(state),

@@ -34,8 +34,6 @@ interface OwnProps {
   alleBehandlinger: [{}];
 }
 
-interface StateProps {}
-
 interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
@@ -67,7 +65,6 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
-    featureToggles: PropTypes.shape({}).isRequired,
     alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }
 
@@ -165,7 +162,7 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
   }
 }
 
-const mapStateToProps = (): StateProps => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
@@ -179,4 +176,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingKlageIndex);
+export default connect<{}, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingKlageIndex);

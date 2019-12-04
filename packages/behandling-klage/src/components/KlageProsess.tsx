@@ -244,6 +244,14 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
 
     const isKlageWithKA = klageVurdering && klageVurdering.klageVurderingResultatNK && klageVurdering.klageVurderingResultatNK.klageVurdertAv === 'NK';
 
+    const fellesProps = {
+      behandling,
+      klageVurdering,
+      submitCallback: this.submitAksjonspunkter,
+      readOnly: valgtSteg.isReadOnly,
+      alleKodeverk: kodeverk,
+    };
+
     return (
       <>
         <KlageBehandlingModal
@@ -266,38 +274,26 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
         >
           {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
             <FormkravProsessIndex
-              behandling={behandling}
-              klageVurdering={klageVurdering}
-              submitCallback={this.submitAksjonspunkter}
-              readOnly={valgtSteg.isReadOnly}
               readOnlySubmitButton={readOnlySubmitButton}
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-              alleKodeverk={kodeverk}
               avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
+              {...fellesProps}
             />
           )}
           {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
             <KlagevurderingProsessIndex
-              behandling={behandling}
-              klageVurdering={klageVurdering}
-              alleKodeverk={kodeverk}
               saveKlage={this.saveKlageText}
-              submitCallback={this.submitAksjonspunkter}
-              readOnly={valgtSteg.isReadOnly}
               previewCallback={this.previewCallback}
               readOnlySubmitButton={readOnlySubmitButton}
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+              {...fellesProps}
             />
           )}
           {valgtStegKode === bpc.KLAGE_RESULTAT && (
             <VedtakKlageProsessIndex
-              behandling={behandling}
-              klageVurdering={klageVurdering}
               aksjonspunkter={valgtSteg.aksjonspunkter}
-              submitCallback={this.submitAksjonspunkter}
               previewVedtakCallback={this.previewCallback}
-              readOnly={valgtSteg.isReadOnly}
-              alleKodeverk={kodeverk}
+              {...fellesProps}
             />
           )}
           {valgtSteg.aksjonspunkter.length === 0 && (

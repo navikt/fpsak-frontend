@@ -161,7 +161,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
   }
 }
 
-const mapStateToProps = () => {};
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
