@@ -58,16 +58,17 @@ const AvviksopplysningerAT = ({
               </Normaltekst>
             </Column>
           </Row>
-      <Row>
-        <Column className={styles.colLine}>
-          <hr />
-        </Column>
-      </Row>
-      <Row>
-        <Column className={styles.colLable}>
-          <Normaltekst className={beregningStyles.semiBoldText}>
-            {!relevanteStatuser.isKombinasjonsstatus && (<FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-          )}
+          <Row>
+            <Column className={styles.colLine}>
+              <hr />
+            </Column>
+          </Row>
+          <Row>
+            <Column className={styles.colLable}>
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                {!relevanteStatuser.isKombinasjonsstatus && (
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
+                )}
                 {relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
                 )}
@@ -88,8 +89,6 @@ const AvviksopplysningerAT = ({
       )}
     </>
   );
-};
-};
 };
 
 AvviksopplysningerAT.propTypes = {

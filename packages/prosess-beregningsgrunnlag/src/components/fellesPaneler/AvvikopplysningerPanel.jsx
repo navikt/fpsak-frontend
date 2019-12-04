@@ -72,24 +72,6 @@ const AvviksopplysningerPanel = ({
       </Column>
     </Row>
     )}
-    {relevanteStatuser.isAAP && (
-      <Row>
-        <Column xs="12">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
-          </Normaltekst>
-        </Column>
-      </Row>
-    )}
-    {relevanteStatuser.isDagpenger && (
-    <Row>
-      <Column xs="12">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
-        </Normaltekst>
-      </Column>
-    </Row>
-    )}
   </Panel>
 );
 
