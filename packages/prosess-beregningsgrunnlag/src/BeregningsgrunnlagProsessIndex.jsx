@@ -29,10 +29,9 @@ const BeregningsgrunnlagProsessIndex = ({
   isApOpen,
   vilkar,
   alleKodeverk,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   featureToggles,
 }) => {
-  const skalViseRedesignetGUI = true; // featureToggles[featureToggle.BG_REDESIGN];
+  const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
   if (skalViseRedesignetGUI) {
     return (
       <RawIntlProvider value={intl}>
