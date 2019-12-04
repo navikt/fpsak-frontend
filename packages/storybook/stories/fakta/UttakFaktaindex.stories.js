@@ -6,38 +6,31 @@ import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 
 import withReduxProvider from '../../decorators/withRedux';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
-const alleKodeverk
-  = require('../mocks/alleKodeverk.json'); // eslint-disable-line
-const aksjonspunkterVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/aksjonspunkter.json'); // eslint-disable-line
-const behandlingVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/behandling.json'); // eslint-disable-line
-const uttakKontrollerFaktaPerioderVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/kontrollerFaktaPerioder.json'); // eslint-disable-line
-const ytelsefordelingVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/ytelsefordeling.json'); // eslint-disable-line
-const faktaArbeidsforholdVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/faktaArbeidsforhold.json'); // eslint-disable-line
-const personopplysningerVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/personopplysninger.json'); // eslint-disable-line
-const familiehendelseVurderAnnenPartHarRett
-  = require('./mocks/uttak/vurder-annen-part-har-rett/familiehendelse.json'); // eslint-disable-line
+import aksjonspunkterVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/aksjonspunkter.json';
+import behandlingVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/behandling.json';
+import uttakKontrollerFaktaPerioderVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/kontrollerFaktaPerioder.json';
+import ytelsefordelingVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/ytelsefordeling.json';
+import faktaArbeidsforholdVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/faktaArbeidsforhold.json';
+import personopplysningerVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/personopplysninger.json';
+import familiehendelseVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/familiehendelse.json';
 
-const aksjonspunkterFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/aksjonspunkter.json'); // eslint-disable-line
-const behandlingFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/behandling.json'); // eslint-disable-line
-const uttakKontrollerFaktaPerioderFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/kontrollerFaktaPerioder.json'); // eslint-disable-line
-const ytelsefordelingFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/ytelsefordeling.json'); // eslint-disable-line
-const faktaArbeidsforholdFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/faktaArbeidsforhold.json'); // eslint-disable-line
-const personopplysningerFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/personopplysninger.json'); // eslint-disable-line
-const familiehendelseFarSøkerFørsteSeksUker
-  = require('./mocks/uttak/far-søker-første-seks-uker/familiehendelse.json'); // eslint-disable-line
+import aksjonspunkterFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/aksjonspunkter.json';
+import behandlingFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/behandling.json';
+import uttakKontrollerFaktaPerioderFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/kontrollerFaktaPerioder.json';
+import ytelsefordelingFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/ytelsefordeling.json';
+import faktaArbeidsforholdFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/faktaArbeidsforhold.json';
+import personopplysningerFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/personopplysninger.json';
+import familiehendelseFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/familiehendelse.json';
+
+import aksjonspunkterOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/aksjonspunkter.json';
+import behandlingOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/behandling.json';
+import uttakKontrollerFaktaPerioderOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/kontrollerFaktaPerioder.json';
+import ytelsefordelingOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/ytelsefordeling.json';
+import faktaArbeidsforholdOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/faktaArbeidsforhold.json';
+import personopplysningerOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/personopplysninger.json';
+import familiehendelseOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/familiehendelse.json';
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
@@ -92,6 +85,30 @@ export const farSøkerFørsteSeksUker = () => {
       faktaArbeidsforhold={faktaArbeidsforholdFarSøkerFørsteSeksUker}
       personopplysninger={personopplysningerFarSøkerFørsteSeksUker}
       familiehendelse={familiehendelseFarSøkerFørsteSeksUker}
+      readOnly={boolean('readOnly', readOnly)}
+      kanOverstyre={false}
+    />
+  );
+};
+
+export const overføringAvPerioder = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
+  const readOnly = false;
+
+  return (
+    <UttakFaktaIndex
+      behandling={behandlingOverføringAvPerioder}
+      aksjonspunkter={aksjonspunkterOverføringAvPerioder}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      shouldOpenDefaultInfoPanels={false}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      ytelsefordeling={ytelsefordelingOverføringAvPerioder}
+      uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderOverføringAvPerioder}
+      alleKodeverk={alleKodeverk}
+      faktaArbeidsforhold={faktaArbeidsforholdOverføringAvPerioder}
+      personopplysninger={personopplysningerOverføringAvPerioder}
+      familiehendelse={familiehendelseOverføringAvPerioder}
       readOnly={boolean('readOnly', readOnly)}
       kanOverstyre={false}
     />
