@@ -1,19 +1,71 @@
-# Simple Proxy to backend
-location  /fpsak/api/ {
-    access_by_lua_file oidc_protected.lua;
-    proxy_pass "${APP_URL_FPSAK}/fpsak/api/";
-}
-
-# Simple Proxy to backend
-location  /fpsak/formidling/ {
-    access_by_lua_file oidc_protected.lua;
-    # proxy_pass "http://fpformidling/fpsak/formidling/";
-}
+# Trenger ikke accesslogger på NAIS siden dette er innebygd i platformen
+access_log off;
 
 
-# Simple Proxy to backend middlertidig fix frem til bedre løsning kommer på plass.
-location  /fpsak/oppgaveredirect {
-    access_by_lua_file oidc_protected.lua;
-    proxy_pass          "${APP_URL_FPSAK}/fpsak/oppgaveredirect";
-    proxy_redirect      "~*/fpsak/#/(.+)$" "$app_baseurl/fpsak/$1";
+server {
+   listen       ${APP_PORT};
+   server_name  localhost;
+
+   # Health check for NAIS
+   location = /isAlive {
+        return 200 "Application:UP";
+        add_header Content-Type text/plain;
+   }
+
+   # Readiness check for NAIS
+   location = /isReady {
+        return 200 "Application:READY";
+        add_header Content-Type text/plain;
+   }
+
+   # Health check for NAIS
+   location = /fpsak/isAlive {
+        return 200 "Application:UP";
+        add_header Content-Type text/plain;
+   }
+
+   # Readiness check for NAIS
+   location = /fpsak/isReady {
+        return 200 "Application:READY";
+        add_header Content-Type text/plain;
+   }
+
+   location  /fpsak {
+       proxy_pass "${APP_URL_FPSAK}/fpsak";
+   }
+
+   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
+   location @rewrites {
+        rewrite ^(.+)$ "/index.html" last;
+   }
+
+    location @401_json {
+        default_type application/json;
+        return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
+    }
+
+    location @403_json {
+        default_type application/json;
+        return 403 '{"feilmelding":"Innlogget bruker har ikke tilgang til ressursen","type":"MANGLER_TILGANG_FEIL"}';
+    }
+
+    location @404_json {
+        default_type application/json;
+        return 404 '{"feilmelding":"Kunne ikke finne ressursen, beklager.","type":"IKKE_FUNNET_FEIL"}';
+    }
+
+    location @504_json {
+        default_type application/json;
+        return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
+    }
+
+    location / {
+        # beholder default root slik at vi kan swappe ut med stock nginx
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+        try_files $uri @rewrites;
+
+        # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
+        add_header Cache-Control no-cache;
+     }
 }

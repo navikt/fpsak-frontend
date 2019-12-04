@@ -43,7 +43,7 @@ init({
 });
 
 const history = createBrowserHistory({
-  basename: '/fpsak/',
+  basename: '/',
 });
 const store = configureStore(history);
 

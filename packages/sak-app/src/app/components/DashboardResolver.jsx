@@ -11,7 +11,7 @@ import { getPathToFplos } from '@fpsak-frontend/fp-felles';
 
 import Dashboard from './Dashboard';
 
-const isDevelopment = () => process.env.NODE_ENV === 'development';
+const isDevelopment = () => true;
 
 /**
  * DashboardResolver

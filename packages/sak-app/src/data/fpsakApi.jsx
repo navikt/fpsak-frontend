@@ -124,7 +124,7 @@ const endpoints = new RestApiConfigBuilder()
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
 
   /* /sprak */
-  .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
+  .withGet('/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)
 
   /* /api/feature-toggle */
   .withPost('/fpsak/api/feature-toggle', FpsakApiKeys.FEATURE_TOGGLE)

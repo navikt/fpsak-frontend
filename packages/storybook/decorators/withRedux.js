@@ -5,7 +5,7 @@ import { createBrowserHistory } from 'history';
 import configureStore from '@fpsak-frontend/sak-app/src/configureStore';
 
 const history = createBrowserHistory({
-  basename: '/fpsak/',
+  basename: '/',
 });
 
 const withReduxProvider = (story) => {

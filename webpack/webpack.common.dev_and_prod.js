@@ -18,7 +18,7 @@ const CSS_DIR = path.join(PACKAGES_DIR, 'assets/styles');
 const IMAGE_DIR = path.join(PACKAGES_DIR, 'assets/images');
 
 const isDevelopment = JSON.stringify(process.env.NODE_ENV) === '"development"';
-const PUBLIC_PATH = isDevelopment ? 'fpsak/public/' : '';
+const PUBLIC_PATH = isDevelopment ? 'public/' : '';
 
 const config = {
   module: {

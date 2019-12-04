@@ -9,7 +9,7 @@ const PACKAGES_DIR = path.resolve(__dirname, '../packages');
 const APP_DIR = path.resolve(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
-  mode: 'production',
+  mode: 'development',
   devtool: 'source-map',
   performance: { hints: false },
 
@@ -21,7 +21,7 @@ const config = {
     filename: '[name]-[contenthash].js',
     chunkFilename: '[name].[contenthash].chunk.js',
     path: path.resolve(__dirname, '../dist/public'),
-    publicPath: '/fpsak/public/',
+    publicPath: '/public/',
   },
   optimization: {
     minimizer: [

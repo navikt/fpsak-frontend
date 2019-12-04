@@ -1,20 +1,14 @@
 version: '3'
 services:
   frontend:
-    image: navikt/fpsak-frontend:latest
+    image: k9-sak-frontend:1.2.0
     # build: .
     ports:
-      - 9090:9090
+      - 9000:9000
     environment:
-      - APP_PORT=9090
       - APP_URL_FPSAK=http://host.docker.internal:8080
+      - APP_PORT=9000
       - OIDC_HOST_URL=http://host.docker.internal:8060/rest/isso/oauth2
       - OIDC_REDIRECT_URI=http://localhost:9090/fpsak/cb
       - REDIS_HOST=redis
-    links:
-      - redis
-    volumes:
-      - ./dist:/app/fpsak
 
-  redis:
-    image: redis
