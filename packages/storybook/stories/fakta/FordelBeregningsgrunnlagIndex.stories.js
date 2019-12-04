@@ -10,7 +10,7 @@ import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-ber
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',

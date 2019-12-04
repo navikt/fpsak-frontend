@@ -63,6 +63,7 @@ const UttakPeriode = ({
   editPeriode,
   endringsdato,
   farSøkerFør6Uker,
+  sisteUttakdatoFørsteSeksUker,
   fields,
   inntektsmeldingInfo,
   intl,
@@ -140,13 +141,14 @@ const UttakPeriode = ({
                     behandlingStatusKode={behandlingStatus.kode}
                     inntektsmeldingInfo={inntektsmeldingInfo[index]}
                     farSøkerFør6Uker={farSøkerFør6Uker}
+                    sisteUttakdatoFørsteSeksUker={sisteUttakdatoFørsteSeksUker}
                     familiehendelse={familiehendelse}
                     vilkarForSykdomExists={vilkarForSykdomExists}
                     getKodeverknavn={getKodeverknavn}
                   />
                 </div>
                 {perioder.length === fields.length
-                && renderValidationGraphic(perioder, index, index === (fields.length - 1), intl)}
+                    && renderValidationGraphic(perioder, index, index === (fields.length - 1), intl)}
               </FlexColumn>
             </FlexRow>
           </React.Fragment>
@@ -175,6 +177,7 @@ UttakPeriode.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingStatus: PropTypes.shape().isRequired,
   familiehendelse: PropTypes.shape().isRequired,
+  sisteUttakdatoFørsteSeksUker: PropTypes.shape().isRequired,
   endringsdato: PropTypes.string,
   farSøkerFør6Uker: PropTypes.bool,
 };
