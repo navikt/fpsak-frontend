@@ -90,6 +90,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
     expect(uttakPeriodeType).to.have.length(2);
@@ -121,6 +122,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -151,6 +153,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -186,6 +189,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
       {...otherProps}
     />);
 
