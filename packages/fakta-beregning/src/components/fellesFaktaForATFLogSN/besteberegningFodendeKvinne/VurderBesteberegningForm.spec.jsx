@@ -43,17 +43,11 @@ describe('<VurderBesteberegning>', () => {
       },
     ];
     const transformed = VurderBesteberegningForm.transformValues(values, { vurderBesteberegning: {} }, inntektPrMnd);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(2);
+    expect(transformed.besteberegningAndeler.besteberegningAndelListe.length).to.equal(1);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].andelsnr).to.equal(1);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
     expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[0].fastsatteVerdier.skalHaBesteberegning).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].andelsnr).to.equal(undefined);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].lagtTilAvSaksbehandler).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].nyAndel).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].aktivitetStatus).to.equal('DP');
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.skalHaBesteberegning).to.equal(true);
-    expect(transformed.besteberegningAndeler.besteberegningAndelListe[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
+    expect(transformed.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.inntektskategori).to.equal('DAGPENGER');
+    expect(transformed.besteberegningAndeler.nyDagpengeAndel.fastsatteVerdier.fastsattBeløp).to.equal(20000);
   });
 });
