@@ -115,14 +115,14 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
       '@type': ap.kode,
       ...ap,
     }));
-  
+
     const params = {
       saksnummer: fagsak.saksnummer,
       behandlingId: id,
       behandlingVersjon: versjon,
       bekreftedeAksjonspunktDtoer: models,
     };
-  
+
     return lagreAksjonspunkt(params, { keepData: true })
       .then(() => {
         if (valgtProsessSteg === bpc.VEDTAK) {
@@ -132,7 +132,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
         }
       });
   };
-  
+
   previewCallback = (data) => {
     const {
       fagsak,
@@ -144,7 +144,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
       behandlingUuid: behandling.uuid,
       ytelseType: fagsak.fagsakYtelseType,
     };
-  
+
     return forhandsvisMelding(brevData);
   };
 

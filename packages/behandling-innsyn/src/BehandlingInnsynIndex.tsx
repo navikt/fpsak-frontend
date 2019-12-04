@@ -87,8 +87,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
   }
 
   componentDidUpdate = (prevProps) => {
-    const { behandlingEventHandler, destroyReduxForms, behandlingVersjon } = this.props;
-    behandlingEventHandler.clear();
+    const { destroyReduxForms, behandlingVersjon } = this.props;
     if (behandlingVersjon !== prevProps.behandlingVersjon) {
       setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandlingVersjon)), 1000);
     }

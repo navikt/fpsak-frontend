@@ -20,7 +20,7 @@ export const KlageBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE)
+  .withAsyncPost('/fpsak/api/behandlinger', KlageBehandlingApiKeys.BEHANDLING_KLAGE, { fetchLinkDataAutomatically: false })
   .withInjectedPath('aksjonspunkter', KlageBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', KlageBehandlingApiKeys.VILKAR)
   .withInjectedPath('klage-vurdering', KlageBehandlingApiKeys.KLAGE_VURDERING)

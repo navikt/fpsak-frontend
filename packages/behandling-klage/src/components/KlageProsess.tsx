@@ -6,6 +6,7 @@ import { injectIntl } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -40,7 +41,7 @@ interface OwnProps {
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
-  klageVurdering: KlageVurdering;
+  klageVurdering?: KlageVurdering;
   alleBehandlinger: [{
     id: number;
     type: Kodeverk;
@@ -239,7 +240,10 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
-    /* isKlageWithKA ? 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver' : */
+    const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
+
+    const isKlageWithKA = klageVurdering && klageVurdering.klageVurderingResultatNK && klageVurdering.klageVurderingResultatNK.klageVurdertAv === 'NK';
+
     return (
       <>
         <KlageBehandlingModal
@@ -249,7 +253,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
         <FatterVedtakStatusModal
           visModal={visFatterVedtakModal}
           lukkModal={this.toggleFatterVedtakModal}
-          tekstkode="FatterVedtakStatusModal.SendtKlageResultatTilBeslutter"
+          tekstkode={isKlageWithKA ? 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver' : 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter'}
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
@@ -266,7 +270,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               klageVurdering={klageVurdering}
               submitCallback={this.submitAksjonspunkter}
               readOnly={valgtSteg.isReadOnly}
-              readOnlySubmitButton
+              readOnlySubmitButton={readOnlySubmitButton}
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
               alleKodeverk={kodeverk}
               avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
@@ -281,7 +285,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               submitCallback={this.submitAksjonspunkter}
               readOnly={valgtSteg.isReadOnly}
               previewCallback={this.previewCallback}
-              readOnlySubmitButton
+              readOnlySubmitButton={readOnlySubmitButton}
               apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
             />
           )}

@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from 'react';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
@@ -68,7 +68,7 @@ KlageVurderingModal.propTypes = {
   visModal: PropTypes.bool,
   lukkModal: PropTypes.func.isRequired,
   intl: PropTypes.shape({
-    formatMessage: PropTypes.string.isRequired,
+    formatMessage: PropTypes.func.isRequired,
   }).isRequired,
 };
 
