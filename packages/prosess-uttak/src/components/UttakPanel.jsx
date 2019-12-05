@@ -374,17 +374,19 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   }));
 };
 
-const mapStateToPropsFactory = (_initialState, ownProps) => {
-  const { behandlingId, behandlingVersjon, aksjonspunkter } = ownProps;
-  const validate = (values) => validateUttakPanelForm(values);
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
-  const initialValues = buildInitialValues(ownProps);
+const getSubmitCallback = createSelector(
+  [(props) => props.submitCallback, (props) => props.aksjonspunkter, (props) => props.apCodes],
+  (submitCallback, aksjonspunkter, apCodes) => (values) => submitCallback(transformValues(values, apCodes, aksjonspunkter)),
+);
 
-  return (state) => ({
+const mapStateToPropsFactory = () => {
+  const validate = (values) => validateUttakPanelForm(values);
+
+  return (state, props) => ({
     validate,
-    onSubmit,
-    initialValues,
-    manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
+    onSubmit: getSubmitCallback(props),
+    initialValues: buildInitialValues(props),
+    manuellOverstyring: behandlingFormValueSelector(formName, props.behandlingId, props.behandlingVersjon)(state, 'manuellOverstyring'),
   });
 };
 
