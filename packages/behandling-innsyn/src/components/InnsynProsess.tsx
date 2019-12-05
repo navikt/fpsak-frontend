@@ -178,7 +178,6 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
       saksnummer: fagsak.saksnummer,
       submitCallback: this.submitAksjonspunkter,
       readOnly: valgtSteg.isReadOnly,
-      aksjonspunkter,
       alleDokumenter,
       behandling,
       innsyn,
@@ -204,12 +203,14 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
           {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
             <InnsynProsessIndex
               isSubmittable={valgtSteg.isSubmittable}
+              aksjonspunkter={valgtSteg.aksjonspunkter}
               alleKodeverk={kodeverk}
               {...fellesProps}
             />
           )}
           {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
             <VedtakInnsynProsessIndex
+              aksjonspunkter={aksjonspunkter}
               alleDokumenter={alleDokumenter}
               previewCallback={this.previewCallback}
               {...fellesProps}
