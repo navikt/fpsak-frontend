@@ -15,6 +15,7 @@ import {
 import { DatepickerField, TextAreaField } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import ArbeidsgiverInfo from './ArbeidsgiverInfo';
 
@@ -143,7 +144,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     hasAksjonspunkt,
     hasOpenAksjonspunkt,
     onSubmit,
-    overstyringDisabled: ownProps.readOnlyBehandling,
+    overstyringDisabled: ownProps.readOnlyBehandling || ownProps.behandlingStatus.kode !== behandlingStatus.BEHANDLING_UTREDES,
     initialValues: buildInitialValues(ownProps),
   });
 };
