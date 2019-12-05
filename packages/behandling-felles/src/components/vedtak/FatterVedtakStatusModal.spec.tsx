@@ -11,7 +11,7 @@ import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
-import { FatterVedtakStatusModal } from './FatterVedtakStatusModal';
+import FatterVedtakStatusModal from './FatterVedtakStatusModal';
 
 describe('<FatterVedtakStatusModal>', () => {
   const closeEventCallback = sinon.spy();
@@ -35,7 +35,7 @@ describe('<FatterVedtakStatusModal>', () => {
   ];
 
   it('skal rendre modal for fatter vedtak', () => {
-    const wrapper = shallowWithIntl(<FatterVedtakStatusModal
+    const wrapper = shallowWithIntl(<FatterVedtakStatusModal.WrappedComponent
       intl={intlMock}
       showModal
       aksjonspunkter={aksjonspunkter}

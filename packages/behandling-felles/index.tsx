@@ -1,5 +1,6 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
-export { default as BehandlingPaVent, SettPaVentParams } from './src/components/BehandlingPaVent';
+export { SettPaVentParams } from './src/components/BehandlingPaVent';
+export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as ProsessStegIkkeBehandletPanel } from './src/components/ProsessStegIkkeBehandletPanel';

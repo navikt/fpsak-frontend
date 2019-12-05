@@ -14,22 +14,22 @@ import { Aksjonspunkt } from '../types/aksjonspunktTsType';
 import { Kodeverk } from '../types/kodeverkTsType';
 import behandlingPropType from '../propTypes/behandlingPropType';
 
-export type SettPaVentParams = Readonly<{
+export interface SettPaVentParams {
   formData: {
     ventearsak: string;
     frist?: string;
   };
   behandlingId: number;
   behandlingVersjon: number;
-}>;
+}
 
-type BehandlingPaVentProps = Readonly<{
+interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: [Aksjonspunkt];
   kodeverk: {[key: string]: [Kodeverk]};
   settPaVent: (SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
-}>;
+}
 
 const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
   behandling,
