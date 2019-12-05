@@ -108,12 +108,11 @@ export class DataFetcher extends Component {
 
   componentDidUpdate = (prevProps) => {
     const {
-      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired, behandlingVersjon, behandlingId,
+      showComponent, endpointParams, keepDataWhenRefetching, valueThatWillTriggerRefetchWhenChanged, behandlingNotRequired,
     } = this.props;
 
-    const hasBehandlingdataChanged = prevProps.behandlingId !== behandlingId || prevProps.behandlingVersjon !== behandlingVersjon;
     const forcedRefresh = valueThatWillTriggerRefetchWhenChanged !== prevProps.valueThatWillTriggerRefetchWhenChanged;
-    const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : hasBehandlingdataChanged;
+    const shouldRefetchData = behandlingNotRequired ? this.hasBehandlingsdataChanged(prevProps) : true;
 
     if (showComponent && (forcedRefresh || shouldRefetchData)) {
       this.fetchData(endpointParams, keepDataWhenRefetching);
@@ -123,7 +122,7 @@ export class DataFetcher extends Component {
   render() {
     const {
       showComponent, showComponentDuringFetch, isFetchFinished, render, endpoints, behandlingId, behandlingVersjon,
-      showLoadingIcon, behandlingNotRequired, keepDataWhenRefetching,
+      showLoadingIcon, behandlingNotRequired,
     } = this.props;
     const { nrOfErrors } = this.state;
 
@@ -131,7 +130,7 @@ export class DataFetcher extends Component {
     const showWhenFinished = showComponent && hasRequiredInput && isFetchFinished;
     const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
 
-    if (!hasFailed && (showComponentDuringFetch || keepDataWhenRefetching || showWhenFinished)) {
+    if (!hasFailed && (showComponentDuringFetch || showWhenFinished)) {
       const dataProps = endpoints.reduce((acc, d) => {
         const propName = format(d.name);
         return {
@@ -140,11 +139,7 @@ export class DataFetcher extends Component {
           [propName]: this.props[propName],
         };
       }, {});
-
-      const hasData = Object.values(dataProps).some((vp) => vp);
-      if (showComponentDuringFetch || hasData) {
-        return render(dataProps);
-      }
+      return render(dataProps);
     }
 
     return showComponent && showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;

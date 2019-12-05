@@ -13,10 +13,16 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import styles from './iverksetterVedtakStatusModal.less';
 
 type OwnProps = Readonly<{
-  intl: {};
+  intl: {
+    formatMessage: (o: {}) => string;
+  };
   lukkModal: () => void;
   visModal: boolean;
-  behandlingsresultat?: {};
+  behandlingsresultat?: {
+    type: {
+      kode: string;
+    };
+  };
 }>;
 
 /**
@@ -39,7 +45,7 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps> = ({
       className={styles.modal}
       isOpen={visModal}
       closeButton={false}
-      contentLabel={intl.formatMessage({ id: 'IverksetterVedtakStatusModal.Beskrivelse' })}
+      contentLabel={imageAltText}
       onRequestClose={lukkModal}
       shouldCloseOnOverlayClick={false}
       ariaHideApp={false}
@@ -79,10 +85,16 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps> = ({
 };
 
 IverksetterVedtakStatusModal.propTypes = {
-  intl: PropTypes.shape().isRequired,
+  intl: PropTypes.shape({
+    formatMessage: PropTypes.func.isRequired,
+  }).isRequired,
   lukkModal: PropTypes.func.isRequired,
   visModal: PropTypes.bool.isRequired,
-  behandlingsresultat: PropTypes.shape(),
+  behandlingsresultat: PropTypes.shape({
+    type: PropTypes.shape({
+      kode: PropTypes.string.isRequired,
+    }).isRequired,
+  }),
 };
 
 IverksetterVedtakStatusModal.defaultProps = {

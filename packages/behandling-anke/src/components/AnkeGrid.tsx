@@ -4,7 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { FormattedMessage } from 'react-intl';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
@@ -49,9 +49,11 @@ const AnkeGrid: FunctionComponent<OwnProps> = ({
 }) => (
   <>
     {behandling.behandlingHenlagt && (
-      <Undertittel>
-        <FormattedMessage id="InnsynGrid.Henlagt" />
-      </Undertittel>
+      <FadingPanel>
+        <Undertittel>
+          <FormattedMessage id="InnsynGrid.Henlagt" />
+        </Undertittel>
+      </FadingPanel>
     )}
     {!behandling.behandlingHenlagt && (
       <>

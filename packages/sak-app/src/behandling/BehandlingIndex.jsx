@@ -199,6 +199,7 @@ export class BehandlingIndex extends Component {
       oppdaterProsessStegIUrl: this.goToValgtProsessSteg,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
+      key: behandlingId,
     };
 
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {

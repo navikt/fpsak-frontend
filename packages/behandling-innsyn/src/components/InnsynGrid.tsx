@@ -4,7 +4,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { FormattedMessage } from 'react-intl';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
@@ -50,9 +50,11 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
 }) => (
   <>
     {behandling.behandlingHenlagt && (
-      <Undertittel>
-        <FormattedMessage id="InnsynGrid.Henlagt" />
-      </Undertittel>
+      <FadingPanel>
+        <Undertittel>
+          <FormattedMessage id="InnsynGrid.Henlagt" />
+        </Undertittel>
+      </FadingPanel>
     )}
     {!behandling.behandlingHenlagt && (
       <>

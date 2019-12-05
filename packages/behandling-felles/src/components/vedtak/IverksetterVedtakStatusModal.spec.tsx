@@ -5,9 +5,7 @@ import Modal from 'nav-frontend-modal';
 
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
 import IverksetterVedtakStatusModal from './IverksetterVedtakStatusModal';
 
@@ -16,18 +14,19 @@ describe('<IverksetterVedtakStatusModal>', () => {
     const closeEventCallback = sinon.spy();
     const wrapper = shallowWithIntl(<IverksetterVedtakStatusModal.WrappedComponent
       intl={intlMock}
-      behandlingType={{ kode: BehandlingType.FORSTEGANGSSOKNAD }}
-      fagsakYtelseType={{ kode: FagsakYtelseType.FORELDREPENGER }}
-      closeEvent={closeEventCallback}
-      behandlingStatusKode={behandlingStatus.IVERKSETTER_VEDTAK}
-      resolveProsessAksjonspunkterSuccess
-      resolveFaktaAksjonspunkterSuccess
+      visModal
+      lukkModal={closeEventCallback}
+      behandlingsresultat={{
+        type: {
+          kode: behandlingResultatType.AVSLATT,
+        },
+      }}
     />);
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).is.eql('Engangsstønaden er innvilget. Du kommer nå til forsiden.');
+    expect(modal.prop('contentLabel')).is.eql('Avslått');
 
     const button = wrapper.find(Hovedknapp);
     expect(button).to.have.length(1);
