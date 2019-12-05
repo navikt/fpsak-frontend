@@ -8,7 +8,7 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData,
+  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import ankeApi, { reduxRestApi } from './data/ankeBehandlingApi';
 import AnkeGrid from './components/AnkeGrid';
@@ -40,7 +40,7 @@ interface DispatchProps {
   taBehandlingAvVent: (params: {}) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
   destroyReduxForms: (formPrefix: string) => void;
-  settPaVent: (SettPaVentParams) => Promise<any>;
+  settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }
 

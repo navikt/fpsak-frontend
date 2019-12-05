@@ -6,8 +6,8 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
-import { Aksjonspunkt } from '../types/aksjonspunktTsType';
-import { Kodeverk } from '../types/kodeverkTsType';
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+import Kodeverk from '../types/kodeverkTsType';
 
 import styles from './margMarkering.less';
 

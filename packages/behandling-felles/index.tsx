@@ -1,5 +1,4 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
-export { SettPaVentParams } from './src/components/BehandlingPaVent';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
@@ -15,10 +14,11 @@ export { default as fagsakPersonPropType } from './src/propTypes/fagsakPersonPro
 export { default as behandlingPropType } from './src/propTypes/behandlingPropType';
 export { default as dokumentPropType } from './src/propTypes/dokumentPropType';
 
-export { Aksjonspunkt } from './src/types/aksjonspunktTsType';
-export { Behandling } from './src/types/behandlingTsType';
-export { Dokument } from './src/types/dokumentTsType';
-export { FagsakInfo } from './src/types/fagsakInfoTsType';
-export { Kodeverk } from './src/types/kodeverkTsType';
-export { NavAnsatt } from './src/types/navAnsattTsType';
-export { Vilkar } from './src/types/vilkarTsType';
+export { default as Aksjonspunkt } from './src/types/aksjonspunktTsType';
+export { default as Behandling } from './src/types/behandlingTsType';
+export { default as Dokument } from './src/types/dokumentTsType';
+export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
+export { default as Kodeverk } from './src/types/kodeverkTsType';
+export { default as NavAnsatt } from './src/types/navAnsattTsType';
+export { default as Vilkar } from './src/types/vilkarTsType';
+export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';

@@ -25,7 +25,7 @@ import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
 import klageVurderingPropType from '../propTypes/klageVurderingPropType';
 import KlageBehandlingModal from './KlageBehandlingModal';
-import { KlageVurdering } from '../types/klageVurderingTsType';
+import KlageVurdering from '../types/klageVurderingTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 

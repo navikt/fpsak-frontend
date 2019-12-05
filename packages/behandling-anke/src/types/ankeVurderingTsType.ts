@@ -1,6 +1,4 @@
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type AnkeVurdering = Readonly<{
+type AnkeVurdering = Readonly<{
   ankeVurderingResultat: {
     ankeVurdering: string;
     ankeVurderingOmgjoer?: string;
@@ -14,3 +12,5 @@ export type AnkeVurdering = Readonly<{
     erSubsidiartRealitetsbehandles: boolean;
   };
 }>
+
+export default AnkeVurdering;

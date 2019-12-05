@@ -7,11 +7,11 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 import { VerticalSpacer, FadingPanel } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
 import AnkeProsess from './AnkeProsess';
-import { AnkeVurdering } from '../types/ankeVurderingTsType';
+import AnkeVurdering from '../types/ankeVurderingTsType';
 import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
 
 interface OwnProps {
@@ -25,7 +25,7 @@ interface OwnProps {
   valgtProsessSteg: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
-  settPaVent: (SettPaVentParams) => Promise<any>;
+  settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
   opneSokeside: () => void;
   alleBehandlinger: [{}];

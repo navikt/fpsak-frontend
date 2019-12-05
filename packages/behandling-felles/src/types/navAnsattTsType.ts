@@ -1,6 +1,4 @@
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type NavAnsatt = Readonly<{
+type NavAnsatt = Readonly<{
   brukernavn: string;
   kanBehandleKode6: boolean;
   kanBehandleKode7: boolean;
@@ -12,3 +10,5 @@ export type NavAnsatt = Readonly<{
   navn: string;
   funksjonellTid?: string;
 }>
+
+export default NavAnsatt;

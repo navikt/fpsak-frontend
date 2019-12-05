@@ -1,8 +1,6 @@
-import { Kodeverk } from './kodeverkTsType';
+import Kodeverk from './kodeverkTsType';
 
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type Aksjonspunkt = Readonly<{
+type Aksjonspunkt = Readonly<{
   definisjon: Kodeverk;
   status: Kodeverk;
   begrunnelse: string;
@@ -15,3 +13,5 @@ export type Aksjonspunkt = Readonly<{
   kanLoses: boolean;
   erAktivt: boolean;
 }>
+
+export default Aksjonspunkt;

@@ -1,8 +1,6 @@
-import { Kodeverk } from './kodeverkTsType';
+import Kodeverk from './kodeverkTsType';
 
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type FagsakPerson = Readonly<{
+type FagsakPerson = Readonly<{
   alder: number;
   diskresjonskode?: Kodeverk;
   dodsdato?: string;
@@ -12,3 +10,5 @@ export type FagsakPerson = Readonly<{
   personnummer: string;
   personstatusType: Kodeverk;
 }>
+
+export default FagsakPerson;

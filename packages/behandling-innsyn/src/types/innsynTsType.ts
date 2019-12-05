@@ -1,8 +1,6 @@
 import { Kodeverk } from '@fpsak-frontend/behandling-felles';
 
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type Innsyn = Readonly<{
+type Innsyn = Readonly<{
   dokumenter: [{
     journalpostId: string;
     dokumentId: string;
@@ -16,3 +14,5 @@ export type Innsyn = Readonly<{
     opprettetDato: string;
   };
 }>
+
+export default Innsyn;

@@ -1,6 +1,6 @@
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type Kodeverk = Readonly<{
+type Kodeverk = Readonly<{
   kode: string;
   navn: string;
 }>
+
+export default Kodeverk;

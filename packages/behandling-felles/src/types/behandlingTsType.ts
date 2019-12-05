@@ -1,8 +1,6 @@
-import { Kodeverk } from './kodeverkTsType';
+import Kodeverk from './kodeverkTsType';
 
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type Behandling = Readonly<{
+type Behandling = Readonly<{
   id: number;
   versjon: number;
   uuid: string;
@@ -14,3 +12,5 @@ export type Behandling = Readonly<{
   behandlingHenlagt: boolean;
   behandlingsresultat?: {};
 }>
+
+export default Behandling;

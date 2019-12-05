@@ -9,25 +9,17 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
-import { Behandling } from '../types/behandlingTsType';
-import { Aksjonspunkt } from '../types/aksjonspunktTsType';
-import { Kodeverk } from '../types/kodeverkTsType';
+import Behandling from '../types/behandlingTsType';
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+import SettPaVentParams from '../types/settPaVentParamsTsType';
+import Kodeverk from '../types/kodeverkTsType';
 import behandlingPropType from '../propTypes/behandlingPropType';
-
-export interface SettPaVentParams {
-  formData: {
-    ventearsak: string;
-    frist?: string;
-  };
-  behandlingId: number;
-  behandlingVersjon: number;
-}
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
   aksjonspunkter: [Aksjonspunkt];
   kodeverk: {[key: string]: [Kodeverk]};
-  settPaVent: (SettPaVentParams) => Promise<any>;
+  settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }
 

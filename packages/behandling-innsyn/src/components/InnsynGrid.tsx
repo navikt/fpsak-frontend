@@ -8,11 +8,11 @@ import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
-  dokumentPropType,
+  dokumentPropType, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
 import InnsynProsess from './InnsynProsess';
-import { Innsyn } from '../types/innsynTsType';
+import Innsyn from '../types/innsynTsType';
 import innsynPropType from '../propTypes/innsynPropType';
 
 interface OwnProps {
@@ -27,7 +27,7 @@ interface OwnProps {
   valgtProsessSteg: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
-  settPaVent: (SettPaVentParams) => Promise<any>;
+  settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
   opneSokeside: () => void;
 }

@@ -15,7 +15,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
 import finnInnsynSteg from '../definition/innsynStegDefinition';
-import { Innsyn } from '../types/innsynTsType';
+import Innsyn from '../types/innsynTsType';
 import innsynPropType from '../propTypes/innsynPropType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';

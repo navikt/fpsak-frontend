@@ -22,7 +22,7 @@ import ankeApi from '../data/ankeBehandlingApi';
 import finnAnkeSteg from '../definition/ankeStegDefinition';
 import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
-import { AnkeVurdering } from '../types/ankeVurderingTsType';
+import AnkeVurdering from '../types/ankeVurderingTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 

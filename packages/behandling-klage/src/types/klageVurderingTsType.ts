@@ -1,6 +1,4 @@
-// TODO (TOR) default export feilar for yarn:coverage
-// eslint-disable-next-line import/prefer-default-export
-export type KlageVurdering = Readonly<{
+type KlageVurdering = Readonly<{
   klageVurderingResultatNK: {
     klageVurdertAv: string;
     klageVurdering?: string;
@@ -26,3 +24,5 @@ export type KlageVurdering = Readonly<{
     }];
   };
 }>
+
+export default KlageVurdering;
