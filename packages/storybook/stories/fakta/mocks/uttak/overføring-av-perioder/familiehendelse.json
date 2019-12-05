@@ -1,0 +1,53 @@
+{
+    "oppgitt": {
+        "@type": "AvklartDataFodselDto",
+        "skjaringstidspunkt": "2019-10-09",
+        "avklartBarn": [
+            {
+                "fodselsdato": "2019-10-09",
+                "dodsdato": null
+            }
+        ],
+        "brukAntallBarnFraTps": null,
+        "dokumentasjonForeligger": null,
+        "termindato": null,
+        "antallBarnTermin": null,
+        "utstedtdato": null,
+        "morForSykVedFodsel": null,
+        "vedtaksDatoSomSvangerskapsuke": null
+    },
+    "gjeldende": {
+        "@type": "AvklartDataFodselDto",
+        "skjaringstidspunkt": "2019-10-09",
+        "avklartBarn": [
+            {
+                "fodselsdato": "2019-10-09",
+                "dodsdato": null
+            }
+        ],
+        "brukAntallBarnFraTps": null,
+        "dokumentasjonForeligger": null,
+        "termindato": null,
+        "antallBarnTermin": null,
+        "utstedtdato": null,
+        "morForSykVedFodsel": null,
+        "vedtaksDatoSomSvangerskapsuke": null
+    },
+    "register": {
+        "@type": "AvklartDataFodselDto",
+        "skjaringstidspunkt": "2019-10-09",
+        "avklartBarn": [
+            {
+                "fodselsdato": "2019-10-09",
+                "dodsdato": null
+            }
+        ],
+        "brukAntallBarnFraTps": null,
+        "dokumentasjonForeligger": null,
+        "termindato": null,
+        "antallBarnTermin": null,
+        "utstedtdato": null,
+        "morForSykVedFodsel": null,
+        "vedtaksDatoSomSvangerskapsuke": null
+    }
+}

@@ -41,6 +41,7 @@ describe('<UttakPeriodeInnhold>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       getKodeverknavn={sinon.spy()}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const verticalSpacer = wrapper.find(VerticalSpacer);

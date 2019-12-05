@@ -1,0 +1,133 @@
+{
+    "perioder": [
+        {
+            "tom": "2019-12-03",
+            "fom": "2019-10-23",
+            "uttakPeriodeType": {
+                "kode": "FEDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "-",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        },
+        {
+            "tom": "2019-12-31",
+            "fom": "2019-12-04",
+            "uttakPeriodeType": {
+                "kode": "-",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "SYKDOM",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "-",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        },
+        {
+            "tom": "2020-01-21",
+            "fom": "2020-01-01",
+            "uttakPeriodeType": {
+                "kode": "FEDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "-",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_OK",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": true,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        }
+    ]
+}

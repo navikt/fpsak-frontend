@@ -9,10 +9,10 @@ import BehandlingVelgerSakIndex from '@fpsak-frontend/sak-behandling-velger';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 const BEHANDLING_TYPE_KODEVERK = 'BEHANDLING_TYPE';
 const BEHANDLING_STATUS_KODEVERK = 'BEHANDLING_STATUS';
-
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const behandlinger = [{
   id: 1,

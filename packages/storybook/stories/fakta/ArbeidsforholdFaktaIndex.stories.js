@@ -10,7 +10,7 @@ import arbeidsforholdKilder from '@fpsak-frontend/fakta-arbeidsforhold/src/kodev
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -139,7 +139,7 @@ export const visPanelUtenAksjonspunkter = () => {
       })}
       aksjonspunkter={[]}
       alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{ }}
+      alleMerknaderFraBeslutter={{}}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
