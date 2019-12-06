@@ -648,6 +648,8 @@
 
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
 
+  "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
+
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv og behandle saken litt senere. Om feilen oppstår igjen meld den inn via porten.",

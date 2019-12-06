@@ -15,7 +15,7 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
+  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel, BehandlingHenlagtPanel,
 } from '@fpsak-frontend/behandling-felles';
 
 import ankeApi from '../data/ankeBehandlingApi';
@@ -272,14 +272,17 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
           {(valgtStegKode === bpc.ANKEBEHANDLING && valgtSteg.aksjonspunkter.length > 0) && (
             <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
           )}
-          {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
-            <AnkeMerknaderProsessIndex {...fellesProps} />
-          )}
           {(valgtStegKode === bpc.ANKE_RESULTAT && valgtSteg.aksjonspunkter.length > 0) && (
             <AnkeResultatProsessIndex {...fellesProps} />
           )}
+          {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
+            <AnkeMerknaderProsessIndex {...fellesProps} />
+          )}
         </MargMarkering>
-        {valgtSteg.aksjonspunkter.length === 0 && (
+        {(valgtStegKode === bpc.ANKE_MERKNADER && behandling.behandlingHenlagt) && (
+          <BehandlingHenlagtPanel />
+        )}
+        {(!behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

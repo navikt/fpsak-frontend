@@ -6,7 +6,7 @@ import {
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
+const hasNonDefaultBehandlingspunkt = ({ behandlingHenlagt }, bpLength) => bpLength > 0 || behandlingHenlagt;
 
 /**
  * Rekkefølgen i listene under bestemmer steg-rekkefølgen i GUI.
@@ -46,6 +46,7 @@ const finnAnkeSteg = createSelector(
 
     const builderData = {
       behandlingType: behandling.type,
+      behandlingHenlagt: behandling.behandlingHenlagt,
       aksjonspunkter,
       vilkar,
       behandlingsresultat: behandling.behandlingsresultat,

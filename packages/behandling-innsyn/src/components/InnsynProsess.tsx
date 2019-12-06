@@ -10,7 +10,7 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
+  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg, BehandlingHenlagtPanel,
   fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, dokumentPropType, ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
 import innsynApi from '../data/innsynBehandlingApi';
@@ -217,7 +217,10 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
             />
           )}
         </MargMarkering>
-        {vedtakStegVises && valgtSteg.aksjonspunkter.length === 0 && (
+        {(vedtakStegVises && behandling.behandlingHenlagt) && (
+          <BehandlingHenlagtPanel />
+        )}
+        {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

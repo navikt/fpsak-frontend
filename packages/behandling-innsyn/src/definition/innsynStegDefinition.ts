@@ -11,7 +11,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import Innsyn from '../types/innsynTsType';
 
-const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
+const hasNonDefaultBehandlingspunkt = ({ behandlingHenlagt }, bpLength) => bpLength > 0 || behandlingHenlagt;
 
 const getVedtakStatus = ({ innsynResultatType }, bpAksjonspunkter) => {
   const harApentAksjonpunkt = bpAksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
@@ -61,6 +61,7 @@ const finnInnsynSteg = createSelector(
 
     const builderData = {
       behandlingType: behandling.type,
+      behandlingHenlagt: behandling.behandlingHenlagt,
       aksjonspunkter,
       vilkar,
       innsynResultatType: innsyn.innsynResultatType,

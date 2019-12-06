@@ -9,7 +9,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 
-const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
+const hasNonDefaultBehandlingspunkt = ({ behandlingHenlagt }, bpLength) => bpLength > 0 || behandlingHenlagt;
 
 const getVedtakStatus = ({
   behandlingsresultat,
@@ -70,6 +70,7 @@ const finnKlageSteg = createSelector(
 
     const builderData = {
       behandlingType: behandling.type,
+      behandlingHenlagt: behandling.behandlingHenlagt,
       aksjonspunkter,
       vilkar,
       behandlingsresultat: behandling.behandlingsresultat,

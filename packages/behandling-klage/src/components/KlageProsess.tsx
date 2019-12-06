@@ -16,7 +16,7 @@ import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal,
+  fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
 
 } from '@fpsak-frontend/behandling-felles';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
@@ -252,6 +252,8 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       alleKodeverk: kodeverk,
     };
 
+    const vedtakStegVises = valgtStegKode === bpc.KLAGE_RESULTAT;
+
     return (
       <>
         <KlageBehandlingModal
@@ -290,17 +292,20 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               {...fellesProps}
             />
           )}
-          {valgtStegKode === bpc.KLAGE_RESULTAT && (
+          {(vedtakStegVises && !behandling.behandlingHenlagt) && (
             <VedtakKlageProsessIndex
               aksjonspunkter={valgtSteg.aksjonspunkter}
               previewVedtakCallback={this.previewCallback}
               {...fellesProps}
             />
           )}
-          {valgtSteg.aksjonspunkter.length === 0 && (
-          <div>Ingenting</div>
-          )}
         </MargMarkering>
+        {(vedtakStegVises && behandling.behandlingHenlagt) && (
+          <BehandlingHenlagtPanel />
+        )}
+        {(!behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
+          <ProsessStegIkkeBehandletPanel />
+        )}
       </>
     );
   }
