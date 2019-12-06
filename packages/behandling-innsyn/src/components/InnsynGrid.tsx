@@ -1,10 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import PropTypes from 'prop-types';
-import { Undertittel } from 'nav-frontend-typografi';
 
-import { FormattedMessage } from 'react-intl';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
   Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
@@ -49,38 +47,27 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
   opneSokeside,
 }) => (
   <>
-    {behandling.behandlingHenlagt && (
-      <FadingPanel>
-        <Undertittel>
-          <FormattedMessage id="InnsynGrid.Henlagt" />
-        </Undertittel>
-      </FadingPanel>
-    )}
-    {!behandling.behandlingHenlagt && (
-      <>
-        <BehandlingPaVent
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          kodeverk={kodeverk}
-          settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
-        />
-        <InnsynProsess
-          fagsak={fagsak}
-          behandling={behandling}
-          aksjonspunkter={aksjonspunkter}
-          vilkar={vilkar}
-          innsyn={innsyn}
-          kodeverk={kodeverk}
-          alleDokumenter={innsynDokumenter}
-          navAnsatt={navAnsatt}
-          valgtProsessSteg={valgtProsessSteg}
-          oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          opneSokeside={opneSokeside}
-        />
-      </>
-    )}
+    <BehandlingPaVent
+      behandling={behandling}
+      aksjonspunkter={aksjonspunkter}
+      kodeverk={kodeverk}
+      settPaVent={settPaVent}
+      hentBehandling={hentBehandling}
+    />
+    <InnsynProsess
+      fagsak={fagsak}
+      behandling={behandling}
+      aksjonspunkter={aksjonspunkter}
+      vilkar={vilkar}
+      innsyn={innsyn}
+      kodeverk={kodeverk}
+      alleDokumenter={innsynDokumenter}
+      navAnsatt={navAnsatt}
+      valgtProsessSteg={valgtProsessSteg}
+      oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+      oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+      opneSokeside={opneSokeside}
+    />
     <VerticalSpacer sixteenPx />
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>

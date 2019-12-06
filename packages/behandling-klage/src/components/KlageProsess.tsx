@@ -195,8 +195,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       .then(() => {
         if (skalByttTilKlageinstans) {
           this.toggleKlageModal();
-        }
-        if (valgtProsessSteg === bpc.KLAGE_RESULTAT) {
+        } else if (valgtProsessSteg === bpc.KLAGE_RESULTAT) {
           this.toggleFatterVedtakModal();
         } else {
           oppdaterProsessStegIUrl();

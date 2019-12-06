@@ -175,7 +175,7 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
 }
 
 const mapStateToProps = (state) => ({
-  behandling: klageApi.BEHANDLING_INNSYN.getRestApiData()(state),
+  behandling: klageApi.BEHANDLING_KLAGE.getRestApiData()(state),
 });
 
 const getResetRestApiContext = () => (dispatch) => {
