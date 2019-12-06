@@ -85,7 +85,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     saveKlage: PropTypes.func.isRequired,
     resolveKlageTemp: PropTypes.func.isRequired,
-    klageVurdering: klageVurderingPropType.isRequired,
+    klageVurdering: klageVurderingPropType,
     alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   }
 
@@ -167,14 +167,14 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       behandling,
       lagreAksjonspunkt,
       oppdaterProsessStegIUrl,
-      valgtProsessSteg,
     } = this.props;
     const skalByttTilKlageinstans = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
       && apValue.klageVurdering === klageVurderingKodeverk.STADFESTE_YTELSESVEDTAK);
-    const erFatterVedtak = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
+    const erVedtakAp = aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK
+      || aksjonspunktModels[0].kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL;
 
-    if (skalByttTilKlageinstans || erFatterVedtak) {
+    if (skalByttTilKlageinstans || erVedtakAp) {
       this.slaAvOppdateringAvFagsak();
     }
 
@@ -195,7 +195,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       .then(() => {
         if (skalByttTilKlageinstans) {
           this.toggleKlageModal();
-        } else if (valgtProsessSteg === bpc.KLAGE_RESULTAT) {
+        } else if (erVedtakAp) {
           this.toggleFatterVedtakModal();
         } else {
           oppdaterProsessStegIUrl();
@@ -241,7 +241,8 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
 
     const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
 
-    const isKlageWithKA = klageVurdering && klageVurdering.klageVurderingResultatNK && klageVurdering.klageVurderingResultatNK.klageVurdertAv === 'NK';
+    const skalViseTilBeslutterTekst = klageVurdering && klageVurdering.klageVurderingResultatNK
+      && klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
 
     const fellesProps = {
       behandling,
@@ -260,7 +261,8 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
         <FatterVedtakStatusModal
           visModal={visFatterVedtakModal}
           lukkModal={this.toggleFatterVedtakModal}
-          tekstkode={isKlageWithKA ? 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver' : 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter'}
+          tekstkode={skalViseTilBeslutterTekst
+            ? 'FatterVedtakStatusModal.SendtKlageResultatTilBeslutter' : 'FatterVedtakStatusModal.SendtKlageResultatTilMedunderskriver'}
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
