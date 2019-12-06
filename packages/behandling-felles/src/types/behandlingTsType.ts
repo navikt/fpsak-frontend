@@ -11,6 +11,12 @@ type Behandling = Readonly<{
   behandlingPaaVent: boolean;
   behandlingHenlagt: boolean;
   behandlingsresultat?: {};
+  links: [{
+    href: string;
+    rel: string;
+    requestPayload?: any;
+    type: string;
+  }];
 }>
 
 export default Behandling;

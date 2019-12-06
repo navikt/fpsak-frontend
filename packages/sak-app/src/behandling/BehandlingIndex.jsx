@@ -136,7 +136,6 @@ export class BehandlingIndex extends Component {
     const {
       saksnummer,
       behandlingId,
-      behandlingVersjon,
       behandlingType,
       location,
       oppdaterBehandlingVersjon,
@@ -189,7 +188,6 @@ export class BehandlingIndex extends Component {
 
     const defaultProps = {
       behandlingId,
-      behandlingVersjon,
       oppdaterBehandlingVersjon,
       behandlingEventHandler,
       kodeverk,

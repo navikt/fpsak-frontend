@@ -8,18 +8,16 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
 } from '@fpsak-frontend/behandling-felles';
 
 import innsynApi, { reduxRestApi } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
 
-const behandlingData = [innsynApi.BEHANDLING_INNSYN];
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
 
 interface OwnProps {
   behandlingId: number;
-  behandlingVersjon: number;
   fagsak: FagsakInfo;
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
@@ -35,6 +33,10 @@ interface OwnProps {
   opneSokeside: () => void;
 }
 
+interface StateProps {
+  behandling?: Behandling;
+}
+
 interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
@@ -45,12 +47,15 @@ interface DispatchProps {
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }
 
-type Props = DispatchProps & OwnProps;
+type Props = OwnProps & StateProps & DispatchProps;
 
-class BehandlingInnsynIndex extends PureComponent<Props> {
+interface BehandlingInnsynIndexState {
+  forrigeBehandling?: Behandling;
+}
+
+class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexState> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
-    behandlingVersjon: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
@@ -62,6 +67,7 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
+    behandling: behandlingPropType,
   }
 
   constructor(props) {
@@ -88,24 +94,26 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
   }
 
   componentDidUpdate = (prevProps) => {
-    const { destroyReduxForms, behandlingVersjon, behandling } = this.props;
-    if (behandlingVersjon !== prevProps.behandlingVersjon) {
-      setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandlingVersjon)), 1000);
+    const { destroyReduxForms, behandling } = this.props;
+    if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
+      setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandling.versjon)), 1000);
     }
     if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
     }
     if (!prevProps.behandling && behandling) {
+      // eslint-disable-next-line react/no-did-update-set-state
       this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
     }
   }
 
   componentWillUnmount = () => {
     const {
-      behandlingEventHandler, destroyReduxForms, behandlingId, behandlingVersjon,
+      behandlingEventHandler, destroyReduxForms, behandlingId, behandling,
     } = this.props;
     behandlingEventHandler.clear();
-    setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(behandlingId, behandlingVersjon)), 1000);
+    setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(behandlingId, behandling.versjon)), 1000);
   }
 
   render() {
@@ -179,4 +187,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<{}, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingInnsynIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingInnsynIndex);
