@@ -8,7 +8,7 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams,
+  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import ankeApi, { reduxRestApi } from './data/ankeBehandlingApi';
 import AnkeGrid from './components/AnkeGrid';
@@ -29,7 +29,6 @@ interface OwnProps {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
-  visFeilmelding: (error: {}) => void;
   opneSokeside: () => void;
   alleBehandlinger: [{}];
 }
@@ -61,7 +60,6 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
     behandlingEventHandler: PropTypes.shape({}).isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
     valgtProsessSteg: PropTypes.string.isRequired,
-    visFeilmelding: PropTypes.func.isRequired,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
@@ -111,7 +109,6 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
       kodeverk,
       oppdaterProsessStegIUrl,
       valgtProsessSteg,
-      visFeilmelding,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -119,45 +116,41 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
     } = this.props;
     const { fetchCounter } = this.state;
     return (
-      <ErrorBoundary errorMessageCallback={visFeilmelding}>
-        <DataFetcherBehandlingData
-          showLoadingIcon
-          showOldDataWhenRefetching
-          fetchTrigger={fetchCounter}
-          endpoints={behandlingData}
-          endpointParams={{ behandlingId }}
-          render={(dataProps) => {
-            const { behandlingAnke } = dataProps;
-            reduxRestApi.injectPaths(behandlingAnke.links);
-            return (
-              <DataFetcherBehandlingData
-                showLoadingIcon
-                showOldDataWhenRefetching
-                fetchTrigger={behandlingAnke.versjon}
-                endpoints={ankeData}
-                render={(dProps) => (
-                  <AnkeGrid
-                    fagsak={fagsak}
-                    behandling={behandlingAnke}
-                    aksjonspunkter={dProps.aksjonspunkter}
-                    vilkar={dProps.vilkar}
-                    ankeVurdering={dProps.ankeVurdering}
-                    navAnsatt={navAnsatt}
-                    kodeverk={kodeverk}
-                    valgtProsessSteg={valgtProsessSteg}
-                    oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                    settPaVent={settPaVent}
-                    hentBehandling={hentBehandling}
-                    opneSokeside={opneSokeside}
-                    alleBehandlinger={alleBehandlinger}
-                  />
-                )}
-              />
-            );
-          }}
-        />
-      </ErrorBoundary>
+      <DataFetcherBehandlingData
+        showLoadingIcon
+        showOldDataWhenRefetching
+        fetchTrigger={fetchCounter}
+        endpoints={behandlingData}
+        endpointParams={{ behandlingId }}
+        render={(dataProps) => {
+          const { behandlingAnke } = dataProps;
+          reduxRestApi.injectPaths(behandlingAnke.links);
+          return (
+            <DataFetcherBehandlingData
+              showLoadingIcon
+              showOldDataWhenRefetching
+              fetchTrigger={behandlingAnke.versjon}
+              endpoints={ankeData}
+              render={(dProps) => (
+                <AnkeGrid
+                  fagsak={fagsak}
+                  behandling={behandlingAnke}
+                  navAnsatt={navAnsatt}
+                  kodeverk={kodeverk}
+                  valgtProsessSteg={valgtProsessSteg}
+                  oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+                  oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                  settPaVent={settPaVent}
+                  hentBehandling={hentBehandling}
+                  opneSokeside={opneSokeside}
+                  alleBehandlinger={alleBehandlinger}
+                  {...dProps}
+                />
+              )}
+            />
+          );
+        }}
+      />
     );
   }
 }

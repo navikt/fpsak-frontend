@@ -22,7 +22,7 @@ interface OwnProps {
   vilkar: [Vilkar];
   innsyn: Innsyn;
   kodeverk: {[key: string]: [Kodeverk]};
-  alleDokumenter: [Dokument];
+  innsynDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
   valgtProsessSteg: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
@@ -39,7 +39,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
   vilkar,
   innsyn,
   kodeverk,
-  alleDokumenter,
+  innsynDokumenter,
   navAnsatt,
   valgtProsessSteg,
   oppdaterProsessStegIUrl,
@@ -72,7 +72,7 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
           vilkar={vilkar}
           innsyn={innsyn}
           kodeverk={kodeverk}
-          alleDokumenter={alleDokumenter}
+          alleDokumenter={innsynDokumenter}
           navAnsatt={navAnsatt}
           valgtProsessSteg={valgtProsessSteg}
           oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
@@ -93,7 +93,7 @@ InnsynGrid.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   innsyn: innsynPropType.isRequired,
   kodeverk: PropTypes.shape({}).isRequired,
-  alleDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
+  innsynDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   valgtProsessSteg: PropTypes.string.isRequired,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,

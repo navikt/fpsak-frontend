@@ -32,6 +32,7 @@ import {
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
 import behandlingEventHandler from './BehandlingEventHandler';
+import ErrorBoundary from './ErrorBoundary';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
@@ -193,7 +194,6 @@ export class BehandlingIndex extends Component {
       kodeverk,
       fagsak,
       navAnsatt,
-      visFeilmelding,
       oppdaterProsessStegIUrl: this.goToValgtProsessSteg,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
@@ -203,7 +203,9 @@ export class BehandlingIndex extends Component {
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <BehandlingInnsynIndex {...defaultProps} />
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
+            <BehandlingInnsynIndex {...defaultProps} />
+          </ErrorBoundary>
         </Suspense>
       );
     }
@@ -211,10 +213,12 @@ export class BehandlingIndex extends Component {
     if (behandlingType === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <BehandlingKlageIndex
-            alleBehandlinger={fagsakBehandlingerInfo}
-            {...defaultProps}
-          />
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
+            <BehandlingKlageIndex
+              alleBehandlinger={fagsakBehandlingerInfo}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
         </Suspense>
       );
     }
@@ -222,10 +226,12 @@ export class BehandlingIndex extends Component {
     if (behandlingType === BehandlingType.ANKE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <BehandlingAnkeIndex
-            alleBehandlinger={fagsakBehandlingerInfo}
-            {...defaultProps}
-          />
+          <ErrorBoundary errorMessageCallback={visFeilmelding}>
+            <BehandlingAnkeIndex
+              alleBehandlinger={fagsakBehandlingerInfo}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
         </Suspense>
       );
     }

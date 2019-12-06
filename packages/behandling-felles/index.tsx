@@ -1,7 +1,7 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
-export { default as ErrorBoundary } from './src/components/ErrorBoundary';
 export { default as MargMarkering } from './src/components/MargMarkering';
+export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStateCleaner';
 export { default as ProsessStegIkkeBehandletPanel } from './src/components/ProsessStegIkkeBehandletPanel';
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 export { default as FatterVedtakStatusModal } from './src/components/vedtak/FatterVedtakStatusModal';

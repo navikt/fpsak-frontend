@@ -2,13 +2,12 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
+  ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
 
 import innsynApi, { reduxRestApi } from './data/innsynBehandlingApi';
@@ -29,7 +28,6 @@ interface OwnProps {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
-  visFeilmelding: (error: {}) => void;
   opneSokeside: () => void;
 }
 
@@ -42,7 +40,6 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
-  destroyReduxForms: (formPrefix: string) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
 }
@@ -63,7 +60,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
     behandlingEventHandler: PropTypes.shape({}).isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
     valgtProsessSteg: PropTypes.string.isRequired,
-    visFeilmelding: PropTypes.func.isRequired,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
@@ -94,10 +90,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
   }
 
   componentDidUpdate = (prevProps) => {
-    const { destroyReduxForms, behandling } = this.props;
-    if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
-      setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandling.versjon)), 1000);
-    }
+    const { behandling } = this.props;
     if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
@@ -109,11 +102,8 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
   }
 
   componentWillUnmount = () => {
-    const {
-      behandlingEventHandler, destroyReduxForms, behandlingId, behandling,
-    } = this.props;
+    const { behandlingEventHandler } = this.props;
     behandlingEventHandler.clear();
-    setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(behandlingId, behandling.versjon)), 1000);
   }
 
   render() {
@@ -124,7 +114,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
       navAnsatt,
       oppdaterProsessStegIUrl,
       valgtProsessSteg,
-      visFeilmelding,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -139,34 +128,36 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
     }
 
     reduxRestApi.injectPaths(behandling.links);
+
     return (
-      <ErrorBoundary errorMessageCallback={visFeilmelding}>
-        <DataFetcherBehandlingData
-          showLoadingIcon
-          showOldDataWhenRefetching
-          fetchTrigger={behandling.versjon}
-          endpoints={innsynData}
-          endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-          render={(dataProps, isFetchFinished) => (
-            <InnsynGrid
-              fagsak={fagsak}
-              behandling={isFetchFinished ? behandling : forrigeBehandling}
-              aksjonspunkter={dataProps.aksjonspunkter}
-              vilkar={dataProps.vilkar}
-              innsyn={dataProps.innsyn}
-              alleDokumenter={dataProps.innsynDokumenter}
-              kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
-              valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-              settPaVent={settPaVent}
-              hentBehandling={hentBehandling}
-              opneSokeside={opneSokeside}
-            />
-          )}
-        />
-      </ErrorBoundary>
+      <DataFetcherBehandlingData
+        showLoadingIcon
+        showOldDataWhenRefetching
+        fetchTrigger={behandling.versjon}
+        endpoints={innsynData}
+        endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
+        render={(dataProps, isFetchFinished) => {
+          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
+          return (
+            <>
+              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
+              <InnsynGrid
+                fagsak={fagsak}
+                behandling={aktuellBehandling}
+                kodeverk={kodeverk}
+                navAnsatt={navAnsatt}
+                valgtProsessSteg={valgtProsessSteg}
+                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                settPaVent={settPaVent}
+                hentBehandling={hentBehandling}
+                opneSokeside={opneSokeside}
+                {...dataProps}
+              />
+            </>
+          );
+        }}
+      />
     );
   }
 }
@@ -183,7 +174,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     henleggBehandling: innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
-    destroyReduxForms: destroy,
   }, dispatch),
 });
 
