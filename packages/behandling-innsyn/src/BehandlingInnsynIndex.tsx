@@ -50,11 +50,11 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-interface BehandlingInnsynIndexState {
+interface InnsynState {
   forrigeBehandling?: Behandling;
 }
 
-class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexState> {
+class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,

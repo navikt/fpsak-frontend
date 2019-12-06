@@ -6,14 +6,14 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
-
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner, behandlingPropType,
 } from '@fpsak-frontend/behandling-felles';
-import ankeApi, { reduxRestApi } from './data/ankeBehandlingApi';
+
+import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkeGrid from './components/AnkeGrid';
 
-const behandlingData = [ankeApi.BEHANDLING_ANKE];
 const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING];
 
 interface OwnProps {
@@ -33,26 +33,30 @@ interface OwnProps {
   alleBehandlinger: [{}];
 }
 
+interface StateProps {
+  behandling?: Behandling;
+}
+
 interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
-  destroyReduxForms: (formPrefix: string) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  resetRestApiContext: () => (dspatch: any) => void;
+  destroyReduxForm: (form: string) => void;
 }
 
-type Props = DispatchProps & OwnProps;
+type Props = OwnProps & StateProps & DispatchProps;
 
 interface AnkeState {
-  fetchCounter: number;
+  forrigeBehandling?: Behandling;
 }
 
 class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
-    behandlingVersjon: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
     navAnsatt: navAnsattPropType.isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
@@ -64,45 +68,58 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
     alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+    resetRestApiContext: PropTypes.func.isRequired,
+    destroyReduxForm: PropTypes.func.isRequired,
+    behandling: behandlingPropType,
   }
 
   constructor(props) {
     super(props);
-    this.state = { fetchCounter: 0 };
+    this.state = {
+      forrigeBehandling: undefined,
+    };
   }
 
   componentDidMount = () => {
     const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling,
+      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
-        .then(() => this.setState((state) => ({ ...state, fetchCounter: state.fetchCounter + 1 }))),
+        .then(() => hentBehandling({ behandlingId })),
       settBehandlingPaVent: (params) => settBehandlingPaVent(params)
-        .then(() => this.setState((state) => ({ ...state, fetchCounter: state.fetchCounter + 1 }))),
+        .then(() => hentBehandling({ behandlingId })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params),
       henleggBehandling: (params) => henleggBehandling(params),
     });
+
+    hentBehandling({ behandlingId });
   }
 
   componentDidUpdate = (prevProps) => {
-    const { destroyReduxForms, behandlingVersjon } = this.props;
-    if (behandlingVersjon !== prevProps.behandlingVersjon) {
-      setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandlingVersjon)), 1000);
+    const { behandling } = this.props;
+    if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
+    }
+    if (!prevProps.behandling && behandling) {
+      // eslint-disable-next-line react/no-did-update-set-state
+      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
     }
   }
 
   componentWillUnmount = () => {
     const {
-      behandlingEventHandler, destroyReduxForms, behandlingId, behandlingVersjon,
+      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
     } = this.props;
     behandlingEventHandler.clear();
-    setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(behandlingId, behandlingVersjon)), 1000);
+    resetRestApiContext();
+    setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
   }
 
   render() {
     const {
-      behandlingId,
+      behandling,
       oppdaterBehandlingVersjon,
       fagsak,
       navAnsatt,
@@ -114,40 +131,42 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
       opneSokeside,
       alleBehandlinger,
     } = this.props;
-    const { fetchCounter } = this.state;
+    const {
+      forrigeBehandling,
+    } = this.state;
+
+    if (!behandling) {
+      return <LoadingPanel />;
+    }
+
+    reduxRestApi.injectPaths(behandling.links);
+
     return (
       <DataFetcherBehandlingData
         showLoadingIcon
         showOldDataWhenRefetching
-        fetchTrigger={fetchCounter}
-        endpoints={behandlingData}
-        endpointParams={{ behandlingId }}
-        render={(dataProps) => {
-          const { behandlingAnke } = dataProps;
-          reduxRestApi.injectPaths(behandlingAnke.links);
+        fetchTrigger={behandling.versjon}
+        endpoints={ankeData}
+        render={(dataProps, isFetchFinished) => {
+          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
           return (
-            <DataFetcherBehandlingData
-              showLoadingIcon
-              showOldDataWhenRefetching
-              fetchTrigger={behandlingAnke.versjon}
-              endpoints={ankeData}
-              render={(dProps) => (
-                <AnkeGrid
-                  fagsak={fagsak}
-                  behandling={behandlingAnke}
-                  navAnsatt={navAnsatt}
-                  kodeverk={kodeverk}
-                  valgtProsessSteg={valgtProsessSteg}
-                  oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                  oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                  settPaVent={settPaVent}
-                  hentBehandling={hentBehandling}
-                  opneSokeside={opneSokeside}
-                  alleBehandlinger={alleBehandlinger}
-                  {...dProps}
-                />
-              )}
-            />
+            <>
+              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
+              <AnkeGrid
+                fagsak={fagsak}
+                behandling={aktuellBehandling}
+                navAnsatt={navAnsatt}
+                kodeverk={kodeverk}
+                valgtProsessSteg={valgtProsessSteg}
+                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                settPaVent={settPaVent}
+                hentBehandling={hentBehandling}
+                opneSokeside={opneSokeside}
+                alleBehandlinger={alleBehandlinger}
+                {...dataProps}
+              />
+            </>
           );
         }}
       />
@@ -155,7 +174,16 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  behandling: ankeApi.BEHANDLING_ANKE.getRestApiData()(state),
+});
+
+const getResetRestApiContext = () => (dispatch) => {
+  Object.values(AnkeBehandlingApiKeys)
+    .forEach((value) => {
+      dispatch(ankeApi[value].resetRestApi()());
+    });
+};
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
@@ -165,8 +193,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     henleggBehandling: ankeApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: ankeApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: ankeApi.BEHANDLING_ANKE.makeRestApiRequest(),
-    destroyReduxForms: destroy,
+    resetRestApiContext: getResetRestApiContext,
+    destroyReduxForm: destroy,
   }, dispatch),
 });
 
-export default connect<{}, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingAnkeIndex);
+export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingAnkeIndex);

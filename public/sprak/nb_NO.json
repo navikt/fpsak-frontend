@@ -648,7 +648,7 @@
   "TerminFodselSvpPanel.Termindato": "Termindato",
   "TerminFodselSvpPanel.Fodselsdato": "Fødselsdato",
 
-  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Behandlingssteg er ikke aktivt",
+  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Undertittel } from 'nav-frontend-typografi';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 
@@ -9,9 +9,9 @@ import styles from './prosessStegIkkeBehandletPanel.less';
 const ProsessStegIkkeBehandletPanel = () => (
   <div className={styles.container}>
     <FadingPanel>
-      <Undertittel>
+      <Normaltekst>
         <FormattedMessage id="ProsessStegIkkeBehandletPanel.IkkeBehandlet" />
-      </Undertittel>
+      </Normaltekst>
     </FadingPanel>
   </div>
 );
