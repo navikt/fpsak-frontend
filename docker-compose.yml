@@ -8,3 +8,4 @@ services:
     environment:
       - APP_URL_FPSAK=http://host.docker.internal:8080
       - APP_PORT=9000
+      - APP_PATH_PREFIX=fpsak
