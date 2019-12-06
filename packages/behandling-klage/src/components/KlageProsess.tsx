@@ -292,7 +292,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
               {...fellesProps}
             />
           )}
-          {(vedtakStegVises && !behandling.behandlingHenlagt) && (
+          {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0) && (
             <VedtakKlageProsessIndex
               aksjonspunkter={valgtSteg.aksjonspunkter}
               previewVedtakCallback={this.previewCallback}
