@@ -257,7 +257,7 @@ const mapStateToPropsFactory = (initialState) => {
   return (state) => {
     const behandlingType = getBehandlingType(state);
     const behandlingTypeKode = behandlingType ? behandlingType.kode : undefined;
-    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
+    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
     const behandlingIdentifier = getBehandlingIdentifier(state);
     return {
       totrinnskontrollSkjermlenkeContext: fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER.getRestApiData()(state),

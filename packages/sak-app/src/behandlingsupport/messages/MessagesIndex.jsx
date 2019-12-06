@@ -100,7 +100,7 @@ export class MessagesIndex extends Component {
     const {
       behandlingUuid, fagsakYtelseType, fetchPreview, behandlingTypeKode, behandlingIdentifier,
     } = this.props;
-    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode;
+    const erTilbakekreving = BehandlingType.TILBAKEKREVING === behandlingTypeKode || BehandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode;
     const data = erTilbakekreving ? {
       behandlingId: behandlingIdentifier.behandlingId,
       fritekst: fritekst || ' ',
