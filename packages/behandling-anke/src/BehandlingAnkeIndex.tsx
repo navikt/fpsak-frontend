@@ -40,10 +40,10 @@ interface StateProps {
 interface DispatchProps {
   nyBehandlendeEnhet: (params: {}) => Promise<void>;
   settBehandlingPaVent: (params: {}) => Promise<void>;
-  taBehandlingAvVent: (params: {}) => Promise<void>;
+  taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
   destroyReduxForm: (form: string) => void;
 }
@@ -86,14 +86,14 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
-        .then(() => hentBehandling({ behandlingId })),
+        .then(() => hentBehandling({ behandlingId }, { keepData: true })),
       settBehandlingPaVent: (params) => settBehandlingPaVent(params)
-        .then(() => hentBehandling({ behandlingId })),
-      taBehandlingAvVent: (params) => taBehandlingAvVent(params),
+        .then(() => hentBehandling({ behandlingId }, { keepData: true })),
+      taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
-    hentBehandling({ behandlingId });
+    hentBehandling({ behandlingId }, { keepData: false });
   }
 
   componentDidUpdate = (prevProps) => {

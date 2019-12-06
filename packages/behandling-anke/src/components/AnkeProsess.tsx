@@ -162,14 +162,15 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
       behandling,
       lagreAksjonspunkt,
       oppdaterProsessStegIUrl,
-      valgtProsessSteg,
     } = this.props;
     const skalTilMedunderskriver = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.FORESLA_VEDTAK);
     const skalFerdigstilles = aksjonspunktModels
       .some((apValue) => apValue.kode === aksjonspunktCodes.VEDTAK_UTEN_TOTRINNSKONTROLL);
+    const erManuellVurderingAvAnke = aksjonspunktModels
+      .some((apValue) => apValue.kode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE_MERKNADER);
 
-    if (skalTilMedunderskriver || skalFerdigstilles) {
+    if (skalTilMedunderskriver || skalFerdigstilles || erManuellVurderingAvAnke) {
       this.slaAvOppdateringAvFagsak();
     }
 
@@ -190,8 +191,7 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
       .then(() => {
         if (skalTilMedunderskriver || skalFerdigstilles) {
           this.toggleAnkeModal();
-        }
-        if (valgtProsessSteg === bpc.ANKE_RESULTAT) {
+        } else if (erManuellVurderingAvAnke) {
           this.toggleIverksetterVedtakModal();
         } else {
           oppdaterProsessStegIUrl();
