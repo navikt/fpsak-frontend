@@ -98,7 +98,7 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
 
   componentDidUpdate = (prevProps) => {
     const { behandling } = this.props;
-    if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
+    if (prevProps.behandling && behandling && behandling.versjon !== prevProps.behandling.versjon) {
       // eslint-disable-next-line react/no-did-update-set-state
       this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
     }
@@ -149,6 +149,9 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
         endpoints={ankeData}
         render={(dataProps, isFetchFinished) => {
           const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
+          if (!aktuellBehandling) {
+            return <LoadingPanel />;
+          }
           return (
             <>
               <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />

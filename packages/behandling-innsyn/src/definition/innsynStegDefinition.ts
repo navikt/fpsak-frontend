@@ -9,7 +9,7 @@ import innsynResultatTypeKV from '@fpsak-frontend/kodeverk/src/innsynResultatTyp
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import { Innsyn } from '../types/innsynTsType';
+import Innsyn from '../types/innsynTsType';
 
 const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
 
