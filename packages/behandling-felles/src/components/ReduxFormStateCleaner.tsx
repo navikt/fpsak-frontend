@@ -16,15 +16,17 @@ const ReduxFormStateCleaner: FunctionComponent<OwnProps> = ({
 }) => {
   const dispatch = useDispatch();
   const ref = useRef<number>();
+
   useEffect(() => {
     if (ref.current && ref.current !== behandlingVersjon) {
-      setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current))), 1000);
+      dispatch(destroy(getBehandlingFormPrefix(behandlingId, ref.current)));
     }
     ref.current = behandlingVersjon;
-    return () => {
-      setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon))), 1000);
-    };
   }, [behandlingVersjon]);
+
+  useEffect(() => () => {
+    setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon))), 1000);
+  }, []);
 
   return null;
 };

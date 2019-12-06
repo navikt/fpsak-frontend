@@ -10,7 +10,7 @@ import {
   ReduxFormStateCleaner,
 } from '@fpsak-frontend/behandling-felles';
 
-import innsynApi, { reduxRestApi } from './data/innsynBehandlingApi';
+import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
 
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
@@ -42,6 +42,7 @@ interface DispatchProps {
   henleggBehandling: (params: {}) => Promise<void>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  resetRestApiContext: () => (dspatch: any) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -63,6 +64,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
+    resetRestApiContext: PropTypes.func.isRequired,
     behandling: behandlingPropType,
   }
 
@@ -102,8 +104,9 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
   }
 
   componentWillUnmount = () => {
-    const { behandlingEventHandler } = this.props;
+    const { behandlingEventHandler, resetRestApiContext } = this.props;
     behandlingEventHandler.clear();
+    resetRestApiContext();
   }
 
   render() {
@@ -166,6 +169,13 @@ const mapStateToProps = (state) => ({
   behandling: innsynApi.BEHANDLING_INNSYN.getRestApiData()(state),
 });
 
+const getResetRestApiContext = () => (dispatch) => {
+  Object.values(InnsynBehandlingApiKeys)
+    .forEach((value) => {
+      dispatch(innsynApi[value].resetRestApi()());
+    });
+};
+
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({
     nyBehandlendeEnhet: innsynApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest(),
@@ -174,6 +184,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     henleggBehandling: innsynApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
+    resetRestApiContext: getResetRestApiContext,
   }, dispatch),
 });
 
