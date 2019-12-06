@@ -27,6 +27,7 @@ type OwnProps = Readonly<{
 type DataFetcherState = {
   nrOfErrors: number;
   prevDataProps?: {};
+  currentFetchTrigger?: number;
 }
 
 /**
@@ -64,6 +65,7 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     this.state = {
       nrOfErrors: 0,
       prevDataProps: undefined,
+      currentFetchTrigger: undefined,
     };
   }
 
@@ -120,7 +122,7 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
         };
       }, {});
       // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, prevDataProps }));
+      this.setState((state) => ({ ...state, prevDataProps, currentFetchTrigger: prevProps.fetchTrigger }));
     }
 
     if (showComponent && prevProps.fetchTrigger !== fetchTrigger) {
@@ -131,9 +133,9 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
   render() {
     const {
       showComponent, isFetchFinished, render, endpoints,
-      showLoadingIcon, showOldDataWhenRefetching,
+      showLoadingIcon, showOldDataWhenRefetching, fetchTrigger,
     } = this.props;
-    const { nrOfErrors, prevDataProps } = this.state;
+    const { nrOfErrors, prevDataProps, currentFetchTrigger } = this.state;
 
     const showWhenFinished = showComponent && isFetchFinished;
     const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
@@ -148,7 +150,9 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
         };
       }, {});
 
-      return render(showOldDataWhenRefetching && !showWhenFinished ? prevDataProps : dataProps);
+      const data = showOldDataWhenRefetching && !showWhenFinished ? prevDataProps : dataProps;
+      const fFinished = isFetchFinished && currentFetchTrigger === fetchTrigger;
+      return render(data, fFinished);
     }
 
     return showComponent && showLoadingIcon && !hasFailed ? <LoadingPanel /> : null;

@@ -6,10 +6,11 @@ import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
-
+import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, fagsakInfoPropType, ErrorBoundary, DataFetcherBehandlingData, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
+
 import innsynApi, { reduxRestApi } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
 
@@ -46,11 +47,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & OwnProps;
 
-type InnsynState = Readonly<{
-  fetchCounter: number;
-}>
-
-class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
+class BehandlingInnsynIndex extends PureComponent<Props> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
@@ -69,27 +66,37 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
 
   constructor(props) {
     super(props);
-    this.state = { fetchCounter: 0 };
+    this.state = {
+      forrigeBehandling: undefined,
+    };
   }
 
   componentDidMount = () => {
     const {
-      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling,
+      behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
-        .then(() => this.setState((state) => ({ ...state, fetchCounter: state.fetchCounter + 1 }))),
+        .then(() => hentBehandling({ behandlingId })),
       settBehandlingPaVent: (params) => settBehandlingPaVent(params)
-        .then(() => this.setState((state) => ({ ...state, fetchCounter: state.fetchCounter + 1 }))),
+        .then(() => hentBehandling({ behandlingId })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params),
       henleggBehandling: (params) => henleggBehandling(params),
     });
+
+    hentBehandling({ behandlingId });
   }
 
   componentDidUpdate = (prevProps) => {
-    const { destroyReduxForms, behandlingVersjon } = this.props;
+    const { destroyReduxForms, behandlingVersjon, behandling } = this.props;
     if (behandlingVersjon !== prevProps.behandlingVersjon) {
       setTimeout(() => destroyReduxForms(getBehandlingFormPrefix(prevProps.behandlingId, prevProps.behandlingVersjon)), 1000);
+    }
+    if (prevProps.behandling && behandling.versjon !== prevProps.behandling.versjon) {
+      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
+    }
+    if (!prevProps.behandling && behandling) {
+      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
     }
   }
 
@@ -103,7 +110,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
 
   render() {
     const {
-      behandlingId,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
@@ -114,54 +120,52 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
       settPaVent,
       hentBehandling,
       opneSokeside,
+      behandling,
     } = this.props;
-    const { fetchCounter } = this.state;
+    const {
+      forrigeBehandling,
+    } = this.state;
+
+    if (!behandling) {
+      return <LoadingPanel />;
+    }
+
+    reduxRestApi.injectPaths(behandling.links);
     return (
       <ErrorBoundary errorMessageCallback={visFeilmelding}>
         <DataFetcherBehandlingData
           showLoadingIcon
           showOldDataWhenRefetching
-          fetchTrigger={fetchCounter}
-          endpoints={behandlingData}
-          endpointParams={{ behandlingId }}
-          render={(dataProps) => {
-            const { behandlingInnsyn } = dataProps;
-            reduxRestApi.injectPaths(behandlingInnsyn.links);
-            return (
-              <DataFetcherBehandlingData
-                showLoadingIcon
-                showOldDataWhenRefetching
-                fetchTrigger={behandlingInnsyn.versjon}
-                endpoints={innsynData}
-                endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-                render={(dProps) => (
-                  <InnsynGrid
-                    fagsak={fagsak}
-                    behandling={behandlingInnsyn}
-                    aksjonspunkter={dProps.aksjonspunkter}
-                    vilkar={dProps.vilkar}
-                    innsyn={dProps.innsyn}
-                    alleDokumenter={dProps.innsynDokumenter}
-                    kodeverk={kodeverk}
-                    navAnsatt={navAnsatt}
-                    valgtProsessSteg={valgtProsessSteg}
-                    oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                    settPaVent={settPaVent}
-                    hentBehandling={hentBehandling}
-                    opneSokeside={opneSokeside}
-                  />
-                )}
-              />
-            );
-          }}
+          fetchTrigger={behandling.versjon}
+          endpoints={innsynData}
+          endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
+          render={(dataProps, isFetchFinished) => (
+            <InnsynGrid
+              fagsak={fagsak}
+              behandling={isFetchFinished ? behandling : forrigeBehandling}
+              aksjonspunkter={dataProps.aksjonspunkter}
+              vilkar={dataProps.vilkar}
+              innsyn={dataProps.innsyn}
+              alleDokumenter={dataProps.innsynDokumenter}
+              kodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+            />
+          )}
         />
       </ErrorBoundary>
     );
   }
 }
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => ({
+  behandling: innsynApi.BEHANDLING_INNSYN.getRestApiData()(state),
+});
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   ...bindActionCreators({

@@ -162,17 +162,14 @@ const buildInitialValues = createSelector(
     (ownProps) => ownProps.behandlingPaaVent,
     (ownProps) => ownProps.innsynDokumenter,
     (ownProps) => ownProps.aksjonspunkter],
-  (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => {
-    debugger;
-    return {
-      mottattDato: innsynMottattDato,
-      innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
-      fristDato: moment().add(3, 'days').format(ISO_DATE_FORMAT),
-      sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : !!fristBehandlingPaaVent,
-      ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
-      ...hentDokumenterMedNavnOgFikkInnsyn(dokumenter || []),
-    };
-  },
+  (innsynMottattDato, innsynResultatType, fristBehandlingPaaVent, dokumenter, aksjonspunkter) => ({
+    mottattDato: innsynMottattDato,
+    innsynResultatType: innsynResultatType ? innsynResultatType.kode : undefined,
+    fristDato: moment().add(3, 'days').format(ISO_DATE_FORMAT),
+    sattPaVent: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : !!fristBehandlingPaaVent,
+    ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
+    ...hentDokumenterMedNavnOgFikkInnsyn(dokumenter || []),
+  }),
 );
 
 const getDocumentsStatus = (values, documents) => documents.map((document) => ({
