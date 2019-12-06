@@ -2,7 +2,9 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
+import { destroy } from 'redux-form';
 
+import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
@@ -43,6 +45,7 @@ interface DispatchProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
+  destroyReduxForm: (form: string) => void;
 }
 
 type Props = OwnProps & StateProps & DispatchProps;
@@ -65,6 +68,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
     resetRestApiContext: PropTypes.func.isRequired,
+    destroyReduxForm: PropTypes.func.isRequired,
     behandling: behandlingPropType,
   }
 
@@ -104,9 +108,12 @@ class BehandlingInnsynIndex extends PureComponent<Props, BehandlingInnsynIndexSt
   }
 
   componentWillUnmount = () => {
-    const { behandlingEventHandler, resetRestApiContext } = this.props;
+    const {
+      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
+    } = this.props;
     behandlingEventHandler.clear();
     resetRestApiContext();
+    setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
   }
 
   render() {
@@ -185,6 +192,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     settPaVent: innsynApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: innsynApi.BEHANDLING_INNSYN.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
+    destroyReduxForm: destroy,
   }, dispatch),
 });
 

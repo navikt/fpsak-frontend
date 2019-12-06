@@ -24,10 +24,6 @@ const ReduxFormStateCleaner: FunctionComponent<OwnProps> = ({
     ref.current = behandlingVersjon;
   }, [behandlingVersjon]);
 
-  useEffect(() => () => {
-    setTimeout(() => dispatch(destroy(getBehandlingFormPrefix(behandlingId, behandlingVersjon))), 1000);
-  }, []);
-
   return null;
 };
 
