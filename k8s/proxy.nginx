@@ -1,71 +1,86 @@
 # Trenger ikke accesslogger på NAIS siden dette er innebygd i platformen
 access_log off;
+error_log /dev/stdout info;
+charset utf-8;
 
+client_body_buffer_size 10M; # Default er satt veldig lavt. Får problemer med enkelte dokument queries.
 
 server {
-   listen       ${APP_PORT};
-   server_name  localhost;
+  listen       "${APP_PORT}";
+  server_name  "${APP_HOSTNAME}";
 
-   # Health check for NAIS
-   location = /isAlive {
-        return 200 "Application:UP";
-        add_header Content-Type text/plain;
-   }
+  # Proxy headers. Will be overwritten if you set them in blocks.
+  proxy_pass_header       Nav-Callid;
+  proxy_set_header        Referer $http_referer;
+  proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header        X-Real-IP $remote_addr;
 
-   # Readiness check for NAIS
-   location = /isReady {
-        return 200 "Application:READY";
-        add_header Content-Type text/plain;
-   }
+  # complete disable cache and send some debug headers
+  add_header              Cache-Control 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0';
+  add_header              Last-Modified $date_gmt;
+  add_header              X-Application-Id "${APP_NAME}:${APP_VERSION}, pod=${APP_HOSTNAME}";
+  add_header              X-Cache-Status $upstream_cache_status;
+  etag                    off;
+  expires                 off;
+  if_modified_since       off;
+  sendfile                off;
 
-   # Health check for NAIS
-   location = /fpsak/isAlive {
-        return 200 "Application:UP";
-        add_header Content-Type text/plain;
-   }
+  # Health check for NAIS
+  location = /isAlive {
+    return 200 "Application:UP";
+    add_header Content-Type text/plain;
+  }
 
-   # Readiness check for NAIS
-   location = /fpsak/isReady {
-        return 200 "Application:READY";
-        add_header Content-Type text/plain;
-   }
+  # Readiness check for NAIS
+  location = /isReady {
+    return 200 "Application:READY";
+    add_header Content-Type text/plain;
+  }
 
-   location  /fpsak {
-       proxy_pass "${APP_URL_FPSAK}/fpsak";
-   }
+  location  /"${APP_PATH_PREFIX}" {
+    proxy_set_header Host       $http_host;
+    proxy_hide_header       Content-Security-Policy;
+    proxy_pass "${APP_URL_FPSAK}/${APP_PATH_PREFIX}";
+    proxy_intercept_errors on;
+    error_page 401 = @401_json;
+    error_page 403 = @403_json;
+    error_page 404 = @404_json;
+    error_page 504 = @504_json;
+  }
 
-   # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
-   location @rewrites {
-        rewrite ^(.+)$ "/index.html" last;
-   }
+  # If no asset matches, send it to your javascript app. Hopefully it's a route in the app!
+  location @rewrites {
+    rewrite ^(.+)$ "/index.html" last;
+  }
 
-    location @401_json {
-        default_type application/json;
-        return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
-    }
+  location @401_json {
+    default_type application/json;
+    add_header Location /fpsak/resource/login always;
+    return 401 '{"feilmelding":"Bruker ikke innlogget","type":"MANGLER_TILGANG_FEIL"}';
+  }
 
-    location @403_json {
-        default_type application/json;
-        return 403 '{"feilmelding":"Innlogget bruker har ikke tilgang til ressursen","type":"MANGLER_TILGANG_FEIL"}';
-    }
+  location @403_json {
+    default_type application/json;
+    return 403 '{"feilmelding":"Innlogget bruker har ikke tilgang til ressursen","type":"MANGLER_TILGANG_FEIL"}';
+  }
 
-    location @404_json {
-        default_type application/json;
-        return 404 '{"feilmelding":"Kunne ikke finne ressursen, beklager.","type":"IKKE_FUNNET_FEIL"}';
-    }
+  location @404_json {
+    default_type application/json;
+    return 404 '{"feilmelding":"Kunne ikke finne ressursen, beklager.","type":"IKKE_FUNNET_FEIL"}';
+  }
 
-    location @504_json {
-        default_type application/json;
-        return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
-    }
+  location @504_json {
+    default_type application/json;
+    return 504 '{"feilmelding":"Timet ut","type":"GENERELL_FEIL"}';
+  }
 
-    location / {
-        # beholder default root slik at vi kan swappe ut med stock nginx
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
-        try_files $uri @rewrites;
+  location / {
+    # beholder default root slik at vi kan swappe ut med stock nginx
+    root   /usr/share/nginx/html;
+    index  index.html index.htm;
+    try_files $uri @rewrites;
 
-        # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
-        add_header Cache-Control no-cache;
-     }
+    # Hvis vi tillater browser-caching vil vi ikke ha nedetidsfri deploy (!)
+    add_header Cache-Control no-cache;
+  }
 }
