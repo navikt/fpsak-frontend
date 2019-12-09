@@ -32,6 +32,7 @@ import fpsakApi from '../../data/fpsakBehandlingApi';
 import DataFetcherWithCache from '../../DataFetcherWithCache';
 
 import styles from './faktaPanel.less';
+import OmsorgenForFaktaIndex from '../../../../fakta-omsorgen-for';
 
 const adopsjonAksjonspunkter = [
   aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE,
@@ -155,6 +156,8 @@ export const FaktaPanel = ({
           </>
         )}
       />
+
+      <OmsorgenForFaktaIndex />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
