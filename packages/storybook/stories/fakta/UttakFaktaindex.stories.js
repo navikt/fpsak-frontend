@@ -1,424 +1,36 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean, object } from '@storybook/addon-knobs';
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 
 import withReduxProvider from '../../decorators/withRedux';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import aksjonspunkterVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/aksjonspunkter.json';
+import behandlingVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/behandling.json';
+import uttakKontrollerFaktaPerioderVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/kontrollerFaktaPerioder.json';
+import ytelsefordelingVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/ytelsefordeling.json';
+import faktaArbeidsforholdVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/faktaArbeidsforhold.json';
+import personopplysningerVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/personopplysninger.json';
+import familiehendelseVurderAnnenPartHarRett from './mocks/uttak/vurder-annen-part-har-rett/familiehendelse.json';
 
-const aksjonspunkter = [
-  {
-    definisjon: {
-      kode: '5070',
-      kodeverk: 'AKSJONSPUNKT_DEF',
-    },
-    status: {
-      kode: 'OPPR',
-      kodeverk: 'AKSJONSPUNKT_STATUS',
-    },
-    begrunnelse: null,
-    vilkarType: null,
-    toTrinnsBehandling: false,
-    toTrinnsBehandlingGodkjent: null,
-    vurderPaNyttArsaker: null,
-    besluttersBegrunnelse: null,
-    aksjonspunktType: {
-      kode: 'MANU',
-      kodeverk: 'AKSJONSPUNKT_TYPE',
-    },
-    kanLoses: true,
-    erAktivt: true,
-    fristTid: null,
-  },
-];
+import aksjonspunkterFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/aksjonspunkter.json';
+import behandlingFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/behandling.json';
+import uttakKontrollerFaktaPerioderFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/kontrollerFaktaPerioder.json';
+import ytelsefordelingFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/ytelsefordeling.json';
+import faktaArbeidsforholdFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/faktaArbeidsforhold.json';
+import personopplysningerFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/personopplysninger.json';
+import familiehendelseFarSøkerFørsteSeksUker from './mocks/uttak/far-søker-første-seks-uker/familiehendelse.json';
 
-const uttakKontrollerFaktaPerioder = {
-  perioder: [
-    {
-      tom: '2019-10-31',
-      fom: '2019-10-11',
-      uttakPeriodeType: {
-        kode: 'FORELDREPENGER_FØR_FØDSEL',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-01-31',
-      fom: '2019-11-01',
-      uttakPeriodeType: {
-        kode: 'MØDREKVOTE',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-02-27',
-      fom: '2020-02-03',
-      uttakPeriodeType: {
-        kode: '-',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: 'ARBEID',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: true,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-06-04',
-      fom: '2020-02-28',
-      uttakPeriodeType: {
-        kode: 'FELLESPERIODE',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-06-18',
-      fom: '2020-06-12',
-      uttakPeriodeType: {
-        kode: 'ANNET',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: 'UTTAK_FEDREKVOTE_ANNEN_FORELDER',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-06-25',
-      fom: '2020-06-19',
-      uttakPeriodeType: {
-        kode: 'FELLESPERIODE',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: '-',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_OK',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: true,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-    {
-      tom: '2020-06-11',
-      fom: '2020-06-05',
-      uttakPeriodeType: {
-        kode: 'FEDREKVOTE',
-        kodeverk: 'UTTAK_PERIODE_TYPE',
-      },
-      utsettelseÅrsak: {
-        kode: '-',
-        kodeverk: 'UTSETTELSE_AARSAK_TYPE',
-      },
-      overføringÅrsak: {
-        kode: 'INSTITUSJONSOPPHOLD_ANNEN_FORELDER',
-        kodeverk: 'OVERFOERING_AARSAK_TYPE',
-      },
-      oppholdÅrsak: {
-        kode: '-',
-        kodeverk: 'OPPHOLD_AARSAK_TYPE',
-      },
-      resultat: {
-        kode: 'PERIODE_IKKE_VURDERT',
-        kodeverk: 'UTTAK_PERIODE_VURDERING_TYPE',
-      },
-      dokumentertePerioder: [],
-      arbeidstidsprosent: null,
-      begrunnelse: null,
-      bekreftet: false,
-      arbeidsgiver: null,
-      erArbeidstaker: false,
-      erFrilanser: false,
-      erSelvstendig: false,
-      samtidigUttak: false,
-      samtidigUttaksprosent: null,
-      flerbarnsdager: false,
-      morsAktivitet: {
-        kode: '-',
-        kodeverk: 'MORS_AKTIVITET',
-      },
-      periodeKilde: {
-        kode: 'SØKNAD',
-        kodeverk: 'FORDELING_PERIODE_KILDE',
-      },
-    },
-  ],
-};
-
-const behandling = {
-  id: 1,
-  versjon: 1,
-  type: {
-    kode: 'BT-002',
-    kodeverk: 'BEHANDLING_TYPE',
-  },
-  behandlingArsaker: [
-    {
-      erAutomatiskRevurdering: false,
-      behandlingArsakType: {
-        kode: 'RE-END-INNTEKTSMELD',
-        kodeverk: 'BEHANDLING_AARSAK',
-      },
-      manueltOpprettet: false,
-    },
-  ],
-  status: {
-    kode: 'UTRED',
-    kodeverk: 'BEHANDLING_STATUS',
-  },
-  behandlingPaVent: false,
-};
-
-const ytelsefordeling = {
-  ikkeOmsorgPerioder: null,
-  aleneOmsorgPerioder: null,
-  annenforelderHarRettDto: {
-    annenforelderHarRett: null,
-    begrunnelse: null,
-    annenforelderHarRettPerioder: null,
-  },
-  endringsdato: '2019-10-11',
-  gjeldendeDekningsgrad: 100,
-  førsteUttaksdato: '2019-10-11',
-};
-
-const faktaArbeidsforhold = [
-  {
-    arbeidsgiver: {
-      identifikator: '973861778',
-      aktørId: null,
-      fødselsdato: null,
-      navn: 'EQUINOR ASA AVD STATOIL SOKKELVIRKSOMHET',
-      virksomhet: true,
-    },
-    arbeidType: {
-      kode: 'ORDINÆRT_ARBEID',
-      kodeverk: 'UTTAK_ARBEID_TYPE',
-    },
-  },
-];
-
-const personopplysninger = {
-  navBrukerKjonn: {
-    kode: 'K',
-    kodeverk: 'BRUKER_KJOENN',
-  },
-};
-
-const familiehendelse = {
-  gjeldende: {
-    skjaringstidspunkt: '2019-11-01',
-    avklartBarn: [
-      {
-        fodselsdato: '2019-11-01',
-        dodsdato: null,
-      },
-    ],
-    brukAntallBarnFraTps: false,
-    dokumentasjonForeligger: true,
-    termindato: '2019-11-01',
-    antallBarnTermin: 1,
-    utstedtdato: null,
-    morForSykVedFodsel: null,
-    vedtaksDatoSomSvangerskapsuke: null,
-  },
-};
+import aksjonspunkterOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/aksjonspunkter.json';
+import behandlingOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/behandling.json';
+import uttakKontrollerFaktaPerioderOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/kontrollerFaktaPerioder.json';
+import ytelsefordelingOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/ytelsefordeling.json';
+import faktaArbeidsforholdOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/faktaArbeidsforhold.json';
+import personopplysningerOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/personopplysninger.json';
+import familiehendelseOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/familiehendelse.json';
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
@@ -431,25 +43,72 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visKompleksFaktaOmUttak = () => {
+export const vurderOmAnnenPartHarRett = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
   const readOnly = false;
-  const visKompleksYtelsefordeling = { ...ytelsefordeling };
 
   return (
     <UttakFaktaIndex
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
+      behandling={behandlingVurderAnnenPartHarRett}
+      aksjonspunkter={aksjonspunkterVurderAnnenPartHarRett}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
       shouldOpenDefaultInfoPanels={false}
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      ytelsefordeling={object('ytelsefordeling', visKompleksYtelsefordeling)}
-      uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioder}
+      ytelsefordeling={ytelsefordelingVurderAnnenPartHarRett}
+      uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderVurderAnnenPartHarRett}
       alleKodeverk={alleKodeverk}
-      faktaArbeidsforhold={faktaArbeidsforhold}
-      personopplysninger={personopplysninger}
-      familiehendelse={familiehendelse}
+      faktaArbeidsforhold={faktaArbeidsforholdVurderAnnenPartHarRett}
+      personopplysninger={personopplysningerVurderAnnenPartHarRett}
+      familiehendelse={familiehendelseVurderAnnenPartHarRett}
+      readOnly={boolean('readOnly', readOnly)}
+      kanOverstyre={false}
+    />
+  );
+};
+
+export const farSøkerFørsteSeksUker = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
+  const readOnly = false;
+
+  return (
+    <UttakFaktaIndex
+      behandling={behandlingFarSøkerFørsteSeksUker}
+      aksjonspunkter={aksjonspunkterFarSøkerFørsteSeksUker}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      shouldOpenDefaultInfoPanels={false}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      ytelsefordeling={ytelsefordelingFarSøkerFørsteSeksUker}
+      uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderFarSøkerFørsteSeksUker}
+      alleKodeverk={alleKodeverk}
+      faktaArbeidsforhold={faktaArbeidsforholdFarSøkerFørsteSeksUker}
+      personopplysninger={personopplysningerFarSøkerFørsteSeksUker}
+      familiehendelse={familiehendelseFarSøkerFørsteSeksUker}
+      readOnly={boolean('readOnly', readOnly)}
+      kanOverstyre={false}
+    />
+  );
+};
+
+export const overføringAvPerioder = () => {
+  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
+  const readOnly = false;
+
+  return (
+    <UttakFaktaIndex
+      behandling={behandlingOverføringAvPerioder}
+      aksjonspunkter={aksjonspunkterOverføringAvPerioder}
+      submitCallback={action('button-click')}
+      openInfoPanels={openInfoPanels}
+      shouldOpenDefaultInfoPanels={false}
+      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
+      ytelsefordeling={ytelsefordelingOverføringAvPerioder}
+      uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderOverføringAvPerioder}
+      alleKodeverk={alleKodeverk}
+      faktaArbeidsforhold={faktaArbeidsforholdOverføringAvPerioder}
+      personopplysninger={personopplysningerOverføringAvPerioder}
+      familiehendelse={familiehendelseOverføringAvPerioder}
       readOnly={boolean('readOnly', readOnly)}
       kanOverstyre={false}
     />

@@ -18,9 +18,9 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 
 const behandling = {
   id: 1,

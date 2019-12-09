@@ -9,11 +9,11 @@ import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 const FAGSAK_STATUS_KODEVERK = 'FAGSAK_STATUS';
 const FAGSAK_YTELSE_KODEVERK = 'FAGSAK_YTELSE';
 const PERSONSTATUS_TYPE_KODEVERK = 'PERSONSTATUS_TYPE';
-
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const fagsaker = [{
   saksnummer: 1,

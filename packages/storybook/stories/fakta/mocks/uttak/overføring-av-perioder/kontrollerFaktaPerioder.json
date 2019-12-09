@@ -1,0 +1,176 @@
+{
+    "perioder": [
+        {
+            "tom": "2020-02-04",
+            "fom": "2019-11-27",
+            "uttakPeriodeType": {
+                "kode": "MØDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "ALENEOMSORG",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        },
+        {
+            "tom": "2020-04-14",
+            "fom": "2020-02-05",
+            "uttakPeriodeType": {
+                "kode": "MØDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "IKKE_RETT_ANNEN_FORELDER",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        },
+        {
+            "tom": "2020-06-23",
+            "fom": "2020-04-15",
+            "uttakPeriodeType": {
+                "kode": "MØDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "SYKDOM_ANNEN_FORELDER",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        },
+        {
+            "tom": "2020-09-01",
+            "fom": "2020-06-24",
+            "uttakPeriodeType": {
+                "kode": "MØDREKVOTE",
+                "kodeverk": "UTTAK_PERIODE_TYPE"
+            },
+            "utsettelseÅrsak": {
+                "kode": "-",
+                "kodeverk": "UTSETTELSE_AARSAK_TYPE"
+            },
+            "overføringÅrsak": {
+                "kode": "INSTITUSJONSOPPHOLD_ANNEN_FORELDER",
+                "kodeverk": "OVERFOERING_AARSAK_TYPE"
+            },
+            "oppholdÅrsak": {
+                "kode": "-",
+                "kodeverk": "OPPHOLD_AARSAK_TYPE"
+            },
+            "resultat": {
+                "kode": "PERIODE_IKKE_VURDERT",
+                "kodeverk": "UTTAK_PERIODE_VURDERING_TYPE"
+            },
+            "dokumentertePerioder": [],
+            "arbeidstidsprosent": null,
+            "begrunnelse": null,
+            "bekreftet": false,
+            "arbeidsgiver": null,
+            "erArbeidstaker": false,
+            "erFrilanser": false,
+            "erSelvstendig": false,
+            "samtidigUttak": false,
+            "samtidigUttaksprosent": null,
+            "flerbarnsdager": false,
+            "morsAktivitet": {
+                "kode": "-",
+                "kodeverk": "MORS_AKTIVITET"
+            },
+            "periodeKilde": {
+                "kode": "SØKNAD",
+                "kodeverk": "FORDELING_PERIODE_KILDE"
+            }
+        }
+    ]
+}

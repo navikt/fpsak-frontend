@@ -7,7 +7,7 @@ import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const data = [{
   skjermlenkeType: 'FORMKRAV_KLAGE_NFP',

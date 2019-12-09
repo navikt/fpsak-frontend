@@ -2,7 +2,7 @@ import React from 'react';
 
 import HistorikkSakIndex from '@fpsak-frontend/sak-historikk';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const history = [{
   behandlingId: 999951,

@@ -11,7 +11,7 @@ import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vi
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const soknad = {
   manglendeVedlegg: [{

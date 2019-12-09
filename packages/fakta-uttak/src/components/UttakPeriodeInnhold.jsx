@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
@@ -33,9 +34,11 @@ export const renderPeriode = (
   gjeldendeFamiliehendelse,
   vilkarForSykdomExists,
   getKodeverknavn,
+  sisteUttakdatoFørsteSeksUker,
 ) => {
   const utsettelseSwitch = utsettelseArsak ? utsettelseArsak.kode : utsettelseArsakCodes.UDEFINERT;
   const overforingSwitch = overforingArsak ? overforingArsak.kode : overforingArsakCodes.UDEFINERT;
+  const farHarSøktFørsteSeksUkerOgPeriodeFomErInnenfor = farSøkerFør6Uker && moment(fraDato).isBefore(sisteUttakdatoFørsteSeksUker);
 
   switch (utsettelseSwitch) {
     case utsettelseArsakCodes.ARBEID:
@@ -99,7 +102,7 @@ export const renderPeriode = (
         />
       );
     case utsettelseArsakCodes.UDEFINERT:
-      if (overforingSwitch === overforingArsakCodes.SYKDOM_ANNEN_FORELDER || farSøkerFør6Uker) {
+      if (overforingSwitch === overforingArsakCodes.SYKDOM_ANNEN_FORELDER || farHarSøktFørsteSeksUkerOgPeriodeFomErInnenfor) {
         return (
           <SykdomOgSkadePeriode
             fieldId={fieldId}
@@ -208,6 +211,7 @@ export const UttakPeriodeInnhold = ({
   familiehendelse,
   vilkarForSykdomExists,
   getKodeverknavn,
+  sisteUttakdatoFørsteSeksUker,
 }) => {
   const editable = !(!readOnly && openForm);
 
@@ -236,6 +240,7 @@ export const UttakPeriodeInnhold = ({
         familiehendelse.gjeldende,
         vilkarForSykdomExists,
         getKodeverknavn,
+        sisteUttakdatoFørsteSeksUker,
       )}
     </div>
   );
@@ -263,6 +268,7 @@ UttakPeriodeInnhold.propTypes = {
   arbeidstidprosent: PropTypes.number,
   inntektsmeldingInfo: PropTypes.arrayOf(PropTypes.shape()),
   getKodeverknavn: PropTypes.func.isRequired,
+  sisteUttakdatoFørsteSeksUker: PropTypes.shape().isRequired,
   arbeidsgiver: PropTypes.shape(),
 };
 

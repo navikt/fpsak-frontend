@@ -61,7 +61,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
     const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
     const isAvvikPeriode = inntektsmeldingInfoPerioder.some((periode) => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
     const isAvvikArbeidsgiver = soknadsPeriode.utsettelseÅrsak.kode === '-'
-    && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
+      && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
     const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
       .some((graderingPeriode) => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
     const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
@@ -72,7 +72,7 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
 
     let isManglendeInntektsmelding = false;
     if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
-    || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
+      || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
       isManglendeInntektsmelding = true;
     }
 
@@ -95,15 +95,15 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
 
   const gyldigeInntektsmeldinger = relevant
     .filter((inntektsmelding) => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
-    || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
-    || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
+      || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+      || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
   if (gyldigeInntektsmeldinger.length) {
     return gyldigeInntektsmeldinger;
   }
   return relevant;
 };
 
-const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
+export const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
   const { termindato, avklartBarn } = gjeldendeFamiliehendelse;
 
   if (avklartBarn && avklartBarn.length > 0) {
@@ -389,30 +389,30 @@ export class UttakPerioder extends PureComponent {
       periodeSlett, isNyPeriodeFormOpen, inntektsmeldingInfo, showModalSlettPeriode,
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
-    const familiehendelseDato = findFamiliehendelseDato(familiehendelse.gjeldende);
-    const farSøkerFør6Uker = (perioder[0] || {}).uttakPeriodeType && perioder[0].uttakPeriodeType.kode === 'FEDREKVOTE'
-            && moment((perioder[0] || {}).fom).isBefore(moment(familiehendelseDato).add(6, 'weeks'));
+    const sisteUttakdatoFørsteSeksUker = moment(findFamiliehendelseDato(familiehendelse.gjeldende)).add(6, 'weeks');
+    const farSøkerFør6Uker = (perioder[0] || {}).uttakPeriodeType && (perioder[0] || {}).uttakPeriodeType.kode === 'FEDREKVOTE'
+      && moment((perioder[0] || {}).fom).isBefore(sisteUttakdatoFørsteSeksUker);
 
     return (
       <>
         {!readOnly && (
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-          {aksjonspunkter.map((ap) => {
-            const førsteUttak = {
-              value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
-            };
+          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+            {aksjonspunkter.map((ap) => {
+              const førsteUttak = {
+                value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
+              };
 
-            return (
-              <FormattedMessage
-                key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                id={farSøkerFør6Uker
-                  ? 'UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker'
-                  : `UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                values={førsteUttak}
-              />
-            );
-          })}
-        </AksjonspunktHelpText>
+              return (
+                <FormattedMessage
+                  key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                  id={farSøkerFør6Uker
+                    ? 'UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker'
+                    : `UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                  values={førsteUttak}
+                />
+              );
+            })}
+          </AksjonspunktHelpText>
         )}
         <VerticalSpacer twentyPx />
 
@@ -422,7 +422,7 @@ export class UttakPerioder extends PureComponent {
               <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
             </FlexColumn>
             {kanOverstyre
-                && (
+              && (
                 <FlexColumn className="justifyItemsToFlexEnd">
                   <CheckboxField
                     name="faktaUttakManuellOverstyring"
@@ -431,7 +431,7 @@ export class UttakPerioder extends PureComponent {
                     onClick={() => this.manuellOverstyringResetCallback()}
                   />
                 </FlexColumn>
-                )}
+              )}
           </FlexRow>
         </FlexContainer>
 
@@ -457,6 +457,7 @@ export class UttakPerioder extends PureComponent {
           behandlingStatus={behandlingStatus}
           familiehendelse={familiehendelse}
           vilkarForSykdomExists={vilkarForSykdomExists}
+          sisteUttakdatoFørsteSeksUker={sisteUttakdatoFørsteSeksUker}
         />
         <VerticalSpacer twentyPx />
         <FlexContainer fluid wrap>
@@ -486,21 +487,21 @@ export class UttakPerioder extends PureComponent {
         <VerticalSpacer eightPx />
 
         {isNyPeriodeFormOpen && (
-        <div ref={this.setNyPeriodeFormRef}>
-          <UttakNyPeriode
-            newPeriodeCallback={this.newPeriodeCallback}
-            newPeriodeResetCallback={this.newPeriodeResetCallback}
-            inntektsmeldinger={inntektsmeldinger}
-            nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
-            uttakPeriodeVurderingTyper={uttakPeriodeVurderingTyper}
-            getKodeverknavn={getKodeverknavn}
-            faktaArbeidsforhold={faktaArbeidsforhold}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            personopplysninger={personopplysninger}
-            alleKodeverk={alleKodeverk}
-          />
-        </div>
+          <div ref={this.setNyPeriodeFormRef}>
+            <UttakNyPeriode
+              newPeriodeCallback={this.newPeriodeCallback}
+              newPeriodeResetCallback={this.newPeriodeResetCallback}
+              inntektsmeldinger={inntektsmeldinger}
+              nyPeriodeDisabledDaysFom={nyPeriodeDisabledDaysFom}
+              uttakPeriodeVurderingTyper={uttakPeriodeVurderingTyper}
+              getKodeverknavn={getKodeverknavn}
+              faktaArbeidsforhold={faktaArbeidsforhold}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              personopplysninger={personopplysninger}
+              alleKodeverk={alleKodeverk}
+            />
+          </div>
         )}
         <UttakSlettPeriodeModal
           showModal={showModalSlettPeriode}

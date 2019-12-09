@@ -9,7 +9,7 @@ import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const personstatusKodeverk = 'PERSONSTATUS_TYPE';
 

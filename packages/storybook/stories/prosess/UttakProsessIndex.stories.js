@@ -6,13 +6,13 @@ import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 export default {
   title: 'prosess/prosess-uttak',
   component: UttakProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
-
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
 
 const aksjonspunkter = [
   {

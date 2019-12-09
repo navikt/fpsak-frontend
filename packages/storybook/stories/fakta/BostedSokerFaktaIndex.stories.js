@@ -8,7 +8,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import region from '@fpsak-frontend/kodeverk/src/region';
 import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const personopplysninger = {
   navn: 'Espen Utvikler',

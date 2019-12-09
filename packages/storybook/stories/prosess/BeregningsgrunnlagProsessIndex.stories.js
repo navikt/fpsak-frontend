@@ -11,7 +11,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = require('../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const standardFom = '2019-09-16';
 const standardTom = undefined;

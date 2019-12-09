@@ -18,7 +18,7 @@ import styles from './iverksetterVedtakStatusModal.less';
 const getModalTextId = (ytelseType, behandlingsresultat, behandlingType) => {
   if (!(behandlingsresultat
       && behandlingsresultat.type.kode === behandlingResultatType.AVSLATT)) {
-    return behandlingType.kode === BehandlingType.TILBAKEKREVING
+    return behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING
       ? 'IverksetterVedtakStatusModal.InnvilgetOgIverksatt'
       : 'IverksetterVedtakStatusModal.InnvilgetOgIverksattAutomatisk';
   }

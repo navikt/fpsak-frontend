@@ -10,7 +10,7 @@ import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
-const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
