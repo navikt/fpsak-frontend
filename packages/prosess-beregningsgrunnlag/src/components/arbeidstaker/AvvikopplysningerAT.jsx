@@ -4,23 +4,22 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 const AvviksopplysningerAT = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, aktivitetStatusKode,
 }) => {
-  const kobinasjonsstatusATSN = relevanteStatuser.isArbeidstaker && relevanteStatuser.isSelvstendigNaeringsdrivende && !relevanteStatuser.isFrilanser;
-  const kobinasjonsstatusATFLSN = relevanteStatuser.isArbeidstaker && relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isFrilanser;
-  if (kobinasjonsstatusATSN || kobinasjonsstatusATFLSN) {
+  if (aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN || aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN) {
     return (
       <Row>
         <Column xs="12">
           <Normaltekst>
-            {kobinasjonsstatusATSN && (
+            {aktivitetStatus.KOMBINERT_AT_SN && (
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
             )}
-            {kobinasjonsstatusATFLSN && (
+            {aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN && (
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
             )}
           </Normaltekst>
@@ -39,7 +38,7 @@ const AvviksopplysningerAT = ({
 
         <Column className={styles.colValue}>
           <Normaltekst>
-            {beregnetAarsinntekt === undefined ? '-' : formatCurrencyNoKr(beregnetAarsinntekt)}
+            {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
           </Normaltekst>
         </Column>
       </Row>
@@ -59,9 +58,7 @@ const AvviksopplysningerAT = ({
             </Column>
           </Row>
           <Row>
-            <Column className={styles.colLine}>
-              <hr />
-            </Column>
+            <Column className={styles.colLine} />
           </Row>
           <Row>
             <Column className={styles.colLable}>
@@ -81,7 +78,7 @@ const AvviksopplysningerAT = ({
             </Column>
             <Column className={styles.colAvvik}>
               <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                {`${avvik}%`}
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
               </Normaltekst>
             </Column>
           </Row>
@@ -97,6 +94,7 @@ AvviksopplysningerAT.propTypes = {
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
   relevanteStatuser: PropTypes.shape().isRequired,
+  aktivitetStatusKode: PropTypes.string.isRequired,
 };
 
 AvviksopplysningerAT.defaultProps = {

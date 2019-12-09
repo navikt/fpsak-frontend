@@ -82,52 +82,52 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
   return ' ';
 };
 
-const createArbeidsIntektRows = (relevanteAndeler, erTidsbegrensetArbeidsforhold) => {
+const createArbeidsIntektRows = (relevanteAndeler) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
-  const harAndelerFraSammeArbeidsgiver = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
-  // TODO: Denne må refaktorres så den viser korrekt tekst for arbeidsforhold, sjekk med cecilie
+  const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const rows = relevanteAndeler.map((andel, index) => (
-    <React.Fragment key={`ArbInntektWrapper${index + 1}`}>
+    <React.Fragment key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}`}>
       <Row key={`index${index + 1}`}>
-        <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${index + 1}`}>
+        <Column xs={andel.erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createArbeidsGiverNavn(andel.arbeidsforhold, harAndelerFraSammeArbeidsgiver)}
+            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr)}
           </Normaltekst>
         </Column>
-        {erTidsbegrensetArbeidsforhold && (
-        <Column className={beregningStyles.colTidsbegrenset} key={`ColSpc${index + 1}`}>
+        {andel.erTidsbegrensetArbeidsforhold && (
+        <Column xs="2" className={beregningStyles.colTidsbegrenset} key={`ColSpc${andel.arbeidsforhold.arbeidsgiverId}`}>
           {andel.erTidsbegrensetArbeidsforhold && (
-          <EtikettLiten className={beregningStyles.tekstOverflow}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" /></EtikettLiten>
+          <EtikettLiten className={beregningStyles.tekstOverflow}>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Tidsbegrenset" />
+          </EtikettLiten>
           )}
         </Column>
         )}
-        <Column key={`ColBrgMnd${index + 1}`} className={beregningStyles.colMaanedText}>
-          <Normaltekst key={`ColBrgMndTxt${index + 1}`}>
+        <Column key={`ColBrgMnd${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colMaanedText}>
+          <Normaltekst key={`ColBrgMndTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
             {formatCurrencyNoKr(andel.beregnetPrAar / 12)}
           </Normaltekst>
         </Column>
-        <Column key={`ColBrgAar${index + 1}`} className={beregningStyles.colAarText}>
-          <Normaltekst key={`ColBrgAarTxt${index + 1}`}>
+        <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colAarText}>
+          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
-        <Column className={beregningStyles.colLink} key={`ColLink${index + 1}`} />
+        <Column className={beregningStyles.colLink} key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} />
       </Row>
-      <Row key={`indexD${index + 1}`}>
-        <Column xs={erTidsbegrensetArbeidsforhold ? '3' : '4'} key={`ColArbSt${index + 1}`}>
+      <Row key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>
+        <Column xs="3" key={`ColArbSt${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst>
             {createArbeidsStillingsNavnOgProsent(andel.arbeidsforhold)}
           </Normaltekst>
         </Column>
-        <Column xs="2" key={`ColArbPer${index + 1}`}>
+        <Column xs="2" key={`ColArbPer${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Undertekst>
             {createArbeidsPeriodeText(andel.arbeidsforhold)}
           </Undertekst>
         </Column>
       </Row>
-      <Row key={`indexSp${index + 1}`}>
-        {' '}
+      <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
         <VerticalSpacer fourPx />
       </Row>
     </React.Fragment>
@@ -136,15 +136,10 @@ const createArbeidsIntektRows = (relevanteAndeler, erTidsbegrensetArbeidsforhold
     const summaryRow = (
       <React.Fragment key="bruttoBeregningsgrunnlag">
         <Row>
-          <Column className={beregningStyles.colDevider}>
-            <hr />
-          </Column>
+          <Column className={beregningStyles.colDevider} />
         </Row>
         <Row>
-          <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'}><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
-          {erTidsbegrensetArbeidsforhold && (
-            <Column className={beregningStyles.colTidsbegrenset} />
-          )}
+          <Column xs="7"><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt" /></Column>
           <Column
             key="ColBBgMnd"
             className={beregningStyles.colMaanedText}
@@ -184,7 +179,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
         </Element>
         <Row key="Header">
-          <Column xs={erTidsbegrensetArbeidsforhold ? '5' : '7'} key="ATempthy1" />
+          <Column xs="7" key="ATempthy1" />
           {erTidsbegrensetArbeidsforhold && (
             <Column className={beregningStyles.colTidsbegrenset} key="ATempthy1" />
           )}

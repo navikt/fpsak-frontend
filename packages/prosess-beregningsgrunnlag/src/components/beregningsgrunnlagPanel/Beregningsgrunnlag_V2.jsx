@@ -73,8 +73,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         relevanteStatuser={relevanteStatuser}
         gjelderBesteberegning={gjelderBesteberegning}
       />
-      <VerticalSpacer thirtyTwoPx />
-      <VerticalSpacer eightPx />
+      <VerticalSpacer fourtyPx />
     </div>
     )}
       {(relevanteStatuser.isMilitaer)
@@ -83,9 +82,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <MilitaerPanel
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer twentyPx />
-          <VerticalSpacer thirtyTwoPx />
-          <VerticalSpacer eightPx />
+          <VerticalSpacer fourtyPx />
         </>
       )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
@@ -94,8 +91,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <YtelserFraInfotrygd
           bruttoPrAar={allePerioder[0].bruttoPrAar}
         />
-        <VerticalSpacer thirtyTwoPx />
-        <VerticalSpacer eightPx />
+        <VerticalSpacer fourtyPx />
       </>
     )}
       { relevanteStatuser.isArbeidstaker
@@ -114,8 +110,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer thirtyTwoPx />
-              <VerticalSpacer eightPx />
+              <VerticalSpacer fourtyPx />
             </>
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
@@ -131,8 +126,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer thirtyTwoPx />
-              <VerticalSpacer eightPx />
+              <VerticalSpacer fourtyPx />
             </>
           )}
         </>
@@ -146,8 +140,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           readOnly={readOnly}
           isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
         />
-        <VerticalSpacer thirtyTwoPx />
-        <VerticalSpacer eightPx />
+        <VerticalSpacer fourtyPx />
       </>
     )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
@@ -156,8 +149,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <GrunnlagForAarsinntektPanelSN2
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer thirtyTwoPx />
-          <VerticalSpacer eightPx />
+          <VerticalSpacer fourtyPx />
           <NaeringsopplysningsPanel
             alleAndelerIForstePeriode={alleAndelerIForstePeriode}
           />

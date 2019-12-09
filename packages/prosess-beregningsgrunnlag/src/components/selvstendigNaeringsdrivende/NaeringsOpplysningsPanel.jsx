@@ -13,27 +13,20 @@ import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 
-
 const virksomhetsDatoer = (naringsAndel) => {
-  const datoArr = [];
-  if (Object.prototype.hasOwnProperty.call(naringsAndel, 'oppstartsdato') && naringsAndel.oppstartsdato) {
-    datoArr.push(dateFormat(naringsAndel.oppstartsdato));
+  const { oppstartsdato, opphoersdato } = naringsAndel;
+  if (!oppstartsdato) {
+    return undefined;
   }
-  if (Object.prototype.hasOwnProperty.call(naringsAndel, 'opphoersdato') && naringsAndel.opphoersdato) {
-    datoArr.push(' - ');
-    datoArr.push(dateFormat(naringsAndel.opphoersdato));
-  }
-  return datoArr.join(' ');
+  return opphoersdato ? `${dateFormat(oppstartsdato)}-${dateFormat(opphoersdato)} ` : `${dateFormat(oppstartsdato)}-`;
 };
+
 const revisorDetaljer = (naringsAndel) => {
-  let detaljer = '';
-  if (Object.prototype.hasOwnProperty.call(naringsAndel, 'regnskapsførerNavn') && naringsAndel.regnskapsførerNavn) {
-    detaljer += naringsAndel.regnskapsførerNavn;
+  const { navn, telefon } = naringsAndel;
+  if (!navn) {
+    return '';
   }
-  if (Object.prototype.hasOwnProperty.call(naringsAndel, 'regnskapsførerTlf') && naringsAndel.regnskapsførerTlf) {
-    detaljer += ` ${naringsAndel.regnskapsførerTlf}`;
-  }
-  return detaljer;
+  return telefon ? `${navn}-${telefon} ` : `${dateFormat(navn)}-`;
 };
 
 
@@ -76,9 +69,10 @@ export const NaeringsopplysningsPanel = ({
   intl,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  if (!Object.prototype.hasOwnProperty.call(snAndel, 'næringer')) {
+  if (!snAndel.næringer) {
     return null;
   }
+
   return (
     <Panel className={beregningStyles.panel}>
       <Element className={beregningStyles.semiBoldText}>
@@ -93,9 +87,9 @@ export const NaeringsopplysningsPanel = ({
         </Column>
       </Row>
       <VerticalSpacer fourPx />
-      {snAndel.næringer.map((naring, index) => (
-        <React.Fragment key={`NaringsWrapper${index + 1}`}>
-          <Row key={`NaringsNavn${index + 1}`}>
+      {snAndel.næringer.map((naring) => (
+        <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
+          <Row key={`NaringsNavn${naring.orgnr}`}>
             <Column xs="6">
               <Normaltekst>
                 <span>Bedriftsnavn</span>
@@ -112,7 +106,7 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
           </Row>
-          <Row key={`NaringsDetaljer${index + 1}`}>
+          <Row key={`NaringsDetaljer${naring.orgnr}`}>
             <Column xs="2">
               <Normaltekst>
                 {naring && naring.orgnr ? naring.orgnr : ''}
@@ -124,7 +118,7 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
           </Row>
-          <Row key={`RevisorRad${index + 1}`}>
+          <Row key={`RevisorRad${naring.orgnr}`}>
             <Column xs="10">
               <Normaltekst>
                 {revisorDetaljer(naring)}

@@ -9,11 +9,12 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 
 const AvviksopplysningerSN = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, erNyArbLivet, harAksjonspunkter,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, harAksjonspunkter,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const { pgiSnitt } = snAndel;
   const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  const erNyArbLivet = snAndel.erNyIArbeidslivet;
   if (erNyArbLivet) {
     return (
       <Row>
@@ -58,7 +59,7 @@ const AvviksopplysningerSN = ({
 
         <Column className={styles.colValue}>
           <Normaltekst>
-            {pgiSnitt === undefined ? '-' : formatCurrencyNoKr(pgiSnitt)}
+            {pgiSnitt || pgiSnitt === 0 ? '-' : formatCurrencyNoKr(pgiSnitt)}
           </Normaltekst>
         </Column>
 
@@ -81,9 +82,7 @@ const AvviksopplysningerSN = ({
 
           </Row>
           <Row>
-            <Column className={styles.colLine}>
-              <hr />
-            </Column>
+            <Column className={styles.colLine} />
           </Row>
           <Row>
             <Column className={styles.colLable}>
@@ -98,7 +97,7 @@ const AvviksopplysningerSN = ({
             </Column>
             <Column className={styles.colAvvik}>
               <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                {`${avvik}%`}
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
               </Normaltekst>
             </Column>
           </Row>
@@ -113,7 +112,6 @@ AvviksopplysningerSN.propTypes = {
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
   beregnetAarsinntekt: PropTypes.number,
-  erNyArbLivet: PropTypes.bool,
   harAksjonspunkter: PropTypes.bool,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
 };
@@ -123,6 +121,5 @@ AvviksopplysningerSN.defaultProps = {
   avvik: '',
   beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
-  erNyArbLivet: undefined,
 };
 export default AvviksopplysningerSN;

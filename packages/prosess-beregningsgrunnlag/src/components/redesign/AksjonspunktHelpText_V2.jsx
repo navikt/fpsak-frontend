@@ -34,9 +34,9 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyAr
         return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.Nyoppstartet';
       }
 
-      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende';
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
     case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
-      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold';
+      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold2';
     case FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE:
       return '';
     case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:

@@ -18,7 +18,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
 };
 // TODO: Legg til test for kombinasjon AT FL når vi får splitting fra marianne
 const AvviksopplysningerPanel = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, allePerioder, harAksjonspunkter, erNyArbLivet,
+  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, aktivitetStatusKode, allePerioder, harAksjonspunkter,
 }) => (
   <Panel className={beregningStyles.panelRight}>
     <Element>
@@ -31,6 +31,7 @@ const AvviksopplysningerPanel = ({
         avvik={avvik}
         sammenligningsgrunnlag={sammenligningsgrunnlag}
         relevanteStatuser={relevanteStatuser}
+        aktivitetStatusKode={aktivitetStatusKode}
       />
     )}
     {relevanteStatuser.isFrilanser && !relevanteStatuser.isKombinasjonsstatus && (
@@ -50,7 +51,6 @@ const AvviksopplysningerPanel = ({
         avvik={avvik}
         sammenligningsgrunnlag={sammenligningsgrunnlag}
         alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-        erNyArbLivet={erNyArbLivet}
         harAksjonspunkter={harAksjonspunkter}
       />
     )}
@@ -79,8 +79,8 @@ AvviksopplysningerPanel.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   sammenligningsgrunnlag: PropTypes.number,
   avvik: PropTypes.number,
-  erNyArbLivet: PropTypes.bool,
   relevanteStatuser: PropTypes.shape().isRequired,
+  aktivitetStatusKode: PropTypes.string.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
 };
@@ -90,6 +90,5 @@ AvviksopplysningerPanel.defaultProps = {
   avvik: undefined,
   beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
-  erNyArbLivet: undefined,
 };
 export default AvviksopplysningerPanel;

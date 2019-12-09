@@ -20,7 +20,7 @@ const AvviksopplysningerFL = ({
 
       <Column className={styles.colValue}>
         <Normaltekst>
-          {beregnetAarsinntekt === undefined ? '-' : formatCurrencyNoKr(beregnetAarsinntekt)}
+          {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
         </Normaltekst>
       </Column>
     </Row>
@@ -40,9 +40,7 @@ const AvviksopplysningerFL = ({
 
     </Row>
     <Row>
-      <Column xs="7">
-        <hr />
-      </Column>
+      <Column className={styles.colLine} />
     </Row>
     <Row>
       <Column className={styles.colLable}>
@@ -57,7 +55,7 @@ const AvviksopplysningerFL = ({
       </Column>
       <Column className={styles.colAvvik}>
         <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-          {`${avvik}%`}
+          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
         </Normaltekst>
       </Column>
     </Row>

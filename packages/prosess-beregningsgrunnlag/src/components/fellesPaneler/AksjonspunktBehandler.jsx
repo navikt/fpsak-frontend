@@ -54,13 +54,14 @@ const AksjonspunktBehandler = ({
   alleKodeverk,
   relevanteStatuser,
   tidsBegrensetInntekt,
-  erNyArbLivet,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   let erVarigEndring = false;
   let erNyoppstartet = false;
-  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode, 'aktivitetStatus')) {
+  let erNyArbLivet = false;
+  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
     const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
     erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
     erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
   }
@@ -69,7 +70,7 @@ const AksjonspunktBehandler = ({
   }
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panelRight}>
+      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
@@ -141,7 +142,7 @@ const AksjonspunktBehandler = ({
   }
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panelRight}>
+      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
@@ -201,11 +202,9 @@ AksjonspunktBehandler.propTypes = {
   tidsBegrensetInntekt: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
-  erNyArbLivet: PropTypes.bool,
 };
 
 AksjonspunktBehandler.defaultProps = {
   allePerioder: undefined,
-  erNyArbLivet: undefined,
 };
 export default AksjonspunktBehandler;

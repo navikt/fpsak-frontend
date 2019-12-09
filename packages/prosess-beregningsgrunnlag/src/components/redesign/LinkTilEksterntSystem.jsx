@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styles from './linkTilEksternSystem.less';
 
 
-const CreateExternalLink = ({ linkText, key }) => {
+const LinkTilEksterntSystem = ({ linkText, key }) => {
   const link = 'http://alink';
   if (!linkText) {
     return null;
@@ -29,9 +29,9 @@ const CreateExternalLink = ({ linkText, key }) => {
     </span>
   );
 };
-CreateExternalLink.propTypes = {
+LinkTilEksterntSystem.propTypes = {
   linkText: PropTypes.string.isRequired,
   key: PropTypes.string.isRequired,
 };
 
-export default CreateExternalLink;
+export default LinkTilEksterntSystem;
