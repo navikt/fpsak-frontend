@@ -133,6 +133,7 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
   return aksjonspunkter;
 };
 
+const getSammenligningsgrunnlagsPrStatus = (bg) => (bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined);
 const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -140,11 +141,13 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   }
   return undefined;
 };
-const getAvviksprosent = (beregningsgrunnlag) => {
-  if (!beregningsgrunnlag.sammenligningsgrunnlag) {
+const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
+  if (!sammenligningsgrunnlagPrStatus) {
     return undefined;
   }
-  const { avvikPromille } = beregningsgrunnlag.sammenligningsgrunnlag;
+  const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
+  const avvikPromille = avvikElem && avvikElem.avvikPromille ? avvikElem.avvikPromille : 0;
+  // const { avvikPromille } = beregningsgrunnlag.sammenligningsgrunnlag;
   if (avvikPromille || avvikPromille === 0) {
     return avvikPromille / 10;
   }
@@ -196,12 +199,14 @@ export const BeregningFormImpl2 = ({
   } = beregningsgrunnlag;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
-  const avvikProsent = getAvviksprosent(beregningsgrunnlag);
+  const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
+  const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
   const aktivitetStatusKode = getStatusKode(beregningsgrunnlag);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
+
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
@@ -251,6 +256,7 @@ export const BeregningFormImpl2 = ({
           <VerticalSpacer fourtyPx />
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}

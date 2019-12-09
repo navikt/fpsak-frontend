@@ -110,7 +110,13 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
         </Column>
         <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colAarText}>
           <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
-            {formatCurrencyNoKr(andel.beregnetPrAar)}
+            {!andel.erTidsbegrensetArbeidsforhold && (
+            <Element>
+              {formatCurrencyNoKr(andel.beregnetPrAar)}
+            </Element>
+            )}
+            {andel.erTidsbegrensetArbeidsforhold
+                && formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
         <Column className={beregningStyles.colLink} key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} />

@@ -149,6 +149,24 @@ const lagPeriode = (andelsliste, dagsats, fom, tom, periodeAarsaker) => ({
   andelerLagtTilManueltIForrige: [],
 });
 
+const sammenligningsgrunnlagTyper = {
+  FL: 'SAMMENLIGNING_FL',
+  SN: 'SAMMENLIGNING_SN',
+  AT: 'SAMMENLIGNING_AT',
+  ATFLSN: 'SAMMENLIGNING_ATFL_SN',
+};
+const lagSammenligningsGrunnlag = (kode, rapportertPrAar, avvikProsent, differanse) => ({
+  sammenligningsgrunnlagFom: '2018-09-01',
+  sammenligningsgrunnlagTom: '2019-10-31',
+  rapportertPrAar,
+  avvikPromille: avvikProsent ? avvikProsent * 10 : 0,
+  avvikProsent,
+  sammenligningsgrunnlagType: {
+    kode,
+  },
+  differanseBeregnet: differanse,
+});
+
 const lagPeriodeMedDagsats = (andelsliste, dagsats) => lagPeriode(andelsliste, dagsats, standardFom, standardTom, []);
 
 const lagStandardPeriode = (andelsliste) => lagPeriode(andelsliste, null, standardFom, standardTom, []);
@@ -160,7 +178,7 @@ const lagStatus = (kode) => ({
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser) => {
+const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
     aktivitetStatus: statuser,
@@ -172,6 +190,7 @@ const lagBG = (perioder, statuser) => {
       avvikPromille: 91,
       avvikProsent: 9,
     },
+    sammenligningsgrunnlagPrStatus,
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
@@ -268,7 +287,9 @@ export const arbeidstakerUtenAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 330257, 6.2, -30257)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -290,7 +311,9 @@ export const arbeidstakerMedAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -79059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -309,10 +332,12 @@ export const arbeidstakerMedAvvik = () => {
 };
 
 export const arbeidstakerFrilansMedAvvik = () => {
-  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('FL', 130250, undefined, false)];
+  const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT'), lagStatus('FL')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 36.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -356,7 +381,9 @@ export const arbeidstakerOgAAP = () => {
   const andeler = [lagAndel('AT', 110232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -67059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -400,8 +427,10 @@ export const selvstendigNæringsdrivende = () => {
     kodeverk: 'VIRKSOMHET_TYPE',
   }];
   andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -177059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
 
-  const bg = lagBG(perioder, statuser);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -429,7 +458,9 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
   const statuser = [lagStatus('AT_FL')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -448,13 +479,15 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
 };
 
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -498,13 +531,15 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   );
 };
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -531,7 +566,9 @@ export const tidsbegrensetArbeidsforholdMedAvvikRedesign = () => {
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
   const statuser = [lagStatus('AT_FL')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}

@@ -7,10 +7,24 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
+
 
 const AvviksopplysningerAT = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, aktivitetStatusKode,
+  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt, aktivitetStatusKode,
 }) => {
+  const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_AT'
+      || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
+    : undefined;
+  let avvikAT;
+  let sammenligningsgrunnlagSumAT;
+  let differanseBeregnet;
+  if (sammenligningsGrunnlagAT) {
+    avvikAT = sammenligningsGrunnlagAT.avvikProsent;
+    sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
+    differanseBeregnet = sammenligningsGrunnlagAT.differanseBeregnet;
+  }
   if (aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN || aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN) {
     return (
       <Row>
@@ -27,79 +41,77 @@ const AvviksopplysningerAT = ({
       </Row>
     );
   }
-  return (
-    <>
-      <Row>
-        <Column className={styles.colLable}>
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
-          </Normaltekst>
-        </Column>
+  if (sammenligningsgrunnlagSumAT) {
+    return (
+      <>
+        <Row>
+          <Column className={styles.colLable}>
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
+            </Normaltekst>
+          </Column>
 
-        <Column className={styles.colValue}>
-          <Normaltekst>
-            {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
-          </Normaltekst>
-        </Column>
-      </Row>
-      {sammenligningsgrunnlag && (
-        <>
-          <Row>
-            <Column className={styles.colLable}>
-              <Normaltekst>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
-              </Normaltekst>
-            </Column>
+          <Column className={styles.colValue}>
+            <Normaltekst>
+              {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
+            </Normaltekst>
+          </Column>
+        </Row>
 
-            <Column className={styles.colValue}>
-              <Normaltekst>
-                {formatCurrencyNoKr(sammenligningsgrunnlag)}
-              </Normaltekst>
-            </Column>
-          </Row>
-          <Row>
-            <Column className={styles.colLine} />
-          </Row>
-          <Row>
-            <Column className={styles.colLable}>
-              <Normaltekst className={beregningStyles.semiBoldText}>
-                {!relevanteStatuser.isKombinasjonsstatus && (
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-                )}
-                {relevanteStatuser.isKombinasjonsstatus && (
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
-                )}
-              </Normaltekst>
-            </Column>
-            <Column className={styles.colValue}>
-              <Normaltekst>
-                {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-              </Normaltekst>
-            </Column>
-            <Column className={styles.colAvvik}>
-              <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
-              </Normaltekst>
-            </Column>
-          </Row>
-        </>
-      )}
-    </>
-  );
+        <Row>
+          <Column className={styles.colLable}>
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
+            </Normaltekst>
+          </Column>
+
+          <Column className={styles.colValue}>
+            <Normaltekst>
+              {formatCurrencyNoKr(sammenligningsgrunnlagSumAT)}
+            </Normaltekst>
+          </Column>
+        </Row>
+        <Row>
+          <Column className={styles.colLine} />
+        </Row>
+        <Row>
+          <Column className={styles.colLable}>
+            <Normaltekst className={beregningStyles.semiBoldText}>
+              {!relevanteStatuser.isKombinasjonsstatus && (
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
+              )}
+              {relevanteStatuser.isKombinasjonsstatus && (
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
+              )}
+            </Normaltekst>
+          </Column>
+          <Column className={styles.colValue}>
+            <Normaltekst>
+              {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
+                : differanseBeregnet)}
+            </Normaltekst>
+          </Column>
+          <Column className={styles.colAvvik}>
+            <Normaltekst className={`${avvikAT > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+              {avvikAT !== 0 ? `${avvikAT}%` : ''}
+            </Normaltekst>
+          </Column>
+        </Row>
+      </>
+    );
+  }
+  return null;
 };
 
 
 AvviksopplysningerAT.propTypes = {
-  beregnetAarsinntekt: PropTypes.number,
-  sammenligningsgrunnlag: PropTypes.number,
-  avvik: PropTypes.number,
   relevanteStatuser: PropTypes.shape().isRequired,
   aktivitetStatusKode: PropTypes.string.isRequired,
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  beregnetAarsinntekt: PropTypes.number,
 };
-
-AvviksopplysningerAT.defaultProps = {
-  sammenligningsgrunnlag: undefined,
-  avvik: undefined,
+AvviksopplysningerFL.defaultProps = {
   beregnetAarsinntekt: undefined,
 };
+
 export default AvviksopplysningerAT;
