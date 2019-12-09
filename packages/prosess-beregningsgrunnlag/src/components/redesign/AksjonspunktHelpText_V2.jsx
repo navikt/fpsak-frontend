@@ -1,50 +1,67 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
-import { isObject } from '@fpsak-frontend/utils';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
+import { Normaltekst } from 'nav-frontend-typografi';
 import {
   FlexColumn, FlexContainer, FlexRow, Image,
 } from '@fpsak-frontend/shared-components';
 
-import styles from './aksjonspunktHelpText_V2.less';
 
-/**
- * AksjonspunktHelpText
- *
- * Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
- * å avklare en eller flere aksjonspunkter.
- *
- * Eksempel:
- * ```html
- * <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
- * ```
- */
-const AksjonspunktHelpTextV2 = ({
-  children,
-  intl,
-  isAksjonspunktOpen,
-  marginBottom,
-}) => {
-  if (!isAksjonspunktOpen) {
-    return (
-      <>
-        {children.map((child) => (
-          <Normaltekst key={isObject(child) ? child.key : child} className={styles.wordwrap}>
-            <strong>
-              <FormattedMessage id="HelpText.Aksjonspunkt.BehandletAksjonspunkt" />
-              :
-            </strong>
-            {child}
-          </Normaltekst>
-        ))}
-      </>
-    );
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import styles from './aksjonspunktHelpText_V2.less';
+import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+
+const {
+  FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+  VURDER_DEKNINGSGRAD,
+} = aksjonspunktCodes;
+
+const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyArbLivet, erNyoppstartet) => {
+  switch (gjeldendeAksjonspunkt.definisjon.kode) {
+    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
+      return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
+    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
+      if (erVarigEndring) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.VarigEndring';
+      }
+      if (erNyoppstartet) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.Nyoppstartet';
+      }
+
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
+    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
+      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold2';
+    case FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE:
+      return '';
+    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
+      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
+    case VURDER_DEKNINGSGRAD:
+      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
+    default:
+      return 'Beregningsgrunnlag.Helptext.Ukjent';
   }
-  const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
+};
+
+const AksjonspunktHelpTextV2 = ({
+  apneAksjonspunkt,
+  intl,
+  avvikProsent,
+  erVarigEndring,
+  erNyArbLivet,
+  erNyoppstartet,
+}) => {
+  const elementStyle = apneAksjonspunkt.length === 1 ? styles.oneElement : styles.severalElements;
+  if (!apneAksjonspunkt || apneAksjonspunkt.length === 0) {
+    return null;
+  }
   return (
-    <div className={marginBottom ? styles.container : ''}>
+    <div className={styles.container}>
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
@@ -52,11 +69,25 @@ const AksjonspunktHelpTextV2 = ({
           </FlexColumn>
 
           <FlexColumn className={styles.aksjonspunktText}>
-            {children.map((child) => (
-              <div key={isObject(child) ? child.key : child} className={elementStyle}>
-                <Element className={styles.wordwrap}>{child}</Element>
-              </div>
-            ))}
+            {apneAksjonspunkt.map((ap) => {
+              const langId = findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet);
+              const langIdIngress = `${langId}.Ingress`;
+              return (
+                <div key={ap.definisjon.kode} className={elementStyle}>
+
+                  <Normaltekst className={styles.wordwrap}>
+                    <span className={beregningStyles.semiBoldText}>
+                      <FormattedMessage
+                        key={`Ing${ap.definisjon.kode}`}
+                        id={langIdIngress}
+                        values={{ verdi: avvikProsent }}
+                      />
+                    </span>
+                    <FormattedMessage key={ap.definisjon.kode} id={langId} />
+                  </Normaltekst>
+                </div>
+              );
+            })}
           </FlexColumn>
         </FlexRow>
       </FlexContainer>
@@ -66,16 +97,17 @@ const AksjonspunktHelpTextV2 = ({
 
 AksjonspunktHelpTextV2.propTypes = {
   intl: PropTypes.shape().isRequired,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.string.isRequired),
-    PropTypes.arrayOf(PropTypes.element.isRequired),
-  ]).isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
-  marginBottom: PropTypes.bool,
+  apneAksjonspunkt: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  avvikProsent: PropTypes.number.isRequired,
+  erVarigEndring: PropTypes.bool,
+  erNyArbLivet: PropTypes.bool,
+  erNyoppstartet: PropTypes.bool,
 };
 
 AksjonspunktHelpTextV2.defaultProps = {
-  marginBottom: false,
+  erVarigEndring: false,
+  erNyArbLivet: false,
+  erNyoppstartet: false,
 };
 
 export default injectIntl(AksjonspunktHelpTextV2);

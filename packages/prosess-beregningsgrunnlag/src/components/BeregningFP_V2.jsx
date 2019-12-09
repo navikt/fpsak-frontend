@@ -6,7 +6,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes, { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
+import aktivitetStatus, {
   isStatusArbeidstakerOrKombinasjon,
   isStatusDagpengerOrAAP,
   isStatusFrilanserOrKombinasjon,
@@ -22,6 +22,7 @@ import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnla
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
+
 
 const visningForManglendeBG = () => (
   <FadingPanel>
@@ -43,13 +44,14 @@ const visningForManglendeBG = () => (
 );
 
 const getAksjonspunkterForBeregning = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)) : []);
-
 const getRelevanteStatuser = (bg) => (bg.aktivitetStatus ? ({
   isArbeidstaker: bg.aktivitetStatus.some(({ kode }) => isStatusArbeidstakerOrKombinasjon(kode)),
   isFrilanser: bg.aktivitetStatus.some(({ kode }) => isStatusFrilanserOrKombinasjon(kode)),
   isSelvstendigNaeringsdrivende: bg.aktivitetStatus.some(({ kode }) => isStatusSNOrKombinasjon(kode)),
   harAndreTilstotendeYtelser: bg.aktivitetStatus.some(({ kode }) => isStatusTilstotendeYtelse(kode)),
   harDagpengerEllerAAP: bg.aktivitetStatus.some(({ kode }) => isStatusDagpengerOrAAP(kode)),
+  isAAP: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
+  isDagpenger: bg.aktivitetStatus.some(({ kode }) => kode === aktivitetStatus.DAGPENGER),
   skalViseBeregningsgrunnlag: bg.aktivitetStatus && bg.aktivitetStatus.length > 0,
   isKombinasjonsstatus: bg.aktivitetStatus.some(({ kode }) => isStatusKombinasjon(kode)) || bg.aktivitetStatus.length > 1,
   isMilitaer: bg.aktivitetStatus.some(({ kode }) => isStatusMilitaer(kode)),

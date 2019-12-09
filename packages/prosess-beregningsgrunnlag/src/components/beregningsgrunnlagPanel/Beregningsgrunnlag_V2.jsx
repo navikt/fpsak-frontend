@@ -11,11 +11,12 @@ import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel from '../militær/MilitaerPanel';
-import styles from './beregningsgrunnlag.less';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
+
+import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -64,7 +65,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingVersjon,
   alleKodeverk) => (
     <div>
-
       {(relevanteStatuser.harDagpengerEllerAAP)
     && (
     <div>
@@ -73,44 +73,45 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         relevanteStatuser={relevanteStatuser}
         gjelderBesteberegning={gjelderBesteberegning}
       />
-      <VerticalSpacer twentyPx />
+      <VerticalSpacer fourtyPx />
     </div>
     )}
-      <VerticalSpacer eightPx />
       {(relevanteStatuser.isMilitaer)
       && (
-        <div>
+        <>
           <MilitaerPanel
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer twentyPx />
-        </div>
+          <VerticalSpacer fourtyPx />
+        </>
       )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
     && (
-      <div>
+      <>
         <YtelserFraInfotrygd
           bruttoPrAar={allePerioder[0].bruttoPrAar}
         />
-        <VerticalSpacer twentyPx />
-      </div>
+        <VerticalSpacer fourtyPx />
+      </>
     )}
       { relevanteStatuser.isArbeidstaker
       && (
-        <div>
+        <>
           {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
-          <GrunnlagForAarsinntektPanelAT2
-            alleAndeler={alleAndelerIForstePeriode}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-            allePerioder={allePerioder}
-            readOnly={readOnly}
-            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-            alleKodeverk={alleKodeverk}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-
+            <>
+              <GrunnlagForAarsinntektPanelAT2
+                alleAndeler={alleAndelerIForstePeriode}
+                aksjonspunkter={gjeldendeAksjonspunkter}
+                allePerioder={allePerioder}
+                readOnly={readOnly}
+                isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+                alleKodeverk={alleKodeverk}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+              />
+              <VerticalSpacer fourtyPx />
+            </>
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
           && (
@@ -125,30 +126,35 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
+              <VerticalSpacer fourtyPx />
             </>
           )}
-        </div>
+        </>
       )}
       { relevanteStatuser.isFrilanser
     && (
-    <div>
-      <GrunnlagForAarsinntektPanelFL2
-        alleAndeler={alleAndelerIForstePeriode}
-        aksjonspunkter={gjeldendeAksjonspunkter}
-        readOnly={readOnly}
-        isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-      />
-    </div>
+      <>
+        <GrunnlagForAarsinntektPanelFL2
+          alleAndeler={alleAndelerIForstePeriode}
+          aksjonspunkter={gjeldendeAksjonspunkter}
+          readOnly={readOnly}
+          isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+        />
+        <VerticalSpacer fourtyPx />
+      </>
     )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
-        <GrunnlagForAarsinntektPanelSN2
-          alleAndeler={alleAndelerIForstePeriode}
-        />
+        <>
+          <GrunnlagForAarsinntektPanelSN2
+            alleAndeler={alleAndelerIForstePeriode}
+          />
+          <VerticalSpacer fourtyPx />
+          <NaeringsopplysningsPanel
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          />
+        </>
       )}
-      <VerticalSpacer eightPx />
-
-
     </div>
 );
 
@@ -175,7 +181,7 @@ export const BeregningsgrunnlagImpl2 = ({
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
-    <div className={styles.beregningsgrunnlagPanel}>
+    <>
       {
           createRelevantePaneler(
             alleAndelerIForstePeriode,
@@ -189,7 +195,7 @@ export const BeregningsgrunnlagImpl2 = ({
             alleKodeverk,
           )
         }
-    </div>
+    </>
   );
 };
 

@@ -16,6 +16,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 
 
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import styles from './aksjonspunktBehandler.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -55,12 +56,21 @@ const AksjonspunktBehandler = ({
   tidsBegrensetInntekt,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+  let erVarigEndring = false;
+  let erNyoppstartet = false;
+  let erNyArbLivet = false;
+  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
+    const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
+    erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+    erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panel}>
+      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
@@ -132,22 +142,34 @@ const AksjonspunktBehandler = ({
   }
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={!readOnly ? styles.aksjonspunktBehandlerBorder : beregningStyles.panel}>
+      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
         <Row>
           <Column xs="12">
             <Normaltekst className={beregningStyles.semiBoldText}>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
+              {erNyArbLivet && (
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet" />
+              )}
+              {erNyoppstartet && !erVarigEndring && (
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.Nyoppstartet" />
+              )}
+              {!erNyArbLivet && !erNyoppstartet && erVarigEndring && (
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.VarigEndring" />
+              )}
+              {!erNyArbLivet && erNyoppstartet && erVarigEndring && (
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
+              )}
             </Normaltekst>
           </Column>
         </Row>
         <VerticalSpacer eightPx />
         <AksjonspunktBehandlerSN
           readOnly={readOnly}
-          allePerioder={allePerioder}
-          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
           aksjonspunkter={aksjonspunkter}
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
+          erNyArbLivet={erNyArbLivet}
+          erVarigEndring={erVarigEndring}
+          erNyoppstartet={erNyoppstartet}
         />
         <VerticalSpacer sixteenPx />
         <Row>

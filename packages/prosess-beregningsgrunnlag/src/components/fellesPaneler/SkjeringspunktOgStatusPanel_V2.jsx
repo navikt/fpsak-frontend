@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import { DateLabel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  DateLabel, FlexContainer, FlexColumn, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import Panel from 'nav-frontend-paneler';
 import { EtikettInfo } from 'nav-frontend-etiketter';
 
 
@@ -53,26 +53,26 @@ export const SkjeringspunktOgStatusPanelImpl2 = ({
   aktivitetStatusList,
   getKodeverknavn,
 }) => (
-  <Panel className={beregningStyles.panel}>
-
+  <div className={beregningStyles.panelLeft}>
     {createStatusEtiketter(aktivitetStatusList, getKodeverknavn)}
-
     <VerticalSpacer sixteenPx />
-    <Row>
-      <Column xs="7">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
-        </Normaltekst>
-      </Column>
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn>
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.SkjeringForBeregning" />
+          </Normaltekst>
+        </FlexColumn>
 
-      <Column xs="5">
-        <Normaltekst className={beregningStyles.semiBoldText}>
-          <DateLabel dateString={skjeringstidspunktDato} />
-        </Normaltekst>
-      </Column>
+        <FlexColumn>
+          <Normaltekst className={beregningStyles.semiBoldText}>
+            <DateLabel dateString={skjeringstidspunktDato} />
+          </Normaltekst>
+        </FlexColumn>
 
-    </Row>
-  </Panel>
+      </FlexRow>
+    </FlexContainer>
+  </div>
 );
 
 SkjeringspunktOgStatusPanelImpl2.propTypes = {

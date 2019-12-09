@@ -25,16 +25,15 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
   return (
-    <Panel className={beregningStyles.panel}>
+    <Panel className={beregningStyles.panelLeft}>
       { isKombinasjonsstatus
       && (
-
-      <div>
-        <Element>
-          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
-        </Element>
-        <VerticalSpacer eightPx />
-      </div>
+        <>
+          <Element>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
+          </Element>
+          <VerticalSpacer eightPx />
+        </>
       )}
       {startDato && (
       <Row>
@@ -51,17 +50,17 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
       <VerticalSpacer eightPx />
       <Row>
         <Column xs="7" />
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
           </Undertekst>
         </Column>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
         </Column>
-        <Column xs="1" />
+        <Column className={beregningStyles.colLink} />
       </Row>
       <Row>
         <Column xs="7">
@@ -69,13 +68,13 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
           </Normaltekst>
         </Column>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column className={beregningStyles.colMaanedText}>
           <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
         </Column>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column className={beregningStyles.colAarText}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column xs="1" />
+        <Column className={beregningStyles.colLink} />
       </Row>
     </Panel>
   );

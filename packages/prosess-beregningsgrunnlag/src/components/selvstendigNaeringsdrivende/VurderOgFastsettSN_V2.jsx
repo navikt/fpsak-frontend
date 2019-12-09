@@ -8,7 +8,6 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 
 import VurderVarigEndretEllerNyoppstartetSN2, { varigEndringRadioname } from './VurderVarigEndretEllerNyoppstartetSN_V2';
 import FastsettSN2 from './FastsettSN_V2';
-import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 
 const FORM_NAME = 'BeregningForm';
 const {
@@ -32,10 +31,11 @@ export const VurderOgFastsettSNImpl2 = ({
   readOnly,
   erVarigEndretNaering,
   isAksjonspunktClosed,
-  gjeldendeAksjonspunkter,
+  erNyArbLivet,
+  erNyoppstartet,
+  erVarigEndring,
 }) => {
-  const isNyArbLivet = hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter);
-  if (isNyArbLivet) {
+  if (erNyArbLivet) {
     return (
       <FastsettSN2
         readOnly={readOnly}
@@ -48,6 +48,8 @@ export const VurderOgFastsettSNImpl2 = ({
       <VurderVarigEndretEllerNyoppstartetSN2
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
+        erVarigEndring={erVarigEndring}
+        erNyoppstartet={erNyoppstartet}
       />
       {erVarigEndretNaering
         && (
@@ -64,7 +66,9 @@ VurderOgFastsettSNImpl2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   erVarigEndretNaering: PropTypes.bool,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
-  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
+  erNyArbLivet: PropTypes.bool.isRequired,
+  erVarigEndring: PropTypes.bool.isRequired,
+  erNyoppstartet: PropTypes.bool.isRequired,
 };
 
 VurderOgFastsettSNImpl2.defaultProps = {
