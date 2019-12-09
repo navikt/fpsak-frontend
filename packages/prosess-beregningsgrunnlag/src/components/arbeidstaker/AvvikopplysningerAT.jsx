@@ -16,7 +16,7 @@ const AvviksopplysningerAT = ({
       <Row>
         <Column xs="12">
           <Normaltekst>
-            {aktivitetStatus.KOMBINERT_AT_SN && (
+            {aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN && (
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
             )}
             {aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN && (

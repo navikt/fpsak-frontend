@@ -59,7 +59,7 @@ const AvviksopplysningerSN = ({
 
         <Column className={styles.colValue}>
           <Normaltekst>
-            {pgiSnitt || pgiSnitt === 0 ? '-' : formatCurrencyNoKr(pgiSnitt)}
+            {!pgiSnitt || pgiSnitt === 0 ? '-' : formatCurrencyNoKr(pgiSnitt)}
           </Normaltekst>
         </Column>
 

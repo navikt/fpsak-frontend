@@ -9,11 +9,12 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { BeregningFormImpl2, transformValues } from './BeregningForm_V2';
+import { BeregningFormImpl2, transformValues, buildInitialValues } from './BeregningForm_V2';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2 from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import Beregningsgrunnlag2 from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
+
 
 const apVurderDekningsgrad = {
   definisjon: {
@@ -125,6 +126,9 @@ const lagBeregningsgrunnlag = (avvikPromille, årsinntektVisningstall,
   faktaOmBeregning: {
     faktaOmBeregningTilfeller: tilfeller,
   },
+  aktivitetStatus: [{
+    kode: 'UDEFINERT',
+  }],
 });
 const alleKodeverk = {
   test: 'test',
@@ -138,20 +142,20 @@ const mockVilkar = [{
   },
 }];
 
-lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
+
 const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
 describe('<BeregningForm2>', () => {
   it('skal teste at AvviksopplysningerPanel får korrekte props fra BeregningFP', () => {
     const wrapper = shallow(<BeregningFormImpl2
       readOnly={false}
-      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
       beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleKodeverk={alleKodeverk}
+      gjeldendeAksjonspunkter={apEttLukketOgEttApent}
       relevanteStatuser={relevanteStatuser}
       submitCallback={sinon.spy}
       readOnlySubmitButton
+      behandlingId={1}
+      behandlingVersjon={1}
+      alleKodeverk={alleKodeverk}
       vilkaarBG={getBGVilkar(mockVilkar)}
       {...reduxFormPropsMock}
     />);
@@ -355,5 +359,18 @@ describe('<BeregningForm2>', () => {
     const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5047');
+  });
+  it('skal teste buildInitialValues', () => {
+    const gjeldendeAksjonspunkter = [apFastsettBgTidsbegrensetArbeidsforhold];
+    const beregningsgrunnlag = lagBeregningsgrunnlag(0, 120000, 100000, 100, []);
+
+    const actualValues = buildInitialValues.resultFunc(beregningsgrunnlag, gjeldendeAksjonspunkter);
+    const expectedValues = {
+      ATFLVurdering: undefined,
+      begrunnDekningsgradEndring: '',
+      undefined: '',
+      dekningsgrad: undefined,
+    };
+    expect(actualValues).to.deep.equal(expectedValues);
   });
 });

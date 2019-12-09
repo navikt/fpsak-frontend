@@ -15,8 +15,18 @@ describe('<AvviksopplysningerSN>', () => {
   it('Skal teste tabellen får korrekte rader med innhold', () => {
     const forstePeriode = [
       {
-        aktivitetStatus: { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE },
         pgiSnitt: 100,
+        aktivitetStatus:
+          {
+            kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+          },
+        næringer: [
+          {
+            erVarigEndret: false,
+            erNyoppstartet: false,
+          },
+        ],
+        erNyIArbeidslivet: false,
       },
     ];
 
@@ -25,7 +35,6 @@ describe('<AvviksopplysningerSN>', () => {
       sammenligningsgrunnlag={sammenligningsgrunnlag}
       avvik={avvik}
       alleAndelerIForstePeriode={forstePeriode}
-      erNyArbLivet={false}
       harAksjonspunkter
     />);
 
@@ -46,6 +55,9 @@ describe('<AvviksopplysningerSN>', () => {
     expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik');
     const avvikVerdi = rows.at(3).find('Normaltekst');
     expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((beregnetAarsinntekt - sammenligningsgrunnlag)));
-    expect(avvikVerdi.at(2).childAt(0).text()).to.equal(`${avvik}%`);
+    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
+    const avvikProsentValue = avvikProsentText.first().prop('values');
+    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
+    expect(avvikProsentValue.avvik).to.eql(avvik);
   });
 });

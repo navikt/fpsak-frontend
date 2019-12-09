@@ -81,7 +81,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   );
 };
 
-const buildInitialValues = createSelector(
+export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlag,
     (state, ownProps) => ownProps.gjeldendeAksjonspunkter],
   (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
@@ -151,6 +151,9 @@ const getAvviksprosent = (beregningsgrunnlag) => {
   return undefined;
 };
 const getStatusKode = (beregningsgrunnlag) => {
+  if (!beregningsgrunnlag.aktivitetStatus) {
+    return '';
+  }
   const statusKode = beregningsgrunnlag.aktivitetStatus[0].kode;
   return statusKode;
 };

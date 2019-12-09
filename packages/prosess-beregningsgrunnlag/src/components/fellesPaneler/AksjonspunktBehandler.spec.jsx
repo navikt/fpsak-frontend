@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 
@@ -159,7 +160,22 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     relevanteStatuser.isArbeidstaker = false;
+    const snPeriode = {
+      aktivitetStatus:
+     {
+       kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+     },
+      næringer: [
+        {
+          erVarigEndret: false,
+          erNyoppstartet: false,
+        },
+      ],
+      erNyIArbeidslivet: true,
+    };
     const readOnly = true;
+    const perioderMedSNAndel = allePerioder;
+    perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
@@ -167,7 +183,7 @@ describe('<AksjonspunktBehandler>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       readOnlySubmitButton
-      allePerioder={allePerioder}
+      allePerioder={perioderMedSNAndel}
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
