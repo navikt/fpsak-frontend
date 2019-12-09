@@ -17,7 +17,7 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 
 const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
-    <Column xs="9" key={`indexAl2${index + 1}`}>
+    <Column xs="7" key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry[0]}
       </Normaltekst>
@@ -37,7 +37,7 @@ const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((en
 );
 const lineRow = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="12">
+    <Column xs="10">
       <hr />
     </Column>
   </Row>
@@ -45,12 +45,12 @@ const lineRow = (key) => (
 const createRowsRedusert = (listOfEntries) => (
   listOfEntries.map((entry, index) => (
     <Row key={`indexR${index + 1}`}>
-      <Column xs="8" key={`indexR2${index + 1}`}>
+      <Column xs="7" key={`indexR2${index + 1}`}>
         <Normaltekst>
           {entry[0]}
         </Normaltekst>
       </Column>
-      <Column xs="4" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="3" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     </Row>
@@ -59,7 +59,7 @@ const createRowsRedusert = (listOfEntries) => (
 const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
   <React.Fragment key="beregningOppsummeringWrapper">
     <Row key="beregningOppsummering">
-      <Column xs="8" key="beregningOppsummeringLedetekst">
+      <Column xs="7" key="beregningOppsummeringLedetekst">
         <Normaltekst>
           <span className={beregningStyles.semiBoldText}>
             { !ikkeVurdert && (
@@ -74,12 +74,12 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
         </Normaltekst>
       </Column>
       {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
-        <Column xs="4" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
+        <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
           <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
         </Column>
       ))}
       {ikkeVurdert && (
-        <Column xs="4" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
+        <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
       )}
@@ -198,7 +198,7 @@ const BeregningsresultatTable2 = ({
   halvGVerdi,
   tableData,
 }) => (
-  <Panel className={beregningStyles.panel}>
+  <Panel>
     <Element>
       <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
     </Element>

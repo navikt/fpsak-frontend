@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
   faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling,
 } from '@fpsak-frontend/fp-felles';
@@ -64,6 +64,7 @@ export const MedlemskapInfoPanel = ({
   behandlingId,
   behandlingVersjon,
   behandlingType,
+  behandlingStatus,
   soknad,
   inntektArbeidYtelse,
   alleKodeverk,
@@ -96,6 +97,7 @@ export const MedlemskapInfoPanel = ({
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              behandlingStatus={behandlingStatus}
               behandlingPaaVent={behandlingPaaVent}
               aksjonspunkter={aksjonspunkter}
               soknad={soknad}
@@ -147,7 +149,8 @@ MedlemskapInfoPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-  behandlingType: PropTypes.shape().isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
   soknad: medlemskapSoknadPropType.isRequired,
   inntektArbeidYtelse: medlemskapInntektArbeidYtelsePropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

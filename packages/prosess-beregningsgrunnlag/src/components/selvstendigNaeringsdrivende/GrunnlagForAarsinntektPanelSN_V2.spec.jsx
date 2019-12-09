@@ -70,6 +70,6 @@ describe('<GrunnlagForAarsinntektPanelSN_V2>', () => {
     expect(resultMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende');
     const resultSnitt = rows.at(6).find('Element');
     const expectedSnitt = formatCurrencyNoKr(beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel[0].pgiSnitt);
-    expect(resultSnitt.first().childAt(0).text()).to.equal(expectedSnitt);
+    expect(resultSnitt.at(1).childAt(0).text()).to.equal(expectedSnitt);
   });
 });

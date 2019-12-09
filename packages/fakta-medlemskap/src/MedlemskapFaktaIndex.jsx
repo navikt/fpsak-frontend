@@ -40,6 +40,7 @@ const MedlemskapFaktaIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       behandlingType={behandling.type}
+      behandlingStatus={behandling.status}
       behandlingPaaVent={behandling.behandlingPaaVent}
       soknad={soknad}
       inntektArbeidYtelse={inntektArbeidYtelse}

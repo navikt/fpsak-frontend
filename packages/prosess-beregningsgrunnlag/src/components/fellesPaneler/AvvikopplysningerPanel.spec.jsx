@@ -2,7 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
+
 
 const beregnetAarsinntekt = 360000;
 const sammenligningsgrunnlag = 330000;
@@ -24,6 +26,7 @@ describe('<Avviksopplysninger>', () => {
       avvik={avvik}
       relevanteStatuser={relevanteStatuser}
       allePerioder={[{}]}
+      aktivitetStatusKode=""
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -36,12 +39,28 @@ describe('<Avviksopplysninger>', () => {
   it('Skal teste at riktig componenter blir renderet når SN', () => {
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
+    const snPeriode = {
+      aktivitetStatus:
+        {
+          kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+        },
+      næringer: [
+        {
+          erVarigEndret: false,
+          erNyoppstartet: false,
+        },
+      ],
+      erNyIArbeidslivet: true,
+    };
+    const perioderMedSNAndel = allePerioder;
+    perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
     const wrapper = shallowWithIntl(<AvviksopplysningerPanel
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlag={sammenligningsgrunnlag}
       avvik={avvik}
       relevanteStatuser={relevanteStatuser}
-      allePerioder={allePerioder}
+      allePerioder={perioderMedSNAndel}
+      aktivitetStatusKode={aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
