@@ -195,7 +195,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           </Column>
           <Column className={beregningStyles.colLink} />
         </Row>
-        {createArbeidsIntektRows(relevanteAndeler, erTidsbegrensetArbeidsforhold)}
+        {createArbeidsIntektRows(relevanteAndeler)}
       </Panel>
       <NaturalytelsePanel
         allePerioder={allePerioder}
