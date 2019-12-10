@@ -111,14 +111,8 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
           </Normaltekst>
         </Column>
         <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colAarText}>
-          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
-            {!harFlereArbeidsforhold && (
-            <Element>
-              {formatCurrencyNoKr(andel.beregnetPrAar)}
-            </Element>
-            )}
-            {harFlereArbeidsforhold
-                && formatCurrencyNoKr(andel.beregnetPrAar)}
+          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`} className={harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}>
+            {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>
         <Column className={beregningStyles.colLink} key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} />
@@ -189,7 +183,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
         <Row key="Header">
           <Column xs="7" key="ATempthy1" />
           {erTidsbegrensetArbeidsforhold && (
-            <Column className={beregningStyles.colTidsbegrenset} key="ATempthy1" />
+            <Column className={beregningStyles.colTidsbegrenset} key="ATempthy2" />
           )}
           <Column key="ATMndHead" className={beregningStyles.colMaanedText}>
             <Undertekst>

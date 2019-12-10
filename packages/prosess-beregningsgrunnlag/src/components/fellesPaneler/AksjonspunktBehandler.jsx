@@ -59,8 +59,20 @@ const AksjonspunktBehandler = ({
   let erVarigEndring = false;
   let erNyoppstartet = false;
   let erNyArbLivet = false;
+  let visFL = false;
+  let visAT = false;
+
+  console.log('alleAndelerIForstePeriode', alleAndelerIForstePeriode); // eslint-disable-line no-console
   if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
     const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+    const flAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
+    const atAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
+    if (flAndel) {
+      visFL = flAndel.skalFastsetteGrunnlag;
+    }
+    if (atAndel) {
+      visAT = atAndel.skalFastsetteGrunnlag;
+    }
     erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
     erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
     erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
@@ -91,7 +103,7 @@ const AksjonspunktBehandler = ({
           aksjonspunkter={aksjonspunkter}
         />
         )}
-        {!tidsBegrensetInntekt && relevanteStatuser.isArbeidstaker && (
+        {!tidsBegrensetInntekt && visAT && (
         <AksjonspunktBehandlerAT
           readOnly={readOnly}
           allePerioder={allePerioder}
@@ -99,7 +111,7 @@ const AksjonspunktBehandler = ({
           alleKodeverk={alleKodeverk}
         />
         )}
-        {!tidsBegrensetInntekt && relevanteStatuser.isFrilanser && (
+        {!tidsBegrensetInntekt && visFL && (
         <AksjonspunktBehandlerFT
           readOnly={readOnly}
           allePerioder={allePerioder}

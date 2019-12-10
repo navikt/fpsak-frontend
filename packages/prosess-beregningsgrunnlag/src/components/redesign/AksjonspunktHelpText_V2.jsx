@@ -83,7 +83,7 @@ const AksjonspunktHelpTextV2 = ({
                         values={{ verdi: avvikProsent }}
                       />
                     </span>
-                    <FormattedMessage key={ap.definisjon.kode} id={langId} />
+                    <FormattedMessage key={ap.definisjon.kode} id={langId} values={{ verdi: avvikProsent }} />
                   </Normaltekst>
                 </div>
               );

@@ -16,9 +16,16 @@ const alleKodeverk = {
 };
 const allePerioder = [
   {
-    beregningsgrunnlagPrStatusOgAndel: [{}],
-  },
-];
+    beregningsgrunnlagPrStatusOgAndel: [
+      {
+        beregnetPrAar: 360000,
+        aktivitetStatus: {
+          kode: 'AT',
+          kodeverk: 'AKTIVITET_STATUS',
+        },
+        skalFastsetteGrunnlag: true,
+      }],
+  }];
 const formName = 'BeregningForm';
 const aksjonspunkter = [
   {
@@ -31,9 +38,11 @@ const aksjonspunkter = [
     },
   },
 ];
+
 describe('<AksjonspunktBehandler>', () => {
   it('Skal teste at riktig componenter blir renderet for FL readOnly', () => {
     relevanteStatuser.isFrilanser = true;
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = true;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}
@@ -64,6 +73,7 @@ describe('<AksjonspunktBehandler>', () => {
   });
   it('Skal teste at submitButton blir rendret riktig når readOnly=false', () => {
     relevanteStatuser.isFrilanser = true;
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = false;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}
@@ -96,6 +106,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isArbeidstaker = true;
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}
@@ -128,6 +139,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isArbeidstaker = true;
+    allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}

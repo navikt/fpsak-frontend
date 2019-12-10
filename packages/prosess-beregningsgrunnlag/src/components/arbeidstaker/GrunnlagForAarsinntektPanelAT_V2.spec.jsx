@@ -70,13 +70,9 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
       expect(teksterAndel.at(0).childAt(0).text()).to.equal(andel.arbeidsforhold.arbeidsgiverNavn);
       expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
-      const aarsInntekt = rows.at(rowNr).find('Element');
-      expect(aarsInntekt.at(0).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
+      expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
       rowNr += 1;
-      // const teksterArbForhold = rows.at(rowNr).find('Normaltekst');
       const teksterArbForholdTid = rows.at(rowNr).find('Undertekst');
-      // expect(teksterArbForhold.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.startdato} - ${andel.arbeidsforhold.opphoersdato}`);
-
       expect(teksterArbForholdTid.at(0).childAt(0).text()).to
         .equal(`${dateFormat(andel.arbeidsforhold.startdato)} - ${dateFormat(andel.arbeidsforhold.opphoersdato)}`);
       rowNr += 1;
