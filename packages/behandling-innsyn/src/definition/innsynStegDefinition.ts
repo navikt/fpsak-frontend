@@ -29,10 +29,7 @@ const innsynBuilders = [
   new ProsessStegProperties.Builder(bpc.BEHANDLE_INNSYN, 'Innsyn')
     .withAksjonspunktCodes(ac.VURDER_INNSYN),
   new ProsessStegProperties.Builder(bpc.VEDTAK, 'Vedtak')
-    .withAksjonspunktCodes(
-      ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,
-      ac.VURDERE_DOKUMENT, ac.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST, ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING,
-    )
+    .withAksjonspunktCodes(ac.FORESLA_VEDTAK)
     .withVisibilityWhen(hasNonDefaultBehandlingspunkt)
     .withStatus(getVedtakStatus),
 ];

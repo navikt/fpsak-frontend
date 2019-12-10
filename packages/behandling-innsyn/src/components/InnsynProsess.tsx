@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
@@ -107,7 +108,6 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
       behandling,
       oppdaterProsessStegIUrl,
       lagreAksjonspunkt,
-      valgtProsessSteg,
     } = this.props;
 
     const { id, versjon } = behandling;
@@ -125,7 +125,8 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
 
     return lagreAksjonspunkt(params, { keepData: true })
       .then(() => {
-        if (valgtProsessSteg === bpc.VEDTAK) {
+        const isVedtak = aksjonspunktModels.some((a) => a.kode === aksjonspunktCodes.FORESLA_VEDTAK);
+        if (isVedtak) {
           this.toggleIverksetterVedtakModal();
         } else {
           oppdaterProsessStegIUrl('default');
