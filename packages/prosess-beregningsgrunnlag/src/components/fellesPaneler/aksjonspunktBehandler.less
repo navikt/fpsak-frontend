@@ -1,8 +1,9 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
-
+// dette stylsheetet brukes også av AksjonspunktBehandlerAT, AksjonspunktBehandlerTB, AksjonspunktBehandlerFL, AksjonspunktBehandlerSN
 .aksjonspunktBehandlerBorder {
   border: 3px solid @navOransje;
   border-radius: 3px;
+  padding-left: 12px;
 }
 
 .verticalLine > div > p {
@@ -75,4 +76,9 @@
 
 .textAreaWrapper > div > div > label > span > span {
   font-size: inherit;
+}
+
+.textAreaWrapper ::placeholder {
+  font-size: inherit;
+  font-weight: inherit;
 }

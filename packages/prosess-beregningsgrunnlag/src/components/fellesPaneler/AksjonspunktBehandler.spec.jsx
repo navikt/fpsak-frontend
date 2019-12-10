@@ -2,6 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 
@@ -155,11 +156,26 @@ describe('<AksjonspunktBehandler>', () => {
     const submitButton = rows.at(2).first().childAt(0);
     expect(submitButton).to.have.length(1);
   });
-  it('Skal teste at riktig componenter blir renderet for SN readOnly false', () => {
+  it('Skal teste at riktig componenter blir renderet for SN NyIArbeidslivet==true', () => {
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     relevanteStatuser.isArbeidstaker = false;
+    const snPeriode = {
+      aktivitetStatus:
+     {
+       kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+     },
+      næringer: [
+        {
+          erVarigEndret: false,
+          erNyoppstartet: false,
+        },
+      ],
+      erNyIArbeidslivet: true,
+    };
     const readOnly = true;
+    const perioderMedSNAndel = allePerioder;
+    perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
@@ -167,13 +183,14 @@ describe('<AksjonspunktBehandler>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       readOnlySubmitButton
-      allePerioder={allePerioder}
+      allePerioder={perioderMedSNAndel}
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
+      erNyArbLivet
     />);
     const rows = wrapper.find('Row');
-    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
+    expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet');
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');

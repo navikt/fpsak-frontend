@@ -14,6 +14,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { Normaltekst } from 'nav-frontend-typografi';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
+
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 export const begrunnelseFieldname = 'varigEndringNyoppstartetBegrunnelse';
@@ -30,54 +31,70 @@ const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVE
  */
 export const VurderVarigEndretEllerNyoppstartetSN2 = ({
   readOnly,
-}) => (
-  <>
-    <Row>
-      <Column xs="12">
-        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
-          <TextAreaField
-            name={begrunnelseFieldname}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
-            validate={[required, maxLength1500, minLength3, hasValidText]}
-            maxLength={1500}
+  erVarigEndring,
+  erNyoppstartet,
+}) => {
+  let radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />);
+  let radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />);
+  if (erNyoppstartet && !erVarigEndring) {
+    radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeNyoppstartet" />);
+    radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.Nyoppstartet" />);
+  }
+  if (erVarigEndring && !erNyoppstartet) {
+    radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />);
+    radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />);
+  }
+  return (
+    <>
+      <Row>
+        <Column xs="12">
+          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
+            <TextAreaField
+              name={begrunnelseFieldname}
+              label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+              validate={[required, maxLength1500, minLength3, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+            />
+          </div>
+        </Column>
+      </Row>
+      <Row>
+        {!readOnly && (
+        <Column xs="12">
+          <RadioGroupField
+            name={varigEndringRadioname}
+            validate={[required]}
+            direction="vertical"
             readOnly={readOnly}
-          />
-        </div>
-      </Column>
-    </Row>
-    <Row>
-      {!readOnly && (
-      <Column xs="12">
-        <RadioGroupField
-          name={varigEndringRadioname}
-          validate={[required]}
-          direction="vertical"
-          readOnly={readOnly}
-        >
-          <RadioOption
-            label={<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />}
-            value={false}
-          />
-          <RadioOption
-            label={<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />}
-            value
-          />
-        </RadioGroupField>
-      </Column>
-      )}
-      {readOnly && (
+          >
+            <RadioOption
+              label={radioLabel1}
+              value={false}
+            />
+            <RadioOption
+              label={radioLabel2}
+              value
+            />
+          </RadioGroupField>
+        </Column>
+        )}
+        {readOnly && (
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />
           </Normaltekst>
         </Column>
-      )}
-    </Row>
-  </>
-);
+        )}
+      </Row>
+    </>
+  );
+};
 
 VurderVarigEndretEllerNyoppstartetSN2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  erVarigEndring: PropTypes.bool.isRequired,
+  erNyoppstartet: PropTypes.bool.isRequired,
 };
 
 VurderVarigEndretEllerNyoppstartetSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {

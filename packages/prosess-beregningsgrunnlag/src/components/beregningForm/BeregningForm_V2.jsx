@@ -27,6 +27,8 @@ import BeregningsresultatTable2 from '../beregningsresultatPanel/Beregningsresul
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 
+import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+
 // TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
 
 // ------------------------------------------------------------------------------------------ //
@@ -39,10 +41,8 @@ const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
-
 // ------------------------------------------------------------------------------------------ //
 // Methods
 // ------------------------------------------------------------------------------------------ //
@@ -51,62 +51,37 @@ const gjelderBehandlingenBesteberegning = (faktaOmBeregning) => (faktaOmBeregnin
   ? faktaOmBeregning.faktaOmBeregningTilfeller.some((tilfelle) => tilfelle.kode === faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE)
   : false);
 
-const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt) => {
-  switch (gjeldendeAksjonspunkt.definisjon.kode) {
-    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
-      return 'Beregningsgrunnlag.Helptext.Arbeidstaker';
-    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
-      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende';
-    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
-      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold';
-    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
-      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN';
-    case VURDER_DEKNINGSGRAD:
-      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
-    default:
-      return 'Beregningsgrunnlag.Helptext.Ukjent';
-  }
-};
 
-const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
+const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode) => {
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
     return undefined;
   }
   const vurderDekninsgradAksjonspunkt = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode === VURDER_DEKNINGSGRAD);
-
-  // Aksjonspunkt FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE håndteres sammen med andre og skal ikke ha egen tekst
-  const andreAksjonspunkter = gjeldendeAksjonspunkter.filter((ap) => ap.definisjon.kode !== VURDER_DEKNINGSGRAD)
-    .filter((ap) => ap.definisjon.kode !== FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE);
-
-  const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(andreAksjonspunkter);
+  const sorterteAksjonspunkter = vurderDekninsgradAksjonspunkt.concat(gjeldendeAksjonspunkter);
   const apneAksjonspunkt = sorterteAksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode));
   const erDetMinstEttApentAksjonspunkt = apneAksjonspunkt.length > 0;
-  const lukkedeAksjonspunkt = sorterteAksjonspunkter.filter((ap) => !isAksjonspunktOpen(ap.status.kode));
-  const erDetMinstEttLukketAksjonspunkt = lukkedeAksjonspunkt.length > 0;
+  const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  const erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
+
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextV2 isAksjonspunktOpen marginBottom>
-          { apneAksjonspunkt.map((ap) => (
-            <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
-          ))}
-        </AksjonspunktHelpTextV2>
+        <AksjonspunktHelpTextV2
+          apneAksjonspunkt={apneAksjonspunkt}
+          avvikProsent={avvikProsent}
+          erVarigEndring={erVarigEndring}
+          erNyArbLivet={erNyArbLivet}
+          erNyoppstartet={erNyoppstartet}
+        />
       )}
-      { erDetMinstEttLukketAksjonspunkt && (
-        <div>
-          <VerticalSpacer sixteenPx />
-          <AksjonspunktHelpTextV2 isAksjonspunktOpen={false}>
-            { lukkedeAksjonspunkt.map((ap) => (
-              <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
-            ))}
-          </AksjonspunktHelpTextV2>
-        </div>
-      )}
+
     </div>
   );
 };
 
-const buildInitialValues = createSelector(
+export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlag,
     (state, ownProps) => ownProps.gjeldendeAksjonspunkter],
   (beregningsgrunnlag, gjeldendeAksjonspunkter) => {
@@ -159,7 +134,12 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
 };
 
 const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
-
+const finnAlleAndelerIFørstePeriode = (allePerioder) => {
+  if (allePerioder && allePerioder.length > 0) {
+    return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
+  }
+  return undefined;
+};
 const getAvviksprosent = (beregningsgrunnlag) => {
   if (!beregningsgrunnlag.sammenligningsgrunnlag) {
     return undefined;
@@ -169,6 +149,13 @@ const getAvviksprosent = (beregningsgrunnlag) => {
     return avvikPromille / 10;
   }
   return undefined;
+};
+const getStatusKode = (beregningsgrunnlag) => {
+  if (!beregningsgrunnlag.aktivitetStatus) {
+    return '';
+  }
+  const statusKode = beregningsgrunnlag.aktivitetStatus[0].kode;
+  return statusKode;
 };
 const getStatusList = (beregningsgrunnlagPeriode) => {
   const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
@@ -207,37 +194,29 @@ export const BeregningFormImpl2 = ({
     dekningsgrad, skjaeringstidspunktBeregning,
     årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
-
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(beregningsgrunnlag);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
+  const aktivitetStatusKode = getStatusKode(beregningsgrunnlag);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
-
+  const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
+  const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
   return (
-    <form onSubmit={formProps.handleSubmit}>
-
+    <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
         <ElementWrapper>
           <VerticalSpacer eightPx />
-          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent)}
+          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
         </ElementWrapper>
         )}
       <Row>
         <Column xs="12" md="6">
-          <Undertittel>
+          <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-        </Column>
-        <Column xs="12" md="6">
-          <Undertittel>
-            <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
-          </Undertittel>
-        </Column>
-      </Row>
-      <Row>
-        <Column xs="12" md="6">
+          <VerticalSpacer fourtyPx />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -247,54 +226,68 @@ export const BeregningFormImpl2 = ({
             gjeldendeDekningsgrad={dekningsgrad}
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
-          <Beregningsgrunnlag2
-            relevanteStatuser={relevanteStatuser}
-            readOnly={readOnly}
-            submitCallback={submitCallback}
-            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
-            readOnlySubmitButton={readOnlySubmitButton}
-            formName={formName}
-            allePerioder={beregningsgrunnlagPeriode}
-            gjelderBesteberegning={gjelderBesteberegning}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-          />
+            <>
+              <VerticalSpacer fourtyPx />
+              <Beregningsgrunnlag2
+                relevanteStatuser={relevanteStatuser}
+                readOnly={readOnly}
+                submitCallback={submitCallback}
+                gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+                readOnlySubmitButton={readOnlySubmitButton}
+                formName={formName}
+                allePerioder={beregningsgrunnlagPeriode}
+                gjelderBesteberegning={gjelderBesteberegning}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                alleKodeverk={alleKodeverk}
+              />
+            </>
           )}
         </Column>
         <Column xs="12" md="6">
+          <Undertittel className={beregningStyles.panelRight}>
+            <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
+          </Undertittel>
+          <VerticalSpacer fourtyPx />
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
+            aktivitetStatusKode={aktivitetStatusKode}
             allePerioder={beregningsgrunnlagPeriode}
+            harAksjonspunkter={harAksjonspunkter}
           />
-          {gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0
+          {harAksjonspunkter
           && (
-          <AksjonspunktBehandler
-            readOnly={readOnly}
-            readOnlySubmitButton={readOnlySubmitButton}
-            formName={formName}
-            allePerioder={beregningsgrunnlagPeriode}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-            relevanteStatuser={relevanteStatuser}
-            tidsBegrensetInntekt={tidsBegrensetInntekt}
-          />
+            <>
+              <VerticalSpacer fourtyPx />
+              <AksjonspunktBehandler
+                readOnly={readOnly}
+                readOnlySubmitButton={readOnlySubmitButton}
+                formName={formName}
+                allePerioder={beregningsgrunnlagPeriode}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                alleKodeverk={alleKodeverk}
+                aksjonspunkter={gjeldendeAksjonspunkter}
+                relevanteStatuser={relevanteStatuser}
+                tidsBegrensetInntekt={tidsBegrensetInntekt}
+              />
+            </>
           )}
-          <BeregningsresultatTable2
-            halvGVerdi={beregningsgrunnlag.halvG}
-            beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-            ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-            ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
-            ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
-            vilkaarBG={vilkaarBG}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-          />
-
+          <>
+            <VerticalSpacer fourtyPx />
+            <BeregningsresultatTable2
+              halvGVerdi={beregningsgrunnlag.halvG}
+              beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
+              ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
+              ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
+              ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
+              vilkaarBG={vilkaarBG}
+              aksjonspunkter={gjeldendeAksjonspunkter}
+            />
+          </>
 
         </Column>
       </Row>

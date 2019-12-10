@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerAT from './AvvikopplysningerAT';
 
 const beregnetAarsinntekt = 360000;
@@ -10,11 +11,13 @@ const sammenligningsgrunnlag = 330000;
 const avvik = 25;
 
 describe('<AvviksopplysningerAT>', () => {
-  it('Skal teste tabellen får korrekte rader med innhold', () => {
+  it('Skal teste tabellen får korrekte rader med innhold når ikke kombinasjonsstatus', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlag={sammenligningsgrunnlag}
       avvik={avvik}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
+      aktivitetStatusKode=""
     />);
     const rows = wrapper.find('Row');
 
@@ -33,6 +36,35 @@ describe('<AvviksopplysningerAT>', () => {
     expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik');
     const avvikVerdi = rows.at(3).find('Normaltekst');
     expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((beregnetAarsinntekt - sammenligningsgrunnlag)));
-    expect(avvikVerdi.at(2).childAt(0).text()).to.equal(`${avvik}%`);
+    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
+    const avvikProsentValue = avvikProsentText.first().prop('values');
+    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
+    expect(avvikProsentValue.avvik).to.eql(avvik);
+  });
+  it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_SN', () => {
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlag={sammenligningsgrunnlag}
+      avvik={avvik}
+      relevanteStatuser={{ isKombinasjonsstatus: true }}
+      aktivitetStatusKode={aktivitetStatus.KOMBINERT_AT_SN}
+    />);
+    const rows = wrapper.find('Row');
+    expect(rows).to.have.length(1);
+    const infoText = rows.first().find('FormattedMessage');
+    expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN');
+  });
+  it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_FL_SN', () => {
+    const wrapper = shallowWithIntl(<AvviksopplysningerAT
+      beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlag={sammenligningsgrunnlag}
+      avvik={avvik}
+      relevanteStatuser={{ isKombinasjonsstatus: true }}
+      aktivitetStatusKode={aktivitetStatus.KOMBINERT_AT_FL_SN}
+    />);
+    const rows = wrapper.find('Row');
+    expect(rows).to.have.length(1);
+    const infoText = rows.first().find('FormattedMessage');
+    expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN');
   });
 });
