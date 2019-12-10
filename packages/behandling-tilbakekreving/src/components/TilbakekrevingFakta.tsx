@@ -69,7 +69,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
     }]}
     >
       <DataFetcherBehandlingData
-        showLoadingIcon
+        showOldDataWhenRefetching
         fetchTrigger={behandling.versjon}
         endpoints={feilutbetalingData}
         render={(dataProps) => {

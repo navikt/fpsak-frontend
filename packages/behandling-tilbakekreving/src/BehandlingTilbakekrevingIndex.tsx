@@ -163,7 +163,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
               <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
               <TilbakekrevingGrid
                 fagsak={fagsak}
-                behandling={behandling}
+                behandling={aktuellBehandling}
                 kodeverk={kodeverk}
                 navAnsatt={navAnsatt}
                 valgtProsessSteg={valgtProsessSteg}

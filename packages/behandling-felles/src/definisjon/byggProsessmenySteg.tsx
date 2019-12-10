@@ -43,7 +43,7 @@ interface OwnProps {
   valgtProsessSteg?: string;
   behandling: Behandling;
   aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  vilkar: [Vilkar?];
   navAnsatt: NavAnsatt;
   fagsak: FagsakInfo;
   hasFetchError: boolean;
