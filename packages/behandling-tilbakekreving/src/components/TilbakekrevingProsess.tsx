@@ -228,7 +228,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
           onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        {valgtStegKode && (
+        {(valgtStegKode && valgtSteg.aksjonspunkter.length > 0) && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}

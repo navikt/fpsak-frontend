@@ -16,10 +16,11 @@ const DANGER = 'danger';
 const DEFAULT = 'default';
 
 const finnProsessmenyType = (status, harApentAksjonspunkt) => {
+  if (harApentAksjonspunkt) {
+    return WARNING;
+  }
   if (status === vilkarUtfallType.OPPFYLT) {
     return SUCCESS;
-  } if (status === vilkarUtfallType.IKKE_VURDERT && harApentAksjonspunkt) {
-    return WARNING;
   } if (status === vilkarUtfallType.IKKE_OPPFYLT) {
     return DANGER;
   }
