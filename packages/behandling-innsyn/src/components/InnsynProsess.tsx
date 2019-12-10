@@ -195,7 +195,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
           onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        {valgtStegKode && (
+        {valgtSteg && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
