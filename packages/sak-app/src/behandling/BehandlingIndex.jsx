@@ -300,7 +300,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
 
 export default trackRouteParam({
   paramName: 'behandlingId',
-  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
+  parse: (behandlingFromUrl) => Number.parseInt(behandlingFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setTempBehandlingId,
   getParamFromStore: getTempBehandlingId,

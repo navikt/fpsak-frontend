@@ -14,8 +14,7 @@ import {
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 import TilbakekrevingGrid from './components/TilbakekrevingGrid';
 
-/* , tilbakekrevingApi.PERIODER_FORELDELSE, tilbakekrevingApi.BEREGNINGSRESULTAT */
-const tilbakekrevingData = [tilbakekrevingApi.AKSJONSPUNKTER];
+const tilbakekrevingData = [tilbakekrevingApi.AKSJONSPUNKTER, tilbakekrevingApi.PERIODER_FORELDELSE, tilbakekrevingApi.BEREGNINGSRESULTAT];
 
 interface OwnProps {
   behandlingId: number;

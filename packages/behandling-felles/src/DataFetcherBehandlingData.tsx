@@ -73,17 +73,18 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     const {
       endpoints, endpointParams, allowErrors, keepDataWhenRefetching,
     } = this.props;
-    if (endpoints.length === 0) {
+    const filteredEndpoint = endpoints.filter((e) => e.isEndpointEnabled());
+    if (filteredEndpoint.length === 0) {
       return;
     }
     const meta = {
       keepData: keepDataWhenRefetching,
     };
 
-    const requests = endpoints.map((endpoint) => {
+    const requests = filteredEndpoint.map((endpoint) => {
       // eslint-disable-next-line react/destructuring-assignment
       const request = this.props[`${FETCH_PREFIX}${endpoint.name}`];
-      const params = endpoints.length === 1 ? endpointParams : endpointParams[endpoint.name];
+      const params = filteredEndpoint.length === 1 ? endpointParams : endpointParams[endpoint.name];
       return () => request(params || {}, meta);
     });
 
@@ -93,7 +94,7 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
       });
     } else {
       Promise.all(requests.map((request) => request()))
-        .catch(() => this.setState((state) => ({ ...state, nrOfErrors: endpoints.length })));
+        .catch(() => this.setState((state) => ({ ...state, nrOfErrors: filteredEndpoint.length })));
     }
   }
 
@@ -113,7 +114,7 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     } = this.props;
 
     if (isFetchFinished && prevProps.isFetchFinished !== isFetchFinished) {
-      const prevDataProps = endpoints.reduce((acc, d) => {
+      const prevDataProps = endpoints.filter((e) => e.isEndpointEnabled()).reduce((acc, d) => {
         const propName = format(d.name);
         return {
           ...acc,
@@ -138,10 +139,10 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
     const { nrOfErrors, prevDataProps, currentFetchTrigger } = this.state;
 
     const showWhenFinished = showComponent && isFetchFinished;
-    const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.length;
+    const hasFailed = nrOfErrors > 0 && nrOfErrors === endpoints.filter((e) => e.isEndpointEnabled()).length;
 
     if (!hasFailed && ((showOldDataWhenRefetching && prevDataProps) || showWhenFinished)) {
-      const dataProps = endpoints.reduce((acc, d) => {
+      const dataProps = endpoints.filter((e) => e.isEndpointEnabled()).reduce((acc, d) => {
         const propName = format(d.name);
         return {
           ...acc,
@@ -160,21 +161,23 @@ export class DataFetcherBehandlingData extends Component<OwnProps, DataFetcherSt
 }
 
 export const mapStateToProps = (state, ownProps) => {
-  const dataMappedByApi = ownProps.endpoints.reduce((acc, dataApi) => ({
+  const dataMappedByApi = ownProps.endpoints.filter((e) => e.isEndpointEnabled()).reduce((acc, dataApi) => ({
     ...acc,
     [format(dataApi.name)]: dataApi.getRestApiData()(state),
   }), {});
 
   return {
     ...dataMappedByApi,
-    isFetchFinished: ownProps.endpoints.every((dataApi) => dataApi.getRestApiFinished()(state)),
+    isFetchFinished: ownProps.endpoints.filter((e) => e.isEndpointEnabled()).every((dataApi) => dataApi.getRestApiFinished()(state)),
   };
 };
 
-export const createFetchForEachEndpoint = (endpoints) => endpoints.reduce((acc, dataApi) => ({
-  ...acc,
-  [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
-}), {});
+export const createFetchForEachEndpoint = (endpoints) => endpoints
+  .filter((e) => e.isEndpointEnabled())
+  .reduce((acc, dataApi) => ({
+    ...acc,
+    [`${FETCH_PREFIX}${dataApi.name}`]: dataApi.makeRestApiRequest(),
+  }), {});
 
 const mapDispatchToProps = (dispatch, ownProps) => bindActionCreators(
   createFetchForEachEndpoint(ownProps.endpoints), dispatch,

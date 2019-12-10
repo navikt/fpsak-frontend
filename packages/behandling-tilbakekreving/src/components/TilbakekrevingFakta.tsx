@@ -40,7 +40,7 @@ const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterProsessSt
   };
 
   return dispatch(tilbakekrevingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(() => oppdaterProsessStegIUrl());
+    .then(() => oppdaterProsessStegIUrl('default'));
 };
 
 const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
@@ -69,6 +69,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
     }]}
     >
       <DataFetcherBehandlingData
+        showLoadingIcon
         fetchTrigger={behandling.versjon}
         endpoints={feilutbetalingData}
         render={(dataProps) => {

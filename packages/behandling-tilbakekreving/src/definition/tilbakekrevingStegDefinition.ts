@@ -4,7 +4,7 @@ import {
   ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
-import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import VedtakResultatType from '../kodeverk/vedtakResultatType';
@@ -54,7 +54,7 @@ const finnTilbakekrevingSteg = createSelector(
     (ownProps: OwnProps) => ownProps.aksjonspunkter,
     (ownProps: OwnProps) => ownProps.perioderForeldelse,
     (ownProps: OwnProps) => ownProps.beregningsresultat],
-  (behandling, aksjonspunkter, vilkar, foreldelseResultat, beregningsresultat) => {
+  (behandling, aksjonspunkter, foreldelseResultat, beregningsresultat) => {
     if (!behandling.type) {
       return undefined;
     }
