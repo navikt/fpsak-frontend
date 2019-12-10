@@ -13,17 +13,28 @@ import { getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk } from '../kodeverk/duck
 import { getAllDocuments } from '../behandlingsupport/behandlingsupportSelectors';
 import { getHasSubmittedPaVentForm } from '../behandlingmenu/duck';
 import {
-  getSelectedSaksnummer, getSelectedFagsakStatus, getFagsakPerson,
-  getFagsakYtelseType, isForeldrepengerFagsak, getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd,
+  getSelectedSaksnummer,
+  getSelectedFagsakStatus,
+  getFagsakPerson,
+  getFagsakYtelseType,
+  isForeldrepengerFagsak,
+  getKanRevurderingOpprettes,
+  getSkalBehandlesAvInfotrygd,
 } from '../fagsak/fagsakSelectors';
 import { getNavAnsatt, getFeatureToggles } from '../app/duck';
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  setTempBehandlingId, setSelectedBehandlingIdOgVersjon, getTempBehandlingVersjon, getTempBehandlingId, oppdaterBehandlingVersjon as oppdaterVersjon,
+  setTempBehandlingId,
+  setSelectedBehandlingIdOgVersjon,
+  getTempBehandlingVersjon,
+  getTempBehandlingId,
+  oppdaterBehandlingVersjon as oppdaterVersjon,
   resetBehandlingContext as resetBehandlingContextActionCreator,
 } from './duck';
 import {
-  getBehandlingerTypesMappedById, getBehandlingerAktivPapirsoknadMappedById, getBehandlingerInfo,
+  getBehandlingerTypesMappedById,
+  getBehandlingerAktivPapirsoknadMappedById,
+  getBehandlingerInfo,
   getBehandlingerLinksMappedById,
 } from './selectors/behandlingerSelectors';
 import behandlingUpdater from './BehandlingUpdater';
@@ -58,13 +69,15 @@ export class BehandlingIndex extends Component {
     setBehandlingIdOgVersjon: PropTypes.func.isRequired,
     featureToggles: PropTypes.shape().isRequired,
     hasSubmittedPaVentForm: PropTypes.bool.isRequired,
-    allDocuments: PropTypes.arrayOf(PropTypes.shape({
-      journalpostId: PropTypes.string.isRequired,
-      dokumentId: PropTypes.string.isRequired,
-      tittel: PropTypes.string,
-      tidspunkt: PropTypes.string,
-      kommunikasjonsretning: PropTypes.string.isRequired,
-    })).isRequired,
+    allDocuments: PropTypes.arrayOf(
+      PropTypes.shape({
+        journalpostId: PropTypes.string.isRequired,
+        dokumentId: PropTypes.string.isRequired,
+        tittel: PropTypes.string,
+        tidspunkt: PropTypes.string,
+        kommunikasjonsretning: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     kodeverk: PropTypes.shape().isRequired,
     fagsak: PropTypes.shape({
       fagsakStatus: PropTypes.shape().isRequired,
@@ -74,25 +87,29 @@ export class BehandlingIndex extends Component {
       kanRevurderingOpprettes: PropTypes.bool.isRequired,
       skalBehandlesAvInfotrygd: PropTypes.bool.isRequired,
     }).isRequired,
-    fagsakBehandlingerInfo: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      type: PropTypes.shape({
-        kode: PropTypes.string.isRequired,
-      }).isRequired,
-      avsluttet: PropTypes.string,
-    })).isRequired,
-    behandlingLinks: PropTypes.arrayOf(PropTypes.shape({
-      href: PropTypes.string.isRequired,
-      rel: PropTypes.string.isRequired,
-      requestPayload: PropTypes.any,
-      type: PropTypes.string.isRequired,
-    })).isRequired,
+    fagsakBehandlingerInfo: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        type: PropTypes.shape({
+          kode: PropTypes.string.isRequired,
+        }).isRequired,
+        avsluttet: PropTypes.string,
+      }),
+    ).isRequired,
+    behandlingLinks: PropTypes.arrayOf(
+      PropTypes.shape({
+        href: PropTypes.string.isRequired,
+        rel: PropTypes.string.isRequired,
+        requestPayload: PropTypes.any,
+        type: PropTypes.string.isRequired,
+      }),
+    ).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
   };
 
   static defaultProps = {
     erAktivPapirsoknad: false,
-  }
+  };
 
   constructor(props) {
     super(props);
@@ -256,16 +273,31 @@ export class BehandlingIndex extends Component {
   }
 }
 
-export const getFagsakInfo = createSelector([getSelectedFagsakStatus, getFagsakPerson, getFagsakYtelseType, isForeldrepengerFagsak,
-  getKanRevurderingOpprettes, getSkalBehandlesAvInfotrygd], (fagsakStatus, fagsakPerson, fagsakYtelseType, isForeldrepenger,
-  kanRevurderingOpprettes, skalBehandlesAvInfotrygd) => ({
-  fagsakStatus,
-  fagsakPerson,
-  fagsakYtelseType,
-  kanRevurderingOpprettes,
-  skalBehandlesAvInfotrygd,
-  isForeldrepengerFagsak: isForeldrepenger,
-}));
+export const getFagsakInfo = createSelector(
+  [
+    getSelectedFagsakStatus,
+    getFagsakPerson,
+    getFagsakYtelseType,
+    isForeldrepengerFagsak,
+    getKanRevurderingOpprettes,
+    getSkalBehandlesAvInfotrygd,
+  ],
+  (
+    fagsakStatus,
+    fagsakPerson,
+    fagsakYtelseType,
+    isForeldrepenger,
+    kanRevurderingOpprettes,
+    skalBehandlesAvInfotrygd,
+  ) => ({
+    fagsakStatus,
+    fagsakPerson,
+    fagsakYtelseType,
+    kanRevurderingOpprettes,
+    skalBehandlesAvInfotrygd,
+    isForeldrepengerFagsak: isForeldrepenger,
+  }),
+);
 
 const mapStateToProps = (state) => {
   const behandlingId = getTempBehandlingId(state);
@@ -288,15 +320,18 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  oppdaterBehandlingVersjon: oppdaterVersjon,
-  resetBehandlingContext: resetBehandlingContextActionCreator,
-  setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
-}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    oppdaterBehandlingVersjon: oppdaterVersjon,
+    resetBehandlingContext: resetBehandlingContextActionCreator,
+    setBehandlingIdOgVersjon: setSelectedBehandlingIdOgVersjon,
+  },
+  dispatch,
+);
 
 export default trackRouteParam({
   paramName: 'behandlingId',
-  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
+  parse: (behandlingFromUrl) => Number.parseInt(behandlingFromUrl, 10),
   paramPropType: PropTypes.number,
   storeParam: setTempBehandlingId,
   getParamFromStore: getTempBehandlingId,

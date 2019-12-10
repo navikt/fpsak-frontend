@@ -78,7 +78,7 @@ export class FagsakResolver extends Component {
 }
 
 FagsakResolver.propTypes = {
-  selectedSaksnummer: PropTypes.number.isRequired,
+  selectedsaksnummer: PropTypes.string.isRequired,
   behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
   selectedFagsak: fagsakPropType,

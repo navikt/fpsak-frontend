@@ -270,7 +270,7 @@ class BehandlingMenu extends Component {
 }
 
 BehandlingMenu.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   menyKodeverk: PropTypes.instanceOf(MenyKodeverk),
   ytelseType: kodeverkObjektPropType.isRequired,

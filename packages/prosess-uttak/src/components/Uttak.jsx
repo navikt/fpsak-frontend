@@ -524,7 +524,7 @@ UttakImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   reduxFormChange: PropTypes.func.isRequired,
   reduxFormInitialize: PropTypes.func.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   soknadDate: PropTypes.string.isRequired,
   soknadsType: PropTypes.string.isRequired,
   stonadskonto: PropTypes.shape().isRequired,

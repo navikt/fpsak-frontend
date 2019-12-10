@@ -99,7 +99,7 @@ BehandlingspunktInnsynInfoPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
 };
 
 BehandlingspunktInnsynInfoPanel.defaultProps = {

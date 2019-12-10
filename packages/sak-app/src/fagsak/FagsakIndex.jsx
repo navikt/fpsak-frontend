@@ -50,8 +50,8 @@ const mapStateToProps = (state) => ({
 
 export default trackRouteParam({
   paramName: 'saksnummer',
-  parse: (saksnummerFromUrl) => Number.parseInt(saksnummerFromUrl, 10),
-  paramPropType: PropTypes.number,
+  parse: (saksnummerFromUrl) => saksnummerFromUrl,
+  paramPropType: PropTypes.string,
   storeParam: setSelectedSaksnummer,
   getParamFromStore: getSelectedSaksnummer,
 })(connect(mapStateToProps)(requireProps(['selectedSaksnummer'])(FagsakIndex)));

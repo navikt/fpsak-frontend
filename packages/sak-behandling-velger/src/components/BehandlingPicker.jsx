@@ -60,7 +60,7 @@ const BehandlingPicker = ({
 BehandlingPicker.propTypes = {
   behandlinger: PropTypes.arrayOf(behandlingVelgerBehandlingPropType).isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,

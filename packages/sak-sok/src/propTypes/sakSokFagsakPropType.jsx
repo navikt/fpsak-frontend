@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const sakSokFagsakPropType = PropTypes.shape({
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   sakstype: PropTypes.shape({
     kode: PropTypes.string.isRequired,
   }).isRequired,

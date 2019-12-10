@@ -73,7 +73,7 @@ export const HistoryIndex = ({
 
 HistoryIndex.propTypes = {
   enabledContexts: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
   location: PropTypes.shape({

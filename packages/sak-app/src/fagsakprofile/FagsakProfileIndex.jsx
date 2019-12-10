@@ -131,7 +131,7 @@ export class FagsakProfileIndex extends Component {
 
 FagsakProfileIndex.propTypes = {
   enabledApis: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   selectedBehandlingId: PropTypes.number,
@@ -152,7 +152,7 @@ FagsakProfileIndex.defaultProps = {
 
 export const getEnabledApis = createSelector(
   [getEnabledApplicationContexts],
-  (enabledApplicationContexts) => [fpsakApi.ANNEN_PART_BEHANDLING].concat(enabledApplicationContexts.map((c) => behandlingerRestApis[c])),
+  (enabledApplicationContexts) => [].concat(enabledApplicationContexts.map((c) => behandlingerRestApis[c])),
 );
 
 const mapStateToProps = (state) => ({

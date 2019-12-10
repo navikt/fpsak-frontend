@@ -39,7 +39,7 @@ const FagsakProfilSakIndex = ({
 );
 
 FagsakProfilSakIndex.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   sakstype: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   toggleShowAll: PropTypes.func.isRequired,

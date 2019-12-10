@@ -34,7 +34,7 @@ const HistorikkSakIndex = ({
 
 HistorikkSakIndex.propTypes = {
   historieInnslag: historikkinnslagPropType.isRequired,
-  saksnummer: PropTypes.number,
+  saksnummer: PropTypes.string,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,

@@ -96,7 +96,7 @@ CreateNewBehandlingMenuItem.propTypes = {
   menyKodeverk: PropTypes.instanceOf(MenyKodeverk).isRequired,
   behandlingType: kodeverkObjektPropType,
   ytelseType: kodeverkObjektPropType.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   push: PropTypes.func.isRequired,
   submitNyBehandling: PropTypes.func.isRequired,

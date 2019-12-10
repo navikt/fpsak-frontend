@@ -37,7 +37,7 @@ const BehandlingVelgerSakIndex = ({
 
 BehandlingVelgerSakIndex.propTypes = {
   behandlinger: PropTypes.arrayOf(behandlingVelgerBehandlingPropType).isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   noExistingBehandlinger: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number,
   showAll: PropTypes.bool.isRequired,

@@ -74,7 +74,7 @@ const BehandlingPickerItem = ({
 BehandlingPickerItem.propTypes = {
   onlyOneBehandling: PropTypes.bool.isRequired,
   behandling: behandlingVelgerBehandlingPropType.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   showAll: PropTypes.bool.isRequired,
   toggleShowAll: PropTypes.func.isRequired,

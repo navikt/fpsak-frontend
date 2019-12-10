@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 const uttakFagsakPropType = PropTypes.shape({
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
 });
 
 export default uttakFagsakPropType;

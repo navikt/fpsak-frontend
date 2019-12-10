@@ -70,7 +70,7 @@ const MenySakIndex = ({
 );
 
 MenySakIndex.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData).isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
   behandlendeEnheter: PropTypes.arrayOf(PropTypes.shape({

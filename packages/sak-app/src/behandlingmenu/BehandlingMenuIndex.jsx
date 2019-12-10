@@ -59,7 +59,7 @@ class BehandlingMenuIndex extends Component {
       const erYtelseBehandlingstype = YTELSE_BEHANDLINGTYPER.includes(behandlingData.type.kode);
       if (erBehandlingEndret && erYtelseBehandlingstype) {
         const params = new BehandlingIdentifier(saksnummer, behandlingData.id).toJson();
-        hentMenyvalg(params);
+        // hentMenyvalg(params);
       }
     }
   }
@@ -110,7 +110,7 @@ class BehandlingMenuIndex extends Component {
 }
 
 BehandlingMenuIndex.propTypes = {
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   resetBehandlingMenuData: PropTypes.func.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   hentVergeMenyvalg: PropTypes.func,

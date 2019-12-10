@@ -144,7 +144,7 @@ CreateNewBehandlingModal.propTypes = {
   behandlingType: PropTypes.string,
   uuid: PropTypes.string,
   erTilbakekrevingAktivert: PropTypes.bool.isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   behandlingArsakTyper: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   enabledBehandlingstyper: PropTypes.arrayOf(PropTypes.shape().isRequired).isRequired,
 };

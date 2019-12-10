@@ -50,7 +50,7 @@ InnsynProsessIndex.propTypes = {
   behandling: innsynBehandlingPropType.isRequired,
   innsyn: innsynPropType,
   alleDokumenter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  saksnummer: PropTypes.number.isRequired,
+  saksnummer: PropTypes.string.isRequired,
   aksjonspunkter: PropTypes.arrayOf(innsynAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
