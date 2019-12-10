@@ -274,11 +274,10 @@ describe('<BeregningForm2>', () => {
       erVarigEndretNaering: true,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
-    expect(result).to.have.lengthOf(3);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5039');
-    expect(result[2].kode).to.have.equal('5042');
   });
 
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039, uten varigEndring', () => {
