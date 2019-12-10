@@ -86,6 +86,8 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
+  const harFlereArbeidsforhold = relevanteAndeler.length > 1;
+
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}`}>
       <Row key={`index${index + 1}`}>
@@ -110,12 +112,12 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
         </Column>
         <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colAarText}>
           <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`}>
-            {!andel.erTidsbegrensetArbeidsforhold && (
+            {!harFlereArbeidsforhold && (
             <Element>
               {formatCurrencyNoKr(andel.beregnetPrAar)}
             </Element>
             )}
-            {andel.erTidsbegrensetArbeidsforhold
+            {harFlereArbeidsforhold
                 && formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>

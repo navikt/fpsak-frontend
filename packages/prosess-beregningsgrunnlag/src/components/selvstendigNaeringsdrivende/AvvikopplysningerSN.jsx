@@ -38,7 +38,7 @@ const AvviksopplysningerSN = ({
       </Row>
     );
   }
-  if (!erVarigEndring && !harAksjonspunkter) {
+  if (erVarigEndring && !harAksjonspunkter) {
     return (
       <Row>
         <Column xs="12">

@@ -141,14 +141,27 @@ const mockVilkar = [{
     kode: vilkarUtfallType.OPPFYLT,
   },
 }];
-
+const sammenligningsgrunnlag = (kode) => ({
+  sammenligningsgrunnlagFom: '2018-09-01',
+  sammenligningsgrunnlagTom: '2019-10-31',
+  rapportertPrAar: 330000,
+  avvikPromille: 275,
+  avvikProsent: 27.5,
+  sammenligningsgrunnlagType: {
+    kode,
+  },
+  differanseBeregnet: 12100,
+});
 
 const getBGVilkar = (vilkar) => (vilkar ? vilkar.find((v) => v.vilkarType && v.vilkarType.kode === vilkarType.BEREGNINGSGRUNNLAGVILKARET) : undefined);
 describe('<BeregningForm2>', () => {
   it('skal teste at AvviksopplysningerPanel får korrekte props fra BeregningFP', () => {
+    const beregningsgrunnlag = lagBeregningsgrunnlag(0, 100000, 100000, 100, []);
+    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
+    beregningsgrunnlag.sammenligningsgrunnlagPrStatus = [sammenligningsgrunnlagPrStatus];
     const wrapper = shallow(<BeregningFormImpl2
       readOnly={false}
-      beregningsgrunnlag={lagBeregningsgrunnlag(0, 100000, 100000, 100, [])}
+      beregningsgrunnlag={beregningsgrunnlag}
       gjeldendeAksjonspunkter={apEttLukketOgEttApent}
       relevanteStatuser={relevanteStatuser}
       submitCallback={sinon.spy}
@@ -161,8 +174,7 @@ describe('<BeregningForm2>', () => {
     />);
     const avvikPanel = wrapper.find(AvviksopplysningerPanel);
     expect(avvikPanel.props().beregnetAarsinntekt).to.have.equal(100000);
-    expect(avvikPanel.props().sammenligningsgrunnlag).to.have.equal(100000);
-    expect(avvikPanel.props().avvik).to.have.equal(0);
+    expect(avvikPanel.props().sammenligningsgrunnlagPrStatus[0]).to.have.equal(sammenligningsgrunnlagPrStatus);
     const expectedPerioder = lagPeriode();
     expect(avvikPanel.props().allePerioder[0]).to.eql(expectedPerioder);
   });

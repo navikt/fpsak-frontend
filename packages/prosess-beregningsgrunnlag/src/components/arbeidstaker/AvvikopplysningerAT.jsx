@@ -92,9 +92,7 @@ const AvviksopplysningerAT = ({
             </Normaltekst>
           </Column>
           <Column className={styles.colAvvik}>
-            <Normaltekst className={`${avvikAT > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-              {avvikAT !== 0 ? `${avvikAT}%` : ''}
-            </Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikAT }} />
           </Column>
         </Row>
       </>

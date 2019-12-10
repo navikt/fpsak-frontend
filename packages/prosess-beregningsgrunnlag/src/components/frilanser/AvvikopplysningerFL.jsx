@@ -10,7 +10,6 @@ import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 const AvviksopplysningerFL = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
 }) => {
-  debugger;
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
     : undefined;

@@ -43,7 +43,10 @@ describe('<AvviksopplysningerFL>', () => {
     expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik');
     const avvikVerdi = rows.at(3).find('Normaltekst');
     expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((sammenligningsgrunnlagPrStatus.differanseBeregnet)));
-    expect(avvikVerdi.at(2).childAt(0).text()).to.equal(`${sammenligningsgrunnlagPrStatus.avvikProsent}%`);
+    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
+    const avvikProsentValue = avvikProsentText.first().prop('values');
+    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
+    expect(avvikProsentValue.avvik).to.eql(sammenligningsgrunnlagPrStatus.avvikProsent);
   });
   it('Skal teste tabellen IKKE renderes status:SAMMENLIGNING_ATFL_SN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
