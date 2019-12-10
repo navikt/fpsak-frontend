@@ -108,8 +108,12 @@ ShelveBehandlingMenuItem.propTypes = {
   push: PropTypes.func.isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
-  behandlingUuid: PropTypes.string.isRequired,
   henleggBehandlingEnabled: PropTypes.bool.isRequired,
+  behandlingUuid: PropTypes.string,
+};
+
+ShelveBehandlingMenuItem.defaultProps = {
+  behandlingUuid: undefined,
 };
 
 export default ShelveBehandlingMenuItem;

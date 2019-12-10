@@ -6,11 +6,11 @@
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
   "Behandlingspunkt.CheckFormkravNFP": "Formkrav Vedtaksinstans",
-  "Behandlingspunkt.CheckKlageresultatNFP": "Klageresultat Vedtaksinstans",
+  "Behandlingspunkt.CheckKlageresultatNFP": "Resultat Vedtaksinstans",
   "Behandlingspunkt.CheckFormkravNK": "Formkrav Klageinstans",
-  "Behandlingspunkt.CheckKlageresultatNK": "Klageresultat Klageinstans",
-  "Behandlingspunkt.CheckKlageNFP": "Klagebehandling Vedtaksinstans",
-  "Behandlingspunkt.CheckKlageNK": "Klagebehandling Klageinstans",
+  "Behandlingspunkt.CheckKlageresultatNK": "Resultat Klageinstans",
+  "Behandlingspunkt.CheckKlageNFP": "Behandling Vedtaksinstans",
+  "Behandlingspunkt.CheckKlageNK": "Behandling Klageinstans",
   "Behandlingspunkt.FormkravKlageNFP": "Formkrav Vedtaksinstans",
   "Behandlingspunkt.FormkravKlageKA": "Formkrav Klageinstans",
   "Behandlingspunkt.Ankebehandling": "Ankebehandling",
@@ -649,6 +649,9 @@
   "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
 
   "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
+
+  "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
+  "FaktaPanel.FaktaOm": "Fakta om",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 

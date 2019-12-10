@@ -34,7 +34,8 @@ export const resetBehandlingMenuData = () => ({
 // TODO (TOR) Det meste av kode under skal refaktorerast/flyttast til behandlingskontekst. (Må få vekk auto-henting av data i behandlingskontekst først)
 
 export const shelveBehandling = (params, behandlingType) => (dispatch) => {
-  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE) {
+  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
     return behandlingEventHandler.henleggBehandling(params);
   }
   return dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
@@ -61,7 +62,8 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
 const updateFagsakAndBehandlingInfo = (behandlingIdentifier) => (dispatch) => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
 
 export const setBehandlingOnHold = (params, behandlingIdentifier, behandlingType) => (dispatch) => {
-  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE) {
+  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
     return behandlingEventHandler.settBehandlingPaVent(params);
   }
   return dispatch(fpsakApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
@@ -70,7 +72,8 @@ export const setBehandlingOnHold = (params, behandlingIdentifier, behandlingType
 };
 
 export const resumeBehandling = (behandlingIdentifier, params, behandlingType) => (dispatch) => {
-  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE) {
+  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
     return behandlingEventHandler.taBehandlingAvVent(params);
   }
   return dispatch(fpsakApi.RESUME_BEHANDLING.makeRestApiRequest()(params))
@@ -81,7 +84,8 @@ export const resumeBehandling = (behandlingIdentifier, params, behandlingType) =
 };
 
 export const nyBehandlendeEnhet = (params, behandlingIdentifier, behandlingType) => (dispatch) => {
-  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE) {
+  if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
     return behandlingEventHandler.endreBehandlendeEnhet(params);
   }
   return dispatch(fpsakApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest()(params))

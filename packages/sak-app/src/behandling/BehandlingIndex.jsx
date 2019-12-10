@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -37,7 +38,7 @@ import ErrorBoundary from './ErrorBoundary';
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
-const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-tilbakekreving'));
+const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
 
@@ -168,26 +169,6 @@ export class BehandlingIndex extends Component {
       );
     }
 
-    if (erTilbakekreving(behandlingType)) {
-      return (
-        <Suspense fallback={<LoadingPanel />}>
-          <BehandlingTilbakekrevingIndex
-            key={behandlingId}
-            saksnummer={saksnummer}
-            behandlingId={behandlingId}
-            location={location}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingUpdater={behandlingUpdater}
-            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-            fagsak={fagsak}
-            fagsakBehandlingerInfo={fagsakBehandlingerInfo}
-            navAnsatt={navAnsatt}
-          />
-        </Suspense>
-      );
-    }
-
-    // behandling\/(.*?)\/
     const defaultProps = {
       behandlingId,
       oppdaterBehandlingVersjon,
@@ -236,6 +217,21 @@ export class BehandlingIndex extends Component {
         </Suspense>
       );
     }
+
+    if (erTilbakekreving(behandlingType)) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+            <BehandlingTilbakekrevingIndex
+              harApenRevurdering={fagsakBehandlingerInfo
+                .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
+              {...defaultProps}
+            />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
 
     return (
       <Suspense fallback={<LoadingPanel />}>

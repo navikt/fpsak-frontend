@@ -1,6 +1,7 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as MargMarkering } from './src/components/MargMarkering';
+export { default as FaktaPanel } from './src/components/FaktaPanel';
 export { default as BehandlingHenlagtPanel } from './src/components/BehandlingHenlagtPanel';
 export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStateCleaner';
 export { default as ProsessStegIkkeBehandletPanel } from './src/components/ProsessStegIkkeBehandletPanel';
@@ -9,6 +10,9 @@ export { default as FatterVedtakStatusModal } from './src/components/vedtak/Fatt
 
 export { default as ProsessStegProperties } from './src/definisjon/prosessStegBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';
+
+export { default as erReadOnly } from './src/util/erReadOnly';
+export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 
 export { default as fagsakInfoPropType } from './src/propTypes/fagsakInfoPropType';
 export { default as fagsakPersonPropType } from './src/propTypes/fagsakPersonPropType';

@@ -3,7 +3,7 @@ import Kodeverk from './kodeverkTsType';
 type Behandling = Readonly<{
   id: number;
   versjon: number;
-  uuid: string;
+  uuid?: string;
   status: Kodeverk;
   type: Kodeverk;
   fristBehandlingPaaVent?: string;
