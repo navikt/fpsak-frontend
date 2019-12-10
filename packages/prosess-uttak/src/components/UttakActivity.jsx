@@ -513,7 +513,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       graderingInnvilget: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'graderingInnvilget'),
       erSamtidigUttak: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttak'),
       samtidigUttaksprosent: behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'samtidigUttaksprosent'),
-      starttidspunktForeldrepenger: behandlingsresultat.skjaeringstidspunktForeldrepenger,
+      starttidspunktForeldrepenger: behandlingsresultat.skjæringstidspunkt ? behandlingsresultat.skjæringstidspunkt.dato : undefined,
     };
   };
 };
