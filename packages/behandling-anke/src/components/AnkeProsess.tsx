@@ -33,7 +33,7 @@ interface OwnProps {
   aksjonspunkter: [Aksjonspunkt];
   vilkar: [Vilkar];
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
@@ -72,7 +72,7 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
     vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     lagreAksjonspunkt: PropTypes.func.isRequired,
     forhandsvisMelding: PropTypes.func.isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
@@ -105,11 +105,11 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
     }
   }
 
-  setSteg = (punkt) => {
+  setSteg = (nyttValg, forrigeSteg) => {
     const {
       oppdaterProsessStegIUrl,
     } = this.props;
-    oppdaterProsessStegIUrl(punkt);
+    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   }
 
   toggleIverksetterVedtakModal = () => {
@@ -194,7 +194,7 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
         } else if (erManuellVurderingAvAnke) {
           this.toggleIverksetterVedtakModal();
         } else {
-          oppdaterProsessStegIUrl();
+          oppdaterProsessStegIUrl('default');
         }
       });
   };
@@ -234,14 +234,14 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
-    const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
+    const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
 
     const fellesProps = {
       behandling,
       ankeVurdering,
-      aksjonspunkter: valgtSteg.aksjonspunkter,
+      aksjonspunkter: valgtSteg && valgtSteg.aksjonspunkter,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg.isReadOnly,
+      readOnly: valgtSteg && valgtSteg.isReadOnly,
       previewCallback: this.previewCallback,
       previewVedtakCallback: this.previewCallback,
       readOnlySubmitButton,
@@ -262,27 +262,29 @@ export class AnkeProsess extends Component<Props, AnkeProsessState> {
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
+          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        <MargMarkering
-          behandlingStatus={behandling.status}
-          aksjonspunkter={valgtSteg.aksjonspunkter}
-          isReadOnly={valgtSteg.isReadOnly}
-        >
-          {(valgtStegKode === bpc.ANKEBEHANDLING && valgtSteg.aksjonspunkter.length > 0) && (
-            <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
-          )}
-          {(valgtStegKode === bpc.ANKE_RESULTAT && valgtSteg.aksjonspunkter.length > 0) && (
-            <AnkeResultatProsessIndex {...fellesProps} />
-          )}
-          {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
-            <AnkeMerknaderProsessIndex {...fellesProps} />
-          )}
-        </MargMarkering>
+        {valgtStegKode && (
+          <MargMarkering
+            behandlingStatus={behandling.status}
+            aksjonspunkter={valgtSteg.aksjonspunkter}
+            isReadOnly={valgtSteg.isReadOnly}
+          >
+            {(valgtStegKode === bpc.ANKEBEHANDLING && valgtSteg.aksjonspunkter.length > 0) && (
+              <AnkeProsessIndex behandlinger={alleBehandlinger} {...fellesProps} />
+            )}
+            {(valgtStegKode === bpc.ANKE_RESULTAT && valgtSteg.aksjonspunkter.length > 0) && (
+              <AnkeResultatProsessIndex {...fellesProps} />
+            )}
+            {(valgtStegKode === bpc.ANKE_MERKNADER && valgtSteg.aksjonspunkter.length > 0) && (
+              <AnkeMerknaderProsessIndex {...fellesProps} />
+            )}
+          </MargMarkering>
+        )}
         {(valgtStegKode === bpc.ANKE_MERKNADER && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
         )}
-        {(!behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
+        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

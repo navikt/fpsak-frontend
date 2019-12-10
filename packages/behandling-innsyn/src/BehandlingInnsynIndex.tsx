@@ -24,7 +24,7 @@ interface OwnProps {
   navAnsatt: NavAnsatt;
   location: {};
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
@@ -63,7 +63,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     behandlingEventHandler: PropTypes.shape({}).isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,

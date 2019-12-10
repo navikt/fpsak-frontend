@@ -37,7 +37,7 @@ interface OwnProps {
   vilkar: [Vilkar];
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
@@ -77,7 +77,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     lagreAksjonspunkt: PropTypes.func.isRequired,
     forhandsvisMelding: PropTypes.func.isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
@@ -110,11 +110,11 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     }
   }
 
-  setSteg = (punkt) => {
+  setSteg = (nyttValg, forrigeSteg) => {
     const {
       oppdaterProsessStegIUrl,
     } = this.props;
-    oppdaterProsessStegIUrl(punkt);
+    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   }
 
   toggleFatterVedtakModal = () => {
@@ -198,7 +198,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
         } else if (erVedtakAp) {
           this.toggleFatterVedtakModal();
         } else {
-          oppdaterProsessStegIUrl();
+          oppdaterProsessStegIUrl('default');
         }
       });
   };
@@ -239,7 +239,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
-    const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
+    const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
 
     const skalViseTilBeslutterTekst = klageVurdering && klageVurdering.klageVurderingResultatNK
       && klageVurdering.klageVurderingResultatNK.godkjentAvMedunderskriver;
@@ -248,7 +248,7 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
       behandling,
       klageVurdering,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg.isReadOnly,
+      readOnly: valgtSteg && valgtSteg.isReadOnly,
       alleKodeverk: kodeverk,
     };
 
@@ -268,42 +268,44 @@ export class KlageProsess extends Component<Props, KlageProsessState> {
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
+          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        <MargMarkering
-          behandlingStatus={behandling.status}
-          aksjonspunkter={valgtSteg.aksjonspunkter}
-          isReadOnly={valgtSteg.isReadOnly}
-        >
-          {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
-            <FormkravProsessIndex
-              readOnlySubmitButton={readOnlySubmitButton}
-              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-              avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
-              {...fellesProps}
-            />
-          )}
-          {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
-            <KlagevurderingProsessIndex
-              saveKlage={this.saveKlageText}
-              previewCallback={this.previewCallback}
-              readOnlySubmitButton={readOnlySubmitButton}
-              apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
-              {...fellesProps}
-            />
-          )}
-          {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0) && (
-            <VedtakKlageProsessIndex
-              aksjonspunkter={valgtSteg.aksjonspunkter}
-              previewVedtakCallback={this.previewCallback}
-              {...fellesProps}
-            />
-          )}
-        </MargMarkering>
+        {valgtStegKode && (
+          <MargMarkering
+            behandlingStatus={behandling.status}
+            aksjonspunkter={valgtSteg.aksjonspunkter}
+            isReadOnly={valgtSteg.isReadOnly}
+          >
+            {(valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.FORMKRAV_KLAGE_NAV_KLAGEINSTANS) && (
+              <FormkravProsessIndex
+                readOnlySubmitButton={readOnlySubmitButton}
+                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+                avsluttedeBehandlinger={alleBehandlinger.filter((b) => b.status.kode === behandlingStatus.AVSLUTTET)}
+                {...fellesProps}
+              />
+            )}
+            {(valgtStegKode === bpc.KLAGE_NAV_FAMILIE_OG_PENSJON || valgtStegKode === bpc.KLAGE_NAV_KLAGEINSTANS) && (
+              <KlagevurderingProsessIndex
+                saveKlage={this.saveKlageText}
+                previewCallback={this.previewCallback}
+                readOnlySubmitButton={readOnlySubmitButton}
+                apCodes={valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode)}
+                {...fellesProps}
+              />
+            )}
+            {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0) && (
+              <VedtakKlageProsessIndex
+                aksjonspunkter={valgtSteg.aksjonspunkter}
+                previewVedtakCallback={this.previewCallback}
+                {...fellesProps}
+              />
+            )}
+          </MargMarkering>
+        )}
         {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
         )}
-        {(!behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
+        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

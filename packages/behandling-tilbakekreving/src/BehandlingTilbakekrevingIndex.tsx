@@ -23,7 +23,7 @@ interface OwnProps {
   fagsak: FagsakInfo;
   navAnsatt: NavAnsatt;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
@@ -66,7 +66,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     behandlingEventHandler: PropTypes.shape({}).isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     hentKodeverk: PropTypes.func.isRequired,

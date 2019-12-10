@@ -23,7 +23,7 @@ interface OwnProps {
   beregningsresultat?: Beregningsresultat;
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
@@ -94,7 +94,7 @@ TilbakekrevingGrid.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
   kodeverk: PropTypes.shape({}).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  valgtProsessSteg: PropTypes.string.isRequired,
+  valgtProsessSteg: PropTypes.string,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   settPaVent: PropTypes.func.isRequired,

@@ -30,7 +30,7 @@ interface OwnProps {
   kodeverk: { [key: string]: [Kodeverk] };
   alleDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
@@ -62,7 +62,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     kodeverk: PropTypes.shape({}).isRequired,
     alleDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     lagreAksjonspunkt: PropTypes.func.isRequired,
     forhandsvisMelding: PropTypes.func.isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
@@ -84,11 +84,11 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     }
   }
 
-  setSteg = (punkt) => {
+  setSteg = (nyttValg, forrigeSteg) => {
     const {
       oppdaterProsessStegIUrl,
     } = this.props;
-    oppdaterProsessStegIUrl(punkt);
+    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   }
 
   toggleIverksetterVedtakModal = () => {
@@ -128,7 +128,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
         if (valgtProsessSteg === bpc.VEDTAK) {
           this.toggleIverksetterVedtakModal();
         } else {
-          oppdaterProsessStegIUrl();
+          oppdaterProsessStegIUrl('default');
         }
       });
   };
@@ -177,7 +177,7 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
     const fellesProps = {
       saksnummer: fagsak.saksnummer,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg.isReadOnly,
+      readOnly: valgtSteg && valgtSteg.isReadOnly,
       alleDokumenter,
       behandling,
       innsyn,
@@ -193,34 +193,36 @@ export class InnsynProsess extends Component<Props, InnsynProsessState> {
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
+          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        <MargMarkering
-          behandlingStatus={behandling.status}
-          aksjonspunkter={valgtSteg.aksjonspunkter}
-          isReadOnly={valgtSteg.isReadOnly}
-        >
-          {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
-            <InnsynProsessIndex
-              isSubmittable={valgtSteg.isSubmittable}
-              aksjonspunkter={valgtSteg.aksjonspunkter}
-              alleKodeverk={kodeverk}
-              {...fellesProps}
-            />
-          )}
-          {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
-            <VedtakInnsynProsessIndex
-              aksjonspunkter={aksjonspunkter}
-              alleDokumenter={alleDokumenter}
-              previewCallback={this.previewCallback}
-              {...fellesProps}
-            />
-          )}
-        </MargMarkering>
+        {valgtStegKode && (
+          <MargMarkering
+            behandlingStatus={behandling.status}
+            aksjonspunkter={valgtSteg.aksjonspunkter}
+            isReadOnly={valgtSteg.isReadOnly}
+          >
+            {(!!valgtSteg && valgtSteg.kode === bpc.BEHANDLE_INNSYN) && (
+              <InnsynProsessIndex
+                isSubmittable={valgtSteg.isSubmittable}
+                aksjonspunkter={valgtSteg.aksjonspunkter}
+                alleKodeverk={kodeverk}
+                {...fellesProps}
+              />
+            )}
+            {(vedtakStegVises && valgtSteg.aksjonspunkter.length > 0) && (
+              <VedtakInnsynProsessIndex
+                aksjonspunkter={aksjonspunkter}
+                alleDokumenter={alleDokumenter}
+                previewCallback={this.previewCallback}
+                {...fellesProps}
+              />
+            )}
+          </MargMarkering>
+        )}
         {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
         )}
-        {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
+        {(vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

@@ -4,6 +4,12 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
+import Behandling from '../types/behandlingTsType';
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+import Vilkar from '../types/vilkarTsType';
+import FagsakInfo from '../types/fagsakInfoTsType';
+import NavAnsatt from '../types/navAnsattTsType';
+
 const SUCCESS = 'success';
 const WARNING = 'warning';
 const DANGER = 'danger';
@@ -30,7 +36,20 @@ const erReadOnly = (behandling, aksjonspunkterForPunkt, vilkarlisteForPunkt, nav
   return !rettigheter.writeAccess.isEnabled || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar;
 };
 
-const byggProsessmenySteg = createSelector(
+
+interface OwnProps {
+  alleSteg: [{}];
+  valgtProsessSteg?: string;
+  behandling: Behandling;
+  aksjonspunkter: [Aksjonspunkt];
+  vilkar: [Vilkar];
+  navAnsatt: NavAnsatt;
+  fagsak: FagsakInfo;
+  hasFetchError: boolean;
+  intl: {};
+}
+
+const byggProsessmenySteg = createSelector<OwnProps, any, any>(
   [(ownProps) => ownProps.alleSteg,
     (ownProps) => ownProps.valgtProsessSteg,
     (ownProps) => ownProps.behandling,
@@ -46,7 +65,6 @@ const byggProsessmenySteg = createSelector(
         .some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
 
     const indexTilValgtSteg = alleSteg.findIndex((p) => p.code === valgtStegKode);
-    const valgtStegIndex = indexTilValgtSteg !== -1 ? indexTilValgtSteg : indexTilStegMedApentAksjonspunkt;
 
     return alleSteg.map((steg, mapIndex) => {
       const harApentAp = indexTilStegMedApentAksjonspunkt === mapIndex;
@@ -56,7 +74,11 @@ const byggProsessmenySteg = createSelector(
       const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
       const isReadOnly = erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
-      const erSisteSteg = alleSteg.length - 1 === mapIndex;
+
+      const erValgtSteg = indexTilValgtSteg === mapIndex;
+      const harApentApOgDefaultStegValgt = valgtStegKode === 'default' && harApentAp;
+      const erHenlagtOgSisteSteg = valgtStegKode === 'default' && behandling.behandlingHenlagt && mapIndex === alleSteg.length - 1;
+      const erAktiv = erHenlagtOgSisteSteg || erValgtSteg || harApentApOgDefaultStegValgt;
 
       return {
         kode: steg.code,
@@ -65,7 +87,7 @@ const byggProsessmenySteg = createSelector(
         isSubmittable,
         prosessmenySteg: {
           label: intl.formatMessage({ id: steg.titleCode }),
-          isActive: (valgtStegIndex === -1 && erSisteSteg) || valgtStegIndex === mapIndex,
+          isActive: erAktiv,
           isDisabled: false,
           isFinished: type === SUCCESS,
           type,

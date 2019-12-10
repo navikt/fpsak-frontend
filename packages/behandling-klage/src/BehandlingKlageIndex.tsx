@@ -23,7 +23,7 @@ interface OwnProps {
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
@@ -63,7 +63,7 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
     oppdaterBehandlingVersjon: PropTypes.func.isRequired,
     behandlingEventHandler: PropTypes.shape({}).isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     settPaVent: PropTypes.func.isRequired,
     hentBehandling: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,

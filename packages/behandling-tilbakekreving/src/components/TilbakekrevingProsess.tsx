@@ -40,7 +40,7 @@ interface OwnProps {
   aksjonspunkter: [Aksjonspunkt];
   kodeverk: {[key: string]: [Kodeverk]};
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
@@ -72,7 +72,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
     aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
     kodeverk: PropTypes.shape({}).isRequired,
     navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string.isRequired,
+    valgtProsessSteg: PropTypes.string,
     lagreAksjonspunkt: PropTypes.func.isRequired,
     oppdaterProsessStegIUrl: PropTypes.func.isRequired,
     opneSokeside: PropTypes.func.isRequired,
@@ -109,11 +109,11 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
     }
   }
 
-  setSteg = (punkt) => {
+  setSteg = (nyttValg, forrigeSteg) => {
     const {
       oppdaterProsessStegIUrl,
     } = this.props;
-    oppdaterProsessStegIUrl(punkt);
+    oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined);
   }
 
   toggleFatterVedtakModal = () => {
@@ -165,7 +165,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
         if (isFatterVedtakAp) {
           this.setState((prevState) => ({ ...prevState, visFatterVedtakModal: true }));
         } else {
-          oppdaterProsessStegIUrl();
+          oppdaterProsessStegIUrl('default');
         }
       });
   };
@@ -197,17 +197,17 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
 
-    const readOnlySubmitButton = vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses);
+    const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
 
     const fellesProps = {
       behandling,
       submitCallback: this.submitAksjonspunkter,
-      readOnly: valgtSteg.isReadOnly,
+      readOnly: valgtSteg && valgtSteg.isReadOnly,
       alleKodeverk: kodeverk,
     };
 
     const vedtakStegVises = valgtStegKode === bpc.KLAGE_RESULTAT;
-    const apCodes = valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
+    const apCodes = valgtSteg && valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
 
     return (
       <>
@@ -226,61 +226,63 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode)}
+          onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        <MargMarkering
-          behandlingStatus={behandling.status}
-          aksjonspunkter={valgtSteg.aksjonspunkter}
-          isReadOnly={valgtSteg.isReadOnly}
-        >
-          {valgtStegKode === bpc.FORELDELSE && (
-            <ForeldelseProsessIndex
-              perioderForeldelse={perioderForeldelse}
-              apCodes={apCodes}
-              readOnlySubmitButton={readOnlySubmitButton}
-              navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
-              alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
-              beregnBelop={beregnBelop}
-              {...fellesProps}
-            />
-          )}
-          <DataFetcherBehandlingData
-            showLoadingIcon
-            fetchTrigger={behandling.versjon}
-            endpoints={tilbakekrevingData}
-            showComponent={valgtStegKode === bpc.TILBAKEKREVING}
-            render={(props) => (
-              <TilbakekrevingProsessIndex
+        {valgtStegKode && (
+          <MargMarkering
+            behandlingStatus={behandling.status}
+            aksjonspunkter={valgtSteg.aksjonspunkter}
+            isReadOnly={valgtSteg.isReadOnly}
+          >
+            {valgtStegKode === bpc.FORELDELSE && (
+              <ForeldelseProsessIndex
+                perioderForeldelse={perioderForeldelse}
                 apCodes={apCodes}
                 readOnlySubmitButton={readOnlySubmitButton}
                 navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
                 alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
                 beregnBelop={beregnBelop}
-                {...props}
                 {...fellesProps}
               />
             )}
-          />
-          <DataFetcherBehandlingData
-            showLoadingIcon
-            fetchTrigger={behandling.versjon}
-            endpoints={vedtakData}
-            showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}
-            render={(props) => (
-              <VedtakTilbakekrevingProsessIndex
-                beregningsresultat={beregningsresultat}
-                fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-                aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
-                {...props}
-                {...fellesProps}
-              />
-            )}
-          />
-        </MargMarkering>
+            <DataFetcherBehandlingData
+              showLoadingIcon
+              fetchTrigger={behandling.versjon}
+              endpoints={tilbakekrevingData}
+              showComponent={valgtStegKode === bpc.TILBAKEKREVING}
+              render={(props) => (
+                <TilbakekrevingProsessIndex
+                  apCodes={apCodes}
+                  readOnlySubmitButton={readOnlySubmitButton}
+                  navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
+                  alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
+                  beregnBelop={beregnBelop}
+                  {...props}
+                  {...fellesProps}
+                />
+              )}
+            />
+            <DataFetcherBehandlingData
+              showLoadingIcon
+              fetchTrigger={behandling.versjon}
+              endpoints={vedtakData}
+              showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}
+              render={(props) => (
+                <VedtakTilbakekrevingProsessIndex
+                  beregningsresultat={beregningsresultat}
+                  fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
+                  aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
+                  {...props}
+                  {...fellesProps}
+                />
+              )}
+            />
+          </MargMarkering>
+        )}
         {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
         )}
-        {(!behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length === 0) && (
+        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

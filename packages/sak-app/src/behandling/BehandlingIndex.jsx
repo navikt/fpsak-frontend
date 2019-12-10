@@ -121,11 +121,13 @@ export class BehandlingIndex extends Component {
 
   goToValgtProsessSteg = (prosessId) => {
     const { push: pushLocation, location } = this.props;
-    if (prosessId) {
-      const newLocation = getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId));
-      pushLocation(newLocation);
-    } else {
+    if (prosessId === 'default') {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
+    }
+    if (prosessId) {
+      pushLocation(getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId)));
+    } else {
+      pushLocation(getBehandlingspunktLocation(location)(null));
     }
   };
 

@@ -20,7 +20,7 @@ interface OwnProps {
   ankeVurdering: AnkeVurdering;
   navAnsatt: NavAnsatt;
   kodeverk: {[key: string]: [Kodeverk]};
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
@@ -78,7 +78,7 @@ AnkeGrid.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   kodeverk: PropTypes.shape({}).isRequired,
-  valgtProsessSteg: PropTypes.string.isRequired,
+  valgtProsessSteg: PropTypes.string,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   settPaVent: PropTypes.func.isRequired,

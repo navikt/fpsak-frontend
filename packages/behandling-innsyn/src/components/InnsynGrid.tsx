@@ -22,7 +22,7 @@ interface OwnProps {
   kodeverk: {[key: string]: [Kodeverk]};
   innsynDokumenter: [Dokument];
   navAnsatt: NavAnsatt;
-  valgtProsessSteg: string;
+  valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
@@ -82,7 +82,7 @@ InnsynGrid.propTypes = {
   kodeverk: PropTypes.shape({}).isRequired,
   innsynDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
   navAnsatt: navAnsattPropType.isRequired,
-  valgtProsessSteg: PropTypes.string.isRequired,
+  valgtProsessSteg: PropTypes.string,
   oppdaterProsessStegIUrl: PropTypes.func.isRequired,
   oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   settPaVent: PropTypes.func.isRequired,
