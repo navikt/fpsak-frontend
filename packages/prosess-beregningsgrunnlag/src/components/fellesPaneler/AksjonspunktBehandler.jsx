@@ -62,7 +62,6 @@ const AksjonspunktBehandler = ({
   let visFL = false;
   let visAT = false;
 
-  console.log('alleAndelerIForstePeriode', alleAndelerIForstePeriode); // eslint-disable-line no-console
   if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
     const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
     const flAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
