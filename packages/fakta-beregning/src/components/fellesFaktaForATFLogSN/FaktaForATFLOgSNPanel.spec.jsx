@@ -232,7 +232,7 @@ describe('<FaktaForATFLOgSNPanel>', () => {
     expect(transformedValues.fakta.faktaOmBeregningTilfeller.includes(faktaOmBeregningTilfelle.FASTSETT_MAANEDSINNTEKT_FL)).is.eql(true);
     expect(transformedValues.fakta.fastsattUtenInntektsmelding.andelListe).to.have.length(1);
     expect(transformedValues.fakta.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.eql(2);
-    expect(transformedValues.fakta.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.eql(10000);
+    expect(transformedValues.fakta.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.eql(10000);
     expect(transformedValues.fakta.fastsettMaanedsinntektFL.maanedsinntekt).to.eql(20000);
   });
 

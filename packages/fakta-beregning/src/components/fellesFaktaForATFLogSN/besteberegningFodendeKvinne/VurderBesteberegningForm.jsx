@@ -108,7 +108,6 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
       fastsatteVerdier: {
         fastsattBeløp: verdi.fastsattBelop,
         inntektskategori: verdi.inntektskategori,
-        skalHaBesteberegning,
       },
     }));
   const nyDagpengeAndel = inntektPrAndel

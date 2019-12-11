@@ -241,9 +241,9 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(fastsatteAndelsnr.find((nr) => nr === andel3.andelsnr) === undefined).to.equal(false);
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
-    expect(fastsatteInntekter[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(fastsatteInntekter[0].fastsattBeløp).to.equal(10000);
     expect(fastsatteInntekter[1].andelsnr).to.equal(3);
-    expect(fastsatteInntekter[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
+    expect(fastsatteInntekter[1].fastsattBeløp).to.equal(20000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
     expect(fastsatteTilfeller.length).to.equal(2);
     expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
@@ -275,9 +275,9 @@ describe('<VurderMottarYtelseForm>', () => {
     expect(fastsatteAndelsnr.find((nr) => nr === andel3.andelsnr) === undefined).to.equal(false);
     expect(fastsatteInntekter.length).to.equal(2);
     expect(fastsatteInntekter[0].andelsnr).to.equal(1);
-    expect(fastsatteInntekter[0].fastsatteVerdier.fastsattBeløp).to.equal(0);
+    expect(fastsatteInntekter[0].fastsattBeløp).to.equal(0);
     expect(fastsatteInntekter[1].andelsnr).to.equal(3);
-    expect(fastsatteInntekter[1].fastsatteVerdier.fastsattBeløp).to.equal(0);
+    expect(fastsatteInntekter[1].fastsattBeløp).to.equal(0);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
     expect(fastsatteTilfeller.length).to.equal(2);
     expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);
@@ -341,9 +341,9 @@ describe('<VurderMottarYtelseForm>', () => {
     const fastsatteArbeidsinntekter = transformed.fastsattUtenInntektsmelding.andelListe;
     expect(fastsatteArbeidsinntekter.length).to.equal(2);
     expect(fastsatteArbeidsinntekter[0].andelsnr).to.equal(1);
-    expect(fastsatteArbeidsinntekter[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(fastsatteArbeidsinntekter[0].fastsattBeløp).to.equal(10000);
     expect(fastsatteArbeidsinntekter[1].andelsnr).to.equal(3);
-    expect(fastsatteArbeidsinntekter[1].fastsatteVerdier.fastsattBeløp).to.equal(20000);
+    expect(fastsatteArbeidsinntekter[1].fastsattBeløp).to.equal(20000);
     const fastsatteTilfeller = transformed.faktaOmBeregningTilfeller;
     expect(fastsatteTilfeller.length).to.equal(3);
     expect(fastsatteTilfeller[0]).to.equal(faktaOmBeregningTilfelle.VURDER_MOTTAR_YTELSE);

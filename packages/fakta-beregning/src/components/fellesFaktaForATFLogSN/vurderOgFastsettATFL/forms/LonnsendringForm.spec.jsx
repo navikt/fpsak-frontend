@@ -37,7 +37,7 @@ describe('<LonnsendringForm>', () => {
     expect(transformedObject.vurdertLonnsendring.dummyField).to.equal(undefined);
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
     expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
-    expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(transformedObject.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
   });
 
 

@@ -69,8 +69,8 @@ describe('<KunstigArbeidsforhold>', () => {
     const transformed = transformValuesKunstigArbeidsforhold(inntektVerdier, faktaOmBeregning, bg, fastsatteAndeler);
     expect(transformed.faktaOmBeregningTilfeller[0]).to.equal(faktaOmBeregningTilfelle.FASTSETT_MAANEDSLONN_ARBEIDSTAKER_UTEN_INNTEKTSMELDING);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
-    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
-    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.inntektskategori).to.equal('ARBEIDSTAKER');
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].inntektskategori).to.equal('ARBEIDSTAKER');
     expect(fastsatteAndeler[0]).to.equal(1);
   });
 });

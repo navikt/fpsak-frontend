@@ -91,9 +91,6 @@ LonnsendringForm.transformValues = (values, inntektVerdier, faktaOmBeregning, fa
   const lonnsendringInntekt = andelerMedLonnsendringFields
     .map((field) => ({
       andelsnr: field.andelsnr,
-      fastsatteVerdier: {
-        fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
-      },
       fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
     }));
   return ({

@@ -24,10 +24,6 @@ export const transformValuesKunstigArbeidsforhold = (inntektVerdier, faktaOmBere
   const fastsattInntekt = kunstigeArbeidsforhold
     .map((field) => ({
       andelsnr: field.andelsnr,
-      fastsatteVerdier: {
-        fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
-        inntektskategori: field.inntektskategori,
-      },
       fastsattBeløp: removeSpacesFromNumber(field.fastsattBelop),
       inntektskategori: field.inntektskategori,
     }));
