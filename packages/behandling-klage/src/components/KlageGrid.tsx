@@ -26,7 +26,12 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  alleBehandlinger: [{}];
+  alleBehandlinger: [{
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
+    status: Kodeverk;
+  }];
 }
 
 const KlageGrid: FunctionComponent<OwnProps> = ({

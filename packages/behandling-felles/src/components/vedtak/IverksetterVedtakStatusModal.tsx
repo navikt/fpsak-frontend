@@ -10,20 +10,20 @@ import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResul
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
+import Kodeverk from '../../types/kodeverkTsType';
+
 import styles from './iverksetterVedtakStatusModal.less';
 
-type OwnProps = Readonly<{
+interface OwnProps {
   intl: {
     formatMessage: (o: {}) => string;
   };
   lukkModal: () => void;
   visModal: boolean;
   behandlingsresultat?: {
-    type: {
-      kode: string;
-    };
+    type: Kodeverk;
   };
-}>;
+}
 
 /**
  * IverksetterVedtakStatusModal

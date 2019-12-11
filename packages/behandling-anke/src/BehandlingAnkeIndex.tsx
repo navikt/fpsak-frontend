@@ -21,7 +21,7 @@ const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING
 interface DataProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar;
+  vilkar: Vilkar[];
   ankeVurdering: AnkeVurdering;
 }
 

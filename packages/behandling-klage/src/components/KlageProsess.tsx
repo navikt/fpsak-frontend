@@ -46,6 +46,7 @@ interface OwnProps {
     id: number;
     type: Kodeverk;
     avsluttet?: string;
+    status: Kodeverk;
   }];
 }
 

@@ -38,11 +38,11 @@ interface OwnProps {
   oppdaterBehandlingVersjon: (versjon: number) => void;
   opneSokeside: () => void;
   ankeVurdering?: AnkeVurdering;
-  alleBehandlinger: [{
+  alleBehandlinger: {
     id: number;
     type: Kodeverk;
     avsluttet?: string;
-  }];
+  }[];
 }
 
 interface StateProps {

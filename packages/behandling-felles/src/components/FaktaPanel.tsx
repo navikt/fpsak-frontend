@@ -19,7 +19,7 @@ interface PanelData {
 }
 
 interface OwnProps {
-  paneler: [PanelData];
+  paneler: PanelData[];
   velgPanel?: (index: number) => number;
   children: ReactNode;
 }
@@ -62,7 +62,7 @@ FaktaPanel.propTypes = {
     tekst: PropTypes.string.isRequired,
     erAktiv: PropTypes.bool.isRequired,
     harAksjonspunkt: PropTypes.bool.isRequired,
-  })).isRequired,
+  }).isRequired).isRequired,
   velgPanel: PropTypes.func,
   children: PropTypes.node.isRequired,
 };

@@ -18,7 +18,7 @@ interface OwnProps {
   endpointParams?: {};
   behandlingDataCache: BehandlingDataCache;
   showOldDataWhenRefetching?: boolean;
-  showComponent: boolean;
+  showComponent?: boolean;
 }
 
 const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({

@@ -13,12 +13,12 @@ import styles from './margMarkering.less';
 
 const classNames = classnames.bind(styles);
 
-type OwnProps = Readonly<{
+interface OwnProps {
   behandlingStatus: Kodeverk;
-  aksjonspunkter: [Aksjonspunkt?];
+  aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
-  children: ReactNode | [ReactNode];
-}>;
+  children: ReactNode | ReactNode[];
+}
 
 const MargMarkering: FunctionComponent<OwnProps> = ({
   behandlingStatus,

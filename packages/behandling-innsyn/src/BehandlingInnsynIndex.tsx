@@ -9,7 +9,7 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
-  ReduxFormStateCleaner, BehandlingDataCache, Aksjonspunkt, Dokument,
+  ReduxFormStateCleaner, BehandlingDataCache, Aksjonspunkt, Dokument, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
@@ -21,6 +21,7 @@ const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN
 interface DataProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   innsyn: Innsyn;
   innsynDokumenter: Dokument[];
 }
