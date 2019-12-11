@@ -27,6 +27,7 @@ const AvviksopplysningerSN = ({
     sammenligningsgrunnlagSumSN = sammenligningsGrunnlagSN.rapportertPrAar;
     differanseBeregnet = sammenligningsGrunnlagSN.differanseBeregnet;
   }
+  debugger;
   if (erNyArbLivet) {
     return (
       <Row>
@@ -38,12 +39,12 @@ const AvviksopplysningerSN = ({
       </Row>
     );
   }
-  if (erVarigEndring && !harAksjonspunkter) {
+  if (!erVarigEndring && !harAksjonspunkter) {
     return (
       <Row>
         <Column xs="12">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.VarigEndring" />
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring" />
           </Normaltekst>
         </Column>
       </Row>
