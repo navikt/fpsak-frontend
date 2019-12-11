@@ -6,6 +6,7 @@ services:
     ports:
       - 9000:9000
     environment:
+      - APP_HOSTNAME=localhost
       - APP_URL=http://host.docker.internal:8080
       - APP_PORT=9000
       - APP_PATH_PREFIX=fpsak

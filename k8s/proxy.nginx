@@ -37,7 +37,7 @@ server {
     add_header Content-Type text/plain;
   }
 
-  location  /"${APP_PATH_PREFIX}" {
+  location  "/${APP_PATH_PREFIX}" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
     proxy_pass "${APP_URL}/${APP_PATH_PREFIX}";
