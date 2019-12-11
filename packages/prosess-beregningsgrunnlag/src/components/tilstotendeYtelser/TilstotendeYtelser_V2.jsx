@@ -95,14 +95,13 @@ const TilstotendeYtelser = ({
         </>
       )}
       <Row>
-        <Column xs="4" />
-        <Column xs="2" />
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column xs="7" />
+        <Column className={beregningStyles.colMaanedText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
           </Undertekst>
         </Column>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column className={beregningStyles.colAarText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
@@ -137,7 +136,7 @@ const TilstotendeYtelser = ({
             {skalViseOppjustertGrunnlag
             && (
               <>
-                <Column xs="2" />
+                <Column xs="3" />
                 <Column xs="2">
                   <Normaltekst>{formatCurrencyNoKr(finnOppjustertGrunnlag(andel))}</Normaltekst>
                 </Column>
@@ -149,9 +148,9 @@ const TilstotendeYtelser = ({
             {!skalViseOppjustertGrunnlag
           && (
             <>
-              <Column xs="2" />
-              <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
-              <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
+              <Column xs="3" />
+              <Column xs="2" className={beregningStyles.colMaanedText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
+              <Column xs="2" className={beregningStyles.colAarText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
               <Column xs="2" />
             </>
           )}

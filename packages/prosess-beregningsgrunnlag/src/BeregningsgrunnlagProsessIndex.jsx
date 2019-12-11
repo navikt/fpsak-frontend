@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { featureToggle } from '@fpsak-frontend/fp-felles';
 
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
@@ -28,9 +29,10 @@ const BeregningsgrunnlagProsessIndex = ({
   isApOpen,
   vilkar,
   alleKodeverk,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   featureToggles,
 }) => {
-  const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
+  const skalViseRedesignetGUI = true; // featureToggles[featureToggle.BG_REDESIGN];
   if (skalViseRedesignetGUI) {
     return (
       <RawIntlProvider value={intl}>
