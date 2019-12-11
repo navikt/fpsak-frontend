@@ -2551,9 +2551,9 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
-"@navikt/nap-process-menu@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@navikt/nap-process-menu/-/nap-process-menu-1.0.7.tgz#c9e58ede77db54328fdc423c0857113643f5087d"
+"@navikt/nap-process-menu@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@navikt/nap-process-menu/-/nap-process-menu-1.0.8.tgz#f5d490eb80445829a9ad39272275d348153b4afb"
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"

@@ -20,7 +20,7 @@ interface BehandlingPaVentProps {
   aksjonspunkter: [Aksjonspunkt];
   kodeverk: {[key: string]: [Kodeverk]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
 }
 
 const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
@@ -35,7 +35,7 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
 
   const oppdaterPaVentData = useCallback((formData) => settPaVent({
     ...formData, behandlingId: behandling.id, behandlingVersjon: behandling.versjon,
-  }).then(() => hentBehandling({ behandlingId: behandling.id })), [behandling.versjon]);
+  }).then(() => hentBehandling({ behandlingId: behandling.id }, { keepData: false })), [behandling.versjon]);
 
   const erManueltSattPaVent = useMemo(() => aksjonspunkter.filter((ap) => isAksjonspunktOpen(ap.status.kode))
     .some((ap) => ap.definisjon.kode === aksjonspunktCodes.AUTO_MANUELT_SATT_PÅ_VENT), [aksjonspunkter]);
