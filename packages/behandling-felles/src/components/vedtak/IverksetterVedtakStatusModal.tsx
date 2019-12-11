@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -14,9 +14,6 @@ import Kodeverk from '../../types/kodeverkTsType';
 import styles from './iverksetterVedtakStatusModal.less';
 
 interface OwnProps {
-  intl: {
-    formatMessage: (o: {}) => string;
-  };
   lukkModal: () => void;
   visModal: boolean;
   behandlingsresultat?: {
@@ -30,7 +27,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen vises etter en vilkarsvurdering der behandlingsstatusen
  * er satt til Iverksetter vedtak. Ved å trykke på knapp blir den NAV-ansatte tatt tilbake til sokesiden.
  */
-const IverksetterVedtakStatusModal: FunctionComponent<OwnProps> = ({
+const IverksetterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   lukkModal,
   visModal,

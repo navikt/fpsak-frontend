@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -11,9 +11,6 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import styles from './fatterVedtakStatusModal.less';
 
 interface OwnProps {
-  intl: {
-    formatMessage: (o: {}) => string;
-  };
   visModal?: boolean;
   lukkModal: () => void;
   tekstkode: string;
@@ -25,7 +22,7 @@ interface OwnProps {
  * Presentasjonskomponent. Denne modalen viser en lightbox etter at en saksbehandler har sendt et forslag på vedtak til beslutter
  * ved totrinnskontroll. Ved å trykke på knapp blir saksbehandler tatt tilbake til søkesiden.
  */
-const FatterVedtakStatusModal: FunctionComponent<OwnProps> = ({
+const FatterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   visModal = false,
   lukkModal,

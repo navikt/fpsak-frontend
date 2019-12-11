@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -11,9 +11,6 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import styles from './ankeBehandlingModal.less';
 
 interface OwnProps {
-  intl: {
-    formatMessage: (o: {}) => string;
-  };
   visModal?: boolean;
   lukkModal: () => void;
 }
@@ -25,7 +22,7 @@ interface OwnProps {
  * i aksjonspunkt '' velger at ytelsesvedtaket skal stadfestes. Ved å trykke på knapp blir saksbehandler
  * tatt tilbake til sokesiden.
  */
-const AnkeVurderingModal: FunctionComponent<OwnProps> = ({
+const AnkeVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   visModal = false,
   lukkModal,
   intl,

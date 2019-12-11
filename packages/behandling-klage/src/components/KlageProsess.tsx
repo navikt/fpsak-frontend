@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -26,7 +26,6 @@ import KlageVurdering from '../types/klageVurderingTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
-  intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
@@ -57,7 +56,7 @@ interface DispatchProps {
   resolveKlageTemp: (params: {}) => Promise<any>;
 }
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps;
 
 interface KlageProsessState{
   visFatterVedtakModal: boolean;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -19,7 +19,6 @@ import Innsyn from '../types/innsynTsType';
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
-  intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
@@ -43,7 +42,7 @@ interface DispatchProps {
   forhandsvisMelding: (brevData: {}) => Promise<any>;
 }
 
-type Props = OwnProps & StateProps & DispatchProps
+type Props = OwnProps & StateProps & DispatchProps & WrappedComponentProps
 
 interface InnsynProsessState {
   visIverksetterVedtakModal: boolean;

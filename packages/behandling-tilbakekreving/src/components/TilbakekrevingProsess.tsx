@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
@@ -29,7 +29,6 @@ const vedtakData = [tilbakekrevingApi.VEDTAKSBREV];
 
 
 interface OwnProps {
-  intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
@@ -51,7 +50,7 @@ interface DispatchProps {
   fetchPreviewVedtaksbrev: (params: {}) => Promise<any>;
 }
 
-type Props = OwnProps & DispatchProps;
+type Props = OwnProps & DispatchProps & WrappedComponentProps;
 
 interface KlageProsessState{
   visFatterVedtakModal: boolean;

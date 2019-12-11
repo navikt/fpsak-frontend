@@ -1,4 +1,4 @@
-import React, { ReactNode, FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo } from 'react';
 import classnames from 'classnames/bind';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -15,7 +15,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
-  children: ReactNode | ReactNode[];
+  children: any;
 }
 
 const MargMarkering: FunctionComponent<OwnProps> = ({

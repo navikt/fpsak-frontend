@@ -37,7 +37,11 @@ interface OwnProps {
     clear: () => void;
   };
   opneSokeside: () => void;
-  alleBehandlinger: [{}];
+  alleBehandlinger: {
+    id: number;
+    type: Kodeverk;
+    avsluttet?: string;
+  }[];
 }
 
 interface StateProps {
