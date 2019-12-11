@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+// import fyt from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getCommonBehandlingsprosessSelectors } from '@fpsak-frontend/fp-behandling-felles';
 
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
@@ -10,9 +10,9 @@ import {
   getStonadskontoer,
   getUttaksresultatPerioder,
 } from '../../behandlingSelectors';
-import createEngangsstonadBpProps from '../definition/engangsstonadBpDefinition';
+// import createEngangsstonadBpProps from '../definition/engangsstonadBpDefinition';
 import createForeldrepengerBpProps from '../definition/foreldrepengerBpDefinition';
-import createSvangerskapspengerBpProps from '../definition/svangerskapspengerBpDefinition';
+// import createSvangerskapspengerBpProps from '../definition/svangerskapspengerBpDefinition';
 import { getOverrideBehandlingspunkter, getSelectedBehandlingspunktNavn } from '../duckBpForstegangOgRev';
 import { getFagsakYtelseType, getFeatureToggles } from '../../duckBehandlingForstegangOgRev';
 
@@ -40,11 +40,11 @@ export const getBehandlingspunkterProps = createSelector(
       fagsakYtelseType,
     };
 
-    if (fagsakYtelseType.kode === fyt.ENGANGSSTONAD) {
-      return createEngangsstonadBpProps(builderData);
-    } if (fagsakYtelseType.kode === fyt.SVANGERSKAPSPENGER) {
-      return createSvangerskapspengerBpProps(builderData);
-    }
+    // if (fagsakYtelseType.kode === fyt.ENGANGSSTONAD) {
+    //   return createEngangsstonadBpProps(builderData);
+    // } if (fagsakYtelseType.kode === fyt.SVANGERSKAPSPENGER) {
+    //   return createSvangerskapspengerBpProps(builderData);
+    // }
     return createForeldrepengerBpProps(builderData);
   },
 );
