@@ -2,13 +2,13 @@ import { createSelector } from 'reselect';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import Behandling from '../types/behandlingTsType';
 import Aksjonspunkt from '../types/aksjonspunktTsType';
 import Vilkar from '../types/vilkarTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import NavAnsatt from '../types/navAnsattTsType';
+import erReadOnly from '../util/erReadOnly';
 
 const SUCCESS = 'success';
 const WARNING = 'warning';
@@ -27,23 +27,12 @@ const finnProsessmenyType = (status, harApentAksjonspunkt) => {
   return DEFAULT;
 };
 
-
-const erReadOnly = (behandling, aksjonspunkterForPunkt, vilkarlisteForPunkt, navAnsatt, fagsak, hasFetchError) => {
-  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
-  const behandlingIsOnHold = behandling.behandlingPaaVent;
-  const isBehandlingReadOnly = hasFetchError || (behandling.taskStatus && behandling.taskStatus.readOnly ? behandling.taskStatus.readOnly : false);
-  // TODO (TOR) bp-ap og bp-v
-  const hasNonActivOrNonOverstyrbar = aksjonspunkterForPunkt.some((ap) => !ap.erAktivt) || vilkarlisteForPunkt.some((v) => !v.overstyrbar);
-  return !rettigheter.writeAccess.isEnabled || behandlingIsOnHold || isBehandlingReadOnly || hasNonActivOrNonOverstyrbar;
-};
-
-
 interface OwnProps {
-  alleSteg: [{}];
+  alleSteg: {}[];
   valgtProsessSteg?: string;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar?];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   navAnsatt: NavAnsatt;
   fagsak: FagsakInfo;
   hasFetchError: boolean;

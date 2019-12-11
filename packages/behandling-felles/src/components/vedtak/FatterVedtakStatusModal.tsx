@@ -39,8 +39,6 @@ const FatterVedtakStatusModal: FunctionComponent<OwnProps> = ({
     contentLabel={intl.formatMessage({ id: tekstkode })}
     onRequestClose={lukkModal}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
-    style={{ overlay: { zIndex: 3000 } }}
   >
     <Row>
       <Column xs="1">

@@ -17,8 +17,8 @@ import behandlingPropType from '../propTypes/behandlingPropType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  kodeverk: {[key: string]: [Kodeverk]};
+  aksjonspunkter: Aksjonspunkt[];
+  kodeverk: {[key: string]: Kodeverk[]};
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
 }

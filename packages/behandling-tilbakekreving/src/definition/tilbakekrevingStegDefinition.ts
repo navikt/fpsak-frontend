@@ -1,14 +1,13 @@
 import { createSelector } from 'reselect';
 
-import {
-  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
-} from '@fpsak-frontend/behandling-felles';
+import { ProsessStegProperties, Behandling, Aksjonspunkt } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import VedtakResultatType from '../kodeverk/vedtakResultatType';
 import PerioderForeldelse from '../types/perioderForeldelseTsType';
+import Beregningsresultat from '../types/beregningsresultatTsType';
 
 export const getForeldelseStatus = ({ foreldelseResultat }) => (foreldelseResultat ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT);
 const getVedtakStatus = ({ beregningsresultat }) => {
@@ -44,9 +43,9 @@ const createTilbakekrevingStegProps = (builderData) => tilbakekrevingBuilders.re
 
 interface OwnProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
   perioderForeldelse: PerioderForeldelse;
+  beregningsresultat: Beregningsresultat;
 }
 
 const finnTilbakekrevingSteg = createSelector(

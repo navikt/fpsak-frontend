@@ -2,8 +2,22 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { notNull } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+
 class ProsessStegProperties {
-  constructor(code, titleCode, isVisible, status, bpVilkar, bpAksjonspunkter) {
+  code: string
+
+  titleCode: string
+
+  isVisible: boolean
+
+  status?: boolean
+
+  vilkarene?: string[]
+
+  apCodes?: string[]
+
+  constructor(code, titleCode, isVisible, status?, bpVilkar?, bpAksjonspunkter?) {
     this.code = code;
     this.titleCode = titleCode;
     this.isVisible = isVisible;
@@ -14,6 +28,22 @@ class ProsessStegProperties {
 
   static get Builder() {
     class Builder {
+      bpCode: string
+
+      titleCode: string
+
+      apCodes: string[]
+
+      vilkarTypes: string[]
+
+      vilkarIsOptional: boolean
+
+      visibilityFunctions: ((data: {}, length: number) => undefined)[]
+
+      defaultVisibilityFallback: boolean
+
+      statusFunction: (builderData: {}, bpAksjonspunkter: Aksjonspunkt[]) => undefined
+
       /**
        * @param {string} bpCode - Obligatorisk streng som er en unik identifikator for behandlingspunktet.
        * @param {string} titleCode - Obligatorisk streng som brukes til å hente ut behandlingspunktnavnet.

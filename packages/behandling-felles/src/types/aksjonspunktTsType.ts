@@ -7,7 +7,7 @@ type Aksjonspunkt = Readonly<{
   vilkarType?: Kodeverk;
   toTrinnsBehandling?: boolean;
   toTrinnsBehandlingGodkjent?: boolean;
-  vurderPaNyttArsaker?: [Kodeverk];
+  vurderPaNyttArsaker?: Kodeverk[];
   besluttersBegrunnelse?: string;
   aksjonspunktType?: Kodeverk;
   kanLoses: boolean;

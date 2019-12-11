@@ -48,8 +48,6 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps> = ({
       contentLabel={imageAltText}
       onRequestClose={lukkModal}
       shouldCloseOnOverlayClick={false}
-      ariaHideApp={false}
-      style={{ overlay: { zIndex: 3000 } }}
     >
       <Row>
         <Column xs="1">

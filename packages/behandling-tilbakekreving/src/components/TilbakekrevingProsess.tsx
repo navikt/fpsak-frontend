@@ -65,6 +65,8 @@ interface KlageProsessState{
 }
 
 export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
+
   static propTypes = {
     intl: PropTypes.shape({}).isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -90,7 +92,6 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
       visFatterVedtakModal: false,
       skalOppdatereFagsakKontekst: true,
     };
-    this.cache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -210,8 +211,8 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
     const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
     const apCodes = valgtSteg && valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
 
-    if (this.cache.getCurrentVersion() !== behandling.versjon) {
-      this.cache.setVersion(behandling.versjon);
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
     }
 
     return (
@@ -251,7 +252,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
               />
             )}
             <DataFetcherBehandlingData
-              behandlingDataCache={this.cache}
+              behandlingDataCache={this.behandlingDataCache}
               behandlingVersion={behandling.versjon}
               endpoints={tilbakekrevingData}
               showComponent={valgtStegKode === bpc.TILBAKEKREVING}
@@ -268,7 +269,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
               )}
             />
             <DataFetcherBehandlingData
-              behandlingDataCache={this.cache}
+              behandlingDataCache={this.behandlingDataCache}
               behandlingVersion={behandling.versjon}
               endpoints={vedtakData}
               showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}

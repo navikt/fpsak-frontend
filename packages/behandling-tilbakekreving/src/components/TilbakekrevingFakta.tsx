@@ -18,6 +18,13 @@ import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 
 const feilutbetalingData = [tilbakekrevingApi.FEILUTBETALING_FAKTA, tilbakekrevingApi.FEILUTBETALING_AARSAK];
 
+interface DataProps {
+  feilutbetalingFakta: {};
+  feilutbetalingAarsak: {
+    ytelseType: Kodeverk;
+  }[];
+}
+
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
@@ -77,7 +84,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
         behandlingDataCache={cache}
         behandlingVersion={behandling.versjon}
         endpoints={feilutbetalingData}
-        render={(dataProps) => {
+        render={(dataProps: DataProps) => {
           if (dataProps.feilutbetalingFakta) {
             return (
               <FeilutbetalingFaktaIndex

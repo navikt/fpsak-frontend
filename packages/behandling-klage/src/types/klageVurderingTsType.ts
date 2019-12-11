@@ -14,14 +14,14 @@ type KlageVurdering = Readonly<{
     godkjentAvMedunderskriver: boolean;
   };
   klageFormkravResultatKA: {
-    avvistArsaker: [{
+    avvistArsaker: {
       navn?: string;
-    }];
+    }[];
   };
   klageFormkravResultatNFP: {
-    avvistArsaker: [{
+    avvistArsaker: {
       navn?: string;
-    }];
+    }[];
   };
 }>
 

@@ -1,5 +1,5 @@
 import React, {
-  ReactNode, FunctionComponent, useEffect, useRef, useState,
+  FunctionComponent, useEffect, useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,7 @@ export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m
 
 interface OwnProps {
   behandlingVersion: number;
-  render: (data: {}) => ReactNode;
+  render: (data: {}) => any;
   endpoints: EndpointOperations[];
   endpointParams?: {};
   behandlingDataCache: BehandlingDataCache;
