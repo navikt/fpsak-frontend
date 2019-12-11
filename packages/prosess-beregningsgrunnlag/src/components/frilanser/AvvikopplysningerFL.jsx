@@ -13,16 +13,12 @@ const AvviksopplysningerFL = ({
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
     : undefined;
-  let avvikFL;
-  let sammenligningsgrunnlagSumFL;
-  let differanseBeregnet;
-  if (sammenligningsGrunnlagFL) {
-    avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
-    sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
-    differanseBeregnet = sammenligningsGrunnlagFL.differanseBeregnet;
-  } else {
+  if (!sammenligningsGrunnlagFL) {
     return null;
   }
+  const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
+  const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
+  const { differanseBeregnet } = sammenligningsGrunnlagFL;
   return (
     <>
       <Row>
@@ -56,7 +52,7 @@ const AvviksopplysningerFL = ({
 
           </Row>
           <Row>
-            <Column xs="7" />
+            <Column xs="7" className={styles.colLine} />
           </Row>
           <Row>
             <Column className={styles.colLable}>

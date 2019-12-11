@@ -62,20 +62,25 @@ const AksjonspunktBehandler = ({
   let visFL = false;
   let visAT = false;
 
-  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
-    const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-    const flAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
-    const atAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
-    if (flAndel) {
-      visFL = flAndel.skalFastsetteGrunnlag;
-    }
-    if (atAndel) {
-      visAT = atAndel.skalFastsetteGrunnlag;
-    }
-    erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
-    erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
-    erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  const snAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const flAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+  );
+  const atAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+  );
+  if (flAndel) {
+    visFL = flAndel.skalFastsetteGrunnlag;
   }
+  if (atAndel) {
+    visAT = atAndel.skalFastsetteGrunnlag;
+  }
+  erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
+  erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  // }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }

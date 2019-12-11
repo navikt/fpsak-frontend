@@ -146,10 +146,9 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
     return undefined;
   }
   const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
-  const avvikPromille = avvikElem && avvikElem.avvikPromille ? avvikElem.avvikPromille : 0;
-  // const { avvikPromille } = beregningsgrunnlag.sammenligningsgrunnlag;
-  if (avvikPromille || avvikPromille === 0) {
-    return avvikPromille / 10;
+  const avvikProsent = avvikElem && avvikElem.avvikProsent ? avvikElem.avvikProsent : 0;
+  if (avvikProsent || avvikProsent === 0) {
+    return avvikProsent;
   }
   return undefined;
 };

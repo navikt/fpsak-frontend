@@ -3,6 +3,7 @@ import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvviksopplysningerPanel from './AvvikopplysningerPanel';
 
 const sammenligningsgrunnlag = (kode) => ({
@@ -34,7 +35,7 @@ const allePerioder = [
   }];
 describe('<Avviksopplysninger>', () => {
   it('Skal teste at riktig componenter blir renderet når ATFLSN', () => {
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
+    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.ATFLSN);
     const wrapper = shallowWithIntl(<AvviksopplysningerPanel
       relevanteStatuser={relevanteStatuser}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
@@ -50,7 +51,7 @@ describe('<Avviksopplysninger>', () => {
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
   });
   it('Skal teste at riktig componenter blir renderet når AT', () => {
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AT');
+    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.AT);
     const wrapper = shallowWithIntl(<AvviksopplysningerPanel
       relevanteStatuser={relevanteStatuser}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
@@ -66,7 +67,7 @@ describe('<Avviksopplysninger>', () => {
     expect(wrapper.find('AvviksopplysningerSN')).to.have.length(0);
   });
   it('Skal teste at riktig componenter blir renderet når SN', () => {
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_FL');
+    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.SN);
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = true;
     const snPeriode = {
@@ -99,7 +100,7 @@ describe('<Avviksopplysninger>', () => {
     expect(wrapper.find('AvviksopplysningerFL')).to.have.length(0);
   });
   it('Skal teste at riktig componenter blir renderet når FL', () => {
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AFL');
+    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag(sammenligningType.FL);
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     relevanteStatuser.isFrilanser = true;

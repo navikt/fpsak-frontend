@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
@@ -14,17 +15,16 @@ const AvviksopplysningerAT = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt, aktivitetStatusKode,
 }) => {
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
-    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_AT'
-      || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.AT
+      || status.sammenligningsgrunnlagType.kode === sammenligningType.ATFLSN)
     : undefined;
-  let avvikAT;
-  let sammenligningsgrunnlagSumAT;
-  let differanseBeregnet;
-  if (sammenligningsGrunnlagAT) {
-    avvikAT = sammenligningsGrunnlagAT.avvikProsent;
-    sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
-    differanseBeregnet = sammenligningsGrunnlagAT.differanseBeregnet;
+  if (!sammenligningsGrunnlagAT) {
+    return null;
   }
+  const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
+  const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
+  const { differanseBeregnet } = sammenligningsGrunnlagAT;
+
   if (aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN || aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN) {
     return (
       <Row>

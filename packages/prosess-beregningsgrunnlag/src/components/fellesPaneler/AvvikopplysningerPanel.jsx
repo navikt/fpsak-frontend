@@ -35,7 +35,6 @@ const finnAndelerSomSkalVises = (andeler, status) => {
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) => {
-  // aktivitetStatus.ARBEIDSTAKER
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndelerIForstePeriode, status);
   if (relevanteAndeler) {
     return relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
@@ -104,7 +103,7 @@ const AvviksopplysningerPanel = ({
 
 AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
-  aktivitetStatusKode: PropTypes.string.isRequired,
+  aktivitetStatusKode: PropTypes.string,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
@@ -113,5 +112,6 @@ AvviksopplysningerPanel.propTypes = {
 AvviksopplysningerPanel.defaultProps = {
   harAksjonspunkter: false,
   sammenligningsgrunnlagPrStatus: undefined,
+  aktivitetStatusKode: undefined,
 };
 export default AvviksopplysningerPanel;
