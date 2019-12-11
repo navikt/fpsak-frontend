@@ -36,6 +36,7 @@ export const getRiskPanelLocationCreator = (location) => (isRiskPanelOpen) => ge
 export const DEFAULT_FAKTA = 'default';
 export const DEFAULT_BEHANDLINGSPROSESS = 'default';
 
+// eslint-disable-next-line
 export const getLocationWithDefaultBehandlingspunktAndFakta = (location) => getLocationWithQueryParams(location, { punkt: DEFAULT_BEHANDLINGSPROSESS, fakta: DEFAULT_FAKTA });
 
 export const getPathToFplos = (href) => {

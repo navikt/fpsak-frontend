@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { DataFetcher, BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
+import { DataFetcher } from '@fpsak-frontend/fp-felles';
 import MenySakIndex, { MenyKodeverk, MenyBehandlingData, MenyRettigheter } from '@fpsak-frontend/sak-meny';
 
 import { getBehandlingerUuidsMappedById, getUuidForSisteLukkedeForsteEllerRevurd } from '../behandling/selectors/behandlingerSelectors';
@@ -50,15 +50,13 @@ const getMenyRettigheter = createSelector([
 
 class BehandlingMenuIndex extends Component {
   componentDidUpdate = (prevProps) => {
-    const {
-      saksnummer, behandlingData, hentVergeMenyvalg: hentMenyvalg,
-    } = this.props;
+    const { behandlingData } = this.props;
 
     if (behandlingData.harValgtBehandling) {
       const erBehandlingEndret = behandlingData.id !== prevProps.behandlingData.id || behandlingData.versjon !== prevProps.behandlingData.versjon;
       const erYtelseBehandlingstype = YTELSE_BEHANDLINGTYPER.includes(behandlingData.type.kode);
       if (erBehandlingEndret && erYtelseBehandlingstype) {
-        const params = new BehandlingIdentifier(saksnummer, behandlingData.id).toJson();
+        // const params = new BehandlingIdentifier(saksnummer, behandlingData.id).toJson();
         // hentMenyvalg(params);
       }
     }
