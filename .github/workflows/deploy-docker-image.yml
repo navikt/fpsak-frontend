@@ -36,6 +36,8 @@ jobs:
         run: |
           docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} -p ${GITHUB_TOKEN}
           docker push $(cat .docker_image):$(cat .docker_tag)
+          docker tag $(cat .docker_image):$(cat .docker_tag) $(cat .docker_image):latest
+          docker push $(cat .docker_image):latest
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
