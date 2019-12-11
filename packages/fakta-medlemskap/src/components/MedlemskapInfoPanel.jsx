@@ -11,6 +11,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
+import { createSelector } from 'reselect';
 import medlemskapAksjonspunkterPropType from '../propTypes/medlemskapAksjonspunkterPropType';
 import medlemskapMedlemskaPropType from '../propTypes/medlemskapMedlemskapPropType';
 import medlemskapSoknadPropType from '../propTypes/medlemskapSoknadPropType';
@@ -164,15 +165,17 @@ MedlemskapInfoPanel.defaultProps = {
   isForeldrepenger: true,
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode));
-  return () => ({
-    aksjonspunkterMinusAvklarStartDato,
-  });
-};
+export const getAksjonspunkter = createSelector(
+  [(ownProps) => ownProps.aksjonspunkter],
+  (aksjonspunkter = {}) => (aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode))),
+);
+
+const mapStateToProps = (initialState, ownProps) => ({
+  aksjonspunkterMinusAvklarStartDato: getAksjonspunkter(ownProps),
+});
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO];
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(injectIntl(MedlemskapInfoPanel));
+const ConnectedComponent = connect(mapStateToProps)(injectIntl(MedlemskapInfoPanel));
 export default withDefaultToggling(faktaPanelCodes.MEDLEMSKAPSVILKARET, medlemAksjonspunkter)(ConnectedComponent);
