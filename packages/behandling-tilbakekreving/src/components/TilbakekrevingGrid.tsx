@@ -1,19 +1,15 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, fagsakInfoPropType, behandlingPropType, BehandlingPaVent, SettPaVentParams,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';
 import PerioderForeldelse from '../types/perioderForeldelseTsType';
 import Beregningsresultat from '../types/beregningsresultatTsType';
-import foreldelsePerioderPropType from '../propTypes/foreldelsePerioderPropType';
-import beregningsresultatPropType from '../propTypes/beregningsresultatPropType';
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -87,23 +83,5 @@ const TilbakekrevingGrid: FunctionComponent<OwnProps> = ({
     />
   </>
 );
-
-TilbakekrevingGrid.propTypes = {
-  fagsak: fagsakInfoPropType.isRequired,
-  behandling: behandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  kodeverk: PropTypes.shape({}).isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  valgtProsessSteg: PropTypes.string,
-  oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  settPaVent: PropTypes.func.isRequired,
-  hentBehandling: PropTypes.func.isRequired,
-  opneSokeside: PropTypes.func.isRequired,
-  perioderForeldelse: foreldelsePerioderPropType,
-  beregningsresultat: beregningsresultatPropType,
-  hasFetchError: PropTypes.bool.isRequired,
-  harApenRevurdering: PropTypes.bool.isRequired,
-};
 
 export default TilbakekrevingGrid;

@@ -1,16 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent, SettPaVentParams,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
 import AnkeProsess from './AnkeProsess';
 import AnkeVurdering from '../types/ankeVurderingTsType';
-import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -74,22 +71,5 @@ const AnkeGrid: FunctionComponent<OwnProps> = ({
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
 );
-
-AnkeGrid.propTypes = {
-  fagsak: fagsakInfoPropType.isRequired,
-  behandling: behandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  kodeverk: PropTypes.shape({}).isRequired,
-  valgtProsessSteg: PropTypes.string,
-  oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  settPaVent: PropTypes.func.isRequired,
-  hentBehandling: PropTypes.func.isRequired,
-  opneSokeside: PropTypes.func.isRequired,
-  ankeVurdering: ankeVurderingPropType,
-  alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-};
 
 export default AnkeGrid;

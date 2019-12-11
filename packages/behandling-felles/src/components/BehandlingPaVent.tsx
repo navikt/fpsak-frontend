@@ -1,19 +1,16 @@
 import React, {
   useState, useMemo, useCallback, FunctionComponent,
 } from 'react';
-import PropTypes from 'prop-types';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 
 import Behandling from '../types/behandlingTsType';
 import Aksjonspunkt from '../types/aksjonspunktTsType';
 import SettPaVentParams from '../types/settPaVentParamsTsType';
 import Kodeverk from '../types/kodeverkTsType';
-import behandlingPropType from '../propTypes/behandlingPropType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;
@@ -56,14 +53,6 @@ const BehandlingPaVent: FunctionComponent<BehandlingPaVentProps> = ({
       ventearsaker={kodeverk[kodeverkTyper.VENT_AARSAK]}
     />
   );
-};
-
-BehandlingPaVent.propTypes = {
-  behandling: behandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  kodeverk: PropTypes.shape({}).isRequired,
-  settPaVent: PropTypes.func.isRequired,
-  hentBehandling: PropTypes.func.isRequired,
 };
 
 export default BehandlingPaVent;

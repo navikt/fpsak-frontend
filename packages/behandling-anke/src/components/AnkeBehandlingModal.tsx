@@ -1,6 +1,5 @@
 import React, { FunctionComponent } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -27,7 +26,7 @@ interface OwnProps {
  * tatt tilbake til sokesiden.
  */
 const AnkeVurderingModal: FunctionComponent<OwnProps> = ({
-  visModal,
+  visModal = false,
   lukkModal,
   intl,
 }) => (
@@ -61,18 +60,5 @@ const AnkeVurderingModal: FunctionComponent<OwnProps> = ({
     </Row>
   </Modal>
 );
-
-
-AnkeVurderingModal.propTypes = {
-  visModal: PropTypes.bool,
-  lukkModal: PropTypes.func.isRequired,
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-AnkeVurderingModal.defaultProps = {
-  visModal: false,
-};
 
 export default injectIntl(AnkeVurderingModal);

@@ -1,7 +1,6 @@
 import React, {
   FunctionComponent, useEffect, useRef, useState,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -27,8 +26,8 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   endpoints,
   endpointParams,
   behandlingDataCache,
-  showOldDataWhenRefetching,
-  showComponent,
+  showOldDataWhenRefetching = false,
+  showComponent = true,
 }) => {
   if (!showComponent) {
     return null;
@@ -87,22 +86,6 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   }
 
   return <LoadingPanel />;
-};
-
-DataFetcherBehandlingData.propTypes = {
-  behandlingVersion: PropTypes.number.isRequired,
-  render: PropTypes.func.isRequired,
-  endpoints: PropTypes.arrayOf(PropTypes.instanceOf(EndpointOperations).isRequired).isRequired,
-  endpointParams: PropTypes.shape({}),
-  behandlingDataCache: PropTypes.instanceOf(BehandlingDataCache).isRequired,
-  showOldDataWhenRefetching: PropTypes.bool,
-  showComponent: PropTypes.bool,
-};
-
-DataFetcherBehandlingData.defaultProps = {
-  showOldDataWhenRefetching: false,
-  showComponent: true,
-  endpointParams: undefined,
 };
 
 export default DataFetcherBehandlingData;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
@@ -12,20 +11,16 @@ import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-til
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData,
-  fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  getAlleMerknaderFraBeslutter, BehandlingDataCache,
+  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, getAlleMerknaderFraBeslutter, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import finnTilbakekrevingSteg from '../definition/tilbakekrevingStegDefinition';
 import PerioderForeldelse from '../types/perioderForeldelseTsType';
 import Beregningsresultat from '../types/beregningsresultatTsType';
-import foreldelsePerioderPropType from '../propTypes/foreldelsePerioderPropType';
-import beregningsresultatPropType from '../propTypes/beregningsresultatPropType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -66,24 +61,6 @@ interface KlageProsessState{
 
 export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
   behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
-  static propTypes = {
-    intl: PropTypes.shape({}).isRequired,
-    fagsak: fagsakInfoPropType.isRequired,
-    behandling: behandlingPropType.isRequired,
-    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-    kodeverk: PropTypes.shape({}).isRequired,
-    navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string,
-    lagreAksjonspunkt: PropTypes.func.isRequired,
-    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    opneSokeside: PropTypes.func.isRequired,
-    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    perioderForeldelse: foreldelsePerioderPropType,
-    beregningsresultat: beregningsresultatPropType,
-    beregnBelop: PropTypes.func.isRequired,
-    fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
-  }
 
   constructor(props) {
     super(props);
@@ -263,6 +240,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
                   navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
                   alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
                   beregnBelop={beregnBelop}
+                  perioderForeldelse={perioderForeldelse}
                   {...dataProps}
                   {...fellesProps}
                 />

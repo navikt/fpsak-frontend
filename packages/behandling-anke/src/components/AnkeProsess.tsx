@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
@@ -11,16 +10,14 @@ import AnkeMerknaderProsessIndex from '@fpsak-frontend/prosess-anke-merknader';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel, BehandlingHenlagtPanel,
+  IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel, BehandlingHenlagtPanel,
 } from '@fpsak-frontend/behandling-felles';
 
 import ankeApi from '../data/ankeBehandlingApi';
 import finnAnkeSteg from '../definition/ankeStegDefinition';
-import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
 import AnkeBehandlingModal from './AnkeBehandlingModal';
 import AnkeVurdering from '../types/ankeVurderingTsType';
 
@@ -64,26 +61,7 @@ interface AnkeProsessState{
   skalOppdatereFagsakKontekst: boolean;
 }
 
-export class AnkeProsess extends Component<Props, AnkeProsessState> {
-  static propTypes = {
-    intl: PropTypes.shape({}).isRequired,
-    fagsak: fagsakInfoPropType.isRequired,
-    behandling: behandlingPropType.isRequired,
-    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-    vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string,
-    lagreAksjonspunkt: PropTypes.func.isRequired,
-    forhandsvisMelding: PropTypes.func.isRequired,
-    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    opneSokeside: PropTypes.func.isRequired,
-    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    saveAnke: PropTypes.func.isRequired,
-    resolveAnkeTemp: PropTypes.func.isRequired,
-    ankeVurdering: ankeVurderingPropType.isRequired,
-    alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  }
-
+class AnkeProsess extends Component<Props, AnkeProsessState> {
   constructor(props) {
     super(props);
     this.state = {

@@ -1,5 +1,4 @@
 import { FunctionComponent, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 import { destroy } from 'redux-form';
 import { useDispatch } from 'react-redux';
 
@@ -25,11 +24,6 @@ const ReduxFormStateCleaner: FunctionComponent<OwnProps> = ({
   }, [behandlingVersjon]);
 
   return null;
-};
-
-ReduxFormStateCleaner.propTypes = {
-  behandlingId: PropTypes.number.isRequired,
-  behandlingVersjon: PropTypes.number.isRequired,
 };
 
 export default ReduxFormStateCleaner;

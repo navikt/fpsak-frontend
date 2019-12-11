@@ -15,11 +15,6 @@ export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmeny
 export { default as erReadOnly } from './src/util/erReadOnly';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 
-export { default as fagsakInfoPropType } from './src/propTypes/fagsakInfoPropType';
-export { default as fagsakPersonPropType } from './src/propTypes/fagsakPersonPropType';
-export { default as behandlingPropType } from './src/propTypes/behandlingPropType';
-export { default as dokumentPropType } from './src/propTypes/dokumentPropType';
-
 export { default as Aksjonspunkt } from './src/types/aksjonspunktTsType';
 export { default as Behandling } from './src/types/behandlingTsType';
 export { default as Dokument } from './src/types/dokumentTsType';

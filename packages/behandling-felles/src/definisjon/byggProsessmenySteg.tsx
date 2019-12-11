@@ -39,7 +39,7 @@ interface OwnProps {
   intl: {};
 }
 
-//TODO (TOR) skriv om denne
+// TODO (TOR) skriv om denne
 const byggProsessmenySteg = createSelector<OwnProps, any, any>(
   [(ownProps) => ownProps.alleSteg,
     (ownProps) => ownProps.valgtProsessSteg,

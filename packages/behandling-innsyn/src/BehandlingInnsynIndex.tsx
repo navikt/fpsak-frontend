@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
-import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, DataFetcherBehandlingData, SettPaVentParams,
   ReduxFormStateCleaner, BehandlingDataCache, Aksjonspunkt, Dokument, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
 
@@ -61,23 +59,6 @@ type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingInnsynIndex extends PureComponent<Props> {
   behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
-  static propTypes = {
-    behandlingId: PropTypes.number.isRequired,
-    fagsak: fagsakInfoPropType.isRequired,
-    kodeverk: PropTypes.shape({}).isRequired,
-    navAnsatt: navAnsattPropType.isRequired,
-    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    behandlingEventHandler: PropTypes.shape({}).isRequired,
-    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    valgtProsessSteg: PropTypes.string,
-    settPaVent: PropTypes.func.isRequired,
-    hentBehandling: PropTypes.func.isRequired,
-    opneSokeside: PropTypes.func.isRequired,
-    resetRestApiContext: PropTypes.func.isRequired,
-    destroyReduxForm: PropTypes.func.isRequired,
-    behandling: behandlingPropType,
-  }
 
   componentDidMount = () => {
     const {

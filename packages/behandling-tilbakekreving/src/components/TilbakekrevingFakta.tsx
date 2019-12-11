@@ -1,15 +1,13 @@
 import React, {
   FunctionComponent, useMemo, useCallback,
 } from 'react';
-import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandlingData, behandlingPropType, fagsakInfoPropType, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
+  DataFetcherBehandlingData, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
   getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
@@ -106,16 +104,6 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
       />
     </FaktaPanel>
   );
-};
-
-TilbakekrevingFakta.propTypes = {
-  fagsak: fagsakInfoPropType.isRequired,
-  behandling: behandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  kodeverk: PropTypes.shape({}).isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  hasFetchError: PropTypes.bool.isRequired,
-  oppdaterProsessStegIUrl: PropTypes.func.isRequired,
 };
 
 export default TilbakekrevingFakta;

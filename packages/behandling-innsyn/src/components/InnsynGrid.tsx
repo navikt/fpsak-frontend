@@ -1,17 +1,13 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, fagsakInfoPropType, behandlingPropType, BehandlingPaVent,
-  dokumentPropType, SettPaVentParams,
+  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 
 import InnsynProsess from './InnsynProsess';
 import Innsyn from '../types/innsynTsType';
-import innsynPropType from '../propTypes/innsynPropType';
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -72,22 +68,5 @@ const InnsynGrid: FunctionComponent<OwnProps> = ({
     <PersonIndex medPanel person={fagsak.fagsakPerson} />
   </>
 );
-
-InnsynGrid.propTypes = {
-  fagsak: fagsakInfoPropType.isRequired,
-  behandling: behandlingPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  innsyn: innsynPropType.isRequired,
-  kodeverk: PropTypes.shape({}).isRequired,
-  innsynDokumenter: PropTypes.arrayOf(dokumentPropType).isRequired,
-  navAnsatt: navAnsattPropType.isRequired,
-  valgtProsessSteg: PropTypes.string,
-  oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-  settPaVent: PropTypes.func.isRequired,
-  hentBehandling: PropTypes.func.isRequired,
-  opneSokeside: PropTypes.func.isRequired,
-};
 
 export default InnsynGrid;

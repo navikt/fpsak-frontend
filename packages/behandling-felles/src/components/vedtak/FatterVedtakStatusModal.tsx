@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -28,7 +27,7 @@ interface OwnProps {
  */
 const FatterVedtakStatusModal: FunctionComponent<OwnProps> = ({
   intl,
-  visModal,
+  visModal = false,
   lukkModal,
   tekstkode,
 }) => (
@@ -68,18 +67,5 @@ const FatterVedtakStatusModal: FunctionComponent<OwnProps> = ({
     </Row>
   </Modal>
 );
-
-FatterVedtakStatusModal.propTypes = {
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired,
-  }).isRequired,
-  visModal: PropTypes.bool,
-  lukkModal: PropTypes.func.isRequired,
-  tekstkode: PropTypes.string.isRequired,
-};
-
-FatterVedtakStatusModal.defaultProps = {
-  visModal: false,
-};
 
 export default injectIntl(FatterVedtakStatusModal);

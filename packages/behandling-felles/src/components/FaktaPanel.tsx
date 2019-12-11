@@ -1,5 +1,4 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 
 import SideMenu from '@navikt/nap-side-menu';
@@ -55,16 +54,6 @@ const FaktaPanel: FunctionComponent<OwnProps> = ({
       </FlexContainer>
     </div>
   );
-};
-
-FaktaPanel.propTypes = {
-  paneler: PropTypes.arrayOf(PropTypes.shape({
-    tekst: PropTypes.string.isRequired,
-    erAktiv: PropTypes.bool.isRequired,
-    harAksjonspunkt: PropTypes.bool.isRequired,
-  }).isRequired).isRequired,
-  velgPanel: PropTypes.func,
-  children: PropTypes.node.isRequired,
 };
 
 export default FaktaPanel;

@@ -1,10 +1,8 @@
 import React, { ReactNode, FunctionComponent, useMemo } from 'react';
-import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import Aksjonspunkt from '../types/aksjonspunktTsType';
 import Kodeverk from '../types/kodeverkTsType';
@@ -42,13 +40,6 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
       {children}
     </div>
   );
-};
-
-MargMarkering.propTypes = {
-  behandlingStatus: kodeverkObjektPropType.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-  isReadOnly: PropTypes.bool.isRequired,
-  children: PropTypes.oneOfType([PropTypes.node, PropTypes.arrayOf(PropTypes.node)]).isRequired,
 };
 
 export default MargMarkering;

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
@@ -9,21 +8,18 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-
+  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';
-import klageVurderingPropType from '../propTypes/klageVurderingPropType';
 import KlageBehandlingModal from './KlageBehandlingModal';
 import KlageVurdering from '../types/klageVurderingTsType';
 
@@ -69,27 +65,7 @@ interface KlageProsessState{
   skalOppdatereFagsakKontekst: boolean;
 }
 
-export class KlageProsess extends Component<Props, KlageProsessState> {
-  static propTypes = {
-    intl: PropTypes.shape({}).isRequired,
-    fagsak: fagsakInfoPropType.isRequired,
-    behandling: behandlingPropType.isRequired,
-    aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType).isRequired,
-    vilkar: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-    kodeverk: PropTypes.shape({}).isRequired,
-    navAnsatt: navAnsattPropType.isRequired,
-    valgtProsessSteg: PropTypes.string,
-    lagreAksjonspunkt: PropTypes.func.isRequired,
-    forhandsvisMelding: PropTypes.func.isRequired,
-    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    opneSokeside: PropTypes.func.isRequired,
-    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    saveKlage: PropTypes.func.isRequired,
-    resolveKlageTemp: PropTypes.func.isRequired,
-    klageVurdering: klageVurderingPropType,
-    alleBehandlinger: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  }
-
+class KlageProsess extends Component<Props, KlageProsessState> {
   constructor(props) {
     super(props);
     this.state = {

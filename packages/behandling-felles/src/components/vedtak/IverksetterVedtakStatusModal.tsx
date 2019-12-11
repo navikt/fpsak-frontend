@@ -1,5 +1,4 @@
 import React, { FunctionComponent } from 'react';
-import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -80,23 +79,6 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps> = ({
       </Row>
     </Modal>
   );
-};
-
-IverksetterVedtakStatusModal.propTypes = {
-  intl: PropTypes.shape({
-    formatMessage: PropTypes.func.isRequired,
-  }).isRequired,
-  lukkModal: PropTypes.func.isRequired,
-  visModal: PropTypes.bool.isRequired,
-  behandlingsresultat: PropTypes.shape({
-    type: PropTypes.shape({
-      kode: PropTypes.string.isRequired,
-    }).isRequired,
-  }),
-};
-
-IverksetterVedtakStatusModal.defaultProps = {
-  behandlingsresultat: undefined,
 };
 
 export default injectIntl(IverksetterVedtakStatusModal);

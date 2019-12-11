@@ -1,14 +1,12 @@
 import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
-import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
   DataFetcherBehandlingData, BehandlingDataCache, Aksjonspunkt,
 } from '@fpsak-frontend/behandling-felles';
 
@@ -64,26 +62,6 @@ type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
-  static propTypes = {
-    behandlingId: PropTypes.number.isRequired,
-    fagsak: fagsakInfoPropType.isRequired,
-    kodeverk: PropTypes.shape({}),
-    navAnsatt: navAnsattPropType.isRequired,
-    oppdaterBehandlingVersjon: PropTypes.func.isRequired,
-    behandlingEventHandler: PropTypes.shape({}).isRequired,
-    oppdaterProsessStegIUrl: PropTypes.func.isRequired,
-    valgtProsessSteg: PropTypes.string,
-    settPaVent: PropTypes.func.isRequired,
-    hentBehandling: PropTypes.func.isRequired,
-    hentKodeverk: PropTypes.func.isRequired,
-    opneSokeside: PropTypes.func.isRequired,
-    harApenRevurdering: PropTypes.bool.isRequired,
-    resetRestApiContext: PropTypes.func.isRequired,
-    destroyReduxForm: PropTypes.func.isRequired,
-    hasFetchError: PropTypes.bool.isRequired,
-    behandling: behandlingPropType,
-  }
 
   componentDidMount = () => {
     const {
