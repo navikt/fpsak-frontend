@@ -8,6 +8,7 @@ import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -149,12 +150,7 @@ const lagPeriode = (andelsliste, dagsats, fom, tom, periodeAarsaker) => ({
   andelerLagtTilManueltIForrige: [],
 });
 
-const sammenligningsgrunnlagTyper = {
-  FL: 'SAMMENLIGNING_FL',
-  SN: 'SAMMENLIGNING_SN',
-  AT: 'SAMMENLIGNING_AT',
-  ATFLSN: 'SAMMENLIGNING_ATFL_SN',
-};
+
 const lagSammenligningsGrunnlag = (kode, rapportertPrAar, avvikProsent, differanse) => ({
   sammenligningsgrunnlagFom: '2018-09-01',
   sammenligningsgrunnlagTom: '2019-10-31',
@@ -288,7 +284,7 @@ export const arbeidstakerUtenAvvik = () => {
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 330257, 6.2, -30257)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 330257, 6.2, -30257)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -312,7 +308,7 @@ export const arbeidstakerMedAvvik = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -79059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -333,10 +329,14 @@ export const arbeidstakerMedAvvik = () => {
 
 export const arbeidstakerFrilansMedAvvik = () => {
   const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
+  andeler[0].skalFastsetteGrunnlag = true;
+  andeler[1].skalFastsetteGrunnlag = false;
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT'), lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 36.2, 77059)];
+    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, 46.2, 77000),
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.2, 11000),
+  ];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -382,7 +382,7 @@ export const arbeidstakerOgAAP = () => {
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -67059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -67059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -428,7 +428,7 @@ export const selvstendigNæringsdrivende = () => {
   }];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -177059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
 
   return (
@@ -459,7 +459,7 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -486,7 +486,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -538,7 +538,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => 
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, -77059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -567,7 +567,7 @@ export const tidsbegrensetArbeidsforholdMedAvvikRedesign = () => {
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
   const statuser = [lagStatus('AT_FL')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningsgrunnlagTyper.ATFLSN, 474257, 26.2, 77059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex

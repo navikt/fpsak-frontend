@@ -21,7 +21,7 @@ import styles from './aksjonspunktBehandler.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
-import AksjonspunktBehandlerFT from '../frilanser/AksjonspunktBehandlerFL';
+import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/AkjsonspunktsbehandlerSN';
 
@@ -116,7 +116,7 @@ const AksjonspunktBehandler = ({
         />
         )}
         {!tidsBegrensetInntekt && visFL && (
-        <AksjonspunktBehandlerFT
+        <AksjonspunktBehandlerFL
           readOnly={readOnly}
           allePerioder={allePerioder}
           alleAndelerIForstePeriode={alleAndelerIForstePeriode}
