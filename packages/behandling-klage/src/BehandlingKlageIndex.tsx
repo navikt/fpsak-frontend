@@ -9,6 +9,7 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
+  BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
@@ -50,11 +51,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-interface KlageState {
-  forrigeBehandling?: Behandling;
-}
-
-class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
+class BehandlingKlageIndex extends PureComponent<Props> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -75,9 +72,7 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
 
   constructor(props) {
     super(props);
-    this.state = {
-      forrigeBehandling: undefined,
-    };
+    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -94,18 +89,6 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const { behandling } = this.props;
-    if (prevProps.behandling && behandling && behandling.versjon !== prevProps.behandling.versjon) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
-    }
-    if (!prevProps.behandling && behandling) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
-    }
   }
 
   componentWillUnmount = () => {
@@ -131,9 +114,6 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
       opneSokeside,
       alleBehandlinger,
     } = this.props;
-    const {
-      forrigeBehandling,
-    } = this.state;
 
     if (!behandling) {
       return <LoadingPanel />;
@@ -141,37 +121,36 @@ class BehandlingKlageIndex extends PureComponent<Props, KlageState> {
 
     reduxRestApi.injectPaths(behandling.links);
 
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
+      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+    }
+
     return (
       <DataFetcherBehandlingData
-        showLoadingIcon
-        showOldDataWhenRefetching
-        fetchTrigger={behandling.versjon}
+        behandlingDataCache={this.behandlingDataCache}
+        behandlingVersion={behandling.versjon}
         endpoints={klageData}
-        render={(dataProps, isFetchFinished) => {
-          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
-          if (!aktuellBehandling) {
-            return <LoadingPanel />;
-          }
-          return (
-            <>
-              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
-              <KlageGrid
-                fagsak={fagsak}
-                behandling={behandling}
-                kodeverk={kodeverk}
-                navAnsatt={navAnsatt}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                alleBehandlinger={alleBehandlinger}
-                {...dataProps}
-              />
-            </>
-          );
-        }}
+        showOldDataWhenRefetching
+        render={(dataProps) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <KlageGrid
+              fagsak={fagsak}
+              behandling={dataProps.behandling}
+              kodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              alleBehandlinger={alleBehandlinger}
+              {...dataProps}
+            />
+          </>
+        )}
       />
     );
   }

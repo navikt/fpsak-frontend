@@ -9,7 +9,7 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
-  DataFetcherBehandling, BehandlingDataCache,
+  DataFetcherBehandlingData, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
@@ -133,9 +133,9 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
     }
 
     return (
-      <DataFetcherBehandling
+      <DataFetcherBehandlingData
         behandlingDataCache={this.behandlingDataCache}
-        behandlingVersjon={behandling.versjon}
+        behandlingVersion={behandling.versjon}
         endpoints={tilbakekrevingData}
         showOldDataWhenRefetching
         render={(dataProps) => (

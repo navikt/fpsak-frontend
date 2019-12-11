@@ -21,9 +21,9 @@ class BehandlingDataCache {
     this.currentDataNames = [];
   }
 
-  hasData = (name) => this.currentDataNames.some((n) => n === name)
+  hasLatestDataFor = (name) => this.currentDataNames.some((n) => n === name)
 
-  hasDataForAll = (names) => names.every((n) => this.currentDataNames.some((cn) => n === cn))
+  hasLatestDataForAll = (names) => names.every((n) => this.currentDataNames.some((cn) => n === cn))
 
   startFetch = (behandlingVersjon, name) => {
     if (behandlingVersjon !== this.currentVersion) {

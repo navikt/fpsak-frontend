@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useMemo, useCallback, useEffect,
+  FunctionComponent, useMemo, useCallback,
 } from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
@@ -9,7 +9,7 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandling, behandlingPropType, fagsakInfoPropType, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
+  DataFetcherBehandlingData, behandlingPropType, fagsakInfoPropType, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
   getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
@@ -73,9 +73,9 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
       harAksjonspunkt: harApneAksjonspunkter,
     }]}
     >
-      <DataFetcherBehandling
+      <DataFetcherBehandlingData
         behandlingDataCache={cache}
-        behandlingVersjon={behandling.versjon}
+        behandlingVersion={behandling.versjon}
         endpoints={feilutbetalingData}
         render={(dataProps) => {
           if (dataProps.feilutbetalingFakta) {

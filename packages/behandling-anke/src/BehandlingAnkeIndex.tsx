@@ -9,6 +9,7 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner, behandlingPropType,
+  BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
@@ -50,11 +51,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-interface AnkeState {
-  forrigeBehandling?: Behandling;
-}
-
-class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
+class BehandlingAnkeIndex extends PureComponent<Props> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -75,9 +72,7 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
 
   constructor(props) {
     super(props);
-    this.state = {
-      forrigeBehandling: undefined,
-    };
+    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -94,18 +89,6 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const { behandling } = this.props;
-    if (prevProps.behandling && behandling && behandling.versjon !== prevProps.behandling.versjon) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
-    }
-    if (!prevProps.behandling && behandling) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
-    }
   }
 
   componentWillUnmount = () => {
@@ -131,9 +114,6 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
       opneSokeside,
       alleBehandlinger,
     } = this.props;
-    const {
-      forrigeBehandling,
-    } = this.state;
 
     if (!behandling) {
       return <LoadingPanel />;
@@ -141,37 +121,36 @@ class BehandlingAnkeIndex extends PureComponent<Props, AnkeState> {
 
     reduxRestApi.injectPaths(behandling.links);
 
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
+      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+    }
+
     return (
       <DataFetcherBehandlingData
-        showLoadingIcon
-        showOldDataWhenRefetching
-        fetchTrigger={behandling.versjon}
+        behandlingDataCache={this.behandlingDataCache}
+        behandlingVersion={behandling.versjon}
         endpoints={ankeData}
-        render={(dataProps, isFetchFinished) => {
-          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
-          if (!aktuellBehandling) {
-            return <LoadingPanel />;
-          }
-          return (
-            <>
-              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
-              <AnkeGrid
-                fagsak={fagsak}
-                behandling={aktuellBehandling}
-                navAnsatt={navAnsatt}
-                kodeverk={kodeverk}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                alleBehandlinger={alleBehandlinger}
-                {...dataProps}
-              />
-            </>
-          );
-        }}
+        showOldDataWhenRefetching
+        render={(dataProps) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <AnkeGrid
+              fagsak={fagsak}
+              behandling={dataProps.behandling}
+              navAnsatt={navAnsatt}
+              kodeverk={kodeverk}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              alleBehandlinger={alleBehandlinger}
+              {...dataProps}
+            />
+          </>
+        )}
       />
     );
   }

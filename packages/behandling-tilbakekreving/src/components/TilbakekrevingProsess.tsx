@@ -15,7 +15,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandling,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData,
   fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
   getAlleMerknaderFraBeslutter, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
@@ -250,9 +250,9 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
                 {...fellesProps}
               />
             )}
-            <DataFetcherBehandling
+            <DataFetcherBehandlingData
               behandlingDataCache={this.cache}
-              behandlingVersjon={behandling.versjon}
+              behandlingVersion={behandling.versjon}
               endpoints={tilbakekrevingData}
               showComponent={valgtStegKode === bpc.TILBAKEKREVING}
               render={(dataProps) => (
@@ -267,9 +267,9 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
                 />
               )}
             />
-            <DataFetcherBehandling
+            <DataFetcherBehandlingData
               behandlingDataCache={this.cache}
-              behandlingVersjon={behandling.versjon}
+              behandlingVersion={behandling.versjon}
               endpoints={vedtakData}
               showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}
               render={(dataProps) => (

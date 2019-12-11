@@ -9,7 +9,7 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
-  ReduxFormStateCleaner,
+  ReduxFormStateCleaner, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
@@ -50,11 +50,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-interface InnsynState {
-  forrigeBehandling?: Behandling;
-}
-
-class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
+class BehandlingInnsynIndex extends PureComponent<Props> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -74,9 +70,7 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
 
   constructor(props) {
     super(props);
-    this.state = {
-      forrigeBehandling: undefined,
-    };
+    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -93,18 +87,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const { behandling } = this.props;
-    if (prevProps.behandling && behandling && behandling.versjon !== prevProps.behandling.versjon) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
-    }
-    if (!prevProps.behandling && behandling) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
-    }
   }
 
   componentWillUnmount = () => {
@@ -129,9 +111,6 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
       opneSokeside,
       behandling,
     } = this.props;
-    const {
-      forrigeBehandling,
-    } = this.state;
 
     if (!behandling) {
       return <LoadingPanel />;
@@ -139,37 +118,36 @@ class BehandlingInnsynIndex extends PureComponent<Props, InnsynState> {
 
     reduxRestApi.injectPaths(behandling.links);
 
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
+      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+    }
+
     return (
       <DataFetcherBehandlingData
-        showLoadingIcon
+        behandlingDataCache={this.behandlingDataCache}
+        behandlingVersion={behandling.versjon}
         showOldDataWhenRefetching
-        fetchTrigger={behandling.versjon}
         endpoints={innsynData}
         endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-        render={(dataProps, isFetchFinished) => {
-          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
-          if (!aktuellBehandling) {
-            return <LoadingPanel />;
-          }
-          return (
-            <>
-              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
-              <InnsynGrid
-                fagsak={fagsak}
-                behandling={aktuellBehandling}
-                kodeverk={kodeverk}
-                navAnsatt={navAnsatt}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                {...dataProps}
-              />
-            </>
-          );
-        }}
+        render={(dataProps) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <InnsynGrid
+              fagsak={fagsak}
+              behandling={dataProps.behandling}
+              kodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              {...dataProps}
+            />
+          </>
+        )}
       />
     );
   }
