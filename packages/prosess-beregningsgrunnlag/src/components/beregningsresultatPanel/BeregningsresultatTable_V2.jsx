@@ -14,10 +14,11 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
+import styles from './beregningsresultatTable_V2.less';
 
 const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
-    <Column xs="7" key={`indexAl2${index + 1}`}>
+    <Column xs="8" key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry[0]}
       </Normaltekst>
@@ -37,41 +38,46 @@ const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((en
 );
 const lineRow = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="10">
-      <hr />
-    </Column>
+    <Column xs="11" className={styles.colLine} />
   </Row>
 );
-const erRedusereVerdierLike = (listOfEntries) => {
-  let alleLike = true;
-  let lastEntry;
-  listOfEntries.forEach((entry) => {
-    if (lastEntry && lastEntry[1] !== entry[1]) {
-      alleLike = false;
-    }
-    lastEntry = entry;
-  });
-  return alleLike;
-};
-const createRowsRedusert = (listOfEntries) => (
-  listOfEntries.map((entry, index) => (
-    <Row key={`indexR${index + 1}`}>
-      <Column xs="7" key={`indexR2${index + 1}`}>
+
+const createRowsRedusert = (listOfEntries, verdierLike) => {
+  if (!verdierLike) {
+    return (
+      listOfEntries.map((entry, index) => (
+        <Row key={`indexR${index + 1}`}>
+          <Column xs="8" key={`indexR2${index + 1}`}>
+            <Normaltekst>
+              {entry[0]}
+            </Normaltekst>
+          </Column>
+          <Column xs="3" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
+            <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
+          </Column>
+        </Row>
+      ))
+    );
+  }
+  const entry = listOfEntries[0];
+  return (
+    <Row>
+      <Column xs="8">
         <Normaltekst>
           {entry[0]}
         </Normaltekst>
       </Column>
-      <Column xs="3" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="3" className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry[1])}</Normaltekst>
       </Column>
     </Row>
-  ))
-);
+  );
+};
 
 const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
   <React.Fragment key="beregningOppsummeringWrapper">
     <Row key="beregningOppsummering">
-      <Column xs="7" key="beregningOppsummeringLedetekst">
+      <Column xs="8" key="beregningOppsummeringLedetekst">
         <Normaltekst>
           <span className={beregningStyles.semiBoldText}>
             { !ikkeVurdert && (
@@ -103,22 +109,30 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser) => {
 
   if (listofAndeler && listofAndeler.length > 0) {
     rows.push(createRowsAndeler(listofAndeler));
-    rows.push(lineRow('andelLinje'));
+    if (listofAndeler > 1) {
+      rows.push(lineRow('andelLinje'));
+    }
   }
-  if (!erRedusereVerdierLike(listOfEntries)) {
-    rows.push(createRowsRedusert(listOfEntries));
-    rows.push(lineRow('redusertLinje'));
-  }
+
+
+  rows.push(createRowsRedusert(listOfEntries));
+  rows.push(lineRow('redusertLinje'));
+
+
   rows.push(summaryRow(listOfDagsatser, listOfEntries));
+
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
   const rows = [];
   if (listofAndeler && listofAndeler.length > 0) {
     rows.push(createRowsAndeler(listofAndeler, true));
+
     rows.push(lineRow('redusertAndelLinje'));
   }
+
   rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+
   return rows;
 };
 
@@ -151,7 +165,7 @@ export const createBeregningTableData = createSelector(
     const atRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AT`} />];
     const flRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.FL`} />];
     const snRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.SN`} />];
-    const aapRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AT`} />];
+    const aapRad = [<FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AAP`} />];
     const dpRad = [<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagpenger" />];
     const avkortetRad = [ledetekstAvkortet];
     const redusertRad = [ledetekstRedusert];
@@ -180,7 +194,13 @@ export const createBeregningTableData = createSelector(
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.push(formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar));
       avkortetRad.push(formatCurrencyNoKr(periode.avkortetPrAar));
-      redusertRad.push(formatCurrencyNoKr(periode.redusertPrAar));
+      console.log('periode.avkortetPrAar', periode.avkortetPrAar);
+      console.log('periode.redusertPrAar', periode.redusertPrAar);
+      console.log('redusertRad', redusertRad[0]);
+      if (periode.avkortetPrAar !== periode.redusertPrAar) {
+        debugger;
+        redusertRad.push(formatCurrencyNoKr(periode.redusertPrAar));
+      }
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
     });
     const rowsAndeler = [];
@@ -190,7 +210,14 @@ export const createBeregningTableData = createSelector(
     if (snRad[1] !== undefined) { rowsAndeler.push(snRad); }
     if (aapRad[1] !== undefined) { rowsAndeler.push(aapRad); }
     if (dpRad[1] !== undefined) { rowsAndeler.push(dpRad); }
-    const rows = [bruttoRad, avkortetRad, redusertRad];
+
+    const rows = [avkortetRad];
+    if (rowsAndeler.length > 1) {
+      rows.unshift(bruttoRad);
+    }
+    if (redusertRad.length > 1) {
+      rows.push(redusertRad);
+    }
     return {
       headers,
       rows,
