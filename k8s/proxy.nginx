@@ -40,7 +40,7 @@ server {
   location  /"${APP_PATH_PREFIX}" {
     proxy_set_header Host       $http_host;
     proxy_hide_header       Content-Security-Policy;
-    proxy_pass "${APP_URL_FPSAK}/${APP_PATH_PREFIX}";
+    proxy_pass "${APP_URL}/${APP_PATH_PREFIX}";
     proxy_intercept_errors on;
     error_page 401 = @401_json;
     error_page 403 = @403_json;
