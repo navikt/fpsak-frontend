@@ -274,7 +274,7 @@ describe('<BeregningForm2>', () => {
       erVarigEndretNaering: true,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(3);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5039');
@@ -290,7 +290,7 @@ describe('<BeregningForm2>', () => {
       erVarigEndretNaering: false,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5039');
@@ -304,7 +304,7 @@ describe('<BeregningForm2>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5049');
@@ -317,7 +317,7 @@ describe('<BeregningForm2>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgTidsbegrensetArbeidsforhold];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5047');
@@ -330,7 +330,7 @@ describe('<BeregningForm2>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkter = [apVurderDekningsgrad, apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5039');
@@ -341,7 +341,7 @@ describe('<BeregningForm2>', () => {
       dekningsgrad: 100,
     };
     const aksjonspunkt = [apVurderDekningsgrad];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5087');
   });
@@ -351,7 +351,7 @@ describe('<BeregningForm2>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkt = [apVurderVarigEndretEllerNyoppstartetSN];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5039');
   });
@@ -361,14 +361,14 @@ describe('<BeregningForm2>', () => {
       bruttoBeregningsgrunnlag: 240000,
     };
     const aksjonspunkt = [apFastsettBgSnNyIArbeidslivet];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5047', () => {
     const values = {};
     const aksjonspunkt = [apFastsettBgTidsbegrensetArbeidsforhold];
-    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder);
+    const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5047');
   });

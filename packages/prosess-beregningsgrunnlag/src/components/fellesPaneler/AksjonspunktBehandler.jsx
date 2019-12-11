@@ -223,4 +223,7 @@ AksjonspunktBehandler.propTypes = {
 AksjonspunktBehandler.defaultProps = {
   allePerioder: undefined,
 };
+
+AksjonspunktBehandler.transformValues = (values) => values.ATFLVurdering;
+
 export default AksjonspunktBehandler;
