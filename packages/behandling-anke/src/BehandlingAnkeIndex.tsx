@@ -9,20 +9,28 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, ReduxFormStateCleaner, behandlingPropType,
-  BehandlingDataCache,
+  BehandlingDataCache, Aksjonspunkt, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
 
 import ankeApi, { reduxRestApi, AnkeBehandlingApiKeys } from './data/ankeBehandlingApi';
 import AnkeGrid from './components/AnkeGrid';
+import AnkeVurdering from './types/ankeVurderingTsType';
 
 const ankeData = [ankeApi.AKSJONSPUNKTER, ankeApi.VILKAR, ankeApi.ANKE_VURDERING];
+
+interface DataProps {
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar;
+  ankeVurdering: AnkeVurdering;
+}
 
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   navAnsatt: NavAnsatt;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: Kodeverk[]};
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
@@ -52,6 +60,8 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingAnkeIndex extends PureComponent<Props> {
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
+
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -68,11 +78,6 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
     resetRestApiContext: PropTypes.func.isRequired,
     destroyReduxForm: PropTypes.func.isRequired,
     behandling: behandlingPropType,
-  }
-
-  constructor(props) {
-    super(props);
-    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -132,12 +137,11 @@ class BehandlingAnkeIndex extends PureComponent<Props> {
         behandlingVersion={behandling.versjon}
         endpoints={ankeData}
         showOldDataWhenRefetching
-        render={(dataProps) => (
+        render={(dataProps: DataProps) => (
           <>
             <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
             <AnkeGrid
               fagsak={fagsak}
-              behandling={dataProps.behandling}
               navAnsatt={navAnsatt}
               kodeverk={kodeverk}
               valgtProsessSteg={valgtProsessSteg}

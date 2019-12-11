@@ -15,16 +15,16 @@ import ankeVurderingPropType from '../propTypes/ankeVurderingPropType';
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   ankeVurdering: AnkeVurdering;
   navAnsatt: NavAnsatt;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: Kodeverk[]};
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
   alleBehandlinger: [{}];
 }

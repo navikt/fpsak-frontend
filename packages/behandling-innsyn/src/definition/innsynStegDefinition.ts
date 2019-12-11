@@ -41,8 +41,8 @@ const createInnsynStegProps = (builderData) => innsynBuilders.reduce((currentFbs
 
 interface OwnProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   innsyn: Innsyn;
 }
 

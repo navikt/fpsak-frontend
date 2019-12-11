@@ -31,8 +31,8 @@ const createAnkeStegProps = (builderData) => ankeBuilders.reduce((currentFbs, fb
 
 interface OwnProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
 }
 
 const finnAnkeSteg = createSelector(

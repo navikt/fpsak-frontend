@@ -30,8 +30,8 @@ interface OwnProps {
   intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;

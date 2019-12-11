@@ -55,8 +55,8 @@ const createKlageStegProps = (builderData) => klageBuilders.reduce((currentFbs, 
 
 interface OwnProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
 }
 
 const finnKlageSteg = createSelector(

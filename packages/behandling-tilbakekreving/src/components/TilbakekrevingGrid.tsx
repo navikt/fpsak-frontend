@@ -18,10 +18,10 @@ import beregningsresultatPropType from '../propTypes/beregningsresultatPropType'
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
+  aksjonspunkter: Aksjonspunkt[];
   perioderForeldelse?: PerioderForeldelse;
   beregningsresultat?: Beregningsresultat;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;

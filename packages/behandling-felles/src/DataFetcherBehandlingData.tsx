@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import BehandlingDataCache from './BehandlingDataCache';
 
@@ -13,13 +14,7 @@ export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m
 interface OwnProps {
   behandlingVersion: number;
   render: (data: {}) => ReactNode;
-  endpoints: [{
-    name: string;
-    isEndpointEnabled: () => boolean;
-    getRestApiData: () => (state: {}) => any;
-    getRestApiFinished: () => (state: {}) => boolean;
-    makeRestApiRequest: () => (param: any, meta: { keepData: boolean}) => Promise<any>;
-  }];
+  endpoints: EndpointOperations[];
   endpointParams?: {};
   behandlingDataCache: BehandlingDataCache;
   showOldDataWhenRefetching?: boolean;
@@ -97,14 +92,8 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
 DataFetcherBehandlingData.propTypes = {
   behandlingVersion: PropTypes.number.isRequired,
   render: PropTypes.func.isRequired,
-  endpoints: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    isEndpointEnabled: PropTypes.func.isRequired,
-    getRestApiData: PropTypes.func.isRequired,
-    getRestApiFinished: PropTypes.func.isRequired,
-    makeRestApiRequest: PropTypes.func.isRequired,
-  })).isRequired,
-  endpointParams: PropTypes.shape(),
+  endpoints: PropTypes.arrayOf(PropTypes.instanceOf(EndpointOperations).isRequired).isRequired,
+  endpointParams: PropTypes.shape({}),
   behandlingDataCache: PropTypes.instanceOf(BehandlingDataCache).isRequired,
   showOldDataWhenRefetching: PropTypes.bool,
   showComponent: PropTypes.bool,

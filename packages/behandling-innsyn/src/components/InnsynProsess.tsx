@@ -25,11 +25,11 @@ interface OwnProps {
   intl: {};
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   innsyn: Innsyn;
-  kodeverk: { [key: string]: [Kodeverk] };
-  alleDokumenter: [Dokument];
+  kodeverk: { [key: string]: Kodeverk[] };
+  alleDokumenter: Dokument[];
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;

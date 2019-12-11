@@ -16,17 +16,17 @@ import innsynPropType from '../propTypes/innsynPropType';
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  vilkar: [Vilkar];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
   innsyn: Innsyn;
-  kodeverk: {[key: string]: [Kodeverk]};
-  innsynDokumenter: [Dokument];
+  kodeverk: {[key: string]: Kodeverk[]};
+  innsynDokumenter: Dokument[];
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
-  hentBehandling: ({ behandlingId: number }) => Promise<any>;
+  hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
 }
 

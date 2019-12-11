@@ -9,18 +9,26 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType,
-  ReduxFormStateCleaner, BehandlingDataCache,
+  ReduxFormStateCleaner, BehandlingDataCache, Aksjonspunkt, Dokument,
 } from '@fpsak-frontend/behandling-felles';
 
 import innsynApi, { reduxRestApi, InnsynBehandlingApiKeys } from './data/innsynBehandlingApi';
 import InnsynGrid from './components/InnsynGrid';
+import Innsyn from './types/innsynTsType';
 
 const innsynData = [innsynApi.AKSJONSPUNKTER, innsynApi.VILKAR, innsynApi.INNSYN, innsynApi.INNSYN_DOKUMENTER];
+
+interface DataProps {
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
+  innsyn: Innsyn;
+  innsynDokumenter: Dokument[];
+}
 
 interface OwnProps {
   behandlingId: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   location: {};
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
@@ -51,6 +59,8 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingInnsynIndex extends PureComponent<Props> {
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
+
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -66,11 +76,6 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
     resetRestApiContext: PropTypes.func.isRequired,
     destroyReduxForm: PropTypes.func.isRequired,
     behandling: behandlingPropType,
-  }
-
-  constructor(props) {
-    super(props);
-    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -130,12 +135,11 @@ class BehandlingInnsynIndex extends PureComponent<Props> {
         showOldDataWhenRefetching
         endpoints={innsynData}
         endpointParams={{ [innsynApi.INNSYN_DOKUMENTER.name]: { saksnummer: fagsak.saksnummer } }}
-        render={(dataProps) => (
+        render={(dataProps: DataProps) => (
           <>
             <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
             <InnsynGrid
               fagsak={fagsak}
-              behandling={dataProps.behandling}
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}

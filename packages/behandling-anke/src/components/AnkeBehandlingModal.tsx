@@ -38,7 +38,6 @@ const AnkeVurderingModal: FunctionComponent<OwnProps> = ({
     onRequestClose={lukkModal}
     closeButton={false}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
   >
     <Row>
       <Column xs="1">

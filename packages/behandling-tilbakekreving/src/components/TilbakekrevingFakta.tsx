@@ -21,8 +21,8 @@ const feilutbetalingData = [tilbakekrevingApi.FEILUTBETALING_FAKTA, tilbakekrevi
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-  kodeverk: {[key: string]: [Kodeverk]};
+  aksjonspunkter: Aksjonspunkt[];
+  kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;

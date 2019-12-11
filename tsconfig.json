@@ -18,7 +18,8 @@
 		"packages/behandling-innsyn",
 		"packages/behandling-klage",
 		"packages/behandling-anke",
-		"packages/behandling-tilbakekreving"
+		"packages/behandling-tilbakekreving",
+		"@types"
 	],
 
 }

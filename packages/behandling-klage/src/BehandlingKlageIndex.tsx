@@ -9,19 +9,27 @@ import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
-  BehandlingDataCache,
+  BehandlingDataCache, Vilkar, Aksjonspunkt,
 } from '@fpsak-frontend/behandling-felles';
 
 import klageApi, { reduxRestApi, KlageBehandlingApiKeys } from './data/klageBehandlingApi';
 import KlageGrid from './components/KlageGrid';
+import KlageVurdering from './types/klageVurderingTsType';
 
 const klageData = [klageApi.AKSJONSPUNKTER, klageApi.VILKAR, klageApi.KLAGE_VURDERING];
+
+interface DataProps {
+  behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
+  klageVurdering: KlageVurdering;
+}
 
 interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   fagsak: FagsakInfo;
-  kodeverk: {[key: string]: [Kodeverk]};
+  kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg?: string;
@@ -52,6 +60,8 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingKlageIndex extends PureComponent<Props> {
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
+
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -68,11 +78,6 @@ class BehandlingKlageIndex extends PureComponent<Props> {
     resetRestApiContext: PropTypes.func.isRequired,
     destroyReduxForm: PropTypes.func.isRequired,
     behandling: behandlingPropType,
-  }
-
-  constructor(props) {
-    super(props);
-    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -132,12 +137,11 @@ class BehandlingKlageIndex extends PureComponent<Props> {
         behandlingVersion={behandling.versjon}
         endpoints={klageData}
         showOldDataWhenRefetching
-        render={(dataProps) => (
+        render={(dataProps: DataProps) => (
           <>
             <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
             <KlageGrid
               fagsak={fagsak}
-              behandling={dataProps.behandling}
               kodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
