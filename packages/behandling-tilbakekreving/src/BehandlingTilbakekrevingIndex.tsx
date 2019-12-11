@@ -8,7 +8,8 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, DataFetcherBehandlingData, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, fagsakInfoPropType, SettPaVentParams, behandlingPropType, ReduxFormStateCleaner,
+  DataFetcherBehandling, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
@@ -52,11 +53,7 @@ interface DispatchProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 
-interface TilbakekrevingState {
-  forrigeBehandling?: Behandling;
-}
-
-class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingState> {
+class BehandlingTilbakekrevingIndex extends PureComponent<Props> {
   static propTypes = {
     behandlingId: PropTypes.number.isRequired,
     fagsak: fagsakInfoPropType.isRequired,
@@ -79,9 +76,7 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
 
   constructor(props) {
     super(props);
-    this.state = {
-      forrigeBehandling: undefined,
-    };
+    this.behandlingDataCache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -99,18 +94,6 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
 
     hentBehandling({ behandlingId }, { keepData: false });
     hentKodeverk();
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const { behandling } = this.props;
-    if (prevProps.behandling && behandling && behandling.versjon !== prevProps.behandling.versjon) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: prevProps.behandling }));
-    }
-    if (!prevProps.behandling && behandling) {
-      // eslint-disable-next-line react/no-did-update-set-state
-      this.setState((state) => ({ ...state, forrigeBehandling: behandling }));
-    }
   }
 
   componentWillUnmount = () => {
@@ -137,9 +120,6 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
       harApenRevurdering,
       hasFetchError,
     } = this.props;
-    const {
-      forrigeBehandling,
-    } = this.state;
 
     if (!behandling || !kodeverk) {
       return <LoadingPanel />;
@@ -147,38 +127,36 @@ class BehandlingTilbakekrevingIndex extends PureComponent<Props, TilbakekrevingS
 
     reduxRestApi.injectPaths(behandling.links);
 
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
+      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+    }
+
     return (
-      <DataFetcherBehandlingData
-        showLoadingIcon
-        showOldDataWhenRefetching
-        fetchTrigger={behandling.versjon}
+      <DataFetcherBehandling
+        behandlingDataCache={this.behandlingDataCache}
+        behandlingVersjon={behandling.versjon}
         endpoints={tilbakekrevingData}
-        render={(dataProps, isFetchFinished) => {
-          const aktuellBehandling = isFetchFinished ? behandling : forrigeBehandling;
-          if (!aktuellBehandling) {
-            return <LoadingPanel />;
-          }
-          return (
-            <>
-              <ReduxFormStateCleaner behandlingId={aktuellBehandling.id} behandlingVersjon={aktuellBehandling.versjon} />
-              <TilbakekrevingGrid
-                fagsak={fagsak}
-                behandling={aktuellBehandling}
-                kodeverk={kodeverk}
-                navAnsatt={navAnsatt}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                harApenRevurdering={harApenRevurdering}
-                hasFetchError={hasFetchError}
-                {...dataProps}
-              />
-            </>
-          );
-        }}
+        showOldDataWhenRefetching
+        render={(dataProps) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <TilbakekrevingGrid
+              fagsak={fagsak}
+              kodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              harApenRevurdering={harApenRevurdering}
+              hasFetchError={hasFetchError}
+              {...dataProps}
+            />
+          </>
+        )}
       />
     );
   }
@@ -211,4 +189,4 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
   }, dispatch),
 });
 
-export default connect<StateProps, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingTilbakekrevingIndex);
+export default connect<any, DispatchProps, OwnProps>(mapStateToProps, mapDispatchToProps)(BehandlingTilbakekrevingIndex);

@@ -1,4 +1,6 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
+export { default as DataFetcherBehandling } from './src/DataFetcherBehandling';
+export { default as BehandlingDataCache } from './src/BehandlingDataCache';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as FaktaPanel } from './src/components/FaktaPanel';

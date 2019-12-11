@@ -15,9 +15,9 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandling,
   fagsakInfoPropType, behandlingPropType, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  getAlleMerknaderFraBeslutter,
+  getAlleMerknaderFraBeslutter, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
@@ -90,6 +90,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
       visFatterVedtakModal: false,
       skalOppdatereFagsakKontekst: true,
     };
+    this.cache = new BehandlingDataCache();
   }
 
   componentDidMount = () => {
@@ -206,8 +207,12 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
       alleKodeverk: kodeverk,
     };
 
-    const vedtakStegVises = valgtStegKode === bpc.KLAGE_RESULTAT;
+    const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
     const apCodes = valgtSteg && valgtSteg.aksjonspunkter.map((a) => a.definisjon.kode);
+
+    if (this.cache.getCurrentVersion() !== behandling.versjon) {
+      this.cache.setVersion(behandling.versjon);
+    }
 
     return (
       <>
@@ -245,34 +250,34 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
                 {...fellesProps}
               />
             )}
-            <DataFetcherBehandlingData
-              showLoadingIcon
-              fetchTrigger={behandling.versjon}
+            <DataFetcherBehandling
+              behandlingDataCache={this.cache}
+              behandlingVersjon={behandling.versjon}
               endpoints={tilbakekrevingData}
               showComponent={valgtStegKode === bpc.TILBAKEKREVING}
-              render={(props) => (
+              render={(dataProps) => (
                 <TilbakekrevingProsessIndex
                   apCodes={apCodes}
                   readOnlySubmitButton={readOnlySubmitButton}
                   navBrukerKjonn={fagsak.fagsakPerson.erKvinne ? navBrukerKjonn.KVINNE : navBrukerKjonn.MANN}
                   alleMerknaderFraBeslutter={getAlleMerknaderFraBeslutter(behandling, aksjonspunkter)}
                   beregnBelop={beregnBelop}
-                  {...props}
+                  {...dataProps}
                   {...fellesProps}
                 />
               )}
             />
-            <DataFetcherBehandlingData
-              showLoadingIcon
-              fetchTrigger={behandling.versjon}
+            <DataFetcherBehandling
+              behandlingDataCache={this.cache}
+              behandlingVersjon={behandling.versjon}
               endpoints={vedtakData}
               showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}
-              render={(props) => (
+              render={(dataProps) => (
                 <VedtakTilbakekrevingProsessIndex
                   beregningsresultat={beregningsresultat}
                   fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
                   aksjonspunktKodeForeslaVedtak={aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK}
-                  {...props}
+                  {...dataProps}
                   {...fellesProps}
                 />
               )}

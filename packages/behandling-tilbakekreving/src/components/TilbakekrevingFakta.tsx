@@ -1,4 +1,6 @@
-import React, { FunctionComponent, useMemo, useCallback } from 'react';
+import React, {
+  FunctionComponent, useMemo, useCallback, useEffect,
+} from 'react';
 import PropTypes from 'prop-types';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
@@ -7,8 +9,8 @@ import { aksjonspunktPropType, navAnsattPropType } from '@fpsak-frontend/prop-ty
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandlingData, behandlingPropType, fagsakInfoPropType, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
-  getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt,
+  DataFetcherBehandling, behandlingPropType, fagsakInfoPropType, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
+  getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
@@ -61,6 +63,9 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
   const dispatch = useDispatch();
   const bekreftCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
 
+  const cache = new BehandlingDataCache();
+  cache.setVersion(behandling.versjon);
+
   return (
     <FaktaPanel paneler={[{
       tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
@@ -68,9 +73,9 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
       harAksjonspunkt: harApneAksjonspunkter,
     }]}
     >
-      <DataFetcherBehandlingData
-        showOldDataWhenRefetching
-        fetchTrigger={behandling.versjon}
+      <DataFetcherBehandling
+        behandlingDataCache={cache}
+        behandlingVersjon={behandling.versjon}
         endpoints={feilutbetalingData}
         render={(dataProps) => {
           if (dataProps.feilutbetalingFakta) {
