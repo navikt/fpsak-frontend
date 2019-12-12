@@ -89,7 +89,9 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
 
   const rows = relevanteAndeler.map((andel, index) => (
-    <React.Fragment key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}`}>
+    <React.Fragment
+      key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsForhold.eksternArbeidsforholdId : ''}`}
+    >
       <Row key={`index${index + 1}`}>
         <Column xs={andel.erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>

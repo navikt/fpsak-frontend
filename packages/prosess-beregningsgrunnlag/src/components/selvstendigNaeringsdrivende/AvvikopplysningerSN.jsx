@@ -27,7 +27,6 @@ const AvviksopplysningerSN = ({
     sammenligningsgrunnlagSumSN = sammenligningsGrunnlagSN.rapportertPrAar;
     differanseBeregnet = sammenligningsGrunnlagSN.differanseBeregnet;
   }
-  debugger;
   if (erNyArbLivet) {
     return (
       <Row>

@@ -49,9 +49,9 @@ describe('<AvviksopplysningerSN>', () => {
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet');
   });
-  it('Skal teste komponenten ved erVarigEndring && !harAksjonspunkter', () => {
+  it('Skal teste komponenten ved !erVarigEndring && !harAksjonspunkter', () => {
     forstePeriode[0].erNyIArbeidslivet = false;
-    forstePeriode[0].næringer[0].erVarigEndret = true;
+    forstePeriode[0].næringer[0].erVarigEndret = false;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
@@ -61,11 +61,11 @@ describe('<AvviksopplysningerSN>', () => {
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.VarigEndring');
+    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring');
   });
   it('Skal teste komponenten ved  !harAksjonspunkter', () => {
     forstePeriode[0].erNyIArbeidslivet = false;
-    forstePeriode[0].næringer[0].erVarigEndret = false;
+    forstePeriode[0].næringer[0].erVarigEndret = true;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
     const wrapper = shallowWithIntl(<AvviksopplysningerSN
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
