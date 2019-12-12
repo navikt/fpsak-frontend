@@ -35,7 +35,7 @@ export const FagsakIndex = ({ selectedSaksnummer, requestPendingMessage }) => (
 );
 
 FagsakIndex.propTypes = {
-  selectedSaksnummer: PropTypes.number.isRequired,
+  selectedSaksnummer: PropTypes.string.isRequired,
   requestPendingMessage: PropTypes.string,
 };
 

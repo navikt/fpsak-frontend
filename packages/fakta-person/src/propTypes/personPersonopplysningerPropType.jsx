@@ -6,13 +6,13 @@ const personPersonopplysningerPropType = PropTypes.shape({
   barn: PropTypes.arrayOf(PropTypes.shape({
     navn: PropTypes.string.isRequired,
     fnr: PropTypes.string.isRequired,
-    navBrukerKjonn: kodeverkObjektPropType.isRequired,
-    soktForBarn: PropTypes.bool.isRequired,
+    navBrukerKjonn: kodeverkObjektPropType,
+    soktForBarn: PropTypes.bool,
   })),
   navn: PropTypes.string.isRequired,
   fodselsdato: PropTypes.string.isRequired,
   fnr: PropTypes.string.isRequired,
-  navBrukerKjonn: kodeverkObjektPropType.isRequired,
+  navBrukerKjonn: kodeverkObjektPropType,
   diskresjonskode: kodeverkObjektPropType,
   personstatus: kodeverkObjektPropType.isRequired,
   avklartPersonstatus: PropTypes.shape({

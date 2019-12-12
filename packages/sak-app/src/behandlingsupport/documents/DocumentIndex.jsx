@@ -61,7 +61,7 @@ export const DocumentIndex = ({
 );
 
 DocumentIndex.propTypes = {
-  saksNr: PropTypes.number.isRequired,
+  saksNr: PropTypes.string.isRequired,
   behandlingId: PropTypes.number,
   behandlingVersjon: PropTypes.number,
 };

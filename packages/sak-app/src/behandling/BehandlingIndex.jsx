@@ -58,7 +58,7 @@ const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.T
  */
 export class BehandlingIndex extends Component {
   static propTypes = {
-    saksnummer: PropTypes.number.isRequired,
+    saksnummer: PropTypes.string.isRequired,
     behandlingId: PropTypes.number.isRequired,
     behandlingType: PropTypes.string.isRequired,
     behandlingVersjon: PropTypes.number.isRequired,
