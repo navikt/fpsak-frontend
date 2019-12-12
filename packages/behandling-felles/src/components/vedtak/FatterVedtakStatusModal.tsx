@@ -36,7 +36,7 @@ const FatterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponentProp
     onRequestClose={lukkModal}
     shouldCloseOnOverlayClick={false}
   >
-    <Row>
+    <Row className="">
       <Column xs="1">
         <Image
           className={styles.image}

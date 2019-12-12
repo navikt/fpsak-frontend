@@ -10,7 +10,9 @@ type Behandling = Readonly<{
   venteArsakKode?: string;
   behandlingPaaVent: boolean;
   behandlingHenlagt: boolean;
-  behandlingsresultat?: {};
+  behandlingsresultat?: {
+    type: Kodeverk;
+  };
   links: {
     href: string;
     rel: string;

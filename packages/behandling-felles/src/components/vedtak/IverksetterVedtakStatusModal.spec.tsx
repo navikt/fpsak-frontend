@@ -19,6 +19,7 @@ describe('<IverksetterVedtakStatusModal>', () => {
       behandlingsresultat={{
         type: {
           kode: behandlingResultatType.AVSLATT,
+          navn: 'Avslått',
         },
       }}
     />);

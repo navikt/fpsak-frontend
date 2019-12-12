@@ -11,9 +11,6 @@ import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg
 import styles from './klageBehandlingModal.less';
 
 interface OwnProps {
-  intl: {
-    formatMessage: (o: {}) => string;
-  };
   visModal?: boolean;
   lukkModal: () => void;
 }
@@ -38,7 +35,7 @@ const KlageVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> =
     closeButton={false}
     shouldCloseOnOverlayClick={false}
   >
-    <Row>
+    <Row className="">
       <Column xs="1">
         <Image className={styles.image} src={innvilgetImageUrl} />
         <div className={styles.divider} />

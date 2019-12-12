@@ -10,6 +10,7 @@
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
+		"skipLibCheck": true, //TODO Fjern denne
 	},
 	"include": [
 		"packages/rest-api",

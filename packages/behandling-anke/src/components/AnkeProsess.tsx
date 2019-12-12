@@ -231,7 +231,6 @@ class AnkeProsess extends Component<Props, AnkeProsessState> {
           visModal={visIverksetterVedtakModal}
           lukkModal={this.toggleIverksetterVedtakModal}
           behandlingsresultat={behandling.behandlingsresultat}
-          behandlingStatusKode={behandling.status.kode}
         />
         <AnkeBehandlingModal
           visModal={visModalAnkeBehandling}

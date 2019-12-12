@@ -168,7 +168,6 @@ class InnsynProsess extends Component<Props, InnsynProsessState> {
           visModal={visIverksetterVedtakModal}
           lukkModal={this.toggleIverksetterVedtakModal}
           behandlingsresultat={behandling.behandlingsresultat}
-          behandlingStatusKode={behandling.status.kode}
         />
         <ProcessMenu
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}

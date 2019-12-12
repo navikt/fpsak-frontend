@@ -45,7 +45,7 @@ const IverksetterVedtakStatusModal: FunctionComponent<OwnProps & WrappedComponen
       onRequestClose={lukkModal}
       shouldCloseOnOverlayClick={false}
     >
-      <Row>
+      <Row className="">
         <Column xs="1">
           <Image
             className={styles.image}

@@ -35,7 +35,7 @@ const AnkeVurderingModal: FunctionComponent<OwnProps & WrappedComponentProps> = 
     closeButton={false}
     shouldCloseOnOverlayClick={false}
   >
-    <Row>
+    <Row className="">
       <Column xs="1">
         <Image className={styles.image} src={innvilgetImageUrl} />
         <div className={styles.divider} />
