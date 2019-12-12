@@ -214,11 +214,6 @@ const skjermlenkeCodes = {
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
-  if (!skjermlenke) {
-    console.log('feilet');
-    console.log(behandlingLocation);
-    console.log(skjermlenkeCode);
-  }
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
 
