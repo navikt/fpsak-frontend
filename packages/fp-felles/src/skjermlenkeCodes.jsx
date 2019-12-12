@@ -3,6 +3,11 @@ import faktaPanelCodes from './faktaPanelCodes';
 import { getLocationWithQueryParams } from './paths';
 
 const skjermlenkeCodes = {
+  BEREGNING: {
+    kode: 'BEREGNING',
+    faktaNavn: faktaPanelCodes.DEFAULT,
+    punktNavn: behandlingspunktCodes.BEREGNING,
+  },
   BEREGNING_ENGANGSSTOENAD: {
     kode: 'BEREGNING_ENGANGSSTOENAD',
     faktaNavn: faktaPanelCodes.DEFAULT,
@@ -209,6 +214,11 @@ const skjermlenkeCodes = {
 
 export const createLocationForHistorikkItems = (behandlingLocation, skjermlenkeCode) => {
   const skjermlenke = skjermlenkeCodes[skjermlenkeCode];
+  if (!skjermlenke) {
+    console.log('feilet');
+    console.log(behandlingLocation);
+    console.log(skjermlenkeCode);
+  }
   return getLocationWithQueryParams(behandlingLocation, { punkt: skjermlenke.punktNavn, fakta: skjermlenke.faktaNavn });
 };
 

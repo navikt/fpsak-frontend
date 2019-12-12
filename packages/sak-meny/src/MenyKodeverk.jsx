@@ -22,7 +22,10 @@ class MenyKodeverk {
   }
 
   getKodeverkForBehandlingstype(behandlingTypeKode, kodeverkType) {
-    if (behandlingTypeKode === BehandlingType.TILBAKEKREVING || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    if (
+      behandlingTypeKode === BehandlingType.TILBAKEKREVING
+      || behandlingTypeKode === BehandlingType.TILBAKEKREVING_REVURDERING
+    ) {
       return this.$$fpTilbakeKodeverk[kodeverkType];
     }
     return this.$$fpSakKodeverk[kodeverkType];
@@ -35,7 +38,9 @@ class MenyKodeverk {
   getKodeverkForBehandlingstyper(behandlingTypeKoder, kodeverkType) {
     return behandlingTypeKoder.reduce((acc, btk) => {
       const alleKodeverkForKodeverkType = this.getKodeverkForBehandlingstype(btk, kodeverkType);
-      return alleKodeverkForKodeverkType ? acc.concat([alleKodeverkForKodeverkType.find((k) => k.kode === btk)]) : acc;
+      return alleKodeverkForKodeverkType && alleKodeverkForKodeverkType.some((k) => k.kode === btk)
+        ? acc.concat([alleKodeverkForKodeverkType.find((k) => k.kode === btk)])
+        : acc;
     }, []);
   }
 }
