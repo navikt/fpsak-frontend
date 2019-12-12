@@ -197,7 +197,7 @@ export class BehandlingIndex extends Component {
     if (behandlingType === BehandlingType.KLAGE) {
       return (
         <Suspense fallback={<LoadingPanel />}>
-          <ErrorBoundary errorMessageCallback={visFeilmelding}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
