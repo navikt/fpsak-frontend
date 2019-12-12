@@ -47,12 +47,18 @@ const options = {
       target: process.env.APP_URL_FPSAK || 'http://localhost:8080',
       secure: false,
       changeOrigin: (!!process.env.APP_URL_FPSAK),
+      // bypass: (req) => {
+      //  req.headers['Access-Control-Allow-Headers'] = 'Location';
+      // },
       onProxyRes: function onProxyRes(proxyRes, req, res) {
+        // console.log('Request Headers', req.headers);
+        // console.log('Response Headers', res.headers);
+        // console.log('ProxyRes Headers', proxyRes.headers);
         // For å håndtere redirects på 202 Accepted responser med location headers...
         if (proxyRes.headers.location && proxyRes.headers.location.startsWith(process.env.APP_URL_FPSAK)) {
           proxyRes.headers.location = proxyRes.headers.location.split(process.env.APP_URL_FPSAK)[1];
         }
-      },
+      }
     },
   },
   publicPath: config.output.publicPath,

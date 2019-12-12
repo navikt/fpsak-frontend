@@ -18,6 +18,7 @@ const cancellable = (axiosInstance, config) => {
 
 const defaultHeaders = {
   'Cache-Control': 'no-cache',
+  'Access-Control-Allow-Headers': 'Location',
   Pragma: 'no-cache',
   Expires: 0,
 };

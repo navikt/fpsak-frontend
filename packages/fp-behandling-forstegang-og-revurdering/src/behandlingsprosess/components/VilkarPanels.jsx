@@ -26,6 +26,7 @@ import DataFetcherWithCache from '../../DataFetcherWithCache';
 import {
   hentAlleOverstyringAksjonspunktKoderFor, hentOverstyringAksjonspunktKodeFor, getVilkarKodeFor, getFiltrerteAvslagsarsaker,
 } from './vilkarOverstyringHjelper';
+import MedisinskVilkarProsessIndex from './medisinsk-vilkar/MedisinskVilkarProsessIndex';
 
 const fodselData = [fpsakApi.BEHANDLING];
 const adopsjonData = [fpsakApi.BEHANDLING];
@@ -92,6 +93,8 @@ export const VilkarPanels = ({
         );
       }}
     />
+
+    {behandlingspunkt === behandlingspunktCodes.MEDISINSK_VILKÅR && <MedisinskVilkarProsessIndex />}
 
     <DataFetcherWithCache
       behandlingVersjon={1}
