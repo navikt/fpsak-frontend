@@ -137,7 +137,8 @@ class BehandlingMenu extends Component {
     return behandlingData.harValgtBehandling
       && rettigheter.opneBehandlingForEndringerAccess.employeeHasAccess
       && rettigheter.opneBehandlingForEndringerAccess.isEnabled
-      && !this.isBehandlingQueued();
+      && !this.isBehandlingQueued()
+      && !this.isBehandlingOnHold();
   }
 
   resumeBehandling(behandlingIdentifier, params) {
