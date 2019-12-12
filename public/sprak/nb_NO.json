@@ -1,8 +1,10 @@
 {
   "Personspanel.Arbeidsforhold": "Opplysninger om søker",
 
+
   "BostedBarnView.DodsDato" : "Barnets dødsdato",
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
+  "Behandlingspunkt.MedisinskVilkar": "Medisinsk Vilkår",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
   "Behandlingspunkt.CheckFormkravNFP": "Formkrav Vedtaksinstans",
