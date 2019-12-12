@@ -61,7 +61,7 @@ const finnInnsynSteg = createSelector(
       behandlingHenlagt: behandling.behandlingHenlagt,
       aksjonspunkter,
       vilkar,
-      innsynResultatType: innsyn.innsynResultatType,
+      innsynResultatType: innsyn ? innsyn.innsynResultatType : undefined,
     };
 
     return createInnsynStegProps(builderData);
