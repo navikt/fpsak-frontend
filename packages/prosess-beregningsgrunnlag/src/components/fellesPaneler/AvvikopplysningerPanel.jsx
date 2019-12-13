@@ -100,6 +100,7 @@ const AvviksopplysningerPanel = ({
   );
 };
 
+
 AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
