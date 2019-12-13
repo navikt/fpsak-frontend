@@ -427,6 +427,20 @@ export const createBeregningTableData = createSelector(
         }
         break;
       }
+      case 'DP_FL_SN': {
+        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
+          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
+          rowsAndeler.push(flRad);
+        }
+        break;
+      }
+      case 'AT_DP_SN': {
+        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
+          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
+          rowsAndeler.push(atRad);
+        }
+        break;
+      }
 
         case 'KUN_YTELSE': {
           const ytElement = opprettAndelElement(
