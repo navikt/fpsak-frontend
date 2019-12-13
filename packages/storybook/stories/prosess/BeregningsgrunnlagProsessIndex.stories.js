@@ -623,6 +623,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => 
   andeler[0].pgiSnitt = 954985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
   const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
