@@ -47,9 +47,6 @@ const foreldrepengerBuilders = [
       ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
       ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN,
     ),
-  new BehandlingspunktProperties.Builder(bpc.MEDISINSK_VILKÅR, 'MedisinskVilkar')
-    .withVisibilityWhen(() => true)
-    .withStatus(() => vut.OPPFYLT),
   new BehandlingspunktProperties.Builder(bpc.ADOPSJON, 'Adopsjonsvilkaret')
     .withVilkarTypes(vt.ADOPSJONSVILKARET_FORELDREPENGER)
     .withAksjonspunktCodes(

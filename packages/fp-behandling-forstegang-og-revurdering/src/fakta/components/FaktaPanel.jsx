@@ -19,7 +19,7 @@ import { featureToggle } from '@fpsak-frontend/fp-felles';
 import vilkarType, { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-
+import MedisinskVilkarFaktaIndex from '../../../../fakta-medisinsk-vilkar';
 import behandlingSelectors from '../../selectors/forsteOgRevBehandlingSelectors';
 import { getOpenInfoPanels } from '../duckFaktaForstegangOgRev';
 import {
@@ -158,6 +158,7 @@ export const FaktaPanel = ({
       />
 
       <OmsorgenForFaktaIndex />
+      <MedisinskVilkarFaktaIndex />
 
       <DataFetcherWithCache
         behandlingVersjon={1}
