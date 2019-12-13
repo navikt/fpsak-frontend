@@ -174,6 +174,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
 
     const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
     const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
+    const erStegBehandlet = valgtSteg ? valgtSteg.erStegBehandlet : false;
 
     const readOnlySubmitButton = valgtSteg && (vilkarUtfallType.OPPFYLT === valgtSteg.status || !valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses));
 
@@ -210,7 +211,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
           steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
           onClick={(index) => this.setSteg(alleProsessMenySteg[index].kode, valgtSteg)}
         />
-        {(valgtStegKode && valgtSteg.aksjonspunkter.length > 0) && (
+        {(erStegBehandlet) && (
           <MargMarkering
             behandlingStatus={behandling.status}
             aksjonspunkter={valgtSteg.aksjonspunkter}
@@ -249,7 +250,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
               behandlingDataCache={this.behandlingDataCache}
               behandlingVersion={behandling.versjon}
               endpoints={vedtakData}
-              showComponent={vedtakStegVises && !behandling.behandlingHenlagt && valgtSteg.aksjonspunkter.length > 0}
+              showComponent={vedtakStegVises && !behandling.behandlingHenlagt}
               render={(dataProps) => (
                 <VedtakTilbakekrevingProsessIndex
                   beregningsresultat={beregningsresultat}
@@ -265,7 +266,7 @@ export class TilbakekrevingProsess extends Component<Props, KlageProsessState> {
         {(vedtakStegVises && behandling.behandlingHenlagt) && (
           <BehandlingHenlagtPanel />
         )}
-        {(!behandling.behandlingHenlagt && valgtSteg && valgtSteg.aksjonspunkter.length === 0) && (
+        {(valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt) && (
           <ProsessStegIkkeBehandletPanel />
         )}
       </>

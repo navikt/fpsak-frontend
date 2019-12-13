@@ -76,6 +76,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
         aksjonspunkter: apForSteg,
         isReadOnly,
         isSubmittable,
+        erStegBehandlet: steg.status !== vilkarUtfallType.IKKE_VURDERT || harApentAp,
         prosessmenySteg: {
           label: intl.formatMessage({ id: steg.titleCode }),
           isActive: erAktiv,
