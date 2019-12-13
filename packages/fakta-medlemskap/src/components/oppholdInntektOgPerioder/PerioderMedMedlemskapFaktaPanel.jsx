@@ -14,6 +14,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaGruppe, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { createSelector } from 'reselect';
 
 const headerTextCodes = [
   'PerioderMedMedlemskapFaktaPanel.Period',
@@ -138,12 +139,32 @@ PerioderMedMedlemskapFaktaPanelImpl.defaultProps = {
   fixedMedlemskapPerioder: [],
 };
 
+export const getAksjonspunkter = createSelector(
+  [(ownProps) => ownProps.alleKodeverk],
+  (alleKodeverk) => {
+    const vurderingTypes = alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE];
+    return vurderingTypes.sort((a, b) => {
+      const kodeA = a.kode;
+      const kodeB = b.kode;
+      if (kodeA < kodeB) {
+        return -1;
+      }
+      if (kodeA > kodeB) {
+        return 1;
+      }
+
+      return 0;
+    });
+  },
+);
+
+
 const mapStateToProps = (state, ownProps) => ({
   ...behandlingFormValueSelector(`OppholdInntektOgPeriodeForm-${ownProps.id}`, ownProps.behandlingId, ownProps.behandlingVersjon)(
     state, 'fixedMedlemskapPerioder', 'fodselsdato', 'termindato',
     'omsorgsovertakelseDato', 'hasPeriodeAksjonspunkt', 'isPeriodAksjonspunktClosed',
   ),
-  vurderingTypes: ownProps.alleKodeverk[kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE],
+  vurderingTypes: getAksjonspunkter(ownProps),
 });
 
 const PerioderMedMedlemskapFaktaPanel = connect(mapStateToProps)(PerioderMedMedlemskapFaktaPanelImpl);

@@ -227,7 +227,7 @@ HistorikkMalType5.propTypes = {
   behandlingLocation: PropTypes.shape().isRequired,
   dokumentLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   intl: PropTypes.shape().isRequired,
-  saksNr: PropTypes.number.isRequired,
+  saksNr: PropTypes.string.isRequired,
   getKodeverknavn: PropTypes.func.isRequired,
 };
 

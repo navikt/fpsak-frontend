@@ -134,7 +134,7 @@ const History = ({
 
 History.propTypes = {
   historieInnslag: historikkinnslagPropType.isRequired,
-  saksNr: PropTypes.number,
+  saksNr: PropTypes.string,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
@@ -142,7 +142,7 @@ History.propTypes = {
 };
 
 History.defaultProps = {
-  saksNr: 0,
+  saksNr: '',
 };
 
 export default History;
