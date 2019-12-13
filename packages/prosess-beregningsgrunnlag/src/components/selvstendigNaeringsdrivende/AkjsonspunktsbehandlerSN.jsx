@@ -52,6 +52,8 @@ AksjonspunktBehandlerSN.propTypes = {
 };
 AksjonspunktBehandlerSN.defaultProps = {
   erNyArbLivet: false,
+  erVarigEndring: false,
+  erNyoppstartet: false,
 };
 
 export default AksjonspunktBehandlerSN;

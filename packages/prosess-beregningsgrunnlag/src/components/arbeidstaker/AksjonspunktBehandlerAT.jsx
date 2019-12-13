@@ -96,4 +96,18 @@ AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndele
   };
 };
 
+AksjonspunktBehandlerAT.transformValuesForAT = (values, alleAndelerIForstePeriode) => {
+  let inntektPrAndelList = null;
+  inntektPrAndelList = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode)
+    .map(({ andelsnr }, index) => {
+      const overstyrtInntekt = values[`inntekt${index}`];
+      return {
+        inntekt: (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt),
+        andelsnr,
+      };
+    });
+  return inntektPrAndelList;
+};
+
+
 export default AksjonspunktBehandlerAT;

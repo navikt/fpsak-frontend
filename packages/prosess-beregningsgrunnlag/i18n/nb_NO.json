@@ -35,7 +35,7 @@
   "Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT": "Beregnet avvik arbeid",
   "Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL": "Beregnet avvik frilans",
   "Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet": "Søker er ny i arbeidslivet. Det foretas derfor ingen avviksvurdering.",
-  "Beregningsgrunnlag.Avikssopplysninger.SN.VarigEndring": "Søker har ikke oppgitt varig endring eller nyoppstartet næring. Det foretas derfor ingen avviksvurdering på næring.",
+  "Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring": "Søker har ikke oppgitt varig endring eller nyoppstartet næring. Det foretas derfor ingen avviksvurdering på næring.",
   "Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring": "Søker har ikke oppgitt varig endring eller nyoppstartet næring.\nDet foretas derfor ingen avviksvurdering.",
   "Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN": "Søker har ikke oppgitt varig endring eller nyoppstartet næring.\nDet foretas derfor ingen avviksvurdering.",
   "Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN": "Det regnes ikke avvik på arbeids- og frilansinntekt for kombinasjonen arbeid, frilans og selvstendig næringsdrivende",

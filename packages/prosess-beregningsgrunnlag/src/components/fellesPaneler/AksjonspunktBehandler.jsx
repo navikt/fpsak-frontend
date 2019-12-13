@@ -21,7 +21,7 @@ import styles from './aksjonspunktBehandler.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
-import AksjonspunktBehandlerFT from '../frilanser/AksjonspunktBehandlerFL';
+import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import AksjonspunktBehandlerSN from '../selvstendigNaeringsdrivende/AkjsonspunktsbehandlerSN';
 
@@ -59,12 +59,30 @@ const AksjonspunktBehandler = ({
   let erVarigEndring = false;
   let erNyoppstartet = false;
   let erNyArbLivet = false;
-  if (Object.prototype.hasOwnProperty.call(alleAndelerIForstePeriode[0], 'aktivitetStatus')) {
-    const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-    erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
-    erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
-    erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  let visFL = false;
+  let visAT = false;
+
+  const snAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+  );
+  const flAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER,
+  );
+  const atAndel = alleAndelerIForstePeriode.find(
+    (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER,
+  );
+  if (flAndel) {
+    visFL = flAndel.skalFastsetteGrunnlag;
   }
+  if (atAndel) {
+    visAT = atAndel.skalFastsetteGrunnlag;
+  }
+  if (snAndel && snAndel.erNyIArbeidslivet) {
+    erNyArbLivet = snAndel.erNyIArbeidslivet;
+  }
+  erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  // }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
@@ -91,7 +109,7 @@ const AksjonspunktBehandler = ({
           aksjonspunkter={aksjonspunkter}
         />
         )}
-        {!tidsBegrensetInntekt && relevanteStatuser.isArbeidstaker && (
+        {!tidsBegrensetInntekt && visAT && (
         <AksjonspunktBehandlerAT
           readOnly={readOnly}
           allePerioder={allePerioder}
@@ -99,8 +117,8 @@ const AksjonspunktBehandler = ({
           alleKodeverk={alleKodeverk}
         />
         )}
-        {!tidsBegrensetInntekt && relevanteStatuser.isFrilanser && (
-        <AksjonspunktBehandlerFT
+        {!tidsBegrensetInntekt && visFL && (
+        <AksjonspunktBehandlerFL
           readOnly={readOnly}
           allePerioder={allePerioder}
           alleAndelerIForstePeriode={alleAndelerIForstePeriode}
@@ -207,4 +225,7 @@ AksjonspunktBehandler.propTypes = {
 AksjonspunktBehandler.defaultProps = {
   allePerioder: undefined,
 };
+
+AksjonspunktBehandler.transformValues = (values) => values.ATFLVurdering;
+
 export default AksjonspunktBehandler;

@@ -38,7 +38,7 @@ const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyAr
     case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
       return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold2';
     case FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE:
-      return '';
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
     case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
       return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
     case VURDER_DEKNINGSGRAD:
@@ -83,7 +83,7 @@ const AksjonspunktHelpTextV2 = ({
                         values={{ verdi: avvikProsent }}
                       />
                     </span>
-                    <FormattedMessage key={ap.definisjon.kode} id={langId} />
+                    <FormattedMessage key={ap.definisjon.kode} id={langId} values={{ verdi: avvikProsent }} />
                   </Normaltekst>
                 </div>
               );

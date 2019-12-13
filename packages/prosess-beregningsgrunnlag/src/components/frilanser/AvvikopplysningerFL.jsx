@@ -8,70 +8,91 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 
 const AvviksopplysningerFL = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik,
-}) => (
-  <>
-    <Row>
-      <Column className={styles.colLable}>
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
-        </Normaltekst>
-      </Column>
+  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
+}) => {
+  const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
+    : undefined;
+  if (!sammenligningsGrunnlagFL) {
+    return null;
+  }
+  const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
+  const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
+  const { differanseBeregnet } = sammenligningsGrunnlagFL;
+  return (
+    <>
+      <Row>
+        <Column className={styles.colLable}>
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
+          </Normaltekst>
+        </Column>
 
-      <Column className={styles.colValue}>
-        <Normaltekst>
-          {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
-        </Normaltekst>
-      </Column>
-    </Row>
-    <Row>
-      <Column className={styles.colLable}>
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
-        </Normaltekst>
-      </Column>
+        <Column className={styles.colValue}>
+          <Normaltekst>
+            {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
+          </Normaltekst>
+        </Column>
+      </Row>
+      {sammenligningsgrunnlagSumFL && (
+        <>
+          <Row>
+            <Column className={styles.colLable}>
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
+              </Normaltekst>
+            </Column>
 
-      <Column className={styles.colValue}>
-        <Normaltekst>
-          {formatCurrencyNoKr(sammenligningsgrunnlag)}
-        </Normaltekst>
-      </Column>
-      <Column xs="5" />
+            <Column className={styles.colValue}>
+              <Normaltekst>
+                {formatCurrencyNoKr(sammenligningsgrunnlagSumFL)}
+              </Normaltekst>
+            </Column>
+            <Column xs="5" />
 
-    </Row>
-    <Row>
-      <Column className={styles.colLine} />
-    </Row>
-    <Row>
-      <Column className={styles.colLable}>
-        <Normaltekst className={beregningStyles.semiBoldText}>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-        </Normaltekst>
-      </Column>
-      <Column className={styles.colValue}>
-        <Normaltekst>
-          {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
-        </Normaltekst>
-      </Column>
-      <Column className={styles.colAvvik}>
-        <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
-        </Normaltekst>
-      </Column>
-    </Row>
-  </>
-);
+          </Row>
+          <Row>
+            <Column xs="7" className={styles.colLine} />
+          </Row>
+          <Row>
+            <Column className={styles.colLable}>
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                {!relevanteStatuser.isKombinasjonsstatus && (
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
+                )}
+                {relevanteStatuser.isKombinasjonsstatus && (
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL" />
+                )}
+              </Normaltekst>
+            </Column>
+            <Column className={styles.colValue}>
+              <Normaltekst>
+                {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
+                  : differanseBeregnet)}
+              </Normaltekst>
+            </Column>
+            <Column className={styles.colAvvik}>
+
+              <Normaltekst className={`${avvikFL > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikFL }} />
+              </Normaltekst>
+            </Column>
+          </Row>
+        </>
+      )}
+    </>
+  );
+};
 
 
 AvviksopplysningerFL.propTypes = {
-  sammenligningsgrunnlag: PropTypes.number,
-  avvik: PropTypes.number,
   beregnetAarsinntekt: PropTypes.number,
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
+  relevanteStatuser: PropTypes.shape().isRequired,
 };
 
 AvviksopplysningerFL.defaultProps = {
-  sammenligningsgrunnlag: undefined,
-  avvik: undefined,
   beregnetAarsinntekt: undefined,
+  sammenligningsgrunnlagPrStatus: undefined,
 };
 export default AvviksopplysningerFL;
