@@ -117,7 +117,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
 }) => (
   <BorderBox className={styles.setBoxHeight}>
     <Element>
-      {gjeldendeDekningsgrad && <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.ApplicationInformation" /> }
+      {!!gjeldendeDekningsgrad && <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.ApplicationInformation" /> }
       {!gjeldendeDekningsgrad && <FormattedMessage id="Beregningsgrunnlag.Skjeringstidspunkt.ApplicationInformationUtenDekningsgrad" />}
     </Element>
     <VerticalSpacer sixteenPx />
@@ -138,7 +138,7 @@ export const SkjeringspunktOgStatusPanelImpl = ({
           </Normaltekst>
         </div>
       </Column>
-      {gjeldendeDekningsgrad
+      {!!gjeldendeDekningsgrad
         && (
         <Column xs="5">
           <Undertekst>
