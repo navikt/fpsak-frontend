@@ -48,6 +48,7 @@ describe('<FagsakProfile>', () => {
         },
         behandlingId: 123,
       }}
+      dekningsgrad={100}
     />);
 
     const systemtittel = wrapper.find(Systemtittel);
