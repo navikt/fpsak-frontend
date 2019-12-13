@@ -7,7 +7,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 
-import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
+import YtelserFraInfotrygd2 from '../tilstotendeYtelser/YtelserFraInfotrygd_V2';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
 import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
@@ -147,7 +147,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       {(relevanteStatuser.harAndreTilstotendeYtelser)
       && (
         <>
-          <YtelserFraInfotrygd
+          <YtelserFraInfotrygd2
             bruttoPrAar={allePerioder[0].bruttoPrAar}
           />
           <VerticalSpacer fourtyPx />

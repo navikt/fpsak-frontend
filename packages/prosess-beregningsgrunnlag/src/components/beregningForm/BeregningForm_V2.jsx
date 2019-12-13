@@ -303,11 +303,13 @@ export const BeregningFormImpl2 = ({
             <BeregningsresultatTable2
               halvGVerdi={beregningsgrunnlag.halvG}
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-              ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-              ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
+              // ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
+              // ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
               ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
+              aktivitetStatusKode={aktivitetStatusKode}
+              dekningsgrad={beregningsgrunnlag.dekningsgrad}
             />
           </>
 
