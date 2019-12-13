@@ -154,8 +154,13 @@ const getStatusKode = (beregningsgrunnlag) => {
   if (!beregningsgrunnlag.aktivitetStatus) {
     return '';
   }
-  const statusKode = beregningsgrunnlag.aktivitetStatus[0].kode;
-  return statusKode;
+  // TODO sjekke denne med PETTER
+  if (beregningsgrunnlag.aktivitetStatus.length > 1) {
+    // const status = beregningsgrunnlag.aktivitetStatus.map((statusAndel) => { statusAndel.kode; });
+    return beregningsgrunnlag.aktivitetStatus.map((andelKode) => andelKode.kode).join('_');
+  }
+
+  return beregningsgrunnlag.aktivitetStatus[0].kode;
 };
 const getStatusList = (beregningsgrunnlagPeriode) => {
   const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
@@ -281,11 +286,13 @@ export const BeregningFormImpl2 = ({
             <BeregningsresultatTable2
               halvGVerdi={beregningsgrunnlag.halvG}
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-              ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-              ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
+              // ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
+              // ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
               ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
+              aktivitetStatusKode={aktivitetStatusKode}
+              dekningsgrad={beregningsgrunnlag.dekningsgrad}
             />
           </>
 
