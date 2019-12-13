@@ -8,6 +8,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
+import { EtikettInfo } from 'nav-frontend-etiketter';
 import styles from './fagsakProfile.less';
 
 const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
@@ -27,6 +28,7 @@ export const FagsakProfile = ({
   createLink,
   renderBehandlingMeny,
   renderBehandlingVelger,
+  dekningsgrad,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -37,6 +39,9 @@ export const FagsakProfile = ({
             <Systemtittel>
               {getKodeverknavn(sakstype)}
             </Systemtittel>
+            <EtikettInfo title={dekningsgrad}>
+              {`${dekningsgrad}%`}
+            </EtikettInfo>
           </div>
           <Normaltekst>
             {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
@@ -72,6 +77,7 @@ FagsakProfile.propTypes = {
   createLink: PropTypes.func.isRequired,
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
+  dekningsgrad: PropTypes.number.isRequired,
 };
 
 FagsakProfile.defaultProps = {

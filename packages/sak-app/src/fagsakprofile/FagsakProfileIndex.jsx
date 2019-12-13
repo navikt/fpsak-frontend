@@ -8,7 +8,9 @@ import { Panel } from 'nav-frontend-paneler';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  requireProps, DataFetcher, getLocationWithDefaultBehandlingspunktAndFakta,
+  requireProps,
+  DataFetcher,
+  getLocationWithDefaultBehandlingspunktAndFakta,
   pathToBehandling,
   pathToBehandlinger,
 } from '@fpsak-frontend/fp-felles';
@@ -19,12 +21,15 @@ import { getEnabledApplicationContexts } from '../app/duck';
 import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import BehandlingMenuIndex from '../behandlingmenu/BehandlingMenuIndex';
 import fpsakApi from '../data/fpsakApi';
-import { getFagsakYtelseType, getSelectedFagsakStatus, getSelectedSaksnummer } from '../fagsak/fagsakSelectors';
+import {
+  getFagsakYtelseType,
+  getSelectedFagsakStatus,
+  getSelectedSaksnummer,
+  getSelectedFagsakDekningsgrad,
+} from '../fagsak/fagsakSelectors';
 import { getNoExistingBehandlinger } from '../behandling/selectors/behandlingerSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../behandling/duck';
-import {
-  getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger,
-} from './duck';
+import { getShowAllBehandlinger, resetFagsakProfile, toggleShowAllBehandlinger } from './duck';
 import RisikoklassifiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
 import { getAlleKodeverk } from '../kodeverk/duck';
 
@@ -60,15 +65,28 @@ export class FagsakProfileIndex extends Component {
   pathToBehandling = (alleBehandlinger) => {
     const { saksnummer, location } = this.props;
     if (alleBehandlinger.length === 1) {
-      return getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id) });
+      return getLocationWithDefaultBehandlingspunktAndFakta({
+        ...location,
+        pathname: pathToBehandling(saksnummer, alleBehandlinger[0].id),
+      });
     }
     return pathToBehandlinger(saksnummer);
-  }
+  };
 
   render() {
     const {
-      sakstype, toggleShowAll, showAll, selectedBehandlingId, behandlingVersjon, alleKodeverk,
-      noExistingBehandlinger, fagsakStatus, saksnummer, enabledApis, shouldRedirectToBehandlinger,
+      sakstype,
+      toggleShowAll,
+      showAll,
+      selectedBehandlingId,
+      behandlingVersjon,
+      alleKodeverk,
+      noExistingBehandlinger,
+      fagsakStatus,
+      saksnummer,
+      enabledApis,
+      shouldRedirectToBehandlinger,
+      dekningsgrad,
     } = this.props;
     return (
       <Panel className={styles.panelPadding}>
@@ -91,13 +109,12 @@ export class FagsakProfileIndex extends Component {
                 annenPartLink={props.annenPartBehandling}
                 saksnummer={saksnummer}
                 sakstype={sakstype}
+                dekningsgrad={dekningsgrad}
                 fagsakStatus={fagsakStatus}
                 toggleShowAll={toggleShowAll}
                 createLink={createLink}
                 alleKodeverk={alleKodeverk}
-                renderBehandlingMeny={() => (
-                  <BehandlingMenuIndex />
-                )}
+                renderBehandlingMeny={() => <BehandlingMenuIndex />}
                 renderBehandlingVelger={() => (
                   <BehandlingVelgerSakIndex
                     behandlinger={alleBehandlinger}
@@ -118,11 +135,7 @@ export class FagsakProfileIndex extends Component {
           behandlingVersjon={behandlingVersjon}
           showComponent={risikoklassifiseringData.every((d) => d.isEndpointEnabled())}
           endpoints={risikoklassifiseringData}
-          render={(props) => (
-            <RisikoklassifiseringIndex
-              {...props}
-            />
-          )}
+          render={(props) => <RisikoklassifiseringIndex {...props} />}
         />
       </Panel>
     );
@@ -143,6 +156,7 @@ FagsakProfileIndex.propTypes = {
   behandlingVersjon: PropTypes.number,
   shouldRedirectToBehandlinger: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
+  dekningsgrad: PropTypes.number.isRequired,
 };
 
 FagsakProfileIndex.defaultProps = {
@@ -158,6 +172,7 @@ export const getEnabledApis = createSelector(
 const mapStateToProps = (state) => ({
   enabledApis: getEnabledApis(state),
   saksnummer: getSelectedSaksnummer(state),
+  dekningsgrad: getSelectedFagsakDekningsgrad(state),
   sakstype: getFagsakYtelseType(state),
   fagsakStatus: getSelectedFagsakStatus(state),
   selectedBehandlingId: getSelectedBehandlingId(state),
@@ -167,10 +182,13 @@ const mapStateToProps = (state) => ({
   behandlingVersjon: getBehandlingVersjon(state),
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  toggleShowAll: toggleShowAllBehandlinger,
-  reset: resetFagsakProfile,
-}, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators(
+  {
+    toggleShowAll: toggleShowAllBehandlinger,
+    reset: resetFagsakProfile,
+  },
+  dispatch,
+);
 
 const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   ...ownProps,
@@ -179,4 +197,10 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => ({
   shouldRedirectToBehandlinger: ownProps.match.isExact,
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps, mergeProps)(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex)));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+    mergeProps,
+  )(requireProps(['saksnummer'], <LoadingPanel />)(FagsakProfileIndex)),
+);
