@@ -42,15 +42,15 @@ const finnAndelerSomSkalVises = (andeler) => {
 };
 
 
-const createArbeidsPeriodeText = (arbeidsForhold) => {
+const createArbeidsPeriodeText = (arbeidsforhold) => {
   const periodeArr = [];
 
-  if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'startdato') && arbeidsForhold.startdato) {
-    periodeArr.push(dateFormat(arbeidsForhold.startdato));
+  if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'startdato') && arbeidsforhold.startdato) {
+    periodeArr.push(dateFormat(arbeidsforhold.startdato));
   }
-  if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'opphoersdato') && arbeidsForhold.opphoersdato) {
+  if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'opphoersdato') && arbeidsforhold.opphoersdato) {
     periodeArr.push('-');
-    periodeArr.push(dateFormat(arbeidsForhold.opphoersdato));
+    periodeArr.push(dateFormat(arbeidsforhold.opphoersdato));
   }
   return periodeArr.join(' ');
 };
@@ -59,22 +59,22 @@ const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
   const seen = new Set();
   return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
 };
-const createArbeidsGiverNavn = (arbeidsForhold, harAndelerFraSammeArbeidsgiver) => {
-  if (!arbeidsForhold.arbeidsgiverNavn) {
-    return arbeidsForhold.arbeidsforholdType ? getKodeverknavn(arbeidsForhold.arbeidsforholdType) : '';
+const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver) => {
+  if (!arbeidsforhold.arbeidsgiverNavn) {
+    return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
   }
-  return harAndelerFraSammeArbeidsgiver ? `${arbeidsForhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsForhold.eksternArbeidsforholdId)})`
-    : arbeidsForhold.arbeidsgiverNavn;
+  return harAndelerFraSammeArbeidsgiver ? `${arbeidsforhold.arbeidsgiverNavn} (${getEndCharFromId(arbeidsforhold.eksternArbeidsforholdId)})`
+    : arbeidsforhold.arbeidsgiverNavn;
 };
-const createArbeidsStillingsNavnOgProsent = (arbeidsForhold) => {
+const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   // her må stillingsnavn og stillingsprosent hentest når vi får disse dataene
   const stillingArr = [''];
 
-  if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'stillingsNavn') && arbeidsForhold.stillingsNavn) {
-    stillingArr.push(arbeidsForhold.stillingsNavn);
+  if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'stillingsNavn') && arbeidsforhold.stillingsNavn) {
+    stillingArr.push(arbeidsforhold.stillingsNavn);
   }
-  if (Object.prototype.hasOwnProperty.call(arbeidsForhold, 'stillingsProsent') && arbeidsForhold.stillingsProsent) {
-    stillingArr.push(arbeidsForhold.stillingsProsent);
+  if (Object.prototype.hasOwnProperty.call(arbeidsforhold, 'stillingsProsent') && arbeidsforhold.stillingsProsent) {
+    stillingArr.push(arbeidsforhold.stillingsProsent);
   }
   if (stillingArr.length !== 0) {
     return stillingArr.join(' ');
@@ -90,7 +90,7 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
 
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
-      key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsForhold.eksternArbeidsforholdId : ''}`}
+      key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsforhold.eksternArbeidsforholdId : ''}`}
     >
       <Row key={`index${index + 1}`}>
         <Column xs={andel.erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
