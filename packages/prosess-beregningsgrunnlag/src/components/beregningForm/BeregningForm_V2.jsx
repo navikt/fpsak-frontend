@@ -299,7 +299,7 @@ export const BeregningFormImpl2 = ({
               ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
-              aktivitetStatusKode={aktivitetStatusKode}
+              aktivitetStatusList={aktivitetStatusList}
               dekningsgrad={beregningsgrunnlag.dekningsgrad}
             />
           </>

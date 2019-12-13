@@ -76,13 +76,14 @@ const finnOppjustertGrunnlag = (andel) => {
  * Presentasjonskomponent. Viser navn og sum på alle andeler som er tilstøttende ytelser
  * tilstøtendeYtelseType: Brukes for andre verdier enn dagpenger og arbeidsavklaringspenger.
  */
-const TilstotendeYtelser = ({
+const TilstotendeYtelser2 = ({
   alleAndeler,
   relevanteStatuser,
   gjelderBesteberegning,
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   const skalViseOppjustertGrunnlag = relevanteStatuser.isSelvstendigNaeringsdrivende && !gjelderBesteberegning;
+  debugger;
   return (
     <Panel className={beregningStyles.panel}>
       {relevanteStatuser.isKombinasjonsstatus
@@ -109,33 +110,28 @@ const TilstotendeYtelser = ({
         <Column xs="2" />
       </Row>
 
-      <Row>
-
+      <>
         {relevanteAndeler.map((andel, index) => (
           <div key={andel.aktivitetStatus.kode.concat('_'.concat(index))}>
-
-            <Column xs="4">
-              <Normaltekst>
-                <FormattedMessage
-                  id={getTekstForAndelBruktIBeregning(andel, skalViseOppjustertGrunnlag)}
-                />
-              </Normaltekst>
-            </Column>
+            <Row>
+              <Column xs="4">
+                <Normaltekst>
+                  <FormattedMessage
+                    id={getTekstForAndelBruktIBeregning(andel, skalViseOppjustertGrunnlag)}
+                  />
+                </Normaltekst>
+              </Column>
+              <Column xs="4">
+                <Normaltekst>
+                  <FormattedMessage
+                    id={getTekstForAndelensGrunnlag(andel)}
+                  />
+                </Normaltekst>
+              </Column>
+            </Row>
             {skalViseOppjustertGrunnlag
             && (
-              <>
-                <Column xs="4">
-                  <Normaltekst>
-                    <FormattedMessage
-                      id={getTekstForAndelensGrunnlag(andel)}
-                    />
-                  </Normaltekst>
-                </Column>
-              </>
-            )}
-            {skalViseOppjustertGrunnlag
-            && (
-              <>
+              <Row>
                 <Column xs="3" />
                 <Column xs="2">
                   <Normaltekst>{formatCurrencyNoKr(finnOppjustertGrunnlag(andel))}</Normaltekst>
@@ -143,29 +139,30 @@ const TilstotendeYtelser = ({
                 <Column xs="2">
                   <Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst>
                 </Column>
-              </>
+              </Row>
             )}
+
             {!skalViseOppjustertGrunnlag
           && (
-            <>
+            <Row>
               <Column xs="3" />
               <Column xs="2" className={beregningStyles.colMaanedText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
               <Column xs="2" className={beregningStyles.colAarText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
               <Column xs="2" />
-            </>
+            </Row>
           )}
             <VerticalSpacer eightPx />
           </div>
         ))}
-      </Row>
+      </>
     </Panel>
   );
 };
 
-TilstotendeYtelser.propTypes = {
+TilstotendeYtelser2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
   gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
-export default TilstotendeYtelser;
+export default TilstotendeYtelser2;
