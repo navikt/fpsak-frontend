@@ -2,10 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
+import classNames from 'classnames';
 
 import {
   FlexContainer, FlexRow, FlexColumn,
-  BorderBox, DateTimeLabel, Image, VerticalSpacer,
+  BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
@@ -91,8 +92,6 @@ const renderChevron = (chevron, messageId) => (
   </FormattedMessage>
 );
 
-const forkortEnhetsnavn = (navn) => navn.replace('NAV Familie- og pensjonsytelser', 'NFP');
-
 /**
  * BehandlingPickerItemContent
  *
@@ -116,13 +115,13 @@ const BehandlingPickerItemContent = ({
 }) => (
   <BorderBox className={isSelected ? styles.boxPaddingWithSelected : styles.boxPadding}>
     <FlexContainer>
-      <FlexRow class={styles.smallMarginBottom}>
-        <FlexColumn>
+      <FlexRow>
+        <FlexColumn className={styles.arsakPadding}>
           <Element>{behandlingTypeNavn}</Element>
         </FlexColumn>
         {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak.behandlingArsakType && (
           <>
-            <FlexColumn><span>-</span></FlexColumn>
+            <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
             <FlexColumn>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
@@ -146,21 +145,20 @@ const BehandlingPickerItemContent = ({
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
+    <VerticalSpacer eightPx />
     <hr className={styles.line} />
+    <VerticalSpacer sixteenPx />
     <FlexContainer>
       <FlexRow>
         <FlexColumn>
           <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Behandlingstatus" /></Normaltekst>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
+          <VerticalSpacer twentyPx />
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Normaltekst>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Normaltekst>
         </FlexColumn>
         <FlexColumn>
           <Normaltekst>{behandlingsstatus}</Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
-        </FlexColumn>
-        <FlexColumn className={styles.resultat}>
           {behandlingsresultatTypeKode && (
             <>
               <Image
@@ -168,35 +166,27 @@ const BehandlingPickerItemContent = ({
                 src={behandlingsresultatTypeKode && behandlingsresultatTypeKode === behandlingResultatType.INNVILGET ? innvilgetIkonImg : avslattIkonImg}
                 tabIndex="0"
               />
-              {behandlingsresultatTypeNavn}
+              <Normaltekst className={classNames(styles.inline, styles.resultatPadding)}>{behandlingsresultatTypeNavn}</Normaltekst>
             </>
           )}
           {!behandlingsresultatTypeKode && <span>-</span> }
+          <VerticalSpacer twentyPx />
+          <Normaltekst className={styles.inline}><DateLabel dateString={opprettetDato} /></Normaltekst>
+          <Normaltekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Normaltekst>
+          <Normaltekst className={styles.inline}><TimeLabel dateTimeString={opprettetDato} /></Normaltekst>
+          <div />
+          {avsluttetDato && (
+            <>
+              <Normaltekst className={styles.inline}><DateLabel dateString={avsluttetDato} /></Normaltekst>
+              <Normaltekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Normaltekst>
+              <Normaltekst className={styles.inline}><TimeLabel dateTimeString={avsluttetDato} /></Normaltekst>
+            </>
+          )}
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
-    <VerticalSpacer sixteenPx />
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Normaltekst>
-        </FlexColumn>
-        <FlexColumn>
-          <Normaltekst><DateTimeLabel dateTimeString={opprettetDato} useNewFormat /></Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn>
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Normaltekst>
-        </FlexColumn>
-        <FlexColumn>
-          {avsluttetDato && <Normaltekst><DateTimeLabel dateTimeString={avsluttetDato} useNewFormat /></Normaltekst>}
-        </FlexColumn>
-        <FlexColumn className={styles.pushRight}>
-          <Normaltekst>{`${behandlendeEnhetId} ${forkortEnhetsnavn(behandlendeEnhetNavn)}`}</Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
+    <VerticalSpacer fourPx />
+    <Normaltekst>{`${behandlendeEnhetId} ${behandlendeEnhetNavn}`}</Normaltekst>
   </BorderBox>
 );
 
