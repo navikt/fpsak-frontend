@@ -4,7 +4,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
@@ -12,7 +12,7 @@ import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
 
 
 const AvviksopplysningerAT = ({
-  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt, aktivitetStatusKode,
+  relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
 }) => {
   const sammenligningsGrunnlagAT = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === sammenligningType.AT
@@ -24,16 +24,24 @@ const AvviksopplysningerAT = ({
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
+  const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && !relevanteStatuser.isFrilanser;
+  const kombinasjonsstatusATFLSN = relevanteStatuser.isKombinasjonsstatus
+    && relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && relevanteStatuser.isFrilanser;
 
-  if (aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN || aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN) {
+  if (kombinasjonsstatusATSN || kombinasjonsstatusATFLSN) {
     return (
       <Row>
         <Column xs="12">
           <Normaltekst>
-            {aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_SN && (
+            {kombinasjonsstatusATSN && (
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
             )}
-            {aktivitetStatusKode === aktivitetStatus.KOMBINERT_AT_FL_SN && (
+            {kombinasjonsstatusATFLSN && (
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
             )}
           </Normaltekst>
@@ -41,6 +49,8 @@ const AvviksopplysningerAT = ({
       </Row>
     );
   }
+
+
   if (sammenligningsgrunnlagSumAT) {
     return (
       <>
@@ -106,7 +116,6 @@ const AvviksopplysningerAT = ({
 
 AvviksopplysningerAT.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
-  aktivitetStatusKode: PropTypes.string.isRequired,
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregnetAarsinntekt: PropTypes.number,
 };

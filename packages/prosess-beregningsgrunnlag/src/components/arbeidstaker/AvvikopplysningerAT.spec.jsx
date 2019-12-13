@@ -56,8 +56,7 @@ describe('<AvviksopplysningerAT>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-      relevanteStatuser={{ isKombinasjonsstatus: true }}
-      aktivitetStatusKode={aktivitetStatus.KOMBINERT_AT_SN}
+      relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true }}
     />);
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
@@ -69,8 +68,9 @@ describe('<AvviksopplysningerAT>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-      relevanteStatuser={{ isKombinasjonsstatus: true }}
-      aktivitetStatusKode={aktivitetStatus.KOMBINERT_AT_FL_SN}
+      relevanteStatuser={{
+        isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isFrilanser: true,
+      }}
     />);
     const rows = wrapper.find('Row');
     expect(rows).to.have.length(1);
@@ -83,7 +83,6 @@ describe('<AvviksopplysningerAT>', () => {
       relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true }}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       beregnetAarsinntekt={beregnetAarsinntekt}
-      aktivitetStatusKode={aktivitetStatus.ARBEIDSTAKER}
     />);
     const rows = wrapper.find('Row');
 
@@ -113,8 +112,7 @@ describe('<AvviksopplysningerAT>', () => {
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
       beregnetAarsinntekt={beregnetAarsinntekt}
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-      relevanteStatuser={{ isKombinasjonsstatus: false }}
-      aktivitetStatusKode={aktivitetStatus.FRILANSER}
+      relevanteStatuser={{ isKombinasjonsstatus: false, isFrilanser: true }}
     />);
     const rows = wrapper.find('Row');
     expect(rows.length).to.be.equal(0);

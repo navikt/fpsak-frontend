@@ -168,13 +168,7 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   }
   return undefined;
 };
-const getStatusKode = (beregningsgrunnlag) => {
-  if (!beregningsgrunnlag.aktivitetStatus) {
-    return '';
-  }
-  const statusKode = beregningsgrunnlag.aktivitetStatus[0].kode;
-  return statusKode;
-};
+
 const getStatusList = (beregningsgrunnlagPeriode) => {
   const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
   return statusList;
@@ -217,7 +211,6 @@ export const BeregningFormImpl2 = ({
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
-  const aktivitetStatusKode = getStatusKode(beregningsgrunnlag);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
@@ -275,7 +268,6 @@ export const BeregningFormImpl2 = ({
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
-            aktivitetStatusKode={aktivitetStatusKode}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
           />

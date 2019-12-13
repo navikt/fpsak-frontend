@@ -42,7 +42,7 @@ const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) =
   return null;
 };
 const AvviksopplysningerPanel = ({
-  relevanteStatuser, aktivitetStatusKode, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus,
+  relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
@@ -56,7 +56,6 @@ const AvviksopplysningerPanel = ({
         beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
         sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
         relevanteStatuser={relevanteStatuser}
-        aktivitetStatusKode={aktivitetStatusKode}
       />
       )}
       {relevanteStatuser.isKombinasjonsstatus && (
@@ -103,7 +102,6 @@ const AvviksopplysningerPanel = ({
 
 AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,
-  aktivitetStatusKode: PropTypes.string,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
@@ -112,6 +110,5 @@ AvviksopplysningerPanel.propTypes = {
 AvviksopplysningerPanel.defaultProps = {
   harAksjonspunkter: false,
   sammenligningsgrunnlagPrStatus: undefined,
-  aktivitetStatusKode: undefined,
 };
 export default AvviksopplysningerPanel;
