@@ -77,7 +77,9 @@ const AksjonspunktBehandler = ({
   if (atAndel) {
     visAT = atAndel.skalFastsetteGrunnlag;
   }
-  erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
+  if (snAndel && snAndel.erNyIArbeidslivet) {
+    erNyArbLivet = snAndel.erNyIArbeidslivet;
+  }
   erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
   // }
