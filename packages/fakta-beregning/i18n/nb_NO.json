@@ -24,7 +24,7 @@
   "BeregningInfoPanel.VurderOgFastsettATFL.HarSokerEndring": "Har søker hatt lønnsendring i løpet av de siste tre månedene?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilansUtenFrilans": "Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
   "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForFrilans": "Søker er frilanser. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for frilansaktiviteten?",
-  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger eller svangerskapspenger for arbeid i {arbeid}?",
+  "BeregningInfoPanel.VurderMottarYtelse.MottarYtelseForArbeid" : "Søker er arbeidstaker og det er ikke mottatt inntektsmelding. Mottar søker sykepenger, foreldrepenger, pleiepenger, omsorgspenger, opplæringspenger eller svangerskapspenger for arbeid i {arbeid}?",
 
   "BeregningInfoPanel.VurderBestebergning.HarBesteberegning" : "Søker har hatt dagpenger i opptjeningsperioden. Skal dette fordeles etter besteberegning?",
 
