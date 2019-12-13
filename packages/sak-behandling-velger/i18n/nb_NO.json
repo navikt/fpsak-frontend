@@ -6,6 +6,8 @@
   "BehandlingPickerItemContent.Close": "Lukk behandlingsliste",
   "BehandlingPickerItemContent.GjeldendeVedtak": "Gjeldende vedtak",
   "BehandlingPickerItemContent.Arsak": "Årsak",
+  "BehandlingPickerItemContent.Behandlingstatus": "Behandlingsstatus",
+  "BehandlingPickerItemContent.Resultat": "Resultat",
 
   "BehandlingList.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
@@ -32,5 +34,7 @@
   "Behandlingspunkt.Årsak.BarnDød": "Barn død",
   "Behandlingspunkt.Årsak.Dødfødsel": "Dødfødsel",
   "Behandlingspunkt.Årsak.NyeRegisteropplysninger": "Nye registeropplysninger",
-  "Behandlingspunkt.Årsak.OpplysningerAnnenYtelse": "Opplysninger annen ytelse"
+  "Behandlingspunkt.Årsak.OpplysningerAnnenYtelse": "Opplysninger annen ytelse",
+
+  "DateTimeLabel.Kl": "Kl."
 }

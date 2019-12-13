@@ -30,9 +30,15 @@ const behandlinger = [{
   avsluttet: '2017-08-03T00:54:25.455',
   endret: '2017-08-03T00:54:25.455',
   behandlendeEnhetId: '4812',
-  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelse Bergen',
+  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
   links: [],
-  gjeldendeVedtak: true,
+  gjeldendeVedtak: false,
+  behandlingsresultat: {
+    type: {
+      kode: 'AVSLÅTT',
+      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+    },
+  },
 }, {
   id: 2,
   versjon: 2,
@@ -46,10 +52,18 @@ const behandlinger = [{
   },
   fagsakId: 3,
   opprettet: '2017-08-02T00:54:25.455',
+  avsluttet: '2017-08-03T00:54:25.455',
+  endret: '2017-08-03T00:54:25.455',
   behandlendeEnhetId: '4812',
-  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelse Bergen',
+  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
   links: [],
   gjeldendeVedtak: true,
+  behandlingsresultat: {
+    type: {
+      kode: 'INNVILGET',
+      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+    },
+  },
 }, {
   id: 3,
   versjon: 2,
@@ -64,15 +78,40 @@ const behandlinger = [{
   fagsakId: 3,
   opprettet: '2017-08-02T00:54:25.455',
   behandlendeEnhetId: '4812',
-  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelse Bergen',
+  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
   links: [],
-  gjeldendeVedtak: true,
+  gjeldendeVedtak: false,
   førsteÅrsak: {
     behandlingArsakType: {
       kode: 'RE-ENDR-BER-GRUN',
     },
     erAutomatiskRevurdering: true,
     manueltOpprettet: true,
+  },
+}, {
+  id: 4,
+  versjon: 2,
+  type: {
+    kode: behandlingType.FORSTEGANGSSOKNAD,
+    kodeverk: BEHANDLING_TYPE_KODEVERK,
+  },
+  status: {
+    kode: behandlingStatus.AVSLUTTET,
+    kodeverk: BEHANDLING_STATUS_KODEVERK,
+  },
+  fagsakId: 3,
+  opprettet: '2017-08-02T00:54:25.455',
+  avsluttet: '2017-08-03T00:54:25.455',
+  endret: '2017-08-03T00:54:25.455',
+  behandlendeEnhetId: '4812',
+  behandlendeEnhetNavn: 'NAV Familie- og pensjonsytelser Bergen',
+  links: [],
+  gjeldendeVedtak: false,
+  behandlingsresultat: {
+    type: {
+      kode: 'HENLAGT_SØKNAD_TRUKKET',
+      kodeverk: 'BEHANDLING_RESULTAT_TYPE',
+    },
   },
 }];
 
