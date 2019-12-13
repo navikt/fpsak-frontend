@@ -27,7 +27,7 @@ const EMPTY_LIST = [];
 const getAksjonspunkt = (aksjonspunkter) => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
 const utledFormSectionName = (arbeidsforhold) => {
-  let navn = arbeidsforhold.arbeidsgiverNavn;
+  let navn = arbeidsforhold.arbeidsgiverNavn.replace(new RegExp(/\./, 'g'), '_');
   if (arbeidsforhold.arbeidsgiverIdent) {
     navn += arbeidsforhold.arbeidsgiverIdent;
   }
