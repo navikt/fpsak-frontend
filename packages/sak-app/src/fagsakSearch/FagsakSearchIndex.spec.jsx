@@ -28,6 +28,7 @@ describe('<FagsakSearchIndex>', () => {
       erKvinne: true,
     },
     opprettet: '13‎.‎02‎.‎2017‎ ‎09‎:‎54‎:‎22',
+    dekningsgrad: 100,
   };
   const fagsaker = [fagsak, { ...fagsak, saksnummer: 23456 }];
 

@@ -28,6 +28,7 @@ describe('<FagsakProfileIndex>', () => {
       enabledApis={[]}
       shouldRedirectToBehandlinger={false}
       location={{}}
+      dekningsgrad={100}
     />);
 
     const dataFetchers = wrapper.find(DataFetcher);
@@ -54,6 +55,7 @@ describe('<FagsakProfileIndex>', () => {
       enabledApis={[]}
       shouldRedirectToBehandlinger={false}
       location={{}}
+      dekningsgrad={100}
     />);
 
     expect(showAllCallback.getCalls()).has.length(0);
@@ -74,6 +76,7 @@ describe('<FagsakProfileIndex>', () => {
       enabledApis={[]}
       shouldRedirectToBehandlinger={false}
       location={{}}
+      dekningsgrad={100}
     />);
 
     wrapper.unmount();
@@ -102,6 +105,7 @@ describe('<FagsakProfileIndex>', () => {
       enabledApis={[]}
       shouldRedirectToBehandlinger={false}
       location={{}}
+      dekningsgrad={100}
     />);
 
     let redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({

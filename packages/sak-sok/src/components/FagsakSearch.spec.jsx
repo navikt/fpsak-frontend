@@ -29,6 +29,7 @@ describe('<FagsakSearch>', () => {
       personnummer: '0405198632231',
       erKvinne: true,
     },
+    dekningsgrad: 100,
   };
 
   it('skal kun vise søkefelt før søk er startet', () => {
