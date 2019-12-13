@@ -507,7 +507,36 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
   const pgi = lagPGIVerdier();
   andeler[2].pgiVerdier = pgi;
   andeler[2].pgiSnitt = 154985;
-  const statuser = [lagStatus('FL'), lagStatus('DP'), lagStatus('SN')];
+  const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
+  const andeler = [
+    lagAndel('AT', 596000, undefined, undefined),
+    lagAndel('DP', 331000, undefined, undefined),
+    lagAndel('SN', 331000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[2].pgiVerdier = pgi;
+  andeler[2].pgiSnitt = 154985;
+  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
   const perioder = [lagPeriodeMedDagsats(andeler, 923)];
   const bg = lagBG(perioder, statuser);
   bg.dekningsgrad = 80;

@@ -183,11 +183,11 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus) => {
 
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
-    (state, ownProps) => ownProps.aktivitetStatusKode,
+    (state, ownProps) => ownProps.aktivitetStatusList,
     (state, ownProps) => ownProps.ledetekstRedusert,
     (state, ownProps) => ownProps.dekningsgrad,
     (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
-  (allePerioder, aktivitetStatusKode, ledetekstRedusert, dekningsgrad, vilkarStatus) => {
+  (allePerioder, aktivitetStatusList, ledetekstRedusert, dekningsgrad, vilkarStatus) => {
     const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
     // const bruttoRad = { ledetekst: ledetekstBrutto };
     const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -247,8 +247,9 @@ export const createBeregningTableData = createSelector(
 
     const rowsAndeler = [];
     const rowsForklaringer = [];
-    debugger;
-    switch (aktivitetStatusKode) {
+    const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabvetis
+    const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
+    switch (aktivitetStatusKodeKombo) {
       case 'AT_SN': {
         if ((atRad && atRad.verdi) < (snRad && snRad.verdi)) {
           rowsAndeler.push(snRad);
@@ -261,7 +262,7 @@ export const createBeregningTableData = createSelector(
       }
       case 'AT_FL_SN': {
         if (((atRad && atRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT>SN" />);
+          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
           rowsAndeler.push(atRad);
           rowsAndeler.push(flRad);
         }
@@ -269,6 +270,20 @@ export const createBeregningTableData = createSelector(
           rowsAndeler.push(atRad);
           rowsAndeler.push(flRad);
           rowsAndeler.push(snRad);
+        }
+        break;
+      }
+      case 'DP_FL_SN': {
+        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
+          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
+          rowsAndeler.push(flRad);
+        }
+        break;
+      }
+      case 'AT_DP_SN': {
+        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
+          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
+          rowsAndeler.push(atRad);
         }
         break;
       }

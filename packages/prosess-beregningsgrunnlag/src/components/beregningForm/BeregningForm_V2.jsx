@@ -154,7 +154,7 @@ const getStatusKode = (beregningsgrunnlag) => {
   if (!beregningsgrunnlag.aktivitetStatus) {
     return '';
   }
-  // TODO sjekke denne med PETTER
+  // TODO: sjekke denne med PETTER
   if (beregningsgrunnlag.aktivitetStatus.length > 1) {
     // const status = beregningsgrunnlag.aktivitetStatus.map((statusAndel) => { statusAndel.kode; });
     return beregningsgrunnlag.aktivitetStatus.map((andelKode) => andelKode.kode).join('_');
@@ -291,7 +291,7 @@ export const BeregningFormImpl2 = ({
               ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
-              aktivitetStatusKode={aktivitetStatusKode}
+              aktivitetStatusList={aktivitetStatusList}
               dekningsgrad={beregningsgrunnlag.dekningsgrad}
             />
           </>

@@ -64,16 +64,17 @@ const AvviksopplysningerPanel = ({
       </Row>
     )}
     {relevanteStatuser.isDagpenger && (
-    <Row>
-      <Column xs="12">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
-        </Normaltekst>
-      </Column>
-    </Row>
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+          </Normaltekst>
+        </Column>
+      </Row>
     )}
   </Panel>
 );
+
 
 AvviksopplysningerPanel.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
