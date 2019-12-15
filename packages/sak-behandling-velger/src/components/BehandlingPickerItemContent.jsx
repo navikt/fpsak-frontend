@@ -150,15 +150,18 @@ const BehandlingPickerItemContent = ({
     <VerticalSpacer sixteenPx />
     <FlexContainer>
       <FlexRow>
-        <FlexColumn>
+        <FlexColumn className={styles.firstColumnWidth}>
           <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Behandlingstatus" /></Normaltekst>
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
-          <VerticalSpacer twentyPx />
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Normaltekst>
-          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Normaltekst>
         </FlexColumn>
         <FlexColumn>
           <Normaltekst>{behandlingsstatus}</Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
           {behandlingsresultatTypeKode && (
             <>
               <Image
@@ -170,11 +173,24 @@ const BehandlingPickerItemContent = ({
             </>
           )}
           {!behandlingsresultatTypeKode && <span>-</span> }
-          <VerticalSpacer twentyPx />
+        </FlexColumn>
+      </FlexRow>
+      <VerticalSpacer sixteenPx />
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
           <Normaltekst className={styles.inline}><DateLabel dateString={opprettetDato} /></Normaltekst>
           <Normaltekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Normaltekst>
           <Normaltekst className={styles.inline}><TimeLabel dateTimeString={opprettetDato} /></Normaltekst>
-          <div />
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
           {avsluttetDato && (
             <>
               <Normaltekst className={styles.inline}><DateLabel dateString={avsluttetDato} /></Normaltekst>
