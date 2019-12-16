@@ -60,7 +60,7 @@ export const HistoryIndex = ({
       render={(props) => sortAndTagTilbakekreving(props)
         .map((innslag) => (
           <HistorikkSakIndex
-            key={innslag.opprettetTidspunkt}
+            key={innslag.opprettetTidspunkt + innslag.type.kode}
             historieInnslag={innslag}
             saksnummer={saksnummer}
             location={location}

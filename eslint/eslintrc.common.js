@@ -65,12 +65,16 @@ const config = {
     '@typescript-eslint/no-explicit-any': OFF,
     '@typescript-eslint/ban-ts-ignore': OFF,
   },
-  overrides: [
-    {
-      files: ['*.spec.jsx'],
-      rules: {
-        'no-unused-expressions': OFF,
-      },
-    }],
+  overrides: [{
+    files: ['*.spec.jsx'],
+    rules: {
+      'no-unused-expressions': OFF,
+    },
+  }, {
+    files: ['*.tsx'],
+    rules: {
+      'react/prop-types': OFF,
+    },
+  }],
 };
 module.exports = config;

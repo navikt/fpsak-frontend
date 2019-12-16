@@ -5,16 +5,22 @@
 		"allowJs": true,
 		"noEmit": true,
 		"strict": false,
-		"isolatedModules": true,
 		"esModuleInterop": true,
 		"sourceMap": true,
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
+		"skipLibCheck": true, //TODO Fjern denne
 	},
 	"include": [
 		"packages/rest-api",
-		"packages/rest-api-redux"
+		"packages/rest-api-redux",
+		"packages/behandling-felles",
+		"packages/behandling-innsyn",
+		"packages/behandling-klage",
+		"packages/behandling-anke",
+		"packages/behandling-tilbakekreving",
+		"@types"
 	],
 
 }

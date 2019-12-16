@@ -86,7 +86,7 @@ export class RisikoklassifiseringIndexImpl extends Component {
 
     return (
       <RisikoklassifiseringSakIndex
-        behandlingId={behandlingIdentifier.behandlingId}
+        behandlingId={behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined}
         behandlingVersjon={behandlingVersjon}
         aksjonspunkt={risikoAksjonspunkt}
         risikoklassifisering={kontrollresultat}

@@ -137,7 +137,7 @@ ShelveBehandlingModalImpl.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
   previewHenleggBehandling: PropTypes.func.isRequired,
-  behandlingUuid: PropTypes.string.isRequired,
+  behandlingUuid: PropTypes.string,
   ytelseType: kodeverkObjektPropType.isRequired,
   showLink: PropTypes.bool.isRequired,
   henleggArsaker: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
@@ -152,6 +152,7 @@ ShelveBehandlingModalImpl.propTypes = {
 ShelveBehandlingModalImpl.defaultProps = {
   årsakKode: null,
   begrunnelse: null,
+  behandlingUuid: undefined,
 };
 
 const henleggArsakerPerBehandlingType = {
