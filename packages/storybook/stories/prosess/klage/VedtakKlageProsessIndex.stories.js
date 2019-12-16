@@ -10,6 +10,8 @@ import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
+const alleKodeverk = require('../../mocks/alleKodeverk.json'); // eslint-disable-line
+
 const behandling = {
   id: 1,
   versjon: 1,
@@ -50,7 +52,8 @@ export const visVedtakspanelDerKlageErVurdertAvNk = () => (
       },
       klageFormkravResultatKA: {
         avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
+          kode: 'IKKE_KONKRET',
+          kodeverk: 'KLAGE_AVVIST_AARSAK',
         }],
       },
     })}
@@ -58,6 +61,7 @@ export const visVedtakspanelDerKlageErVurdertAvNk = () => (
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
+    alleKodeverk={alleKodeverk}
   />
 );
 
@@ -74,7 +78,8 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
       },
       klageFormkravResultatKA: {
         avvistArsaker: [{
-          navn: 'Denne er avvist fordi...',
+          kode: 'IKKE_KONKRET',
+          kodeverk: 'KLAGE_AVVIST_AARSAK',
         }],
       },
     })}
@@ -82,5 +87,6 @@ export const visVedtakspanelDerKlageErVurdertAvNfp = () => (
     submitCallback={action('button-click')}
     previewVedtakCallback={action('button-click')}
     readOnly={boolean('readOnly', false)}
+    alleKodeverk={alleKodeverk}
   />
 );

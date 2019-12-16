@@ -32,14 +32,16 @@ class ShelveBehandlingMenuItem extends Component {
   }
 
   submit(formValues) {
-    const { behandlingIdentifier, behandlingVersjon, shelveBehandling } = this.props;
+    const {
+      behandlingIdentifier, behandlingVersjon, shelveBehandling, behandlingType,
+    } = this.props;
     const henleggBehandlingDto = {
       behandlingVersjon,
       behandlingId: behandlingIdentifier.behandlingId,
       årsakKode: formValues.årsakKode,
       begrunnelse: formValues.begrunnelse,
     };
-    shelveBehandling(henleggBehandlingDto).then(() => {
+    shelveBehandling(henleggBehandlingDto, behandlingType).then(() => {
       this.setState({ showBehandlingErHenlagtModal: true });
     });
     this.hideModal();
@@ -106,8 +108,12 @@ ShelveBehandlingMenuItem.propTypes = {
   push: PropTypes.func.isRequired,
   ytelseType: kodeverkObjektPropType.isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
-  behandlingUuid: PropTypes.string.isRequired,
   henleggBehandlingEnabled: PropTypes.bool.isRequired,
+  behandlingUuid: PropTypes.string,
+};
+
+ShelveBehandlingMenuItem.defaultProps = {
+  behandlingUuid: undefined,
 };
 
 export default ShelveBehandlingMenuItem;

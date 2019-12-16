@@ -21,6 +21,9 @@ describe('<HistoryIndex>', () => {
       historyFpsak: [{
         opprettetTidspunkt: '2019-01-01',
         historikkinnslagDeler: [],
+        type: {
+          kode: 'Test',
+        },
       }],
     }).find(HistorikkSakIndex);
     expect(history).to.have.length(1);

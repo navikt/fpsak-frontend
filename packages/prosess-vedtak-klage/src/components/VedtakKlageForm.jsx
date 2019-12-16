@@ -6,8 +6,9 @@ import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ElementWrapper, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { getKodeverknavnFn, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 
@@ -38,41 +39,44 @@ export const VedtakKlageFormImpl = ({
   behandlingsResultatTekst,
   klageVurdering,
   behandlingPaaVent,
+  alleKodeverk,
   ...formProps
-}) => (
-  <FadingPanel>
-    <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
-    <VerticalSpacer twentyPx />
-    <ElementWrapper>
-      <div>
-        <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
-      </div>
-      <Normaltekst>
-        {intl.formatMessage({ id: behandlingsResultatTekst })}
-      </Normaltekst>
-      <VerticalSpacer sixteenPx />
-      {isAvvist && (
+}) => {
+  const kodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
+  return (
+    <FadingPanel>
+      <Undertittel>{intl.formatMessage({ id: 'VedtakKlageForm.Header' })}</Undertittel>
+      <VerticalSpacer twentyPx />
+      <ElementWrapper>
+        <div>
+          <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.Resultat' })}</Undertekst>
+        </div>
+        <Normaltekst>
+          {intl.formatMessage({ id: behandlingsResultatTekst })}
+        </Normaltekst>
+        <VerticalSpacer sixteenPx />
+        {isAvvist && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilAvvisning' })}</Undertekst>
-          { avvistArsaker.map((arsak) => <Normaltekst key={arsak.navn}>{arsak.navn}</Normaltekst>) }
+          { avvistArsaker.map((arsak) => <Normaltekst key={arsak.kode}>{kodeverknavn(arsak)}</Normaltekst>) }
           <VerticalSpacer sixteenPx />
         </div>
-      )}
-      {isOmgjort && (
+        )}
+        {isOmgjort && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOmgjoring' })}</Undertekst>
           { omgjortAarsak }
           <VerticalSpacer sixteenPx />
         </div>
-      )}
-      {isOpphevOgHjemsend && (
+        )}
+        {isOpphevOgHjemsend && (
         <div>
           <Undertekst>{intl.formatMessage({ id: 'VedtakKlageForm.ArsakTilOppheving' })}</Undertekst>
           { omgjortAarsak }
           <VerticalSpacer sixteenPx />
         </div>
-      )}
-      {klageVurdering.klageVurdertAv === 'NK' && (
+        )}
+        {klageVurdering.klageVurdertAv === 'NK' && (
         <VedtakKlageKaSubmitPanel
           begrunnelse={fritekstTilBrev}
           klageResultat={klageVurdering}
@@ -81,8 +85,8 @@ export const VedtakKlageFormImpl = ({
           readOnly={readOnly}
           behandlingPaaVent={behandlingPaaVent}
         />
-      )}
-      {klageVurdering.klageVurdertAv === 'NFP' && (
+        )}
+        {klageVurdering.klageVurdertAv === 'NFP' && (
         <VedtakKlageSubmitPanel
           begrunnelse={fritekstTilBrev}
           klageResultat={klageVurdering}
@@ -91,10 +95,11 @@ export const VedtakKlageFormImpl = ({
           readOnly={readOnly}
           behandlingPaaVent={behandlingPaaVent}
         />
-      )}
-    </ElementWrapper>
-  </FadingPanel>
-);
+        )}
+      </ElementWrapper>
+    </FadingPanel>
+  );
+};
 
 VedtakKlageFormImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,

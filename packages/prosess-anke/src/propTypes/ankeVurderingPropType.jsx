@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const ankeVurderingPropType = PropTypes.shape({
   ankeVurderingResultat: PropTypes.shape({
-    ankeVurdering: PropTypes.string.isRequired,
+    ankeVurdering: PropTypes.string,
     ankeVurderingOmgjoer: PropTypes.string,
     ankeOmgjoerArsakNavn: PropTypes.string,
     begrunnelse: PropTypes.string.isRequired,

@@ -460,7 +460,7 @@ describe('RequestProcess', () => {
 
     const result = await process.run(params);
 
-    expect(result).is.eql({ payload: [] });
+    expect(result).is.eql({ payload: undefined });
     // eslint-disable-next-line no-unused-expressions
     expect(notificationHelper.requestFinishedCallback.getCalls()[0].args[0]).is.null;
   });

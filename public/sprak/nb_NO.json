@@ -6,11 +6,11 @@
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
   "Behandlingspunkt.CheckFormkravNFP": "Formkrav Vedtaksinstans",
-  "Behandlingspunkt.CheckKlageresultatNFP": "Klageresultat Vedtaksinstans",
+  "Behandlingspunkt.CheckKlageresultatNFP": "Resultat Vedtaksinstans",
   "Behandlingspunkt.CheckFormkravNK": "Formkrav Klageinstans",
-  "Behandlingspunkt.CheckKlageresultatNK": "Klageresultat Klageinstans",
-  "Behandlingspunkt.CheckKlageNFP": "Klagebehandling Vedtaksinstans",
-  "Behandlingspunkt.CheckKlageNK": "Klagebehandling Klageinstans",
+  "Behandlingspunkt.CheckKlageresultatNK": "Resultat Klageinstans",
+  "Behandlingspunkt.CheckKlageNFP": "Behandling Vedtaksinstans",
+  "Behandlingspunkt.CheckKlageNK": "Behandling Klageinstans",
   "Behandlingspunkt.FormkravKlageNFP": "Formkrav Vedtaksinstans",
   "Behandlingspunkt.FormkravKlageKA": "Formkrav Klageinstans",
   "Behandlingspunkt.Ankebehandling": "Ankebehandling",
@@ -45,6 +45,9 @@
 
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
+  "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",
+  "IverksetterVedtakStatusModal.VedtakAvslatt": "Vedtak er avslått.",
+  "IverksetterVedtakStatusModal.VedtakInnvilet": "Vedtaket ble fattet og blir nå iverksatt",
   "IverksetterVedtakStatusModal.ModalDescription": "Engangsstønaden er innvilget. Du kommer nå til forsiden.",
   "IverksetterVedtakStatusModal.Innvilget": "Innvilget",
   "IverksetterVedtakStatusModal.Avslatt": "Avslått",
@@ -642,6 +645,13 @@
   "TerminFodselSvpPanel.TerminOgFodsel": "Opplysninger om termin og fødsel",
   "TerminFodselSvpPanel.Termindato": "Termindato",
   "TerminFodselSvpPanel.Fodselsdato": "Fødselsdato",
+
+  "ProsessStegIkkeBehandletPanel.IkkeBehandlet": "Dette steget er ikke behandlet",
+
+  "BehandlingHenlagtPanel.Henlagt": "Behandlingen er henlagt",
+
+  "TilbakekrevingFakta.FaktaFeilutbetaling": "Feilutbetaling",
+  "FaktaPanel.FaktaOm": "Fakta om",
 
   "DashboardResolver.FpLosErNede": "Forsiden har nedetid",
 
