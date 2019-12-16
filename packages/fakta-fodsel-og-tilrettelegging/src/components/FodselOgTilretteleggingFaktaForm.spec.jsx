@@ -115,8 +115,10 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
 
   it('skal validere OK', () => {
     const values = {
+      termindato: '2020-01-01',
       'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
         skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
         tilretteleggingDatoer: [{
           fom: '2019-01-01',
         }],
@@ -135,8 +137,10 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
 
   it('skal vise feilmelding når ingen arbeidsforhold skal brukes', () => {
     const values = {
+      termindato: '2020-01-01',
       'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
         skalBrukes: false,
+        tilretteleggingBehovFom: '2019-01-01',
         tilretteleggingDatoer: [{
           fom: '2019-01-01',
         }],
@@ -156,8 +160,10 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
 
   it('skal finne duplikate datoer innenfor et arbeidsforhold', () => {
     const values = {
+      termindato: '2020-01-01',
       'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
         skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
         tilretteleggingDatoer: [{
           fom: '2019-01-01',
         }, {
@@ -166,6 +172,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       },
       'BEDRIFT AS910909088fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5': {
         skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
         tilretteleggingDatoer: [{
           fom: '2019-01-01',
         }, {
@@ -188,5 +195,71 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
         }],
       },
     });
+  });
+
+  it('skal ikke kunne godkjenne arbeidsforhold som har tilretteleggingBehovFom etter termindato', () => {
+    const values = {
+      termindato: '2018-01-01',
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    expect(errors).is.eql({
+      termindato: [{
+        id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato',
+      }],
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        tilretteleggingBehovFom: [{
+          id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato',
+        }],
+      },
+    });
+  });
+
+  it('skal ikke kunne godkjenne arbeidsforhold som har tilretteleggingBehovFom lik termindato', () => {
+    const values = {
+      termindato: '2019-01-01',
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    expect(errors).is.eql({
+      termindato: [{
+        id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato',
+      }],
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        tilretteleggingBehovFom: [{
+          id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato',
+        }],
+      },
+    });
+  });
+
+  it('skal kunne godkjenne arbeidsforhold som har tilretteleggingBehovFom før termindato', () => {
+    const values = {
+      termindato: '2020-01-01',
+      'BEDRIFT AS9109090880f70f2f2-79f8-4cc0-8929-be25ef2be878': {
+        skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
+        tilretteleggingDatoer: [{
+          fom: '2019-01-01',
+        }],
+      },
+    };
+    const errors = validateForm(values, arbeidsforhold);
+
+    expect(errors).is.eql({});
   });
 });
