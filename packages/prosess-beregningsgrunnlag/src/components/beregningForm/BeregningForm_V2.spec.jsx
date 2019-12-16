@@ -309,18 +309,18 @@ describe('<BeregningForm2>', () => {
     expect(result[0].kode).to.have.equal('5087');
     expect(result[1].kode).to.have.equal('5049');
   });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5047', () => {
+  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5038', () => {
     const values = {
       fellesVurdering: 'bbb',
       begrunnDekningsgradEndring: 'aaa',
       dekningsgrad: 100,
       bruttoBeregningsgrunnlag: 240000,
     };
-    const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgTidsbegrensetArbeidsforhold];
+    const aksjonspunkter = [apVurderDekningsgrad, apFastsettBgATFL];
     const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkter, allPerioder, false);
     expect(result).to.have.lengthOf(2);
     expect(result[0].kode).to.have.equal('5087');
-    expect(result[1].kode).to.have.equal('5047');
+    expect(result[1].kode).to.have.equal('5038');
   });
   it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5087 og 5039', () => {
     const values = {
@@ -365,12 +365,12 @@ describe('<BeregningForm2>', () => {
     expect(result).to.have.lengthOf(1);
     expect(result[0].kode).to.have.equal('5049');
   });
-  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5047', () => {
+  it('skal teste at transformValues blir transformert riktig med aksjonspunkt 5038', () => {
     const values = {};
-    const aksjonspunkt = [apFastsettBgTidsbegrensetArbeidsforhold];
+    const aksjonspunkt = [apFastsettBgATFL];
     const result = transformValues(values, relevanteStatuser, allAndeler, aksjonspunkt, allPerioder, false);
     expect(result).to.have.lengthOf(1);
-    expect(result[0].kode).to.have.equal('5047');
+    expect(result[0].kode).to.have.equal('5038');
   });
   it('skal teste buildInitialValues', () => {
     const gjeldendeAksjonspunkter = [apFastsettBgTidsbegrensetArbeidsforhold];
