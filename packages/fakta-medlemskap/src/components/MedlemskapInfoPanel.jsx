@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
@@ -164,12 +165,12 @@ MedlemskapInfoPanel.defaultProps = {
   isForeldrepenger: true,
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode));
-  return () => ({
-    aksjonspunkterMinusAvklarStartDato,
-  });
-};
+const filtrerAksjonspunkter = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => aksjonspunkter
+  .filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode)));
+
+const mapStateToPropsFactory = (state, ownProps) => ({
+  aksjonspunkterMinusAvklarStartDato: filtrerAksjonspunkter(ownProps),
+});
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO];

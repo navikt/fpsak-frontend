@@ -12,6 +12,8 @@
     "@fpsak-frontend/utils": "1.0.0",
     "core-js": "^3.4.2",
     "moment": "^2.24.0",
+    "nav-frontend-alertstriper": "3.0.7",
+    "nav-frontend-alertstriper-style": "2.0.6",
     "nav-frontend-grid": "1.0.23",
     "nav-frontend-grid-style": "0.2.18",
     "nav-frontend-typografi": "2.0.16",

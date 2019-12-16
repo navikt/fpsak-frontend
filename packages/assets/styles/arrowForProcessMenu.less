@@ -1,0 +1,34 @@
+.step__arrow-container {
+  bottom: -17px !important; // stylelint-disable-line declaration-no-important
+  z-index: 1;
+
+  .step__arrow {
+    position: relative;
+
+    &:after,
+    &:before {
+      border: solid transparent;
+      bottom: 100%;
+      content: " ";
+      height: 0;
+      left: 50%;
+      pointer-events: none;
+      position: absolute;
+      width: 0;
+    }
+
+    &:after {
+      border-color: rgba(255, 255, 255, 0);
+      border-bottom-color: #fff;
+      border-width: 12px;
+      margin-left: -12px;
+    }
+
+    &:before {
+      border-color: rgba(0, 0, 0, 0);
+      border-bottom-color: #000;
+      border-width: 13px;
+      margin-left: -13px;
+    }
+  }
+}

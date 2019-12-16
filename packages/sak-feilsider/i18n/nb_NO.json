@@ -5,5 +5,6 @@
   "UnauthorizedPage.Header": "Du må logge inn for å få tilgang til systemet",
   "UnauthorizedPage.LinkText": "Gå til innloggingssiden",
   "ForbiddenPage.Header": "Du har ikke tilgang til å slå opp denne personen",
-  "ForbiddenPage.LinkText": "Gå til forsiden"
+  "ForbiddenPage.LinkText": "Gå til forsiden",
+  "ErrorPage.Header": "Applikasjonsfeil"
 }

@@ -1,0 +1,35 @@
+{
+  "name": "@fpsak-frontend/behandling-anke",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@fpsak-frontend/behandling-felles": "1.0.0",
+    "@fpsak-frontend/error-api-redux": "1.0.0",
+    "@fpsak-frontend/fp-felles": "1.0.0",
+    "@fpsak-frontend/kodeverk": "1.0.0",
+    "@fpsak-frontend/prop-types": "1.0.0",
+    "@fpsak-frontend/prosess-anke": "1.0.0",
+    "@fpsak-frontend/prosess-anke-merknader": "1.0.0",
+    "@fpsak-frontend/prosess-anke-resultat": "1.0.0",
+    "@fpsak-frontend/rest-api-redux": "1.0.0",
+    "@fpsak-frontend/shared-components": "1.0.0",
+    "@navikt/nap-process-menu": "1.0.8",
+    "nav-frontend-typografi": "2.0.16",
+    "nav-frontend-typografi-style": "1.0.17",
+    "react": "^16.12.0",
+    "react-intl": "^3.6.2",
+    "react-redux": "^7.1.3",
+    "redux": "^4.0.4",
+    "redux-form": "^8.2.6",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "axios-mock-adapter": "^1.16.0",
+    "chai": "^4.2.0",
+    "enzyme": "^3.10.0",
+    "redux-mock-store": "^1.5.3",
+    "sinon": "^7.3.2"
+  }
+}

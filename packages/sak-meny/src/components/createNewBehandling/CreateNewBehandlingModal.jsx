@@ -136,7 +136,7 @@ CreateNewBehandlingModal.propTypes = {
   showModal: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   cancelEvent: PropTypes.func.isRequired,
-  behandlingId: PropTypes.string,
+  behandlingId: PropTypes.number,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
   sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
   intl: PropTypes.shape().isRequired,

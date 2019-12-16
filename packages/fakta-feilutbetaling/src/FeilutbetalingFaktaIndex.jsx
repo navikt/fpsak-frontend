@@ -24,10 +24,8 @@ const FeilutbetalingFaktaIndex = ({
   alleMerknaderFraBeslutter,
   alleKodeverk,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  hasOpenAksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <FeilutbetalingInfoPanel
@@ -39,10 +37,8 @@ const FeilutbetalingFaktaIndex = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
+      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
     />
   </RawIntlProvider>
 );
@@ -55,10 +51,8 @@ FeilutbetalingFaktaIndex.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
 };
 
 export default FeilutbetalingFaktaIndex;

@@ -103,6 +103,6 @@ export const erBehandlingKoet = createSelector([getBehandling], (behandling) => 
 export const getBehandlingAnsvarligSaksbehandler = createSelector([getBehandling], (behandling) => (behandling
   ? behandling.ansvarligSaksbehandler : undefined));
 export const getBehandlingToTrinnsBehandling = createSelector([getBehandling], (behandling) => behandling.toTrinnsBehandling);
-export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (behandling ? behandling.erAktivPapirsoknad : false));
+export const getBehandlingErPapirsoknad = createSelector([getBehandling], (behandling) => (!!behandling && !!behandling.erAktivPapirsoknad));
 export const getBehandlingsresultat = createSelector([getBehandling], (behandling) => behandling.behandlingsresultat);
 export const getBehandlingArsaker = createSelector([getBehandling], (behandling) => behandling.behandlingArsaker);

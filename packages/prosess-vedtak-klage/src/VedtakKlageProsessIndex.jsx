@@ -22,6 +22,7 @@ const VedtakKlageProsessIndex = ({
   submitCallback,
   previewVedtakCallback,
   readOnly,
+  alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
     <VedtakKlageForm
@@ -34,6 +35,7 @@ const VedtakKlageProsessIndex = ({
       submitCallback={submitCallback}
       previewVedtakCallback={previewVedtakCallback}
       readOnly={readOnly}
+      alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
 );
@@ -45,6 +47,7 @@ VedtakKlageProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewVedtakCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 export default VedtakKlageProsessIndex;

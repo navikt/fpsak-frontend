@@ -109,7 +109,7 @@ const config = {
         options: {
           name: isDevelopment ? '[name]_[hash].[ext]' : '/[name]_[hash].[ext]',
         },
-        include: [IMAGE_DIR],
+        include: [CORE_DIR, IMAGE_DIR],
       }],
   },
 

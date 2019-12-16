@@ -20,6 +20,7 @@ export const getSelectedFagsak = createSelector(
 export const getSelectedFagsakDekningsgrad = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.dekningsgrad : undefined));
 export const getSelectedFagsakStatus = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.status : undefined));
 export const getFagsakPerson = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.person : undefined));
+export const getSaksnummer = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.saksnummer : undefined));
 export const getFagsakYtelseType = createSelector(getSelectedFagsak, (fagsak) => (fagsak ? fagsak.sakstype : undefined));
 export const isForeldrepengerFagsak = createSelector(
   getFagsakYtelseType,
