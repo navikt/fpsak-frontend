@@ -3,7 +3,7 @@ import Kodeverk from './kodeverkTsType';
 type Aksjonspunkt = Readonly<{
   definisjon: Kodeverk;
   status: Kodeverk;
-  begrunnelse: string;
+  begrunnelse?: string;
   vilkarType?: Kodeverk;
   toTrinnsBehandling?: boolean;
   toTrinnsBehandlingGodkjent?: boolean;

@@ -30,10 +30,8 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
   const ikkeAkseptertAvBeslutter = behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES
     && aksjonspunkter[0].toTrinnsBehandling && aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
-  const harApneAksjonspunkterSomIkkeErForeslaVedtak = useMemo(() => aksjonspunkter
-    .some((ap) => isAksjonspunktOpen(ap.status.kode)), [aksjonspunkter]);
-  const erAksjonspunktLosbart = useMemo(() => aksjonspunkter.some((ap) => ap.kanLoses), [aksjonspunkter]);
-  const visAksjonspunkt = harApneAksjonspunkterSomIkkeErForeslaVedtak && erAksjonspunktLosbart && !isReadOnly;
+  const harApnentAksjonspunktSomKanLoses = useMemo(() => aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses), [aksjonspunkter]);
+  const visAksjonspunkt = harApnentAksjonspunktSomKanLoses && !isReadOnly;
 
   return (
     <div className={classNames('prosesspunkt', { ikkeAkseptertAvBeslutter, visAksjonspunkt })}>

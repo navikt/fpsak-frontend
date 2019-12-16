@@ -1,6 +1,5 @@
 import React, { FunctionComponent, ReactNode } from 'react';
-import { useIntl } from 'react-intl';
-
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import SideMenu from '@navikt/nap-side-menu';
 
 import {
@@ -23,37 +22,35 @@ interface OwnProps {
   children: ReactNode;
 }
 
-const FaktaPanel: FunctionComponent<OwnProps> = ({
+const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   paneler,
   velgPanel,
   children,
-}) => {
-  const intl = useIntl();
-  return (
-    <div className={styles.container}>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <SideMenu
-              heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
-              links={paneler.map((panel) => ({
-                label: panel.tekst,
-                active: panel.erAktiv,
-                iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
-                iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
-              }))}
-              onClick={velgPanel}
-            />
-          </FlexColumn>
-          <FlexColumn>
-            <div className={styles.content}>
-              {children}
-            </div>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </div>
-  );
-};
+}) => (
+  <div className={styles.container}>
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn>
+          <SideMenu
+            heading={intl.formatMessage({ id: 'FaktaPanel.FaktaOm' })}
+            links={paneler.map((panel) => ({
+              label: panel.tekst,
+              active: panel.erAktiv,
+              iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
+              iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
+            }))}
+            onClick={velgPanel}
+          />
+        </FlexColumn>
+        <FlexColumn>
+          <div className={styles.content}>
+            {children}
+          </div>
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+  </div>
+);
 
-export default FaktaPanel;
+export default injectIntl(FaktaPanel);
