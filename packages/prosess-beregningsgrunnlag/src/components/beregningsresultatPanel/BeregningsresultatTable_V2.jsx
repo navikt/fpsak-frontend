@@ -89,7 +89,10 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
         <Normaltekst>
           <span className={beregningStyles.semiBoldText}>
             { !ikkeVurdert && (
-            <FormattedMessage id="Beregningsgrunnlag.BeregningTable.DagsatsNy" values={{ dagSats: listOfEntries[listOfEntries.length - 1].verdi }} />
+            <FormattedMessage
+              id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
+              values={{ dagSats: formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) }}
+            />
             )}
             { ikkeVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
@@ -142,8 +145,12 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   }
   rows.push(createRowsRedusert(listOfEntries));
   rows.push(lineRow('redusertLinje'));
+  if (listOfEntries.length === 0) {
+    rows.push(summaryRow(listOfDagsatser, listofAndeler));
+  } else {
+    rows.push(summaryRow(listOfDagsatser, listOfEntries));
+  }
 
-  rows.push(summaryRow(listOfDagsatser, listOfEntries));
 
   return rows;
 };
@@ -184,10 +191,9 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus) => {
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
-    (state, ownProps) => ownProps.ledetekstRedusert,
     (state, ownProps) => ownProps.dekningsgrad,
     (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
-  (allePerioder, aktivitetStatusList, ledetekstRedusert, dekningsgrad, vilkarStatus) => {
+  (allePerioder, aktivitetStatusList, dekningsgrad, vilkarStatus) => {
     const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
     // const bruttoRad = { ledetekst: ledetekstBrutto };
     const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -238,7 +244,6 @@ export const createBeregningTableData = createSelector(
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
-
       if (dekningsgrad !== 100) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
@@ -334,7 +339,7 @@ const BeregningsresultatTable2 = ({
   halvGVerdi,
   tableData,
 }) => {
-  console.log('vilkaarBG', vilkaarBG);
+  console.log('tabledata', tableData); // eslint-disable-line no-console
   return (
     <Panel>
       <Element>
