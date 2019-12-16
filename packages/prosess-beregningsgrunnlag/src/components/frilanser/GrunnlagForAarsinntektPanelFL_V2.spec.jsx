@@ -61,7 +61,7 @@ describe('<GrunnlagForAarsinntektPanelFL_V2>', () => {
     const ledeTextStartDato = rows.at(0).find('DateLabel');
 
     expect(rows).to.have.length(3);
-    expect(ledeTextStart.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato');
+    expect(ledeTextStart.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2');
     expect(ledeTextStartDato.dateString).to.equal(periode.beregningsgrunnlagPrStatusOgAndel.beregningsgrunnlagFom);
 
     const ledeText = rows.at(2).find('FormattedMessage');
