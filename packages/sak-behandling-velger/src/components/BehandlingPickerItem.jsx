@@ -22,6 +22,8 @@ const getContentProps = (behandling, getKodeverknavn) => ({
   avsluttetDato: behandling.avsluttet,
   behandlingsstatus: getKodeverknavn(behandling.status),
   erGjeldendeVedtak: behandling.gjeldendeVedtak,
+  behandlingsresultatTypeNavn: behandling.behandlingsresultat ? getKodeverknavn(behandling.behandlingsresultat.type) : undefined,
+  behandlingsresultatTypeKode: behandling.behandlingsresultat ? behandling.behandlingsresultat.type.kode : undefined,
 });
 
 const renderItemContent = (behandling, getKodeverknavn, isSelected = false, withChevronDown = false, withChevronUp = false) => (

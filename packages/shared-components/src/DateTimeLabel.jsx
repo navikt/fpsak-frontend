@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedDate, FormattedTime } from 'react-intl';
+import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
 /**
  * DateTimeLabel
@@ -14,16 +14,32 @@ import { FormattedDate, FormattedTime } from 'react-intl';
  */
 const DateTimeLabel = ({
   dateTimeString,
+  useNewFormat,
 }) => (
-  <div>
+  <>
     <FormattedDate day="2-digit" month="2-digit" year="numeric" value={new Date(dateTimeString)} />
-     -
-    <FormattedTime value={new Date(dateTimeString)} />
-  </div>
+    {!useNewFormat && (
+      <>
+        -
+        <FormattedTime value={new Date(dateTimeString)} />
+      </>
+    )}
+    {useNewFormat && (
+      <>
+        <FormattedMessage id="DateTimeLabel.Kl" />
+        <FormattedTime value={new Date(dateTimeString)} hour="numeric" minute="numeric" second="numeric" />
+      </>
+    )}
+  </>
 );
 
 DateTimeLabel.propTypes = {
   dateTimeString: PropTypes.string.isRequired,
+  useNewFormat: PropTypes.bool,
+};
+
+DateTimeLabel.defaultProps = {
+  useNewFormat: false,
 };
 
 export default DateTimeLabel;

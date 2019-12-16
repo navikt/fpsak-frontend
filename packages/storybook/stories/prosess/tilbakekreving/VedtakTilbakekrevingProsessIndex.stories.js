@@ -5,9 +5,9 @@ import { withKnobs, boolean } from '@storybook/addon-knobs';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import VedtakTilbakekrevingProsessIndex from '@fpsak-frontend/prosess-vedtak-tilbakekreving';
-import vedtakResultatType from '@fpsak-frontend/fp-behandling-tilbakekreving/src/kodeverk/vedtakResultatType';
 import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
 
+import vedtakResultatType from './vedtakResultatType';
 import withReduxProvider from '../../../decorators/withRedux';
 
 const vedtaksbrev = {

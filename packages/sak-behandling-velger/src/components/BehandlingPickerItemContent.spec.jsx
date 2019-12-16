@@ -67,6 +67,6 @@ describe('<BehandlingPickerItemContent>', () => {
     />);
 
     const formattedMessages = wrapper.find('FormattedMessage');
-    expect(formattedMessages.last().prop('id')).to.eql('Behandlingspunkt.Årsak.Annet');
+    expect(formattedMessages.first().prop('id')).to.eql('Behandlingspunkt.Årsak.Annet');
   });
 });
