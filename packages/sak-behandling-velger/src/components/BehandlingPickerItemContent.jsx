@@ -9,14 +9,11 @@ import {
   BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
-import avslattIkonImg from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
-import innvilgetIkonImg from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
 import styles from './behandlingPickerItemContent.less';
 
@@ -162,17 +159,7 @@ const BehandlingPickerItemContent = ({
           <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
         </FlexColumn>
         <FlexColumn>
-          {behandlingsresultatTypeKode && (
-            <>
-              <Image
-                className={styles.resultatStatusImage}
-                src={behandlingsresultatTypeKode && behandlingsresultatTypeKode === behandlingResultatType.INNVILGET ? innvilgetIkonImg : avslattIkonImg}
-                tabIndex="0"
-              />
-              <Normaltekst className={classNames(styles.inline, styles.resultatPadding)}>{behandlingsresultatTypeNavn}</Normaltekst>
-            </>
-          )}
-          {!behandlingsresultatTypeKode && <span>-</span> }
+          <Normaltekst>{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</Normaltekst>
         </FlexColumn>
       </FlexRow>
       <VerticalSpacer sixteenPx />
