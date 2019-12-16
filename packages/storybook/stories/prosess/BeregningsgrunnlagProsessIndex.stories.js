@@ -595,36 +595,10 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 154985;
-  const perioder = [lagStandardPeriode(andeler)];
-  const statuser = [lagStatus('AT_FL_SN')];
-  const bg = lagBG(perioder, statuser);
-  bg.andelerMedGraderingUtenBG = [lagAndel('AT', 0, 0, false)];
-  return (
-    <BeregningsgrunnlagProsessIndex
-      behandling={behandling}
-      beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
-      submitCallback={action('button-click')}
-      readOnly={false}
-      readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
-      alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
-    />
-  );
-};
-export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
-  const pgi = lagPGIVerdier();
-  andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 954985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
@@ -641,6 +615,60 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => 
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
+  const andeler = [
+    lagAndel('SN', 331000, undefined, undefined, true),
+    lagAndel('AT', 324000, undefined, undefined),
+    lagAndel('FL', 396000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 954985;
+  // const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].redusertPrAar = 479318;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
+
+  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };

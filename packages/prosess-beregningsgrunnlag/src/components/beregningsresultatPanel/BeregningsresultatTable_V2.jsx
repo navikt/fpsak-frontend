@@ -296,9 +296,9 @@ export const createBeregningTableData = createSelector(
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
       const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
-      switch (aktivitetStatusKodeKombo) {
-        case 'AT_SN': {
-          const atElement = opprettAndelElement(
+      const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
+    switch (aktivitetStatusKodeKombo) {
+      case 'AT_SN': {const atElement = opprettAndelElement(
             periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
             'AT',
             vilkarStatus,
