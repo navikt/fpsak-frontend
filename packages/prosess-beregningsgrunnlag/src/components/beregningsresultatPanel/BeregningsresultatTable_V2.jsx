@@ -156,8 +156,10 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   }
   rows.push(createRowsRedusert(listOfEntries));
   rows.push(lineRow('redusertLinje'));
-
   if (listOfEntries.length === 0) {
+    rows.push(summaryRow(listOfDagsatser, listofAndeler));
+  } else {
+    if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
   } else {
     if (listOfEntries.length === 0) {
@@ -166,6 +168,7 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
   } else {rows.push(summaryRow(listOfDagsatser, listOfEntries));
   }
+
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
@@ -283,8 +286,6 @@ export const createBeregningTableData = createSelector(
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
-      if (dekningsgrad !== 100) {
-
       if (dekningsgrad !== 100) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
