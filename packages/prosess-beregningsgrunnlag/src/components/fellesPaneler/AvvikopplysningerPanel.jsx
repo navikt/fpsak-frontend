@@ -5,6 +5,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
@@ -16,45 +17,68 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   }
   return undefined;
 };
-// TODO: Legg til test for kombinasjon AT FL når vi får splitting fra marianne
+const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
+  // Andelen er fastsatt før og må kunne fastsettes igjen
+  if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
+    return true;
+  }
+  // Andeler som er lagt til av sbh eller tilkom før stp skal ikke kunne endres på
+  return andel.erTilkommetAndel === false && andel.lagtTilAvSaksbehandler === false;
+};
+const finnAndelerSomSkalVises = (andeler, status) => {
+  if (!andeler) {
+    return [];
+  }
+
+  return andeler
+    .filter((andel) => andel.aktivitetStatus.kode === status)
+    .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
+};
+const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) => {
+  const relevanteAndeler = finnAndelerSomSkalVises(alleAndelerIForstePeriode, status);
+  if (relevanteAndeler) {
+    return relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
+  }
+  return null;
+};
 const AvviksopplysningerPanel = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, relevanteStatuser, aktivitetStatusKode, allePerioder, harAksjonspunkter,
-}) => (
-  <Panel className={beregningStyles.panelRight}>
-    <Element>
-      <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
-    </Element>
-    <VerticalSpacer eightPx />
-    {relevanteStatuser.isArbeidstaker && (
+  relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus,
+}) => {
+  const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+  return (
+    <Panel className={beregningStyles.panelRight}>
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
+      </Element>
+      <VerticalSpacer eightPx />
+      {relevanteStatuser.isArbeidstaker && (
       <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvik={avvik}
-        sammenligningsgrunnlag={sammenligningsgrunnlag}
-        relevanteStatuser={relevanteStatuser}
-        aktivitetStatusKode={aktivitetStatusKode}
-      />
-    )}
-    {relevanteStatuser.isFrilanser && !relevanteStatuser.isKombinasjonsstatus && (
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvik={avvik}
-        sammenligningsgrunnlag={sammenligningsgrunnlag}
+        beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
+        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
         relevanteStatuser={relevanteStatuser}
       />
-    )}
-    {relevanteStatuser.isKombinasjonsstatus && (
+      )}
+      {relevanteStatuser.isKombinasjonsstatus && (
       <VerticalSpacer sixteenPx />
-    )}
-    {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-      <AvviksopplysningerSN
-        beregnetAarsinntekt={beregnetAarsinntekt}
-        avvik={avvik}
-        sammenligningsgrunnlag={sammenligningsgrunnlag}
-        alleAndelerIForstePeriode={finnAlleAndelerIFørstePeriode(allePerioder)}
-        harAksjonspunkter={harAksjonspunkter}
+      )}
+      {relevanteStatuser.isFrilanser && (
+      <AvviksopplysningerFL
+        beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
+        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+        relevanteStatuser={relevanteStatuser}
       />
-    )}
-    {relevanteStatuser.isAAP && (
+      )}
+      {relevanteStatuser.isKombinasjonsstatus && (
+      <VerticalSpacer sixteenPx />
+      )}
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+      <AvviksopplysningerSN
+        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+        harAksjonspunkter={harAksjonspunkter}
+        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+      />
+      )}
+      {relevanteStatuser.isAAP && (
       <Row>
         <Column xs="12">
           <Normaltekst>
@@ -62,33 +86,29 @@ const AvviksopplysningerPanel = ({
           </Normaltekst>
         </Column>
       </Row>
-    )}
-    {relevanteStatuser.isDagpenger && (
-    <Row>
-      <Column xs="12">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
-        </Normaltekst>
-      </Column>
-    </Row>
-    )}
-  </Panel>
-);
+      )}
+      {relevanteStatuser.isDagpenger && (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+          </Normaltekst>
+        </Column>
+      </Row>
+      )}
+    </Panel>
+  );
+};
 
 AvviksopplysningerPanel.propTypes = {
-  beregnetAarsinntekt: PropTypes.number,
-  sammenligningsgrunnlag: PropTypes.number,
-  avvik: PropTypes.number,
   relevanteStatuser: PropTypes.shape().isRequired,
-  aktivitetStatusKode: PropTypes.string.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
 };
 
 AvviksopplysningerPanel.defaultProps = {
-  sammenligningsgrunnlag: undefined,
-  avvik: undefined,
-  beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
+  sammenligningsgrunnlagPrStatus: undefined,
 };
 export default AvviksopplysningerPanel;

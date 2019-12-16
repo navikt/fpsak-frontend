@@ -9,12 +9,24 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 
 const AvviksopplysningerSN = ({
-  beregnetAarsinntekt, sammenligningsgrunnlag, avvik, alleAndelerIForstePeriode, harAksjonspunkter,
+  sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, harAksjonspunkter,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
   const { pgiSnitt } = snAndel;
-  const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   const erNyArbLivet = snAndel.erNyIArbeidslivet;
+  const erVarigEndring = snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
+  const sammenligningsGrunnlagSN = sammenligningsgrunnlagPrStatus
+    ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_SN'
+      || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
+    : undefined;
+  let avvikSN;
+  let sammenligningsgrunnlagSumSN;
+  let differanseBeregnet;
+  if (sammenligningsGrunnlagSN) {
+    avvikSN = sammenligningsGrunnlagSN.avvikProsent;
+    sammenligningsgrunnlagSumSN = sammenligningsGrunnlagSN.rapportertPrAar;
+    differanseBeregnet = sammenligningsGrunnlagSN.differanseBeregnet;
+  }
   if (erNyArbLivet) {
     return (
       <Row>
@@ -31,7 +43,7 @@ const AvviksopplysningerSN = ({
       <Row>
         <Column xs="12">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.VarigEndring" />
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring" />
           </Normaltekst>
         </Column>
       </Row>
@@ -64,7 +76,7 @@ const AvviksopplysningerSN = ({
         </Column>
 
       </Row>
-      {sammenligningsgrunnlag && (
+      {sammenligningsgrunnlagSumSN && (
         <>
           <Row>
             <Column className={styles.colLable}>
@@ -75,7 +87,7 @@ const AvviksopplysningerSN = ({
 
             <Column className={styles.colValue}>
               <Normaltekst>
-                {formatCurrencyNoKr(sammenligningsgrunnlag)}
+                {formatCurrencyNoKr(sammenligningsgrunnlagSumSN)}
               </Normaltekst>
             </Column>
             <Column xs="5" />
@@ -92,12 +104,13 @@ const AvviksopplysningerSN = ({
             </Column>
             <Column className={styles.colValue}>
               <Normaltekst>
-                {formatCurrencyNoKr(beregnetAarsinntekt === undefined ? 0 : beregnetAarsinntekt - sammenligningsgrunnlag)}
+                {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
+                  : differanseBeregnet)}
               </Normaltekst>
             </Column>
             <Column className={styles.colAvvik}>
-              <Normaltekst className={`${avvik > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik }} />
+              <Normaltekst className={`${avvikSN > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikSN }} />
               </Normaltekst>
             </Column>
           </Row>
@@ -109,17 +122,12 @@ const AvviksopplysningerSN = ({
 
 
 AvviksopplysningerSN.propTypes = {
-  sammenligningsgrunnlag: PropTypes.number,
-  avvik: PropTypes.number,
-  beregnetAarsinntekt: PropTypes.number,
   harAksjonspunkter: PropTypes.bool,
   alleAndelerIForstePeriode: PropTypes.arrayOf(PropTypes.shape()),
+  sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 AvviksopplysningerSN.defaultProps = {
-  sammenligningsgrunnlag: undefined,
-  avvik: '',
-  beregnetAarsinntekt: undefined,
   harAksjonspunkter: false,
 };
 export default AvviksopplysningerSN;

@@ -60,7 +60,7 @@ export const createInputFieldKey = (andel, periode) => {
   if (!andel.arbeidsforhold) {
     return undefined;
   }
-  return `${formPrefix}_${andel.arbeidsforhold.arbeidsforholdId}_${andel.andelsnr}_${periode.beregningsgrunnlagPeriodeFom}`; // eslint-disable-line
+  return `${formPrefix}_${andel.arbeidsforhold.arbeidsforholdId}_${andel.andelsnr}_${periode.beregningsgrunnlagPeriodeFom}`;
 };
 // Lager en liste med FormattedMessages som skal brukes som overskrifter i tabellen
 
