@@ -5,14 +5,13 @@ import sinon from 'sinon';
 
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
+import EngangsstonadForm from '@fpsak-frontend/papirsoknad-es';
+import ForeldrepengerForm from '@fpsak-frontend/papirsoknad-fp';
+import SvangerskapspengerForm from '@fpsak-frontend/papirsoknad-svp';
 
-import SoknadData from '../SoknadData';
-import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
-import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import { RegistrerPapirsoknad } from './RegistrerPapirsoknad';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
-import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
-
 
 describe('<RegistrerPapirsoknad>', () => {
   it('skal vise aksjonspunkt-hjelpetekst og form for engangsstønad', () => {

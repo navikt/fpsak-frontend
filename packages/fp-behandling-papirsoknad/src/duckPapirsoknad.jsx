@@ -127,9 +127,3 @@ export const getSoknadData = createSelector(
   [getPapirsoknadContext],
   (papirsoknadContext = {}) => papirsoknadContext.soknadData,
 );
-
-const getFormState = (state) => state.form;
-export const getRegisteredFields = (formName) => createSelector(
-  [getFormState],
-  (formState = {}) => (formState[formName] ? formState[formName].registeredFields : {}),
-);

@@ -17,8 +17,8 @@ import { ariaCheck, required } from '@fpsak-frontend/utils';
 import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
+import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 
-import SoknadData from '../SoknadData';
 import { getFagsakYtelseType, getKodeverk } from '../duckPapirsoknad';
 
 import styles from './soknadTypePickerForm.less';

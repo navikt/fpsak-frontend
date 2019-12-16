@@ -7,12 +7,12 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
+import EngangsstonadForm from '@fpsak-frontend/papirsoknad-es';
+import ForeldrepengerForm from '@fpsak-frontend/papirsoknad-fp';
+import SvangerskapspengerForm from '@fpsak-frontend/papirsoknad-svp';
 
-import EngangsstonadForm from './engangsstonad/EngangsstonadForm';
-import ForeldrepengerForm from './foreldrepenger/ForeldrepengerForm';
-import SvangerskapspengerForm from './svangerskapspenger/SvangerskapspengerForm';
 import SoknadTypePickerForm from './SoknadTypePickerForm';
-import SoknadData from '../SoknadData';
 
 import styles from './registrerPapirsoknad.less';
 

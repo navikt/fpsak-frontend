@@ -10,9 +10,9 @@ import {
   BehandlingIdentifier, ErrorTypes, requireProps,
 } from '@fpsak-frontend/fp-felles';
 import { PersonIndex } from '@fpsak-frontend/person-info';
+import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 
 import papirsoknadApi from './data/papirsoknadApi';
-import SoknadData from './SoknadData';
 import behandlingSelectors from './selectors/papirsoknadSelectors';
 import {
   getBehandlingIdentifier,
