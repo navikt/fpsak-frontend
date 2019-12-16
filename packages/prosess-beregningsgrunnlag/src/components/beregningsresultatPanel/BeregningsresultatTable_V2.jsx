@@ -50,17 +50,7 @@ const lineRow = (key) => (
   </Row>
 );
 
-const erRedusereVerdierLike = (listOfEntries) => {
-  let alleLike = true;
-  let lastEntry;
-  listOfEntries.forEach((entry) => {
-    if (lastEntry && lastEntry[1] !== entry[1]) {
-      alleLike = false;
-    }
-    lastEntry = entry;
-  });
-  return alleLike;
-};
+
 const createRowsRedusert = (listOfEntries, verdierLike) => {
   if (!verdierLike) {
     return (
@@ -155,12 +145,14 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   }
   rows.push(createRowsRedusert(listOfEntries));
   rows.push(lineRow('redusertLinje'));
-
-  }
   if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
-  } else {rows.push(summaryRow(listOfDagsatser, listOfEntries));
-}
+  if (listOfEntries.length === 0) {
+    rows.push(summaryRow(listOfDagsatser, listofAndeler));
+  } else {
+    rows.push(summaryRow(listOfDagsatser, listOfEntries));
+  }
+
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
@@ -253,8 +245,6 @@ export const createBeregningTableData = createSelector(
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
-      if (dekningsgrad !== 100) {
-
       if (dekningsgrad !== 100) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
