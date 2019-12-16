@@ -214,7 +214,6 @@ export const BeregningFormImpl2 = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
-
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
@@ -298,6 +297,7 @@ export const BeregningFormImpl2 = ({
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
               aktivitetStatusList={aktivitetStatusList}
+              grunnbelop={beregningsgrunnlag.grunnbeløp}
             />
           </>
 

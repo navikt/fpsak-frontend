@@ -8,7 +8,7 @@ import { createSelector } from 'reselect';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -193,8 +193,9 @@ export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
     (state, ownProps) => ownProps.dekningsgrad,
+    (state, ownProps) => ownProps.grunnbelop,
     (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
-  (allePerioder, aktivitetStatusList, dekningsgrad, vilkarStatus) => {
+  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, vilkarStatus) => {
     const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TomString" />];
     // const bruttoRad = { ledetekst: ledetekstBrutto };
     const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -205,6 +206,7 @@ export const createBeregningTableData = createSelector(
     const aapRad = { ledetekst: <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.AAP`} /> };
     const ytRad = { ledetekst: <FormattedMessage id={`Beregningsgrunnlag.BeregningTable.${strKey}.Ytelse`} /> };
     const dpRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagpenger" /> };
+    const msRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.MiletarSivil" /> };
     // const avkortetRad = { ledetekst: ledetekstAvkortet };
     const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
     // const redusertRad = { ledetekst: ledetekstRedusert };
@@ -213,7 +215,6 @@ export const createBeregningTableData = createSelector(
     // Kun dersom periodeårsaken kan endre dagsatsen på beregningsresultatet er
     // vi interessert i å vise den tilhørende perioden i resultattabellen.
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
-
     perioderSomSkalVises.forEach((periode) => {
       const atAndeleler = periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
       const flAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
@@ -221,11 +222,13 @@ export const createBeregningTableData = createSelector(
       const aapAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER);
       const snAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
       const ytAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.KUN_YTELSE);
+      const msAndel = periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
       const flInntekt = flAndel ? flAndel.bruttoPrAar : undefined;
       const dpInntekt = dpAndel ? dpAndel.bruttoPrAar : undefined;
       const aapInntekt = aapAndel ? aapAndel.bruttoPrAar : undefined;
       const snInntekt = snAndel ? snAndel.pgiSnitt : undefined;
       const ytInntekt = ytAndel ? ytAndel.bruttoPrAar : undefined;
+      const msInntekt = msAndel ? msAndel.bruttoPrAar : undefined;
       const atInntekt = atAndeleler && atAndeleler.length > 0 ? atAndeleler.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
 
       // const skalFastsetteAT = atAndeleler && atAndeleler.length > 0 ? atAndeleler.some((andeler) => andeler.skalFastsetteGrunnlag);
@@ -242,6 +245,8 @@ export const createBeregningTableData = createSelector(
       flRad.skalFastsetteGrunnlag = flAndel && flAndel.skalFastsetteGrunnlag;
       ytRad.verdi = ytInntekt;
       ytRad.skalFastsetteGrunnlag = ytAndel && ytAndel.skalFastsetteGrunnlag;
+      msRad.verdi = msInntekt;
+      msRad.skalFastsetteGrunnlag = msAndel && msAndel.skalFastsetteGrunnlag;
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
@@ -255,6 +260,7 @@ export const createBeregningTableData = createSelector(
     const rowsForklaringer = [];
     const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabvetis
     const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
+    const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
     switch (aktivitetStatusKodeKombo) {
       case 'AT_SN': {
         if ((atRad && atRad.verdi) < (snRad && snRad.verdi)) {
@@ -307,12 +313,14 @@ export const createBeregningTableData = createSelector(
         }
         break;
       }
+
       case 'KUN_YTELSE': {
         if (ytRad && ytRad.verdi) {
           rowsAndeler.push(ytRad);
         }
         break;
       }
+
       default: {
         if (atRad.verdi !== undefined) { rowsAndeler.push(atRad); }
         if (flRad.verdi !== undefined) { rowsAndeler.push(flRad); }
@@ -321,8 +329,14 @@ export const createBeregningTableData = createSelector(
         if (dpRad.verdi !== undefined) { rowsAndeler.push(dpRad); }
       }
     }
+
     const rows = [];
-    if (bruttoRad.verdi !== avkortetRad.verdi) {
+    if (isMS && msRad.verdi > 0) {
+      rows.push(msRad);
+    }
+    const seksG = grunnbelop * 6;
+
+    if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
       rows.push(avkortetRad);
     }
     if (rowsAndeler.length > 1) {
