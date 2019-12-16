@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import classNames from 'classnames';
 
 import {
@@ -182,8 +182,8 @@ const BehandlingPickerItemContent = ({
         </FlexColumn>
         <FlexColumn>
           <Normaltekst className={styles.inline}><DateLabel dateString={opprettetDato} /></Normaltekst>
-          <Normaltekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Normaltekst>
-          <Normaltekst className={styles.inline}><TimeLabel dateTimeString={opprettetDato} /></Normaltekst>
+          <Undertekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Undertekst>
+          <Undertekst className={styles.inline}><TimeLabel dateTimeString={opprettetDato} /></Undertekst>
         </FlexColumn>
       </FlexRow>
       <FlexRow>
@@ -194,15 +194,18 @@ const BehandlingPickerItemContent = ({
           {avsluttetDato && (
             <>
               <Normaltekst className={styles.inline}><DateLabel dateString={avsluttetDato} /></Normaltekst>
-              <Normaltekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Normaltekst>
-              <Normaltekst className={styles.inline}><TimeLabel dateTimeString={avsluttetDato} /></Normaltekst>
+              <Undertekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Undertekst>
+              <Undertekst className={styles.inline}><TimeLabel dateTimeString={avsluttetDato} /></Undertekst>
             </>
           )}
+        </FlexColumn>
+        <FlexColumn className={styles.pushRightCorner}>
+          <Normaltekst className={styles.inline}><FormattedMessage id="BehandlingPickerItemContent.Enhet" /></Normaltekst>
+          <Normaltekst className={styles.inline} title={behandlendeEnhetNavn}>{behandlendeEnhetId}</Normaltekst>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>
     <VerticalSpacer fourPx />
-    <Normaltekst>{`${behandlendeEnhetId} ${behandlendeEnhetNavn}`}</Normaltekst>
   </BorderBox>
 );
 
