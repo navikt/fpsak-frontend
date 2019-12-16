@@ -96,6 +96,16 @@ const AvviksopplysningerPanel = ({
         </Column>
       </Row>
       )}
+      {relevanteStatuser.isMilitaer && (
+        <Row>
+          <Column xs="12">
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+            </Normaltekst>
+          </Column>
+        </Row>
+      )}
+
     </Panel>
   );
 };
