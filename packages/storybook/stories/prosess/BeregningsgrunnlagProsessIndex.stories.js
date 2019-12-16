@@ -165,6 +165,7 @@ const lagBG = (perioder, statuser) => {
     skjaeringstidspunktBeregning: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
+    dekningsgrad: 80,
     sammenligningsgrunnlag: {
       sammenligningsgrunnlagFom: '2018-09-01',
       sammenligningsgrunnlagTom: '2019-08-31',
