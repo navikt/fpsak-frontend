@@ -4,7 +4,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { InputField } from '@fpsak-frontend/form';
-import { parseCurrencyInput, required } from '@fpsak-frontend/utils';
+import { parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
@@ -34,5 +34,7 @@ const AksjonspunktBehandlerFL = ({
 AksjonspunktBehandlerFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
 };
+
+AksjonspunktBehandlerFL.transformValuesForFL = (values) => removeSpacesFromNumber(values.inntektFrilanser);
 
 export default AksjonspunktBehandlerFL;

@@ -22,6 +22,7 @@ const FagsakProfilSakIndex = ({
   createLink,
   renderBehandlingMeny,
   renderBehandlingVelger,
+  dekningsgrad,
 }) => (
   <RawIntlProvider value={intl}>
     <FagsakProfile
@@ -34,6 +35,7 @@ const FagsakProfilSakIndex = ({
       createLink={createLink}
       renderBehandlingMeny={renderBehandlingMeny}
       renderBehandlingVelger={renderBehandlingVelger}
+      dekningsgrad={dekningsgrad}
     />
   </RawIntlProvider>
 );
@@ -48,6 +50,7 @@ FagsakProfilSakIndex.propTypes = {
   createLink: PropTypes.func.isRequired,
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
+  dekningsgrad: PropTypes.number.isRequired,
 };
 
 FagsakProfilSakIndex.defaultProps = {

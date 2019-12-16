@@ -48,7 +48,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
   });
 
   it('Skal teste at korrekte verdier settes i tabellen med EN arbeidsandel med opphørsdato', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false)];
+    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200001, false)];
     andeler[0].arbeidsforhold.opphoersdato = '2019-11-11';
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
@@ -72,10 +72,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       expect(teksterAndel.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar / 12));
       expect(teksterAndel.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andel.beregnetPrAar));
       rowNr += 1;
-      // const teksterArbForhold = rows.at(rowNr).find('Normaltekst');
       const teksterArbForholdTid = rows.at(rowNr).find('Undertekst');
-      // expect(teksterArbForhold.at(0).childAt(0).text()).to.equal(`${andel.arbeidsforhold.startdato} - ${andel.arbeidsforhold.opphoersdato}`);
-
       expect(teksterArbForholdTid.at(0).childAt(0).text()).to
         .equal(`${dateFormat(andel.arbeidsforhold.startdato)} - ${dateFormat(andel.arbeidsforhold.opphoersdato)}`);
       rowNr += 1;
@@ -83,7 +80,9 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
   });
 
   it('Skal teste at korrekte verdier settes i tabellen med to arbeidsandeler', () => {
-    const andeler = [mockAndel('Arbeidsgiver 1', 100, 200000, false), mockAndel('Arbeidsgiver 2', 100, 100000, false)];
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', 100, 200000, false),
+      mockAndel('Arbeidsgiver 2', 100, 100000, false)];
     const wrapper = shallowWithIntl(<UnwrappedForm
       {...reduxFormPropsMock}
       intl={intlMock}

@@ -14,6 +14,7 @@ import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregn
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 
 import { Undertittel } from 'nav-frontend-typografi';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import VurderOgFastsettSN2 from '../selvstendigNaeringsdrivende/VurderOgFastsettSN_V2';
@@ -26,6 +27,7 @@ import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
 import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
+import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -108,7 +110,18 @@ export const buildInitialValues = createSelector(
 const harAksjonspunkt = (aksjonspunktKode, gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter !== undefined && gjeldendeAksjonspunkter !== null
   && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === aksjonspunktKode);
 
-export const transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder) => {
+const transformValuesATFLHverForSeg = (values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode) => ([{
+  kode: aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
+  begrunnelse: AksjonspunktBehandler.transformValues(values),
+  inntektFrilanser: skalFastsetteFL ? AksjonspunktBehandlerFL.transformValuesForFL(values) : undefined,
+  inntektPrAndelList: skalFastsetteAT ? AksjonspunktBehandlerAT.transformValuesForAT(values, alleAndelerIForstePeriode) : undefined,
+}]);
+
+export const transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode,
+  gjeldendeAksjonspunkter, allePerioder, harNyttIkkeSamletSammenligningsgrunnlag) => {
+  const skalFastsetteAT = alleAndelerIForstePeriode.some((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.skalFastsetteGrunnlag);
+  const skalFastsetteFL = alleAndelerIForstePeriode.some((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER && andel.skalFastsetteGrunnlag);
+  const skalATOgFLFastsettesHverForSeg = (skalFastsetteAT || skalFastsetteFL) && harNyttIkkeSamletSammenligningsgrunnlag;
   const aksjonspunkter = [];
   const vurderDekningsgradAksjonspunkt = {
     kode: VURDER_DEKNINGSGRAD,
@@ -119,6 +132,9 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
     aksjonspunkter.push(vurderDekningsgradAksjonspunkt);
   }
   if (harAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS, gjeldendeAksjonspunkter)) {
+    if (skalATOgFLFastsettesHverForSeg) {
+      return aksjonspunkter.concat(transformValuesATFLHverForSeg(values, skalFastsetteAT, skalFastsetteFL, alleAndelerIForstePeriode));
+    }
     // todo: refactoreres til å bruke transform values from Aksjonspunkt behandler
     // return aksjonspunkter.concat(GrunnlagForAarsinntektPanelAT2.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
     return aksjonspunkter.concat(AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, alleAndelerIForstePeriode));
@@ -133,6 +149,7 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
   return aksjonspunkter;
 };
 
+const getSammenligningsgrunnlagsPrStatus = (bg) => (bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined);
 const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -140,23 +157,18 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   }
   return undefined;
 };
-const getAvviksprosent = (beregningsgrunnlag) => {
-  if (!beregningsgrunnlag.sammenligningsgrunnlag) {
+const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
+  if (!sammenligningsgrunnlagPrStatus) {
     return undefined;
   }
-  const { avvikPromille } = beregningsgrunnlag.sammenligningsgrunnlag;
-  if (avvikPromille || avvikPromille === 0) {
-    return avvikPromille / 10;
+  const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
+  const avvikProsent = avvikElem && avvikElem.avvikProsent ? avvikElem.avvikProsent : 0;
+  if (avvikProsent || avvikProsent === 0) {
+    return avvikProsent;
   }
   return undefined;
 };
-const getStatusKode = (beregningsgrunnlag) => {
-  if (!beregningsgrunnlag.aktivitetStatus) {
-    return '';
-  }
-  const statusKode = beregningsgrunnlag.aktivitetStatus[0].kode;
-  return statusKode;
-};
+
 const getStatusList = (beregningsgrunnlagPeriode) => {
   const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
   return statusList;
@@ -196,12 +208,13 @@ export const BeregningFormImpl2 = ({
   } = beregningsgrunnlag;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
   const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
-  const avvikProsent = getAvviksprosent(beregningsgrunnlag);
+  const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
+  const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
-  const aktivitetStatusKode = getStatusKode(beregningsgrunnlag);
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode, gjeldendeAksjonspunkter);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
+
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
@@ -251,10 +264,10 @@ export const BeregningFormImpl2 = ({
           <VerticalSpacer fourtyPx />
           <AvviksopplysningerPanel
             beregnetAarsinntekt={årsinntektVisningstall}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             sammenligningsgrunnlag={sammenligningsgrunnlagSum}
             avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
-            aktivitetStatusKode={aktivitetStatusKode}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
           />
@@ -316,7 +329,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const allePerioder = beregningsgrunnlag ? beregningsgrunnlag.beregningsgrunnlagPeriode : [];
   const alleAndelerIForstePeriode = allePerioder && allePerioder.length > 0
     ? allePerioder[0].beregningsgrunnlagPrStatusOgAndel : [];
-  const onSubmit = (values) => submitCallback(transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter, allePerioder));
+
+  const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
+  const samletSammenligningsgrunnnlag = sammenligningsgrunnlagPrStatus
+  && sammenligningsgrunnlagPrStatus.find((sammenLigGr) => sammenLigGr.sammenligningsgrunnlagType === sammenligningType.ATFLSN);
+  const harNyttIkkeSamletSammenligningsgrunnlag = sammenligningsgrunnlagPrStatus && !samletSammenligningsgrunnnlag;
+
+  const onSubmit = (values) => submitCallback(transformValues(values, relevanteStatuser, alleAndelerIForstePeriode, gjeldendeAksjonspunkter,
+    allePerioder, harNyttIkkeSamletSammenligningsgrunnlag));
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(state, ownProps),
