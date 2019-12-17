@@ -147,11 +147,10 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   rows.push(lineRow('redusertLinje'));
   if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
-  if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler));
   } else {
     rows.push(summaryRow(listOfDagsatser, listOfEntries));
   }
+
 
   return rows;
 };
@@ -384,20 +383,6 @@ export const createBeregningTableData = createSelector(
           }
           break;
         }
-      case 'DP_FL_SN': {
-        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
-          rowsAndeler.push(flRad);
-        }
-        break;
-      }
-      case 'AT_DP_SN': {
-        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
-          rowsAndeler.push(atRad);
-        }
-        break;
-      }
 
         case 'KUN_YTELSE': {
           const ytElement = opprettAndelElement(
@@ -445,8 +430,13 @@ export const createBeregningTableData = createSelector(
         }
       }
       const rows = [];
-      if (isMS && msRad.verdi > 0) {
-        rows.push(msRad);
+      if (isMS) {
+        const msElement = opprettAndelElement(
+          periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL),
+          'MS',
+          vilkarStatus,
+        );
+        rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {

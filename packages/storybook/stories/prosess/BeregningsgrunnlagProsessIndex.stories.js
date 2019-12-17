@@ -483,7 +483,10 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
 };
 
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
+  const andeler = [
+    lagAndel('SN', 300000, undefined, undefined),
+    lagAndel('AT', 130250, undefined, undefined),
+    lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
@@ -617,13 +620,16 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   );
 };
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
+  const andeler = [
+    lagAndel('SN', 300000, undefined, undefined),
+    lagAndel('AT', 130250, undefined, undefined),
+    lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 954985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
@@ -658,7 +664,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 954985;
-  const statuser = [lagStatus('AT_SN'), lagStatus('DPP')];
+  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
   const næringer = [{
     begrunnelse: 'Endringsbeskrivelse',
     endringsdato: '2019-11-22',
