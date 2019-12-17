@@ -51,17 +51,6 @@ const lineRow = (key) => (
 );
 
 
-const erRedusereVerdierLike = (listOfEntries) => {
-  let alleLike = true;
-  let lastEntry;
-  listOfEntries.forEach((entry) => {
-    if (lastEntry && lastEntry[1] !== entry[1]) {
-      alleLike = false;
-    }
-    lastEntry = entry;
-  });
-  return alleLike;
-};
 const createRowsRedusert = (listOfEntries, verdierLike) => {
   if (!verdierLike) {
     return (
@@ -159,15 +148,9 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   if (listOfEntries.length === 0) {
     rows.push(summaryRow(listOfDagsatser, listofAndeler));
   } else {
-    if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler));
-  } else {
-    if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler));
-  if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler));
-  } else {rows.push(summaryRow(listOfDagsatser, listOfEntries));
+    rows.push(summaryRow(listOfDagsatser, listOfEntries));
   }
+
 
   return rows;
 };
@@ -296,9 +279,9 @@ export const createBeregningTableData = createSelector(
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
       const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
-      const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
-    switch (aktivitetStatusKodeKombo) {
-      case 'AT_SN': {const atElement = opprettAndelElement(
+      switch (aktivitetStatusKodeKombo) {
+        case 'AT_SN': {
+          const atElement = opprettAndelElement(
             periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
             'AT',
             vilkarStatus,
@@ -400,48 +383,6 @@ export const createBeregningTableData = createSelector(
           }
           break;
         }
-      case 'DP_FL_SN': {
-        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
-          rowsAndeler.push(flRad);
-        }
-        break;
-      }
-      case 'AT_DP_SN': {
-        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
-          rowsAndeler.push(atRad);
-        }
-        break;
-      }
-      case 'DP_FL_SN': {
-        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
-          rowsAndeler.push(flRad);
-        }
-        break;
-      }
-      case 'AT_DP_SN': {
-        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
-          rowsAndeler.push(atRad);
-        }
-        break;
-      }
-      case 'DP_FL_SN': {
-        if (((dpRad && dpRad.verdi) + (flRad && flRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
-          rowsAndeler.push(flRad);
-        }
-        break;
-      }
-      case 'AT_DP_SN': {
-        if (((dpRad && dpRad.verdi) + (atRad && atRad.verdi)) > (snRad && snRad.verdi)) {
-          rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
-          rowsAndeler.push(atRad);
-        }
-        break;
-      }
 
         case 'KUN_YTELSE': {
           const ytElement = opprettAndelElement(
@@ -489,8 +430,13 @@ export const createBeregningTableData = createSelector(
         }
       }
       const rows = [];
-      if (isMS && msRad.verdi > 0) {
-        rows.push(msRad);
+      if (isMS) {
+        const msElement = opprettAndelElement(
+          periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL),
+          'MS',
+          vilkarStatus,
+        );
+        rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {

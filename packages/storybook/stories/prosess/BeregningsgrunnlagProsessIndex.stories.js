@@ -483,7 +483,10 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
 };
 
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 230250, undefined, undefined)];
+  const andeler = [
+    lagAndel('SN', 300000, undefined, undefined),
+    lagAndel('AT', 130250, undefined, undefined),
+    lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
@@ -628,7 +631,6 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt 
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 954985;
   // const perioder = [lagStandardPeriode(andeler)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].avkortetPrAar = 599148;
   perioder[0].redusertPrAar = 479318;
@@ -672,6 +674,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt 
     />
   );
 };
+
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAksjonspunkt = () => {
   const andeler = [
     lagAndel('SN', 107232, undefined, undefined, true),
@@ -687,7 +690,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 954985;
-  const statuser = [lagStatus('AT_SN'), lagStatus('DPP')];
+  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
   const næringer = [{
     begrunnelse: 'Endringsbeskrivelse',
     endringsdato: '2019-11-22',
