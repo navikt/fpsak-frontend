@@ -112,18 +112,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer fourtyPx />
       </>
     )}
-      { relevanteStatuser.isSelvstendigNaeringsdrivende
-      && (
-        <>
-          <GrunnlagForAarsinntektPanelSN2
-            alleAndeler={alleAndelerIForstePeriode}
-          />
-          <VerticalSpacer fourtyPx />
-          <NaeringsopplysningsPanel
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-          />
-        </>
-      )}
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
@@ -153,6 +141,19 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <VerticalSpacer fourtyPx />
         </>
       )}
+      { relevanteStatuser.isSelvstendigNaeringsdrivende
+      && (
+        <>
+          <GrunnlagForAarsinntektPanelSN2
+            alleAndeler={alleAndelerIForstePeriode}
+          />
+          <VerticalSpacer fourtyPx />
+          <NaeringsopplysningsPanel
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          />
+        </>
+      )}
+
     </div>
 );
 
