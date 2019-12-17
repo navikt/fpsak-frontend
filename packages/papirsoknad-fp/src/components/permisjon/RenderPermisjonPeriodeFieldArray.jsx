@@ -274,7 +274,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   if (typeof permisjonValues[ownProps.periodePrefix] !== 'undefined') {
     selectedPeriodeTyper = permisjonValues[ownProps.periodePrefix].map(({ periodeType }) => periodeType);
   }
-  const periodeTyper = ownProps.alleKodererk[kodeverkTyper.UTTAK_PERIODE_TYPE];
+  const periodeTyper = ownProps.alleKodeverk[kodeverkTyper.UTTAK_PERIODE_TYPE];
   const morsAktivitetTyper = ownProps.alleKodeverk[kodeverkTyper.MORS_AKTIVITET];
 
   return () => ({

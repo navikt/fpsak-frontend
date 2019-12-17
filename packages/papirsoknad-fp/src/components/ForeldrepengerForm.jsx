@@ -53,16 +53,18 @@ export class ForeldrepengerForm extends React.Component {
       submitFailed,
       annenForelderInformertRequired,
       sokerHarAleneomsorg,
+      alleKodeverk,
     } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
         <MottattDatoPanel readOnly={readOnly} />
-        <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
-        <InntektsgivendeArbeidPanel readOnly={readOnly} />
+        <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} alleKodeverk={alleKodeverk} />
+        <InntektsgivendeArbeidPanel readOnly={readOnly} alleKodeverk={alleKodeverk} />
         <EgenVirksomhetPanel
           readOnly={readOnly}
           form={form}
+          alleKodeverk={alleKodeverk}
         />
         <FrilansPanel readOnly={readOnly} form={form} formName={FORELDREPENGER_FORM_NAME} />
         <AndreYtelserPanel readOnly={readOnly} form={form} alleKodeverk={alleKodeverk} />
@@ -76,7 +78,7 @@ export class ForeldrepengerForm extends React.Component {
             namePrefix={OMSORG_FORM_NAME_PREFIX}
             readOnly={readOnly}
             familieHendelseType={soknadData.getFamilieHendelseType()}
-            isForeldrepengerFagsak={hentFraduck}
+            isForeldrepengerFagsak
           />
         </FormSection>
         <FormSection name={ANNEN_FORELDER_FORM_NAME_PREFIX}>
@@ -86,6 +88,7 @@ export class ForeldrepengerForm extends React.Component {
             form={form}
             readOnly={readOnly}
             permisjonRettigheterPanel={<PermisjonRettigheterPanel readOnly={readOnly} sokerHarAleneomsorg={sokerHarAleneomsorg} />}
+            alleKodeverk={alleKodeverk}
           />
         </FormSection>
         <PermisjonPanel
@@ -95,6 +98,7 @@ export class ForeldrepengerForm extends React.Component {
           error={error}
           submitFailed={submitFailed}
           sokerHarAleneomsorg={sokerHarAleneomsorg}
+          alleKodeverk={alleKodeverk}
         />
         <BekreftelsePanel annenForelderInformertRequired={annenForelderInformertRequired} readOnly={readOnly} />
         <TilleggsopplysningerPanel readOnly={readOnly} />
@@ -111,6 +115,7 @@ ForeldrepengerForm.propTypes = {
   /** Skjemaverdier hentet fra reduxForm */
   readOnly: PropTypes.bool,
   soknadData: PropTypes.instanceOf(SoknadData).isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 ForeldrepengerForm.defaultProps = {

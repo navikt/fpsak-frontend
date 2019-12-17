@@ -48,7 +48,12 @@ export const RegistrerVirksomhetModalForm = ({
     <form className={styles.form}>
       <Undertittel><FormattedMessage id="Registrering.RegistrerVirksomhetModalForm.Title" /></Undertittel>
       <VerticalSpacer twentyPx />
-      <VirksomhetIdentifikasjonPanel intl={intl} readOnly={readOnly} form={REGISTRER_VIRKSOMHET_FORM_NAME} alleKodeverk={alleKodeverk} />
+      <VirksomhetIdentifikasjonPanel
+        intl={intl}
+        readOnly={readOnly}
+        form={REGISTRER_VIRKSOMHET_FORM_NAME}
+        alleKodeverk={alleKodeverk}
+      />
       <FormSection name={TYPE_VIRKSOMHET_PREFIX}>
         <VirksomhetTypeNaringPanel
           readOnly={readOnly}

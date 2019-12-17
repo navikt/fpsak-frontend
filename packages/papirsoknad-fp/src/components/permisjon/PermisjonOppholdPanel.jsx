@@ -78,7 +78,7 @@ PermisjonOppholdPanel.initialValues = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  oppholdsReasons: ownProps.alleKodevrk[kodeverkTyper.OPPHOLD_ARSAK],
+  oppholdsReasons: ownProps.alleKodeverk[kodeverkTyper.OPPHOLD_ARSAK],
   skalHaOpphold: formValueSelector(ownProps.form)(state, ownProps.namePrefix).skalHaOpphold,
 });
 

@@ -1,1 +1,1 @@
-export { default } from './src/ForeldrepengerForm';
+export { default } from './src/ForeldrepengerPapirsoknadIndex';

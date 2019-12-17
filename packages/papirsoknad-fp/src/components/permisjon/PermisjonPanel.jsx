@@ -35,6 +35,7 @@ export const PermisjonPanel = ({
   readOnly,
   error,
   visFeilMelding,
+  alleKodeverk,
 }) => (
   <FormSection name={TIDSROM_PERMISJON_FORM_NAME_PREFIX}>
     <BorderBox>
@@ -65,6 +66,7 @@ export const PermisjonPanel = ({
               namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX}
               sokerErMor={soknadData.getForeldreType() === foreldreType.MOR}
               readOnly={readOnly}
+              alleKodeverk={alleKodeverk}
             />
           )}
         <VerticalSpacer twentyPx />
@@ -74,13 +76,26 @@ export const PermisjonPanel = ({
           readOnly={readOnly}
           soknadData={soknadData}
           namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX}
+          alleKodeverk={alleKodeverk}
         />
         <VerticalSpacer twentyPx />
-        <PermisjonUtsettelsePanel visFeilMelding={visFeilMelding} form={form} readOnly={readOnly} namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX} />
+        <PermisjonUtsettelsePanel
+          visFeilMelding={visFeilMelding}
+          form={form}
+          readOnly={readOnly}
+          namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX}
+          alleKodeverk={alleKodeverk}
+        />
         <VerticalSpacer twentyPx />
-        <PermisjonGraderingPanel visFeilMelding={visFeilMelding} form={form} readOnly={readOnly} namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX} />
+        <PermisjonGraderingPanel
+          visFeilMelding={visFeilMelding}
+          form={form}
+          readOnly={readOnly}
+          namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX}
+          alleKodeverk={alleKodeverk}
+        />
         <VerticalSpacer twentyPx />
-        <PermisjonOppholdPanel form={form} readOnly={readOnly} namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX} />
+        <PermisjonOppholdPanel form={form} readOnly={readOnly} namePrefix={TIDSROM_PERMISJON_FORM_NAME_PREFIX} alleKodeverk={alleKodeverk} />
       </div>
     </BorderBox>
   </FormSection>
@@ -93,6 +108,7 @@ PermisjonPanel.propTypes = {
   fulltUttak: PropTypes.bool,
   visFeilMelding: PropTypes.bool.isRequired,
   error: PropTypes.shape(),
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 PermisjonPanel.defaultProps = {
