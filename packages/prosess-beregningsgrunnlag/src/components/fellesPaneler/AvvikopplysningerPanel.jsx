@@ -100,7 +100,7 @@ const AvviksopplysningerPanel = ({
         <Row>
           <Column xs="12">
             <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
             </Normaltekst>
           </Column>
         </Row>
