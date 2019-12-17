@@ -10,6 +10,7 @@ describe('<EgenVirksomhetPanel>', () => {
     const wrapper = shallowWithIntl(<EgenVirksomhetPanel
       intl={intlMock}
       form="form"
+      alleKodeverk={{}}
     />);
 
     const radios = wrapper.find('RadioOption');
@@ -24,6 +25,7 @@ describe('<EgenVirksomhetPanel>', () => {
       harArbeidetIEgenVirksomhet
       intl={intlMock}
       form="form"
+      alleKodeverk={{}}
     />);
 
     const fieldarray = wrapper.find('FieldArray');

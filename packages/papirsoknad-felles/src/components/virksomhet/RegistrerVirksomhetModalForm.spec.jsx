@@ -14,6 +14,7 @@ describe('<RegistrerVirksomhetModalForm>', () => {
       handleSubmit={sinon.spy()}
       closeEvent={sinon.spy()}
       showModal
+      alleKodeverk={{}}
     />);
 
     const modal = wrapper.find(Modal);
@@ -39,6 +40,7 @@ describe('<RegistrerVirksomhetModalForm>', () => {
       handleSubmit={sinon.spy()}
       closeEvent={sinon.spy()}
       showModal={false}
+      alleKodeverk={{}}
     />);
 
     const modal = wrapper.find(Modal);
@@ -52,6 +54,7 @@ describe('<RegistrerVirksomhetModalForm>', () => {
       handleSubmit={handleSubmit}
       closeEvent={sinon.spy()}
       showModal={false}
+      alleKodeverk={{}}
     />);
 
     const hovedknapp = wrapper.find('Hovedknapp');
@@ -66,6 +69,7 @@ describe('<RegistrerVirksomhetModalForm>', () => {
       handleSubmit={sinon.spy()}
       closeEvent={closeEvent}
       showModal={false}
+      alleKodeverk={{}}
     />);
 
     const knapp = wrapper.find('Knapp');

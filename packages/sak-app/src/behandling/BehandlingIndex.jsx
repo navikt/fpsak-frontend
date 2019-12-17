@@ -40,7 +40,7 @@ const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandlin
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
 const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-anke'));
-const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-papirsoknad'));
+const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
 const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
@@ -152,24 +152,6 @@ export class BehandlingIndex extends Component {
       navAnsatt,
       visFeilmelding,
     } = this.props;
-    if (erAktivPapirsoknad) {
-      return (
-        <Suspense fallback={<LoadingPanel />}>
-          <BehandlingPapirsoknadIndex
-            key={behandlingId}
-            saksnummer={saksnummer}
-            behandlingId={behandlingId}
-            location={location}
-            oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-            behandlingUpdater={behandlingUpdater}
-            hasSubmittedPaVentForm={hasSubmittedPaVentForm}
-            kodeverk={kodeverk}
-            fagsak={fagsak}
-            navAnsatt={navAnsatt}
-          />
-        </Suspense>
-      );
-    }
 
     const defaultProps = {
       behandlingId,
@@ -183,6 +165,16 @@ export class BehandlingIndex extends Component {
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
     };
+
+    if (erAktivPapirsoknad) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+            <BehandlingPapirsoknadIndex {...defaultProps} />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
 
     if (behandlingType === BehandlingType.DOKUMENTINNSYN) {
       return (

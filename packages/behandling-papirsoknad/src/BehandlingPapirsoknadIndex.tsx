@@ -3,17 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { destroy } from 'redux-form';
 
-import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
+  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
+  BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
-import papirsoknadApi, { PapirsoknadApiKeys } from './data/papirsoknadApi';
-import PapirsoknadIndex from './components/PapirsoknadIndex';
+import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
+import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
+
+const papirsoknadData = [papirsoknadApi.AKSJONSPUNKTER];
 
 interface DataProps {
   behandling: Behandling;
+  aksjonspunkter: Aksjonspunkt[];
 }
 
 interface OwnProps {
@@ -22,18 +26,15 @@ interface OwnProps {
   kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   location: {};
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  valgtProsessSteg?: string;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
-  opneSokeside: () => void;
 }
 
 interface StateProps {
   behandling?: Behandling;
+  erAksjonspunktLagret: boolean;
 }
 
 interface DispatchProps {
@@ -41,6 +42,7 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
+  lagreAksjonspunkt: (params: {}) => Promise<void>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
@@ -50,6 +52,7 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingPapirsoknadIndex extends PureComponent<Props> {
+  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
 
   componentDidMount = () => {
     const {
@@ -64,56 +67,74 @@ class BehandlingPapirsoknadIndex extends PureComponent<Props> {
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
+    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   }
 
   componentWillUnmount = () => {
     const {
-      resetRestApiContext, destroyReduxForm, behandling,
+      behandlingEventHandler, resetRestApiContext, destroyReduxForm, behandling,
     } = this.props;
+    behandlingEventHandler.clear();
     resetRestApiContext();
     setTimeout(() => destroyReduxForm(getBehandlingFormPrefix(behandling.id, behandling.versjon)), 1000);
   }
 
   render() {
     const {
-      oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
-      valgtProsessSteg,
       settPaVent,
       hentBehandling,
-      opneSokeside,
       behandling,
+      lagreAksjonspunkt,
+      erAksjonspunktLagret,
     } = this.props;
 
     if (!behandling) {
       return <LoadingPanel />;
     }
 
+    reduxRestApi.injectPaths(behandling.links);
+
+    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
+      this.behandlingDataCache.setVersion(behandling.versjon);
+      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
+    }
+
     return (
-      <>
-        <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={behandling.versjon} />
-        <PapirsoknadIndex
-          fagsak={fagsak}
-          kodeverk={kodeverk}
-          navAnsatt={navAnsatt}
-          valgtProsessSteg={valgtProsessSteg}
-          oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-          oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-          settPaVent={settPaVent}
-          hentBehandling={hentBehandling}
-          opneSokeside={opneSokeside}
-        />
-      </>
+      <DataFetcherBehandlingData
+        behandlingDataCache={this.behandlingDataCache}
+        behandlingVersion={behandling.versjon}
+        showOldDataWhenRefetching
+        endpoints={papirsoknadData}
+        render={(dataProps: DataProps) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+            <RegistrerPapirsoknad
+              fagsak={fagsak}
+              kodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              lagreAksjonspunkt={lagreAksjonspunkt}
+              erAksjonspunktLagret={erAksjonspunktLagret}
+              {...dataProps}
+            />
+          </>
+        )}
+      />
     );
   }
 }
 
+const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_TILGANG_FEIL);
+
 const mapStateToProps = (state) => ({
-  behandling: papirsoknadApi.BEHANDLING_INNSYN.getRestApiData()(state),
+  behandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.getRestApiData()(state),
+  erAksjonspunktLagret: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
+  || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
 });
 
 const getResetRestApiContext = () => (dispatch) => {
@@ -131,6 +152,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     henleggBehandling: papirsoknadApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: papirsoknadApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: papirsoknadApi.BEHANDLING_PAPIRSOKNAD.makeRestApiRequest(),
+    lagreAksjonspunkt: papirsoknadApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
     destroyReduxForm: destroy,
   }, dispatch),

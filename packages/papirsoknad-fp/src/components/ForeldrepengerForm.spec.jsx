@@ -22,6 +22,7 @@ describe('<ForeldrepengerForm>', () => {
       countryCodes={[]}
       readOnly={false}
       soknadData={new SoknadData(fagsakYtelseType.FORELDREPENGER, familieHendelseType.FODSEL, foreldreType.MOR, [])}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(TerminFodselDatoPanel)).has.length(1);
   });
@@ -34,6 +35,7 @@ describe('<ForeldrepengerForm>', () => {
       countryCodes={[]}
       readOnly={false}
       soknadData={new SoknadData(fagsakYtelseType.FORELDREPENGER, familieHendelseType.ADOPSJON, foreldreType.MOR, [])}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(OmsorgOgAdopsjonPanel)).has.length(1);
   });

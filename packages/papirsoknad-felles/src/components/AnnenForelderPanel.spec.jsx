@@ -6,7 +6,6 @@ import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-e
 
 import SoknadData from '../SoknadData';
 import AnnenForelderPanel, { AnnenForelderPanelImpl, KanIkkeOppgiBegrunnelsePanel } from './AnnenForelderPanel';
-import PermisjonRettigheterPanel from '../foreldrepenger/permisjon/PermisjonRettigheterPanel';
 
 describe('<AnnenForelderPanel>', () => {
   describe('validate', () => {
@@ -109,19 +108,5 @@ describe('<AnnenForelderPanel>', () => {
       expect(land).to.have.length(1);
       expect(utenlandskFoedselsnummer).to.have.length(1);
     });
-  });
-
-
-  it('skal render Rettigheter når søknad er foreldrepenger og type ikkje er endring foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<AnnenForelderPanelImpl
-      isForeldrepenger
-      soknadData={new SoknadData('', '', '', [])}
-      readOnly={false}
-      countryCodes={countryCodes}
-      intl={intlMock}
-    />);
-
-    const permisjonRettigheterPanel = wrapper.find(PermisjonRettigheterPanel);
-    expect(permisjonRettigheterPanel).to.have.length(1);
   });
 });

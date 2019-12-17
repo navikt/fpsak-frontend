@@ -1,6 +1,5 @@
-import React from 'react';
-import { injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Link } from 'react-router-dom';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp } from 'nav-frontend-knapper';
@@ -8,13 +7,17 @@ import { AlertStripeSuksess } from 'nav-frontend-alertstriper';
 
 import styles from './soknadRegistrertModal.less';
 
+interface OwnProps {
+  isOpen?: boolean;
+}
+
 /**
  * SoknadRegistrertModal
  *
  * Presentasjonskomponent. Informasjonsmodal som vises til saksbehandler når en papirsøknad har blitt registrert.
  */
-export const SoknadRegistrertModal = ({
-  isOpen,
+export const SoknadRegistrertModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  isOpen = false,
   intl,
 }) => (
   <Modal
@@ -24,8 +27,6 @@ export const SoknadRegistrertModal = ({
     closeButton={false}
     onRequestClose={() => null}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
-    style={{ overlay: { zIndex: 3000 } }}
   >
     <AlertStripeSuksess className={styles.alertStyle}>
       <div className={styles.left}>
@@ -40,14 +41,5 @@ export const SoknadRegistrertModal = ({
     </AlertStripeSuksess>
   </Modal>
 );
-
-SoknadRegistrertModal.propTypes = {
-  isOpen: PropTypes.bool,
-  intl: PropTypes.shape().isRequired,
-};
-
-SoknadRegistrertModal.defaultProps = {
-  isOpen: false,
-};
 
 export default injectIntl(SoknadRegistrertModal);

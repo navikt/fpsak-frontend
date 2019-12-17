@@ -1,35 +1,43 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Container } from 'nav-frontend-grid';
 import { Panel } from 'nav-frontend-paneler';
 import { Undertittel } from 'nav-frontend-typografi';
 
+import { PersonIndex } from '@fpsak-frontend/person-info';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import EngangsstonadPapirsoknadIndex from '@fpsak-frontend/papirsoknad-es';
 import ForeldrepengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-fp';
 import SvangerskapspengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-svp';
+import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
+import { Kodeverk, FagsakInfo } from '@fpsak-frontend/behandling-felles';
 
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 
-import styles from './registrerPapirsoknad.less';
+import styles from './registrerPapirsoknadPanel.less';
 
-/**
- * RegisterPapirsoknad
- *
- * Presentasjonskomponent. Har ansvar for å sette opp ReduxForm-skjemaet for registrering av papirsøknad for engangsstønad eller foreldrepenger.
- * Komponenten tilpasser skjemaet til valgt søknadstype (engagnsstønad eller foreldrepenger), valgt søknadtema (fødsel, adopsjon eller omsorg)
- * og valgt foreldretype (mor, far/medmor eller tredjepart). Komponenten inneholder logikk for å reinitialisere deler av
- * skjemaet ved bytte av søknadstype.
- */
-export const RegistrerPapirsoknad = ({
-  onSubmitUfullstendigsoknad,
-  submitPapirsoknad,
+interface OwnProps {
+  fagsak: FagsakInfo;
+  kodeverk: {[key: string]: Kodeverk[]};
+  readOnly: boolean;
+  setSoknadData: (SoknadData) => void;
+  soknadData: SoknadData;
+  lagreUfullstendig: () => Promise<any>;
+  lagreFullstendig: (_formValues, _dispatch, values: {}) => Promise<any>;
+}
+
+const RegistrerPapirsoknadPanel: FunctionComponent<OwnProps> = ({
+  fagsak,
+  kodeverk,
   readOnly,
-}) => {
-  const [soknadData, setSoknadData] = useState();
-  return (
+  setSoknadData,
+  soknadData,
+  lagreUfullstendig,
+  lagreFullstendig,
+}) => (
+  <>
+    <PersonIndex medPanel person={fagsak.fagsakPerson} />
     <Panel className={styles.panelWithActionNeeded}>
       <Container fluid>
         <Undertittel><FormattedMessage id="Registrering.RegistrereSoknad" /></Undertittel>
@@ -42,42 +50,42 @@ export const RegistrerPapirsoknad = ({
         <SoknadTypePickerForm
           setSoknadData={setSoknadData}
           soknadData={soknadData}
+          fagsakYtelseType={fagsak.fagsakYtelseType}
+          alleKodeverk={kodeverk}
         />
         {soknadData && soknadData.getFagsakYtelseType() === fagsakYtelseType.ENGANGSSTONAD && (
           <EngangsstonadPapirsoknadIndex
-            onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
-            onSubmit={submitPapirsoknad}
+            onSubmitUfullstendigsoknad={lagreUfullstendig}
+            onSubmit={lagreFullstendig}
             readOnly={readOnly}
             soknadData={soknadData}
+            alleKodeverk={kodeverk}
+            fagsakPerson={fagsak.fagsakPerson}
           />
         )}
         {soknadData && soknadData.getFagsakYtelseType() === fagsakYtelseType.FORELDREPENGER && (
           <ForeldrepengerPapirsoknadIndex
-            onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
-            onSubmit={submitPapirsoknad}
+            onSubmitUfullstendigsoknad={lagreUfullstendig}
+            onSubmit={lagreFullstendig}
             readOnly={readOnly}
             soknadData={soknadData}
+            alleKodeverk={kodeverk}
+            fagsakPerson={fagsak.fagsakPerson}
           />
         )}
         {soknadData && soknadData.getFagsakYtelseType() === fagsakYtelseType.SVANGERSKAPSPENGER && (
           <SvangerskapspengerPapirsoknadIndex
-            onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
-            submitCallback={submitPapirsoknad}
+            onSubmitUfullstendigsoknad={lagreUfullstendig}
+            onSubmit={lagreFullstendig}
             readOnly={readOnly}
             soknadData={soknadData}
+            alleKodeverk={kodeverk}
+            fagsakPerson={fagsak.fagsakPerson}
           />
         )}
       </Container>
     </Panel>
-  )
-}
+  </>
+);
 
-RegistrerPapirsoknad.propTypes = {
-  /** Egen submit-handler som brukes dersom det indikeres at søknaden er ufullstendig */
-  onSubmitUfullstendigsoknad: PropTypes.func.isRequired,
-  /** Skjemaverdier hentet fra reduxForm */
-  readOnly: PropTypes.bool.isRequired,
-  submitPapirsoknad: PropTypes.func.isRequired,
-};
-
-export default RegistrerPapirsoknad;
+export default RegistrerPapirsoknadPanel;

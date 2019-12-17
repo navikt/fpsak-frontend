@@ -20,6 +20,7 @@ describe('<SvangerskapspengerForm>', () => {
       countryCodes={[]}
       readOnly={false}
       soknadData={new SoknadData(fagsakYtelseType.FORELDREPENGER, familieHendelseType.FODSEL, foreldreType.MOR, [])}
+      alleKodeverk={{}}
     />);
     expect(wrapper.find(MottattDatoPanel)).has.length(1);
   });

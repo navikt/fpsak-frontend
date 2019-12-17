@@ -20,6 +20,7 @@
 		"packages/behandling-klage",
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
+		"packages/behandling-papirsoknad",
 		"@types"
 	],
 

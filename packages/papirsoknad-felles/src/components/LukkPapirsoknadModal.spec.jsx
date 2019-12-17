@@ -29,7 +29,7 @@ describe('<LukkPapirSoknadModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('Registrering av søknaden avsluttes');
+    expect(modal.prop('contentLabel')).to.eql('ModalLukkPapirSoknad.ModalDescription');
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
 

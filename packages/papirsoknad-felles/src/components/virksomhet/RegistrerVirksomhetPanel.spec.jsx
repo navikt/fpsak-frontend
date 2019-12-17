@@ -19,6 +19,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       namePrefix="regvirk"
       formatMessage={sinon.spy()}
       form="form"
+      alleKodeverk={{}}
     />);
 
     const image = wrapper.find(Image);
@@ -37,6 +38,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       namePrefix="regvirk"
       formatMessage={sinon.spy()}
       form="form"
+      alleKodeverk={{}}
     />);
 
     const fields = wrapper.find('Field');
@@ -54,6 +56,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       formatMessage={sinon.spy()}
       virksomheter={virksomheter}
       form="form"
+      alleKodeverk={{}}
     />);
 
     wrapper.instance().showRegistrerVirksomhetModal(0);
@@ -71,6 +74,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       formatMessage={sinon.spy()}
       virksomheter={virksomheter}
       form="form"
+      alleKodeverk={{}}
     />);
 
     wrapper.instance().showRegistrerVirksomhetModal(0);
@@ -92,6 +96,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       formatMessage={sinon.spy()}
       virksomheter={virksomheter}
       form="form"
+      alleKodeverk={{}}
     />);
 
     wrapper.instance().showRegistrerVirksomhetModal(0);
@@ -114,6 +119,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       formatMessage={sinon.spy()}
       virksomheter={virksomheter}
       form="form"
+      alleKodeverk={{}}
     />);
 
     wrapper.instance().addVirksomhet({}, sinon.spy(), {
@@ -137,6 +143,7 @@ describe('<RegistrerVirksomhetPanel>', () => {
       formatMessage={sinon.spy()}
       virksomheter={virksomheter}
       form="form"
+      alleKodeverk={{}}
     />);
 
     wrapper.instance().showRegistrerVirksomhetModal(1);

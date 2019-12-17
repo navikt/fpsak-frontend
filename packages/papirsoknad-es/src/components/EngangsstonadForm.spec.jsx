@@ -22,6 +22,7 @@ describe('<EngangsstonadForm>', () => {
       countryCodes={[]}
       readOnly={false}
       soknadData={new SoknadData(fagsakYtelseType.ENGANGSSTONAD, familieHendelseType.FODSEL, foreldreType.MOR, [])}
+      alleKodeverk={{}}
     />);
     const form = wrapper.find(RegistreringFodselGrid);
     expect(form).to.have.length(1);
@@ -35,6 +36,7 @@ describe('<EngangsstonadForm>', () => {
       countryCodes={[]}
       readOnly={false}
       soknadData={new SoknadData(fagsakYtelseType.ENGANGSSTONAD, familieHendelseType.ADOPSJON, foreldreType.MOR, [])}
+      alleKodeverk={{}}
     />);
     const form = wrapper.find(RegistreringAdopsjonOgOmsorgGrid);
     expect(form).to.have.length(1);
