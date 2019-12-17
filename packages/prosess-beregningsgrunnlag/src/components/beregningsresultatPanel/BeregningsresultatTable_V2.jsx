@@ -173,7 +173,7 @@ const createPeriodeHeader = (header) => (
   </>
 );
 const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
-  <>
+  <React.Fragment key={`Wr${tableData.dagsatser[0]}`}>
     {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
     { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
   && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
@@ -181,7 +181,7 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
   && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
     { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
   && (
-    <>
+    <React.Fragment key={`IVR2${tableData.dagsatser[0]}`}>
       {createRowsAndeler(tableData.rowsAndeler)}
       <VerticalSpacer twentyPx />
       <Normaltekst className={beregningStyles.redError}>
@@ -195,9 +195,9 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
           values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
         />
       </Normaltekst>
-    </>
+    </React.Fragment>
   )}
-  </>
+  </React.Fragment>
 );
 
 const constructPeriod = (fom, tom) => (
