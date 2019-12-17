@@ -24,7 +24,7 @@ const virksomhetsDatoer = (naringsAndel) => {
 const revisorDetaljer = (naring) => {
   const { regnskapsførerNavn, regnskapsførerTlf } = naring;
   if (!regnskapsførerNavn) {
-    return '';
+    return null;
   }
   return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${dateFormat(regnskapsførerNavn)}-`;
 };
@@ -150,9 +150,11 @@ export const NaeringsopplysningsPanel = ({
           </Row>
           <Row key={`RevisorRad${naring.orgnr}`}>
             <Column xs="10">
-              <Normaltekst>
-                {revisorDetaljer(naring)}
-              </Normaltekst>
+              {naring.navn && (
+                <Normaltekst>
+                  {revisorDetaljer(naring)}
+                </Normaltekst>
+              )}
             </Column>
           </Row>
           {erNæringNyoppstartetEllerVarigEndret(naring)
