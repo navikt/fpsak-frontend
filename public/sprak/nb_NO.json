@@ -1,7 +1,4 @@
 {
-  "Personspanel.Arbeidsforhold": "Opplysninger om søker",
-
-  "BostedBarnView.DodsDato" : "Barnets dødsdato",
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",
   "Behandlingspunkt.CheckVarselRevurdering": "Varsel",
@@ -237,62 +234,26 @@
   "SettBehandlingPaVentModal.Lukk": "Lukk",
   
   "PeriodLabel.DateToday": "d.d.",
-  "ShowVilkarStatus.Check": "Informasjonen er utfylt",
+
   "Registrering.RegistrereSoknad": "Registrere søknad",
   "Registrering.RegistrerAlleOpplysninger": "Registrer inn alle opplysninger fra papirsøknaden",
-  
-  "Registrering.Description.Engangsstonad.Fodsel": "Engangsstønad til {parent} ved fødsel",
-  "Registrering.Description.Engangsstonad.Adopsjon": "Engangsstønad til {parent} ved adopsjon",
-  
   "Registrering.Omsoknaden.Title": "Om søknaden",
   "Registrering.Omsoknaden.soknadstype": "Søknadstype",
-  "Registrering.Omsoknaden.VelgSoknadstype": "- Velg søknadstype -",
-  "Registrering.Omsoknaden.KontrollerSoknadstype": "Kontroller og sett riktig søknadstype",
   "Registrering.Omsoknaden.Tema": "Tema",
   "Registrering.Omsoknaden.Soker": "Søker",
   "Registrering.Omsoknaden.VisSkjema": "Vis skjema",
-  
-  "Registrering.AndreYtelser.LonnUnderUtdanning": "Lønn under utdanning",
-  "Registrering.AndreYtelser.EtterlonnFraArbeidsgiver": "Etterlønn fra arbeidsgiver",
-  "Registrering.AndreYtelser.MilitaerEllerSiviltjeneste": "Militær- eller siviltjeneste",
-  "Registrering.AndreYtelser.Ventelonn": "Ventelønn",
-  "Registrering.RegistrerVirksomhetModalForm.Name": "Legg til næringsvirksomhet",
-  
-  
-  "Registrering.VirksomhetStartetPanel.NewlyStarted": "Er virksomheten nyoppstartet?",
-  
-  "Registrering.VirksomhetIdentifikasjonPanel.Stillingsprosent": "Prosentandel",
-  
-  "Registrering.VirksomhetNyIArbeidslivetPanel.Yes": "Ja",
-  "Registrering.VirksomhetNyIArbeidslivetPanel.No": "Nei",
-  "Registrering.VirksomhetNyIArbeidslivetPanel.OppgiOppstartsdato": "Oppgi oppstartsdato",
-  "Registrering.VirksomhetNaeringTypePanel.Fiske": "Fiske",
-  "Registrering.VirksomhetNaeringTypePanel.Reindrift": "Reindrift",
-  "Registrering.VirksomhetNaeringTypePanel.JordbrukEllerSkogbruk": "Jordbruk eller skogbruk",
-  "Registrering.VirksomhetNaeringTypePanel.Frilanser": "Frilanser",
-  "Registrering.VirksomhetNaeringTypePanel.Annen": "Annen næringsvirksomhet",
-  "Registrering.VirksomhetNaeringTypePanel.TypeFiske": "Type fiske",
-  "Registrering.VirksomhetStartetPanel.BladA": "Blad A",
-  "Registrering.VirksomhetStartetPanel.BladB": "Blad B",
-  "Registrering.VirksomhetStartetPanel.Lott": "Lott",
-  "Registrering.VirksomhetStartetPanel.Hyre": "Hyre",
-  
-  "Parent.Mother": "Mor",
-  "Parent.Father": "Far",
-  "Registrering.Termin.Title": "Termindato",
-  "Registrering.Fodsel.Title": "Fødselsdato",
-  "Registrering.ErBarnetDott": "barnet er dødt",
-  "Registrering.Dodsdato": "Dødsdato",
-  "Registrering.SaveApplication.ResetButton": "Nullstill",
-  "Registrering.SaveApplication.CannotComplete": "Ikke mulig å registrere søknaden",
-  "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
-  "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "Registrering.FrilansOppdrag.FieldArray.BeforeFomValidation": "F.o.m må være lik eller etter dato for første periode med frilansvirksomhet",
   "SoknadRegistrertModal.ContentLabel": "Søknaden er registrert. Du kommer nå til forsiden.",
   "SoknadRegistrertModal.InfoTextOne": "Søknaden er registrert og vil bli behandlet",
   "SoknadRegistrertModal.InfoTextTwo": "Du kommer nå til forsiden",
   "SoknadRegistrertModal.OkButtonText": "OK",
-  "VedtakRevurderingForm.OpphorPanel.ArsakTilOpphor": "Årsak til opphør",
+  
+  "Registrering.VirksomhetNyIArbeidslivetPanel.Yes": "Ja",
+  "Registrering.VirksomhetNyIArbeidslivetPanel.No": "Nei",
+  "Registrering.VirksomhetNyIArbeidslivetPanel.OppgiOppstartsdato": "Oppgi oppstartsdato",
+  
+  "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
+  "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "PreviewAnkeLink.ForhandvisBrev": "Forhåndsvis brev",
   "PeriodeInformasjon.Feilutbetaling": "Feilutbetaling",
   "PeriodeController.Detaljer": "Detaljer for valgt periode",
@@ -300,18 +261,8 @@
   "PeriodeController.ForrigePeriode": "Forrige periode",
   "PeriodeController.NestePeriode": "Neste periode",
 
-  "VilkarResultPicker.SelectArsak": "Velg årsak",
-  "VilkarResultPicker.Arsak": "Angi avslagsårsak",
-  "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
-  "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
-  "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
-  "VilkarResultPicker.VilkarDato": "Dato",
-  "Vedtak.Fritekstbrev": "Fritekstbrev",
-  "Tilgangskontroll.Avslag.Kode6": "Ingen tilgang.",
-  "Tilgangskontroll.Avslag.Kode7": "Ingen tilgang.",
-  "Tilgangskontroll.Avslag.EgenAnsatt": "Ingen tilgang. Søker har markering <b>Egen ansatt</b>.",
-  "TermindatoFaktaForm.Termindato": "Termindato",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
+
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
   "Calendar.Day.2": "tirsdag",
