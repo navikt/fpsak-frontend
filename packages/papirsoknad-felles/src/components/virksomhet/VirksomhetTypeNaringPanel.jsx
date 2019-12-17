@@ -38,10 +38,10 @@ export const VirksomhetTypeNaringPanel = ({
 );
 
 const getFilteredNaringsvirksomhetTypes = createSelector(
-  [(ownProps) => ownProps.alleKodverk[kodeverkTyper.VIRKSOMHET_TYPE]], (types = []) => types.filter((t) => t.kode !== naringsvirksomhetType.FRILANSER),
+  [(ownProps) => ownProps.alleKodeverk[kodeverkTyper.VIRKSOMHET_TYPE]], (types = []) => types.filter((t) => t.kode !== naringsvirksomhetType.FRILANSER),
 );
 
-const mapStateToProps = () => ({
+const mapStateToProps = (state, ownProps) => ({
   naringvirksomhetTyper: getFilteredNaringsvirksomhetTypes(ownProps),
 });
 

@@ -43,16 +43,17 @@ export class SvangerskapspengerForm extends React.Component {
       readOnly,
       soknadData,
       onSubmitUfullstendigsoknad,
+      alleKodeverk,
     } = this.props;
 
     return (
       <form onSubmit={handleSubmit}>
         <MottattDatoPanel readOnly={readOnly} />
-        <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} />
-        <InntektsgivendeArbeidPanel readOnly={readOnly} />
-        <EgenVirksomhetPanel readOnly={readOnly} form={form} />
+        <OppholdINorgePanel form={form} readOnly={readOnly} soknadData={soknadData} alleKodeverk={alleKodeverk} />
+        <InntektsgivendeArbeidPanel readOnly={readOnly} alleKodeverk={alleKodeverk} />
+        <EgenVirksomhetPanel readOnly={readOnly} form={form} alleKodeverk={alleKodeverk} />
         <FrilansPanel readOnly={readOnly} form={form} formName={SVANGERSKAPSPENGER_FORM_NAME} />
-        <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste />
+        <AndreYtelserPanel readOnly={readOnly} form={form} kunMiliterEllerSiviltjeneste alleKodeverk={alleKodeverk} />
         <TerminFodselSvpPanel readOnly={readOnly} form={form} />
         <FormSection name={TILRETTELEGGING_NAME_PREFIX}>
           <BehovForTilretteleggingPanel readOnly={readOnly} formName={SVANGERSKAPSPENGER_FORM_NAME} namePrefix={TILRETTELEGGING_NAME_PREFIX} />

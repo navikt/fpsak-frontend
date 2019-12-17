@@ -32,6 +32,7 @@ export const EgenVirksomhetPanel = ({
   intl,
   form,
   harArbeidetIEgenVirksomhet,
+  alleKodeverk,
 }) => (
   <FormSection name={EGEN_VIRKSOMHET_FORM_NAME_PREFIX}>
     <BorderBox>
@@ -53,6 +54,7 @@ export const EgenVirksomhetPanel = ({
           formatMessage={intl.formatMessage}
           validate={[arrayMinLength1]}
           readOnly={readOnly}
+          alleKodeverk={alleKodeverk}
         />
         )}
         </ElementWrapper>
@@ -63,6 +65,7 @@ export const EgenVirksomhetPanel = ({
 
 EgenVirksomhetPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
   form: PropTypes.string.isRequired,
   readOnly: PropTypes.bool,
   harArbeidetIEgenVirksomhet: PropTypes.bool,

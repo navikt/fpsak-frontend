@@ -1,1 +1,1 @@
-export { default } from './src/SvangerskapspengerForm';
+export { default } from './src/SvangerskapspengerPapirsoknadIndex';

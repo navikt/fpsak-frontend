@@ -110,8 +110,8 @@ RenderInntektsgivendeArbeidFieldArray.propTypes = {
   })).isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  countryCodes: state.alleKodeverk[kodeverkTyper.LANDKODER],
+const mapStateToProps = (state, ownProps) => ({
+  countryCodes: ownProps.alleKodeverk[kodeverkTyper.LANDKODER],
 });
 
 export default connect(mapStateToProps)(RenderInntektsgivendeArbeidFieldArray);

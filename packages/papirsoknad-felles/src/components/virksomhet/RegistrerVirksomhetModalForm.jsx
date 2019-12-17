@@ -34,6 +34,7 @@ export const RegistrerVirksomhetModalForm = ({
   handleSubmit,
   readOnly,
   intl,
+  alleKodeverk,
 }) => (
   <Modal
     className={styles.modal}
@@ -47,12 +48,13 @@ export const RegistrerVirksomhetModalForm = ({
     <form className={styles.form}>
       <Undertittel><FormattedMessage id="Registrering.RegistrerVirksomhetModalForm.Title" /></Undertittel>
       <VerticalSpacer twentyPx />
-      <VirksomhetIdentifikasjonPanel intl={intl} readOnly={readOnly} form={REGISTRER_VIRKSOMHET_FORM_NAME} />
+      <VirksomhetIdentifikasjonPanel intl={intl} readOnly={readOnly} form={REGISTRER_VIRKSOMHET_FORM_NAME} alleKodeverk={alleKodeverk} />
       <FormSection name={TYPE_VIRKSOMHET_PREFIX}>
         <VirksomhetTypeNaringPanel
           readOnly={readOnly}
           form={REGISTRER_VIRKSOMHET_FORM_NAME}
           namePrefix={TYPE_VIRKSOMHET_PREFIX}
+          alleKodeverk={alleKodeverk}
         />
       </FormSection>
       <VirksomhetStartetEndretPanel readOnly={readOnly} form={REGISTRER_VIRKSOMHET_FORM_NAME} />
@@ -87,6 +89,7 @@ RegistrerVirksomhetModalForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
   readOnly: PropTypes.bool,
   intl: PropTypes.shape().isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 RegistrerVirksomhetModalForm.defaultProps = {

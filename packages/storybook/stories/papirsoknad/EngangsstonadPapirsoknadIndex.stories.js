@@ -60,6 +60,9 @@ export const visPapirsoknadForFarVedFødsel = () => (
     readOnly={boolean('readOnly', false)}
     soknadData={new SoknadData(fagsakYtelseType.ENGANGSSTONAD, familieHendelseType.FODSEL, foreldreType.FAR)}
     alleKodeverk={alleKodeverk}
-    fagsakPerson={fagsakPerson}
+    fagsakPerson={{
+      ...fagsakPerson,
+      erKvinne: false,
+    }}
   />
 );

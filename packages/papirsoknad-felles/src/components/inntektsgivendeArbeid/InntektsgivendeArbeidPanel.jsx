@@ -26,6 +26,7 @@ const AMBASSADE_ARBEIDS_FORHOLD_PREFIX = 'ambassadearbeidsforhold';
  */
 const InntektsgivendeArbeidPanel = ({
   readOnly,
+  alleKodeverk,
 }) => (
   <BorderBox>
     <Undertittel><FormattedMessage id="Registrering.InntektsgivendeArbeid.ArbeidINorge.Title" /></Undertittel>
@@ -41,6 +42,7 @@ const InntektsgivendeArbeidPanel = ({
       name={inntektsgivendeArbeidFieldArrayName}
       component={RenderInntektsgivendeArbeidFieldArray}
       readOnly={readOnly}
+      alleKodeverk={alleKodeverk}
     />
     {localFeature
       && (
@@ -54,6 +56,7 @@ const InntektsgivendeArbeidPanel = ({
           name={renderInntektsgivendeArbeidAmbassadeFieldArray}
           component={RenderInntektsgivendeArbeidAmbassadeFieldArray}
           readOnly={readOnly}
+          alleKodeverk={alleKodeverk}
         />
       </div>
       )}
@@ -71,6 +74,7 @@ InntektsgivendeArbeidPanel.validate = (values) => {
 
 InntektsgivendeArbeidPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 InntektsgivendeArbeidPanel.initialValues = {

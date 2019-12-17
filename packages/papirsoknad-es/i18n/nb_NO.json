@@ -40,6 +40,14 @@
   "Registrering.UtstedtDato": "Utstedt dato fra terminbekreftelsen",
   "Registrering.Termindato": "Termindato",
 
+  "ModalLukkPapirSoknad.ModalDescription": "Registrering av søknaden avsluttes",
+  "ModalLukkPapirSoknad.Avslutt": "Avslutt registrering av søknaden",
+  "ModalLukkPapirSoknad.AvslutterRegistrering": "Avslutter registrering av søknaden. Det er ikke mulig å innhente ytterligere opplysninger.",
+  "ModalLukkPapirSoknad.BekreftAvslag": "Bekreft at søknaden skal avslås",
+  "ModalLukkPapirSoknad.Ok": "OK",
+  "ModalLukkPapirSoknad.Avbryt": "Avbryt",
+
+
   "Registrering.TheOtherParent.CannotSpecifyOtherParent": "Kan ikke oppgi annen forelder",
   "Registrering.TheOtherParent.CannotSpecifyOtherParent.Reason.Title": "Angi årsak",
   "Registrering.TheOtherParent.CannotSpecifyOtherParent.Reason.1": "Forelder er ukjent",

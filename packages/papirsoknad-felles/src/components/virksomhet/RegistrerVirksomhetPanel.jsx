@@ -117,6 +117,7 @@ export class RegistrerVirksomhetPanel extends Component {
       readOnly,
       meta,
       formatMessage,
+      alleKodeverk,
     } = this.props;
     const { editVirksomhet, editIndex } = this.state;
     return (
@@ -190,6 +191,7 @@ export class RegistrerVirksomhetPanel extends Component {
           readOnly={readOnly}
           initialValues={editVirksomhet}
           index={editIndex}
+          alleKodeverk={alleKodeverk}
         />
       </div>
     );
@@ -207,6 +209,7 @@ RegistrerVirksomhetPanel.propTypes = {
   form: PropTypes.string.isRequired,
   name: PropTypes.string,
   readOnly: PropTypes.bool,
+  alleKodeverk: PropTypes.shape().isRequired,
 };
 
 RegistrerVirksomhetPanel.defaultProps = {

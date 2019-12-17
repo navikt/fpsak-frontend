@@ -65,7 +65,7 @@ export class ForeldrepengerForm extends React.Component {
           form={form}
         />
         <FrilansPanel readOnly={readOnly} form={form} formName={FORELDREPENGER_FORM_NAME} />
-        <AndreYtelserPanel readOnly={readOnly} form={form} />
+        <AndreYtelserPanel readOnly={readOnly} form={form} alleKodeverk={alleKodeverk} />
         <DekningsgradPanel readOnly={readOnly} />
         {soknadData.getFamilieHendelseType() === familieHendelseType.FODSEL
           && <TerminFodselDatoPanel readOnly={readOnly} form={form} />}
