@@ -524,7 +524,6 @@ export const createBeregningTableData = createSelector(
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
 const BeregningsresultatTable2 = ({
-  intl,
   vilkaarBG,
   periodeResultatTabeller,
 }) => {
