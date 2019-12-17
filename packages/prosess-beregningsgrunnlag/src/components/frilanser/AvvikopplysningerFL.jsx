@@ -10,6 +10,21 @@ import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 const AvviksopplysningerFL = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
 }) => {
+  const kombinasjonsstatusFNSN = relevanteStatuser.isKombinasjonsstatus
+    && !relevanteStatuser.isArbeidstaker
+    && relevanteStatuser.isSelvstendigNaeringsdrivende
+    && relevanteStatuser.isFrilanser;
+  if (kombinasjonsstatusFNSN) {
+    return (
+      <Row>
+        <Column xs="12">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.FL.KobinasjonsStatusFLSN" />
+          </Normaltekst>
+        </Column>
+      </Row>
+    );
+  }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
     ? sammenligningsgrunnlagPrStatus.find((status) => status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_FL')
     : undefined;

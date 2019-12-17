@@ -623,7 +623,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => 
   andeler[0].pgiSnitt = 954985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
-  const statuser = [lagStatus('AT_FL_SN')];
+  const statuser = [lagStatus('AT'), lagStatus('AAP')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
@@ -643,22 +643,22 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeRedesign = () => 
     />
   );
 };
-export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
+export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAksjonspunkt = () => {
   const andeler = [
-    lagAndel('SN', 331000, undefined, undefined, true),
-    lagAndel('AT', 324000, undefined, undefined),
-    lagAndel('FL', 396000, undefined, undefined),
+    lagAndel('SN', 107232, undefined, undefined, true),
+    lagAndel('DP', 143000, undefined, undefined),
+    lagAndel('AT', 343000, undefined, undefined),
   ];
-  const pgi = lagPGIVerdier();
-  andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 831129;
+  // const pgi = lagPGIVerdier();
+
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
   perioder[0].avkortetPrAar = 599148;
-  perioder[0].redusertPrAar = 479318;
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
-
-  const statuser = [lagStatus('AT_FL_SN')];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 954985;
+  const statuser = [lagStatus('AT_SN'), lagStatus('DPP')];
   const næringer = [{
     begrunnelse: 'Endringsbeskrivelse',
     endringsdato: '2019-11-22',
@@ -680,7 +680,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt 
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
+  bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
