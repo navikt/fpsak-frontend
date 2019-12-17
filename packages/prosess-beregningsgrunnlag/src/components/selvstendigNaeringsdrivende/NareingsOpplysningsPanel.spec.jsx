@@ -49,7 +49,7 @@ describe('NaeringsopplysningsPanel', () => {
     expect(formattedMessages.at(1).props().id).to.equal('Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar');
 
     const messages = wrapper.find('Normaltekst');
-    expect(messages).to.be.lengthOf(8);
+    expect(messages).to.be.lengthOf(7);
     expect(messages.at(2).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].virksomhetType.kode);
     expect(messages.at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
     expect(messages.at(4).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
