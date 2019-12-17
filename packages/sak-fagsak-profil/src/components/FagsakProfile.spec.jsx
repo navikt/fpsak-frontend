@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { Systemtittel, Normaltekst } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-fagsak-profil';
 import { FagsakProfile } from './FagsakProfile';
@@ -49,6 +50,7 @@ describe('<FagsakProfile>', () => {
         behandlingId: 123,
       }}
       dekningsgrad={100}
+      intl={intlMock}
     />);
 
     const systemtittel = wrapper.find(Systemtittel);
