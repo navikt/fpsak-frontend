@@ -248,10 +248,6 @@
   "SoknadRegistrertModal.InfoTextTwo": "Du kommer nå til forsiden",
   "SoknadRegistrertModal.OkButtonText": "OK",
   
-  "Registrering.VirksomhetNyIArbeidslivetPanel.Yes": "Ja",
-  "Registrering.VirksomhetNyIArbeidslivetPanel.No": "Nei",
-  "Registrering.VirksomhetNyIArbeidslivetPanel.OppgiOppstartsdato": "Oppgi oppstartsdato",
-  
   "PeriodFieldArray.LeggTilPeriode": "Legg til periode",
   "PeriodFieldArray.LeggTilBarn": "Legg til barn",
   "PreviewAnkeLink.ForhandvisBrev": "Forhåndsvis brev",

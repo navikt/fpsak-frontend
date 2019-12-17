@@ -10,28 +10,15 @@ import {
   BehandlingIdentifier, ErrorTypes, requireProps,
 } from '@fpsak-frontend/fp-felles';
 import { PersonIndex } from '@fpsak-frontend/person-info';
-import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 
-import papirsoknadApi from './data/papirsoknadApi';
-import behandlingSelectors from './selectors/papirsoknadSelectors';
-import {
-  getBehandlingIdentifier,
-  getFagsakPerson,
-  getSoknadData,
-  resetRegistrering,
-  resetRegistreringData,
-  setSoknadData,
-  submitRegistrering,
-} from './duckPapirsoknad';
-import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';
-import SoknadRegistrertModal from './components/SoknadRegistrertModal';
+import RegistrerPapirsoknad from './RegistrerPapirsoknad';
+import SoknadRegistrertModal from './SoknadRegistrertModal';
 
 /**
  * PapirsoknadIndex
  *
  * Container komponent. Har ansvar for registrering-delen av hovedvinduet. Denne bruker valgt
  * fagsak og behandling for å generere korrekt registreringsskjema.
- *
  */
 export class PapirsoknadIndex extends Component {
   constructor(props) {
@@ -95,17 +82,15 @@ export class PapirsoknadIndex extends Component {
 
   render() {
     const {
-      setSoknadData: setData, writeAccess, behandlingPaaVent, soknadData, fagsakPerson, submitRegistreringSuccess,
+      writeAccess, behandlingPaaVent, fagsakPerson, submitRegistreringSuccess,
     } = this.props;
     return (
       <div>
         <PersonIndex medPanel person={fagsakPerson} />
         <RegistrerPapirsoknad
           submitPapirsoknad={this.onSubmit}
-          setSoknadData={setData}
           onSubmitUfullstendigsoknad={this.onSubmitUfullstendigsoknad}
           readOnly={!writeAccess.isEnabled || behandlingPaaVent}
-          soknadData={soknadData}
         />
         <SoknadRegistrertModal isOpen={submitRegistreringSuccess} />
       </div>
@@ -122,8 +107,6 @@ PapirsoknadIndex.propTypes = {
   submitRegistreringSuccess: PropTypes.bool.isRequired,
   resetRegistrering: PropTypes.func.isRequired,
   writeAccess: rettighetPropType,
-  setSoknadData: PropTypes.func.isRequired,
-  soknadData: PropTypes.instanceOf(SoknadData),
   resetRegistreringData: PropTypes.func.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
 };
@@ -133,7 +116,6 @@ PapirsoknadIndex.defaultProps = {
     employeeHasAccess: false,
     isEnabled: false,
   },
-  soknadData: null,
   aksjonspunkter: [],
 };
 
@@ -142,7 +124,6 @@ const hasAccessError = (error) => !!(error && error.type === ErrorTypes.MANGLER_
 const mapStateToProps = (state) => ({
   submitRegistreringSuccess: papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiFinished()(state)
   || hasAccessError(papirsoknadApi.SAVE_AKSJONSPUNKT.getRestApiError()(state)),
-  soknadData: getSoknadData(state),
   aksjonspunkter: behandlingSelectors.getAksjonspunkter(state),
   behandlingIdentifier: getBehandlingIdentifier(state),
   behandlingVersjon: behandlingSelectors.getBehandlingVersjon(state),
@@ -154,7 +135,6 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     submitRegistrering,
-    setSoknadData,
     resetRegistrering,
     resetRegistreringData,
   }, dispatch),
