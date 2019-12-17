@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
@@ -9,6 +9,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import styles from './fagsakProfile.less';
 
 const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
@@ -29,6 +30,7 @@ export const FagsakProfile = ({
   renderBehandlingMeny,
   renderBehandlingVelger,
   dekningsgrad,
+  intl,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -39,9 +41,11 @@ export const FagsakProfile = ({
             <Systemtittel>
               {getKodeverknavn(sakstype)}
             </Systemtittel>
-            <EtikettInfo title={dekningsgrad}>
-              {`${dekningsgrad}%`}
-            </EtikettInfo>
+            {sakstype.kode === fagsakYtelseType.FORELDREPENGER && (
+              <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
+                {`${dekningsgrad}%`}
+              </EtikettInfo>
+            )}
           </div>
           <Normaltekst>
             {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
@@ -78,10 +82,11 @@ FagsakProfile.propTypes = {
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
   dekningsgrad: PropTypes.number.isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 FagsakProfile.defaultProps = {
   annenPartLink: null,
 };
 
-export default FagsakProfile;
+export default injectIntl(FagsakProfile);
