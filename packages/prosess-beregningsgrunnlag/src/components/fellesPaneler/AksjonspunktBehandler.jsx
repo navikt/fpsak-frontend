@@ -117,7 +117,7 @@ const AksjonspunktBehandler = ({
           alleKodeverk={alleKodeverk}
         />
         )}
-        {!tidsBegrensetInntekt && visFL && (
+        {visFL && (
         <AksjonspunktBehandlerFL
           readOnly={readOnly}
           allePerioder={allePerioder}
