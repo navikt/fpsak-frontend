@@ -40,7 +40,7 @@ describe('<BehandlingMenu>', () => {
 
   const behandlingIdentifier = new BehandlingIdentifier(23, 1);
   const type = { kode: behandlingType.FORSTEGANGSSOKNAD };
-  const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn');
+  const behandlingData = new MenyBehandlingData(1, '3', 2, type, false, false, 'enhetsid', 'Enhetsnavn', false);
   const kodeverk = new MenyKodeverk();
 
   const rettigheter = new MenyRettigheter({
@@ -101,7 +101,7 @@ describe('<BehandlingMenu>', () => {
   it('skal vise menyvalg "fortsett behandling" men ikke "Sett på vent" og "Kan henlegges" når behandling er satt på vent', () => {
     const wrapper = shallow(<BehandlingMenu
       saksnummer={23}
-      behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn')}
+      behandlingData={new MenyBehandlingData(1, '3', 2, type, true, false, 'enhetsid', 'Enhetsnavn', false)}
       menyKodeverk={kodeverk}
       ytelseType={{
         kode: fagsakYtelseType.FORELDREPENGER,

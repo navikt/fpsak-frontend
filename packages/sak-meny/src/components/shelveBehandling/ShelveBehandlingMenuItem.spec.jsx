@@ -28,6 +28,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
       menyKodeverk={new MenyKodeverk()}
+      erPapirsoknad={false}
     />);
 
     expect(wrapper.find('Connect(injectIntl(ReduxForm))')).has.length(0);
@@ -51,6 +52,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
       menyKodeverk={new MenyKodeverk()}
+      erPapirsoknad={false}
     />);
 
     const button = wrapper.find('MenuButton');
@@ -85,6 +87,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
       menyKodeverk={new MenyKodeverk()}
+      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });
@@ -116,6 +119,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
         kode: behandlingType.FORSTEGANGSSOKNAD,
       }}
       menyKodeverk={new MenyKodeverk()}
+      erPapirsoknad={false}
     />);
     shelveBehandlingCallback.returns({ then: () => { wrapper.setState({ showBehandlingErHenlagtModal: true }); } });
 
@@ -132,7 +136,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
     wrapper.update();
 
     expect(shelveBehandlingCallback.called).is.true;
-    expect(shelveBehandlingCallback.getCalls()[0].args).has.length(2);
+    expect(shelveBehandlingCallback.getCalls()[0].args).has.length(3);
     expect(shelveBehandlingCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,

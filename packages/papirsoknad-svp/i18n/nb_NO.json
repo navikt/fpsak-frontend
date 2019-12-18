@@ -14,6 +14,8 @@
   "BehovForTilrettteleggingFieldArray.RedusertArbeid": "b) kan gjennomføres slik at arbeidstakeren kan fortsette med redusert arbeidstid fra og med",
   "BehovForTilrettteleggingFieldArray.KanIkkeGjennomfores": "c) kan ikke gjennomføres og arbeidstakeren må midlertidig gå ut av sitt arbeid fra og med",
   "Registrering.RegistrerVirksomhetModalForm.ModalDescription": "Legg til næringsvirksomhet",
+  "Registrering.Adopsjon.FodselsdatoBarnN": "Fødselsdato barn {n}",
+  "Registrering.FrilansOppdrag.FieldArray.BeforeFomValidation": "F.o.m må være lik eller etter dato for første periode med frilansvirksomhet",
   
   "MigreringFraInfotrygdPanel.Migrering": "Flytting fra Infotrygd",
   "MigreringFraInfotrygdPanel.Ja": "Ja",

@@ -39,6 +39,8 @@
   "Registrering.Fodselsdato": "Når ble barnet født?",
   "Registrering.UtstedtDato": "Utstedt dato fra terminbekreftelsen",
   "Registrering.Termindato": "Termindato",
+  "Registrering.Adopsjon.FodselsdatoBarnN": "Fødselsdato barn {n}",
+  "Registrering.FrilansOppdrag.FieldArray.BeforeFomValidation": "F.o.m må være lik eller etter dato for første periode med frilansvirksomhet",
 
   "ModalLukkPapirSoknad.ModalDescription": "Registrering av søknaden avsluttes",
   "ModalLukkPapirSoknad.Avslutt": "Avslutt registrering av søknaden",

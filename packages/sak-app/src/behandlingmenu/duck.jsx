@@ -33,9 +33,9 @@ export const resetBehandlingMenuData = () => ({
 
 // TODO (TOR) Det meste av kode under skal refaktorerast/flyttast til behandlingskontekst. (Må få vekk auto-henting av data i behandlingskontekst først)
 
-export const shelveBehandling = (params, behandlingType) => (dispatch) => {
+export const shelveBehandling = (params, behandlingType, erPapirsoknad) => (dispatch) => {
   if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
-    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING || erPapirsoknad) {
     return behandlingEventHandler.henleggBehandling(params);
   }
   return dispatch(fpsakApi.HENLEGG_BEHANDLING.makeRestApiRequest()(params));
@@ -61,9 +61,9 @@ export const createNewBehandling = (push, saksnummer, erBehandlingValgt, isTilba
 
 const updateFagsakAndBehandlingInfo = (behandlingIdentifier) => (dispatch) => behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
 
-export const setBehandlingOnHold = (params, behandlingIdentifier, behandlingType) => (dispatch) => {
+export const setBehandlingOnHold = (params, behandlingIdentifier, behandlingType, erPapirsoknad) => (dispatch) => {
   if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
-    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING || erPapirsoknad) {
     return behandlingEventHandler.settBehandlingPaVent(params);
   }
   return dispatch(fpsakApi.BEHANDLING_ON_HOLD.makeRestApiRequest()(params))
@@ -71,9 +71,9 @@ export const setBehandlingOnHold = (params, behandlingIdentifier, behandlingType
     .then(() => dispatch(updateFagsakAndBehandlingInfo(behandlingIdentifier)));
 };
 
-export const resumeBehandling = (behandlingIdentifier, params, behandlingType) => (dispatch) => {
+export const resumeBehandling = (behandlingIdentifier, params, behandlingType, erPapirsoknad) => (dispatch) => {
   if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
-    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING || erPapirsoknad) {
     return behandlingEventHandler.taBehandlingAvVent(params);
   }
   return dispatch(fpsakApi.RESUME_BEHANDLING.makeRestApiRequest()(params))
@@ -83,9 +83,9 @@ export const resumeBehandling = (behandlingIdentifier, params, behandlingType) =
     ]));
 };
 
-export const nyBehandlendeEnhet = (params, behandlingIdentifier, behandlingType) => (dispatch) => {
+export const nyBehandlendeEnhet = (params, behandlingIdentifier, behandlingType, erPapirsoknad) => (dispatch) => {
   if (behandlingType.kode === BehandlingType.DOKUMENTINNSYN || behandlingType.kode === BehandlingType.KLAGE || behandlingType.kode === BehandlingType.ANKE
-    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+    || behandlingType.kode === BehandlingType.TILBAKEKREVING || behandlingType.kode === BehandlingType.TILBAKEKREVING_REVURDERING || erPapirsoknad) {
     return behandlingEventHandler.endreBehandlendeEnhet(params);
   }
   return dispatch(fpsakApi.BEHANDLING_NY_BEHANDLENDE_ENHET.makeRestApiRequest()(params))
