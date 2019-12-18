@@ -57,7 +57,6 @@ const TilstotendeYtelser2 = ({
               <Column xs="4">
                 <Normaltekst>
                   <FormattedMessage
-                    // TODO: dette skal ikke vises lengre
                     id={getTekstForAndelBruktIBeregning(andel)}
                   />
                 </Normaltekst>

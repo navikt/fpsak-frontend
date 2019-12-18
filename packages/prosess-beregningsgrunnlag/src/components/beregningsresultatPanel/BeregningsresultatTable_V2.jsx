@@ -10,6 +10,7 @@ import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import dekningsgradKode from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import avslaatIkonUrl from '@fpsak-frontend/assets/images/avslaatt_mini.svg';
@@ -19,24 +20,24 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 import styles from './beregningsresultatTable_V2.less';
 
 
-const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
+const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
     <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry.ledetekst}
       </Normaltekst>
     </Column>
-    {!ikkeVurdert && (
+    {erVurdert && (
       <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
     )}
-    {ikkeVurdert && entry.skalFastsetteGrunnlag === true && (
+    {!erVurdert && entry.skalFastsetteGrunnlag === true && (
       <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
         <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
       </Column>
     )}
-    {ikkeVurdert && !entry.skalFastsetteGrunnlag && (
+    {erVurdert && !entry.skalFastsetteGrunnlag && (
       <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElement}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
@@ -82,19 +83,19 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
     </Row>
   );
 };
-const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
+const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => (
   <React.Fragment key="beregningOppsummeringWrapper">
     <Row key="beregningOppsummering">
       <Column xs="8" key="beregningOppsummeringLedetekst">
         <Normaltekst>
           <span className={beregningStyles.semiBoldText}>
-            { !ikkeVurdert && (
+            { erVurdert && (
             <FormattedMessage
               id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
               values={{ dagSats: formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) }}
             />
             )}
-            { ikkeVurdert && (
+            { !erVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
             )}
           </span>
@@ -102,12 +103,12 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => (
 
         </Normaltekst>
       </Column>
-      {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
+      {!erVurdert && listOfDagsatser.map((dag, index) => (
         <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
           <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
         </Column>
       ))}
-      {ikkeVurdert && (
+      {!erVurdert && (
         <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
@@ -157,11 +158,11 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
   const rows = [];
   if (listofAndeler && listofAndeler.length > 0) {
-    rows.push(createRowsAndeler(listofAndeler, true));
+    rows.push(createRowsAndeler(listofAndeler, false));
     rows.push(lineRow('redusertAndelLinje'));
   }
 
-  rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+  rows.push(summaryRow(listOfDagsatser, listOfEntries, false));
 
   return rows;
 };
@@ -269,7 +270,7 @@ export const createBeregningTableData = createSelector(
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
-      if (dekningsgrad !== 100) {
+      if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
@@ -473,13 +474,13 @@ const BeregningsresultatTable2 = ({
   vilkaarBG,
   periodeResultatTabeller,
 }) => {
-  const lagPeriodeHeaders = periodeResultatTabeller.length > 1;
+  const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
     <Panel className={beregningStyles.panelRight}>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, lagPeriodeHeaders))}
+      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders))}
     </Panel>
   );
 };
