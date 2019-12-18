@@ -11,8 +11,8 @@ import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/Grunn
 
 
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
-import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
-import MilitaerPanel from '../militær/MilitaerPanel';
+import YtelserFraInfotrygd2 from '../tilstotendeYtelser/YtelserFraInfotrygd_V2';
+import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 
 const arbeidstakerAndel = {
   aktivitetStatus: {
@@ -250,7 +250,7 @@ describe('<Beregningsgrunnlag2>', () => {
       behandlingVersjon={1}
       formName={formName}
     />);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(1);
@@ -272,7 +272,7 @@ describe('<Beregningsgrunnlag2>', () => {
       behandlingVersjon={1}
       formName={formName}
     />);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(1);
@@ -295,7 +295,7 @@ describe('<Beregningsgrunnlag2>', () => {
       behandlingVersjon={1}
       formName={formName}
     />);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(0);
@@ -319,7 +319,7 @@ describe('<Beregningsgrunnlag2>', () => {
       behandlingVersjon={1}
       formName={formName}
     />);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(1);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(1);
@@ -340,7 +340,7 @@ describe('<Beregningsgrunnlag2>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelAT2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(0);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser2)).to.have.length(1);
 
     const ytelsePanel = wrapper.find(TilstotendeYtelser2);
@@ -363,8 +363,8 @@ describe('<Beregningsgrunnlag2>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser2)).to.have.length(0);
-    expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(1);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(0);
+    expect(wrapper.find(YtelserFraInfotrygd2)).to.have.length(1);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(0);
   });
   it('Skal teste at korrekte komponenter vises for militær uten aksjonspunkt', () => {
     const wrapper = shallowWithIntl(<BeregningsgrunnlagImpl2
@@ -383,8 +383,8 @@ describe('<Beregningsgrunnlag2>', () => {
     expect(wrapper.find(GrunnlagForAarsinntektPanelFL2)).to.have.length(0);
     expect(wrapper.find(GrunnlagForAarsinntektPanelSN2)).to.have.length(0);
     expect(wrapper.find(TilstotendeYtelser2)).to.have.length(0);
-    expect(wrapper.find(YtelserFraInfotrygd)).to.have.length(0);
-    expect(wrapper.find(MilitaerPanel)).to.have.length(1);
+    expect(wrapper.find(YtelserFraInfotrygd2)).to.have.length(0);
+    expect(wrapper.find(MilitaerPanel2)).to.have.length(1);
   });
   it('Skal teste buildInitialValues med ATFL og vurderDekningsgrad aksjonspunkt', () => {
     const aksjonspunkter = [vurderAksjonspunktDekningsgrad, atflAksjonspunkt];

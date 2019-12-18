@@ -68,7 +68,6 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
   const erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
-
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
@@ -223,7 +222,6 @@ export const BeregningFormImpl2 = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
-
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
@@ -301,13 +299,13 @@ export const BeregningFormImpl2 = ({
           <>
             <VerticalSpacer fourtyPx />
             <BeregningsresultatTable2
-              halvGVerdi={beregningsgrunnlag.halvG}
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
-              ledetekstBrutto={beregningsgrunnlag.ledetekstBrutto}
-              ledetekstAvkortet={beregningsgrunnlag.ledetekstAvkortet}
-              ledetekstRedusert={beregningsgrunnlag.ledetekstRedusert}
+              dekningsgrad={dekningsgrad}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
+              aktivitetStatusList={aktivitetStatusList}
+              grunnbelop={beregningsgrunnlag.grunnbeløp}
+              harAksjonspunkter={harAksjonspunkter}
             />
           </>
 

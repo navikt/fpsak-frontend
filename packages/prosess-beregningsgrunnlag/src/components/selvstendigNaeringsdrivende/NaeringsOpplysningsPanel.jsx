@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
@@ -24,9 +24,9 @@ const virksomhetsDatoer = (naringsAndel) => {
 const revisorDetaljer = (naring) => {
   const { regnskapsførerNavn, regnskapsførerTlf } = naring;
   if (!regnskapsførerNavn) {
-    return '';
+    return null;
   }
-  return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${dateFormat(regnskapsførerNavn)}-`;
+  return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${regnskapsførerNavn}-`;
 };
 
 const finnBedriftsnavn = (naring) => {
@@ -104,10 +104,10 @@ export const NaeringsopplysningsPanel = ({
       </Element>
       <Row key="SNInntektIngress">
         <Column xs="8" />
-        <Column xs="4">
-          <Normaltekst>
+        <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
+          <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
-          </Normaltekst>
+          </Undertekst>
         </Column>
       </Row>
       <VerticalSpacer fourPx />
@@ -124,7 +124,7 @@ export const NaeringsopplysningsPanel = ({
                 {naring.virksomhetType && naring.virksomhetType.kode ? naring.virksomhetType.kode : ''}
               </Normaltekst>
             </Column>
-            <Column xs="4">
+            <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst>
@@ -150,9 +150,11 @@ export const NaeringsopplysningsPanel = ({
           </Row>
           <Row key={`RevisorRad${naring.orgnr}`}>
             <Column xs="10">
-              <Normaltekst>
-                {revisorDetaljer(naring)}
-              </Normaltekst>
+              {naring.regnskapsførerNavn && (
+                <Normaltekst>
+                  {revisorDetaljer(naring)}
+                </Normaltekst>
+              )}
             </Column>
           </Row>
           {erNæringNyoppstartetEllerVarigEndret(naring)
