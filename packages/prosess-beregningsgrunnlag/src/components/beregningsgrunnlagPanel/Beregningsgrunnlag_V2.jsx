@@ -7,10 +7,10 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 
-import YtelserFraInfotrygd from '../tilstotendeYtelser/YtelserFraInfotrygd';
+import YtelserFraInfotrygd2 from '../tilstotendeYtelser/YtelserFraInfotrygd_V2';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
-import MilitaerPanel from '../militær/MilitaerPanel';
+import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
@@ -63,35 +63,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingVersjon,
   alleKodeverk) => (
     <div>
-      {(relevanteStatuser.harDagpengerEllerAAP)
-    && (
-    <div>
-      <TilstotendeYtelser2
-        alleAndeler={alleAndelerIForstePeriode}
-        relevanteStatuser={relevanteStatuser}
-        gjelderBesteberegning={gjelderBesteberegning}
-      />
-      <VerticalSpacer fourtyPx />
-    </div>
-    )}
-      {(relevanteStatuser.isMilitaer)
-      && (
-        <>
-          <MilitaerPanel
-            alleAndeler={alleAndelerIForstePeriode}
-          />
-          <VerticalSpacer fourtyPx />
-        </>
-      )}
-      {(relevanteStatuser.harAndreTilstotendeYtelser)
-    && (
-      <>
-        <YtelserFraInfotrygd
-          bruttoPrAar={allePerioder[0].bruttoPrAar}
-        />
-        <VerticalSpacer fourtyPx />
-      </>
-    )}
       { relevanteStatuser.isArbeidstaker
       && (
         <>
@@ -141,6 +112,35 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer fourtyPx />
       </>
     )}
+      {(relevanteStatuser.harDagpengerEllerAAP)
+      && (
+        <div>
+          <TilstotendeYtelser2
+            alleAndeler={alleAndelerIForstePeriode}
+            relevanteStatuser={relevanteStatuser}
+            gjelderBesteberegning={gjelderBesteberegning}
+          />
+          <VerticalSpacer fourtyPx />
+        </div>
+      )}
+      {(relevanteStatuser.isMilitaer)
+      && (
+        <>
+          <MilitaerPanel2
+            alleAndeler={alleAndelerIForstePeriode}
+          />
+          <VerticalSpacer fourtyPx />
+        </>
+      )}
+      {(relevanteStatuser.harAndreTilstotendeYtelser)
+      && (
+        <>
+          <YtelserFraInfotrygd2
+            bruttoPrAar={allePerioder[0].bruttoPrAar}
+          />
+          <VerticalSpacer fourtyPx />
+        </>
+      )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
         <>
@@ -153,6 +153,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
+
     </div>
 );
 

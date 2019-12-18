@@ -96,9 +96,20 @@ const AvviksopplysningerPanel = ({
         </Column>
       </Row>
       )}
+      {relevanteStatuser.isMilitaer && (
+        <Row>
+          <Column xs="12">
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
+            </Normaltekst>
+          </Column>
+        </Row>
+      )}
+
     </Panel>
   );
 };
+
 
 AvviksopplysningerPanel.propTypes = {
   relevanteStatuser: PropTypes.shape().isRequired,

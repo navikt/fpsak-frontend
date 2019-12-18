@@ -75,6 +75,7 @@ export const SkjeringspunktOgStatusPanelImpl2 = ({
   </div>
 );
 
+
 SkjeringspunktOgStatusPanelImpl2.propTypes = {
   skjeringstidspunktDato: PropTypes.string.isRequired,
   aktivitetStatusList: PropTypes.arrayOf(PropTypes.shape()).isRequired,

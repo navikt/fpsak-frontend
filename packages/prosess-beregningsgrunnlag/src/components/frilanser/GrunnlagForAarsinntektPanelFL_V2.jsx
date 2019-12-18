@@ -39,7 +39,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
       <Row>
         <Column xs="12">
           <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato" />
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
             <span className={beregningStyles.semiBoldText}>
               {dateFormat(startDato)}
             </span>

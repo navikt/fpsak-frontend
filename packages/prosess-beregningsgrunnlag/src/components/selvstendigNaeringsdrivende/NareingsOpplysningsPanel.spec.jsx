@@ -24,7 +24,7 @@ const andelerForstePeriode = {
     kode: 'ANNEN',
     kodeverk: 'VIRKSOMHET_TYPE',
     oppgittInntekt: 1500000,
-    oppstartsdato: null,
+    oppstartsdato: '2019-09-16',
     orgnr: '910909088',
     regnskapsførerNavn: 'Regnar Regnskap',
     regnskapsførerTlf: '99999999',
@@ -50,9 +50,9 @@ describe('NaeringsopplysningsPanel', () => {
 
     const messages = wrapper.find('Normaltekst');
     expect(messages).to.be.lengthOf(7);
-    expect(messages.at(2).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].virksomhetType.kode);
-    expect(messages.at(3).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
-    expect(messages.at(4).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
+    expect(messages.at(1).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].virksomhetType.kode);
+    expect(messages.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
+    expect(messages.at(3).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
     const lesMer = wrapper.find('Lesmerpanel');
     expect(lesMer.length).to.equal(1);
   });

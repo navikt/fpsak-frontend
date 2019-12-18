@@ -9,80 +9,21 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
-export const getTekstForAndelBruktIBeregning = (andel, erIKombinasjonMedSN) => {
-  if (erIKombinasjonMedSN === true) {
-    if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
-      return 'Beregningsgrunnlag.TilstottendeYtelse.DagpengerOppjustert';
-    }
-    if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
-      return 'Beregningsgrunnlag.TilstottendeYtelse.AAPOppjustert';
-    }
-  } else {
-    if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
-      return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
-    }
-    if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
-      return 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
-    }
+export const getTekstForAndelBruktIBeregning = (andel) => {
+  if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
+    return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
+  }
+  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
+    return 'Beregningsgrunnlag.TilstottendeYtelse.AAP';
   }
   return '';
 };
 
-const getTekstForAndelensGrunnlag = (andel) => {
-  if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
-    return 'Beregningsgrunnlag.TilstottendeYtelse.DagpengerGrunnlag';
-  }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
-    return 'Beregningsgrunnlag.TilstottendeYtelse.AAPGrunnlag';
-  }
-  return '';
-};
-
-/**
- * Regnes ut frontend da det ikke brukes noe annet sted enn til informasjon til saksbehandler
- * Metode for utregning beskrevet her: https://confluence.adeo.no/pages/viewpage.action?pageId=297094932#Applikasjonoginformasjon
- * @param grunnlag det originale grunnlaget på andelen
- * @returns {number} oppjustert dagsats
- */
-const regnUtOppjustertAAP = (grunnlag) => {
-  const mellomregning = grunnlag / 66;
-  return mellomregning * 100;
-};
-
-/**
- * Regnes ut frontend da det ikke brukes noe annet sted enn til informasjon til saksbehandler
- * Metode for utregning beskrevet her: https://confluence.adeo.no/pages/viewpage.action?pageId=297094932#Applikasjonoginformasjon
- * @param grunnlag det originale grunnlaget på andelen
- * @returns {number} oppjustert dagsats
- */
-const regnUtOppjustertDagpenger = (grunnlag) => {
-  const mellomregning = grunnlag / 62.4;
-  return mellomregning * 100;
-};
-
-const finnOppjustertGrunnlag = (andel) => {
-  if (andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER) {
-    return regnUtOppjustertAAP(andel.beregnetPrAar);
-  }
-  if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
-    return regnUtOppjustertDagpenger(andel.beregnetPrAar);
-  }
-  return undefined;
-};
-
-/**
- * TilstotendeYtelser
- *
- * Presentasjonskomponent. Viser navn og sum på alle andeler som er tilstøttende ytelser
- * tilstøtendeYtelseType: Brukes for andre verdier enn dagpenger og arbeidsavklaringspenger.
- */
-const TilstotendeYtelser = ({
+const TilstotendeYtelser2 = ({
   alleAndeler,
   relevanteStatuser,
-  gjelderBesteberegning,
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
-  const skalViseOppjustertGrunnlag = relevanteStatuser.isSelvstendigNaeringsdrivende && !gjelderBesteberegning;
   return (
     <Panel className={beregningStyles.panel}>
       {relevanteStatuser.isKombinasjonsstatus
@@ -95,14 +36,13 @@ const TilstotendeYtelser = ({
         </>
       )}
       <Row>
-        <Column xs="4" />
-        <Column xs="2" />
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column xs="7" />
+        <Column className={beregningStyles.colMaanedText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
           </Undertekst>
         </Column>
-        <Column xs="2" className={beregningStyles.rightAlignElement}>
+        <Column className={beregningStyles.colAarText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
@@ -110,63 +50,33 @@ const TilstotendeYtelser = ({
         <Column xs="2" />
       </Row>
 
-      <Row>
-
+      <>
         {relevanteAndeler.map((andel, index) => (
           <div key={andel.aktivitetStatus.kode.concat('_'.concat(index))}>
-
-            <Column xs="4">
-              <Normaltekst>
-                <FormattedMessage
-                  id={getTekstForAndelBruktIBeregning(andel, skalViseOppjustertGrunnlag)}
-                />
-              </Normaltekst>
-            </Column>
-            {skalViseOppjustertGrunnlag
-            && (
-              <>
-                <Column xs="4">
-                  <Normaltekst>
-                    <FormattedMessage
-                      id={getTekstForAndelensGrunnlag(andel)}
-                    />
-                  </Normaltekst>
-                </Column>
-              </>
-            )}
-            {skalViseOppjustertGrunnlag
-            && (
-              <>
-                <Column xs="2" />
-                <Column xs="2">
-                  <Normaltekst>{formatCurrencyNoKr(finnOppjustertGrunnlag(andel))}</Normaltekst>
-                </Column>
-                <Column xs="2">
-                  <Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst>
-                </Column>
-              </>
-            )}
-            {!skalViseOppjustertGrunnlag
-          && (
-            <>
+            <Row>
+              <Column xs="4">
+                <Normaltekst>
+                  <FormattedMessage
+                    id={getTekstForAndelBruktIBeregning(andel)}
+                  />
+                </Normaltekst>
+              </Column>
+              <Column xs="3" />
+              <Column xs="2" className={beregningStyles.colMaanedText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
+              <Column xs="2" className={beregningStyles.colAarText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
               <Column xs="2" />
-              <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
-              <Column xs="2" className={beregningStyles.rightAlignElement}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
-              <Column xs="2" />
-            </>
-          )}
+            </Row>
             <VerticalSpacer eightPx />
           </div>
         ))}
-      </Row>
+      </>
     </Panel>
   );
 };
 
-TilstotendeYtelser.propTypes = {
+TilstotendeYtelser2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
-  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
-export default TilstotendeYtelser;
+export default TilstotendeYtelser2;
