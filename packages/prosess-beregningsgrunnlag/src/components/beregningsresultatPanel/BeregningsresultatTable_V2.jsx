@@ -22,13 +22,13 @@ import styles from './beregningsresultatTable_V2.less';
 
 const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
-    <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
+    <Column xs={!erVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry.ledetekst}
       </Normaltekst>
     </Column>
     {erVurdert && (
-      <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElement}>
+      <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
     )}
@@ -37,8 +37,8 @@ const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entr
         <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
       </Column>
     )}
-    {erVurdert && !entry.skalFastsetteGrunnlag && (
-      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElement}>
+    {!erVurdert && !entry.skalFastsetteGrunnlag && (
+      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
     )}
@@ -62,7 +62,7 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
               {entry.ledetekst}
             </Normaltekst>
           </Column>
-          <Column xs="2" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElement}>
+          <Column xs="2" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
             <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
           </Column>
         </Row>
@@ -77,7 +77,7 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
           {entry.ledetekst}
         </Normaltekst>
       </Column>
-      <Column xs="3" className={beregningStyles.rightAlignElement}>
+      <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
     </Row>
@@ -103,7 +103,7 @@ const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => (
 
         </Normaltekst>
       </Column>
-      {!erVurdert && listOfDagsatser.map((dag, index) => (
+      {erVurdert && listOfDagsatser.map((dag, index) => (
         <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
           <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
         </Column>
@@ -139,7 +139,7 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     rows.push(createRowsForklaringer(listOfForklaringer));
   }
   if (listofAndeler && listofAndeler.length > 0) {
-    rows.push(createRowsAndeler(listofAndeler));
+    rows.push(createRowsAndeler(listofAndeler, true));
     if (listofAndeler.length > 1) {
       rows.push(lineRow('andelLinje'));
     }
@@ -147,9 +147,9 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
   rows.push(createRowsRedusert(listOfEntries));
   rows.push(lineRow('redusertLinje'));
   if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler));
+    rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
   } else {
-    rows.push(summaryRow(listOfDagsatser, listOfEntries));
+    rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
   }
 
 
@@ -256,8 +256,9 @@ export const createBeregningTableData = createSelector(
     (state, ownProps) => ownProps.aktivitetStatusList,
     (state, ownProps) => ownProps.dekningsgrad,
     (state, ownProps) => ownProps.grunnbelop,
+    (state, ownProps) => ownProps.harAksjonspunkter,
     (state, ownProps) => ownProps.vilkaarBG.vilkarStatus],
-  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, vilkarStatus) => {
+  (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkarStatus) => {
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
     const periodeResultatTabeller = [];
     perioderSomSkalVises.forEach((periode) => {
@@ -274,7 +275,7 @@ export const createBeregningTableData = createSelector(
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
-
+      console.log('harAksjonspunkter', harAksjonspunkter);
       const rowsAndeler = [];
       const rowsForklaringer = [];
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
@@ -318,12 +319,23 @@ export const createBeregningTableData = createSelector(
             'FL',
             vilkarStatus,
           );
-          if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
-            rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
-            rowsAndeler.push(atElement);
-            rowsAndeler.push(flElement);
-          }
-          if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) < (snElement && snElement.verdi)) {
+
+          if (!harAksjonspunkter) {
+            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
+              rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
+              rowsAndeler.push(atElement);
+              rowsAndeler.push(flElement);
+            }
+            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) < (snElement && snElement.verdi)) {
+              // setter SN ledetekst til Pensjonsgibevnde årsintekt
+              snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
+              rowsAndeler.push(atElement);
+              rowsAndeler.push(flElement);
+              rowsAndeler.push(snElement);
+            }
+          } else {
+            // setter SN ledetekst til Fastsatt årsintekt
+            snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
             rowsAndeler.push(atElement);
             rowsAndeler.push(flElement);
             rowsAndeler.push(snElement);
@@ -488,7 +500,6 @@ const BeregningsresultatTable2 = ({
 BeregningsresultatTable2.propTypes = {
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-
 };
 
 BeregningsresultatTable2.defaultProps = {

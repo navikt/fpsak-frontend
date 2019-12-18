@@ -68,7 +68,6 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   const erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   const erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
   const erNyArbLivet = snAndel && snAndel.erNyIArbeidslivet;
-
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
@@ -300,13 +299,13 @@ export const BeregningFormImpl2 = ({
           <>
             <VerticalSpacer fourtyPx />
             <BeregningsresultatTable2
-              halvGVerdi={beregningsgrunnlag.halvG}
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
               dekningsgrad={dekningsgrad}
               vilkaarBG={vilkaarBG}
               aksjonspunkter={gjeldendeAksjonspunkter}
               aktivitetStatusList={aktivitetStatusList}
               grunnbelop={beregningsgrunnlag.grunnbeløp}
+              harAksjonspunkter={harAksjonspunkter}
             />
           </>
 

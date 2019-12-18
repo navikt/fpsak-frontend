@@ -621,22 +621,21 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
     />
   );
 };
-export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
+export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const andeler = [
     lagAndel('SN', 331000, undefined, undefined, true),
     lagAndel('AT', 324000, undefined, undefined),
-    lagAndel('FL', 396000, undefined, undefined),
   ];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 954985;
+  andeler[0].pgiSnitt = 554985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].avkortetPrAar = 599148;
   perioder[0].redusertPrAar = 479318;
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
 
-  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const statuser = [lagStatus('AT_SN')];
   const næringer = [{
     begrunnelse: 'Endringsbeskrivelse',
     endringsdato: '2019-11-22',
@@ -663,6 +662,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt 
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
+
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}
@@ -675,15 +675,13 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAkjsonspunkt 
   );
 };
 
-export const arbeidstakerFrilanserOgSelvstendigNæringsdrivendeUtenAksjonspunkt = () => {
+export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt = () => {
   const andeler = [
     lagAndel('SN', 107232, undefined, undefined, true),
     lagAndel('DP', 143000, undefined, undefined),
     lagAndel('AT', 343000, undefined, undefined),
   ];
-  // const pgi = lagPGIVerdier();
 
-  // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
   perioder[0].avkortetPrAar = 599148;
