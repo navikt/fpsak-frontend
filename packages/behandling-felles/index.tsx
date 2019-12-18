@@ -20,6 +20,7 @@ export { default as Behandling } from './src/types/behandlingTsType';
 export { default as Dokument } from './src/types/dokumentTsType';
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
 export { default as Kodeverk } from './src/types/kodeverkTsType';
+export { default as KodeverkMedNavn } from './src/types/kodeverkMedNavnTsType';
 export { default as NavAnsatt } from './src/types/navAnsattTsType';
 export { default as Vilkar } from './src/types/vilkarTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';

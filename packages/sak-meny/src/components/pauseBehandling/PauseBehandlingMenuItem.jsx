@@ -29,7 +29,7 @@ class PauseBehandlingMenuItem extends Component {
 
   submit(formValues) {
     const {
-      setBehandlingOnHold, behandlingIdentifier, behandlingVersjon, behandlingType,
+      setBehandlingOnHold, behandlingIdentifier, behandlingVersjon, behandlingType, erPapirsoknad,
     } = this.props;
     const values = {
       behandlingVersjon,
@@ -37,7 +37,7 @@ class PauseBehandlingMenuItem extends Component {
       frist: formValues.frist,
       ventearsak: formValues.ventearsak,
     };
-    setBehandlingOnHold(values, behandlingIdentifier, behandlingType);
+    setBehandlingOnHold(values, behandlingIdentifier, behandlingType, erPapirsoknad);
 
     this.hideModal();
   }
@@ -89,6 +89,7 @@ PauseBehandlingMenuItem.propTypes = {
   setBehandlingOnHold: PropTypes.func.isRequired,
   settBehandlingPaVentEnabled: PropTypes.bool.isRequired,
   behandlingType: PropTypes.shape().isRequired,
+  erPapirsoknad: PropTypes.bool.isRequired,
 };
 
 export default PauseBehandlingMenuItem;

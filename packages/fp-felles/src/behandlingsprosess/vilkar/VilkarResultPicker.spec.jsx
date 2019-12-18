@@ -71,8 +71,8 @@ describe('<VilkarResultPicker>', () => {
 
     const select = wrapper.find('SelectField');
     expect(select).to.have.length(1);
-    expect(select.prop('label')).to.eql('Angi avslagsårsak');
-    expect(select.prop('placeholder')).to.eql('Velg årsak');
+    expect(select.prop('label')).to.eql('VilkarResultPicker.Arsak');
+    expect(select.prop('placeholder')).to.eql('VilkarResultPicker.SelectArsak');
     expect(select.prop('selectValues')).to.have.length(1);
   });
 

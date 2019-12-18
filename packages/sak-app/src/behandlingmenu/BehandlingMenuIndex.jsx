@@ -133,11 +133,13 @@ const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk,
   (behandlingType, alleFpSakKodeverk, alleFpTilbakeKodeverk) => new MenyKodeverk(behandlingType)
     .medFpSakKodeverk(alleFpSakKodeverk)
     .medFpTilbakeKodeverk(alleFpTilbakeKodeverk));
+
 const getMenyBehandlingData = createSelector([getSelectedBehandlingId, getBehandlingerUuidsMappedById, getBehandlingVersjon, getBehandlingType,
-  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn],
-(behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn) => (versjon
-  ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn)
+  erBehandlingPaVent, erBehandlingKoet, getBehandlingBehandlendeEnhetId, getBehandlingBehandlendeEnhetNavn, getBehandlingErPapirsoknad],
+(behandlingId, uuidsMappedById, versjon, type, isOnHold, isQueued, enhetId, enhetNavn, erPapirsoknad) => (versjon
+  ? new MenyBehandlingData(behandlingId, uuidsMappedById[behandlingId], versjon, type, isOnHold, isQueued, enhetId, enhetNavn, erPapirsoknad)
   : undefined));
+
 const getTilbakekrevingOpprettes = createSelector([
   (state) => fpsakApi.KAN_TILBAKEKREVING_OPPRETTES.getRestApiData()(state),
   (state) => fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.getRestApiData()(state),
