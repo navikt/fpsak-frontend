@@ -34,10 +34,8 @@ const {
 // Methods
 // ------------------------------------------------------------------------------------------ //
 
-const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder, gjeldendeAksjonspunkter) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
-    && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET))
-    && gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.some((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD);
-
+const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
+    && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET));
 
 const finnAksjonspunktForATFL = (gjeldendeAksjonspunkter) => gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.find(
   (ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS
@@ -97,7 +95,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
       { relevanteStatuser.isArbeidstaker
       && (
         <>
-          {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
+          {!harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
           && (
             <>
               <GrunnlagForAarsinntektPanelAT2
@@ -113,7 +111,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
               <VerticalSpacer fourtyPx />
             </>
           )}
-          { harPerioderMedAvsluttedeArbeidsforhold(allePerioder, gjeldendeAksjonspunkter)
+          { harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
           && (
             <>
               <GrunnlagForAarsinntektPanelAT2

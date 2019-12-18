@@ -21,37 +21,60 @@ const virksomhetsDatoer = (naringsAndel) => {
   return opphoersdato ? `${dateFormat(oppstartsdato)}-${dateFormat(opphoersdato)} ` : `${dateFormat(oppstartsdato)}-`;
 };
 
-const revisorDetaljer = (naringsAndel) => {
-  const { navn, telefon } = naringsAndel;
-  if (!navn) {
+const revisorDetaljer = (naring) => {
+  const { regnskapsførerNavn, regnskapsførerTlf } = naring;
+  if (!regnskapsførerNavn) {
     return '';
   }
-  return telefon ? `${navn}-${telefon} ` : `${dateFormat(navn)}-`;
+  return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${dateFormat(regnskapsførerNavn)}-`;
 };
 
+const finnBedriftsnavn = (naring) => {
+  const { virksomhetNavn } = naring;
+  return virksomhetNavn || 'Ukjent bedriftsnavn';
+};
+
+const lagIntroTilEndringspanel = (naring) => {
+  const {
+    oppstartsdato, erVarigEndret, endringsdato,
+  } = naring;
+  const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
+  const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
+  return (
+    <>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <Normaltekst>
+              <FormattedMessage id={hendelseTekst} />
+            </Normaltekst>
+          </FlexColumn>
+          <FlexColumn>
+            {hendelseDato
+            && (
+            <Normaltekst className={beregningStyles.semiBoldText}>
+              <DateLabel dateString={hendelseDato} />
+            </Normaltekst>
+            )}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </>
+  );
+};
+
+const erNæringNyoppstartetEllerVarigEndret = (naring) => {
+  const {
+    erNyoppstartet, erVarigEndret,
+  } = naring;
+  return erVarigEndret || erNyoppstartet;
+};
 
 const lagBeskrivelsePanel = (naringsAndel, intl) => (
   <>
     <Lesmerpanel
       className={styles.lesMer}
-      intro={(
-        <>
-          <FlexContainer>
-            <FlexRow>
-              <FlexColumn>
-                <Normaltekst>
-                  <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Begrunnelse" />
-                </Normaltekst>
-              </FlexColumn>
-              <FlexColumn>
-                <Normaltekst className={beregningStyles.semiBoldText}>
-                  <DateLabel dateString={naringsAndel.endringsdato} />
-                </Normaltekst>
-              </FlexColumn>
-            </FlexRow>
-          </FlexContainer>
-        </>
-)}
+      intro={lagIntroTilEndringspanel(naringsAndel)}
       lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.SkjulBegrunnelse' })}
       apneTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VisBegrunnelse' })}
       defaultApen
@@ -60,9 +83,10 @@ const lagBeskrivelsePanel = (naringsAndel, intl) => (
         {naringsAndel.begrunnelse}
       </Normaltekst>
     </Lesmerpanel>
-
   </>
 );
+
+const søkerHarOppgittInntekt = (naring) => naring.oppgittInntekt || naring.oppgittInntekt === 0;
 
 export const NaeringsopplysningsPanel = ({
   alleAndelerIForstePeriode,
@@ -92,7 +116,7 @@ export const NaeringsopplysningsPanel = ({
           <Row key={`NaringsNavn${naring.orgnr}`}>
             <Column xs="6">
               <Normaltekst>
-                <span>Bedriftsnavn</span>
+                {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
             <Column xs="2">
@@ -101,9 +125,12 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
             <Column xs="4">
-              <Normaltekst>
-                {formatCurrencyNoKr(naring.oppgittInntekt)}
-              </Normaltekst>
+              {søkerHarOppgittInntekt(naring)
+                && (
+                <Normaltekst>
+                  {formatCurrencyNoKr(naring.oppgittInntekt)}
+                </Normaltekst>
+                )}
             </Column>
           </Row>
           <Row key={`NaringsDetaljer${naring.orgnr}`}>
@@ -113,9 +140,12 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
             <Column xs="2">
-              <Normaltekst>
-                {virksomhetsDatoer(naring)}
-              </Normaltekst>
+              {virksomhetsDatoer(naring)
+                && (
+                <Normaltekst>
+                  {virksomhetsDatoer(naring)}
+                </Normaltekst>
+                )}
             </Column>
           </Row>
           <Row key={`RevisorRad${naring.orgnr}`}>
@@ -125,9 +155,12 @@ export const NaeringsopplysningsPanel = ({
               </Normaltekst>
             </Column>
           </Row>
-          <Row>
-            {lagBeskrivelsePanel(naring, intl)}
-          </Row>
+          {erNæringNyoppstartetEllerVarigEndret(naring)
+            && (
+            <Row>
+              {lagBeskrivelsePanel(naring, intl)}
+            </Row>
+            )}
         </React.Fragment>
       ))}
     </Panel>
