@@ -26,7 +26,7 @@ const revisorDetaljer = (naring) => {
   if (!regnskapsførerNavn) {
     return null;
   }
-  return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${dateFormat(regnskapsførerNavn)}-`;
+  return regnskapsførerTlf ? `${regnskapsførerNavn}-${regnskapsførerTlf} ` : `${regnskapsførerNavn}-`;
 };
 
 const finnBedriftsnavn = (naring) => {

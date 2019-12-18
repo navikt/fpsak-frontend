@@ -234,11 +234,11 @@ const opprettAndelElement = (andel, andelType, vilkarStatus) => {
       inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
       break;
     case 'SN':
-      inntekt = andel ? andel.pgiSnitt : undefined;
+      inntekt = andel && andel.pgiSnitt ? andel.pgiSnitt : undefined;
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
       break;
     default:
-      inntekt = andel ? andel.bruttoPrAar : undefined;
+      inntekt = andel && andel.bruttoPrAar ? andel.bruttoPrAar : undefined;
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
 
