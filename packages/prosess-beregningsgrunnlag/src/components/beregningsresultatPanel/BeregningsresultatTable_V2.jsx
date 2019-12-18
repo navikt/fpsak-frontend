@@ -275,7 +275,6 @@ export const createBeregningTableData = createSelector(
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
-      console.log('harAksjonspunkter', harAksjonspunkter);
       const rowsAndeler = [];
       const rowsForklaringer = [];
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
@@ -293,14 +292,17 @@ export const createBeregningTableData = createSelector(
             'SN',
             vilkarStatus,
           );
-
-          if ((atElement && atElement.verdi) < (snElement && snElement.verdi)) {
+          if (((atElement && atElement.verdi) < (snElement && snElement.verdi)) && harAksjonspunkter) {
             rowsAndeler.push(snElement);
+            break;
           }
           if ((atElement && atElement.verdi) > (snElement && snElement.verdi)) {
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT>SN" />);
             rowsAndeler.push(atElement);
+            break;
           }
+          rowsAndeler.push(atElement);
+          rowsAndeler.push(snElement);
           break;
         }
         case 'AT_FL_SN': {
@@ -363,7 +365,7 @@ export const createBeregningTableData = createSelector(
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
             rowsAndeler.push(flElement);
           } else {
-            // TODO: Avklar hva vi skal vise her
+            // TODO: Avklar hva vi skal vise her min tolkning er kun snAndel
             rowsAndeler.push(snElement);
           }
           break;
@@ -389,10 +391,9 @@ export const createBeregningTableData = createSelector(
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
             rowsAndeler.push(atElement);
           } else {
-            // TODO: Avklar hva vi skal vise her
             rowsAndeler.push(atElement);
-            rowsAndeler.push(snElement);
             rowsAndeler.push(dpElement);
+            rowsAndeler.push(snElement);
           }
           break;
         }

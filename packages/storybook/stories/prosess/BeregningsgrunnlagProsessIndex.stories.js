@@ -535,6 +535,32 @@ export const infoTrygdYtelse = () => {
     />
   );
 };
+export const naturalYtelse = () => {
+  const andeler = [
+    lagAndel('AT', 240000, undefined, undefined),
+  ];
+  const statuser = [lagStatus('AT')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  perioder[0].periodeAarsaker = [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }];
+  andeler[0].bortfaltNaturalytelse = 23;
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
 export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
   const andeler = [
     lagAndel('FL', 596000, undefined, undefined),
@@ -624,15 +650,15 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
 export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const andeler = [
     lagAndel('SN', 331000, undefined, undefined, true),
-    lagAndel('AT', 324000, undefined, undefined),
+    lagAndel('AT', 355000, undefined, undefined),
   ];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 554985;
+  andeler[0].pgiSnitt = 654985;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].avkortetPrAar = 599148;
-  perioder[0].redusertPrAar = 479318;
+  perioder[0].redusertPrAar = 379318;
   perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
 
   const statuser = [lagStatus('AT_SN')];
@@ -662,7 +688,6 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}
@@ -679,7 +704,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   const andeler = [
     lagAndel('SN', 107232, undefined, undefined, true),
     lagAndel('DP', 143000, undefined, undefined),
-    lagAndel('AT', 343000, undefined, undefined),
+    lagAndel('FL', 343000, undefined, undefined),
   ];
 
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
@@ -687,8 +712,8 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   perioder[0].avkortetPrAar = 599148;
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 954985;
-  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
+  andeler[0].pgiSnitt = 754985;
+  const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
   const næringer = [{
     begrunnelse: 'Endringsbeskrivelse',
     endringsdato: '2019-11-22',
