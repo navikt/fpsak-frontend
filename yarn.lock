@@ -2547,14 +2547,62 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
+"@navikt/boxed-list-with-links@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@navikt/boxed-list-with-links/-/boxed-list-with-links-1.0.2.tgz#2fe2c0dcdc60b06ab295f21af1b18d2fb70a400b"
+  dependencies:
+    "@navikt/boxed-list" "1.0.2"
+    "@navikt/nap-bem-utils" "1.0.1"
+    nav-frontend-typografi "^2.0.16"
+    nav-frontend-typografi-style "^1.0.17"
+
+"@navikt/boxed-list@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@navikt/boxed-list/-/boxed-list-1.0.2.tgz#9b9d4142b13184bdc39d1ad99baa9a1ee04213ec"
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+
 "@navikt/nap-bem-utils@1.0.1":
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
+<<<<<<< HEAD
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
   integrity sha512-vBrQMaiD61I27IH9CtJAZmPQZ+hV6BpLh9Y1Ej+aaTh0OBAWDhUciti4+pAK6uXNUS0LDtP0kp8xHQYyh7ZeTA==
+=======
+"@navikt/nap-header@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.npmjs.org/@navikt/nap-header/-/nap-header-1.0.4.tgz#8f22c0566e8eba9735c407a270cdf79a3a265544"
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    "@navikt/nap-popover" "1.0.1"
+    classnames "^2.2.6"
+    lodash.throttle "^4.1.1"
+    nav-frontend-chevron "^1.0.10"
+    nav-frontend-chevron-style "^0.3.5"
+    nav-frontend-core "^4.0.11"
+    nav-frontend-ikoner-assets "^1.0.3"
+    nav-frontend-ikonknapper "0.0.10"
+    nav-frontend-js-utils "^1.0.8"
+    nav-frontend-knapper "^1.0.37"
+    nav-frontend-knapper-style "^0.3.32"
+    nav-frontend-typografi "^2.0.16"
+    nav-frontend-typografi-style "^1.0.17"
+    prop-types "^15.7.2"
+
+"@navikt/nap-popover@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@navikt/nap-popover/-/nap-popover-1.0.1.tgz#4cd6da66ef0f73c652c5db7d562921044f67588a"
+  dependencies:
+    prop-types "^15.7.2"
+    react-popper "^1.3.5"
+
+"@navikt/nap-process-menu@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@navikt/nap-process-menu/-/nap-process-menu-1.0.8.tgz#f5d490eb80445829a9ad39272275d348153b4afb"
+>>>>>>> NOJIRA Ta i bruk ny header
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
@@ -6202,7 +6250,7 @@ deep-eql@^3.0.1:
   dependencies:
     type-detect "^4.0.0"
 
-deep-equal@^1.0.1:
+deep-equal@^1.0.1, deep-equal@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npmjs.org/deep-equal/-/deep-equal-1.1.1.tgz#b5c98c942ceffaf7cb051e24e1434a25a2e6076a"
   dependencies:
@@ -10906,11 +10954,11 @@ nav-frontend-alertstriper@3.0.7:
   version "3.0.7"
   resolved "https://registry.npmjs.org/nav-frontend-alertstriper/-/nav-frontend-alertstriper-3.0.7.tgz#a812fa48e986655c1b60a2efbf172dd2a87d6f67"
 
-nav-frontend-chevron-style@0.3.5:
+nav-frontend-chevron-style@0.3.5, nav-frontend-chevron-style@^0.3.5:
   version "0.3.5"
   resolved "https://registry.npmjs.org/nav-frontend-chevron-style/-/nav-frontend-chevron-style-0.3.5.tgz#778d814ccf98825da744b7fb95a6e7dfb3ff7f4e"
 
-nav-frontend-chevron@1.0.10:
+nav-frontend-chevron@1.0.10, nav-frontend-chevron@^1.0.10:
   version "1.0.10"
   resolved "https://registry.npmjs.org/nav-frontend-chevron/-/nav-frontend-chevron-1.0.10.tgz#6d38caa5231c3bb164005c7f95c4c39979d86fe4"
 
@@ -10942,9 +10990,13 @@ nav-frontend-grid@1.0.23:
   version "1.0.23"
   resolved "https://registry.npmjs.org/nav-frontend-grid/-/nav-frontend-grid-1.0.23.tgz#22620b6c73edaaba2e315c2bae0f59ab3b2493f7"
 
-nav-frontend-ikoner-assets@1.0.3:
+nav-frontend-ikoner-assets@1.0.3, nav-frontend-ikoner-assets@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npmjs.org/nav-frontend-ikoner-assets/-/nav-frontend-ikoner-assets-1.0.3.tgz#fca3d5c689524416ca25c7dd1d207c2f5effea2f"
+
+nav-frontend-ikonknapper@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.npmjs.org/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-0.0.10.tgz#8f304e0c11661b71eb5bc1a59cf33fe99e6588b0"
 
 nav-frontend-js-utils@1.0.8, nav-frontend-js-utils@^1.0.8:
   version "1.0.8"
@@ -10954,9 +11006,17 @@ nav-frontend-knapper-style@0.3.32:
   version "0.3.32"
   resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.32.tgz#7f6b1bf1b413199e0518fd3682b38dbd41478598"
 
+nav-frontend-knapper-style@^0.3.32:
+  version "0.3.33"
+  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.33.tgz#f3ad20b98dfe1c9e4d912ea63250fb7fb10ee400"
+
 nav-frontend-knapper@1.0.37:
   version "1.0.37"
   resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.37.tgz#79075100f757c0589f19632b47449d1aec242bab"
+
+nav-frontend-knapper@^1.0.37:
+  version "1.0.38"
+  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.38.tgz#782bc02bc4025e8bece1d8397b6353fab1adfbbc"
 
 nav-frontend-lenkepanel-style@^0.3.27:
   version "0.3.27"
@@ -10973,12 +11033,10 @@ nav-frontend-lenker-style@0.2.24:
 nav-frontend-lesmerpanel-style@0.0.27:
   version "0.0.27"
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel-style/-/nav-frontend-lesmerpanel-style-0.0.27.tgz#dbd22ee50a9a5feabe7cfcc70457b0d2e8505d78"
-  integrity sha512-YEcB5D2Hy8mZvfXq5olW+aCt0Q2mZ+o4CN8hFxQKNQcxfaSaiHvf1rxqqCVFLic7EPSTfDBrEGbAnfWSji7kPA==
 
 nav-frontend-lesmerpanel@0.0.32:
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel/-/nav-frontend-lesmerpanel-0.0.32.tgz#c6ecfa7ea7217a301a5884a03c69a0ea3acba651"
-  integrity sha512-pvA13rTc+NDeixDrWJi+JrFR6n3zUdzN/vfU7sqH/Ewojs++fc/2sJ21RweJ22LYFdhayzl2drV9aJPs5xyWdg==
 
 nav-frontend-lukknapp-style@0.2.21:
   version "0.2.21"
@@ -13108,6 +13166,18 @@ react-popper@^1.3.4:
   dependencies:
     "@babel/runtime" "^7.1.2"
     create-react-context "^0.3.0"
+    popper.js "^1.14.4"
+    prop-types "^15.6.1"
+    typed-styles "^0.0.7"
+    warning "^4.0.2"
+
+react-popper@^1.3.5:
+  version "1.3.7"
+  resolved "https://registry.npmjs.org/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    create-react-context "^0.3.0"
+    deep-equal "^1.1.1"
     popper.js "^1.14.4"
     prop-types "^15.6.1"
     typed-styles "^0.0.7"
