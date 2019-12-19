@@ -14,6 +14,13 @@ import styles from './fagsakProfile.less';
 
 const hasLink = (link) => link && link.saksnr && link.saksnr.verdi && link.behandlingId;
 
+const visSakDekningsgrad = (saksKode, dekningsgrad) => {
+  const erForeldrepenger = saksKode === fagsakYtelseType.FORELDREPENGER;
+  const gyldigDekningsGrad = dekningsgrad === 100 || dekningsgrad === 80;
+
+  return erForeldrepenger && gyldigDekningsGrad;
+};
+
 /**
  * FagsakProfile
  *
@@ -41,7 +48,7 @@ export const FagsakProfile = ({
             <Systemtittel>
               {getKodeverknavn(sakstype)}
             </Systemtittel>
-            {sakstype.kode === fagsakYtelseType.FORELDREPENGER && (
+            {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
               <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
                 {`${dekningsgrad}%`}
               </EtikettInfo>
