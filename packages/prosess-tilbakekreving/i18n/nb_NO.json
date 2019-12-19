@@ -32,6 +32,9 @@
   "AktsomhetReduksjonAvBelopFormPanel.Ja": "Ja",
   
   "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.Forsett": "Burde ha forstått",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt": "Må ha forstått",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom": "Forsto",
 
   "AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt": "Når 6. ledd anvendes må alle perioder behandles likt",
   "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",

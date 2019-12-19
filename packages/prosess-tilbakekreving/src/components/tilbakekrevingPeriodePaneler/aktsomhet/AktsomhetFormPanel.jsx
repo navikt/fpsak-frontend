@@ -18,6 +18,13 @@ const uaktsomhetCodes = [
   Aktsomhet.FORSETT,
 ];
 
+const forstoBurdeForstattTekster = {
+  [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom',
+  [Aktsomhet.GROVT_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt',
+  [Aktsomhet.SIMPEL_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
+};
+
+
 const AktsomhetFormPanel = ({
   readOnly,
   resetFields,
@@ -25,6 +32,7 @@ const AktsomhetFormPanel = ({
   handletUaktsomhetGrad,
   harGrunnerTilReduksjon,
   erSerligGrunnAnnetValgt,
+  erValgtResultatTypeForstoBurdeForstaatt,
   aktsomhetTyper,
   sarligGrunnTyper,
   antallYtelser,
@@ -46,7 +54,7 @@ const AktsomhetFormPanel = ({
       {aktsomhetTyper.map((vrt) => (
         <RadioOption
           key={vrt.kode}
-          label={vrt.navn}
+          label={erValgtResultatTypeForstoBurdeForstaatt ? <FormattedMessage id={forstoBurdeForstattTekster[vrt.kode]} /> : vrt.navn}
           value={vrt.kode}
         />
       ))}
@@ -76,6 +84,7 @@ AktsomhetFormPanel.propTypes = {
   resetAnnetTextField: PropTypes.func.isRequired,
   harGrunnerTilReduksjon: PropTypes.bool,
   erSerligGrunnAnnetValgt: PropTypes.bool,
+  erValgtResultatTypeForstoBurdeForstaatt: PropTypes.bool,
   handletUaktsomhetGrad: PropTypes.string,
   antallYtelser: PropTypes.number.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
@@ -87,6 +96,7 @@ AktsomhetFormPanel.propTypes = {
 
 AktsomhetFormPanel.defaultProps = {
   erSerligGrunnAnnetValgt: false,
+  erValgtResultatTypeForstoBurdeForstaatt: false,
   harGrunnerTilReduksjon: undefined,
   handletUaktsomhetGrad: undefined,
   andelSomTilbakekreves: undefined,
