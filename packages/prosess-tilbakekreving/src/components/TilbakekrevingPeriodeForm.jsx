@@ -19,7 +19,7 @@ import {
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
 
 import sarligGrunn from '../kodeverk/sarligGrunn';
-import Aktsomhet from '../kodeverk/aktsomhet';
+import Aktsomhet, { AKTSOMHET_REKKEFØLGE } from '../kodeverk/aktsomhet';
 import VilkarResultat from '../kodeverk/vilkarResultat';
 import TilbakekrevingAktivitetTabell from './tilbakekrevingPeriodePaneler/TilbakekrevingAktivitetTabell';
 import ForeldetFormPanel from './tilbakekrevingPeriodePaneler/ForeldetFormPanel';
@@ -325,6 +325,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   const sarligGrunnTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.SARLIG_GRUNN];
   const vilkarResultatTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.VILKAR_RESULTAT];
   const aktsomhetTyper = ownProps.alleKodeverk[tilbakekrevingKodeverkTyper.AKTSOMHET];
+  const sorterteAktsomhetTyper = AKTSOMHET_REKKEFØLGE.map((a) => aktsomhetTyper.find((el) => el.kode === a));
   const submitCallback = (values) => ownProps.oppdaterPeriode(values);
   const validateForm = (values) => validate(values, sarligGrunnTyper, ownProps.data);
   return (state, oProps) => {
@@ -345,7 +346,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
       valgtVilkarResultatType,
       handletUaktsomhetGrad,
       vilkarResultatTyper,
-      aktsomhetTyper,
+      aktsomhetTyper: sorterteAktsomhetTyper,
       sarligGrunnTyper,
     };
   };
