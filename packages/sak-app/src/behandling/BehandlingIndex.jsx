@@ -6,6 +6,7 @@ import { bindActionCreators } from 'redux';
 import { push } from 'connected-react-router';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import FagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
@@ -36,6 +37,8 @@ import behandlingEventHandler from './BehandlingEventHandler';
 import ErrorBoundary from './ErrorBoundary';
 
 const BehandlingForstegangOgRevurderingIndex = React.lazy(() => import('@fpsak-frontend/fp-behandling-forstegang-og-revurdering'));
+const BehandlingEngangsstonadIndex = React.lazy(() => import('@fpsak-frontend/behandling-es'));
+const BehandlingForeldrepengerIndex = React.lazy(() => import('@fpsak-frontend/behandling-fp'));
 const BehandlingInnsynIndex = React.lazy(() => import('@fpsak-frontend/behandling-innsyn'));
 const BehandlingKlageIndex = React.lazy(() => import('@fpsak-frontend/behandling-klage'));
 const BehandlingTilbakekrevingIndex = React.lazy(() => import('@fpsak-frontend/behandling-tilbakekreving'));
@@ -226,6 +229,25 @@ export class BehandlingIndex extends Component {
       );
     }
 
+    if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.ENGANGSSTONAD) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+            <BehandlingEngangsstonadIndex {...defaultProps} />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
+
+    if (fagsak.fagsakYtelseType.kode === FagsakYtelseType.FORELDREPENGER) {
+      return (
+        <Suspense fallback={<LoadingPanel />}>
+          <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
+            <BehandlingForeldrepengerIndex {...defaultProps} />
+          </ErrorBoundary>
+        </Suspense>
+      );
+    }
 
     return (
       <Suspense fallback={<LoadingPanel />}>
