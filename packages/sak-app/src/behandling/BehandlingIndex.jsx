@@ -233,7 +233,10 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingEngangsstonadIndex {...defaultProps} />
+            <BehandlingEngangsstonadIndex
+              featureToggles={featureToggles}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );

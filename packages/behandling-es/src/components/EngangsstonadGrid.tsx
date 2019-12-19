@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
+import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
+import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
 import EngangsstonadProsess from './EngangsstonadProsess';
 import EngangsstonadFakta from './EngangsstonadFakta';
@@ -31,6 +32,8 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
   vilkar,
+  personopplysninger,
+  inntektArbeidYtelse,
   kodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -41,6 +44,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   opneSokeside,
   harApenRevurdering,
   hasFetchError,
+  featureToggles,
 }) => (
   <>
     <BehandlingPaVent
@@ -65,7 +69,17 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       hasFetchError={hasFetchError}
     />
     <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
+    <PersonFaktaIndex
+      behandling={behandling}
+      fagsakPerson={fagsak.fagsakPerson}
+      aksjonspunkter={aksjonspunkter}
+      personopplysninger={personopplysninger}
+      inntektArbeidYtelse={inntektArbeidYtelse}
+      submitCallback={() => undefined}
+      readOnly={false}
+      featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
+      alleKodeverk={kodeverk}
+    />
     <VerticalSpacer sixteenPx />
     <EngangsstonadFakta
       fagsak={fagsak}

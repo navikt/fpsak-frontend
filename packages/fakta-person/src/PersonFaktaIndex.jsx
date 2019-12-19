@@ -25,9 +25,6 @@ const PersonFaktaIndex = ({
   fagsakPerson,
   aksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
   featureToggleUtland,
   alleKodeverk,
@@ -43,9 +40,6 @@ const PersonFaktaIndex = ({
         relatertTilgrensendeYtelserForAnnenForelder={inntektArbeidYtelse.relatertTilgrensendeYtelserForAnnenForelder}
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
         readOnly={readOnly}
         readOnlyOriginal={readOnly}
         featureToggleUtland={featureToggleUtland}
@@ -59,9 +53,6 @@ const PersonFaktaIndex = ({
         person={fagsakPerson}
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
-        openInfoPanels={openInfoPanels}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
         readOnly={readOnly}
       />
     )}
@@ -75,9 +66,6 @@ PersonFaktaIndex.propTypes = {
   personopplysninger: personPersonopplysningerPropType,
   fagsakPerson: personFagsakPersonPropType,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   featureToggleUtland: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

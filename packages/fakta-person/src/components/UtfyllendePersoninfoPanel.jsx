@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 
 import {
-  behandlingForm, faktaPanelCodes, withDefaultToggling, getKodeverknavnFn,
+  behandlingForm, faktaPanelCodes, getKodeverknavnFn,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -27,6 +27,8 @@ const getUtlandSakstype = (aksjonspunkter) => {
   }
   return utlandSakstypeKode.NASJONAL;
 };
+
+// const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 
 /**
  * UtfyllendePersoninfoPanel
@@ -169,6 +171,4 @@ UtfyllendePersoninfoPanel.defaultProps = {
   submitCallback: undefined,
 };
 
-const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
-
-export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(behandlingForm({ form: 'PersonInfoPanel' })(UtfyllendePersoninfoPanel));
+export default behandlingForm({ form: 'PersonInfoPanel' })(UtfyllendePersoninfoPanel);

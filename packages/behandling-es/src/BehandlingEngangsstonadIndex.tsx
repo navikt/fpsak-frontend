@@ -13,7 +13,7 @@ import {
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
 import EngangsstonadGrid from './components/EngangsstonadGrid';
 
-const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR];
+const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR, esBehandlingApi.PERSONOPPLYSNINGER, esBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
 interface DataProps {
   behandling: Behandling;
@@ -98,6 +98,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
       opneSokeside,
       harApenRevurdering,
       hasFetchError,
+      featureToggles,
     } = this.props;
 
     if (!behandling || !kodeverk) {
@@ -132,6 +133,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
               opneSokeside={opneSokeside}
               harApenRevurdering={harApenRevurdering}
               hasFetchError={hasFetchError}
+              featureToggles={featureToggles}
               {...dataProps}
             />
           </>
