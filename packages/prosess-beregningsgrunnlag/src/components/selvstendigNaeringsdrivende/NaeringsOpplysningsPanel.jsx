@@ -13,6 +13,24 @@ import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 
+const virksomhetsTypeNavn = {
+  DAGMAMMA: 'Dagmamma i eget hjem/familiebarnehage',
+  FISKE: 'Fiske',
+  FRILANSER: 'Frilanser',
+  JORDBRUK_SKOGBRUK: 'Jordbruk / Skogbruk',
+  ANNEN: 'Annen næringsvirksomhet',
+  UDEFINERT: 'Ikke definert',
+};
+
+
+const finnvirksomhetsTypeNavn = (naring) => {
+  const { virksomhetType } = naring;
+  const { kode } = virksomhetType;
+  if (!virksomhetType || !kode) {
+    return '';
+  }
+  return virksomhetsTypeNavn[kode];
+};
 const virksomhetsDatoer = (naringsAndel) => {
   const { oppstartsdato, opphoersdato } = naringsAndel;
   if (!oppstartsdato) {
@@ -119,12 +137,12 @@ export const NaeringsopplysningsPanel = ({
                 {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
-            <Column xs="2">
+            <Column xs="3">
               <Normaltekst>
-                {naring.virksomhetType && naring.virksomhetType.kode ? naring.virksomhetType.kode : ''}
+                {finnvirksomhetsTypeNavn(naring)}
               </Normaltekst>
             </Column>
-            <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst>
