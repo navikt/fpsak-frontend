@@ -2567,6 +2567,7 @@
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
@@ -2575,9 +2576,15 @@
 "@navikt/nap-header@1.0.4":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@navikt/nap-header/-/nap-header-1.0.4.tgz#8f22c0566e8eba9735c407a270cdf79a3a265544"
+=======
+"@navikt/nap-header@1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.6.tgz#34d9878e31431128c694cd9c2f9182d5a4eacffa"
+  integrity sha512-6aXAT1XAF642Bi1NRUDcXTLyAH0M69Qr92lqZhNxBgQ1ccr8DY+b1P/3o/+iwhrChiUbC6KMpHAQainwbChjHw==
+>>>>>>> FIX div
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
-    "@navikt/nap-popover" "1.0.1"
+    "@navikt/nap-popover" "1.0.3"
     classnames "^2.2.6"
     lodash.throttle "^4.1.1"
     nav-frontend-chevron "^1.0.10"
@@ -2592,12 +2599,13 @@
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
 
-"@navikt/nap-popover@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@navikt/nap-popover/-/nap-popover-1.0.1.tgz#4cd6da66ef0f73c652c5db7d562921044f67588a"
+"@navikt/nap-popover@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-popover/-/nap-popover-1.0.3.tgz#474638aa770e83c31d5758da50d76e984569d6ba"
+  integrity sha512-ptC5z98vGacwpMPPqhTwmJK+4AuYLgPfXLEcOuxP1h/BWPAuTVMQIbLzIc+9OXdj6d8I0kIK7DydJcg/JosW9A==
   dependencies:
     prop-types "^15.7.2"
-    react-popper "^1.3.5"
+    react-popper "^1.3.7"
 
 <<<<<<< HEAD
 "@navikt/nap-process-menu@1.0.8":
@@ -13178,9 +13186,10 @@ react-popper@^1.3.4:
     typed-styles "^0.0.7"
     warning "^4.0.2"
 
-react-popper@^1.3.5:
+react-popper@^1.3.7:
   version "1.3.7"
-  resolved "https://registry.npmjs.org/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
+  resolved "https://registry.yarnpkg.com/react-popper/-/react-popper-1.3.7.tgz#f6a3471362ef1f0d10a4963673789de1baca2324"
+  integrity sha512-nmqYTx7QVjCm3WUZLeuOomna138R1luC4EqkW3hxJUrAe+3eNz3oFCLYdnPwILfn0mX1Ew2c3wctrjlUMYYUww==
   dependencies:
     "@babel/runtime" "^7.1.2"
     create-react-context "^0.3.0"
