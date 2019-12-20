@@ -267,10 +267,11 @@ export const createBeregningTableData = createSelector(
       const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
       const redusertRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.RedusertProsent" values={{ redusert: dekningsgrad }} /> };
       const dagsatserRad = [];
-
+      const harBortfallNaturalYtelse = periode.periodeAarsaker.some((aarsaak) => aarsaak.kode === periodeAarsak.NATURALYTELSE_BORTFALT);
       headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
+
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
@@ -442,6 +443,16 @@ export const createBeregningTableData = createSelector(
           if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
           if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
         }
+          if (harBortfallNaturalYtelse) {
+            const ntElement = {};
+            const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
+              (andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.bortfaltNaturalytelse,
+            );
+            ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((a, b) => a + b.bortfaltNaturalytelse, 0) : undefined;
+            ntElement.skalFastsetteGrunnlag = false;
+            ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
+            rowsAndeler.push(ntElement);
+          }
       }
       const rows = [];
       if (isMS) {
@@ -453,6 +464,7 @@ export const createBeregningTableData = createSelector(
         rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
+
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
         rows.push(avkortetRad);
       }
