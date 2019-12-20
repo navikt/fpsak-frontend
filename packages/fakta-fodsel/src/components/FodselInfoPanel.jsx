@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  faktaPanelCodes, getBehandlingFormPrefix, FaktaSubmitButton, FaktaEkspandertpanel, withDefaultToggling,
+  getBehandlingFormPrefix, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
@@ -23,7 +23,6 @@ import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 const {
   TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
 } = aksjonspunktCodes;
-const fodselAksjonspunkter = [TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
@@ -81,10 +80,7 @@ export class FodselInfoPanelImpl extends Component {
 
   render() {
     const {
-      intl,
       aksjonspunkter,
-      openInfoPanels,
-      toggleInfoPanelCallback,
       hasOpenAksjonspunkter,
       submittable,
       formPrefix,
@@ -103,14 +99,7 @@ export class FodselInfoPanelImpl extends Component {
       behandlingType,
     } = this.props;
     return (
-      <FaktaEkspandertpanel
-        title={intl.formatMessage({ id: 'FodselInfoPanel.Fodsel' })}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELSVILKARET)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        faktaId={faktaPanelCodes.FODSELSVILKARET}
-        readOnly={readOnly}
-      >
+      <>
         <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
         <form onSubmit={this.getSubmitFunction(dispatch, formPrefix)}>
           {hasAksjonspunkt(VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, aksjonspunkter) && (
@@ -182,19 +171,13 @@ export class FodselInfoPanelImpl extends Component {
             />
           )}
         </form>
-      </FaktaEkspandertpanel>
+      </>
     );
   }
 }
 
 FodselInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -229,7 +212,4 @@ const mapStateToProps = (state, ownProps) => ({
   vedtaksDatoSomSvangerskapsuke: nullSafe(ownProps.familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
 });
 
-const ConnectedComponent = connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));
-const FodselInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELSVILKARET, fodselAksjonspunkter)(ConnectedComponent);
-
-export default FodselInfoPanel;
+export default connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));

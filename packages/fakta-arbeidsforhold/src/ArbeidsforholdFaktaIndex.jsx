@@ -21,10 +21,8 @@ const ArbeidsforholdFaktaIndex = ({
   alleKodeverk,
   alleMerknaderFraBeslutter,
   aksjonspunkter,
+  harApneAksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
 }) => (
   <RawIntlProvider value={intl}>
@@ -37,10 +35,8 @@ const ArbeidsforholdFaktaIndex = ({
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
     />
   </RawIntlProvider>
@@ -55,9 +51,6 @@ ArbeidsforholdFaktaIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

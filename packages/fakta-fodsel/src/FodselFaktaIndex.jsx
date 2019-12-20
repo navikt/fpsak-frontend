@@ -25,11 +25,10 @@ const FodselFaktaIndex = ({
   personopplysninger,
   originalBehandling,
   aksjonspunkter,
+  harApneAksjonspunkter,
+  submittable,
   alleMerknaderFraBeslutter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
 }) => (
   <RawIntlProvider value={intl}>
@@ -43,10 +42,9 @@ const FodselFaktaIndex = ({
       personopplysninger={personopplysninger}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
     />
   </RawIntlProvider>
@@ -61,9 +59,6 @@ FodselFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(fodselAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

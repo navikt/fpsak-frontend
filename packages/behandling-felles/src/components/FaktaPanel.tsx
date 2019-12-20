@@ -18,14 +18,14 @@ interface PanelData {
 
 interface OwnProps {
   paneler: PanelData[];
-  velgPanel?: (index: number) => number;
+  onClick?: (index: number) => number;
   children: ReactNode;
 }
 
 const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   paneler,
-  velgPanel,
+  onClick,
   children,
 }) => (
   <div className={styles.container}>
@@ -40,13 +40,11 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
               iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
             }))}
-            onClick={velgPanel}
+            onClick={onClick}
           />
         </FlexColumn>
-        <FlexColumn>
-          <div className={styles.content}>
-            {children}
-          </div>
+        <FlexColumn className={styles.content}>
+          {children}
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

@@ -11,7 +11,7 @@ import errorHandler from '@fpsak-frontend/error-api-redux';
 import { replaceNorwegianCharacters } from '@fpsak-frontend/utils';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  trackRouteParam, requireProps, getBehandlingspunktLocation, getLocationWithDefaultBehandlingspunktAndFakta,
+  trackRouteParam, requireProps, getBehandlingspunktLocation, getFaktaLocation, getLocationWithDefaultBehandlingspunktAndFakta,
 } from '@fpsak-frontend/fp-felles';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { navAnsattPropType } from '@fpsak-frontend/prop-types';
@@ -46,7 +46,7 @@ const BehandlingAnkeIndex = React.lazy(() => import('@fpsak-frontend/behandling-
 const BehandlingPapirsoknadIndex = React.lazy(() => import('@fpsak-frontend/behandling-papirsoknad'));
 
 const erTilbakekreving = (behandlingType) => behandlingType === BehandlingType.TILBAKEKREVING || behandlingType === BehandlingType.TILBAKEKREVING_REVURDERING;
-const formatBehandlingspunktName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
+const formatName = (bpName = '') => replaceNorwegianCharacters(bpName.toLowerCase());
 
 /**
  * BehandlingIndex
@@ -128,9 +128,21 @@ export class BehandlingIndex extends Component {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
     }
     if (prosessId) {
-      pushLocation(getBehandlingspunktLocation(location)(formatBehandlingspunktName(prosessId)));
+      pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
     } else {
       pushLocation(getBehandlingspunktLocation(location)(null));
+    }
+  };
+
+  goToValgtFaktaPanel = (faktaId) => {
+    const { push: pushLocation, location } = this.props;
+    if (faktaId === 'default') {
+      pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
+    }
+    if (faktaId) {
+      pushLocation(getFaktaLocation(location)(formatName(faktaId)));
+    } else {
+      pushLocation(getFaktaLocation(location)(null));
     }
   };
 
@@ -235,6 +247,8 @@ export class BehandlingIndex extends Component {
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingEngangsstonadIndex
               featureToggles={featureToggles}
+              oppdaterFaktaPanelIUrl={this.goToValgtFaktaPanel}
+              valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
           </ErrorBoundary>

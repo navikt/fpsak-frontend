@@ -19,6 +19,8 @@ interface OwnProps {
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -34,10 +36,13 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   vilkar,
   personopplysninger,
   inntektArbeidYtelse,
+  soknad,
   kodeverk,
   navAnsatt,
   valgtProsessSteg,
   oppdaterProsessStegIUrl,
+  valgtFaktaSteg,
+  oppdaterFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -85,10 +90,16 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       fagsak={fagsak}
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
+      vilkar={vilkar}
+      soknad={soknad}
+      personopplysninger={personopplysninger}
+      inntektArbeidYtelse={inntektArbeidYtelse}
       kodeverk={kodeverk}
       navAnsatt={navAnsatt}
       hasFetchError={hasFetchError}
-      oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+      valgtFaktaSteg={valgtFaktaSteg}
+      oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
+      hasFetchError={hasFetchError}
     />
   </>
 );

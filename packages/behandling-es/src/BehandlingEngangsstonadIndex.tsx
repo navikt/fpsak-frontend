@@ -13,7 +13,8 @@ import {
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
 import EngangsstonadGrid from './components/EngangsstonadGrid';
 
-const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR, esBehandlingApi.PERSONOPPLYSNINGER, esBehandlingApi.INNTEKT_ARBEID_YTELSE];
+const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR, esBehandlingApi.PERSONOPPLYSNINGER,
+  esBehandlingApi.SOKNAD, esBehandlingApi.INNTEKT_ARBEID_YTELSE];
 
 interface DataProps {
   behandling: Behandling;
@@ -28,6 +29,8 @@ interface OwnProps {
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
+  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
@@ -93,6 +96,8 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
       navAnsatt,
       oppdaterProsessStegIUrl,
       valgtProsessSteg,
+      oppdaterFaktaPanelIUrl,
+      valgtFaktaSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -127,6 +132,8 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
               oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
+              valgtFaktaSteg={valgtFaktaSteg}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}
