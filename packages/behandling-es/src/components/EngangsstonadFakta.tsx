@@ -1,13 +1,15 @@
-import React, {
-  FunctionComponent, useMemo,
-} from 'react';
+import React, { FunctionComponent } from 'react';
 import { useIntl } from 'react-intl';
 
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, Kodeverk, NavAnsatt, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+
+import esBehandlingApi from '../data/esBehandlingApi';
 
 interface DataProps {
   feilutbetalingFakta: {};
@@ -26,27 +28,57 @@ interface OwnProps {
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
 }
 
+const paneler = [{
+  textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
+  component: (props) => <TilleggsopplysningerFaktaIndex {...props} />,
+  aksjonspunkter: [aksjonspunktCodes.TILLEGGSOPPLYSNINGER],
+  data: [esBehandlingApi.SOKNAD],
+  urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
+}];
+
+
+const utledFaktaPanelInfo = (aksjonspunkter) => {
+  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
+  return paneler
+    .filter((panel) => panel.aksjonspunkter.some((a) => apCodes.includes(a)))
+    .map((panel) => {
+      const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkter.includes(ap.definisjon.kode));
+      return {
+        ...panel,
+        aksjonspunkter: filtrerteAksjonspunkter,
+        harApneAksjonspunkter: filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
+      };
+    });
+};
+
 const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
 }) => {
   const intl = useIntl();
-  const apForPanel = useMemo(() => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING),
-    [aksjonspunkter]);
-  const harApneAksjonspunkter = apForPanel.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
-
 
   const cache = new BehandlingDataCache();
   cache.setVersion(behandling.versjon);
 
+  const faktaPanelInfo = utledFaktaPanelInfo(aksjonspunkter);
+
+  const props = {
+    behandling,
+    soknad: {},
+    aksjonspunkter: faktaPanelInfo[0].aksjonspunkter,
+    harApneAksjonspunkter: faktaPanelInfo[0].harApneAksjonspunkter,
+    submitCallback: () => undefined,
+    readOnly: false,
+  };
+
   return (
-    <FaktaPanel paneler={[{
-      tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
+    <FaktaPanel paneler={faktaPanelInfo.map((fpi) => ({
+      tekst: intl.formatMessage({ id: fpi.textCode }),
       erAktiv: true,
-      harAksjonspunkt: harApneAksjonspunkter,
-    }]}
+      harAksjonspunkt: fpi.harApneAksjonspunkter,
+    }))}
     >
-      <div>test</div>
+      {faktaPanelInfo[0].component(props)}
     </FaktaPanel>
   );
 };

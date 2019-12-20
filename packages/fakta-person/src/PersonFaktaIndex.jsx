@@ -41,7 +41,6 @@ const PersonFaktaIndex = ({
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
         readOnly={readOnly}
-        readOnlyOriginal={readOnly}
         featureToggleUtland={featureToggleUtland}
         alleKodeverk={alleKodeverk}
       />
