@@ -50,7 +50,7 @@ describe('NaeringsopplysningsPanel', () => {
 
     const messages = wrapper.find('Normaltekst');
     expect(messages).to.be.lengthOf(7);
-    expect(messages.at(1).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].virksomhetType.kode);
+    expect(messages.at(1).childAt(0).text()).to.equal('Annen næringsvirksomhet');
     expect(messages.at(2).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
     expect(messages.at(3).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
     const lesMer = wrapper.find('Lesmerpanel');

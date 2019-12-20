@@ -213,8 +213,8 @@ describe('<NaturalytelsePanel2>', () => {
     const expectedReturnObject = {
       arbeidsforholdPeriodeMap: {
         arbeidsgiver1123: ['arbeidsgiver1', { periodeTekst: '01.09.2018 - 01.12.2018', aar: 50000, maaned: 50000 / 12 }],
-        arbeidsgiver2456: ['arbeidsgiver2', { periodeTekst: '01.07.2018', aar: 10000, maaned: 833 }],
-        arbeidsgiver3789: ['arbeidsgiver3', { periodeTekst: '01.07.2018', aar: 70000, maaned: 5833 }],
+        arbeidsgiver2456: ['arbeidsgiver2', { periodeTekst: '01.07.2018', aar: 10000, maaned: 10000 / 12 }],
+        arbeidsgiver3789: ['arbeidsgiver3', { periodeTekst: '01.07.2018', aar: 70000, maaned: 70000 / 12 }],
 
       },
     };
