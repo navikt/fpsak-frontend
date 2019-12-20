@@ -15,7 +15,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import NaturalytelsePanel from './NaturalytelsePanel';
+import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
@@ -197,11 +197,11 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
             </Undertekst>
           </Column>
-          <Column className={beregningStyles.colLink} />
+          <Column className={beregningStyles.colLink}>AA1</Column>
         </Row>
         {createArbeidsIntektRows(relevanteAndeler)}
       </Panel>
-      <NaturalytelsePanel
+      <NaturalytelsePanel2
         allePerioder={allePerioder}
       />
     </>

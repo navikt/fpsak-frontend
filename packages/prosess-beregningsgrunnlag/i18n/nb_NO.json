@@ -99,6 +99,7 @@
   "Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.OmberegnetAar": "Beregnet År",
   "Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandlerFL": "Frilansinntekt fastsettes til",
   "Beregningsgrunnlag.AarsinntektPanel.Naturalytelse": "Naturalytelse fra arbeidsgiver",
+  "Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2": "Naturalytelser",
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift": "Opplysninger om næring fra søknad",
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar": "Oppgitt år",
   "Beregningsgrunnlag.NaeringsOpplysningsPanel.RevisorKanKontaktes": "- Kan kontaktes",
@@ -148,6 +149,7 @@
 
   "Beregningsgrunnlag.BeregningTable.RedusertProsent":"Redusert til {redusert}% dekningsgrad",
   "Beregningsgrunnlag.BeregningTable.Dagsats":"Dagsats",
+  "Beregningsgrunnlag.BeregningTable.Naturalytelser":"Naturalytelser",
   "Beregningsgrunnlag.BeregningTable.DagsatsNy":"Dagsats ({dagSats}/260 dager)",
   "Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt": "Dagsats (årsinntekt/260 dager)",
   "Beregningsgrunnlag.BeregningTable.Tittel": "Beregning av dagsats",
