@@ -1,6 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import {
@@ -28,17 +27,16 @@ const maxLength2000 = maxLength(2000);
  */
 const ReasonsField = ({
   fieldName, godkjentHosKA, showOnlyBegrunnelse, intl,
-}) => (
+}: ReasonsFieldProps) => (
   <>
-    <ArrowBox
-      alignOffset={godkjentHosKA ? 1 : 110}
-    >
-      {!showOnlyBegrunnelse
-        && (
+    <ArrowBox alignOffset={godkjentHosKA ? 1 : 110}>
+      {!showOnlyBegrunnelse && (
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
-              <Undertekst className="blokk-xs"><FormattedMessage id="ReasonsField.Arsak" /></Undertekst>
+              <Undertekst className="blokk-xs">
+                <FormattedMessage id="ReasonsField.Arsak" />
+              </Undertekst>
             </FlexColumn>
           </FlexRow>
           <FlexRow>
@@ -59,32 +57,27 @@ const ReasonsField = ({
                     name={`${fieldName}.feilLov`}
                     label={intl.formatMessage({ id: 'ReasonsField.FeilLovanvendelse' })}
                   />
-                  <CheckboxField
-                    name={`${fieldName}.annet`}
-                    label={intl.formatMessage({ id: 'ReasonsField.Annet' })}
-                  />
+                  <CheckboxField name={`${fieldName}.annet`} label={intl.formatMessage({ id: 'ReasonsField.Annet' })} />
                 </FlexColumn>
               </FlexRow>
             </NavFieldGroup>
           </FlexRow>
         </FlexContainer>
-        )}
+      )}
       <TextAreaField
         name={`${fieldName}.besluttersBegrunnelse`}
         label={intl.formatMessage({ id: 'ReasonsField.Begrunnelse' })}
         validate={[required, minLength3, maxLength2000, hasValidText]}
       />
-
     </ArrowBox>
   </>
 );
 
-ReasonsField.propTypes = {
-  fieldName: PropTypes.string.isRequired,
-  showOnlyBegrunnelse: PropTypes.bool.isRequired,
-  godkjentHosKA: PropTypes.bool.isRequired,
-  intl: PropTypes.shape().isRequired,
-};
-
+interface ReasonsFieldProps {
+  fieldName: string;
+  showOnlyBegrunnelse: boolean;
+  godkjentHosKA: boolean;
+  intl: IntlShape;
+}
 
 export default injectIntl(ReasonsField);

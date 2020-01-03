@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const { NODE_ENV, BABEL_ENV } = process.env;
 
-module.exports = function (api) {
+module.exports = function(api) {
   // eslint-disable-next-line no-unused-expressions
   api ? api.cache(true) : null;
   const presets = [
@@ -14,8 +14,7 @@ module.exports = function (api) {
     ],
     '@babel/preset-typescript',
   ];
-  const plugins = ['@babel/plugin-proposal-class-properties'];
-
+  const plugins = ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-optional-chaining'];
 
   if (NODE_ENV && BABEL_ENV && NODE_ENV !== BABEL_ENV) {
     console.warn('WARNING: Both BABEL_ENV and NODE_ENV are set in');

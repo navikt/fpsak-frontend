@@ -10,7 +10,8 @@
 		"jsx": "react",
 		"typeRoots": ["./node_modules/@types", "./@types"],
 		"baseUrl": "packages/",
-		"skipLibCheck": true, //TODO Fjern denne
+    "skipLibCheck": true, //TODO Fjern denne
+    "resolveJsonModule": true
 	},
 	"include": [
 		"packages/rest-api",
@@ -21,7 +22,8 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
-		"@types"
+    "@types",
+		"packages/sak-totrinnskontroll",
 	],
 
 }

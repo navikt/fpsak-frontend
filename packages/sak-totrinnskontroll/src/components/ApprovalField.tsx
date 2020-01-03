@@ -1,7 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { injectIntl } from 'react-intl';
+import { injectIntl, IntlShape } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
@@ -38,17 +37,21 @@ export const ApprovalFieldImpl = ({
   showBegrunnelse,
   getAksjonspunktText,
   klageKA,
-}) => {
+}: ApprovalFieldImplProps) => {
   const fieldName = `approvals[${contextIndex}].aksjonspunkter[${approvalIndex}]`;
-  const erKlageKA = (klageKA && currentValue && currentValue.totrinnskontrollGodkjent);
-  const erAnke = aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE && currentValue.totrinnskontrollGodkjent === true;
+  const erKlageKA = klageKA && currentValue && currentValue.totrinnskontrollGodkjent;
+  const erAnke = aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.MANUELL_VURDERING_AV_ANKE
+    && currentValue.totrinnskontrollGodkjent === true;
   const showOnlyBegrunnelse = erAnke || erKlageKA ? currentValue.totrinnskontrollGodkjent : showBegrunnelse;
-  const showReasons = (erAnke || ((currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA));
+  const showReasons = erAnke || (currentValue && currentValue.totrinnskontrollGodkjent === false) || erKlageKA;
   return (
     <div className={styles.approvalItemContainer}>
-      {getAksjonspunktText(aksjonspunkt).map((formattedMessage, index) => (
-        <div key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index))} className={styles.aksjonspunktTextContainer}>
-          <Normaltekst key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(index))}>
+      {getAksjonspunktText(aksjonspunkt)?.map((formattedMessage, index) => (
+        <div
+          key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(`${index}`))}
+          className={styles.aksjonspunktTextContainer}
+        >
+          <Normaltekst key={aksjonspunkt.aksjonspunktKode.concat('_'.concat(`${index}`))}>
             {formattedMessage}
           </Normaltekst>
         </div>
@@ -58,39 +61,28 @@ export const ApprovalFieldImpl = ({
           <RadioOption label={{ id: 'ApprovalField.Godkjent' }} value />
           <RadioOption label={{ id: 'ApprovalField.Vurder' }} value={false} />
         </RadioGroupField>
-        {showReasons
-        && (
-        <ReasonsField
-          fieldName={fieldName}
-          godkjentHosKA={erKlageKA}
-          showOnlyBegrunnelse={showOnlyBegrunnelse}
-        />
+        {showReasons && (
+          <ReasonsField fieldName={fieldName} godkjentHosKA={erKlageKA} showOnlyBegrunnelse={showOnlyBegrunnelse} />
         )}
       </NavFieldGroup>
     </div>
   );
 };
 
+interface ApprovalFieldImplProps {
+  aksjonspunkt: { aksjonspunktKode: string };
+  getAksjonspunktText: (aksjonspunkt: any) => (JSX.Element | null)[] | null;
+  readOnly: boolean;
+  approvalIndex?: number;
+  contextIndex?: number;
+  currentValue?: any;
+  showBegrunnelse?: boolean;
+  klageKA?: boolean;
+  intl: IntlShape;
+}
 
-ApprovalFieldImpl.propTypes = {
-  aksjonspunkt: PropTypes.shape().isRequired,
-  getAksjonspunktText: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  approvalIndex: PropTypes.number,
-  contextIndex: PropTypes.number,
-  currentValue: PropTypes.shape(),
-  showBegrunnelse: PropTypes.bool,
-  klageKA: PropTypes.bool,
-};
-
-ApprovalFieldImpl.defaultProps = {
-  showBegrunnelse: false,
-  currentValue: undefined,
-  approvalIndex: null,
-  contextIndex: null,
-  klageKA: false,
-};
-
-const mapStateToProps = (state, ownProps) => ({ getAksjonspunktText: getAksjonspunktTextSelector(ownProps) });
+const mapStateToProps = (state, ownProps) => ({
+  getAksjonspunktText: getAksjonspunktTextSelector(ownProps),
+});
 
 export default connect(mapStateToProps)(injectIntl(ApprovalFieldImpl));

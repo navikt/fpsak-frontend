@@ -15,19 +15,28 @@ import totrinnskontrollaksjonspunktTextCodes from '../totrinnskontrollaksjonspun
 import vurderFaktaOmBeregningTotrinnText from '../VurderFaktaBeregningTotrinnText';
 import OpptjeningTotrinnText from './OpptjeningTotrinnText';
 
-const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
+const formatDate = (date: Date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
-const buildVarigEndringBeregningText = (beregningDto) => (beregningDto.fastsattVarigEndringNaering ? (
-  <FormattedMessage
-    id="ToTrinnsForm.Beregning.VarigEndring"
-  />
-) : (
-  <FormattedMessage
-    id="ToTrinnsForm.Beregning.IkkeVarigEndring"
-  />
-));
+interface BeregningDto {
+  fastsattVarigEndringNaering: boolean;
+}
 
-export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforholdHandlingTyper) => {
+const buildVarigEndringBeregningText = (beregningDto: BeregningDto) => {
+  if (beregningDto.fastsattVarigEndringNaering) {
+    return <FormattedMessage id="ToTrinnsForm.Beregning.VarigEndring" />;
+  }
+  return <FormattedMessage id="ToTrinnsForm.Beregning.IkkeVarigEndring" />;
+};
+
+interface ArbeidsforholdHandlingTyper {
+  kode: string;
+  navn: string;
+}
+
+export const getFaktaOmArbeidsforholdMessages = (
+  arbeidforholdDto: ArbeidsforholdDto,
+  arbeidsforholdHandlingTyper: ArbeidsforholdHandlingTyper[],
+) => {
   const formattedMessages = [];
   const { kode } = arbeidforholdDto.arbeidsforholdHandlingType;
   if (arbeidforholdDto.brukPermisjon === true) {
@@ -46,7 +55,10 @@ export const getFaktaOmArbeidsforholdMessages = (arbeidforholdDto, arbeidsforhol
   return formattedMessages;
 };
 
-const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => aksjonspunkt.arbeidforholdDtos.map((arbeidforholdDto) => {
+const buildArbeidsforholdText = (
+  aksjonspunkt: Aksjonspunkt,
+  arbeidsforholdHandlingTyper: ArbeidsforholdHandlingTyper[],
+) => aksjonspunkt.arbeidforholdDtos.map((arbeidforholdDto) => {
   const formattedMessages = getFaktaOmArbeidsforholdMessages(arbeidforholdDto, arbeidsforholdHandlingTyper);
   return (
     <>
@@ -55,19 +67,19 @@ const buildArbeidsforholdText = (aksjonspunkt, arbeidsforholdHandlingTyper) => a
         values={{
           orgnavn: arbeidforholdDto.navn,
           orgnummer: arbeidforholdDto.organisasjonsnummer,
-          arbeidsforholdId: arbeidforholdDto.arbeidsforholdId ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}` : '',
+          arbeidsforholdId: arbeidforholdDto.arbeidsforholdId
+            ? `...${arbeidforholdDto.arbeidsforholdId.slice(-4)}`
+            : '',
         }}
       />
-      { formattedMessages.map((formattedMessage) => (
-        <React.Fragment key={formattedMessage.props.id}>
-          {formattedMessage}
-        </React.Fragment>
+      {formattedMessages.map((formattedMessage) => (
+        <React.Fragment key={formattedMessage.props.id}>{formattedMessage}</React.Fragment>
       ))}
     </>
   );
 });
 
-const buildUttakText = (aksjonspunkt) => aksjonspunkt.uttakPerioder.map((uttakperiode) => {
+const buildUttakText = (aksjonspunkt: Aksjonspunkt) => aksjonspunkt.uttakPerioder.map((uttakperiode) => {
   const fom = formatDate(uttakperiode.fom);
   const tom = formatDate(uttakperiode.tom);
   let id;
@@ -76,13 +88,16 @@ const buildUttakText = (aksjonspunkt) => aksjonspunkt.uttakPerioder.map((uttakpe
     id = 'ToTrinnsForm.AvklarUttak.PeriodeSlettet';
   } else if (uttakperiode.erLagtTil) {
     id = 'ToTrinnsForm.AvklarUttak.PeriodeLagtTil';
-  } else if (uttakperiode.erEndret && (
-    aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER
-    || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.TILKNYTTET_STORTINGET
-  )
+  } else if (
+    uttakperiode.erEndret
+      && (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.FASTSETT_UTTAKPERIODER
+        || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.TILKNYTTET_STORTINGET)
   ) {
     id = 'ToTrinnsForm.ManueltFastsattUttak.PeriodeEndret';
-  } else if (uttakperiode.erEndret && aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER) {
+  } else if (
+    uttakperiode.erEndret
+      && aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.OVERSTYRING_AV_UTTAKPERIODER
+  ) {
     id = 'ToTrinnsForm.OverstyrUttak.PeriodeEndret';
   } else if (uttakperiode.erEndret) {
     id = 'ToTrinnsForm.AvklarUttak.PeriodeEndret';
@@ -90,57 +105,46 @@ const buildUttakText = (aksjonspunkt) => aksjonspunkt.uttakPerioder.map((uttakpe
     id = 'ToTrinnsForm.AvklarUttak.PeriodeAvklart';
   }
 
-  return (
-    <FormattedMessage
-      id={id}
-      values={{ a: fom, b: tom }}
-    />
-  );
+  return <FormattedMessage id={id} values={{ a: fom, b: tom }} />;
 });
 
-const buildOpptjeningText = (aksjonspunkt) => aksjonspunkt.opptjeningAktiviteter.map((aktivitet) => (
-  <OpptjeningTotrinnText
-    aktivitet={aktivitet}
-  />
-));
+/* eslint-disable-next-line max-len */
+const buildOpptjeningText = (aksjonspunkt: Aksjonspunkt) => aksjonspunkt.opptjeningAktiviteter.map((aktivitet) => <OpptjeningTotrinnText aktivitet={aktivitet} />);
 
-const getTextFromAksjonspunktkode = (aksjonspunkt) => {
+const getTextFromAksjonspunktkode = (aksjonspunkt: Aksjonspunkt) => {
   const aksjonspunktTextId = totrinnskontrollaksjonspunktTextCodes[aksjonspunkt.aksjonspunktKode];
-  return aksjonspunktTextId ? (
-    <FormattedMessage
-      id={aksjonspunktTextId}
-    />
-  ) : null;
+  return aksjonspunktTextId ? <FormattedMessage id={aksjonspunktTextId} /> : null;
 };
 
-
-const getTextForForeldreansvarsvilkåretAndreLedd = (isForeldrepenger) => {
+const getTextForForeldreansvarsvilkåretAndreLedd = (isForeldrepenger: boolean) => {
   const aksjonspunktTextId = isForeldrepenger
     ? 'ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddFP'
     : 'ToTrinnsForm.Foreldreansvar.VurderVilkarForeldreansvarAndreLeddES';
   return [<FormattedMessage id={aksjonspunktTextId} />];
 };
 
-const getFaktaOmBeregningText = (beregningDto) => {
+const getFaktaOmBeregningText = (beregningDto: BeregningDto) => {
   if (!beregningDto.faktaOmBeregningTilfeller) {
     return null;
   }
-  const aksjonspunktTextIds = beregningDto.faktaOmBeregningTilfeller.map(({ kode }) => vurderFaktaOmBeregningTotrinnText[kode]);
-  return aksjonspunktTextIds.map((aksjonspunktTextId) => (aksjonspunktTextId ? (
-    <FormattedMessage
-      id={aksjonspunktTextId}
-    />
-  ) : null));
+  const aksjonspunktTextIds = beregningDto.faktaOmBeregningTilfeller.map(
+    ({ kode }) => vurderFaktaOmBeregningTotrinnText[kode],
+  );
+  return aksjonspunktTextIds.map((aksjonspunktTextId) => {
+    if (aksjonspunktTextId) {
+      return <FormattedMessage id={aksjonspunktTextId} />;
+    }
+    return null;
+  });
 };
 
-const omgjoerTekstMap = {
+const omgjoerTekstMap: { [index: string]: string } = {
   DELVIS_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.DelvisOmgjortTilGunst',
   GUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilGunst',
   UGUNST_MEDHOLD_I_KLAGE: 'ToTrinnsForm.Klage.OmgjortTilUgunst',
 };
 
-
-const getTextForKlageHelper = (klageVurderingResultat) => {
+const getTextForKlageHelper = (klageVurderingResultat: KlageVurderingResultat) => {
   let aksjonspunktTextId = '';
   switch (klageVurderingResultat.klageVurdering) {
     case klageVurderingCodes.STADFESTE_YTELSESVEDTAK:
@@ -156,8 +160,10 @@ const getTextForKlageHelper = (klageVurderingResultat) => {
       aksjonspunktTextId = 'ToTrinnsForm.Klage.HjemsendUtenOpphev';
       break;
     case klageVurderingCodes.MEDHOLD_I_KLAGE:
-      if (klageVurderingResultat.klageVurderingOmgjoer
-        && klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT) {
+      if (
+        klageVurderingResultat.klageVurderingOmgjoer
+        && klageVurderingResultat.klageVurderingOmgjoer !== klageVurderingOmgjoerCodes.UDEFINERT
+      ) {
         aksjonspunktTextId = omgjoerTekstMap[klageVurderingResultat.klageVurderingOmgjoer];
         break;
       }
@@ -169,7 +175,21 @@ const getTextForKlageHelper = (klageVurderingResultat) => {
   return <FormattedMessage id={aksjonspunktTextId} />;
 };
 
-const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
+interface KlageVurderingResultat {
+  klageVurdering: string;
+  klageVurderingOmgjoer: string;
+}
+
+interface KlagebehandlingVurdering {
+  klageVurderingResultatNK: KlageVurderingResultat;
+  klageVurderingResultatNFP: KlageVurderingResultat;
+}
+
+interface BehandlingStaus {
+  kode: string;
+}
+
+const getTextForKlage = (klagebehandlingVurdering: KlagebehandlingVurdering, behandlingStaus: BehandlingStaus) => {
   if (behandlingStaus.kode === behandlingStatusCode.FATTER_VEDTAK) {
     if (klagebehandlingVurdering.klageVurderingResultatNK) {
       return getTextForKlageHelper(klagebehandlingVurdering.klageVurderingResultatNK);
@@ -183,27 +203,93 @@ const getTextForKlage = (klagebehandlingVurdering, behandlingStaus) => {
 
 const buildAvklarAnnenForelderText = () => <FormattedMessage id="ToTrinnsForm.AvklarUttak.AnnenForelderHarRett" />;
 
-const erKlageAksjonspunkt = (aksjonspunkt) => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
+interface BeregningDto {
+  faktaOmBeregningTilfeller: {
+    kode: number;
+  }[];
+}
+
+interface Aktivitet {
+  erEndring: boolean;
+  aktivitetType: string;
+  arbeidsgiverNavn: string;
+  orgnr: string;
+  godkjent: boolean;
+}
+
+interface UttakPerioder {
+  fom: any;
+  tom: any;
+  erSlettet: boolean;
+  erLagtTil: boolean;
+  erEndret: boolean;
+}
+
+export interface ArbeidsforholdDto {
+  navn: string;
+  organisasjonsnummer: string;
+  arbeidsforholdId: string;
+  arbeidsforholdHandlingType: ArbeidsforholdHandlingType;
+  brukPermisjon: boolean;
+}
+
+export interface ArbeidsforholdHandlingType {
+  kode: string;
+  navn: string;
+  kodeverk: string;
+}
+
+export interface Aksjonspunkt {
+  aksjonspunktKode: string;
+  beregningDto: BeregningDto;
+  uttakPerioder: UttakPerioder[];
+  opptjeningAktiviteter: Aktivitet[];
+  arbeidforholdDtos: ArbeidsforholdDto[];
+  navn: string;
+  besluttersBegrunnelse: string;
+  totrinnskontrollGodkjent: boolean;
+  vurderPaNyttArsaker: { navn: string; kode: string }[];
+}
+
+const erKlageAksjonspunkt = (aksjonspunkt: Aksjonspunkt) => aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NFP
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.BEHANDLE_KLAGE_NK
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_NFP
   || aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDERING_AV_FORMKRAV_KLAGE_KA;
 
+interface OwnProps {
+  isForeldrepengerFagsak: boolean;
+  behandlingKlageVurdering: KlagebehandlingVurdering;
+  behandlingStatus: BehandlingStaus;
+  alleKodeverk: any[];
+}
+
 export const getAksjonspunktTextSelector = createSelector(
-  [(ownProps) => ownProps.isForeldrepengerFagsak,
-    (ownProps) => ownProps.behandlingKlageVurdering,
-    (ownProps) => ownProps.behandlingStatus,
-    (ownProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]],
-  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (aksjonspunkt) => {
+  [
+    (ownProps: OwnProps) => ownProps.isForeldrepengerFagsak,
+    (ownProps: OwnProps) => ownProps.behandlingKlageVurdering,
+    (ownProps: OwnProps) => ownProps.behandlingStatus,
+    (ownProps: OwnProps) => ownProps.alleKodeverk[kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE],
+  ],
+  (isForeldrepenger, klagebehandlingVurdering, behandlingStatus, arbeidsforholdHandlingTyper) => (
+    aksjonspunkt: Aksjonspunkt,
+  ) => {
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING) {
       return buildOpptjeningText(aksjonspunkt);
     }
-    if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE) {
+    if (
+      aksjonspunkt.aksjonspunktKode
+      === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE
+    ) {
       return [buildVarigEndringBeregningText(aksjonspunkt.beregningDto)];
     }
     if (aksjonspunkt.aksjonspunktKode === aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN) {
       return getFaktaOmBeregningText(aksjonspunkt.beregningDto);
     }
-    if (isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode) && aksjonspunkt.uttakPerioder && aksjonspunkt.uttakPerioder.length > 0) {
+    if (
+      isUttakAksjonspunkt(aksjonspunkt.aksjonspunktKode)
+      && aksjonspunkt.uttakPerioder
+      && aksjonspunkt.uttakPerioder.length > 0
+    ) {
       return buildUttakText(aksjonspunkt);
     }
 
@@ -222,6 +308,5 @@ export const getAksjonspunktTextSelector = createSelector(
     return [getTextFromAksjonspunktkode(aksjonspunkt)];
   },
 );
-
 
 export default getAksjonspunktTextSelector;

@@ -1,6 +1,6 @@
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-const totrinnskontrollaksjonspunktTextCodes = {
+const totrinnskontrollaksjonspunktTextCodes: { [index: string]: string } = {
   [aksjonspunktCodes.ADOPSJONSDOKUMENTAJON]: 'ToTrinnsForm.Adopsjon.KontrollerOpplysninger',
   [aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN]: 'ToTrinnsForm.Adopsjon.VurderEktefellesBarn',
   [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE]: 'ToTrinnsForm.Adopsjon.VurderMannAdoptererAlene',
@@ -71,7 +71,6 @@ const totrinnskontrollaksjonspunktTextCodes = {
   [aksjonspunktCodes.VURDER_FARESIGNALER]: 'ToTrinnsForm.Faresignaler.Vurder',
 
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'ToTrinnsForm.Opptjening.VurderOpptjeningsvilkåret',
-
 };
 
 export default totrinnskontrollaksjonspunktTextCodes;

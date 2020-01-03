@@ -1,6 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import { NavLink } from 'react-router-dom';
@@ -8,25 +6,30 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import { ariaCheck, isRequiredMessage } from '@fpsak-frontend/utils';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { InjectedFormProps } from 'redux-form';
 
 import ApprovalField from './ApprovalField';
 
 import styles from './ToTrinnsForm.less';
+import { Approvals } from './ApprovalPanel';
+import {
+  BehandlingStatusType,
+  TotrinnskontrollAksjonspunkter,
+  KlageVuderingResultat,
+  BehandlingKlageVurdering,
+} from '../TotrinnskontrollSakIndex';
 
-const allApproved = (formState) => formState
+const allApproved = (formState: FormState[]) => formState
   .reduce((a, b) => a.concat(b.aksjonspunkter), [])
   .every((ap) => ap.totrinnskontrollGodkjent && ap.totrinnskontrollGodkjent === true);
 
-const allSelected = (formState) => formState
-  .reduce((a, b) => a.concat(b.aksjonspunkter), [])
-  .every((ap) => ap.totrinnskontrollGodkjent !== null);
-
+const allSelected = (formState: FormState[]) => formState.reduce((a, b) => a.concat(b.aksjonspunkter), []).every((ap) => ap.totrinnskontrollGodkjent !== null);
 
 /*
-  * ToTrinnsForm
-  *
-  * Presentasjonskomponent. Holds the form of the totrinnkontroll
-  */
+ * ToTrinnsForm
+ *
+ * Presentasjonskomponent. Holds the form of the totrinnkontroll
+ */
 export const ToTrinnsFormImpl = ({
   handleSubmit,
   formState,
@@ -40,12 +43,13 @@ export const ToTrinnsFormImpl = ({
   alleKodeverk,
   disableGodkjennKnapp,
   ...formProps
-}) => {
+}: ToTrinnsFormImplProps) => {
   if (formState.length !== totrinnskontrollContext.length) {
     return null;
   }
 
-  const erKlage = !!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK;
+  const erKlage = behandlingKlageVurdering
+    && (!!behandlingKlageVurdering.klageVurderingResultatNFP || !!behandlingKlageVurdering.klageVurderingResultatNK);
 
   return (
     <form name="toTrinn" onSubmit={handleSubmit}>
@@ -66,7 +70,7 @@ export const ToTrinnsFormImpl = ({
                     currentValue={formState[contextIndex].aksjonspunkter[approvalIndex]}
                     approvalIndex={approvalIndex}
                     readOnly={readOnly}
-                    klageKA={!!behandlingKlageVurdering.klageVurderingResultatNK}
+                    klageKA={behandlingKlageVurdering && !!behandlingKlageVurdering.klageVurderingResultatNK}
                     isForeldrepengerFagsak={isForeldrepengerFagsak}
                     behandlingKlageVurdering={behandlingKlageVurdering}
                     behandlingStatus={behandlingStatus}
@@ -95,44 +99,44 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage
-        && (
-        <button
-          type="button"
-          className={styles.buttonLink}
-          onClick={forhandsvisVedtaksbrev}
-        >
-          <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
-        </button>
+        {!erKlage && !erBehandlingEtterKlage && (
+          <button type="button" className={styles.buttonLink} onClick={forhandsvisVedtaksbrev}>
+            <FormattedMessage id="ToTrinnsForm.ForhandvisBrev" />
+          </button>
         )}
       </div>
     </form>
   );
 };
 
-ToTrinnsFormImpl.propTypes = {
-  ...formPropTypes,
-  totrinnskontrollContext: PropTypes.arrayOf(PropTypes.shape({})),
-  formState: PropTypes.arrayOf(PropTypes.shape({})),
-  forhandsvisVedtaksbrev: PropTypes.func.isRequired,
-  klageVurderingResultatNFP: PropTypes.shape(),
-  klageVurderingResultatNK: PropTypes.shape(),
-  behandlingKlageVurdering: PropTypes.shape(),
-  erBehandlingEtterKlage: PropTypes.bool,
-  readOnly: PropTypes.bool.isRequired,
-  disableGodkjennKnapp: PropTypes.bool.isRequired,
-};
+interface FormState {
+  aksjonspunkter: TotrinnskontrollAksjonspunkter[];
+}
 
-ToTrinnsFormImpl.defaultProps = {
-  klageVurderingResultatNFP: undefined,
-  klageVurderingResultatNK: undefined,
-  totrinnskontrollContext: [],
-  formState: [{ aksjonspunkter: [] }],
-  behandlingKlageVurdering: {},
-};
+interface ToTrinnsFormImplProps extends InjectedFormProps {
+  totrinnskontrollContext: Approvals[];
+  formState: FormState[];
+  forhandsvisVedtaksbrev: () => void;
+  klageVurderingResultatNFP?: KlageVuderingResultat;
+  klageVurderingResultatNK?: KlageVuderingResultat;
+  behandlingKlageVurdering?: BehandlingKlageVurdering;
+  erBehandlingEtterKlage?: boolean;
+  readOnly: boolean;
+  disableGodkjennKnapp: boolean;
+  behandlingStatus: BehandlingStatusType;
+  alleKodeverk: object;
+  isForeldrepengerFagsak: boolean;
+}
 
-const validate = (values) => {
-  const errors = {};
+interface Aksjonspunkter {
+  feilFakta: boolean;
+  feilLov: boolean;
+  feilRegel: boolean;
+  annet: boolean;
+}
+
+const validate = (values: { approvals: { aksjonspunkter: Aksjonspunkter[] }[] }) => {
+  const errors: { approvals: object } = { approvals: {} };
   if (!values.approvals) {
     return errors;
   }
@@ -152,8 +156,12 @@ const validate = (values) => {
 
 const formName = 'toTrinnForm';
 
-const mapStateToProps = (state, ownProps) => ({
-  formState: behandlingFormValueSelector(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'approvals'),
+const mapStateToProps = (state: any, ownProps: { behandlingId: string; behandlingVersjon: string }) => ({
+  formState: behandlingFormValueSelector(
+    formName,
+    ownProps.behandlingId,
+    ownProps.behandlingVersjon,
+  )(state, 'approvals'),
 });
 const ToTrinnsForm = behandlingForm({ form: formName, validate })(connect(mapStateToProps)(ToTrinnsFormImpl));
 

@@ -9,56 +9,62 @@ import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
-const data = [{
-  skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
-  totrinnskontrollAksjonspunkter: [
-    {
-      aksjonspunktKode: '5082',
-      opptjeningAktiviteter: [],
-      beregningDto: {
-        fastsattVarigEndringNaering: false,
-        faktaOmBeregningTilfeller: null,
-      },
-      besluttersBegrunnelse: null,
-      totrinnskontrollGodkjent: null,
-      vurderPaNyttArsaker: [],
-      uttakPerioder: [],
-      arbeidforholdDtos: [],
-    },
-  ],
-}];
-
-const dataReadOnly = [{
-  skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
-  totrinnskontrollAksjonspunkter: [
-    {
-      aksjonspunktKode: '5082',
-      opptjeningAktiviteter: [],
-      beregningDto: {
-        fastsattVarigEndringNaering: false,
-        faktaOmBeregningTilfeller: null,
-      },
-      besluttersBegrunnelse: 'asdfa',
-      totrinnskontrollGodkjent: false,
-      vurderPaNyttArsaker: [
-        {
-          kode: 'FEIL_REGEL',
-          navn: 'Feil regelforståelse',
+const data = [
+  {
+    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    totrinnskontrollAksjonspunkter: [
+      {
+        aksjonspunktKode: '5082',
+        opptjeningAktiviteter: [],
+        beregningDto: {
+          fastsattVarigEndringNaering: false,
+          faktaOmBeregningTilfeller: null,
         },
-        {
-          kode: 'FEIL_FAKTA',
-          navn: 'Feil fakta',
-        },
-      ],
-      uttakPerioder: [],
-      arbeidforholdDtos: [],
-    },
-  ],
-}];
+        besluttersBegrunnelse: null,
+        totrinnskontrollGodkjent: null,
+        vurderPaNyttArsaker: [],
+        uttakPerioder: [],
+        arbeidforholdDtos: [],
+      },
+    ],
+  },
+];
 
-const skjemalenkeTyper = [{
-  kode: 'FORMKRAV_KLAGE_NFP',
-}];
+const dataReadOnly = [
+  {
+    skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
+    totrinnskontrollAksjonspunkter: [
+      {
+        aksjonspunktKode: '5082',
+        opptjeningAktiviteter: [],
+        beregningDto: {
+          fastsattVarigEndringNaering: false,
+          faktaOmBeregningTilfeller: null,
+        },
+        besluttersBegrunnelse: 'asdfa',
+        totrinnskontrollGodkjent: false,
+        vurderPaNyttArsaker: [
+          {
+            kode: 'FEIL_REGEL',
+            navn: 'Feil regelforståelse',
+          },
+          {
+            kode: 'FEIL_FAKTA',
+            navn: 'Feil fakta',
+          },
+        ],
+        uttakPerioder: [],
+        arbeidforholdDtos: [],
+      },
+    ],
+  },
+];
+
+const skjemalenkeTyper = [
+  {
+    kode: 'FORMKRAV_KLAGE_NFP',
+  },
+];
 
 export default {
   title: 'sak/sak-totrinnskontroll',

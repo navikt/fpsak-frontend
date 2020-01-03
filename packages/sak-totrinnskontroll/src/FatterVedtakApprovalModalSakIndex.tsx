@@ -1,18 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import FatterVedtakApprovalModal from './components/modal/FatterVedtakApprovalModal';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
-const intl = createIntl({
-  locale: 'nb-NO',
-  messages,
-}, cache);
+const intl = createIntl(
+  {
+    locale: 'nb-NO',
+    messages,
+  },
+  cache,
+);
 
 const FatterVedtakApprovalModalSakIndex = ({
   showModal,
@@ -26,7 +28,7 @@ const FatterVedtakApprovalModalSakIndex = ({
   behandlingStatusKode,
   behandlingTypeKode,
   harSammeResultatSomOriginalBehandling,
-}) => (
+}: FatterVedtakApprovalModalSakIndexProps) => (
   <RawIntlProvider value={intl}>
     <FatterVedtakApprovalModal
       showModal={showModal}
@@ -44,23 +46,18 @@ const FatterVedtakApprovalModalSakIndex = ({
   </RawIntlProvider>
 );
 
-FatterVedtakApprovalModalSakIndex.propTypes = {
-  showModal: PropTypes.bool.isRequired,
-  closeEvent: PropTypes.func.isRequired,
-  allAksjonspunktApproved: PropTypes.bool.isRequired,
-  fagsakYtelseType: kodeverkObjektPropType.isRequired,
-  erGodkjenningFerdig: PropTypes.bool.isRequired,
-  erKlageWithKA: PropTypes.bool,
-  behandlingsresultat: PropTypes.shape().isRequired,
-  behandlingId: PropTypes.number.isRequired,
-  behandlingStatusKode: PropTypes.string.isRequired,
-  behandlingTypeKode: PropTypes.string.isRequired,
-  harSammeResultatSomOriginalBehandling: PropTypes.bool,
-};
-
-FatterVedtakApprovalModalSakIndex.defaultProps = {
-  erKlageWithKA: undefined,
-  harSammeResultatSomOriginalBehandling: false,
-};
+interface FatterVedtakApprovalModalSakIndexProps {
+  showModal: boolean;
+  closeEvent: () => void;
+  allAksjonspunktApproved: boolean;
+  fagsakYtelseType: kodeverkObjektPropType;
+  erGodkjenningFerdig: boolean;
+  erKlageWithKA?: boolean;
+  behandlingsresultat: any;
+  behandlingId: number;
+  behandlingStatusKode: string;
+  behandlingTypeKode: string;
+  harSammeResultatSomOriginalBehandling?: boolean;
+}
 
 export default FatterVedtakApprovalModalSakIndex;
