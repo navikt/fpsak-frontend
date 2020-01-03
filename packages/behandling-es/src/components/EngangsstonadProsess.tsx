@@ -9,7 +9,7 @@ import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjon
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, Vilkar,
-  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, BehandlingDataCache,
+  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
@@ -22,6 +22,7 @@ interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
+  simuleringResultat: SimuleringResultat;
   kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -45,8 +46,6 @@ interface KlageProsessState{
 }
 
 export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
   constructor(props) {
     super(props);
     this.state = {
@@ -141,6 +140,8 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
       behandling,
       aksjonspunkter,
       vilkar,
+      simuleringResultat,
+      beregningresultatEngangsstonad,
       navAnsatt,
       valgtProsessSteg,
       hasFetchError,
@@ -148,7 +149,7 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
     const { visFatterVedtakModal, visApenRevurderingModal } = this.state;
 
     const alleSteg = finnEngangsstonadSteg({
-      behandling, aksjonspunkter, vilkar,
+      behandling, aksjonspunkter, vilkar, simuleringResultat, beregningresultatEngangsstonad,
     });
     const alleProsessMenySteg = byggProsessmenySteg({
       alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar: [], navAnsatt, fagsak, hasFetchError, intl,
@@ -159,10 +160,6 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
     const erStegBehandlet = valgtSteg ? valgtSteg.erStegBehandlet : false;
 
     const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
-
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-    }
 
     return (
       <>

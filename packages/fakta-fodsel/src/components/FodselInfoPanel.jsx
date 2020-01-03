@@ -6,13 +6,10 @@ import { connect } from 'react-redux';
 
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  getBehandlingFormPrefix, FaktaSubmitButton,
-} from '@fpsak-frontend/fp-felles';
+import { getBehandlingFormPrefix, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
-import fodselOriginalBehandlingPropType from '../propTypes/fodselOriginalBehandlingPropType';
 import fodselPersonopplysningerPropType from '../propTypes/fodselPersonopplysningerPropType';
 import fodselFamilieHendelsePropType from '../propTypes/fodselFamilieHendelsePropType';
 import fodselSoknadPropType from '../propTypes/fodselSoknadPropType';
@@ -47,7 +44,6 @@ const formNames = [sykdomPanelName, termindatoFaktaFormName, sjekkFodselDokForm]
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-
 export class FodselInfoPanelImpl extends Component {
   constructor() {
     super();
@@ -90,7 +86,8 @@ export class FodselInfoPanelImpl extends Component {
       termindato,
       vedtaksDatoSomSvangerskapsuke,
       soknad,
-      originalBehandling,
+      soknadOriginalBehandling,
+      familiehendelseOriginalBehandling,
       familiehendelse,
       alleMerknaderFraBeslutter,
       personopplysninger,
@@ -138,7 +135,8 @@ export class FodselInfoPanelImpl extends Component {
               submittable={submittable}
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
-              originalBehandling={originalBehandling}
+              soknadOriginalBehandling={soknadOriginalBehandling}
+              familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               soknad={soknad}
               avklartBarn={avklartBarn}
@@ -167,7 +165,8 @@ export class FodselInfoPanelImpl extends Component {
               termindato={termindato}
               vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
               soknad={soknad}
-              originalBehandling={originalBehandling}
+              soknadOriginalBehandling={soknadOriginalBehandling}
+              familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
             />
           )}
         </form>
@@ -188,7 +187,8 @@ FodselInfoPanelImpl.propTypes = {
   termindato: PropTypes.string,
   vedtaksDatoSomSvangerskapsuke: PropTypes.number,
   soknad: fodselSoknadPropType.isRequired,
-  originalBehandling: fodselOriginalBehandlingPropType,
+  soknadOriginalBehandling: fodselSoknadPropType,
+  familiehendelseOriginalBehandling: fodselFamilieHendelsePropType,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   familiehendelse: fodselFamilieHendelsePropType.isRequired,
   behandlingId: PropTypes.number.isRequired,
@@ -198,7 +198,8 @@ FodselInfoPanelImpl.propTypes = {
 };
 
 FodselInfoPanelImpl.defaultProps = {
-  originalBehandling: undefined,
+  soknadOriginalBehandling: undefined,
+  familiehendelseOriginalBehandling: undefined,
   avklartBarn: [],
   termindato: undefined,
 };

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 import {
-  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
+  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar, SimuleringResultat,
 } from '@fpsak-frontend/behandling-felles';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -75,14 +75,18 @@ const createEngangsstonadBpProps = (builderData) => engangsstonadBuilders.reduce
 interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
+  beregningresultatEngangsstonad: any;
+  simuleringResultat: SimuleringResultat;
   vilkar: Vilkar[];
 }
 
 export const finnEngangsstonadSteg = createSelector(
   [(ownProps: OwnProps) => ownProps.behandling,
     (ownProps: OwnProps) => ownProps.aksjonspunkter,
+    (ownProps: OwnProps) => ownProps.beregningresultatEngangsstonad,
+    (ownProps: OwnProps) => ownProps.simuleringResultat,
     (ownProps: OwnProps) => ownProps.vilkar],
-  (behandling, aksjonspunkter, vilkar = []) => {
+  (behandling, aksjonspunkter, beregningresultatEngangsstonad, simuleringResultat, vilkar = []) => {
     if (!behandling) {
       return undefined;
     }
@@ -91,6 +95,8 @@ export const finnEngangsstonadSteg = createSelector(
       behandlingsresultat: behandling.behandlingsresultat,
       aksjonspunkter,
       vilkar,
+      resultatstruktur: beregningresultatEngangsstonad,
+      simuleringResultat,
     };
 
     return createEngangsstonadBpProps(builderData);

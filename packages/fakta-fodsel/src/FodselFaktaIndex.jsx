@@ -6,7 +6,6 @@ import FodselInfoPanel from './components/FodselInfoPanel';
 import fodselAksjonspunkterPropType from './propTypes/fodselAksjonspunkterPropType';
 import fodselPersonopplysningerPropType from './propTypes/fodselPersonopplysningerPropType';
 import fodselFamilieHendelsePropType from './propTypes/fodselFamilieHendelsePropType';
-import fodselOriginalBehandlingPropType from './propTypes/fodselOriginalBehandlingPropType';
 import fodselBehandlingPropType from './propTypes/fodselBehandlingPropType';
 import fodselSoknadPropType from './propTypes/fodselSoknadPropType';
 import messages from '../i18n/nb_NO';
@@ -23,7 +22,8 @@ const FodselFaktaIndex = ({
   soknad,
   familiehendelse,
   personopplysninger,
-  originalBehandling,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
   aksjonspunkter,
   harApneAksjonspunkter,
   submittable,
@@ -38,7 +38,8 @@ const FodselFaktaIndex = ({
       behandlingType={behandling.type}
       soknad={soknad}
       familiehendelse={familiehendelse}
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={soknadOriginalBehandling}
+      familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
       personopplysninger={personopplysninger}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
@@ -55,7 +56,8 @@ FodselFaktaIndex.propTypes = {
   soknad: fodselSoknadPropType.isRequired,
   familiehendelse: fodselFamilieHendelsePropType.isRequired,
   personopplysninger: fodselPersonopplysningerPropType.isRequired,
-  originalBehandling: fodselOriginalBehandlingPropType,
+  soknadOriginalBehandling: fodselSoknadPropType,
+  familiehendelseOriginalBehandling: fodselFamilieHendelsePropType,
   aksjonspunkter: PropTypes.arrayOf(fodselAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
@@ -63,7 +65,8 @@ FodselFaktaIndex.propTypes = {
 };
 
 FodselFaktaIndex.defaultProps = {
-  originalBehandling: undefined,
+  soknadOriginalBehandling: undefined,
+  familiehendelseOriginalBehandling: undefined,
 };
 
 export default FodselFaktaIndex;

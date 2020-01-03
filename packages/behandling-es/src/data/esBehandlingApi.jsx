@@ -21,7 +21,8 @@ export const EsBehandlingApiKeys = {
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
-  ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
+  SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
+  FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
@@ -71,7 +72,8 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('beregningsresultat-foreldrepenger', EsBehandlingApiKeys.BEREGNINGRESULTAT)
   .withInjectedPath('familiehendelse-v2', EsBehandlingApiKeys.FAMILIEHENDELSE)
   .withInjectedPath('soknad', EsBehandlingApiKeys.SOKNAD)
-  .withInjectedPath('original-behandling', EsBehandlingApiKeys.ORIGINAL_BEHANDLING)
+  .withInjectedPath('soknad-original-behandling', EsBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withInjectedPath('familiehendelse-original-behandling', EsBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
   .withInjectedPath('soeker-medlemskap', EsBehandlingApiKeys.MEDLEMSKAP)
   .withInjectedPath('soeker-medlemskap-v2', EsBehandlingApiKeys.MEDLEMSKAP_V2)
   .withInjectedPath('uttak-periode-grense', EsBehandlingApiKeys.UTTAK_PERIODE_GRENSE)

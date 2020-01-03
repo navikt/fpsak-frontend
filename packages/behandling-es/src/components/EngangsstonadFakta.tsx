@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useState, useMemo, useCallback,
+  FunctionComponent, useMemo, useCallback,
 } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
@@ -12,7 +12,7 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  FagsakInfo, Behandling, Aksjonspunkt, Vilkar, FaktaPanel, Kodeverk, NavAnsatt, BehandlingDataCache, DataFetcherBehandlingData,
+  FagsakInfo, Behandling, Aksjonspunkt, Vilkar, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2,
   Soknad, Personopplysninger, InntektArbeidYtelse, getAlleMerknaderFraBeslutter, erReadOnly,
 } from '@fpsak-frontend/behandling-felles';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -56,7 +56,7 @@ const paneler = [{
   urlCode: faktaPanelCodes.FODSELSVILKARET,
   aksjonspunkterCodes: [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
     aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT],
-  endpoints: [esBehandlingApi.FAMILIEHENDELSE],
+  endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, esBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
   renderComponent: (props) => <FodselFaktaIndex {...props} />,
   showComponent: ({ vilkarListe }) => vilkarListe.some((vilkar) => fodselsvilkarene.includes(vilkar.vilkarType.kode)),
   getExtraData: ({ personopplysninger, soknad }) => ({ personopplysninger, soknad }),
@@ -90,7 +90,6 @@ const utledFaktaPanelInfo = (fagsak, behandling, navAnsatt, soknad, aksjonspunkt
     .filter((panel) => panel.aksjonspunkterCodes.some((a) => apCodes.includes(a)) || panel.showComponent(data))
     .map((panel) => {
       const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
-      // TODO submittable er feil
       return {
         textCode: panel.textCode,
         endpoints: panel.endpoints,
@@ -98,7 +97,7 @@ const utledFaktaPanelInfo = (fagsak, behandling, navAnsatt, soknad, aksjonspunkt
         urlCode: panel.urlCode,
         aksjonspunkter: filtrerteAksjonspunkter,
         readOnly: erReadOnly(behandling, filtrerteAksjonspunkter, [], navAnsatt, fagsak, hasFetchError),
-        submittable: filtrerteAksjonspunkter.some((ap) => !isAksjonspunktOpen(ap.status.kode) || ap.kanLoses),
+        submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
         harApneAksjonspunkter: filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses),
         extraData: panel.getExtraData(data),
       };
@@ -145,10 +144,6 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   hasFetchError,
 }) => {
   const intl = useIntl();
-  const [cache] = useState(new BehandlingDataCache());
-  if (cache.getCurrentVersion() !== behandling.versjon) {
-    cache.setVersion(behandling.versjon);
-  }
 
   const faktaPanelInfo = useMemo(() => utledFaktaPanelInfo(fagsak, behandling, navAnsatt, soknad, aksjonspunkter, vilkar, personopplysninger,
     inntektArbeidYtelse, hasFetchError),
@@ -166,17 +161,16 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
     tekst: intl.formatMessage({ id: fpi.textCode }),
     erAktiv: fpi.textCode === valgtPanel.textCode,
     harAksjonspunkt: fpi.harApneAksjonspunkter,
-  })), [behandling.versjon]);
+  })), [behandling.versjon, valgtPanel.textCode]);
 
   return (
     <FaktaPanel paneler={faktaPaneler} onClick={valgFaktaPanelCallback}>
-      <DataFetcherBehandlingData
+      <DataFetcherBehandlingDataV2
         key={valgtPanel.textCode}
-        behandlingDataCache={cache}
         behandlingVersion={behandling.versjon}
         endpoints={valgtPanel.endpoints}
         render={(dataProps) => valgtPanel.renderComponent({
-          behandling,
+          ...dataProps,
           aksjonspunkter: valgtPanel.aksjonspunkter,
           harApneAksjonspunkter: valgtPanel.harApneAksjonspunkter,
           submitCallback: bekreftCallback,
@@ -185,7 +179,6 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
           alleKodeverk: kodeverk,
           alleMerknaderFraBeslutter,
           ...valgtPanel.extraData,
-          ...dataProps,
         })}
       />
     </FaktaPanel>

@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar, SimuleringResultat,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
@@ -15,6 +15,7 @@ interface OwnProps {
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
+  simuleringResultat: SimuleringResultat;
   kodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -34,6 +35,8 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
   vilkar,
+  simuleringResultat,
+  beregningresultatEngangsstonad,
   personopplysninger,
   inntektArbeidYtelse,
   soknad,
@@ -64,6 +67,8 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
       vilkar={vilkar}
+      simuleringResultat={simuleringResultat}
+      beregningresultatEngangsstonad={beregningresultatEngangsstonad}
       kodeverk={kodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
@@ -99,7 +104,6 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       hasFetchError={hasFetchError}
       valgtFaktaSteg={valgtFaktaSteg}
       oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
-      hasFetchError={hasFetchError}
     />
   </>
 );
