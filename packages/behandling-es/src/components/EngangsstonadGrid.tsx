@@ -69,6 +69,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       vilkar={vilkar}
       simuleringResultat={simuleringResultat}
       beregningresultatEngangsstonad={beregningresultatEngangsstonad}
+      soknad={soknad}
       kodeverk={kodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}

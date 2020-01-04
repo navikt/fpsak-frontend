@@ -4,18 +4,51 @@ import { bindActionCreators } from 'redux';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import ProcessMenu from '@navikt/nap-process-menu';
 
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, Vilkar,
   FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
+  DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
+import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
+import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
+import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
+import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsresultat';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import finnEngangsstonadSteg from '../definition/engangsstonadStegDefinition';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
+
+const paneler = [{
+  showWhen: ({ stegKode }) => stegKode === bpc.OPPLYSNINGSPLIKT,
+  endpoints: [],
+  renderComponent: (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
+  getExtraData: ({ soknad }) => ({ soknad }),
+}, {
+  showWhen: ({ stegKode }) => stegKode === bpc.FOEDSEL,
+  endpoints: [],
+  renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
+  getExtraData: ({ vilkar, fagsak }) => ({ vilkar, ytelseTypeKode: fagsak.fagsakYtelseType.kode }),
+}, {
+  showWhen: ({ stegKode, aksjonspunkter }) => stegKode === bpc.SOEKNADSFRIST
+    && aksjonspunkter.map((a) => a.definisjon.kode).includes(aksjonspunktCodes.SOKNADSFRISTVILKARET),
+  endpoints: [esBehandlingApi.FAMILIEHENDELSE],
+  renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
+  getExtraData: ({ vilkar, soknad }) => ({ vilkar, soknad }),
+}, {
+  showWhen: ({ stegKode }) => stegKode === bpc.BEREGNING,
+  endpoints: [esBehandlingApi.BEREGNINGRESULTAT_ENGANGSSTONAD],
+  renderComponent: (props) => <BeregningsresultatProsessIndex {...props} />,
+  getExtraData: ({ vilkar, soknad }) => ({ vilkar, soknad }),
+}];
+
+const getValgtPanel = (stegKode, aksjonspunkter) => paneler.find((panel) => panel.showWhen({ stegKode, aksjonspunkter }));
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -142,6 +175,8 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
       vilkar,
       simuleringResultat,
       beregningresultatEngangsstonad,
+      soknad,
+      kodeverk,
       navAnsatt,
       valgtProsessSteg,
       hasFetchError,
@@ -160,6 +195,8 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
     const erStegBehandlet = valgtSteg ? valgtSteg.erStegBehandlet : false;
 
     const vedtakStegVises = valgtStegKode === bpc.VEDTAK;
+
+    const valgtPanel = valgtSteg ? getValgtPanel(valgtStegKode, valgtSteg.aksjonspunkter) : undefined;
 
     return (
       <>
@@ -186,7 +223,25 @@ export class EngangsstonadProsess extends Component<Props, KlageProsessState> {
             aksjonspunkter={valgtSteg.aksjonspunkter}
             isReadOnly={valgtSteg.isReadOnly}
           >
-            <div>test</div>
+            <DataFetcherBehandlingDataV2
+              key={valgtPanel.code}
+              behandlingVersion={behandling.versjon}
+              endpoints={valgtPanel.endpoints}
+              render={(dataProps) => valgtPanel.renderComponent({
+                ...dataProps,
+                submitCallback: this.submitAksjonspunkter,
+                readOnly: valgtSteg.isReadOnly,
+                readOnlySubmitButton: (!(valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === valgtSteg.status),
+                aksjonspunkter: valgtSteg.aksjonspunkter,
+                status: valgtSteg.status,
+                alleKodeverk: kodeverk,
+                isAksjonspunktOpen: valgtSteg.aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET),
+                ...valgtPanel.getExtraData({ vilkar, soknad, fagsak }),
+                overrideReadOnly: false,
+                kanOverstyreAccess: true,
+                toggleOverstyring: () => undefined,
+              })}
+            />
           </MargMarkering>
         )}
         {(vedtakStegVises && behandling.behandlingHenlagt) && (
