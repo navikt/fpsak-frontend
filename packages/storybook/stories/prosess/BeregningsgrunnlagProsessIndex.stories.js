@@ -541,7 +541,7 @@ export const infoTrygdYtelse = () => {
 export const naturalYtelse = () => {
   const andel1 = lagAndel('AT', 240000, undefined, undefined);
   const andel2 = lagAndel('AT', 740000, 744000, undefined);
-  const andel3 = lagAndel('AT', 740000, 744000, undefined);
+  const andel3 = lagAndel('AT', 750000, 755000, undefined);
   andel1.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 1';
   andel1.arbeidsforhold.arbeidsgiverId = '9109090881';
   andel2.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 2';
@@ -553,6 +553,7 @@ export const naturalYtelse = () => {
   andel1.dekningsgrad = 100;
   andel2.dekningsgrad = 80;
   andel3.dekningsgrad = 80;
+  delete andel1.bortfaltNaturalytelse;
   const statuser = [lagStatus('AT')];
   const periode1 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }],
     4432,
@@ -567,7 +568,7 @@ export const naturalYtelse = () => {
     '2019-06-01',
     '2019-07-30',
     [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }]);
-  const periode3 = lagPeriode([andel1, andel2, andel3],
+  const periode3 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }],
     3432,
     '2019-08-01',
     '2019-09-30',
@@ -587,7 +588,6 @@ export const naturalYtelse = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex

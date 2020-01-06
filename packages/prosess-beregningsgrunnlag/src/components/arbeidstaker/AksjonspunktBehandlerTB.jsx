@@ -315,7 +315,9 @@ const AksjonspunktBehandlerTidsbegrenset = connect(mapStateToProps)(Aksjonspunkt
 
 AksjonspunktBehandlerTidsbegrenset.buildInitialValues = (allePerioder) => {
   const initialValues = {};
-  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold([...allePerioder]);
+  debugger;
+  // const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold([...allePerioder]);
+  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(JSON.parse(JSON.stringify(allePerioder)));
   relevantePerioder.forEach((periode) => {
     const arbeidstakerAndeler = periode.beregningsgrunnlagPrStatusOgAndel
       .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
