@@ -45,8 +45,9 @@ const harPeriodeArbeidsforholdAvsluttet = (periode) => periode.periodeAarsaker !
 const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
   const perioderMellomSluttdatoForArbeidsforhold = [];
   let k = 0;
+  debugger;
   while (k < allePerioder.length) {
-    const nyPeriode = allePerioder[k];
+    const nyPeriode = { ...allePerioder[k] };
     k += 1;
     while (k < allePerioder.length && !harPeriodeArbeidsforholdAvsluttet(allePerioder[k])) {
       k += 1;
@@ -316,7 +317,7 @@ const AksjonspunktBehandlerTidsbegrenset = connect(mapStateToProps)(Aksjonspunkt
 AksjonspunktBehandlerTidsbegrenset.buildInitialValues = (allePerioder) => {
   const initialValues = {};
   // const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold([...allePerioder]);
-  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(JSON.parse(JSON.stringify(allePerioder)));
+  const relevantePerioder = finnPerioderMedAvsluttetArbeidsforhold(allePerioder);
   relevantePerioder.forEach((periode) => {
     const arbeidstakerAndeler = periode.beregningsgrunnlagPrStatusOgAndel
       .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
