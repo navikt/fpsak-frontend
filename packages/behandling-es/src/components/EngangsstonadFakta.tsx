@@ -50,7 +50,7 @@ const utledFaktaPanelInfo = (fagsak, behandling, navAnsatt, aksjonspunkter, extr
 
 const utledValgtPanel = (info, valgtFaktaSteg) => {
   if (valgtFaktaSteg === 'default') {
-    const index = info.findIndex((i) => i.hasApneAksjonspunkter);
+    const index = info.findIndex((i) => i.harApneAksjonspunkter);
     return index !== -1 ? info[index] : info[0];
   }
   return info.find((i) => i.urlCode === valgtFaktaSteg);

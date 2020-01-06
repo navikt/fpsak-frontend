@@ -20,7 +20,6 @@ interface OwnProps {
 }
 
 const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
-  behandlingVersion,
   render,
   endpoints,
   endpointParams,
@@ -33,6 +32,8 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
 
   const dispatchContext = useContext(DispatchContext);
   const stateContext = useContext(StateContext);
+
+  const behandlingVersion = stateContext.version;
 
   const [hasFailed, setFailed] = useState(false);
 
