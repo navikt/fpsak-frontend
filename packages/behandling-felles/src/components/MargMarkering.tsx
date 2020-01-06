@@ -25,8 +25,13 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
   children,
 }) => {
   if (aksjonspunkter.length === 0) {
-    return children;
+    return (
+      <div className={styles.prosesspunkt}>
+        {children}
+      </div>
+    );
   }
+
   const ikkeAkseptertAvBeslutter = behandlingStatus.kode === BehandlingStatus.BEHANDLING_UTREDES
     && aksjonspunkter[0].toTrinnsBehandling && aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
