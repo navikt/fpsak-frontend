@@ -326,7 +326,6 @@ export const createBeregningTableData = createSelector(
             'FL',
             vilkarStatus,
           );
-          debugger;
           if (!harAksjonspunkter) {
             if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
               rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);

@@ -485,12 +485,12 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const andeler = [
     lagAndel('SN', 300000, undefined, undefined),
-    lagAndel('AT', 0, undefined, undefined),
-    lagAndel('FL', 120333, undefined, undefined)];
+    lagAndel('AT', 130250, undefined, undefined),
+    lagAndel('FL', 0, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
-  const perioder = [lagPeriodeMedDagsats(andeler, 345)];
+  const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
@@ -505,7 +505,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
     />
