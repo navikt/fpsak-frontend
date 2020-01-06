@@ -115,23 +115,6 @@ const createNaturalYtelseRows = (tableData) => {
   return rows;
 };
 
-/*
-const createHeaders = (listOfYears) => {
-  const headers = [<FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse" />];
-  const headerString = 'Beregningsgrunnlag.AarsinntektPanel.OpphortYtelse';
-  listOfYears.forEach((aar) => {
-    headers.push(
-      <FormattedMessage
-        id={headerString}
-        key={aar.toString()}
-        values={{ dato: moment(aar, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) }}
-      />,
-    );
-  });
-  return headers;
-};
-
- */
 /**
  * NaturalytelsePanel
  *
