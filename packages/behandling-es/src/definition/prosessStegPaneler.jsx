@@ -2,9 +2,11 @@ import React from 'react';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
+import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
+import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-foreldreansvar';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
@@ -14,6 +16,7 @@ import BeregningsresultatProsessIndex from '@fpsak-frontend/prosess-beregningsre
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import { hentAlleOverstyringAksjonspunktKoderFor, hentOverstyringAksjonspunktKodeFor } from './vilkarOverstyringHjelper';
@@ -100,6 +103,19 @@ const prosessStegPaneler = [{
     lovReferanse: vilkar[0].lovReferanse,
     overstyringApKode: hentOverstyringAksjonspunktKodeFor(valgtStegKode, vilkar),
     erMedlemskapsPanel: valgtStegKode === bpc.MEDLEMSKAP,
+  }),
+}, {
+  showWhen: ({ stegKode }) => stegKode === bpc.AVREGNING,
+  endpoints: [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.SIMULERING_RESULTAT, esBehandlingApi.TILBAKEKREVINGVALG],
+  renderComponent: (props) => <AvregningProsessIndex {...props} />,
+  getExtraData: ({ fagsak, featureToggles, previewFptilbakeCallback }) => ({ fagsak, featureToggles, previewFptilbakeCallback }),
+}, {
+  showWhen: ({ stegKode }) => stegKode === bpc.FORELDREANSVAR,
+  endpoints: [],
+  renderComponent: (props) => <ForeldreansvarVilkarProsessIndex {...props} />,
+  getExtraData: ({ vilkar }) => ({
+    isEngangsstonad: true,
+    isForeldreansvar2Ledd: vilkar.map((v) => v.vilkarType.kode).includes(vilkarType.FORELDREANSVARSVILKARET_2_LEDD),
   }),
 }];
 

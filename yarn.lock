@@ -2561,9 +2561,10 @@
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
 
-"@navikt/nap-side-menu@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@navikt/nap-side-menu/-/nap-side-menu-1.0.3.tgz#f12b504ef1917ff4b83b43a8d971dca5d7ec119f"
+"@navikt/nap-side-menu@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-side-menu/-/nap-side-menu-1.0.4.tgz#79207d85a38dc802b118887c4bf04ac025f8a096"
+  integrity sha512-Sw+ivnx17QEDPp9Apx/9o0NaAeksieMDKOmMxFS7kE4euCdelY6fldAyLCx+T9iD2HV12OoIcr3ZckAKZQBKFw==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"

@@ -78,6 +78,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       opneSokeside={opneSokeside}
       harApenRevurdering={harApenRevurdering}
       hasFetchError={hasFetchError}
+      featureToggles={featureToggles}
     />
     <VerticalSpacer sixteenPx />
     <PersonFaktaIndex

@@ -10,7 +10,7 @@
     "@fpsak-frontend/prop-types": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
-    "@navikt/nap-side-menu": "1.0.3",
+    "@navikt/nap-side-menu": "1.0.4",
     "@sentry/browser": "^5.9.1",
     "classnames": "^2.2.6",
     "nav-frontend-core": "4.0.11",

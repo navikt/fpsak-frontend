@@ -25,8 +25,7 @@ const AvregningProsessIndex = ({
   submitCallback,
   readOnly,
   readOnlySubmitButton,
-  apCodes,
-  isApOpen,
+  isAksjonspunktOpen,
   previewCallback,
   featureToggles,
 }) => (
@@ -43,8 +42,8 @@ const AvregningProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={readOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={apCodes}
-      isApOpen={isApOpen}
+      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      isApOpen={isAksjonspunktOpen}
       previewCallback={previewCallback}
     />
   </RawIntlProvider>
@@ -59,9 +58,8 @@ AvregningProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   featureToggles: PropTypes.shape().isRequired,
 };
 

@@ -48,12 +48,6 @@ interface DispatchProps {
 
 type Props = OwnProps & DispatchProps & WrappedComponentProps;
 
-interface KlageProsessState{
-  visFatterVedtakModal: boolean;
-  visApenRevurderingModal: boolean;
-  skalOppdatereFagsakKontekst: boolean;
-}
-
 const getPreviewCallback = (dispatch, behandling) => (data) => {
   const brevData = {
     ...data,
@@ -61,6 +55,18 @@ const getPreviewCallback = (dispatch, behandling) => (data) => {
     ytelseType: fagsakYtelseType.ENGANGSSTONAD,
   };
   return dispatch(esBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
+};
+
+const getPreviewFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker, brevmalkode, fritekst, saksnummer) => {
+  const data = {
+    behandlingUuid: behandling.uuid,
+    fagsakYtelseType: fagsak.fagsakYtelseType,
+    varseltekst: fritekst || '',
+    mottaker,
+    brevmalkode,
+    saksnummer,
+  };
+  return dispatch(esBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
 };
 
 const getSubmitAksjonspunkter = (dispatch, toggleFatterVedtakModal, toggleOppdatereFagsakContext,
@@ -106,6 +112,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   harApenRevurdering,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegIUrl,
+  featureToggles,
 }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -119,6 +126,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   const submitAksjonspunkter = useCallback(() => getSubmitAksjonspunkter(dispatch,
     toggleFatterVedtakModal, toggleOppdatereFagsakContext, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
   const previewCallback = useCallback(() => getPreviewCallback(dispatch, behandling), []);
+  const previewFptilbakeCallback = useCallback(() => getPreviewFptilbakeCallback(dispatch, behandling), []);
   const dispatchSubmitFailed = useCallback(() => dispatch(setSubmitFailed), []);
 
   useEffect(() => {
@@ -183,12 +191,15 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
                 valgtStegKode,
                 vilkar: valgtSteg.vilkar,
                 previewCallback,
+                previewFptilbakeCallback,
                 rettigheter,
                 aksjonspunkter,
                 overstyrteProsessSteg,
                 label: valgtSteg.prosessmenySteg.label,
                 alleKodeverk: kodeverk,
                 dispatchSubmitFailed,
+                featureToggles,
+                fagsak,
               }),
               overrideReadOnly: valgtSteg.isOverrideReadOnly,
               kanOverstyreAccess: rettigheter.kanOverstyreAccess,
