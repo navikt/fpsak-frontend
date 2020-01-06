@@ -125,6 +125,7 @@ describe('<FodselOgTilretteleggingFaktaForm>', () => {
       },
       'BEDRIFT AS910909088fb74d757-6bd3-4ed3-a1f4-c2424ebb64d5': {
         skalBrukes: true,
+        tilretteleggingBehovFom: '2019-01-01',
         tilretteleggingDatoer: [{
           fom: '2019-01-01',
         }],
