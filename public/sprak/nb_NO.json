@@ -3,6 +3,9 @@
   "ArbeidsforholdInfoPanel.Title": "Arbeidsforhold",
   "FodselInfoPanel.Fodsel": "Fødsel",
   "MedlemskapInfoPanel.Medlemskap": "Medlemskap",
+  "RegistrereVergeInfoPanel.Info": "Verge/fullmektig",
+  "AdopsjonInfoPanel.Adopsjon": "Adopsjon",
+  "OmsorgOgForeldreansvarInfoPanel.Omsorg": "Omsorg og foreldreansvar",
 
   "Messages.BrevErBestilt": "Brevet er bestilt. Du kan endre frist eller årsak før du fortsetter.",
   "Behandlingspunkt.Saksopplysninger": "Saksopplysninger",

@@ -2,7 +2,7 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 const getAlleMerknaderFraBeslutter = (behandling, aksjonspunkter) => {
   if (behandling.status.kode !== behandlingStatus.BEHANDLING_UTREDES) {
-    return [];
+    return {};
   }
   return aksjonspunkter.reduce((obj, ap) => ({
     ...obj,

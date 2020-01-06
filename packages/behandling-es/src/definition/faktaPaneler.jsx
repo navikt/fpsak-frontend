@@ -1,9 +1,12 @@
 import React from 'react';
 
+import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
+import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
-import { fodselsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -37,6 +40,24 @@ const faktaPaneler = [{
   showComponent: ({ vilkarListe }) => vilkarListe.some((vilkar) => fodselsvilkarene.includes(vilkar.vilkarType.kode)),
   getExtraData: ({ personopplysninger, soknad }) => ({ personopplysninger, soknad }),
 }, {
+  textCode: 'AdopsjonInfoPanel.Adopsjon',
+  urlCode: faktaPanelCodes.ADOPSJONSVILKARET,
+  aksjonspunkterCodes: [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
+    aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN],
+  endpoints: [esBehandlingApi.SOKNAD, esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.PERSONOPPLYSNINGER],
+  renderComponent: (props) => <AdopsjonFaktaIndex {...props} />,
+  showComponent: ({ vilkarListe }) => vilkarListe.some((vilkar) => adopsjonsvilkarene.includes(vilkar.vilkarType.kode)),
+  getExtraData: () => ({ isForeldrepengerFagsak: false }),
+}, {
+  textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
+  urlCode: faktaPanelCodes.OMSORGSVILKARET,
+  aksjonspunkterCodes: [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR],
+  endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.SOKNAD, esBehandlingApi.PERSONOPPLYSNINGER,
+    esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.INNTEKT_ARBEID_YTELSE],
+  renderComponent: (props) => <OmsorgOgForeldreansvarFaktaIndex {...props} />,
+  showComponent: () => false,
+  getExtraData: ({ soknad }) => ({ soknad }),
+}, {
   textCode: 'MedlemskapInfoPanel.Medlemskap',
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
@@ -54,6 +75,14 @@ const faktaPaneler = [{
     inntektArbeidYtelse,
     soknad,
   }),
+}, {
+  textCode: 'RegistrereVergeInfoPanel.Info',
+  urlCode: faktaPanelCodes.VERGE,
+  aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_VERGE],
+  endpoints: [esBehandlingApi.VERGE],
+  renderComponent: (props) => <VergeFaktaIndex {...props} />,
+  showComponent: () => false,
+  getExtraData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
 }];
 
 export default faktaPaneler;

@@ -6,7 +6,7 @@ import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
 
 import {
-  faktaPanelCodes, getKodeverknavnFn, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, FaktaSubmitButton, behandlingForm,
+  getKodeverknavnFn, FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
 } from '@fpsak-frontend/fp-felles';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -22,12 +22,9 @@ import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
  * når det finnes åpne aksjonspunkter.
  */
 export const OmsorgOgForeldreansvarInfoPanelImpl = ({
-  intl,
   behandlingId,
   behandlingVersjon,
   erAksjonspunktForeldreansvar,
-  openInfoPanels,
-  toggleInfoPanelCallback,
   hasOpenAksjonspunkter,
   submittable,
   readOnly,
@@ -40,14 +37,7 @@ export const OmsorgOgForeldreansvarInfoPanelImpl = ({
   personopplysninger,
   ...formProps
 }) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'OmsorgOgForeldreansvarInfoPanel.Omsorg' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.OMSORGSVILKARET)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.OMSORGSVILKARET}
-    readOnly={readOnly}
-  >
+  <>
     <form onSubmit={formProps.handleSubmit}>
       <OmsorgOgForeldreansvarFaktaForm
         erAksjonspunktForeldreansvar={erAksjonspunktForeldreansvar}
@@ -82,7 +72,7 @@ export const OmsorgOgForeldreansvarInfoPanelImpl = ({
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
       />
     </form>
-  </FaktaEkspandertpanel>
+  </>
 );
 
 OmsorgOgForeldreansvarInfoPanelImpl.propTypes = {
@@ -145,10 +135,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const omsorgOgForeldreansvarAksjonspunkter = [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR];
-
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'OmsorgOgForeldreansvarInfoPanel',
   validate: OmsorgOgForeldreansvarFaktaForm.validate,
 })(injectIntl(OmsorgOgForeldreansvarInfoPanelImpl)));
-export default withDefaultToggling(faktaPanelCodes.OMSORGSVILKARET, omsorgOgForeldreansvarAksjonspunkter)(ConnectedComponent);

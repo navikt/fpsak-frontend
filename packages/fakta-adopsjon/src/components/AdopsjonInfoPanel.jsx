@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { createSelector } from 'reselect';
 
 import { kodeverkObjektPropType, aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import {
-  faktaPanelCodes, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, FaktaSubmitButton, behandlingForm,
+  FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
   isFieldEdited,
 } from '@fpsak-frontend/fp-felles';
-import { adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -44,10 +43,7 @@ const getHelpTexts = (aksjonspunkter) => {
  * når det finnes åpne aksjonspunkter.
  */
 export const AdopsjonInfoPanelImpl = ({
-  intl,
   aksjonspunkter,
-  openInfoPanels,
-  toggleInfoPanelCallback,
   hasOpenAksjonspunkter,
   submittable,
   readOnly,
@@ -61,14 +57,7 @@ export const AdopsjonInfoPanelImpl = ({
   farSokerType,
   ...formProps
 }) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'AdopsjonInfoPanel.Adopsjon' })}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.ADOPSJONSVILKARET)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.ADOPSJONSVILKARET}
-    readOnly={readOnly}
-  >
+  <>
     <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {getHelpTexts(aksjonspunkter)}
     </AksjonspunktHelpText>
@@ -131,18 +120,12 @@ export const AdopsjonInfoPanelImpl = ({
       </ElementWrapper>
       )}
     </form>
-  </FaktaEkspandertpanel>
+  </>
 );
 
 AdopsjonInfoPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
@@ -224,13 +207,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const AdopsjonInfoPanel = withDefaultToggling(faktaPanelCodes.ADOPSJONSVILKARET, adopsjonAksjonspunkter)(
-  connect(mapStateToPropsFactory)(behandlingForm({
-    form: 'AdopsjonInfoPanel',
-  })(injectIntl(AdopsjonInfoPanelImpl))),
-);
-
-AdopsjonInfoPanel.supports = (vilkarCodes, aksjonspunkter) => aksjonspunkter.some((ap) => adopsjonAksjonspunkter.includes(ap.definisjon.kode))
-  || vilkarCodes.some((code) => adopsjonsvilkarene.includes(code));
-
-export default AdopsjonInfoPanel;
+export default connect(mapStateToPropsFactory)(behandlingForm({
+  form: 'AdopsjonInfoPanel',
+})(AdopsjonInfoPanelImpl));

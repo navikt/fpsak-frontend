@@ -22,10 +22,8 @@ const VergeFaktaIndex = ({
   alleMerknaderFraBeslutter,
   alleKodeverk,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  harApneAksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <RegistrereVergeInfoPanel
@@ -34,11 +32,9 @@ const VergeFaktaIndex = ({
       verge={verge}
       aksjonspunkter={aksjonspunkter}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
     />
   </RawIntlProvider>
@@ -51,10 +47,8 @@ VergeFaktaIndex.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
 };
 
 VergeFaktaIndex.defaultProps = {

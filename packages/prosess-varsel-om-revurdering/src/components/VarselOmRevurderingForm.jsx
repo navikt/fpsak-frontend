@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/utils';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
-import revurderingOriginalBehandlingPropType from '../propTypes/revurderingOriginalBehandlingPropType';
+import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
 
 import styles from './varselOmRevurderingForm.less';
@@ -111,7 +111,8 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       behandlingTypeKode,
       soknad,
       termindato,
-      originalBehandling,
+      soknadOriginalBehandling,
+      familiehendelseOriginalBehandling,
       vedtaksDatoSomSvangerskapsuke,
       ...formProps
     } = this.props;
@@ -141,7 +142,8 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                   termindato={termindato}
                   vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
                   soknad={soknad}
-                  originalBehandling={originalBehandling}
+                  soknadOriginalBehandling={soknadOriginalBehandling}
+                  familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
                 />
                 <VerticalSpacer sixteenPx />
               </div>
@@ -238,7 +240,8 @@ VarselOmRevurderingFormImpl.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
   termindato: PropTypes.string,
-  originalBehandling: revurderingOriginalBehandlingPropType.isRequired,
+  soknadOriginalBehandling: revurderingSoknadPropType.isRequired,
+  familiehendelseOriginalBehandling: revurderingFamilieHendelsePropType.isRequired,
   ...formPropTypes,
 };
 

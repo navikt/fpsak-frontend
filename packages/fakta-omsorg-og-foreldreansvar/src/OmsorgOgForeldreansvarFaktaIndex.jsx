@@ -27,9 +27,6 @@ const OmsorgOgForeldreansvarFaktaIndex = ({
   aksjonspunkter,
   alleMerknaderFraBeslutter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
   alleKodeverk,
 }) => (
@@ -44,9 +41,6 @@ const OmsorgOgForeldreansvarFaktaIndex = ({
       innvilgetRelatertTilgrensendeYtelserForAnnenForelder={inntektArbeidYtelse.innvilgetRelatertTilgrensendeYtelserForAnnenForelder}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
       alleKodeverk={alleKodeverk}
     />
@@ -64,9 +58,6 @@ OmsorgOgForeldreansvarFaktaIndex.propTypes = {
     notAccepted: PropTypes.bool,
   }).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };

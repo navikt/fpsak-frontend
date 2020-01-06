@@ -6,7 +6,6 @@ import revurderingBehandlingPropType from './propTypes/revurderingBehandlingProp
 import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspunkterPropType';
 import revurderingFamilieHendelsePropType from './propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from './propTypes/revurderingSoknadPropType';
-import revurderingOriginalBehandlingPropType from './propTypes/revurderingOriginalBehandlingPropType';
 import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
 import messages from '../i18n/nb_NO';
 
@@ -21,7 +20,8 @@ const VarselOmRevurderingProsessIndex = ({
   behandling,
   familiehendelse,
   soknad,
-  originalBehandling,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
   aksjonspunkter,
   submitCallback,
   previewCallback,
@@ -38,7 +38,8 @@ const VarselOmRevurderingProsessIndex = ({
       behandlingType={behandling.type}
       familiehendelse={familiehendelse}
       soknad={soknad}
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={soknadOriginalBehandling}
+      familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       previewCallback={previewCallback}
@@ -53,7 +54,8 @@ VarselOmRevurderingProsessIndex.propTypes = {
   behandling: revurderingBehandlingPropType.isRequired,
   familiehendelse: revurderingFamilieHendelsePropType.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
-  originalBehandling: revurderingOriginalBehandlingPropType.isRequired,
+  soknadOriginalBehandling: revurderingSoknadPropType.isRequired,
+  familiehendelseOriginalBehandling: revurderingFamilieHendelsePropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(revurderingAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,

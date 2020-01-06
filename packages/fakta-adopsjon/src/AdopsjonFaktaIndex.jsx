@@ -26,11 +26,9 @@ const AdopsjonFaktaIndex = ({
   alleMerknaderFraBeslutter,
   alleKodeverk,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
   isForeldrepengerFagsak,
+  harApneAksjonspunkter,
 }) => (
   <RawIntlProvider value={intl}>
     <AdopsjonInfoPanel
@@ -43,11 +41,9 @@ const AdopsjonFaktaIndex = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
       isForeldrepengerFagsak={isForeldrepengerFagsak}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
     />
   </RawIntlProvider>
 );
@@ -62,9 +58,7 @@ AdopsjonFaktaIndex.propTypes = {
   isForeldrepengerFagsak: PropTypes.bool.isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

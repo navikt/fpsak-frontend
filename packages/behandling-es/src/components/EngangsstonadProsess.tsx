@@ -3,6 +3,7 @@ import React, {
 } from 'react';
 import { useIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
+import { setSubmitFailed } from 'redux-form';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -118,6 +119,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   const submitAksjonspunkter = useCallback(() => getSubmitAksjonspunkter(dispatch,
     toggleFatterVedtakModal, toggleOppdatereFagsakContext, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
   const previewCallback = useCallback(() => getPreviewCallback(dispatch, behandling), []);
+  const dispatchSubmitFailed = useCallback(() => dispatch(setSubmitFailed), []);
 
   useEffect(() => {
     if (skalOppdatereFagsakKontekst) {
@@ -186,6 +188,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
                 overstyrteProsessSteg,
                 label: valgtSteg.prosessmenySteg.label,
                 alleKodeverk: kodeverk,
+                dispatchSubmitFailed,
               }),
               overrideReadOnly: valgtSteg.isOverrideReadOnly,
               kanOverstyreAccess: rettigheter.kanOverstyreAccess,
@@ -197,7 +200,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
       {(valgtStegKode === bpc.VEDTAK && behandling.behandlingHenlagt) && (
         <BehandlingHenlagtPanel />
       )}
-      {(valgtStegKode && !erStegBehandlet && !behandling.behandlingHenlagt) && (
+      {(valgtStegKode && !erStegBehandlet && (valgtStegKode !== bpc.VEDTAK || (valgtStegKode === bpc.VEDTAK && !behandling.behandlingHenlagt))) && (
         <ProsessStegIkkeBehandletPanel />
       )}
     </>
