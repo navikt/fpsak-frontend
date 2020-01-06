@@ -197,7 +197,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
               <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
             </Undertekst>
           </Column>
-          <Column className={beregningStyles.colLink}>AA1</Column>
+          <Column className={beregningStyles.colLink} />
         </Row>
         {createArbeidsIntektRows(relevanteAndeler)}
       </Panel>

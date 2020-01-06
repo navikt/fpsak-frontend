@@ -82,6 +82,7 @@ export const createNaturalytelseTableData = (allePerioder) => {
 const createNaturalYtelseRows = (tableData) => {
   const { arbeidsforholdPeriodeMap } = tableData;
   const rows = [];
+  debugger;
   Object.keys(arbeidsforholdPeriodeMap).sort().forEach((val) => {
     const list = arbeidsforholdPeriodeMap[val];
     let valueKey = 0;
