@@ -485,12 +485,12 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const andeler = [
     lagAndel('SN', 300000, undefined, undefined),
-    lagAndel('AT', 130250, undefined, undefined),
-    lagAndel('FL', 230250, undefined, undefined)];
+    lagAndel('AT', 0, undefined, undefined),
+    lagAndel('FL', 120333, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
-  const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 345)];
   const statuser = [lagStatus('AT_FL_SN')];
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
@@ -499,15 +499,15 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      aksjonspunkter={[]}
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
+      featureToggles={togglesTrue}
     />
   );
 };
