@@ -486,7 +486,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
   const andeler = [
     lagAndel('SN', 300000, undefined, undefined),
     lagAndel('AT', 130250, undefined, undefined),
-    lagAndel('FL', 0, undefined, undefined)];
+    lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
@@ -499,7 +499,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      aksjonspunkter={[]}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}
@@ -507,7 +507,7 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+      featureToggles={togglesFalse}
     />
   );
 };
