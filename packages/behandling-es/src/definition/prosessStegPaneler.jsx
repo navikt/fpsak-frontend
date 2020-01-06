@@ -28,7 +28,8 @@ const prosessStegPaneler = [{
   renderComponent: (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
   getExtraData: () => {},
 }, {
-  showWhen: ({ stegKode }) => stegKode === bpc.FOEDSEL,
+  showWhen: ({ stegKode, aksjonspunkter }) => (stegKode === bpc.FOEDSEL
+    && aksjonspunkter.some((ap) => [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN].includes(ap.definisjon.kode))),
   endpoints: [],
   renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
   getExtraData: ({ vilkar }) => ({ vilkar, ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD }),
