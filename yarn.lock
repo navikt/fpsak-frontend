@@ -2568,6 +2568,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
@@ -2581,6 +2582,12 @@
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.6.tgz#34d9878e31431128c694cd9c2f9182d5a4eacffa"
   integrity sha512-6aXAT1XAF642Bi1NRUDcXTLyAH0M69Qr92lqZhNxBgQ1ccr8DY+b1P/3o/+iwhrChiUbC6KMpHAQainwbChjHw==
+>>>>>>> FIX div
+=======
+"@navikt/nap-header@1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.7.tgz#a6d2d6d4873d81fdfed7c47817d223abc19de737"
+  integrity sha512-7RQcWxPn4/4m2EMmXhepq8aXpvJMyZD6S/o8g58AU6pDd+QvWTWDuSKmCi13Ii+QybS3YsMLeT8K+PBM6oIpIw==
 >>>>>>> FIX div
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
