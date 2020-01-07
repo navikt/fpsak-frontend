@@ -19,11 +19,10 @@ const uaktsomhetCodes = [
 ];
 
 const forstoBurdeForstattTekster = {
-  [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom',
+  [Aktsomhet.FORSETT]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
   [Aktsomhet.GROVT_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt',
-  [Aktsomhet.SIMPEL_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.Forsett',
+  [Aktsomhet.SIMPEL_UAKTSOM]: 'AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom',
 };
-
 
 const AktsomhetFormPanel = ({
   readOnly,
