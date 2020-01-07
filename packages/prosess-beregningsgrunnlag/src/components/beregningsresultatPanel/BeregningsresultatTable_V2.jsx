@@ -234,15 +234,15 @@ const opprettAndelElement = (andel, andelType, vilkarStatus) => {
       inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
       break;
     case 'SN':
-      inntekt = andel && andel.pgiSnitt ? andel.pgiSnitt : undefined;
+      inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
       break;
     default:
-      inntekt = andel && andel.bruttoPrAar ? andel.bruttoPrAar : undefined;
+      inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
   }
 
-  if (inntekt) {
+  if (inntekt || inntekt === 0) {
     andelElement.verdi = inntekt;
     andelElement.skalFastsetteGrunnlag = skalFastsetteGrunnlag;
     const strKey = setTekstStrengKeyPavilkaarUtfallType(vilkarStatus, skalFastsetteGrunnlag);
@@ -250,7 +250,12 @@ const opprettAndelElement = (andel, andelType, vilkarStatus) => {
   }
   return andelElement;
 };
-
+const hentVerdiFraAndel = (andel) => {
+  if (!andel || !andel.verdi) {
+    return 0;
+  }
+  return andel.verdi;
+};
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -321,14 +326,12 @@ export const createBeregningTableData = createSelector(
             'FL',
             vilkarStatus,
           );
-
           if (!harAksjonspunkter) {
-            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
+            if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
               rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
               rowsAndeler.push(atElement);
               rowsAndeler.push(flElement);
-            }
-            if (((atElement && atElement.verdi) + (flElement && flElement.verdi)) < (snElement && snElement.verdi)) {
+            } else {
               // setter SN ledetekst til Pensjonsgibevnde årsintekt
               snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
               rowsAndeler.push(atElement);
@@ -361,7 +364,7 @@ export const createBeregningTableData = createSelector(
             vilkarStatus,
           );
 
-          if (((dpElement && dpElement.verdi) + (flElement && flElement.verdi)) > (snElement && snElement.verdi)) {
+          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
             rowsAndeler.push(flElement);
           } else {
@@ -387,7 +390,7 @@ export const createBeregningTableData = createSelector(
             vilkarStatus,
           );
 
-          if (((dpElement && dpElement.verdi) + (atElement && atElement.verdi)) > (snElement && snElement.verdi)) {
+          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
             rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
             rowsAndeler.push(atElement);
           } else {
