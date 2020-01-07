@@ -3,6 +3,8 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 
+const DEFAULT_FAKTA_KODE = 'default';
+
 const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
@@ -29,7 +31,7 @@ const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, beha
 };
 
 const finnValgtPanel = (faktaPaneler, valgtFaktaPanelKode) => {
-  if (valgtFaktaPanelKode === 'default') {
+  if (valgtFaktaPanelKode === DEFAULT_FAKTA_KODE) {
     const index = faktaPaneler.findIndex((i) => i.harApneAksjonspunkter);
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
   }
@@ -42,10 +44,37 @@ const formaterPanelerForSidemeny = (intl, faktaPaneler, valgtFaktaPanelKode) => 
   harAksjonspunkt: panel.harApneAksjonspunkter,
 }));
 
+const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl, overstyringApCodes, api) => (aksjonspunkter) => {
+  const model = aksjonspunkter.map((ap) => ({
+    '@type': ap.kode,
+    ...ap,
+  }));
+
+  const params = {
+    saksnummer: fagsak.saksnummer,
+    behandlingId: behandling.id,
+    behandlingVersjon: behandling.versjon,
+  };
+
+  if (model && overstyringApCodes.includes(model[0].kode)) {
+    return dispatch(api.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()({
+      ...params,
+      overstyrteAksjonspunktDtoer: model,
+    }, { keepData: true })).then(() => oppdaterFaktaPanelIUrl(DEFAULT_FAKTA_KODE));
+  }
+
+  return dispatch(api.SAVE_AKSJONSPUNKT.makeRestApiRequest()({
+    ...params,
+    bekreftedeAksjonspunktDtoer: model,
+  }, { keepData: true })).then(() => oppdaterFaktaPanelIUrl(DEFAULT_FAKTA_KODE));
+};
+
+
 const faktaPanelUtils = {
   utledFaktaPaneler,
   finnValgtPanel,
   formaterPanelerForSidemeny,
+  getBekreftAksjonspunktCallback,
 };
 
 export default faktaPanelUtils;

@@ -8,9 +8,12 @@ import {
   FagsakInfo, Behandling, Aksjonspunkt, Vilkar, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2,
   Soknad, Personopplysninger, InntektArbeidYtelse, faktaPanelUtils,
 } from '@fpsak-frontend/behandling-felles';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import faktaPanelDefinisjoner from '../definition/faktaPanelDefinisjoner';
+
+const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -26,23 +29,6 @@ interface OwnProps {
   oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
   valgtFaktaSteg?: string;
 }
-
-const getBekreftFaktaCallback = (dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl) => (aksjonspunkter) => {
-  const model = aksjonspunkter.map((ap) => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
-
-  const params = {
-    saksnummer: fagsak.saksnummer,
-    behandlingId: behandling.id,
-    behandlingVersjon: behandling.versjon,
-    bekreftedeAksjonspunktDtoer: model,
-  };
-
-  return dispatch(esBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(() => oppdaterFaktaPanelIUrl('default'));
-};
 
 const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   fagsak,
@@ -69,10 +55,11 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   [behandling.versjon]);
 
   const velgFaktaPanelCallback = useCallback((index) => oppdaterFaktaPanelIUrl(faktaPaneler[index].urlCode), [behandling.versjon]);
-  const bekreftAksjonspunktCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl), [behandling.versjon]);
+  const bekreftAksjonspunktCallback = useCallback(faktaPanelUtils
+    .getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl, overstyringApCodes, esBehandlingApi),
+  [behandling.versjon]);
 
-  const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg),
-    [behandling.versjon, valgtFaktaSteg]);
+  const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);
 
   const formaterteFaktaPaneler = useMemo(() => faktaPanelUtils.formaterPanelerForSidemeny(intl, faktaPaneler, valgtFaktaSteg),
     [behandling.versjon, valgtFaktaSteg]);

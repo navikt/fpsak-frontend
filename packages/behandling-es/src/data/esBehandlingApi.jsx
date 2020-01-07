@@ -52,7 +52,9 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', EsBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
   })
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', EsBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', EsBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
+    storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
+  })
   .withPost('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder', EsBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
   /* fptilbake/api/dokument */
