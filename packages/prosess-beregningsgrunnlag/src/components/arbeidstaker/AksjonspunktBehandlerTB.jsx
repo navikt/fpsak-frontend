@@ -45,7 +45,6 @@ const harPeriodeArbeidsforholdAvsluttet = (periode) => periode.periodeAarsaker !
 const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
   const perioderMellomSluttdatoForArbeidsforhold = [];
   let k = 0;
-  debugger;
   while (k < allePerioder.length) {
     const nyPeriode = { ...allePerioder[k] };
     k += 1;
