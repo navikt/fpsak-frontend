@@ -16,7 +16,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   simuleringResultat: SimuleringResultat;
-  kodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
@@ -40,7 +40,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   personopplysninger,
   inntektArbeidYtelse,
   soknad,
-  kodeverk,
+  alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
   oppdaterProsessStegIUrl,
@@ -58,7 +58,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
     <BehandlingPaVent
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
-      kodeverk={kodeverk}
+      kodeverk={alleKodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
     />
@@ -70,7 +70,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       simuleringResultat={simuleringResultat}
       beregningresultatEngangsstonad={beregningresultatEngangsstonad}
       soknad={soknad}
-      kodeverk={kodeverk}
+      alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
       oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
@@ -90,7 +90,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       submitCallback={() => undefined}
       readOnly={false}
       featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
-      alleKodeverk={kodeverk}
+      alleKodeverk={alleKodeverk}
     />
     <VerticalSpacer sixteenPx />
     <EngangsstonadFakta
@@ -101,7 +101,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       soknad={soknad}
       personopplysninger={personopplysninger}
       inntektArbeidYtelse={inntektArbeidYtelse}
-      kodeverk={kodeverk}
+      alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       hasFetchError={hasFetchError}
       valgtFaktaSteg={valgtFaktaSteg}

@@ -25,6 +25,7 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   endpointParams,
   showOldDataWhenRefetching = false,
   showComponent = true,
+  behandlingVersion,
 }) => {
   if (!showComponent) {
     return null;
@@ -32,8 +33,6 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
 
   const dispatchContext = useContext(DispatchContext);
   const stateContext = useContext(StateContext);
-
-  const behandlingVersion = stateContext.version;
 
   const [hasFailed, setFailed] = useState(false);
 

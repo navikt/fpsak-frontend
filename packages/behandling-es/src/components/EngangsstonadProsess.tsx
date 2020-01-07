@@ -32,7 +32,7 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   simuleringResultat: SimuleringResultat;
-  kodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
@@ -104,8 +104,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   vilkar,
   simuleringResultat,
   beregningresultatEngangsstonad,
-  soknad,
-  kodeverk,
+  alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
   hasFetchError,
@@ -126,7 +125,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   const submitAksjonspunkter = useCallback(() => getSubmitAksjonspunkter(dispatch,
     toggleFatterVedtakModal, toggleOppdatereFagsakContext, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
   const previewCallback = useCallback(() => getPreviewCallback(dispatch, behandling), []);
-  const previewFptilbakeCallback = useCallback(() => getPreviewFptilbakeCallback(dispatch, behandling), []);
+  const previewFptilbakeCallback = useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []);
   const dispatchSubmitFailed = useCallback(() => dispatch(setSubmitFailed), []);
 
   useEffect(() => {
@@ -185,7 +184,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
               readOnlySubmitButton: (!(valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === valgtSteg.status),
               aksjonspunkter: valgtSteg.aksjonspunkter,
               status: valgtSteg.status,
-              alleKodeverk: kodeverk,
+              alleKodeverk,
               isAksjonspunktOpen: valgtSteg.aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET),
               ...valgtPanel.getExtraData({
                 valgtStegKode,
@@ -196,7 +195,7 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
                 aksjonspunkter,
                 overstyrteProsessSteg,
                 label: valgtSteg.prosessmenySteg.label,
-                alleKodeverk: kodeverk,
+                alleKodeverk,
                 dispatchSubmitFailed,
                 featureToggles,
                 fagsak,

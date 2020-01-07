@@ -122,7 +122,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
               <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
               <EngangsstonadGrid
                 fagsak={fagsak}
-                kodeverk={kodeverk}
+                alleKodeverk={kodeverk}
                 navAnsatt={navAnsatt}
                 valgtProsessSteg={valgtProsessSteg}
                 oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}

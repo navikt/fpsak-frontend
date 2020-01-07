@@ -18,7 +18,7 @@ interface PanelData {
 
 interface OwnProps {
   paneler: PanelData[];
-  onClick?: (index: number) => number;
+  onClick?: (index: number) => void;
   children: ReactNode;
 }
 
