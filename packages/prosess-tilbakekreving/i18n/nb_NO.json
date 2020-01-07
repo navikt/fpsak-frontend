@@ -14,7 +14,7 @@
   "TilbakekrevingPeriodeForm.FeilutbetaltBelopTrekk": "Feilutbetalt beløp er redusert med <b>kr. {belop},-</b> på grunn av trekk.",
   "TilbakekrevingPeriodeForm.Aktsomhet": "Aktsomhet",
   "TilbakekrevingPeriodeForm.BelopetMottattIGodTro": "Beløpet mottatt i god tro",
-   
+
   "TilbakekrevingTimeline.ImageText": "Personinformasjon",
   "TilbakekrevingTimeline.Woman": "Kvinne",
   "TilbakekrevingTimeline.Man": "Mann",
@@ -30,8 +30,11 @@
   "AktsomhetReduksjonAvBelopFormPanel.SkalSarligeGrunnerGiReduksjon": "Skal særlige grunner gi reduksjon av beløpet?",
   "AktsomhetReduksjonAvBelopFormPanel.Nei": "Nei",
   "AktsomhetReduksjonAvBelopFormPanel.Ja": "Ja",
-  
+
   "AktsomhetFormPanel.HandletUaktsomhetGrad": "I hvilken grad har mottaker handlet uaktsomt?",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.SimpelUaktsom": "Burde ha forstått",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.GrovtUaktsomt": "Må ha forstått",
+  "AktsomhetFormPanel.AktsomhetTyperLabel.Forsett": "Forsto",
 
   "AktsomhetGradUaktsomhetFormPanel.AllePerioderBehandlesLikt": "Når 6. ledd anvendes må alle perioder behandles likt",
   "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",
@@ -56,7 +59,7 @@
   "BelopetMottattIGodTroFormPanel.AngiBelop": "Angi beløp som skal tilbakekreves",
   "BelopetMottattIGodTroFormPanel.IngenTilbakekreving": "Ingen tilbakekreving",
 
-  
+
   "PeriodeController.Detaljer": "Detaljer for valgt periode",
   "PeriodeController.DelOppPerioden": "Del opp perioden",
   "PeriodeController.ForrigePeriode": "Forrige periode",
