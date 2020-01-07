@@ -62,6 +62,8 @@ FodselFaktaIndex.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 FodselFaktaIndex.defaultProps = {

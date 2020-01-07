@@ -75,6 +75,8 @@ MedlemskapFaktaIndex.propTypes = {
   isForeldrepengerFagsak: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlyBehandling: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default MedlemskapFaktaIndex;

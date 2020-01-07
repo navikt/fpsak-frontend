@@ -52,6 +52,7 @@ ArbeidsforholdFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
 };
 
 export default ArbeidsforholdFaktaIndex;

@@ -92,7 +92,7 @@ VedtakProsessIndex.propTypes = {
 VedtakProsessIndex.defaultProps = {
   beregningresultatForeldrepenger: undefined,
   beregningresultatEngangsstonad: undefined,
-  originalBehandling: undefined,
+  beregningsresultatOriginalBehandling: undefined,
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
   sendVarselOmRevurdering: false,
