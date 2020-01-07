@@ -13,7 +13,6 @@ import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-bereg
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
@@ -121,10 +120,6 @@ describe('<VurderVarigEndretEllerNyoppstartetSN>', () => {
         kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
         begrunnelse: 'Ok varig endring.',
         erVarigEndretNaering: true,
-      },
-      {
-        kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        begrunnelse: 'Ok fastsatt inntekt.',
         bruttoBeregningsgrunnlag: 650000,
       },
     ];
