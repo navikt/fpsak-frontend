@@ -235,6 +235,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                           resetFields={this.resetFields}
                           resetAnnetTextField={this.resetAnnetTextField}
                           erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+                          erValgtResultatTypeForstoBurdeForstaatt={valgtVilkarResultatType === VilkarResultat.FORSTO_BURDE_FORSTAATT}
                           aktsomhetTyper={aktsomhetTyper}
                           sarligGrunnTyper={sarligGrunnTyper}
                           antallYtelser={data.ytelser.length}
