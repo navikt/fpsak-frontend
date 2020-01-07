@@ -9,6 +9,7 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
+
 export const getTekstForAndelBruktIBeregning = (andel) => {
   if (andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER) {
     return 'Beregningsgrunnlag.TilstottendeYtelse.Dagpenger';
@@ -22,10 +23,13 @@ export const getTekstForAndelBruktIBeregning = (andel) => {
 const TilstotendeYtelser2 = ({
   alleAndeler,
   relevanteStatuser,
+  gjelderBesteberegning,
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
+  const harFlereYtelser = relevanteAndeler.length > 1;
   return (
     <Panel className={beregningStyles.panel}>
+
       {relevanteStatuser.isKombinasjonsstatus
       && (
         <>
@@ -55,20 +59,27 @@ const TilstotendeYtelser2 = ({
           <div key={andel.aktivitetStatus.kode.concat('_'.concat(index))}>
             <Row>
               <Column xs="4">
-                <Normaltekst>
+                <Element>
                   <FormattedMessage
                     id={getTekstForAndelBruktIBeregning(andel)}
                   />
-                </Normaltekst>
+                </Element>
               </Column>
               <Column xs="3" />
               <Column xs="2" className={beregningStyles.colMaanedText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar / 12)}</Normaltekst></Column>
-              <Column xs="2" className={beregningStyles.colAarText}><Normaltekst>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst></Column>
+              <Column xs="2" className={beregningStyles.colAarText}>
+                <Normaltekst className={!harFlereYtelser ? beregningStyles.semiBoldText : ''}>{formatCurrencyNoKr(andel.beregnetPrAar)}</Normaltekst>
+              </Column>
               <Column xs="2" />
             </Row>
-            <VerticalSpacer eightPx />
+
           </div>
         ))}
+        {gjelderBesteberegning && (
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.Besteberegning" />
+          </Normaltekst>
+        )}
       </>
     </Panel>
   );
@@ -77,6 +88,10 @@ const TilstotendeYtelser2 = ({
 TilstotendeYtelser2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
+  gjelderBesteberegning: PropTypes.bool,
+};
+TilstotendeYtelser2.defaultProps = {
+  gjelderBesteberegning: false,
 };
 
 export default TilstotendeYtelser2;
