@@ -126,8 +126,7 @@ export class BehandlingIndex extends Component {
     const { push: pushLocation, location } = this.props;
     if (prosessId === 'default') {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    }
-    if (prosessId) {
+    } else if (prosessId) {
       pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
     } else {
       pushLocation(getBehandlingspunktLocation(location)(null));
@@ -138,8 +137,7 @@ export class BehandlingIndex extends Component {
     const { push: pushLocation, location } = this.props;
     if (faktaId === 'default') {
       pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    }
-    if (faktaId) {
+    } else if (faktaId) {
       pushLocation(getFaktaLocation(location)(formatName(faktaId)));
     } else {
       pushLocation(getFaktaLocation(location)(null));
