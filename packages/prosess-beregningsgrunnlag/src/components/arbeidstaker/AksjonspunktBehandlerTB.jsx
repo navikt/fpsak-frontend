@@ -121,7 +121,6 @@ export const createTableData = createSelector(
     const arbeidsforholdPeriodeMap = initializeMap(kopiAvPerioder, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
     // Etter å ha initialiser mappet med faste bokser kan vi fjerne første element fra lista, da
     // denne ikke skal være en av de redigerbare feltene i tabellen, og det er disse vi skal lage nå
-    debugger;
     kopiAvPerioder.forEach((periode) => {
       const arbeidstakerAndeler = findArbeidstakerAndeler(periode);
       arbeidstakerAndeler.forEach((andel) => {
