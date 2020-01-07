@@ -10,7 +10,8 @@ import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-fo
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
+
+import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 
@@ -18,27 +19,35 @@ const faktaPanelDefinisjoner = [{
   urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
   textCode: 'ArbeidsforholdInfoPanel.Title',
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],
-  endpoints: [],
+  endpoints: [esBehandlingApi.PERSONOPPLYSNINGER, esBehandlingApi.INNTEKT_ARBEID_YTELSE],
   renderComponent: (props) => <ArbeidsforholdFaktaIndex {...props} />,
   showComponent: ({ personopplysninger }) => personopplysninger,
-  getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
+  getData: () => {},
+}, {
+  urlCode: faktaPanelCodes.VERGE,
+  textCode: 'RegistrereVergeInfoPanel.Info',
+  aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_VERGE],
+  endpoints: [esBehandlingApi.VERGE, esBehandlingApi.AKSJONSPUNKTER],
+  renderComponent: (props) => <VergeFaktaIndex {...props} />,
+  showComponent: () => false,
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
   aksjonspunkterCodes: [aksjonspunktCodes.TILLEGGSOPPLYSNINGER],
-  endpoints: [],
+  endpoints: [esBehandlingApi.SOKNAD, esBehandlingApi.AKSJONSPUNKTER],
   renderComponent: (props) => <TilleggsopplysningerFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ soknad }) => ({ soknad }),
+  getData: () => {},
 }, {
-  urlCode: faktaPanelCodes.FODSELSVILKARET,
-  textCode: 'FodselInfoPanel.Fodsel',
-  aksjonspunkterCodes: [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
-    aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT],
-  endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, esBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
-  renderComponent: (props) => <FodselFaktaIndex {...props} />,
-  showComponent: ({ vilkar }) => vilkar.some((v) => fodselsvilkarene.includes(v.vilkarType.kode)),
-  getData: ({ personopplysninger, soknad }) => ({ personopplysninger, soknad }),
+  urlCode: faktaPanelCodes.OMSORGSVILKARET,
+  textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
+  aksjonspunkterCodes: [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR],
+  endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.SOKNAD, esBehandlingApi.PERSONOPPLYSNINGER,
+    esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.INNTEKT_ARBEID_YTELSE],
+  renderComponent: (props) => <OmsorgOgForeldreansvarFaktaIndex {...props} />,
+  showComponent: () => false,
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.ADOPSJONSVILKARET,
   textCode: 'AdopsjonInfoPanel.Adopsjon',
@@ -49,40 +58,32 @@ const faktaPanelDefinisjoner = [{
   showComponent: ({ vilkar }) => vilkar.some((v) => adopsjonsvilkarene.includes(v.vilkarType.kode)),
   getData: () => ({ isForeldrepengerFagsak: false }),
 }, {
-  urlCode: faktaPanelCodes.OMSORGSVILKARET,
-  textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
-  aksjonspunkterCodes: [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR],
-  endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.SOKNAD, esBehandlingApi.PERSONOPPLYSNINGER,
-    esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.INNTEKT_ARBEID_YTELSE],
-  renderComponent: (props) => <OmsorgOgForeldreansvarFaktaIndex {...props} />,
-  showComponent: () => false,
-  getData: ({ soknad }) => ({ soknad }),
+  urlCode: faktaPanelCodes.FODSELSVILKARET,
+  textCode: 'FodselInfoPanel.Fodsel',
+  aksjonspunkterCodes: [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
+    aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT],
+  endpoints: [esBehandlingApi.SOKNAD, esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.PERSONOPPLYSNINGER,
+    esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, esBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
+  renderComponent: (props) => <FodselFaktaIndex {...props} />,
+  showComponent: ({ vilkar }) => vilkar.some((v) => fodselsvilkarene.includes(v.vilkarType.kode)),
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   textCode: 'MedlemskapInfoPanel.Medlemskap',
   aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
     aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE, aksjonspunktCodes.AVKLAR_OPPHOLDSRETT, aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD,
     aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunktCodes.OVERSTYR_AVKLAR_STARTDATO],
-  endpoints: [esBehandlingApi.MEDLEMSKAP, esBehandlingApi.MEDLEMSKAP_V2],
+  endpoints: [esBehandlingApi.PERSONOPPLYSNINGER, esBehandlingApi.SOKNAD, esBehandlingApi.AKSJONSPUNKTER,
+    esBehandlingApi.INNTEKT_ARBEID_YTELSE, esBehandlingApi.MEDLEMSKAP, esBehandlingApi.MEDLEMSKAP_V2],
   renderComponent: (props) => <MedlemskapFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, soknad }) => personopplysninger && soknad,
   getData: ({
-    fagsak, personopplysninger, inntektArbeidYtelse, soknad,
+    fagsak, behandling, hasFetchError,
   }) => ({
-    isForeldrepengerFagsak: fagsak.fagsakYtelseType.kode === fagsakYtelseType.FORELDREPENGER,
+    isForeldrepengerFagsak: false,
     fagsakPerson: fagsak.fagsakPerson,
-    personopplysninger,
-    inntektArbeidYtelse,
-    soknad,
+    readOnlyBehandling: hasFetchError || readOnlyUtils.harBehandlingReadOnlyStatus(behandling),
   }),
-}, {
-  urlCode: faktaPanelCodes.VERGE,
-  textCode: 'RegistrereVergeInfoPanel.Info',
-  aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_VERGE],
-  endpoints: [esBehandlingApi.VERGE],
-  renderComponent: (props) => <VergeFaktaIndex {...props} />,
-  showComponent: () => false,
-  getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
 }];
 
 export default faktaPanelDefinisjoner;

@@ -14,7 +14,7 @@ export { default as FatterVedtakStatusModal } from './src/components/vedtak/Fatt
 export { default as ProsessStegProperties } from './src/definisjon/prosessStegBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';
 
-export { erReadOnly } from './src/util/erReadOnly';
+export { default as readOnlyUtils } from './src/util/readOnlyUtils';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 export { default as faktaPanelUtils } from './src/util/faktaPanelUtils';
 

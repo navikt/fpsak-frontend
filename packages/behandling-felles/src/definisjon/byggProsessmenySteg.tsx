@@ -8,7 +8,7 @@ import Aksjonspunkt from '../types/aksjonspunktTsType';
 import Vilkar from '../types/vilkarTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import NavAnsatt from '../types/navAnsattTsType';
-import { erOverrideReadOnly, erReadOnly } from '../util/erReadOnly';
+import readOnlyUtils from '../util/readOnlyUtils';
 
 const SUCCESS = 'success';
 const WARNING = 'warning';
@@ -63,8 +63,8 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
 
       const apForSteg = aksjonspunkter.filter((a) => steg.apCodes.includes(a.definisjon.kode));
       const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
-      const isReadOnly = erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
-      const isOverrideReadOnly = erOverrideReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
+      const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
+      const isOverrideReadOnly = readOnlyUtils.erOverrideReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 
       const erValgtSteg = indexTilValgtSteg === mapIndex;

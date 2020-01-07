@@ -1,6 +1,6 @@
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { erReadOnly } from './erReadOnly';
+import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 
 const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
@@ -18,7 +18,7 @@ const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, beha
         harApneAksjonspunkter,
         componentData: {
           aksjonspunkter: filtrerteAksjonspunkter,
-          readOnly: erReadOnly(behandling, filtrerteAksjonspunkter, [], navAnsatt, fagsak, hasFetchError),
+          readOnly: readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, [], navAnsatt, fagsak, hasFetchError),
           submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
           harApneAksjonspunkter,
           alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, filtrerteAksjonspunkter),

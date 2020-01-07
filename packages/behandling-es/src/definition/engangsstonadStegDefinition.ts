@@ -11,7 +11,7 @@ import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import getVedtakStatus from './vedtakStatusUtleder';
 
 const getStatusFromBeregningsresultat = ({ resultatstruktur }) => (resultatstruktur ? vut.OPPFYLT : vut.IKKE_VURDERT);
-const hasNonDefaultBehandlingspunkt = (builderData, bpLength) => bpLength > 0;
+const hasNonDefaultBehandlingspunkt = (_builderData, bpLength) => bpLength > 0;
 const getStatusFromSimulering = ({ simuleringResultat }) => (simuleringResultat ? vut.OPPFYLT : vut.IKKE_VURDERT);
 
 /**

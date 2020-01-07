@@ -62,7 +62,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   const dispatch = useDispatch();
 
   const esPanelerData = {
-    fagsak, soknad, vilkar, personopplysninger, inntektArbeidYtelse,
+    fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, hasFetchError,
   };
   const faktaPaneler = useMemo(() => faktaPanelUtils
     .utledFaktaPaneler(faktaPanelDefinisjoner, esPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
