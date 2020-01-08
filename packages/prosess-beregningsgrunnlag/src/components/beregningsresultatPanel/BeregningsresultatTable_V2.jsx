@@ -179,7 +179,7 @@ const createPeriodeHeader = (header) => (
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
   </>
 );
-const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
+const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => (
   <React.Fragment key={`Wr${tableData.dagsatser[0]}`}>
     {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
     { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
@@ -487,8 +487,10 @@ export const createBeregningTableData = createSelector(
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
 const BeregningsresultatTable2 = ({
+  intl,
   vilkaarBG,
   periodeResultatTabeller,
+  halvGVerdi,
 }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
@@ -496,12 +498,14 @@ const BeregningsresultatTable2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders))}
+      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders, intl, halvGVerdi))}
     </Panel>
   );
 };
 
 BeregningsresultatTable2.propTypes = {
+  intl: PropTypes.shape().isRequired,
+  halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
