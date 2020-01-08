@@ -55,6 +55,7 @@ describe('<BeregningsresultatTable2>', () => {
       intl={intlMock}
       periodeResultatTabeller={[tableData]}
       vilkaarBG={vilkaarBG}
+      halvGVerdi={98866}
     />);
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
@@ -77,6 +78,7 @@ describe('<BeregningsresultatTable2>', () => {
       intl={intlMock}
       periodeResultatTabeller={[tableData]}
       vilkaarBG={vilkaarBG}
+      halvGVerdi={98866}
     />);
     const panel = wrapper.find('PanelBase');
     const rows = panel.find('Row');
