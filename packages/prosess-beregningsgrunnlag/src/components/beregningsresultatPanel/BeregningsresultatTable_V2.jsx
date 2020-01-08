@@ -160,8 +160,6 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
       rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
     }
   }
-
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
