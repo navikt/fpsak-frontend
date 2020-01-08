@@ -3,7 +3,8 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar, SimuleringResultat,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar, SimuleringResultat, BeregningsresultatEs,
+  Soknad, Personopplysninger, InntektArbeidYtelse,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
@@ -16,6 +17,10 @@ interface OwnProps {
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   simuleringResultat: SimuleringResultat;
+  beregningresultatEngangsstonad?: BeregningsresultatEs;
+  personopplysninger: Personopplysninger;
+  inntektArbeidYtelse: InntektArbeidYtelse;
+  soknad: Soknad;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -26,8 +31,8 @@ interface OwnProps {
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  harApenRevurdering: boolean;
   hasFetchError: boolean;
+  featureToggles: {};
 }
 
 const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
@@ -50,7 +55,6 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   settPaVent,
   hentBehandling,
   opneSokeside,
-  harApenRevurdering,
   hasFetchError,
   featureToggles,
 }) => (
@@ -69,14 +73,12 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
       vilkar={vilkar}
       simuleringResultat={simuleringResultat}
       beregningresultatEngangsstonad={beregningresultatEngangsstonad}
-      soknad={soknad}
       alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
       oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
       oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       opneSokeside={opneSokeside}
-      harApenRevurdering={harApenRevurdering}
       hasFetchError={hasFetchError}
       featureToggles={featureToggles}
     />

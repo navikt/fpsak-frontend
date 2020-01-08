@@ -1,6 +1,6 @@
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import readOnlyUtils from './readOnlyUtils';
 
@@ -44,27 +44,33 @@ const erProsessStegSynlig = (vilkarTypes, bpVilkar, bpAksjonspunkter) => {
   return hasVilkar || hasNoVilkarDefinitionButAksjonspunkter;
 };
 
-const createData = (panel, aksjonspunkter, vilkar, ekstraPanelData, intl) => ({
+const createData = (panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl) => ({
   ...ekstraPanelData,
+  fagsak,
+  behandling,
+  aksjonspunkter,
+  vilkar,
   aksjonspunkterForSteg: aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode)),
   aksjonspunktDefKoderForSteg: panel.aksjonspunkterCodes,
   vilkarForSteg: vilkar.filter((v) => panel.vilkarCodes.includes(v.vilkarType.kode)),
   label: intl.formatMessage({ id: panel.textCode }),
+  rettigheter,
 });
 
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   const vilkarCodes = vilkar.map((v) => v.vilkarType.kode);
+  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
 
   return prosessStegPanelDefinisjoner
     .filter((panel) => {
       if (panel.showComponent) {
-        return panel.showComponent(createData(panel, aksjonspunkter, vilkar, ekstraPanelData, intl));
+        return panel.showComponent(createData(panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl));
       }
       return panel.vilkarCodes.some((v) => vilkarCodes.includes(v)) && panel.aksjonspunkterCodes.some((a) => apCodes.includes(a));
     })
     .map((panel) => {
-      const ekstra = createData(panel, aksjonspunkter, vilkar, ekstraPanelData, intl);
+      const ekstra = createData(panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl);
       const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
       const filtrerteVilkar = vilkar.filter((v) => panel.vilkarCodes.includes(v.vilkarType.kode));
       const status = panel.overrideStatus ? panel.overrideStatus(ekstra, filtrerteAksjonspunkter) : finnStatus(filtrerteVilkar, filtrerteAksjonspunkter);
@@ -100,6 +106,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
           isReadOnly,
           readOnlySubmitButton: (!(filtrerteAksjonspunkter.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
           overrideReadOnly: isOverrideReadOnly,
+          kanOverstyreAccess: rettigheter.kanOverstyreAccess,
           isAksjonspunktOpen: erAksjonspunktOpen,
           isSubmittable,
           ...panel.getData(ekstra),
@@ -127,10 +134,32 @@ const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessSte
   };
 });
 
+const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, api) => (aksjonspunktModels) => {
+  const { id, versjon } = behandling;
+  const models = aksjonspunktModels.map((ap) => ({
+    '@type': ap.kode,
+    ...ap,
+  }));
+
+  const etterLagringCallback = lagringSideEffectsCallback(aksjonspunktModels);
+
+  const params = {
+    saksnummer: fagsak.saksnummer,
+    behandlingId: id,
+    behandlingVersjon: versjon,
+    bekreftedeAksjonspunktDtoer: models,
+  };
+
+  return dispatch(api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
+    .then(etterLagringCallback);
+};
+
+
 const prosessStegPanelUtils = {
   utledProsessStegPaneler,
   finnValgtPanel,
   formaterPanelerForProsessmeny,
+  getBekreftAksjonspunktCallback,
 };
 
 export default prosessStegPanelUtils;

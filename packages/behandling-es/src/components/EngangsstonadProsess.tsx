@@ -1,23 +1,22 @@
 import React, {
   FunctionComponent, useState, useEffect, useCallback, useMemo,
 } from 'react';
-import { useIntl, WrappedComponentProps } from 'react-intl';
+import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { setSubmitFailed } from 'redux-form';
 import ProcessMenu from '@navikt/nap-process-menu';
 
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { behandlingspunktCodes as bpc, allAccessRights } from '@fpsak-frontend/fp-felles';
+import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, prosessStegPanelUtils, Vilkar,
   BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
-  DataFetcherBehandlingDataV2,
+  DataFetcherBehandlingDataV2, BeregningsresultatEs, IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import prosessStegPanelDefinisjoner from '../definition/prosessStegPanelDefinisjoner';
-import EngangsstonadProsessModaler from './EngangsstonadProsessModaler';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -30,18 +29,13 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
-  opneSokeside: () => void;
   hasFetchError: boolean;
-  harApenRevurdering: boolean;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
+  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  beregningresultatEngangsstonad?: BeregningsresultatEs;
+  featureToggles: {};
+  opneSokeside: () => void;
 }
-
-interface DispatchProps {
-  lagreAksjonspunkt: (params: {}, { keepData: boolean }) => Promise<any>;
-}
-
-type Props = OwnProps & DispatchProps & WrappedComponentProps;
 
 const getPreviewCallback = (dispatch, behandling) => (data) => {
   const brevData = {
@@ -64,35 +58,29 @@ const getPreviewFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker,
   return dispatch(esBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
 };
 
-const getSubmitAksjonspunkter = (dispatch, toggleFatterVedtakModal, toggleOppdatereFagsakContext,
-  fagsak, behandling, oppdaterProsessStegIUrl) => (aksjonspunktModels) => {
-  const isFatterVedtakAp = aksjonspunktModels.some((ap) => ap.kode === aksjonspunktCodesTilbakekreving.FORESLA_VEDTAK);
+const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside) => (aksjonspunktModels) => {
+  const erRevurderingsaksjonspunkt = aksjonspunktModels.some((apModel) => ((apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL
+    || apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) && apModel.sendVarsel));
+  const visIverksetterVedtakModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+  const isVedtakAp = aksjonspunktModels.some((a) => a.isVedtakSubmission);
 
-  const { id, versjon } = behandling;
-  const models = aksjonspunktModels.map((ap) => ({
-    '@type': ap.kode,
-    ...ap,
-  }));
+  if (visIverksetterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+    toggleOppdatereFagsakContext(false);
+  }
 
-  const params = {
-    saksnummer: fagsak.saksnummer,
-    behandlingId: id,
-    behandlingVersjon: versjon,
-    bekreftedeAksjonspunktDtoer: models,
+  // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
+  return () => {
+    if (visIverksetterVedtakModal) {
+      toggleIverksetterVedtakModal(true);
+    } else if (erRevurderingsaksjonspunkt) {
+      opneSokeside();
+    } else {
+      oppdaterProsessStegIUrl('default');
+    }
   };
-
-  return dispatch(esBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(() => {
-      if (isFatterVedtakAp) {
-        toggleOppdatereFagsakContext(false);
-        toggleFatterVedtakModal(true);
-      } else {
-        oppdaterProsessStegIUrl('default');
-      }
-    });
 };
 
-const EngangsstonadProsess: FunctionComponent<Props> = ({
+const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   fagsak,
   behandling,
   aksjonspunkter,
@@ -103,23 +91,18 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   navAnsatt,
   valgtProsessSteg,
   hasFetchError,
-  harApenRevurdering,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegIUrl,
   featureToggles,
+  opneSokeside,
 }) => {
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
-  const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const [overstyrteProsessSteg, toggleOverstyrteProsessSteg] = useState([]);
-
-  const submitAksjonspunkter = useCallback(() => getSubmitAksjonspunkter(dispatch,
-    toggleFatterVedtakModal, toggleOppdatereFagsakContext, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
-  const previewCallback = useCallback(() => getPreviewCallback(dispatch, behandling), []);
-  const previewFptilbakeCallback = useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []);
-  const dispatchSubmitFailed = useCallback(() => dispatch(setSubmitFailed), []);
+  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
+  const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
+  const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
 
   useEffect(() => {
     if (skalOppdatereFagsakKontekst) {
@@ -127,51 +110,46 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
     }
   }, [behandling.versjon]);
 
-  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
+
   const ekstraPanelData = {
-    previewCallback,
-    previewFptilbakeCallback,
-    rettigheter,
-    aksjonspunkter,
-    vilkar,
+    previewCallback: useCallback(() => getPreviewCallback(dispatch, behandling), []),
+    previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
+    dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
     overstyrteProsessSteg,
     alleKodeverk,
-    dispatchSubmitFailed,
     featureToggles,
     simuleringResultat,
-    fagsak,
     beregningresultatEngangsstonad,
-    behandlingsresultat: behandling.behandlingsresultat,
   };
-
-  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(
-    prosessStegPanelDefinisjoner, ekstraPanelData, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
-  ), [
-    behandling.versjon,
-  ]);
+  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData,
+    behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);
 
   const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
+  const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
+  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
 
   const formaterteProsessStegPaneler = useMemo(() => prosessStegPanelUtils.formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanelKode),
     [behandling.versjon, valgtPanelKode]);
 
-  const processMenuCallback = useCallback((index) => {
-    const nyttValg = prosessStegPaneler[index].urlCode;
-    const forrigeValg = valgtProsessSteg;
-    oppdaterProsessStegIUrl(!forrigeValg || nyttValg !== forrigeValg ? nyttValg : undefined);
+  const prosessmenyCallback = useCallback((index) => {
+    const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
+    oppdaterProsessStegIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined);
   }, [behandling.versjon, valgtProsessSteg]);
+
+  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside);
+  const bekreftAksjonspunktCallback = useCallback(() => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
+    lagringSideEffectsCallback, fagsak, behandling, esBehandlingApi), [behandling.versjon]);
 
   return (
     <>
-      <EngangsstonadProsessModaler
-        behandling={behandling}
-        harApenRevurdering={harApenRevurdering}
-        visFatterVedtakModal={visFatterVedtakModal}
-        toggleFatterVedtakModal={toggleFatterVedtakModal}
+      <IverksetterVedtakStatusModal
+        visModal={visIverksetterVedtakModal}
+        lukkModal={toggleIverksetterModalOgGaTilSokeside}
+        behandlingsresultat={behandling.behandlingsresultat}
       />
-      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={processMenuCallback} />
-      {(valgtPanel && valgtPanel.erStegBehandlet) && (
+      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={prosessmenyCallback} />
+      {erStegBehandlet && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtPanel.aksjonspunkter}
@@ -184,22 +162,19 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
             render={(dataProps) => valgtPanel.renderComponent({
               ...dataProps,
               alleKodeverk,
-              submitCallback: submitAksjonspunkter,
-              kanOverstyreAccess: rettigheter.kanOverstyreAccess,
+              submitCallback: bekreftAksjonspunktCallback,
               toggleOverstyring: toggleOverstyrteProsessSteg,
               ...valgtPanel.componentData,
             })}
           />
         </MargMarkering>
       )}
-      {(valgtPanelKode === bpc.VEDTAK && behandling.behandlingHenlagt) && (
+      {erHenlagtOgVedtakStegValgt && (
         <BehandlingHenlagtPanel />
       )}
-      {(valgtPanel && !valgtPanel.erStegBehandlet && (valgtPanelKode !== bpc.VEDTAK
-        || (valgtPanelKode === bpc.VEDTAK && !behandling.behandlingHenlagt))) && (
+      {(valgtPanelKode && !erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
         <ProsessStegIkkeBehandletPanel />
       )}
-
     </>
   );
 };

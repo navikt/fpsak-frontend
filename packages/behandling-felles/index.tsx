@@ -32,3 +32,4 @@ export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType'
 export { default as Soknad } from './src/types/soknadTsType';
 export { default as InntektArbeidYtelse } from './src/types/inntektArbeidYtelseTsType';
 export { default as SimuleringResultat } from './src/types/simuleringResultatTsType';
+export { default as BeregningsresultatEs } from './src/types/beregningsresultatEsTsType';

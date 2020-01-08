@@ -6,8 +6,8 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
-  DataFetcherBehandlingDataV2, Aksjonspunkt, BehandlingDataProvider,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, BeregningsresultatEs,
+  DataFetcherBehandlingDataV2, Aksjonspunkt, BehandlingDataProvider, Vilkar, SimuleringResultat, Personopplysninger, InntektArbeidYtelse, Soknad,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
@@ -19,7 +19,13 @@ const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR
 
 interface DataProps {
   behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
+  aksjonspunkter: Aksjonspunkt[];
+  vilkar: Vilkar[];
+  personopplysninger: Personopplysninger;
+  soknad: Soknad;
+  inntektArbeidYtelse: InntektArbeidYtelse;
+  simuleringResultat: SimuleringResultat;
+  beregningresultatEngangsstonad?: BeregningsresultatEs;
 }
 
 interface OwnProps {
@@ -38,6 +44,7 @@ interface OwnProps {
   };
   opneSokeside: () => void;
   harApenRevurdering: boolean;
+  featureToggles: {};
 }
 
 interface StateProps {
@@ -100,7 +107,6 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
       settPaVent,
       hentBehandling,
       opneSokeside,
-      harApenRevurdering,
       hasFetchError,
       featureToggles,
     } = this.props;
@@ -132,7 +138,6 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
                 settPaVent={settPaVent}
                 hentBehandling={hentBehandling}
                 opneSokeside={opneSokeside}
-                harApenRevurdering={harApenRevurdering}
                 hasFetchError={hasFetchError}
                 featureToggles={featureToggles}
                 {...dataProps}

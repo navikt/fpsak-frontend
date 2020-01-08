@@ -175,8 +175,8 @@ const prosessStegPanelDefinisjoner = [{
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
   }),
   showComponent: () => true,
-  overrideStatus: ({ vilkar, aksjonspunkter, behandlingsresultat }, panelAksjonspunkter) => findStatusForVedtak(
-    vilkar, aksjonspunkter, panelAksjonspunkter, behandlingsresultat,
+  overrideStatus: ({ vilkar, aksjonspunkter, behandling }, panelAksjonspunkter) => findStatusForVedtak(
+    vilkar, aksjonspunkter, panelAksjonspunkter, behandling.behandlingsresultat,
   ),
 }];
 
