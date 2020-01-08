@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { VurderSoknadsfristForeldrepengerFormImpl as UnwrappedForm } from './VurderSoknadsfristForeldrepengerForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-soknadsfrist';
 
 describe('<VurderSoknadsfristForeldrepengerForm>', () => {
   it('skal rendre form og vise søknadsfristdato som er lik mottatt dato minus antallDagerSoknadLevertForSent', () => {

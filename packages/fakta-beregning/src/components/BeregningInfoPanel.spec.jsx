@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
@@ -9,6 +9,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import { BeregningInfoPanelImpl } from './BeregningInfoPanel';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-beregning';
 
 const {
   AVKLAR_AKTIVITETER,
@@ -49,7 +50,6 @@ describe('<BeregningInfoPanel>', () => {
     />);
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om beregning');
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.BEREGNING);
     expect(panel.prop('readOnly')).is.true;

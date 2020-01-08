@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import ToTrinnsForm from './ToTrinnsForm';
 import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
 import { ApprovalPanel, mapPropsToContext } from './ApprovalPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 describe('<ApprovalPanel>', () => {
   const getBehandling = () => ({

@@ -54,7 +54,7 @@ export const SykdomOgSkadePeriode = ({
   }
 
   const isEdited = resultat === uttakPeriodeVurdering.PERIODE_OK_ENDRET
-  && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
+    && readOnly && behandlingStatusKode === behandlingStatus.FATTER_VEDTAK;
 
   // const periodeOkDisabled = !bekreftet;
 
@@ -80,6 +80,7 @@ export const SykdomOgSkadePeriode = ({
           <RadioGroupField
             direction="vertical"
             name="resultat"
+            DOMName={`resultat_${id}`}
             bredde="M"
             validate={[required]}
             readOnly={readOnly}
@@ -96,15 +97,15 @@ export const SykdomOgSkadePeriode = ({
             />
           </RadioGroupField>
           {resultat === uttakPeriodeVurdering.PERIODE_OK && !readOnly && (
-          <div className={styles.addPeriodeSykdom}>
-            <ArrowBox>
-              <FieldArray
-                name="dokumentertePerioder"
-                component={DokumentertePerioderPeriodePicker}
-                props={{ fraDato, tilDato, readOnly }}
-              />
-            </ArrowBox>
-          </div>
+            <div className={styles.addPeriodeSykdom}>
+              <ArrowBox>
+                <FieldArray
+                  name="dokumentertePerioder"
+                  component={DokumentertePerioderPeriodePicker}
+                  props={{ fraDato, tilDato, readOnly }}
+                />
+              </ArrowBox>
+            </div>
           )}
           <VerticalSpacer twentyPx />
           <div className={styles.textAreaStyle}>

@@ -1,10 +1,11 @@
 import React from 'react';
 import sinon from 'sinon';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { TimeLineButton } from '@fpsak-frontend/tidslinje';
 import DelOppPeriodeModal from './DelOppPeriodeModal';
 import { PeriodeController } from './PeriodeController';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-tilbakekreving';
 
 
 describe('<PeriodeController>', () => {
@@ -46,11 +47,13 @@ describe('<PeriodeController>', () => {
 
   it('skal splitte periode via modal', async () => {
     const response = {
-      perioder: [{
-        belop: 400,
-      }, {
-        belop: 600,
-      }],
+      payload: {
+        perioder: [{
+          belop: 400,
+        }, {
+          belop: 600,
+        }],
+      },
     };
     const beregnBelop = () => Promise.resolve(response);
     const oppdaterSplittedePerioder = sinon.spy();

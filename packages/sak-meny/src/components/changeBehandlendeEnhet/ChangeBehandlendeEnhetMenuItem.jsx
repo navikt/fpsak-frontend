@@ -29,7 +29,9 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
   }
 
   submit(formValues) {
-    const { behandlingIdentifier, behandlingVersjon, nyBehandlendeEnhet } = this.props;
+    const {
+      behandlingIdentifier, behandlingVersjon, nyBehandlendeEnhet, behandlingType, erPapirsoknad,
+    } = this.props;
     const { nyEnhet } = this.state;
     const values = {
       behandlingVersjon,
@@ -38,7 +40,7 @@ class ChangeBehandlendeEnhetMenuItem extends Component {
       enhetId: nyEnhet.enhetId,
       begrunnelse: formValues.begrunnelse,
     };
-    nyBehandlendeEnhet(values, behandlingIdentifier);
+    nyBehandlendeEnhet(values, behandlingIdentifier, behandlingType, erPapirsoknad);
 
     this.hideModal();
   }
@@ -99,6 +101,8 @@ ChangeBehandlendeEnhetMenuItem.propTypes = {
   })).isRequired,
   nyBehandlendeEnhet: PropTypes.func.isRequired,
   byttBehandlendeEnhetEnabled: PropTypes.bool,
+  behandlingType: PropTypes.shape(),
+  erPapirsoknad: PropTypes.bool.isRequired,
 };
 
 ChangeBehandlendeEnhetMenuItem.defaultProps = {
@@ -107,6 +111,7 @@ ChangeBehandlendeEnhetMenuItem.defaultProps = {
   behandlendeEnhetId: undefined,
   behandlendeEnhetNavn: undefined,
   byttBehandlendeEnhetEnabled: false,
+  behandlingType: undefined,
 };
 
 export default ChangeBehandlendeEnhetMenuItem;

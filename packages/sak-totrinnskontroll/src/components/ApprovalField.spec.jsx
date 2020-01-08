@@ -1,9 +1,9 @@
 import React from 'react';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ApprovalField from './ApprovalField';
 import getAksjonspunktText from './ApprovalTextUtils';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
 
 describe('<ApprovalField>', () => {

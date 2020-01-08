@@ -75,6 +75,6 @@ VilkarresultatMedBegrunnelse.transformValues = (values) => ({
   begrunnelse: values.begrunnelse,
 });
 
-VilkarresultatMedBegrunnelse.validate = (values) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
+VilkarresultatMedBegrunnelse.validate = (values = {}) => VilkarResultPicker.validate(values.erVilkarOk, values.avslagCode);
 
 export default VilkarresultatMedBegrunnelse;

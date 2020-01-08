@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
+  decodeHtmlEntity, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { TextAreaField } from '@fpsak-frontend/form';
 import { ElementWrapper } from '@fpsak-frontend/shared-components';
@@ -17,20 +17,19 @@ const maxLength1500 = maxLength(1500);
 const FaktaBegrunnelseTextField = ({
   isReadOnly,
   isSubmittable,
-  isDirty,
   hasBegrunnelse,
   labelCode,
   hasVurderingText,
   name,
 }) => (
   <ElementWrapper>
-    {((isSubmittable && isDirty) || hasBegrunnelse)
+    {((isSubmittable) || hasBegrunnelse)
     && (
     <div className={styles.begrunnelseTextField}>
       <TextAreaField
         name={name}
         label={isReadOnly ? '' : { id: hasVurderingText ? 'FaktaBegrunnelseTextField.Vurdering' : labelCode }}
-        validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+        validate={[required, minLength3, maxLength1500, hasValidText]}
         textareaClass={isReadOnly ? styles.explanationTextareaReadOnly : styles.explanationTextarea}
         maxLength={1500}
         readOnly={isReadOnly}
@@ -43,7 +42,6 @@ const FaktaBegrunnelseTextField = ({
 FaktaBegrunnelseTextField.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   isSubmittable: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
   hasBegrunnelse: PropTypes.bool.isRequired,
   labelCode: PropTypes.string,
   hasVurderingText: PropTypes.bool,

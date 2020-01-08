@@ -80,8 +80,8 @@ const getOpphorsdato = createSelector(
     if (medlemskapFom) {
       return medlemskapFom;
     }
-    return behandlingsresultat.skjaeringstidspunktForeldrepenger
-      ? behandlingsresultat.skjaeringstidspunktForeldrepenger : '';
+    return behandlingsresultat.skjæringstidspunkt
+      ? behandlingsresultat.skjæringstidspunkt.dato : '';
   },
 );
 

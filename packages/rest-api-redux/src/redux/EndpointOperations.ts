@@ -37,11 +37,13 @@ class EndpointOperations {
 
   getRestApiMeta = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.meta);
 
+  getRestApiCacheParams = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.cacheParams);
+
   getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error);
 
   getRestApiStarted = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.started);
 
-  getRestApiFinished = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.finished || apiState.error);
+  getRestApiFinished = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.finished);
 
   getRestApiPollingTimeout = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.pollingTimeout);
 }

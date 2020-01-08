@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
@@ -27,7 +28,7 @@ const EMPTY_LIST = [];
 const getAksjonspunkt = (aksjonspunkter) => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodes.FODSELTILRETTELEGGING)[0].begrunnelse;
 
 const utledFormSectionName = (arbeidsforhold) => {
-  let navn = arbeidsforhold.arbeidsgiverNavn;
+  let navn = arbeidsforhold.arbeidsgiverNavn.replace(new RegExp(/\./, 'g'), '_');
   if (arbeidsforhold.arbeidsgiverIdent) {
     navn += arbeidsforhold.arbeidsgiverIdent;
   }
@@ -168,15 +169,56 @@ const transformValues = (values, arbeidsforhold) => {
   }]);
 };
 
-const validateForm = (values, arbeidsforhold) => {
-  const errors = {};
-  const validerArbeidsforholdList = [];
-  arbeidsforhold.forEach((a) => { validerArbeidsforholdList.push(values[utledFormSectionName(a)]); });
+const finnAntallDatoerMappedByDato = (datoer) => datoer.reduce((acc, dato) => ({
+  ...acc,
+  [dato]: (acc[dato] || 0) + 1,
+}), {});
+
+export const validateForm = (values, arbeidsforhold) => {
+  let errors = {};
+  if (Object.keys(values).length === 0) {
+    return errors;
+  }
+  const formSectionNames = arbeidsforhold.map((a) => utledFormSectionName(a));
+  const validerArbeidsforholdList = formSectionNames.map((name) => values[name]);
   const ingenTilretteleggingSkalBrukes = validerArbeidsforholdList.every((a) => (a.skalBrukes === false));
   if (ingenTilretteleggingSkalBrukes) {
     // eslint-disable-next-line no-underscore-dangle
     errors._error = 'FodselOgTilretteleggingFaktaForm.MinstEnTilretteleggingMåBrukes';
   }
+
+  const { termindato } = values;
+  Object.keys(values)
+    .filter((key) => formSectionNames.includes(key))
+    .filter((key) => values[key].skalBrukes)
+    .forEach((key) => {
+      if (!moment(termindato).isAfter(moment(values[key].tilretteleggingBehovFom))) {
+        errors[key] = {
+          tilretteleggingBehovFom: [{ id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato' }],
+        };
+        errors = {
+          ...errors,
+          termindato: [{ id: 'FodselOgTilretteleggingFaktaForm.TermindatoForDato' }],
+        };
+      }
+    });
+
+  Object.keys(values)
+    .filter((key) => formSectionNames.includes(key))
+    .forEach((key) => {
+      const td = values[key].tilretteleggingDatoer;
+      const antallMappedByDato = finnAntallDatoerMappedByDato(td.map((d) => d.fom));
+      const harDuplikat = Object.keys(antallMappedByDato).some((k) => antallMappedByDato[k] > 1);
+      if (harDuplikat) {
+        const tilretteleggingDatoerErrors = td
+          .reduce((acc, t) => (antallMappedByDato[t.fom] > 1
+            ? acc.concat({ fom: [{ id: 'FodselOgTilretteleggingFaktaForm.DuplikateDatoer' }] }) : acc.concat({})), []);
+        errors[key] = {
+          tilretteleggingDatoer: tilretteleggingDatoerErrors,
+        };
+      }
+    });
+
   return errors;
 };
 

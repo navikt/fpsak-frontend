@@ -1,10 +1,11 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import UttakPeriode from './UttakPeriode';
 import UttakPeriodeType from './UttakPeriodeType';
 import UttakPeriodeInnhold from './UttakPeriodeInnhold';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const getMockedFields = (fieldNames, perioder) => {
   const field = {
@@ -89,6 +90,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
     const uttakPeriodeType = wrapper.find(UttakPeriodeType);
     expect(uttakPeriodeType).to.have.length(2);
@@ -120,6 +122,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -150,6 +153,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const periodeContainer = wrapper.find('div.periodeContainer');
@@ -185,6 +189,7 @@ describe('<UttakPeriode>', () => {
         kodeverk: '1',
       }}
       familiehendelse={{}}
+      sisteUttakdatoFørsteSeksUker={{}}
       {...otherProps}
     />);
 

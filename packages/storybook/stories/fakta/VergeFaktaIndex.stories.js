@@ -2,14 +2,14 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
-import vergeType from '@fpsak-frontend/fakta-verge/src/kodeverk/vergeType';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -30,26 +30,6 @@ const aksjonspunkter = [{
 
 const verge = {};
 
-const alleKodeverk = {
-  [kodeverkTyper.VERGE_TYPE]: [{
-    kode: vergeType.BARN,
-    navn: 'Barn',
-  }, {
-    kode: vergeType.FBARN,
-    navn: 'Foreldreløst barn',
-  }, {
-    kode: vergeType.VOKSEN,
-    navn: 'Voksen',
-  }, {
-    kode: vergeType.ADVOKAT,
-    navn: 'Advokat',
-  }, {
-    kode: vergeType.ANNEN_F,
-    navn: 'Annen foreldre',
-  },
-  ],
-};
-
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
@@ -60,7 +40,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/VergeFaktaIndex',
+  title: 'fakta/fakta-verge',
   component: VergeFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

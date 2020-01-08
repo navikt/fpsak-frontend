@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
 
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
+import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import {
   faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling,
 } from '@fpsak-frontend/fp-felles';
@@ -64,6 +65,7 @@ export const MedlemskapInfoPanel = ({
   behandlingId,
   behandlingVersjon,
   behandlingType,
+  behandlingStatus,
   soknad,
   inntektArbeidYtelse,
   alleKodeverk,
@@ -96,6 +98,7 @@ export const MedlemskapInfoPanel = ({
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               behandlingId={behandlingId}
               behandlingVersjon={behandlingVersjon}
+              behandlingStatus={behandlingStatus}
               behandlingPaaVent={behandlingPaaVent}
               aksjonspunkter={aksjonspunkter}
               soknad={soknad}
@@ -147,7 +150,8 @@ MedlemskapInfoPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   fagsakPerson: PropTypes.shape().isRequired,
-  behandlingType: PropTypes.shape().isRequired,
+  behandlingType: kodeverkObjektPropType.isRequired,
+  behandlingStatus: kodeverkObjektPropType.isRequired,
   soknad: medlemskapSoknadPropType.isRequired,
   inntektArbeidYtelse: medlemskapInntektArbeidYtelsePropType.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
@@ -161,12 +165,12 @@ MedlemskapInfoPanel.defaultProps = {
   isForeldrepenger: true,
 };
 
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const aksjonspunkterMinusAvklarStartDato = ownProps.aksjonspunkter.filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode));
-  return () => ({
-    aksjonspunkterMinusAvklarStartDato,
-  });
-};
+const filtrerAksjonspunkter = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => aksjonspunkter
+  .filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode)));
+
+const mapStateToPropsFactory = (state, ownProps) => ({
+  aksjonspunkterMinusAvklarStartDato: filtrerAksjonspunkter(ownProps),
+});
 
 const medlemAksjonspunkter = [AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN, AVKLAR_OM_BRUKER_ER_BOSATT, AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
   AVKLAR_OPPHOLDSRETT, AVKLAR_LOVLIG_OPPHOLD, AVKLAR_FORTSATT_MEDLEMSKAP, OVERSTYR_AVKLAR_STARTDATO];

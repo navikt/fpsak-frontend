@@ -172,8 +172,12 @@ FerieOgArbeidsPeriode.defaultProps = {
   førsteUttaksdato: undefined,
 };
 
-const validateForm = ({ nyFom, nyTom }) => {
+const validateForm = (values) => {
   const errors = {};
+  if (!values) {
+    return errors;
+  }
+  const { nyFom, nyTom } = values;
 
   const invalid = required(nyFom) || hasValidPeriod(nyFom, nyTom);
 

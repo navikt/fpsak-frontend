@@ -40,7 +40,8 @@ export const henleggBehandlingAccess = accessSelector(
 
 const settBehandlingPaVentAccessSelector = (navAnsatt, harSoknad, erIInnhentSoknadopplysningerSteg, type) => {
   const isBehandlingAvKlageEllerInnsynEllerTilbakekreving = type
-    ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN || type.kode === BehandlingType.TILBAKEKREVING
+    ? type.kode === BehandlingType.KLAGE || type.kode === BehandlingType.DOKUMENTINNSYN
+      || type.kode === BehandlingType.TILBAKEKREVING || type.kode === BehandlingType.TILBAKEKREVING_REVURDERING
     : false;
 
   if (harSoknad || erIInnhentSoknadopplysningerSteg || isBehandlingAvKlageEllerInnsynEllerTilbakekreving) {

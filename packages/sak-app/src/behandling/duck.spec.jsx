@@ -5,7 +5,7 @@ import { expect } from 'chai';
 
 import { reduxRestApi } from '../data/fpsakApi';
 import {
-  behandlingReducer, setSelectedBehandlingId,
+  behandlingReducer, setTempBehandlingId,
 } from './duck';
 
 const middlewares = [thunk];
@@ -29,20 +29,22 @@ describe('Behandling-reducer', () => {
   it('skal returnere initial state', () => {
     expect(behandlingReducer(undefined, {})).to.eql({
       behandlingId: undefined,
-      behandlingInfoHolder: {},
+      behandlingVersjon: undefined,
+      tempBehandlingId: undefined,
     });
   });
 
   it('skal markere i state at behandling er valgt', () => {
     const store = mockStore();
 
-    store.dispatch(setSelectedBehandlingId(1));
+    store.dispatch(setTempBehandlingId(1));
 
     expect(store.getActions()).to.have.length(1);
 
     expect(behandlingReducer(undefined, store.getActions()[0])).to.eql({
-      behandlingId: 1,
-      behandlingInfoHolder: {},
+      tempBehandlingId: 1,
+      behandlingId: undefined,
+      behandlingVersjon: undefined,
     });
   });
 });

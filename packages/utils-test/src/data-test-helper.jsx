@@ -44,6 +44,7 @@ export const dummyFagsak = (saksnummer = 12345) => ({
   sakstype: { kode: 'ES', navn: 'test' },
   status: { kode: 'OPPR', navn: 'test' },
   barnFodt: '10.10.2017',
+  dekningsgrad: 100,
   antallBarn: 1,
   person: {
     navn: 'Espen',

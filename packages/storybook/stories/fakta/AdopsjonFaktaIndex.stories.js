@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -10,6 +9,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -50,20 +51,13 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.FAR_SOEKER_TYPE]: [{
-    kode: 'ADOPTERER_ALENE',
-    navn: 'Adopterer alene',
-  }],
-};
-
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/AdopsjonFaktaIndex',
+  title: 'fakta/fakta-adopsjon',
   component: AdopsjonFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

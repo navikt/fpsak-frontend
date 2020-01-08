@@ -25,6 +25,10 @@ describe('<PauseBehandlingMenuItem>', () => {
       setBehandlingOnHold={sinon.spy()}
       settBehandlingPaVentEnabled
       menyKodeverk={menyKodeverk}
+      behandlingType={{
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      }}
+      erPapirsoknad={false}
     />);
 
     expect(wrapper.find(SettBehandlingPaVentForm)).has.length(0);
@@ -39,6 +43,10 @@ describe('<PauseBehandlingMenuItem>', () => {
       setBehandlingOnHold={sinon.spy()}
       settBehandlingPaVentEnabled
       menyKodeverk={menyKodeverk}
+      behandlingType={{
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      }}
+      erPapirsoknad={false}
     />);
 
     const button = wrapper.find(MenuButton);
@@ -63,6 +71,10 @@ describe('<PauseBehandlingMenuItem>', () => {
       setBehandlingOnHold={sinon.spy()}
       settBehandlingPaVentEnabled
       menyKodeverk={menyKodeverk}
+      behandlingType={{
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      }}
+      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });
@@ -85,6 +97,10 @@ describe('<PauseBehandlingMenuItem>', () => {
       setBehandlingOnHold={behandlingOnHoldCallback}
       settBehandlingPaVentEnabled
       menyKodeverk={menyKodeverk}
+      behandlingType={{
+        kode: behandlingType.FORSTEGANGSSOKNAD,
+      }}
+      erPapirsoknad={false}
     />);
 
     wrapper.setState({ showModal: true });
@@ -96,7 +112,7 @@ describe('<PauseBehandlingMenuItem>', () => {
     wrapper.update();
 
     expect(behandlingOnHoldCallback.called).is.true;
-    expect(behandlingOnHoldCallback.getCalls()[0].args).has.length(2);
+    expect(behandlingOnHoldCallback.getCalls()[0].args).has.length(4);
     expect(behandlingOnHoldCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,

@@ -87,20 +87,10 @@ const personopplysning = {
       barn: [],
       barnSoktFor: [],
       barnFraTpsRelatertTilSoknad: [],
-      opplysningsKilde: {
-        kode: 'UDEFINERT',
-        navn: null,
-        kodeverk: 'OPPLYSNINGSKILDE',
-      },
       harVerge: false,
     },
   ],
   barnFraTpsRelatertTilSoknad: [],
-  opplysningsKilde: {
-    kode: 'TPS',
-    navn: 'Kilden er TPS',
-    kodeverk: 'OPPLYSNINGSKILDE',
-  },
   harVerge: false,
 };
 

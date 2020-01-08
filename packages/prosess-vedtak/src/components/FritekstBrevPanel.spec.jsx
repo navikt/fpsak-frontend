@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import FritekstBrevPanel from './FritekstBrevPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<FritekstBrevPanel>', () => {
   const eventCallback = sinon.spy();

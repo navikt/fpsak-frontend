@@ -1,14 +1,17 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+
 import { MedlemskapInfoPanel } from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
 describe('<MedlemskapInfoPanel>', () => {
   it('skal vise ekspanderbart panel', () => {
@@ -28,6 +31,9 @@ describe('<MedlemskapInfoPanel>', () => {
       behandlingType={{
         kode: 'TEst',
       }}
+      behandlingStatus={{
+        kode: behandlingStatus.BEHANDLING_UTREDES,
+      }}
       soknad={{}}
       inntektArbeidYtelse={{}}
       alleKodeverk={{}}
@@ -40,7 +46,7 @@ describe('<MedlemskapInfoPanel>', () => {
 
     const panel = wrapper.find(FaktaEkspandertpanel);
     expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('MedlemskapInfoPanel.Medlemskap');
+    expect(panel.prop('title')).to.eql('Fakta om medlemskap');
     expect(panel.prop('hasOpenAksjonspunkter')).is.false;
     expect(panel.prop('isInfoPanelOpen')).is.false;
     expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.MEDLEMSKAPSVILKARET);
@@ -79,6 +85,9 @@ describe('<MedlemskapInfoPanel>', () => {
       behandlingVersjon={1}
       behandlingType={{
         kode: 'TEst',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
       inntektArbeidYtelse={{}}
@@ -127,6 +136,9 @@ describe('<MedlemskapInfoPanel>', () => {
       behandlingType={{
         kode: 'TEst',
       }}
+      behandlingStatus={{
+        kode: behandlingStatus.BEHANDLING_UTREDES,
+      }}
       soknad={{}}
       inntektArbeidYtelse={{}}
       alleKodeverk={{}}
@@ -174,6 +186,9 @@ describe('<MedlemskapInfoPanel>', () => {
       behandlingType={{
         kode: 'TEst',
       }}
+      behandlingStatus={{
+        kode: behandlingStatus.BEHANDLING_UTREDES,
+      }}
       soknad={{}}
       inntektArbeidYtelse={{}}
       alleKodeverk={{}}
@@ -204,6 +219,9 @@ describe('<MedlemskapInfoPanel>', () => {
       behandlingVersjon={1}
       behandlingType={{
         kode: 'TEst',
+      }}
+      behandlingStatus={{
+        kode: behandlingStatus.BEHANDLING_UTREDES,
       }}
       soknad={{}}
       inntektArbeidYtelse={{}}

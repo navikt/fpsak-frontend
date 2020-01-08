@@ -5,10 +5,7 @@ const APP_DIR = path.join(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
   resolve: {
-    alias: {
-      behandlingForstegangOgRevurdering: path.join(PACKAGES_DIR, 'fp-behandling-forstegang-og-revurdering'),
-    },
-    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx', '.less'],
   },
 
   externals: {

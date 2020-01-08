@@ -1,6 +1,5 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import VurderOgFastsettSN, { VurderOgFastsettSNImpl } from './VurderOgFastsettSN';
 import VurderVarigEndretEllerNyoppstartetSN,
@@ -9,11 +8,11 @@ import VurderVarigEndretEllerNyoppstartetSN,
 }
   from './VurderVarigEndretEllerNyoppstartetSN';
 import FastsettSN, { begrunnelseFieldname as fastsettingBegrunnelse, fastsettInntektFieldname } from './FastsettSN';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
@@ -121,10 +120,6 @@ describe('<VurderVarigEndretEllerNyoppstartetSN>', () => {
         kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
         begrunnelse: 'Ok varig endring.',
         erVarigEndretNaering: true,
-      },
-      {
-        kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        begrunnelse: 'Ok fastsatt inntekt.',
         bruttoBeregningsgrunnlag: 650000,
       },
     ];

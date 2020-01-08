@@ -1,9 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import { VedtakHelpTextPanelImpl } from './VedtakHelpTextPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<VedtakHelpTextPanel>', () => {
   it('skal vise hjelpetekst for vurdering av dokument når en har dette aksjonspunktet', () => {
@@ -16,7 +17,7 @@ describe('<VedtakHelpTextPanel>', () => {
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
     expect(helpText.children()).to.have.length(1);
-    expect(helpText.childAt(0).text()).is.eql('VedtakForm.VurderDokument');
+    expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen');
   });
 
 
@@ -30,8 +31,8 @@ describe('<VedtakHelpTextPanel>', () => {
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
     expect(helpText.children()).to.have.length(2);
-    expect(helpText.childAt(0).text()).is.eql('VedtakForm.VurderAnnenYtelse');
-    expect(helpText.childAt(1).text()).is.eql('VedtakForm.VurderDokument');
+    expect(helpText.childAt(0).text()).is.eql('Vurder om den åpne oppgaven «Vurder konsekvens for ytelse» påvirker behandlingen');
+    expect(helpText.childAt(1).text()).is.eql('Vurder om den åpne oppgaven «Vurder dokument» påvirker behandlingen');
   });
 
 

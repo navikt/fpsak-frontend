@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -11,6 +11,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VedtakFritekstPanel from './VedtakFritekstPanel';
 import { VedtakAvslagPanelImpl } from './VedtakAvslagPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 const engangsstonad = fagsakYtelseType.ENGANGSSTONAD;
 const foreldrepenger = fagsakYtelseType.FORELDREPENGER;
@@ -129,11 +130,11 @@ describe('<VedtakAvslagPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.EngangsstonadIkkeInnvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });
@@ -154,11 +155,11 @@ describe('<VedtakAvslagPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.EngangsstonadIkkeInnvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Engangsstønad er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -179,11 +180,11 @@ describe('<VedtakAvslagPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.ForeldrepengerIkkeInnvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(0);
   });
@@ -204,11 +205,11 @@ describe('<VedtakAvslagPanel>', () => {
 
     const undertekstFields = wrapper.find('Undertekst');
     expect(undertekstFields).to.have.length(2);
-    expect(undertekstFields.first().childAt(0).text()).to.eql('VedtakForm.Resultat');
+    expect(undertekstFields.first().childAt(0).text()).to.eql('Resultat');
 
     const normaltekstFields = wrapper.find('Normaltekst');
     expect(normaltekstFields).to.have.length(2);
-    expect(normaltekstFields.first().childAt(0).text()).to.eql('VedtakForm.ForeldrepengerIkkeInnvilget');
+    expect(normaltekstFields.first().childAt(0).text()).to.eql('Foreldrepenger er avslått');
 
     expect(wrapper.find(VedtakFritekstPanel)).to.have.length(1);
   });

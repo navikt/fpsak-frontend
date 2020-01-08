@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
@@ -8,6 +8,7 @@ import { FaktaBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import { OmsorgOgForeldreansvarInfoPanelImpl } from './OmsorgOgForeldreansvarInfoPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg-og-foreldreansvar';
 
 
 describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
@@ -46,7 +47,7 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
 
     const panel = wrapper.find('FaktaEkspandertpanel');
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('OmsorgOgForeldreansvarInfoPanel.Omsorg');
+    expect(panel.prop('title')).to.eql('Fakta om omsorg og foreldreansvar');
     expect(panel.prop('hasOpenAksjonspunkter')).is.true;
     expect(panel.prop('isInfoPanelOpen')).is.true;
     expect(panel.prop('faktaId')).to.eql('omsorgsvilkaaret');

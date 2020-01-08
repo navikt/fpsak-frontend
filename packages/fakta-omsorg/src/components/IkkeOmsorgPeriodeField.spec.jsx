@@ -1,12 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DatepickerField } from '@fpsak-frontend/form';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 
 import IkkeOmsorgPeriodeField from './IkkeOmsorgPeriodeField';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg';
 
 const getRemoveButton = () => <button id="avslutt" type="button" />;
 

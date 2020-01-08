@@ -1,6 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -9,6 +9,7 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import OppholdINorgeOgAdresserFaktaPanel from './OppholdINorgeOgAdresserFaktaPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
 describe('<OppholdINorgeOgAdresserFaktaPanel>', () => {
   const opphold = {

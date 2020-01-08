@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { UttakPeriodeInnhold } from './UttakPeriodeInnhold';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
 const behandlingStatusKode = behandlingStatus.BEHANDLING_UTREDES;
 
@@ -41,6 +41,7 @@ describe('<UttakPeriodeInnhold>', () => {
       behandlingId={1}
       behandlingVersjon={1}
       getKodeverknavn={sinon.spy()}
+      sisteUttakdatoFørsteSeksUker={{}}
     />);
 
     const verticalSpacer = wrapper.find(VerticalSpacer);

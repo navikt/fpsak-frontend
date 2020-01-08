@@ -10,11 +10,11 @@ import { CommonBehandlingsprosessIndex } from '@fpsak-frontend/fp-behandling-fel
 
 import { BehandlingIdentifier, behandlingspunktCodes, trackRouteParam } from '@fpsak-frontend/fp-felles';
 
-import { getBehandlingIdentifier, getFagsakYtelseType } from 'behandlingForstegangOgRevurdering/src/duckBehandlingForstegangOgRev';
-import statusIconsBeregningsgrunnlag from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsBeregningsgrunnlag';
-import statusIconsUttak from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsUttak';
-import IverksetterVedtakStatusModal from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/components/IverksetterVedtakStatusModal';
-import statusIconsAvregning from 'behandlingForstegangOgRevurdering/src/behandlingsprosess/statusIconsAvregning';
+import { getBehandlingIdentifier, getFagsakYtelseType, setDoNoUpdateFagsak as setDoNoUpdateFagsakAC } from '../duckBehandlingForstegangOgRev';
+import statusIconsBeregningsgrunnlag from './statusIconsBeregningsgrunnlag';
+import statusIconsUttak from './statusIconsUttak';
+import IverksetterVedtakStatusModal from './components/IverksetterVedtakStatusModal';
+import statusIconsAvregning from './statusIconsAvregning';
 import behandlingSelectors from '../selectors/forsteOgRevBehandlingSelectors';
 import {
   fetchPreviewBrev,
@@ -68,11 +68,16 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
   }
 
   submit = (aksjonspunktModels) => {
+    const { setDoNoUpdateFagsak } = this.props;
     const submitIsRevurdering = hasRevurderingAp(aksjonspunktModels);
-    const shouldUpdateInfo = !submitIsRevurdering;
+
+    const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+    const isVedtakAp = aksjonspunktModels.some((a) => a.isVedtakSubmission);
+    if (showModal || submitIsRevurdering || isVedtakAp) {
+      setDoNoUpdateFagsak();
+    }
 
     const afterAksjonspunktSubmit = () => {
-      const showModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
       if (showModal) {
         this.setState((prevState) => ({ ...prevState, showIverksetterVedtakModal: true }));
       } else if (submitIsRevurdering) {
@@ -82,7 +87,7 @@ export class BehandlingsprosessForstegangOgRevIndex extends Component {
       }
     };
 
-    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit, shouldUpdateInfo);
+    return this.submitCallback(aksjonspunktModels, afterAksjonspunktSubmit);
   }
 
   getSubmit = (submitCallback, goToDefaultPage, goToSearchPage) => {
@@ -166,6 +171,7 @@ BehandlingsprosessForstegangOgRevIndex.propTypes = {
   isSelectedBehandlingHenlagt: PropTypes.bool.isRequired,
   location: PropTypes.shape().isRequired,
   resolveProsessAksjonspunkterSuccess: PropTypes.bool.isRequired,
+  setDoNoUpdateFagsak: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -191,6 +197,7 @@ const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
     dispatchSubmitFailed,
     fetchFptilbakePreview,
+    setDoNoUpdateFagsak: setDoNoUpdateFagsakAC,
   }, dispatch),
 });
 

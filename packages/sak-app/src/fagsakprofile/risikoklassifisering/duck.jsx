@@ -1,6 +1,6 @@
-import { sakOperations } from '@fpsak-frontend/fp-behandling-felles';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
+import behandlingUpdater from '../../behandling/BehandlingUpdater';
 import fpsakApi from '../../data/fpsakApi';
 
 const reducerName = 'kontrollresultat';
@@ -25,8 +25,7 @@ const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch
   dispatch({
     type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS,
   });
-  return dispatch(sakOperations.updateFagsakInfo(behandlingIdentifier.saksnummer))
-    .then(() => dispatch(fpsakApi.BEHANDLING.setDataRestApi()(response.payload, behandlingIdentifier.toJson(), { keepData: true })));
+  return behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
 };
 
 export const resolveAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {

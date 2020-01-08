@@ -1,16 +1,12 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, boolean } from '@storybook/addon-knobs';
+import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import landkoder from '@fpsak-frontend/kodeverk/src/landkoder';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import sivilstandType from '@fpsak-frontend/kodeverk/src/sivilstandType';
 import diskresjonskodeType from '@fpsak-frontend/kodeverk/src/diskresjonskodeType';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 import relatertYtelseTilstand from '@fpsak-frontend/kodeverk/src/relatertYtelseTilstand';
 import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
@@ -19,6 +15,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -32,9 +30,6 @@ const personopplysninger = {
   barn: [{
     navn: 'Espen Utvikler jr.',
     fnr: '12324435',
-    opplysningsKilde: {
-      kode: opplysningsKilde.TPS,
-    },
     navBrukerKjonn: {
       kode: navBrukerKjonn.MANN,
     },
@@ -58,7 +53,7 @@ const personopplysninger = {
     fodselsdato: '2019-01-01',
     fnr: '123456789',
     navBrukerKjonn: {
-      kode: navBrukerKjonn.KVINNE,
+      kode: navBrukerKjonn.UDEFINERT,
     },
     diskresjonskode: {
       kode: diskresjonskodeType.UDEFINERT,
@@ -109,36 +104,13 @@ const fagsakPerson = {
   personnummer: '123456789',
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.SIVILSTAND_TYPE]: [{
-    kode: sivilstandType.ENKE,
-    navn: 'Enke',
-  }],
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: personstatusType.BOSATT,
-    navn: 'Bosatt',
-  }],
-  [kodeverkTyper.RELATERT_YTELSE_TYPE]: [{
-    kode: relatertYtelseType.FORELDREPENGER,
-    navn: 'Foreldrepenger',
-  }],
-  [kodeverkTyper.FAGSAK_STATUS]: [{
-    kode: fagsakStatus.OPPRETTET,
-    navn: 'Opprettet',
-  }],
-  [kodeverkTyper.RELATERT_YTELSE_TILSTAND]: [{
-    kode: relatertYtelseTilstand.LOPENDE,
-    navn: 'Løpende',
-  }],
-};
-
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/PersonFaktaIndex',
+  title: 'fakta/fakta-person',
   component: PersonFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
@@ -147,10 +119,10 @@ export const visPanelForBeggeParter = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      personopplysninger={personopplysninger}
-      inntektArbeidYtelse={inntektArbeidYtelse}
-      fagsakPerson={fagsakPerson}
+      behandling={object('behandling', behandling)}
+      personopplysninger={object('personopplysninger', personopplysninger)}
+      inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+      fagsakPerson={object('fagsakPerson', fagsakPerson)}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,
@@ -177,8 +149,8 @@ export const visPanelForGrunnleggendePersoninfo = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      fagsakPerson={fagsakPerson}
+      behandling={object('behandling', behandling)}
+      fagsakPerson={object('fagsakPerson', fagsakPerson)}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
@@ -195,12 +167,12 @@ export const visPanelForMarkertUtenlandssak = () => {
   const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.PERSON]);
   return (
     <PersonFaktaIndex
-      behandling={behandling}
-      fagsakPerson={{
+      behandling={object('behandling', behandling)}
+      fagsakPerson={object('fagsakPerson', {
         ...fagsakPerson,
         dodsdato: undefined,
         erDod: false,
-      }}
+      })}
       aksjonspunkter={[{
         definisjon: {
           kode: aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK,

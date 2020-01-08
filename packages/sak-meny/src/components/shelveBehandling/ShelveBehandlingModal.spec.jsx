@@ -4,11 +4,12 @@ import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { shallowWithIntl, intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import { getHenleggArsaker, ShelveBehandlingModalImpl } from './ShelveBehandlingModal';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<ShelveBehandlingModal>', () => {
   const henleggArsaker = [{
@@ -43,7 +44,7 @@ describe('<ShelveBehandlingModal>', () => {
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
     expect(modal.prop('closeButton')).is.false;
-    expect(modal.prop('contentLabel')).to.eql('ShelveBehandlingModal.ModalDescription');
+    expect(modal.prop('contentLabel')).to.eql('Behandlingen henlegges');
 
     const button = wrapper.find('Hovedknapp');
     expect(button).to.have.length(1);
@@ -95,7 +96,7 @@ describe('<ShelveBehandlingModal>', () => {
 
     const selectField = wrapper.find('SelectField');
     expect(selectField).to.have.length(1);
-    expect(selectField.prop('placeholder')).is.eql('ShelveBehandlingModal.ArsakFieldDefaultValue');
+    expect(selectField.prop('placeholder')).is.eql('Velg årsak til henleggelse');
     const values = selectField.prop('selectValues');
     expect(values[0].props.value).is.eql(behandlingResultatType.HENLAGT_SOKNAD_TRUKKET);
     expect(values[1].props.value).is.eql(behandlingResultatType.HENLAGT_FEILOPPRETTET);
@@ -242,7 +243,7 @@ describe('<ShelveBehandlingModal>', () => {
 
     const previewLink = wrapper.find('a');
     expect(previewLink).to.have.length(1);
-    expect(previewLink.text()).to.eql('ShelveBehandlingModal.ForhandsvisBrev');
+    expect(previewLink.text()).to.eql('Forhåndsvis brev');
 
     expect(previewEventCallback.called).is.false;
     previewLink.simulate('click', { preventDefault: sinon.spy() });

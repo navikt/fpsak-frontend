@@ -6,7 +6,7 @@ import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import AktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { LINK_TIL_BESTE_BEREGNING_REGNEARK } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
@@ -99,19 +99,30 @@ VurderBesteberegningPanelImpl.transformValues = (values, faktaOmBeregning, innte
       },
     };
   }
-  const transformedValues = inntektPrAndel.map((verdi) => ({
-    andelsnr: verdi.andelsnr,
-    nyAndel: verdi.nyAndel,
-    lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
-    aktivitetStatus: verdi.nyAndel ? aktivitetStatus.DAGPENGER : null,
-    fastsatteVerdier: {
-      fastsattBeløp: verdi.fastsattBelop,
-      inntektskategori: verdi.inntektskategori,
-      skalHaBesteberegning,
-    },
-  }));
+  const transformedValues = inntektPrAndel
+    .filter(({ nyAndel }) => nyAndel !== true)
+    .map((verdi) => ({
+      andelsnr: verdi.andelsnr,
+      nyAndel: verdi.nyAndel,
+      lagtTilAvSaksbehandler: verdi.lagtTilAvSaksbehandler,
+      fastsatteVerdier: {
+        fastsattBeløp: verdi.fastsattBelop,
+        inntektskategori: verdi.inntektskategori,
+        skalHaBesteberegning,
+      },
+    }));
+  const nyDagpengeAndel = inntektPrAndel
+    .find((a) => a.nyAndel && a.aktivitetStatus === AktivitetStatus.DAGPENGER);
   return {
-    besteberegningAndeler: { besteberegningAndelListe: transformedValues },
+    besteberegningAndeler: {
+      besteberegningAndelListe: transformedValues,
+      nyDagpengeAndel: nyDagpengeAndel ? {
+        fastsatteVerdier: {
+          fastsattBeløp: nyDagpengeAndel.fastsattBelop,
+          inntektskategori: nyDagpengeAndel.inntektskategori,
+        },
+      } : null,
+    },
   };
 };
 

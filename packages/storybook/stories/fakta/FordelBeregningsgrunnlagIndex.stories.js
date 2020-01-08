@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
@@ -11,8 +10,10 @@ import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-ber
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import withReduxProvider from '../../decorators/withRedux';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 export default {
-  title: 'fakta/FordelBeregningsgrunnlagFaktaIndex',
+  title: 'fakta/fakta-fordel-beregningsgrunnlag',
   component: FordelBeregningsgrunnlagFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
@@ -28,38 +29,6 @@ const behandling = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const alleKodeverk = {
-  [kodeverkTyper.INNTEKTSKATEGORI]: [
-    {
-      kode: 'ARBEIDSAVKLARINGSPENGER',
-      navn: 'Arbeidsavklaringspenger',
-    },
-    {
-      kode: 'ARBEIDSTAKER',
-      navn: 'Arbeidstaker',
-    },
-  ],
-  [kodeverkTyper.AKTIVITET_STATUS]: [
-    {
-      kode: 'AAP',
-      navn: 'Arbeidsavklaringspenger',
-    },
-    {
-      kode: 'AT',
-      navn: 'Arbeidstaker',
-    },
-    {
-      kode: 'FL',
-      navn: 'Frilanser',
-    },
-    {
-      kode: 'SN',
-      navn: 'Selvstendig næringsdrivende',
-    },
-  ],
-
 };
 
 const toggle = (openInfoPanels, togglePanel) => (value) => {
@@ -280,7 +249,6 @@ const lagFordelingsandel = (andelsnr, status, ref, fordelt) => ({
   },
   andelIArbeid: [0],
   belopFraInntektsmeldingPrAar: null,
-  fastsattAvSaksbehandler: false,
   fastsattForrigePrAar: null,
   fordelingForrigeBehandlingPrAar: null,
   fordeltPrAar: fordelt,

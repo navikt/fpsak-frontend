@@ -2,14 +2,14 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -55,16 +55,6 @@ const originalBehandling = {
   },
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.VENT_AARSAK]: [{
-    kode: venteArsakType.AVV_DOK,
-    navn: 'Avvent dokumentasjon',
-  }, {
-    kode: venteArsakType.UTV_FRIST,
-    navn: 'Utvid frist',
-  }],
-};
-
 const aksjonspunkter = [{
   definisjon: {
     kode: aksjonspunktCodes.VARSEL_REVURDERING_MANUELL,
@@ -76,7 +66,7 @@ const aksjonspunkter = [{
 }];
 
 export default {
-  title: 'prosess/VarselOmRevurderingProsessIndex',
+  title: 'prosess/prosess-varsel-om-revurdering',
   component: VarselOmRevurderingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

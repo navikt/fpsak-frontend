@@ -1,11 +1,12 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { metaMock, MockFields } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { expect } from 'chai';
 import { PeriodFieldArray } from '@fpsak-frontend/shared-components';
 import { DatepickerField, SelectField } from '@fpsak-frontend/form';
 import { FormattedMessage } from 'react-intl';
 import { TilretteleggingFieldArray } from './TilretteleggingFieldArray';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const getRemoveButton = () => <button id="avslutt" type="button" />;
 
@@ -29,7 +30,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
+    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');
@@ -68,7 +69,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
+    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');
@@ -104,7 +105,7 @@ describe('<TilretteleggingFieldArray>', () => {
 
     const selectField = innerWrapper.find(SelectField);
     expect(selectField).has.length(1);
-    expect(selectField.props().placeholder).to.eql('TilretteleggingFieldArray.VelgTilretteleggingPlaceholder');
+    expect(selectField.props().placeholder).to.eql('- Velg tilretteleggingsbehov -');
     expect(selectField.props().selectValues).has.length(3);
     expect(selectField.props().selectValues[0].key).to.eql('HEL_TILRETTELEGGING');
     expect(selectField.props().selectValues[1].key).to.eql('DELVIS_TILRETTELEGGING');

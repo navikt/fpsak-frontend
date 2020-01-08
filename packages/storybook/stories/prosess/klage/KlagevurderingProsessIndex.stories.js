@@ -2,12 +2,13 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import klageVurderingCodes from '@fpsak-frontend/kodeverk/src/klageVurdering';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 
 import withReduxProvider from '../../../decorators/withRedux';
+
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -17,20 +18,8 @@ const behandling = {
   },
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.KLAGE_MEDHOLD_ARSAK]: [{
-    kode: 'NYE_OPPLYSNINGER',
-    navn: 'Nye opplysninger',
-    kodeverk: kodeverkTyper.KLAGE_MEDHOLD_ARSAK,
-  }, {
-    kode: 'ULIK_REGELVERKSTOLKNING',
-    navn: 'Ulik regelverkstolkning',
-    kodeverk: kodeverkTyper.KLAGE_MEDHOLD_ARSAK,
-  }],
-};
-
 export default {
-  title: 'prosess/klage/KlagevurderingProsessIndex',
+  title: 'prosess/klage/prosess-klagevurdering',
   component: KlagevurderingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

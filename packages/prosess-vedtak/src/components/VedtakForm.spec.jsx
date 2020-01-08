@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -14,6 +14,7 @@ import { buildInitialValues, VedtakForm } from './VedtakForm';
 import VedtakInnvilgetPanel from './VedtakInnvilgetPanel';
 import VedtakAvslagPanel from './VedtakAvslagPanel';
 import VedtakOverstyrendeKnapp from './VedtakOverstyrendeKnapp';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vedtak';
 
 describe('<VedtakForm>', () => {
   const sprakkode = {
@@ -295,7 +296,7 @@ describe('<VedtakForm>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(1);
   });
@@ -351,7 +352,7 @@ describe('<VedtakForm>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(0);
   });
@@ -410,7 +411,7 @@ describe('<VedtakForm>', () => {
 
     const hovedknapp = wrapper.find('Hovedknapp');
     expect(hovedknapp).to.have.length(1);
-    expect(hovedknapp.childAt(0).text()).to.eql('VedtakForm.TilGodkjenning');
+    expect(hovedknapp.childAt(0).text()).to.eql('Til godkjenning');
     const a = wrapper.find('ForhaandsvisningsKnapp');
     expect(a).to.have.length(1);
   });

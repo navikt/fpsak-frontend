@@ -9,6 +9,8 @@ import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
+import alleKodeverk from '../../mocks/alleKodeverk.json';
+
 const behandling = {
   id: 1,
   versjon: 1,
@@ -17,7 +19,6 @@ const behandling = {
   },
 };
 
-const alleKodeverk = {};
 const avsluttedeBehandlinger = [{
   id: 1,
   type: {
@@ -27,7 +28,7 @@ const avsluttedeBehandlinger = [{
 }];
 
 export default {
-  title: 'prosess/klage/FormkravProsessIndex',
+  title: 'prosess/klage/prosess-formkrav',
   component: FormkravProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
+import classNames from 'classnames';
 
+import {
+  FlexContainer, FlexRow, FlexColumn,
+  BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { BorderBox, DateLabel, Image } from '@fpsak-frontend/shared-components';
+
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
 import chevronDown from '@fpsak-frontend/assets/images/pil_ned.svg';
 import stjerneImg from '@fpsak-frontend/assets/images/stjerne.svg';
@@ -81,7 +85,7 @@ const getÅrsak = (årsak) => {
 
 const renderChevron = (chevron, messageId) => (
   <FormattedMessage id={messageId}>
-    {(altText) => <Image className={styles.image} src={chevron} alt={altText} />}
+    {(altText) => <Image src={chevron} alt={altText} />}
   </FormattedMessage>
 );
 
@@ -95,65 +99,100 @@ const BehandlingPickerItemContent = ({
   withChevronUp,
   behandlendeEnhetId,
   behandlendeEnhetNavn,
-  behandlingId,
   opprettetDato,
   avsluttetDato,
   behandlingsstatus,
   behandlingTypeNavn,
-  behandlingTypeKode,
-  førsteÅrsak,
   erGjeldendeVedtak,
   isSelected,
+  behandlingsresultatTypeKode,
+  behandlingsresultatTypeNavn,
+  førsteÅrsak,
+  behandlingTypeKode,
 }) => (
   <BorderBox className={isSelected ? styles.boxPaddingWithSelected : styles.boxPadding}>
-    <div>
-      <div className={styles.imgDiv}>
-        {erGjeldendeVedtak && (
-          <Image
-            className={styles.starImage}
-            src={stjerneImg}
-            tooltip={{ header: <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" /></Normaltekst> }}
-            tabIndex="0"
-          />
-        )}
-        {withChevronDown && renderChevron(chevronDown, 'BehandlingPickerItemContent.Open')}
-        {withChevronUp && renderChevron(chevronUp, 'BehandlingPickerItemContent.Close')}
-      </div>
-      <div>
-        <Element className={styles.smallMarginBottom}>
-          {behandlingTypeNavn}
-        </Element>
-        <Normaltekst className={styles.paddingBottom}>
-          {`${behandlendeEnhetId} ${behandlendeEnhetNavn}`}
-        </Normaltekst>
-      </div>
-    </div>
-    <div>
-      <Row value={behandlingId}>
-        <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Undertekst>
-          <Normaltekst><DateLabel dateString={opprettetDato} /></Normaltekst>
-        </Column>
-        <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Undertekst>
-          {avsluttetDato && <Normaltekst><DateLabel dateString={avsluttetDato} /></Normaltekst>}
-        </Column>
-        <Column xs="3">
-          <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Behandlingsstatus" /></Undertekst>
-          <Normaltekst>{behandlingsstatus}</Normaltekst>
-        </Column>
-        <Column xs="3">
-          {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak.behandlingArsakType && (
-            <>
-              <Undertekst className={styles.undertekstPaddingBottom}><FormattedMessage id="BehandlingPickerItemContent.Arsak" /></Undertekst>
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.arsakPadding}>
+          <Element>{behandlingTypeNavn}</Element>
+        </FlexColumn>
+        {behandlingTypeKode === behandlingType.REVURDERING && førsteÅrsak.behandlingArsakType && (
+          <>
+            <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
+            <FlexColumn>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
               </Normaltekst>
+            </FlexColumn>
+          </>
+        )}
+        <FlexColumn className={styles.pushRight}>
+          {erGjeldendeVedtak && (
+            <Image
+              className={styles.starImage}
+              src={stjerneImg}
+              tooltip={{ header: <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.GjeldendeVedtak" /></Normaltekst> }}
+              tabIndex="0"
+            />
+          )}
+        </FlexColumn>
+        <FlexColumn>
+          {withChevronDown && renderChevron(chevronDown, 'BehandlingPickerItemContent.Open')}
+          {withChevronUp && renderChevron(chevronUp, 'BehandlingPickerItemContent.Close')}
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+    <VerticalSpacer eightPx />
+    <hr className={styles.line} />
+    <VerticalSpacer sixteenPx />
+    <FlexContainer>
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Behandlingstatus" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
+          <Normaltekst>{behandlingsstatus}</Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Resultat" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
+          <Normaltekst>{behandlingsresultatTypeKode ? behandlingsresultatTypeNavn : '-'}</Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+      <VerticalSpacer sixteenPx />
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Opprettet" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
+          <Normaltekst className={styles.inline}><DateLabel dateString={opprettetDato} /></Normaltekst>
+          <Undertekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Undertekst>
+          <Undertekst className={styles.inline}><TimeLabel dateTimeString={opprettetDato} /></Undertekst>
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn className={styles.firstColumnWidth}>
+          <Normaltekst><FormattedMessage id="BehandlingPickerItemContent.Avsluttet" /></Normaltekst>
+        </FlexColumn>
+        <FlexColumn>
+          {avsluttetDato && (
+            <>
+              <Normaltekst className={styles.inline}><DateLabel dateString={avsluttetDato} /></Normaltekst>
+              <Undertekst className={classNames(styles.inline, styles.timePadding)}><FormattedMessage id="DateTimeLabel.Kl" /></Undertekst>
+              <Undertekst className={styles.inline}><TimeLabel dateTimeString={avsluttetDato} /></Undertekst>
             </>
           )}
-        </Column>
-      </Row>
-    </div>
+        </FlexColumn>
+        <FlexColumn className={styles.pushRightCorner}>
+          <Normaltekst className={styles.inline}><FormattedMessage id="BehandlingPickerItemContent.Enhet" /></Normaltekst>
+          <Normaltekst className={styles.inline} title={behandlendeEnhetNavn}>{behandlendeEnhetId}</Normaltekst>
+        </FlexColumn>
+      </FlexRow>
+    </FlexContainer>
+    <VerticalSpacer fourPx />
   </BorderBox>
 );
 
@@ -162,12 +201,11 @@ BehandlingPickerItemContent.propTypes = {
   withChevronUp: PropTypes.bool,
   behandlendeEnhetId: PropTypes.string,
   behandlendeEnhetNavn: PropTypes.string,
-  behandlingId: PropTypes.number.isRequired,
   opprettetDato: PropTypes.string.isRequired,
   avsluttetDato: PropTypes.string,
   behandlingsstatus: PropTypes.string.isRequired,
-  behandlingTypeNavn: PropTypes.string.isRequired,
   behandlingTypeKode: PropTypes.string.isRequired,
+  behandlingTypeNavn: PropTypes.string.isRequired,
   førsteÅrsak: PropTypes.shape({
     behandlingArsakType: kodeverkObjektPropType,
     erAutomatiskRevurdering: PropTypes.bool,
@@ -175,6 +213,8 @@ BehandlingPickerItemContent.propTypes = {
   }),
   erGjeldendeVedtak: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired,
+  behandlingsresultatTypeKode: PropTypes.string,
+  behandlingsresultatTypeNavn: PropTypes.string,
 };
 
 BehandlingPickerItemContent.defaultProps = {
@@ -189,6 +229,8 @@ BehandlingPickerItemContent.defaultProps = {
     },
   },
   erGjeldendeVedtak: false,
+  behandlingsresultatTypeKode: undefined,
+  behandlingsresultatTypeNavn: undefined,
 };
 
 export default BehandlingPickerItemContent;

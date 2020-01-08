@@ -2,11 +2,11 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtelsen';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -92,10 +92,6 @@ const feilutbetalingAarsak = {
   }],
 };
 
-const merknaderFraBeslutter = {
-  notAccepted: false,
-};
-
 const alleKodeverk = {
   [kodeverkTyper.BEHANDLING_AARSAK]: [{
     kode: behandlingArsakType.FEIL_I_LOVANDVENDELSE,
@@ -123,13 +119,17 @@ const alleKodeverk = {
   }],
 };
 
+const merknaderFraBeslutter = {
+  notAccepted: false,
+};
+
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/tilbakekreving/FeilutbetalingFaktaIndex',
+  title: 'fakta/tilbakekreving/fakta-feilutbetaling',
   component: FeilutbetalingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

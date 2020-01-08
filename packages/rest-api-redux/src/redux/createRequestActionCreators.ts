@@ -8,6 +8,7 @@ import { ActionTypes } from './ActionTypesTsType';
 
 interface Options {
   keepData?: boolean;
+  cacheParams?: {};
 }
 
 const getActionCreators = (actionTypes) => ({
@@ -66,6 +67,10 @@ const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKe
     notificationMapper.addUpdatePollingMessageEventHandler((data) => dispatch(reduxEvents.getPollingMessageActionCreator()(data)));
     notificationMapper.addRequestFinishedEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
     notificationMapper.addRequestErrorEventHandler((data, type, isAsync: boolean) => isAsync && dispatch(reduxEvents.getPollingMessageActionCreator()()));
+  }
+
+  if (!requestRunner.getPath()) {
+    throw new Error(`Missing URL for endpoint: ${requestRunner.getName()}`);
   }
 
   return requestRunner.startProcess(params, notificationMapper);

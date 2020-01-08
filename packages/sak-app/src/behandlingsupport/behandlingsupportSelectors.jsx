@@ -73,6 +73,3 @@ export const getEnabledSupportPanels = createSelector(
       }
     }),
 );
-
-export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS.getRestApiData()],
-  (documents = []) => documents);

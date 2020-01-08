@@ -63,11 +63,11 @@ export const AnnenForelderHarRettForm = ({
         />
       </div>
       {formProps.error
-        && (
-        <span>
-          {formProps.error}
-        </span>
-        )}
+          && (
+            <span>
+              {formProps.error}
+            </span>
+          )}
     </form>
   </div>
 );
@@ -91,10 +91,10 @@ const buildInitialValues = createSelector([(props) => props.ytelsefordeling], (y
   return undefined;
 });
 
-const mapStateToPropsFactory = (_initialState, props) => {
-  const onSubmit = (values) => props.submitCallback(transformValues(values, props.aksjonspunkter));
+const mapStateToPropsFactory = (_initialState, initialProps) => {
+  const onSubmit = (values) => initialProps.submitCallback(transformValues(values, initialProps.aksjonspunkter));
 
-  return () => ({
+  return (_state, props) => ({
     initialValues: buildInitialValues(props),
     onSubmit,
   });

@@ -5,9 +5,9 @@ import sinon from 'sinon';
 import {
   DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
-import { mountWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
+import { mountWithIntl } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
 
 describe('<PersonArbeidsforholdTable>', () => {

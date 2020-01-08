@@ -1,10 +1,11 @@
 import React from 'react';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { DelOppPeriodeModalImpl } from './DelOppPeriodeModal';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
 
 describe('<DelOppPeriodeModal>', () => {
   const periodeData = {

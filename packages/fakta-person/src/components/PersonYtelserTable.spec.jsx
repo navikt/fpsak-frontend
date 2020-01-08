@@ -1,8 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { PersonYtelserTable } from './PersonYtelserTable';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-person';
 
 describe('<PersonYtelserTable>', () => {
   const ytelser = [{
@@ -68,7 +69,7 @@ describe('<PersonYtelserTable>', () => {
     />);
     const rows = wrapper.find('TableRow');
     expect(rows.find('Normaltekst').first().childAt(0).text()).to.equal('Foreldrepenger');
-    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal('PersonYtelserTable.Ingen');
+    expect(rows.find('Normaltekst').at(1).childAt(0).text()).to.equal('Ingen');
   });
 
   it('skal sjekke at viser ytelse informasjon', () => {

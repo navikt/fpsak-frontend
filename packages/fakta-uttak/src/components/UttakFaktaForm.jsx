@@ -38,11 +38,11 @@ export const UttakFaktaForm = ({
   return (
     <form onSubmit={formProps.handleSubmit}>
       {formProps.warning
-      && (
-      <span>
-        {formProps.warning}
-      </span>
-      )}
+        && (
+          <span>
+            {formProps.warning}
+          </span>
+        )}
       <UttakPerioder
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
         readOnly={readOnly}
@@ -61,11 +61,11 @@ export const UttakFaktaForm = ({
         vilkarForSykdomExists={vilkarForSykdomExists}
       />
       {formProps.error
-      && (
-      <span>
-        {formProps.error}
-      </span>
-      )}
+        && (
+          <span>
+            {formProps.error}
+          </span>
+        )}
     </form>
   );
 };
@@ -98,7 +98,7 @@ const warningsUttakForm = (values) => {
     warnings.perioder = {
       _warning: <FormattedMessage
         id="UttakInfoPanel.PeriodeMellomFørsteuttaksdatoOgEndringsdato"
-        values={{ endringsdato: dateFormat(endringsdato), førsteuttaksdato: dateFormat(førsteUttaksdato) }}
+        values={{ endringsdato: dateFormat(endringsdato) }}
       />,
     };
   }
@@ -107,6 +107,9 @@ const warningsUttakForm = (values) => {
 
 const validateUttakForm = (values, originalPerioder, aksjonspunkter) => { // NOSONAR må ha disse sjekkene
   const errors = {};
+  if (!values.perioder) {
+    return errors;
+  }
 
   if (sjekkOmfaktaOmUttakAksjonspunkt(aksjonspunkter) || values.faktaUttakManuellOverstyring) {
     // const originalStartDato = (originalPerioder[0] || []).fom;

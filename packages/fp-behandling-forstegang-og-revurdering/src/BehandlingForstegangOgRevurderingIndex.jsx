@@ -7,8 +7,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { BehandlingGrid, CommonBehandlingIndex } from '@fpsak-frontend/fp-behandling-felles';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
-import behandlingSelectors from 'behandlingForstegangOgRevurdering/src/selectors/forsteOgRevBehandlingSelectors';
-import FpSakBehandlingInfoSetter from './FpSakBehandlingInfoSetter';
+import behandlingSelectors from './selectors/forsteOgRevBehandlingSelectors';
 import BehandlingsprosessForstegangOgRevIndex from './behandlingsprosess/BehandlingsprosessForstegangOgRevIndex';
 import FaktaIndex from './fakta/FaktaIndex';
 import {
@@ -20,6 +19,7 @@ import {
   setBehandlingInfo as setBehandlingInfoFunc,
   setHasShownBehandlingPaVent as setHasShownBehandlingPaVentFunc,
   updateOnHold as updateOnHoldFunc,
+  shouldUpdateFagsak as shouldUpdateFagsakSel,
 } from './duckBehandlingForstegangOgRev';
 import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 
@@ -31,8 +31,7 @@ import FpSakBehandlingUpdater from './FpSakBehandlingUpdater';
 export const BehandlingForstegangOgRevurderingIndex = ({
   behandlingId,
   behandlingIdentifier,
-  behandlingerVersjonMappedById,
-  setBehandlingInfoHolder,
+  oppdaterBehandlingVersjon,
   behandlingVersjon,
   fristBehandlingPaaVent,
   behandlingPaaVent,
@@ -43,13 +42,13 @@ export const BehandlingForstegangOgRevurderingIndex = ({
   fagsakInfo,
   resetBehandling,
   behandlingUpdater,
-  appContextUpdater,
   hasShownBehandlingPaVent,
   fetchBehandling,
   updateOnHold,
   setHasShownBehandlingPaVent,
   setBehandlingInfo,
   hasSubmittedPaVentForm,
+  shouldUpdateFagsak,
 }) => (
   <CommonBehandlingIndex
     behandlingId={behandlingId}
@@ -68,13 +67,12 @@ export const BehandlingForstegangOgRevurderingIndex = ({
     fagsakInfo={fagsakInfo}
     fetchBehandling={fetchBehandling}
     resetBehandlingFpsakContext={resetBehandling}
-    behandlingerVersjonMappedById={behandlingerVersjonMappedById}
-    appContextUpdater={appContextUpdater}
     setBehandlingInfo={setBehandlingInfo}
     fpBehandlingUpdater={FpSakBehandlingUpdater}
     behandlingUpdater={behandlingUpdater}
+    oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+    shouldUpdateFagsak={shouldUpdateFagsak}
   >
-    <FpSakBehandlingInfoSetter setBehandlingInfoHolder={setBehandlingInfoHolder} />
     <BehandlingGrid
       behandlingsprosessContent={<BehandlingsprosessForstegangOgRevIndex />}
       faktaContent={<FaktaIndex />}
@@ -84,8 +82,7 @@ export const BehandlingForstegangOgRevurderingIndex = ({
 
 BehandlingForstegangOgRevurderingIndex.propTypes = {
   behandlingId: PropTypes.number.isRequired,
-  setBehandlingInfoHolder: PropTypes.func.isRequired,
-  behandlingerVersjonMappedById: PropTypes.shape().isRequired,
+  oppdaterBehandlingVersjon: PropTypes.func.isRequired,
   behandlingIdentifier: PropTypes.instanceOf(BehandlingIdentifier),
   behandlingVersjon: PropTypes.number,
   fristBehandlingPaaVent: PropTypes.string,
@@ -105,8 +102,8 @@ BehandlingForstegangOgRevurderingIndex.propTypes = {
   setBehandlingInfo: PropTypes.func.isRequired,
   fagsakInfo: PropTypes.shape().isRequired,
   behandlingUpdater: PropTypes.shape().isRequired,
-  appContextUpdater: PropTypes.shape().isRequired,
   hasSubmittedPaVentForm: PropTypes.bool.isRequired,
+  shouldUpdateFagsak: PropTypes.bool.isRequired,
 };
 
 const mapStateToPropsFactory = (initialState, ownProps) => {
@@ -128,6 +125,7 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
     hasShownBehandlingPaVent: getHasShownBehandlingPaVent(state),
     ventearsaker: getKodeverk(kodeverkTyper.VENT_AARSAK)(state),
     isInSync: behandlingSelectors.isBehandlingInSync(state),
+    shouldUpdateFagsak: shouldUpdateFagsakSel(state),
     fagsakInfo,
   });
 };
