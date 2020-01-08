@@ -36,7 +36,7 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, p
 };
 
 // Denne metoden lager data til naturalytelsetabellen. Returnerer et map der key er arbeidsgiver + orgNr
-// med periodetekst og år=bortfaltNaturalytelse og maned=bortfaltNaturalytelse/12
+// med periodetekst og aar=bortfaltNaturalytelse og maaned=bortfaltNaturalytelse/12
 // Eksempel på hvordan et map returnert av denne metoden kan se ut:
 // arbeidsgivermap = {
 //  arbeidsgiver1123: ['arbeidsgiver1', { periodeTekst: '01.09.2018 - 01.12.2018', aar: 1231, maaned: 103 }],
@@ -59,7 +59,6 @@ export const createNaturalytelseTableData = (allePerioder) => {
     return undefined;
   }
 
-  // const headers = createHeaderData(relevantePerioder);
   const tempMap = {};
   let antallPerioderMedFrafaltYtelse = 0;
   relevantePerioder.forEach((periode) => {

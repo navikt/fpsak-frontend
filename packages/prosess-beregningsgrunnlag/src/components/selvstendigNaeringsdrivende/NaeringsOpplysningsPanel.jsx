@@ -13,6 +13,7 @@ import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 
+/* Flyttes til språkfil istde
 const virksomhetsTypeNavn = {
   DAGMAMMA: 'Dagmamma i eget hjem/familiebarnehage',
   FISKE: 'Fiske',
@@ -21,15 +22,18 @@ const virksomhetsTypeNavn = {
   ANNEN: 'Annen næringsvirksomhet',
   UDEFINERT: 'Ikke definert',
 };
+*/
 
-
-const finnvirksomhetsTypeNavn = (naring) => {
+const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
-  const { kode } = virksomhetType;
-  if (!virksomhetType || !kode) {
-    return '';
+  if (!virksomhetType) {
+    return 'UDEFINERT';
   }
-  return virksomhetsTypeNavn[kode];
+  const { kode } = virksomhetType;
+  if (!kode) {
+    return 'UDEFINERT';
+  }
+  return kode;
 };
 const virksomhetsDatoer = (naringsAndel) => {
   const { oppstartsdato, opphoersdato } = naringsAndel;
@@ -139,7 +143,7 @@ export const NaeringsopplysningsPanel = ({
             </Column>
             <Column xs="3">
               <Normaltekst>
-                {finnvirksomhetsTypeNavn(naring)}
+                <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </Normaltekst>
             </Column>
             <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>

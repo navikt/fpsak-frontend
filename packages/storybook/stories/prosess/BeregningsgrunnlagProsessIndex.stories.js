@@ -584,7 +584,6 @@ export const naturalYtelse = () => {
   perioder[1].bruttoInkludertBortfaltNaturalytelsePrAar = 732000;
   perioder[1].redusertPrAar = 499148;
   perioder[1].avkortetPrAar = 599148;
-  // perioder[1].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
@@ -598,7 +597,6 @@ export const naturalYtelse = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -627,7 +625,6 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesFalse}
@@ -656,7 +653,6 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesFalse}
@@ -771,7 +767,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
     regnskapsførerNavn: 'Regnar Regnskap',
     regnskapsførerTlf: '99999999',
     utenlandskvirksomhetsnavn: null,
-    virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+    virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
     kode: 'ANNEN',
     kodeverk: 'VIRKSOMHET_TYPE',
   }];

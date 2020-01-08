@@ -451,7 +451,7 @@ export const createBeregningTableData = createSelector(
             const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
               (andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.bortfaltNaturalytelse,
             );
-            ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((a, b) => a + b.bortfaltNaturalytelse, 0) : undefined;
+            ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((sum, andel) => sum + andel.bortfaltNaturalytelse, 0) : undefined;
             ntElement.skalFastsetteGrunnlag = false;
             ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
             rowsAndeler.push(ntElement);

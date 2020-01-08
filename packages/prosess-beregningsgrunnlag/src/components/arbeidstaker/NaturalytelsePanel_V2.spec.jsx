@@ -3,8 +3,8 @@ import { expect } from 'chai';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
+import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import NaturalytelsePanel2, { createNaturalytelseTableData } from './NaturalytelsePanel_V2';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const bgPerioder = [
   {
