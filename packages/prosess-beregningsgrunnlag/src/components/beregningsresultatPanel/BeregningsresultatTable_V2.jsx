@@ -83,39 +83,46 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
     </Row>
   );
 };
-const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => (
-  <React.Fragment key="beregningOppsummeringWrapper">
-    <Row key="beregningOppsummering">
-      <Column xs="8" key="beregningOppsummeringLedetekst">
-        <Normaltekst>
-          <span className={beregningStyles.semiBoldText}>
-            { erVurdert && (
-            <FormattedMessage
-              id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-              values={{ dagSats: formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) }}
-            />
-            )}
-            { !erVurdert && (
+const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
+  if (!listOfEntries || listOfEntries.length === 0) {
+    return null;
+  }
+  const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
+    ? formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) : 0;
+  return (
+    <React.Fragment key="beregningOppsummeringWrapper">
+      <Row key="beregningOppsummering">
+        <Column xs="8" key="beregningOppsummeringLedetekst">
+          <Normaltekst>
+            <span className={beregningStyles.semiBoldText}>
+              { erVurdert && (
+              <FormattedMessage
+                id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
+                values={{ dagSats: dagsats }}
+              />
+              )}
+              { !erVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
-            )}
-          </span>
+              )}
+            </span>
 
 
-        </Normaltekst>
-      </Column>
-      {erVurdert && listOfDagsatser.map((dag, index) => (
-        <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+          </Normaltekst>
         </Column>
-      ))}
-      {!erVurdert && (
+        {erVurdert && listOfDagsatser.map((dag, index) => (
+          <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
+            <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+          </Column>
+        ))}
+        {!erVurdert && (
         <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
-      )}
-    </Row>
-  </React.Fragment>
-);
+        )}
+      </Row>
+    </React.Fragment>
+  );
+};
 
 const createRowsForklaringer = (forklaringsListe) => (
   forklaringsListe.map((forklaring) => (
@@ -145,11 +152,13 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     }
   }
   rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow('redusertLinje'));
-  if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
-  } else {
-    rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+  if (listofAndeler.length > 0 || listOfEntries.length > 0) {
+    rows.push(lineRow('redusertLinje'));
+    if (listOfEntries.length === 0) {
+      rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
+    } else {
+      rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+    }
   }
 
 
@@ -401,18 +410,17 @@ export const createBeregningTableData = createSelector(
           break;
         }
 
-        case 'KUN_YTELSE': {
-          const ytElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.KUN_YTELSE),
-            'YT',
+        case 'BA': {
+          const baElement = opprettAndelElement(
+            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
+            'BA',
             vilkarStatus,
           );
-          if (ytElement && ytElement.verdi) {
-            rowsAndeler.push(ytElement);
+          if (baElement && baElement.verdi !== undefined) {
+            rowsAndeler.push(baElement);
           }
           break;
         }
-
         default: {
           const atElement = opprettAndelElement(
             periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),

@@ -306,6 +306,36 @@ export const arbeidstakerUtenAvvik = () => {
   );
 };
 
+export const brukersAndelUtenAvvik = () => {
+  const andeler = [
+    lagAndel('BA', 34230, undefined, false),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 2340)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 0;
+  delete perioder[0].redusertPrAar;
+  delete perioder[0].avkortetPrAar;
+
+  const statuser = [lagStatus('BA')];
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
 export const arbeidstakerMedAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagStandardPeriode(andeler)];

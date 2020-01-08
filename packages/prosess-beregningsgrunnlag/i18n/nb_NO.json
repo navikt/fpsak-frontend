@@ -162,6 +162,8 @@
   "Beregningsgrunnlag.BeregningTable.Omberegnet.DP": "Beregningsgrunnlag - Dagpenger",
   "Beregningsgrunnlag.BeregningTable.Fastsatt.YT": "Beregningsgrunnlag - fastsatt ytelse",
   "Beregningsgrunnlag.BeregningTable.Omberegnet.YT": "Beregningsgrunnlag - beregnet ytelse",
+  "Beregningsgrunnlag.BeregningTable.Fastsatt.BA": "Beregningsgrunnlag - Brukers andel",
+  "Beregningsgrunnlag.BeregningTable.Omberegnet.BA": "Beregningsgrunnlag - Brukers andel",
   "Beregningsgrunnlag.BeregningTable.Omberegnet.MS":"Oppjustert til 3G for militær- eller siviltjeneste",
   "Beregningsgrunnlag.BeregningTable.Fastsatt.MS":"Oppjustert til 3G for militær- eller siviltjeneste",
   "Beregningsgrunnlag.BeregningTable.Fastsatt.Ytelse": "Beregningsgrunnlag - fastsatt årsinntekt",
