@@ -37,8 +37,4 @@ const findStatusForVedtak = (vilkar, aksjonspunkter, vedtakAksjonspunkter, behan
   return vilkarUtfallType.OPPFYLT;
 };
 
-const getVedtakStatus = ({
-  aksjonspunkter, behandlingsresultat, vilkar,
-}, vedtakAksjonspunkter) => findStatusForVedtak(vilkar, aksjonspunkter, vedtakAksjonspunkter, behandlingsresultat);
-
-export default getVedtakStatus;
+export default findStatusForVedtak;

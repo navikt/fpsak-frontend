@@ -10,6 +10,8 @@ import FagsakInfo from '../types/fagsakInfoTsType';
 import NavAnsatt from '../types/navAnsattTsType';
 import readOnlyUtils from '../util/readOnlyUtils';
 
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
+
 const SUCCESS = 'success';
 const WARNING = 'warning';
 const DANGER = 'danger';
@@ -39,7 +41,6 @@ interface OwnProps {
   intl: {};
 }
 
-// TODO (TOR) skriv om denne
 const byggProsessmenySteg = createSelector<OwnProps, any, any>(
   [(ownProps) => ownProps.alleSteg,
     (ownProps) => ownProps.valgtProsessSteg,

@@ -17,6 +17,7 @@ export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmeny
 export { default as readOnlyUtils } from './src/util/readOnlyUtils';
 export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerknaderFraBeslutter';
 export { default as faktaPanelUtils } from './src/util/faktaPanelUtils';
+export { default as prosessStegPanelUtils } from './src/util/prosessStegPanelUtils';
 
 export { default as Aksjonspunkt } from './src/types/aksjonspunktTsType';
 export { default as Behandling } from './src/types/behandlingTsType';

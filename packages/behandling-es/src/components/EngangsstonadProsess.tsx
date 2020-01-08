@@ -1,30 +1,25 @@
 import React, {
-  FunctionComponent, useState, useEffect, useCallback,
+  FunctionComponent, useState, useEffect, useCallback, useMemo,
 } from 'react';
 import { useIntl, WrappedComponentProps } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { setSubmitFailed } from 'redux-form';
 import ProcessMenu from '@navikt/nap-process-menu';
 
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import { AdvarselModal } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { behandlingspunktCodes as bpc, allAccessRights } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, Vilkar,
-  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, prosessStegPanelUtils, Vilkar,
+  BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
   DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
-import finnEngangsstonadSteg from '../definition/engangsstonadStegDefinition';
-import prosessStegPaneler from '../definition/prosessStegPaneler';
+import prosessStegPanelDefinisjoner from '../definition/prosessStegPanelDefinisjoner';
+import EngangsstonadProsessModaler from './EngangsstonadProsessModaler';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
-
-const getValgtPanel = (stegKode, aksjonspunkter) => prosessStegPaneler.find((panel) => panel.showWhen({ stegKode, aksjonspunkter }));
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -116,12 +111,10 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [visApenRevurderingModal, lukkApenRevurderingModal] = useState(harApenRevurdering && !behandling.behandlingPaaVent);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const [overstyrteProsessSteg, toggleOverstyrteProsessSteg] = useState([]);
 
-  const setStegIUrl = useCallback((nyttValg, forrigeSteg) => oppdaterProsessStegIUrl(!forrigeSteg || nyttValg !== forrigeSteg.kode ? nyttValg : undefined), []);
   const submitAksjonspunkter = useCallback(() => getSubmitAksjonspunkter(dispatch,
     toggleFatterVedtakModal, toggleOppdatereFagsakContext, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);
   const previewCallback = useCallback(() => getPreviewCallback(dispatch, behandling), []);
@@ -134,85 +127,79 @@ const EngangsstonadProsess: FunctionComponent<Props> = ({
     }
   }, [behandling.versjon]);
 
-  const alleSteg = finnEngangsstonadSteg({
-    behandling, aksjonspunkter, vilkar, simuleringResultat, beregningresultatEngangsstonad,
-  });
-  const alleProsessMenySteg = byggProsessmenySteg({
-    alleSteg, valgtProsessSteg, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
-  });
-
-  const valgtSteg = alleProsessMenySteg[(alleProsessMenySteg.findIndex((p) => p.prosessmenySteg.isActive))];
-  const valgtStegKode = valgtSteg ? valgtSteg.kode : undefined;
-  const erStegBehandlet = valgtSteg ? valgtSteg.erStegBehandlet : false;
-
-  const valgtPanel = valgtSteg ? getValgtPanel(valgtStegKode, valgtSteg.aksjonspunkter) : undefined;
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
+  const ekstraPanelData = {
+    previewCallback,
+    previewFptilbakeCallback,
+    rettigheter,
+    aksjonspunkter,
+    vilkar,
+    overstyrteProsessSteg,
+    alleKodeverk,
+    dispatchSubmitFailed,
+    featureToggles,
+    simuleringResultat,
+    fagsak,
+    beregningresultatEngangsstonad,
+    behandlingsresultat: behandling.behandlingsresultat,
+  };
+
+  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(
+    prosessStegPanelDefinisjoner, ekstraPanelData, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl,
+  ), [
+    behandling.versjon,
+  ]);
+
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
+  const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
+
+  const formaterteProsessStegPaneler = useMemo(() => prosessStegPanelUtils.formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanelKode),
+    [behandling.versjon, valgtPanelKode]);
+
+  const processMenuCallback = useCallback((index) => {
+    const nyttValg = prosessStegPaneler[index].urlCode;
+    const forrigeValg = valgtProsessSteg;
+    oppdaterProsessStegIUrl(!forrigeValg || nyttValg !== forrigeValg ? nyttValg : undefined);
+  }, [behandling.versjon, valgtProsessSteg]);
 
   return (
     <>
-      {visApenRevurderingModal && (
-        <AdvarselModal
-          headerTextCode="BehandlingTilbakekrevingIndex.ApenRevurderingHeader"
-          textCode="BehandlingTilbakekrevingIndex.ApenRevurdering"
-          showModal
-          submit={lukkApenRevurderingModal}
-        />
-      )}
-      <FatterVedtakStatusModal
-        visModal={visFatterVedtakModal}
-        lukkModal={toggleFatterVedtakModal}
-        tekstkode="FatterTilbakekrevingVedtakStatusModal.Sendt"
+      <EngangsstonadProsessModaler
+        behandling={behandling}
+        harApenRevurdering={harApenRevurdering}
+        visFatterVedtakModal={visFatterVedtakModal}
+        toggleFatterVedtakModal={toggleFatterVedtakModal}
       />
-      <ProcessMenu
-        steps={alleProsessMenySteg.map((p) => p.prosessmenySteg)}
-        onClick={(index) => setStegIUrl(alleProsessMenySteg[index].kode, valgtSteg)}
-      />
-      {(erStegBehandlet) && (
+      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={processMenuCallback} />
+      {(valgtPanel && valgtPanel.erStegBehandlet) && (
         <MargMarkering
           behandlingStatus={behandling.status}
-          aksjonspunkter={valgtSteg.aksjonspunkter}
-          isReadOnly={valgtSteg.isReadOnly}
+          aksjonspunkter={valgtPanel.aksjonspunkter}
+          isReadOnly={valgtPanel.isReadOnly}
         >
           <DataFetcherBehandlingDataV2
-            key={valgtSteg.kode}
+            key={valgtPanel.urlCode}
             behandlingVersion={behandling.versjon}
             endpoints={valgtPanel.endpoints}
             render={(dataProps) => valgtPanel.renderComponent({
               ...dataProps,
-              submitCallback: submitAksjonspunkter,
-              readOnly: valgtSteg.isReadOnly,
-              readOnlySubmitButton: (!(valgtSteg.aksjonspunkter.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === valgtSteg.status),
-              aksjonspunkter: valgtSteg.aksjonspunkter,
-              status: valgtSteg.status,
               alleKodeverk,
-              isAksjonspunktOpen: valgtSteg.aksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET),
-              ...valgtPanel.getExtraData({
-                valgtStegKode,
-                vilkar: valgtSteg.vilkar,
-                previewCallback,
-                previewFptilbakeCallback,
-                rettigheter,
-                aksjonspunkter,
-                overstyrteProsessSteg,
-                label: valgtSteg.prosessmenySteg.label,
-                alleKodeverk,
-                dispatchSubmitFailed,
-                featureToggles,
-                fagsak,
-              }),
-              overrideReadOnly: valgtSteg.isOverrideReadOnly,
+              submitCallback: submitAksjonspunkter,
               kanOverstyreAccess: rettigheter.kanOverstyreAccess,
               toggleOverstyring: toggleOverstyrteProsessSteg,
+              ...valgtPanel.componentData,
             })}
           />
         </MargMarkering>
       )}
-      {(valgtStegKode === bpc.VEDTAK && behandling.behandlingHenlagt) && (
+      {(valgtPanelKode === bpc.VEDTAK && behandling.behandlingHenlagt) && (
         <BehandlingHenlagtPanel />
       )}
-      {(valgtStegKode && !erStegBehandlet && (valgtStegKode !== bpc.VEDTAK || (valgtStegKode === bpc.VEDTAK && !behandling.behandlingHenlagt))) && (
+      {(valgtPanel && !valgtPanel.erStegBehandlet && (valgtPanelKode !== bpc.VEDTAK
+        || (valgtPanelKode === bpc.VEDTAK && !behandling.behandlingHenlagt))) && (
         <ProsessStegIkkeBehandletPanel />
       )}
+
     </>
   );
 };

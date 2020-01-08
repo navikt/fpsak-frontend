@@ -61,8 +61,8 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
 
   const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);
 
-  const formaterteFaktaPaneler = useMemo(() => faktaPanelUtils.formaterPanelerForSidemeny(intl, faktaPaneler, valgtFaktaSteg),
-    [behandling.versjon, valgtFaktaSteg]);
+  const formaterteFaktaPaneler = useMemo(() => faktaPanelUtils.formaterPanelerForSidemeny(intl, faktaPaneler, valgtPanel.urlCode),
+    [behandling.versjon, valgtPanel.urlCode]);
 
   return (
     <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
