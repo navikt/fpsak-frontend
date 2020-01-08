@@ -407,18 +407,6 @@ export const createBeregningTableData = createSelector(
           }
           break;
         }
-
-        case 'BA': {
-          const baElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
-            'BA',
-            vilkarStatus,
-          );
-          if (baElement && baElement.verdi !== undefined) {
-            rowsAndeler.push(baElement);
-          }
-          break;
-        }
         default: {
           const atElement = opprettAndelElement(
             periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
@@ -445,6 +433,12 @@ export const createBeregningTableData = createSelector(
             'DP',
             vilkarStatus,
           );
+          const baElement = opprettAndelElement(
+            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
+            'BA',
+            vilkarStatus,
+          );
+          if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
           if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
           if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
           if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }

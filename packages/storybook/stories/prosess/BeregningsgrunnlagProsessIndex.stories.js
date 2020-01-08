@@ -309,15 +309,18 @@ export const arbeidstakerUtenAvvik = () => {
 export const brukersAndelUtenAvvik = () => {
   const andeler = [
     lagAndel('BA', 34230, undefined, false),
+    lagAndel('AT', 534230, undefined, false),
   ];
 
   const perioder = [lagPeriodeMedDagsats(andeler, 2340)];
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 0;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 564000;
   delete perioder[0].redusertPrAar;
   delete perioder[0].avkortetPrAar;
 
-  const statuser = [lagStatus('BA')];
-  const bg = lagBG(perioder, statuser);
+  const statuser = [lagStatus('BA'), lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -67059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   bg.dekningsgrad = 80;
   return (
     <BeregningsgrunnlagProsessIndex
@@ -331,7 +334,7 @@ export const brukersAndelUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesTrue}
+      featureToggles={togglesFalse}
     />
   );
 };
