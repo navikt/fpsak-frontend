@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -42,6 +42,7 @@ const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
@@ -55,6 +56,31 @@ const gjelderBehandlingenBesteberegning = (faktaOmBeregning) => (faktaOmBeregnin
 
 const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
   && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET));
+
+const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyArbLivet, erNyoppstartet) => {
+  switch (gjeldendeAksjonspunkt.definisjon.kode) {
+    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
+      return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
+    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
+      if (erVarigEndring) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.VarigEndring';
+      }
+      if (erNyoppstartet) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.Nyoppstartet';
+      }
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
+    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
+      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold2';
+    case FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE:
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
+    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
+      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
+    case VURDER_DEKNINGSGRAD:
+      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
+    default:
+      return 'Beregningsgrunnlag.Helptext.Ukjent';
+  }
+};
 
 const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode) => {
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
@@ -71,13 +97,15 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextV2
-          apneAksjonspunkt={apneAksjonspunkt}
-          avvikProsent={avvikProsent}
-          erVarigEndring={erVarigEndring}
-          erNyArbLivet={erNyArbLivet}
-          erNyoppstartet={erNyoppstartet}
-        />
+        <AksjonspunktHelpTextV2 isAksjonspunktOpen>
+          { apneAksjonspunkt.map((ap) => (
+            <FormattedHTMLMessage
+              key={ap.definisjon.kode}
+              id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+              values={{ verdi: avvikProsent }}
+            />
+          ))}
+        </AksjonspunktHelpTextV2>
       )}
 
     </div>
