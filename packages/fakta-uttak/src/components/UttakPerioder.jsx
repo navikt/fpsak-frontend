@@ -405,13 +405,17 @@ export class UttakPerioder extends PureComponent {
               return (
                 <FormattedMessage
                   key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
-                  id={farSøkerFør6Uker
-                    ? 'UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker'
-                    : `UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
+                  id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
                   values={førsteUttak}
                 />
               );
             })}
+            <VerticalSpacer eightPx />
+            {farSøkerFør6Uker && (
+              <FormattedMessage
+                id="UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker"
+              />
+            )}
           </AksjonspunktHelpText>
         )}
         <VerticalSpacer twentyPx />
