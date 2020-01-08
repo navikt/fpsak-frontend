@@ -41,10 +41,20 @@ const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) =
   }
   return null;
 };
+const harRelevanteStatuserSatt = (relevanteStatuser) => {
+  const statuser = relevanteStatuser;
+  delete statuser.skalViseBeregningsgrunnlag;
+  const statusVerdier = Object.values(statuser);
+  return statusVerdier.some((verdi) => verdi === true);
+};
 const AvviksopplysningerPanel = ({
   relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+  const skalViseAvviksPanel = harRelevanteStatuserSatt({ ...relevanteStatuser });
+  if (!skalViseAvviksPanel) {
+    return null;
+  }
   return (
     <Panel className={beregningStyles.panelRight}>
       <Element>

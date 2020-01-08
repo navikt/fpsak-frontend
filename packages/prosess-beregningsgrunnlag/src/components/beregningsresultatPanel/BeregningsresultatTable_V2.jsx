@@ -83,39 +83,46 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
     </Row>
   );
 };
-const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => (
-  <React.Fragment key="beregningOppsummeringWrapper">
-    <Row key="beregningOppsummering">
-      <Column xs="8" key="beregningOppsummeringLedetekst">
-        <Normaltekst>
-          <span className={beregningStyles.semiBoldText}>
-            { erVurdert && (
-            <FormattedMessage
-              id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-              values={{ dagSats: formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) }}
-            />
-            )}
-            { !erVurdert && (
+const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
+  if (!listOfEntries || listOfEntries.length === 0) {
+    return null;
+  }
+  const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
+    ? formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) : 0;
+  return (
+    <React.Fragment key="beregningOppsummeringWrapper">
+      <Row key="beregningOppsummering">
+        <Column xs="8" key="beregningOppsummeringLedetekst">
+          <Normaltekst>
+            <span className={beregningStyles.semiBoldText}>
+              { erVurdert && (
+              <FormattedMessage
+                id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
+                values={{ dagSats: dagsats }}
+              />
+              )}
+              { !erVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
-            )}
-          </span>
+              )}
+            </span>
 
 
-        </Normaltekst>
-      </Column>
-      {erVurdert && listOfDagsatser.map((dag, index) => (
-        <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+          </Normaltekst>
         </Column>
-      ))}
-      {!erVurdert && (
+        {erVurdert && listOfDagsatser.map((dag, index) => (
+          <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
+            <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+          </Column>
+        ))}
+        {!erVurdert && (
         <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
-      )}
-    </Row>
-  </React.Fragment>
-);
+        )}
+      </Row>
+    </React.Fragment>
+  );
+};
 
 const createRowsForklaringer = (forklaringsListe) => (
   forklaringsListe.map((forklaring) => (
@@ -145,14 +152,14 @@ const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfFo
     }
   }
   rows.push(createRowsRedusert(listOfEntries));
-  rows.push(lineRow('redusertLinje'));
-  if (listOfEntries.length === 0) {
-    rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
-  } else {
-    rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+  if (listofAndeler.length > 0 || listOfEntries.length > 0) {
+    rows.push(lineRow('redusertLinje'));
+    if (listOfEntries.length === 0) {
+      rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
+    } else {
+      rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
+    }
   }
-
-
   return rows;
 };
 const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
@@ -172,7 +179,7 @@ const createPeriodeHeader = (header) => (
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
   </>
 );
-const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders) => (
+const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => (
   <React.Fragment key={`Wr${tableData.dagsatser[0]}`}>
     {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
     { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
@@ -400,19 +407,6 @@ export const createBeregningTableData = createSelector(
           }
           break;
         }
-
-        case 'KUN_YTELSE': {
-          const ytElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.KUN_YTELSE),
-            'YT',
-            vilkarStatus,
-          );
-          if (ytElement && ytElement.verdi) {
-            rowsAndeler.push(ytElement);
-          }
-          break;
-        }
-
         default: {
           const atElement = opprettAndelElement(
             periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
@@ -439,6 +433,12 @@ export const createBeregningTableData = createSelector(
             'DP',
             vilkarStatus,
           );
+          const baElement = opprettAndelElement(
+            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
+            'BA',
+            vilkarStatus,
+          );
+          if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
           if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
           if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
           if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
@@ -487,8 +487,10 @@ export const createBeregningTableData = createSelector(
  * Dersom vilkåret ble avslått vil grunnen til dette vises istedenfor tabellen
  */
 const BeregningsresultatTable2 = ({
+  intl,
   vilkaarBG,
   periodeResultatTabeller,
+  halvGVerdi,
 }) => {
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
@@ -496,12 +498,14 @@ const BeregningsresultatTable2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders))}
+      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders, intl, halvGVerdi))}
     </Panel>
   );
 };
 
 BeregningsresultatTable2.propTypes = {
+  intl: PropTypes.shape().isRequired,
+  halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };

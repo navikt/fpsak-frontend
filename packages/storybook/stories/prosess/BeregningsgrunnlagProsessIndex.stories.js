@@ -306,6 +306,39 @@ export const arbeidstakerUtenAvvik = () => {
   );
 };
 
+export const brukersAndelUtenAvvik = () => {
+  const andeler = [
+    lagAndel('BA', 34230, undefined, false),
+    lagAndel('AT', 534230, undefined, false),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 2340)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 564000;
+  delete perioder[0].redusertPrAar;
+  delete perioder[0].avkortetPrAar;
+
+  const statuser = [lagStatus('BA'), lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -67059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+
 export const arbeidstakerMedAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagStandardPeriode(andeler)];
@@ -745,7 +778,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
     />
