@@ -3,6 +3,7 @@ import React from 'react';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import CheckPersonStatusIndex from '@fpsak-frontend/prosess-saksopplysninger';
 import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
+import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import OpptjeningVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-opptjening';
 import VarselOmRevurderingProsessIndex from '@fpsak-frontend/prosess-varsel-om-revurdering';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
@@ -245,7 +246,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.TilkjentYtelse',
   aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
   endpoints: [api.BEREGNINGRESULTAT, api.FAMILIEHENDELSE, api.PERSONOPPLYSNINGER, api.SOKNAD],
-  renderComponent: (props) => <AvregningProsessIndex {...props} />,
+  renderComponent: (props) => <TilkjentYtelseProsessIndex {...props} />,
   getData: ({ fagsak }) => ({ fagsak }),
   showComponent: () => true,
   overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(

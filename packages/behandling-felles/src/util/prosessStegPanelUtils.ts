@@ -22,12 +22,6 @@ const finnStatus = (bpVilkar, bpAksjonspunkter) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-const erProsessStegTrykkbart = (vilkarTypes, bpVilkar, bpAksjonspunkter) => {
-  const hasVilkar = vilkarTypes.length > 0 && bpVilkar.length > 0;
-  const hasNoVilkarDefinitionButAksjonspunkter = vilkarTypes.length === 0 && bpAksjonspunkter.length > 0;
-  return hasVilkar || hasNoVilkarDefinitionButAksjonspunkter;
-};
-
 const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl) => ({
   ...ekstraPanelData,
   fagsak,
@@ -82,10 +76,6 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
         isReadOnly,
         status,
       };
-
-      if (!erProsessStegTrykkbart(panel.vilkarCodes, vilkarForSteg, aksjonspunkterForSteg)) {
-        return prosessStegPanel;
-      }
 
       const komponentData = {
         status,
