@@ -13,6 +13,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
 const maxLength1500 = maxLength(1500);
@@ -36,51 +37,64 @@ const FastsettSN2 = ({
   readOnly,
   isAksjonspunktClosed,
   intl,
-}) => (
-  <>
-    <Row className={styles.verticalAlignMiddle}>
-      <Column xs="7">
-        <Normaltekst>
-          <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
-        </Normaltekst>
-      </Column>
-      <Column xs="5">
-        <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
-          <InputField
-            name={fastsettInntektFieldname}
-            bredde="XS"
-            validate={[required]}
-            parse={parseCurrencyInput}
-            className={styles['input--xs']}
-            readOnly={readOnly}
-          />
-        </div>
-      </Column>
-    </Row>
-    <VerticalSpacer eightPx />
-    <Row>
-      <Column xs="12" className={styles.marginTop}>
-        <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
-          <TextAreaField
-            name={begrunnelseFieldname}
-            label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
-            validate={[required, maxLength1500, minLength3, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-            isEdited={isAksjonspunktClosed}
-            placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-          />
-        </div>
-      </Column>
-    </Row>
+  gjeldendeAksjonspunkter,
+}) => {
+  const harGammeltAPFastsettBrutto = gjeldendeAksjonspunkter
+    ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE)
+    : false;
+  const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
+    ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
+    : false;
 
-  </>
-);
+  return (
+    <>
+      <Row className={styles.verticalAlignMiddle}>
+        <Column xs="3">
+          <Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
+          </Normaltekst>
+        </Column>
+        <Column xs="5">
+          <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
+            <InputField
+              name={fastsettInntektFieldname}
+              bredde="XS"
+              validate={[required]}
+              parse={parseCurrencyInput}
+              className={styles['input--xs']}
+              readOnly={readOnly}
+            />
+          </div>
+        </Column>
+      </Row>
+      <VerticalSpacer eightPx />
+      {(harGammeltAPFastsettBrutto || harAPSNNyiArbLiv)
+      && (
+      <Row>
+        <Column xs="12" className={styles.marginTop}>
+          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
+            <TextAreaField
+              name={begrunnelseFieldname}
+              label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
+              validate={[required, maxLength1500, minLength3, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+              isEdited={isAksjonspunktClosed}
+              placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+            />
+          </div>
+        </Column>
+      </Row>
+      )}
+    </>
+  );
+};
 
 FastsettSN2.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
 };
 
 FastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
@@ -97,17 +111,20 @@ FastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => 
     .find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET);
   const gjeldendeAP = fastsettBruttoEtterVarigEndring || fastsettBruttoNyIArbeidslivet;
 
-  if (gjeldendeAP) {
+  if (gjeldendeAP || (snAndel.overstyrtPrAar || snAndel.overstyrtPrAar === 0)) {
     return {
       [fastsettInntektFieldname]: snAndel ? formatCurrencyNoKr(snAndel.overstyrtPrAar) : undefined,
-      [begrunnelseFieldname]: gjeldendeAP.begrunnelse ? gjeldendeAP.begrunnelse : '',
+      [begrunnelseFieldname]: gjeldendeAP && gjeldendeAP.begrunnelse ? gjeldendeAP.begrunnelse : '',
     };
   }
   return undefined;
 };
 
-FastsettSN2.transformValues = (values) => ({
+FastsettSN2.transformValuesMedBegrunnelse = (values) => ({
   begrunnelse: values[begrunnelseFieldname],
+  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
+});
+FastsettSN2.transformValuesUtenBegrunnelse = (values) => ({
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
 

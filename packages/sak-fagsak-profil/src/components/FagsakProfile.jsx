@@ -88,12 +88,13 @@ FagsakProfile.propTypes = {
   createLink: PropTypes.func.isRequired,
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
-  dekningsgrad: PropTypes.number.isRequired,
+  dekningsgrad: PropTypes.number,
   intl: PropTypes.shape().isRequired,
 };
 
 FagsakProfile.defaultProps = {
   annenPartLink: null,
+  dekningsgrad: null,
 };
 
 export default injectIntl(FagsakProfile);

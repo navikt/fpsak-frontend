@@ -129,10 +129,23 @@ const lagRelevantePaneler = (
   );
 };
 
+
+const harRelevanteStatuserSatt = (relevanteStatuser) => {
+  const statuser = relevanteStatuser;
+  delete statuser.skalViseBeregningsgrunnlag;
+  const statusVerdier = Object.values(statuser);
+  return statusVerdier.some((verdi) => verdi === true);
+};
+
 const AvviksopplysningerPanel = ({
   relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus, gjelderBesteberegning,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+
+  const skalViseAvviksPanel = harRelevanteStatuserSatt({ ...relevanteStatuser });
+  if (!skalViseAvviksPanel) {
+    return null;
+  }
 
   return (
     <Panel className={beregningStyles.panelRight}>
