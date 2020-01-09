@@ -82,11 +82,9 @@ const AksjonspunktBehandler = ({
   }
   erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
-  // }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
-
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
