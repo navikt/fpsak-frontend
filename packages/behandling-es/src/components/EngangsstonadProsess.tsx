@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
-import prosessStegPanelDefinisjoner from '../definition/prosessStegPanelDefinisjoner';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -99,7 +99,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [overstyrteProsessSteg, toggleOverstyrteProsessSteg] = useState([]);
+  const [overstyrteProsessSteg, toggleOverstyring] = useState([]);
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
@@ -121,7 +121,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     simuleringResultat,
     beregningresultatEngangsstonad,
   };
-  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData,
+  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
     behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);
 
   const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
@@ -139,7 +139,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
 
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside);
   const bekreftAksjonspunktCallback = useCallback(() => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, esBehandlingApi), [behandling.versjon]);
+    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, esBehandlingApi), [behandling.versjon]);
 
   return (
     <>
@@ -163,8 +163,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
               ...dataProps,
               alleKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
-              toggleOverstyring: toggleOverstyrteProsessSteg,
-              ...valgtPanel.componentData,
+              ...valgtPanel.komponentData,
             })}
           />
         </MargMarkering>

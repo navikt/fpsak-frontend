@@ -11,7 +11,7 @@ import {
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import esBehandlingApi from '../data/esBehandlingApi';
-import faktaPanelDefinisjoner from '../definition/faktaPanelDefinisjoner';
+import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
 
 const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 
@@ -74,7 +74,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
           ...dataProps,
           alleKodeverk,
           submitCallback: bekreftAksjonspunktCallback,
-          ...valgtPanel.componentData,
+          ...valgtPanel.komponentData,
         })}
       />
     </FaktaPanel>

@@ -3,6 +3,8 @@ import { isAvslag } from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
+// TODO (TOR) Kan denne skrivast om? For høg kompleksitet.
+
 const hasOnlyClosedAps = (aksjonspunkter, vedtakAksjonspunkter) => aksjonspunkter
   .filter((ap) => !vedtakAksjonspunkter.some((vap) => vap.definisjon.kode === ap.definisjon.kode))
   .every((ap) => !isAksjonspunktOpen(ap.status.kode));

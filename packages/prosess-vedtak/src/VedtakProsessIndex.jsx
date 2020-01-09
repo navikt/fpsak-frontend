@@ -33,7 +33,7 @@ const VedtakProsessIndex = ({
   beregningsresultatOriginalBehandling,
   medlemskap,
   aksjonspunkter,
-  readOnly,
+  isReadOnly,
   previewCallback,
   submitCallback,
   ytelseTypeKode,
@@ -62,7 +62,7 @@ const VedtakProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       ytelseTypeKode={ytelseTypeKode}
       employeeHasAccess={employeeHasAccess}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       previewCallback={previewCallback}
       submitCallback={submitCallback}
       alleKodeverk={alleKodeverk}
@@ -83,7 +83,7 @@ VedtakProsessIndex.propTypes = {
   tilbakekrevingvalg: vedtakTilbakekrevingvalgPropType,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

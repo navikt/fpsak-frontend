@@ -26,7 +26,7 @@ const VarselOmRevurderingProsessIndex = ({
   submitCallback,
   previewCallback,
   dispatchSubmitFailed,
-  readOnly,
+  isReadOnly,
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
@@ -44,7 +44,7 @@ const VarselOmRevurderingProsessIndex = ({
       submitCallback={submitCallback}
       previewCallback={previewCallback}
       dispatchSubmitFailed={dispatchSubmitFailed}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
@@ -60,7 +60,7 @@ VarselOmRevurderingProsessIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
   dispatchSubmitFailed: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

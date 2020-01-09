@@ -18,7 +18,7 @@ const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, beha
         endpoints: panel.endpoints,
         renderComponent: panel.renderComponent,
         harApneAksjonspunkter,
-        componentData: {
+        komponentData: {
           aksjonspunkter: filtrerteAksjonspunkter,
           readOnly: readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, [], navAnsatt, fagsak, hasFetchError),
           submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),

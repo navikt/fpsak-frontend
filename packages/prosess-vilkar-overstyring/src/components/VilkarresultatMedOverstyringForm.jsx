@@ -84,7 +84,6 @@ VilkarresultatMedOverstyringForm.propTypes = {
   isOverstyrt: PropTypes.bool,
   erVilkarOk: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
-  aksjonspunktCode: PropTypes.string,
   lovReferanse: PropTypes.string,
   customVilkarIkkeOppfyltText: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -109,7 +108,6 @@ VilkarresultatMedOverstyringForm.propTypes = {
 VilkarresultatMedOverstyringForm.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
-  aksjonspunktCode: undefined,
   lovReferanse: undefined,
   isOverstyrt: undefined,
   erVilkarOk: undefined,

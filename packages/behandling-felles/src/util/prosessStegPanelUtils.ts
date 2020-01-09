@@ -1,27 +1,11 @@
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 
 import readOnlyUtils from './readOnlyUtils';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
-
-const SUCCESS = 'success';
-const WARNING = 'warning';
-const DANGER = 'danger';
-const DEFAULT = 'default';
-
-const finnProsessmenyType = (status, harApentAksjonspunkt) => {
-  if (harApentAksjonspunkt) {
-    return WARNING;
-  }
-  if (status === vilkarUtfallType.OPPFYLT) {
-    return SUCCESS;
-  } if (status === vilkarUtfallType.IKKE_OPPFYLT) {
-    return DANGER;
-  }
-  return DEFAULT;
-};
 
 const finnStatus = (bpVilkar, bpAksjonspunkter) => {
   if (bpVilkar.length > 0) {
@@ -44,73 +28,76 @@ const erProsessStegSynlig = (vilkarTypes, bpVilkar, bpAksjonspunkter) => {
   return hasVilkar || hasNoVilkarDefinitionButAksjonspunkter;
 };
 
-const createData = (panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl) => ({
+const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl) => ({
   ...ekstraPanelData,
   fagsak,
   behandling,
   aksjonspunkter,
   vilkar,
-  aksjonspunkterForSteg: aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode)),
-  aksjonspunktDefKoderForSteg: panel.aksjonspunkterCodes,
-  vilkarForSteg: vilkar.filter((v) => panel.vilkarCodes.includes(v.vilkarType.kode)),
-  label: intl.formatMessage({ id: panel.textCode }),
+  aksjonspunktDefKoderForSteg: panelDefinisjon.aksjonspunkterCodes,
+  aksjonspunkterForSteg: aksjonspunkter.filter((ap) => panelDefinisjon.aksjonspunkterCodes.includes(ap.definisjon.kode)),
+  vilkarForSteg: vilkar.filter((v) => panelDefinisjon.vilkarCodes.includes(v.vilkarType.kode)),
+  label: intl.formatMessage({ id: panelDefinisjon.textCode }),
   rettigheter,
 });
 
-const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
-  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
-  const vilkarCodes = vilkar.map((v) => v.vilkarType.kode);
+const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, behandling, aksjonspunkter, vilkar,
+  navAnsatt, fagsak, hasFetchError, intl) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
 
   return prosessStegPanelDefinisjoner
-    .filter((panel) => {
-      if (panel.showComponent) {
-        return panel.showComponent(createData(panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl));
-      }
-      return panel.vilkarCodes.some((v) => vilkarCodes.includes(v)) && panel.aksjonspunkterCodes.some((a) => apCodes.includes(a));
-    })
+    .map((panelDefinisjon) => ({
+      ...panelDefinisjon,
+      dataTilUtleding: settOppDataBruktTilUtledingAvSteg(panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl),
+    }))
+    .filter((panel) => (panel.showComponent
+      ? panel.showComponent(panel.dataTilUtleding)
+      : panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc))
+        && panel.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac))))
     .map((panel) => {
-      const ekstra = createData(panel, fagsak, behandling, aksjonspunkter, vilkar, ekstraPanelData, rettigheter, intl);
-      const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
-      const filtrerteVilkar = vilkar.filter((v) => panel.vilkarCodes.includes(v.vilkarType.kode));
-      const status = panel.overrideStatus ? panel.overrideStatus(ekstra, filtrerteAksjonspunkter) : finnStatus(filtrerteVilkar, filtrerteAksjonspunkter);
-      const erAksjonspunktOpen = filtrerteAksjonspunkter.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+      const { vilkarForSteg, aksjonspunkterForSteg } = panel.dataTilUtleding;
 
-      if (!erProsessStegSynlig(panel.vilkarCodes, filtrerteVilkar, filtrerteAksjonspunkter)) {
-        return {
-          urlCode: panel.urlCode,
-          label: intl.formatMessage({ id: panel.textCode }),
-          status,
-          isAksjonspunktOpen: erAksjonspunktOpen,
-        };
-      }
+      const status = panel.overrideStatus ? panel.overrideStatus(panel.dataTilUtleding) : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
+      const erAksjonspunktOpen = aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+      const isReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError);
 
-      const isReadOnly = readOnlyUtils.erReadOnly(behandling, filtrerteAksjonspunkter, filtrerteVilkar, navAnsatt, fagsak, hasFetchError);
-      const isOverrideReadOnly = readOnlyUtils.erOverrideReadOnly(behandling, filtrerteAksjonspunkter, filtrerteVilkar, navAnsatt, fagsak, hasFetchError);
-      const isSubmittable = filtrerteAksjonspunkter.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === status;
-
-      return {
+      const prosessStegPanel = {
         urlCode: panel.urlCode,
-        label: intl.formatMessage({ id: panel.textCode }),
         endpoints: panel.endpoints,
         renderComponent: panel.renderComponent,
+        aksjonspunkter: aksjonspunkterForSteg,
+        erStegBehandlet: status !== vilkarUtfallType.IKKE_VURDERT || erAksjonspunktOpen,
+        label: intl.formatMessage({ id: panel.textCode }),
+        isAksjonspunktOpen: erAksjonspunktOpen,
         isReadOnly,
         status,
-        aksjonspunkter: filtrerteAksjonspunkter,
-        erStegBehandlet: status !== vilkarUtfallType.IKKE_VURDERT || erAksjonspunktOpen,
+      };
+
+      if (!erProsessStegSynlig(panel.vilkarCodes, vilkarForSteg, aksjonspunkterForSteg)) {
+        return prosessStegPanel;
+      }
+
+      const komponentData = {
+        status,
+        isReadOnly,
+        readOnlySubmitButton: (!(aksjonspunkterForSteg.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
+        aksjonspunkter: aksjonspunkterForSteg,
+        vilkar: vilkarForSteg,
         isAksjonspunktOpen: erAksjonspunktOpen,
-        componentData: {
-          aksjonspunkter: filtrerteAksjonspunkter,
-          vilkar: filtrerteVilkar,
-          status,
-          isReadOnly,
-          readOnlySubmitButton: (!(filtrerteAksjonspunkter.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
-          overrideReadOnly: isOverrideReadOnly,
+        ...panel.getData(panel.dataTilUtleding),
+      };
+
+      return panel.isOverridable ? {
+        ...prosessStegPanel,
+        komponentData: {
+          overrideReadOnly: readOnlyUtils.erOverrideReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError),
           kanOverstyreAccess: rettigheter.kanOverstyreAccess,
-          isAksjonspunktOpen: erAksjonspunktOpen,
-          isSubmittable,
-          ...panel.getData(ekstra),
+          toggleOverstyring,
+          ...komponentData,
         },
+      } : {
+        ...prosessStegPanel,
+        komponentData,
       };
     });
 };
@@ -123,35 +110,69 @@ const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode) => {
   return prosessStegPaneler.find((i) => i.urlCode === valgtProsessStegPanelKode);
 };
 
+
+// TODO (TOR) Hent desse statusane fra process-menu komponent
+export enum StepType {
+  warning = 'warning',
+  success = 'success',
+  danger = 'danger',
+  default = 'default',
+}
+
+const finnProsessmenyType = (status, harApentAksjonspunkt) => {
+  if (harApentAksjonspunkt) {
+    return StepType.warning;
+  }
+  if (status === vilkarUtfallType.OPPFYLT) {
+    return StepType.success;
+  } if (status === vilkarUtfallType.IKKE_OPPFYLT) {
+    return StepType.danger;
+  }
+  return StepType.default;
+};
+
 const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessStegPanelKode) => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.status, panel.isAksjonspunktOpen);
   return {
     label: panel.label,
     isActive: panel.urlCode === valgtProsessStegPanelKode,
     isDisabled: false,
-    isFinished: type === SUCCESS,
+    isFinished: type === StepType.success,
     type,
   };
 });
 
-const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, api) => (aksjonspunktModels) => {
-  const { id, versjon } = behandling;
+const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api) => (aksjonspunktModels) => {
   const models = aksjonspunktModels.map((ap) => ({
     '@type': ap.kode,
     ...ap,
   }));
 
-  const etterLagringCallback = lagringSideEffectsCallback(aksjonspunktModels);
-
   const params = {
     saksnummer: fagsak.saksnummer,
-    behandlingId: id,
-    behandlingVersjon: versjon,
-    bekreftedeAksjonspunktDtoer: models,
+    behandlingId: behandling.id,
+    behandlingVersjon: behandling.versjon,
   };
 
-  return dispatch(api.SAVE_AKSJONSPUNKT.makeRestApiRequest()(params, { keepData: true }))
-    .then(etterLagringCallback);
+  const etterLagringCallback = lagringSideEffectsCallback(aksjonspunktModels);
+
+  if (api.SAVE_OVERSTYRT_AKSJONSPUNKT) {
+    const aksjonspunkterTilLagring = aksjonspunkter.filter((ap) => aksjonspunktModels.some((apModel) => apModel.kode === ap.definisjon.kode));
+    const erOverstyringsaksjonspunkter = aksjonspunkterTilLagring
+      .some((ap) => ap.aksjonspunktType.kode === aksjonspunktType.OVERSTYRING || ap.aksjonspunktType.kode === aksjonspunktType.SAKSBEHANDLEROVERSTYRING);
+
+    if (aksjonspunkterTilLagring.length === 0 || erOverstyringsaksjonspunkter) {
+      return dispatch(api.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()({
+        ...params,
+        overstyrteAksjonspunktDtoer: models,
+      }, { keepData: true })).then(etterLagringCallback);
+    }
+  }
+
+  return dispatch(api.SAVE_AKSJONSPUNKT.makeRestApiRequest()({
+    ...params,
+    bekreftedeAksjonspunktDtoer: models,
+  }, { keepData: true })).then(etterLagringCallback);
 };
 
 

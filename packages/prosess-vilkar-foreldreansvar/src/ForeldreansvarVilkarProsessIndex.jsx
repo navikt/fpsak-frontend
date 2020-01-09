@@ -21,7 +21,7 @@ const ForeldreansvarVilkarProsessIndex = ({
   isForeldreansvar2Ledd,
   status,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
 }) => (
@@ -35,7 +35,7 @@ const ForeldreansvarVilkarProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       status={status}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       alleKodeverk={alleKodeverk}
     />
@@ -49,7 +49,7 @@ ForeldreansvarVilkarProsessIndex.propTypes = {
   isEngangsstonad: PropTypes.bool.isRequired,
   status: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
