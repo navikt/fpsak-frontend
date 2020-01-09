@@ -8,12 +8,13 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 
 import VurderVarigEndretEllerNyoppstartetSN2, { varigEndringRadioname } from './VurderVarigEndretEllerNyoppstartetSN_V2';
 import FastsettSN2 from './FastsettSN_V2';
+import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 
 const FORM_NAME = 'BeregningForm';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
 const finnSnAksjonspunkt = (aksjonspunkter) => aksjonspunkter && aksjonspunkter.find(
@@ -34,12 +35,14 @@ export const VurderOgFastsettSNImpl2 = ({
   erNyArbLivet,
   erNyoppstartet,
   erVarigEndring,
+  gjeldendeAksjonspunkter,
 }) => {
   if (erNyArbLivet) {
     return (
       <FastsettSN2
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
       />
     );
   }
@@ -56,6 +59,7 @@ export const VurderOgFastsettSNImpl2 = ({
         <FastsettSN2
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
+          gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         />
         )}
     </>
@@ -69,6 +73,7 @@ VurderOgFastsettSNImpl2.propTypes = {
   erNyArbLivet: PropTypes.bool.isRequired,
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,
+  gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
 };
 
 VurderOgFastsettSNImpl2.defaultProps = {
@@ -92,25 +97,40 @@ VurderOgFastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunk
   ...FastsettSN2.buildInitialValues(relevanteAndeler, gjeldendeAksjonspunkter),
 });
 
+const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkter) => {
+  // Utgått aksjonspunkt som må håndteres intill data er migrert
+  if (hasAksjonspunkt(FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)) {
+    const aksjonspunkter = [{
+      kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+      ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
+    }];
+    aksjonspunkter.push({
+      kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
+      ...FastsettSN2.transformValuesMedBegrunnelse(values),
+    });
+    return aksjonspunkter;
+  }
+  return [{
+    kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+    ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
+    ...FastsettSN2.transformValuesUtenBegrunnelse(values),
+  }];
+};
+
 VurderOgFastsettSN2.transformValues = (values, gjeldendeAksjonspunkter) => {
   if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
     return [{
       kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-      ...FastsettSN2.transformValues(values),
+      ...FastsettSN2.transformValuesMedBegrunnelse(values),
     }];
   }
-  const varigEndretTransformed = {
+  if (values[varigEndringRadioname]) {
+    return transformValuesMedVarigEndretNyoppstartet(values, gjeldendeAksjonspunkter);
+  }
+  return [{
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
-  };
-  const losteAksjonspunkt = [varigEndretTransformed];
-  if (values[varigEndringRadioname]) {
-    losteAksjonspunkt.push({
-      kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-      ...FastsettSN2.transformValues(values),
-    });
-  }
-  return losteAksjonspunkt;
+  }];
 };
 
 export default VurderOgFastsettSN2;
