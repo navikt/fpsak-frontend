@@ -1,9 +1,9 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
@@ -35,10 +35,16 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
   uttakStnadskontoer,
   uttaksresultatPerioder,
   simuleringResultat,
+  soknad,
+  personopplysninger,
+  inntektArbeidYtelse,
+  ytelsefordeling,
   kodeverk,
   navAnsatt,
   valgtProsessSteg,
+  valgtFaktaSteg,
   oppdaterProsessStegIUrl,
+  oppdaterFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -79,10 +85,16 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
       fagsak={fagsak}
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
-      kodeverk={kodeverk}
+      vilkar={vilkar}
+      soknad={soknad}
+      personopplysninger={personopplysninger}
+      inntektArbeidYtelse={inntektArbeidYtelse}
+      ytelsefordeling={ytelsefordeling}
+      alleKodeverk={kodeverk}
       navAnsatt={navAnsatt}
       hasFetchError={hasFetchError}
-      oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+      valgtFaktaSteg={valgtFaktaSteg}
+      oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
     />
   </>
 );

@@ -1,52 +1,83 @@
 import React, {
-  FunctionComponent, useMemo,
+  FunctionComponent, useMemo, useCallback,
 } from 'react';
 import { useIntl } from 'react-intl';
+import { useDispatch } from 'react-redux';
 
-import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, Kodeverk, NavAnsatt, BehandlingDataCache,
+  FagsakInfo, Behandling, Aksjonspunkt, Vilkar, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2,
+  Soknad, Personopplysninger, InntektArbeidYtelse, faktaPanelUtils,
 } from '@fpsak-frontend/behandling-felles';
+import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-interface DataProps {
-  feilutbetalingFakta: {};
-  feilutbetalingAarsak: {
-    ytelseType: Kodeverk;
-  }[];
-}
+import fpBehandlingApi from '../data/fpBehandlingApi';
+import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
+
+const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 
 interface OwnProps {
   fagsak: FagsakInfo;
   behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  vilkar: Vilkar[];
+  soknad: Soknad;
+  personopplysninger: Personopplysninger;
+  inntektArbeidYtelse: InntektArbeidYtelse;
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
 }
 
 const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
+  fagsak,
   behandling,
   aksjonspunkter,
+  vilkar,
+  soknad,
+  personopplysninger,
+  navAnsatt,
+  inntektArbeidYtelse,
+  ytelsefordeling,
+  alleKodeverk,
+  oppdaterFaktaPanelIUrl,
+  valgtFaktaSteg,
+  hasFetchError,
 }) => {
   const intl = useIntl();
-  const apForPanel = useMemo(() => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING),
-    [aksjonspunkter]);
-  const harApneAksjonspunkter = apForPanel.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
+  const dispatch = useDispatch();
 
+  const fpPanelerData = {
+    fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, hasFetchError,
+  };
+  const faktaPaneler = useMemo(() => faktaPanelUtils
+    .utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
+  [behandling.versjon]);
 
-  const cache = new BehandlingDataCache();
-  cache.setVersion(behandling.versjon);
+  const velgFaktaPanelCallback = useCallback((index) => oppdaterFaktaPanelIUrl(faktaPaneler[index].urlCode), [behandling.versjon]);
+  const bekreftAksjonspunktCallback = useCallback(faktaPanelUtils
+    .getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl, overstyringApCodes, fpBehandlingApi),
+  [behandling.versjon]);
+
+  const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);
+
+  const formaterteFaktaPaneler = useMemo(() => faktaPanelUtils.formaterPanelerForSidemeny(intl, faktaPaneler, valgtPanel.urlCode),
+    [behandling.versjon, valgtPanel.urlCode]);
 
   return (
-    <FaktaPanel paneler={[{
-      tekst: intl.formatMessage({ id: 'TilbakekrevingFakta.FaktaFeilutbetaling' }),
-      erAktiv: true,
-      harAksjonspunkt: harApneAksjonspunkter,
-    }]}
-    >
-      <div>test</div>
+    <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
+      <DataFetcherBehandlingDataV2
+        key={valgtPanel.urlCode}
+        behandlingVersion={behandling.versjon}
+        endpoints={valgtPanel.endpoints}
+        render={(dataProps) => valgtPanel.renderComponent({
+          ...dataProps,
+          alleKodeverk,
+          submitCallback: bekreftAksjonspunktCallback,
+          ...valgtPanel.komponentData,
+        })}
+      />
     </FaktaPanel>
   );
 };

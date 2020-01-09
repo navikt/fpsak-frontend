@@ -2,7 +2,6 @@
   "BegrunnelsePanel.readOnly": "Begrunnelse",
   "FaktaBegrunnelseTextField.Vurdering": "Vurdering",
 
-  "BeregningInfoPanel.Title": "Fakta om beregning",
   "BeregningInfoPanel.AksjonspunktHelpText.FaktaOmBeregning": "Vurder fakta for beregningen",
   "BeregningInfoPanel.TidsbegrensetArbFor.Arbeidsforhold": "Er arbeidsforholdet i {navn} med varighet {fom} - {tom} tidsbegrenset?",
   "BeregningInfoPanel.FormAlternativ.Ja": "Ja",

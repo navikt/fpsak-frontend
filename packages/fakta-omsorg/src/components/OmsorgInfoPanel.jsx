@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, behandlingFormValueSelector, FaktaSubmitButton,
-  faktaPanelCodes,
+  behandlingForm, FaktaBegrunnelseTextField, behandlingFormValueSelector, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
 
 import omsorgAksjonspunkterPropType from '../propTypes/omsorgAksjonspunkterPropType';
@@ -34,9 +33,6 @@ const getHelpTexts = (aksjonspunkter) => {
 };
 
 export const OmsorgInfoPanel = ({
-  intl,
-  openInfoPanels,
-  toggleInfoPanelCallback,
   personopplysninger,
   readOnly,
   hasOpenAksjonspunkter,
@@ -51,14 +47,7 @@ export const OmsorgInfoPanel = ({
   alleMerknaderFraBeslutter,
   ...formProps
 }) => (
-  <FaktaEkspandertpanel
-    title={intl.formatMessage({ id: 'OmsorgInfoPanel.Omsorg' })}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.OMSORG)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.OMSORG}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    readOnly={readOnly}
-  >
+  <>
     {!readOnly && (
       <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {getHelpTexts(aksjonspunkter)}
@@ -85,7 +74,7 @@ export const OmsorgInfoPanel = ({
       />
     </form>
 
-  </FaktaEkspandertpanel>
+  </>
 );
 
 OmsorgInfoPanel.propTypes = {
@@ -146,9 +135,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const omsorgAksjonspunkter = [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG];
-
-export default withDefaultToggling(faktaPanelCodes.OMSORG, omsorgAksjonspunkter)(connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'OmsorgInfoPanel',
   validate: IkkeOmsorgPeriodeField.validate,
-})(injectIntl(OmsorgInfoPanel))));
+})(OmsorgInfoPanel));

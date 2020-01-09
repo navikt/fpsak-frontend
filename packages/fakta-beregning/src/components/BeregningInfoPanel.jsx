@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 
-import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
@@ -69,11 +67,7 @@ const createRelevantForms = (
  * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
  * når det finnes åpne aksjonspunkter.
  */
-export const BeregningInfoPanelImpl = ({
-  intl,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  hasOpenAksjonspunkter,
+export const BeregningInfoPanel = ({
   readOnly,
   aksjonspunkter,
   submittable,
@@ -87,37 +81,21 @@ export const BeregningInfoPanelImpl = ({
   if (!beregningsgrunnlag) {
     return null;
   }
-  return (
-    <FaktaEkspandertpanel
-      title={intl.formatMessage({ id: 'BeregningInfoPanel.Title' })}
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.BEREGNING)}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId={faktaPanelCodes.BEREGNING}
-      readOnly={readOnly}
-    >
-      {createRelevantForms(
-        readOnly,
-        aksjonspunkter,
-        submitCallback,
-        submittable,
-        erOverstyrer,
-        alleKodeverk,
-        behandlingId,
-        behandlingVersjon,
-        beregningsgrunnlag,
-      )}
-    </FaktaEkspandertpanel>
+  return createRelevantForms(
+    readOnly,
+    aksjonspunkter,
+    submitCallback,
+    submittable,
+    erOverstyrer,
+    alleKodeverk,
+    behandlingId,
+    behandlingVersjon,
+    beregningsgrunnlag,
   );
 };
 
-BeregningInfoPanelImpl.propTypes = {
+BeregningInfoPanel.propTypes = {
   intl: PropTypes.shape().isRequired,
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   submitCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -129,8 +107,5 @@ BeregningInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
 };
-
-const BeregningInfoPanel = withDefaultToggling(faktaPanelCodes.BEREGNING,
-  faktaOmBeregningAksjonspunkter, true)(injectIntl(BeregningInfoPanelImpl));
 
 export default BeregningInfoPanel;

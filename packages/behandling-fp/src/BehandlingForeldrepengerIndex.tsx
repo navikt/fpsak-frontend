@@ -7,13 +7,14 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
-  DataFetcherBehandlingData, BehandlingDataCache, Aksjonspunkt,
+  DataFetcherBehandlingDataV2, BehandlingDataCache, Aksjonspunkt, BehandlingDataProvider,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
 import ForeldrepengerGrid from './components/ForeldrepengerGrid';
 
-const engansstonadData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
+const engansstonadData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.PERSONOPPLYSNINGER, fpBehandlingApi.YTELSEFORDELING,
+  fpBehandlingApi.SOKNAD, fpBehandlingApi.INNTEKT_ARBEID_YTELSE, fpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
   fpBehandlingApi.UTTAK_STONADSKONTOER, fpBehandlingApi.UTTAKSRESULTAT_PERIODER, fpBehandlingApi.SIMULERING_RESULTAT];
 
 interface DataProps {
@@ -57,8 +58,6 @@ interface DispatchProps {
 type Props = OwnProps & StateProps & DispatchProps;
 
 class BehandlingForeldrepengerIndex extends PureComponent<Props> {
-  behandlingDataCache: BehandlingDataCache = new BehandlingDataCache()
-
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
@@ -72,7 +71,6 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       henleggBehandling: (params) => henleggBehandling(params),
     });
 
-    this.behandlingDataCache = new BehandlingDataCache();
     hentBehandling({ behandlingId }, { keepData: false });
   }
 
@@ -93,7 +91,9 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       fagsak,
       navAnsatt,
       oppdaterProsessStegIUrl,
+      oppdaterFaktaPanelIUrl,
       valgtProsessSteg,
+      valgtFaktaSteg,
       settPaVent,
       hentBehandling,
       opneSokeside,
@@ -107,37 +107,35 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
 
     reduxRestApi.injectPaths(behandling.links);
 
-    if (this.behandlingDataCache.getCurrentVersion() !== behandling.versjon) {
-      this.behandlingDataCache.setVersion(behandling.versjon);
-      this.behandlingDataCache.setData(behandling.versjon, 'behandling', behandling);
-    }
-
     return (
-      <DataFetcherBehandlingData
-        behandlingDataCache={this.behandlingDataCache}
-        behandlingVersion={behandling.versjon}
-        endpoints={engansstonadData}
-        showOldDataWhenRefetching
-        render={(dataProps: DataProps) => (
-          <>
-            <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
-            <ForeldrepengerGrid
-              fagsak={fagsak}
-              kodeverk={kodeverk}
-              navAnsatt={navAnsatt}
-              valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-              settPaVent={settPaVent}
-              hentBehandling={hentBehandling}
-              opneSokeside={opneSokeside}
-              harApenRevurdering={harApenRevurdering}
-              hasFetchError={hasFetchError}
-              {...dataProps}
-            />
-          </>
-        )}
-      />
+      <BehandlingDataProvider behandling={behandling}>
+        <DataFetcherBehandlingDataV2
+          behandlingVersion={behandling.versjon}
+          endpoints={engansstonadData}
+          showOldDataWhenRefetching
+          render={(dataProps: DataProps) => (
+            <>
+              <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+              <ForeldrepengerGrid
+                fagsak={fagsak}
+                kodeverk={kodeverk}
+                navAnsatt={navAnsatt}
+                valgtProsessSteg={valgtProsessSteg}
+                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+                oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
+                valgtFaktaSteg={valgtFaktaSteg}
+                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+                settPaVent={settPaVent}
+                hentBehandling={hentBehandling}
+                opneSokeside={opneSokeside}
+                harApenRevurdering={harApenRevurdering}
+                hasFetchError={hasFetchError}
+                {...dataProps}
+              />
+            </>
+          )}
+        />
+      </BehandlingDataProvider>
     );
   }
 }

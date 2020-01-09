@@ -258,7 +258,12 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingForeldrepengerIndex {...defaultProps} />
+            <BehandlingForeldrepengerIndex
+              featureToggles={featureToggles}
+              oppdaterFaktaPanelIUrl={this.goToValgtFaktaPanel}
+              valgtFaktaSteg={location.query.fakta}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );

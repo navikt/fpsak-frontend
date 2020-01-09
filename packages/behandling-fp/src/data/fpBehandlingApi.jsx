@@ -21,7 +21,9 @@ export const FpBehandlingApiKeys = {
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
   FAMILIEHENDELSE: 'FAMILIEHENDELSE',
   SOKNAD: 'SOKNAD',
-  ORIGINAL_BEHANDLING: 'ORIGINAL_BEHANDLING',
+  SOKNAD_ORIGINAL_BEHANDLING: 'SOKNAD_ORIGINAL_BEHANDLING',
+  FAMILIEHENDELSE_ORIGINAL_BEHANDLING: 'FAMILIEHENDELSE_ORIGINAL_BEHANDLING',
+  BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
   UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
@@ -71,7 +73,9 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT)
   .withInjectedPath('familiehendelse-v2', FpBehandlingApiKeys.FAMILIEHENDELSE)
   .withInjectedPath('soknad', FpBehandlingApiKeys.SOKNAD)
-  .withInjectedPath('original-behandling', FpBehandlingApiKeys.ORIGINAL_BEHANDLING)
+  .withInjectedPath('soknad-original-behandling', FpBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withInjectedPath('familiehendelse-original-behandling', FpBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+  .withInjectedPath('beregningsresultat-engangsstonad-original-behandling', FpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
   .withInjectedPath('soeker-medlemskap', FpBehandlingApiKeys.MEDLEMSKAP)
   .withInjectedPath('soeker-medlemskap-v2', FpBehandlingApiKeys.MEDLEMSKAP_V2)
   .withInjectedPath('uttak-periode-grense', FpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
