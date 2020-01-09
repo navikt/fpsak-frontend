@@ -19,6 +19,12 @@ export const getTekstForAndelBruktIBeregning = (andel) => {
   }
   return '';
 };
+const isAktivitetKodeDagpenger = (aktivitetStatusKode) => {
+  if (!aktivitetStatusKode) {
+    return false;
+  }
+  return aktivitetStatusKode === aktivitetStatus.DAGPENGER;
+};
 
 const TilstotendeYtelser2 = ({
   alleAndeler,
@@ -27,6 +33,7 @@ const TilstotendeYtelser2 = ({
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   const harFlereYtelser = relevanteAndeler.length > 1;
+
   return (
     <Panel className={beregningStyles.panel}>
 
@@ -72,14 +79,17 @@ const TilstotendeYtelser2 = ({
               </Column>
               <Column xs="2" />
             </Row>
-
+            {gjelderBesteberegning && isAktivitetKodeDagpenger(andel.aktivitetStatus.kode) && (
+              <Row>
+                <Column xs="12">
+                  <Normaltekst>
+                    <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.Besteberegning" />
+                  </Normaltekst>
+                </Column>
+              </Row>
+            )}
           </div>
         ))}
-        {gjelderBesteberegning && (
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.Besteberegning" />
-          </Normaltekst>
-        )}
       </>
     </Panel>
   );
