@@ -333,6 +333,7 @@ export const BeregningFormImpl2 = ({
               aksjonspunkter={gjeldendeAksjonspunkter}
               aktivitetStatusList={aktivitetStatusList}
               grunnbelop={beregningsgrunnlag.grunnbeløp}
+              halvGVerdi={beregningsgrunnlag.halvG}
               harAksjonspunkter={harAksjonspunkter}
             />
           </>
