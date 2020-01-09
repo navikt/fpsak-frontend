@@ -41,6 +41,19 @@ const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fag
   rettigheter,
 });
 
+const skalVisePanel = (aksjonspunkter, vilkar) => (panel) => {
+  if (panel.showComponent) {
+    return panel.showComponent(panel.dataTilUtleding);
+  }
+
+  const harAksjonspunkter = panel.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac));
+  if (panel.vilkarCodes.length === 0) {
+    return harAksjonspunkter;
+  }
+  const harVilkar = panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc));
+  return harAksjonspunkter && harVilkar;
+};
+
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, behandling, aksjonspunkter, vilkar,
   navAnsatt, fagsak, hasFetchError, intl) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
@@ -50,10 +63,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
       ...panelDefinisjon,
       dataTilUtleding: settOppDataBruktTilUtledingAvSteg(panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl),
     }))
-    .filter((panel) => (panel.showComponent
-      ? panel.showComponent(panel.dataTilUtleding)
-      : panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc))
-        && panel.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac))))
+    .filter(skalVisePanel(aksjonspunkter, vilkar))
     .map((panel) => {
       const { vilkarForSteg, aksjonspunkterForSteg } = panel.dataTilUtleding;
 
