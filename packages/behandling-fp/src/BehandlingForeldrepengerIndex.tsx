@@ -7,7 +7,7 @@ import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
-  DataFetcherBehandlingDataV2, BehandlingDataCache, Aksjonspunkt, BehandlingDataProvider,
+  DataFetcherBehandlingDataV2, Aksjonspunkt, BehandlingDataProvider,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';

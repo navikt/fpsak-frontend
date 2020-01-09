@@ -105,7 +105,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [fpBehandlingApi.BEREGNINGSGRUNNLAG],
   renderComponent: (props) => <BeregningFaktaIndex {...props} />,
   showComponent: () => true,
-  getData: () => {},
+  getData: ({ rettigheter }) => ({ erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled }),
 }, {
   urlCode: faktaPanelCodes.FORDELING,
   textCode: 'FordelBeregningsgrunnlag.Title',
@@ -133,7 +133,7 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <UttakFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, ytelsefordeling }) => ytelsefordeling.endringsdato !== undefined && personopplysninger !== null
     && personopplysninger !== undefined,
-  getData: () => {},
+  getData: ({ rettigheter }) => ({ kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled }),
 }];
 
 export default faktaPanelDefinisjoner;

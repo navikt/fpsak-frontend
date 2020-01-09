@@ -95,7 +95,6 @@ export const BeregningInfoPanel = ({
 };
 
 BeregningInfoPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,

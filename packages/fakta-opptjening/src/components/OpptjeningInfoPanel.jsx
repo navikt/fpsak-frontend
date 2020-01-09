@@ -51,7 +51,6 @@ export const OpptjeningInfoPanel = ({
 );
 
 OpptjeningInfoPanel.propTypes = {
-  intl: PropTypes.shape().isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkt: aksjonspunktPropType,

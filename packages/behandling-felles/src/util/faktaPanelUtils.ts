@@ -1,4 +1,5 @@
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { allAccessRights } from '@fpsak-frontend/fp-felles';
 
 import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
@@ -6,9 +7,11 @@ import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 const DEFAULT_FAKTA_KODE = 'default';
 
 const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
+  const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
+  const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
   return faktaPanelDefinisjoner
-    .filter((panel) => panel.aksjonspunkterCodes.some((a) => apCodes.includes(a)) || panel.showComponent(ekstraPanelData))
+    .filter((panel) => panel.aksjonspunkterCodes.some((a) => apCodes.includes(a)) || panel.showComponent(utvidetEkstraPanelData))
     .map((panel) => {
       const filtrerteAksjonspunkter = aksjonspunkter.filter((ap) => panel.aksjonspunkterCodes.includes(ap.definisjon.kode));
       const harApneAksjonspunkter = filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
@@ -24,7 +27,7 @@ const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, beha
           submittable: !filtrerteAksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode)) || filtrerteAksjonspunkter.some((ap) => ap.kanLoses),
           harApneAksjonspunkter,
           alleMerknaderFraBeslutter: getAlleMerknaderFraBeslutter(behandling, filtrerteAksjonspunkter),
-          ...panel.getData(ekstraPanelData),
+          ...panel.getData(utvidetEkstraPanelData),
         },
       };
     });
