@@ -13,17 +13,6 @@ import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 
-/* Flyttes til språkfil istde
-const virksomhetsTypeNavn = {
-  DAGMAMMA: 'Dagmamma i eget hjem/familiebarnehage',
-  FISKE: 'Fiske',
-  FRILANSER: 'Frilanser',
-  JORDBRUK_SKOGBRUK: 'Jordbruk / Skogbruk',
-  ANNEN: 'Annen næringsvirksomhet',
-  UDEFINERT: 'Ikke definert',
-};
-*/
-
 const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
   if (!virksomhetType) {
