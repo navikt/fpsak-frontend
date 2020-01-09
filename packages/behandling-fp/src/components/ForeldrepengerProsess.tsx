@@ -86,6 +86,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   aksjonspunkter,
   vilkar,
   simuleringResultat,
+  beregningsgrunnlag,
   beregningresultatForeldrepenger,
   uttaksresultatPerioder,
   alleKodeverk,
@@ -123,6 +124,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     simuleringResultat,
     beregningresultatForeldrepenger,
     uttaksresultatPerioder,
+    beregningsgrunnlag,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
     behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);

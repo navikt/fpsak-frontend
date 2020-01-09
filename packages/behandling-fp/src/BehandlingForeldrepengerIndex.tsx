@@ -13,8 +13,8 @@ import {
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
 import ForeldrepengerGrid from './components/ForeldrepengerGrid';
 
-const engansstonadData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.PERSONOPPLYSNINGER, fpBehandlingApi.YTELSEFORDELING,
-  fpBehandlingApi.SOKNAD, fpBehandlingApi.INNTEKT_ARBEID_YTELSE, fpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER,
+const foreldrepengerData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.PERSONOPPLYSNINGER, fpBehandlingApi.YTELSEFORDELING,
+  fpBehandlingApi.SOKNAD, fpBehandlingApi.INNTEKT_ARBEID_YTELSE, fpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER, fpBehandlingApi.BEREGNINGSGRUNNLAG,
   fpBehandlingApi.UTTAK_STONADSKONTOER, fpBehandlingApi.UTTAKSRESULTAT_PERIODER, fpBehandlingApi.SIMULERING_RESULTAT];
 
 interface DataProps {
@@ -112,7 +112,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       <BehandlingDataProvider behandling={behandling}>
         <DataFetcherBehandlingDataV2
           behandlingVersion={behandling.versjon}
-          endpoints={engansstonadData}
+          endpoints={foreldrepengerData}
           showOldDataWhenRefetching
           render={(dataProps: DataProps) => (
             <>

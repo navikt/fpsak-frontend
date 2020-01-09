@@ -34,6 +34,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
   vilkar,
   beregningresultatForeldrepenger,
   uttakStnadskontoer,
+  beregningsgrunnlag,
   uttaksresultatPerioder,
   simuleringResultat,
   soknad,
@@ -69,6 +70,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
       vilkar={vilkar}
       uttaksresultatPerioder={uttaksresultatPerioder}
       simuleringResultat={simuleringResultat}
+      beregningsgrunnlag={beregningsgrunnlag}
       beregningresultatForeldrepenger={beregningresultatForeldrepenger}
       alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}

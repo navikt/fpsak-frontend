@@ -104,7 +104,7 @@ const faktaPanelDefinisjoner = [{
     aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG],
   endpoints: [fpBehandlingApi.BEREGNINGSGRUNNLAG],
   renderComponent: (props) => <BeregningFaktaIndex {...props} />,
-  showComponent: () => true,
+  showComponent: ({ beregningsgrunnlag }) => beregningsgrunnlag,
   getData: ({ rettigheter }) => ({ erOverstyrer: rettigheter.kanOverstyreAccess.isEnabled }),
 }, {
   urlCode: faktaPanelCodes.FORDELING,

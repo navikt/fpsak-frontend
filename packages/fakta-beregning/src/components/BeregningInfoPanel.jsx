@@ -77,22 +77,17 @@ export const BeregningInfoPanel = ({
   alleKodeverk,
   behandlingId,
   behandlingVersjon,
-}) => {
-  if (!beregningsgrunnlag) {
-    return null;
-  }
-  return createRelevantForms(
-    readOnly,
-    aksjonspunkter,
-    submitCallback,
-    submittable,
-    erOverstyrer,
-    alleKodeverk,
-    behandlingId,
-    behandlingVersjon,
-    beregningsgrunnlag,
-  );
-};
+}) => createRelevantForms(
+  readOnly,
+  aksjonspunkter,
+  submitCallback,
+  submittable,
+  erOverstyrer,
+  alleKodeverk,
+  behandlingId,
+  behandlingVersjon,
+  beregningsgrunnlag,
+);
 
 BeregningInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
