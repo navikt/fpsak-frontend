@@ -46,7 +46,7 @@ const finnPerioderMedAvsluttetArbeidsforhold = (allePerioder) => {
   const perioderMellomSluttdatoForArbeidsforhold = [];
   let k = 0;
   while (k < allePerioder.length) {
-    const nyPeriode = allePerioder[k];
+    const nyPeriode = { ...allePerioder[k] };
     k += 1;
     while (k < allePerioder.length && !harPeriodeArbeidsforholdAvsluttet(allePerioder[k])) {
       k += 1;
@@ -121,7 +121,6 @@ export const createTableData = createSelector(
     const arbeidsforholdPeriodeMap = initializeMap(kopiAvPerioder, getKodeverknavnFn(alleKodeverk, kodeverkTyper));
     // Etter å ha initialiser mappet med faste bokser kan vi fjerne første element fra lista, da
     // denne ikke skal være en av de redigerbare feltene i tabellen, og det er disse vi skal lage nå
-
     kopiAvPerioder.forEach((periode) => {
       const arbeidstakerAndeler = findArbeidstakerAndeler(periode);
       arbeidstakerAndeler.forEach((andel) => {
