@@ -1,10 +1,11 @@
 import React, { FunctionComponent } from 'react';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { PersonIndex } from '@fpsak-frontend/person-info';
+import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar,
 } from '@fpsak-frontend/behandling-felles';
+import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
 import ForeldrepengerFakta from './ForeldrepengerFakta';
@@ -39,7 +40,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
   personopplysninger,
   inntektArbeidYtelse,
   ytelsefordeling,
-  kodeverk,
+  alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
   valgtFaktaSteg,
@@ -51,12 +52,13 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
   opneSokeside,
   harApenRevurdering,
   hasFetchError,
+  featureToggles,
 }) => (
   <>
     <BehandlingPaVent
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
-      kodeverk={kodeverk}
+      kodeverk={alleKodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
     />
@@ -65,21 +67,30 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
       vilkar={vilkar}
-      kodeverk={kodeverk}
+      uttaksresultatPerioder={uttaksresultatPerioder}
+      simuleringResultat={simuleringResultat}
+      beregningresultatForeldrepenger={beregningresultatForeldrepenger}
+      alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
       oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
       oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
       opneSokeside={opneSokeside}
-      harApenRevurdering={harApenRevurdering}
       hasFetchError={hasFetchError}
-      beregningresultatForeldrepenger={beregningresultatForeldrepenger}
-      uttakStonadskontoer={uttakStnadskontoer}
-      uttaksresultatPerioder={uttaksresultatPerioder}
-      simuleringResultat={simuleringResultat}
+      featureToggles={featureToggles}
     />
     <VerticalSpacer sixteenPx />
-    <PersonIndex medPanel person={fagsak.fagsakPerson} />
+    <PersonFaktaIndex
+      behandling={behandling}
+      fagsakPerson={fagsak.fagsakPerson}
+      aksjonspunkter={aksjonspunkter}
+      personopplysninger={personopplysninger}
+      inntektArbeidYtelse={inntektArbeidYtelse}
+      submitCallback={() => undefined}
+      readOnly={false}
+      featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
+      alleKodeverk={alleKodeverk}
+    />
     <VerticalSpacer sixteenPx />
     <ForeldrepengerFakta
       fagsak={fagsak}
@@ -90,7 +101,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
       personopplysninger={personopplysninger}
       inntektArbeidYtelse={inntektArbeidYtelse}
       ytelsefordeling={ytelsefordeling}
-      alleKodeverk={kodeverk}
+      alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       hasFetchError={hasFetchError}
       valgtFaktaSteg={valgtFaktaSteg}

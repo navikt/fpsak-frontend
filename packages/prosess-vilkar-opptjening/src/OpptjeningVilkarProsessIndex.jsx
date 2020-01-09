@@ -23,7 +23,7 @@ const OpptjeningVilkarProsessIndex = ({
   lovReferanse,
   submitCallback,
   readOnly,
-  isAksjonspunktOpen,
+  harApneAksjonspunkter,
   readOnlySubmitButton,
 }) => (
   <RawIntlProvider value={intl}>
@@ -37,7 +37,7 @@ const OpptjeningVilkarProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}
-      isAksjonspunktOpen={isAksjonspunktOpen}
+      isAksjonspunktOpen={harApneAksjonspunkter}
       readOnlySubmitButton={readOnlySubmitButton}
     />
   </RawIntlProvider>
@@ -51,7 +51,7 @@ OpptjeningVilkarProsessIndex.propTypes = {
   lovReferanse: PropTypes.string,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
 };
 

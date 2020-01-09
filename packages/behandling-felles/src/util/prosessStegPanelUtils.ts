@@ -22,7 +22,7 @@ const finnStatus = (bpVilkar, bpAksjonspunkter) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-const erProsessStegSynlig = (vilkarTypes, bpVilkar, bpAksjonspunkter) => {
+const erProsessStegTrykkbart = (vilkarTypes, bpVilkar, bpAksjonspunkter) => {
   const hasVilkar = vilkarTypes.length > 0 && bpVilkar.length > 0;
   const hasNoVilkarDefinitionButAksjonspunkter = vilkarTypes.length === 0 && bpAksjonspunkter.length > 0;
   return hasVilkar || hasNoVilkarDefinitionButAksjonspunkter;
@@ -83,7 +83,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
         status,
       };
 
-      if (!erProsessStegSynlig(panel.vilkarCodes, vilkarForSteg, aksjonspunkterForSteg)) {
+      if (!erProsessStegTrykkbart(panel.vilkarCodes, vilkarForSteg, aksjonspunkterForSteg)) {
         return prosessStegPanel;
       }
 

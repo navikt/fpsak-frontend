@@ -24,8 +24,7 @@ const BeregningsgrunnlagProsessIndex = ({
   submitCallback,
   readOnly,
   readOnlySubmitButton,
-  apCodes,
-  isApOpen,
+  isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
   featureToggles,
@@ -41,8 +40,8 @@ const BeregningsgrunnlagProsessIndex = ({
           submitCallback={submitCallback}
           readOnly={readOnly}
           readOnlySubmitButton={readOnlySubmitButton}
-          apCodes={apCodes}
-          isApOpen={isApOpen}
+          apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+          isApOpen={isAksjonspunktOpen}
           vilkar={vilkar}
           alleKodeverk={alleKodeverk}
         />
@@ -58,8 +57,8 @@ const BeregningsgrunnlagProsessIndex = ({
         submitCallback={submitCallback}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
-        apCodes={apCodes}
-        isApOpen={isApOpen}
+        apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+        isApOpen={isAksjonspunktOpen}
         vilkar={vilkar}
         alleKodeverk={alleKodeverk}
       />
@@ -72,9 +71,8 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,

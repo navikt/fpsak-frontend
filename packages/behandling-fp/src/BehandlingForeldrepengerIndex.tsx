@@ -99,6 +99,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       opneSokeside,
       harApenRevurdering,
       hasFetchError,
+      featureToggles,
     } = this.props;
 
     if (!behandling || !kodeverk) {
@@ -118,7 +119,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
               <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
               <ForeldrepengerGrid
                 fagsak={fagsak}
-                kodeverk={kodeverk}
+                alleKodeverk={kodeverk}
                 navAnsatt={navAnsatt}
                 valgtProsessSteg={valgtProsessSteg}
                 oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
@@ -130,6 +131,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
                 opneSokeside={opneSokeside}
                 harApenRevurdering={harApenRevurdering}
                 hasFetchError={hasFetchError}
+                featureToggles={featureToggles}
                 {...dataProps}
               />
             </>
