@@ -41,8 +41,6 @@ const formNames = [sykdomPanelName, termindatoFaktaFormName, sjekkFodselDokForm]
  * FodselInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Fødselsvilkåret.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export class FodselInfoPanelImpl extends Component {
   constructor() {

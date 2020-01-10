@@ -207,7 +207,7 @@ const prosessStegPanelDefinisjoner = [{
 }, {
   urlCode: bpc.SOEKNADSFRIST,
   textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
-  aksjonspunkterCodes: [ac.SOKNADSFRISTVILKARET],
+  aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
   vilkarCodes: [vt.SOKNADFRISTVILKARET],
   endpoints: [api.SOKNAD, api.FAMILIEHENDELSE],
   renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,

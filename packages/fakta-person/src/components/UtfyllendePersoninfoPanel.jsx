@@ -33,8 +33,6 @@ const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARK
  * UtfyllendePersoninfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Tilleggsopplysninger.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export class UtfyllendePersoninfoPanel extends Component {
   constructor(props) {

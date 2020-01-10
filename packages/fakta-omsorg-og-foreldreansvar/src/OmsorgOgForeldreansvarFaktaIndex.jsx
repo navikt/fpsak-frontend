@@ -29,6 +29,8 @@ const OmsorgOgForeldreansvarFaktaIndex = ({
   submitCallback,
   readOnly,
   alleKodeverk,
+  harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <OmsorgOgForeldreansvarInfoPanel
@@ -43,6 +45,8 @@ const OmsorgOgForeldreansvarFaktaIndex = ({
       submitCallback={submitCallback}
       readOnly={readOnly}
       alleKodeverk={alleKodeverk}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -59,6 +63,8 @@ OmsorgOgForeldreansvarFaktaIndex.propTypes = {
   }).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
 

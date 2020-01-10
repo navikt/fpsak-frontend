@@ -1,5 +1,7 @@
-import behandlingUpdater from '../../behandling/BehandlingUpdater';
 import fpsakApi from '../../data/fpsakApi';
+
+// FIXME (TOR) Korleis håndtere dette?
+const behandlingUpdater = () => undefined;
 
 export const resetSubmitMessageActionCreator = (behandlingIdentifier) => (dispatch) => {
   dispatch(fpsakApi.SUBMIT_MESSAGE.resetRestApi());

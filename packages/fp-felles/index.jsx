@@ -54,7 +54,6 @@ export { default as isFieldEdited } from './src/util/isFieldEdited';
 export { default as FaktaSubmitButton } from './src/fakta/FaktaSubmitButton';
 export { default as FaktaBegrunnelseTextField } from './src/fakta/FaktaBegrunnelseTextField';
 export { default as FaktaEkspandertpanel } from './src/fakta/FaktaEkspandertpanel';
-export { default as withDefaultToggling } from './src/fakta/withDefaultToggling';
 export { default as BehandlingspunktBegrunnelseTextField } from './src/behandlingsprosess/BehandlingspunktBegrunnelseTextField';
 export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/BehandlingspunktSubmitButton';
 export { default as VilkarResultPicker } from './src/behandlingsprosess/vilkar/VilkarResultPicker';

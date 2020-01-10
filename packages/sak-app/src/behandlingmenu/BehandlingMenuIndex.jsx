@@ -25,7 +25,7 @@ import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
@@ -64,11 +64,6 @@ class BehandlingMenuIndex extends Component {
     }
   }
 
-  componentWillUnmount() {
-    const { resetBehandlingMenuData: resetMenuData } = this.props;
-    resetMenuData();
-  }
-
   render() {
     const {
       behandlingData,
@@ -101,6 +96,10 @@ class BehandlingMenuIndex extends Component {
               harSoknad: dataProps.menyhandlingRettigheter ? dataProps.menyhandlingRettigheter.harSoknad : false,
               behandlingType: behandlingData.harValgtBehandling ? behandlingData.type : undefined,
             })}
+            shelveBehandling={shelveBehandling}
+            setBehandlingOnHold={setBehandlingOnHold}
+            resumeBehandling={resumeBehandling}
+            nyBehandlendeEnhet={nyBehandlendeEnhet}
             {...this.props}
           />
         )}
@@ -111,7 +110,6 @@ class BehandlingMenuIndex extends Component {
 
 BehandlingMenuIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
-  resetBehandlingMenuData: PropTypes.func.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   hentVergeMenyvalg: PropTypes.func,
   navAnsatt: PropTypes.shape().isRequired,
@@ -172,13 +170,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  resumeBehandling,
-  shelveBehandling,
-  nyBehandlendeEnhet,
   createNewBehandling,
-  setBehandlingOnHold,
   openBehandlingForChanges,
-  resetBehandlingMenuData,
   hentVergeMenyvalg,
   fjernVerge,
   opprettVerge,

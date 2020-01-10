@@ -42,8 +42,6 @@ const skalViseAvklarStartdatoPanel = (
  * MedlemskapInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å vise faktapanelene for medlemskap.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export const MedlemskapInfoPanel = ({
   hasOpenAksjonspunkter,

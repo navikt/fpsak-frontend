@@ -15,8 +15,6 @@ import TilleggsopplysningerFaktaForm from './TilleggsopplysningerFaktaForm';
  * TilleggsopplysningerInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Tilleggsopplysninger.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export const TilleggsopplysningerInfoPanel = ({
   hasOpenAksjonspunkter,

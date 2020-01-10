@@ -39,8 +39,6 @@ const getHelpTexts = (aksjonspunkter) => {
  * AdopsjonInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Adopsjonsvilkåret.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export const AdopsjonInfoPanelImpl = ({
   aksjonspunkter,

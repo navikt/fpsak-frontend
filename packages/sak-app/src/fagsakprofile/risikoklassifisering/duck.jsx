@@ -1,6 +1,5 @@
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
-import behandlingUpdater from '../../behandling/BehandlingUpdater';
 import fpsakApi from '../../data/fpsakApi';
 
 const reducerName = 'kontrollresultat';
@@ -20,6 +19,9 @@ export const setRiskPanelOpen = (isOpen) => ({
 const resolveAksjonspunktStarted = () => ({
   type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED, // Bedre navn for denne?
 });
+
+// FIXME (TOR) Korleis håndtere dette?
+const behandlingUpdater = () => undefined;
 
 const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch) => {
   dispatch({

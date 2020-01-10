@@ -24,6 +24,7 @@ const VergeFaktaIndex = ({
   submitCallback,
   readOnly,
   harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <RegistrereVergeInfoPanel
@@ -36,6 +37,7 @@ const VergeFaktaIndex = ({
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
       readOnly={readOnly}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -49,6 +51,7 @@ VergeFaktaIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 VergeFaktaIndex.defaultProps = {

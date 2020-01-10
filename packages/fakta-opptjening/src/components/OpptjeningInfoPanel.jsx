@@ -18,8 +18,6 @@ export const formName = 'OpptjeningInfoPanel';
  * OpptjeningInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Opptjeningsvilkåret.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export const OpptjeningInfoPanel = ({
   hasOpenAksjonspunkter,
