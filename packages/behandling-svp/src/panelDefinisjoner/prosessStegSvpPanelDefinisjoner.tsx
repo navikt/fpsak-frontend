@@ -98,7 +98,7 @@ const prosessStegPanelDefinisjoner = [{
     ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
     ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG, ac.VURDER_DEKNINGSGRAD],
   vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-  endpoints: [api.BEREGNINGRESULTAT_ENGANGSSTONAD],
+  endpoints: [api.BEREGNINGRESULTAT_FORELDREPENGER],
   renderComponent: (props) => <BeregningsgrunnlagProsessIndex {...props} />,
   showComponent: () => true,
   getData: ({ fagsak, featureToggles }) => ({ fagsak, featureToggles }),

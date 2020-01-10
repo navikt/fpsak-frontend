@@ -1,6 +1,6 @@
 import {
   Behandling, BeregningsresultatFp, Aksjonspunkt, Vilkar, Personopplysninger, Soknad, InntektArbeidYtelse,
-  Beregningsgrunnlag, UttakStonadskontoer, SimuleringResultat,
+  Beregningsgrunnlag, SimuleringResultat,
 } from '@fpsak-frontend/behandling-felles';
 
 interface FetchedData {
@@ -12,7 +12,6 @@ interface FetchedData {
   inntektArbeidYtelse: InntektArbeidYtelse;
   beregningresultatForeldrepenger: BeregningsresultatFp;
   beregningsgrunnlag: Beregningsgrunnlag;
-  uttakStonadskontoer: UttakStonadskontoer;
   simuleringResultat: SimuleringResultat;
 }
 

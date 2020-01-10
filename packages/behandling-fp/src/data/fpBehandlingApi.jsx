@@ -15,7 +15,6 @@ export const FpBehandlingApiKeys = {
   PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
   SIMULERING_RESULTAT: 'SIMULERING_RESULTAT',
   TILBAKEKREVINGVALG: 'TILBAKEKREVINGVALG',
-  BEREGNINGRESULTAT_ENGANGSSTONAD: 'BEREGNINGRESULTAT_ENGANGSSTONAD',
   BEREGNINGRESULTAT_FORELDREPENGER: 'BEREGNINGRESULTAT_FORELDREPENGER',
   BEREGNINGSGRUNNLAG: 'BEREGNINGSGRUNNLAG',
   BEREGNINGRESULTAT: 'BEREGNINGRESULTAT',
@@ -32,7 +31,6 @@ export const FpBehandlingApiKeys = {
   YTELSEFORDELING: 'YTELSEFORDELING',
   OPPTJENING: 'OPPTJENING',
   SEND_VARSEL_OM_REVURDERING: 'SEND_VARSEL_OM_REVURDERING',
-  SVANGERSKAPSPENGER_TILRETTELEGGING: 'SVANGERSKAPSPENGER_TILRETTELEGGING',
   FAKTA_ARBEIDSFORHOLD: 'FAKTA_ARBEIDSFORHOLD',
   UTTAKSRESULTAT_PERIODER: 'UTTAKSRESULTAT_PERIODER',
   UTTAK_STONADSKONTOER: 'UTTAK_STONADSKONTOER',
@@ -61,13 +59,11 @@ const endpoints = new RestApiConfigBuilder()
   /* /api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpBehandlingApiKeys.PREVIEW_MESSAGE)
 
-  // TODO (TOR) Desse er ikkje i bruk enno. Må flytta ut prosess- og fakta-komponentar først
   .withInjectedPath('aksjonspunkter', FpBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', FpBehandlingApiKeys.VILKAR)
   .withInjectedPath('soeker-personopplysninger', FpBehandlingApiKeys.PERSONOPPLYSNINGER)
   .withInjectedPath('simuleringResultat', FpBehandlingApiKeys.SIMULERING_RESULTAT)
   .withInjectedPath('tilbakekrevingvalg', FpBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withInjectedPath('beregningsresultat-engangsstonad', FpBehandlingApiKeys.BEREGNINGRESULTAT_ENGANGSSTONAD)
   .withInjectedPath('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
   .withInjectedPath('beregningsgrunnlag', FpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
   .withInjectedPath('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT)
@@ -84,7 +80,6 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('ytelsefordeling', FpBehandlingApiKeys.YTELSEFORDELING)
   .withInjectedPath('opptjening', FpBehandlingApiKeys.OPPTJENING)
   .withInjectedPath('sendt-varsel-om-revurdering', FpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withInjectedPath('svangerskapspenger-tilrettelegging', FpBehandlingApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING)
   .withInjectedPath('fakta-arbeidsforhold', FpBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
   .withInjectedPath('uttaksresultat-perioder', FpBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
   .withInjectedPath('uttak-stonadskontoer', FpBehandlingApiKeys.UTTAK_STONADSKONTOER)
