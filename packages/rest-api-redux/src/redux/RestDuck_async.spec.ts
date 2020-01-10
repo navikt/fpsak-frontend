@@ -595,7 +595,6 @@ describe('RestDuck (async)', () => {
     const config = {
       maxPollingLimit: undefined,
       fetchLinkDataAutomatically: true,
-      addLinkDataToArray: false,
     };
     const requestConfig = new RequestConfig('ressurs', ressursEndpoint, config).withGetAsyncMethod();
 

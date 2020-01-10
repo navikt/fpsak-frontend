@@ -51,9 +51,6 @@ describe('RequestProcess', () => {
   const HTTP_ACCEPTED = 202;
   const defaultConfig = {
     maxPollingLimit: undefined,
-    fetchLinkDataAutomatically: true,
-    addLinkDataToArray: false,
-    linksToFetchAutomatically: [],
   };
 
   it('skal hente data via get-kall', async () => {

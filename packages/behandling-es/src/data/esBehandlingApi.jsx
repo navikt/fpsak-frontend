@@ -34,7 +34,7 @@ export const EsBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/fpsak/api/behandlinger', EsBehandlingApiKeys.BEHANDLING_ES, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fpsak/api/behandlinger', EsBehandlingApiKeys.BEHANDLING_ES)
   .withPost('/fpsak/api/behandlinger/endre-pa-vent', EsBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */

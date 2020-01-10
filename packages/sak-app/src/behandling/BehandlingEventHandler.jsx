@@ -17,6 +17,12 @@ class BehandlingEventHandler {
     taBehandlingAvVent = (params) => this.handler.taBehandlingAvVent(params);
 
     henleggBehandling = (params) => this.handler.henleggBehandling(params);
+
+    opneBehandlingForEndringer = (params) => this.handler.opneBehandlingForEndringer(params);
+
+    opprettVerge = (params) => this.handler.opprettVerge(params);
+
+    fjernVerge = (params) => this.handler.fjernVerge(params);
 }
 
 export default new BehandlingEventHandler();

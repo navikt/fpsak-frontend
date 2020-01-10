@@ -23,7 +23,6 @@ export const FpsakApiKeys = {
   INTEGRATION_STATUS: 'INTEGRATION_STATUS',
   FEATURE_TOGGLE: 'FEATURE_TOGGLE',
   AKTOER_INFO: 'AKTOER_INFO',
-  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
   KONTROLLRESULTAT: 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT: 'RISIKO_AKSJONSPUNKT',
   LAGRE_RISIKO_AKSJONSPUNKT: 'LAGRE_RISIKO_AKSJONSPUNKT',
@@ -37,8 +36,6 @@ export const FpsakApiKeys = {
   KAN_TILBAKEKREVING_OPPRETTES: 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES: 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
   VERGE_MENYVALG: 'VERGE_MENYVALG',
-  VERGE_OPPRETT: 'VERGE_OPPRETT',
-  VERGE_FJERN: 'VERGE_FJERN',
   MENYHANDLING_RETTIGHETER: 'MENYHANDLING_RETTIGHETER',
   HAR_APENT_KONTROLLER_REVURDERING_AP: 'HAR_APENT_KONTROLLER_REVURDERING_AP',
   TOTRINNS_KLAGE_VURDERING: 'TOTRINNS_KLAGE_VURDERING',
@@ -53,20 +50,17 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/fagsak', FpsakApiKeys.FETCH_FAGSAK)
 
   /* /fpsak/api/behandlinger */
-  .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK, { fetchLinkDataAutomatically: false })
-  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK, { fetchLinkDataAutomatically: false })
+  .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK)
+  .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
-  .withInjectedPath('opne-for-endringer', FpsakApiKeys.OPEN_BEHANDLING_FOR_CHANGES)
   .withInjectedPath('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
-  .withInjectedPath('opprett-verge', FpsakApiKeys.VERGE_OPPRETT, { fetchLinkDataAutomatically: false })
-  .withInjectedPath('fjern-verge', FpsakApiKeys.VERGE_FJERN, { fetchLinkDataAutomatically: false })
   .withInjectedPath('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
 
   /* /fptilbake/api/behandlinger */
-  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
   .withGet('/fptilbake/api/behandlinger/kan-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_OPPRETTES)
   .withGet('/fptilbake/api/behandlinger/kan-revurdering-opprettes', FpsakApiKeys.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES)
-  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE, { fetchLinkDataAutomatically: false })
+  .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   /* /api/behandling/beregningsresultat */
   .withInjectedPath('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)

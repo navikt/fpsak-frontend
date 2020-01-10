@@ -33,11 +33,14 @@ export const SvpBehandlingApiKeys = {
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
+  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
+  VERGE_OPPRETT: 'VERGE_OPPRETT',
+  VERGE_FJERN: 'VERGE_FJERN',
 };
 
 const endpoints = new RestApiConfigBuilder()
   /* /api/behandlinger */
-  .withAsyncPost('/fpsak/api/behandlinger', SvpBehandlingApiKeys.BEHANDLING_SVP, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fpsak/api/behandlinger', SvpBehandlingApiKeys.BEHANDLING_SVP)
   .withPost('/fpsak/api/behandlinger/endre-pa-vent', SvpBehandlingApiKeys.UPDATE_ON_HOLD)
 
   /* /api/behandling */
@@ -79,6 +82,15 @@ const endpoints = new RestApiConfigBuilder()
     storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
   })
   .withPost('/fpsak/api/behandlinger/sett-pa-vent', SvpBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/fpsak/api/behandlinger/opne-for-endringer', SvpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
+    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
+  })
+  .withPost('/fpsak/api//verge/opprett', SvpBehandlingApiKeys.VERGE_OPPRETT, {
+    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
+  })
+  .withPost('/fpsak/api//verge/fjern', SvpBehandlingApiKeys.VERGE_FJERN, {
+    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
+  })
 
   .build();
 

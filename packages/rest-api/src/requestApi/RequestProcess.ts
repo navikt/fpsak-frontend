@@ -102,21 +102,6 @@ class RequestProcess {
     return statusOrResultResponse;
   };
 
-  execLinkRequests = async (responseData: {links: ResponseDataLink[]}) => {
-    const linksToFetch = this.config.linksToFetchAutomatically;
-    const requestList = responseData.links
-      .filter((link) => linksToFetch.length === 0 || linksToFetch.includes(link.rel))
-      .map((link) => () => this.execute(// eslint-disable-line no-use-before-define
-        link.href, getRestMethod(this.httpClientApi, link.type), link.requestPayload,
-      ).then((response: SuccessResponse) => Promise.resolve({ [link.rel]: response.data })));
-
-    const allResponses = await Promise.all([Promise.resolve(responseData), ...requestList.map((request) => request())]);
-    const data = this.config.addLinkDataToArray
-      ? allResponses.reduce((acc, rData) => (rData.links ? acc : acc.concat(Object.values(rData)[0])), [])
-      : allResponses.reduce((acc, rData) => ({ ...acc, ...rData }), {});
-    return { data };
-  }
-
   execute = async (path: string, restMethod: (path: string, params?: any) => Promise<Response>, params: any): Promise<Response> => {
     let response = await restMethod(path, params);
     if ('status' in response && response.status === HTTP_ACCEPTED) {
@@ -134,10 +119,6 @@ class RequestProcess {
           throw error;
         }
       }
-    }
-    const responseData = response && 'data' in response && response.data;
-    if (this.config.fetchLinkDataAutomatically && responseData && responseData.links && responseData.links.length > 0) {
-      response = await this.execLinkRequests(responseData);
     }
     return response;
   }

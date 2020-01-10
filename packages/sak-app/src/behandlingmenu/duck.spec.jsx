@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
-import behandlingUpdater from '../behandling/BehandlingUpdater';
 import {
   behandlingMenuReducer, createNewBehandling, openBehandlingForChanges, resetBehandlingMenuData, setHasSubmittedPaVentForm,
 } from './duck';
@@ -24,12 +23,10 @@ describe('BehandlingMenu-reducer', () => {
 
   afterEach(() => {
     mockAxios.reset();
-    behandlingUpdater.reset();
   });
 
   after(() => {
     mockAxios.restore();
-    behandlingUpdater.reset();
   });
 
   it('skal returnere initial state', () => {

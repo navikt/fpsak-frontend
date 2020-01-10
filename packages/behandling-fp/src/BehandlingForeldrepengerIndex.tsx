@@ -47,6 +47,9 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
+  opneBehandlingForEndringer: (params: {}) => Promise<any>;
+  opprettVerge: (params: {}) => Promise<any>;
+  fjernVerge: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
@@ -59,6 +62,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling, hentBehandling, behandlingId,
+      opneBehandlingForEndringer, opprettVerge, fjernVerge,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
@@ -67,6 +71,9 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: (params) => henleggBehandling(params),
+      opneBehandlingForEndringer: (params) => opneBehandlingForEndringer(params),
+      opprettVerge: (params) => opprettVerge(params),
+      fjernVerge: (params) => fjernVerge(params),
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
@@ -157,6 +164,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     taBehandlingAvVent: fpBehandlingApi.RESUME_BEHANDLING.makeRestApiRequest(),
     henleggBehandling: fpBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: fpBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
+    opneBehandlingForEndringer: fpBehandlingApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
+    opprettVerge: fpBehandlingApi.VERGE_OPPRETT.makeRestApiRequest(),
+    fjernVerge: fpBehandlingApi.VERGE_FJERN.makeRestApiRequest(),
     hentBehandling: fpBehandlingApi.BEHANDLING_FP.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
     destroyReduxForm: destroy,

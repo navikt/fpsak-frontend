@@ -36,6 +36,8 @@ export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatc
   fpsakApi.KAN_TILBAKEKREVING_REVURDERING_OPPRETTES.makeRestApiRequest()(params),
 );
 
+export const hentVergeMenyvalg = (params) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
+
 export const shelveBehandling = (params) => behandlingEventHandler.henleggBehandling(params);
 
 export const setBehandlingOnHold = (params) => behandlingEventHandler.settBehandlingPaVent(params);
@@ -44,28 +46,18 @@ export const resumeBehandling = (params) => behandlingEventHandler.taBehandlingA
 
 export const nyBehandlendeEnhet = (params) => behandlingEventHandler.endreBehandlendeEnhet(params);
 
-// FIXME (TOR) Korleis håndtere dette?
-const behandlingUpdater = () => undefined;
+export const openBehandlingForChanges = (params) => behandlingEventHandler.opneBehandlingForEndringer(params);
 
-export const openBehandlingForChanges = (params, behandlingIdentifier) => (dispatch) => dispatch(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES
-  .makeRestApiRequest()(params))
-  .then((response) => behandlingUpdater.setBehandlingResult(dispatch, response.payload, behandlingIdentifier.toJson(), { keepData: true }));
-
-export const hentVergeMenyvalg = (params) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
-// TODO (TOR) To neste funksjonar skal flyttast inn i behandling-pakke etter at lenker ikkje lenger blir henta automatisk.
-export const opprettVerge = (push, behandlingIdentifier, versjon) => (dispatch) => dispatch(fpsakApi.VERGE_OPPRETT.makeRestApiRequest()({
+export const opprettVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.opprettVerge({
   behandlingId: behandlingIdentifier.behandlingId,
   behandlingVersjon: versjon,
-})).then(() => Promise.all([
-  behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
-])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
+}).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
   pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
 })));
-export const fjernVerge = (push, behandlingIdentifier, versjon) => (dispatch) => dispatch(fpsakApi.VERGE_FJERN.makeRestApiRequest()({
+
+export const fjernVerge = (push, behandlingIdentifier, versjon) => behandlingEventHandler.fjernVerge({
   behandlingId: behandlingIdentifier.behandlingId,
   behandlingVersjon: versjon,
-})).then(() => Promise.all([
-  behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier),
-])).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
+}).then(() => push(getLocationWithDefaultBehandlingspunktAndFakta({
   pathname: pathToBehandling(behandlingIdentifier.saksnummer, behandlingIdentifier.behandlingId),
 })));
