@@ -36,16 +36,16 @@ const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fag
 });
 
 const skalVisePanel = (aksjonspunkter, vilkar) => (panel) => {
-  if (panel.showComponent) {
-    return panel.showComponent(panel.dataTilUtleding);
-  }
-
   const harAksjonspunkter = panel.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac));
   if (panel.vilkarCodes.length === 0) {
     return harAksjonspunkter;
   }
   const harVilkar = panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc));
-  return harAksjonspunkter && harVilkar;
+  const harVilkarOgAksjonspunkter = harAksjonspunkter && harVilkar;
+
+  return !harVilkarOgAksjonspunkter && panel.showComponent
+    ? panel.showComponent(panel.dataTilUtleding)
+    : harVilkarOgAksjonspunkter;
 };
 
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, behandling, aksjonspunkter, vilkar,

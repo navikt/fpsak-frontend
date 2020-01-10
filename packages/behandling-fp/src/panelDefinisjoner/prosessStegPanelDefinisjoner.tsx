@@ -20,6 +20,7 @@ import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
+import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
@@ -64,19 +65,17 @@ const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
   return vut.IKKE_OPPFYLT;
 };
 
-const isNotRevurderingAndManualOpplysningspliktAp = ({ behandlingType, aksjonspunkter }) => {
-  const isRevurdering = bt.REVURDERING === behandlingType.kode;
-  const hasAp = aksjonspunkter.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
-  return !(isRevurdering && !hasAp);
-};
-
-
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
   const apKoder = aksjonspunkterForSteg.map((ap) => ap.definisjon.kode);
   const harIngenApOgMulighetTilOverstyring = apKoder.length === 0 && aksjonspunktDefKoderForSteg.length > 0;
   const harApSomErOverstyringAp = apKoder.some((apCode) => aksjonspunktDefKoderForSteg.includes(apCode));
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
 };
+
+const avslagsarsakerES = ['1002', '1003', '1032'];
+const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKode === vt.FODSELSVILKARET_MOR
+  ? avslagsarsaker[vilkarTypeKode].filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
+  : avslagsarsaker[vilkarTypeKode]);
 
 const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   endpoints: [api.MEDLEMSKAP],
@@ -88,7 +87,7 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   }) => ({
     erOverstyrt: overstyrteProsessSteg.includes(valgtStegKode),
     panelTittel: label,
-    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
+    avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
     lovReferanse: vilkarForSteg[0].lovReferanse,
     overstyringApKode: aksjonspunktDefKoderForSteg[0],
     erMedlemskapsPanel: valgtStegKode === bpc.MEDLEMSKAP,
@@ -123,35 +122,39 @@ const prosessStegPanelDefinisjoner = [{
   aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
   vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
   endpoints: [api.SOKNAD],
-  showComponent: ({ vilkarForSteg }) => vilkarForSteg.length > 0,
+  showComponent: ({ behandling, aksjonspunkterForSteg }) => {
+    const isRevurdering = bt.REVURDERING === behandling.type.kode;
+    const hasAp = aksjonspunkterForSteg.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
+    return !(isRevurdering && !hasAp);
+  },
   renderComponent: (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
 }, {
   urlCode: bpc.FOEDSEL,
   textCode: 'Behandlingspunkt.Fodselsvilkaret',
   aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
-  vilkarCodes: [vt.FODSELSVILKARET_MOR],
+  vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
   endpoints: [],
   renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
   getData: () => ({ ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD }),
 }, {
   urlCode: bpc.FOEDSEL,
   textCode: 'Behandlingspunkt.Fodselsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR],
-  vilkarCodes: [vt.FODSELSVILKARET_MOR],
+  aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR],
+  vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
   ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
 }, {
   urlCode: bpc.ADOPSJON,
   textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
   aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
-  vilkarCodes: [vt.ADOPSJONSVILKARET],
+  vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
   endpoints: [],
   renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,
   getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
 }, {
   urlCode: bpc.ADOPSJON,
   textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_ADOPSJONSVILKAR],
-  vilkarCodes: [vt.ADOPSJONSVILKARET],
+  aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
+  vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
   ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
 }, {
   urlCode: bpc.OMSORG,
