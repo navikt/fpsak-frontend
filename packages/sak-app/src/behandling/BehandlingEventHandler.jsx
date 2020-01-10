@@ -23,6 +23,8 @@ class BehandlingEventHandler {
     opprettVerge = (params) => this.handler.opprettVerge(params);
 
     fjernVerge = (params) => this.handler.fjernVerge(params);
+
+    lagreRisikoklassifiseringAksjonspunkt = (params) => this.handler.lagreRisikoklassifiseringAksjonspunkt(params);
 }
 
 export default new BehandlingEventHandler();

@@ -58,6 +58,7 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
+  lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   resetRestApiContext: () => (dspatch: any) => void;
@@ -70,7 +71,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling,
-      hentBehandling, behandlingId,
+      hentBehandling, behandlingId, lagreRisikoklassifiseringAksjonspunkt,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
@@ -79,6 +80,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: (params) => henleggBehandling(params),
+      lagreRisikoklassifiseringAksjonspunkt: (params) => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
     hentBehandling({ behandlingId }, { keepData: false });
@@ -170,6 +172,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     henleggBehandling: esBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: esBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
     hentBehandling: esBehandlingApi.BEHANDLING_ES.makeRestApiRequest(),
+    lagreRisikoklassifiseringAksjonspunkt: fpBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
     destroyReduxForm: destroy,
   }, dispatch),

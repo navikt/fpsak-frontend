@@ -1,7 +1,7 @@
 import EventType from './eventType';
 import asyncPollingStatus from './asyncPollingStatus';
 import { HttpClientApi } from '../HttpClientApiTsType';
-import { Response, SuccessResponse } from './ResponseTsType';
+import { Response } from './ResponseTsType';
 import { RequestAdditionalConfig } from '../RequestAdditionalConfigTsType';
 import TimeoutError from './error/TimeoutError';
 import RequestErrorEventHandler from './error/RequestErrorEventHandler';
@@ -11,17 +11,6 @@ const MAX_POLLING_ATTEMPTS = 150;
 const CANCELLED = 'INTERNAL_CANCELLATION';
 
 const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const getRestMethod = (httpClientApi: HttpClientApi, restMethodString: string) => {
-  switch (restMethodString) {
-    case 'POST':
-      return httpClientApi.post;
-    case 'PUT':
-      return httpClientApi.put;
-    default:
-      return httpClientApi.get;
-  }
-};
 
 const hasLocationAndStatusDelayedOrHalted = (responseData) => responseData.location && (responseData.status === asyncPollingStatus.DELAYED
   || responseData.status === asyncPollingStatus.HALTED);

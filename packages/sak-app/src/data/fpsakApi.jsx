@@ -25,7 +25,6 @@ export const FpsakApiKeys = {
   AKTOER_INFO: 'AKTOER_INFO',
   KONTROLLRESULTAT: 'KONTROLLRESULTAT',
   RISIKO_AKSJONSPUNKT: 'RISIKO_AKSJONSPUNKT',
-  LAGRE_RISIKO_AKSJONSPUNKT: 'LAGRE_RISIKO_AKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER: 'TOTRINNSAKSJONSPUNKT_ARSAKER',
   SAVE_TOTRINNSAKSJONSPUNKT: 'SAVE_TOTRINNSAKSJONSPUNKT',
   TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY: 'TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY',
@@ -79,7 +78,6 @@ const endpoints = new RestApiConfigBuilder()
   /* Kontrollresultat */
   .withInjectedPath('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
   .withInjectedPath('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
-  .withInjectedPath('lagre-risikoklassifisering-aksjonspunkt', FpsakApiKeys.LAGRE_RISIKO_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
