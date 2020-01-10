@@ -5,13 +5,17 @@ import styles from './linkTilEksternSystem.less';
 
 
 const LinkTilEksterntSystem = ({
-  type, linkText, key, uniqeReactId,
+  type, linkText, userIdent, uniqeReactId,
 }) => {
   let link = 'http://alink';
-  devugger;
+
   switch (type) {
     case 'AI': {
-      link = `https://modapp.adeo.no/a-inntekt/person/${key}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
+      link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
+      break;
+    }
+    case 'SØ': {
+      link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
       break;
     }
     default: {
@@ -23,7 +27,7 @@ const LinkTilEksterntSystem = ({
     return null;
   }
   return (
-    <span className={styles.linkContainer} key={key} id={`ExtLink${uniqeReactId}`}>
+    <span className={styles.linkContainer} key={`ExtLink${uniqeReactId}`} id={`ExtLink${uniqeReactId}`}>
       <a
         href={link}
         className={styles.linkText}
@@ -45,7 +49,7 @@ const LinkTilEksterntSystem = ({
 LinkTilEksterntSystem.propTypes = {
   linkText: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
+  userIdent: PropTypes.string.isRequired,
   uniqeReactId: PropTypes.string.isRequired,
 };
 

@@ -12,6 +12,7 @@ import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
 const finnvirksomhetsTypeKode = (naring) => {
   const { virksomhetType } = naring;
@@ -113,9 +114,16 @@ export const NaeringsopplysningsPanel = ({
 
   return (
     <Panel className={beregningStyles.panel}>
-      <Element className={beregningStyles.semiBoldText}>
-        <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
-      </Element>
+      <Row key="SNNareingOverskrift">
+        <Column xs="6">
+          <Element className={beregningStyles.semiBoldText}>
+            <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
+          </Element>
+        </Column>
+        <Column>
+          <LinkTilEksterntSystem linkText="SØ" userIdent="123456789" uniqeReactId="SøLink" type="SØ" />
+        </Column>
+      </Row>
       <Row key="SNInntektIngress">
         <Column xs="8" />
         <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>

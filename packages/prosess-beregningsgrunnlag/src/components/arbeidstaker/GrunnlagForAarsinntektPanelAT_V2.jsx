@@ -113,7 +113,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
           </Normaltekst>
         </Column>
         <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
-          <LinkTilEksterntSystem linkText="IM" key="123456789" uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
+          <LinkTilEksterntSystem linkText="IM" userIdent="123456789" uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
         </Column>
       </Row>
       <Row key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>
