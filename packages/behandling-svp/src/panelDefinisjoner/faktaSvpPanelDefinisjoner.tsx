@@ -1,19 +1,15 @@
 import React from 'react';
 
-import AdopsjonFaktaIndex from '@fpsak-frontend/fakta-adopsjon';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
-import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
-import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 import FodselOgTilretteleggingFaktaIndex from '@fpsak-frontend/fakta-fodsel-og-tilrettelegging';
 import TilleggsopplysningerFaktaIndex from '@fpsak-frontend/fakta-tilleggsopplysninger';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
-import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 
 import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
@@ -45,40 +41,12 @@ const faktaPanelDefinisjoner = [{
   showComponent: () => false,
   getData: () => {},
 }, {
-  urlCode: faktaPanelCodes.OMSORGSVILKARET,
-  textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
-  aksjonspunkterCodes: [aksjonspunktCodes.OMSORGSOVERTAKELSE, aksjonspunktCodes.AVKLAR_VILKAR_FOR_FORELDREANSVAR],
-  endpoints: [svpBehandlingApi.FAMILIEHENDELSE, svpBehandlingApi.SOKNAD, svpBehandlingApi.PERSONOPPLYSNINGER,
-    svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingApi.INNTEKT_ARBEID_YTELSE],
-  renderComponent: (props) => <OmsorgOgForeldreansvarFaktaIndex {...props} />,
-  showComponent: () => false,
-  getData: () => {},
-}, {
   urlCode: faktaPanelCodes.FODSELTILRETTELEGGING,
   textCode: 'FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging',
   aksjonspunkterCodes: [aksjonspunktCodes.FODSELTILRETTELEGGING],
   endpoints: [svpBehandlingApi.SVANGERSKAPSPENGER_TILRETTELEGGING],
   renderComponent: (props) => <FodselOgTilretteleggingFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: () => {},
-}, {
-  urlCode: faktaPanelCodes.ADOPSJONSVILKARET,
-  textCode: 'AdopsjonInfoPanel.Adopsjon',
-  aksjonspunkterCodes: [aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE, aksjonspunktCodes.ADOPSJONSDOKUMENTAJON,
-    aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN],
-  endpoints: [svpBehandlingApi.SOKNAD, svpBehandlingApi.FAMILIEHENDELSE, svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingApi.PERSONOPPLYSNINGER],
-  renderComponent: (props) => <AdopsjonFaktaIndex {...props} />,
-  showComponent: ({ vilkar }) => vilkar.some((v) => adopsjonsvilkarene.includes(v.vilkarType.kode)),
-  getData: () => ({ isForeldrepengerFagsak: false }),
-}, {
-  urlCode: faktaPanelCodes.FODSELSVILKARET,
-  textCode: 'FodselInfoPanel.Fodsel',
-  aksjonspunkterCodes: [aksjonspunktCodes.TERMINBEKREFTELSE, aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL,
-    aksjonspunktCodes.VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT],
-  endpoints: [svpBehandlingApi.SOKNAD, svpBehandlingApi.FAMILIEHENDELSE, svpBehandlingApi.PERSONOPPLYSNINGER,
-    svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, svpBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
-  renderComponent: (props) => <FodselFaktaIndex {...props} />,
-  showComponent: ({ vilkar }) => vilkar.some((v) => fodselsvilkarene.includes(v.vilkarType.kode)),
   getData: () => {},
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
@@ -120,14 +88,6 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG],
   endpoints: [svpBehandlingApi.BEREGNINGSGRUNNLAG],
   renderComponent: (props) => <FordelBeregningsgrunnlagFaktaIndex {...props} />,
-  showComponent: () => false,
-  getData: () => {},
-}, {
-  urlCode: faktaPanelCodes.OMSORG,
-  textCode: 'OmsorgInfoPanel.Omsorg',
-  aksjonspunkterCodes: [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG, aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG],
-  endpoints: [svpBehandlingApi.YTELSEFORDELING, svpBehandlingApi.PERSONOPPLYSNINGER, svpBehandlingApi.SOKNAD],
-  renderComponent: (props) => <OmsorgFaktaIndex {...props} />,
   showComponent: () => false,
   getData: () => {},
 }];

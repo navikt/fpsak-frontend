@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
-import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
+import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegEsPanelDefinisjoner';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 

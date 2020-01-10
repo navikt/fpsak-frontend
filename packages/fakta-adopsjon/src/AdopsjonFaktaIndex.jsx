@@ -29,6 +29,7 @@ const AdopsjonFaktaIndex = ({
   readOnly,
   isForeldrepengerFagsak,
   harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <AdopsjonInfoPanel
@@ -44,6 +45,7 @@ const AdopsjonFaktaIndex = ({
       readOnly={readOnly}
       isForeldrepengerFagsak={isForeldrepengerFagsak}
       hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -60,6 +62,7 @@ AdopsjonFaktaIndex.propTypes = {
   submitCallback: PropTypes.func.isRequired,
   harApneAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default AdopsjonFaktaIndex;

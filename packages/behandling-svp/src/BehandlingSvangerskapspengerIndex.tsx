@@ -15,7 +15,7 @@ import FetchedData from './types/fetchedDataTsType';
 
 const svangerskapspengerData = [svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingApi.VILKAR, svpBehandlingApi.PERSONOPPLYSNINGER,
   svpBehandlingApi.SOKNAD, svpBehandlingApi.INNTEKT_ARBEID_YTELSE, svpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER, svpBehandlingApi.BEREGNINGSGRUNNLAG,
-  svpBehandlingApi.UTTAK_STONADSKONTOER, svpBehandlingApi.UTTAKSRESULTAT_PERIODER, svpBehandlingApi.SIMULERING_RESULTAT];
+  svpBehandlingApi.UTTAK_STONADSKONTOER, svpBehandlingApi.SIMULERING_RESULTAT];
 
 
 interface OwnProps {

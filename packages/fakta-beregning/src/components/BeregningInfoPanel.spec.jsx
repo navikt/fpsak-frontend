@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BeregningInfoPanelImpl } from './BeregningInfoPanel';
@@ -32,28 +32,6 @@ const beregningsgrunnlag = {
 };
 
 describe('<BeregningInfoPanel>', () => {
-  it('skal vise ekspanderbart panel', () => {
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
-      intl={intlMock}
-      aksjonspunkter={[]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly
-      submitCallback={sinon.spy()}
-      alleKodeverk={alleKodeverk}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      beregningsgrunnlag={beregningsgrunnlag}
-      erOverstyrer={false}
-    />);
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel).has.length(1);
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.BEREGNING);
-    expect(panel.prop('readOnly')).is.true;
-  });
   it('skal vise VurderFaktaBeregning panel', () => {
     const tidsbegrensetAP = {
       id: 1,

@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
@@ -73,9 +73,6 @@ describe('<AdopsjonInfoPanel>', () => {
       behandlingVersjon={1}
     />);
 
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
-
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(2);
@@ -122,9 +119,6 @@ describe('<AdopsjonInfoPanel>', () => {
       behandlingId={1}
       behandlingVersjon={1}
     />);
-
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
 
     const helpText = wrapper.find(AksjonspunktHelpText);
     expect(helpText).has.length(1);

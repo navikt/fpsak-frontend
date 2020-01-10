@@ -6,7 +6,6 @@ import AvregningProsessIndex from '@fpsak-frontend/prosess-avregning';
 import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse';
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
-import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
@@ -17,48 +16,9 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
 import findStatusForVedtak from './vedtakStatusUtleder';
 import api from '../data/svpBehandlingApi';
-
-const faktaUttakAp = [
-  ac.AVKLAR_UTTAK,
-  ac.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
-  ac.AVKLAR_FØRSTE_UTTAKSDATO,
-  ac.AVKLAR_ANNEN_FORELDER_RETT,
-  ac.MANUELL_AVKLAR_FAKTA_UTTAK,
-  ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-];
-
-const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
-  if (resultatstruktur && resultatstruktur.perioder.length > 0) {
-    if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
-      const oppfylt = uttaksresultat.perioderSøker.some((p) => (
-        p.periodeResultatType.kode !== prt.AVSLATT
-      ));
-      if (oppfylt) {
-        return vut.OPPFYLT;
-      }
-    }
-  }
-  return vut.IKKE_VURDERT;
-};
-
-const getStatusFromUttakresultat = (uttaksresultat, aksjonspunkter) => {
-  if (!uttaksresultat || aksjonspunkter.some((ap) => faktaUttakAp.includes(ap.definisjon.kode) && ap.status.kode === 'OPPR')) {
-    return vut.IKKE_VURDERT;
-  }
-  if (uttaksresultat.perioderSøker && uttaksresultat.perioderSøker.length > 0) {
-    const oppfylt = uttaksresultat.perioderSøker.some((p) => (
-      p.periodeResultatType.kode !== prt.AVSLATT
-    ));
-    if (oppfylt) {
-      return vut.OPPFYLT;
-    }
-  }
-  return vut.IKKE_OPPFYLT;
-};
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {
   const apKoder = aksjonspunkterForSteg.map((ap) => ap.definisjon.kode);
@@ -66,11 +26,6 @@ const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefK
   const harApSomErOverstyringAp = apKoder.some((apCode) => aksjonspunktDefKoderForSteg.includes(apCode));
   return harIngenApOgMulighetTilOverstyring || harApSomErOverstyringAp;
 };
-
-const avslagsarsakerES = ['1002', '1003', '1032'];
-const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKode === vt.FODSELSVILKARET_MOR
-  ? avslagsarsaker[vilkarTypeKode].filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
-  : avslagsarsaker[vilkarTypeKode]);
 
 const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   endpoints: [api.MEDLEMSKAP],
@@ -82,7 +37,7 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   }) => ({
     erOverstyrt: overstyrteProsessSteg.includes(valgtStegKode),
     panelTittel: label,
-    avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
+    avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
     lovReferanse: vilkarForSteg[0].lovReferanse,
     overstyringApKode: aksjonspunktDefKoderForSteg[0],
     erMedlemskapsPanel: valgtStegKode === bpc.MEDLEMSKAP,
@@ -172,9 +127,8 @@ const prosessStegPanelDefinisjoner = [{
   renderComponent: (props) => <TilkjentYtelseProsessIndex {...props} />,
   getData: ({ fagsak }) => ({ fagsak }),
   showComponent: () => true,
-  overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(
-    beregningresultatForeldrepenger, uttaksresultatPerioder,
-  ),
+  overrideStatus: ({ beregningresultatForeldrepenger }) => (beregningresultatForeldrepenger
+    && beregningresultatForeldrepenger.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT),
 }, {
   urlCode: bpc.AVREGNING,
   textCode: 'Behandlingspunkt.Avregning',

@@ -10,7 +10,7 @@ import {
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
-import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
+import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaFpPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
@@ -35,13 +35,13 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   hasFetchError,
 }) => {
   const {
-    behandling, aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling,
+    behandling, aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
   } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
   const fpPanelerData = {
-    fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, hasFetchError,
+    fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag, hasFetchError,
   };
   const faktaPaneler = useMemo(() => faktaPanelUtils
     .utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),

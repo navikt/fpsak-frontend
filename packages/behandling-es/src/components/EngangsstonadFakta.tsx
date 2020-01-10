@@ -11,7 +11,7 @@ import {
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import esBehandlingApi from '../data/esBehandlingApi';
-import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
+import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaEsPanelDefinisjoner';
 
 const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 
