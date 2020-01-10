@@ -33,3 +33,8 @@ export { default as Soknad } from './src/types/soknadTsType';
 export { default as InntektArbeidYtelse } from './src/types/inntektArbeidYtelseTsType';
 export { default as SimuleringResultat } from './src/types/simuleringResultatTsType';
 export { default as BeregningsresultatEs } from './src/types/beregningsresultatEsTsType';
+export { default as BeregningsresultatFp } from './src/types/beregningsresultatFpTsType';
+export { default as Beregningsgrunnlag } from './src/types/beregningsgrunnlagTsType';
+export { default as Ytelsesfordeling } from './src/types/ytelsefordelingTsType';
+export { default as UttakStonadskontoer } from './src/types/uttakStonadskontoerTsType';
+export { default as UttaksresultatPeriode } from './src/types/uttaksresultatPeriodeTsType';

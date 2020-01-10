@@ -6,21 +6,17 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
-  DataFetcherBehandlingDataV2, Aksjonspunkt, BehandlingDataProvider,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2, BehandlingDataProvider,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
 import ForeldrepengerGrid from './components/ForeldrepengerGrid';
+import FetchedData from './types/fetchedDataTsType';
 
 const foreldrepengerData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.PERSONOPPLYSNINGER, fpBehandlingApi.YTELSEFORDELING,
   fpBehandlingApi.SOKNAD, fpBehandlingApi.INNTEKT_ARBEID_YTELSE, fpBehandlingApi.BEREGNINGRESULTAT_FORELDREPENGER, fpBehandlingApi.BEREGNINGSGRUNNLAG,
   fpBehandlingApi.UTTAK_STONADSKONTOER, fpBehandlingApi.UTTAKSRESULTAT_PERIODER, fpBehandlingApi.SIMULERING_RESULTAT];
 
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: [Aksjonspunkt];
-}
 
 interface OwnProps {
   behandlingId: number;
@@ -29,13 +25,15 @@ interface OwnProps {
   navAnsatt: NavAnsatt;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtProsessSteg?: string;
+  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
   };
   opneSokeside: () => void;
-  harApenRevurdering: boolean;
+  featureToggles: {};
 }
 
 interface StateProps {
@@ -97,7 +95,6 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       settPaVent,
       hentBehandling,
       opneSokeside,
-      harApenRevurdering,
       hasFetchError,
       featureToggles,
     } = this.props;
@@ -114,25 +111,24 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
           behandlingVersion={behandling.versjon}
           endpoints={foreldrepengerData}
           showOldDataWhenRefetching
-          render={(dataProps: DataProps) => (
+          render={(dataProps: FetchedData) => (
             <>
               <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
               <ForeldrepengerGrid
+                fetchedData={dataProps}
                 fagsak={fagsak}
                 alleKodeverk={kodeverk}
                 navAnsatt={navAnsatt}
                 valgtProsessSteg={valgtProsessSteg}
                 oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
                 valgtFaktaSteg={valgtFaktaSteg}
+                oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
                 oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
                 settPaVent={settPaVent}
                 hentBehandling={hentBehandling}
                 opneSokeside={opneSokeside}
-                harApenRevurdering={harApenRevurdering}
                 hasFetchError={hasFetchError}
                 featureToggles={featureToggles}
-                {...dataProps}
               />
             </>
           )}

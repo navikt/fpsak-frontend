@@ -10,29 +10,25 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, prosessStegPanelUtils, Vilkar,
-  BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
-  DataFetcherBehandlingDataV2, BeregningsresultatEs, IverksetterVedtakStatusModal,
+  Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  DataFetcherBehandlingDataV2, IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  simuleringResultat: SimuleringResultat;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  beregningresultatEngangsstonad?: BeregningsresultatEs;
   featureToggles: {};
   opneSokeside: () => void;
 }
@@ -81,14 +77,8 @@ const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFags
 };
 
 const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
+  data,
   fagsak,
-  behandling,
-  aksjonspunkter,
-  vilkar,
-  simuleringResultat,
-  beregningsgrunnlag,
-  beregningresultatForeldrepenger,
-  uttaksresultatPerioder,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -98,6 +88,9 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   featureToggles,
   opneSokeside,
 }) => {
+  const {
+    behandling, aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
+  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 

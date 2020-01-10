@@ -101,6 +101,7 @@ const VALGFRIE_ATTRIBUTTER = {
   showComponent: undefined,
   overrideStatus: undefined,
   isOverridable: false,
+  overridePanel: undefined,
 };
 
 const prosessStegPanelDefinisjoner = [{
@@ -136,12 +137,10 @@ const prosessStegPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
   getData: () => ({ ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD }),
-}, {
-  urlCode: bpc.FOEDSEL,
-  textCode: 'Behandlingspunkt.Fodselsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR],
-  vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.ADOPSJON,
   textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
@@ -150,12 +149,10 @@ const prosessStegPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,
   getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
-}, {
-  urlCode: bpc.ADOPSJON,
-  textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
-  vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYRING_AV_ADOPSJONSVILKÅRET_FP],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.OMSORG,
   textCode: 'Behandlingspunkt.Omsorgsvilkaret',
@@ -192,12 +189,10 @@ const prosessStegPanelDefinisjoner = [{
   getData: ({ vilkarForSteg }) => ({
     lovReferanse: vilkarForSteg[0].lovReferanse,
   }),
-}, {
-  urlCode: bpc.OPPTJENING,
-  textCode: 'Behandlingspunkt.Opptjeningsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYRING_AV_OPPTJENINGSVILKARET],
-  vilkarCodes: [vt.OPPTJENINGSPERIODE, vt.OPPTJENINGSVILKARET],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYRING_AV_OPPTJENINGSVILKARET],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.BEREGNINGSGRUNNLAG,
   textCode: 'Behandlingspunkt.Beregning',
@@ -216,12 +211,10 @@ const prosessStegPanelDefinisjoner = [{
   vilkarCodes: [vt.SOKNADFRISTVILKARET],
   endpoints: [api.SOKNAD, api.FAMILIEHENDELSE],
   renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
-}, {
-  urlCode: bpc.SOEKNADSFRIST,
-  textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
-  vilkarCodes: [vt.SOKNADFRISTVILKARET],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.FORTSATTMEDLEMSKAP,
   textCode: 'Behandlingspunkt.FortsattMedlemskap',

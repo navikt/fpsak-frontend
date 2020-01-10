@@ -5,24 +5,19 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, Behandling, Aksjonspunkt, Vilkar, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2,
-  Soknad, Personopplysninger, InntektArbeidYtelse, faktaPanelUtils,
+  FagsakInfo, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaPanelUtils,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
 const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  soknad: Soknad;
-  personopplysninger: Personopplysninger;
-  inntektArbeidYtelse: InntektArbeidYtelse;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
@@ -31,20 +26,17 @@ interface OwnProps {
 }
 
 const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
+  data,
   fagsak,
-  behandling,
-  aksjonspunkter,
-  vilkar,
-  soknad,
-  personopplysninger,
   navAnsatt,
-  inntektArbeidYtelse,
-  ytelsefordeling,
   alleKodeverk,
   oppdaterFaktaPanelIUrl,
   valgtFaktaSteg,
   hasFetchError,
 }) => {
+  const {
+    behandling, aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling,
+  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 

@@ -84,12 +84,10 @@ const prosessStegPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
   getData: () => ({ ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD }),
-}, {
-  urlCode: bpc.FOEDSEL,
-  textCode: 'Behandlingspunkt.Fodselsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR],
-  vilkarCodes: [vt.FODSELSVILKARET_MOR],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.ADOPSJON,
   textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
@@ -98,12 +96,10 @@ const prosessStegPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,
   getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
-}, {
-  urlCode: bpc.ADOPSJON,
-  textCode: 'Behandlingspunkt.Adopsjonsvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_ADOPSJONSVILKAR],
-  vilkarCodes: [vt.ADOPSJONSVILKARET],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYR_ADOPSJONSVILKAR],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.OMSORG,
   textCode: 'Behandlingspunkt.Omsorgsvilkaret',
@@ -137,12 +133,10 @@ const prosessStegPanelDefinisjoner = [{
   vilkarCodes: [vt.SOKNADFRISTVILKARET],
   endpoints: [api.SOKNAD, api.FAMILIEHENDELSE],
   renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
-}, {
-  urlCode: bpc.SOEKNADSFRIST,
-  textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
-  aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
-  vilkarCodes: [vt.SOKNADFRISTVILKARET],
-  ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  overridePanel: {
+    aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
+    ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
+  },
 }, {
   urlCode: bpc.BEREGNING,
   textCode: 'Behandlingspunkt.Beregning',

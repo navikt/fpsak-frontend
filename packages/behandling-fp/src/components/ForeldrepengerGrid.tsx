@@ -3,75 +3,58 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams, Vilkar,
+  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
 import ForeldrepengerProsess from './ForeldrepengerProsess';
 import ForeldrepengerFakta from './ForeldrepengerFakta';
+import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
+  fetchedData: FetchedData;
   fagsak: FagsakInfo;
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  kodeverk: {[key: string]: Kodeverk[]};
+  alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  valgtFaktaSteg?: string;
+  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
   opneSokeside: () => void;
-  harApenRevurdering: boolean;
   hasFetchError: boolean;
+  featureToggles: {};
 }
 
 const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
+  fetchedData,
   fagsak,
-  behandling,
-  aksjonspunkter,
-  vilkar,
-  beregningresultatForeldrepenger,
-  uttakStnadskontoer,
-  beregningsgrunnlag,
-  uttaksresultatPerioder,
-  simuleringResultat,
-  soknad,
-  personopplysninger,
-  inntektArbeidYtelse,
-  ytelsefordeling,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
-  valgtFaktaSteg,
   oppdaterProsessStegIUrl,
+  valgtFaktaSteg,
   oppdaterFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
   opneSokeside,
-  harApenRevurdering,
   hasFetchError,
   featureToggles,
 }) => (
   <>
     <BehandlingPaVent
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
+      behandling={fetchedData.behandling}
+      aksjonspunkter={fetchedData.aksjonspunkter}
       kodeverk={alleKodeverk}
       settPaVent={settPaVent}
       hentBehandling={hentBehandling}
     />
     <ForeldrepengerProsess
+      data={fetchedData}
       fagsak={fagsak}
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
-      vilkar={vilkar}
-      uttaksresultatPerioder={uttaksresultatPerioder}
-      simuleringResultat={simuleringResultat}
-      beregningsgrunnlag={beregningsgrunnlag}
-      beregningresultatForeldrepenger={beregningresultatForeldrepenger}
       alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
@@ -83,11 +66,11 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
     />
     <VerticalSpacer sixteenPx />
     <PersonFaktaIndex
-      behandling={behandling}
+      behandling={fetchedData.behandling}
       fagsakPerson={fagsak.fagsakPerson}
-      aksjonspunkter={aksjonspunkter}
-      personopplysninger={personopplysninger}
-      inntektArbeidYtelse={inntektArbeidYtelse}
+      aksjonspunkter={fetchedData.aksjonspunkter}
+      personopplysninger={fetchedData.personopplysninger}
+      inntektArbeidYtelse={fetchedData.inntektArbeidYtelse}
       submitCallback={() => undefined}
       readOnly={false}
       featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
@@ -95,14 +78,8 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
     />
     <VerticalSpacer sixteenPx />
     <ForeldrepengerFakta
+      data={fetchedData}
       fagsak={fagsak}
-      behandling={behandling}
-      aksjonspunkter={aksjonspunkter}
-      vilkar={vilkar}
-      soknad={soknad}
-      personopplysninger={personopplysninger}
-      inntektArbeidYtelse={inntektArbeidYtelse}
-      ytelsefordeling={ytelsefordeling}
       alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       hasFetchError={hasFetchError}

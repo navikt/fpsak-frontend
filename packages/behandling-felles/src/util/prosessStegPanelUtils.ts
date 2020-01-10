@@ -36,17 +36,28 @@ const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fag
 });
 
 const skalVisePanel = (aksjonspunkter, vilkar) => (panel) => {
+  if (panel.showComponent) {
+    return panel.showComponent(panel.dataTilUtleding);
+  }
+
   const harAksjonspunkter = panel.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac));
   if (panel.vilkarCodes.length === 0) {
     return harAksjonspunkter;
   }
-  const harVilkar = panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc));
-  const harVilkarOgAksjonspunkter = harAksjonspunkter && harVilkar;
 
-  return !harVilkarOgAksjonspunkter && panel.showComponent
-    ? panel.showComponent(panel.dataTilUtleding)
-    : harVilkarOgAksjonspunkter;
+  const harVilkar = panel.vilkarCodes.some((vc) => vilkar.some((v) => v.vilkarType.kode === vc));
+  if (harVilkar && !harAksjonspunkter && panel.overridePanel) {
+    return true;
+  }
+
+  return harAksjonspunkter && harVilkar;
 };
+
+const tilOverstyringspanel = (aksjonspunkter) => (panel) => (panel.overridePanel && !panel.aksjonspunkterCodes
+  .some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac)) ? ({
+    ...panel,
+    ...panel.overridePanel,
+  }) : panel);
 
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, behandling, aksjonspunkter, vilkar,
   navAnsatt, fagsak, hasFetchError, intl) => {
@@ -58,6 +69,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
       dataTilUtleding: settOppDataBruktTilUtledingAvSteg(panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl),
     }))
     .filter(skalVisePanel(aksjonspunkter, vilkar))
+    .map(tilOverstyringspanel(aksjonspunkter))
     .map((panel) => {
       const { vilkarForSteg, aksjonspunkterForSteg } = panel.dataTilUtleding;
 
