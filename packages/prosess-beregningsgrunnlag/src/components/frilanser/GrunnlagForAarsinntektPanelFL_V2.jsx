@@ -8,6 +8,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
 
 /**
@@ -36,7 +37,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         </>
       )}
       {startDato && (
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
@@ -48,7 +49,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
       </Row>
       )}
       <VerticalSpacer eightPx />
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="7" />
         <Column xs="2" className={beregningStyles.colMaanedText}>
           <Undertekst>
@@ -62,19 +63,21 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         </Column>
         <Column className={beregningStyles.colLink} />
       </Row>
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="7">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
           </Normaltekst>
         </Column>
-        <Column className={beregningStyles.colMaanedText}>
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
         </Column>
-        <Column className={beregningStyles.colAarText}>
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column className={beregningStyles.colLink} />
+        <Column xs="1" className={beregningStyles.colLink}>
+          <LinkTilEksterntSystem linkText="AI" userIdent="123456789" uniqeReactId="AILink" type="AI" />
+        </Column>
       </Row>
     </Panel>
   );
