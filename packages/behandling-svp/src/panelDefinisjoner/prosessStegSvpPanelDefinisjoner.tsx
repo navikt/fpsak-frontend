@@ -152,7 +152,7 @@ const prosessStegPanelDefinisjoner = [{
     previewCallback,
     aksjonspunkter,
     vilkar,
-    ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
+    ytelseTypeKode: fagsakYtelseType.SVANGERSKAPSPENGER,
     employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
   }),
   showComponent: () => true,
