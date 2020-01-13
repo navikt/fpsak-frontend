@@ -23,6 +23,7 @@ import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
+  behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -79,6 +80,7 @@ const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFags
 const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  behandling,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -89,7 +91,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
 }) => {
   const {
-    behandling, aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
+    aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
   } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -159,6 +161,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
             endpoints={valgtPanel.endpoints}
             render={(dataProps) => valgtPanel.renderComponent({
               ...dataProps,
+              behandling,
               alleKodeverk,
               submitCallback: bekreftAksjonspunktCallback,
               ...valgtPanel.komponentData,

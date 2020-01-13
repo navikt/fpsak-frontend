@@ -2,7 +2,10 @@ import { ActionTypes } from './ActionTypesTsType';
 
 const initialState = {
   data: undefined,
+  previusData: undefined,
   meta: undefined,
+  cacheParams: undefined,
+  previousCacheParams: undefined,
   error: undefined,
   started: false,
   finished: false,
@@ -14,8 +17,10 @@ const initialState = {
 
 export interface State {
   data: any;
+  previousData: any;
   meta: any;
   cacheParams: any;
+  previousCacheParams: any;
   error?: any;
   started: boolean;
   finished: boolean;
@@ -52,15 +57,15 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
   }
   switch (action.type) {
     case actionTypes.requestStarted():
-    case actionTypes.copyDataStarted(): {
       return {
         ...initialState,
         data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
         started: true,
         meta: action.payload,
         cacheParams: action.meta.options.cacheParams,
+        previousData: action.meta.options.cacheParams ? state.data : undefined,
+        previousCacheParams: action.meta.options.cacheParams ? state.cacheParams : undefined,
       };
-    }
     case actionTypes.statusRequestStarted():
       return {
         ...state,
@@ -84,7 +89,6 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         statusRequestFinished: true,
       };
     case actionTypes.requestFinished():
-    case actionTypes.copyDataFinished():
       return {
         ...state,
         started: false,

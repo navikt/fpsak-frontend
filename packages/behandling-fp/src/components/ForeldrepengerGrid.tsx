@@ -3,7 +3,7 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
@@ -14,6 +14,7 @@ import FetchedData from '../types/fetchedDataTsType';
 interface OwnProps {
   fetchedData: FetchedData;
   fagsak: FagsakInfo;
+  behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -31,6 +32,7 @@ interface OwnProps {
 const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
+  behandling,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -46,7 +48,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
 }) => (
   <>
     <BehandlingPaVent
-      behandling={fetchedData.behandling}
+      behandling={behandling}
       aksjonspunkter={fetchedData.aksjonspunkter}
       kodeverk={alleKodeverk}
       settPaVent={settPaVent}
@@ -55,6 +57,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
     <ForeldrepengerProsess
       data={fetchedData}
       fagsak={fagsak}
+      behandling={behandling}
       alleKodeverk={alleKodeverk}
       navAnsatt={navAnsatt}
       valgtProsessSteg={valgtProsessSteg}
@@ -66,7 +69,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
     />
     <VerticalSpacer sixteenPx />
     <PersonFaktaIndex
-      behandling={fetchedData.behandling}
+      behandling={behandling}
       fagsakPerson={fagsak.fagsakPerson}
       aksjonspunkter={fetchedData.aksjonspunkter}
       personopplysninger={fetchedData.personopplysninger}
@@ -78,6 +81,7 @@ const ForeldrepengerGrid: FunctionComponent<OwnProps> = ({
     />
     <VerticalSpacer sixteenPx />
     <ForeldrepengerFakta
+      behandling={behandling}
       data={fetchedData}
       fagsak={fagsak}
       alleKodeverk={alleKodeverk}

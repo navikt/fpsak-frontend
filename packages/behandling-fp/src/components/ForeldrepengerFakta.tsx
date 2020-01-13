@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import {
-  FagsakInfo, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaPanelUtils,
+  FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaPanelUtils,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -18,6 +18,7 @@ const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
 interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
+  behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
@@ -27,6 +28,7 @@ interface OwnProps {
 
 const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   data,
+  behandling,
   fagsak,
   navAnsatt,
   alleKodeverk,
@@ -35,7 +37,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   hasFetchError,
 }) => {
   const {
-    behandling, aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
+    aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
   } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
@@ -65,6 +67,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
         endpoints={valgtPanel.endpoints}
         render={(dataProps) => valgtPanel.renderComponent({
           ...dataProps,
+          behandling,
           alleKodeverk,
           submitCallback: bekreftAksjonspunktCallback,
           ...valgtPanel.komponentData,

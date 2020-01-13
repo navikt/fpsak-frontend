@@ -1,3 +1,5 @@
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
+
 class BehandlingDataCache {
   currentVersion: number;
 

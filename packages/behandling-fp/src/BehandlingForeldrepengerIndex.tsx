@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2, BehandlingDataProvider,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
@@ -38,6 +38,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
   kodeverk?: {[key: string]: [Kodeverk]};
   hasFetchError: boolean;
 }
@@ -93,6 +94,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
@@ -115,40 +117,40 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <BehandlingDataProvider behandling={behandling}>
-        <DataFetcherBehandlingDataV2
-          behandlingVersion={behandling.versjon}
-          endpoints={foreldrepengerData}
-          showOldDataWhenRefetching
-          render={(dataProps: FetchedData) => (
-            <>
-              <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
-              <ForeldrepengerGrid
-                fetchedData={dataProps}
-                fagsak={fagsak}
-                alleKodeverk={kodeverk}
-                navAnsatt={navAnsatt}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                valgtFaktaSteg={valgtFaktaSteg}
-                oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                hasFetchError={hasFetchError}
-                featureToggles={featureToggles}
-              />
-            </>
-          )}
-        />
-      </BehandlingDataProvider>
+      <DataFetcherBehandlingDataV2
+        behandlingVersion={behandling.versjon}
+        endpoints={foreldrepengerData}
+        showOldDataWhenRefetching
+        render={(dataProps: FetchedData, isFinished) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.version : forrigeBehandling.versjon} />
+            <ForeldrepengerGrid
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
+              fagsak={fagsak}
+              alleKodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              valgtFaktaSteg={valgtFaktaSteg}
+              oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              hasFetchError={hasFetchError}
+              featureToggles={featureToggles}
+            />
+          </>
+        )}
+      />
     );
   }
 }
 
 const mapStateToProps = (state) => ({
   behandling: fpBehandlingApi.BEHANDLING_FP.getRestApiData()(state),
+  forrigeBehandling: fpBehandlingApi.BEHANDLING_FP.getRestApiPreviousData()(state),
   hasFetchError: !!fpBehandlingApi.BEHANDLING_FP.getRestApiError()(state),
 });
 
