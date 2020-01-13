@@ -51,6 +51,9 @@ const lagIntroTilEndringspanel = (naring) => {
   } = naring;
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
+  if (!hendelseDato) {
+    return null;
+  }
   return (
     <>
       <FlexContainer>
