@@ -21,7 +21,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 const formName = 'BeregningForm';
 
-const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
+export const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
   // Andelen er fastsatt før og må kunne fastsettes igjen
   if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
     return true;
@@ -41,7 +41,10 @@ const finnAndelerSomSkalVises = (andeler) => {
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
-
+const beregnbruttoFastsattInntekt = (overstyrteInntekter) => {
+  if (!overstyrteInntekter || overstyrteInntekter.length === 0) return null;
+  return overstyrteInntekter.reduce((sum, andel) => sum + andel, 0);
+};
 const createArbeidsPeriodeText = (arbeidsforhold) => {
   const periodeArr = [];
 
@@ -84,7 +87,7 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
 
 const createArbeidsIntektRows = (relevanteAndeler) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
-  const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
+  const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
 
@@ -176,6 +179,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
+  if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   return (
     <>
       <Panel className={beregningStyles.panelLeft}>
@@ -229,7 +233,7 @@ const mapStateToProps = (state, initialProps) => {
     );
     return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
   });
-  const bruttoFastsattInntekt = overstyrteInntekter.reduce((a, b) => a + b);
+  const bruttoFastsattInntekt = beregnbruttoFastsattInntekt(overstyrteInntekter);
   return {
     bruttoFastsattInntekt,
     getKodeverknavn,

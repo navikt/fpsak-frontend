@@ -18,6 +18,7 @@ import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
 import styles from './beregningsresultatTable_V2.less';
+import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 
 const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entry, index) => (
@@ -87,6 +88,9 @@ const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
   if (!listOfEntries || listOfEntries.length === 0) {
     return null;
   }
+  if (erVurdert && (listOfDagsatser.length === 0 || !listOfDagsatser[0])) {
+    return null;
+  }
   const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
     ? formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) : 0;
   return (
@@ -111,7 +115,9 @@ const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
         </Column>
         {erVurdert && listOfDagsatser.map((dag, index) => (
           <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
+            {dag && (
             <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
+            )}
           </Column>
         ))}
         {!erVurdert && (
@@ -292,7 +298,9 @@ export const createBeregningTableData = createSelector(
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -316,7 +324,9 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_FL_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -379,7 +389,9 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_DP_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
@@ -406,7 +418,9 @@ export const createBeregningTableData = createSelector(
         }
         default: {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER),
+            periode.beregningsgrunnlagPrStatusOgAndel
+              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
             'AT',
             vilkarStatus,
           );
