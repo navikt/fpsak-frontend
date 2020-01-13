@@ -42,8 +42,9 @@ const finnAndelerSomSkalVises = (andeler) => {
 };
 
 const beregnbruttoFastsattInntekt = (overstyrteInntekter) => {
+  debugger;
   if (!overstyrteInntekter || overstyrteInntekter.length === 0) return null;
-  return overstyrteInntekter.reduce((sum, andel) => sum + andel);
+  return overstyrteInntekter.reduce((sum, andel) => sum + andel, 0);
 };
 const createArbeidsPeriodeText = (arbeidsforhold) => {
   const periodeArr = [];
