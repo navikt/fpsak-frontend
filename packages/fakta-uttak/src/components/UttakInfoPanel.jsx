@@ -68,6 +68,7 @@ export const UttakInfoPanelImpl = ({
   const isRevurdering = behandlingIsRevurdering && (erManueltOpprettet || erArsakTypeHendelseFodsel);
   const behandlingUtredes = behandlingStatus.kode === behandlingStatuser.BEHANDLING_UTREDES;
   const sortedUttakPerioder = [...uttakPerioder.sort(sortUttaksperioder)];
+  const endringsdato = ytelsefordeling && ytelsefordeling.endringsdato ? ytelsefordeling.endringsdato : undefined;
 
   return (
     <FaktaEkspandertpanel
@@ -80,44 +81,44 @@ export const UttakInfoPanelImpl = ({
       disabledTextCode="UttakInfoPanel.Uttak"
     >
       {avklarAnnenForelderRettAp
-      && (
-        <>
-          <AnnenForelderHarRettForm
-            hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
-            hasOpenUttakAksjonspunkter={uttakApOpen}
-            readOnly={readOnly}
+        && (
+          <>
+            <AnnenForelderHarRettForm
+              hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
+              hasOpenUttakAksjonspunkter={uttakApOpen}
+              readOnly={readOnly}
+              toggleInfoPanelCallback={toggleInfoPanelCallback}
+              aksjonspunkter={[avklarAnnenForelderRettAp]}
+              submitCallback={submitCallback}
+              behandlingId={behandlingId}
+              behandlingVersjon={behandlingVersjon}
+              ytelsefordeling={ytelsefordeling}
+            />
+            <VerticalSpacer twentyPx />
+          </>
+        )}
+
+      {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
+        && (
+          <UttakFaktaForm
+            hasOpenAksjonspunkter={uttakApOpen}
+            readOnly={overrideReadOnly && (!isRevurdering || !behandlingUtredes || behandlingPaaVent)}
             toggleInfoPanelCallback={toggleInfoPanelCallback}
-            aksjonspunkter={[avklarAnnenForelderRettAp]}
+            aksjonspunkter={uttakAp}
             submitCallback={submitCallback}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
+            behandlingStatus={behandlingStatus}
             ytelsefordeling={ytelsefordeling}
+            uttakPerioder={sortedUttakPerioder}
+            alleKodeverk={alleKodeverk}
+            kanOverstyre={kanOverstyre && endringsdato !== undefined}
+            faktaArbeidsforhold={faktaArbeidsforhold}
+            personopplysninger={personopplysninger}
+            familiehendelse={familiehendelse}
+            vilkarForSykdomExists={vilkarForSykdomExists}
           />
-          <VerticalSpacer twentyPx />
-        </>
-      )}
-
-      {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
-      && (
-      <UttakFaktaForm
-        hasOpenAksjonspunkter={uttakApOpen}
-        readOnly={overrideReadOnly && (!isRevurdering || !behandlingUtredes || behandlingPaaVent)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        aksjonspunkter={uttakAp}
-        submitCallback={submitCallback}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        behandlingStatus={behandlingStatus}
-        ytelsefordeling={ytelsefordeling}
-        uttakPerioder={sortedUttakPerioder}
-        alleKodeverk={alleKodeverk}
-        kanOverstyre={kanOverstyre}
-        faktaArbeidsforhold={faktaArbeidsforhold}
-        personopplysninger={personopplysninger}
-        familiehendelse={familiehendelse}
-        vilkarForSykdomExists={vilkarForSykdomExists}
-      />
-      )}
+        )}
 
     </FaktaEkspandertpanel>
   );
