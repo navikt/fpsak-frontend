@@ -25,6 +25,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <Panel className={beregningStyles.panelLeft}>
       { isKombinasjonsstatus
@@ -76,7 +77,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
         <Column xs="1" className={beregningStyles.colLink}>
-          <LinkTilEksterntSystem linkText="AI" userIdent="123456789" uniqeReactId="AILink" type="AI" />
+          <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
         </Column>
       </Row>
     </Panel>
