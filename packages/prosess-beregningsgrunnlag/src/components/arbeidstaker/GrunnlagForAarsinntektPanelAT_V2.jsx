@@ -90,7 +90,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
   const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
-
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
       key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsforhold.eksternArbeidsforholdId : ''}`}
@@ -113,7 +113,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
           </Normaltekst>
         </Column>
         <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
-          <LinkTilEksterntSystem linkText="IM" userIdent="123456789" uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
+          <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
         </Column>
       </Row>
       <Row key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>

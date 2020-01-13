@@ -108,6 +108,7 @@ export const NaeringsopplysningsPanel = ({
   intl,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   if (!snAndel.næringer) {
     return null;
   }
@@ -121,7 +122,7 @@ export const NaeringsopplysningsPanel = ({
           </Element>
         </FlexColumn>
         <FlexColumn>
-          <LinkTilEksterntSystem linkText="SØ" userIdent="123456789" uniqeReactId="SøLink" type="SØ" />
+          <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} uniqeReactId="SøLink" type="SØ" />
         </FlexColumn>
       </FlexRow>
       <Row key="SNInntektIngress">

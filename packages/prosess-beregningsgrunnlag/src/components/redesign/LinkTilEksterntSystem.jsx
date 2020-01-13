@@ -8,9 +8,13 @@ const LinkTilEksterntSystem = ({
   type, linkText, userIdent, uniqeReactId,
 }) => {
   let link = 'http://alink';
-
+  if (!userIdent) { return null; }
   switch (type) {
     case 'AI': {
+      link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
+      break;
+    }
+    case 'IM': {
       link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
       break;
     }
