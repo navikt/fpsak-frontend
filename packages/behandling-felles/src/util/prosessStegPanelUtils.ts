@@ -22,20 +22,25 @@ const finnStatus = (bpVilkar, bpAksjonspunkter) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-const settOppDataBruktTilUtledingAvSteg = (panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl) => ({
-  ...ekstraPanelData,
-  fagsak,
-  behandling,
-  aksjonspunkter,
-  vilkar,
-  aksjonspunktDefKoderForSteg: panelDefinisjon.aksjonspunkterCodes,
-  aksjonspunkterForSteg: aksjonspunkter.filter((ap) => panelDefinisjon.aksjonspunkterCodes.includes(ap.definisjon.kode)),
-  vilkarForSteg: vilkar.filter((v) => panelDefinisjon.vilkarCodes.includes(v.vilkarType.kode)),
-  label: intl.formatMessage({ id: panelDefinisjon.textCode }),
-  rettigheter,
-});
+const settOppDataBruktTilUtledingAvSteg = (ekstraData, intl) => (panelDefinisjon) => {
+  const panels = panelDefinisjon.panels.map((pDef) => ({
+    ...pDef,
+    dataTilUtleding: {
+      ...ekstraData,
+      aksjonspunktDefKoderForSteg: pDef.aksjonspunkterCodes,
+      aksjonspunkterForSteg: ekstraData.aksjonspunkter.filter((ap) => pDef.aksjonspunkterCodes.includes(ap.definisjon.kode)),
+      vilkarForSteg: ekstraData.vilkar.filter((v) => pDef.vilkarCodes.includes(v.vilkarType.kode)),
+    },
+  }), {});
 
-const skalVisePanel = (aksjonspunkter, vilkar) => (panel) => {
+  return {
+    ...panelDefinisjon,
+    panels,
+    label: intl.formatMessage({ id: panelDefinisjon.textCode }),
+  };
+};
+
+const skalViseDelPanel = (aksjonspunkter, vilkar, panel) => {
   if (panel.showComponent) {
     return panel.showComponent(panel.dataTilUtleding);
   }
@@ -53,63 +58,106 @@ const skalVisePanel = (aksjonspunkter, vilkar) => (panel) => {
   return harAksjonspunkter && harVilkar;
 };
 
-const tilOverstyringspanel = (aksjonspunkter) => (panel) => (panel.overridePanel && !panel.aksjonspunkterCodes
-  .some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac)) ? ({
+const skalVisePanel = (aksjonspunkter, vilkar) => (panelDefinisjon) => panelDefinisjon.panels.some((p) => skalViseDelPanel(aksjonspunkter, vilkar, p));
+
+const tilOverstyringspanel = (aksjonspunkter) => (panel) => {
+  const panels = panel.panels.map((p) => {
+    if (p.overridePanel && !p.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac))) {
+      return {
+        ...p,
+        ...p.overridePanel,
+      };
+    }
+    return p;
+  });
+
+  return {
     ...panel,
-    ...panel.overridePanel,
-  }) : panel);
+    panels,
+  };
+};
+
 
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, behandling, aksjonspunkter, vilkar,
   navAnsatt, fagsak, hasFetchError, intl) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
+  const data = {
+    ...ekstraPanelData,
+    fagsak,
+    behandling,
+    aksjonspunkter,
+    vilkar,
+    rettigheter,
+  };
 
   return prosessStegPanelDefinisjoner
-    .map((panelDefinisjon) => ({
-      ...panelDefinisjon,
-      dataTilUtleding: settOppDataBruktTilUtledingAvSteg(panelDefinisjon, ekstraPanelData, fagsak, behandling, aksjonspunkter, vilkar, rettigheter, intl),
-    }))
+    .map(settOppDataBruktTilUtledingAvSteg(data, intl))
     .filter(skalVisePanel(aksjonspunkter, vilkar))
     .map(tilOverstyringspanel(aksjonspunkter))
-    .map((panel) => {
-      const { vilkarForSteg, aksjonspunkterForSteg } = panel.dataTilUtleding;
+    .map((panelDef) => {
+      const panelData = panelDef.panels.map((panel) => {
+        if (!skalViseDelPanel(aksjonspunkter, vilkar, panel)) {
+          return {
+            code: panel.code ? panel.code : panelDef.urlCode,
+          };
+        }
+        const { vilkarForSteg, aksjonspunkterForSteg } = panel.dataTilUtleding;
 
-      const status = panel.overrideStatus ? panel.overrideStatus(panel.dataTilUtleding) : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
-      const erAksjonspunktOpen = aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
-      const isReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError);
+        const status = panel.overrideStatus ? panel.overrideStatus(panel.dataTilUtleding) : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
+        const erAksjonspunktOpen = aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+        const isReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError);
 
-      const prosessStegPanel = {
-        urlCode: panel.urlCode,
-        endpoints: panel.endpoints,
-        renderComponent: panel.renderComponent,
-        aksjonspunkter: aksjonspunkterForSteg,
+        const prosessStegPanel = {
+          code: panel.code ? panel.code : panelDef.urlCode,
+          endpoints: panel.endpoints,
+          renderComponent: panel.renderComponent,
+          aksjonspunkter: aksjonspunkterForSteg,
+          isAksjonspunktOpen: erAksjonspunktOpen,
+          isReadOnly,
+          status,
+        };
+
+        const komponentData = {
+          status,
+          isReadOnly,
+          readOnlySubmitButton: (!(aksjonspunkterForSteg.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
+          aksjonspunkter: aksjonspunkterForSteg,
+          vilkar: vilkarForSteg,
+          isAksjonspunktOpen: erAksjonspunktOpen,
+          ...panel.getData(panel.dataTilUtleding),
+        };
+
+        return panel.isOverridable ? {
+          ...prosessStegPanel,
+          komponentData: {
+            overrideReadOnly: readOnlyUtils.erOverrideReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError),
+            kanOverstyreAccess: rettigheter.kanOverstyreAccess,
+            toggleOverstyring,
+            ...komponentData,
+          },
+        } : {
+          ...prosessStegPanel,
+          komponentData,
+        };
+      });
+
+      const statusIkkeVurdert = panelData.some((p) => p.status === vilkarUtfallType.IKKE_VURDERT);
+      const statusAvslatt = panelData.some((p) => p.status === vilkarUtfallType.IKKE_OPPFYLT);
+      const statusOppfylt = panelData.some((p) => p.status === vilkarUtfallType.OPPFYLT);
+      const tempStatus = statusOppfylt && !statusIkkeVurdert ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
+      const status = statusAvslatt ? vilkarUtfallType.IKKE_OPPFYLT : tempStatus;
+
+      const erAksjonspunktOpen = panelData.some((p) => p.erAksjonspunktOpen);
+
+      return {
+        urlCode: panelDef.urlCode,
         erStegBehandlet: status !== vilkarUtfallType.IKKE_VURDERT || erAksjonspunktOpen,
-        label: intl.formatMessage({ id: panel.textCode }),
+        label: intl.formatMessage({ id: panelDef.textCode }),
         isAksjonspunktOpen: erAksjonspunktOpen,
-        isReadOnly,
+        isReadOnly: panelData.every((p) => p.isReadOnly),
+        aksjonspunkter: panelData.length === 1 ? panelData[0].aksjonspunkter : [],
         status,
-      };
-
-      const komponentData = {
-        status,
-        isReadOnly,
-        readOnlySubmitButton: (!(aksjonspunkterForSteg.some((ap) => ap.kanLoses)) || vilkarUtfallType.OPPFYLT === status),
-        aksjonspunkter: aksjonspunkterForSteg,
-        vilkar: vilkarForSteg,
-        isAksjonspunktOpen: erAksjonspunktOpen,
-        ...panel.getData(panel.dataTilUtleding),
-      };
-
-      return panel.isOverridable ? {
-        ...prosessStegPanel,
-        komponentData: {
-          overrideReadOnly: readOnlyUtils.erOverrideReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError),
-          kanOverstyreAccess: rettigheter.kanOverstyreAccess,
-          toggleOverstyring,
-          ...komponentData,
-        },
-      } : {
-        ...prosessStegPanel,
-        komponentData,
+        panelData,
       };
     });
 };

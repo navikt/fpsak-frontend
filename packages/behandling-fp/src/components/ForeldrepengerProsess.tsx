@@ -11,12 +11,13 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  DataFetcherBehandlingDataV2, IverksetterVedtakStatusModal,
+  IverksetterVedtakStatusModal, Behandling,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFpPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
+import MultipleProcessPanel from './MultipleProcessPanel';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
@@ -155,17 +156,11 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
           aksjonspunkter={valgtPanel.aksjonspunkter}
           isReadOnly={valgtPanel.isReadOnly}
         >
-          <DataFetcherBehandlingDataV2
-            key={valgtPanel.urlCode}
-            behandlingVersion={behandling.versjon}
-            endpoints={valgtPanel.endpoints}
-            render={(dataProps) => valgtPanel.renderComponent({
-              ...dataProps,
-              behandling,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.komponentData,
-            })}
+          <MultipleProcessPanel
+            behandling={behandling}
+            alleKodeverk={alleKodeverk}
+            prosessStegData={valgtPanel.panelData}
+            submitCallback={bekreftAksjonspunktCallback}
           />
         </MargMarkering>
       )}
