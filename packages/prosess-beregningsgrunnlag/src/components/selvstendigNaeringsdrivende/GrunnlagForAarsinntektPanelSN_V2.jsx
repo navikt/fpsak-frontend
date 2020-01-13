@@ -21,7 +21,7 @@ const createHeaderRow = () => (
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
       </EtikettLiten>
     </Column>
-    <Column xs="2" className={beregningStyles.rightAlignElement}>
+    <Column xs="2" className={beregningStyles.colAarText}>
 
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
@@ -46,7 +46,7 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
               />
             </Element>
           </Column>
-          <Column xs="2" className={beregningStyles.rightAlignElement}>
+          <Column xs="2" className={beregningStyles.colAarText}>
             <Element>
               {formatCurrencyNoKr(pgiSnitt)}
             </Element>
@@ -65,7 +65,7 @@ const createInntektRows = (pgiVerdier) => (
             {element.årstall}
           </EtikettLiten>
         </Column>
-        <Column xs="4" className={beregningStyles.rightAlignElement}>
+        <Column xs="4" className={beregningStyles.colAarText}>
           <EtikettLiten>
             {formatCurrencyNoKr(element.beløp)}
           </EtikettLiten>

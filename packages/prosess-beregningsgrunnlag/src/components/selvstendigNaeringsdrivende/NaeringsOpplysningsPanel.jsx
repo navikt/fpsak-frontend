@@ -114,19 +114,19 @@ export const NaeringsopplysningsPanel = ({
 
   return (
     <Panel className={beregningStyles.panel}>
-      <Row key="SNNareingOverskrift">
-        <Column xs="6">
+      <FlexRow key="SNNareingOverskrift">
+        <FlexColumn>
           <Element className={beregningStyles.semiBoldText}>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
           </Element>
-        </Column>
-        <Column>
+        </FlexColumn>
+        <FlexColumn>
           <LinkTilEksterntSystem linkText="SØ" userIdent="123456789" uniqeReactId="SøLink" type="SØ" />
-        </Column>
-      </Row>
+        </FlexColumn>
+      </FlexRow>
       <Row key="SNInntektIngress">
         <Column xs="8" />
-        <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
+        <Column xs="3" className={beregningStyles.colAarText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
           </Undertekst>
@@ -150,7 +150,7 @@ export const NaeringsopplysningsPanel = ({
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst>
-                  {formatCurrencyNoKr(naring.oppgittInntekt)}
+                  {formatCurrencyNoKr(naring.colAarText)}
                 </Normaltekst>
                 )}
             </Column>

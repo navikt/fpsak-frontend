@@ -61,7 +61,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
         </Column>
-        <Column className={beregningStyles.colLink} />
+        <Column xs="1" className={beregningStyles.colLink} />
       </Row>
       <Row className={beregningStyles.rows}>
         <Column xs="7">
