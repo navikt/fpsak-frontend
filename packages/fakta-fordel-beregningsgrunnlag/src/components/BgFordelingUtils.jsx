@@ -1,6 +1,8 @@
 import moment from 'moment';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
+
 import { formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
@@ -73,7 +75,7 @@ export const setGenerellAndelsinfo = (andel, harKunYtelse, getKodeverknavn) => (
   nyAndel: false,
   lagtTilAvSaksbehandler: andel.lagtTilAvSaksbehandler === true,
   inntektskategori: finnnInntektskategorikode(andel),
-  forrigeInntektskategori: andel.inntektskategori.kode,
+  forrigeInntektskategori: !andel.inntektskategori || andel.inntektskategori.kode === inntektskategorier.UDEFINERT ? null : andel.inntektskategori.kode,
 });
 
 export const starterPaaEllerEtterStp = (bgAndel,

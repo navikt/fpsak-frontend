@@ -181,7 +181,9 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
 };
 
 const getStatusList = (beregningsgrunnlagPeriode) => {
-  const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
+  const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+    .filter((statusAndel) => statusAndel.erTilkommetAndel !== true)
+    .map((statusAndel) => statusAndel.aktivitetStatus);
   return statusList;
 };
 
