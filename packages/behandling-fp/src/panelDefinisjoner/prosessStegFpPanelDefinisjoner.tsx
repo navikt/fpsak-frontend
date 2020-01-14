@@ -83,14 +83,14 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
   renderComponent: (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />,
   getData: ({
-    valgtStegKode, overstyrteProsessSteg, vilkarForSteg, label, alleKodeverk, aksjonspunktDefKoderForSteg,
+    code, overstyrteAksjonspunkter, vilkarForSteg, label, alleKodeverk, aksjonspunktDefKoderForSteg,
   }) => ({
-    erOverstyrt: overstyrteProsessSteg.includes(valgtStegKode),
+    erOverstyrt: overstyrteAksjonspunkter.some((o) => aksjonspunktDefKoderForSteg.some((a) => a === o)),
     panelTittel: label,
     avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
     lovReferanse: vilkarForSteg[0].lovReferanse,
     overstyringApKode: aksjonspunktDefKoderForSteg[0],
-    erMedlemskapsPanel: valgtStegKode === bpc.MEDLEMSKAP,
+    erMedlemskapsPanel: code === 'MEDLEMSKAP',
   }),
   isOverridable: true,
 });

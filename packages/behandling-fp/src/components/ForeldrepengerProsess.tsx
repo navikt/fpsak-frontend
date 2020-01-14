@@ -78,7 +78,7 @@ const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFags
   };
 };
 
-const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
+const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
   behandling,
@@ -97,7 +97,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [overstyrteProsessSteg, toggleOverstyring] = useState([]);
+  const [overstyrteAksjonspunkter, toggleOverstyring] = useState([]);
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
@@ -114,7 +114,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
     dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
     tempUpdateStonadskontoer: useCallback(() => dispatch(fpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(data)), []),
-    overstyrteProsessSteg,
+    overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
     simuleringResultat,
@@ -123,15 +123,16 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     beregningsgrunnlag,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);
+    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg),
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
 
   const formaterteProsessStegPaneler = useMemo(() => prosessStegPanelUtils.formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanelKode),
-    [behandling.versjon, valgtPanelKode]);
+    [behandling.versjon, valgtPanelKode, overstyrteAksjonspunkter]);
 
   const prosessmenyCallback = useCallback((index) => {
     const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
@@ -174,4 +175,4 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EngangsstonadProsess;
+export default ForeldrepengerProsess;

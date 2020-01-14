@@ -20,9 +20,6 @@ export const VilkarresultatMedBegrunnelse = ({
   customVilkarOppfyltText,
 }) => (
   <>
-    {skalViseBegrunnelse && (
-      <VilkarBegrunnelse isReadOnly={readOnly} />
-    )}
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -32,6 +29,9 @@ export const VilkarresultatMedBegrunnelse = ({
       hasAksjonspunkt={hasAksjonspunkt}
       erMedlemskapsPanel={erMedlemskapsPanel}
     />
+    {skalViseBegrunnelse && (
+      <VilkarBegrunnelse isReadOnly={readOnly} />
+    )}
   </>
 );
 

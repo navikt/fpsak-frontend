@@ -1,22 +1,36 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import PropTypes from 'prop-types';
+import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import {
+  Undertittel, Element, EtikettLiten, Normaltekst,
+} from 'nav-frontend-typografi';
+import { Knapp } from 'nav-frontend-knapper';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { FadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel, OverstyrVurderingVelger,
+  FadingPanel, FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox,
+} from '@fpsak-frontend/shared-components';
+import {
+  behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
 } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
+import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
+import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
 
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 
 import styles from './vilkarresultatMedOverstyringForm.less';
+
+const isOverridden = (aksjonspunktCodes, aksjonspunktCode) => aksjonspunktCodes.some((code) => code === aksjonspunktCode);
+const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) => !isOverridden(aksjonspunktCodes, aksjonspunktCode) && !kanOverstyre;
 
 /**
  * VilkarresultatForm
@@ -26,12 +40,13 @@ import styles from './vilkarresultatMedOverstyringForm.less';
  */
 export const VilkarresultatMedOverstyringForm = ({
   panelTittel,
-  isOverstyrt,
+  erOverstyrt,
   isReadOnly,
   overstyringApKode,
   lovReferanse,
   isSolvable,
   erVilkarOk,
+  originalErVilkarOk,
   customVilkarIkkeOppfyltText,
   customVilkarOppfyltText,
   erMedlemskapsPanel,
@@ -42,47 +57,107 @@ export const VilkarresultatMedOverstyringForm = ({
   aksjonspunktCodes,
   toggleOverstyring,
   ...formProps
-}) => (
-  <FadingPanel>
-    <form onSubmit={formProps.handleSubmit}>
-      <div className={styles.headerContainer}>
-        <div className={styles.textAlign}>
-          <Undertittel>{panelTittel}</Undertittel>
-          {lovReferanse && <Normaltekst>{lovReferanse}</Normaltekst>}
-        </div>
-        <div className={styles.checkerAlign}>
-          <OverstyrVurderingVelger
-            aksjonspunktCode={overstyringApKode}
-            resetValues={formProps.reset}
-            overrideReadOnly={overrideReadOnly}
-            kanOverstyreAccess={kanOverstyreAccess}
-            aksjonspunktCodes={aksjonspunktCodes}
-            toggleOverstyring={toggleOverstyring}
-          />
-        </div>
-      </div>
-      <VilkarresultatMedBegrunnelse
-        skalViseBegrunnelse={isOverstyrt}
-        readOnly={isReadOnly || !isOverstyrt}
-        erVilkarOk={erVilkarOk}
-        customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-        customVilkarOppfyltText={customVilkarOppfyltText}
-        erMedlemskapsPanel={erMedlemskapsPanel}
-        hasAksjonspunkt={hasAksjonspunkt}
-        avslagsarsaker={avslagsarsaker}
-      />
-      <OverstyrBekreftKnappPanel
-        submitting={formProps.submitting}
-        pristine={!isSolvable || formProps.pristine}
-        overrideReadOnly={overrideReadOnly}
-      />
-    </form>
-  </FadingPanel>
-);
+}) => {
+  const togglePa = useCallback(() => toggleOverstyring((oldArray) => [...oldArray, overstyringApKode]));
+  const toggleAv = useCallback(() => {
+    formProps.reset();
+    toggleOverstyring((oldArray) => oldArray.filter((code) => code !== overstyringApKode));
+  });
+
+  return (
+    <FadingPanel>
+      <form onSubmit={formProps.handleSubmit}>
+        <FlexContainer>
+          <FlexRow>
+            {(!erOverstyrt && originalErVilkarOk !== undefined) && (
+              <FlexColumn>
+                <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
+              </FlexColumn>
+            )}
+            <FlexColumn>
+              <Undertittel>{panelTittel}</Undertittel>
+            </FlexColumn>
+            <FlexColumn>
+              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+            </FlexColumn>
+          </FlexRow>
+          <VerticalSpacer eightPx />
+          <FlexRow>
+            <FlexColumn>
+              {originalErVilkarOk && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element> }
+              {originalErVilkarOk === false && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element> }
+            </FlexColumn>
+            {!isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
+              <>
+                {(!erOverstyrt && !overrideReadOnly) && (
+                  <FlexColumn>
+                    <Image className={styles.key} src={keyImage} onClick={togglePa} />
+                  </FlexColumn>
+                )}
+                {(erOverstyrt || overrideReadOnly) && (
+                  <FlexColumn>
+                    <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
+                  </FlexColumn>
+                )}
+              </>
+            )}
+          </FlexRow>
+        </FlexContainer>
+        <VerticalSpacer eightPx />
+        {erOverstyrt && (
+          <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent>
+            <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
+            <VerticalSpacer eightPx />
+            <VilkarresultatMedBegrunnelse
+              skalViseBegrunnelse={erOverstyrt}
+              readOnly={isReadOnly || !erOverstyrt}
+              erVilkarOk={erVilkarOk}
+              customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+              customVilkarOppfyltText={customVilkarOppfyltText}
+              erMedlemskapsPanel={erMedlemskapsPanel}
+              hasAksjonspunkt={hasAksjonspunkt}
+              avslagsarsaker={avslagsarsaker}
+            />
+            <FlexContainer>
+              <FlexRow>
+                <FlexColumn>
+                  <Image src={advarselIkonUrl} />
+                </FlexColumn>
+                <FlexColumn>
+                  <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Normaltekst>
+                </FlexColumn>
+              </FlexRow>
+              <VerticalSpacer sixteenPx />
+              <FlexRow>
+                <FlexColumn>
+                  <OverstyrBekreftKnappPanel
+                    submitting={formProps.submitting}
+                    pristine={!isSolvable || formProps.pristine}
+                    overrideReadOnly={overrideReadOnly}
+                  />
+                </FlexColumn>
+                <FlexColumn>
+                  <Knapp
+                    spinner={formProps.submitting}
+                    disabled={formProps.submitting}
+                    onClick={toggleAv}
+                  >
+                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
+                  </Knapp>
+                </FlexColumn>
+              </FlexRow>
+            </FlexContainer>
+          </AksjonspunktBox>
+        )}
+      </form>
+    </FadingPanel>
+  );
+};
 
 VilkarresultatMedOverstyringForm.propTypes = {
-  isOverstyrt: PropTypes.bool,
+  erOverstyrt: PropTypes.bool,
   erVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
   lovReferanse: PropTypes.string,
   customVilkarIkkeOppfyltText: PropTypes.shape({
@@ -109,8 +184,9 @@ VilkarresultatMedOverstyringForm.defaultProps = {
   customVilkarIkkeOppfyltText: undefined,
   customVilkarOppfyltText: undefined,
   lovReferanse: undefined,
-  isOverstyrt: undefined,
+  erOverstyrt: undefined,
   erVilkarOk: undefined,
+  originalErVilkarOk: undefined,
 };
 
 const buildInitialValues = createSelector(
@@ -154,7 +230,7 @@ const transformValues = (values, overstyringApKode) => ({
 
 const validate = (values) => VilkarresultatMedBegrunnelse.validate(values);
 
-const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
   const { overstyringApKode, submitCallback } = initialOwnProps;
   const onSubmit = (values) => submitCallback([transformValues(values, overstyringApKode)]);
   const validateFn = (values) => validate(values);
@@ -170,17 +246,20 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     const isSolvable = aksjonspunkt !== undefined
       ? !(aksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET && !aksjonspunkt.kanLoses) : false;
 
+    const initialValues = buildInitialValues(ownProps);
+
     return {
       onSubmit,
       aksjonspunktCodes,
+      initialValues,
       customVilkarOppfyltText: getCustomVilkarTextForOppfylt(ownProps),
       customVilkarIkkeOppfyltText: getCustomVilkarTextForIkkeOppfylt(ownProps),
       isSolvable: erOverstyrt || isSolvable,
       isReadOnly: overrideReadOnly,
       hasAksjonspunkt: aksjonspunkt !== undefined,
-      initialValues: buildInitialValues(ownProps),
       validate: validateFn,
       form: formName,
+      originalErVilkarOk: initialValues.erVilkarOk,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };

@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
@@ -42,6 +41,7 @@ const VilkarResultPickerImpl = ({
       bredde="XXL"
       readOnly={readOnly}
       isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}
+      direction="vertical"
     >
       <RadioOption
         label={(
@@ -60,33 +60,32 @@ const VilkarResultPickerImpl = ({
           />
         )}
         value={false}
-      />
-    </RadioGroupField>
-    {(erVilkarOk === false && avslagsarsaker) && (
-      <Row>
-        <Column xs="6">
-          <ArrowBox alignOffset={166} hideBorder={readOnly}>
-            <VerticalSpacer eightPx />
-            <SelectField
-              name="avslagCode"
-              label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-              placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-              selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
-              bredde="xl"
-              readOnly={readOnly}
-            />
-            {erMedlemskapsPanel && (
+      >
+        <>
+          {avslagsarsaker && (
+            <>
+              <VerticalSpacer eightPx />
+              <SelectField
+                name="avslagCode"
+                label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
+                placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+                selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
+                bredde="xl"
+                readOnly={readOnly}
+              />
+              {erMedlemskapsPanel && (
               <DatepickerField
                 name="avslagDato"
                 label={{ id: 'VilkarResultPicker.VilkarDato' }}
                 readOnly={readOnly}
                 validate={[required, hasValidDate]}
               />
-            )}
-          </ArrowBox>
-        </Column>
-      </Row>
-    )}
+              )}
+            </>
+          )}
+        </>
+      </RadioOption>
+    </RadioGroupField>
   </div>
 );
 
