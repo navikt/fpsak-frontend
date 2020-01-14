@@ -24,7 +24,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
-  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
       { isKombinasjonsstatus
