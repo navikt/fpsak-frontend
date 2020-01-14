@@ -13,7 +13,7 @@ const findPreviousData = (activeEndpointsData) => {
     return undefined;
   }
 
-  activeEndpointsData.reduce((acc, a) => ({
+  return activeEndpointsData.reduce((acc, a) => ({
     ...acc,
     [a.formattedName]: a.previousData,
   }), {});
