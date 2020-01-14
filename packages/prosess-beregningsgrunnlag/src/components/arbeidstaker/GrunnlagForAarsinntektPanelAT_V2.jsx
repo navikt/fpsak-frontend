@@ -62,7 +62,7 @@ const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
   const seen = new Set();
   return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
 };
-const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver) => {
+const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, getKodeverknavn) => {
   if (!arbeidsforhold.arbeidsgiverNavn) {
     return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
   }
@@ -85,7 +85,7 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   return ' ';
 };
 
-const createArbeidsIntektRows = (relevanteAndeler) => {
+const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
@@ -98,7 +98,7 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
       <Row key={`index${index + 1}`}>
         <Column xs={andel.erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr)}
+            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr, getKodeverknavn)}
           </Normaltekst>
         </Column>
         {andel.erTidsbegrensetArbeidsforhold && (
@@ -176,6 +176,7 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
 export const GrunnlagForAarsinntektPanelATImpl2 = ({
   alleAndeler,
   allePerioder,
+  getKodeverknavn,
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
@@ -203,7 +204,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           </Column>
           <Column className={beregningStyles.colLink} />
         </Row>
-        {createArbeidsIntektRows(relevanteAndeler)}
+        {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn)}
       </Panel>
       <NaturalytelsePanel2
         allePerioder={allePerioder}
@@ -215,6 +216,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 GrunnlagForAarsinntektPanelATImpl2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 GrunnlagForAarsinntektPanelATImpl2.defaultProps = {
