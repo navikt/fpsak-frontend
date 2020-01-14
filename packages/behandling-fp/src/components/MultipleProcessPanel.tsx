@@ -18,18 +18,18 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
   const panels = prosessStegData.map((stegData) => (
     <div>
       {stegData.renderComponent && (
-      <DataFetcherBehandlingDataV2
-        key={stegData.panelCode}
-        behandlingVersion={behandling.versjon}
-        endpoints={stegData.endpoints}
-        render={(dataProps) => stegData.renderComponent({
-          ...dataProps,
-          behandling,
-          alleKodeverk,
-          submitCallback,
-          ...stegData.komponentData,
-        })}
-      />
+        <DataFetcherBehandlingDataV2
+          key={stegData.code}
+          behandlingVersion={behandling.versjon}
+          endpoints={stegData.endpoints}
+          render={(dataProps) => stegData.renderComponent({
+            ...dataProps,
+            behandling,
+            alleKodeverk,
+            submitCallback,
+            ...stegData.komponentData,
+          })}
+        />
       )}
     </div>
   ));

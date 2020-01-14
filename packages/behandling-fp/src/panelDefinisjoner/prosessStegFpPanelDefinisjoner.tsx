@@ -140,6 +140,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Inngangsvilkar',
   panels: [{
     code: 'FODSEL',
+    textCode: 'Inngangsvilkar.Fodselsvilkaret',
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
     endpoints: [],
@@ -151,6 +152,7 @@ const prosessStegPanelDefinisjoner = [{
     },
   }, {
     code: 'ADOPSJON',
+    textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
     endpoints: [],
@@ -162,17 +164,21 @@ const prosessStegPanelDefinisjoner = [{
     },
   }, {
     code: 'OMSORG',
+    textCode: 'Inngangsvilkar.Omsorgsvilkaret',
     aksjonspunkterCodes: [ac.MANUELL_VURDERING_AV_OMSORGSVILKARET, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
       ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     vilkarCodes: [vt.OMSORGSVILKARET],
     endpoints: [],
     renderComponent: (props) => <OmsorgVilkarProsessIndex {...props} />,
   }, {
+    code: 'MEDLEMSKAP',
+    textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
     aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
     vilkarCodes: [vt.MEDLEMSKAPSVILKARET],
     ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
   }, {
     code: 'FORELDREANSVARSVILKARET',
+    textCode: 'Inngangsvilkar.Foreldreansvar',
     aksjonspunkterCodes: [ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD, ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
       ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     vilkarCodes: [vt.FORELDREANSVARSVILKARET_2_LEDD, vt.FORELDREANSVARSVILKARET_4_LEDD],
@@ -184,6 +190,7 @@ const prosessStegPanelDefinisjoner = [{
     }),
   }, {
     code: 'OPPTJENINGSVILKARET',
+    textCode: 'Inngangsvilkar.Opptjeningsvilkaret',
     aksjonspunkterCodes: [ac.VURDER_OPPTJENINGSVILKARET],
     vilkarCodes: [vt.OPPTJENINGSPERIODE, vt.OPPTJENINGSVILKARET],
     endpoints: [api.OPPTJENING],

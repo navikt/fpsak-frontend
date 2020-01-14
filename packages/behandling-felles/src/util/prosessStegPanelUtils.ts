@@ -30,6 +30,7 @@ const settOppDataBruktTilUtledingAvSteg = (ekstraData, intl) => (panelDefinisjon
       aksjonspunktDefKoderForSteg: pDef.aksjonspunkterCodes,
       aksjonspunkterForSteg: ekstraData.aksjonspunkter.filter((ap) => pDef.aksjonspunkterCodes.includes(ap.definisjon.kode)),
       vilkarForSteg: ekstraData.vilkar.filter((v) => pDef.vilkarCodes.includes(v.vilkarType.kode)),
+      label: pDef.textCode ? intl.formatMessage({ id: pDef.textCode }) : undefined,
     },
   }), {});
 
