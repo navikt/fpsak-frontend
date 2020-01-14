@@ -3,7 +3,6 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import Panel from 'nav-frontend-paneler';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -25,9 +24,9 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
-  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
-    <Panel className={beregningStyles.panelLeft}>
+    <>
       { isKombinasjonsstatus
       && (
         <>
@@ -80,7 +79,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
           <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
         </Column>
       </Row>
-    </Panel>
+    </>
   );
 };
 GrunnlagForAarsinntektPanelFL2.propTypes = {

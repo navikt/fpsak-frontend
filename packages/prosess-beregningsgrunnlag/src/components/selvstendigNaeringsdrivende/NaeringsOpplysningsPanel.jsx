@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
@@ -114,7 +113,7 @@ export const NaeringsopplysningsPanel = ({
   }
 
   return (
-    <Panel className={beregningStyles.panel}>
+    <>
       <FlexRow key="SNNareingOverskrift">
         <FlexColumn>
           <Element className={beregningStyles.semiBoldText}>
@@ -151,7 +150,7 @@ export const NaeringsopplysningsPanel = ({
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst>
-                  {formatCurrencyNoKr(naring.colAarText)}
+                  {formatCurrencyNoKr(naring.oppgittInntekt)}
                 </Normaltekst>
                 )}
             </Column>
@@ -188,7 +187,7 @@ export const NaeringsopplysningsPanel = ({
             )}
         </React.Fragment>
       ))}
-    </Panel>
+    </>
   );
 };
 

@@ -53,8 +53,11 @@ const LinkTilEksterntSystem = ({
 LinkTilEksterntSystem.propTypes = {
   linkText: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  userIdent: PropTypes.string.isRequired,
+  userIdent: PropTypes.string,
   uniqeReactId: PropTypes.string.isRequired,
+};
+LinkTilEksterntSystem.defaultProps = {
+  userIdent: undefined,
 };
 
 export default LinkTilEksterntSystem;

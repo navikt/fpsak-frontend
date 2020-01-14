@@ -9,7 +9,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -91,7 +90,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   }
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
   return (
-    <Panel className={beregningStyles.panel}>
+    <>
       <Element className={beregningStyles.semiBoldText}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
@@ -108,7 +107,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
       {createInntektRows(pgiVerdier)}
       {createSumRow(pgiSnitt, erNyIArbeidslivet)}
 
-    </Panel>
+    </>
   );
 };
 

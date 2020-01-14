@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
-import Panel from 'nav-frontend-paneler';
+
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
@@ -25,7 +25,7 @@ const TilstotendeYtelser2 = ({
 }) => {
   const relevanteAndeler = alleAndeler.filter((andel) => isStatusDagpengerOrAAP(andel.aktivitetStatus.kode));
   return (
-    <Panel className={beregningStyles.panel}>
+    <>
       {relevanteStatuser.isKombinasjonsstatus
       && (
         <>
@@ -70,7 +70,7 @@ const TilstotendeYtelser2 = ({
           </div>
         ))}
       </>
-    </Panel>
+    </>
   );
 };
 

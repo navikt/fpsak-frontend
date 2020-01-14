@@ -43,17 +43,15 @@ describe('<GrunnlagForAarsinntektPanelSN_V2>', () => {
       alleAndeler={beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel}
     />);
 
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     expect(rows).to.have.length(7);
   });
   it('Skal teste tabellen får korrekt innhold', () => {
     const wrapper = shallowWithIntl(<GrunnlagForAarsinntektPanelSN2
       alleAndeler={beregningsgrunnlagperioder.beregningsgrunnlagPrStatusOgAndel}
     />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
-    const formattedMessage = panel.find('FormattedMessage');
+    const rows = wrapper.find('Row');
+    const formattedMessage = wrapper.find('FormattedMessage');
     expect(formattedMessage.first().prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt');
     expect(formattedMessage.at(1).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.SN.sisteTreAar');
     expect(formattedMessage.at(2).prop('id')).to.eql('Beregningsgrunnlag.AarsinntektPanel.AarHeader');
