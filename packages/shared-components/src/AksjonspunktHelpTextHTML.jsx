@@ -3,13 +3,24 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel2.svg';
 import { Normaltekst } from 'nav-frontend-typografi';
-import {
-  FlexColumn, FlexContainer, FlexRow, Image,
-} from '@fpsak-frontend/shared-components';
 import { isObject } from '@fpsak-frontend/utils';
-import styles from './aksjonspunktHelpText_V2.less';
+import { FlexColumn, FlexContainer, FlexRow } from './flexGrid';
+import Image from './Image';
+import styles from './aksjonspunktHelpTextHTML.less';
 
-const AksjonspunktHelpTextV2 = ({
+/**
+ * AksjonspunktHelpTextHTML
+ *
+ * Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
+ * å avklare en eller flere aksjonspunkter.
+ *
+ * Eksempel:
+ * ```html
+ * <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
+ * ```
+ */
+
+const AksjonspunktHelpTextHTML = ({
   children,
   intl,
 }) => {
@@ -38,7 +49,7 @@ const AksjonspunktHelpTextV2 = ({
   );
 };
 
-AksjonspunktHelpTextV2.propTypes = {
+AksjonspunktHelpTextHTML.propTypes = {
   intl: PropTypes.shape().isRequired,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string.isRequired),
@@ -46,4 +57,4 @@ AksjonspunktHelpTextV2.propTypes = {
   ]).isRequired,
 };
 
-export default injectIntl(AksjonspunktHelpTextV2);
+export default injectIntl(AksjonspunktHelpTextHTML);

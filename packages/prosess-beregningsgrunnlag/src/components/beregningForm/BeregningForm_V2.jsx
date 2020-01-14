@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
@@ -25,7 +25,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregnings
 import Beregningsgrunnlag2, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
-import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
+
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 
@@ -97,7 +97,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextV2 isAksjonspunktOpen>
+        <AksjonspunktHelpTextHTML>
           { apneAksjonspunkt.map((ap) => (
             <FormattedHTMLMessage
               key={ap.definisjon.kode}
@@ -105,7 +105,7 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
               values={{ verdi: avvikProsent }}
             />
           ))}
-        </AksjonspunktHelpTextV2>
+        </AksjonspunktHelpTextHTML>
       )}
 
     </div>

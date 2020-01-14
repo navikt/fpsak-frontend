@@ -2,18 +2,18 @@ import React from 'react';
 import { expect } from 'chai';
 import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { FormattedHTMLMessage } from 'react-intl';
-import AksjonspunktHelpTextV2 from './AksjonspunktHelpText_V2';
+import AksjonspunktHelpTextHTML from './AksjonspunktHelpTextHTML';
 
-describe('<AksjonspunktHelpText2>', () => {
+describe('<AksjonspunktHelpTextHTML>', () => {
   it('Skal teste at aksjonspunkt hjelp viser riktig', () => {
     const wrapper = shallowWithIntl(
-      <AksjonspunktHelpTextV2.WrappedComponent intl={intlMock}>
+      <AksjonspunktHelpTextHTML.WrappedComponent intl={intlMock}>
         {[<FormattedHTMLMessage
           key="1"
           id="Beregningsgrunnlag.Helptext.Arbeidstaker2"
           values={{ verdi: 23 }}
         />]}
-      </AksjonspunktHelpTextV2.WrappedComponent>,
+      </AksjonspunktHelpTextHTML.WrappedComponent>,
     );
     const flexContainer = wrapper.find('FlexContainer');
     const messages = flexContainer.first().find('FormattedHTMLMessage');
@@ -24,9 +24,9 @@ describe('<AksjonspunktHelpText2>', () => {
   });
   it('Skal teste at aksjonspunkt hjelp ikke vises når ikke aksjonspunkt', () => {
     const wrapper = shallowWithIntl(
-      <AksjonspunktHelpTextV2.WrappedComponent intl={intlMock}>
+      <AksjonspunktHelpTextHTML.WrappedComponent intl={intlMock}>
         {[]}
-      </AksjonspunktHelpTextV2.WrappedComponent>,
+      </AksjonspunktHelpTextHTML.WrappedComponent>,
     );
     const flexContainer = wrapper.find('FlexContainer');
     expect(flexContainer.length).to.equal(0);
