@@ -25,20 +25,20 @@ const YtelserFraInfotrygd2 = ({
           />
         </Element>
       </Column>
-      <Row>
-        <Column xs="7" />
-        <Column className={beregningStyles.colMaanedText}>
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
-          </Undertekst>
-        </Column>
-        <Column className={beregningStyles.colAarText}>
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
-          </Undertekst>
-        </Column>
-        <Column xs="2" />
-      </Row>
+    </Row>
+    <Row>
+      <Column xs="7" />
+      <Column xs="2" className={beregningStyles.colMaanedText}>
+        <Undertekst>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+        </Undertekst>
+      </Column>
+      <Column xs="2" className={beregningStyles.colAarText}>
+        <Undertekst>
+          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+        </Undertekst>
+      </Column>
+      <Column xs="2" />
     </Row>
     <Row>
       <Column xs="7">
@@ -48,12 +48,12 @@ const YtelserFraInfotrygd2 = ({
           />
         </Normaltekst>
       </Column>
-      <Column className={beregningStyles.colMaanedText}>
+      <Column xs="2" className={beregningStyles.colMaanedText}>
         <Normaltekst>
           {formatCurrencyNoKr(bruttoPrAar / 12)}
         </Normaltekst>
       </Column>
-      <Column className={beregningStyles.colAarText}>
+      <Column xs="2" className={beregningStyles.colAarText}>
         <Element>{formatCurrencyNoKr(bruttoPrAar)}</Element>
       </Column>
     </Row>

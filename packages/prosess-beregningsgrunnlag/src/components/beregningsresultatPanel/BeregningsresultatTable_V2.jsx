@@ -48,7 +48,9 @@ const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entr
 );
 const lineRow = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="11" className={styles.colLine} />
+    <Column xs="11" className={beregningStyles.noPaddingRight}>
+      <div className={beregningStyles.colDevider} />
+    </Column>
   </Row>
 );
 

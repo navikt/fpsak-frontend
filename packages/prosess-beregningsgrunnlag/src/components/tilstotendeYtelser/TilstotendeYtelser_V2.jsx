@@ -37,12 +37,12 @@ const TilstotendeYtelser2 = ({
       )}
       <Row>
         <Column xs="7" />
-        <Column className={beregningStyles.colMaanedText}>
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
           </Undertekst>
         </Column>
-        <Column className={beregningStyles.colAarText}>
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Undertekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
