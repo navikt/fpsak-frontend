@@ -17,6 +17,7 @@ import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektP
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
+import beregningStyles from './beregningsgrunnlag_V2.less';
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -62,7 +63,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingId,
   behandlingVersjon,
   alleKodeverk) => (
-    <div>
+    <div className={beregningStyles.panelLeft}>
       { relevanteStatuser.isArbeidstaker
       && (
         <>
@@ -179,22 +180,16 @@ export const BeregningsgrunnlagImpl2 = ({
   alleKodeverk,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
-  return (
-    <>
-      {
-          createRelevantePaneler(
-            alleAndelerIForstePeriode,
-            gjeldendeAksjonspunkter,
-            relevanteStatuser,
-            allePerioder,
-            readOnly,
-            gjelderBesteberegning,
-            behandlingId,
-            behandlingVersjon,
-            alleKodeverk,
-          )
-        }
-    </>
+  return createRelevantePaneler(
+    alleAndelerIForstePeriode,
+    gjeldendeAksjonspunkter,
+    relevanteStatuser,
+    allePerioder,
+    readOnly,
+    gjelderBesteberegning,
+    behandlingId,
+    behandlingVersjon,
+    alleKodeverk,
   );
 };
 

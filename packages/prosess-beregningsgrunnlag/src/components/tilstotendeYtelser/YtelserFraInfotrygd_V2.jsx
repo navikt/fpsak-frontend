@@ -4,7 +4,6 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import Panel from 'nav-frontend-paneler';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
@@ -16,7 +15,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 const YtelserFraInfotrygd2 = ({
   bruttoPrAar,
 }) => (
-  <Panel className={beregningStyles.panelLeft}>
+  <>
     <Row>
       <Column xs="12">
         <Element>
@@ -57,7 +56,7 @@ const YtelserFraInfotrygd2 = ({
         <Element>{formatCurrencyNoKr(bruttoPrAar)}</Element>
       </Column>
     </Row>
-  </Panel>
+  </>
 );
 
 YtelserFraInfotrygd2.propTypes = {

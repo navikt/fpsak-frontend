@@ -7,7 +7,6 @@ import {
 } from 'nav-frontend-typografi';
 
 import { behandlingFormValueSelector, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
-import Panel from 'nav-frontend-paneler';
 import { dateFormat, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -190,26 +189,26 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   return (
     <>
-      <Panel className={beregningStyles.panelLeft}>
-        <Element>
-          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
-        </Element>
-        <Row key="Header">
-          <Column xs="7" key="ATempthy1" />
-          <Column key="ATMndHead" className={beregningStyles.colMaanedText} xs="2">
-            <Undertekst>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
-            </Undertekst>
-          </Column>
-          <Column key="ATAarHead" className={beregningStyles.colAarText} xs="2">
-            <Undertekst>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
-            </Undertekst>
-          </Column>
-          <Column className={beregningStyles.colLink} xs="1" />
-        </Row>
-        {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn)}
-      </Panel>
+
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
+      </Element>
+      <Row key="Header">
+        <Column xs="7" key="ATempthy1" />
+        <Column key="ATMndHead" className={beregningStyles.colMaanedText} xs="2">
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+          </Undertekst>
+        </Column>
+        <Column key="ATAarHead" className={beregningStyles.colAarText} xs="2">
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+          </Undertekst>
+        </Column>
+        <Column className={beregningStyles.colLink} xs="1" />
+      </Row>
+      {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn)}
+
       <NaturalytelsePanel2
         allePerioder={allePerioder}
       />
