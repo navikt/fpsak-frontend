@@ -23,18 +23,23 @@
   font-weight: 600;
 }
 
-.rightAlignElement > p {
-  padding-left: 0;
-  text-align: right;
+.rightAlignElement {
+  padding-right: 0;
+  && p {
+    text-align: right;
+  }
 }
 
 .rightAlignTextInDiv {
   text-align: right;
 }
 
-.rightAlignElementNoWrap > p {
-  text-align: right;
+.rightAlignElementNoWrap {
+  padding-right: 0;
+  && p {
+    text-align: right;
   white-space: nowrap;
+}
 }
 
 .setBoxHeight {
@@ -77,8 +82,6 @@
 
 .colDevider {
   border-top: 1px inset @navGra40;
-  margin-left: 8px;
-  margin-right: 8px;
   margin-top: 4px;
   min-height: 8px;
 }
@@ -100,6 +103,6 @@
   position: relative;
   text-align: right;
 }
-.rowLeft {
-  margin-right: 0px;
+.noPaddingRight {
+  padding-right: 0;
 }

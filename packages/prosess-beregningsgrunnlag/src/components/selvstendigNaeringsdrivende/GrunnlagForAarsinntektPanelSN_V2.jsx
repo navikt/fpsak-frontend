@@ -34,8 +34,8 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
     {pgiSnitt !== undefined && !erNyIArbeidslivet && (
       <>
         <Row key="grunnlagAarsinntektSNLine">
-          <Column xs="11">
-            <hr />
+          <Column xs="11" className={beregningStyles.noPaddingRight}>
+            <div className={beregningStyles.colDevider} />
           </Column>
         </Row>
         <Row key="grunnlagAarsinntektSN">
