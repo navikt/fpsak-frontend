@@ -43,11 +43,7 @@ const lagSumRad = (andeler) => {
         >
           <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumATAndeler)}</Normaltekst>
         </Column>
-        <Column
-          Column
-          xs="2"
-          className={beregningStyles.colAarText}
-        >
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumFTAndeler)}</Normaltekst>
         </Column>
       </Row>
@@ -73,7 +69,7 @@ const lagRad = (andel, maks) => {
 
         <Column xs="6" className={styles.chartColumn}>
 
-          <FlexibleWidthXYPlot height="10" stackBy="x">
+          <FlexibleWidthXYPlot height={10} stackBy="x" yDomain={[1, 1]}>
             <HorizontalBarSeries
               data={[{ y: 1, x: atAndel }]}
               fill={styles.bgColorAT}
