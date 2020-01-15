@@ -173,7 +173,6 @@ describe('<BeregningForm2>', () => {
       {...reduxFormPropsMock}
     />);
     const avvikPanel = wrapper.find(AvviksopplysningerPanel);
-    console.log('avvikPanel.props()', avvikPanel.props()); // eslint-disable-line no-console
     expect(avvikPanel.props().harAksjonspunkter).to.have.equal(true);
     expect(avvikPanel.props().gjelderBesteberegning).to.have.equal(false);
     expect(avvikPanel.props().sammenligningsgrunnlagPrStatus[0]).to.have.equal(sammenligningsgrunnlagPrStatus);
