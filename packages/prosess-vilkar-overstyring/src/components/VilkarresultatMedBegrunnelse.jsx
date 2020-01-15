@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  * VIlkarresultatMedBegrunnelse
@@ -30,7 +31,10 @@ export const VilkarresultatMedBegrunnelse = ({
       erMedlemskapsPanel={erMedlemskapsPanel}
     />
     {skalViseBegrunnelse && (
-      <VilkarBegrunnelse isReadOnly={readOnly} />
+      <>
+        <VerticalSpacer eightPx />
+        <VilkarBegrunnelse isReadOnly={readOnly} />
+      </>
     )}
   </>
 );

@@ -18,7 +18,7 @@ import {
 import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
 } from '@fpsak-frontend/fp-felles';
-import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
@@ -111,7 +111,7 @@ export const VilkarresultatMedOverstyringForm = ({
             <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
             <VerticalSpacer eightPx />
             <VilkarresultatMedBegrunnelse
-              skalViseBegrunnelse={hasAksjonspunkt}
+              skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
               readOnly={isReadOnly || !erOverstyrt}
               erVilkarOk={erVilkarOk}
               customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -259,8 +259,8 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 
     const initialValues = buildInitialValues(ownProps);
 
-    const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
-    const erVilkarOk = aksjonspunkter.length === 0 || isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === ownProps.status;
+    const erOppfylt = vilkarUtfallType.OPPFYLT === ownProps.status;
+    const erVilkarOk = vilkarUtfallType.IKKE_VURDERT !== ownProps.status ? erOppfylt : undefined;
 
     return {
       onSubmit,
