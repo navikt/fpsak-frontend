@@ -13,7 +13,6 @@ import FastsettSN2, { begrunnelseFieldname as fastsettingBegrunnelse, fastsettIn
 const {
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
@@ -37,6 +36,7 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       erNyArbLivet
       erVarigEndring
       erNyoppstartet={false}
+      gjeldendeAksjonspunkter={[mockAksjonspunktMedKodeOgStatus(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, undefined, 'OPPR')]}
     />);
     expect(wrapper.find(FastsettSN2)).to.have.length(1);
     expect(wrapper.find(VurderVarigEndretEllerNyoppstartetSN2)).to.have.length(0);
@@ -131,10 +131,6 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
         kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
         begrunnelse: 'Ok varig endring.',
         erVarigEndretNaering: true,
-      },
-      {
-        kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-        begrunnelse: 'Ok fastsatt inntekt.',
         bruttoBeregningsgrunnlag: 650000,
       },
     ];

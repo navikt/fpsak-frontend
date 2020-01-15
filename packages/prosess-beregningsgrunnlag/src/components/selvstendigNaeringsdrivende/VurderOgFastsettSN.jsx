@@ -17,7 +17,6 @@ import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregnings
 const FORM_NAME = 'BeregningForm';
 const {
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
 } = aksjonspunktCodes;
 
@@ -43,6 +42,7 @@ export const VurderOgFastsettSNImpl = ({
       <FastsettSN
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
       />
     );
   }
@@ -67,6 +67,7 @@ export const VurderOgFastsettSNImpl = ({
           <FastsettSN
             readOnly={readOnly}
             isAksjonspunktClosed={isAksjonspunktClosed}
+            gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
           />
         </ArrowBox>
         )}
@@ -106,21 +107,20 @@ VurderOgFastsettSN.transformValues = (values, gjeldendeAksjonspunkter) => {
   if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
     return [{
       kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
-      ...FastsettSN.transformValues(values),
+      ...FastsettSN.transformValuesMedBegrunnelse(values),
     }];
   }
-  const losteAksjonspunkt = [];
-  losteAksjonspunkt.push({
+  if (values[varigEndringRadioname]) {
+    return [{
+      kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
+      ...VurderVarigEndretEllerNyoppstartetSN.transformValues(values),
+      ...FastsettSN.transformValuesUtenBegrunnelse(values),
+    }];
+  }
+  return [{
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN.transformValues(values),
-  });
-  if (values[varigEndringRadioname]) {
-    losteAksjonspunkt.push({
-      kode: FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
-      ...FastsettSN.transformValues(values),
-    });
-  }
-  return losteAksjonspunkt;
+  }];
 };
 
 export default VurderOgFastsettSN;

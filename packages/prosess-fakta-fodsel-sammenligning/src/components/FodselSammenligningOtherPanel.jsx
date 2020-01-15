@@ -78,14 +78,14 @@ export const getTerminFodselLabel = createSelector(
 export const getTerminOrFodselDate = createSelector(
   [getHasSoknad, getSoknadTermindato, getSoknadFodselsdatoer, (state, ownProps) => ownProps.termindato],
   (hasSoknad, termindatoSoknad, fødselsdatoerSoknad, termindato) => {
+    if (hasSoknad && Object.keys(fødselsdatoerSoknad).length > 0) {
+      return formatDate(Object.values(fødselsdatoerSoknad)[0]);
+    }
     if (termindato) {
       return formatDate(termindato);
     }
     if (!hasSoknad) {
       return null;
-    }
-    if (Object.keys(fødselsdatoerSoknad).length > 0) {
-      return formatDate(Object.values(fødselsdatoerSoknad)[0]);
     }
     return formatDate(termindatoSoknad);
   },

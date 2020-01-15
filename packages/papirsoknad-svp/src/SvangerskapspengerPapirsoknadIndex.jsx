@@ -25,7 +25,7 @@ const SvangerskapspengerPapirsoknadIndex = ({
   <RawIntlProvider value={intl}>
     <SvangerskapspengerForm
       onSubmitUfullstendigsoknad={onSubmitUfullstendigsoknad}
-      onSubmit={onSubmit}
+      submitCallback={onSubmit}
       readOnly={readOnly}
       soknadData={soknadData}
       alleKodeverk={alleKodeverk}

@@ -15,13 +15,13 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { Column, Row } from 'nav-frontend-grid';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import NaturalytelsePanel from './NaturalytelsePanel';
+import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
 const formName = 'BeregningForm';
 
-const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
+export const andelErIkkeTilkommetEllerLagtTilAvSBH = (andel) => {
   // Andelen er fastsatt før og må kunne fastsettes igjen
   if (andel.overstyrtPrAar !== null && andel.overstyrtPrAar !== undefined) {
     return true;
@@ -41,7 +41,10 @@ const finnAndelerSomSkalVises = (andeler) => {
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
 
-
+const beregnbruttoFastsattInntekt = (overstyrteInntekter) => {
+  if (!overstyrteInntekter || overstyrteInntekter.length === 0) return null;
+  return overstyrteInntekter.reduce((sum, andel) => sum + andel, 0);
+};
 const createArbeidsPeriodeText = (arbeidsforhold) => {
   const periodeArr = [];
 
@@ -59,7 +62,7 @@ const harDuplikateArbeidsforholdFraSammeArbeidsgiver = (Andeler) => {
   const seen = new Set();
   return Andeler.some((currentObject) => seen.size === seen.add(currentObject.arbeidsforhold.arbeidsgiverNavn).size);
 };
-const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver) => {
+const createArbeidsGiverNavn = (arbeidsforhold, harAndelerFraSammeArbeidsgiver, getKodeverknavn) => {
   if (!arbeidsforhold.arbeidsgiverNavn) {
     return arbeidsforhold.arbeidsforholdType ? getKodeverknavn(arbeidsforhold.arbeidsforholdType) : '';
   }
@@ -82,9 +85,9 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   return ' ';
 };
 
-const createArbeidsIntektRows = (relevanteAndeler) => {
+const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
-  const beregnetMaanedsinntekt = relevanteAndeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
+  const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
 
@@ -95,7 +98,7 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
       <Row key={`index${index + 1}`}>
         <Column xs={andel.erTidsbegrensetArbeidsforhold ? '5' : '7'} key={`ColLable${andel.arbeidsforhold.arbeidsgiverId}`}>
           <Normaltekst key={`ColLableTxt${index + 1}`} className={beregningStyles.semiBoldText}>
-            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr)}
+            {createArbeidsGiverNavn(andel.arbeidsforhold, skalViseArbeidsforholdIdOgOrgNr, getKodeverknavn)}
           </Normaltekst>
         </Column>
         {andel.erTidsbegrensetArbeidsforhold && (
@@ -173,9 +176,11 @@ const createArbeidsIntektRows = (relevanteAndeler) => {
 export const GrunnlagForAarsinntektPanelATImpl2 = ({
   alleAndeler,
   allePerioder,
+  getKodeverknavn,
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
+  if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   return (
     <>
       <Panel className={beregningStyles.panelLeft}>
@@ -199,9 +204,9 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           </Column>
           <Column className={beregningStyles.colLink} />
         </Row>
-        {createArbeidsIntektRows(relevanteAndeler)}
+        {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn)}
       </Panel>
-      <NaturalytelsePanel
+      <NaturalytelsePanel2
         allePerioder={allePerioder}
       />
     </>
@@ -211,6 +216,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 GrunnlagForAarsinntektPanelATImpl2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  getKodeverknavn: PropTypes.func.isRequired,
 };
 
 GrunnlagForAarsinntektPanelATImpl2.defaultProps = {
@@ -229,7 +235,7 @@ const mapStateToProps = (state, initialProps) => {
     );
     return (overstyrtInntekt === undefined || overstyrtInntekt === '') ? 0 : removeSpacesFromNumber(overstyrtInntekt);
   });
-  const bruttoFastsattInntekt = overstyrteInntekter.reduce((a, b) => a + b);
+  const bruttoFastsattInntekt = beregnbruttoFastsattInntekt(overstyrteInntekter);
   return {
     bruttoFastsattInntekt,
     getKodeverknavn,

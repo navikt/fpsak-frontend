@@ -13,6 +13,17 @@ import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 
+const finnvirksomhetsTypeKode = (naring) => {
+  const { virksomhetType } = naring;
+  if (!virksomhetType) {
+    return 'UDEFINERT';
+  }
+  const { kode } = virksomhetType;
+  if (!kode) {
+    return 'UDEFINERT';
+  }
+  return kode;
+};
 const virksomhetsDatoer = (naringsAndel) => {
   const { oppstartsdato, opphoersdato } = naringsAndel;
   if (!oppstartsdato) {
@@ -40,6 +51,9 @@ const lagIntroTilEndringspanel = (naring) => {
   } = naring;
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
+  if (!hendelseDato) {
+    return null;
+  }
   return (
     <>
       <FlexContainer>
@@ -119,12 +133,12 @@ export const NaeringsopplysningsPanel = ({
                 {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
-            <Column xs="2">
+            <Column xs="3">
               <Normaltekst>
-                {naring.virksomhetType && naring.virksomhetType.kode ? naring.virksomhetType.kode : ''}
+                <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </Normaltekst>
             </Column>
-            <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst>

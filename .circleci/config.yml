@@ -140,7 +140,7 @@ jobs:
             cp -r /tmp/workspace/dist ./dist
             cp -r /tmp/workspace/k8s ./k8s
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Build Docker image
           command: |
@@ -162,7 +162,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
@@ -180,7 +180,7 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - setup_remote_docker:
-          docker_layer_caching: true
+          docker_layer_caching: false
       - run:
           name: Load archived Docker image
           command: docker load -i /tmp/workspace/image.tar
