@@ -11,13 +11,14 @@ import {
 import { Knapp } from 'nav-frontend-knapper';
 
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FadingPanel, FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox,
+  FadingPanel, FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
 } from '@fpsak-frontend/fp-felles';
-import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
@@ -86,8 +87,9 @@ export const VilkarresultatMedOverstyringForm = ({
             <FlexColumn>
               {originalErVilkarOk && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element> }
               {originalErVilkarOk === false && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element> }
+              {originalErVilkarOk === undefined && <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>}
             </FlexColumn>
-            {!isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
+            {originalErVilkarOk !== undefined && !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
               <>
                 {(!erOverstyrt && !overrideReadOnly) && (
                   <FlexColumn>
@@ -104,12 +106,12 @@ export const VilkarresultatMedOverstyringForm = ({
           </FlexRow>
         </FlexContainer>
         <VerticalSpacer eightPx />
-        {erOverstyrt && (
-          <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent>
+        {(erOverstyrt || hasAksjonspunkt) && (
+          <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
             <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
             <VerticalSpacer eightPx />
             <VilkarresultatMedBegrunnelse
-              skalViseBegrunnelse={erOverstyrt}
+              skalViseBegrunnelse={hasAksjonspunkt}
               readOnly={isReadOnly || !erOverstyrt}
               erVilkarOk={erVilkarOk}
               customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -118,6 +120,13 @@ export const VilkarresultatMedOverstyringForm = ({
               hasAksjonspunkt={hasAksjonspunkt}
               avslagsarsaker={avslagsarsaker}
             />
+            {!erOverstyrt && (erVilkarOk !== undefined) && (
+              <>
+                <VerticalSpacer fourPx />
+                <EditedIcon />
+              </>
+            )}
+            {erOverstyrt && (
             <FlexContainer>
               <FlexRow>
                 <FlexColumn>
@@ -138,6 +147,7 @@ export const VilkarresultatMedOverstyringForm = ({
                 </FlexColumn>
                 <FlexColumn>
                   <Knapp
+                    htmlType="button"
                     spinner={formProps.submitting}
                     disabled={formProps.submitting}
                     onClick={toggleAv}
@@ -147,6 +157,7 @@ export const VilkarresultatMedOverstyringForm = ({
                 </FlexColumn>
               </FlexRow>
             </FlexContainer>
+            )}
           </AksjonspunktBox>
         )}
       </form>
@@ -248,6 +259,9 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
 
     const initialValues = buildInitialValues(ownProps);
 
+    const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+    const erVilkarOk = aksjonspunkter.length === 0 || isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === ownProps.status;
+
     return {
       onSubmit,
       aksjonspunktCodes,
@@ -259,7 +273,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       hasAksjonspunkt: aksjonspunkt !== undefined,
       validate: validateFn,
       form: formName,
-      originalErVilkarOk: initialValues.erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       ...behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'isOverstyrt', 'erVilkarOk'),
     };
   };

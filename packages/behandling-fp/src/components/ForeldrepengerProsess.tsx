@@ -140,8 +140,8 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   }, [behandling.versjon, valgtProsessSteg]);
 
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside);
-  const bekreftAksjonspunktCallback = useCallback(() => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, fpBehandlingApi), [behandling.versjon]);
+  const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
+    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, fpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>

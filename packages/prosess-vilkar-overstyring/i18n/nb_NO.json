@@ -1,9 +1,10 @@
 {
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
-  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er ikke oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.AutomatiskVurdering": "Manuell overstyring av automatisk vurdering",
   "VilkarresultatMedOverstyringForm.Avbryt": "Avbryt",
   "VilkarresultatMedOverstyringForm.Unntakstilfeller": "Overstyring skal kun gjøres i unntakstilfeller",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
 
   "OverstyrVurderingVelger.OverstyrBeregning": "Overstyr beregning",
   "OverstyrVurderingVelger.OverstyrtBeregning": "Overstyrt beregning",
@@ -86,5 +87,6 @@
   "Calendar.Month.8": "September",
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
-  "Calendar.Month.11": "Desember"
+  "Calendar.Month.11": "Desember",
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi"
 }
