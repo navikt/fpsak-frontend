@@ -46,8 +46,8 @@ const VilkarResultPickerImpl = ({
             <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
           </FlexColumn>
           <FlexColumn>
-            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Normaltekst>}
-            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Normaltekst>}
+            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarResultPicker.VilkarOppfylt" /></Normaltekst>}
+            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarResultPicker.VilkarIkkeOppfylt" /></Normaltekst>}
           </FlexColumn>
         </FlexRow>
       </FlexContainer>

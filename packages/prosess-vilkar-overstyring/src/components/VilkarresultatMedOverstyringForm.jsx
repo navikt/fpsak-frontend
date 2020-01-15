@@ -24,7 +24,7 @@ import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 import keyImage from '@fpsak-frontend/assets/images/key-1-rotert.svg';
 import keyUtgraetImage from '@fpsak-frontend/assets/images/key-1-rotert-utgraet.svg';
-import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel.svg';
+import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 
 import { VilkarresultatMedBegrunnelse } from './VilkarresultatMedBegrunnelse';
 
@@ -123,7 +123,14 @@ export const VilkarresultatMedOverstyringForm = ({
             {!erOverstyrt && (erVilkarOk !== undefined) && (
               <>
                 <VerticalSpacer fourPx />
-                <EditedIcon />
+                <FlexRow>
+                  <FlexColumn>
+                    <EditedIcon />
+                  </FlexColumn>
+                  <FlexColumn>
+                    <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" /></Normaltekst>
+                  </FlexColumn>
+                </FlexRow>
               </>
             )}
             {erOverstyrt && (
@@ -133,7 +140,7 @@ export const VilkarresultatMedOverstyringForm = ({
                   <Image src={advarselIkonUrl} />
                 </FlexColumn>
                 <FlexColumn>
-                  <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Normaltekst>
+                  <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Element>
                 </FlexColumn>
               </FlexRow>
               <VerticalSpacer sixteenPx />
