@@ -169,12 +169,11 @@ AvviksopplysningerPanel.propTypes = {
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
-  gjelderBesteberegning: PropTypes.bool,
+  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
 AvviksopplysningerPanel.defaultProps = {
   harAksjonspunkter: false,
-  gjelderBesteberegning: false,
   sammenligningsgrunnlagPrStatus: undefined,
 };
 export default AvviksopplysningerPanel;

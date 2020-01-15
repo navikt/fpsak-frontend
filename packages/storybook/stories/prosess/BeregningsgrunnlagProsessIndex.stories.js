@@ -827,7 +827,6 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
 };
 
 
-
 export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
   const andeler = [
     lagAndel('DP', 107232, undefined, undefined),
@@ -864,7 +863,6 @@ export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
 
 
 export const tidsbegrensetArbeidsforholdMedAvvikORGdesign = () => {
-
   const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
     lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');

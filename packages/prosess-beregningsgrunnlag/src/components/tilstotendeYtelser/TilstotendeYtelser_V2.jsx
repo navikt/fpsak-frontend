@@ -19,12 +19,7 @@ export const getTekstForAndelBruktIBeregning = (andel) => {
   }
   return '';
 };
-const isAktivitetKodeDagpenger = (aktivitetStatusKode) => {
-  if (!aktivitetStatusKode) {
-    return false;
-  }
-  return aktivitetStatusKode === aktivitetStatus.DAGPENGER;
-};
+const isAktivitetKodeDagpenger = (aktivitetStatusKode) => aktivitetStatusKode === aktivitetStatus.DAGPENGER;
 
 const TilstotendeYtelser2 = ({
   alleAndeler,
@@ -98,10 +93,7 @@ const TilstotendeYtelser2 = ({
 TilstotendeYtelser2.propTypes = {
   alleAndeler: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   relevanteStatuser: PropTypes.shape().isRequired,
-  gjelderBesteberegning: PropTypes.bool,
-};
-TilstotendeYtelser2.defaultProps = {
-  gjelderBesteberegning: false,
+  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
 export default TilstotendeYtelser2;
