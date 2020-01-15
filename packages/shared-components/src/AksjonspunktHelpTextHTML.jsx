@@ -22,7 +22,6 @@ const AksjonspunktHelpTextHTML = ({
   if (!children || children.length === 0) {
     return null;
   }
-  debugger;
   const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
   return (
     <div className={styles.container}>
