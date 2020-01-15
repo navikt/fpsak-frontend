@@ -13,11 +13,6 @@ import styles from './aksjonspunktHelpTextHTML.less';
  *
  * Presentasjonskomponent. Viser hjelpetekster som forteller NAV-ansatt hva som må gjøres for
  * å avklare en eller flere aksjonspunkter.
- *
- * Eksempel:
- * ```html
- * <AksjonspunktHelpText children={['tekst1', 'tekst2']} isAksjonspunktOpen={false} />
- * ```
  */
 
 const AksjonspunktHelpTextHTML = ({
@@ -27,6 +22,7 @@ const AksjonspunktHelpTextHTML = ({
   if (!children || children.length === 0) {
     return null;
   }
+  debugger;
   const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
   return (
     <div className={styles.container}>
