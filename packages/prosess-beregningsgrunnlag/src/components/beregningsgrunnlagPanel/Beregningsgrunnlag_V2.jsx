@@ -14,6 +14,7 @@ import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
+import SammenlignsgrunnlagAOrdningen from '../fellesPaneler/SammenligningsgrunnlagAOrdningen';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
@@ -112,6 +113,18 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer fourtyPx />
       </>
     )}
+      { (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
+      && (
+        <>
+          <SammenlignsgrunnlagAOrdningen
+            alleAndeler={alleAndelerIForstePeriode}
+            aksjonspunkter={gjeldendeAksjonspunkter}
+            readOnly={readOnly}
+            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
+          />
+          <VerticalSpacer fourtyPx />
+        </>
+      )}
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
