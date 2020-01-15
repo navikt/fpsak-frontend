@@ -8,8 +8,8 @@
   "OpptjeningVilkarView.Days": "dager",
   "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
-  "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
-
+  
+  "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger": "Har søker opptjent rett til foreldrepenger",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
 
   "TimeLineNavigation.openData": "Åpne info om første periode",
@@ -17,6 +17,11 @@
   "TimeLineData.prevPeriod": "Forrige periode",
   "Timeline.openData": "Åpne info om første periode",
   
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "VilkarresultatMedOverstyringForm.Endret": "Endret av saksbehandler",
+  "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",

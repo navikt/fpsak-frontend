@@ -9,7 +9,7 @@ import { formPropTypes } from 'redux-form';
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
 import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
-  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpText, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -95,7 +95,7 @@ export const UttakPanelImpl = ({
   intl,
   ...formProps
 }) => (
-  <FadingPanel>
+  <>
     <Undertittel>
       <FormattedMessage id="UttakPanel.Title" />
     </Undertittel>
@@ -147,7 +147,7 @@ export const UttakPanelImpl = ({
         )}
     {formProps.error && formProps.submitFailed
         && formProps.error}
-  </FadingPanel>
+  </>
 );
 
 UttakPanelImpl.propTypes = {

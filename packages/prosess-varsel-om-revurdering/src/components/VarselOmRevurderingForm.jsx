@@ -12,7 +12,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpText, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector, SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -122,11 +122,10 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     const fristHasChanged = hasValueChanged(originalFrist, frist);
 
     return (
-      <FadingPanel>
-        <form>
-          <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
-          <VerticalSpacer eightPx />
-          {(!readOnly && isAksjonspunktOpen(aksjonspunktStatus))
+      <form>
+        <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
+        <VerticalSpacer eightPx />
+        {(!readOnly && isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
               <AksjonspunktHelpText isAksjonspunktOpen>
@@ -191,28 +190,27 @@ export class VarselOmRevurderingFormImpl extends React.Component {
               </div>
             </div>
             )}
-          {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
+        {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
               <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
               <Normaltekst>{begrunnelse}</Normaltekst>
             </div>
             )}
-          <SettBehandlingPaVentModal
-            showModal={showSettPaVentModal}
-            aksjonspunktKode={aksjonspunktKode}
-            frist={frist}
-            cancelEvent={this.hideSettPaVentModal}
-            comment={<Normaltekst><FormattedMessage id="VarselOmRevurderingForm.BrevBlirBestilt" /></Normaltekst>}
-            venteArsakHasChanged={venteArsakHasChanged}
-            fristHasChanged={fristHasChanged}
-            showAvbryt
-            handleSubmit={this.handleSubmitFromModal}
-            hasManualPaVent
-            ventearsaker={ventearsaker}
-          />
-        </form>
-      </FadingPanel>
+        <SettBehandlingPaVentModal
+          showModal={showSettPaVentModal}
+          aksjonspunktKode={aksjonspunktKode}
+          frist={frist}
+          cancelEvent={this.hideSettPaVentModal}
+          comment={<Normaltekst><FormattedMessage id="VarselOmRevurderingForm.BrevBlirBestilt" /></Normaltekst>}
+          venteArsakHasChanged={venteArsakHasChanged}
+          fristHasChanged={fristHasChanged}
+          showAvbryt
+          handleSubmit={this.handleSubmitFromModal}
+          hasManualPaVent
+          ventearsaker={ventearsaker}
+        />
+      </form>
     );
   }
 }

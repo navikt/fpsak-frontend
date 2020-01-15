@@ -2,7 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
@@ -19,8 +23,9 @@ const FORM_NAME = 'OpptjeningVilkarForm';
  * Presentasjonskomponent. Viser panel for å løse aksjonspunkt for avslått opptjeningsvilkår
  */
 export const OpptjeningVilkarAksjonspunktPanelImpl = ({
-  isAksjonspunktOpen,
+  isApOpen,
   erVilkarOk,
+  origingalErVilkarOk,
   readOnlySubmitButton,
   readOnly,
   lovReferanse,
@@ -32,8 +37,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   <ProsessPanelTemplate
     handleSubmit={formProps.handleSubmit}
     titleCode="OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret"
-    isAksjonspunktOpen={isAksjonspunktOpen}
-    aksjonspunktHelpTexts={['OpptjeningVilkarView.VurderOmSøkerHarRett']}
+    isAksjonspunktOpen={isApOpen}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     isDirty={formProps.dirty}
@@ -41,38 +45,46 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    origingalErVilkarOk={origingalErVilkarOk}
+    rendreFakta={() => (
+      <>
+        <VerticalSpacer sixteenPx />
+        <OpptjeningVilkarView
+          months={fastsattOpptjening.opptjeningperiode.måneder}
+          days={fastsattOpptjening.opptjeningperiode.dager}
+          fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
+          opptjeningFomDate={fastsattOpptjening.opptjeningFom}
+          opptjeningTomDate={fastsattOpptjening.opptjeningTom}
+        />
+      </>
+    )}
   >
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <Element><FormattedMessage id="OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger" /></Element>
     <VilkarResultPicker
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt
     />
-    <VerticalSpacer fourPx />
-    <OpptjeningVilkarView
-      months={fastsattOpptjening.opptjeningperiode.måneder}
-      days={fastsattOpptjening.opptjeningperiode.dager}
-      fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
-      opptjeningFomDate={fastsattOpptjening.opptjeningFom}
-      opptjeningTomDate={fastsattOpptjening.opptjeningTom}
-    />
-    <VerticalSpacer twentyPx />
+    <VerticalSpacer sixteenPx />
+    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
 
 OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
   fastsattOpptjening: fastsattOpptjeningPropType.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
+  isApOpen: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erVilkarOk: PropTypes.bool,
+  origingalErVilkarOk: PropTypes.bool,
   lovReferanse: PropTypes.string,
 };
 
 OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
   erVilkarOk: undefined,
+  origingalErVilkarOk: undefined,
   lovReferanse: undefined,
 };
 
@@ -96,9 +108,13 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const { aksjonspunkter, submitCallback } = initialOwnProps;
   const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
 
+  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
+
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
+    origingalErVilkarOk: erVilkarOk,
     erVilkarOk: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'erVilkarOk'),
     lovReferanse: ownProps.lovReferanse,
   });

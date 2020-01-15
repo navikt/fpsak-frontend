@@ -156,4 +156,11 @@ export const isVilkarForSykdomOppfylt = aksjonspunktIsOfType(isVilkarForSykdomOp
 export const isUttakAksjonspunkt = aksjonspunktIsOfType(uttakAksjonspunkter);
 export const isBeregningAksjonspunkt = aksjonspunktIsOfType(beregningAksjonspunkter);
 
+export const aksjonspunktTilTekstKode = {
+  [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'FodselVilkarForm.VurderGjelderSammeBarn',
+  [aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN]: 'FodselVilkarForm.VurderGjelderSammeBarn',
+  [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'OpptjeningVilkarView.VurderOmSøkerHarRett',
+};
+export const finnAksjonspunktHjelpetekstKode = (aksjonspunktKode) => aksjonspunktTilTekstKode[aksjonspunktKode];
+
 export default aksjonspunktCodes;

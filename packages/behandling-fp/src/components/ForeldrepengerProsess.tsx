@@ -33,6 +33,7 @@ interface OwnProps {
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   featureToggles: {};
   opneSokeside: () => void;
+  harApentFaktaAksjonspunkt: boolean;
 }
 
 const getPreviewCallback = (dispatch, behandling) => (data) => {
@@ -90,6 +91,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegIUrl,
   featureToggles,
   opneSokeside,
+  harApentFaktaAksjonspunkt,
 }) => {
   const {
     aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
@@ -162,6 +164,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
             alleKodeverk={alleKodeverk}
             prosessStegData={valgtPanel.panelData}
             submitCallback={bekreftAksjonspunktCallback}
+            harApentFaktaAksjonspunkt={harApentFaktaAksjonspunkt}
           />
         </MargMarkering>
       )}

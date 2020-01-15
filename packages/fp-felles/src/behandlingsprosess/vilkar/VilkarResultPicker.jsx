@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
+import { Normaltekst } from 'nav-frontend-typografi';
 
 import {
   VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image,
@@ -10,7 +11,7 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import {
   DatepickerField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
-import { Normaltekst } from 'nav-frontend-typografi';
+
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
 import innvilgetImage from '@fpsak-frontend/assets/images/innvilget.svg';
@@ -39,6 +40,7 @@ const VilkarResultPickerImpl = ({
   erMedlemskapsPanel,
 }) => (
   <div className={styles.container}>
+    <VerticalSpacer sixteenPx />
     {readOnly && (
       <FlexContainer>
         <FlexRow>
@@ -80,7 +82,7 @@ const VilkarResultPickerImpl = ({
       </RadioGroupField>
     )}
     <>
-      {!erVilkarOk && avslagsarsaker && (
+      {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
         <>
           <VerticalSpacer eightPx />
           <SelectField

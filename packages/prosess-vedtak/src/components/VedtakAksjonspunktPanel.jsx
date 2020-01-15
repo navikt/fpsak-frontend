@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
 
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -21,19 +21,17 @@ export const VedtakAksjonspunktPanelImpl = ({
 }) => {
   if (erBehandlingHenlagt) {
     return (
-      <FadingPanel>
-        <Systemtittel>{intl.formatMessage({ id: 'VedtakForm.BehandlingHenlagt' })}</Systemtittel>
-      </FadingPanel>
+      <Systemtittel>{intl.formatMessage({ id: 'VedtakForm.BehandlingHenlagt' })}</Systemtittel>
     );
   }
 
   return (
-    <FadingPanel>
+    <>
       <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
       <VerticalSpacer twentyPx />
       <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
       {children}
-    </FadingPanel>
+    </>
   );
 };
 

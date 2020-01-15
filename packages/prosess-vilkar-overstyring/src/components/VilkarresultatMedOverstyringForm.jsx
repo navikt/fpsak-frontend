@@ -13,7 +13,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import BehandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  FadingPanel, FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
+  FlexContainer, FlexRow, FlexColumn, Image, VerticalSpacer, AksjonspunktBox, EditedIcon,
 } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, OverstyrBekreftKnappPanel,
@@ -66,31 +66,29 @@ export const VilkarresultatMedOverstyringForm = ({
   });
 
   return (
-    <FadingPanel>
-      <form onSubmit={formProps.handleSubmit}>
-        <FlexContainer>
-          <FlexRow>
-            {(!erOverstyrt && originalErVilkarOk !== undefined) && (
-              <FlexColumn>
-                <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
-              </FlexColumn>
-            )}
-            <FlexColumn>
-              <Undertittel>{panelTittel}</Undertittel>
-            </FlexColumn>
-            <FlexColumn>
-              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
-            </FlexColumn>
-          </FlexRow>
-          <VerticalSpacer eightPx />
-          <FlexRow>
-            <FlexColumn>
-              {originalErVilkarOk && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element> }
-              {originalErVilkarOk === false && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element> }
-              {originalErVilkarOk === undefined && <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>}
-            </FlexColumn>
-            {originalErVilkarOk !== undefined && !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
-              <>
+    <form onSubmit={formProps.handleSubmit}>
+      <FlexContainer>
+        <FlexRow>
+          {(!erOverstyrt && originalErVilkarOk !== undefined) && (
+          <FlexColumn>
+            <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
+          </FlexColumn>
+          )}
+          <FlexColumn>
+            <Undertittel>{panelTittel}</Undertittel>
+          </FlexColumn>
+          <FlexColumn>
+            <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow>
+          <FlexColumn>
+            {originalErVilkarOk && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element> }
+            {originalErVilkarOk === false && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element> }
+            {originalErVilkarOk === undefined && <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>}
+          </FlexColumn>
+          {originalErVilkarOk !== undefined && !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
+            <>
                 {(!erOverstyrt && !overrideReadOnly) && (
                   <FlexColumn>
                     <Image className={styles.key} src={keyImage} onClick={togglePa} />
@@ -101,74 +99,73 @@ export const VilkarresultatMedOverstyringForm = ({
                     <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
                   </FlexColumn>
                 )}
-              </>
-            )}
+            </>
+          )}
+        </FlexRow>
+      </FlexContainer>
+      <VerticalSpacer eightPx />
+      {(erOverstyrt || hasAksjonspunkt) && (
+      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
+        <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
+        <VerticalSpacer eightPx />
+        <VilkarresultatMedBegrunnelse
+          skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
+          readOnly={isReadOnly || !erOverstyrt}
+          erVilkarOk={erVilkarOk}
+          customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
+          customVilkarOppfyltText={customVilkarOppfyltText}
+          erMedlemskapsPanel={erMedlemskapsPanel}
+          hasAksjonspunkt={hasAksjonspunkt}
+          avslagsarsaker={avslagsarsaker}
+        />
+        {!erOverstyrt && (erVilkarOk !== undefined) && (
+          <>
+            <VerticalSpacer fourPx />
+            <FlexRow>
+              <FlexColumn>
+                <EditedIcon />
+              </FlexColumn>
+              <FlexColumn>
+                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" /></Normaltekst>
+              </FlexColumn>
+            </FlexRow>
+          </>
+        )}
+        {erOverstyrt && (
+        <FlexContainer>
+          <FlexRow>
+            <FlexColumn>
+              <Image src={advarselIkonUrl} />
+            </FlexColumn>
+            <FlexColumn>
+              <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Element>
+            </FlexColumn>
+          </FlexRow>
+          <VerticalSpacer sixteenPx />
+          <FlexRow>
+            <FlexColumn>
+              <OverstyrBekreftKnappPanel
+                submitting={formProps.submitting}
+                pristine={!isSolvable || formProps.pristine}
+                overrideReadOnly={overrideReadOnly}
+              />
+            </FlexColumn>
+            <FlexColumn>
+              <Knapp
+                htmlType="button"
+                spinner={formProps.submitting}
+                disabled={formProps.submitting}
+                onClick={toggleAv}
+              >
+                <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
+              </Knapp>
+            </FlexColumn>
           </FlexRow>
         </FlexContainer>
-        <VerticalSpacer eightPx />
-        {(erOverstyrt || hasAksjonspunkt) && (
-          <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={erOverstyrt}>
-            <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.AutomatiskVurdering" /></Element>
-            <VerticalSpacer eightPx />
-            <VilkarresultatMedBegrunnelse
-              skalViseBegrunnelse={erOverstyrt || hasAksjonspunkt}
-              readOnly={isReadOnly || !erOverstyrt}
-              erVilkarOk={erVilkarOk}
-              customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
-              customVilkarOppfyltText={customVilkarOppfyltText}
-              erMedlemskapsPanel={erMedlemskapsPanel}
-              hasAksjonspunkt={hasAksjonspunkt}
-              avslagsarsaker={avslagsarsaker}
-            />
-            {!erOverstyrt && (erVilkarOk !== undefined) && (
-              <>
-                <VerticalSpacer fourPx />
-                <FlexRow>
-                  <FlexColumn>
-                    <EditedIcon />
-                  </FlexColumn>
-                  <FlexColumn>
-                    <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.Endret" /></Normaltekst>
-                  </FlexColumn>
-                </FlexRow>
-              </>
-            )}
-            {erOverstyrt && (
-            <FlexContainer>
-              <FlexRow>
-                <FlexColumn>
-                  <Image src={advarselIkonUrl} />
-                </FlexColumn>
-                <FlexColumn>
-                  <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.Unntakstilfeller" /></Element>
-                </FlexColumn>
-              </FlexRow>
-              <VerticalSpacer sixteenPx />
-              <FlexRow>
-                <FlexColumn>
-                  <OverstyrBekreftKnappPanel
-                    submitting={formProps.submitting}
-                    pristine={!isSolvable || formProps.pristine}
-                    overrideReadOnly={overrideReadOnly}
-                  />
-                </FlexColumn>
-                <FlexColumn>
-                  <Knapp
-                    htmlType="button"
-                    spinner={formProps.submitting}
-                    disabled={formProps.submitting}
-                    onClick={toggleAv}
-                  >
-                    <FormattedMessage id="VilkarresultatMedOverstyringForm.Avbryt" />
-                  </Knapp>
-                </FlexColumn>
-              </FlexRow>
-            </FlexContainer>
-            )}
-          </AksjonspunktBox>
         )}
-      </form>
-    </FadingPanel>
+      </AksjonspunktBox>
+      )}
+    </form>
   );
 };
 

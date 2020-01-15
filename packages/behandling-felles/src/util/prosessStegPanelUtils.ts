@@ -154,7 +154,8 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
       const tempStatus = statusOppfylt && !statusIkkeVurdert ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
       const status = statusAvslatt ? vilkarUtfallType.IKKE_OPPFYLT : tempStatus;
 
-      const erAksjonspunktOpen = panelData.some((p) => p.isAksjonspunktOpen);
+      const harForkjelligeStatuserIUnderPanela = statusIkkeVurdert && statusOppfylt;
+      const erAksjonspunktOpen = harForkjelligeStatuserIUnderPanela || panelData.some((p) => p.isAksjonspunktOpen);
 
       return {
         urlCode: panelDef.urlCode,

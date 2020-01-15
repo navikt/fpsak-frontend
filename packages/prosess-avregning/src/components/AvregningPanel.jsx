@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
+  AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
@@ -126,7 +126,7 @@ export class AvregningPanelImpl extends Component {
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
 
     return (
-      <FadingPanel>
+      <>
         <Undertittel>
           <FormattedMessage id="Avregning.Title" />
         </Undertittel>
@@ -267,7 +267,7 @@ export class AvregningPanelImpl extends Component {
             </Row>
           </div>
         )}
-      </FadingPanel>
+      </>
     );
   }
 }

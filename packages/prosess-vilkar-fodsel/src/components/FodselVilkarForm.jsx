@@ -10,7 +10,6 @@ import {
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const avslagsarsakerES = ['1002', '1003', '1032'];
 
@@ -26,7 +25,6 @@ export const FodselVilkarFormImpl = ({
   readOnlySubmitButton,
   erVilkarOk,
   hasAksjonspunkt,
-  status,
   isAksjonspunktOpen,
   behandlingId,
   behandlingVersjon,
@@ -36,18 +34,15 @@ export const FodselVilkarFormImpl = ({
     handleSubmit={formProps.handleSubmit}
     titleCode="FodselVilkarForm.Fodsel"
     isAksjonspunktOpen={isAksjonspunktOpen}
-    aksjonspunktHelpTexts={['FodselVilkarForm.VurderGjelderSammeBarn']}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
-    bpStatus={status}
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
   >
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    <VerticalSpacer eightPx />
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
+    <BehandlingspunktBegrunnelseTextField useAllWidth readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
 
@@ -60,7 +55,6 @@ FodselVilkarFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
-  status: PropTypes.string.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,

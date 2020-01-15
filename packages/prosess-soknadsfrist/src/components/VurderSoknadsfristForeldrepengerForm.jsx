@@ -12,7 +12,7 @@ import {
 import Panel from 'nav-frontend-paneler';
 
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpText, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
@@ -48,7 +48,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
   isApOpen,
   ...formProps
 }) => (
-  <FadingPanel>
+  <>
     <Undertittel><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Soknadsfrist" /></Undertittel>
     <VerticalSpacer twentyPx />
     <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
@@ -126,7 +126,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
         />
       </div>
     </form>
-  </FadingPanel>
+  </>
 );
 
 VurderSoknadsfristForeldrepengerFormImpl.propTypes = {

@@ -1,5 +1,5 @@
 import React, {
-  FunctionComponent, useMemo, useCallback,
+  FunctionComponent, useMemo, useCallback, useEffect,
 } from 'react';
 import { useIntl } from 'react-intl';
 import { useDispatch } from 'react-redux';
@@ -24,9 +24,10 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
   valgtFaktaSteg?: string;
+  setApentFaktaAksjonspunkt: (erApApent: boolean) => void;
 }
 
-const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
+const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   data,
   behandling,
   fagsak,
@@ -35,6 +36,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   oppdaterFaktaPanelIUrl,
   valgtFaktaSteg,
   hasFetchError,
+  setApentFaktaAksjonspunkt,
 }) => {
   const {
     aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
@@ -48,6 +50,10 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   const faktaPaneler = useMemo(() => faktaPanelUtils
     .utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
   [behandling.versjon]);
+
+  useEffect(() => {
+    setApentFaktaAksjonspunkt(faktaPaneler.some((p) => p.harApneAksjonspunkter));
+  }, [faktaPaneler]);
 
   const velgFaktaPanelCallback = useCallback((index) => oppdaterFaktaPanelIUrl(faktaPaneler[index].urlCode), [behandling.versjon]);
   const bekreftAksjonspunktCallback = useCallback(faktaPanelUtils
@@ -77,4 +83,4 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EngangsstonadFakta;
+export default ForeldrepengerFakta;

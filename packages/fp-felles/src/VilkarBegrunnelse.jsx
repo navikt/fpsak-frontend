@@ -29,6 +29,7 @@ const VilkarBegrunnelseImpl = ({
     textareaClass={styles.explanationTextarea}
     maxLength={1500}
     readOnly={isReadOnly}
+    placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
   />
 );
 

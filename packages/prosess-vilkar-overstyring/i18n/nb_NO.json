@@ -1,11 +1,11 @@
 {
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "VilkarresultatMedOverstyringForm.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.AutomatiskVurdering": "Manuell overstyring av automatisk vurdering",
   "VilkarresultatMedOverstyringForm.Avbryt": "Avbryt",
   "VilkarresultatMedOverstyringForm.Unntakstilfeller": "Overstyring skal kun gjøres i unntakstilfeller",
-  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
-  "VilkarresultatMedOverstyringForm.Endret": "Endret av saksbehandler",
 
   "OverstyrVurderingVelger.OverstyrBeregning": "Overstyr beregning",
   "OverstyrVurderingVelger.OverstyrtBeregning": "Overstyrt beregning",
@@ -22,6 +22,7 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
+  "VilkarBegrunnelse.BegrunnVurdering": "Begrunn vurderingen din",
   "VilkarResultPicker.VilkarDato": "Dato",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
