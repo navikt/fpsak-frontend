@@ -190,7 +190,6 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
 };
 
 const getSammenligningsgrunnlagsPrStatus = (bg) => (bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined);
-const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
@@ -241,11 +240,9 @@ export const BeregningFormImpl2 = ({
   ...formProps
 }) => {
   const {
-    dekningsgrad, skjaeringstidspunktBeregning,
-    årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
+    dekningsgrad, skjaeringstidspunktBeregning, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
-  const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
@@ -300,13 +297,11 @@ export const BeregningFormImpl2 = ({
           </Undertittel>
           <VerticalSpacer fourtyPx />
           <AvviksopplysningerPanel
-            beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            sammenligningsgrunnlag={sammenligningsgrunnlagSum}
-            avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
+            gjelderBesteberegning={gjelderBesteberegning}
           />
           {harAksjonspunkter
           && (

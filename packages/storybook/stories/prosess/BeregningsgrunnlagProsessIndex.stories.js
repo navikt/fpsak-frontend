@@ -10,6 +10,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
+import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -824,6 +825,42 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
     />
   );
 };
+
+
+export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
+  const andeler = [
+    lagAndel('DP', 107232, undefined, undefined),
+    lagAndel('AT', 343094, undefined, undefined),
+    lagAndel('AAP', 33094, undefined, undefined),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 1732)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
+  perioder[0].avkortetPrAar = 599148;
+
+  const statuser = [lagStatus('AT'), lagStatus('DP')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.faktaOmBeregning.faktaOmBeregningTilfeller = [{ kode: faktaOmBeregningTilfelle.FASTSETT_BESTEBEREGNING_FODENDE_KVINNE }];
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
 
 export const tidsbegrensetArbeidsforholdMedAvvikORGdesign = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),

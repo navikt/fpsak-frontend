@@ -116,7 +116,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
           </Normaltekst>
         </Column>
         <Column key={`ColBrgAar${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colAarText}>
-          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`} className={harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}>
+          <Normaltekst key={`ColBrgAarTxt${andel.arbeidsforhold.arbeidsgiverId}`} className={!harFlereArbeidsforhold ? beregningStyles.semiBoldText : ''}>
             {formatCurrencyNoKr(andel.beregnetPrAar)}
           </Normaltekst>
         </Column>

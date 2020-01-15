@@ -41,6 +41,7 @@ describe('<Avviksopplysninger>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       allePerioder={allePerioder}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -57,6 +58,7 @@ describe('<Avviksopplysninger>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       allePerioder={allePerioder}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -90,6 +92,7 @@ describe('<Avviksopplysninger>', () => {
       relevanteStatuser={relevanteStatuser}
       allePerioder={perioderMedSNAndel}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -109,6 +112,7 @@ describe('<Avviksopplysninger>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       allePerioder={allePerioder}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -128,6 +132,7 @@ describe('<Avviksopplysninger>', () => {
       sammenligningsgrunnlagPrStatus={[{}]}
       allePerioder={allePerioder}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
@@ -151,6 +156,7 @@ describe('<Avviksopplysninger>', () => {
       sammenligningsgrunnlagPrStatus={[{}]}
       allePerioder={allePerioder}
       aktivitetStatusKode=""
+      gjelderBesteberegning={false}
     />);
     const panel = wrapper.find('PanelBase');
     const headerTitle = panel.find('FormattedMessage').first();
