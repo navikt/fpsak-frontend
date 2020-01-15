@@ -13,21 +13,22 @@ import SupportPanelLink from './components/SupportPanelLink';
 import HistoryIndex from './history/HistoryIndex';
 import MessagesIndex from './messages/MessagesIndex';
 import DocumentIndex from './documents/DocumentIndex';
-import ApprovalIndex from './approval/ApprovalIndex';
+import Totrinnskontroll from './totrinnskontroll/Totrinnskontroll';
 
 import styles from './behandlingSupportIndex.less';
 
-const renderSupportPanel = (supportPanel) => {
+const renderSupportPanel = supportPanel => {
   switch (supportPanel) {
-    case supportPanels.APPROVAL:
     case supportPanels.RETURNED:
-      return (<ApprovalIndex />);
+      return <TilbakemeldingerFraTotrinnskontroll />;
+    case supportPanels.APPROVAL:
+      return <Totrinnskontroll />;
     case supportPanels.HISTORY:
-      return (<HistoryIndex />);
+      return <HistoryIndex />;
     case supportPanels.MESSAGES:
-      return (<MessagesIndex />);
+      return <MessagesIndex />;
     case supportPanels.DOCUMENTS:
-      return (<DocumentIndex />);
+      return <DocumentIndex />;
     default:
       return null;
   }
@@ -47,10 +48,14 @@ export const BehandlingSupportIndex = ({
   getSupportPanelLocation,
 }) => (
   <BehandlingsupportDataResolver>
-    <div className={activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex}>
+    <div
+      className={
+        activeSupportPanel === supportPanels.APPROVAL ? styles.statusAksjonspunkt : styles.behandlingsupportIndex
+      }
+    >
       <div className={styles.marginBottom}>
         <LinkRow>
-          {acccessibleSupportPanels.map((supportPanel) => (
+          {acccessibleSupportPanels.map(supportPanel => (
             <SupportPanelLink
               key={supportPanel}
               supportPanel={supportPanel}
@@ -73,19 +78,21 @@ BehandlingSupportIndex.propTypes = {
   getSupportPanelLocation: PropTypes.func.isRequired,
 };
 
-const getDefaultSupportPanel = (enabledSupportPanels) => (
-  enabledSupportPanels.find(() => true) || supportPanels.HISTORY
-);
+const getDefaultSupportPanel = enabledSupportPanels => enabledSupportPanels.find(() => true) || supportPanels.HISTORY;
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const acccessibleSupportPanels = getAccessibleSupportPanels(state);
   const enabledSupportPanels = getEnabledSupportPanels(state);
   const selectedSupportPanel = getSelectedSupportPanel(state);
 
   const defaultSupportPanel = getDefaultSupportPanel(enabledSupportPanels);
-  const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel) ? selectedSupportPanel : defaultSupportPanel;
+  const activeSupportPanel = enabledSupportPanels.includes(selectedSupportPanel)
+    ? selectedSupportPanel
+    : defaultSupportPanel;
   return {
-    acccessibleSupportPanels, enabledSupportPanels, activeSupportPanel,
+    acccessibleSupportPanels,
+    enabledSupportPanels,
+    activeSupportPanel,
   };
 };
 

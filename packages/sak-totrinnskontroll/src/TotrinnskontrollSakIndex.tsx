@@ -69,7 +69,7 @@ export interface TotrinnskontrollAksjonspunkter {
 
 export interface BeregningDto {
   fastsattVarigEndringNaering: boolean;
-  faktaOmBeregningTilfeller: null;
+  faktaOmBeregningTilfeller: { kode: string }[];
 }
 
 export interface VurderPaNyttArsaker {

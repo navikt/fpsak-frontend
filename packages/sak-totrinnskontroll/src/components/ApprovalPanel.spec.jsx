@@ -6,7 +6,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import ToTrinnsForm from './ToTrinnsForm';
-import ToTrinnsFormReadOnly from './ToTrinnsFormReadOnly';
+import ToTrinnsFormReadOnly from './TilbakemeldingerFraTotrinnskontroll';
 import { ApprovalPanel, mapPropsToContext } from './ApprovalPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-sak-totrinnskontroll';
 
@@ -27,43 +27,44 @@ describe('<ApprovalPanel>', () => {
     toTrinnsBehandling: true,
   });
 
-  const getKodeverkSkjemalenkeTyper = (aksjonspunkter) => aksjonspunkter.map((ap) => ({
-    kode: ap.skjermlenkeType,
-    navn: 'Dummy Tekst',
-  }));
+  const getKodeverkSkjemalenkeTyper = aksjonspunkter =>
+    aksjonspunkter.map(ap => ({
+      kode: ap.skjermlenkeType,
+      navn: 'Dummy Tekst',
+    }));
 
-  const getNextProps = (totrinnskontrollSkjermlenkeContext, status) => (
-    {
-      totrinnskontrollSkjermlenkeContext,
-      behandlingStatus: { kode: status },
-      selectedBehandling: getBehandling(),
-      location: { pathname: 'test' },
-      totrinnskontrollReadOnlySkjermlenkeContext: [],
-    }
-  );
+  const getNextProps = (totrinnskontrollSkjermlenkeContext, status) => ({
+    totrinnskontrollSkjermlenkeContext,
+    behandlingStatus: { kode: status },
+    selectedBehandling: getBehandling(),
+    location: { pathname: 'test' },
+    totrinnskontrollReadOnlySkjermlenkeContext: [],
+  });
 
-  const createAksjonspunkt = (aksjonspunktKode) => (
-    {
-      aksjonspunktKode,
-      beregningDto: null,
-      besluttersBegrunnelse: null,
-      opptjeningAktiviteter: [],
-      totrinnskontrollGodkjent: null,
-      vurderPaNyttArsaker: [],
-    }
-  );
+  const createAksjonspunkt = aksjonspunktKode => ({
+    aksjonspunktKode,
+    beregningDto: null,
+    besluttersBegrunnelse: null,
+    opptjeningAktiviteter: [],
+    totrinnskontrollGodkjent: null,
+    vurderPaNyttArsaker: [],
+  });
 
   const getTotrinnsaksjonspunkterFoedsel = () => ({
     skjermlenkeType: 'FAKTA_OM_FOEDSEL',
-    totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL),
+    totrinnskontrollAksjonspunkter: [
+      createAksjonspunkt(aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL),
       createAksjonspunkt(aksjonspunktCodes.TERMINBEKREFTELSE),
-      createAksjonspunkt(aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING)],
+      createAksjonspunkt(aksjonspunktCodes.AUTO_VENT_PÅ_FODSELREGISTRERING),
+    ],
   });
 
   const getTotrinnsaksjonspunkterOmsorg = () => ({
     skjermlenkeType: 'FAKTA_FOR_OMSORG',
-    totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.OMSORGSOVERTAKELSE),
-      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)],
+    totrinnskontrollAksjonspunkter: [
+      createAksjonspunkt(aksjonspunktCodes.OMSORGSOVERTAKELSE),
+      createAksjonspunkt(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET),
+    ],
   });
 
   const getTotrinnsaksjonspunkterForeldreansvar = () => ({
@@ -78,20 +79,23 @@ describe('<ApprovalPanel>', () => {
 
   const getTotrinnsaksjonspunkterAdopsjon = () => ({
     skjermlenkeType: 'PUNKT_FOR_ADOPSJON',
-    totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.ADOPSJONSDOKUMENTAJON),
+    totrinnskontrollAksjonspunkter: [
+      createAksjonspunkt(aksjonspunktCodes.ADOPSJONSDOKUMENTAJON),
       createAksjonspunkt(aksjonspunktCodes.OM_ADOPSJON_GJELDER_EKTEFELLES_BARN),
-      createAksjonspunkt(aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE)],
+      createAksjonspunkt(aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE),
+    ],
   });
 
   const getTotrinnsaksjonspunkterMedlemskap = () => ({
     skjermlenkeType: 'FAKTA_OM_MEDLEMSKAP',
-    totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD),
+    totrinnskontrollAksjonspunkter: [
+      createAksjonspunkt(aksjonspunktCodes.AVKLAR_LOVLIG_OPPHOLD),
       createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT),
       createAksjonspunkt(aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE),
       createAksjonspunkt(aksjonspunktCodes.AVKLAR_OPPHOLDSRETT),
-      createAksjonspunkt(aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN)],
+      createAksjonspunkt(aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN),
+    ],
   });
-
 
   const getAksjonspunktOpptjening = () => ({
     skjermlenkeType: 'FAKTA_FOR_OPPTJENING',
@@ -100,17 +104,17 @@ describe('<ApprovalPanel>', () => {
 
   const getAksjonspunktBeregning = () => ({
     skjermlenkeType: 'BEREGNING_FORELDREPENGER',
-    totrinnskontrollAksjonspunkter:
-      [createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
-        createAksjonspunkt(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
-        createAksjonspunkt(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE),
-        createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)],
+    totrinnskontrollAksjonspunkter: [
+      createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS),
+      createAksjonspunkt(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE),
+      createAksjonspunkt(aksjonspunktCodes.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE),
+      createAksjonspunkt(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD),
+    ],
   });
 
   const getAksjonspunktFaktaOmBeregning = () => ({
     skjermlenkeType: 'FAKTA_OM_BEREGNING',
-    totrinnskontrollAksjonspunkter:
-      [createAksjonspunkt(aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN)],
+    totrinnskontrollAksjonspunkter: [createAksjonspunkt(aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN)],
   });
 
   it('skal mappe aksjonspunkter til context-objekt når aksjonspunkter hentes frå rest-tjeneste', () => {
@@ -128,163 +132,100 @@ describe('<ApprovalPanel>', () => {
     const nextProps = getNextProps(totrinnskontrollAksjonspunkter, behandlingStatus.FATTER_VEDTAK);
     const skjemalenkeTyper = getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter);
     const context = mapPropsToContext(true, nextProps, skjemalenkeTyper);
-    expect(context)
-      .to
-      .have
-      .length(8);
+    expect(context).to.have.length(8);
     const foedselContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_OM_FOEDSEL');
-    expect(foedselContext)
-      .to
-      .have
-      .length(1);
-    expect(foedselContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(3);
+    expect(foedselContext).to.have.length(1);
+    expect(foedselContext[0].aksjonspunkter).to.have.length(3);
     const omsorgContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_FOR_OMSORG');
-    expect(omsorgContext)
-      .to
-      .have
-      .length(1);
-    expect(omsorgContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(2);
+    expect(omsorgContext).to.have.length(1);
+    expect(omsorgContext[0].aksjonspunkter).to.have.length(2);
     const foreldreansContext = context.filter(({ contextCode }) => contextCode === 'PUNKT_FOR_FORELDREANSVAR');
-    expect(foreldreansContext)
-      .to
-      .have
-      .length(1);
-    expect(foreldreansContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(2);
+    expect(foreldreansContext).to.have.length(1);
+    expect(foreldreansContext[0].aksjonspunkter).to.have.length(2);
     const adopsjonContext = context.filter(({ contextCode }) => contextCode === 'PUNKT_FOR_ADOPSJON');
-    expect(adopsjonContext)
-      .to
-      .have
-      .length(1);
-    expect(adopsjonContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(3);
+    expect(adopsjonContext).to.have.length(1);
+    expect(adopsjonContext[0].aksjonspunkter).to.have.length(3);
     const beregningContext = context.filter(({ contextCode }) => contextCode === 'BEREGNING_FORELDREPENGER');
-    expect(beregningContext)
-      .to
-      .have
-      .length(1);
-    expect(beregningContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(4);
+    expect(beregningContext).to.have.length(1);
+    expect(beregningContext[0].aksjonspunkter).to.have.length(4);
     const opptjeningContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_FOR_OPPTJENING');
-    expect(opptjeningContext)
-      .to
-      .have
-      .length(1);
-    expect(opptjeningContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(1);
+    expect(opptjeningContext).to.have.length(1);
+    expect(opptjeningContext[0].aksjonspunkter).to.have.length(1);
     const medlemskapContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_OM_MEDLEMSKAP');
-    expect(medlemskapContext)
-      .to
-      .have
-      .length(1);
-    expect(medlemskapContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(5);
+    expect(medlemskapContext).to.have.length(1);
+    expect(medlemskapContext[0].aksjonspunkter).to.have.length(5);
     const faktaOmBeregningContext = context.filter(({ contextCode }) => contextCode === 'FAKTA_OM_BEREGNING');
-    expect(faktaOmBeregningContext)
-      .to
-      .have
-      .length(1);
-    expect(faktaOmBeregningContext[0].aksjonspunkter)
-      .to
-      .have
-      .length(1);
+    expect(faktaOmBeregningContext).to.have.length(1);
+    expect(faktaOmBeregningContext[0].aksjonspunkter).to.have.length(1);
   });
-
 
   it('skal vise approvals under godkjenning fanen', () => {
     const behandling = getBehandling();
     const totrinnskontrollAksjonspunkter = getTotrinnsaksjonspunkter();
 
-    const wrapper = shallowWithIntl(<ApprovalPanel
-      behandlingId={1}
-      behandlingVersjon={1}
-      behandlingStatus={behandling.status}
-      onSubmit={sinon.spy()}
-      readOnly={false}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      isForeldrepengerFagsak
-      behandlingKlageVurdering={{}}
-      alleKodeverk={{}}
-      erBehandlingEtterKlage={false}
-      erKlageWithKA={false}
-      erKlage={false}
-      toTrinnsBehandling={behandling.toTrinnsBehandling}
-      aksjonspunkter={[]}
-      resetApproval={sinon.spy()}
-      location={{ pathname: 'test' }}
-      totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
-      skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ApprovalPanel
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={behandling.status}
+        onSubmit={sinon.spy()}
+        readOnly={false}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        isForeldrepengerFagsak
+        behandlingKlageVurdering={{}}
+        alleKodeverk={{}}
+        erBehandlingEtterKlage={false}
+        erKlageWithKA={false}
+        erKlage={false}
+        toTrinnsBehandling={behandling.toTrinnsBehandling}
+        aksjonspunkter={[]}
+        resetApproval={sinon.spy()}
+        location={{ pathname: 'test' }}
+        totrinnskontrollSkjermlenkeContext={totrinnskontrollAksjonspunkter}
+        skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+        disableGodkjennKnapp={false}
+      />,
+    );
 
     const approvals = wrapper.state('approvals');
-    expect(approvals)
-      .to
-      .have
-      .length(1);
-    expect(approvals[0].aksjonspunkter)
-      .to
-      .have
-      .length(3);
+    expect(approvals).to.have.length(1);
+    expect(approvals[0].aksjonspunkter).to.have.length(3);
 
     const toTrinnsForm = wrapper.find(ToTrinnsForm);
-    expect(toTrinnsForm)
-      .to
-      .have
-      .length(1);
+    expect(toTrinnsForm).to.have.length(1);
   });
 
   it('skal ikkje vise approvals under godkjenning fanen når aksjonspunkter ikkje har komt inn frå resttjeneste', () => {
     const behandling = getBehandling();
 
-    const wrapper = shallowWithIntl(<ApprovalPanel
-      behandlingId={1}
-      behandlingVersjon={1}
-      behandlingStatus={behandling.status}
-      onSubmit={sinon.spy()}
-      readOnly={false}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      isForeldrepengerFagsak
-      behandlingKlageVurdering={{}}
-      alleKodeverk={{}}
-      erBehandlingEtterKlage={false}
-      erKlageWithKA={false}
-      erKlage={false}
-      toTrinnsBehandling={behandling.toTrinnsBehandling}
-      resetApproval={sinon.spy()}
-      location={{ pathname: 'test' }}
-      totrinnskontrollSkjermlenkeContext={undefined}
-      skjemalenkeTyper={[]}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ApprovalPanel
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={behandling.status}
+        onSubmit={sinon.spy()}
+        readOnly={false}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        isForeldrepengerFagsak
+        behandlingKlageVurdering={{}}
+        alleKodeverk={{}}
+        erBehandlingEtterKlage={false}
+        erKlageWithKA={false}
+        erKlage={false}
+        toTrinnsBehandling={behandling.toTrinnsBehandling}
+        resetApproval={sinon.spy()}
+        location={{ pathname: 'test' }}
+        totrinnskontrollSkjermlenkeContext={undefined}
+        skjemalenkeTyper={[]}
+        disableGodkjennKnapp={false}
+      />,
+    );
 
     const approvals = wrapper.state('approvals');
-    expect(approvals)
-      .to
-      .have
-      .length(0);
+    expect(approvals).to.have.length(0);
 
     const toTrinnsForm = wrapper.find(ToTrinnsForm);
-    expect(toTrinnsForm)
-      .to
-      .have
-      .length(0);
+    expect(toTrinnsForm).to.have.length(0);
   });
 
   it('skal vise approvals under fraBeslutter fanen', () => {
@@ -300,38 +241,33 @@ describe('<ApprovalPanel>', () => {
       getTotrinnsaksjonspunkterForeldreansvar(),
     ];
 
-
-    const wrapper = shallowWithIntl(<ApprovalPanel
-      behandlingId={1}
-      behandlingVersjon={1}
-      behandlingStatus={behandling.status}
-      onSubmit={sinon.spy()}
-      readOnly={false}
-      forhandsvisVedtaksbrev={sinon.spy()}
-      isForeldrepengerFagsak
-      behandlingKlageVurdering={{}}
-      alleKodeverk={{}}
-      erBehandlingEtterKlage={false}
-      erKlageWithKA={false}
-      erKlage={false}
-      toTrinnsBehandling={behandling.toTrinnsBehandling}
-      resetApproval={sinon.spy()}
-      location={{ pathname: 'test' }}
-      totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
-      skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
-      disableGodkjennKnapp={false}
-    />);
+    const wrapper = shallowWithIntl(
+      <ApprovalPanel
+        behandlingId={1}
+        behandlingVersjon={1}
+        behandlingStatus={behandling.status}
+        onSubmit={sinon.spy()}
+        readOnly={false}
+        forhandsvisVedtaksbrev={sinon.spy()}
+        isForeldrepengerFagsak
+        behandlingKlageVurdering={{}}
+        alleKodeverk={{}}
+        erBehandlingEtterKlage={false}
+        erKlageWithKA={false}
+        erKlage={false}
+        toTrinnsBehandling={behandling.toTrinnsBehandling}
+        resetApproval={sinon.spy()}
+        location={{ pathname: 'test' }}
+        totrinnskontrollReadOnlySkjermlenkeContext={totrinnskontrollAksjonspunkter}
+        skjemalenkeTyper={getKodeverkSkjemalenkeTyper(totrinnskontrollAksjonspunkter)}
+        disableGodkjennKnapp={false}
+      />,
+    );
 
     const approvals = wrapper.state('approvals');
-    expect(approvals)
-      .to
-      .have
-      .length(3);
+    expect(approvals).to.have.length(3);
 
     const toTrinnsFormReadOnly = wrapper.find(ToTrinnsFormReadOnly);
-    expect(toTrinnsFormReadOnly)
-      .to
-      .have
-      .length(1);
+    expect(toTrinnsFormReadOnly).to.have.length(1);
   });
 });

@@ -13,10 +13,10 @@ import ApprovalField from './ApprovalField';
 import styles from './ToTrinnsForm.less';
 import { Approvals } from './ApprovalPanel';
 import {
-  BehandlingStatusType,
   TotrinnskontrollAksjonspunkter,
   KlageVuderingResultat,
   BehandlingKlageVurdering,
+  BehandlingStatusType,
 } from '../TotrinnskontrollSakIndex';
 
 const allApproved = (formState: FormState[]) => formState
@@ -123,9 +123,9 @@ interface ToTrinnsFormImplProps extends InjectedFormProps {
   erBehandlingEtterKlage?: boolean;
   readOnly: boolean;
   disableGodkjennKnapp: boolean;
-  behandlingStatus: BehandlingStatusType;
   alleKodeverk: object;
   isForeldrepengerFagsak: boolean;
+  behandlingStatus: BehandlingStatusType;
 }
 
 interface Aksjonspunkter {
