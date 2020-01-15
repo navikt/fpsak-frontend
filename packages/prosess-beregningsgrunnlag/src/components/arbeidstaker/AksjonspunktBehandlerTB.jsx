@@ -181,12 +181,12 @@ const createRows = (tableData, readOnly, isAksjonspunktClosed, perioder) => {
       {perioder.map((element, index) => (
         <React.Fragment key={`PeriodeWrapper${index + 1}`}>
           <td key={`Col_Tittel_${element.periode}`} colSpan="2">
-            <Normaltekst>
+            <Undertekst>
               <FormattedMessage
                 id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.OmberegnetAar"
                 key={`Tittel_${element.periode}`}
               />
-            </Normaltekst>
+            </Undertekst>
           </td>
 
         </React.Fragment>

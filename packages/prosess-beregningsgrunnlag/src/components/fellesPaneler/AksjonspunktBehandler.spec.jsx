@@ -1,7 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-
-import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AksjonspunktBehandler from './AksjonspunktBehandler';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
@@ -44,7 +43,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler
+    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -55,6 +54,7 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
+      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
@@ -75,7 +75,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = false;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler
+    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -86,6 +86,7 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
+      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
@@ -108,7 +109,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isArbeidstaker = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler
+    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -119,6 +120,7 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
+      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
@@ -141,7 +143,7 @@ describe('<AksjonspunktBehandler>', () => {
     relevanteStatuser.isArbeidstaker = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'AT';
     const readOnly = true;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler
+    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -152,6 +154,7 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt
+      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
@@ -188,7 +191,7 @@ describe('<AksjonspunktBehandler>', () => {
     const readOnly = true;
     const perioderMedSNAndel = allePerioder;
     perioderMedSNAndel[0].beregningsgrunnlagPrStatusOgAndel[0] = snPeriode;
-    const wrapper = shallowWithIntl(<AksjonspunktBehandler
+    const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -200,6 +203,7 @@ describe('<AksjonspunktBehandler>', () => {
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
       erNyArbLivet
+      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet');
