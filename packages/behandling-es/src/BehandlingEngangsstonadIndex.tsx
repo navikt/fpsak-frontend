@@ -6,27 +6,16 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, BeregningsresultatEs,
-  DataFetcherBehandlingDataV2, Aksjonspunkt, BehandlingDataProvider, Vilkar, SimuleringResultat, Personopplysninger, InntektArbeidYtelse, Soknad,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2, BehandlingDataProvider,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
 import EngangsstonadGrid from './components/EngangsstonadGrid';
+import FetchedData from './types/fetchedDataTsType';
 
 const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR, esBehandlingApi.PERSONOPPLYSNINGER,
   esBehandlingApi.SOKNAD, esBehandlingApi.INNTEKT_ARBEID_YTELSE, esBehandlingApi.SIMULERING_RESULTAT,
   esBehandlingApi.BEREGNINGRESULTAT_ENGANGSSTONAD];
-
-interface DataProps {
-  behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  personopplysninger: Personopplysninger;
-  soknad: Soknad;
-  inntektArbeidYtelse: InntektArbeidYtelse;
-  simuleringResultat: SimuleringResultat;
-  beregningresultatEngangsstonad?: BeregningsresultatEs;
-}
 
 interface OwnProps {
   behandlingId: number;
@@ -49,6 +38,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
   kodeverk?: {[key: string]: [Kodeverk]};
   hasFetchError: boolean;
 }
@@ -58,6 +48,9 @@ interface DispatchProps {
   settBehandlingPaVent: (params: {}) => Promise<void>;
   taBehandlingAvVent: (params: {}, { keepData: boolean }) => Promise<void>;
   henleggBehandling: (params: {}) => Promise<void>;
+  opneBehandlingForEndringer: (params: {}) => Promise<any>;
+  opprettVerge: (params: {}) => Promise<any>;
+  fjernVerge: (params: {}) => Promise<any>;
   lagreRisikoklassifiseringAksjonspunkt: (params: {}) => Promise<any>;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -71,7 +64,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
   componentDidMount = () => {
     const {
       behandlingEventHandler, nyBehandlendeEnhet, settBehandlingPaVent, taBehandlingAvVent, henleggBehandling,
-      hentBehandling, behandlingId, lagreRisikoklassifiseringAksjonspunkt,
+      hentBehandling, behandlingId, opneBehandlingForEndringer, opprettVerge, fjernVerge, lagreRisikoklassifiseringAksjonspunkt,
     } = this.props;
     behandlingEventHandler.setHandler({
       endreBehandlendeEnhet: (params) => nyBehandlendeEnhet(params)
@@ -80,6 +73,9 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
         .then(() => hentBehandling({ behandlingId }, { keepData: true })),
       taBehandlingAvVent: (params) => taBehandlingAvVent(params, { keepData: true }),
       henleggBehandling: (params) => henleggBehandling(params),
+      opneBehandlingForEndringer: (params) => opneBehandlingForEndringer(params),
+      opprettVerge: (params) => opprettVerge(params),
+      fjernVerge: (params) => fjernVerge(params),
       lagreRisikoklassifiseringAksjonspunkt: (params) => lagreRisikoklassifiseringAksjonspunkt(params),
     });
 
@@ -98,6 +94,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
@@ -125,10 +122,12 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
           behandlingVersion={behandling.versjon}
           endpoints={engansstonadData}
           showOldDataWhenRefetching
-          render={(dataProps: DataProps) => (
+          render={(dataProps: FetchedData, isFinished) => (
             <>
-              <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+              <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
               <EngangsstonadGrid
+                behandling={isFinished ? behandling : forrigeBehandling}
+                fetchedData={dataProps}
                 fagsak={fagsak}
                 alleKodeverk={kodeverk}
                 navAnsatt={navAnsatt}
@@ -142,7 +141,6 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
                 opneSokeside={opneSokeside}
                 hasFetchError={hasFetchError}
                 featureToggles={featureToggles}
-                {...dataProps}
               />
             </>
           )}
@@ -154,6 +152,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   behandling: esBehandlingApi.BEHANDLING_ES.getRestApiData()(state),
+  forrigeBehandling: esBehandlingApi.BEHANDLING_ES.getRestApiPreviousData()(state),
   hasFetchError: !!esBehandlingApi.BEHANDLING_ES.getRestApiError()(state),
 });
 
@@ -171,8 +170,11 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => ({
     taBehandlingAvVent: esBehandlingApi.RESUME_BEHANDLING.makeRestApiRequest(),
     henleggBehandling: esBehandlingApi.HENLEGG_BEHANDLING.makeRestApiRequest(),
     settPaVent: esBehandlingApi.UPDATE_ON_HOLD.makeRestApiRequest(),
+    opneBehandlingForEndringer: esBehandlingApi.OPEN_BEHANDLING_FOR_CHANGES.makeRestApiRequest(),
+    opprettVerge: esBehandlingApi.VERGE_OPPRETT.makeRestApiRequest(),
+    fjernVerge: esBehandlingApi.VERGE_FJERN.makeRestApiRequest(),
     hentBehandling: esBehandlingApi.BEHANDLING_ES.makeRestApiRequest(),
-    lagreRisikoklassifiseringAksjonspunkt: fpBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
+    lagreRisikoklassifiseringAksjonspunkt: esBehandlingApi.SAVE_AKSJONSPUNKT.makeRestApiRequest(),
     resetRestApiContext: getResetRestApiContext,
     destroyReduxForm: destroy,
   }, dispatch),

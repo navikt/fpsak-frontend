@@ -30,6 +30,9 @@ export const EsBehandlingApiKeys = {
   HENLEGG_BEHANDLING: 'HENLEGG_BEHANDLING',
   RESUME_BEHANDLING: 'RESUME_BEHANDLING',
   BEHANDLING_ON_HOLD: 'BEHANDLING_ON_HOLD',
+  OPEN_BEHANDLING_FOR_CHANGES: 'OPEN_BEHANDLING_FOR_CHANGES',
+  VERGE_OPPRETT: 'VERGE_OPPRETT',
+  VERGE_FJERN: 'VERGE_FJERN',
 };
 
 const endpoints = new RestApiConfigBuilder()
@@ -75,6 +78,15 @@ const endpoints = new RestApiConfigBuilder()
     storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
   })
   .withPost('/fpsak/api/behandlinger/sett-pa-vent', EsBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withPost('/fpsak/api/behandlinger/opne-for-endringer', EsBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
+    storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
+  })
+  .withPost('/fpsak/api/verge/opprett', EsBehandlingApiKeys.VERGE_OPPRETT, {
+    storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
+  })
+  .withPost('/fpsak/api/verge/fjern', EsBehandlingApiKeys.VERGE_FJERN, {
+    storeResultKey: EsBehandlingApiKeys.BEHANDLING_ES,
+  })
 
   .build();
 

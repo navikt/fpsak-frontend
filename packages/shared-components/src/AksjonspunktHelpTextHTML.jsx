@@ -49,6 +49,7 @@ AksjonspunktHelpTextHTML.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string.isRequired),
     PropTypes.arrayOf(PropTypes.element.isRequired),
+    PropTypes.element.isRequired,
   ]).isRequired,
 };
 

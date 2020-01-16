@@ -1,10 +1,11 @@
 {
   "ErForeldreansvarVilkaarOppfyltForm.Foreldreansvar": "Foreldreansvaret",
-  "ErForeldreansvarVilkaarOppfyltForm.Vurder": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
-  "ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafEngangsStonad": "Vurder om vilkår om foreldreansvaret etter § 14-17 andre ledd er oppfylt",
-  "ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger": "Vurder om vilkår om foreldreansvaret etter § 14-5 andre ledd er oppfylt",
-  "ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf": "Vurder om vilkårene i § 14-17 fjerde ledd for far er oppfylt (når far overtar foreldreansvaret alene)",
-  
+  "ErForeldreansvarVilkaarOppfyltForm.ErVilkaretOppfylt": "Er vilkåret oppfylt?",
+   
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",

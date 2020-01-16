@@ -79,6 +79,11 @@ const tilOverstyringspanel = (aksjonspunkter) => (panel) => {
   };
 };
 
+const finnHjelpetekster = (opneAksjonspunkter, aksjonspunkterCodes, aksjonspunkterTextCodes = []) => {
+  const indekser = opneAksjonspunkter.map((a) => aksjonspunkterCodes.findIndex((ac) => a.definisjon.kode === ac));
+  return aksjonspunkterTextCodes.filter((a, index) => indekser.includes(index));
+};
+
 
 const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunkter,
   behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
@@ -100,17 +105,21 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
       const harMinstEttPanelApentAksjonspunkt = panelDef.panels.some((p) => p.dataTilUtleding.aksjonspunktDefKoderForSteg
         .some((a) => overstyrteAksjonspunkter.includes(a))
           || p.dataTilUtleding.aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
+
       const panelData = panelDef.panels.map((panel) => {
         if (!skalViseDelPanel(aksjonspunkter, vilkar, panel)) {
           return {
             code: panel.code ? panel.code : panelDef.urlCode,
           };
         }
-        const { vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg } = panel.dataTilUtleding;
+        const {
+          vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg,
+        } = panel.dataTilUtleding;
 
         const status = panel.overrideStatus ? panel.overrideStatus(panel.dataTilUtleding) : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
+        const opneAksjonspunkter = aksjonspunkterForSteg.filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
         const erAksjonspunktOpen = aksjonspunktDefKoderForSteg.some((a) => overstyrteAksjonspunkter.includes(a))
-          || aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET);
+          || opneAksjonspunkter.length > 0;
         const isReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError);
 
         const prosessStegPanel = {
@@ -119,6 +128,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
           renderComponent: panel.renderComponent,
           aksjonspunkter: aksjonspunkterForSteg,
           isAksjonspunktOpen: erAksjonspunktOpen,
+          aksjonspunktHelpTextCodes: finnHjelpetekster(opneAksjonspunkter, panel.aksjonspunkterCodes, panel.aksjonspunkterTextCodes),
           isReadOnly,
           status,
         };

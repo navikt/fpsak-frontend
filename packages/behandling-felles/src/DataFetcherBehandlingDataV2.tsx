@@ -21,7 +21,7 @@ const findPreviousData = (activeEndpointsData) => {
 
 interface OwnProps {
   behandlingVersion: number;
-  render: (data: {}) => any;
+  render: (data: {}, isFinished: boolean) => any;
   endpoints: EndpointOperations[];
   endpointParams?: {};
   showOldDataWhenRefetching?: boolean;

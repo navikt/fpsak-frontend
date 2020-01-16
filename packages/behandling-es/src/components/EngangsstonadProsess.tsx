@@ -10,31 +10,29 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, prosessStegPanelUtils, Vilkar,
-  BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, SimuleringResultat,
-  DataFetcherBehandlingDataV2, BeregningsresultatEs, IverksetterVedtakStatusModal,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  IverksetterVedtakStatusModal, MultipleProcessPanel,
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi from '../data/esBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegEsPanelDefinisjoner';
+import FetchedData from '../types/fetchedDataTsType';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 
 interface OwnProps {
+  data: FetchedData;
   fagsak: FagsakInfo;
   behandling: Behandling;
-  aksjonspunkter: Aksjonspunkt[];
-  vilkar: Vilkar[];
-  simuleringResultat: SimuleringResultat;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
-  beregningresultatEngangsstonad?: BeregningsresultatEs;
   featureToggles: {};
   opneSokeside: () => void;
+  harApentFaktaAksjonspunkt: boolean;
 }
 
 const getPreviewCallback = (dispatch, behandling) => (data) => {
@@ -81,12 +79,9 @@ const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFags
 };
 
 const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
+  data,
   fagsak,
   behandling,
-  aksjonspunkter,
-  vilkar,
-  simuleringResultat,
-  beregningresultatEngangsstonad,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -95,11 +90,15 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegIUrl,
   featureToggles,
   opneSokeside,
+  harApentFaktaAksjonspunkt,
 }) => {
+  const {
+    aksjonspunkter, vilkar, simuleringResultat, beregningresultatEngangsstonad,
+  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [overstyrteProsessSteg, toggleOverstyring] = useState([]);
+  const [overstyrteAksjonspunkter, toggleOverstyring] = useState([]);
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
@@ -115,16 +114,17 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     previewCallback: useCallback(() => getPreviewCallback(dispatch, behandling), []),
     previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
     dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
-    overstyrteProsessSteg,
+    overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
     simuleringResultat,
     beregningresultatEngangsstonad,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);
+    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg),
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
@@ -138,8 +138,8 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   }, [behandling.versjon, valgtProsessSteg]);
 
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside);
-  const bekreftAksjonspunktCallback = useCallback(() => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, esBehandlingApi), [behandling.versjon]);
+  const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
+    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, esBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>
@@ -155,16 +155,12 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
           aksjonspunkter={valgtPanel.aksjonspunkter}
           isReadOnly={valgtPanel.isReadOnly}
         >
-          <DataFetcherBehandlingDataV2
-            key={valgtPanel.urlCode}
-            behandlingVersion={behandling.versjon}
-            endpoints={valgtPanel.endpoints}
-            render={(dataProps) => valgtPanel.renderComponent({
-              ...dataProps,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.komponentData,
-            })}
+          <MultipleProcessPanel
+            behandling={behandling}
+            alleKodeverk={alleKodeverk}
+            prosessStegData={valgtPanel.panelData}
+            submitCallback={bekreftAksjonspunktCallback}
+            harApentFaktaAksjonspunkt={harApentFaktaAksjonspunkt}
           />
         </MargMarkering>
       )}

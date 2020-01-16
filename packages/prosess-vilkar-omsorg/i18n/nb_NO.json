@@ -1,9 +1,12 @@
 {
   "ErOmsorgVilkaarOppfyltForm.Omsorg": "Omsorg",
-  "ErOmsorgVilkaarOppfyltForm.Paragraf": "Vurder om vilkårene i § 14-17 tredje ledd for far er oppfylt (når mor dør ifm fødsel/omsorgsovertakelse)",
-  "ErOmsorgVilkaarOppfyltForm.Vurder": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",
   "ErOmsorgVilkaarOppfyltForm.Anvendes": "Vilkår som anvendes",
+  "ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt": "Er vilkåret oppfylt?",
   
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",

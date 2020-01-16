@@ -2,7 +2,6 @@ import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { finnAksjonspunktHjelpetekstKode } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 
 import Kodeverk from '../types/kodeverkTsType';
@@ -48,20 +47,21 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
     );
   }
 
-  const aksjonspunktKode = useMemo(() => {
-    const panelMedApentAksjonspunkt = filteredPanels.find((p) => p.isAksjonspunktOpen);
-    return panelMedApentAksjonspunkt && panelMedApentAksjonspunkt.aksjonspunkter[0]
-      ? finnAksjonspunktHjelpetekstKode(panelMedApentAksjonspunkt.aksjonspunkter[0].definisjon.kode) : undefined;
-  }, [filteredPanels]);
+  const aksjonspunktTekstKoder = useMemo(() => filteredPanels
+    .filter((p) => p.isAksjonspunktOpen)
+    .reduce((acc, p) => [...acc, p.aksjonspunktHelpTextCodes], []),
+  [filteredPanels]);
 
   return (
     <FadingPanel>
-      {(harApentFaktaAksjonspunkt || aksjonspunktKode) && (
+      {(harApentFaktaAksjonspunkt || aksjonspunktTekstKoder.length > 0) && (
         <>
           <AksjonspunktHelpTextHTML>
-            <FormattedMessage id={harApentFaktaAksjonspunkt ? 'MultipleProcessPanel.AvventerAvklaringAv' : aksjonspunktKode} />
+            {harApentFaktaAksjonspunkt
+              ? <FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />
+              : aksjonspunktTekstKoder.map((kode) => <FormattedMessage key={kode} id={kode} />)}
           </AksjonspunktHelpTextHTML>
-          <VerticalSpacer thirtyTwoPx />
+          <VerticalSpacer sixteenPx />
         </>
       )}
       <Row className="">

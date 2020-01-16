@@ -39,7 +39,7 @@ const getPreviewCallback = (dispatch, behandling) => (data) => {
   const brevData = {
     ...data,
     behandling: behandling.uuid,
-    ytelseType: fagsakYtelseType.ENGANGSSTONAD,
+    ytelseType: fagsakYtelseType.FORELDREPENGER,
   };
   return dispatch(fpBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };

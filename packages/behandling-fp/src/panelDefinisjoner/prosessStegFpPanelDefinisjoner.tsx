@@ -93,6 +93,7 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
     erMedlemskapsPanel: code === 'MEDLEMSKAP',
   }),
   isOverridable: true,
+  aksjonspunkterTextCodes: [],
 });
 
 const VALGFRIE_ATTRIBUTTER = {
@@ -126,6 +127,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Opplysningsplikt',
   panels: [{
     aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
+    aksjonspunkterTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger', 'SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
     vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
     endpoints: [api.SOKNAD],
     showComponent: ({ behandling, aksjonspunkterForSteg }) => {
@@ -142,10 +144,11 @@ const prosessStegPanelDefinisjoner = [{
     code: 'FODSEL',
     textCode: 'Inngangsvilkar.Fodselsvilkaret',
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
+    aksjonspunkterTextCodes: ['FodselVilkarForm.VurderGjelderSammeBarn', 'FodselVilkarForm.VurderGjelderSammeBarn'],
     vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
     endpoints: [],
     renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
-    getData: () => ({ ytelseTypeKode: fagsakYtelseType.ENGANGSSTONAD }),
+    getData: () => ({ ytelseTypeKode: fagsakYtelseType.FORELDREPENGER }),
     overridePanel: {
       aksjonspunkterCodes: [ac.OVERSTYR_FODSELSVILKAR, ac.OVERSTYR_FODSELSVILKAR_FAR_MEDMOR],
       ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
@@ -167,6 +170,7 @@ const prosessStegPanelDefinisjoner = [{
     textCode: 'Inngangsvilkar.Omsorgsvilkaret',
     aksjonspunkterCodes: [ac.MANUELL_VURDERING_AV_OMSORGSVILKARET, ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN,
       ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
+    aksjonspunkterTextCodes: ['ErOmsorgVilkaarOppfyltForm.Paragraf', 'ErOmsorgVilkaarOppfyltForm.Vurder', 'ErOmsorgVilkaarOppfyltForm.Vurder'],
     vilkarCodes: [vt.OMSORGSVILKARET],
     endpoints: [],
     renderComponent: (props) => <OmsorgVilkarProsessIndex {...props} />,
@@ -181,17 +185,20 @@ const prosessStegPanelDefinisjoner = [{
     textCode: 'Inngangsvilkar.Foreldreansvar',
     aksjonspunkterCodes: [ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_2_LEDD, ac.MANUELL_VURDERING_AV_FORELDREANSVARSVILKARET_4_LEDD,
       ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
+    aksjonspunkterTextCodes: ['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger', 'ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf',
+      'ErForeldreansvarVilkaarOppfyltForm.Vurder', 'ErForeldreansvarVilkaarOppfyltForm.Vurder'],
     vilkarCodes: [vt.FORELDREANSVARSVILKARET_2_LEDD, vt.FORELDREANSVARSVILKARET_4_LEDD],
     endpoints: [],
     renderComponent: (props) => <ForeldreansvarVilkarProsessIndex {...props} />,
     getData: ({ vilkarForSteg }) => ({
-      isEngangsstonad: true,
+      isEngangsstonad: false,
       isForeldreansvar2Ledd: vilkarForSteg.map((v) => v.vilkarType.kode).includes(vt.FORELDREANSVARSVILKARET_2_LEDD),
     }),
   }, {
     code: 'OPPTJENINGSVILKARET',
     textCode: 'Inngangsvilkar.Opptjeningsvilkaret',
     aksjonspunkterCodes: [ac.VURDER_OPPTJENINGSVILKARET],
+    aksjonspunkterTextCodes: ['OpptjeningVilkarView.VurderOmSøkerHarRett'],
     vilkarCodes: [vt.OPPTJENINGSPERIODE, vt.OPPTJENINGSVILKARET],
     endpoints: [api.OPPTJENING],
     renderComponent: (props) => <OpptjeningVilkarProsessIndex {...props} />,

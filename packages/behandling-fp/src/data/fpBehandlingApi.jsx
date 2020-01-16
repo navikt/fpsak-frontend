@@ -99,10 +99,10 @@ const endpoints = new RestApiConfigBuilder()
   .withPost('/fpsak/api/behandlinger/opne-for-endringer', FpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/fpsak/api//verge/opprett', FpBehandlingApiKeys.VERGE_OPPRETT, {
+  .withPost('/fpsak/api/verge/opprett', FpBehandlingApiKeys.VERGE_OPPRETT, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
-  .withPost('/fpsak/api//verge/fjern', FpBehandlingApiKeys.VERGE_FJERN, {
+  .withPost('/fpsak/api/verge/fjern', FpBehandlingApiKeys.VERGE_FJERN, {
     storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
   })
 

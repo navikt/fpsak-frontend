@@ -123,7 +123,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
         showOldDataWhenRefetching
         render={(dataProps: FetchedData, isFinished) => (
           <>
-            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.version : forrigeBehandling.versjon} />
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
             <ForeldrepengerGrid
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}

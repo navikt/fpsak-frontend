@@ -112,7 +112,7 @@ ProsessPanelTemplate.propTypes = {
   origingalErVilkarOk: PropTypes.bool,
   rendreFakta: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool.isRequired,
+  isDirty: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
@@ -120,6 +120,7 @@ ProsessPanelTemplate.defaultProps = {
   lovReferanse: undefined,
   origingalErVilkarOk: undefined,
   rendreFakta: undefined,
+  isDirty: undefined,
 };
 
 export default ProsessPanelTemplate;
