@@ -39,10 +39,10 @@ const AvviksopplysningerAT = ({
         <Column xs="12">
           <Normaltekst>
             {kombinasjonsstatusATSN && (
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
+              <Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" /></Normaltekst>
             )}
             {kombinasjonsstatusATFLSN && (
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
+              <Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" /></Normaltekst>
             )}
           </Normaltekst>
         </Column>
