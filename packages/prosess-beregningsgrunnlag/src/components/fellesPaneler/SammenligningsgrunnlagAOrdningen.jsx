@@ -75,8 +75,6 @@ const lagRad = (andel, maks, relevanteStatuser) => {
   const formattedMaaned = (maanedNavn.charAt(0).toUpperCase() + maanedNavn.slice(1, 3));
   const maaned = moment(dato, ISO_DATE_FORMAT).format('MM');
   const aar = moment(dato, ISO_DATE_FORMAT).format('YYYY');
-
-  console.log('styles.grafFargeAT.color', styles.grafFargeAT);
   return (
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
