@@ -56,6 +56,17 @@ const skalViseESBrev = (revResultat, orgResultat, erSendtVarsel) => {
   return erSendtVarsel;
 };
 
+const skalKunneForhåndsviseBrev = (behandlingResultat) => {
+  if (!behandlingResultat) {
+    return true;
+  }
+  const { konsekvenserForYtelsen } = behandlingResultat;
+  if (!Array.isArray(konsekvenserForYtelsen) || konsekvenserForYtelsen.length !== 1) {
+    return true;
+  }
+  return konsekvenserForYtelsen[0].kode !== 'ENDRING_I_FORDELING_AV_YTELSEN' && konsekvenserForYtelsen[0].kode !== 'INGEN_ENDRING';
+};
+
 export const getSubmitKnappTekst = createSelector(
   [(ownProps) => ownProps.aksjonspunkter],
   (aksjonspunkter) => (aksjonspunkter && aksjonspunkter.some((ap) => ap.erAktivt === true
@@ -77,6 +88,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
   begrunnelse,
   brodtekst,
   overskrift,
+  behandlingResultat,
 }) => {
   const previewBrev = getPreviewCallback(formProps, begrunnelse, previewCallback);
   const previewOverstyrtBrev = getPreviewManueltBrevCallback(formProps, begrunnelse, brodtekst, overskrift, true, previewCallback);
@@ -108,7 +120,7 @@ export const VedtakRevurderingSubmitPanelImpl = ({
         <ForhaandsvisningsKnapp previewFunction={previewOverstyrtBrev} />
       )}
       {(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER || ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER)
-          && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage && (
+          && !skalBrukeOverstyrendeFritekstBrev && !erBehandlingEtterKlage && skalKunneForhåndsviseBrev(behandlingResultat) && (
           <ForhaandsvisningsKnapp previewFunction={previewBrev} />
       )}
     </div>
@@ -130,6 +142,7 @@ VedtakRevurderingSubmitPanelImpl.propTypes = {
   begrunnelse: PropTypes.string,
   brodtekst: PropTypes.string,
   overskrift: PropTypes.string,
+  behandlingResultat: PropTypes.shape(),
 };
 
 VedtakRevurderingSubmitPanelImpl.defaultProps = {
