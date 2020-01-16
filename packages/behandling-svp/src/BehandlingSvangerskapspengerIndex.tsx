@@ -37,6 +37,7 @@ interface OwnProps {
 
 interface StateProps {
   behandling?: Behandling;
+  forrigeBehandling?: Behandling;
   kodeverk?: {[key: string]: [Kodeverk]};
   hasFetchError: boolean;
 }
@@ -92,6 +93,7 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
   render() {
     const {
       behandling,
+      forrigeBehandling,
       oppdaterBehandlingVersjon,
       kodeverk,
       fagsak,
@@ -119,10 +121,11 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
           behandlingVersion={behandling.versjon}
           endpoints={svangerskapspengerData}
           showOldDataWhenRefetching
-          render={(dataProps: FetchedData) => (
+          render={(dataProps: FetchedData, isFinished) => (
             <>
-              <ReduxFormStateCleaner behandlingId={dataProps.behandling.id} behandlingVersjon={dataProps.behandling.versjon} />
+              <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
               <SvangerskapspengerGrid
+                behandling={isFinished ? behandling : forrigeBehandling}
                 fetchedData={dataProps}
                 fagsak={fagsak}
                 alleKodeverk={kodeverk}
@@ -148,6 +151,7 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
 
 const mapStateToProps = (state) => ({
   behandling: svpBehandlingApi.BEHANDLING_SVP.getRestApiData()(state),
+  forrigeBehandling: svpBehandlingApi.BEHANDLING_SVP.getRestApiPreviousData()(state),
   hasFetchError: !!svpBehandlingApi.BEHANDLING_SVP.getRestApiError()(state),
 });
 

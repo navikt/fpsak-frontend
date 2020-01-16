@@ -33,7 +33,6 @@
   "Behandlingspunkt.Vedtak": "Vedtak",
   "Behandlingspunkt.Innsyn": "Behandle innsyn",
   "Behandlingspunkt.Opplysningsplikt": "Opplysningsplikt",
-  "Behandlingspunkt.Svangerskapsvilkaret": "Svangerskap",
   "Behandlingspunkt.OmsorgsvilkaretEngangsstonad": "Fakta om omsorg og foreldreansvar",
   "Behandlingspunkt.FortsattMedlemskap": "Fortsatt medlem",
   "Behandlingspunkt.Beregningsgrunnlagvilkaret": "Beregning",
@@ -55,6 +54,7 @@
   "Inngangsvilkar.Foreldreansvar": "Foreldreansvar",
   "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
   "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
+  "Inngangsvilkar.Svangerskapsvilkaret": "Svangerskap",
 
   "MultipleProcessPanel.AvventerAvklaringAv": "Avventer avklaring av fakta-aksjonspunkt",
   "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
@@ -65,7 +65,8 @@
   "ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafEngangsStonad": "Vurder om vilkår om foreldreansvaret etter § 14-17 andre ledd er oppfylt",
   "ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger": "Vurder om vilkår om foreldreansvaret etter § 14-5 andre ledd er oppfylt",
   "ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf": "Vurder om vilkårene i § 14-17 fjerde ledd for far er oppfylt (når far overtar foreldreansvaret alene)",
- 
+  "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene for svangerskapspenger i § 14-4 første og andre ledd",
+  
   "NoSelectedBehandling.ZeroBehandlinger": "Ingen behandlinger er opprettet",
 
   "IverksetterVedtakStatusModal.Beskrivelse": "Vedtak er innvilget. Du kommer nå til forsiden.",

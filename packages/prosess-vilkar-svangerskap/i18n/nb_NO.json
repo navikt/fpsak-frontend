@@ -1,10 +1,13 @@
 {
   "SvangerskapVilkarForm.Svangerskap": "Svangerskapspenger",
-  "SvangerskapVilkarForm.FyllerVilkår": "Kontroller at søker fyller vilkårene for svangerskapspenger i § 14-4 første og andre ledd",
   
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
-  "VilkarResultPicker.Arsak": "Angi avslagsårsak",
+  "VilkarResultPicker.Arsak": "Avslagsårsak",
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",

@@ -105,6 +105,7 @@ const prosessStegPanelDefinisjoner = [{
     code: 'ADOPSJON',
     textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
+    aksjonspunkterTextCodes: ['AdopsjonVilkarForm.VurderGjelderSammeBarn', 'AdopsjonVilkarForm.VurderGjelderSammeBarn'],
     vilkarCodes: [vt.ADOPSJONSVILKARET],
     endpoints: [],
     renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,
@@ -126,7 +127,6 @@ const prosessStegPanelDefinisjoner = [{
     code: 'MEDLEMSKAP',
     textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
     aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
-    aksjonspunkterTextCodes: ['ErOmsorgVilkaarOppfyltForm.Paragraf', 'ErOmsorgVilkaarOppfyltForm.Vurder', 'ErOmsorgVilkaarOppfyltForm.Vurder'],
     vilkarCodes: [vt.MEDLEMSKAPSVILKARET],
     ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
   }, {

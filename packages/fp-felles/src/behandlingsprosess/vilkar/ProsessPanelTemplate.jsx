@@ -81,7 +81,7 @@ const ProsessPanelTemplate = ({
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer sixteenPx />
-      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
+      <AksjonspunktBox className={isAksjonspunktOpen ? styles.aksjonspunktMargin : undefined} erAksjonspunktApent={isAksjonspunktOpen}>
         {children}
         <BehandlingspunktSubmitButton
           formName={formProps.form}
@@ -94,9 +94,14 @@ const ProsessPanelTemplate = ({
           isBehandlingFormDirty={isBehandlingFormDirty}
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
         />
-        <VerticalSpacer sixteenPx />
+
       </AksjonspunktBox>
-      {rendreFakta && rendreFakta()}
+      {rendreFakta && (
+        <>
+          <VerticalSpacer sixteenPx />
+          {rendreFakta()}
+        </>
+      )}
     </form>
   </>
 );

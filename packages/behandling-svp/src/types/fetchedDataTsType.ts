@@ -1,10 +1,9 @@
 import {
-  Behandling, BeregningsresultatFp, Aksjonspunkt, Vilkar, Personopplysninger, Soknad, InntektArbeidYtelse,
+  BeregningsresultatFp, Aksjonspunkt, Vilkar, Personopplysninger, Soknad, InntektArbeidYtelse,
   Beregningsgrunnlag, SimuleringResultat,
 } from '@fpsak-frontend/behandling-felles';
 
 interface FetchedData {
-  behandling: Behandling;
   aksjonspunkter: Aksjonspunkt[];
   vilkar: Vilkar[];
   personopplysninger: Personopplysninger;

@@ -157,6 +157,7 @@ const prosessStegPanelDefinisjoner = [{
     code: 'ADOPSJON',
     textCode: 'Inngangsvilkar.Adopsjonsvilkaret',
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
+    aksjonspunkterTextCodes: ['AdopsjonVilkarForm.VurderGjelderSammeBarn', 'AdopsjonVilkarForm.VurderGjelderSammeBarn'],
     vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
     endpoints: [],
     renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,

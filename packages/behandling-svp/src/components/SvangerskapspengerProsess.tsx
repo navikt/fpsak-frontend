@@ -10,8 +10,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  DataFetcherBehandlingDataV2, IverksetterVedtakStatusModal,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  MultipleProcessPanel, IverksetterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
@@ -23,6 +23,7 @@ import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 interface OwnProps {
   data: FetchedData;
   fagsak: FagsakInfo;
+  behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
@@ -31,6 +32,7 @@ interface OwnProps {
   oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   featureToggles: {};
   opneSokeside: () => void;
+  harApentFaktaAksjonspunkt: boolean;
 }
 
 const getPreviewCallback = (dispatch, behandling) => (data) => {
@@ -79,6 +81,7 @@ const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFags
 const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   data,
   fagsak,
+  behandling,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
@@ -87,14 +90,15 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   oppdaterProsessStegIUrl,
   featureToggles,
   opneSokeside,
+  harApentFaktaAksjonspunkt,
 }) => {
   const {
-    behandling, aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
+    aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, beregningsgrunnlag,
   } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
-  const [overstyrteProsessSteg, toggleOverstyring] = useState([]);
+  const [overstyrteAksjonspunkter, toggleOverstyring] = useState([]);
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
@@ -111,24 +115,24 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
     previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
     dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
     tempUpdateStonadskontoer: useCallback(() => dispatch(svpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(data)), []),
-    overstyrteProsessSteg,
+    overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
     simuleringResultat,
     beregningresultatForeldrepenger,
-    uttaksresultatPerioder,
     beregningsgrunnlag,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon]);
+    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg), [behandling.versjon, valgtProsessSteg]);
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg),
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
 
   const formaterteProsessStegPaneler = useMemo(() => prosessStegPanelUtils.formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanelKode),
-    [behandling.versjon, valgtPanelKode]);
+    [behandling.versjon, valgtPanelKode, overstyrteAksjonspunkter]);
 
   const prosessmenyCallback = useCallback((index) => {
     const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
@@ -136,8 +140,8 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   }, [behandling.versjon, valgtProsessSteg]);
 
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegIUrl, opneSokeside);
-  const bekreftAksjonspunktCallback = useCallback(() => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, svpBehandlingApi), [behandling.versjon]);
+  const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
+    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, svpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>
@@ -153,16 +157,12 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
           aksjonspunkter={valgtPanel.aksjonspunkter}
           isReadOnly={valgtPanel.isReadOnly}
         >
-          <DataFetcherBehandlingDataV2
-            key={valgtPanel.urlCode}
-            behandlingVersion={behandling.versjon}
-            endpoints={valgtPanel.endpoints}
-            render={(dataProps) => valgtPanel.renderComponent({
-              ...dataProps,
-              alleKodeverk,
-              submitCallback: bekreftAksjonspunktCallback,
-              ...valgtPanel.komponentData,
-            })}
+          <MultipleProcessPanel
+            behandling={behandling}
+            alleKodeverk={alleKodeverk}
+            prosessStegData={valgtPanel.panelData}
+            submitCallback={bekreftAksjonspunktCallback}
+            harApentFaktaAksjonspunkt={harApentFaktaAksjonspunkt}
           />
         </MargMarkering>
       )}
