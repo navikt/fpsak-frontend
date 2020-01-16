@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import moment from 'moment';
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-import SammenlignsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
+import SammenligningsgrunnlagAOrdningen from './SammenligningsgrunnlagAOrdningen';
 
 
 const relevanteStatuser = {
@@ -77,7 +77,7 @@ const mockSammenligningsgrunnlagInntekt = [
 
 describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
   it('Skal se at panelet ikke rendrer ved manglende SammenligningsgrunnlagInntekt', () => {
-    const wrapper = shallowWithIntl(<SammenlignsgrunnlagAOrdningen
+    const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
     />);
     const panel = wrapper.find('PanelBase');
@@ -85,14 +85,14 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
   });
   it('Skal se at panelet ikke rendrer ved SammenligningsgrunnlagInntekt og SN', () => {
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
-    const wrapper = shallowWithIntl(<SammenlignsgrunnlagAOrdningen
+    const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
     />);
     const panel = wrapper.find('PanelBase');
     expect(panel).to.have.length(0);
   });
   it('Skal se at panelet rendrer korrekt SammenligningsgrunnlagInntekt og AT_FL', () => {
-    const wrapper = shallowWithIntl(<SammenlignsgrunnlagAOrdningen
+    const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);
@@ -133,7 +133,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
   it('Skal se at panelet rendrer korrekt SammenligningsgrunnlagInntekt og FL', () => {
     relevanteStatuser.isArbeidstaker = false;
     relevanteStatuser.isKombinasjonsstatus = false;
-    const wrapper = shallowWithIntl(<SammenlignsgrunnlagAOrdningen
+    const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);
@@ -170,7 +170,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     relevanteStatuser.isArbeidstaker = true;
     relevanteStatuser.isFrilanser = false;
     relevanteStatuser.isKombinasjonsstatus = false;
-    const wrapper = shallowWithIntl(<SammenlignsgrunnlagAOrdningen
+    const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);

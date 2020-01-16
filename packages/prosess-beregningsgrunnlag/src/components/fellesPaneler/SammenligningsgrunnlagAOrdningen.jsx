@@ -133,7 +133,7 @@ const lagRad = (andel, maks, relevanteStatuser) => {
 };
 
 
-const SammenlignsgrunnlagAOrdningen = ({
+const SammenligningsgrunnlagAOrdningen = ({
   sammenligningsGrunnlagInntekter,
   relevanteStatuser,
 }) => {
@@ -187,14 +187,14 @@ const SammenlignsgrunnlagAOrdningen = ({
   );
 };
 
-SammenlignsgrunnlagAOrdningen.propTypes = {
+SammenligningsgrunnlagAOrdningen.propTypes = {
   sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
 };
 
-SammenlignsgrunnlagAOrdningen.defaultProps = {
+SammenligningsgrunnlagAOrdningen.defaultProps = {
   sammenligningsGrunnlagInntekter: undefined,
 };
 
 
-export default SammenlignsgrunnlagAOrdningen;
+export default SammenligningsgrunnlagAOrdningen;
