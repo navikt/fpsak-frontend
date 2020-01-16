@@ -27,7 +27,7 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
   textCode,
   useAllWidth,
 }) => (
-  <div className={!useAllWidth && styles.begrunnelseTextField}>
+  <div className={!useAllWidth ? styles.begrunnelseTextField : ''}>
     <TextAreaField
       name="begrunnelse"
       label={intl.formatMessage({ id: textCode || getBegrunnelseTextCode(readOnly) })}

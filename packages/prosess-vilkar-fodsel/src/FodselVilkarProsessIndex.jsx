@@ -38,7 +38,7 @@ const FodselVilkarProsessIndex = ({
       submitCallback={submitCallback}
       readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      isAksjonspunktOpen={isAksjonspunktOpen}
+      isApOpen={isAksjonspunktOpen}
       alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>

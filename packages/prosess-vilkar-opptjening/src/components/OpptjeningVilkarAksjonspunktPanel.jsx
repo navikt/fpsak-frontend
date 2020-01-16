@@ -35,12 +35,10 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   ...formProps
 }) => (
   <ProsessPanelTemplate
-    handleSubmit={formProps.handleSubmit}
     titleCode="OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret"
     isAksjonspunktOpen={isApOpen}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
-    isDirty={formProps.dirty}
     readOnly={readOnly}
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}

@@ -41,7 +41,7 @@ const VilkarResultPickerImpl = ({
 }) => (
   <div className={styles.container}>
     <VerticalSpacer sixteenPx />
-    {readOnly && (
+    {(readOnly && erVilkarOk !== undefined) && (
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
@@ -54,12 +54,13 @@ const VilkarResultPickerImpl = ({
         </FlexRow>
       </FlexContainer>
     )}
-    {!readOnly && (
+    {(!readOnly || erVilkarOk === undefined) && (
       <RadioGroupField
         name="erVilkarOk"
         validate={[required]}
         bredde="XXL"
         direction="vertical"
+        readOnly={readOnly}
       >
         <RadioOption
           label={(

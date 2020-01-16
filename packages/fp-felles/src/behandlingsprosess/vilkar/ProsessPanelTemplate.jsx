@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import {
@@ -25,7 +25,6 @@ import styles from './prosessPanelTemplate.less';
  * Presentasjonskomponent.
  */
 const ProsessPanelTemplate = ({
-  handleSubmit,
   behandlingId,
   behandlingVersjon,
   lovReferanse,
@@ -34,13 +33,12 @@ const ProsessPanelTemplate = ({
   isAksjonspunktOpen,
   formProps,
   readOnlySubmitButton,
-  isDirty,
   readOnly,
   rendreFakta,
   children,
 }) => (
   <>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={formProps.handleSubmit}>
       <FlexContainer>
         <FlexRow>
           {origingalErVilkarOk !== undefined && (
@@ -90,7 +88,7 @@ const ProsessPanelTemplate = ({
           behandlingVersjon={behandlingVersjon}
           isReadOnly={readOnly}
           isSubmittable={!readOnlySubmitButton}
-          isDirty={isDirty}
+          isDirty={formProps.dirty}
           isBehandlingFormSubmitting={isBehandlingFormSubmitting}
           isBehandlingFormDirty={isBehandlingFormDirty}
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
@@ -103,7 +101,6 @@ const ProsessPanelTemplate = ({
 );
 
 ProsessPanelTemplate.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
   titleCode: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
@@ -111,7 +108,6 @@ ProsessPanelTemplate.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool,
   origingalErVilkarOk: PropTypes.bool,
   rendreFakta: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
@@ -120,7 +116,6 @@ ProsessPanelTemplate.propTypes = {
 
 ProsessPanelTemplate.defaultProps = {
   lovReferanse: undefined,
-  isDirty: undefined,
   origingalErVilkarOk: undefined,
   rendreFakta: undefined,
 };

@@ -1,5 +1,6 @@
 {
   "FodselVilkarForm.Fodsel": "Fødsel",
+  "FodselVilkarForm.TidligereUtbetaltStonad": "Tidligere utbetalt foreldrepenger eller engangsstønad",
   
   "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",

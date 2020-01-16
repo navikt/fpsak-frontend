@@ -3,7 +3,11 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
@@ -19,28 +23,30 @@ const avslagsarsakerES = ['1002', '1003', '1032'];
  * Presentasjonskomponent. Setter opp aksjonspunktet for avklaring av Fødselsvilkåret.
  */
 export const FodselVilkarFormImpl = ({
+  isApOpen,
   avslagsarsaker,
   lovReferanse,
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
+  origingalErVilkarOk,
   hasAksjonspunkt,
-  isAksjonspunktOpen,
   behandlingId,
   behandlingVersjon,
   ...formProps
 }) => (
   <ProsessPanelTemplate
-    handleSubmit={formProps.handleSubmit}
     titleCode="FodselVilkarForm.Fodsel"
-    isAksjonspunktOpen={isAksjonspunktOpen}
+    isAksjonspunktOpen={isApOpen}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    origingalErVilkarOk={origingalErVilkarOk}
   >
+    <Element><FormattedMessage id="FodselVilkarForm.TidligereUtbetaltStonad" /></Element>
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     <BehandlingspunktBegrunnelseTextField useAllWidth readOnly={readOnly} />
   </ProsessPanelTemplate>
@@ -54,8 +60,9 @@ FodselVilkarFormImpl.propTypes = {
   })).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool,
+  origingalErVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
+  isApOpen: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
@@ -63,6 +70,7 @@ FodselVilkarFormImpl.propTypes = {
 
 FodselVilkarFormImpl.defaultProps = {
   erVilkarOk: undefined,
+  origingalErVilkarOk: undefined,
   hasAksjonspunkt: false,
 };
 
@@ -90,17 +98,23 @@ export const getFodselVilkarAvslagsarsaker = (isFpFagsak, fodselsvilkarAvslagsko
   ? fodselsvilkarAvslagskoder.filter((arsak) => !avslagsarsakerES.includes(arsak.kode))
   : fodselsvilkarAvslagskoder);
 
-const mapStateToPropsFactory = (initialState, staticOwnProps) => {
-  const { aksjonspunkter, alleKodeverk } = staticOwnProps;
-  const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+const mapStateToPropsFactory = (initialState, initialOwnProps) => {
+  const {
+    aksjonspunkter, status, alleKodeverk, submitCallback, ytelseTypeKode,
+  } = initialOwnProps;
+  const onSubmit = (values) => submitCallback([transformValues(values, aksjonspunkter)]);
   const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.FODSELSVILKARET_MOR];
-  const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(staticOwnProps.ytelseTypeKode === fagsakYtelseType.FORELDREPENGER, avslagsarsaker);
+  const filtrerteAvslagsarsaker = getFodselVilkarAvslagsarsaker(ytelseTypeKode === fagsakYtelseType.FORELDREPENGER, avslagsarsaker);
+
+  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, vilkar } = ownProps;
     return {
       onSubmit,
       avslagsarsaker: filtrerteAvslagsarsaker,
+      origingalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,

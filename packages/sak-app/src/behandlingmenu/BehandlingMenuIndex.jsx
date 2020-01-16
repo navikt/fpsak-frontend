@@ -128,13 +128,14 @@ BehandlingMenuIndex.propTypes = {
   ytelseType: PropTypes.shape().isRequired,
   behandlingStatus: PropTypes.shape(),
   erIInnhentSoknadopplysningerSteg: PropTypes.bool.isRequired,
-  vergeMenyvalg: PropTypes.string.isRequired,
+  vergeMenyvalg: PropTypes.string,
 };
 
 BehandlingMenuIndex.defaultProps = {
   behandlingData: MenyBehandlingData.lagIngenValgtBehandling(),
   hentVergeMenyvalg: undefined,
   behandlingStatus: undefined,
+  vergeMenyvalg: undefined,
 };
 
 const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk],
