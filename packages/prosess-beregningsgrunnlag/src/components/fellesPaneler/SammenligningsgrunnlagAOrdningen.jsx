@@ -1,34 +1,46 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  HorizontalBarSeries, FlexibleWidthXYPlot,
+  HorizontalRectSeries, FlexibleWidthXYPlot,
 } from 'react-vis';
 import { Column, Row } from 'nav-frontend-grid';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { FormattedMessage } from 'react-intl';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 
 import Panel from 'nav-frontend-paneler';
+import moment from 'moment';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
-const maanedNavn = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'];
 
-const finnAlleAndelerIFørstePeriode = (allePerioder) => {
-  if (allePerioder && allePerioder.length > 0) {
-    return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
-  }
-  return undefined;
+const finnAndelerStatus = (relevanteStatuser) => {
+  if (relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker) return 'AT_FL';
+  if (relevanteStatuser.isFrilanser) return 'FL';
+  if (relevanteStatuser.isArbeidstaker) return 'AT';
+  return null;
+};
+const finnMaksVerdienFraRelevanteAndeler = (andeler, relevanteStatuser) => {
+  if (relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker) return Math.max(...andeler.map((andel) => andel.atAndel + andel.flAndel), 0);
+  if (relevanteStatuser.isArbeidstaker) return Math.max(...andeler.map((andel) => andel.atAndel), 0);
+  if (relevanteStatuser.isFrilanser) return Math.max(...andeler.map((andel) => andel.flAndel), 0);
+  return null;
+};
+const finnRestVerdienFraRelevanteAndeler = (relevanteStatuser, maks, atAndel, flAndel) => {
+  if (relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker) return maks - atAndel - flAndel;
+  if (relevanteStatuser.isArbeidstaker) return maks - atAndel;
+  if (relevanteStatuser.isFrilanser) return maks - flAndel;
+  return null;
 };
 
-const lagSumRad = (andeler) => {
+const lagSumRad = (andeler, relevanteStatuser) => {
   const sumATAndeler = andeler.reduce((acc, andel) => acc + andel.atAndel, 0);
-  const sumFTAndeler = andeler.reduce((acc, andel) => acc + andel.flAndel, 0);
+  const sumFLAndeler = andeler.reduce((acc, andel) => acc + andel.flAndel, 0);
   return (
     <>
       <Row>
-        <Column xs="10" className={beregningStyles.colDevider} />
+        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '10' : '8'} className={beregningStyles.colDevider} />
       </Row>
       <Row>
         <Column xs="7">
@@ -36,189 +48,149 @@ const lagSumRad = (andeler) => {
             <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel" />
           </Normaltekst>
         </Column>
-        <Column
-          xs="2"
-          key="ColBBgMnd"
-          className={beregningStyles.colMaanedText}
-        >
-          <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumATAndeler)}</Normaltekst>
+        {relevanteStatuser.isArbeidstaker && (
+        <Column xs="2">
+          <Element className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumATAndeler)}</Element>
         </Column>
-        <Column xs="2" className={beregningStyles.colAarText}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumFTAndeler)}</Normaltekst>
+        )}
+        {relevanteStatuser.isFrilanser && (
+        <Column xs="2">
+          <Element>{formatCurrencyNoKr(sumFLAndeler)}</Element>
         </Column>
+        )}
+        <Column xs="1" className={beregningStyles.rightAlignElementNoWrap} />
       </Row>
     </>
   );
 };
-const lagRad = (andel, maks) => {
+const lagRad = (andel, maks, relevanteStatuser) => {
   const {
-    atAndel, flAndel, maaned, aar,
+    atAndel, flAndel, dato,
   } = andel;
-  const rest = maks - atAndel - flAndel;
+  const rest = finnRestVerdienFraRelevanteAndeler(relevanteStatuser, maks, atAndel, flAndel);
+  const maanedNavn = moment(dato, ISO_DATE_FORMAT).format('MMM');
+  const formattedMaaned = (maanedNavn.charAt(0).toUpperCase() + maanedNavn.slice(1, 3));
+  const maaned = moment(dato, ISO_DATE_FORMAT).format('MM');
+  const aar = moment(dato, ISO_DATE_FORMAT).format('YYYY');
+
+
   return (
-    <>
+    <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
       <Row>
-        <Column xs="10" className={styles.aarDevider} />
+        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '11' : '9'} className={styles.aarDevider} />
       </Row>
       )}
       <Row>
         <Column xs="1" className={styles.maanedColumn}>
-          <Undertekst>{maanedNavn[parseInt(maaned, 10) - 1]}</Undertekst>
+          <Undertekst>{formattedMaaned}</Undertekst>
         </Column>
-
         <Column xs="6" className={styles.chartColumn}>
-
           <FlexibleWidthXYPlot height={10} stackBy="x" yDomain={[1, 1]}>
-            <HorizontalBarSeries
-              data={[{ y: 1, x: atAndel }]}
+            {relevanteStatuser.isArbeidstaker && (
+            <HorizontalRectSeries
+              data={[{ y0: 0.5, y: 1, x: atAndel }]}
               fill={styles.bgColorAT}
               stroke={styles.stroke}
             />
-            <HorizontalBarSeries
-              data={[{ y: 1, x: flAndel }]}
+            )}
+            {relevanteStatuser.isFrilanser && (
+            <HorizontalRectSeries
+              data={[{ y0: 0.5, y: 1, x: flAndel }]}
               fill={styles.bgColorFL}
               stroke={styles.stroke}
             />
-            <HorizontalBarSeries
-              data={[{ y: 1, x: rest }]}
+            )}
+            <HorizontalRectSeries
+              data={[{ y0: 0.5, y: 1, x: rest }]}
               fill={styles.bgColorEmpty}
               stroke={styles.bgColorEmpty}
             />
           </FlexibleWidthXYPlot>
 
         </Column>
+        {relevanteStatuser.isArbeidstaker && (
         <Column xs="2" className={beregningStyles.colMaanedText}>
           <Undertekst>{formatCurrencyNoKr(atAndel)}</Undertekst>
         </Column>
-        <Column xs="2" className={beregningStyles.colAarText}>
+        )}
+        {relevanteStatuser.isFrilanser && (
+        <Column xs="2" className={relevanteStatuser.isArbeidstaker ? beregningStyles.colAarText : beregningStyles.colMaanedText}>
           <Undertekst>{formatCurrencyNoKr(flAndel)}</Undertekst>
         </Column>
+        )}
         <Column xs="1" className={beregningStyles.rightAlignElementNoWrap}>
           { (maaned === '12' || maaned === '01') && (
           <Undertekst>{aar}</Undertekst>
           )}
         </Column>
       </Row>
-    </>
+    </React.Fragment>
   );
 };
 
-const SammenlignsgrunnlagAOrdningen = ({
-  allePerioder,
-}) => {
-  const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
-  console.log(alleAndelerIForstePeriode);
-  const andeler = [
-    {
-      atAndel: 31800,
-      flAndel: 0,
-      maaned: '08',
-      aar: 2018,
-    },
-    {
-      atAndel: 33450,
-      flAndel: 0,
-      maaned: '09',
-      aar: 2018,
-    },
-    {
-      atAndel: 33559,
-      flAndel: 10000,
-      maaned: '10',
-      aar: 2018,
-    },
-    {
-      atAndel: 41800,
-      flAndel: 0,
-      maaned: '11',
-      aar: 2018,
-    },
-    {
-      atAndel: 39450,
-      flAndel: 0,
-      maaned: '12',
-      aar: 2018,
-    },
-    {
-      atAndel: 39559,
-      flAndel: 0,
-      maaned: '01',
-      aar: 2019,
-    },
-    {
-      atAndel: 38800,
-      flAndel: 0,
-      maaned: '02',
-      aar: 2019,
-    },
-    {
-      atAndel: 39450,
-      flAndel: 0,
-      maaned: '03',
-      aar: 2019,
-    },
-    {
-      atAndel: 38559,
-      flAndel: 0,
-      maaned: '04',
-      aar: 2019,
-    },
-    {
-      atAndel: 39600,
-      flAndel: 64000,
-      maaned: '05',
-      aar: 2019,
-    },
-    {
-      atAndel: 49993,
-      flAndel: 55000,
-      maaned: '06',
-      aar: 2019,
-    },
-    {
-      atAndel: 48237,
-      flAndel: 30000,
-      maaned: '07',
-      aar: 2019,
-    },
-  ];
-  const maxValue = Math.max(...andeler.map((andel) => andel.atAndel + andel.flAndel), 0);
 
+const SammenlignsgrunnlagAOrdningen = ({
+  sammenligningsGrunnlagInntekter,
+  relevanteStatuser,
+}) => {
+  const andeler = sammenligningsGrunnlagInntekter;
+  if (!andeler) return null;
+  const maxValue = finnMaksVerdienFraRelevanteAndeler(andeler, relevanteStatuser);
+  const andelStatus = finnAndelerStatus(relevanteStatuser);
   return (
     <Panel className={beregningStyles.panelLeft}>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
       </Element>
       <Normaltekst>
-        <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.IngressATFL" />
+        <FormattedMessage id={`Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.${andelStatus}`} />
       </Normaltekst>
       <Row>
         <Column xs="1" className={styles.maanedColumn} />
         <Column xs="6" />
-        <Column xs="2" className={beregningStyles.colMaanedText}>
-          <Undertekst>Arbeid</Undertekst>
-        </Column>
-        <Column xs="2" className={beregningStyles.colAarText}>
-          <Undertekst>Frilans</Undertekst>
-        </Column>
+        {relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
+          <>
+            <Column xs="2" className={beregningStyles.colMaanedText}>
+              <Undertekst>Arbeid</Undertekst>
+            </Column>
+            <Column xs="2" className={beregningStyles.colAarText}>
+              <Undertekst>Frilans</Undertekst>
+            </Column>
+          </>
+        )}
+        {!relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker && (
+          <>
+            <Column xs="2" className={beregningStyles.colMaanedText}>
+              <Undertekst>Arbeid</Undertekst>
+            </Column>
+          </>
+        )}
+        {!relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
+          <>
+            <Column xs="2" className={beregningStyles.colMaanedText}>
+              <Undertekst>Frilans</Undertekst>
+            </Column>
+          </>
+        )}
         <Column xs="1" />
 
       </Row>
       {andeler.map((andel) => (
-        lagRad(andel, maxValue)
+        lagRad(andel, maxValue, relevanteStatuser)
       ))}
-      {lagSumRad(andeler)}
+      {lagSumRad(andeler, relevanteStatuser)}
     </Panel>
   );
 };
 
 SammenlignsgrunnlagAOrdningen.propTypes = {
-  allePerioder: PropTypes.arrayOf(PropTypes.shape()),
+  sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()),
+  relevanteStatuser: PropTypes.shape().isRequired,
 };
 
 SammenlignsgrunnlagAOrdningen.defaultProps = {
-  allePerioder: undefined,
+  sammenligningsGrunnlagInntekter: undefined,
 };
 
 

@@ -62,7 +62,8 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk) => (
+  alleKodeverk,
+  sammenligningsGrunnlagInntekter) => (
     <div>
       { relevanteStatuser.isArbeidstaker
       && (
@@ -113,18 +114,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer fourtyPx />
       </>
     )}
-      { (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
-      && (
-        <>
-          <SammenlignsgrunnlagAOrdningen
-            alleAndeler={alleAndelerIForstePeriode}
-            aksjonspunkter={gjeldendeAksjonspunkter}
-            readOnly={readOnly}
-            isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
-          />
-          <VerticalSpacer fourtyPx />
-        </>
-      )}
+
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
@@ -166,6 +156,16 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
+      { !relevanteStatuser.isSelvstendigNaeringsdrivende && (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
+      && (
+        <>
+          <SammenlignsgrunnlagAOrdningen
+            sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
+            relevanteStatuser={relevanteStatuser}
+          />
+          <VerticalSpacer fourtyPx />
+        </>
+      )}
 
     </div>
 );
@@ -184,12 +184,11 @@ export const BeregningsgrunnlagImpl2 = ({
   relevanteStatuser,
   gjeldendeAksjonspunkter,
   allePerioder,
-
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-
   alleKodeverk,
+  sammenligningsGrunnlagInntekter,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
@@ -205,6 +204,7 @@ export const BeregningsgrunnlagImpl2 = ({
             behandlingId,
             behandlingVersjon,
             alleKodeverk,
+            sammenligningsGrunnlagInntekter,
           )
         }
     </>
@@ -220,10 +220,12 @@ BeregningsgrunnlagImpl2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()),
 };
 
 BeregningsgrunnlagImpl2.defaultProps = {
   allePerioder: undefined,
+  sammenligningsGrunnlagInntekter: undefined,
 };
 
 const Beregningsgrunnlag2 = BeregningsgrunnlagImpl2;
