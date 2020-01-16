@@ -6,6 +6,11 @@
   "SokersOpplysningspliktForm.VilkarIkkeOppfyltMerInfo": "Manglende opplysninger, foreslå avslag",
   "SokersOpplysningspliktForm.ManglendeDokumentasjon": "Manglende dokumentasjon",
   
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "VilkarresultatMedOverstyringForm.Endret": "Endret av saksbehandler",
+  "BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering": "Begrunn vurderingen din",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "ShowVilkarStatus.Check": "Informasjonen er utfylt",
   "VilkarResultPicker.Arsak": "Angi avslagsårsak",

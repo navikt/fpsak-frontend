@@ -4,6 +4,7 @@ export { default as BehandlingDataCache } from './src/BehandlingDataCache';
 export { default as BehandlingDataProvider } from './src/BehandlingDataProvider';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as MargMarkering } from './src/components/MargMarkering';
+export { default as MultipleProcessPanel } from './src/components/MultipleProcessPanel';
 export { default as FaktaPanel } from './src/components/FaktaPanel';
 export { default as BehandlingHenlagtPanel } from './src/components/BehandlingHenlagtPanel';
 export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStateCleaner';

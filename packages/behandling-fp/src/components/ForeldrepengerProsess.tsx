@@ -11,13 +11,12 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  IverksetterVedtakStatusModal, Behandling,
+  IverksetterVedtakStatusModal, Behandling, MultipleProcessPanel,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFpPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
-import MultipleProcessPanel from './MultipleProcessPanel';
 
 import '@fpsak-frontend/assets/styles/arrowForProcessMenu.less';
 

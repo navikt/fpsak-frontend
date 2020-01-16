@@ -1,11 +1,13 @@
 import React, { FunctionComponent, useMemo } from 'react';
 import { FormattedMessage } from 'react-intl';
-import AlertStripe from 'nav-frontend-alertstriper';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { finnAksjonspunktHjelpetekstKode } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { Kodeverk, DataFetcherBehandlingDataV2, Behandling } from '@fpsak-frontend/behandling-felles';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
+
+import Kodeverk from '../types/kodeverkTsType';
+import Behandling from '../types/behandlingTsType';
+import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
 interface OwnProps {
   behandling: Behandling;
@@ -56,9 +58,9 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
     <FadingPanel>
       {(harApentFaktaAksjonspunkt || aksjonspunktKode) && (
         <>
-          <AlertStripe type="advarsel">
+          <AksjonspunktHelpTextHTML>
             <FormattedMessage id={harApentFaktaAksjonspunkt ? 'MultipleProcessPanel.AvventerAvklaringAv' : aksjonspunktKode} />
-          </AlertStripe>
+          </AksjonspunktHelpTextHTML>
           <VerticalSpacer thirtyTwoPx />
         </>
       )}
@@ -68,7 +70,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
             .reduce((acc, x) => (acc === null ? <>{x}</> : (
               <>
                 {acc}
-                <VerticalSpacer thirtyTwoPx />
+                <VerticalSpacer fourtyPx />
                 {x}
               </>
             )), null)}
@@ -78,7 +80,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
             .reduce((acc, x) => (acc === null ? <>{x}</> : (
               <>
                 {acc}
-                <VerticalSpacer thirtyTwoPx />
+                <VerticalSpacer fourtyPx />
                 {x}
               </>
             )), null)}

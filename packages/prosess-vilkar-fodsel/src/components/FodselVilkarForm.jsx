@@ -39,6 +39,7 @@ export const FodselVilkarFormImpl = ({
     titleCode="FodselVilkarForm.Fodsel"
     isAksjonspunktOpen={isApOpen}
     formProps={formProps}
+    isDirty={formProps.dirty}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     lovReferanse={lovReferanse}

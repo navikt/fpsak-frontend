@@ -35,6 +35,7 @@ const ProsessPanelTemplate = ({
   readOnlySubmitButton,
   readOnly,
   rendreFakta,
+  isDirty,
   children,
 }) => (
   <>
@@ -88,7 +89,7 @@ const ProsessPanelTemplate = ({
           behandlingVersjon={behandlingVersjon}
           isReadOnly={readOnly}
           isSubmittable={!readOnlySubmitButton}
-          isDirty={formProps.dirty}
+          isDirty={isDirty}
           isBehandlingFormSubmitting={isBehandlingFormSubmitting}
           isBehandlingFormDirty={isBehandlingFormDirty}
           hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
@@ -111,6 +112,7 @@ ProsessPanelTemplate.propTypes = {
   origingalErVilkarOk: PropTypes.bool,
   rendreFakta: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
+  isDirty: PropTypes.bool.isRequired,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 

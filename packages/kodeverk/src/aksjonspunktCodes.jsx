@@ -160,6 +160,8 @@ export const aksjonspunktTilTekstKode = {
   [aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN]: 'FodselVilkarForm.VurderGjelderSammeBarn',
   [aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN]: 'FodselVilkarForm.VurderGjelderSammeBarn',
   [aksjonspunktCodes.VURDER_OPPTJENINGSVILKARET]: 'OpptjeningVilkarView.VurderOmSøkerHarRett',
+  [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_OVST]: 'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+  [aksjonspunktCodes.SOKERS_OPPLYSNINGSPLIKT_MANU]: 'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
 };
 export const finnAksjonspunktHjelpetekstKode = (aksjonspunktKode) => aksjonspunktTilTekstKode[aksjonspunktKode];
 
