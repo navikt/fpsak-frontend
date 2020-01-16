@@ -1,0 +1,329 @@
+{
+    "fnr": "07029837435",
+    "aktoerId": "9907029837435",
+    "diskresjonskode": {
+        "kode": "UDEF",
+        "kodeverk": "DISKRESJONSKODE"
+    },
+    "nummer": null,
+    "navBrukerKjonn": {
+        "kode": "M",
+        "kodeverk": "BRUKER_KJOENN"
+    },
+    "statsborgerskap": {
+        "kode": "NOR",
+        "kodeverk": "LANDKODER",
+        "navn": "Norge"
+    },
+    "avklartPersonstatus": {
+        "orginalPersonstatus": {
+            "kode": "BOSA",
+            "kodeverk": "PERSONSTATUS_TYPE"
+        },
+        "overstyrtPersonstatus": {
+            "kode": "BOSA",
+            "kodeverk": "PERSONSTATUS_TYPE"
+        }
+    },
+    "personstatus": {
+        "kode": "BOSA",
+        "kodeverk": "PERSONSTATUS_TYPE"
+    },
+    "sivilstand": {
+        "kode": "UGIF",
+        "kodeverk": "SIVILSTAND_TYPE"
+    },
+    "navn": "Puma Pawel",
+    "dodsdato": null,
+    "fodselsdato": "1969-12-04",
+    "adresser": [],
+    "region": {
+        "kode": "NORDEN",
+        "kodeverk": "REGION"
+    },
+    "annenPart": {
+        "fnr": "11018547211",
+        "aktoerId": "9911018547211",
+        "diskresjonskode": {
+            "kode": "UDEF",
+            "kodeverk": "DISKRESJONSKODE"
+        },
+        "nummer": null,
+        "navBrukerKjonn": {
+            "kode": "K",
+            "kodeverk": "BRUKER_KJOENN"
+        },
+        "statsborgerskap": {
+            "kode": "NOR",
+            "kodeverk": "LANDKODER",
+            "navn": "Norge"
+        },
+        "avklartPersonstatus": {
+            "orginalPersonstatus": {
+                "kode": "BOSA",
+                "kodeverk": "PERSONSTATUS_TYPE"
+            },
+            "overstyrtPersonstatus": {
+                "kode": "BOSA",
+                "kodeverk": "PERSONSTATUS_TYPE"
+            }
+        },
+        "personstatus": {
+            "kode": "BOSA",
+            "kodeverk": "PERSONSTATUS_TYPE"
+        },
+        "sivilstand": {
+            "kode": "GIFT",
+            "kodeverk": "SIVILSTAND_TYPE"
+        },
+        "navn": "Bever Bjørg",
+        "dodsdato": null,
+        "fodselsdato": "1969-12-04",
+        "adresser": [
+            {
+                "adresseType": {
+                    "kode": "BOSTEDSADRESSE",
+                    "kodeverk": "ADRESSE_TYPE"
+                },
+                "mottakerNavn": "Bever Bjørg",
+                "adresselinje1": "Fjordlandet 10 B",
+                "adresselinje2": null,
+                "adresselinje3": null,
+                "postNummer": "2500",
+                "poststed": "Tynset",
+                "land": "NOR"
+            }
+        ],
+        "region": {
+            "kode": "NORDEN",
+            "kodeverk": "REGION"
+        },
+        "annenPart": null,
+        "ektefelle": null,
+        "barn": [
+            {
+                "fnr": "25041757569",
+                "aktoerId": "9925041757569",
+                "diskresjonskode": {
+                    "kode": "UDEF",
+                    "kodeverk": "DISKRESJONSKODE"
+                },
+                "nummer": null,
+                "navBrukerKjonn": {
+                    "kode": "M",
+                    "kodeverk": "BRUKER_KJOENN"
+                },
+                "statsborgerskap": {
+                    "kode": "NOR",
+                    "kodeverk": "LANDKODER",
+                    "navn": "Norge"
+                },
+                "avklartPersonstatus": {
+                    "orginalPersonstatus": {
+                        "kode": "BOSA",
+                        "kodeverk": "PERSONSTATUS_TYPE"
+                    },
+                    "overstyrtPersonstatus": {
+                        "kode": "BOSA",
+                        "kodeverk": "PERSONSTATUS_TYPE"
+                    }
+                },
+                "personstatus": {
+                    "kode": "BOSA",
+                    "kodeverk": "PERSONSTATUS_TYPE"
+                },
+                "sivilstand": {
+                    "kode": "UGIF",
+                    "kodeverk": "SIVILSTAND_TYPE"
+                },
+                "navn": "Duck Dole",
+                "dodsdato": null,
+                "fodselsdato": "2019-10-09",
+                "adresser": [
+                    {
+                        "adresseType": {
+                            "kode": "UKJENT_ADRESSE",
+                            "kodeverk": "ADRESSE_TYPE"
+                        },
+                        "mottakerNavn": "Duck Dole",
+                        "adresselinje1": null,
+                        "adresselinje2": null,
+                        "adresselinje3": null,
+                        "postNummer": null,
+                        "poststed": null,
+                        "land": null
+                    }
+                ],
+                "region": {
+                    "kode": "NORDEN",
+                    "kodeverk": "REGION"
+                },
+                "annenPart": null,
+                "ektefelle": null,
+                "barn": [],
+                "barnSoktFor": [],
+                "barnFraTpsRelatertTilSoknad": [],
+                "harVerge": false
+            }
+        ],
+        "barnSoktFor": [],
+        "barnFraTpsRelatertTilSoknad": [],
+        "harVerge": false
+    },
+    "ektefelle": {
+        "fnr": "11018547211",
+        "aktoerId": "9911018547211",
+        "diskresjonskode": {
+            "kode": "UDEF",
+            "kodeverk": "DISKRESJONSKODE"
+        },
+        "nummer": null,
+        "navBrukerKjonn": {
+            "kode": "K",
+            "kodeverk": "BRUKER_KJOENN"
+        },
+        "statsborgerskap": {
+            "kode": "NOR",
+            "kodeverk": "LANDKODER",
+            "navn": "Norge"
+        },
+        "avklartPersonstatus": {
+            "orginalPersonstatus": {
+                "kode": "BOSA",
+                "kodeverk": "PERSONSTATUS_TYPE"
+            },
+            "overstyrtPersonstatus": {
+                "kode": "BOSA",
+                "kodeverk": "PERSONSTATUS_TYPE"
+            }
+        },
+        "personstatus": {
+            "kode": "BOSA",
+            "kodeverk": "PERSONSTATUS_TYPE"
+        },
+        "sivilstand": {
+            "kode": "GIFT",
+            "kodeverk": "SIVILSTAND_TYPE"
+        },
+        "navn": "Bever Bjørg",
+        "dodsdato": null,
+        "fodselsdato": "1969-12-04",
+        "adresser": [
+            {
+                "adresseType": {
+                    "kode": "BOSTEDSADRESSE",
+                    "kodeverk": "ADRESSE_TYPE"
+                },
+                "mottakerNavn": "Bever Bjørg",
+                "adresselinje1": "Fjordlandet 10 B",
+                "adresselinje2": null,
+                "adresselinje3": null,
+                "postNummer": "2500",
+                "poststed": "Tynset",
+                "land": "NOR"
+            }
+        ],
+        "region": {
+            "kode": "NORDEN",
+            "kodeverk": "REGION"
+        },
+        "annenPart": null,
+        "ektefelle": null,
+        "barn": [],
+        "barnSoktFor": [],
+        "barnFraTpsRelatertTilSoknad": [],
+        "harVerge": false
+    },
+    "barn": [
+        {
+            "fnr": "25041757569",
+            "aktoerId": "9925041757569",
+            "diskresjonskode": {
+                "kode": "UDEF",
+                "kodeverk": "DISKRESJONSKODE"
+            },
+            "nummer": null,
+            "navBrukerKjonn": {
+                "kode": "M",
+                "kodeverk": "BRUKER_KJOENN"
+            },
+            "statsborgerskap": {
+                "kode": "NOR",
+                "kodeverk": "LANDKODER",
+                "navn": "Norge"
+            },
+            "avklartPersonstatus": {
+                "orginalPersonstatus": {
+                    "kode": "BOSA",
+                    "kodeverk": "PERSONSTATUS_TYPE"
+                },
+                "overstyrtPersonstatus": {
+                    "kode": "BOSA",
+                    "kodeverk": "PERSONSTATUS_TYPE"
+                }
+            },
+            "personstatus": {
+                "kode": "BOSA",
+                "kodeverk": "PERSONSTATUS_TYPE"
+            },
+            "sivilstand": {
+                "kode": "UGIF",
+                "kodeverk": "SIVILSTAND_TYPE"
+            },
+            "navn": "Duck Dole",
+            "dodsdato": null,
+            "fodselsdato": "2019-10-09",
+            "adresser": [
+                {
+                    "adresseType": {
+                        "kode": "UKJENT_ADRESSE",
+                        "kodeverk": "ADRESSE_TYPE"
+                    },
+                    "mottakerNavn": "Duck Dole",
+                    "adresselinje1": null,
+                    "adresselinje2": null,
+                    "adresselinje3": null,
+                    "postNummer": null,
+                    "poststed": null,
+                    "land": null
+                }
+            ],
+            "region": {
+                "kode": "NORDEN",
+                "kodeverk": "REGION"
+            },
+            "annenPart": null,
+            "ektefelle": null,
+            "barn": [],
+            "barnSoktFor": [],
+            "barnFraTpsRelatertTilSoknad": [],
+            "harVerge": false
+        }
+    ],
+    "barnSoktFor": [
+        {
+            "fnr": null,
+            "aktoerId": null,
+            "diskresjonskode": null,
+            "nummer": 1,
+            "navBrukerKjonn": null,
+            "statsborgerskap": null,
+            "avklartPersonstatus": null,
+            "personstatus": null,
+            "sivilstand": null,
+            "navn": null,
+            "dodsdato": null,
+            "fodselsdato": "2019-10-09",
+            "adresser": [],
+            "region": null,
+            "annenPart": null,
+            "ektefelle": null,
+            "barn": [],
+            "barnSoktFor": [],
+            "barnFraTpsRelatertTilSoknad": [],
+            "harVerge": false
+        }
+    ],
+    "barnFraTpsRelatertTilSoknad": [],
+    "harVerge": false
+}

@@ -2,8 +2,8 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
+import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
@@ -42,12 +42,13 @@ const alleKodeverk = {
   }],
 };
 
+
 const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
 export default {
-  title: 'prosess/tilbakekreving/ForeldelseProsessIndex',
+  title: 'prosess/tilbakekreving/prosess-foreldelse',
   component: ForeldelseProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

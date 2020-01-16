@@ -26,7 +26,7 @@ const svangerskapspengerTilretteleggingForArbeidsgiver = {
         kode: tilretteleggingType.INGEN_TILRETTELEGGING,
       },
     }],
-    arbeidsgiverNavn: 'OSLO KOMMUNE',
+    arbeidsgiverNavn: 'WWW.EIENDOMSDRIFT.CC SA',
     arbeidsgiverIdent: '555864629',
     kopiertFraTidligereBehandling: false,
     mottattTidspunkt: '2019-09-12T18:15:52.655168',
@@ -42,7 +42,7 @@ const svangerskapspengerTilretteleggingForArbeidsgiver = {
         kode: tilretteleggingType.INGEN_TILRETTELEGGING,
       },
     }],
-    arbeidsgiverNavn: 'OSLO KOMMUNE',
+    arbeidsgiverNavn: 'WWW.EIENDOMSDRIFT.CC SA',
     arbeidsgiverIdent: '555864629',
     kopiertFraTidligereBehandling: false,
     mottattTidspunkt: '2019-09-12T18:15:52.655168',
@@ -89,7 +89,7 @@ const toggle = (openInfoPanels, togglePanel) => (value) => {
 };
 
 export default {
-  title: 'fakta/FodselOgTilretteleggingFaktaIndex',
+  title: 'fakta/fakta-fodsel-og-tilrettelegging',
   component: FodselOgTilretteleggingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

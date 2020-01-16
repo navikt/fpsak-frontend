@@ -2,14 +2,14 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import tilbakekrevingKodeverkTyper from '@fpsak-frontend/kodeverk/src/tilbakekrevingKodeverkTyper';
+import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
+import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
+import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
+import NavBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import TilbakekrevingProsessIndex from '@fpsak-frontend/prosess-tilbakekreving';
-import sarligGrunn from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/sarligGrunn';
-import aktsomhet from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/aktsomhet';
-import vilkarResultat from '@fpsak-frontend/prosess-tilbakekreving/src/kodeverk/vilkarResultat';
 
 import withReduxProvider from '../../../decorators/withRedux';
 
@@ -59,6 +59,10 @@ const vilkarvurderingsperioder = {
 };
 const vilkarvurdering = {
   vilkarsVurdertePerioder: [],
+};
+
+const merknaderFraBeslutter = {
+  notAccepted: false,
 };
 
 const alleKodeverk = {
@@ -116,12 +120,9 @@ const alleKodeverk = {
   }],
 };
 
-const merknaderFraBeslutter = {
-  notAccepted: false,
-};
 
 export default {
-  title: 'prosess/tilbakekreving/TilbakekrevingProsessIndex',
+  title: 'prosess/tilbakekreving/prosess-tilbakekreving',
   component: TilbakekrevingProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

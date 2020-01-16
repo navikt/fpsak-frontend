@@ -87,7 +87,8 @@ export class PeriodeController extends Component {
     };
 
     callBeregnBelop(params).then((response) => {
-      const harPeriodeMedBelop0 = response.perioder.some((p) => p.belop === 0);
+      const { perioder } = response.payload;
+      const harPeriodeMedBelop0 = perioder.some((p) => p.belop === 0);
       if (harPeriodeMedBelop0) {
         this.setState((state) => ({
           ...state,
@@ -97,12 +98,12 @@ export class PeriodeController extends Component {
         const forstePeriodeMedBeløp = {
           fom: forstePeriode.fom,
           tom: forstePeriode.tom,
-          feilutbetaling: response.perioder[0].belop,
+          feilutbetaling: perioder[0].belop,
         };
         const andrePeriodeMedBeløp = {
           fom: andrePeriode.fom,
           tom: andrePeriode.tom,
-          feilutbetaling: response.perioder[1].belop,
+          feilutbetaling: perioder[1].belop,
         };
         this.hideModal();
         oppdaterSplittedePerioder([forstePeriodeMedBeløp, andrePeriodeMedBeløp]);

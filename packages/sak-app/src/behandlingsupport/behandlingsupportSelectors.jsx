@@ -2,22 +2,35 @@ import { createSelector } from 'reselect';
 
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
+import { getNavAnsatt } from '../app/duck';
 import fpsakApi from '../data/fpsakApi';
-import { getRettigheter, getBehandlingStatus, getBehandlingIsOnHold } from '../behandling/duck';
+import {
+  getBehandlingStatus, getBehandlingType, erBehandlingPaVent, getBehandlingAnsvarligSaksbehandler,
+} from '../behandling/duck';
 import { getSelectedSaksnummer } from '../fagsak/duck';
+import { getSelectedFagsakStatus } from '../fagsak/fagsakSelectors';
 import SupportPanel from './supportPanels';
+import allSupportPanelAccessRights from './accessSupport';
 
+const getRettigheter = createSelector([
+  getNavAnsatt,
+  getSelectedFagsakStatus,
+  getBehandlingStatus,
+  getBehandlingType,
+  getBehandlingAnsvarligSaksbehandler,
+], allSupportPanelAccessRights);
 
-const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, getBehandlingIsOnHold],
+const getSendMessageIsRelevant = createSelector([getSelectedSaksnummer, erBehandlingPaVent],
   (fagsakSaksnummer, isOnHold) => (fagsakSaksnummer && !isOnHold));
 
 const getReturnedIsRelevant = createSelector(
-  [fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData(), getBehandlingStatus],
-  (toTrinnsAksjonspunkter = [], status = {}) => toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
+  [erBehandlingPaVent, fpsakApi.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY.getRestApiData(), getBehandlingStatus],
+  (isOnHold, toTrinnsAksjonspunkter = [], status = {}) => !isOnHold && toTrinnsAksjonspunkter.reduce((a, b) => a.concat(b.totrinnskontrollAksjonspunkter), [])
     .some((ap) => ap.totrinnskontrollGodkjent === false) && status.kode === behandlingStatus.BEHANDLING_UTREDES,
 );
 
-const getApprovalIsRelevant = createSelector([getBehandlingStatus], (status = {}) => status.kode === behandlingStatus.FATTER_VEDTAK);
+const getApprovalIsRelevant = createSelector([erBehandlingPaVent, getBehandlingStatus], (isOnHold, status = {}) => !isOnHold
+  && status.kode === behandlingStatus.FATTER_VEDTAK);
 
 export const getAccessibleSupportPanels = createSelector(
   [
@@ -60,6 +73,3 @@ export const getEnabledSupportPanels = createSelector(
       }
     }),
 );
-
-export const getAllDocuments = createSelector([fpsakApi.ALL_DOCUMENTS.getRestApiData()],
-  (documents = []) => documents);

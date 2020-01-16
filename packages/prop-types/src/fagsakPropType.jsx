@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 
 const fagsakPropType = PropTypes.shape({
   saksnummer: PropTypes.number.isRequired,
+  dekningsgrad: PropTypes.number.isRequired,
   sakstype: PropTypes.shape({
     kode: PropTypes.string.isRequired,
   }).isRequired,

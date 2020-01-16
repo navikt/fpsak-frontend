@@ -7,5 +7,5 @@
   "ErrorMessageDetailsModal.Close": "Lukk",
   "Rest.ErrorMessage.General": "Noe feilet. Feilen kan være forbigående. Prøv og behandle saken litt senere. Om feilen oppstår igjen meld den inn via porten.",
   "Rest.ErrorMessage.DownTime": "Saksbehandlingsløsningen venter på et annet system som har nedetid nå. Du trenger ikke melde inn en feil, men prøv igjen {date} kl. {time}.\n{message}",
-  "Rest.ErrorMessage.Timeout": "Serverkall har gått ut på tid: {location}"
+  "Rest.ErrorMessage.PollingTimeout": "Serverkall har gått ut på tid: {location}"
 }

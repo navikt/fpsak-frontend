@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
 import dokumentTypeId from '@fpsak-frontend/kodeverk/src/dokumentTypeId';
@@ -9,6 +9,7 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { Table, TableRow } from '@fpsak-frontend/shared-components';
 import { buildInitialValues, getSortedManglendeVedlegg, SokersOpplysningspliktFormImpl } from './SokersOpplysningspliktForm';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-vilkar-sokers-opplysningsplikt';
 
 describe('<SokersOpplysningspliktForm>', () => {
   const getKodeverknavn = () => undefined;

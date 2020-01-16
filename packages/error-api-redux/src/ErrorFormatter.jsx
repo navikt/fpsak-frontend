@@ -1,9 +1,10 @@
 import DefaultFormatter from './formatters/DefaultFormatter';
 import RestTimeoutFormatter from './formatters/RestTimeoutFormatter';
 import RestHaltedOrDelayedFormatter from './formatters/RestHaltedOrDelayedFormatter';
+import RestGatewayTimeoutOrNotFoundFormatter from './formatters/RestGatewayTimeoutOrNotFoundFormatter';
 
 const defaultFormatter = new DefaultFormatter();
-const formatters = [new RestTimeoutFormatter(), new RestHaltedOrDelayedFormatter(), defaultFormatter];
+const formatters = [new RestTimeoutFormatter(), new RestHaltedOrDelayedFormatter(), new RestGatewayTimeoutOrNotFoundFormatter(), defaultFormatter];
 
 class ErrorFormatter {
   format = (errorMessages, crashMessage) => {

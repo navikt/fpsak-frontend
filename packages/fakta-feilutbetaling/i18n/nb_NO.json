@@ -1,5 +1,4 @@
 {
-  "FeilutbetalingInfoPanel.FaktaFeilutbetaling": "Fakta om feilutbetaling",
   "FeilutbetalingInfoPanel.Revurdering": "Revurdering",
   "FeilutbetalingInfoPanel.Feilutbetaling": "Feilutbetaling",
   "FeilutbetalingInfoPanel.Årsaker": "Årsak(er) til revurdering",
@@ -8,7 +7,6 @@
   "FeilutbetalingInfoPanel.Tilbakekrevingsvalg": "Tilbakekrevingsvalg",
   "FeilutbetalingInfoPanel.PeriodeMedFeilutbetaling": "Periode med feilutbetaling",
   "FeilutbetalingInfoPanel.FeilutbetaltBeløp": "Feilutbetalt beløp totalt",
-  "FeilutbetalingInfoPanel.TidligereVarsel": "Tidligere sendt varsel om tilbakekreving",
   "FeilutbetalingInfoPanel.TidligereVarseltBeløp": "Tidligere varslet beløp",
   "FeilutbetalingInfoPanel.Period": "Period",
   "FeilutbetalingInfoPanel.Hendelse": "Hendelse",
@@ -17,6 +15,7 @@
   "FeilutbetalingInfoPanel.Begrunnelse": "Begrunn endringene",
   "FeilutbetalingInfoPanel.Aksjonspunkt": "Kontroller at korrekt hendelse er satt",
   "FeilutbetalingInfoPanel.Confirm": "Bekreft og fortsett",
+  "FeilutbetalingInfoPanel.IkkeVarslet": "Ikke varslet",
 
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",

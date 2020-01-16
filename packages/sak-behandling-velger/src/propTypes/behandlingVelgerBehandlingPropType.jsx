@@ -30,6 +30,10 @@ const behandlingVelgerBehandlingPropType = PropTypes.shape({
     erAutomatiskRevurdering: PropTypes.bool,
     manueltOpprettet: PropTypes.bool,
   }),
+  behandlingsresultat: PropTypes.shape({
+    type: kodeverkObjektPropType,
+    avslagsarsak: kodeverkObjektPropType,
+  }),
 });
 
 export default behandlingVelgerBehandlingPropType;

@@ -27,7 +27,6 @@ const getOptions = (sortedPeriods) => {
 
   return {
     end: moment(lastPeriod.tom).add(2, 'days'),
-    height: '104px',
     locale: moment.locale('nb'),
     margin: { item: 14 },
     max: moment(firstPeriod.fom).add(4, 'years'),
@@ -116,17 +115,17 @@ class TilbakekrevingTimeline extends Component {
   }
 
   zoomIn() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomIn(0.5);
   }
 
   zoomOut() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     timeline.zoomOut(0.5);
   }
 
   goForward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() + 42),
@@ -137,7 +136,7 @@ class TilbakekrevingTimeline extends Component {
   }
 
   goBackward() {
-    const timeline = this.timelineRef.$el;
+    const timeline = this.timelineRef.current.$el;
     const currentWindowTimes = timeline.getWindow();
     const newWindowTimes = {
       start: new Date(currentWindowTimes.start).setDate(currentWindowTimes.start.getDate() - 42),

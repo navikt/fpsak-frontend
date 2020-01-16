@@ -1,11 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
 
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { Image } from '@fpsak-frontend/shared-components';
 import { TextAreaField } from '@fpsak-frontend/form';
 
 import { TilbakekrevingVedtakUtdypendeTekstPanel } from './TilbakekrevingVedtakUtdypendeTekstPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-vedtak-tilbakekreving';
 
 describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
   it('skal vise lenke for å skrive inn tekst når felt ikke har verdi og en ikke er i readonly-modus', () => {
@@ -14,6 +15,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
       isEmpty
       type="OPPSUMMERING"
       readOnly={false}
+      fritekstPakrevet={false}
     />);
 
     expect(wrapper.find(Image)).to.have.length(1);
@@ -26,6 +28,20 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
       isEmpty={false}
       type="OPPSUMMERING"
       readOnly={false}
+      fritekstPakrevet={false}
+    />);
+
+    expect(wrapper.find(Image)).to.have.length(0);
+    expect(wrapper.find(TextAreaField)).to.have.length(1);
+  });
+
+  it('skal vise textarea når fritekst er påkrevet', () => {
+    const wrapper = shallowWithIntl(<TilbakekrevingVedtakUtdypendeTekstPanel
+      intl={intlMock}
+      isEmpty
+      type="OPPSUMMERING"
+      readOnly={false}
+      fritekstPakrevet
     />);
 
     expect(wrapper.find(Image)).to.have.length(0);
@@ -38,6 +54,7 @@ describe('<TilbakekrevingVedtakUtdypendeTekstPanel>', () => {
       isEmpty
       type="OPPSUMMERING"
       readOnly
+      fritekstPakrevet={false}
     />);
 
     expect(wrapper.find(Image)).to.have.length(0);

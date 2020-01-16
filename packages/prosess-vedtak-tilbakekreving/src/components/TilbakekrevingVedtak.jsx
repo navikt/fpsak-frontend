@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import {
-  Systemtittel, Undertittel, Undertekst, Normaltekst,
-} from 'nav-frontend-typografi';
+import { Undertittel, Undertekst, Normaltekst } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
@@ -20,7 +18,6 @@ const TilbakekrevingVedtak = ({
   resultat,
   perioder,
   alleKodeverk,
-  isBehandlingHenlagt,
   behandlingId,
   behandlingVersjon,
   avsnittsliste,
@@ -30,35 +27,28 @@ const TilbakekrevingVedtak = ({
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
     <FadingPanel>
-      {isBehandlingHenlagt && (
-      <Systemtittel><FormattedMessage id="TilbakekrevingVedtak.ErHenlagt" /></Systemtittel>
-      )}
-      {!isBehandlingHenlagt && (
-        <>
-          <Undertittel>
-            <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
-          </Undertittel>
-          <VerticalSpacer twentyPx />
-          <Undertekst>
-            <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
-          </Undertekst>
-          <Normaltekst>
-            {getKodeverknavn(resultat)}
-          </Normaltekst>
-          <VerticalSpacer sixteenPx />
-          <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
-          <VerticalSpacer sixteenPx />
-          <TilbakekrevingVedtakForm
-            submitCallback={submitCallback}
-            readOnly={readOnly}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            avsnittsliste={avsnittsliste}
-            fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-            aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
-          />
-        </>
-      )}
+      <Undertittel>
+        <FormattedMessage id="TilbakekrevingVedtak.Vedtak" />
+      </Undertittel>
+      <VerticalSpacer twentyPx />
+      <Undertekst>
+        <FormattedMessage id="TilbakekrevingVedtak.Resultat" />
+      </Undertekst>
+      <Normaltekst>
+        {getKodeverknavn(resultat)}
+      </Normaltekst>
+      <VerticalSpacer sixteenPx />
+      <TilbakekrevingVedtakPeriodeTabell perioder={perioder} getKodeverknavn={getKodeverknavn} />
+      <VerticalSpacer sixteenPx />
+      <TilbakekrevingVedtakForm
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        avsnittsliste={avsnittsliste}
+        fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
+        aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
+      />
     </FadingPanel>
   );
 };
@@ -69,7 +59,6 @@ TilbakekrevingVedtak.propTypes = {
   resultat: kodeverkObjektPropType.isRequired,
   perioder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  isBehandlingHenlagt: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   avsnittsliste: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,

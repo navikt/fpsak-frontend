@@ -47,7 +47,6 @@ class BehandlingMenu extends Component {
     this.isResumeBehandlingEnabled = this.isResumeBehandlingEnabled.bind(this);
     this.isPauseBehandlingEnabled = this.isPauseBehandlingEnabled.bind(this);
     this.isShelveBehandlingEnebled = this.isShelveBehandlingEnebled.bind(this);
-    this.resumeBehandling = this.resumeBehandling.bind(this);
     this.isChangeBehandlendeEnhetEnabled = this.isChangeBehandlendeEnhetEnabled.bind(this);
     this.hasEnabledOpenBehandlingForChangesAccess = this.hasEnabledOpenBehandlingForChangesAccess.bind(this);
     this.state = {
@@ -137,12 +136,8 @@ class BehandlingMenu extends Component {
     return behandlingData.harValgtBehandling
       && rettigheter.opneBehandlingForEndringerAccess.employeeHasAccess
       && rettigheter.opneBehandlingForEndringerAccess.isEnabled
-      && !this.isBehandlingQueued();
-  }
-
-  resumeBehandling(behandlingIdentifier, params) {
-    const { resumeBehandling } = this.props;
-    return resumeBehandling(behandlingIdentifier, params);
+      && !this.isBehandlingQueued()
+      && !this.isBehandlingOnHold();
   }
 
   render() {
@@ -152,8 +147,8 @@ class BehandlingMenu extends Component {
     const {
       behandlingData, behandlendeEnheter, setBehandlingOnHold, rettigheter, openBehandlingForChanges,
       previewHenleggBehandling, shelveBehandling, push, nyBehandlendeEnhet, saksnummer, createNewBehandling,
-      fjernVerge, opprettVerge, menyKodeverk, ytelseType, kanTilbakekrevingOpprettes,
-      sjekkOmTilbakekrevingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
+      fjernVerge, opprettVerge, menyKodeverk, ytelseType, kanTilbakekrevingOpprettes, resumeBehandling,
+      sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes, uuidForSistLukkede, erTilbakekrevingAktivert,
     } = this.props;
     const { menuVisible } = this.state;
     const behandlingIdentifier = new BehandlingIdentifier(saksnummer, behandlingData.id);
@@ -184,8 +179,10 @@ class BehandlingMenu extends Component {
                 toggleBehandlingsmeny={this.toggleBehandlingMenu}
                 behandlingIdentifier={behandlingIdentifier}
                 behandlingVersjon={behandlingData.versjon}
-                resumeBehandling={this.resumeBehandling}
+                resumeBehandling={resumeBehandling}
                 gjenopptaBehandlingEnabled={rettigheter.gjenopptaBehandlingAccess.isEnabled}
+                behandlingType={behandlingData.type}
+                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.isPauseBehandlingEnabled() && (
@@ -196,6 +193,8 @@ class BehandlingMenu extends Component {
                 setBehandlingOnHold={setBehandlingOnHold}
                 settBehandlingPaVentEnabled={rettigheter.settBehandlingPaVentAccess.isEnabled}
                 menyKodeverk={menyKodeverk}
+                behandlingType={behandlingData.type}
+                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.isShelveBehandlingEnebled() && (
@@ -211,6 +210,7 @@ class BehandlingMenu extends Component {
                 behandlingType={behandlingData.type}
                 behandlingUuid={behandlingData.uuid}
                 menyKodeverk={menyKodeverk}
+                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.hasEnabledOpenBehandlingForChangesAccess() && (
@@ -231,6 +231,8 @@ class BehandlingMenu extends Component {
                 behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
                 nyBehandlendeEnhet={nyBehandlendeEnhet}
                 byttBehandlendeEnhetEnabled={rettigheter.byttBehandlendeEnhetAccess.isEnabled}
+                behandlingType={behandlingData.type}
+                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {!this.isBehandlingQueued() && (
@@ -247,6 +249,7 @@ class BehandlingMenu extends Component {
                 menyKodeverk={menyKodeverk}
                 kanTilbakekrevingOpprettes={kanTilbakekrevingOpprettes}
                 sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+                sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
                 uuidForSistLukkede={uuidForSistLukkede}
                 erTilbakekrevingAktivert={erTilbakekrevingAktivert}
                 ytelseType={ytelseType}
@@ -292,6 +295,7 @@ BehandlingMenu.propTypes = {
   setBehandlingOnHold: PropTypes.func.isRequired,
   openBehandlingForChanges: PropTypes.func.isRequired,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
   push: PropTypes.func.isRequired,
   navAnsatt: navAnsattPropType.isRequired,
   fjernVerge: PropTypes.func,

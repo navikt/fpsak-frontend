@@ -13,6 +13,7 @@ const dokumentMalType = {
   TBKVAR: 'TBKVAR',
   KORRIGVARS: 'KORRIGVARS',
   FRITKS: 'FRITKS',
+  VARSEL_OM_TILBAKEKREVING: 'VARS',
 };
 
 export default dokumentMalType;

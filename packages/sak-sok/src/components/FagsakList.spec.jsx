@@ -52,6 +52,7 @@ describe('<FagsakList>', () => {
     opprettet: '2019-02-17T13:49:18.645',
     endret: '2019-02-17T13:49:18.645',
     person,
+    dekningsgrad: 100,
   };
 
   const headerTextCodes = [
@@ -95,6 +96,7 @@ describe('<FagsakList>', () => {
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
       person,
+      dekningsgrad: 100,
     };
     const fagsak3 = {
       saksnummer: 34567,
@@ -110,6 +112,7 @@ describe('<FagsakList>', () => {
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
       person,
+      dekningsgrad: 100,
     };
 
     const fagsaker = [fagsak, fagsak2, fagsak3];
@@ -156,6 +159,7 @@ describe('<FagsakList>', () => {
       opprettet: '2019-02-18T13:49:18.645',
       endret: '2019-02-18T13:49:18.645',
       person,
+      dekningsgrad: 100,
     };
 
     const clickFunction = sinon.spy();

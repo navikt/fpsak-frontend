@@ -48,6 +48,7 @@ describe('Behandling-felles-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
+      shouldUpdateFagsak: true,
     });
   });
 
@@ -69,6 +70,7 @@ describe('Behandling-felles-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
+      shouldUpdateFagsak: true,
     });
   });
 
@@ -86,6 +88,7 @@ describe('Behandling-felles-reducer', () => {
       featureToggles: {},
       kodeverk: {},
       fagsak: {},
+      shouldUpdateFagsak: true,
     });
   });
 

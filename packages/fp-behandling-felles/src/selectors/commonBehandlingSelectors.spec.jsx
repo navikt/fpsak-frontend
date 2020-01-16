@@ -115,30 +115,6 @@ describe('commonBehandlingSelectors', () => {
       expect(openAps[0].id).is.eql(1);
     });
 
-    it('skal ha åpent aksjonspunkt for kontrollering av revurdering', () => {
-      const openAksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST,
-        },
-      }];
-
-      const isApOpen = selectors.isKontrollerRevurderingAksjonspunkOpen.resultFunc(openAksjonspunkter);
-
-      expect(isApOpen).is.true;
-    });
-
-    it('skal ikke ha åpent aksjonspunkt for kontrollering av revurdering', () => {
-      const openAksjonspunkter = [{
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_INNSYN,
-        },
-      }];
-
-      const isApOpen = selectors.isKontrollerRevurderingAksjonspunkOpen.resultFunc(openAksjonspunkter);
-
-      expect(isApOpen).is.false;
-    });
-
     it('skal ha behandling som manuelt er satt på vent', () => {
       const openAksjonspunkter = [{
         definisjon: {
@@ -161,24 +137,6 @@ describe('commonBehandlingSelectors', () => {
       const hasAp = selectors.hasBehandlingManualPaVent.resultFunc(openAksjonspunkter);
 
       expect(hasAp).is.false;
-    });
-  });
-
-  describe('språk', () => {
-    it('skal hente språktekst fra behandlingens språk-kode', () => {
-      const sprakkode = {
-        kode: 'NN',
-      };
-
-      const languageCode = selectors.getBehandlingLanguageCode.resultFunc(sprakkode);
-
-      expect(languageCode).is.eql('Malform.Nynorsk');
-    });
-
-    it('skal hente standard språktekst når behandlingens ikke har språk-kode', () => {
-      const sprakkode = undefined;
-      const languageCode = selectors.getBehandlingLanguageCode.resultFunc(sprakkode);
-      expect(languageCode).is.eql('Malform.Bokmal');
     });
   });
 
@@ -271,23 +229,6 @@ describe('commonBehandlingSelectors', () => {
           notAccepted: false,
         },
       });
-    });
-  });
-
-  describe('getMerknaderFraBeslutter', () => {
-    it('skal hente merknad fra beslutter for ett bestemt aksjonspunkt', () => {
-      const allMerknaderFraBeslutter = {
-        [aksjonspunktCodes.VURDER_INNSYN]: {
-          notAccepted: true,
-        },
-        [aksjonspunktCodes.VURDERE_DOKUMENT]: {
-          notAccepted: false,
-        },
-      };
-
-      const notAccepted = selectors.getMerknaderFraBeslutter(aksjonspunktCodes.VURDER_INNSYN).resultFunc(allMerknaderFraBeslutter);
-
-      expect(notAccepted).is.eql(allMerknaderFraBeslutter[aksjonspunktCodes.VURDER_INNSYN]);
     });
   });
 });

@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -10,6 +9,8 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import arbeidsforholdKilder from '@fpsak-frontend/fakta-arbeidsforhold/src/kodeverk/arbeidsforholdKilder';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -37,20 +38,13 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.PERMISJONSBESKRIVELSE_TYPE]: [{
-    kode: 'PERMISJON',
-    navn: 'Permisjon',
-  }],
-};
-
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/ArbeidsforholdFaktaIndex',
+  title: 'fakta/fakta-arbeidsforhold',
   component: ArbeidsforholdFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
@@ -145,7 +139,7 @@ export const visPanelUtenAksjonspunkter = () => {
       })}
       aksjonspunkter={[]}
       alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{ }}
+      alleMerknaderFraBeslutter={{}}
       submitCallback={action('button-click')}
       openInfoPanels={openInfoPanels}
       toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}

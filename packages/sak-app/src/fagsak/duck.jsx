@@ -3,10 +3,6 @@ import { createSelector } from 'reselect';
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi, { FpsakApiKeys } from '../data/fpsakApi';
-import { updateBehandlingsupportInfo } from '../behandlingsupport/duck';
-import { updateAnnenPartBehandling } from '../fagsakprofile/duck';
-import behandlingOrchestrator from '../behandling/BehandlingOrchestrator';
-import behandlingUpdater from '../behandling/BehandlingUpdater';
 
 export const reducerName = 'fagsak';
 
@@ -15,27 +11,6 @@ const actionType = (name) => `${reducerName}/${name}`;
 export const SELECT_FAGSAK = actionType('SELECT_FAGSAK');
 export const RESET_FAGSAKER = actionType('RESET_FAGSAKER');
 export const SET_SELECTED_SAKSNUMMER = actionType('SET_SELECTED_SAKSNUMMER');
-
-export const updateBehandlinger = (saksnummer) => (dispatch) => (behandlingOrchestrator.fetchBehandlinger(saksnummer, dispatch));
-
-const resetFetchFagsakInfo = () => (dispatch) => {
-  dispatch(fpsakApi.FETCH_FAGSAK.resetRestApi()());
-  behandlingOrchestrator.resetRestApis(dispatch);
-  behandlingUpdater.resetBehandling(dispatch);
-  dispatch(fpsakApi.ANNEN_PART_BEHANDLING.resetRestApi()());
-};
-
-export const updateFagsakInfo = (saksnummer) => (dispatch) => Promise.all([
-  dispatch(fpsakApi.FETCH_FAGSAK.makeRestApiRequest()({ saksnummer }, { keepData: true })),
-  dispatch(updateBehandlinger(saksnummer)),
-  dispatch(updateAnnenPartBehandling(saksnummer)),
-  dispatch(updateBehandlingsupportInfo(saksnummer)),
-]);
-
-export const fetchFagsakInfo = (saksnummer) => (dispatch) => {
-  dispatch(resetFetchFagsakInfo());
-  return dispatch(updateFagsakInfo(saksnummer));
-};
 
 export const setSelectedSaksnummer = (saksnummer) => ({
   type: SET_SELECTED_SAKSNUMMER,
@@ -48,6 +23,7 @@ export const doNotResetWhitelist = [
   FpsakApiKeys.LANGUAGE_FILE,
   FpsakApiKeys.BEHANDLENDE_ENHETER,
   FpsakApiKeys.KODEVERK,
+  FpsakApiKeys.KODEVERK_FPTILBAKE,
   FpsakApiKeys.SHOW_DETAILED_ERROR_MESSAGES,
   FpsakApiKeys.FEATURE_TOGGLE,
 ];

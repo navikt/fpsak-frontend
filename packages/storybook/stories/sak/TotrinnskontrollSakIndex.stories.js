@@ -2,12 +2,12 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import arbeidsforholdHandlingType from '@fpsak-frontend/kodeverk/src/arbeidsforholdHandlingType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import TotrinnskontrollSakIndex from '@fpsak-frontend/sak-totrinnskontroll';
 
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const data = [{
   skjermlenkeType: 'FORMKRAV_KLAGE_NFP',
@@ -60,16 +60,8 @@ const skjemalenkeTyper = [{
   kode: 'FORMKRAV_KLAGE_NFP',
 }];
 
-const alleKodeverk = {
-  [kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE]: [{
-    kode: arbeidsforholdHandlingType.BRUK,
-    navn: 'Bruk',
-    kodeverk: kodeverkTyper.ARBEIDSFORHOLD_HANDLING_TYPE,
-  }],
-};
-
 export default {
-  title: 'sak/TotrinnskontrollSakIndex',
+  title: 'sak/sak-totrinnskontroll',
   component: TotrinnskontrollSakIndex,
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
@@ -98,8 +90,6 @@ export const visTotrinnskontrollForBeslutter = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>
@@ -129,8 +119,6 @@ export const visTotrinnskontrollForSaksbehandler = () => (
       }}
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage
-      erKlageWithKA={false}
-      erKlage
       disableGodkjennKnapp={boolean('disableGodkjennKnapp', false)}
     />
   </div>

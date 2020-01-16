@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -10,6 +9,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -142,10 +143,6 @@ const medlemskap = {
       barn: [],
       barnSoktFor: [],
       barnFraTpsRelatertTilSoknad: [],
-      opplysningsKilde: {
-        kode: 'TPS',
-        kodeverk: 'OPPLYSNINGSKILDE',
-      },
       harVerge: false,
     },
     aksjonspunkter: [
@@ -207,10 +204,6 @@ const medlemskap = {
       barn: [],
       barnSoktFor: [],
       barnFraTpsRelatertTilSoknad: [],
-      opplysningsKilde: {
-        kode: 'TPS',
-        kodeverk: 'OPPLYSNINGSKILDE',
-      },
       harVerge: false,
     },
     aksjonspunkter: [
@@ -233,49 +226,13 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.MEDLEMSKAP_DEKNING]: [{
-    kode: 'FTL_2_6',
-    navn: 'Folketrygdloven § 2-6',
-  }],
-  [kodeverkTyper.MEDLEMSKAP_TYPE]: [{
-    kode: 'ENDELIG',
-    navn: 'Endelig',
-  }],
-  [kodeverkTyper.MEDLEMSKAP_MANUELL_VURDERING_TYPE]: [{
-    kode: 'MEDLEM',
-    navn: 'Medlem',
-  }, {
-    kode: 'UNNTAK',
-    navn: 'Unntak',
-  }, {
-    kode: 'IKKE_RELEVANT',
-    navn: 'Ikke relevant',
-  }],
-  [kodeverkTyper.PERSONSTATUS_TYPE]: [{
-    kode: 'BOSA',
-    navn: 'Bosatt',
-    kodeverk: 'PERSONSTATUS_TYPE',
-  }],
-  [kodeverkTyper.SIVILSTAND_TYPE]: [{
-    kode: 'UGIF',
-    navn: 'Ugift',
-    kodeverk: 'SIVILSTAND_TYPE',
-  }],
-  [kodeverkTyper.REGION]: [{
-    kode: 'NORDEN',
-    navn: 'Norden',
-    kodeverk: 'REGION',
-  }],
-};
-
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/MedlemskapFaktaIndex',
+  title: 'fakta/fakta-medlemskap',
   component: MedlemskapFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

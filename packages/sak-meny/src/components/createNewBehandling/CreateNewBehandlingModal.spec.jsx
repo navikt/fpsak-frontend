@@ -7,7 +7,7 @@ import { Knapp } from 'nav-frontend-knapper';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { CheckboxField, SelectField } from '@fpsak-frontend/form';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 
@@ -15,6 +15,7 @@ import MenyKodeverk from '../../MenyKodeverk';
 import {
   CreateNewBehandlingModal, getBehandlingAarsaker, getBehandlingTyper, getEnabledBehandlingstyper,
 } from './CreateNewBehandlingModal';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-sak-meny';
 
 describe('<CreateNewBehandlingModal>', () => {
   const submitEventCallback = sinon.spy();
@@ -37,13 +38,14 @@ describe('<CreateNewBehandlingModal>', () => {
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       menyKodeverk={menyKodeverk}
     />);
 
     const modal = wrapper.find(Modal);
     expect(modal).to.have.length(1);
     expect(modal.prop('isOpen')).is.true;
-    expect(modal.prop('contentLabel')).to.eql('CreateNewBehandlingModal.ModalDescription');
+    expect(modal.prop('contentLabel')).to.eql('Ny behandling');
     expect(modal.prop('onRequestClose')).to.eql(cancelEventCallback);
     expect(modal.prop('onAfterOpen')).is.not.null;
   });
@@ -60,6 +62,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       menyKodeverk={menyKodeverk}
@@ -83,6 +86,7 @@ describe('<CreateNewBehandlingModal>', () => {
       kanTilbakekrevingOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       saksnummer={123}
       menyKodeverk={menyKodeverk}
     />);
@@ -105,6 +109,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       menyKodeverk={menyKodeverk}
@@ -127,6 +132,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       menyKodeverk={menyKodeverk}
@@ -148,6 +154,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       menyKodeverk={menyKodeverk}
@@ -169,6 +176,7 @@ describe('<CreateNewBehandlingModal>', () => {
       enabledBehandlingstyper={behandlingstyper}
       kanTilbakekrevingOpprettes={sinon.spy()}
       sjekkOmTilbakekrevingKanOpprettes={sinon.spy()}
+      sjekkOmTilbakekrevingRevurderingKanOpprettes={sinon.spy()}
       erTilbakekrevingAktivert={false}
       saksnummer={123}
       menyKodeverk={menyKodeverk}

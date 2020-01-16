@@ -131,6 +131,7 @@ export class UttakTimeLineData extends Component {
 
     const periodeSomSkalSplittes = uttaksresultatActivity.find((o) => o.id === periodeId);
     const alleAndrePerioder = uttaksresultatActivity.filter((o) => o.id !== periodeId);
+    const nyId = periodeId + 1;
 
     const virkedagerForPeriode1 = calcDays(forstePeriode.fom, forstePeriode.tom);
     const virkedagerForPeriode2 = calcDays(andrePeriode.fom, andrePeriode.tom);
@@ -151,12 +152,20 @@ export class UttakTimeLineData extends Component {
     };
     const nyPeriode2 = {
       ...periodeSomSkalSplittes,
+      id: nyId,
       fom: andrePeriode.fom,
       tom: andrePeriode.tom,
       begrunnelse: periodeSomSkalSplittes.begrunnelse ? periodeSomSkalSplittes.begrunnelse : ' ',
       aktiviteter: oppdaterteAktiviteterPeriode2,
       hovedsoker,
     };
+
+    alleAndrePerioder.forEach((p) => {
+      if (p.id >= nyId) {
+        // eslint-disable-next-line no-param-reassign
+        p.id += 1;
+      }
+    });
 
     const sorterteAktiviteter = alleAndrePerioder.concat(nyPeriode1, nyPeriode2);
     sorterteAktiviteter.sort((a, b) => a.id - b.id);

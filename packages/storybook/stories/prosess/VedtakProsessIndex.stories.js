@@ -18,6 +18,8 @@ import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';
 
 const behandling = {
@@ -66,24 +68,8 @@ const resultatstruktur = {
 };
 const resultatstrukturOriginalBehandling = {};
 
-const alleKodeverk = {
-  [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.ADOPSJONSVILKARET]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-  },
-  [kodeverkTyper.TILBAKEKR_VIDERE_BEH]: [{
-    kode: tilbakekrevingVidereBehandling.TILBAKEKR_OPPDATER,
-    navn: 'Endringer vil oppdatere eksisterende feilutbetalte perioder og beløp.',
-    kodeverk: TILBAKEKR_VIDERE_BEH_KODEVERK,
-  }],
-};
-
-
 export default {
-  title: 'prosess/VedtakProsessIndex',
+  title: 'prosess/prosess-vedtak',
   component: VedtakProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

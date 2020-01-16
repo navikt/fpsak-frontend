@@ -26,7 +26,7 @@ describe('<RisikoklassifiseringSakIndex>', () => {
       risikoklassifisering={undefined}
       isPanelOpen={false}
       readOnly={false}
-      submitAksjonspunkter={sinon.spy()}
+      submitAksjonspunkt={sinon.spy()}
       toggleRiskPanel={sinon.spy()}
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
@@ -41,7 +41,7 @@ describe('<RisikoklassifiseringSakIndex>', () => {
       risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_KLASSIFISERT)}
       isPanelOpen={false}
       readOnly={false}
-      submitAksjonspunkter={sinon.spy()}
+      submitAksjonspunkt={sinon.spy()}
       toggleRiskPanel={sinon.spy()}
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(1);
@@ -56,7 +56,7 @@ describe('<RisikoklassifiseringSakIndex>', () => {
       risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.IKKE_HOY)}
       isPanelOpen={false}
       readOnly={false}
-      submitAksjonspunkter={sinon.spy()}
+      submitAksjonspunkt={sinon.spy()}
       toggleRiskPanel={sinon.spy()}
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);
@@ -71,7 +71,7 @@ describe('<RisikoklassifiseringSakIndex>', () => {
       risikoklassifisering={lagRisikoklassifisering(kontrollresultatKode.HOY)}
       isPanelOpen={false}
       readOnly={false}
-      submitAksjonspunkter={sinon.spy()}
+      submitAksjonspunkt={sinon.spy()}
       toggleRiskPanel={sinon.spy()}
     />);
     expect(wrapper.find(ManglendeKlassifiseringPanel)).has.length(0);

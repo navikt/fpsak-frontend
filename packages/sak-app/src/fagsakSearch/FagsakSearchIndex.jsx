@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createSelector } from 'reselect';
 
-import { pathToFagsak } from '@fpsak-frontend/fp-felles';
+import {
+  pathToFagsak, errorOfType, ErrorTypes, getErrorResponseData,
+} from '@fpsak-frontend/fp-felles';
 import { fagsakPropType } from '@fpsak-frontend/prop-types';
 import FagsakSokSakIndex from '@fpsak-frontend/sak-sok';
 
-import { getAlleKodeverk } from '../kodeverk/duck';
-import { resetFagsakSearch, searchFagsaker } from './duck';
-import {
-  getFagsaker, getSearchFagsakerAccessDenied, getSearchFagsakerFinished, getSearchFagsakerStarted,
-} from './fagsakSearchSelectors';
+import fpsakApi from '../data/fpsakApi';
+import { getAlleFpSakKodeverk } from '../kodeverk/duck';
 
 /**
  * FagsakSearchIndex
@@ -84,17 +84,29 @@ FagsakSearchIndex.defaultProps = {
   searchResultReceived: false,
 };
 
+export const getSearchFagsakerAccessDenied = createSelector(
+  [fpsakApi.SEARCH_FAGSAK.getRestApiError()],
+  (error) => {
+    if (errorOfType(error, ErrorTypes.MANGLER_TILGANG_FEIL)) {
+      return getErrorResponseData(error);
+    }
+    return undefined;
+  },
+);
+
 const mapStateToProps = (state) => ({
-  searchResultReceived: getSearchFagsakerFinished(state),
-  fagsaker: getFagsaker(state),
-  searchStarted: getSearchFagsakerStarted(state),
+  searchResultReceived: fpsakApi.SEARCH_FAGSAK.getRestApiFinished()(state),
+  fagsaker: fpsakApi.SEARCH_FAGSAK.getRestApiData()(state),
+  searchStarted: fpsakApi.SEARCH_FAGSAK.getRestApiStarted()(state),
   searchResultAccessDenied: getSearchFagsakerAccessDenied(state),
-  alleKodeverk: getAlleKodeverk(state),
+  alleKodeverk: getAlleFpSakKodeverk(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
   ...bindActionCreators({
-    push, searchFagsaker, resetFagsakSearch,
+    push,
+    searchFagsaker: fpsakApi.SEARCH_FAGSAK.makeRestApiRequest(),
+    resetFagsakSearch: fpsakApi.SEARCH_FAGSAK.resetRestApi(),
   }, dispatch),
 });
 

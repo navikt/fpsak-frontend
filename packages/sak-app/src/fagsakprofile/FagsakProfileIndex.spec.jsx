@@ -2,13 +2,16 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { expect } from 'chai';
+import { Redirect } from 'react-router-dom';
 
+import FagsakProfilSakIndex from '@fpsak-frontend/sak-fagsak-profil';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
+import {
+  getLocationWithDefaultBehandlingspunktAndFakta, pathToBehandling, pathToBehandlinger, DataFetcher,
+} from '@fpsak-frontend/fp-felles';
 
-import RisikoklassfiseringIndex from './risikoklassifisering/RisikoklassifiseringIndex';
-import FagsakProfile from './components/FagsakProfile';
-import { FagsakProfileIndex, getSkalViseRisikoklassifisering } from './FagsakProfileIndex';
+import { FagsakProfileIndex } from './FagsakProfileIndex';
 
 describe('<FagsakProfileIndex>', () => {
   it('skal rendre komponent og vise alle behandlinger når ingen behandling er valgt', () => {
@@ -17,16 +20,23 @@ describe('<FagsakProfileIndex>', () => {
       saksnummer={123}
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll={false}
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
-      skalViseRisikoklassifisering={false}
       alleKodeverk={{}}
+      enabledApis={[]}
+      shouldRedirectToBehandlinger={false}
+      location={{}}
+      dekningsgrad={100}
     />);
-    expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
-    expect(wrapper.find(FagsakProfile)).has.length(1);
+
+    const dataFetchers = wrapper.find(DataFetcher);
+    expect(dataFetchers.at(1).prop('showComponent')).is.false;
+
+    const fagsakProfile = dataFetchers.at(0).renderProp('render')({
+    }).find(FagsakProfilSakIndex);
+    expect(fagsakProfile).has.length(1);
     expect(showAllCallback.getCalls()).has.length(1);
   });
 
@@ -37,13 +47,15 @@ describe('<FagsakProfileIndex>', () => {
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll
       toggleShowAll={showAllCallback}
       reset={sinon.spy()}
-      skalViseRisikoklassifisering={false}
       alleKodeverk={{}}
+      enabledApis={[]}
+      shouldRedirectToBehandlinger={false}
+      location={{}}
+      dekningsgrad={100}
     />);
 
     expect(showAllCallback.getCalls()).has.length(0);
@@ -56,58 +68,68 @@ describe('<FagsakProfileIndex>', () => {
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll
       toggleShowAll={sinon.spy()}
       reset={resetCallback}
-      skalViseRisikoklassifisering={false}
       alleKodeverk={{}}
+      enabledApis={[]}
+      shouldRedirectToBehandlinger={false}
+      location={{}}
+      dekningsgrad={100}
     />);
-    expect(wrapper.find(RisikoklassfiseringIndex)).has.length(0);
+
     wrapper.unmount();
 
     expect(resetCallback.getCalls()).has.length(1);
   });
 
-  it('skal teste at risikoklassifisering vises hvis den er tilgjengelig', () => {
-    const resetCallback = sinon.spy();
+
+  it('skal omdirigere til behandling hvis flagget er satt', () => {
+    const behandlingId = 67890;
+    const saksnummer = 123;
+    const location = {};
+    const pathToBehandlingerForFagsak = pathToBehandlinger(saksnummer);
+    const locationForBehandling = getLocationWithDefaultBehandlingspunktAndFakta({ ...location, pathname: pathToBehandling(saksnummer, behandlingId) });
+
     const wrapper = shallow(<FagsakProfileIndex
-      saksnummer={123}
+      saksnummer={saksnummer}
       sakstype={{ kode: fagsakYtelseType.FORELDREPENGER }}
       fagsakStatus={{ kode: fagsakStatus.OPPRETTET }}
       selectedBehandlingId={1}
-      behandlinger={[]}
       noExistingBehandlinger
       showAll
       toggleShowAll={sinon.spy()}
-      reset={resetCallback}
-      skalViseRisikoklassifisering
+      reset={sinon.spy()}
       alleKodeverk={{}}
+      enabledApis={[]}
+      shouldRedirectToBehandlinger={false}
+      location={{}}
+      dekningsgrad={100}
     />);
-    expect(wrapper.find(RisikoklassfiseringIndex)).has.length(1);
-    wrapper.unmount();
 
-    expect(resetCallback.getCalls()).has.length(1);
-  });
+    let redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({
+    }).find(Redirect);
+    expect(redirect).to.have.length(0);
 
-  it('skal teste at vi viser risikoklassifisering dersom valgt behandling er en førstegangsbehandling', () => {
-    const typeMap = {
-      9999999: 'BT-002',
-      7777777: 'BT-004',
-      5555555: 'BT-007',
-    };
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(9999999, typeMap);
-    expect(skalViseRisikoklassifisering).to.eql(true);
-  });
+    wrapper.setProps({ shouldRedirectToBehandlinger: true });
 
-  it('skal teste at vi ikke viser risikoklassifisering dersom valgt behandling er en førstegangsbehandling', () => {
-    const typeMap = {
-      9999999: 'BT-002',
-      7777777: 'BT-004',
-      5555555: 'BT-007',
-    };
-    const skalViseRisikoklassifisering = getSkalViseRisikoklassifisering.resultFunc(5555555, typeMap);
-    expect(skalViseRisikoklassifisering).to.eql(false);
+    redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({
+      behandlingerFpsak: [{
+        id: 67890,
+      }, {
+        id: 2,
+      }],
+    }).find(Redirect);
+    expect(redirect).to.have.length(1);
+    expect(redirect.at(0).props()).to.have.property('to').that.eql(pathToBehandlingerForFagsak);
+
+    redirect = wrapper.find(DataFetcher).at(0).renderProp('render')({
+      behandlingerFpsak: [{
+        id: 67890,
+      }],
+    }).find(Redirect);
+    expect(redirect).to.have.length(1);
+    expect(redirect.at(0).props()).to.have.property('to').that.eql(locationForBehandling);
   });
 });

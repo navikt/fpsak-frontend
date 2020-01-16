@@ -6,7 +6,7 @@ import { ForbiddenPage, NotFoundPage, UnauthorizedPage } from '@fpsak-frontend/s
 import withReduxAndRouterProvider from '../../decorators/withReduxAndRouter';
 
 export default {
-  title: 'sak/FeilsiderSakIndex',
+  title: 'sak/sak-feilsider',
   decorators: [withKnobs, withReduxAndRouterProvider],
 };
 

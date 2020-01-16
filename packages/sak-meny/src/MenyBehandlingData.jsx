@@ -5,7 +5,7 @@ class MenyBehandlingData {
 
   $$erKoet = false;
 
-  constructor(id, uuid, versjon, type, erPaVent, erKoet, behandlendeEnhetId, behandlendeEnhetNavn) {
+  constructor(id, uuid, versjon, type, erPaVent, erKoet, behandlendeEnhetId, behandlendeEnhetNavn, erPapirsoknad) {
     this.$$id = id;
     this.$$uuid = uuid;
     this.$$versjon = versjon;
@@ -14,6 +14,7 @@ class MenyBehandlingData {
     this.$$erKoet = erKoet;
     this.$$behandlendeEnhetId = behandlendeEnhetId;
     this.$$behandlendeEnhetNavn = behandlendeEnhetNavn;
+    this.$$erPapirsoknad = erPapirsoknad;
   }
 
   static lagIngenValgtBehandling() {
@@ -56,6 +57,10 @@ class MenyBehandlingData {
 
   get harValgtBehandling() {
     return this.$$harValgtBehandling;
+  }
+
+  get erPapirsoknad() {
+    return this.$$erPapirsoknad;
   }
 }
 

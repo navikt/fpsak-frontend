@@ -1,11 +1,8 @@
 export { default as BehandlingsprosessPanel } from './src/behandlingsprosess/components/BehandlingsprosessPanel';
 export { default as FatterVedtakStatusModal } from './src/behandlingsprosess/components/vedtak/FatterVedtakStatusModal';
 export { default as IverksetterVedtakStatusModal } from './src/behandlingsprosess/components/vedtak/IverksetterVedtakStatusModal';
-export { default as BehandlingspunktSubmitButton } from './src/behandlingsprosess/components/BehandlingspunktSubmitButton';
 export { default as BehandlingspunktProperties } from './src/behandlingsprosess/definition/behandlingspunktBuilder';
 export { default as getBehandlingsprosessRedux } from './src/behandlingsprosess/behandlingsprosessCommonDuck';
-export { default as BehandlingInfoHolder } from './src/BehandlingInfoHolder';
-export { default as sakOperations } from './src/SakOperations';
 export { default as BehandlingGrid } from './src/components/BehandlingGrid';
 export { default as getFaktaRedux } from './src/fakta/faktaCommonDuck';
 export { default as getBehandlingRedux } from './src/behandlingCommonDuck';

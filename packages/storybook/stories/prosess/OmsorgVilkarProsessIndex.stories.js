@@ -3,27 +3,17 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 
 import withReduxProvider from '../../decorators/withRedux';
 
-const alleKodeverk = {
-  [kodeverkTyper.AVSLAGSARSAK]: {
-    [vilkarType.OMSORGSVILKARET]: [{
-      kode: avslagsarsakCodes.INGEN_BEREGNINGSREGLER,
-      navn: 'Ingen beregningsregler',
-      kodeverk: kodeverkTyper.AVSLAGSARSAK,
-    }],
-  },
-};
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 export default {
-  title: 'prosess/OmsorgVilkarProsessIndex',
+  title: 'prosess/prosess-vilkar-omsorg',
   component: OmsorgVilkarProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };

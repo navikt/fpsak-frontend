@@ -21,8 +21,11 @@ const options = {
   before: function (app, server) {
     vtpLogin(app);
     sentryMock(app);
-    featureToggles(app);
     fakeError(app);
+    if (process.argv.includes('--feature-toggles')) {
+      console.warn('Mocking feature toggles');
+      featureToggles(app);
+    }
   },
   proxy: {
     '/fpoppdrag/**': {

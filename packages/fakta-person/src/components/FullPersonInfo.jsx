@@ -19,7 +19,8 @@ const findPersonStatus = (personopplysning) => {
   return personopplysning.personstatus ? personopplysning.personstatus : undefined;
 };
 
-export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => barn.opplysningsKilde.kode === opplysningsKilde.TPS);
+// TODO (TOR) Fjern opplysningskilde
+export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => barn.opplysningsKilde === opplysningsKilde.TPS);
 
 /**
  * FullPersonInfo

@@ -1,22 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { clearFields, formPropTypes } from 'redux-form';
 import moment from 'moment';
 import { Column, Row } from 'nav-frontend-grid';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, Undertekst,
+} from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
+import AlertStripe from 'nav-frontend-alertstriper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
-  behandlingForm, getKodeverknavnFn, faktaPanelCodes, getBehandlingFormPrefix, FaktaGruppe, FaktaEkspandertpanel, withDefaultToggling,
+  behandlingForm, getKodeverknavnFn, getBehandlingFormPrefix, FaktaGruppe,
 } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -48,10 +51,7 @@ export class FeilutbetalingInfoPanelImpl extends Component {
 
   render() {
     const {
-      toggleInfoPanelCallback,
-      openInfoPanels,
       hasOpenAksjonspunkter,
-      intl,
       feilutbetaling,
       årsaker,
       readOnly,
@@ -65,17 +65,17 @@ export class FeilutbetalingInfoPanelImpl extends Component {
     const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
 
     return (
-      <FaktaEkspandertpanel
-        title={intl.formatMessage({ id: 'FeilutbetalingInfoPanel.FaktaFeilutbetaling' })}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FEILUTBETALING)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        faktaId={faktaPanelCodes.FEILUTBETALING}
-        readOnly={readOnly}
-      >
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
-          {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
-        </AksjonspunktHelpText>
+      <>
+        {hasOpenAksjonspunkter && (
+          <AlertStripe type="advarsel" className={styles.marginBottom}>
+            <FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />
+          </AlertStripe>
+        )}
+        {!hasOpenAksjonspunkter && (
+          <AksjonspunktHelpText isAksjonspunktOpen={false}>
+            {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
+          </AksjonspunktHelpText>
+        )}
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
           <Row className={styles.smallMarginBottom}>
@@ -122,7 +122,8 @@ export class FeilutbetalingInfoPanelImpl extends Component {
                         <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarseltBeløp" />
                       </Undertekst>
                       <Normaltekst className={styles.smallPaddingRight}>
-                        {feilutbetaling.tidligereVarseltBeløp}
+                        {feilutbetaling.tidligereVarseltBeløp
+                          ? feilutbetaling.tidligereVarseltBeløp : <FormattedMessage id="FeilutbetalingInfoPanel.IkkeVarslet" />}
                       </Normaltekst>
                     </Column>
                   </Row>
@@ -215,14 +216,6 @@ export class FeilutbetalingInfoPanelImpl extends Component {
               </Row>
             </Column>
           </Row>
-          <Row className={styles.smallMarginBottom}>
-            <Column xs="12" md="6">
-              <Element>
-                <FormattedMessage id="FeilutbetalingInfoPanel.TidligereVarsel" />
-              </Element>
-            </Column>
-          </Row>
-          <VerticalSpacer twentyPx />
           <Row>
             <Column md="6">
               <TextAreaField
@@ -251,17 +244,14 @@ export class FeilutbetalingInfoPanelImpl extends Component {
             </Column>
           </Row>
         </form>
-      </FaktaEkspandertpanel>
+      </>
     );
   }
 }
 
 FeilutbetalingInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   feilutbetaling: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
@@ -273,13 +263,10 @@ FeilutbetalingInfoPanelImpl.propTypes = {
 };
 
 const buildInitialValues = createSelector([
-  (ownProps) => ownProps.feilutbetalingFakta, (ownProps) => ownProps.aksjonspunkter], (
-  feilutbetalingFakta, aksjonspunkter,
-) => {
-  const { perioder } = feilutbetalingFakta;
-  const apCode = aksjonspunkter.find((ap) => ap.definisjon.kode === feilutbetalingAksjonspunkter[0]);
+  (ownProps) => ownProps.feilutbetalingFakta], (feilutbetalingFakta) => {
+  const { perioder, begrunnelse } = feilutbetalingFakta;
   return {
-    begrunnelse: apCode ? apCode.begrunnelse : null,
+    begrunnelse,
     perioder: perioder.sort((a, b) => moment(a.fom) - moment(b.fom))
       .map((p) => {
         const {
@@ -365,8 +352,7 @@ const mapDispatchToProps = (dispatch) => ({
   }, dispatch),
 });
 
-const FeilutbetalingForm = injectIntl(behandlingForm({
+const FeilutbetalingForm = behandlingForm({
   form: formName,
-})(FeilutbetalingInfoPanelImpl));
-const FeilutbetalingInfoPanel = withDefaultToggling(faktaPanelCodes.FEILUTBETALING, feilutbetalingAksjonspunkter)(FeilutbetalingForm);
-export default connect(mapStateToPropsFactory, mapDispatchToProps)(FeilutbetalingInfoPanel);
+})(FeilutbetalingInfoPanelImpl);
+export default connect(mapStateToPropsFactory, mapDispatchToProps)(FeilutbetalingForm);

@@ -2,8 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import arbeidType from '@fpsak-frontend/kodeverk/src/arbeidType';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -11,6 +9,8 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
 
 import withReduxProvider from '../../decorators/withRedux';
+
+import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -122,36 +122,13 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.OPPTJENING_AKTIVITET_TYPE]: [{
-    kode: opptjeningAktivitetType.ARBEID,
-    navn: 'Arbeid',
-  }, {
-    kode: opptjeningAktivitetType.FRILANS,
-    navn: 'Frilans',
-  }, {
-    kode: opptjeningAktivitetType.DAGPENGER,
-    navn: 'Dagpenger',
-  }, {
-    kode: opptjeningAktivitetType.NARING,
-    navn: 'Næring',
-  }],
-  [kodeverkTyper.ARBEID_TYPE]: [{
-    kode: arbeidType.LONN_UNDER_UTDANNING,
-    navn: 'Lønn under utdanning',
-  }, {
-    kode: arbeidType.FRILANSER,
-    navn: 'Frilanser',
-  }],
-};
-
 const toggle = (openInfoPanels, togglePanel) => (value) => {
   const exists = openInfoPanels.some((op) => op === value);
   return togglePanel(exists ? [] : [value]);
 };
 
 export default {
-  title: 'fakta/OpptjeningFaktaIndex',
+  title: 'fakta/fakta-opptjening',
   component: OpptjeningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };

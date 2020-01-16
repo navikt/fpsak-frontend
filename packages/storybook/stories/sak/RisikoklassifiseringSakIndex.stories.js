@@ -6,7 +6,6 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import RisikoklassifiseringSakIndex from '@fpsak-frontend/sak-risikoklassifisering';
 import kontrollresultatKode from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/kontrollresultatKode';
-import faresignalVurdering from '@fpsak-frontend/sak-risikoklassifisering/src/kodeverk/faresignalVurdering';
 
 import withReduxProvider from '../../decorators/withRedux';
 
@@ -17,7 +16,7 @@ const withWidthProvider = (story) => (
 );
 
 export default {
-  title: 'sak/RisikoklassifiseringSakIndex',
+  title: 'sak/sak-risikoklassifisering',
   component: RisikoklassifiseringSakIndex,
   decorators: [withKnobs, withReduxProvider, withWidthProvider],
 };
@@ -28,7 +27,7 @@ export const visPanelUtenInformasjon = () => (
     behandlingVersjon={1}
     isPanelOpen={boolean('isPanelOpen', false)}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     toggleRiskPanel={action('button-click')}
   />
 );
@@ -44,7 +43,7 @@ export const visPanelForLavRisikoklassifisering = () => (
     }}
     isPanelOpen={boolean('isPanelOpen', false)}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     toggleRiskPanel={action('button-click')}
   />
 );
@@ -66,12 +65,15 @@ export const visPanelForHøyRisikoklassifisering = () => (
       kontrollresultat: {
         kode: kontrollresultatKode.HOY,
       },
-      faresignalVurdering: {
-        kode: faresignalVurdering.INNVIRKNING,
+      medlFaresignaler: {
+        faresignaler: ['Søker bor hos foreldre'],
+      },
+      iayFaresignaler: {
+        faresignaler: ['Søkers lønn har runde tall', 'Det er nær relasjon mellom søker og sentral rolle hos Statoil', 'Statoil er nyoppstartet'],
       },
     }}
     readOnly={boolean('readOnly', false)}
-    submitAksjonspunkter={action('button-click')}
+    submitAksjonspunkt={action('button-click')}
     isPanelOpen
     toggleRiskPanel={action('button-click')}
   />

@@ -1,0 +1,194 @@
+{
+  "id": 1000604,
+  "uuid": "5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+  "versjon": 32,
+  "type": {
+    "kode": "BT-002",
+    "kodeverk": "BEHANDLING_TYPE"
+  },
+  "status": {
+    "kode": "UTRED",
+    "kodeverk": "BEHANDLING_STATUS"
+  },
+  "fagsakId": 1000604,
+  "opprettet": "2019-12-04T15:04:05",
+  "avsluttet": null,
+  "endret": "2019-12-04T15:04:10.378",
+  "endretAvBrukernavn": "im-just-a-fake-code",
+  "behandlendeEnhetId": "0300",
+  "behandlendeEnhetNavn": "NAV Oslo",
+  "erAktivPapirsoknad": false,
+  "førsteÅrsak": {
+    "erAutomatiskRevurdering": false,
+    "behandlingArsakType": {
+      "kode": "RE-END-INNTEKTSMELD",
+      "kodeverk": "BEHANDLING_AARSAK"
+    },
+    "manueltOpprettet": false
+  },
+  "behandlingsfristTid": "2020-01-15",
+  "gjeldendeVedtak": false,
+  "erPaaVent": false,
+  "originalVedtaksDato": null,
+  "behandlingKøet": false,
+  "behandlingsresultat": {
+    "id": 1000554,
+    "type": {
+      "kode": "IKKE_FASTSATT",
+      "kodeverk": "BEHANDLING_RESULTAT_TYPE"
+    },
+    "avslagsarsak": null,
+    "avslagsarsakFritekst": null,
+    "rettenTil": {
+      "kode": "-",
+      "kodeverk": "RETTEN_TIL"
+    },
+    "konsekvenserForYtelsen": [],
+    "vedtaksbrev": {
+      "kode": "-",
+      "kodeverk": "VEDTAKSBREV"
+    },
+    "overskrift": null,
+    "fritekstbrev": null,
+    "erRevurderingMedUendretUtfall": false,
+    "skjaeringstidspunktForeldrepenger": "2019-11-27",
+    "skjæringstidspunkt": {
+      "dato": "2019-11-27"
+    }
+  },
+  "links": [
+    {
+      "href": "/fpsak/api/fagsak?saksnummer=124123804",
+      "rel": "fagsak",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/aksjonspunkt-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "aksjonspunkter",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/vilkar-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "vilkar",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/soknad?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "soknad",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/dokument/hent-mottattdokumentliste?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "mottattdokument",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/familiehendelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "familiehendelse",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/familiehendelse/v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "familiehendelse-v2",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/person/personopplysninger?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "soeker-personopplysninger",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/person/medlemskap-v2?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "soeker-medlemskap-v2",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/person/medlemskap?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "soeker-medlemskap",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/inntekt-arbeid-ytelse?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "inntekt-arbeid-ytelse",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/ytelsefordeling?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "ytelsefordeling",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/opptjening?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "opptjening",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/beregningsgrunnlag?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "beregningsgrunnlag",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/uttak/fakta-arbeidsforhold?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "fakta-arbeidsforhold",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/uttak/periode-grense?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "uttak-periode-grense",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "/fpsak/api/behandling/uttak/kontroller-fakta-perioder?uuid=5b1337b9-68d4-4fa0-a96f-c9b13fd03e8f",
+      "rel": "uttak-kontroller-fakta-perioder",
+      "requestPayload": null,
+      "type": "GET"
+    },
+    {
+      "href": "http://localhost:9000/fpsak/jetty/dummy/fpoppdrag/simulering/resultat-uten-inntrekk",
+      "rel": "simuleringResultat",
+      "requestPayload": {
+        "behandlingId": 1000604
+      },
+      "type": "POST"
+    }
+  ],
+  "behandlingPaaVent": false,
+  "fristBehandlingPaaVent": null,
+  "venteArsakKode": null,
+  "sprakkode": {
+    "kode": "-",
+    "kodeverk": "SPRAAK_KODE"
+  },
+  "ansvarligSaksbehandler": null,
+  "toTrinnsBehandling": false,
+  "behandlingArsaker": [
+    {
+      "erAutomatiskRevurdering": false,
+      "behandlingArsakType": {
+        "kode": "RE-END-INNTEKTSMELD",
+        "kodeverk": "BEHANDLING_AARSAK"
+      },
+      "manueltOpprettet": false
+    }
+  ],
+  "ansvarligBeslutter": null,
+  "behandlingHenlagt": false,
+  "taskStatus": null,
+  "behandlingKoet": false
+}

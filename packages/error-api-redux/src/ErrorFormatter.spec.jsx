@@ -26,7 +26,7 @@ describe('ErrorFormatter', () => {
     expect(new ErrorFormatter().format(errorMessages, crashMessage)).to.eql([
       ErrorMessage.withMessage(crashMessage),
       ErrorMessage.withMessageCode('Rest.ErrorMessage.General', { errorDetails: 'halted' }),
-      ErrorMessage.withMessageCode('Rest.ErrorMessage.Timeout', errorMessages[1]),
+      ErrorMessage.withMessageCode('Rest.ErrorMessage.PollingTimeout', errorMessages[1]),
     ]);
   });
 });

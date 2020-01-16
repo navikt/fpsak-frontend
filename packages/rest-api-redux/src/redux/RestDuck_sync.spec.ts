@@ -35,6 +35,7 @@ const getAsyncDefaultProps = {
   pollingTimeout: false,
   statusRequestFinished: false,
   statusRequestStarted: false,
+  cacheParams: undefined,
 };
 
 const createStore = (): Store => mockStore();
@@ -141,10 +142,10 @@ describe('RestDuck (sync)', () => {
           data: undefined,
           meta: { params, timestamp: stateAfterRequestError.meta.timestamp },
           error: {
-            message: 'Resource not found',
+            location: '/fpsak/api/ressurs',
           },
           started: false,
-          finished: false,
+          finished: true,
           ...getAsyncDefaultProps,
         };
         expect(stateAfterRequestError).to.eql(expected);

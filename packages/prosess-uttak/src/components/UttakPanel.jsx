@@ -229,7 +229,7 @@ const getGjeldendeStønadskonto = (stonadskontoTypeKode, stonadskontoer) => {
     case stonadskontoType.FEDREKVOTE:
       return stonadskontoer.FEDREKVOTE;
     default:
-      return {};
+      return undefined;
   }
 };
 
@@ -240,8 +240,16 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
   uttakResultArray
     .filter((res) => !(res.konto === stonadskontoType.UDEFINERT && res.trekkdagerDesimaler === 0))
     .forEach((value) => {
-      const gjeldeneStønadskonto = getGjeldendeStønadskonto(value.konto, stonadskonto.stonadskontoer);
-      if (gjeldeneStønadskonto && !gjeldeneStønadskonto.gyldigForbruk) {
+      const gjeldendeStønadskonto = getGjeldendeStønadskonto(value.konto, stonadskonto.stonadskontoer);
+      if (gjeldendeStønadskonto && !gjeldendeStønadskonto.gyldigForbruk) {
+        const minsteSaldo = gjeldendeStønadskonto.aktivitetSaldoDtoList.reduce((min, akt) => {
+          if (akt.saldo < min) {
+            return akt.saldo;
+          }
+
+          return min;
+        }, 0);
+
         errors = {
           _error: (
             <AlertStripe type="advarsel" className={styles.marginTop}>
@@ -249,7 +257,7 @@ const checkMaxDager = (uttaksresultatActivity, stonadskonto) => {
                 id="ValidationMessage.NegativeSaldo"
                 values={{
                   periode: uttakPeriodeNavn[value.konto],
-                  days: gjeldeneStønadskonto.saldo * -1,
+                  days: minsteSaldo * -1,
                 }}
               />
             </AlertStripe>
@@ -366,18 +374,21 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   }));
 };
 
-const mapStateToPropsFactory = (_initialState, ownProps) => {
-  const { behandlingId, behandlingVersjon, aksjonspunkter } = ownProps;
+const mapStateToPropsFactory = (_initialState, initOwnProps) => {
+  const { behandlingId, behandlingVersjon, aksjonspunkter } = initOwnProps;
   const validate = (values) => validateUttakPanelForm(values);
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
-  const initialValues = buildInitialValues(ownProps);
+  const onSubmit = (values) => initOwnProps.submitCallback(transformValues(values, initOwnProps.apCodes, aksjonspunkter));
 
-  return (state) => ({
-    validate,
-    onSubmit,
-    initialValues,
-    manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
-  });
+  return (state, ownProps) => {
+    const initialValues = buildInitialValues(ownProps);
+
+    return {
+      validate,
+      onSubmit,
+      initialValues,
+      manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
+    };
+  };
 };
 
 const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({

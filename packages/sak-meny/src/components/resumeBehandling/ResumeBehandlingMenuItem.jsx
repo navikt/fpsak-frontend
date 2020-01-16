@@ -6,11 +6,11 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import MenuButton from '../MenuButton';
 
-const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjon) => () => {
+const submit = (resumeBehandling, behandlingIdentifier, selectedBehandlingVersjon, behandlingType, erPapirsoknad) => () => {
   resumeBehandling(behandlingIdentifier, {
     behandlingId: behandlingIdentifier.behandlingId,
     behandlingVersjon: selectedBehandlingVersjon,
-  });
+  }, behandlingType, erPapirsoknad);
 };
 
 /**
@@ -24,9 +24,11 @@ const ResumeBehandlingMenuItem = ({
   behandlingVersjon,
   resumeBehandling,
   gjenopptaBehandlingEnabled,
+  behandlingType,
+  erPapirsoknad,
 }) => (
   <MenuButton
-    onMouseDown={submit(resumeBehandling, behandlingIdentifier, behandlingVersjon)}
+    onMouseDown={submit(resumeBehandling, behandlingIdentifier, behandlingVersjon, behandlingType, erPapirsoknad)}
     disabled={!gjenopptaBehandlingEnabled}
   >
     <FormattedMessage id="Behandlingsmeny.ResumeBehandling" />
@@ -38,6 +40,8 @@ ResumeBehandlingMenuItem.propTypes = {
   behandlingVersjon: PropTypes.number,
   resumeBehandling: PropTypes.func.isRequired,
   gjenopptaBehandlingEnabled: PropTypes.bool,
+  behandlingType: PropTypes.shape().isRequired,
+  erPapirsoknad: PropTypes.bool.isRequired,
 };
 
 ResumeBehandlingMenuItem.defaultProps = {

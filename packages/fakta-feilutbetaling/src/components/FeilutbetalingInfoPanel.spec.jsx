@@ -10,9 +10,10 @@ import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { FeilutbetalingInfoPanelImpl } from './FeilutbetalingInfoPanel';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-feilutbetaling';
 
 const BEHANDLING_AARSAK_KODEVERK = 'BEHANDLING_AARSAK';
 const TILBAKEKR_VIDERE_BEH_KODEVERK = 'TILBAKEKR_VIDERE_BEH';

@@ -41,7 +41,8 @@ class CreateNewBehandlingMenuItem extends Component {
     };
 
     const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
-    submitNyBehandling(push, saksnummer, behandlingIdentifier !== undefined, isTilbakekreving, data);
+    const erBehandlingValgt = behandlingIdentifier !== undefined && behandlingIdentifier.behandlingId;
+    submitNyBehandling(push, saksnummer, erBehandlingValgt, isTilbakekreving, data);
     this.hideModal();
   }
 
@@ -59,7 +60,7 @@ class CreateNewBehandlingMenuItem extends Component {
     const {
       opprettNyForstegangsBehandlingEnabled, opprettRevurderingEnabled, ikkeVisOpprettNyBehandling, menyKodeverk,
       behandlingType, behandlingIdentifier, ytelseType, saksnummer, kanTilbakekrevingOpprettes, uuidForSistLukkede,
-      erTilbakekrevingAktivert, sjekkOmTilbakekrevingKanOpprettes,
+      erTilbakekrevingAktivert, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
     } = this.props;
     const { showModal } = this.state;
     return (
@@ -83,6 +84,7 @@ class CreateNewBehandlingMenuItem extends Component {
             uuidForSistLukkede={uuidForSistLukkede}
             erTilbakekrevingAktivert={erTilbakekrevingAktivert}
             sjekkOmTilbakekrevingKanOpprettes={sjekkOmTilbakekrevingKanOpprettes}
+            sjekkOmTilbakekrevingRevurderingKanOpprettes={sjekkOmTilbakekrevingRevurderingKanOpprettes}
           />
         )}
       </div>
@@ -109,6 +111,7 @@ CreateNewBehandlingMenuItem.propTypes = {
   uuidForSistLukkede: PropTypes.string,
   erTilbakekrevingAktivert: PropTypes.bool.isRequired,
   sjekkOmTilbakekrevingKanOpprettes: PropTypes.func.isRequired,
+  sjekkOmTilbakekrevingRevurderingKanOpprettes: PropTypes.func.isRequired,
 };
 
 CreateNewBehandlingMenuItem.defaultProps = {

@@ -6,15 +6,22 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
+import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import withReduxProvider from '../../decorators/withRedux';
 
+import alleKodeverk from '../mocks/alleKodeverk.json';
+
 const standardFom = '2019-09-16';
 const standardTom = undefined;
-
+const togglesFalse = {
+  'fpsak.redesign.beregningsgrunnlag': false,
+};
+const togglesTrue = {
+  'fpsak.redesign.beregningsgrunnlag': true,
+};
 const behandling = {
   id: 1,
   versjon: 1,
@@ -55,11 +62,11 @@ const vilkarMedUtfall = (kode) => [{
   },
 }];
 
-const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId) => ({
+const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, opphoersdato) => ({
   arbeidsgiverNavn,
   arbeidsgiverId,
   startdato: '2018-10-09',
-  opphoersdato: null,
+  opphoersdato,
   arbeidsforholdId,
   arbeidsforholdType: {
     kode: 'ARBEID',
@@ -76,7 +83,7 @@ const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId) =
   naturalytelseTilkommetPrÅr: null,
 });
 
-const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegrensetArbeidsforhold) => ({
+const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegrensetArbeidsforhold, skalFastsetteGrunnlag) => ({
   beregningsgrunnlagTom: '2019-08-31',
   beregningsgrunnlagFom: '2019-06-01',
   aktivitetStatus: {
@@ -90,8 +97,9 @@ const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegr
   overstyrtPrAar,
   bruttoPrAar: overstyrtPrAar || beregnetPrAar,
   avkortetPrAar: 360000,
-  redusertPrAar: 360000,
+  redusertPrAar: 599000,
   erTidsbegrensetArbeidsforhold,
+  skalFastsetteGrunnlag,
   erNyIArbeidslivet: null,
   lonnsendringIBeregningsperioden: null,
   andelsnr: 1,
@@ -120,7 +128,6 @@ const lagAndel = (aktivitetstatuskode, beregnetPrAar, overstyrtPrAar, erTidsbegr
     naturalytelseBortfaltPrÅr: null,
     naturalytelseTilkommetPrÅr: null,
   },
-  fastsattAvSaksbehandler: null,
   lagtTilAvSaksbehandler: false,
   belopPrMndEtterAOrdningen: 30000,
   belopPrAarEtterAOrdningen: 360000,
@@ -144,6 +151,19 @@ const lagPeriode = (andelsliste, dagsats, fom, tom, periodeAarsaker) => ({
   andelerLagtTilManueltIForrige: [],
 });
 
+
+const lagSammenligningsGrunnlag = (kode, rapportertPrAar, avvikProsent, differanse) => ({
+  sammenligningsgrunnlagFom: '2018-09-01',
+  sammenligningsgrunnlagTom: '2019-10-31',
+  rapportertPrAar,
+  avvikPromille: avvikProsent ? avvikProsent * 10 : 0,
+  avvikProsent,
+  sammenligningsgrunnlagType: {
+    kode,
+  },
+  differanseBeregnet: differanse,
+});
+
 const lagPeriodeMedDagsats = (andelsliste, dagsats) => lagPeriode(andelsliste, dagsats, standardFom, standardTom, []);
 
 const lagStandardPeriode = (andelsliste) => lagPeriode(andelsliste, null, standardFom, standardTom, []);
@@ -155,11 +175,13 @@ const lagStatus = (kode) => ({
   kodeverk: 'AKTIVITET_STATUS',
 });
 
-const lagBG = (perioder, statuser) => {
+const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
   const beregningsgrunnlag = {
     skjaeringstidspunktBeregning: '2019-09-16',
     aktivitetStatus: statuser,
     beregningsgrunnlagPeriode: perioder,
+    dekningsgrad: 80,
+    grunnbeløp: 99858,
     sammenligningsgrunnlag: {
       sammenligningsgrunnlagFom: '2018-09-01',
       sammenligningsgrunnlagTom: '2019-08-31',
@@ -167,6 +189,7 @@ const lagBG = (perioder, statuser) => {
       avvikPromille: 91,
       avvikProsent: 9,
     },
+    sammenligningsgrunnlagPrStatus,
     ledetekstBrutto: 'Brutto beregningsgrunnlag',
     ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
     ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
@@ -253,38 +276,8 @@ const lagBG = (perioder, statuser) => {
   return beregningsgrunnlag;
 };
 
-const alleKodeverk = {
-  [kodeverkTyper.AKTIVITET_STATUS]: [
-    {
-      kode: 'AT',
-      navn: 'Arbeidstaker',
-    },
-    {
-      kode: 'FL',
-      navn: 'Frilans',
-    },
-    {
-      kode: 'AT_FL',
-      navn: 'Arbeidstaker og frilanser',
-    },
-    {
-      kode: 'MS',
-      navn: 'Militær eller siviltjeneste',
-    },
-    {
-      kode: 'SN',
-      navn: 'Selvstendig næringsdrivende',
-    },
-    {
-      kode: 'AT_FL_SN',
-      navn: 'Kombinert arbeidtaker, frilanser og selvstendig næringsdrivende',
-    },
-  ],
-};
-
-
 export default {
-  title: 'prosess/BeregningsgrunnlagProsessIndex',
+  title: 'prosess/prosess-beregningsgrunnlag',
   component: BeregningsgrunnlagProsessIndex,
   decorators: [withKnobs, withReduxProvider],
 };
@@ -293,7 +286,9 @@ export const arbeidstakerUtenAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
   const statuser = [lagStatus('AT')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 330257, 6.2, -30257)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -306,6 +301,40 @@ export const arbeidstakerUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+
+export const brukersAndelUtenAvvik = () => {
+  const andeler = [
+    lagAndel('BA', 34230, undefined, false),
+    lagAndel('AT', 534230, undefined, false),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 2340)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 564000;
+  delete perioder[0].redusertPrAar;
+  delete perioder[0].avkortetPrAar;
+
+  const statuser = [lagStatus('BA'), lagStatus('AT')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -67059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -314,7 +343,9 @@ export const arbeidstakerMedAvvik = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false)];
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -327,15 +358,22 @@ export const arbeidstakerMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
 
 export const arbeidstakerFrilansMedAvvik = () => {
-  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('FL', 130250, undefined, false)];
+  const andeler = [lagAndel('AT', 551316, undefined, false), lagAndel('FL', 596000, undefined, false)];
+  andeler[0].skalFastsetteGrunnlag = true;
+  andeler[1].skalFastsetteGrunnlag = false;
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT'), lagStatus('FL')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, 46.2, 77000),
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.2, 11000),
+  ];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -348,14 +386,15 @@ export const arbeidstakerFrilansMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
 
 export const militær = () => {
-  const andeler = [lagAndel('MS', 300000, undefined, false)];
+  const andeler = [lagAndel('AT', 110232, undefined, false), lagAndel('MS', 300000, undefined, false)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
-  const statuser = [lagStatus('MS')];
+  const statuser = [lagStatus('AT'), lagStatus('MS')];
   const bg = lagBG(perioder, statuser);
   return (
     <BeregningsgrunnlagProsessIndex
@@ -369,19 +408,66 @@ export const militær = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+
+export const arbeidstakerOgAAP = () => {
+  const andeler = [lagAndel('AT', 110232, undefined, false), lagAndel('AAP', 250000, undefined, false)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1234)];
+  const statuser = [lagStatus('AT'), lagStatus('AAP')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -67059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
 
 export const selvstendigNæringsdrivende = () => {
   const andeler = [lagAndel('SN', 300000, undefined, false)];
-  const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, null, true)];
   const statuser = [lagStatus('SN')];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
+  andeler[0].erNyIArbeidslivet = false;
 
-  const bg = lagBG(perioder, statuser);
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -392,23 +478,29 @@ export const selvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
 
 export const tidsbegrensetArbeidsforholdMedAvvik = () => {
-  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
-    lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
+  const andeler = [
+    lagAndel('AT', 300000, undefined, false),
+    lagAndel('AT', 130250, undefined, true),
+    lagAndel('AT', 130250, undefined, true),
+    lagAndel('FL', 130250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
-  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das');
+  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das', '2019-11-11');
   andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
   const perioder = [lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
   const statuser = [lagStatus('AT_FL')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -421,18 +513,24 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
     />
   );
 };
 
 export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
-  const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
+  const andeler = [
+    lagAndel('SN', 300000, undefined, undefined),
+    lagAndel('AT', 130250, undefined, undefined),
+    lagAndel('FL', 230250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
   andeler[0].pgiSnitt = 154985;
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT_FL_SN')];
-  const bg = lagBG(perioder, statuser);
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -445,6 +543,152 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const infoTrygdYtelse = () => {
+  const andeler = [
+    lagAndel('KUN_YTELSE', 240000, undefined, undefined),
+  ];
+  const statuser = [lagStatus('KUN_YTELSE')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const naturalYtelse = () => {
+  const andel1 = lagAndel('AT', 240000, undefined, undefined);
+  const andel2 = lagAndel('AT', 740000, 744000, undefined);
+  const andel3 = lagAndel('AT', 750000, 755000, undefined);
+  andel1.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 1';
+  andel1.arbeidsforhold.arbeidsgiverId = '9109090881';
+  andel2.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 2';
+  andel2.arbeidsforhold.arbeidsgiverId = '9109090882';
+  andel3.arbeidsforhold.arbeidsgiverNavn = 'BEDRIFT AS 3';
+  andel3.arbeidsforhold.arbeidsgiverId = '9109090883';
+  andel2.bortfaltNaturalytelse = 2231;
+  andel3.bortfaltNaturalytelse = 3231;
+  andel1.dekningsgrad = 100;
+  andel2.dekningsgrad = 80;
+  andel3.dekningsgrad = 80;
+  delete andel1.bortfaltNaturalytelse;
+  const statuser = [lagStatus('AT')];
+  const periode1 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }],
+    4432,
+    '2019-03-21',
+    '2019-05-31',
+    [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }]);
+  andel1.bortfaltNaturalytelse = 1231;
+  delete andel2.bortfaltNaturalytelse;
+  delete andel3.bortfaltNaturalytelse;
+  const periode2 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }],
+    2432,
+    '2019-06-01',
+    '2019-07-30',
+    [{ kode: periodeAarsak.NATURALYTELSE_BORTFALT }]);
+  const periode3 = lagPeriode([{ ...andel1 }, { ...andel2 }, { ...andel3 }],
+    3432,
+    '2019-08-01',
+    '2019-09-30',
+    [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }]);
+
+  const perioder = [
+    periode1,
+    periode2,
+    periode3,
+  ];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 432000;
+  perioder[0].redusertPrAar = 399148;
+  perioder[1].bruttoInkludertBortfaltNaturalytelsePrAar = 732000;
+  perioder[1].redusertPrAar = 499148;
+  perioder[1].avkortetPrAar = 599148;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
+  const andeler = [
+    lagAndel('FL', 596000, undefined, undefined),
+    lagAndel('DP', 331000, undefined, undefined),
+    lagAndel('SN', 331000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[2].pgiVerdier = pgi;
+  andeler[2].pgiSnitt = 154985;
+  const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};
+export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
+  const andeler = [
+    lagAndel('AT', 596000, undefined, undefined),
+    lagAndel('DP', 331000, undefined, undefined),
+    lagAndel('SN', 331000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[2].pgiVerdier = pgi;
+  andeler[2].pgiSnitt = 154985;
+  const statuser = [lagStatus('AT_SN'), lagStatus('DP')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
     />
   );
 };
@@ -453,16 +697,152 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
   const andeler = [lagAndel('SN', 300000, undefined, undefined), lagAndel('AT', 130250, undefined, undefined), lagAndel('FL', 130250, undefined, undefined)];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 154985;
-  const perioder = [lagStandardPeriode(andeler)];
+  andeler[0].pgiSnitt = 954985;
+  // const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 12345)];
   const statuser = [lagStatus('AT_FL_SN')];
-  const bg = lagBG(perioder, statuser);
-  bg.andelerMedGraderingUtenBG = [lagAndel('AT', 0, 0, false)];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG)}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
+  const andeler = [
+    lagAndel('SN', 331000, undefined, undefined, true),
+    lagAndel('AT', 355000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 654985;
+  // const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].avkortetPrAar = 599148;
+  perioder[0].redusertPrAar = 379318;
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
+
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
+export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt = () => {
+  const andeler = [
+    lagAndel('SN', 107232, undefined, undefined, true),
+    lagAndel('DP', 143000, undefined, undefined),
+    lagAndel('FL', 343000, undefined, undefined),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
+  perioder[0].avkortetPrAar = 599148;
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 754985;
+  const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 1500000,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
+export const tidsbegrensetArbeidsforholdMedAvvikRedesign = () => {
+  const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
+    lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
+  andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
+  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das');
+  andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
+  const perioder = [lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
+    lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
+    lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
+  const statuser = [lagStatus('AT_FL')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, 77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
       submitCallback={action('button-click')}
       readOnly={false}
       readOnlySubmitButton={false}
@@ -470,6 +850,7 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
     />
   );
 };

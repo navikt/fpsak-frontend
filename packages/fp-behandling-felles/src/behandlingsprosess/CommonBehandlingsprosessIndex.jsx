@@ -88,7 +88,7 @@ export class CommonBehandlingsprosessIndex extends Component {
     fetchBrevPreview(brevData);
   };
 
-  submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback, shouldUpdateInfo) => {
+  submitAksjonspunkter = (aksjonspunktModels, afterSubmitCallback) => {
     const {
       resolveProsessAksjonspunkter: resolveAksjonspunkter,
       overrideProsessAksjonspunkter: overrideAksjonspunkter,
@@ -111,7 +111,7 @@ export class CommonBehandlingsprosessIndex extends Component {
           behandlingVersjon,
           overstyrteAksjonspunktDtoer: models,
         };
-        return overrideAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
+        return overrideAksjonspunkter(behandlingIdentifier, params)
           .then(afterSubmitCallback);
       }
     }
@@ -122,7 +122,7 @@ export class CommonBehandlingsprosessIndex extends Component {
       bekreftedeAksjonspunktDtoer: models,
     };
 
-    return resolveAksjonspunkter(behandlingIdentifier, params, shouldUpdateInfo)
+    return resolveAksjonspunkter(behandlingIdentifier, params)
       .then(afterSubmitCallback);
   };
 

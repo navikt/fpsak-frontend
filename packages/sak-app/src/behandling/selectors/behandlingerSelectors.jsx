@@ -43,9 +43,6 @@ export const getBehandlingerTypesMappedById = createSelector([getBehandlinger], 
 export const getBehandlingerStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((acc, b) => ({ ...acc, [b.id]: b.status.kode }), {}));
 
-export const getBehandlingerVersjonMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((a, b) => ({ ...a, [b.id]: b.versjon }), {}));
-
 export const getBehandlingerAktivPapirsoknadMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.erAktivPapirsoknad }), {}));
 
@@ -53,7 +50,7 @@ export const getBehandlingerLinksMappedById = createSelector([getBehandlinger], 
   .reduce((a, b) => ({ ...a, [b.id]: b.links }), {}));
 
 export const getBehandlingerErPaaVentStatusMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
-  .reduce((a, b) => ({ ...a, [b.id]: b.erPaaVent }), {}));
+  .reduce((a, b) => ({ ...a, [b.id]: b.behandlingPaaVent }), {}));
 
 export const getBehandlingerUuidsMappedById = createSelector([getBehandlinger], (behandlinger = []) => behandlinger
   .reduce((a, b) => ({ ...a, [b.id]: b.uuid }), {}));

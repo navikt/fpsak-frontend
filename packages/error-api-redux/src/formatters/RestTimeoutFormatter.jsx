@@ -1,7 +1,7 @@
 import ErrorEventType from './errorEventType';
 import ErrorMessage from './ErrorMessage';
 
-const TIMEOUT_MESSAGE_CODE = 'Rest.ErrorMessage.Timeout';
+const TIMEOUT_MESSAGE_CODE = 'Rest.ErrorMessage.PollingTimeout';
 
 class RestTimeoutFormatter {
   type = ErrorEventType.POLLING_TIMEOUT;
