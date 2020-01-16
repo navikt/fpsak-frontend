@@ -90,21 +90,21 @@ const lagRad = (andel, maks, relevanteStatuser) => {
             {relevanteStatuser.isArbeidstaker && (
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: atAndel }]}
-              fill={styles.bgColorAT}
+              fill={styles.bgcolorat}
               stroke={styles.stroke}
             />
             )}
             {relevanteStatuser.isFrilanser && (
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: flAndel }]}
-              fill={styles.bgColorFL}
+              fill={styles.bgcolorfl}
               stroke={styles.stroke}
             />
             )}
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: rest }]}
-              fill={styles.bgColorEmpty}
-              stroke={styles.bgColorEmpty}
+              fill={styles.bgcolorempty}
+              stroke={styles.bgcolorempty}
             />
           </FlexibleWidthXYPlot>
 
