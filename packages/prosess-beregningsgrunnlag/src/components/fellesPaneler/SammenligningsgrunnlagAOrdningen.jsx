@@ -14,6 +14,9 @@ import moment from 'moment';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
+const grafFargeAT = '#99bdcd';
+const grafFargeFL = '#c1b5d0';
+const grafBorderFarge = '#0c5472';
 
 const finnAndelerStatus = (relevanteStatuser) => {
   if (relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker) return 'AT_FL';
@@ -73,7 +76,7 @@ const lagRad = (andel, maks, relevanteStatuser) => {
   const maaned = moment(dato, ISO_DATE_FORMAT).format('MM');
   const aar = moment(dato, ISO_DATE_FORMAT).format('YYYY');
 
-
+  console.log('styles.grafFargeAT.color', styles.grafFargeAT);
   return (
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
@@ -90,21 +93,21 @@ const lagRad = (andel, maks, relevanteStatuser) => {
             {relevanteStatuser.isArbeidstaker && (
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: atAndel }]}
-              fill={styles.bgcolorat}
-              stroke={styles.stroke}
+              fill={grafFargeAT}
+              stroke={grafBorderFarge}
             />
             )}
             {relevanteStatuser.isFrilanser && (
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: flAndel }]}
-              fill={styles.bgcolorfl}
-              stroke={styles.stroke}
+              fill={grafFargeFL}
+              stroke={grafBorderFarge}
             />
             )}
             <HorizontalRectSeries
               data={[{ y0: 0.5, y: 1, x: rest }]}
-              fill={styles.bgcolorempty}
-              stroke={styles.bgcolorempty}
+              fill="transparent"
+              stroke="transparent"
             />
           </FlexibleWidthXYPlot>
 
