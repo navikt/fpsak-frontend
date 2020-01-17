@@ -17,7 +17,7 @@ import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
-  AksjonspunktHelpText,
+  AksjonspunktHelpTextTemp,
   FlexColumn,
   FlexContainer,
   FlexRow,
@@ -461,7 +461,7 @@ export class UttakPerioder extends PureComponent {
     return (
       <>
         {!readOnly && (
-          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
             {aksjonspunkter.map((ap) => {
               const førsteUttak = {
                 value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
@@ -486,7 +486,7 @@ export class UttakPerioder extends PureComponent {
             })}
             <VerticalSpacer eightPx />
             {farSøkerFør6Uker && <FormattedMessage id="UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker" />}
-          </AksjonspunktHelpText>
+          </AksjonspunktHelpTextTemp>
         )}
         <VerticalSpacer twentyPx />
 

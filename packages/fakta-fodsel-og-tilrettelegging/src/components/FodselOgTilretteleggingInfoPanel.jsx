@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import fodselOgTilretteleggingAksjonspunkterPropType from '../propTypes/fodselOgTilretteleggingAksjonspunkterPropType';
 import fodselOgTilretteleggingPropType from '../propTypes/fodselOgTilretteleggingPropType';
@@ -23,9 +23,9 @@ export const FodselOgTilretteleggingInfoPanel = ({
   submittable,
 }) => (
   <>
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {[<FormattedMessage id="FodselOgTilretteleggingInfoPanel.Aksjonspunkt" key="svangerskapspengerAp" />]}
-    </AksjonspunktHelpText>
+    </AksjonspunktHelpTextTemp>
     <VerticalSpacer eightPx />
     <FodselOgTilretteleggingFaktaForm
       behandlingId={behandlingId}

@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
@@ -54,12 +54,12 @@ export const ArbeidsforholdInfoPanelImpl = ({
 }) => (
   <>
     { aksjonspunkter.length > 0 && (
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-      {[<FormattedMessage
-        key="ArbeidsforholdInfoPanelAksjonspunkt"
-        id={skalKunneLeggeTilNyeArbeidsforhold ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert' : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'}
-      />]}
-    </AksjonspunktHelpText>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+        {[<FormattedMessage
+          key="ArbeidsforholdInfoPanelAksjonspunkt"
+          id={skalKunneLeggeTilNyeArbeidsforhold ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert' : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'}
+        />]}
+      </AksjonspunktHelpTextTemp>
     )}
     <form onSubmit={formProps.handleSubmit}>
       <PersonArbeidsforholdPanel

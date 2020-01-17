@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 
 import withReduxProvider from '../../decorators/withRedux';
@@ -32,11 +31,6 @@ import faktaArbeidsforholdOverføringAvPerioder from './mocks/uttak/overføring-
 import personopplysningerOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/personopplysninger.json';
 import familiehendelseOverføringAvPerioder from './mocks/uttak/overføring-av-perioder/familiehendelse.json';
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-uttak',
   component: UttakFaktaIndex,
@@ -44,7 +38,6 @@ export default {
 };
 
 export const vurderOmAnnenPartHarRett = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
   const readOnly = false;
 
   return (
@@ -52,9 +45,6 @@ export const vurderOmAnnenPartHarRett = () => {
       behandling={behandlingVurderAnnenPartHarRett}
       aksjonspunkter={aksjonspunkterVurderAnnenPartHarRett}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      shouldOpenDefaultInfoPanels={false}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
       ytelsefordeling={ytelsefordelingVurderAnnenPartHarRett}
       uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderVurderAnnenPartHarRett}
       alleKodeverk={alleKodeverk}
@@ -63,12 +53,12 @@ export const vurderOmAnnenPartHarRett = () => {
       familiehendelse={familiehendelseVurderAnnenPartHarRett}
       readOnly={boolean('readOnly', readOnly)}
       kanOverstyre={false}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const farSøkerFørsteSeksUker = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
   const readOnly = false;
 
   return (
@@ -76,9 +66,6 @@ export const farSøkerFørsteSeksUker = () => {
       behandling={behandlingFarSøkerFørsteSeksUker}
       aksjonspunkter={aksjonspunkterFarSøkerFørsteSeksUker}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      shouldOpenDefaultInfoPanels={false}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
       ytelsefordeling={ytelsefordelingFarSøkerFørsteSeksUker}
       uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderFarSøkerFørsteSeksUker}
       alleKodeverk={alleKodeverk}
@@ -87,12 +74,12 @@ export const farSøkerFørsteSeksUker = () => {
       familiehendelse={familiehendelseFarSøkerFørsteSeksUker}
       readOnly={boolean('readOnly', readOnly)}
       kanOverstyre={false}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const overføringAvPerioder = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.UTTAK]);
   const readOnly = false;
 
   return (
@@ -100,9 +87,6 @@ export const overføringAvPerioder = () => {
       behandling={behandlingOverføringAvPerioder}
       aksjonspunkter={aksjonspunkterOverføringAvPerioder}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      shouldOpenDefaultInfoPanels={false}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
       ytelsefordeling={ytelsefordelingOverføringAvPerioder}
       uttakKontrollerFaktaPerioder={uttakKontrollerFaktaPerioderOverføringAvPerioder}
       alleKodeverk={alleKodeverk}
@@ -111,6 +95,7 @@ export const overføringAvPerioder = () => {
       familiehendelse={familiehendelseOverføringAvPerioder}
       readOnly={boolean('readOnly', readOnly)}
       kanOverstyre={false}
+      submittable={boolean('submittable', true)}
     />
   );
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -83,65 +82,52 @@ const svangerskapspengerTilretteleggingForFrilanser = {
   }],
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-fodsel-og-tilrettelegging',
   component: FodselOgTilretteleggingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELTILRETTELEGGING]);
-  return (
-    <FodselOgTilretteleggingFaktaIndex
-      behandling={behandling}
-      svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForArbeidsgiver)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => (
+  <FodselOgTilretteleggingFaktaIndex
+    behandling={behandling}
+    svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForArbeidsgiver)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
-export const visAksjonspunktForFødselstilretteleggingForFrilanserOgSelvstendigNæringsdrivende = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELTILRETTELEGGING]);
-  return (
-    <FodselOgTilretteleggingFaktaIndex
-      behandling={behandling}
-      svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForFrilanser)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForFødselstilretteleggingForFrilanserOgSelvstendigNæringsdrivende = () => (
+  <FodselOgTilretteleggingFaktaIndex
+    behandling={behandling}
+    svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForFrilanser)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);

@@ -75,7 +75,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [fpBehandlingApi.FAMILIEHENDELSE, fpBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, fpBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
   renderComponent: (props) => <FodselFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => fodselsvilkarene.includes(v.vilkarType.kode)),
-  getData: ({ soknad, aksjonspunkter, personopplysninger }) => ({ soknad, aksjonspunkter, personopplysninger }),
+  getData: ({ soknad, personopplysninger }) => ({ soknad, personopplysninger }),
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   textCode: 'MedlemskapInfoPanel.Medlemskap',

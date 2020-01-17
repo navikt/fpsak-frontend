@@ -10,7 +10,7 @@ import {
   behandlingFormValueSelector,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
@@ -39,9 +39,9 @@ export const RegistrereVergeInfoPanelImpl = ({
   }
   return (
     <>
-      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <form onSubmit={formProps.handleSubmit}>
         <RegistrereVergeFaktaForm
           readOnly={readOnly}

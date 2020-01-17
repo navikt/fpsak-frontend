@@ -11,7 +11,9 @@ import {
   FaktaBegrunnelseTextField, FaktaSubmitButton, behandlingForm,
   isFieldEdited,
 } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  ElementWrapper, VerticalSpacer, AksjonspunktHelpTextTemp,
+} from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import MannAdoptererAleneFaktaForm from './MannAdoptererAleneFaktaForm';
@@ -56,9 +58,9 @@ export const AdopsjonInfoPanelImpl = ({
   ...formProps
 }) => (
   <>
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {getHelpTexts(aksjonspunkter)}
-    </AksjonspunktHelpText>
+    </AksjonspunktHelpTextTemp>
     <form onSubmit={formProps.handleSubmit}>
       <VerticalSpacer eightPx />
       <Row>

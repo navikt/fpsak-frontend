@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import { FormattedMessage } from 'react-intl';
 
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, FaktaBegrunnelseTextField, behandlingFormValueSelector, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
@@ -49,9 +49,9 @@ export const OmsorgInfoPanel = ({
 }) => (
   <>
     {!readOnly && (
-      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {getHelpTexts(aksjonspunkter)}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
     )}
     <BostedFaktaView personopplysning={personopplysninger} ektefellePersonopplysning={personopplysninger.ektefelle} alleKodeverk={alleKodeverk} />
     <form onSubmit={formProps.handleSubmit}>

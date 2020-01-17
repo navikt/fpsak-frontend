@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { AksjonspunktHelpText, EditedIcon, ElementWrapper } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { SelectField } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
@@ -59,9 +59,9 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
   alleMerknaderFraBeslutter,
 }) => (
   <ElementWrapper>
-    <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
       {findAksjonspunktHelpTexts(erAksjonspunktForeldreansvar)}
-    </AksjonspunktHelpText>
+    </AksjonspunktHelpTextTemp>
     <Row>
       <Column xs={erAksjonspunktForeldreansvar ? '12' : '6'}>
         <OmsorgsovertakelseFaktaPanel
