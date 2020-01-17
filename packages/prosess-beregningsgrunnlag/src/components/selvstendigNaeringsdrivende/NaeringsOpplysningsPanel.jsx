@@ -54,7 +54,6 @@ const lagIntroTilEndringspanel = (naring) => {
 
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
-  console.log('hendelsesteksten er:', hendelseTekst, endringsdato, oppstartsdato);
   if (!hendelseDato) {
     return null;
   }
