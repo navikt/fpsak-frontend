@@ -143,7 +143,7 @@ const SammenligningsgrunnlagAOrdningen = ({
   if (!andeler) return null;
   const maxValue = finnMaksVerdienFraRelevanteAndeler(andeler, relevanteStatuser);
   const andelStatus = finnAndelerStatus(relevanteStatuser);
-  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
       <FlexRow key="SNNareingOverskrift">
@@ -153,7 +153,7 @@ const SammenligningsgrunnlagAOrdningen = ({
           </Element>
         </FlexColumn>
         <FlexColumn>
-          <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
+          <LinkTilEksterntSystem linkText="AI" uniqeReactId="AILink" userIdent={userIdent} type="AI" />
         </FlexColumn>
       </FlexRow>
       <FlexRow>

@@ -80,29 +80,29 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
     />);
-    const panel = wrapper.find('PanelBase');
-    expect(panel).to.have.length(0);
+    const rows = wrapper.find('FlexRow');
+    expect(rows).to.have.length(0);
   });
   it('Skal se at panelet ikke rendrer ved SammenligningsgrunnlagInntekt og SN', () => {
     relevanteStatuser.isSelvstendigNaeringsdrivende = false;
     const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
     />);
-    const panel = wrapper.find('PanelBase');
-    expect(panel).to.have.length(0);
+    const rows = wrapper.find('FlexRow');
+    expect(rows).to.have.length(0);
   });
   it('Skal se at panelet rendrer korrekt SammenligningsgrunnlagInntekt og AT_FL', () => {
     const wrapper = shallowWithIntl(<SammenligningsgrunnlagAOrdningen
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);
-    const panel = wrapper.find('PanelBase');
-    expect(panel).to.have.length(1);
-    const headerTitle = panel.find('FormattedMessage').first();
-    const headerIngress = panel.find('FormattedMessage').at(1);
+    const rows = wrapper.find('FlexRow');
+    expect(rows).to.have.length(2);
+    const headerTitle = wrapper.find('FormattedMessage').first();
+    const headerIngress = wrapper.find('FormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.AT_FL');
-    const underTekster = panel.find('Undertekst');
+    const underTekster = wrapper.find('Undertekst');
     expect(underTekster.at(0).children().at(0).text()).to.equal('Arbeid');
     expect(underTekster.at(1).children().at(0).text()).to.equal('Frilans');
 
@@ -121,10 +121,10 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
         teller += 3;
       }
     });
-    const sumTitle = panel.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('FormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
-    const sumATAndeler = panel.find('Element').at(1);
-    const sumFLAndeler = panel.find('Element').at(2);
+    const sumATAndeler = wrapper.find('Element').at(1);
+    const sumFLAndeler = wrapper.find('Element').at(2);
     const calcSumATAndeler = mockSammenligningsgrunnlagInntekt.reduce((acc, andel) => acc + andel.atAndel, 0);
     const calcSumFLAndeler = mockSammenligningsgrunnlagInntekt.reduce((acc, andel) => acc + andel.flAndel, 0);
     expect(sumATAndeler.children().at(0).text()).to.equal(formatCurrencyNoKr(calcSumATAndeler));
@@ -137,13 +137,13 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);
-    const panel = wrapper.find('PanelBase');
-    expect(panel).to.have.length(1);
-    const headerTitle = panel.find('FormattedMessage').first();
-    const headerIngress = panel.find('FormattedMessage').at(1);
+    const rows = wrapper.find('FlexRow');
+    expect(rows).to.have.length(2);
+    const headerTitle = wrapper.find('FormattedMessage').first();
+    const headerIngress = wrapper.find('FormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.FL');
-    const underTekster = panel.find('Undertekst');
+    const underTekster = wrapper.find('Undertekst');
     expect(underTekster.at(0).children().at(0).text()).to.equal('Frilans');
 
     let teller = 1;
@@ -160,9 +160,9 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
         teller += 2;
       }
     });
-    const sumTitle = panel.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('FormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
-    const sumFLAndeler = panel.find('Element').at(1);
+    const sumFLAndeler = wrapper.find('Element').at(1);
     const calcSumFLAndeler = mockSammenligningsgrunnlagInntekt.reduce((acc, andel) => acc + andel.flAndel, 0);
     expect(sumFLAndeler.children().at(0).text()).to.equal(formatCurrencyNoKr(calcSumFLAndeler));
   });
@@ -174,13 +174,13 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
       relevanteStatuser={relevanteStatuser}
       sammenligningsGrunnlagInntekter={mockSammenligningsgrunnlagInntekt}
     />);
-    const panel = wrapper.find('PanelBase');
-    expect(panel).to.have.length(1);
-    const headerTitle = panel.find('FormattedMessage').first();
-    const headerIngress = panel.find('FormattedMessage').at(1);
+    const rows = wrapper.find('FlexRow');
+    expect(rows).to.have.length(2);
+    const headerTitle = wrapper.find('FormattedMessage').first();
+    const headerIngress = wrapper.find('FormattedMessage').at(1);
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.AT');
-    const underTekster = panel.find('Undertekst');
+    const underTekster = wrapper.find('Undertekst');
     expect(underTekster.at(0).children().at(0).text()).to.equal('Arbeid');
 
     let teller = 1;
@@ -197,9 +197,9 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
         teller += 2;
       }
     });
-    const sumTitle = panel.find('FormattedMessage').at(2);
+    const sumTitle = wrapper.find('FormattedMessage').at(2);
     expect(sumTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.SumTittel');
-    const sumATAndeler = panel.find('Element').at(1);
+    const sumATAndeler = wrapper.find('Element').at(1);
     const calcSumATAndeler = mockSammenligningsgrunnlagInntekt.reduce((acc, andel) => acc + andel.atAndel, 0);
     expect(sumATAndeler.children().at(0).text()).to.equal(formatCurrencyNoKr(calcSumATAndeler));
   });
