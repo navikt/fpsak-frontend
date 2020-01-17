@@ -8,9 +8,11 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
-
-import Panel from 'nav-frontend-paneler';
+import {
+  FlexColumn, FlexRow,
+} from '@fpsak-frontend/shared-components';
 import moment from 'moment';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -43,7 +45,9 @@ const lagSumRad = (andeler, relevanteStatuser) => {
   return (
     <>
       <Row>
-        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '10' : '8'} className={beregningStyles.colDevider} />
+        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '11' : '9'} className={beregningStyles.noPaddingRight}>
+          <div className={beregningStyles.colDevider} />
+        </Column>
       </Row>
       <Row>
         <Column xs="7">
@@ -52,12 +56,12 @@ const lagSumRad = (andeler, relevanteStatuser) => {
           </Normaltekst>
         </Column>
         {relevanteStatuser.isArbeidstaker && (
-        <Column xs="2">
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Element className={beregningStyles.semiBoldText}>{formatCurrencyNoKr(sumATAndeler)}</Element>
         </Column>
         )}
         {relevanteStatuser.isFrilanser && (
-        <Column xs="2">
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Element>{formatCurrencyNoKr(sumFLAndeler)}</Element>
         </Column>
         )}
@@ -79,7 +83,7 @@ const lagRad = (andel, maks, relevanteStatuser) => {
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
       <Row>
-        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '11' : '9'} className={styles.aarDevider} />
+        <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '12' : '10'} className={styles.aarDevider} />
       </Row>
       )}
       <Row>
@@ -139,14 +143,26 @@ const SammenligningsgrunnlagAOrdningen = ({
   if (!andeler) return null;
   const maxValue = finnMaksVerdienFraRelevanteAndeler(andeler, relevanteStatuser);
   const andelStatus = finnAndelerStatus(relevanteStatuser);
+  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
-    <Panel className={beregningStyles.panelLeft}>
-      <Element>
-        <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
-      </Element>
-      <Normaltekst>
-        <FormattedMessage id={`Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.${andelStatus}`} />
-      </Normaltekst>
+    <>
+      <FlexRow key="SNNareingOverskrift">
+        <FlexColumn>
+          <Element className={beregningStyles.semiBoldText}>
+            <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
+          </Element>
+        </FlexColumn>
+        <FlexColumn>
+          <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
+        </FlexColumn>
+      </FlexRow>
+      <FlexRow>
+        <FlexColumn>
+          <Normaltekst>
+            <FormattedMessage id={`Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.${andelStatus}`} />
+          </Normaltekst>
+        </FlexColumn>
+      </FlexRow>
       <Row>
         <Column xs="1" className={styles.maanedColumn} />
         <Column xs="6" />
@@ -181,7 +197,7 @@ const SammenligningsgrunnlagAOrdningen = ({
         lagRad(andel, maxValue, relevanteStatuser)
       ))}
       {lagSumRad(andeler, relevanteStatuser)}
-    </Panel>
+    </>
   );
 };
 
