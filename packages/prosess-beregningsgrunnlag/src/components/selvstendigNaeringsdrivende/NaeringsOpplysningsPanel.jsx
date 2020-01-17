@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, Undertekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
@@ -49,8 +51,10 @@ const lagIntroTilEndringspanel = (naring) => {
   const {
     oppstartsdato, erVarigEndret, endringsdato,
   } = naring;
+
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
+  console.log('hendelsesteksten er:', hendelseTekst, endringsdato, oppstartsdato);
   if (!hendelseDato) {
     return null;
   }
@@ -107,7 +111,7 @@ export const NaeringsopplysningsPanel = ({
   intl,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   if (!snAndel.næringer) {
     return null;
   }
@@ -124,32 +128,35 @@ export const NaeringsopplysningsPanel = ({
           <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} uniqeReactId="SøLink" type="SØ" />
         </FlexColumn>
       </FlexRow>
-      <Row key="SNInntektIngress">
-        <Column xs="8" />
-        <Column xs="3" className={beregningStyles.colAarText}>
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
-          </Undertekst>
-        </Column>
-      </Row>
+
       <VerticalSpacer fourPx />
       {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
+          <Row key="SNInntektIngress">
+            <Column xs="8" />
+            <Column xs="3" className={beregningStyles.colAarText}>
+              {søkerHarOppgittInntekt(naring) && (
+                <Undertekst>
+                  <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
+                </Undertekst>
+              )}
+            </Column>
+          </Row>
           <Row key={`NaringsNavn${naring.orgnr}`}>
             <Column xs="6">
-              <Normaltekst>
+              <Normaltekst className={beregningStyles.semiBoldText}>
                 {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
             <Column xs="3">
-              <Normaltekst>
+              <EtikettLiten>
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
-              </Normaltekst>
+              </EtikettLiten>
             </Column>
             <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
               {søkerHarOppgittInntekt(naring)
                 && (
-                <Normaltekst>
+                <Normaltekst className={beregningStyles.semiBoldText}>
                   {formatCurrencyNoKr(naring.oppgittInntekt)}
                 </Normaltekst>
                 )}
@@ -161,12 +168,12 @@ export const NaeringsopplysningsPanel = ({
                 {naring && naring.orgnr ? naring.orgnr : ''}
               </Normaltekst>
             </Column>
-            <Column xs="2">
+            <Column xs="4">
               {virksomhetsDatoer(naring)
                 && (
-                <Normaltekst>
+                <Undertekst>
                   {virksomhetsDatoer(naring)}
-                </Normaltekst>
+                </Undertekst>
                 )}
             </Column>
           </Row>
@@ -185,6 +192,7 @@ export const NaeringsopplysningsPanel = ({
               {lagBeskrivelsePanel(naring, intl)}
             </Row>
             )}
+          <VerticalSpacer twentyPx />
         </React.Fragment>
       ))}
     </>

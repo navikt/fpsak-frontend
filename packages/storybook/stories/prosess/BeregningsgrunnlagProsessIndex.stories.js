@@ -448,22 +448,41 @@ export const selvstendigNæringsdrivende = () => {
   andeler[0].pgiSnitt = 154985;
   andeler[0].erNyIArbeidslivet = false;
 
-  const næringer = [{
-    begrunnelse: 'Endringsbeskrivelse',
-    endringsdato: '2019-11-22',
-    erNyoppstartet: true,
-    erVarigEndret: false,
-    kanRegnskapsførerKontaktes: false,
-    oppgittInntekt: 1500000,
-    oppstartsdato: null,
-    orgnr: '910909088',
-    regnskapsførerNavn: 'Regnar Regnskap',
-    regnskapsførerTlf: '99999999',
-    utenlandskvirksomhetsnavn: null,
-    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
-    kode: 'ANNEN',
-    kodeverk: 'VIRKSOMHET_TYPE',
-  }];
+  const næringer = [
+    {
+      begrunnelse: 'Jeg utvidet virksomheten fra en ren frisørsalong til også å tilby hudpleie. '
+        + 'Jeg jobbet opprinnelig alene men har ansatt to stykker i løpet av det siste året',
+      endringsdato: '2016-05-01',
+      erNyoppstartet: false,
+      erVarigEndret: true,
+      kanRegnskapsførerKontaktes: true,
+      oppgittInntekt: 900000,
+      oppstartsdato: '2015-11-01',
+      orgnr: '910909088',
+      regnskapsførerNavn: 'Petra Olsen',
+      regnskapsførerTlf: '90890989',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+      kode: 'ANNEN',
+      kodeverk: 'VIRKSOMHET_TYPE',
+    },
+    {
+      begrunnelse: 'Endringsbeskrivelse',
+      endringsdato: '2019-11-22',
+      erNyoppstartet: false,
+      erVarigEndret: false,
+      kanRegnskapsførerKontaktes: false,
+      oppgittInntekt: null,
+      oppstartsdato: '2015-11-01',
+      opphoersdato: '201-03-01',
+      orgnr: '910909077',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetNavn: 'Berit Jensen',
+      kode: 'ANNEN',
+      kodeverk: 'VIRKSOMHET_TYPE',
+    },
+  ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
