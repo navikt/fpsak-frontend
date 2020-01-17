@@ -180,8 +180,11 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
     });
 };
 
-const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode) => {
+const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt) => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
+    if (erBehandlingHenlagt) {
+      return prosessStegPaneler[prosessStegPaneler.length - 1];
+    }
     const index = prosessStegPaneler.findIndex((i) => i.isAksjonspunktOpen);
     return index !== -1 ? prosessStegPaneler[index] : prosessStegPaneler[0];
   }

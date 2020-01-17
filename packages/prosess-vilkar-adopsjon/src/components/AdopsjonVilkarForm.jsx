@@ -45,7 +45,7 @@ export const AdopsjonVilkarFormImpl = ({
     behandlingVersjon={behandlingVersjon}
     origingalErVilkarOk={origingalErVilkarOk}
   >
-    <Element><FormattedMessage id="FodselVilkarForm.TidligereUtbetaltStonad" /></Element>
+    <Element><FormattedMessage id="AdopsjonVilkarForm.TidligereUtbetaltStonad" /></Element>
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>

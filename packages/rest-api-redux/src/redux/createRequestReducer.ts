@@ -2,7 +2,7 @@ import { ActionTypes } from './ActionTypesTsType';
 
 const initialState = {
   data: undefined,
-  previusData: undefined,
+  previousData: undefined,
   meta: undefined,
   cacheParams: undefined,
   previousCacheParams: undefined,
@@ -63,8 +63,8 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         started: true,
         meta: action.payload,
         cacheParams: action.meta.options.cacheParams,
-        previousData: action.meta.options.cacheParams ? state.data : undefined,
         previousCacheParams: action.meta.options.cacheParams ? state.cacheParams : undefined,
+        previousData: state.previousData,
       };
     case actionTypes.statusRequestStarted():
       return {
@@ -95,6 +95,7 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         finished: true,
         data: action.payload,
         pollingMessage: undefined,
+        previousData: state.data,
       };
     case actionTypes.requestError():
       return {

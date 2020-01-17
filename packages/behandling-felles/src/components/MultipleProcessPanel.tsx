@@ -58,7 +58,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
         <>
           <AksjonspunktHelpTextHTML>
             {harApentFaktaAksjonspunkt
-              ? <FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />
+              ? [<FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />]
               : aksjonspunktTekstKoder.map((kode) => <FormattedMessage key={kode} id={kode} />)}
           </AksjonspunktHelpTextHTML>
           <VerticalSpacer sixteenPx />

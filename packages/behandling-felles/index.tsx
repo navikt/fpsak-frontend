@@ -1,7 +1,6 @@
 export { default as DataFetcherBehandlingData } from './src/DataFetcherBehandlingData';
 export { default as DataFetcherBehandlingDataV2 } from './src/DataFetcherBehandlingDataV2';
 export { default as BehandlingDataCache } from './src/BehandlingDataCache';
-export { default as BehandlingDataProvider } from './src/BehandlingDataProvider';
 export { default as BehandlingPaVent } from './src/components/BehandlingPaVent';
 export { default as MargMarkering } from './src/components/MargMarkering';
 export { default as MultipleProcessPanel } from './src/components/MultipleProcessPanel';

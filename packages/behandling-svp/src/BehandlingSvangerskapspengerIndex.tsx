@@ -6,7 +6,7 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2, BehandlingDataProvider,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingDataV2,
 } from '@fpsak-frontend/behandling-felles';
 
 import svpBehandlingApi, { reduxRestApi, SvpBehandlingApiKeys } from './data/svpBehandlingApi';
@@ -109,42 +109,40 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
       featureToggles,
     } = this.props;
 
-    if (!behandling || !kodeverk) {
+    if (!behandling) {
       return <LoadingPanel />;
     }
 
     reduxRestApi.injectPaths(behandling.links);
 
     return (
-      <BehandlingDataProvider behandling={behandling}>
-        <DataFetcherBehandlingDataV2
-          behandlingVersion={behandling.versjon}
-          endpoints={svangerskapspengerData}
-          showOldDataWhenRefetching
-          render={(dataProps: FetchedData, isFinished) => (
-            <>
-              <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-              <SvangerskapspengerGrid
-                behandling={isFinished ? behandling : forrigeBehandling}
-                fetchedData={dataProps}
-                fagsak={fagsak}
-                alleKodeverk={kodeverk}
-                navAnsatt={navAnsatt}
-                valgtProsessSteg={valgtProsessSteg}
-                oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-                valgtFaktaSteg={valgtFaktaSteg}
-                oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
-                oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
-                settPaVent={settPaVent}
-                hentBehandling={hentBehandling}
-                opneSokeside={opneSokeside}
-                hasFetchError={hasFetchError}
-                featureToggles={featureToggles}
-              />
-            </>
-          )}
-        />
-      </BehandlingDataProvider>
+      <DataFetcherBehandlingDataV2
+        behandlingVersion={behandling.versjon}
+        endpoints={svangerskapspengerData}
+        showOldDataWhenRefetching
+        render={(dataProps: FetchedData, isFinished) => (
+          <>
+            <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
+            <SvangerskapspengerGrid
+              behandling={isFinished ? behandling : forrigeBehandling}
+              fetchedData={dataProps}
+              fagsak={fagsak}
+              alleKodeverk={kodeverk}
+              navAnsatt={navAnsatt}
+              valgtProsessSteg={valgtProsessSteg}
+              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+              valgtFaktaSteg={valgtFaktaSteg}
+              oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
+              oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
+              settPaVent={settPaVent}
+              hentBehandling={hentBehandling}
+              opneSokeside={opneSokeside}
+              hasFetchError={hasFetchError}
+              featureToggles={featureToggles}
+            />
+          </>
+        )}
+      />
     );
   }
 }

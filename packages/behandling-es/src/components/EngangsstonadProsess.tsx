@@ -123,7 +123,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
     overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg),
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt),
     [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;

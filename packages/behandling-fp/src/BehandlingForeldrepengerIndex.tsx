@@ -110,7 +110,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
       featureToggles,
     } = this.props;
 
-    if (!behandling || !kodeverk) {
+    if (!behandling) {
       return <LoadingPanel />;
     }
 

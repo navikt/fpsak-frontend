@@ -15,7 +15,7 @@ const findPreviousData = (activeEndpointsData) => {
 
   return activeEndpointsData.reduce((acc, a) => ({
     ...acc,
-    [a.formattedName]: a.previousData,
+    [a.formattedName]: a.isFinished ? a.previousData : a.data,
   }), {});
 };
 
@@ -84,6 +84,7 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
       [endpoint.formattedName]: endpoint.data,
     }), {}), true);
   }
+
 
   if (!hasFailed && showOldDataWhenRefetching) {
     const endpointPreviousData = findPreviousData(activeEndpointsData);

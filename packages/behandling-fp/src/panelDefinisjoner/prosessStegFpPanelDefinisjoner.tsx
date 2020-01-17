@@ -110,17 +110,18 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.CheckVarselRevurdering',
   panels: [{
     aksjonspunkterCodes: [ac.VARSEL_REVURDERING_MANUELL, ac.VARSEL_REVURDERING_ETTERKONTROLL],
-    endpoints: [api.FAMILIEHENDELSE, api.SOKNAD, api.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, api.SOKNAD_ORIGINAL_BEHANDLING],
+    endpoints: [api.FAMILIEHENDELSE, api.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, api.SOKNAD_ORIGINAL_BEHANDLING],
     renderComponent: (props) => <VarselOmRevurderingProsessIndex {...props} />,
-    getData: ({ previewCallback, dispatchSubmitFailed }) => ({ previewCallback, dispatchSubmitFailed }),
+    getData: ({ previewCallback, dispatchSubmitFailed, soknad }) => ({ previewCallback, dispatchSubmitFailed, soknad }),
   }],
 }, {
   urlCode: bpc.SAKSOPPLYSNINGER,
   textCode: 'Behandlingspunkt.Saksopplysninger',
   panels: [{
     aksjonspunkterCodes: [ac.AVKLAR_PERSONSTATUS],
-    endpoints: [api.MEDLEMSKAP, api.PERSONOPPLYSNINGER],
+    endpoints: [api.MEDLEMSKAP],
     renderComponent: (props) => <CheckPersonStatusIndex {...props} />,
+    getData: ({ personopplysninger }) => ({ personopplysninger }),
   }],
 }, {
   urlCode: bpc.OPPLYSNINGSPLIKT,
@@ -129,13 +130,14 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
     aksjonspunkterTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger', 'SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
     vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
-    endpoints: [api.SOKNAD],
+    endpoints: [],
     showComponent: ({ behandling, aksjonspunkterForSteg }) => {
       const isRevurdering = bt.REVURDERING === behandling.type.kode;
       const hasAp = aksjonspunkterForSteg.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
       return !(isRevurdering && !hasAp);
     },
     renderComponent: (props) => <SokersOpplysningspliktVilkarProsessIndex {...props} />,
+    getData: ({ soknad }) => ({ soknad }),
   }],
 }, {
   urlCode: bpc.INNGANGSVILKAR,
@@ -219,10 +221,10 @@ const prosessStegPanelDefinisjoner = [{
       ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG, ac.VURDER_DEKNINGSGRAD],
     vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-    endpoints: [api.BEREGNINGRESULTAT_FORELDREPENGER],
+    endpoints: [],
     renderComponent: (props) => <BeregningsgrunnlagProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ fagsak, featureToggles }) => ({ fagsak, featureToggles }),
+    getData: ({ fagsak, featureToggles, beregningresultatForeldrepenger }) => ({ fagsak, featureToggles, beregningresultatForeldrepenger }),
   }],
 }, {
   urlCode: bpc.SOEKNADSFRIST,
@@ -230,12 +232,13 @@ const prosessStegPanelDefinisjoner = [{
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
     vilkarCodes: [vt.SOKNADFRISTVILKARET],
-    endpoints: [api.SOKNAD, api.FAMILIEHENDELSE],
+    endpoints: [api.FAMILIEHENDELSE],
     renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
     overridePanel: {
       aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
       ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
     },
+    getData: ({ soknad }) => ({ soknad }),
   }],
 }, {
   urlCode: bpc.FORTSATTMEDLEMSKAP,
@@ -252,13 +255,19 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.FASTSETT_UTTAKPERIODER, ac.OVERSTYRING_AV_UTTAKPERIODER, ac.TILKNYTTET_STORTINGET, ac.KONTROLLER_REALITETSBEHANDLING_ELLER_KLAGE,
       ac.KONTROLLER_OPPLYSNINGER_OM_MEDLEMSKAP, ac.KONTROLLER_OPPLYSNINGER_OM_FORDELING_AV_STØNADSPERIODEN, ac.KONTROLLER_OPPLYSNINGER_OM_DØD,
       ac.KONTROLLER_OPPLYSNINGER_OM_SØKNADSFRIST, ac.KONTROLLER_TILSTØTENDE_YTELSER_INNVILGET, ac.KONTROLLER_TILSTØTENDE_YTELSER_OPPHØRT],
-    endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.UTTAKSRESULTAT_PERIODER, api.UTTAK_STONADSKONTOER, api.FAMILIEHENDELSE,
-      api.SOKNAD, api.PERSONOPPLYSNINGER, api.UTTAK_PERIODE_GRENSE, api.YTELSEFORDELING],
+    endpoints: [api.FAKTA_ARBEIDSFORHOLD, api.FAMILIEHENDELSE, api.UTTAK_PERIODE_GRENSE],
     renderComponent: (props) => <UttakProsessIndex {...props} />,
-    getData: ({ fagsak, rettigheter, tempUpdateStonadskontoer }) => ({
+    getData: ({
+      fagsak, rettigheter, tempUpdateStonadskontoer, uttaksresultatPerioder, uttakStonadskontoer, soknad, personopplysninger, ytelsefordeling,
+    }) => ({
       fagsak,
       tempUpdateStonadskontoer,
       employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
+      uttaksresultatPerioder,
+      uttakStonadskontoer,
+      soknad,
+      personopplysninger,
+      ytelsefordeling,
     }),
     showComponent: () => true,
     overrideStatus: ({ uttaksresultatPerioder, aksjonspunkter }) => getStatusFromUttakresultat(uttaksresultatPerioder, aksjonspunkter),
@@ -268,9 +277,13 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.TilkjentYtelse',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
-    endpoints: [api.BEREGNINGRESULTAT, api.FAMILIEHENDELSE, api.PERSONOPPLYSNINGER, api.SOKNAD],
+    endpoints: [api.FAMILIEHENDELSE],
     renderComponent: (props) => <TilkjentYtelseProsessIndex {...props} />,
-    getData: ({ fagsak }) => ({ fagsak }),
+    getData: ({
+      fagsak, beregningresultat, familiehendelse, personopplysninger, soknad,
+    }) => ({
+      fagsak, beregningresultat, familiehendelse, personopplysninger, soknad,
+    }),
     showComponent: () => true,
     overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(
       beregningresultatForeldrepenger, uttaksresultatPerioder,
@@ -281,9 +294,13 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Avregning',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_FEILUTBETALING],
-    endpoints: [api.SIMULERING_RESULTAT, api.TILBAKEKREVINGVALG],
+    endpoints: [api.TILBAKEKREVINGVALG],
     renderComponent: (props) => <AvregningProsessIndex {...props} />,
-    getData: ({ fagsak, featureToggles, previewFptilbakeCallback }) => ({ fagsak, featureToggles, previewFptilbakeCallback }),
+    getData: ({
+      fagsak, featureToggles, previewFptilbakeCallback, simuleringResultat,
+    }) => ({
+      fagsak, featureToggles, previewFptilbakeCallback, simuleringResultat,
+    }),
     showComponent: () => true,
     overrideStatus: ({ simuleringResultat }) => (simuleringResultat ? vut.OPPFYLT : vut.IKKE_VURDERT),
   }],
@@ -293,15 +310,16 @@ const prosessStegPanelDefinisjoner = [{
   panels: [{
     aksjonspunkterCodes: [ac.FORESLA_VEDTAK, ac.FATTER_VEDTAK, ac.FORESLA_VEDTAK_MANUELT, ac.VEDTAK_UTEN_TOTRINNSKONTROLL, ac.VURDERE_ANNEN_YTELSE,
       ac.VURDERE_DOKUMENT, ac.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST, ac.KONTROLL_AV_MAUNELT_OPPRETTET_REVURDERINGSBEHANDLING],
-    endpoints: [api.BEREGNINGRESULTAT_FORELDREPENGER, api.TILBAKEKREVINGVALG, api.SIMULERING_RESULTAT,
-      api.VILKAR, api.SEND_VARSEL_OM_REVURDERING, api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING, api.MEDLEMSKAP],
+    endpoints: [api.TILBAKEKREVINGVALG, api.SEND_VARSEL_OM_REVURDERING, api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING, api.MEDLEMSKAP],
     renderComponent: (props) => <VedtakProsessIndex {...props} />,
     getData: ({
-      previewCallback, rettigheter, aksjonspunkter, vilkar,
+      previewCallback, rettigheter, aksjonspunkter, vilkar, beregningresultatForeldrepenger, simuleringResultat,
     }) => ({
       previewCallback,
       aksjonspunkter,
       vilkar,
+      beregningresultatForeldrepenger,
+      simuleringResultat,
       ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
       employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     }),
