@@ -7,8 +7,9 @@ import styles from './linkTilEksternSystem.less';
 const LinkTilEksterntSystem = ({
   type, linkText, userIdent, uniqeReactId,
 }) => {
-  let link = 'http://alink';
+  let link;
   if (!userIdent) { return null; }
+  // TODO: Det mangler linker til IM og SØ de bruker det samm som AI må endres når vi får data fra backend
   switch (type) {
     case 'AI': {
       link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
