@@ -73,7 +73,8 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
   endpoints: [svpBehandlingApi.OPPTJENING],
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
-  showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET),
+  showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
+    && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT),
   getData: () => {},
 }, {
   urlCode: faktaPanelCodes.BEREGNING,

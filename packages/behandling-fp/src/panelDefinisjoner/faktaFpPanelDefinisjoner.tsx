@@ -8,6 +8,7 @@ import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-fronten
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import OmsorgOgForeldreansvarFaktaIndex from '@fpsak-frontend/fakta-omsorg-og-foreldreansvar';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
@@ -101,7 +102,8 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING],
   endpoints: [fpBehandlingApi.OPPTJENING],
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
-  showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET),
+  showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
+    && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT),
   getData: () => {},
 }, {
   urlCode: faktaPanelCodes.BEREGNING,
