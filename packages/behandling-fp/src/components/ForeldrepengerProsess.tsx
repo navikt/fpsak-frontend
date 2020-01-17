@@ -140,7 +140,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   const prosessmenyCallback = useCallback((index) => {
     const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
     oppdaterProsessStegOgFaktaPanelIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined, valgtFaktaSteg);
-  }, [behandling.versjon, valgtProsessSte, valgtFaktaStegg]);
+  }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside);
