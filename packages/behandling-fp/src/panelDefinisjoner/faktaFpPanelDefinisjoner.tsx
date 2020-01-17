@@ -139,7 +139,11 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <UttakFaktaIndex {...props} />,
   showComponent: ({ personopplysninger, ytelsefordeling }) => ytelsefordeling.endringsdato !== undefined && personopplysninger !== null
     && personopplysninger !== undefined,
-  getData: ({ rettigheter, ytelsefordeling, personopplysninger }) => ({ kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled, ytelsefordeling, personopplysninger }),
+  getData: ({ rettigheter, ytelsefordeling, personopplysninger }) => ({
+    kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled,
+    ytelsefordeling,
+    personopplysninger,
+  }),
 }];
 
 export default faktaPanelDefinisjoner;

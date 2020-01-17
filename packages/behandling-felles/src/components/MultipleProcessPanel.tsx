@@ -8,6 +8,8 @@ import Kodeverk from '../types/kodeverkTsType';
 import Behandling from '../types/behandlingTsType';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
+import styles from './multipleProcessPanel.less';
+
 interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
@@ -61,29 +63,25 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
               ? [<FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />]
               : aksjonspunktTekstKoder.map((kode) => <FormattedMessage key={kode} id={kode} />)}
           </AksjonspunktHelpTextHTML>
-          <VerticalSpacer sixteenPx />
+          <VerticalSpacer thirtyTwoPx />
         </>
       )}
       <Row className="">
         <Column xs="6">
           {panels.filter((_p, index) => index < 2)
-            .reduce((acc, x) => (acc === null ? <>{x}</> : (
-              <>
-                {acc}
-                <VerticalSpacer fourtyPx />
-                {x}
-              </>
-            )), null)}
+            .map((p, index) => (
+              <div className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
+                {p}
+              </div>
+            ))}
         </Column>
         <Column xs="6">
           {panels.filter((_p, index) => index > 1)
-            .reduce((acc, x) => (acc === null ? <>{x}</> : (
-              <>
-                {acc}
-                <VerticalSpacer fourtyPx />
-                {x}
-              </>
-            )), null)}
+            .map((p, index) => (
+              <div className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
+                {p}
+              </div>
+            ))}
         </Column>
       </Row>
     </FadingPanel>
