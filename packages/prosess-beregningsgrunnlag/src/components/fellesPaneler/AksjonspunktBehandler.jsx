@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   hasValidText, maxLength, minLength, required,
@@ -44,6 +44,7 @@ const finnATFLVurderingLabel = (gjeldendeAksjonspunkter) => {
 };
 
 const AksjonspunktBehandler = ({
+  intl,
   readOnly,
   aksjonspunkter,
   formName,
@@ -61,7 +62,6 @@ const AksjonspunktBehandler = ({
   let erNyArbLivet = false;
   let visFL = false;
   let visAT = false;
-
   const snAndel = alleAndelerIForstePeriode.find(
     (andel) => andel.aktivitetStatus && andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
   );
@@ -82,7 +82,6 @@ const AksjonspunktBehandler = ({
   }
   erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
-  // }
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
@@ -128,13 +127,14 @@ const AksjonspunktBehandler = ({
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="12">
-            <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
+            <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapperHeigh}>
               <TextAreaField
                 name="ATFLVurdering"
                 label={finnATFLVurderingLabel(aksjonspunkter)}
                 validate={[required, maxLength1500, minLength3, hasValidText]}
                 maxLength={1500}
                 readOnly={readOnly}
+                placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
               />
             </div>
           </Column>
@@ -220,6 +220,7 @@ AksjonspunktBehandler.propTypes = {
   tidsBegrensetInntekt: PropTypes.bool.isRequired,
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   relevanteStatuser: PropTypes.shape().isRequired,
+  intl: PropTypes.shape().isRequired,
 };
 
 AksjonspunktBehandler.defaultProps = {
@@ -228,4 +229,4 @@ AksjonspunktBehandler.defaultProps = {
 
 AksjonspunktBehandler.transformValues = (values) => values.ATFLVurdering;
 
-export default AksjonspunktBehandler;
+export default injectIntl(AksjonspunktBehandler);
