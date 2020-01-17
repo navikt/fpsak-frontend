@@ -22,9 +22,10 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   hasFetchError: boolean;
-  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
   valgtFaktaSteg?: string;
-  setApentFaktaAksjonspunkt: (erApApent: boolean) => void;
+  valgtProsessSteg?: string;
+  setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
 }
 
 const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
@@ -33,10 +34,11 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   fagsak,
   navAnsatt,
   alleKodeverk,
-  oppdaterFaktaPanelIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   valgtFaktaSteg,
+  valgtProsessSteg,
   hasFetchError,
-  setApentFaktaAksjonspunkt,
+  setApentFaktaPanel,
 }) => {
   const {
     aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
@@ -52,12 +54,16 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   [behandling.versjon]);
 
   useEffect(() => {
-    setApentFaktaAksjonspunkt(faktaPaneler.some((p) => p.harApneAksjonspunkter));
-  }, [faktaPaneler]);
+    const panelMedApentAp = faktaPaneler.find((p) => p.harApneAksjonspunkter);
+    if (panelMedApentAp) {
+      setApentFaktaPanel({ urlCode: panelMedApentAp.urlCode, textCode: panelMedApentAp.textCode });
+    }
+  }, [behandling.versjon]);
 
-  const velgFaktaPanelCallback = useCallback((index) => oppdaterFaktaPanelIUrl(faktaPaneler[index].urlCode), [behandling.versjon]);
+  const velgFaktaPanelCallback = useCallback((index) => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].urlCode),
+    [behandling.versjon, valgtProsessSteg]);
   const bekreftAksjonspunktCallback = useCallback(faktaPanelUtils
-    .getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl, overstyringApCodes, fpBehandlingApi),
+    .getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, fpBehandlingApi),
   [behandling.versjon]);
 
   const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);

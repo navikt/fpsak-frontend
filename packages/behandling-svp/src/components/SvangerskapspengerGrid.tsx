@@ -18,9 +18,8 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
   valgtFaktaSteg?: string;
-  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -36,9 +35,8 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
-  oppdaterProsessStegIUrl,
   valgtFaktaSteg,
-  oppdaterFaktaPanelIUrl,
+  oppdaterProsessStegOgFaktaPanelIUrl,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -46,7 +44,7 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
   hasFetchError,
   featureToggles,
 }) => {
-  const [harApentFaktaAksjonspunkt, setApentFaktaAksjonspunkt] = useState(false);
+  const [apentFaktaPanelInfo, setApentFaktaPanel] = useState();
   return (
     <>
       <BehandlingPaVent
@@ -63,12 +61,13 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
         alleKodeverk={alleKodeverk}
         navAnsatt={navAnsatt}
         valgtProsessSteg={valgtProsessSteg}
-        oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
+        valgtFaktaSteg={valgtFaktaSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         hasFetchError={hasFetchError}
         featureToggles={featureToggles}
-        harApentFaktaAksjonspunkt={harApentFaktaAksjonspunkt}
+        apentFaktaPanelInfo={apentFaktaPanelInfo}
       />
       <VerticalSpacer sixteenPx />
       <PersonFaktaIndex
@@ -91,8 +90,9 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
         navAnsatt={navAnsatt}
         hasFetchError={hasFetchError}
         valgtFaktaSteg={valgtFaktaSteg}
-        oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
-        setApentFaktaAksjonspunkt={setApentFaktaAksjonspunkt}
+        valgtProsessSteg={valgtProsessSteg}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        setApentFaktaPanel={setApentFaktaPanel}
       />
     </>
   );

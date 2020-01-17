@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useMemo } from 'react';
+import React, { FunctionComponent, useMemo, useCallback } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
@@ -15,7 +15,8 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   prosessStegData: any;
   submitCallback: () => void;
-  harApentFaktaAksjonspunkt: boolean;
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string};
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
 const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
@@ -23,7 +24,8 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
   alleKodeverk,
   prosessStegData,
   submitCallback,
-  harApentFaktaAksjonspunkt,
+  apentFaktaPanelInfo,
+  oppdaterProsessStegOgFaktaPanelIUrl,
 }) => {
   const filteredPanels = prosessStegData.filter((stegData) => stegData.renderComponent);
   const panels = filteredPanels.map((stegData) => (
@@ -54,13 +56,23 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
     .reduce((acc, p) => [...acc, p.aksjonspunktHelpTextCodes], []),
   [filteredPanels]);
 
+  const oppdaterUrl = useCallback((evt) => {
+    oppdaterProsessStegOgFaktaPanelIUrl(undefined, apentFaktaPanelInfo.urlCode);
+    evt.preventDefault();
+  }, [apentFaktaPanelInfo]);
+
   return (
     <FadingPanel>
-      {(harApentFaktaAksjonspunkt || aksjonspunktTekstKoder.length > 0) && (
+      {(apentFaktaPanelInfo || aksjonspunktTekstKoder.length > 0) && (
         <>
           <AksjonspunktHelpTextHTML>
-            {harApentFaktaAksjonspunkt
-              ? [<FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />]
+            {apentFaktaPanelInfo
+              ? [
+                <>
+                  <FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />
+                  <a href="" onClick={oppdaterUrl}><FormattedMessage id={apentFaktaPanelInfo.textCode} /></a>
+                </>,
+              ]
               : aksjonspunktTekstKoder.map((kode) => <FormattedMessage key={kode} id={kode} />)}
           </AksjonspunktHelpTextHTML>
           <VerticalSpacer thirtyTwoPx />

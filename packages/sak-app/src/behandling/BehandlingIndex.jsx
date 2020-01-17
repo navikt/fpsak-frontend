@@ -118,6 +118,29 @@ export class BehandlingIndex extends Component {
     resetBehandlingContext();
   }
 
+  goToValgtProsessStegOgFaktaPanel = (prosessStegId, faktaPanelId) => {
+    const { push: pushLocation, location } = this.props;
+    let newLocation;
+    if (prosessStegId === 'default') {
+      newLocation = getLocationWithDefaultBehandlingspunktAndFakta(location);
+    } else if (prosessStegId) {
+      newLocation = getBehandlingspunktLocation(location)(formatName(prosessStegId));
+    } else {
+      newLocation = getBehandlingspunktLocation(location)(null);
+    }
+
+    if (faktaPanelId === 'default') {
+      newLocation = getFaktaLocation(newLocation)('default');
+    } else if (faktaPanelId) {
+      newLocation = getFaktaLocation(newLocation)(formatName(faktaPanelId));
+    } else {
+      newLocation = getFaktaLocation(newLocation)(null);
+    }
+
+    pushLocation(newLocation);
+  };
+
+
   goToValgtProsessSteg = (prosessId) => {
     const { push: pushLocation, location } = this.props;
     if (prosessId === 'default') {
@@ -126,17 +149,6 @@ export class BehandlingIndex extends Component {
       pushLocation(getBehandlingspunktLocation(location)(formatName(prosessId)));
     } else {
       pushLocation(getBehandlingspunktLocation(location)(null));
-    }
-  };
-
-  goToValgtFaktaPanel = (faktaId) => {
-    const { push: pushLocation, location } = this.props;
-    if (faktaId === 'default') {
-      pushLocation(getLocationWithDefaultBehandlingspunktAndFakta(location));
-    } else if (faktaId) {
-      pushLocation(getFaktaLocation(location)(formatName(faktaId)));
-    } else {
-      pushLocation(getFaktaLocation(location)(null));
     }
   };
 
@@ -167,7 +179,6 @@ export class BehandlingIndex extends Component {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl: this.goToValgtProsessSteg,
       valgtProsessSteg: location.query.punkt,
       opneSokeside: this.goToSearchPage,
       key: behandlingId,
@@ -177,7 +188,10 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingPapirsoknadIndex {...defaultProps} />
+            <BehandlingPapirsoknadIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );
@@ -187,7 +201,10 @@ export class BehandlingIndex extends Component {
       return (
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
-            <BehandlingInnsynIndex {...defaultProps} />
+            <BehandlingInnsynIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
+              {...defaultProps}
+            />
           </ErrorBoundary>
         </Suspense>
       );
@@ -198,6 +215,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingKlageIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -211,6 +229,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingAnkeIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               alleBehandlinger={fagsakBehandlingerInfo}
               {...defaultProps}
             />
@@ -224,6 +243,7 @@ export class BehandlingIndex extends Component {
         <Suspense fallback={<LoadingPanel />}>
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingTilbakekrevingIndex
+              oppdaterProsessStegIUrl={this.goToValgtProsessSteg}
               harApenRevurdering={fagsakBehandlingerInfo
                 .some((b) => b.type.kode === BehandlingType.REVURDERING && b.status.kode !== behandlingStatus.AVSLUTTET)}
               {...defaultProps}
@@ -239,7 +259,7 @@ export class BehandlingIndex extends Component {
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingEngangsstonadIndex
               featureToggles={featureToggles}
-              oppdaterFaktaPanelIUrl={this.goToValgtFaktaPanel}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
@@ -254,7 +274,7 @@ export class BehandlingIndex extends Component {
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingForeldrepengerIndex
               featureToggles={featureToggles}
-              oppdaterFaktaPanelIUrl={this.goToValgtFaktaPanel}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />
@@ -269,7 +289,7 @@ export class BehandlingIndex extends Component {
           <ErrorBoundary key={behandlingId} errorMessageCallback={visFeilmelding}>
             <BehandlingSvangerskapspengerIndex
               featureToggles={featureToggles}
-              oppdaterFaktaPanelIUrl={this.goToValgtFaktaPanel}
+              oppdaterProsessStegOgFaktaPanelIUrl={this.goToValgtProsessStegOgFaktaPanel}
               valgtFaktaSteg={location.query.fakta}
               {...defaultProps}
             />

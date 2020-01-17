@@ -22,11 +22,10 @@ interface OwnProps {
   behandlingVersjon: number;
   fagsak: FagsakInfo;
   navAnsatt: NavAnsatt;
-  oppdaterProsessStegIUrl: (punktnavn?: string) => void;
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   valgtProsessSteg?: string;
-  oppdaterBehandlingVersjon: (versjon: number) => void;
-  oppdaterFaktaPanelIUrl: (faktanavn?: string) => void;
   valgtFaktaSteg?: string;
+  oppdaterBehandlingVersjon: (versjon: number) => void;
   behandlingEventHandler: {
     setHandler: (events: {[key: string]: (params: {}) => Promise<any> }) => void;
     clear: () => void;
@@ -99,9 +98,8 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
       kodeverk,
       fagsak,
       navAnsatt,
-      oppdaterProsessStegIUrl,
+      oppdaterProsessStegOgFaktaPanelIUrl,
       valgtProsessSteg,
-      oppdaterFaktaPanelIUrl,
       valgtFaktaSteg,
       settPaVent,
       hentBehandling,
@@ -131,9 +129,8 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
               alleKodeverk={kodeverk}
               navAnsatt={navAnsatt}
               valgtProsessSteg={valgtProsessSteg}
-              oppdaterProsessStegIUrl={oppdaterProsessStegIUrl}
-              oppdaterFaktaPanelIUrl={oppdaterFaktaPanelIUrl}
               valgtFaktaSteg={valgtFaktaSteg}
+              oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
               oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
               settPaVent={settPaVent}
               hentBehandling={hentBehandling}

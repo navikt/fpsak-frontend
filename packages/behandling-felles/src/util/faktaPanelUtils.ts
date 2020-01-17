@@ -5,6 +5,7 @@ import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 
 const DEFAULT_FAKTA_KODE = 'default';
+const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
@@ -47,7 +48,8 @@ const formaterPanelerForSidemeny = (intl, faktaPaneler, valgtFaktaPanelKode) => 
   harAksjonspunkt: panel.harApneAksjonspunkter,
 }));
 
-const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterFaktaPanelIUrl, overstyringApCodes, api) => (aksjonspunkter) => {
+const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+  overstyringApCodes, api) => (aksjonspunkter) => {
   const model = aksjonspunkter.map((ap) => ({
     '@type': ap.kode,
     ...ap,
@@ -63,13 +65,13 @@ const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterFa
     return dispatch(api.SAVE_OVERSTYRT_AKSJONSPUNKT.makeRestApiRequest()({
       ...params,
       overstyrteAksjonspunktDtoer: model,
-    }, { keepData: true })).then(() => oppdaterFaktaPanelIUrl(DEFAULT_FAKTA_KODE));
+    }, { keepData: true })).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
   }
 
   return dispatch(api.SAVE_AKSJONSPUNKT.makeRestApiRequest()({
     ...params,
     bekreftedeAksjonspunktDtoer: model,
-  }, { keepData: true })).then(() => oppdaterFaktaPanelIUrl(DEFAULT_FAKTA_KODE));
+  }, { keepData: true })).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
 };
 
 
