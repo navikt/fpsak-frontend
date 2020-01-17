@@ -10,6 +10,7 @@ const AktsomhetGradFormPanel = ({
   readOnly,
   handletUaktsomhetGrad,
   erSerligGrunnAnnetValgt,
+  erValgtResultatTypeForstoBurdeForstaatt,
   sarligGrunnTyper,
   harMerEnnEnYtelse,
   feilutbetalingBelop,
@@ -18,7 +19,10 @@ const AktsomhetGradFormPanel = ({
 }) => (
   <>
     { handletUaktsomhetGrad === aktsomhet.FORSETT && (
-      <AktsomhetGradForsettFormPanel />
+      <AktsomhetGradForsettFormPanel
+        readOnly={readOnly}
+        erValgtResultatTypeForstoBurdeForstaatt={erValgtResultatTypeForstoBurdeForstaatt}
+      />
     )}
     { handletUaktsomhetGrad !== aktsomhet.FORSETT && (
       <AktsomhetGradUaktsomhetFormPanel
@@ -41,6 +45,7 @@ AktsomhetGradFormPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   handletUaktsomhetGrad: PropTypes.string.isRequired,
   erSerligGrunnAnnetValgt: PropTypes.bool.isRequired,
+  erValgtResultatTypeForstoBurdeForstaatt: PropTypes.bool,
   harMerEnnEnYtelse: PropTypes.bool.isRequired,
   feilutbetalingBelop: PropTypes.number.isRequired,
   erTotalBelopUnder4Rettsgebyr: PropTypes.bool.isRequired,
