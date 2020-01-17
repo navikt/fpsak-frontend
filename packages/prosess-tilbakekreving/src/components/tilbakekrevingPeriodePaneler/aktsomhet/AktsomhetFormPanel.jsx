@@ -65,6 +65,7 @@ const AktsomhetFormPanel = ({
           readOnly={readOnly}
           handletUaktsomhetGrad={handletUaktsomhetGrad}
           erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
+          erValgtResultatTypeForstoBurdeForstaatt={erValgtResultatTypeForstoBurdeForstaatt}
           resetAnnetTextField={resetAnnetTextField}
           sarligGrunnTyper={sarligGrunnTyper}
           harMerEnnEnYtelse={antallYtelser > 1}
