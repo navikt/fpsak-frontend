@@ -55,7 +55,7 @@ export const visPanelForÅpentAksjonspunkt = () => (
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
   />
@@ -73,7 +73,7 @@ export const visPanelForNårEnIkkeHarAksjonspunkt = () => (
     status={vilkarUtfallType.IKKE_VURDERT}
     lovReferanse="§§Dette er en lovreferanse"
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
   />

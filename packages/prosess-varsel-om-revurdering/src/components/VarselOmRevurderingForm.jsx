@@ -12,7 +12,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector, SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -128,9 +128,9 @@ export class VarselOmRevurderingFormImpl extends React.Component {
         {(!readOnly && isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
-              <AksjonspunktHelpText isAksjonspunktOpen>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
                 {[<FormattedMessage key="1" id="VarselOmRevurderingForm.VarselOmRevurderingVurder" />]}
-              </AksjonspunktHelpText>
+              </AksjonspunktHelpTextTemp>
               <VerticalSpacer twentyPx />
               { erAutomatiskRevurdering
               && (

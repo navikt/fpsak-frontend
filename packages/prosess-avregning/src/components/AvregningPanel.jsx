@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, Image, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
@@ -135,9 +135,9 @@ export class AvregningPanelImpl extends Component {
           <div>
             <Row>
               <Column xs="12">
-                <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
                   {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
-                </AksjonspunktHelpText>
+                </AksjonspunktHelpTextTemp>
                 <VerticalSpacer twentyPx />
                 <AvregningSummary
                   fom={simuleringResultatOption.periodeFom}

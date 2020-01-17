@@ -9,7 +9,7 @@ import { formPropTypes } from 'redux-form';
 import { uttaksresultaltPerioderSøkerPropType } from '@fpsak-frontend/prop-types';
 import { behandlingFormValueSelector, behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
-  AksjonspunktHelpText, ElementWrapper, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import AlertStripe from 'nav-frontend-alertstriper';
@@ -103,9 +103,9 @@ export const UttakPanelImpl = ({
     {aksjonspunkter.length > 0
         && (
           <ElementWrapper>
-            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
               {hentApTekst(uttaksresultat, isApOpen, aksjonspunkter)}
-            </AksjonspunktHelpText>
+            </AksjonspunktHelpTextTemp>
             <VerticalSpacer twentyPx />
           </ElementWrapper>
         )}

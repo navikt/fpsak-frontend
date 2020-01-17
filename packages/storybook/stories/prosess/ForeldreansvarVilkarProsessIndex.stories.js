@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import avslagsarsakCodes from '@fpsak-frontend/kodeverk/src/avslagsarsakCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -36,11 +35,11 @@ export const visÅpentAksjonspunkt2Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     status={vilkarUtfallType.IKKE_VURDERT}
     isEngangsstonad={boolean('isEngangsstonad', false)}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_2_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', true)}
   />
 );
 
@@ -62,11 +61,11 @@ export const visOppfyltVilkår2Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.OPPFYLT}
     isEngangsstonad={boolean('isEngangsstonad', false)}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_2_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', true)}
   />
 );
 
@@ -92,11 +91,11 @@ export const visAvslåttVilkår2Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.IKKE_OPPFYLT}
     isEngangsstonad={boolean('isEngangsstonad', false)}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_2_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', true)}
   />
 );
 
@@ -117,11 +116,11 @@ export const visÅpentAksjonspunkt4Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     status={vilkarUtfallType.IKKE_VURDERT}
     isEngangsstonad={false}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_4_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', false)}
   />
 );
 
@@ -143,11 +142,11 @@ export const visOppfyltVilkår4Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.OPPFYLT}
     isEngangsstonad={false}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_4_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', false)}
   />
 );
 
@@ -173,10 +172,10 @@ export const visAvslåttVilkår4Ledd = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.IKKE_OPPFYLT}
     isEngangsstonad={false}
-    vilkarTypeCodes={[vilkarType.FORELDREANSVARSVILKARET_4_LEDD]}
+    isForeldreansvar2Ledd={boolean('isForeldreansvar2Ledd', false)}
   />
 );

@@ -13,7 +13,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
@@ -43,9 +43,9 @@ export const CheckPersonStatusFormImpl = ({
   <form onSubmit={formProps.handleSubmit}>
     <Undertittel>{intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}</Undertittel>
     <VerticalSpacer twentyPx />
-    <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
-    </AksjonspunktHelpText>
+    </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
     { gjeldeneFom
         && (
