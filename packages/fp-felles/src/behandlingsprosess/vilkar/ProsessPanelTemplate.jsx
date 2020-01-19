@@ -29,7 +29,7 @@ const ProsessPanelTemplate = ({
   behandlingVersjon,
   lovReferanse,
   titleCode,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   isAksjonspunktOpen,
   formProps,
   readOnlySubmitButton,
@@ -42,9 +42,9 @@ const ProsessPanelTemplate = ({
     <form onSubmit={formProps.handleSubmit}>
       <FlexContainer>
         <FlexRow>
-          {origingalErVilkarOk !== undefined && (
+          {originalErVilkarOk !== undefined && (
             <FlexColumn>
-              <Image className={styles.status} src={origingalErVilkarOk ? innvilgetImage : avslattImage} />
+              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
             </FlexColumn>
           )}
           <FlexColumn>
@@ -59,19 +59,19 @@ const ProsessPanelTemplate = ({
 
         <FlexRow>
           <FlexColumn>
-            {origingalErVilkarOk && (
+            {originalErVilkarOk && (
               <>
                 <VerticalSpacer eightPx />
                 <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element>
               </>
             )}
-            {origingalErVilkarOk === false && (
+            {originalErVilkarOk === false && (
               <>
                 <VerticalSpacer eightPx />
                 <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element>
               </>
             )}
-            {(!isAksjonspunktOpen && origingalErVilkarOk === undefined) && (
+            {(!isAksjonspunktOpen && originalErVilkarOk === undefined) && (
               <>
                 <VerticalSpacer eightPx />
                 <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>
@@ -114,7 +114,7 @@ ProsessPanelTemplate.propTypes = {
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   formProps: PropTypes.shape().isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  origingalErVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   rendreFakta: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
   isDirty: PropTypes.bool,
@@ -123,7 +123,7 @@ ProsessPanelTemplate.propTypes = {
 
 ProsessPanelTemplate.defaultProps = {
   lovReferanse: undefined,
-  origingalErVilkarOk: undefined,
+  originalErVilkarOk: undefined,
   rendreFakta: undefined,
   isDirty: undefined,
 };

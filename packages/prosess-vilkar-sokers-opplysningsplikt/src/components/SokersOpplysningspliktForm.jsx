@@ -68,7 +68,7 @@ export const SokersOpplysningspliktFormImpl = ({
   behandlingsresultat,
   hasSoknad,
   erVilkarOk,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   hasAksjonspunkt,
   manglendeVedlegg,
   dokumentTypeIds,
@@ -87,7 +87,7 @@ export const SokersOpplysningspliktFormImpl = ({
     readOnly={readOnly}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
   >
     {manglendeVedlegg.length > 0 && (
       <ElementWrapper>
@@ -158,7 +158,7 @@ SokersOpplysningspliktFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   hasSoknad: PropTypes.bool,
   erVilkarOk: PropTypes.bool,
-  origingalErVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
   behandlingsresultat: PropTypes.shape(),
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
@@ -172,7 +172,7 @@ SokersOpplysningspliktFormImpl.propTypes = {
 SokersOpplysningspliktFormImpl.defaultProps = {
   hasSoknad: undefined,
   erVilkarOk: undefined,
-  origingalErVilkarOk: undefined,
+  originalErVilkarOk: undefined,
   hasAksjonspunkt: false,
   behandlingsresultat: {},
   manglendeVedlegg: [],
@@ -251,7 +251,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
       getKodeverknavn,
       onSubmit: submitSelector(state, ownProps),
       hasSoknad: hasSoknad(state, ownProps),
-      origingalErVilkarOk: erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
       manglendeVedlegg: getSortedManglendeVedlegg(state, ownProps),
       initialValues: buildInitialValues(state, ownProps),

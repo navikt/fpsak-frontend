@@ -25,7 +25,7 @@ const FORM_NAME = 'OpptjeningVilkarForm';
 export const OpptjeningVilkarAksjonspunktPanelImpl = ({
   isApOpen,
   erVilkarOk,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   readOnlySubmitButton,
   readOnly,
   lovReferanse,
@@ -44,7 +44,7 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
     rendreFakta={() => (
       <>
         <VerticalSpacer sixteenPx />
@@ -77,13 +77,13 @@ OpptjeningVilkarAksjonspunktPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   erVilkarOk: PropTypes.bool,
-  origingalErVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   lovReferanse: PropTypes.string,
 };
 
 OpptjeningVilkarAksjonspunktPanelImpl.defaultProps = {
   erVilkarOk: undefined,
-  origingalErVilkarOk: undefined,
+  originalErVilkarOk: undefined,
   lovReferanse: undefined,
 };
 
@@ -113,7 +113,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   return (state, ownProps) => ({
     onSubmit,
     initialValues: buildInitialValues(ownProps),
-    origingalErVilkarOk: erVilkarOk,
+    originalErVilkarOk: erVilkarOk,
     erVilkarOk: behandlingFormValueSelector(FORM_NAME, ownProps.behandlingId, ownProps.behandlingVersjon)(state, 'erVilkarOk'),
     lovReferanse: ownProps.lovReferanse,
   });

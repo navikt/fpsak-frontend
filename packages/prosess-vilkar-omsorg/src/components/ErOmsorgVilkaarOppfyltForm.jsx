@@ -26,7 +26,7 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
@@ -41,7 +41,7 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
     readOnly={readOnly}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt" /></Element>
     <VilkarResultPicker
@@ -107,7 +107,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     return {
       onSubmit,
       avslagsarsaker,
-      origingalErVilkarOk: erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
     };

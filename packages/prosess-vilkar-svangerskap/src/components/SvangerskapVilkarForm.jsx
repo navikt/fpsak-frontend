@@ -29,7 +29,7 @@ export const SvangerskapVilkarFormImpl = ({
   isApOpen,
   behandlingId,
   behandlingVersjon,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   ...formProps
 }) => (
   <ProsessPanelTemplate
@@ -40,7 +40,7 @@ export const SvangerskapVilkarFormImpl = ({
     readOnly={readOnly}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="SvangerskapVilkarForm.Test" /></Element>
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
@@ -100,7 +100,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, vilkar } = ownProps;
     return {
-      origingalErVilkarOk: erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,

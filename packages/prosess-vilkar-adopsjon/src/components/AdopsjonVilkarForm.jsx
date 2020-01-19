@@ -25,7 +25,7 @@ export const AdopsjonVilkarFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   hasAksjonspunkt,
   status,
   isApOpen,
@@ -43,7 +43,7 @@ export const AdopsjonVilkarFormImpl = ({
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="AdopsjonVilkarForm.TidligereUtbetaltStonad" /></Element>
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
@@ -103,7 +103,7 @@ const mapStateToPropsFactory = (initialState, staticOwnProps) => {
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, vilkar } = ownProps;
     return {
-      origingalErVilkarOk: erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,

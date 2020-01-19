@@ -83,19 +83,36 @@ export const VilkarresultatMedOverstyringForm = ({
         </FlexRow>
         <FlexRow>
           <FlexColumn>
-            {originalErVilkarOk && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element> }
-            {originalErVilkarOk === false && <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element> }
-            {originalErVilkarOk === undefined && <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>}
+            {originalErVilkarOk && (
+              <>
+                <VerticalSpacer eightPx />
+                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element>
+              </>
+            )}
+            {originalErVilkarOk === false && (
+              <>
+                <VerticalSpacer eightPx />
+                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element>
+              </>
+            )}
+            {originalErVilkarOk === undefined && (
+              <>
+                <VerticalSpacer eightPx />
+                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>
+              </>
+            )}
           </FlexColumn>
           {originalErVilkarOk !== undefined && !isHidden(kanOverstyreAccess.isEnabled, aksjonspunktCodes, overstyringApKode) && (
             <>
                 {(!erOverstyrt && !overrideReadOnly) && (
                   <FlexColumn>
+                    <VerticalSpacer eightPx />
                     <Image className={styles.key} src={keyImage} onClick={togglePa} />
                   </FlexColumn>
                 )}
                 {(erOverstyrt || overrideReadOnly) && (
                   <FlexColumn>
+                    <VerticalSpacer eightPx />
                     <Image className={styles.keyWithoutCursor} src={keyUtgraetImage} />
                   </FlexColumn>
                 )}

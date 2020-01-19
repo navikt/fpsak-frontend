@@ -29,7 +29,7 @@ export const FodselVilkarFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
-  origingalErVilkarOk,
+  originalErVilkarOk,
   hasAksjonspunkt,
   behandlingId,
   behandlingVersjon,
@@ -45,7 +45,7 @@ export const FodselVilkarFormImpl = ({
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
-    origingalErVilkarOk={origingalErVilkarOk}
+    originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="FodselVilkarForm.TidligereUtbetaltStonad" /></Element>
     <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
@@ -61,7 +61,7 @@ FodselVilkarFormImpl.propTypes = {
   })).isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   erVilkarOk: PropTypes.bool,
-  origingalErVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
   isApOpen: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
@@ -71,7 +71,7 @@ FodselVilkarFormImpl.propTypes = {
 
 FodselVilkarFormImpl.defaultProps = {
   erVilkarOk: undefined,
-  origingalErVilkarOk: undefined,
+  originalErVilkarOk: undefined,
   hasAksjonspunkt: false,
 };
 
@@ -115,7 +115,7 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     return {
       onSubmit,
       avslagsarsaker: filtrerteAvslagsarsaker,
-      origingalErVilkarOk: erVilkarOk,
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,
