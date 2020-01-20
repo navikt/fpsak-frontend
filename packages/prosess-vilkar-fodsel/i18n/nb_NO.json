@@ -1,7 +1,10 @@
 {
   "FodselVilkarForm.Fodsel": "Fødsel",
-  "FodselVilkarForm.TidligereUtbetaltStonad": "Tidligere utbetalt foreldrepenger eller engangsstønad",
+  "FodselVilkarForm.TidligereUtbetaltStonad": "Tidligere utbetalte foreldrepenger eller engangsstønad",
+  "FodselVilkarForm.Oppfylt": "Er utbetalt for et annet barn, vilkåret er oppfylt",
+  "FodselVilkarForm.IkkeOppfylt": "Er utbetalt for dette barnet, vilkåret er <b>ikke</b> oppfylt",
   
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

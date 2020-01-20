@@ -30,6 +30,7 @@ export const ErForeldreansvarVilkaarOppfyltForm = ({
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
+  isEngangsstonad,
   ...formProps
 }) => (
   <ProsessPanelTemplate
@@ -42,12 +43,14 @@ export const ErForeldreansvarVilkaarOppfyltForm = ({
     behandlingVersjon={behandlingVersjon}
     originalErVilkarOk={originalErVilkarOk}
   >
-    <Element><FormattedMessage id="ErForeldreansvarVilkaarOppfyltForm.ErVilkaretOppfylt" /></Element>
+    <Element><FormattedMessage id="ErForeldreansvarVilkaarOppfyltForm.RettTilStonad" /></Element>
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt={aksjonspunkter.length > 0}
+      customVilkarOppfyltText={{ id: isEngangsstonad ? 'FodselVilkarForm.OppfyltEs' : 'FodselVilkarForm.OppfyltFp' }}
+      customVilkarIkkeOppfyltText={{ id: isEngangsstonad ? 'FodselVilkarForm.IkkeOppfyltEs' : 'FodselVilkarForm.IkkeOppfyltFp' }}
     />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>

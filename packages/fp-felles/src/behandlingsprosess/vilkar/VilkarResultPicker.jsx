@@ -48,10 +48,11 @@ const VilkarResultPickerImpl = ({
             <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
           </FlexColumn>
           <FlexColumn>
-            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarResultPicker.VilkarOppfylt" /></Normaltekst>}
-            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id="VilkarResultPicker.VilkarIkkeOppfylt" /></Normaltekst>}
+            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarOppfyltText, true)} /></Normaltekst>}
+            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)} /></Normaltekst>}
           </FlexColumn>
         </FlexRow>
+        <VerticalSpacer eightPx />
       </FlexContainer>
     )}
     {(!readOnly || erVilkarOk === undefined) && (

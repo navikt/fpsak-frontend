@@ -1,6 +1,10 @@
 {
   "AdopsjonVilkarForm.Adopsjon": "Adopsjon",
-  
+  "AdopsjonVilkarForm.TidligereUtbetaltStonad": "Tidligere utbetalte foreldrepenger eller engangsstønad",
+  "AdopsjonVilkarForm.Oppfylt": "Er utbetalt for et annet barn, vilkåret er oppfylt",
+  "AdopsjonVilkarForm.IkkeOppfylt": "Er utbetalt for dette barnet, vilkåret er <b>ikke</b> oppfylt",
+
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

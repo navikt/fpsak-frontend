@@ -42,8 +42,15 @@ export const SvangerskapVilkarFormImpl = ({
     behandlingVersjon={behandlingVersjon}
     originalErVilkarOk={originalErVilkarOk}
   >
-    <Element><FormattedMessage id="SvangerskapVilkarForm.Test" /></Element>
-    <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
+    <Element><FormattedMessage id="SvangerskapVilkarForm.RettTilSvp" /></Element>
+    <VilkarResultPicker
+      avslagsarsaker={avslagsarsaker}
+      erVilkarOk={erVilkarOk}
+      readOnly={readOnly}
+      hasAksjonspunkt={hasAksjonspunkt}
+      customVilkarOppfyltText={{ id: 'SvangerskapVilkarForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'SvangerskapVilkarForm.IkkeOppfylt' }}
+    />
     {erVilkarOk === false
       && <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />}
   </ProsessPanelTemplate>

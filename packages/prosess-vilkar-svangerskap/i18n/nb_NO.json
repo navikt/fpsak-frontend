@@ -1,6 +1,10 @@
 {
   "SvangerskapVilkarForm.Svangerskap": "Svangerskapspenger",
+  "SvangerskapVilkarForm.RettTilSvp": "Rett til svangerskapspenger",
+  "SvangerskapVilkarForm.Oppfylt": "Mor har rett til svangerskapspenger, vilkåret er oppfylt",
+  "SvangerskapVilkarForm.IkkeOppfylt": "Mor har ikke rett til svangerskapspenger, vilkåret er <b>ikke</b> oppfylt",
   
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

@@ -49,6 +49,8 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt={aksjonspunkter.length > 0}
+      customVilkarOppfyltText={{ id: 'ErOmsorgVilkaarOppfyltForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'ErOmsorgVilkaarOppfyltForm.IkkeOppfylt' }}
     />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>

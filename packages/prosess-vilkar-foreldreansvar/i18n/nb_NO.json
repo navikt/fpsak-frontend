@@ -1,7 +1,13 @@
 {
   "ErForeldreansvarVilkaarOppfyltForm.Foreldreansvar": "Foreldreansvaret",
   "ErForeldreansvarVilkaarOppfyltForm.ErVilkaretOppfylt": "Er vilkåret oppfylt?",
+  "ErForeldreansvarVilkaarOppfyltForm.RettTilStonad": "Rett til stønad ved overtakelse av foreldreansvaret",
+  "FodselVilkarForm.OppfyltEs": "Far har rett til engangsstønad, vilkåret er oppfylt",
+  "FodselVilkarForm.IkkeOppfyltEs": "Far har ikke rett til engangsstønad, vilkåret er <b>ikke</b> oppfylt",
+  "FodselVilkarForm.OppfyltFp": "Far har rett til foreldrepenger, vilkåret er oppfylt",
+  "FodselVilkarForm.IkkeOppfyltFp": "Far har ikke rett til foreldrepenger, vilkåret er <b>ikke</b> oppfylt",
    
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

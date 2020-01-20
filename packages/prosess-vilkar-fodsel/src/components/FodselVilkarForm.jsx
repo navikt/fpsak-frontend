@@ -48,7 +48,14 @@ export const FodselVilkarFormImpl = ({
     originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="FodselVilkarForm.TidligereUtbetaltStonad" /></Element>
-    <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
+    <VilkarResultPicker
+      avslagsarsaker={avslagsarsaker}
+      erVilkarOk={erVilkarOk}
+      readOnly={readOnly}
+      hasAksjonspunkt={hasAksjonspunkt}
+      customVilkarOppfyltText={{ id: 'FodselVilkarForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'FodselVilkarForm.IkkeOppfylt' }}
+    />
     <BehandlingspunktBegrunnelseTextField useAllWidth readOnly={readOnly} />
   </ProsessPanelTemplate>
 );

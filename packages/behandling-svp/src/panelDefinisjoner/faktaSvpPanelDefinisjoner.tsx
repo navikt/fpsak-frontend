@@ -3,6 +3,7 @@ import React from 'react';
 import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';

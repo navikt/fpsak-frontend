@@ -22,6 +22,7 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarBegrunnelse.BegrunnVurdering": "Begrunn vurderingen din",
   "VilkarResultPicker.VilkarDato": "Dato",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",

@@ -1,8 +1,11 @@
 {
   "ErOmsorgVilkaarOppfyltForm.Omsorg": "Omsorg",
   "ErOmsorgVilkaarOppfyltForm.Anvendes": "Vilkår som anvendes",
-  "ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt": "Er vilkåret oppfylt?",
+  "ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt": "Far rett til engangsstønad",
+  "ErOmsorgVilkaarOppfyltForm.Oppfylt": "Far har rett til engangsstønad, vilkåret er oppfylt",
+  "ErOmsorgVilkaarOppfyltForm.IkkeOppfylt": "Far har ikke rett til engangsstønad, vilkåret er <b>ikke</b> oppfylt",
   
+  "BehandlingspunktBegrunnelseTextField.Endret": "Endret av saksbehandler",
   "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
   "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
   "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",

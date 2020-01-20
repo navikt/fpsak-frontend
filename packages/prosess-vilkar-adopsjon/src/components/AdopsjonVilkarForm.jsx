@@ -46,7 +46,14 @@ export const AdopsjonVilkarFormImpl = ({
     originalErVilkarOk={originalErVilkarOk}
   >
     <Element><FormattedMessage id="AdopsjonVilkarForm.TidligereUtbetaltStonad" /></Element>
-    <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
+    <VilkarResultPicker
+      avslagsarsaker={avslagsarsaker}
+      erVilkarOk={erVilkarOk}
+      readOnly={readOnly}
+      hasAksjonspunkt={hasAksjonspunkt}
+      customVilkarOppfyltText={{ id: 'AdopsjonVilkarForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'AdopsjonVilkarForm.IkkeOppfylt' }}
+    />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
