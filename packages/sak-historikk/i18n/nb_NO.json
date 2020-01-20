@@ -376,6 +376,7 @@
   "HistorikkEndretFeltVerdiType.GyldigUtsettelsePgaSykdom": "Gyldig utsettelse pga sykdom",
   "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartIkkeRett": "Overføring oppfylt, annen part har ikke rett til foreldrepengene",
   "HistorikkEndretFeltVerdiType.OverforingOppfyltAleneomsorg": "Overføring oppfylt, søker har aleneomsorg for barnet",
+  "HistorikkEndretFeltVerdiType.InnvilgetFellesperiodeTilFar": "Innvilget fellesperiode til far",
   "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnenPartInnlagt": "Overføring oppfylt, annen part er innlagt i helseinstitusjon",
   "HistorikkEndretFeltVerdiType.OverforingOppfyltAnnePartHjelp": "Overføring oppfylt, annen part er helt avhengig av hjelp til å ta seg av barnet",
   "HistorikkEndretFeltVerdiType.InnvilgetUttakKvote": "Innvilget uttak av kvote",
