@@ -5,19 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { isObjectEmpty } from '@fpsak-frontend/utils';
 
 const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
-
-const findPreviousData = (activeEndpointsData) => {
-  if (activeEndpointsData.some((e) => !e.previousCacheParams)) {
-    return undefined;
-  }
-
-  return activeEndpointsData.reduce((acc, a) => ({
-    ...acc,
-    [a.formattedName]: a.isFinished ? a.previousData : a.data,
-  }), {});
-};
 
 interface OwnProps {
   behandlingVersion: number;
@@ -40,7 +30,10 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     return null;
   }
 
-  const [hasFailed, setFailed] = useState(false);
+  const [fetchingData, setFetchingData] = useState({
+    hasFinishedFetching: false,
+    data: {},
+  });
 
   const endpointData = endpoints.reduce((acc, e) => ({
     ...acc,
@@ -49,8 +42,6 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
       data: useSelector((state) => e.getRestApiData()(state)),
       isFinished: useSelector((state) => e.getRestApiFinished()(state)),
       cacheParams: useSelector((state) => e.getRestApiCacheParams()(state)),
-      previousData: useSelector((state) => e.getRestApiPreviousData()(state)),
-      previousCacheParams: useSelector((state) => e.getRestApiPreviousCacheParams()(state)),
     },
   }), {});
 
@@ -62,6 +53,11 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
   const dispatch = useDispatch();
   const ref = useRef<number>();
   useEffect(() => {
+    setFetchingData((oldState) => ({
+      hasFinishedFetching: false,
+      data: oldState.data,
+    }));
+
     ref.current = behandlingVersion;
     const endpointsToFetchFrom = activeEndpointsData.filter((e) => !e.cacheParams || e.cacheParams.behandlingVersion !== behandlingVersion);
 
@@ -73,24 +69,30 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     Promise.all(endpointsToFetchFrom.map((e) => {
       const params = endpointParams ? endpointParams[e.endpoint.name] : {};
       return dispatch(e.endpoint.makeRestApiRequest()(params, meta));
-    })).catch(() => setFailed(true));
+    })).then((data) => {
+      setFetchingData({
+        hasFinishedFetching: true,
+        data: endpointsToFetchFrom.reduce((acc, endpoint, index) => ({
+          ...acc,
+          [endpoint.formattedName]: data[index].payload,
+        }), {}),
+      });
+    });
   }, [behandlingVersion]);
 
-  const isFetchFinished = activeEndpointsData.every((e) => e.isFinished && e.cacheParams.behandlingVersion === behandlingVersion);
+  const hasChanged = ref.current !== behandlingVersion;
+  const hasFinishedFetching = fetchingData.hasFinishedFetching && activeEndpointsData.every((e) => e.isFinished);
 
-  if (!hasFailed && isFetchFinished) {
+  if (hasFinishedFetching && !hasChanged) {
     return render(activeEndpointsData.reduce((acc, endpoint) => ({
       ...acc,
       [endpoint.formattedName]: endpoint.data,
-    }), {}), true);
+    }), fetchingData.data), true);
   }
 
 
-  if (!hasFailed && showOldDataWhenRefetching) {
-    const endpointPreviousData = findPreviousData(activeEndpointsData);
-    if (endpointPreviousData) {
-      return render(endpointPreviousData, false);
-    }
+  if ((!hasFinishedFetching || hasChanged) && showOldDataWhenRefetching && !isObjectEmpty(fetchingData.data)) {
+    return render(fetchingData.data, false);
   }
 
   return <LoadingPanel />;
