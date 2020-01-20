@@ -203,7 +203,7 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
   const avvikProsent = avvikElem && avvikElem.avvikProsent ? avvikElem.avvikProsent : 0;
   if (avvikProsent || avvikProsent === 0) {
-    return avvikProsent;
+    return parseFloat((avvikProsent.toPrecision(3)));
   }
   return undefined;
 };
