@@ -1,15 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl, FormattedMessage } from 'react-intl';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { injectIntl } from 'react-intl';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
   decodeHtmlEntity, hasValidText, maxLength, minLength, requiredIfNotPristine,
 } from '@fpsak-frontend/utils';
-import {
-  FlexContainer, FlexRow, FlexColumn, EditedIcon,
-} from '@fpsak-frontend/shared-components';
 
 import styles from './behandlingspunktBegrunnelseTextField.less';
 
@@ -41,18 +37,6 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
       readOnly={readOnly}
       placeholder={intl.formatMessage({ id: 'BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering' })}
     />
-    {readOnly && (
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <EditedIcon />
-          </FlexColumn>
-          <FlexColumn>
-            <Normaltekst><FormattedMessage id="BehandlingspunktBegrunnelseTextField.Endret" /></Normaltekst>
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    )}
   </div>
 );
 

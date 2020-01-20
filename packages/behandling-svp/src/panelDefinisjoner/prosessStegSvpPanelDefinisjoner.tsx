@@ -85,7 +85,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Inngangsvilkar',
   panels: [{
     code: 'SVANGERSKAP',
-    textCode: 'Behandlingspunkt.Svangerskapsvilkaret',
+    textCode: 'Inngangsvilkar.Svangerskapsvilkaret',
     aksjonspunkterCodes: [ac.SVANGERSKAPSVILKARET],
     aksjonspunkterTextCodes: ['SvangerskapVilkarForm.FyllerVilkår'],
     vilkarCodes: [vt.SVANGERSKAPVILKARET],

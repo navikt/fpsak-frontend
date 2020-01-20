@@ -82,7 +82,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
         <Column xs="6">
           {panels.filter((_p, index) => index < 2)
             .map((p, index) => (
-              <div className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
+              <div key={p.key} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
                 {p}
               </div>
             ))}
@@ -90,7 +90,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
         <Column xs="6">
           {panels.filter((_p, index) => index > 1)
             .map((p, index) => (
-              <div className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
+              <div key={p.key} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
                 {p}
               </div>
             ))}

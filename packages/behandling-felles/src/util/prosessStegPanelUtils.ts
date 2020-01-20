@@ -173,7 +173,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
         label: intl.formatMessage({ id: panelDef.textCode }),
         isAksjonspunktOpen: erAksjonspunktOpen,
         isReadOnly: panelData.every((p) => p.isReadOnly),
-        aksjonspunkter: panelData.length === 1 ? panelData[0].aksjonspunkter : [],
+        aksjonspunkter: panelData.filter((pd) => pd.aksjonspunkter).reduce((acc, pd) => [...acc, ...pd.aksjonspunkter], []),
         status,
         panelData,
       };

@@ -169,6 +169,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtPanel.aksjonspunkter}
           isReadOnly={valgtPanel.isReadOnly}
+          visAksjonspunktMarkering={valgtPanel.panelData.length === 1}
         >
           <MultipleProcessPanel
             behandling={behandling}

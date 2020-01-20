@@ -15,6 +15,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
+  visAksjonspunktMarkering?: booean;
   children: any;
 }
 
@@ -22,6 +23,7 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
   behandlingStatus,
   aksjonspunkter,
   isReadOnly,
+  visAksjonspunktMarkering = true,
   children,
 }) => {
   if (aksjonspunkter.length === 0) {
@@ -36,7 +38,7 @@ const MargMarkering: FunctionComponent<OwnProps> = ({
     && aksjonspunkter[0].toTrinnsBehandling && aksjonspunkter[0].toTrinnsBehandlingGodkjent === false;
 
   const harApnentAksjonspunktSomKanLoses = useMemo(() => aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses), [aksjonspunkter]);
-  const visAksjonspunkt = harApnentAksjonspunktSomKanLoses && !isReadOnly;
+  const visAksjonspunkt = visAksjonspunktMarkering && harApnentAksjonspunktSomKanLoses && !isReadOnly;
 
   return (
     <div className={classNames('prosesspunkt', { ikkeAkseptertAvBeslutter, visAksjonspunkt })}>

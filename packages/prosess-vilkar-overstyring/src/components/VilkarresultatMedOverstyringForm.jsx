@@ -77,9 +77,11 @@ export const VilkarresultatMedOverstyringForm = ({
           <FlexColumn>
             <Undertittel>{panelTittel}</Undertittel>
           </FlexColumn>
-          <FlexColumn>
-            <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
-          </FlexColumn>
+          {lovReferanse && (
+            <FlexColumn>
+              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+            </FlexColumn>
+          )}
         </FlexRow>
         <FlexRow>
           <FlexColumn>
