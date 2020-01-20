@@ -7,11 +7,13 @@ import { setSubmitFailed } from 'redux-form';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  IverksetterVedtakStatusModal, Behandling, MultipleProcessPanel,
+  IverksetterVedtakStatusModal, Behandling, MultipleProcessPanel, FatterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
@@ -56,20 +58,23 @@ const getPreviewFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker,
   return dispatch(fpBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
 };
 
-const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
+const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside) => (aksjonspunktModels) => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some((apModel) => ((apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL
     || apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) && apModel.sendVarsel));
   const visIverksetterVedtakModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FATTER_VEDTAK;
+  const visFatterVedtakModal = aksjonspunktModels[0].isVedtakSubmission && aksjonspunktModels[0].kode === aksjonspunktCodes.FORESLA_VEDTAK;
   const isVedtakAp = aksjonspunktModels.some((a) => a.isVedtakSubmission);
 
-  if (visIverksetterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
+  if (visIverksetterVedtakModal || visFatterVedtakModal || erRevurderingsaksjonspunkt || isVedtakAp) {
     toggleOppdatereFagsakContext(false);
   }
 
   // Returner funksjon som blir kjørt etter lagring av aksjonspunkt(er)
   return () => {
-    if (visIverksetterVedtakModal) {
+    if (visFatterVedtakModal) {
+      toggleFatterVedtakModal(true);
+    } else if (visIverksetterVedtakModal) {
       toggleIverksetterVedtakModal(true);
     } else if (erRevurderingsaksjonspunkt) {
       opneSokeside();
@@ -99,8 +104,10 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
 
   const [overstyrteAksjonspunkter, toggleOverstyring] = useState([]);
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
+  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
   const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
   const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
+  const toggleFatterVedtakOgGaTilSokeside = useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, []);
 
   useEffect(() => {
     if (skalOppdatereFagsakKontekst) {
@@ -138,10 +145,12 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
     oppdaterProsessStegOgFaktaPanelIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined, valgtFaktaSteg);
   }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
-  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
-    opneSokeside);
+  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext,
+    oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
   const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
     lagringSideEffectsCallback, fagsak, behandling, data.aksjonspunkter, fpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
+  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
+    ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionFP'), [behandling.versjon]);
 
   return (
     <>
@@ -149,6 +158,11 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
         visModal={visIverksetterVedtakModal}
         lukkModal={toggleIverksetterModalOgGaTilSokeside}
         behandlingsresultat={behandling.behandlingsresultat}
+      />
+      <FatterVedtakStatusModal
+        visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
+        lukkModal={toggleFatterVedtakOgGaTilSokeside}
+        tekstkode={fatterVedtakTextCode}
       />
       <ProcessMenu steps={formaterteProsessStegPaneler} onClick={prosessmenyCallback} />
       {erStegBehandlet && (
