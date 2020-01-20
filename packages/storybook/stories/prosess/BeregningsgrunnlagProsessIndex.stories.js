@@ -335,7 +335,7 @@ export const brukersAndelUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
+      featureToggles={togglesTrue}
     />
   );
 };
