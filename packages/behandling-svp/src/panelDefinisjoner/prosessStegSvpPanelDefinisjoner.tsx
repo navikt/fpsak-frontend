@@ -144,9 +144,13 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.TilkjentYtelse',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_TILBAKETREKK],
-    endpoints: [api.BEREGNINGRESULTAT, api.FAMILIEHENDELSE, api.SOKNAD],
+    endpoints: [api.FAMILIEHENDELSE],
     renderComponent: (props) => <TilkjentYtelseProsessIndex {...props} />,
-    getData: ({ fagsak, personopplysninger, soknad }) => ({ fagsak, personopplysninger, soknad }),
+    getData: ({
+      fagsak, personopplysninger, soknad, beregningresultatForeldrepenger,
+    }) => ({
+      fagsak, personopplysninger, soknad, beregningresultat: beregningresultatForeldrepenger,
+    }),
     showComponent: () => true,
     overrideStatus: ({ beregningresultatForeldrepenger }) => (beregningresultatForeldrepenger
     && beregningresultatForeldrepenger.perioder.length > 0 ? vut.OPPFYLT : vut.IKKE_VURDERT),

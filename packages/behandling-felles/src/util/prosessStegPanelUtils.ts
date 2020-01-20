@@ -164,7 +164,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
       const tempStatus = statusOppfylt && !statusIkkeVurdert ? vilkarUtfallType.OPPFYLT : vilkarUtfallType.IKKE_VURDERT;
       const status = statusAvslatt ? vilkarUtfallType.IKKE_OPPFYLT : tempStatus;
 
-      const harForkjelligeStatuserIUnderPanela = statusIkkeVurdert && statusOppfylt;
+      const harForkjelligeStatuserIUnderPanela = statusIkkeVurdert && statusOppfylt && !statusAvslatt;
       const erAksjonspunktOpen = harForkjelligeStatuserIUnderPanela || panelData.some((p) => p.isAksjonspunktOpen);
 
       return {
@@ -180,10 +180,13 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
     });
 };
 
-const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt) => {
+const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt, apentFaktaPanelInfo) => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
+    }
+    if (apentFaktaPanelInfo) {
+      return undefined;
     }
     const index = prosessStegPaneler.findIndex((i) => i.isAksjonspunktOpen);
     return index !== -1 ? prosessStegPaneler[index] : prosessStegPaneler[0];

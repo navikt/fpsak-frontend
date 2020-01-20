@@ -94,9 +94,6 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
 }) => {
-  const {
-    aksjonspunkter, vilkar, simuleringResultat, beregningresultatEngangsstonad,
-  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -119,14 +116,14 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
-    simuleringResultat,
-    beregningresultatEngangsstonad,
+    ...data,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
+    overstyrteAksjonspunkter, behandling, data.aksjonspunkter, data.vilkar, navAnsatt, fagsak, hasFetchError, intl),
+  [behandling.versjon, overstyrteAksjonspunkter]);
 
   const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
@@ -142,7 +139,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside);
   const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, esBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
+    lagringSideEffectsCallback, fagsak, behandling, data.aksjonspunkter, esBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>

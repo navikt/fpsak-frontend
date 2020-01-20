@@ -94,9 +94,6 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
 }) => {
-  const {
-    aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, beregningsgrunnlag,
-  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -120,15 +117,14 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
     overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
-    simuleringResultat,
-    beregningresultatForeldrepenger,
-    beregningsgrunnlag,
+    ...data,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
+    overstyrteAksjonspunkter, behandling, data.aksjonspunkter, data.vilkar, navAnsatt, fagsak, hasFetchError, intl), 
+  [behandling.versjon, overstyrteAksjonspunkter]);
 
   const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
@@ -144,7 +140,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside);
   const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, svpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
+    lagringSideEffectsCallback, fagsak, behandling, data.aksjonspunkter, svpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>

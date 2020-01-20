@@ -94,9 +94,6 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   opneSokeside,
   apentFaktaPanelInfo,
 }) => {
-  const {
-    aksjonspunkter, vilkar, simuleringResultat, beregningresultatForeldrepenger, uttaksresultatPerioder, beregningsgrunnlag,
-  } = data;
   const intl = useIntl();
   const dispatch = useDispatch();
 
@@ -120,16 +117,15 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
     overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
-    simuleringResultat,
-    beregningresultatForeldrepenger,
-    uttaksresultatPerioder,
-    beregningsgrunnlag,
+    ...data,
   };
   const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl), [behandling.versjon, overstyrteAksjonspunkter]);
+    overstyrteAksjonspunkter, behandling, data.aksjonspunkter, data.vilkar, navAnsatt, fagsak, hasFetchError, intl),
+  [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter]);
+  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt,
+    apentFaktaPanelInfo),
+  [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
   const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
   const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
@@ -145,7 +141,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
     opneSokeside);
   const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, fpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
+    lagringSideEffectsCallback, fagsak, behandling, data.aksjonspunkter, fpBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
 
   return (
     <>

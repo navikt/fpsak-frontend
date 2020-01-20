@@ -280,9 +280,9 @@ const prosessStegPanelDefinisjoner = [{
     endpoints: [api.FAMILIEHENDELSE],
     renderComponent: (props) => <TilkjentYtelseProsessIndex {...props} />,
     getData: ({
-      fagsak, beregningresultat, familiehendelse, personopplysninger, soknad,
+      fagsak, beregningresultatForeldrepenger, personopplysninger, soknad,
     }) => ({
-      fagsak, beregningresultat, familiehendelse, personopplysninger, soknad,
+      fagsak, personopplysninger, soknad, beregningresultat: beregningresultatForeldrepenger,
     }),
     showComponent: () => true,
     overrideStatus: ({ beregningresultatForeldrepenger, uttaksresultatPerioder }) => getStatusFromResultatstruktur(

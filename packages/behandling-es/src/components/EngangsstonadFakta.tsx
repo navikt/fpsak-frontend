@@ -57,6 +57,8 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
     const panelMedApentAp = faktaPaneler.find((p) => p.harApneAksjonspunkter);
     if (panelMedApentAp) {
       setApentFaktaPanel({ urlCode: panelMedApentAp.urlCode, textCode: panelMedApentAp.textCode });
+    } else {
+      setApentFaktaPanel(undefined);
     }
   }, [behandling.versjon]);
 
