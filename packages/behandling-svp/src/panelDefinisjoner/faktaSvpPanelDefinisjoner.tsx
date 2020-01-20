@@ -75,7 +75,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [svpBehandlingApi.OPPTJENING],
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
-    && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode !== vilkarUtfallType.IKKE_VURDERT),
+    && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT),
   getData: () => {},
 }, {
   urlCode: faktaPanelCodes.BEREGNING,
