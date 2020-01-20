@@ -12,7 +12,7 @@ import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm
  * Svangerskapspenger
  * Fakta om Fødsel og tilrettelegging
  */
-export const FodselOgTilretteleggingInfoPanel = ({
+const FodselOgTilretteleggingInfoPanel = ({
   behandlingId,
   behandlingVersjon,
   svangerskapspengerTilrettelegging,

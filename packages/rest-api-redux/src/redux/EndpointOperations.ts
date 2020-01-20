@@ -39,8 +39,6 @@ class EndpointOperations {
 
   getRestApiPreviousData = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.previousData);
 
-  getRestApiPreviousCacheParams = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.previousCacheParams);
-
   getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error);
 
   getRestApiStarted = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.started);

@@ -5,7 +5,6 @@ const initialState = {
   previousData: undefined,
   meta: undefined,
   cacheParams: undefined,
-  previousCacheParams: undefined,
   error: undefined,
   started: false,
   finished: false,
@@ -20,7 +19,6 @@ export interface State {
   previousData: any;
   meta: any;
   cacheParams: any;
-  previousCacheParams: any;
   error?: any;
   started: boolean;
   finished: boolean;
@@ -63,7 +61,6 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         started: true,
         meta: action.payload,
         cacheParams: action.meta.options.cacheParams,
-        previousCacheParams: action.meta.options.cacheParams ? state.cacheParams : undefined,
         previousData: state.previousData,
       };
     case actionTypes.statusRequestStarted():

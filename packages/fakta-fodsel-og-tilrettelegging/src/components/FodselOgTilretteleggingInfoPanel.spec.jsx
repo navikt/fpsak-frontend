@@ -4,9 +4,9 @@ import sinon from 'sinon';
 
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 
-import { FodselOgTilretteleggingInfoPanel } from './FodselOgTilretteleggingInfoPanel';
+import FodselOgTilretteleggingInfoPanel from './FodselOgTilretteleggingInfoPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const svangerskapspengerTilrettelegging = {
@@ -35,8 +35,6 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       behandlingVersjon={1}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={[]}
-      openInfoPanels={['fodseltilrettelegging']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       readOnly
       submitCallback={sinon.spy()}
@@ -59,8 +57,6 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       behandlingVersjon={1}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={[]}
-      openInfoPanels={['fodseltilrettelegging']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       readOnly
       submitCallback={sinon.spy()}

@@ -23,7 +23,7 @@ const getErArsakTypeHendelseFodsel = (behandlingArsakTyper = []) => behandlingAr
 
 const sortUttaksperioder = (p1, p2) => moment(p1.tom).diff(moment(p2.tom));
 
-export const UttakInfoPanel = ({
+const UttakInfoPanel = ({
   readOnly,
   aksjonspunkter,
   behandlingPaaVent,

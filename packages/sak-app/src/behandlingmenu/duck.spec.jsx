@@ -8,7 +8,7 @@ import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
 
 import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
 import {
-  behandlingMenuReducer, createNewBehandling, openBehandlingForChanges, resetBehandlingMenuData, setHasSubmittedPaVentForm,
+  createNewBehandling, openBehandlingForChanges,
 } from './duck';
 
 const middlewares = [thunk];
@@ -27,39 +27,6 @@ describe('BehandlingMenu-reducer', () => {
 
   after(() => {
     mockAxios.restore();
-  });
-
-  it('skal returnere initial state', () => {
-    expect(behandlingMenuReducer(undefined, {})).to.eql({
-      hasSubmittedPaVentForm: false,
-    });
-  });
-
-  it('skal markere i state at behandling er satt på vent', () => {
-    const store = mockStore();
-
-    store.dispatch(setHasSubmittedPaVentForm());
-
-    expect(store.getActions()).to.have.length(1);
-
-    expect(behandlingMenuReducer(undefined, store.getActions()[0])).to.eql({
-      hasSubmittedPaVentForm: true,
-    });
-  });
-
-  it('skal resette state for behandlingsmeny', () => {
-    const state = {
-      hasSubmittedPaVentForm: true,
-    };
-    const store = mockStore();
-
-    store.dispatch(resetBehandlingMenuData());
-
-    expect(store.getActions()).to.have.length(1);
-
-    expect(behandlingMenuReducer(state, store.getActions()[0])).to.eql({
-      hasSubmittedPaVentForm: false,
-    });
   });
 
   it('skal ved opprettelse av ny behandling returnere fagsak og velge siste behandling fra behandlinglisten', () => {

@@ -1,13 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
+import { FormattedMessage } from 'react-intl';
+
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 import { OmsorgInfoPanel } from './OmsorgInfoPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg';
@@ -76,8 +75,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[aleneomsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -104,8 +101,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[aleneomsorgAp, omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -133,8 +128,6 @@ describe('<OmsorgInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
       openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
       submittable
       readOnly={false}
       personopplysninger={personopplysning}
@@ -159,8 +152,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -184,8 +175,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}

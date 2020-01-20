@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
+import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { MedlemskapInfoPanel } from './MedlemskapInfoPanel';
+import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
@@ -19,8 +19,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -74,8 +72,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -124,8 +120,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -174,8 +168,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -208,8 +200,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly

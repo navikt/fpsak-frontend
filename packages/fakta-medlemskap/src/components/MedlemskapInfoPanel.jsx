@@ -1,9 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { createSelector } from 'reselect';
 
-import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
+import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -43,11 +41,10 @@ const skalViseAvklarStartdatoPanel = (
  *
  * Presentasjonskomponent. Har ansvar for å vise faktapanelene for medlemskap.
  */
-export const MedlemskapInfoPanel = ({
+const MedlemskapInfoPanel = ({
   hasOpenAksjonspunkter,
   submittable,
   aksjonspunkter,
-  aksjonspunkterMinusAvklarStartDato,
   readOnly,
   submitCallback,
   isForeldrepenger,
@@ -67,6 +64,9 @@ export const MedlemskapInfoPanel = ({
 }) => {
   const avklarStartdatoAksjonspunkt = aksjonspunkter.find((ap) => ap.definisjon.kode === AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN);
   const avklarStartdatoOverstyring = aksjonspunkter.find((ap) => ap.definisjon.kode === OVERSTYR_AVKLAR_STARTDATO);
+  const aksjonspunkterMinusAvklarStartDato = useMemo(() => aksjonspunkter
+    .filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode)), [aksjonspunkter]);
+
   return (
     <>
       {skalViseAvklarStartdatoPanel(aksjonspunkter, isForeldrepenger, aksjonspunkterMinusAvklarStartDato, hasOpenAksjonspunkter)
@@ -117,7 +117,6 @@ MedlemskapInfoPanel.propTypes = {
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(medlemskapAksjonspunkterPropType.isRequired).isRequired,
-  aksjonspunkterMinusAvklarStartDato: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   isForeldrepenger: PropTypes.bool,
@@ -142,11 +141,4 @@ MedlemskapInfoPanel.defaultProps = {
   isForeldrepenger: true,
 };
 
-const filtrerAksjonspunkter = createSelector([(ownProps) => ownProps.aksjonspunkter], (aksjonspunkter) => aksjonspunkter
-  .filter((ap) => !avklarStartdatoAp.includes(ap.definisjon.kode)));
-
-const mapStateToPropsFactory = (state, ownProps) => ({
-  aksjonspunkterMinusAvklarStartDato: filtrerAksjonspunkter(ownProps),
-});
-
-export default connect(mapStateToPropsFactory)(MedlemskapInfoPanel);
+export default MedlemskapInfoPanel;

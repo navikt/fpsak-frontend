@@ -65,7 +65,7 @@ const createRelevantForms = (
  *
  * Container komponent.. Har ansvar for å sette opp Redux Formen for "avklar fakta om beregning" panel.
  */
-export const BeregningInfoPanel = ({
+const BeregningInfoPanel = ({
   readOnly,
   aksjonspunkter,
   submittable,
