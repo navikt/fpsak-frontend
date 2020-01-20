@@ -231,7 +231,10 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   return aarsaker.filter((aarsak) => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
 const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnlag) => {
-  if (vilkarStatus && ((vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) || vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT)) {
+  if (vilkarStatus && vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
+    return 'Omberegnet';
+  }
+  if (typeof vilkarStatus === 'object' && vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
     return 'Omberegnet';
   }
   return 'Fastsatt';
@@ -276,6 +279,67 @@ const hentVerdiFraAndel = (andel) => {
   }
   return andel.verdi;
 };
+const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+  const atElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.ARBEIDSTAKER,
+    vilkarStatus,
+  );
+  const snElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    vilkarStatus,
+  );
+
+  // legg til regler for særtilfeller
+  if (((atElement && atElement.verdi) < (snElement && snElement.verdi)) && harAksjonspunkter) {
+    rowsAndeler.push(snElement);
+    return;
+  }
+  if ((atElement && atElement.verdi) > (snElement && snElement.verdi)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT>SN" />);
+    rowsAndeler.push(atElement);
+    return;
+  }
+  rowsAndeler.push(atElement);
+  rowsAndeler.push(snElement);
+};
+const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter) => {
+  const atElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.ARBEIDSTAKER,
+    vilkarStatus,
+  );
+  const snElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    vilkarStatus,
+  );
+  const flElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.FRILANSER,
+    vilkarStatus,
+  );
+  if (!harAksjonspunkter) {
+    if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
+      rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
+      rowsAndeler.push(atElement);
+      rowsAndeler.push(flElement);
+    } else {
+      // setter SN ledetekst til Pensjonsgibevnde årsintekt
+      snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
+      rowsAndeler.push(atElement);
+      rowsAndeler.push(flElement);
+      rowsAndeler.push(snElement);
+    }
+  } else {
+    // setter SN ledetekst til Fastsatt årsintekt
+    snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
+    rowsAndeler.push(atElement);
+    rowsAndeler.push(flElement);
+    rowsAndeler.push(snElement);
+  }
+};
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -308,64 +372,11 @@ export const createBeregningTableData = createSelector(
       const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
-          const atElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.ARBEIDSTAKER,
-            vilkarStatus,
-          );
-          const snElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-            vilkarStatus,
-          );
-          if (((atElement && atElement.verdi) < (snElement && snElement.verdi)) && harAksjonspunkter) {
-            rowsAndeler.push(snElement);
-            break;
-          }
-          if ((atElement && atElement.verdi) > (snElement && snElement.verdi)) {
-            rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT>SN" />);
-            rowsAndeler.push(atElement);
-            break;
-          }
-          rowsAndeler.push(atElement);
-          rowsAndeler.push(snElement);
+          settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
           break;
         }
         case 'AT_FL_SN': {
-          const atElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.ARBEIDSTAKER,
-            vilkarStatus,
-          );
-          const snElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-            vilkarStatus,
-          );
-          const flElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.FRILANSER,
-            vilkarStatus,
-          );
-          if (!harAksjonspunkter) {
-            if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-              rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
-              rowsAndeler.push(atElement);
-              rowsAndeler.push(flElement);
-            } else {
-              // setter SN ledetekst til Pensjonsgibevnde årsintekt
-              snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.SN" />;
-              rowsAndeler.push(atElement);
-              rowsAndeler.push(flElement);
-              rowsAndeler.push(snElement);
-            }
-          } else {
-            // setter SN ledetekst til Fastsatt årsintekt
-            snElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Fastsatt.SN" />;
-            rowsAndeler.push(atElement);
-            rowsAndeler.push(flElement);
-            rowsAndeler.push(snElement);
-          }
+          settVisningsRaderForATFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
           break;
         }
         case 'DP_FL_SN': {
@@ -458,7 +469,7 @@ export const createBeregningTableData = createSelector(
           if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
           if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
           if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
-        }
+
           if (harBortfallNaturalYtelse) {
             const ntElement = {};
             const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
@@ -469,12 +480,13 @@ export const createBeregningTableData = createSelector(
             ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
             rowsAndeler.push(ntElement);
           }
+        }
       }
       const rows = [];
       if (isMS) {
         const msElement = opprettAndelElement(
-          periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL),
-          'MS',
+          periode,
+          aktivitetStatus.MILITAER_ELLER_SIVIL,
           vilkarStatus,
         );
         rows.push(msElement);

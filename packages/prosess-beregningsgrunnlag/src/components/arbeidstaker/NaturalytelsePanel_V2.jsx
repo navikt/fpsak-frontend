@@ -85,7 +85,7 @@ const createNaturalYtelseRows = (tableData) => {
   Object.keys(arbeidsforholdPeriodeMap).sort().forEach((val) => {
     const list = arbeidsforholdPeriodeMap[val];
     let valueKey = 0;
-    const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+    const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
     const row = list.map((element) => {
       valueKey += 1;
       if (valueKey === 1) {
