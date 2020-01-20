@@ -248,10 +248,19 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   }
   return 'Fastsatt';
 };
-const opprettAndelElement = (andel, andelType, vilkarStatus) => {
+const hentAndelFraPeriode = (periode, andelType) => {
+  if (andelType === aktivitetStatus.ARBEIDSTAKER) {
+    return periode.beregningsgrunnlagPrStatusOgAndel
+      .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
+      .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
+  }
+  return periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === andelType);
+};
+const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   let inntekt;
   const andelElement = {};
   let skalFastsetteGrunnlag = false;
+  const andel = hentAndelFraPeriode(periode, andelType);
   if (!andel) {
     return null;
   }
@@ -312,15 +321,13 @@ export const createBeregningTableData = createSelector(
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel
-              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
-            'AT',
+            periode,
+            aktivitetStatus.ARBEIDSTAKER,
             vilkarStatus,
           );
           const snElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
-            'SN',
+            periode,
+            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
             vilkarStatus,
           );
           if (((atElement && atElement.verdi) < (snElement && snElement.verdi)) && harAksjonspunkter) {
@@ -338,20 +345,18 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_FL_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel
-              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
-            'AT',
+            periode,
+            aktivitetStatus.ARBEIDSTAKER,
             vilkarStatus,
           );
           const snElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
-            'SN',
+            periode,
+            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
             vilkarStatus,
           );
           const flElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER),
-            'FL',
+            periode,
+            aktivitetStatus.FRILANSER,
             vilkarStatus,
           );
           if (!harAksjonspunkter) {
@@ -377,18 +382,18 @@ export const createBeregningTableData = createSelector(
         }
         case 'DP_FL_SN': {
           const snElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
-            'SN',
+            periode,
+            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
             vilkarStatus,
           );
           const flElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER),
-            'FL',
+            periode,
+            aktivitetStatus.FRILANSER,
             vilkarStatus,
           );
           const dpElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER),
-            'DP',
+            periode,
+            aktivitetStatus.DAGPENGER,
             vilkarStatus,
           );
 
@@ -403,20 +408,18 @@ export const createBeregningTableData = createSelector(
         }
         case 'AT_DP_SN': {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel
-              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
-            'AT',
+            periode,
+            aktivitetStatus.ARBEIDSTAKER,
             vilkarStatus,
           );
           const snElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
-            'SN',
+            periode,
+            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
             vilkarStatus,
           );
           const dpElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER),
-            'DP',
+            periode,
+            aktivitetStatus.DAGPENGER,
             vilkarStatus,
           );
 
@@ -432,35 +435,33 @@ export const createBeregningTableData = createSelector(
         }
         default: {
           const atElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel
-              .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
-              .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel)),
-            'AT',
+            periode,
+            aktivitetStatus.ARBEIDSTAKER,
             vilkarStatus,
           );
           const flElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER),
-            'FL',
+            periode,
+            aktivitetStatus.FRILANSER,
             vilkarStatus,
           );
           const snElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE),
-            'SN',
+            periode,
+            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
             vilkarStatus,
           );
           const aapElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSAVKLARINGSPENGER),
-            'AAP',
+            periode,
+            aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
             vilkarStatus,
           );
           const dpElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.DAGPENGER),
-            'DP',
+            periode,
+            aktivitetStatus.DAGPENGER,
             vilkarStatus,
           );
           const baElement = opprettAndelElement(
-            periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.BRUKERS_ANDEL),
-            'BA',
+            periode,
+            aktivitetStatus.BRUKERS_ANDEL,
             vilkarStatus,
           );
           if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
