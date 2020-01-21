@@ -3,12 +3,12 @@ import React, { FunctionComponent, useState } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, BehandlingPaVent, SettPaVentParams,
+  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams, Behandling,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
-import EngangsstonadProsess from './EngangsstonadProsess';
-import EngangsstonadFakta from './EngangsstonadFakta';
+import SvangerskapspengerProsess from './SvangerskapspengerProsess';
+import SvangerskapspengerFakta from './SvangerskapspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
@@ -28,7 +28,7 @@ interface OwnProps {
   featureToggles: {};
 }
 
-const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
+const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
   behandling,
@@ -54,10 +54,10 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
-      <EngangsstonadProsess
+      <SvangerskapspengerProsess
         data={fetchedData}
-        fagsak={fagsak}
         behandling={behandling}
+        fagsak={fagsak}
         alleKodeverk={alleKodeverk}
         navAnsatt={navAnsatt}
         valgtProsessSteg={valgtProsessSteg}
@@ -82,7 +82,7 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
         alleKodeverk={alleKodeverk}
       />
       <VerticalSpacer sixteenPx />
-      <EngangsstonadFakta
+      <SvangerskapspengerFakta
         behandling={behandling}
         data={fetchedData}
         fagsak={fagsak}
@@ -98,4 +98,4 @@ const EngangsstonadGrid: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EngangsstonadGrid;
+export default SvangerskapspengerPaneler;

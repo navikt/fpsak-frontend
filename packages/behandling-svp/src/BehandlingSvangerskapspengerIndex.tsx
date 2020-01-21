@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import svpBehandlingApi, { reduxRestApi, SvpBehandlingApiKeys } from './data/svpBehandlingApi';
-import SvangerskapspengerGrid from './components/SvangerskapspengerGrid';
+import SvangerskapspengerPaneler from './components/SvangerskapspengerPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
 const svangerskapspengerData = [svpBehandlingApi.AKSJONSPUNKTER, svpBehandlingApi.VILKAR, svpBehandlingApi.PERSONOPPLYSNINGER,
@@ -121,7 +121,7 @@ class BehandlingSvangerskapspengerIndex extends PureComponent<Props> {
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <SvangerskapspengerGrid
+            <SvangerskapspengerPaneler
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}
               fagsak={fagsak}

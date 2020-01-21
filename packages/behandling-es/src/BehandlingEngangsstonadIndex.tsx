@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import esBehandlingApi, { reduxRestApi, EsBehandlingApiKeys } from './data/esBehandlingApi';
-import EngangsstonadGrid from './components/EngangsstonadGrid';
+import EngangsstonadPaneler from './components/EngangsstonadPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
 const engansstonadData = [esBehandlingApi.AKSJONSPUNKTER, esBehandlingApi.VILKAR, esBehandlingApi.PERSONOPPLYSNINGER,
@@ -122,7 +122,7 @@ class BehandlingEngangsstonadIndex extends PureComponent<Props> {
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <EngangsstonadGrid
+            <EngangsstonadPaneler
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}
               fagsak={fagsak}

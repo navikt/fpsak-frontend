@@ -57,7 +57,6 @@ export const ErForeldreansvarVilkaarOppfyltForm = ({
 );
 
 ErForeldreansvarVilkaarOppfyltForm.propTypes = {
-  intl: PropTypes.shape().isRequired,
   avslagsarsaker: PropTypes.arrayOf(PropTypes.shape({
     kode: PropTypes.string.isRequired,
     navn: PropTypes.string.isRequired,

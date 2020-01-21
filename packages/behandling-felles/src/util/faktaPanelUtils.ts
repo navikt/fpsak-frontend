@@ -7,7 +7,7 @@ import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 const DEFAULT_FAKTA_KODE = 'default';
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
-const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
+export const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const utvidetEkstraPanelData = { ...ekstraPanelData, rettigheter };
   const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
@@ -34,7 +34,7 @@ const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, beha
     });
 };
 
-const finnValgtPanel = (faktaPaneler, valgtFaktaPanelKode) => {
+export const finnValgtPanel = (faktaPaneler, valgtFaktaPanelKode) => {
   if (valgtFaktaPanelKode === DEFAULT_FAKTA_KODE) {
     const index = faktaPaneler.findIndex((i) => i.harApneAksjonspunkter);
     return index !== -1 ? faktaPaneler[index] : faktaPaneler[0];
@@ -42,13 +42,13 @@ const finnValgtPanel = (faktaPaneler, valgtFaktaPanelKode) => {
   return faktaPaneler.find((i) => i.urlCode === valgtFaktaPanelKode);
 };
 
-const formaterPanelerForSidemeny = (intl, faktaPaneler, valgtFaktaPanelKode) => faktaPaneler.map((panel) => ({
+export const formaterPanelerForSidemeny = (intl, faktaPaneler, valgtFaktaPanelKode) => faktaPaneler.map((panel) => ({
   tekst: intl.formatMessage({ id: panel.textCode }),
   erAktiv: panel.urlCode === valgtFaktaPanelKode,
   harAksjonspunkt: panel.harApneAksjonspunkter,
 }));
 
-const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+export const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
   overstyringApCodes, api) => (aksjonspunkter) => {
   const model = aksjonspunkter.map((ap) => ({
     '@type': ap.kode,
@@ -73,13 +73,3 @@ const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterPr
     bekreftedeAksjonspunktDtoer: model,
   }, { keepData: true })).then(() => oppdaterProsessStegOgFaktaPanelIUrl(DEFAULT_PROSESS_STEG_KODE, DEFAULT_FAKTA_KODE));
 };
-
-
-const faktaPanelUtils = {
-  utledFaktaPaneler,
-  finnValgtPanel,
-  formaterPanelerForSidemeny,
-  getBekreftAksjonspunktCallback,
-};
-
-export default faktaPanelUtils;

@@ -1,11 +1,7 @@
-import React, {
-  FunctionComponent, useMemo, useCallback, useEffect,
-} from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
+import React, { FunctionComponent } from 'react';
 
 import {
-  FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaPanelUtils,
+  FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -42,35 +38,18 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps> = ({
   const {
     aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, beregningsgrunnlag,
   } = data;
-  const intl = useIntl();
-  const dispatch = useDispatch();
 
-  const fpPanelerData = {
+  const dataTilUtledingAvSvpPaneler = {
     fagsak, behandling, soknad, vilkar, personopplysninger, inntektArbeidYtelse, beregningsgrunnlag, hasFetchError,
   };
-  const faktaPaneler = useMemo(() => faktaPanelUtils
-    .utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
-  [behandling.versjon]);
 
-  useEffect(() => {
-    const panelMedApentAp = faktaPaneler.find((p) => p.harApneAksjonspunkter);
-    if (panelMedApentAp) {
-      setApentFaktaPanel({ urlCode: panelMedApentAp.urlCode, textCode: panelMedApentAp.textCode });
-    } else {
-      setApentFaktaPanel(undefined);
-    }
-  }, [behandling.versjon]);
+  const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvSvpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg);
 
-  const velgFaktaPanelCallback = useCallback((index) => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].urlCode),
-    [behandling.versjon, valgtProsessSteg]);
-  const bekreftAksjonspunktCallback = useCallback(faktaPanelUtils
-    .getBekreftAksjonspunktCallback(dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, overstyringApCodes, svpBehandlingApi),
-  [behandling.versjon]);
+  faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
-  const valgtPanel = useMemo(() => faktaPanelUtils.finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);
-
-  const formaterteFaktaPaneler = useMemo(() => faktaPanelUtils.formaterPanelerForSidemeny(intl, faktaPaneler, valgtPanel.urlCode),
-    [behandling.versjon, valgtPanel.urlCode]);
+  const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
+    .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, svpBehandlingApi);
 
   return (
     <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>

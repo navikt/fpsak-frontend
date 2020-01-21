@@ -10,7 +10,7 @@ import {
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi, { reduxRestApi, FpBehandlingApiKeys } from './data/fpBehandlingApi';
-import ForeldrepengerGrid from './components/ForeldrepengerGrid';
+import ForeldrepengerPaneler from './components/ForeldrepengerPaneler';
 import FetchedData from './types/fetchedDataTsType';
 
 const foreldrepengerData = [fpBehandlingApi.AKSJONSPUNKTER, fpBehandlingApi.VILKAR, fpBehandlingApi.PERSONOPPLYSNINGER, fpBehandlingApi.YTELSEFORDELING,
@@ -122,7 +122,7 @@ class BehandlingForeldrepengerIndex extends PureComponent<Props> {
         render={(dataProps: FetchedData, isFinished) => (
           <>
             <ReduxFormStateCleaner behandlingId={behandling.id} behandlingVersjon={isFinished ? behandling.versjon : forrigeBehandling.versjon} />
-            <ForeldrepengerGrid
+            <ForeldrepengerPaneler
               behandling={isFinished ? behandling : forrigeBehandling}
               fetchedData={dataProps}
               fagsak={fagsak}

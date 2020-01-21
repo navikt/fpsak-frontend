@@ -3,12 +3,12 @@ import React, { FunctionComponent, useState } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams, Behandling,
+  Kodeverk, NavAnsatt, Behandling, FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
-import SvangerskapspengerProsess from './SvangerskapspengerProsess';
-import SvangerskapspengerFakta from './SvangerskapspengerFakta';
+import ForeldrepengerProsess from './ForeldrepengerProsess';
+import ForeldrepengerFakta from './ForeldrepengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
 
 interface OwnProps {
@@ -18,8 +18,8 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   navAnsatt: NavAnsatt;
   valgtProsessSteg?: string;
-  valgtFaktaSteg?: string;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
+  valgtFaktaSteg?: string;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   settPaVent: (params: SettPaVentParams) => Promise<any>;
   hentBehandling: ({ behandlingId: number }, { keepData: boolean }) => Promise<any>;
@@ -28,15 +28,15 @@ interface OwnProps {
   featureToggles: {};
 }
 
-const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
+const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
   fetchedData,
   fagsak,
   behandling,
   alleKodeverk,
   navAnsatt,
   valgtProsessSteg,
-  valgtFaktaSteg,
   oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtFaktaSteg,
   oppdaterBehandlingVersjon,
   settPaVent,
   hentBehandling,
@@ -54,10 +54,10 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
         settPaVent={settPaVent}
         hentBehandling={hentBehandling}
       />
-      <SvangerskapspengerProsess
+      <ForeldrepengerProsess
         data={fetchedData}
-        behandling={behandling}
         fagsak={fagsak}
+        behandling={behandling}
         alleKodeverk={alleKodeverk}
         navAnsatt={navAnsatt}
         valgtProsessSteg={valgtProsessSteg}
@@ -82,7 +82,7 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
         alleKodeverk={alleKodeverk}
       />
       <VerticalSpacer sixteenPx />
-      <SvangerskapspengerFakta
+      <ForeldrepengerFakta
         behandling={behandling}
         data={fetchedData}
         fagsak={fagsak}
@@ -98,4 +98,4 @@ const SvangerskapspengerGrid: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default SvangerskapspengerGrid;
+export default ForeldrepengerPaneler;
