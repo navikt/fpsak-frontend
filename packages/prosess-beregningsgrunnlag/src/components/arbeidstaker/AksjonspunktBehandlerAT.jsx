@@ -6,6 +6,9 @@ import { InputField } from '@fpsak-frontend/form';
 import { parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+
+import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
@@ -26,10 +29,9 @@ const finnAndelerSomSkalVisesAT = (andeler) => {
     .filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER)
     .filter((andel) => andelErIkkeTilkommetEllerLagtTilAvSBH(andel));
 };
-const getKodeverknavn = (alleKodeverk) => {
-  getKodeverknavnFn(alleKodeverk, kodeverkTyper);
-};
-const createRows = (relevanteAndelerAT, alleKodeverk, readOnly) => {
+
+
+const createRows = (relevanteAndelerAT, getKodeverknavn, readOnly) => {
   const rows = relevanteAndelerAT.map((andel, index) => (
     <Row key={`index${index + 1}`} className={styles.verticalAlignMiddle}>
       <Column xs="7">
@@ -58,10 +60,11 @@ const AksjonspunktBehandlerAT = ({
   alleAndelerIForstePeriode,
   alleKodeverk,
 }) => {
+  const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const relevanteAndelerAT = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode);
   return (
     <>
-      { createRows(relevanteAndelerAT, alleKodeverk, readOnly) }
+      { createRows(relevanteAndelerAT, getKodeverknavn, readOnly) }
     </>
   );
 };

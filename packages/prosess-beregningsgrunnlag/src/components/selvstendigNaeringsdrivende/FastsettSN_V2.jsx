@@ -49,7 +49,7 @@ const FastsettSN2 = ({
   return (
     <>
       <Row className={styles.verticalAlignMiddle}>
-        <Column xs="3">
+        <Column className={styles.dynamiskKolonne}>
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
           </Normaltekst>
@@ -72,7 +72,7 @@ const FastsettSN2 = ({
       && (
       <Row>
         <Column xs="12" className={styles.marginTop}>
-          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapper}>
+          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapperHeigh}>
             <TextAreaField
               name={begrunnelseFieldname}
               label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}

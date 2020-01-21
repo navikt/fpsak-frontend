@@ -53,16 +53,6 @@ describe('<FodselSammenligningOtherPanel>', () => {
     expect(textCode).to.eql('FodselsammenligningPanel.Termindato');
   });
 
-  it('skal vise termindato fra familiehendelse når denne finnes', () => {
-    const hasSoknad = false;
-    const termindatoSoknad = undefined;
-    const fodselsdatoerSoknad = undefined;
-    const termindato = '2017-10-10';
-
-    const date = getTerminOrFodselDate.resultFunc(hasSoknad, termindatoSoknad, fodselsdatoerSoknad, termindato);
-    expect(date).to.eql('10.10.2017');
-  });
-
   it('skal returnere null når en ikke har familiehendelse og heller ikke søknad', () => {
     const hasSoknad = false;
     const termindatoSoknad = undefined;

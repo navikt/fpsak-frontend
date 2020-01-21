@@ -173,8 +173,10 @@ describe('<BeregningForm2>', () => {
       {...reduxFormPropsMock}
     />);
     const avvikPanel = wrapper.find(AvviksopplysningerPanel);
-    expect(avvikPanel.props().beregnetAarsinntekt).to.have.equal(100000);
+    expect(avvikPanel.props().harAksjonspunkter).to.have.equal(true);
+    expect(avvikPanel.props().gjelderBesteberegning).to.have.equal(false);
     expect(avvikPanel.props().sammenligningsgrunnlagPrStatus[0]).to.have.equal(sammenligningsgrunnlagPrStatus);
+    expect(avvikPanel.props().relevanteStatuser).to.have.equal(relevanteStatuser);
     const expectedPerioder = lagPeriode();
     expect(avvikPanel.props().allePerioder[0]).to.eql(expectedPerioder);
   });

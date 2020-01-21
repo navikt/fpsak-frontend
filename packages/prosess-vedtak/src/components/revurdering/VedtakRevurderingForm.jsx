@@ -193,6 +193,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 aksjonspunkter={aksjonspunkter}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
                 behandlingArsaker={behandlingArsaker}
+                behandlingResultat={behandlingresultat}
               />
             )}
           </>
