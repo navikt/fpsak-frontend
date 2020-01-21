@@ -96,7 +96,7 @@ const lagSumRad = (andeler, relevanteStatuser) => {
 const lagRad = (relevanteStatuser, atAndel, flAndel, maksVerdi, aarMaaned) => {
   const dato = `${aarMaaned}01`;
   const maanedNavn = moment(dato, ISO_DATE_FORMAT).format('MMM');
-  const formattedMaaned = (maanedNavn.charAt(0).toUpperCase() + maanedNavn.slice(1, 3));
+  const formattedMaaned = maanedNavn.charAt(0).toUpperCase() + maanedNavn.slice(1, 3);
   const maaned = moment(dato, ISO_DATE_FORMAT).format('MM');
   const aar = moment(dato, ISO_DATE_FORMAT).format('YYYY');
   const atBelop = atAndel && atAndel.beløp ? atAndel.beløp : 0;
@@ -177,7 +177,7 @@ const SammenligningsgrunnlagAOrdningen = ({
   skjeringstidspunktDato,
 }) => {
   const andeler = sammenligningsGrunnlagInntekter;
-  if (!andeler || !skjeringstidspunktDato) return null;
+  if ((!andeler || andeler.length === 0) || !skjeringstidspunktDato || relevanteStatuser.isSelvstendigNaeringsdrivende) return null;
   const andelStatus = finnAndelerStatus(relevanteStatuser);
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
