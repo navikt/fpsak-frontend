@@ -147,7 +147,7 @@ const inneholderUgyldigeGraderinger = (faktaArbeidsforhold, perioder) => {
   const arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold = faktaArbeidsforhold
     .filter((arb) => arbeidsgiverIdentifikatorer.includes(arb.arbeidsgiver.identifikator));
 
-  return arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold.length === 0;
+  return arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold.length === 0 && gradertePerioder.length > 0;
 };
 
 export const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
