@@ -1,14 +1,10 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback,
 } from './faktaPanelUtils';
 
-const useFaktaPaneler = (faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg) => {
-  const intl = useIntl();
-
+const useFaktaPaneler = (faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl) => {
   const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
     [behandling.versjon]);
 
@@ -31,9 +27,7 @@ const useFaktaAksjonspunktNotifikator = (faktaPaneler, setApentFaktaPanel, behan
   }, [behandlingVersjon]);
 };
 
-const useCallbacks = (faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, behandlingApi) => {
-  const dispatch = useDispatch();
-
+const useCallbacks = (faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, behandlingApi, dispatch) => {
   const velgFaktaPanelCallback = useCallback((index) => oppdaterProsessStegOgFaktaPanelIUrl(valgtProsessSteg, faktaPaneler[index].urlCode),
     [behandling.versjon, valgtProsessSteg]);
 

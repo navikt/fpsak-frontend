@@ -29,7 +29,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [esBehandlingApi.VERGE],
   renderComponent: (props) => <VergeFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ aksjonspunkter }) => ({ aksjonspunkter }),
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
@@ -37,7 +37,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <TilleggsopplysningerFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ soknad, aksjonspunkter }) => ({ soknad, aksjonspunkter }),
+  getData: ({ soknad }) => ({ soknad }),
 }, {
   urlCode: faktaPanelCodes.OMSORGSVILKARET,
   textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
@@ -58,8 +58,8 @@ const faktaPanelDefinisjoner = [{
   endpoints: [esBehandlingApi.FAMILIEHENDELSE],
   renderComponent: (props) => <AdopsjonFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => adopsjonsvilkarene.includes(v.vilkarType.kode)),
-  getData: ({ personopplysninger, soknad, aksjonspunkter }) => ({
-    isForeldrepengerFagsak: false, personopplysninger, soknad, aksjonspunkter,
+  getData: ({ personopplysninger, soknad }) => ({
+    isForeldrepengerFagsak: false, personopplysninger, soknad,
   }),
 }, {
   urlCode: faktaPanelCodes.FODSELSVILKARET,
@@ -69,7 +69,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [esBehandlingApi.FAMILIEHENDELSE, esBehandlingApi.FAMILIEHENDELSE_ORIGINAL_BEHANDLING, esBehandlingApi.SOKNAD_ORIGINAL_BEHANDLING],
   renderComponent: (props) => <FodselFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => fodselsvilkarene.includes(v.vilkarType.kode)),
-  getData: ({ personopplysninger, soknad, aksjonspunkter }) => ({ personopplysninger, soknad, aksjonspunkter }),
+  getData: ({ personopplysninger, soknad }) => ({ personopplysninger, soknad }),
 }, {
   urlCode: faktaPanelCodes.MEDLEMSKAPSVILKARET,
   textCode: 'MedlemskapInfoPanel.Medlemskap',

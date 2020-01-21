@@ -32,7 +32,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [svpBehandlingApi.VERGE],
   renderComponent: (props) => <VergeFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ aksjonspunkter }) => ({ aksjonspunkter }),
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
@@ -40,7 +40,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <TilleggsopplysningerFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ soknad, aksjonspunkter }) => ({ soknad, aksjonspunkter }),
+  getData: ({ soknad }) => ({ soknad }),
 }, {
   urlCode: faktaPanelCodes.FODSELTILRETTELEGGING,
   textCode: 'FodselOgTilretteleggingInfoPanel.FaktaFodselOgTilrettelegging',

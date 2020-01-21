@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
   FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
@@ -24,7 +25,8 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
 }
 
-const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
+const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   data,
   behandling,
   fagsak,
@@ -35,6 +37,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   hasFetchError,
   setApentFaktaPanel,
+  dispatch,
 }) => {
   const {
     aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse, ytelsefordeling, beregningsgrunnlag,
@@ -45,12 +48,12 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
-    .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, fpBehandlingApi);
+    .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, fpBehandlingApi, dispatch);
 
   return (
     <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
@@ -70,4 +73,4 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default ForeldrepengerFakta;
+export default injectIntl(ForeldrepengerFakta);

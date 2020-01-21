@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
@@ -45,6 +46,9 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
   featureToggles,
 }) => {
   const [apentFaktaPanelInfo, setApentFaktaPanel] = useState();
+  // TODO (TOR) Har trekt denne ut hit grunna redux test-oppsett. Fiks
+  const dispatch = useDispatch();
+
   return (
     <>
       <BehandlingPaVent
@@ -68,6 +72,7 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
+        dispatch={dispatch}
       />
       <VerticalSpacer sixteenPx />
       <PersonFaktaIndex

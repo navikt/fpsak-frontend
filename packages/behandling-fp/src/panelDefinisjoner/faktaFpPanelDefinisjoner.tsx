@@ -36,7 +36,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [fpBehandlingApi.VERGE],
   renderComponent: (props) => <VergeFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ aksjonspunkter }) => ({ aksjonspunkter }),
+  getData: () => {},
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
@@ -44,7 +44,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [],
   renderComponent: (props) => <TilleggsopplysningerFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: ({ soknad, aksjonspunkter }) => ({ soknad, aksjonspunkter }),
+  getData: ({ soknad }) => ({ soknad }),
 }, {
   urlCode: faktaPanelCodes.OMSORGSVILKARET,
   textCode: 'OmsorgOgForeldreansvarInfoPanel.Omsorg',
@@ -53,9 +53,9 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <OmsorgOgForeldreansvarFaktaIndex {...props} />,
   showComponent: () => false,
   getData: ({
-    soknad, personopplysninger, aksjonspunkter, inntektArbeidYtelse,
+    soknad, personopplysninger, inntektArbeidYtelse,
   }) => ({
-    soknad, personopplysninger, aksjonspunkter, inntektArbeidYtelse,
+    soknad, personopplysninger, inntektArbeidYtelse,
   }),
 }, {
   urlCode: faktaPanelCodes.ADOPSJONSVILKARET,
@@ -139,7 +139,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [fpBehandlingApi.UTTAK_KONTROLLER_FAKTA_PERIODER, fpBehandlingApi.FAKTA_ARBEIDSFORHOLD,
     fpBehandlingApi.FAMILIEHENDELSE],
   renderComponent: (props) => <UttakFaktaIndex {...props} />,
-  showComponent: ({ personopplysninger, ytelsefordeling }) => ytelsefordeling.endringsdato !== undefined && personopplysninger !== null
+  showComponent: ({ personopplysninger, ytelsefordeling }) => ytelsefordeling && ytelsefordeling.endringsdato !== undefined && personopplysninger !== null
     && personopplysninger !== undefined,
   getData: ({ rettigheter, ytelsefordeling, personopplysninger }) => ({
     kanOverstyre: rettigheter.kanOverstyreAccess.isEnabled,

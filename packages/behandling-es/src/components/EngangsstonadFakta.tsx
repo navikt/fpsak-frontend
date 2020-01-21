@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 
 import {
   FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaHooks,
@@ -24,7 +25,8 @@ interface OwnProps {
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
 }
 
-const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
+const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   data,
   fagsak,
   behandling,
@@ -35,6 +37,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   valgtProsessSteg,
   hasFetchError,
   setApentFaktaPanel,
+  dispatch,
 }) => {
   const {
     aksjonspunkter, soknad, vilkar, personopplysninger, inntektArbeidYtelse,
@@ -45,12 +48,12 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   };
 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
-    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvEsPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg);
+    .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvEsPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
-    .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, esBehandlingApi);
+    .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, esBehandlingApi, dispatch);
 
   return (
     <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
@@ -70,4 +73,4 @@ const EngangsstonadFakta: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EngangsstonadFakta;
+export default injectIntl(EngangsstonadFakta);
