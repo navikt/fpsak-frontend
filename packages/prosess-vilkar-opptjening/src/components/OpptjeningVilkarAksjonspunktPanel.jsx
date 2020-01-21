@@ -63,6 +63,8 @@ export const OpptjeningVilkarAksjonspunktPanelImpl = ({
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt
+      customVilkarOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErOppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt' }}
     />
     <VerticalSpacer sixteenPx />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />

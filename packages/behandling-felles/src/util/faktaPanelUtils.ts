@@ -4,8 +4,8 @@ import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import readOnlyUtils from './readOnlyUtils';
 import getAlleMerknaderFraBeslutter from './getAlleMerknaderFraBeslutter';
 
-const DEFAULT_FAKTA_KODE = 'default';
-const DEFAULT_PROSESS_STEG_KODE = 'default';
+export const DEFAULT_FAKTA_KODE = 'default';
+export const DEFAULT_PROSESS_STEG_KODE = 'default';
 
 export const utledFaktaPaneler = (faktaPanelDefinisjoner, ekstraPanelData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);

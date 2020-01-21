@@ -9,7 +9,9 @@
   "OpptjeningVilkarView.MonthsAndDays": "{months} måneder og {days} dager aktivitet i opptjeningsperioden",
   "OpptjeningVilkarView.DetailsForSelectedPeriod": "Detaljer for valgt periode",
   
-  "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger": "Har søker opptjent rett til foreldrepenger",
+  "OpptjeningVilkarAksjonspunktPanel.SokerHarVurdertOpptjentRettTilForeldrepenger": "Opptjent rett til foreldrepenger",
+  "OpptjeningVilkarAksjonspunktPanel.ErOppfylt": "Søker har oppfylt krav om 6 mnd opptjening, vilkåret er oppfylt.",
+  "OpptjeningVilkarAksjonspunktPanel.ErIkkeOppfylt": "Søker har ikke oppfylt krav om 6 mnd opptjening, vilkåret er <b>ikke</b> oppfylt.",
   "OpptjeningVilkarAksjonspunktPanel.Opptjeningsvilkaret": "Opptjening",
 
   "TimeLineNavigation.openData": "Åpne info om første periode",
