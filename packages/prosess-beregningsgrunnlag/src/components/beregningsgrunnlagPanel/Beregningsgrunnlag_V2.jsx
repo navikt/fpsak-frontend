@@ -63,7 +63,8 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   behandlingId,
   behandlingVersjon,
   alleKodeverk,
-  sammenligningsGrunnlagInntekter) => (
+  sammenligningsGrunnlagInntekter,
+  skjeringstidspunktDato) => (
     <div>
       { relevanteStatuser.isArbeidstaker
       && (
@@ -156,12 +157,16 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
-      { !relevanteStatuser.isSelvstendigNaeringsdrivende && (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
+      { !relevanteStatuser.isSelvstendigNaeringsdrivende
+      && sammenligningsGrunnlagInntekter
+      && skjeringstidspunktDato
+      && (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
       && (
         <>
           <SammenlignsgrunnlagAOrdningen
             sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
             relevanteStatuser={relevanteStatuser}
+            skjeringstidspunktDato={skjeringstidspunktDato}
           />
           <VerticalSpacer fourtyPx />
         </>
@@ -189,6 +194,7 @@ export const BeregningsgrunnlagImpl2 = ({
   behandlingVersjon,
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
+  skjeringstidspunktDato,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
@@ -205,6 +211,7 @@ export const BeregningsgrunnlagImpl2 = ({
             behandlingVersjon,
             alleKodeverk,
             sammenligningsGrunnlagInntekter,
+            skjeringstidspunktDato,
           )
         }
     </>
@@ -221,11 +228,13 @@ BeregningsgrunnlagImpl2.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()),
+  skjeringstidspunktDato: PropTypes.string,
 };
 
 BeregningsgrunnlagImpl2.defaultProps = {
   allePerioder: undefined,
   sammenligningsGrunnlagInntekter: undefined,
+  skjeringstidspunktDato: undefined,
 };
 
 const Beregningsgrunnlag2 = BeregningsgrunnlagImpl2;

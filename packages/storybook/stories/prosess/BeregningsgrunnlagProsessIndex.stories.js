@@ -11,6 +11,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -275,64 +276,120 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
     årsinntektVisningstall: 360000,
     sammenligningsgrunnlagInntekter: [
       {
-        atAndel: 31800,
-        flAndel: 0,
-        dato: '2018-08-01',
-      },
-      {
-        atAndel: 33450,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 31800,
         dato: '2018-09-01',
       },
       {
-        atAndel: 33559,
-        flAndel: 10000,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-09-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33450,
         dato: '2018-10-01',
       },
       {
-        atAndel: 41800,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-10-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33559,
         dato: '2018-11-01',
       },
       {
-        atAndel: 39450,
-        flAndel: 0,
-        dato: '2018-12-01',
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 10000,
+        dato: '2018-11-01',
       },
       {
-        atAndel: 39559,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 41800,
+        dato: '2018-12-01',
+      },
+
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
         dato: '2019-01-01',
       },
       {
-        atAndel: 38800,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-01-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39559,
         dato: '2019-02-01',
       },
       {
-        atAndel: 39450,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-02-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38800,
         dato: '2019-03-01',
       },
       {
-        atAndel: 38559,
-        flAndel: 0,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-03-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
         dato: '2019-04-01',
       },
       {
-        atAndel: 39600,
-        flAndel: 64000,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-04-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38559,
         dato: '2019-05-01',
       },
       {
-        atAndel: 49993,
-        flAndel: 55000,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-05-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39600,
         dato: '2019-06-01',
       },
       {
-        atAndel: 48237,
-        flAndel: 30000,
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 64000,
+        dato: '2019-06-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 49993,
         dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 55000,
+        dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 48237,
+        dato: '2019-08-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 30000,
+        dato: '2019-08-01',
       },
     ],
   };

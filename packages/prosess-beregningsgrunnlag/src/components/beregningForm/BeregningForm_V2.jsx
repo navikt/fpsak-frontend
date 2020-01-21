@@ -288,6 +288,7 @@ export const BeregningFormImpl2 = ({
                 behandlingVersjon={behandlingVersjon}
                 alleKodeverk={alleKodeverk}
                 sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
+                skjeringstidspunktDato={skjaeringstidspunktBeregning}
               />
             </>
           )}
