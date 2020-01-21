@@ -22,7 +22,7 @@ const AvviksopplysningerAT = ({
     return null;
   }
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
-  const avvikATRounded = parseFloat((sammenligningsGrunnlagAT.avvikProsent.toPrecision(3)));
+  const avvikATRounded = parseFloat((sammenligningsGrunnlagAT.avvikProsent.toFixed(1)));
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
   const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
