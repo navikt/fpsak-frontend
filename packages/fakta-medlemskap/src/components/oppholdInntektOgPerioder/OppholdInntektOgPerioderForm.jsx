@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux';
 import { Hovedknapp } from 'nav-frontend-knapper';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { AksjonspunktHelpText, AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
@@ -165,16 +165,9 @@ export class OppholdInntektOgPerioderForm extends Component {
 
     return (
       <form onSubmit={formProps.handleSubmit}>
-        {isApOpen && (
-          <AksjonspunktHelpTextHTML>
-            {getHelpTexts(aksjonspunkter)}
-          </AksjonspunktHelpTextHTML>
-        )}
-        {!isApOpen && (
-          <AksjonspunktHelpText isAksjonspunktOpen={false}>
-            {getHelpTexts(aksjonspunkter)}
-          </AksjonspunktHelpText>
-        )}
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
+          {getHelpTexts(aksjonspunkter)}
+        </AksjonspunktHelpTextTemp>
         { hasAksjonspunkt(AVKLAR_FORTSATT_MEDLEMSKAP, aksjonspunkter) && (
         <MedlemskapEndringerTabell
           selectedId={valgtPeriode ? valgtPeriode.id : undefined}

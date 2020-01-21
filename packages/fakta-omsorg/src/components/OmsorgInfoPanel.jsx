@@ -79,8 +79,6 @@ export const OmsorgInfoPanel = ({
 
 OmsorgInfoPanel.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(omsorgAksjonspunkterPropType.isRequired).isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,

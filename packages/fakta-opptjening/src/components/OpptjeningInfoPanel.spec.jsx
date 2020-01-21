@@ -22,12 +22,6 @@ describe('<OpptjeningInfoPanel>', () => {
       alleKodeverk={{}}
     />);
 
-    const faktaPanel = wrapper.find(FaktaEkspandertpanel);
-    expect(faktaPanel).to.have.length(1);
-    expect(faktaPanel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(faktaPanel.prop('isInfoPanelOpen')).is.true;
-    expect(faktaPanel.prop('readOnly')).is.false;
-
     const opptjeningForm = wrapper.find(OpptjeningFaktaForm);
     expect(opptjeningForm).to.have.length(1);
     expect(opptjeningForm.prop('readOnly')).is.false;

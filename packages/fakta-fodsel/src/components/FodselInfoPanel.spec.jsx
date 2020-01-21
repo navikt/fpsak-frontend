@@ -64,9 +64,6 @@ describe('<FodselInfoPanel>', () => {
       personopplysninger={personopplysninger}
     />);
 
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
-
     expect(wrapper.find(SjekkFodselDokForm)).has.length(1);
   });
 
@@ -106,9 +103,6 @@ describe('<FodselInfoPanel>', () => {
       behandlingVersjon={1}
       personopplysninger={personopplysninger}
     />);
-
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
 
     expect(wrapper.find(TermindatoFaktaForm)).has.length(1);
   });

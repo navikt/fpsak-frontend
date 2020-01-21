@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 import { OmsorgInfoPanel } from './OmsorgInfoPanel';
@@ -86,12 +86,8 @@ describe('<OmsorgInfoPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       personopplysninger={personopplysning}
     />);
-    const panel = wrapper.find(FaktaEkspandertpanel);
+    const panel = wrapper.find(OmsorgFaktaForm);
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om omsorg');
-    expect(panel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql('omsorg');
   });
 
   it('skal vise helptext for omsorg og aleneomsorg aksjonspunkt', () => {
@@ -112,7 +108,7 @@ describe('<OmsorgInfoPanel>', () => {
       soknad={{}}
       alleMerknaderFraBeslutter={{}}
     />);
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(2);
@@ -127,7 +123,7 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
+      hasOpenAksjonspunkter
       submittable
       readOnly={false}
       personopplysninger={personopplysning}
@@ -138,7 +134,7 @@ describe('<OmsorgInfoPanel>', () => {
       soknad={{}}
       alleMerknaderFraBeslutter={{}}
     />);
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(1);

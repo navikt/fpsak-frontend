@@ -58,9 +58,7 @@ describe('<UttakInfoPanel>', () => {
       familiehendelse={{}}
     />);
 
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    const uttakFaktaForm = faktaEkspandertpanel.find(UttakFaktaForm);
-    expect(faktaEkspandertpanel).to.have.length(1);
+    const uttakFaktaForm = wrapper.find(UttakFaktaForm);
     expect(uttakFaktaForm).to.have.length(1);
   });
 
@@ -85,9 +83,7 @@ describe('<UttakInfoPanel>', () => {
       familiehendelse={{}}
     />);
 
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    const annenForelderHarRettForm = faktaEkspandertpanel.find(AnnenForelderHarRettForm);
-    expect(faktaEkspandertpanel).to.have.length(1);
+    const annenForelderHarRettForm = wrapper.find(AnnenForelderHarRettForm);
     expect(annenForelderHarRettForm).to.have.length(1);
   });
 });

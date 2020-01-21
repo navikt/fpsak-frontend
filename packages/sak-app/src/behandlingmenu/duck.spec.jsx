@@ -4,12 +4,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { expect } from 'chai';
 import sinon from 'sinon';
 
-import { BehandlingIdentifier } from '@fpsak-frontend/fp-felles';
-
 import fpsakApi, { reduxRestApi } from '../data/fpsakApi';
-import {
-  createNewBehandling, openBehandlingForChanges,
-} from './duck';
+import { createNewBehandling } from './duck';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -40,11 +36,6 @@ describe('BehandlingMenu-reducer', () => {
       id: 2,
       opprettet: '2017-08-15',
     }];
-
-    const updater = {
-      resetBehandling: () => () => Promise.resolve(sinon.spy()),
-    };
-    behandlingUpdater.setUpdater(updater);
 
     const data = {
       resource: 'resource',
@@ -107,11 +98,6 @@ describe('BehandlingMenu-reducer', () => {
       opprettet: '2017-08-15',
     }];
 
-    const updater = {
-      resetBehandling: () => () => Promise.resolve(sinon.spy()),
-    };
-    behandlingUpdater.setUpdater(updater);
-
     mockAxios
       .onPut(fpsakApi.NEW_BEHANDLING_FPSAK.path)
       .reply(200, behandling);
@@ -144,40 +130,6 @@ describe('BehandlingMenu-reducer', () => {
         expect(push.getCalls()[0].args[0]).is.eql({
           pathname: '/fagsak/1/behandling/2/',
           search: '?punkt=default&fakta=default',
-        });
-      });
-  });
-
-  it('skal åpne behandling for endringer', () => {
-    const updater = {
-      setBehandlingResult: () => () => () => Promise.resolve(sinon.spy()),
-    };
-    behandlingUpdater.setUpdater(updater);
-
-    reduxRestApi.injectPaths([{
-      href: '/fpsak/api/behandlinger/opne-for-endringer',
-      rel: 'opne-for-endringer',
-      requestPayload: { behandlingId: null, behandlingVersjon: null },
-      type: 'POST',
-    }]);
-
-    mockAxios
-      .onPost(fpsakApi.OPEN_BEHANDLING_FOR_CHANGES.path)
-      .replyOnce(200);
-
-    const store = mockStore();
-
-    const params = { behandlingId: 2, behandlingVersjon: 10 };
-    const id = new BehandlingIdentifier(1, 2);
-
-    return store.dispatch(openBehandlingForChanges(params, id))
-      .then(() => {
-        expect(store.getActions()).to.have.length(2);
-        const [startOpenForChanges] = store.getActions();
-        expect(startOpenForChanges.type).to.contain('@@REST/OPEN_BEHANDLING_FOR_CHANGES');
-        expect(startOpenForChanges.payload.params).is.eql({
-          behandlingId: 2,
-          behandlingVersjon: 10,
         });
       });
   });
