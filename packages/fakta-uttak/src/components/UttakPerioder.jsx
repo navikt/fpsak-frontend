@@ -17,7 +17,11 @@ import { ariaCheck, DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { uttakPeriodeNavn } from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
 import {
-  AksjonspunktHelpText, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  AksjonspunktHelpText,
+  FlexColumn,
+  FlexContainer,
+  FlexRow,
+  VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import UttakPeriode from './UttakPeriode';
@@ -39,14 +43,30 @@ const createNewPerioder = (perioder, id, values) => {
 };
 
 const overlappingDates = (inntektsmelding, innmldPeriode, soknadsPeriode) => {
-  const søknadFomBetween = moment(soknadsPeriode.fom)
-    .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
-  const søknadTomBetween = moment(soknadsPeriode.tom)
-    .isBetween(moment(innmldPeriode.fom), moment(innmldPeriode.tom), null, '[]');
-  const inntekstmeldingFomBetween = moment(innmldPeriode.fom)
-    .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
-  const inntekstmeldingTomBetween = moment(innmldPeriode.tom)
-    .isBetween(moment(soknadsPeriode.fom), moment(soknadsPeriode.tom), null, '[]');
+  const søknadFomBetween = moment(soknadsPeriode.fom).isBetween(
+    moment(innmldPeriode.fom),
+    moment(innmldPeriode.tom),
+    null,
+    '[]',
+  );
+  const søknadTomBetween = moment(soknadsPeriode.tom).isBetween(
+    moment(innmldPeriode.fom),
+    moment(innmldPeriode.tom),
+    null,
+    '[]',
+  );
+  const inntekstmeldingFomBetween = moment(innmldPeriode.fom).isBetween(
+    moment(soknadsPeriode.fom),
+    moment(soknadsPeriode.tom),
+    null,
+    '[]',
+  );
+  const inntekstmeldingTomBetween = moment(innmldPeriode.tom).isBetween(
+    moment(soknadsPeriode.fom),
+    moment(soknadsPeriode.tom),
+    null,
+    '[]',
+  );
 
   return (søknadFomBetween && søknadTomBetween) || inntekstmeldingFomBetween || inntekstmeldingTomBetween;
 };
@@ -59,32 +79,46 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
     const inntektsmeldingInfoPerioder = gjeldeneGraderingPerioder.concat(gjeldeneUtsettelsePerioder);
 
     const isArbeidstaker = (soknadsPeriode.arbeidsgiver || {}).virksomhet;
-    const isAvvikPeriode = inntektsmeldingInfoPerioder.some((periode) => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom);
+    const isAvvikPeriode = inntektsmeldingInfoPerioder.some(
+      (periode) => periode.fom !== soknadsPeriode.fom || periode.tom !== soknadsPeriode.tom,
+    );
     const isAvvikArbeidsgiver = soknadsPeriode.utsettelseÅrsak.kode === '-'
       && inntektsmelding.arbeidsgiverOrgnr !== (soknadsPeriode.arbeidsgiver || {}).identifikator;
-    const isAvvikArbeidsprosent = gjeldeneGraderingPerioder
-      .some((graderingPeriode) => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2) !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2));
-    const isAvvikUtsettelse = gjeldeneUtsettelsePerioder
-      .some((utsettelsePeriode) => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode);
+    const isAvvikArbeidsprosent = gjeldeneGraderingPerioder.some(
+      (graderingPeriode) => parseFloat(graderingPeriode.arbeidsprosent).toFixed(2)
+        !== parseFloat(soknadsPeriode.arbeidstidsprosent).toFixed(2),
+    );
+    const isAvvikUtsettelse = gjeldeneUtsettelsePerioder.some(
+      (utsettelsePeriode) => utsettelsePeriode.utsettelseArsak.kode !== soknadsPeriode.utsettelseÅrsak.kode,
+    );
 
     // hvis utsettelse er det ingen behov for arbeidsgiver
     const isManglendeSøktGraderingEllerUtsettelse = !!(isAvvikArbeidsgiver && !isAvvikPeriode);
 
     let isManglendeInntektsmelding = false;
-    if ((isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
-      || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')) {
+    if (
+      (isArbeidstaker && gjeldeneGraderingPerioder.length === 0 && soknadsPeriode.arbeidstidsprosent !== null)
+      || (gjeldeneUtsettelsePerioder.length === 0 && soknadsPeriode.utsettelseÅrsak.kode !== '-')
+    ) {
       isManglendeInntektsmelding = true;
     }
 
     return {
       ...inntektsmelding,
-      arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce((acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10), 0),
-      graderingPerioder: isAvvikArbeidsprosent || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneGraderingPerioder : [],
+      arbeidsProsentFraInntektsmelding: gjeldeneGraderingPerioder.reduce(
+        (acc, periode) => parseFloat(acc) + parseFloat(periode.arbeidsprosent, 10),
+        0,
+      ),
+      graderingPerioder:
+        isAvvikArbeidsprosent || isAvvikPeriode || isAvvikArbeidsgiver ? gjeldeneGraderingPerioder : [],
       utsettelsePerioder: isAvvikUtsettelse || isAvvikPeriode ? gjeldeneUtsettelsePerioder : [],
       isManglendeInntektsmelding,
       isManglendeSøktGraderingEllerUtsettelse,
       avvik: {
-        utsettelseÅrsak: isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-' ? soknadsPeriode.utsettelseÅrsak : false,
+        utsettelseÅrsak:
+          isManglendeInntektsmelding && soknadsPeriode.utsettelseÅrsak.kode !== '-'
+            ? soknadsPeriode.utsettelseÅrsak
+            : false,
         isAvvikArbeidsprosent,
         isAvvikArbeidsgiver,
         isAvvikUtsettelse,
@@ -93,14 +127,27 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
     };
   });
 
-  const gyldigeInntektsmeldinger = relevant
-    .filter((inntektsmelding) => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
+  const gyldigeInntektsmeldinger = relevant.filter(
+    (inntektsmelding) => (!inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
       || (!inntektsmelding.isManglendeInntektsmelding && inntektsmelding.isManglendeSøktGraderingEllerUtsettelse)
-      || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse));
+      || (inntektsmelding.isManglendeInntektsmelding && !inntektsmelding.isManglendeSøktGraderingEllerUtsettelse),
+  );
   if (gyldigeInntektsmeldinger.length) {
     return gyldigeInntektsmeldinger;
   }
   return relevant;
+};
+
+const inneholderUgyldigeGraderinger = (faktaArbeidsforhold, perioder) => {
+  const gradertePerioder = perioder.filter((p) => p.arbeidstidsprosent && p.arbeidstidsprosent > 0);
+  const arbeidsgiverIdentifikatorer = gradertePerioder.reduce((indentifikatorer, p) => {
+    indentifikatorer.push(p.arbeidsgiver.identifikator);
+    return indentifikatorer;
+  }, []);
+  const arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold = faktaArbeidsforhold
+    .filter((arb) => arbeidsgiverIdentifikatorer.includes(arb.arbeidsgiver.identifikator));
+
+  return arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold.length === 0;
 };
 
 export const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
@@ -113,11 +160,11 @@ export const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
   return termindato;
 };
 
-const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updatedIndex, periode) => ([
+const updateInntektsmeldingInfo = (inntektsmeldinger, inntektsmeldingInfo, updatedIndex, periode) => [
   ...inntektsmeldingInfo.slice(0, updatedIndex),
   findRelevantInntektsmeldingInfo(inntektsmeldinger, periode),
   ...inntektsmeldingInfo.slice(updatedIndex + 1),
-]);
+];
 
 export class UttakPerioder extends PureComponent {
   constructor(props) {
@@ -155,14 +202,14 @@ export class UttakPerioder extends PureComponent {
 
   overrideResultat = (resultat) => {
     if (
-      [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES,
-        uttakPeriodeVurdering.PERIODE_OK,
-      ].some((type) => type === resultat)
+      [uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES, uttakPeriodeVurdering.PERIODE_OK].some(
+        (type) => type === resultat,
+      )
     ) {
       return resultat;
     }
     return uttakPeriodeVurdering.PERIODE_IKKE_VURDERT;
-  }
+  };
 
   newPeriodeResetCallback() {
     const { behandlingFormPrefix, reduxFormReset: formReset } = this.props;
@@ -204,7 +251,12 @@ export class UttakPerioder extends PureComponent {
 
   removePeriode(values) {
     const {
-      behandlingFormPrefix, perioder, inntektsmeldinger, slettedePerioder, initialValues, reduxFormChange: formChange,
+      behandlingFormPrefix,
+      perioder,
+      inntektsmeldinger,
+      slettedePerioder,
+      initialValues,
+      reduxFormChange: formChange,
     } = this.props;
     const { periodeSlett } = this.state;
 
@@ -214,10 +266,12 @@ export class UttakPerioder extends PureComponent {
       formChange(
         `${behandlingFormPrefix}.UttakFaktaForm`,
         'slettedePerioder',
-        slettedePerioder.concat([{
-          ...periodeSlett,
-          begrunnelse: values.begrunnelse,
-        }]),
+        slettedePerioder.concat([
+          {
+            ...periodeSlett,
+            begrunnelse: values.begrunnelse,
+          },
+        ]),
       );
     }
 
@@ -242,17 +296,20 @@ export class UttakPerioder extends PureComponent {
     const { behandlingFormPrefix, perioder, reduxFormChange: formChange } = this.props;
 
     formChange(
-      `${behandlingFormPrefix}.UttakFaktaForm`, 'perioder',
-      perioder.map((periode) => {
-        if (periode.id === id) {
-          return {
-            ...periode,
-            begrunnelse: undefined,
-            resultat: undefined,
-          };
-        }
-        return { ...periode };
-      }).sort((a, b) => a.fom.localeCompare(b.fom)),
+      `${behandlingFormPrefix}.UttakFaktaForm`,
+      'perioder',
+      perioder
+        .map((periode) => {
+          if (periode.id === id) {
+            return {
+              ...periode,
+              begrunnelse: undefined,
+              resultat: undefined,
+            };
+          }
+          return { ...periode };
+        })
+        .sort((a, b) => a.fom.localeCompare(b.fom)),
     );
   }
 
@@ -296,7 +353,8 @@ export class UttakPerioder extends PureComponent {
       kontoType,
       resultat: uttakPeriodeVurderingTyper.find((type) => type.kode === this.overrideResultat(resultat)),
       begrunnelse: values.begrunnelse,
-      dokumentertePerioder: resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
+      dokumentertePerioder:
+        resultat && resultat !== uttakPeriodeVurdering.PERIODE_KAN_IKKE_AVKLARES ? dokumentertePerioder : null,
       arbeidstidsprosent: nyArbeidstidsprosent || updatedPeriode.arbeidstidprosent,
       openForm: !updatedPeriode.openForm,
       utsettelseÅrsak: updatedPeriode.utsettelseÅrsak,
@@ -342,7 +400,11 @@ export class UttakPerioder extends PureComponent {
 
     const newPerioder = await createNewPerioder(perioder, id, newPeriodeObject);
 
-    await formChange(`${behandlingFormPrefix}.UttakFaktaForm`, 'perioder', newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)));
+    await formChange(
+      `${behandlingFormPrefix}.UttakFaktaForm`,
+      'perioder',
+      newPerioder.sort((a, b) => a.fom.localeCompare(b.fom)),
+    );
   }
 
   isAnyFormOpen() {
@@ -390,7 +452,8 @@ export class UttakPerioder extends PureComponent {
     } = this.state;
     const nyPeriodeDisabledDaysFom = førsteUttaksdato || (perioder[0] || []).fom;
     const sisteUttakdatoFørsteSeksUker = moment(findFamiliehendelseDato(familiehendelse.gjeldende)).add(6, 'weeks');
-    const farSøkerFør6Uker = (perioder[0] || {}).uttakPeriodeType && (perioder[0] || {}).uttakPeriodeType.kode === 'FEDREKVOTE'
+    const farSøkerFør6Uker = (perioder[0] || {}).uttakPeriodeType
+      && (perioder[0] || {}).uttakPeriodeType.kode === 'FEDREKVOTE'
       && moment((perioder[0] || {}).fom).isBefore(sisteUttakdatoFørsteSeksUker);
 
     return (
@@ -402,6 +465,15 @@ export class UttakPerioder extends PureComponent {
                 value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
               };
 
+              if (inneholderUgyldigeGraderinger(faktaArbeidsforhold, perioder) && ap.definisjon.kode === '5070') {
+                return (
+                  <FormattedMessage
+                    key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}.ugyldigGradering`}
+                    id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}.ugyldigGradering`}
+                  />
+                );
+              }
+
               return (
                 <FormattedMessage
                   key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
@@ -411,11 +483,7 @@ export class UttakPerioder extends PureComponent {
               );
             })}
             <VerticalSpacer eightPx />
-            {farSøkerFør6Uker && (
-              <FormattedMessage
-                id="UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker"
-              />
-            )}
+            {farSøkerFør6Uker && <FormattedMessage id="UttakInfoPanel.Aksjonspunkt.FarSøkerFør6Uker" />}
           </AksjonspunktHelpText>
         )}
         <VerticalSpacer twentyPx />
@@ -423,19 +491,20 @@ export class UttakPerioder extends PureComponent {
         <FlexContainer>
           <FlexRow>
             <FlexColumn>
-              <Element><FormattedMessage id="UttakInfoPanel.SoknadsPeriode" /></Element>
+              <Element>
+                <FormattedMessage id="UttakInfoPanel.SoknadsPeriode" />
+              </Element>
             </FlexColumn>
-            {kanOverstyre
-              && (
-                <FlexColumn className="justifyItemsToFlexEnd">
-                  <CheckboxField
-                    name="faktaUttakManuellOverstyring"
-                    label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
-                    readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
-                    onClick={() => this.manuellOverstyringResetCallback()}
-                  />
-                </FlexColumn>
-              )}
+            {kanOverstyre && (
+              <FlexColumn className="justifyItemsToFlexEnd">
+                <CheckboxField
+                  name="faktaUttakManuellOverstyring"
+                  label={{ id: 'UttakInfoPanel.ManuellOverstyring' }}
+                  readOnly={!readOnly || hasRevurderingOvertyringAp || !kanOverstyre}
+                  onClick={() => this.manuellOverstyringResetCallback()}
+                />
+              </FlexColumn>
+            )}
           </FlexRow>
         </FlexContainer>
 
@@ -467,22 +536,12 @@ export class UttakPerioder extends PureComponent {
         <FlexContainer fluid wrap>
           <FlexRow>
             <FlexColumn>
-              <Hovedknapp
-                mini
-                disabled={this.disableButtons()}
-                onClick={ariaCheck}
-                spinner={submitting}
-              >
+              <Hovedknapp mini disabled={this.disableButtons()} onClick={ariaCheck} spinner={submitting}>
                 <FormattedMessage id="UttakInfoPanel.BekreftOgFortsett" />
               </Hovedknapp>
             </FlexColumn>
             <FlexColumn>
-              <Knapp
-                mini
-                htmlType="button"
-                onClick={this.addNewPeriod}
-                disabled={this.disableButtons()}
-              >
+              <Knapp mini htmlType="button" onClick={this.addNewPeriod} disabled={this.disableButtons()}>
                 <FormattedMessage id="UttakInfoPanel.LeggTilPeriode" />
               </Knapp>
             </FlexColumn>
@@ -516,9 +575,7 @@ export class UttakPerioder extends PureComponent {
           behandlingVersjon={behandlingVersjon}
           getKodeverknavn={getKodeverknavn}
         />
-
       </>
-
     );
   }
 }
@@ -567,25 +624,15 @@ UttakPerioder.defaultProps = {
 };
 
 const getFørsteUttaksdato = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
-  'UttakFaktaForm',
-  behandlingId,
-  behandlingVersjon,
+  'UttakFaktaForm', behandlingId, behandlingVersjon,
 )(state, 'førsteUttaksdato') || undefined;
 const getEndringsdato = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
-  'UttakFaktaForm',
-  behandlingId,
-  behandlingVersjon,
+  'UttakFaktaForm', behandlingId, behandlingVersjon,
 )(state, 'endringsdato') || undefined;
 const slettedePerioder = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
-  'UttakFaktaForm',
-  behandlingId,
-  behandlingVersjon,
+  'UttakFaktaForm', behandlingId, behandlingVersjon,
 )(state, 'slettedePerioder');
-const perioder = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
-  'UttakFaktaForm',
-  behandlingId,
-  behandlingVersjon,
-)(state, 'perioder');
+const perioder = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector('UttakFaktaForm', behandlingId, behandlingVersjon)(state, 'perioder');
 const manuellOverstyring = (state, behandlingId, behandlingVersjon) => behandlingFormValueSelector(
   'UttakFaktaForm',
   behandlingId,
@@ -611,10 +658,13 @@ const mapStateToProps = (state, props) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  ...bindActionCreators({
-    reduxFormChange,
-    reduxFormReset,
-  }, dispatch),
+  ...bindActionCreators(
+    {
+      reduxFormChange,
+      reduxFormReset,
+    },
+    dispatch,
+  ),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(UttakPerioder);
