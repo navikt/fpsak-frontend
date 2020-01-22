@@ -11,6 +11,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -273,6 +274,124 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
     },
     faktaOmFordeling: null,
     årsinntektVisningstall: 360000,
+    sammenligningsgrunnlagInntekter: [
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 31800,
+        dato: '2018-09-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-09-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33450,
+        dato: '2018-10-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-10-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33559,
+        dato: '2018-11-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 10000,
+        dato: '2018-11-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 41800,
+        dato: '2018-12-01',
+      },
+
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
+        dato: '2019-01-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-01-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39559,
+        dato: '2019-02-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-02-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38800,
+        dato: '2019-03-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-03-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
+        dato: '2019-04-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-04-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38559,
+        dato: '2019-05-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-05-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39600,
+        dato: '2019-06-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 64000,
+        dato: '2019-06-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 49993,
+        dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 55000,
+        dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 48237,
+        dato: '2019-08-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 30000,
+        dato: '2019-08-01',
+      },
+    ],
   };
   return beregningsgrunnlag;
 };
@@ -335,7 +454,7 @@ export const brukersAndelUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
+      featureToggles={togglesTrue}
     />
   );
 };
@@ -348,6 +467,7 @@ export const arbeidstakerMedAvvik = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -677,6 +797,32 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       apCodes={[]}
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const FrilansMedAvvik = () => {
+  const andeler = [lagAndel('FL', 596000, undefined, false)];
+  andeler[0].skalFastsetteGrunnlag = true;
+
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('FL')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 26.2, 11000),
+  ];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
     />
