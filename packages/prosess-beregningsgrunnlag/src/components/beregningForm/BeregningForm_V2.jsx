@@ -196,6 +196,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   }
   return undefined;
 };
+
 const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   if (!sammenligningsgrunnlagPrStatus) {
     return undefined;
@@ -203,7 +204,7 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
   const avvikProsent = avvikElem && avvikElem.avvikProsent ? avvikElem.avvikProsent : 0;
   if (avvikProsent || avvikProsent === 0) {
-    return avvikProsent;
+    return Number((avvikProsent).toFixed(1));
   }
   return undefined;
 };
