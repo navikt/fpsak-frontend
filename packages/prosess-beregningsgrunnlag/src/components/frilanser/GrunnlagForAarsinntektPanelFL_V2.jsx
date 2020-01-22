@@ -77,7 +77,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         </Column>
         <Column xs="1" className={beregningStyles.colLink}>
           {userIdent && (
-            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
+            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />
           )}
         </Column>
       </Row>

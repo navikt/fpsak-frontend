@@ -125,7 +125,7 @@ export const NaeringsopplysningsPanel = ({
         </FlexColumn>
         <FlexColumn>
           {userIdent && (
-            <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} uniqeReactId="SøLink" type="SØ" />
+            <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} type="SØ" />
           )}
         </FlexColumn>
       </FlexRow>
@@ -134,7 +134,7 @@ export const NaeringsopplysningsPanel = ({
       {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
           <Row key="SNInntektIngress">
-            <Column xs="8" />
+            <Column xs="9" />
             <Column xs="3" className={beregningStyles.colAarText}>
               {søkerHarOppgittInntekt(naring) && (
                 <Undertekst>
@@ -149,7 +149,7 @@ export const NaeringsopplysningsPanel = ({
                 {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
-            <Column xs="3">
+            <Column xs="4">
               <EtikettLiten>
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>

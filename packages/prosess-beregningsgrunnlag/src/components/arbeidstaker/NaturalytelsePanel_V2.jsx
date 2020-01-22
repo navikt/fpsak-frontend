@@ -94,7 +94,7 @@ const createNaturalYtelseRows = (tableData) => {
             </Column>
             <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
               {userIdent && (
-                <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} uniqeReactId="AILink" type="IM" />
+                <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
               )}
             </Column>
           </Row>

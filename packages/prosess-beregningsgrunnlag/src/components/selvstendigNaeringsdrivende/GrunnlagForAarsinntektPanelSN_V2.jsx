@@ -15,7 +15,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 
 const createHeaderRow = () => (
   <Row key="SNInntektHeader">
-    <Column xs="9">
+    <Column xs="10">
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
       </EtikettLiten>
@@ -33,12 +33,12 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
     {pgiSnitt !== undefined && !erNyIArbeidslivet && (
       <>
         <Row key="grunnlagAarsinntektSNLine">
-          <Column xs="11" className={beregningStyles.noPaddingRight}>
+          <Column xs="12" className={beregningStyles.noPaddingRight}>
             <div className={beregningStyles.colDevider} />
           </Column>
         </Row>
         <Row key="grunnlagAarsinntektSN">
-          <Column xs="9" className={beregningStyles.rightAlignTextInDiv}>
+          <Column xs="10" className={beregningStyles.rightAlignTextInDiv}>
             <Element>
               <FormattedMessage
                 id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
@@ -64,7 +64,7 @@ const createInntektRows = (pgiVerdier) => (
             {element.årstall}
           </EtikettLiten>
         </Column>
-        <Column xs="4" className={beregningStyles.colAarText}>
+        <Column xs="5" className={beregningStyles.colAarText}>
           <EtikettLiten>
             {formatCurrencyNoKr(element.beløp)}
           </EtikettLiten>

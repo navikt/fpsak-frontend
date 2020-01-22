@@ -12,7 +12,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import { Column, Row } from 'nav-frontend-grid';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexRow, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import NaturalytelsePanel2 from './NaturalytelsePanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
@@ -84,12 +84,11 @@ const createArbeidsStillingsNavnOgProsent = (arbeidsforhold) => {
   return ' ';
 };
 
-const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
+const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) => {
   const beregnetAarsinntekt = relevanteAndeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
   const beregnetMaanedsinntekt = beregnetAarsinntekt ? beregnetAarsinntekt / 12 : 0;
   const skalViseArbeidsforholdIdOgOrgNr = harDuplikateArbeidsforholdFraSammeArbeidsgiver(relevanteAndeler);
   const harFlereArbeidsforhold = relevanteAndeler.length > 1;
-  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   const rows = relevanteAndeler.map((andel, index) => (
     <React.Fragment
       key={`ArbInntektWrapper${andel.arbeidsforhold.arbeidsgiverId}${skalViseArbeidsforholdIdOgOrgNr ? andel.arbeidsforhold.eksternArbeidsforholdId : ''}`}
@@ -113,7 +112,7 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
         </Column>
         <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
           {userIdent && (
-          <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
+          <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
           )}
         </Column>
       </Row>
@@ -188,12 +187,21 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
-
-      <Element>
-        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
-      </Element>
+      <FlexRow>
+        <FlexColumn>
+          <Element>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
+          </Element>
+        </FlexColumn>
+        <FlexColumn>
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="Aa" userIdent={userIdent} type="Aa" />
+          )}
+        </FlexColumn>
+      </FlexRow>
       <Row key="Header">
         <Column xs="7" key="ATempthy1" />
         <Column key="ATMndHead" className={beregningStyles.colMaanedText} xs="2">
@@ -208,7 +216,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
         </Column>
         <Column className={beregningStyles.colLink} xs="1" />
       </Row>
-      {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn)}
+      {createArbeidsIntektRows(relevanteAndeler, getKodeverknavn, userIdent)}
 
       <NaturalytelsePanel2
         allePerioder={allePerioder}

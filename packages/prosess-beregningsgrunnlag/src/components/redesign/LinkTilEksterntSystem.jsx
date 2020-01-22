@@ -5,7 +5,7 @@ import styles from './linkTilEksternSystem.less';
 
 
 const LinkTilEksterntSystem = ({
-  type, linkText, userIdent, uniqeReactId,
+  type, linkText, userIdent,
 }) => {
   let link;
   if (!userIdent) { return null; }
@@ -16,7 +16,7 @@ const LinkTilEksterntSystem = ({
       break;
     }
     default: {
-      link = null;
+      link = 'http://link';
     }
   }
 
@@ -24,11 +24,10 @@ const LinkTilEksterntSystem = ({
     return null;
   }
   return (
-    <span className={styles.linkContainer} key={`ExtLink${uniqeReactId}`} id={`ExtLink${uniqeReactId}`}>
+    <span className={styles.linkContainer}>
       <a
         href={link}
         className={styles.linkText}
-        key={`a${uniqeReactId}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -37,7 +36,6 @@ const LinkTilEksterntSystem = ({
           className={styles.linkArrow}
           src={linkArrow}
           alt={`Ekster link til ${linkText}`}
-          key={`img${uniqeReactId}`}
         />
       </a>
     </span>
@@ -47,7 +45,6 @@ LinkTilEksterntSystem.propTypes = {
   linkText: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   userIdent: PropTypes.string,
-  uniqeReactId: PropTypes.string.isRequired,
 };
 LinkTilEksterntSystem.defaultProps = {
   userIdent: undefined,
