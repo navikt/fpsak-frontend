@@ -51,7 +51,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
     .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvEsPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
-  if (!valgtPanel) {
+  if (!valgtPanel.urlCode) {
     return null;
   }
 
