@@ -202,9 +202,9 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, ha
     <React.Fragment key={`Wr${key}`}>
       {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
       { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
-  && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
+        && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
       { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
-  && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
+        && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
       { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
   && (
     <React.Fragment key={`IVR2${key}`}>
@@ -227,7 +227,7 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, ha
   );
 };
 
-const constructPeriod = (fom, tom) => (
+const lagPeriodeHeader = (fom, tom) => (
   <FormattedMessage
     id="Beregningsgrunnlag.BeregningTable.Periode"
     key={`fom-tom${fom}${tom}`}
@@ -268,7 +268,7 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
     return null;
   }
   switch (andelType) {
-    case 'AT':
+    case aktivitetStatus.ARBEIDSTAKER:
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
       inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
       break;
@@ -434,12 +434,19 @@ const settVisningsRaderForDefault = (periode, rowsAndeler, rowsForklaringer, vil
     aktivitetStatus.BRUKERS_ANDEL,
     vilkarStatus,
   );
+  const msElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.MILITAER_ELLER_SIVIL,
+    vilkarStatus,
+  );
+
   if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
   if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
   if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
   if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
   if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
   if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
+  if (msElement && msElement.verdi !== undefined) { rowsAndeler.push(msElement); }
 
   if (harBortfallNaturalYtelse) {
     const ntElement = {};
@@ -469,7 +476,7 @@ export const createBeregningTableData = createSelector(
       const redusertRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.RedusertProsent" values={{ redusert: dekningsgrad }} /> };
       const dagsatserRad = [];
       const harBortfallNaturalYtelse = periode.periodeAarsaker.some((aarsaak) => aarsaak.kode === periodeAarsak.NATURALYTELSE_BORTFALT);
-      headers.push(constructPeriod(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
+      headers.push(lagPeriodeHeader(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
       avkortetRad.verdi = formatCurrencyNoKr(periode.avkortetPrAar);
 
@@ -479,9 +486,10 @@ export const createBeregningTableData = createSelector(
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
       const rowsAndeler = [];
       const rowsForklaringer = [];
+      debugger;
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
-      const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
+      // const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
@@ -504,14 +512,7 @@ export const createBeregningTableData = createSelector(
         }
       }
       const rows = [];
-      if (isMS) {
-        const msElement = opprettAndelElement(
-          periode,
-          aktivitetStatus.MILITAER_ELLER_SIVIL,
-          vilkarStatus,
-        );
-        rows.push(msElement);
-      }
+
       const seksG = grunnbelop * 6;
       // Vis avkortet rad vis mindre en 6G
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
