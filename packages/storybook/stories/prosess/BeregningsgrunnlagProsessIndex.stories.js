@@ -346,7 +346,7 @@ export const arbeidstakerMedAvvik = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
     <BeregningsgrunnlagProsessIndex
