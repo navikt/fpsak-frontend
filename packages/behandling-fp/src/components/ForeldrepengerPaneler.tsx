@@ -72,6 +72,7 @@ const ForeldrepengerPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
+        dispatch={dispatch}
       />
       <VerticalSpacer sixteenPx />
       <PersonFaktaIndex

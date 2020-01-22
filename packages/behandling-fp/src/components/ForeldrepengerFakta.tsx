@@ -23,6 +23,7 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
+  dispatch: (data: any) => Promise<any>;
 }
 
 const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({

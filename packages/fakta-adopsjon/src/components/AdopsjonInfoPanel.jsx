@@ -124,7 +124,6 @@ export const AdopsjonInfoPanelImpl = ({
 );
 
 AdopsjonInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
   submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,

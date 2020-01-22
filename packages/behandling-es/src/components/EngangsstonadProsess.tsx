@@ -1,8 +1,6 @@
 import React, {
-  FunctionComponent, useState, useEffect, useCallback, useMemo,
+  FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { useIntl } from 'react-intl';
-import { useDispatch } from 'react-redux';
 import { setSubmitFailed } from 'redux-form';
 import ProcessMenu from '@navikt/nap-process-menu';
 
@@ -12,7 +10,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, MargMarkering, prosessStegPanelUtils, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, MargMarkering, prosessStegHooks, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
   IverksetterVedtakStatusModal, MultipleProcessPanel, FatterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
 
@@ -35,7 +33,8 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   featureToggles: {};
   opneSokeside: () => void;
-  apentFaktaPanelInfo?: { urlCode: string; textCode: string};
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string };
+  dispatch: (data: any) => Promise<any>;
 }
 
 const getPreviewCallback = (dispatch, behandling) => (data) => {
@@ -99,73 +98,49 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
+  dispatch,
 }) => {
-  const intl = useIntl();
-  const dispatch = useDispatch();
+  const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
-  const [overstyrteAksjonspunkter, toggleOverstyring] = useState([]);
-  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
-  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
-  const [skalOppdatereFagsakKontekst, toggleOppdatereFagsakContext] = useState(true);
-  const toggleIverksetterModalOgGaTilSokeside = useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, []);
-  const toggleFatterVedtakOgGaTilSokeside = useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, []);
-
-  useEffect(() => {
-    if (skalOppdatereFagsakKontekst) {
-      oppdaterBehandlingVersjon(behandling.versjon);
-    }
-  }, [behandling.versjon]);
-
-
-  const ekstraPanelData = {
+  const dataTilUtledingAvFpPaneler = {
     previewCallback: useCallback(() => getPreviewCallback(dispatch, behandling), []),
     previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
     dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
-    overstyrteAksjonspunkter,
     alleKodeverk,
     featureToggles,
     ...data,
   };
-  const prosessStegPaneler = useMemo(() => prosessStegPanelUtils.utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring,
-    overstyrteAksjonspunkter, behandling, data.aksjonspunkter, data.vilkar, navAnsatt, fagsak, hasFetchError, intl),
-  [behandling.versjon, overstyrteAksjonspunkter]);
+  const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
+    dataTilUtledingAvFpPaneler, valgtProsessSteg, apentFaktaPanelInfo, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError);
 
-  const valgtPanel = useMemo(() => prosessStegPanelUtils.finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt),
-    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
-  const valgtPanelKode = valgtPanel ? valgtPanel.urlCode : undefined;
-  const erStegBehandlet = valgtPanel ? valgtPanel.erStegBehandlet : false;
-  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanelKode === bpc.VEDTAK;
-
-  const formaterteProsessStegPaneler = useMemo(() => prosessStegPanelUtils.formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanelKode),
-    [behandling.versjon, valgtPanelKode]);
-
-  const prosessmenyCallback = useCallback((index) => {
-    const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
-    oppdaterProsessStegOgFaktaPanelIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined, valgtFaktaSteg);
-  }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
-
-  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext,
+  const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
+  const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
+  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
-  const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => prosessStegPanelUtils.getBekreftAksjonspunktCallback(dispatch,
-    lagringSideEffectsCallback, fagsak, behandling, data.aksjonspunkter, esBehandlingApi)(aksjonspunktModels), [behandling.versjon]);
-  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
-    ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionES'), [behandling.versjon]);
 
+  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtFaktaSteg, fagsak, behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, esBehandlingApi, lagringSideEffectsCallback, dispatch);
+
+  const fatterVedtakTextCode = useMemo(() => (valgtPanel.status === vilkarUtfallType.OPPFYLT
+    ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionES'),
+  [behandling.versjon]);
+
+  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanel.urlCode === bpc.VEDTAK;
 
   return (
     <>
       <IverksetterVedtakStatusModal
         visModal={visIverksetterVedtakModal}
-        lukkModal={toggleIverksetterModalOgGaTilSokeside}
+        lukkModal={useCallback(() => { toggleIverksetterVedtakModal(false); opneSokeside(); }, [])}
         behandlingsresultat={behandling.behandlingsresultat}
       />
       <FatterVedtakStatusModal
         visModal={visFatterVedtakModal && behandling.status.kode === behandlingStatus.FATTER_VEDTAK}
-        lukkModal={toggleFatterVedtakOgGaTilSokeside}
+        lukkModal={useCallback(() => { toggleFatterVedtakModal(false); opneSokeside(); }, [])}
         tekstkode={fatterVedtakTextCode}
       />
-      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={prosessmenyCallback} />
-      {erStegBehandlet && (
+      <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
+      {valgtPanel.erStegBehandlet && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtPanel.aksjonspunkter}
@@ -185,7 +160,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
       {erHenlagtOgVedtakStegValgt && (
         <BehandlingHenlagtPanel />
       )}
-      {(valgtPanelKode && !erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
+      {(valgtPanel.urlCode && !valgtPanel.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
         <ProsessStegIkkeBehandletPanel />
       )}
     </>

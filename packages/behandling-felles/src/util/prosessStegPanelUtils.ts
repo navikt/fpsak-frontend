@@ -85,7 +85,7 @@ const finnHjelpetekster = (opneAksjonspunkter, aksjonspunkterCodes, aksjonspunkt
 };
 
 
-const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunkter,
+export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunkter,
   behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const data = {
@@ -180,7 +180,7 @@ const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, 
     });
 };
 
-const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt, apentFaktaPanelInfo) => {
+export const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt, apentFaktaPanelInfo) => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
@@ -215,7 +215,7 @@ const finnProsessmenyType = (status, harApentAksjonspunkt) => {
   return StepType.default;
 };
 
-const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessStegPanelKode) => prosessStegPaneler.map((panel) => {
+export const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessStegPanelKode) => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.status, panel.isAksjonspunktOpen);
   return {
     label: panel.label,
@@ -226,7 +226,7 @@ const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessSte
   };
 });
 
-const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api) => (aksjonspunktModels) => {
+export const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api) => (aksjonspunktModels) => {
   const models = aksjonspunktModels.map((ap) => ({
     '@type': ap.kode,
     ...ap,
@@ -258,13 +258,3 @@ const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fa
     bekreftedeAksjonspunktDtoer: models,
   }, { keepData: true })).then(etterLagringCallback);
 };
-
-
-const prosessStegPanelUtils = {
-  utledProsessStegPaneler,
-  finnValgtPanel,
-  formaterPanelerForProsessmeny,
-  getBekreftAksjonspunktCallback,
-};
-
-export default prosessStegPanelUtils;
