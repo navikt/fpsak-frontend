@@ -6,10 +6,9 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-
-import Panel from 'nav-frontend-paneler';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
 const createArbeidsforholdKey = (andel) => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
 
@@ -84,15 +83,20 @@ const createNaturalYtelseRows = (tableData) => {
   Object.keys(arbeidsforholdPeriodeMap).sort().forEach((val) => {
     const list = arbeidsforholdPeriodeMap[val];
     let valueKey = 0;
+    const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
     const row = list.map((element) => {
       valueKey += 1;
       if (valueKey === 1) {
         return (
           <Row key={`naturalytelse_firma_rad_${val}_{valueKey}`}>
-            <Column xs="11" key={`naturalytelse_firma_col_${val}_{valueKey}`}>
+            <Column xs="11" className={beregningStyles.noPaddingRight} ey={`naturalytelse_firma_col_${val}_{valueKey}`}>
               <Element>{element}</Element>
             </Column>
-            <Column className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`} />
+            <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
+              {userIdent && (
+                <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
+              )}
+            </Column>
           </Row>
         );
       }
@@ -101,10 +105,10 @@ const createNaturalYtelseRows = (tableData) => {
           <Column xs="7" key={`naturalytelse_vperiode_${valueKey}`}>
             <Normaltekst>{element && element.periodeTekst && element.periodeTekst}</Normaltekst>
           </Column>
-          <Column className={beregningStyles.colMaanedText}>
+          <Column xs="2" className={beregningStyles.colMaanedText}>
             <Normaltekst>{element && element.maaned && formatCurrencyNoKr(element.maaned)}</Normaltekst>
           </Column>
-          <Column className={beregningStyles.colAarText}>
+          <Column xs="2" className={beregningStyles.colAarText}>
             <Element>{element && element.aar && formatCurrencyNoKr(element.aar)}</Element>
           </Column>
         </Row>
@@ -131,26 +135,24 @@ const NaturalytelsePanel2 = ({
   return (
     <>
       <VerticalSpacer fourtyPx />
-      <Panel className={beregningStyles.panelLeft}>
-        <Element>
-          <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
-        </Element>
-        <Row>
-          <Column xs="7" key="ATempthy1" />
-          <Column className={beregningStyles.colMaanedText}>
-            <Undertekst>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
-            </Undertekst>
-          </Column>
-          <Column className={beregningStyles.colAarText}>
-            <Undertekst>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
-            </Undertekst>
-          </Column>
-          <Column className={beregningStyles.colLink} />
-        </Row>
-        {createNaturalYtelseRows(tableData)}
-      </Panel>
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
+      </Element>
+      <Row>
+        <Column xs="7" key="ATempthy1" />
+        <Column xs="2" className={beregningStyles.colMaanedText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Maaned" />
+          </Undertekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colAarText}>
+          <Undertekst>
+            <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
+          </Undertekst>
+        </Column>
+        <Column className={beregningStyles.colLink} />
+      </Row>
+      {createNaturalYtelseRows(tableData)}
     </>
   );
 };

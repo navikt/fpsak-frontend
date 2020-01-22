@@ -12,29 +12,36 @@
 }
 
 .panelLeft {
-  padding: 0 12px 0 20px;
+  padding: 0 20px 0 20px;
 }
 
 .panelRight {
-  padding: 0 20px 0 12px;
+  padding: 0 20px 0 20px;
 }
 
 .semiBoldText {
   font-weight: 600;
 }
 
-.rightAlignElement > p {
-  padding-left: 0;
-  text-align: right;
+.rightAlignElement {
+  padding-right: 0;
+
+  && p {
+    text-align: right;
+  }
 }
 
 .rightAlignTextInDiv {
   text-align: right;
 }
 
-.rightAlignElementNoWrap > p {
-  text-align: right;
-  white-space: nowrap;
+.rightAlignElementNoWrap {
+  padding: 0;
+
+  && p {
+    text-align: right;
+    white-space: nowrap;
+  }
 }
 
 .setBoxHeight {
@@ -61,7 +68,6 @@
   padding-right: 0;
   position: relative;
   text-align: right;
-  width: 3.7em;
 }
 
 .colAarText {
@@ -71,13 +77,11 @@
   padding-right: 0;
   position: relative;
   text-align: right;
-  width: 5.2em;
+  white-space: nowrap;
 }
 
 .colDevider {
   border-top: 1px inset @navGra40;
-  margin-left: 8px;
-  margin-right: 8px;
   margin-top: 4px;
   min-height: 8px;
 }
@@ -89,7 +93,6 @@
   padding-right: 0;
   position: relative;
   text-align: right;
-  width: 2em;
 }
 
 .colTidsbegrenset {
@@ -99,4 +102,8 @@
   padding-right: 0;
   position: relative;
   text-align: right;
+}
+
+.noPaddingRight {
+  padding-right: 0;
 }

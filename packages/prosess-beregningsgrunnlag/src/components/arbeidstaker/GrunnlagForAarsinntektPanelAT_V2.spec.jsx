@@ -41,9 +41,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       bruttoFastsattInntekt={0}
 
     />);
-
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     expect(rows).to.have.length(9);
   });
 
@@ -62,8 +60,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       getKodeverknavn={getKodeverknavn}
       bruttoFastsattInntekt={0}
     />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     expect(rows).to.have.length(4);
     let rowNr = 1;
     andeler.forEach((andel) => {
@@ -96,8 +93,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       bruttoFastsattInntekt={0}
     />);
 
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     let rowNr = 1;
     andeler.forEach((andel) => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');

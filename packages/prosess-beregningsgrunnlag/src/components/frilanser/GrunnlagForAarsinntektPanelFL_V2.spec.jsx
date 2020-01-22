@@ -35,8 +35,7 @@ describe('<GrunnlagForAarsinntektPanelFL_V2>', () => {
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       isKombinasjonsstatus={false}
     />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
 
     expect(rows).to.have.length(2);
 
@@ -55,8 +54,7 @@ describe('<GrunnlagForAarsinntektPanelFL_V2>', () => {
       alleAndeler={periode.beregningsgrunnlagPrStatusOgAndel}
       isKombinasjonsstatus={false}
     />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     const ledeTextStart = rows.at(0).find('FormattedMessage');
     const ledeTextStartDato = rows.at(0).find('DateLabel');
 

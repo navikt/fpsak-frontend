@@ -7,8 +7,7 @@ import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import Panel from 'nav-frontend-paneler';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+
 
 /**
  * MilitaerPanel
@@ -21,7 +20,7 @@ export const MilitaerPanel2 = ({
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
   const beregnetAarsinntekt = relevanteAndeler && relevanteAndeler.length > 0 ? relevanteAndeler[0].beregnetPrAar : '';
   return (
-    <Panel className={beregningStyles.panelLeft}>
+    <>
       <Row>
         <Column xs="12">
           <Element><FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Militær" /></Element>
@@ -33,7 +32,7 @@ export const MilitaerPanel2 = ({
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
       </Row>
-    </Panel>
+    </>
   );
 };
 MilitaerPanel2.propTypes = {
