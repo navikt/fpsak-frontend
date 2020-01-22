@@ -2,12 +2,12 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, BehandlingPaVent, SettPaVentParams,
+  Kodeverk, NavAnsatt, FagsakInfo, Behandling, BehandlingPaVent, SettPaVentParams, TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
+import esBehandlingApi from '../data/esBehandlingApi';
 import EngangsstonadProsess from './EngangsstonadProsess';
 import EngangsstonadFakta from './EngangsstonadFakta';
 import FetchedData from '../types/fetchedDataTsType';
@@ -75,16 +75,17 @@ const EngangsstonadPaneler: FunctionComponent<OwnProps> = ({
         dispatch={dispatch}
       />
       <VerticalSpacer sixteenPx />
-      <PersonFaktaIndex
+      <TempPersonPanel
         behandling={behandling}
-        fagsakPerson={fagsak.fagsakPerson}
+        fagsak={fagsak}
         aksjonspunkter={fetchedData.aksjonspunkter}
         personopplysninger={fetchedData.personopplysninger}
         inntektArbeidYtelse={fetchedData.inntektArbeidYtelse}
-        submitCallback={() => undefined}
-        readOnly={false}
         featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
         alleKodeverk={alleKodeverk}
+        dispatch={dispatch}
+        behandlingApi={esBehandlingApi}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       />
       <VerticalSpacer sixteenPx />
       <EngangsstonadFakta

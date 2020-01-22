@@ -10,6 +10,7 @@ export { default as ReduxFormStateCleaner } from './src/components/ReduxFormStat
 export { default as ProsessStegIkkeBehandletPanel } from './src/components/ProsessStegIkkeBehandletPanel';
 export { default as IverksetterVedtakStatusModal } from './src/components/vedtak/IverksetterVedtakStatusModal';
 export { default as FatterVedtakStatusModal } from './src/components/vedtak/FatterVedtakStatusModal';
+export { default as TempPersonPanel } from './src/components/TempPersonPanel';
 
 export { default as ProsessStegProperties } from './src/definisjon/prosessStegBuilder';
 export { default as byggProsessmenySteg } from './src/definisjon/byggProsessmenySteg';

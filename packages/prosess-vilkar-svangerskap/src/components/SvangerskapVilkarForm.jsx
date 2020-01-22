@@ -80,9 +80,9 @@ SvangerskapVilkarFormImpl.defaultProps = {
 const validate = ({ erVilkarOk, avslagCode }) => VilkarResultPicker.validate(erVilkarOk, avslagCode);
 
 export const buildInitialValues = createSelector(
-  [(state, ownProps) => ownProps.behandlingsresultat,
-    (state, ownProps) => ownProps.aksjonspunkter,
-    (state, ownProps) => ownProps.status],
+  [(ownProps) => ownProps.behandlingsresultat,
+    (ownProps) => ownProps.aksjonspunkter,
+    (ownProps) => ownProps.status],
   (behandlingsresultat, aksjonspunkter, status) => ({
     ...VilkarResultPicker.buildInitialValues(behandlingsresultat, aksjonspunkter, status),
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),
@@ -98,17 +98,18 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'SvangerskapVilkarForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { aksjonspunkter, alleKodeverk, status } = initialOwnProps;
+  const { aksjonspunkter, alleKodeverk } = initialOwnProps;
   const onSubmit = (values) => initialOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
 
-  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
-  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
-
   return (state, ownProps) => {
-    const { behandlingId, behandlingVersjon, vilkar } = ownProps;
+    const {
+      behandlingId, behandlingVersjon, vilkar, status,
+    } = ownProps;
+    const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+    const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
     return {
       originalErVilkarOk: erVilkarOk,
-      initialValues: buildInitialValues(state, ownProps),
+      initialValues: buildInitialValues(ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,
       hasAksjonspunkt: aksjonspunkter.length > 0,

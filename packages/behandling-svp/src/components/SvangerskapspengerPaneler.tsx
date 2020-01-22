@@ -2,15 +2,15 @@ import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams, Behandling,
+  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams, Behandling, TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
 
 import SvangerskapspengerProsess from './SvangerskapspengerProsess';
 import SvangerskapspengerFakta from './SvangerskapspengerFakta';
 import FetchedData from '../types/fetchedDataTsType';
+import svpBehandlingApi from '../data/svpBehandlingApi';
 
 interface OwnProps {
   fetchedData: FetchedData;
@@ -75,16 +75,17 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         dispatch={dispatch}
       />
       <VerticalSpacer sixteenPx />
-      <PersonFaktaIndex
+      <TempPersonPanel
         behandling={behandling}
-        fagsakPerson={fagsak.fagsakPerson}
+        fagsak={fagsak}
         aksjonspunkter={fetchedData.aksjonspunkter}
         personopplysninger={fetchedData.personopplysninger}
         inntektArbeidYtelse={fetchedData.inntektArbeidYtelse}
-        submitCallback={() => undefined}
-        readOnly={false}
         featureToggleUtland={featureToggles[FeatureToggle.MARKER_UTENLANDSSAK]}
         alleKodeverk={alleKodeverk}
+        dispatch={dispatch}
+        behandlingApi={svpBehandlingApi}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
       />
       <VerticalSpacer sixteenPx />
       <SvangerskapspengerFakta

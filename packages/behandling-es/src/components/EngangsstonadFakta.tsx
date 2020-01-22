@@ -10,7 +10,7 @@ import esBehandlingApi from '../data/esBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaEsPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
+const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO, ac.OVERSTYR_AVKLAR_STARTDATO];
 
 interface OwnProps {
   data: FetchedData;

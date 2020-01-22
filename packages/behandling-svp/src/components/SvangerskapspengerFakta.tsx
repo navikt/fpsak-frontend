@@ -10,7 +10,8 @@ import svpBehandlingApi from '../data/svpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaSvpPanelDefinisjoner';
 import FetchedData from '../types/fetchedDataTsType';
 
-const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO];
+const overstyringApCodes = [ac.OVERSTYR_AVKLAR_STARTDATO, ac.OVERSTYR_AVKLAR_STARTDAT,
+  ac.OVERSTYRING_AV_BEREGNINGSAKTIVITETER, ac.OVERSTYRING_AV_BEREGNINGSGRUNNLAG];
 
 interface OwnProps {
   data: FetchedData;
