@@ -31,6 +31,7 @@
   "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: ",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",
+  "BehandlingspunktBegrunnelseTextField.BegrunnVurdering": "Begrunn vurderingen din",
   "SubmitButton.SettPåVent": "Sett behandling på vent",
   "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
 

@@ -35,7 +35,7 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
       textareaClass={styles.explanationTextarea}
       maxLength={1500}
       readOnly={readOnly}
-      placeholder={intl.formatMessage({ id: 'BehandlingspunktBegrunnelseTextFieldImpl.BegrunnVurdering' })}
+      placeholder={intl.formatMessage({ id: 'BehandlingspunktBegrunnelseTextField.BegrunnVurdering' })}
     />
   </div>
 );
