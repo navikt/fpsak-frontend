@@ -51,7 +51,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
     .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvSvpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
-  if (valgtPanel) {
+  if (!valgtPanel) {
     return null;
   }
 

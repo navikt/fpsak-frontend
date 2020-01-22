@@ -51,7 +51,7 @@ const ForeldrepengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> =
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
     .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvFpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
-  if (valgtPanel) {
+  if (!valgtPanel) {
     return null;
   }
 
