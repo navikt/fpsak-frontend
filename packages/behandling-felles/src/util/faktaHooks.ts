@@ -8,7 +8,10 @@ const useFaktaPaneler = (faktaPanelDefinisjoner, fpPanelerData, fagsak, behandli
   const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),
     [behandling.versjon]);
 
-  const valgtPanel = useMemo(() => finnValgtPanel(faktaPaneler, valgtFaktaSteg), [behandling.versjon, valgtFaktaSteg]);
+  const valgtPanel = useMemo(() => {
+    const panel = finnValgtPanel(faktaPaneler, valgtFaktaSteg);
+    return panel || { urlCode: undefined };
+  }, [behandling.versjon, valgtFaktaSteg]);
 
   const formaterteFaktaPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, valgtPanel.urlCode),
     [behandling.versjon, valgtPanel.urlCode]);
