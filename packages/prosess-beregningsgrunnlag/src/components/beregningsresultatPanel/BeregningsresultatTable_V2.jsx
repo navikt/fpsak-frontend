@@ -352,6 +352,106 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     rowsAndeler.push(snElement);
   }
 };
+const settVisningsRaderForDPFLSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
+  const snElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    vilkarStatus,
+  );
+  const flElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.FRILANSER,
+    vilkarStatus,
+  );
+  const dpElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.DAGPENGER,
+    vilkarStatus,
+  );
+
+  if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
+    rowsAndeler.push(flElement);
+  } else {
+    // TODO: Avklar hva vi skal vise her min tolkning er kun snAndel
+    rowsAndeler.push(snElement);
+  }
+};
+const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilkarStatus) => {
+  const atElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.ARBEIDSTAKER,
+    vilkarStatus,
+  );
+  const snElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    vilkarStatus,
+  );
+  const dpElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.DAGPENGER,
+    vilkarStatus,
+  );
+
+  if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
+    rowsAndeler.push(atElement);
+  } else {
+    rowsAndeler.push(atElement);
+    rowsAndeler.push(dpElement);
+    rowsAndeler.push(snElement);
+  }
+};
+const settVisningsRaderForDefault = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse) => {
+  const atElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.ARBEIDSTAKER,
+    vilkarStatus,
+  );
+  const flElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.FRILANSER,
+    vilkarStatus,
+  );
+  const snElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+    vilkarStatus,
+  );
+  const aapElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
+    vilkarStatus,
+  );
+  const dpElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.DAGPENGER,
+    vilkarStatus,
+  );
+  const baElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.BRUKERS_ANDEL,
+    vilkarStatus,
+  );
+  if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
+  if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
+  if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
+  if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
+  if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
+  if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
+
+  if (harBortfallNaturalYtelse) {
+    const ntElement = {};
+    const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
+      (andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.bortfaltNaturalytelse,
+    );
+    ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((sum, andel) => sum + andel.bortfaltNaturalytelse, 0) : undefined;
+    ntElement.skalFastsetteGrunnlag = false;
+    ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
+    rowsAndeler.push(ntElement);
+  }
+};
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -392,106 +492,15 @@ export const createBeregningTableData = createSelector(
           break;
         }
         case 'DP_FL_SN': {
-          const snElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-            vilkarStatus,
-          );
-          const flElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.FRILANSER,
-            vilkarStatus,
-          );
-          const dpElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.DAGPENGER,
-            vilkarStatus,
-          );
-
-          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-            rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
-            rowsAndeler.push(flElement);
-          } else {
-            // TODO: Avklar hva vi skal vise her min tolkning er kun snAndel
-            rowsAndeler.push(snElement);
-          }
+          settVisningsRaderForDPFLSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         case 'AT_DP_SN': {
-          const atElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.ARBEIDSTAKER,
-            vilkarStatus,
-          );
-          const snElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-            vilkarStatus,
-          );
-          const dpElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.DAGPENGER,
-            vilkarStatus,
-          );
-
-          if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
-            rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
-            rowsAndeler.push(atElement);
-          } else {
-            rowsAndeler.push(atElement);
-            rowsAndeler.push(dpElement);
-            rowsAndeler.push(snElement);
-          }
+          settVisningsRaderForATDPSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus);
           break;
         }
         default: {
-          const atElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.ARBEIDSTAKER,
-            vilkarStatus,
-          );
-          const flElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.FRILANSER,
-            vilkarStatus,
-          );
-          const snElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
-            vilkarStatus,
-          );
-          const aapElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.ARBEIDSAVKLARINGSPENGER,
-            vilkarStatus,
-          );
-          const dpElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.DAGPENGER,
-            vilkarStatus,
-          );
-          const baElement = opprettAndelElement(
-            periode,
-            aktivitetStatus.BRUKERS_ANDEL,
-            vilkarStatus,
-          );
-          if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
-          if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
-          if (flElement && flElement.verdi !== undefined) { rowsAndeler.push(flElement); }
-          if (snElement && snElement.verdi !== undefined) { rowsAndeler.push(snElement); }
-          if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
-          if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
-
-          if (harBortfallNaturalYtelse) {
-            const ntElement = {};
-            const atAndel = periode.beregningsgrunnlagPrStatusOgAndel.filter(
-              (andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER && andel.bortfaltNaturalytelse,
-            );
-            ntElement.verdi = atAndel && atAndel.length > 0 ? atAndel.reduce((sum, andel) => sum + andel.bortfaltNaturalytelse, 0) : undefined;
-            ntElement.skalFastsetteGrunnlag = false;
-            ntElement.ledetekst = <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Naturalytelser" />;
-            rowsAndeler.push(ntElement);
-          }
+          settVisningsRaderForDefault(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse);
         }
       }
       const rows = [];
@@ -504,10 +513,11 @@ export const createBeregningTableData = createSelector(
         rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
-
+      // Vis avkortet rad vis mindre en 6G
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
         rows.push(avkortetRad);
       }
+      // Vis avkortet rad vis mindre en 6G
       if (rowsAndeler.length > 1) {
         rows.unshift(bruttoRad);
       }
@@ -557,9 +567,6 @@ BeregningsresultatTable2.propTypes = {
   halvGVerdi: PropTypes.number.isRequired,
   vilkaarBG: beregningsgrunnlagVilkarPropType.isRequired,
   periodeResultatTabeller: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
-
-BeregningsresultatTable2.defaultProps = {
 };
 
 const mapStateToProps = (state, ownProps) => ({
