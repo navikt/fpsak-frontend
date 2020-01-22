@@ -18,6 +18,7 @@ import SammenlignsgrunnlagAOrdningen from '../fellesPaneler/Sammenligningsgrunnl
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
+import beregningStyles from './beregningsgrunnlag_V2.less';
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -62,10 +63,12 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
+
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
   skjeringstidspunktDato) => (
     <div>
+
       { relevanteStatuser.isArbeidstaker
       && (
         <>
@@ -215,6 +218,7 @@ export const BeregningsgrunnlagImpl2 = ({
           )
         }
     </>
+
   );
 };
 
