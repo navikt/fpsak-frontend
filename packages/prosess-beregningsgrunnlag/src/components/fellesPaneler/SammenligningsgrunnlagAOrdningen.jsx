@@ -9,7 +9,7 @@ import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { formatCurrencyNoKr, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import {
-  FlexColumn, FlexRow,
+  FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -182,14 +182,14 @@ const SammenligningsgrunnlagAOrdningen = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
-      <FlexRow key="SNNareingOverskrift">
+      <FlexRow key="SamenenligningsGrunnlagOverskrift">
         <FlexColumn>
           <Element className={beregningStyles.semiBoldText}>
             <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
           </Element>
         </FlexColumn>
         <FlexColumn>
-          <LinkTilEksterntSystem linkText="" uniqeReactId="AILink" userIdent={userIdent} type="AI" />
+          <LinkTilEksterntSystem linkText="" userIdent={userIdent} type="AI" />
         </FlexColumn>
       </FlexRow>
       <FlexRow>
@@ -199,36 +199,20 @@ const SammenligningsgrunnlagAOrdningen = ({
           </Normaltekst>
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer eightPx />
+      {relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
       <Row>
         <Column xs="1" className={styles.maanedColumn} />
         <Column xs="6" />
-        {relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
-          <>
-            <Column xs="2" className={beregningStyles.colMaanedText}>
-              <Undertekst className={beregningStyles.semiBoldText}>Arbeid</Undertekst>
-            </Column>
-            <Column xs="2" className={beregningStyles.colAarText}>
-              <Undertekst className={beregningStyles.semiBoldText}>Frilans</Undertekst>
-            </Column>
-          </>
-        )}
-        {!relevanteStatuser.isFrilanser && relevanteStatuser.isArbeidstaker && (
-          <>
-            <Column xs="2" className={beregningStyles.colMaanedText}>
-              <Undertekst>Arbeid</Undertekst>
-            </Column>
-          </>
-        )}
-        {!relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser && (
-          <>
-            <Column xs="2" className={beregningStyles.colMaanedText}>
-              <Undertekst>Frilans</Undertekst>
-            </Column>
-          </>
-        )}
+        <Column xs="2" className={beregningStyles.colMaanedText}>
+          <Undertekst className={beregningStyles.semiBoldText}>Arbeid</Undertekst>
+        </Column>
+        <Column xs="2" className={beregningStyles.colAarText}>
+          <Undertekst className={beregningStyles.semiBoldText}>Frilans</Undertekst>
+        </Column>
         <Column xs="1" />
-
       </Row>
+      )}
       {lagRader(andeler, relevanteStatuser, skjeringstidspunktDato)}
       {lagSumRad(andeler, relevanteStatuser)}
     </>

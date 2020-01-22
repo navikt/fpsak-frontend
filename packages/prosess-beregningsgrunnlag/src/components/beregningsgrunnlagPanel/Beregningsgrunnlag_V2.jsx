@@ -67,8 +67,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
   skjeringstidspunktDato) => (
-    <div>
-
+    <div className={beregningStyles.panelLeft}>
       { relevanteStatuser.isArbeidstaker
       && (
         <>
@@ -201,23 +200,21 @@ export const BeregningsgrunnlagImpl2 = ({
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
   return (
-    <>
-      {
-          createRelevantePaneler(
-            alleAndelerIForstePeriode,
-            gjeldendeAksjonspunkter,
-            relevanteStatuser,
-            allePerioder,
-            readOnly,
-            gjelderBesteberegning,
-            behandlingId,
-            behandlingVersjon,
-            alleKodeverk,
-            sammenligningsGrunnlagInntekter,
-            skjeringstidspunktDato,
-          )
-        }
-    </>
+
+    createRelevantePaneler(
+      alleAndelerIForstePeriode,
+      gjeldendeAksjonspunkter,
+      relevanteStatuser,
+      allePerioder,
+      readOnly,
+      gjelderBesteberegning,
+      behandlingId,
+      behandlingVersjon,
+      alleKodeverk,
+      sammenligningsGrunnlagInntekter,
+      skjeringstidspunktDato,
+    )
+
 
   );
 };

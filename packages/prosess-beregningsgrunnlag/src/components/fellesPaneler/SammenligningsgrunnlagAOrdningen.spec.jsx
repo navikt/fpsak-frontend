@@ -312,9 +312,7 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.FL');
     const underTekster = wrapper.find('Undertekst');
-    expect(underTekster.at(0).children().at(0).text()).to.equal('Frilans');
-
-    let teller = 1;
+    let teller = 0;
     let expTeller = 0;
     for (let step = 12; step > 0; step -= 1) {
       const formattedMaaned = expectedFLverdier[expTeller].maanedNavn.charAt(0).toUpperCase() + expectedFLverdier[expTeller].maanedNavn.slice(1, 3);
@@ -352,9 +350,8 @@ describe('<SammenligningsgrunnlagFraA-Ordningen>', () => {
     expect(headerTitle.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel');
     expect(headerIngress.props().id).to.equal('Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Ingress.AT');
     const underTekster = wrapper.find('Undertekst');
-    expect(underTekster.at(0).children().at(0).text()).to.equal('Arbeid');
 
-    let teller = 1;
+    let teller = 0;
     let expTeller = 0;
     for (let step = 12; step > 0; step -= 1) {
       const formattedMaaned = expectedATverdier[expTeller].maanedNavn.charAt(0).toUpperCase() + expectedATverdier[expTeller].maanedNavn.slice(1, 3);
