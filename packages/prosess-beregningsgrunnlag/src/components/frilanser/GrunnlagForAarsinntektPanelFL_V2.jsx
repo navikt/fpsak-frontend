@@ -76,7 +76,9 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
         <Column xs="1" className={beregningStyles.colLink}>
-          <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} uniqeReactId="AILink" type="AI" />
+          )}
         </Column>
       </Row>
     </>

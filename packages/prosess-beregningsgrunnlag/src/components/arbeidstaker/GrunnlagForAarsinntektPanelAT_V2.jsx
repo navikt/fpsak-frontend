@@ -112,7 +112,9 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn) => {
           </Normaltekst>
         </Column>
         <Column xs="1" key={`ColLink${andel.arbeidsforhold.arbeidsgiverId}`} className={beregningStyles.colLink}>
+          {userIdent && (
           <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} uniqeReactId={andel.arbeidsforhold.arbeidsgiverId} type="IM" />
+          )}
         </Column>
       </Row>
       <Row key={`indexD${andel.arbeidsforhold.arbeidsgiverId}`}>
@@ -185,7 +187,6 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
   getKodeverknavn,
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
-  // const erTidsbegrensetArbeidsforhold = relevanteAndeler.some((andel) => andel.erTidsbegrensetArbeidsforhold);
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
   return (
     <>

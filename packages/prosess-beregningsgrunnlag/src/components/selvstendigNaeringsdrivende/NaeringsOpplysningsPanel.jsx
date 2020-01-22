@@ -124,7 +124,9 @@ export const NaeringsopplysningsPanel = ({
           </Element>
         </FlexColumn>
         <FlexColumn>
-          <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} uniqeReactId="SøLink" type="SØ" />
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} uniqeReactId="SøLink" type="SØ" />
+          )}
         </FlexColumn>
       </FlexRow>
 

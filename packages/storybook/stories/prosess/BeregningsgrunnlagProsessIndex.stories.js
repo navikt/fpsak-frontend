@@ -459,12 +459,10 @@ export const selvstendigNæringsdrivende = () => {
       oppgittInntekt: 900000,
       oppstartsdato: '2015-11-01',
       orgnr: '910909088',
-      regnskapsførerNavn: 'Petra Olsen',
-      regnskapsførerTlf: '90890989',
+      regnskapsførerNavn: 'Regnskapsfører Regn S. Fører',
+      regnskapsførerTlf: '99999999',
       utenlandskvirksomhetsnavn: null,
       virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
-      kode: 'ANNEN',
-      kodeverk: 'VIRKSOMHET_TYPE',
     },
     {
       begrunnelse: 'Endringsbeskrivelse',
@@ -479,8 +477,6 @@ export const selvstendigNæringsdrivende = () => {
       utenlandskvirksomhetsnavn: null,
       virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
       virksomhetNavn: 'Berit Jensen',
-      kode: 'ANNEN',
-      kodeverk: 'VIRKSOMHET_TYPE',
     },
   ];
   andeler[0].næringer = næringer;
