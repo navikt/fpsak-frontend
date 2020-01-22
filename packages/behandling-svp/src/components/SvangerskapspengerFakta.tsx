@@ -52,32 +52,30 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
   const [faktaPaneler, valgtPanel, formaterteFaktaPaneler] = faktaHooks
     .useFaktaPaneler(faktaPanelDefinisjoner, dataTilUtledingAvSvpPaneler, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl);
 
-  if (!valgtPanel.urlCode) {
-    return null;
-  }
-
   faktaHooks.useFaktaAksjonspunktNotifikator(faktaPaneler, setApentFaktaPanel, behandling.versjon);
 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, svpBehandlingApi, dispatch);
 
-
-  return (
-    <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
-      <DataFetcherBehandlingDataV2
-        key={valgtPanel.urlCode}
-        behandlingVersion={behandling.versjon}
-        endpoints={valgtPanel.endpoints}
-        render={(dataProps) => valgtPanel.renderComponent({
-          ...dataProps,
-          behandling,
-          alleKodeverk,
-          submitCallback: bekreftAksjonspunktCallback,
-          ...valgtPanel.komponentData,
-        })}
-      />
-    </FaktaPanel>
-  );
+  if (valgtPanel.urlCode) {
+    return (
+      <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
+        <DataFetcherBehandlingDataV2
+          key={valgtPanel.urlCode}
+          behandlingVersion={behandling.versjon}
+          endpoints={valgtPanel.endpoints}
+          render={(dataProps) => valgtPanel.renderComponent({
+            ...dataProps,
+            behandling,
+            alleKodeverk,
+            submitCallback: bekreftAksjonspunktCallback,
+            ...valgtPanel.komponentData,
+          })}
+        />
+      </FaktaPanel>
+    );
+  }
+  return null;
 };
 
 export default injectIntl(SvangerskapspengerFakta);
