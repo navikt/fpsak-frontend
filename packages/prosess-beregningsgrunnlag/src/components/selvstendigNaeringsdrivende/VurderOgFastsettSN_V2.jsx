@@ -37,7 +37,6 @@ export const VurderOgFastsettSNImpl2 = ({
   erVarigEndring,
   gjeldendeAksjonspunkter,
 }) => {
-  debugger;
   if (erNyArbLivet) {
     return (
       <FastsettSN2
