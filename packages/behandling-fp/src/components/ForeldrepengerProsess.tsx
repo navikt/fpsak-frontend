@@ -8,10 +8,8 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, MargMarkering, prosessStegHooks, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
-  IverksetterVedtakStatusModal, Behandling, MultipleProcessPanel, FatterVedtakStatusModal,
+  Kodeverk, NavAnsatt, FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, Behandling, FatterVedtakStatusModal, ProsessStegPanel,
 } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
@@ -37,7 +35,7 @@ interface OwnProps {
   dispatch: (data: any) => Promise<any>;
 }
 
-const getPreviewCallback = (dispatch, behandling) => (data) => {
+const getForhandsvisCallback = (dispatch, behandling) => (data) => {
   const brevData = {
     ...data,
     behandling: behandling.uuid,
@@ -46,7 +44,7 @@ const getPreviewCallback = (dispatch, behandling) => (data) => {
   return dispatch(fpBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
 
-const getPreviewFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker, brevmalkode, fritekst, saksnummer) => {
+const getForhandsvisFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker, brevmalkode, fritekst, saksnummer) => {
   const data = {
     behandlingUuid: behandling.uuid,
     fagsakYtelseType: fagsak.fagsakYtelseType,
@@ -58,7 +56,7 @@ const getPreviewFptilbakeCallback = (dispatch, fagsak, behandling) => (mottaker,
   return dispatch(fpBehandlingApi.PREVIEW_TILBAKEKREVING_MESSAGE.makeRestApiRequest()(data));
 };
 
-const getLagringSideEffects = (toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
+const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleOppdatereFagsakContext, oppdaterProsessStegOgFaktaPanelIUrl,
   opneSokeside) => (aksjonspunktModels) => {
   const erRevurderingsaksjonspunkt = aksjonspunktModels.some((apModel) => ((apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_MANUELL
     || apModel.kode === aksjonspunktCodes.VARSEL_REVURDERING_ETTERKONTROLL) && apModel.sendVarsel));
@@ -103,8 +101,8 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvFpPaneler = {
-    previewCallback: useCallback(() => getPreviewCallback(dispatch, behandling), []),
-    previewFptilbakeCallback: useCallback(() => getPreviewFptilbakeCallback(dispatch, fagsak, behandling), []),
+    previewCallback: useCallback(() => getForhandsvisCallback(dispatch, behandling), []),
+    previewFptilbakeCallback: useCallback(() => getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), []),
     dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
     tempUpdateStonadskontoer: useCallback(() => dispatch(fpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(data)), []),
     alleKodeverk,
@@ -116,17 +114,15 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
-  const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext,
+  const lagringSideeffekterCallback = getLagringSideeffekter(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
 
-  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtPanel.urlCode, valgtFaktaSteg,
-    fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, fpBehandlingApi, lagringSideEffectsCallback, dispatch);
+  const velgProsessStegPanelCallback = prosessStegHooks.useProsessStegVelger(prosessStegPaneler, valgtFaktaSteg, behandling,
+    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg);
 
-  const fatterVedtakTextCode = useMemo(() => (valgtPanel.status === vilkarUtfallType.OPPFYLT
+  const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT
     ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionFP'),
   [behandling.versjon]);
-
-  const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtPanel.urlCode === bpc.VEDTAK;
 
   return (
     <>
@@ -141,29 +137,17 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
         tekstkode={fatterVedtakTextCode}
       />
       <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
-      {valgtPanel.erStegBehandlet && (
-        <MargMarkering
-          behandlingStatus={behandling.status}
-          aksjonspunkter={valgtPanel.aksjonspunkter}
-          isReadOnly={valgtPanel.isReadOnly}
-          visAksjonspunktMarkering={valgtPanel.panelData.length === 1}
-        >
-          <MultipleProcessPanel
-            behandling={behandling}
-            alleKodeverk={alleKodeverk}
-            prosessStegData={valgtPanel.panelData}
-            submitCallback={bekreftAksjonspunktCallback}
-            apentFaktaPanelInfo={apentFaktaPanelInfo}
-            oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
-          />
-        </MargMarkering>
-      )}
-      {erHenlagtOgVedtakStegValgt && (
-        <BehandlingHenlagtPanel />
-      )}
-      {(valgtPanel.urlCode && !valgtPanel.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
-        <ProsessStegIkkeBehandletPanel />
-      )}
+      <ProsessStegPanel
+        valgtPanel={valgtPanel}
+        fagsak={fagsak}
+        behandling={behandling}
+        alleKodeverk={alleKodeverk}
+        apentFaktaPanelInfo={apentFaktaPanelInfo}
+        oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
+        lagringSideeffekterCallback={lagringSideeffekterCallback}
+        behandlingApi={fpBehandlingApi}
+        dispatch={dispatch}
+      />
     </>
   );
 };

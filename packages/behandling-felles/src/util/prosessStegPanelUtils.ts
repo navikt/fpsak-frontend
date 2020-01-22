@@ -106,12 +106,7 @@ export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPane
         .some((a) => overstyrteAksjonspunkter.includes(a))
           || p.dataTilUtleding.aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
 
-      const panelData = panelDef.panels.map((panel) => {
-        if (!skalViseDelPanel(aksjonspunkter, vilkar, panel)) {
-          return {
-            code: panel.code ? panel.code : panelDef.urlCode,
-          };
-        }
+      const panelData = panelDef.panels.filter((panel) => skalViseDelPanel(aksjonspunkter, vilkar, panel)).map((panel) => {
         const {
           vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg,
         } = panel.dataTilUtleding;

@@ -17,33 +17,26 @@ const useProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraData, valgtPr
     overstyrteAksjonspunkter, behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl),
   [behandling.versjon, overstyrteAksjonspunkter]);
 
-  const valgtPanel = useMemo(() => {
-    const panel = finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt, apentFaktaPanelInfo);
-    return panel || { urlCode: undefined };
-  },
-  [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
+  const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt, apentFaktaPanelInfo),
+    [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunkter, apentFaktaPanelInfo]);
 
-  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(intl, prosessStegPaneler, valgtPanel.urlCode),
-    [behandling.versjon, valgtPanel.urlCode, overstyrteAksjonspunkter]);
+  const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;
+  const formaterteProsessStegPaneler = useMemo(() => formaterPanelerForProsessmeny(intl, prosessStegPaneler, urlCode),
+    [behandling.versjon, urlCode, overstyrteAksjonspunkter]);
 
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
 
-const useCallbacks = (prosessStegPaneler, valgtPanelUrlCode, valgtFaktaSteg, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg,
-  behandlingApi, lagringSideEffectsCallback, dispatch) => {
-  const velgProsessStegPanelCallback = useCallback((index) => {
-    const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
-    oppdaterProsessStegOgFaktaPanelIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined, valgtFaktaSteg);
-  }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
+const useProsessStegVelger = (prosessStegPaneler, valgtFaktaSteg, behandling, oppdaterProsessStegOgFaktaPanelIUrl,
+  valgtProsessSteg) => useCallback((index) => {
+  const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
+  oppdaterProsessStegOgFaktaPanelIUrl(!valgtProsessSteg || nyttProsessStegValg !== valgtProsessSteg ? nyttProsessStegValg : undefined, valgtFaktaSteg);
+}, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
-  const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => {
-    const valgtPanel = prosessStegPaneler.find((p) => p.urlCode === valgtPanelUrlCode);
-    return getBekreftAksjonspunktCallback(dispatch,
-      lagringSideEffectsCallback, fagsak, behandling, valgtPanel.aksjonspunkter, behandlingApi)(aksjonspunktModels);
-  }, [behandling.versjon]);
-
-  return [velgProsessStegPanelCallback, bekreftAksjonspunktCallback];
-};
+const useBekreftAksjonspunkt = (valgtPanel, fagsak, behandling, behandlingApi, lagringSideEffectsCallback, dispatch) => useCallback((
+  aksjonspunktModels,
+) => getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak,
+  behandling, valgtPanel.aksjonspunkter, behandlingApi)(aksjonspunktModels), [behandling.versjon, valgtPanel]);
 
 const useOppdateringAvBehandlingsversjon = (behandlingVersjon, oppdaterBehandlingVersjon) => {
   const [skalOppdatereFagsakKontekst, toggleSkalOppdatereFagsakContext] = useState(true);
@@ -58,7 +51,8 @@ const useOppdateringAvBehandlingsversjon = (behandlingVersjon, oppdaterBehandlin
 
 const prosessStegHooks = {
   useProsessStegPaneler,
-  useCallbacks,
+  useProsessStegVelger,
+  useBekreftAksjonspunkt,
   useOppdateringAvBehandlingsversjon,
 };
 

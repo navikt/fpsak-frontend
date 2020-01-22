@@ -8,7 +8,7 @@ import Kodeverk from '../types/kodeverkTsType';
 import Behandling from '../types/behandlingTsType';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
-import styles from './multipleProcessPanel.less';
+import styles from './inngangsvilkarPanel.less';
 
 interface OwnProps {
   behandling: Behandling;
@@ -19,7 +19,7 @@ interface OwnProps {
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
 }
 
-const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
+const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
   behandling,
   alleKodeverk,
   prosessStegData,
@@ -42,14 +42,6 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
       })}
     />
   ));
-
-  if (panels.length === 1) {
-    return (
-      <FadingPanel>
-        {panels[0]}
-      </FadingPanel>
-    );
-  }
 
   const aksjonspunktTekstKoder = useMemo(() => filteredPanels
     .filter((p) => p.isAksjonspunktOpen && p.aksjonspunktHelpTextCodes.length > 0)
@@ -100,4 +92,4 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default MultipleProcessPanel;
+export default InngangsvilkarPanel;

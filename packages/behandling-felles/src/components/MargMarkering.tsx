@@ -15,7 +15,7 @@ interface OwnProps {
   behandlingStatus: Kodeverk;
   aksjonspunkter: Aksjonspunkt[];
   isReadOnly: boolean;
-  visAksjonspunktMarkering?: booean;
+  visAksjonspunktMarkering?: boolean;
   children: any;
 }
 
