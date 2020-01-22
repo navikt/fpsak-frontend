@@ -52,7 +52,7 @@ const MultipleProcessPanel: FunctionComponent<OwnProps> = ({
   }
 
   const aksjonspunktTekstKoder = useMemo(() => filteredPanels
-    .filter((p) => p.isAksjonspunktOpen)
+    .filter((p) => p.isAksjonspunktOpen && p.aksjonspunktHelpTextCodes.length > 0)
     .reduce((acc, p) => [...acc, p.aksjonspunktHelpTextCodes], []),
   [filteredPanels]);
 
