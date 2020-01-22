@@ -119,8 +119,8 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
 
-  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtFaktaSteg, fagsak, behandling,
-    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, svpBehandlingApi, lagringSideEffectsCallback, dispatch);
+  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtPanel.urlCode, valgtFaktaSteg,
+    fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, svpBehandlingApi, lagringSideEffectsCallback, dispatch);
 
 
   const fatterVedtakTextCode = useMemo(() => (valgtPanel && valgtPanel.status === vilkarUtfallType.OPPFYLT

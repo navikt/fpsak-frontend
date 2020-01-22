@@ -119,8 +119,8 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
   const lagringSideEffectsCallback = getLagringSideEffects(toggleIverksetterVedtakModal, toggleFatterVedtakModal, toggleSkalOppdatereFagsakContext,
     oppdaterProsessStegOgFaktaPanelIUrl, opneSokeside);
 
-  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtFaktaSteg, fagsak, behandling,
-    oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, fpBehandlingApi, lagringSideEffectsCallback, dispatch);
+  const [velgProsessStegPanelCallback, bekreftAksjonspunktCallback] = prosessStegHooks.useCallbacks(prosessStegPaneler, valgtPanel.urlCode, valgtFaktaSteg,
+    fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, fpBehandlingApi, lagringSideEffectsCallback, dispatch);
 
   const fatterVedtakTextCode = useMemo(() => (valgtPanel.status === vilkarUtfallType.OPPFYLT
     ? 'FatterVedtakStatusModal.SendtBeslutter' : 'FatterVedtakStatusModal.ModalDescriptionFP'),

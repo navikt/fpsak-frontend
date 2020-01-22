@@ -29,7 +29,7 @@ const useProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraData, valgtPr
   return [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler];
 };
 
-const useCallbacks = (prosessStegPaneler, valgtFaktaSteg, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg,
+const useCallbacks = (prosessStegPaneler, valgtPanelUrlCode, valgtFaktaSteg, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg,
   behandlingApi, lagringSideEffectsCallback, dispatch) => {
   const velgProsessStegPanelCallback = useCallback((index) => {
     const nyttProsessStegValg = prosessStegPaneler[index].urlCode;
@@ -37,7 +37,7 @@ const useCallbacks = (prosessStegPaneler, valgtFaktaSteg, fagsak, behandling, op
   }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
   const bekreftAksjonspunktCallback = useCallback((aksjonspunktModels) => {
-    const valgtPanel = prosessStegPaneler.find((p) => p.urlCode === valgtProsessSteg);
+    const valgtPanel = prosessStegPaneler.find((p) => p.urlCode === valgtPanelUrlCode);
     return getBekreftAksjonspunktCallback(dispatch,
       lagringSideEffectsCallback, fagsak, behandling, valgtPanel.aksjonspunkter, behandlingApi)(aksjonspunktModels);
   }, [behandling.versjon]);
