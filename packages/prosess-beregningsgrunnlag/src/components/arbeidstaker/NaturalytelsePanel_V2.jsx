@@ -89,7 +89,7 @@ const createNaturalYtelseRows = (tableData) => {
       if (valueKey === 1) {
         return (
           <Row key={`naturalytelse_firma_rad_${val}_{valueKey}`}>
-            <Column xs="11" className={beregningStyles.noPaddingRight} ey={`naturalytelse_firma_col_${val}_{valueKey}`}>
+            <Column xs="11" className={beregningStyles.noPaddingRight} key={`naturalytelse_firma_col_${val}_{valueKey}`}>
               <Element>{element}</Element>
             </Column>
             <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
