@@ -72,7 +72,6 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
-        dispatch={dispatch}
       />
       <VerticalSpacer sixteenPx />
       <PersonFaktaIndex
@@ -98,6 +97,7 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         valgtProsessSteg={valgtProsessSteg}
         oppdaterProsessStegOgFaktaPanelIUrl={oppdaterProsessStegOgFaktaPanelIUrl}
         setApentFaktaPanel={setApentFaktaPanel}
+        dispatch={dispatch}
       />
     </>
   );
