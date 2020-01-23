@@ -12,7 +12,7 @@ import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback, DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE,
-} from './faktaPanelUtils';
+} from './faktaUtils';
 
 describe('<faktaPanelUtils>', () => {
   const fagsak = {

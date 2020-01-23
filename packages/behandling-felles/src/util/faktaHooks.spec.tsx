@@ -12,7 +12,7 @@ import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
 import fagsakStatus from '@fpsak-frontend/kodeverk/src/fagsakStatus';
 
 import faktaHooks from './faktaHooks';
-import { DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE } from './faktaPanelUtils';
+import { DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE } from './faktaUtils';
 
 const HookWrapper = ({ callback }) => <div {...callback()} />;
 

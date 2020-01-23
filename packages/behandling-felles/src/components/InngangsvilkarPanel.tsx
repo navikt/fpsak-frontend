@@ -6,6 +6,7 @@ import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-fr
 
 import Kodeverk from '../types/kodeverkTsType';
 import Behandling from '../types/behandlingTsType';
+import ProsessStegData from '../types/prosessStegDataTsType';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
 import styles from './inngangsvilkarPanel.less';
@@ -13,7 +14,7 @@ import styles from './inngangsvilkarPanel.less';
 interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  prosessStegData: any;
+  prosessStegData: ProsessStegData[];
   submitCallback: (data: {}) => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
@@ -61,7 +62,7 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
             {apentFaktaPanelInfo
               ? [
                 <>
-                  <FormattedMessage id="MultipleProcessPanel.AvventerAvklaringAv" />
+                  <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />
                   <a href="" onClick={oppdaterUrl}><FormattedMessage id={apentFaktaPanelInfo.textCode} /></a>
                 </>,
               ]
@@ -72,18 +73,18 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
       )}
       <Row className="">
         <Column xs="6">
-          {panels.filter((_p, index) => index < 2)
-            .map((p, index) => (
-              <div key={p.key} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
-                {p}
+          {panels.filter((_panel, index) => index < 2)
+            .map((panel, index) => (
+              <div key={panel.key} className={index === 0 ? styles.panelLeftTop : styles.panelLeftBottom}>
+                {panel}
               </div>
             ))}
         </Column>
         <Column xs="6">
-          {panels.filter((_p, index) => index > 1)
-            .map((p, index) => (
-              <div key={p.key} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
-                {p}
+          {panels.filter((_panel, index) => index > 1)
+            .map((panel, index) => (
+              <div key={panel.key} className={index === 0 ? styles.panelRightTop : styles.panelRightBottom}>
+                {panel}
               </div>
             ))}
         </Column>

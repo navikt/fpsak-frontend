@@ -5,7 +5,7 @@ import { useIntl } from 'react-intl';
 
 import {
   utledProsessStegPaneler, finnValgtPanel, formaterPanelerForProsessmeny, getBekreftAksjonspunktCallback,
-} from './prosessStegPanelUtils';
+} from './prosessStegUtils';
 
 const useProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraData, valgtProsessSteg, apentFaktaPanelInfo, fagsak, navAnsatt, behandling,
   aksjonspunkter, vilkar, hasFetchError) => {

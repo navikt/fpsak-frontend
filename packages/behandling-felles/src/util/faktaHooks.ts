@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo } from 'react';
 
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback,
-} from './faktaPanelUtils';
+} from './faktaUtils';
 
 const useFaktaPaneler = (faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError, valgtFaktaSteg, intl) => {
   const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt, aksjonspunkter, hasFetchError),

@@ -1,4 +1,4 @@
-import React, { FunctionComponent, ReactNode } from 'react';
+import React, { FunctionComponent } from 'react';
 
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
@@ -13,6 +13,7 @@ import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 import BehandlingHenlagtPanel from './BehandlingHenlagtPanel';
 import ProsessStegIkkeBehandletPanel from './ProsessStegIkkeBehandletPanel';
 import prosessStegHooks from '../util/prosessStegHooks';
+import ProsessStegData from '../types/prosessStegDataTsType';
 
 interface OwnProps {
   fagsak: FagsakInfo;
@@ -23,12 +24,7 @@ interface OwnProps {
     erStegBehandlet: boolean;
     aksjonspunkter: Aksjonspunkt[];
     isReadOnly: boolean;
-    panelData: {
-      code: string;
-      endpoints: [];
-      renderComponent: (props: {}) => ReactNode;
-      komponentData: {};
-    }[];
+    panelData: ProsessStegData[];
   };
   apentFaktaPanelInfo: any;
   oppdaterProsessStegOgFaktaPanelIUrl: () => void;
@@ -53,7 +49,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
     dispatch);
   return (
     <>
-      { valgtPanel.erStegBehandlet && (
+      {valgtPanel.erStegBehandlet && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtPanel.aksjonspunkter}
@@ -88,10 +84,10 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
           )}
         </MargMarkering>
       )}
-      { erHenlagtOgVedtakStegValgt && (
+      {erHenlagtOgVedtakStegValgt && (
         <BehandlingHenlagtPanel />
       )}
-      { (valgtPanel.urlCode && !valgtPanel.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
+      {(valgtPanel.urlCode && !valgtPanel.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
         <ProsessStegIkkeBehandletPanel />
       )}
     </>
