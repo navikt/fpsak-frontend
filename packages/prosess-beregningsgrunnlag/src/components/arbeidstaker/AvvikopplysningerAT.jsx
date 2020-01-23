@@ -22,6 +22,7 @@ const AvviksopplysningerAT = ({
     return null;
   }
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
+  const avvikATRounded = parseFloat((sammenligningsGrunnlagAT.avvikProsent.toFixed(1)));
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
   const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
@@ -103,7 +104,7 @@ const AvviksopplysningerAT = ({
           </Column>
           <Column className={styles.colAvvik}>
             <Normaltekst className={`${avvikAT > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikAT }} />
+              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikATRounded }} />
             </Normaltekst>
           </Column>
         </Row>

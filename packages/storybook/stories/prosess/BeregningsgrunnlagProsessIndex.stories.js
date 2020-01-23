@@ -11,6 +11,7 @@ import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import withReduxProvider from '../../decorators/withRedux';
 
 import alleKodeverk from '../mocks/alleKodeverk.json';
@@ -273,6 +274,124 @@ const lagBG = (perioder, statuser, sammenligningsgrunnlagPrStatus) => {
     },
     faktaOmFordeling: null,
     årsinntektVisningstall: 360000,
+    sammenligningsgrunnlagInntekter: [
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 31800,
+        dato: '2018-09-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-09-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33450,
+        dato: '2018-10-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2018-10-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 33559,
+        dato: '2018-11-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 10000,
+        dato: '2018-11-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 41800,
+        dato: '2018-12-01',
+      },
+
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
+        dato: '2019-01-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-01-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39559,
+        dato: '2019-02-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-02-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38800,
+        dato: '2019-03-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-03-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39450,
+        dato: '2019-04-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-04-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 38559,
+        dato: '2019-05-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 0,
+        dato: '2019-05-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 39600,
+        dato: '2019-06-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 64000,
+        dato: '2019-06-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 49993,
+        dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 55000,
+        dato: '2019-07-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.ARBEIDSTAKER,
+        beløp: 48237,
+        dato: '2019-08-01',
+      },
+      {
+        aktivitetStatus: aktivitetStatus.FRILANSER,
+        beløp: 30000,
+        dato: '2019-08-01',
+      },
+    ],
   };
   return beregningsgrunnlag;
 };
@@ -335,7 +454,7 @@ export const brukersAndelUtenAvvik = () => {
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
-      featureToggles={togglesFalse}
+      featureToggles={togglesTrue}
     />
   );
 };
@@ -346,8 +465,9 @@ export const arbeidstakerMedAvvik = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -79059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 25.009999999, -79059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  delete bg.sammenligningsgrunnlagInntekter;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
@@ -448,22 +568,37 @@ export const selvstendigNæringsdrivende = () => {
   andeler[0].pgiSnitt = 154985;
   andeler[0].erNyIArbeidslivet = false;
 
-  const næringer = [{
-    begrunnelse: 'Endringsbeskrivelse',
-    endringsdato: '2019-11-22',
-    erNyoppstartet: true,
-    erVarigEndret: false,
-    kanRegnskapsførerKontaktes: false,
-    oppgittInntekt: 1500000,
-    oppstartsdato: null,
-    orgnr: '910909088',
-    regnskapsførerNavn: 'Regnar Regnskap',
-    regnskapsførerTlf: '99999999',
-    utenlandskvirksomhetsnavn: null,
-    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
-    kode: 'ANNEN',
-    kodeverk: 'VIRKSOMHET_TYPE',
-  }];
+  const næringer = [
+    {
+      begrunnelse: 'Jeg utvidet virksomheten fra en ren frisørsalong til også å tilby hudpleie. '
+        + 'Jeg jobbet opprinnelig alene men har ansatt to stykker i løpet av det siste året',
+      endringsdato: '2016-05-01',
+      erNyoppstartet: false,
+      erVarigEndret: true,
+      kanRegnskapsførerKontaktes: true,
+      oppgittInntekt: 900000,
+      oppstartsdato: '2015-11-01',
+      orgnr: '910909088',
+      regnskapsførerNavn: 'Regnskapsfører Regn S. Fører',
+      regnskapsførerTlf: '99999999',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    },
+    {
+      begrunnelse: 'Endringsbeskrivelse',
+      endringsdato: '2019-11-22',
+      erNyoppstartet: false,
+      erVarigEndret: false,
+      kanRegnskapsførerKontaktes: false,
+      oppgittInntekt: null,
+      oppstartsdato: '2015-11-01',
+      opphoersdato: '201-03-01',
+      orgnr: '910909077',
+      utenlandskvirksomhetsnavn: null,
+      virksomhetType: { kode: 'JORDBRUK_SKOGBRUK', kodeverk: 'VIRKSOMHET_TYPE' },
+      virksomhetNavn: 'Berit Jensen',
+    },
+  ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
@@ -493,8 +628,10 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
     lagAndel('AT', 130250, undefined, true),
     lagAndel('FL', 130250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
-  andeler[1].arbeidsforhold = lagArbeidsforhold('Gåseby Skole', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das', '2019-11-11');
+  andeler[1].arbeidsforhold = lagArbeidsforhold('Gardslien transport og Gardiner AS', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das', '2019-11-11');
   andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
+  andeler[1].arbeidsforhold.stillingsProsent = '60';
+  andeler[1].arbeidsforhold.stillingsNavn = 'Butikkmedarbeider';
   const perioder = [lagPeriode(andeler, undefined, '2019-09-16', '2019-09-29', []),
     lagTidsbegrensetPeriode(andeler, '2019-09-30', '2019-10-15'),
     lagPeriode(andeler, undefined, '2019-10-15', null, [{ kode: periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET }])];
@@ -660,6 +797,32 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       apCodes={[]}
       isApOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const FrilansMedAvvik = () => {
+  const andeler = [lagAndel('FL', 596000, undefined, false)];
+  andeler[0].skalFastsetteGrunnlag = true;
+
+  const perioder = [lagStandardPeriode(andeler)];
+  const statuser = [lagStatus('FL')];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 26.2, 11000),
+  ];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
     />

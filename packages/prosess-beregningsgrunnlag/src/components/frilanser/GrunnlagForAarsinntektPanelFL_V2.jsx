@@ -3,11 +3,11 @@ import { FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
-import Panel from 'nav-frontend-paneler';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
 
 /**
@@ -24,8 +24,9 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
   const relevanteAndeler = alleAndeler.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
   const beregnetAarsinntekt = relevanteAndeler[0].beregnetPrAar;
   const startDato = relevanteAndeler[0].arbeidsforhold.startdato;
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
-    <Panel className={beregningStyles.panelLeft}>
+    <>
       { isKombinasjonsstatus
       && (
         <>
@@ -36,7 +37,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
         </>
       )}
       {startDato && (
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.FrilansStartDato2" />
@@ -48,7 +49,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
       </Row>
       )}
       <VerticalSpacer eightPx />
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="7" />
         <Column xs="2" className={beregningStyles.colMaanedText}>
           <Undertekst>
@@ -60,23 +61,27 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt.Aar" />
           </Undertekst>
         </Column>
-        <Column className={beregningStyles.colLink} />
+        <Column xs="1" className={beregningStyles.colLink} />
       </Row>
-      <Row>
+      <Row className={beregningStyles.rows}>
         <Column xs="7">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.InnrapportertFrilans" />
           </Normaltekst>
         </Column>
-        <Column className={beregningStyles.colMaanedText}>
+        <Column xs="2" className={beregningStyles.colMaanedText}>
           <Normaltekst>{formatCurrencyNoKr(beregnetAarsinntekt / 12)}</Normaltekst>
         </Column>
-        <Column className={beregningStyles.colAarText}>
+        <Column xs="2" className={beregningStyles.colAarText}>
           <Element>{formatCurrencyNoKr(beregnetAarsinntekt)}</Element>
         </Column>
-        <Column className={beregningStyles.colLink} />
+        <Column xs="1" className={beregningStyles.colLink}>
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="AI" userIdent={userIdent} type="AI" />
+          )}
+        </Column>
       </Row>
-    </Panel>
+    </>
   );
 };
 GrunnlagForAarsinntektPanelFL2.propTypes = {

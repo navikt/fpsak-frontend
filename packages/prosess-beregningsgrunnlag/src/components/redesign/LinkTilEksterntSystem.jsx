@@ -4,17 +4,31 @@ import PropTypes from 'prop-types';
 import styles from './linkTilEksternSystem.less';
 
 
-const LinkTilEksterntSystem = ({ linkText, key }) => {
-  const link = 'http://alink';
-  if (!linkText) {
+const LinkTilEksterntSystem = ({
+
+  type, linkText, userIdent,
+}) => {
+  let link;
+  if (!userIdent) { return null; }
+  // TODO: Det mangler linker til IM og SØ de bruker det samm som AI må endres når vi får data fra backend
+  switch (type) {
+    case 'AI': {
+      link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;
+      break;
+    }
+    default: {
+      link = 'http://link';
+    }
+  }
+
+  if (!linkText || !link) {
     return null;
   }
   return (
-    <span className={styles.linkContainer} key={key} id={`ExtLink${key}`}>
+    <span className={styles.linkContainer}>
       <a
         href={link}
         className={styles.linkText}
-        key={`a${key}`}
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -23,7 +37,6 @@ const LinkTilEksterntSystem = ({ linkText, key }) => {
           className={styles.linkArrow}
           src={linkArrow}
           alt={`Ekster link til ${linkText}`}
-          key={`img${key}`}
         />
       </a>
     </span>
@@ -31,7 +44,11 @@ const LinkTilEksterntSystem = ({ linkText, key }) => {
 };
 LinkTilEksterntSystem.propTypes = {
   linkText: PropTypes.string.isRequired,
-  key: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  userIdent: PropTypes.string,
+};
+LinkTilEksterntSystem.defaultProps = {
+  userIdent: undefined,
 };
 
 export default LinkTilEksterntSystem;
