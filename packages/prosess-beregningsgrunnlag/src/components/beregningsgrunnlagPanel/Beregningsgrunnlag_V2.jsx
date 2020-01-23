@@ -14,6 +14,7 @@ import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
+import SammenlignsgrunnlagAOrdningen from '../fellesPaneler/SammenligningsgrunnlagAOrdningen';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
@@ -62,7 +63,10 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-  alleKodeverk) => (
+
+  alleKodeverk,
+  sammenligningsGrunnlagInntekter,
+  skjeringstidspunktDato) => (
     <div className={beregningStyles.panelLeft}>
       { relevanteStatuser.isArbeidstaker
       && (
@@ -113,6 +117,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         <VerticalSpacer fourtyPx />
       </>
     )}
+
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
@@ -154,6 +159,20 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
+      { !relevanteStatuser.isSelvstendigNaeringsdrivende
+      && sammenligningsGrunnlagInntekter
+      && skjeringstidspunktDato
+      && (relevanteStatuser.isFrilanser || relevanteStatuser.isArbeidstaker)
+      && (
+        <>
+          <SammenlignsgrunnlagAOrdningen
+            sammenligningsGrunnlagInntekter={sammenligningsGrunnlagInntekter}
+            relevanteStatuser={relevanteStatuser}
+            skjeringstidspunktDato={skjeringstidspunktDato}
+          />
+          <VerticalSpacer fourtyPx />
+        </>
+      )}
 
     </div>
 );
@@ -172,24 +191,31 @@ export const BeregningsgrunnlagImpl2 = ({
   relevanteStatuser,
   gjeldendeAksjonspunkter,
   allePerioder,
-
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-
   alleKodeverk,
+  sammenligningsGrunnlagInntekter,
+  skjeringstidspunktDato,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
-  return createRelevantePaneler(
-    alleAndelerIForstePeriode,
-    gjeldendeAksjonspunkter,
-    relevanteStatuser,
-    allePerioder,
-    readOnly,
-    gjelderBesteberegning,
-    behandlingId,
-    behandlingVersjon,
-    alleKodeverk,
+  return (
+
+    createRelevantePaneler(
+      alleAndelerIForstePeriode,
+      gjeldendeAksjonspunkter,
+      relevanteStatuser,
+      allePerioder,
+      readOnly,
+      gjelderBesteberegning,
+      behandlingId,
+      behandlingVersjon,
+      alleKodeverk,
+      sammenligningsGrunnlagInntekter,
+      skjeringstidspunktDato,
+    )
+
+
   );
 };
 
@@ -202,10 +228,14 @@ BeregningsgrunnlagImpl2.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  sammenligningsGrunnlagInntekter: PropTypes.arrayOf(PropTypes.shape()),
+  skjeringstidspunktDato: PropTypes.string,
 };
 
 BeregningsgrunnlagImpl2.defaultProps = {
   allePerioder: undefined,
+  sammenligningsGrunnlagInntekter: undefined,
+  skjeringstidspunktDato: undefined,
 };
 
 const Beregningsgrunnlag2 = BeregningsgrunnlagImpl2;
