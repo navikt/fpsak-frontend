@@ -2,6 +2,7 @@ import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
 import { setSubmitFailed } from 'redux-form';
+import { Dispatch } from 'redux';
 import ProcessMenu from '@navikt/nap-process-menu';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -32,7 +33,7 @@ interface OwnProps {
   featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
-  dispatch: (data: any) => Promise<any>;
+  dispatch: Dispatch;
 }
 
 const getForhandsvisCallback = (dispatch, behandling) => (data) => {
@@ -111,7 +112,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, valgtProsessSteg, apentFaktaPanelInfo, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError);
+    dataTilUtledingAvFpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -139,7 +140,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps> = ({
       />
       <ProcessMenu steps={formaterteProsessStegPaneler} onClick={velgProsessStegPanelCallback} />
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={alleKodeverk}

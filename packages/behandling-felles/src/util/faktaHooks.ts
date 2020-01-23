@@ -16,7 +16,7 @@ import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
 const useFaktaPaneler = (
   faktaPanelDefinisjoner: FaktaPanelDefinisjon[],
-  fpPanelerData: {},
+  panelData: {},
   fagsak: FagsakInfo,
   behandling: Behandling,
   navAnsatt: NavAnsatt,
@@ -25,7 +25,7 @@ const useFaktaPaneler = (
   valgtFaktaPanelKode: string,
   intl,
 ): [FaktaPanelUtledet[], FaktaPanelUtledet, FaktaPanelFaktaPanelMenyRadMeny[]] => {
-  const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, fpPanelerData, fagsak, behandling, navAnsatt,
+  const faktaPaneler = useMemo(() => utledFaktaPaneler(faktaPanelDefinisjoner, panelData, fagsak, behandling, navAnsatt,
     aksjonspunkter, hasFetchError),
   [behandling.versjon]);
 

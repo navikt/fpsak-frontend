@@ -83,9 +83,9 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
   renderComponent: (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />,
   getData: ({
-    code, overstyrteAksjonspunkter, vilkarForSteg, label, alleKodeverk, aksjonspunktDefKoderForSteg,
+    code, overstyrteAksjonspunktKoder, vilkarForSteg, label, alleKodeverk, aksjonspunktDefKoderForSteg,
   }) => ({
-    erOverstyrt: overstyrteAksjonspunkter.some((o) => aksjonspunktDefKoderForSteg.some((a) => a === o)),
+    erOverstyrt: overstyrteAksjonspunktKoder.some((o) => aksjonspunktDefKoderForSteg.some((a) => a === o)),
     panelTittel: label,
     avslagsarsaker: filtrerAvslagsarsaker(alleKodeverk[kodeverkTyper.AVSLAGSARSAK], vilkarForSteg[0].vilkarType.kode),
     lovReferanse: vilkarForSteg[0].lovReferanse,
@@ -96,9 +96,11 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   aksjonspunkterTextCodes: [],
 });
 
-const VALGFRIE_ATTRIBUTTER = {
+const PANEL_ATTRIBUTTER = {
   vilkarCodes: [],
-  getData: () => {},
+  endpoints: [],
+  getData: () => ({}),
+  aksjonspunkterTextCodes: undefined,
   showComponent: undefined,
   overrideStatus: undefined,
   isOverridable: false,
@@ -130,7 +132,6 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.SOKERS_OPPLYSNINGSPLIKT_OVST, ac.SOKERS_OPPLYSNINGSPLIKT_MANU],
     aksjonspunkterTextCodes: ['SokersOpplysningspliktForm.UtfyllendeOpplysninger', 'SokersOpplysningspliktForm.UtfyllendeOpplysninger'],
     vilkarCodes: [vt.SOKERSOPPLYSNINGSPLIKT],
-    endpoints: [],
     showComponent: ({ behandling, aksjonspunkterForSteg }) => {
       const isRevurdering = bt.REVURDERING === behandling.type.kode;
       const hasAp = aksjonspunkterForSteg.some((ap) => ap.definisjon.kode === ac.SOKERS_OPPLYSNINGSPLIKT_MANU);
@@ -148,7 +149,6 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     aksjonspunkterTextCodes: ['FodselVilkarForm.VurderGjelderSammeBarn', 'FodselVilkarForm.VurderGjelderSammeBarn'],
     vilkarCodes: [vt.FODSELSVILKARET_MOR, vt.FODSELSVILKARET_FAR],
-    endpoints: [],
     renderComponent: (props) => <FodselVilkarProsessIndex {...props} />,
     getData: () => ({ ytelseTypeKode: fagsakYtelseType.FORELDREPENGER }),
     overridePanel: {
@@ -161,7 +161,6 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterCodes: [ac.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN, ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     aksjonspunkterTextCodes: ['AdopsjonVilkarForm.VurderGjelderSammeBarn', 'AdopsjonVilkarForm.VurderGjelderSammeBarn'],
     vilkarCodes: [vt.ADOPSJONSVILKARET_FORELDREPENGER],
-    endpoints: [],
     renderComponent: (props) => <AdopsjonVilkarProsessIndex {...props} />,
     getData: ({ vilkarForSteg }) => ({ vilkar: vilkarForSteg }),
     overridePanel: {
@@ -175,7 +174,6 @@ const prosessStegPanelDefinisjoner = [{
       ac.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN],
     aksjonspunkterTextCodes: ['ErOmsorgVilkaarOppfyltForm.Paragraf', 'ErOmsorgVilkaarOppfyltForm.Vurder', 'ErOmsorgVilkaarOppfyltForm.Vurder'],
     vilkarCodes: [vt.OMSORGSVILKARET],
-    endpoints: [],
     renderComponent: (props) => <OmsorgVilkarProsessIndex {...props} />,
   }, {
     code: 'MEDLEMSKAP',
@@ -191,7 +189,6 @@ const prosessStegPanelDefinisjoner = [{
     aksjonspunkterTextCodes: ['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger', 'ErForeldreansvarVilkaarOppfyltForm.4LeddParagraf',
       'ErForeldreansvarVilkaarOppfyltForm.Vurder', 'ErForeldreansvarVilkaarOppfyltForm.Vurder'],
     vilkarCodes: [vt.FORELDREANSVARSVILKARET_2_LEDD, vt.FORELDREANSVARSVILKARET_4_LEDD],
-    endpoints: [],
     renderComponent: (props) => <ForeldreansvarVilkarProsessIndex {...props} />,
     getData: ({ vilkarForSteg }) => ({
       isEngangsstonad: false,
@@ -221,7 +218,6 @@ const prosessStegPanelDefinisjoner = [{
       ac.FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, ac.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
       ac.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, ac.VURDER_GRADERING_UTEN_BEREGNINGSGRUNNLAG, ac.VURDER_DEKNINGSGRAD],
     vilkarCodes: [vt.BEREGNINGSGRUNNLAGVILKARET],
-    endpoints: [],
     renderComponent: (props) => <BeregningsgrunnlagProsessIndex {...props} />,
     showComponent: () => true,
     getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
@@ -335,7 +331,7 @@ const prosessStegPanelDefinisjoner = [{
 export default prosessStegPanelDefinisjoner.map((def) => ({
   ...def,
   panels: def.panels.map((p) => ({
-    ...VALGFRIE_ATTRIBUTTER,
+    ...PANEL_ATTRIBUTTER,
     ...p,
   })),
 }));

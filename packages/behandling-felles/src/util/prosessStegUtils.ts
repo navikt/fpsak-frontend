@@ -1,13 +1,26 @@
+import { SetStateAction } from 'react';
+import { Dispatch } from 'redux';
+import { StepType } from '@navikt/nap-process-menu/dist/Step';
+
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 
+import ProsessStegDefinisjon, { ProsessStegPanelDefinisjon } from '../types/prosessStegDefinisjonTsType';
 import readOnlyUtils from './readOnlyUtils';
+import Behandling from '../types/behandlingTsType';
+import FagsakInfo from '../types/fagsakInfoTsType';
+import NavAnsatt from '../types/navAnsattTsType';
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+import Vilkar from '../types/vilkarTsType';
+import ProsessStegData from '../types/prosessStegDataTsType';
+import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
 const DEFAULT_PROSESS_STEG_KODE = 'default';
 
-const finnStatus = (bpVilkar, bpAksjonspunkter) => {
+const finnStatus = (bpVilkar: Vilkar[], bpAksjonspunkter: Aksjonspunkt[]) => {
   if (bpVilkar.length > 0) {
     const vilkarStatusCodes = bpVilkar.map((v) => v.vilkarStatus.kode);
     if (vilkarStatusCodes.some((vsc) => vsc === vilkarUtfallType.IKKE_VURDERT)) {
@@ -22,7 +35,7 @@ const finnStatus = (bpVilkar, bpAksjonspunkter) => {
   return vilkarUtfallType.IKKE_VURDERT;
 };
 
-const settOppDataBruktTilUtledingAvSteg = (ekstraData, intl) => (panelDefinisjon) => {
+const settOppDataBruktTilUtledingAvSteg = (ekstraData: {}, intl) => (panelDefinisjon) => {
   const panels = panelDefinisjon.panels.map((pDef) => ({
     ...pDef,
     dataTilUtleding: {
@@ -42,7 +55,7 @@ const settOppDataBruktTilUtledingAvSteg = (ekstraData, intl) => (panelDefinisjon
   };
 };
 
-const skalViseDelPanel = (aksjonspunkter, vilkar, panel) => {
+const skalViseDelPanel = (aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[], panel: ProsessStegPanelDefinisjon) => {
   if (panel.showComponent) {
     return panel.showComponent(panel.dataTilUtleding);
   }
@@ -60,9 +73,10 @@ const skalViseDelPanel = (aksjonspunkter, vilkar, panel) => {
   return harAksjonspunkter && harVilkar;
 };
 
-const skalVisePanel = (aksjonspunkter, vilkar) => (panelDefinisjon) => panelDefinisjon.panels.some((p) => skalViseDelPanel(aksjonspunkter, vilkar, p));
+const skalVisePanel = (aksjonspunkter: Aksjonspunkt[], vilkar: Vilkar[]) => (panelDefinisjon: ProsessStegDefinisjon) => panelDefinisjon
+  .panels.some((p) => skalViseDelPanel(aksjonspunkter, vilkar, p));
 
-const tilOverstyringspanel = (aksjonspunkter) => (panel) => {
+const tilOverstyringspanel = (aksjonspunkter: Aksjonspunkt[]) => (panel: ProsessStegDefinisjon) => {
   const panels = panel.panels.map((p) => {
     if (p.overridePanel && !p.aksjonspunkterCodes.some((ac) => aksjonspunkter.some((a) => a.definisjon.kode === ac))) {
       return {
@@ -79,14 +93,25 @@ const tilOverstyringspanel = (aksjonspunkter) => (panel) => {
   };
 };
 
-const finnHjelpetekster = (opneAksjonspunkter, aksjonspunkterCodes, aksjonspunkterTextCodes = []) => {
+const finnHjelpetekster = (opneAksjonspunkter: Aksjonspunkt[], aksjonspunkterCodes: string[], aksjonspunkterTextCodes: string[] = []) => {
   const indekser = opneAksjonspunkter.map((a) => aksjonspunkterCodes.findIndex((ac) => a.definisjon.kode === ac));
   return aksjonspunkterTextCodes.filter((a, index) => indekser.includes(index));
 };
 
 
-export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunkter,
-  behandling, aksjonspunkter, vilkar, navAnsatt, fagsak, hasFetchError, intl) => {
+export const utledProsessStegPaneler = (
+  prosessStegPanelDefinisjoner: ProsessStegDefinisjon[],
+  ekstraPanelData: {},
+  toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
+  overstyrteAksjonspunktKoder: string[],
+  fagsak: FagsakInfo,
+  navAnsatt: NavAnsatt,
+  behandling: Behandling,
+  aksjonspunkter: Aksjonspunkt[],
+  vilkar: Vilkar[],
+  hasFetchError: boolean,
+  intl,
+) => {
   const rettigheter = allAccessRights(navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type);
   const data = {
     ...ekstraPanelData,
@@ -103,7 +128,7 @@ export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPane
     .filter(skalVisePanel(aksjonspunkter, vilkar))
     .map((panelDef) => {
       const harMinstEttPanelApentAksjonspunkt = panelDef.panels.some((p) => p.dataTilUtleding.aksjonspunktDefKoderForSteg
-        .some((a) => overstyrteAksjonspunkter.includes(a))
+        .some((a) => overstyrteAksjonspunktKoder.includes(a))
           || p.dataTilUtleding.aksjonspunkterForSteg.some((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET));
 
       const panelData = panelDef.panels.filter((panel) => skalViseDelPanel(aksjonspunkter, vilkar, panel)).map((panel) => {
@@ -113,7 +138,7 @@ export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPane
 
         const status = panel.overrideStatus ? panel.overrideStatus(panel.dataTilUtleding) : finnStatus(vilkarForSteg, aksjonspunkterForSteg);
         const opneAksjonspunkter = aksjonspunkterForSteg.filter((ap) => ap.status.kode === aksjonspunktStatus.OPPRETTET && ap.kanLoses);
-        const erAksjonspunktOpen = aksjonspunktDefKoderForSteg.some((a) => overstyrteAksjonspunkter.includes(a))
+        const erAksjonspunktOpen = aksjonspunktDefKoderForSteg.some((a) => overstyrteAksjonspunktKoder.includes(a))
           || opneAksjonspunkter.length > 0;
         const isReadOnly = readOnlyUtils.erReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError);
 
@@ -174,7 +199,12 @@ export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPane
     });
 };
 
-export const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, erBehandlingHenlagt, apentFaktaPanelInfo) => {
+export const finnValgtPanel = (
+  prosessStegPaneler: ProsessStegData[],
+  valgtProsessStegPanelKode: string,
+  erBehandlingHenlagt: boolean,
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string},
+) => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
     if (erBehandlingHenlagt) {
       return prosessStegPaneler[prosessStegPaneler.length - 1];
@@ -188,16 +218,10 @@ export const finnValgtPanel = (prosessStegPaneler, valgtProsessStegPanelKode, er
   return prosessStegPaneler.find((i) => i.urlCode === valgtProsessStegPanelKode);
 };
 
-
-// TODO (TOR) Hent desse statusane fra process-menu komponent
-export enum StepType {
-  warning = 'warning',
-  success = 'success',
-  danger = 'danger',
-  default = 'default',
-}
-
-const finnProsessmenyType = (status, harApentAksjonspunkt) => {
+const finnProsessmenyType = (
+  status: vilkarUtfallType.OPPFYLT | vilkarUtfallType.IKKE_OPPFYLT | vilkarUtfallType.IKKE_VURDERT,
+  harApentAksjonspunkt: boolean,
+) => {
   if (harApentAksjonspunkt) {
     return StepType.warning;
   }
@@ -209,7 +233,10 @@ const finnProsessmenyType = (status, harApentAksjonspunkt) => {
   return StepType.default;
 };
 
-export const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtProsessStegPanelKode) => prosessStegPaneler.map((panel) => {
+export const formaterPanelerForProsessmeny = (
+  prosessStegPaneler: ProsessStegData[],
+  valgtProsessStegPanelKode: string,
+): ProsessStegMenyRad[] => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.status, panel.isAksjonspunktOpen);
   return {
     label: panel.label,
@@ -220,7 +247,14 @@ export const formaterPanelerForProsessmeny = (intl, prosessStegPaneler, valgtPro
   };
 });
 
-export const getBekreftAksjonspunktCallback = (dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api) => (aksjonspunktModels) => {
+export const getBekreftAksjonspunktCallback = (
+  dispatch: Dispatch,
+  lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
+  fagsak: FagsakInfo,
+  behandling: Behandling,
+  aksjonspunkter: Aksjonspunkt[],
+  api: {[name: string]: EndpointOperations},
+) => (aksjonspunktModels) => {
   const models = aksjonspunktModels.map((ap) => ({
     '@type': ap.kode,
     ...ap,

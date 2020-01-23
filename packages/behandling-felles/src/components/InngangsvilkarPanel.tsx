@@ -6,7 +6,7 @@ import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-fr
 
 import Kodeverk from '../types/kodeverkTsType';
 import Behandling from '../types/behandlingTsType';
-import ProsessStegData from '../types/prosessStegDataTsType';
+import { ProsessStegPanelData } from '../types/prosessStegDataTsType';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
 import styles from './inngangsvilkarPanel.less';
@@ -14,7 +14,7 @@ import styles from './inngangsvilkarPanel.less';
 interface OwnProps {
   behandling: Behandling;
   alleKodeverk: {[key: string]: Kodeverk[]};
-  prosessStegData: ProsessStegData[];
+  prosessStegData: ProsessStegPanelData[];
   submitCallback: (data: {}) => Promise<any>;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
