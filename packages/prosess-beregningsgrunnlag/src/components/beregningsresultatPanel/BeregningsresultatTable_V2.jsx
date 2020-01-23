@@ -21,24 +21,24 @@ import styles from './beregningsresultatTable_V2.less';
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 
 
-const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entry, index) => (
+const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
   <Row key={`indeAx${index + 1}`}>
-    <Column xs={!erVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
+    <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
       <Normaltekst>
         {entry.ledetekst}
       </Normaltekst>
     </Column>
-    {erVurdert && (
+    {!ikkeVurdert && (
       <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
     )}
-    {!erVurdert && entry.skalFastsetteGrunnlag === true && (
+    {ikkeVurdert && entry.skalFastsetteGrunnlag === true && (
       <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
         <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
       </Column>
     )}
-    {!erVurdert && !entry.skalFastsetteGrunnlag && (
+    {ikkeVurdert && !entry.skalFastsetteGrunnlag && (
       <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
         <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
       </Column>
@@ -86,11 +86,11 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
     </Row>
   );
 };
-const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
+const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => {
   if (!listOfEntries || listOfEntries.length === 0) {
     return null;
   }
-  if (erVurdert && (listOfDagsatser.length === 0 || !listOfDagsatser[0])) {
+  if (!ikkeVurdert && (listOfDagsatser.length === 0 || !listOfDagsatser[0])) {
     return null;
   }
   const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
@@ -101,28 +101,26 @@ const summaryRow = (listOfDagsatser, listOfEntries, erVurdert) => {
         <Column xs="8" key="beregningOppsummeringLedetekst">
           <Normaltekst>
             <span className={beregningStyles.semiBoldText}>
-              { erVurdert && (
+              { !ikkeVurdert && (
               <FormattedMessage
                 id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
                 values={{ dagSats: dagsats }}
               />
               )}
-              { !erVurdert && (
+              { ikkeVurdert && (
               <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
               )}
             </span>
-
-
           </Normaltekst>
         </Column>
-        {erVurdert && listOfDagsatser.map((dag, index) => (
+        {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
           <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
             {dag && (
             <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
             )}
           </Column>
         ))}
-        {!erVurdert && (
+        {ikkeVurdert && (
         <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
           <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
         </Column>
@@ -146,7 +144,7 @@ const createRowsForklaringer = (forklaringsListe) => (
     </>
   ))
 );
-
+/*
 const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfForklaringer) => {
   const rows = [];
 
@@ -181,7 +179,57 @@ const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatse
 
   return rows;
 };
-const createPeriodeHeader = (header) => (
+ */
+const lagTabellRader = (listofAndeler, listOfEntries, listOfDagsatser, listOfForklaringer, ikkeVurdert) => {
+  const rows = [];
+  if (listOfForklaringer && listOfForklaringer.length > 0) {
+    rows.push(createRowsForklaringer(listOfForklaringer));
+  }
+
+  if (listofAndeler && listofAndeler.length > 0) {
+    rows.push(createRowsAndeler(listofAndeler, ikkeVurdert));
+    if (listofAndeler.length > 1) {
+      rows.push(lineRow('andelLinje'));
+    }
+  }
+  if (!ikkeVurdert) {
+    rows.push(createRowsRedusert(listOfEntries));
+    if (listofAndeler.length > 0 || listOfEntries.length > 0) {
+      debugger;
+      rows.push(lineRow('redusertLinje'));
+      if (listOfEntries.length === 0) {
+        rows.push(summaryRow(listOfDagsatser, listofAndeler, ikkeVurdert));
+      } else {
+        rows.push(summaryRow(listOfDagsatser, listOfEntries, ikkeVurdert));
+      }
+    }
+  } else {
+    rows.push(lineRow('ikkevurdertLinje'));
+    rows.push(summaryRow(listOfDagsatser, listOfEntries, ikkeVurdert));
+  }
+  return rows;
+};
+const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => {
+  console.log('props');
+  return (
+    <React.Fragment key={`IVR2${key}`}>
+      {createRowsAndeler(listofAndeler)}
+      <VerticalSpacer twentyPx />
+      <Normaltekst className={beregningStyles.redError}>
+        <Image
+          className={styles.avslaat_icon}
+          alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' })}
+          src={avslaatIkonUrl}
+        />
+        <FormattedMessage
+          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
+          values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
+        />
+      </Normaltekst>
+    </React.Fragment>
+  );
+};
+const lagPeriodeOverskrift = (header) => (
   <>
     <VerticalSpacer twentyPx />
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
@@ -198,6 +246,17 @@ const lagKeyForPeriode = (dagsats, header) => {
 };
 const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => {
   const key = lagKeyForPeriode(tableData.dagsatser[0], tableData.headers[0]);
+  const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
+  const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
+
+  return (
+    <React.Fragment key={`Wr${key}`}>
+      {tableData && lagPeriodeHeaders && lagPeriodeOverskrift(tableData.headers)}
+      {!ikkeOppfylt && lagTabellRader(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer, ikkeVurdert)}
+      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(tableData.rowsAndeler, intl, halvGVerdi, key)}
+    </React.Fragment>
+  );
+  /*
   return (
     <React.Fragment key={`Wr${key}`}>
       {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
@@ -225,6 +284,7 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, ha
   )}
     </React.Fragment>
   );
+   */
 };
 
 const lagPeriodeHeader = (fom, tom) => (
@@ -243,7 +303,7 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   return aarsaker.filter((aarsak) => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
 const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnlag) => {
-  if (vilkarStatus && vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
+  if (vilkarStatus && vilkarStatus.kode && vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
     return 'Omberegnet';
   }
   if (typeof vilkarStatus === 'object' && vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
