@@ -42,6 +42,8 @@ export const HistorikkMalTypeTilbakekreving = ({
         const periodeTom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
         const begrunnelse = opplysninger
           .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode).tilVerdi;
+        const sarligGrunnerBegrunnelse = opplysninger
+          .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode).tilVerdi;
 
         return (
           <div key={periodeFom + periodeTom}>
@@ -63,9 +65,14 @@ export const HistorikkMalTypeTilbakekreving = ({
               const formatertFraVerdi = visProsentverdi && fraVerdi ? `${fraVerdi}%` : fraVerdi;
               const formatertTilVerdi = visProsentverdi && tilVerdi ? `${tilVerdi}%` : tilVerdi;
               const visAktsomhetBegrunnelse = begrunnelseFritekst && index === endredeFelter.length - 1;
+              const visSarligGrunnerBegrunnelse = sarligGrunnerBegrunnelse && index === endredeFelter.length - 1;
 
               return (
                 <React.Fragment key={endretFeltNavn.kode}>
+                  {visBegrunnelse && begrunnelse}
+                  {visBegrunnelse && <VerticalSpacer eightPx />}
+                  {visAktsomhetBegrunnelse && begrunnelseFritekst}
+                  {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
                   <Normaltekst>
                     <FormattedHTMLMessage
                       id={felt.fraVerdi ? 'Historikk.Template.Tilbakekreving.ChangedFromTo' : 'Historikk.Template.Tilbakekreving.FieldSetTo'}
@@ -73,10 +80,8 @@ export const HistorikkMalTypeTilbakekreving = ({
                     />
                   </Normaltekst>
                   <VerticalSpacer eightPx />
-                  {visBegrunnelse && begrunnelse}
-                  {visBegrunnelse && <VerticalSpacer eightPx />}
-                  {visAktsomhetBegrunnelse && begrunnelseFritekst}
-                  {visAktsomhetBegrunnelse && <VerticalSpacer eightPx />}
+                  {visSarligGrunnerBegrunnelse && sarligGrunnerBegrunnelse}
+                  {visSarligGrunnerBegrunnelse && <VerticalSpacer eightPx />}
                 </React.Fragment>
               );
             })}

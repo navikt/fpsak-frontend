@@ -2,7 +2,7 @@ import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
 
-import { RadioGroupField } from '@fpsak-frontend/form';
+import { RadioGroupField, TextAreaField } from '@fpsak-frontend/form';
 
 import sarligGrunn from '../../../kodeverk/sarligGrunn';
 import aktsomhet from '../../../kodeverk/aktsomhet';
@@ -47,6 +47,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
+    expect(wrapper.find(TextAreaField)).to.have.length(1);
     expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).to.have.length(1);
   });
 
@@ -63,6 +64,7 @@ describe('<AktsomhetGradUaktsomhetFormPanel>', () => {
     />);
 
     expect(wrapper.find(RadioGroupField)).to.have.length(0);
+    expect(wrapper.find(TextAreaField)).to.have.length(1);
     expect(wrapper.find(AktsomhetSarligeGrunnerFormPanel)).to.have.length(1);
   });
 });

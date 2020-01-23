@@ -126,6 +126,7 @@ const formatAktsomhetData = (aktsomhet, sarligGrunnTyper) => {
     sarligGrunner: sarligeGrunner.length > 0 ? sarligeGrunner : undefined,
     tilbakekrevesBelop: aktsomhet.harGrunnerTilReduksjon ? removeSpacesFromNumber(aktsomhet.belopSomSkalTilbakekreves) : undefined,
     annetBegrunnelse: aktsomhet.annetBegrunnelse,
+    sarligGrunnerBegrunnelse: aktsomhet.sarligGrunnerBegrunnelse,
     tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhet.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
     ...andelSomTilbakekreves,
   };
@@ -153,6 +154,7 @@ AktsomhetFormPanel.buildInitalValues = (vilkarResultatInfo) => {
       skalDetTilleggesRenter: aktsomhetInfo.ileggRenter,
       belopSomSkalTilbakekreves: aktsomhetInfo.tilbakekrevesBelop,
       annetBegrunnelse: aktsomhetInfo.annetBegrunnelse,
+      sarligGrunnerBegrunnelse: aktsomhetInfo.sarligGrunnerBegrunnelse,
       tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: aktsomhetInfo.tilbakekrevSelvOmBeloepErUnder4Rettsgebyr,
       ...(aktsomhetInfo.sarligGrunner ? aktsomhetInfo.sarligGrunner.reduce((acc, sg) => ({ ...acc, [(sg.kode ? sg.kode : sg)]: true }), {}) : {}),
     },
