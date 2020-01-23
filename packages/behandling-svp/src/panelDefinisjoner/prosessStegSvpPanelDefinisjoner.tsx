@@ -115,7 +115,7 @@ const prosessStegPanelDefinisjoner = [{
     endpoints: [],
     renderComponent: (props) => <BeregningsgrunnlagProsessIndex {...props} />,
     showComponent: () => true,
-    getData: ({ fagsak, featureToggles, beregningresultatForeldrepenger }) => ({ fagsak, featureToggles, beregningresultatForeldrepenger }),
+    getData: ({ fagsak, featureToggles, beregningsgrunnlag }) => ({ fagsak, featureToggles, beregningsgrunnlag }),
   }],
 }, {
   urlCode: bpc.SOEKNADSFRIST,

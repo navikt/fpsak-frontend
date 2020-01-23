@@ -31,8 +31,9 @@ const useFaktaPaneler = (
 
   const valgtPanel = useMemo(() => finnValgtPanel(faktaPaneler, valgtFaktaPanelKode), [behandling.versjon, valgtFaktaPanelKode]);
 
-  const formaterteFaktaPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, valgtPanel.urlCode),
-    [behandling.versjon, valgtPanel.urlCode]);
+  const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;
+  const formaterteFaktaPaneler = useMemo(() => formaterPanelerForSidemeny(intl, faktaPaneler, urlCode),
+    [behandling.versjon, urlCode]);
 
   return [faktaPaneler, valgtPanel, formaterteFaktaPaneler];
 };

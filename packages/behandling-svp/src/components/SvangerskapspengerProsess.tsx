@@ -102,10 +102,11 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvSvpPaneler = {
-    previewCallback: useCallback(() => getForhandsvisCallback(dispatch, behandling), []),
-    previewFptilbakeCallback: useCallback(() => getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), []),
-    dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
-    tempUpdateStonadskontoer: useCallback(() => dispatch(svpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(data)), []),
+    previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
+    previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
+    dispatchSubmitFailed: useCallback((formName) => dispatch(setSubmitFailed(formName)), []),
+    tempUpdateStonadskontoer: useCallback((params) => dispatch(svpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
+      [behandling.versjon]),
     alleKodeverk,
     featureToggles,
     ...data,

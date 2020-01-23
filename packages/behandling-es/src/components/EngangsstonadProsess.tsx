@@ -101,9 +101,9 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvFpPaneler = {
-    previewCallback: useCallback(() => getForhandsvisCallback(dispatch, behandling), []),
-    previewFptilbakeCallback: useCallback(() => getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), []),
-    dispatchSubmitFailed: useCallback(() => dispatch(setSubmitFailed), []),
+    previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
+    previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
+    dispatchSubmitFailed: useCallback((formName) => dispatch(setSubmitFailed(formName)), []),
     alleKodeverk,
     featureToggles,
     ...data,
