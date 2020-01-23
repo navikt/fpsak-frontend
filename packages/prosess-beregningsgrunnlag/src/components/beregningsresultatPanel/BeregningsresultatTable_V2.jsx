@@ -46,56 +46,35 @@ const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((en
   </Row>
 ))
 );
-const lineRow = (key) => (
-  <Row key={key || 'separator'}>
-    <Column xs="11" className={beregningStyles.noPaddingRight}>
-      <div className={beregningStyles.colDevider} />
-    </Column>
-  </Row>
-);
 
 
-const createRowsRedusert = (listOfEntries) => (
-  listOfEntries.map((entry, index) => (
-    <Row key={`indexR${index + 1}`}>
-      <Column xs="9" key={`indexR2${index + 1}`}>
-        <Normaltekst>
-          {entry.ledetekst}
-        </Normaltekst>
-      </Column>
-      <Column xs="2" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-      </Column>
-    </Row>
-  ))
-);
-/*
-  const entry = listOfEntries[0];
+const lagSpesialRaderRad = (visningsObjekt) => {
+  if (!visningsObjekt || !visningsObjekt.verdi) return null;
   return (
     <Row>
-      <Column xs="8">
+      <Column xs="9">
         <Normaltekst>
-          {entry.ledetekst}
+          {visningsObjekt.ledetekst}
         </Normaltekst>
       </Column>
-      <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
-        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(visningsObjekt.verdi)}</Normaltekst>
       </Column>
     </Row>
-  );
- */
 
-const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => {
-  if (!listOfEntries || listOfEntries.length === 0) {
-    return null;
-  }
-  if (!ikkeVurdert && (listOfDagsatser.length === 0 || !listOfDagsatser[0])) {
-    return null;
-  }
-  const dagsats = listOfEntries[listOfEntries.length - 1].verdi !== undefined
-    ? formatCurrencyNoKr(listOfEntries[listOfEntries.length - 1].verdi) : 0;
+  );
+};
+
+
+const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
+  if (!dagsatsRad.grunnlag) return null;
   return (
     <React.Fragment key="beregningOppsummeringWrapper">
+      <Row key="DagsatsSeparator">
+        <Column xs="11" className={beregningStyles.noPaddingRight}>
+          <div className={beregningStyles.colDevider} />
+        </Column>
+      </Row>
       <Row key="beregningOppsummering">
         <Column xs="8" key="beregningOppsummeringLedetekst">
           <Normaltekst>
@@ -103,7 +82,7 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => {
               { !ikkeVurdert && (
               <FormattedMessage
                 id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-                values={{ dagSats: dagsats }}
+                values={{ dagSats: dagsatsRad.grunnlag }}
               />
               )}
               { ikkeVurdert && (
@@ -112,23 +91,20 @@ const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => {
             </span>
           </Normaltekst>
         </Column>
-        {!ikkeVurdert && listOfDagsatser.map((dag, index) => (
-          <Column xs="3" key={`indexDS${index + 1}`} className={beregningStyles.rightAlignElement}>
-            {dag && (
-            <Normaltekst className={beregningStyles.semiBoldText}>{dag}</Normaltekst>
-            )}
-          </Column>
-        ))}
-        {ikkeVurdert && (
-        <Column xs="3" className={beregningStyles.rightAlignElement} key="beregningOppsummeDagsats">
-          <Normaltekst className={beregningStyles.semiBoldText}>-</Normaltekst>
+        <Column xs="3" className={beregningStyles.rightAlignElement}>
+          <Normaltekst className={beregningStyles.semiBoldText}>{dagsatsRad.verdi ? dagsatsRad.verdi : '-'}</Normaltekst>
         </Column>
-        )}
       </Row>
     </React.Fragment>
   );
 };
-
+const lineRad = (key) => (
+  <Row key={key || 'separator'}>
+    <Column xs="11" className={beregningStyles.noPaddingRight}>
+      <div className={beregningStyles.colDevider} />
+    </Column>
+  </Row>
+);
 const createRowsForklaringer = (forklaringsListe) => (
   forklaringsListe.map((forklaring) => (
     <>
@@ -143,67 +119,38 @@ const createRowsForklaringer = (forklaringsListe) => (
     </>
   ))
 );
-/*
-const createTableRows = (listofAndeler, listOfEntries, listOfDagsatser, listOfForklaringer) => {
+
+const lagTabellRader = (periodeData, ikkeVurdert) => {
+  const {
+    rowsAndeler,
+    avkortetRad,
+    redusertRad,
+    bruttoRad,
+    dagsatser,
+    rowsForklaringer,
+  } = periodeData;
   const rows = [];
-
-  if (listOfForklaringer && listOfForklaringer.length > 0) {
-    rows.push(createRowsForklaringer(listOfForklaringer));
-  }
-  if (listofAndeler && listofAndeler.length > 0) {
-    rows.push(createRowsAndeler(listofAndeler, true));
-    if (listofAndeler.length > 1) {
-      rows.push(lineRow('andelLinje'));
-    }
-  }
-  rows.push(createRowsRedusert(listOfEntries));
-  if (listofAndeler.length > 0 || listOfEntries.length > 0) {
-    rows.push(lineRow('redusertLinje'));
-    if (listOfEntries.length === 0) {
-      rows.push(summaryRow(listOfDagsatser, listofAndeler, true));
-    } else {
-      rows.push(summaryRow(listOfDagsatser, listOfEntries, true));
-    }
-  }
-  return rows;
-};
-const createTableRowsIkkeVurdert = (listofAndeler, listOfEntries, listOfDagsatser) => {
-  const rows = [];
-  if (listofAndeler && listofAndeler.length > 0) {
-    rows.push(createRowsAndeler(listofAndeler, false));
-    rows.push(lineRow('redusertAndelLinje'));
+  if (rowsForklaringer && rowsForklaringer.length > 0) {
+    rows.push(createRowsForklaringer(rowsForklaringer));
   }
 
-  rows.push(summaryRow(listOfDagsatser, listOfEntries, false));
-
-  return rows;
-};
- */
-const lagTabellRader = (listofAndeler, listOfEntries, listOfDagsatser, listOfForklaringer, ikkeVurdert) => {
-  const rows = [];
-  if (listOfForklaringer && listOfForklaringer.length > 0) {
-    rows.push(createRowsForklaringer(listOfForklaringer));
-  }
-
-  if (listofAndeler && listofAndeler.length > 0) {
-    rows.push(createRowsAndeler(listofAndeler, ikkeVurdert));
-    if (listofAndeler.length > 1) {
-      rows.push(lineRow('andelLinje'));
+  if (rowsAndeler && rowsAndeler.length > 0) {
+    rows.push(createRowsAndeler(rowsAndeler, ikkeVurdert));
+    if (rowsAndeler.length > 1) {
+      rows.push(lineRad('andelLinje'));
+      rows.push(lagSpesialRaderRad(bruttoRad));
     }
   }
   if (!ikkeVurdert) {
-    rows.push(createRowsRedusert(listOfEntries));
-    if (listofAndeler.length > 0 || listOfEntries.length > 0) {
-      rows.push(lineRow('redusertLinje'));
-      if (listOfEntries.length === 0) {
-        rows.push(summaryRow(listOfDagsatser, listofAndeler, ikkeVurdert));
-      } else {
-        rows.push(summaryRow(listOfDagsatser, listOfEntries, ikkeVurdert));
-      }
+    rows.push(lagSpesialRaderRad(avkortetRad));
+    rows.push(lagSpesialRaderRad(redusertRad));
+    if (rowsAndeler.length > 0) {
+      // rows.push(lineRow('redusertLinje'));
+
+      rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
     }
   } else {
-    rows.push(lineRow('ikkevurdertLinje'));
-    rows.push(summaryRow(listOfDagsatser, listOfEntries, ikkeVurdert));
+    rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
   }
   return rows;
 };
@@ -242,47 +189,18 @@ const lagKeyForPeriode = (dagsats, header) => {
   }
   return 'key';
 };
-const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => {
-  const key = lagKeyForPeriode(tableData.dagsatser[0], tableData.headers[0]);
+const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi) => {
+  const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
 
   return (
     <React.Fragment key={`Wr${key}`}>
-      {tableData && lagPeriodeHeaders && lagPeriodeOverskrift(tableData.headers)}
-      {!ikkeOppfylt && lagTabellRader(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer, ikkeVurdert)}
-      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(tableData.rowsAndeler, intl, halvGVerdi, key)}
+      {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers)}
+      {!ikkeOppfylt && lagTabellRader(periodeData, ikkeVurdert)}
+      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key)}
     </React.Fragment>
   );
-  /*
-  return (
-    <React.Fragment key={`Wr${key}`}>
-      {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
-        && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
-        && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
-  && (
-    <React.Fragment key={`IVR2${key}`}>
-      {createRowsAndeler(tableData.rowsAndeler)}
-      <VerticalSpacer twentyPx />
-      <Normaltekst className={beregningStyles.redError}>
-        <Image
-          className={styles.avslaat_icon}
-          alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' })}
-          src={avslaatIkonUrl}
-        />
-        <FormattedMessage
-          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
-          values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
-        />
-      </Normaltekst>
-    </React.Fragment>
-  )}
-    </React.Fragment>
-  );
-   */
 };
 
 const lagPeriodeHeader = (fom, tom) => (
@@ -461,7 +379,7 @@ const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilk
     rowsAndeler.push(snElement);
   }
 };
-const settVisningsRaderForDefault = (periode, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse) => {
+const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse) => {
   const atElement = opprettAndelElement(
     periode,
     aktivitetStatus.ARBEIDSTAKER,
@@ -532,7 +450,7 @@ export const createBeregningTableData = createSelector(
       const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
       const avkortetRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Avkortet6g" /> };
       const redusertRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.RedusertProsent" values={{ redusert: dekningsgrad }} /> };
-      const dagsatserRad = [];
+      const dagsatserRad = {};
       const harBortfallNaturalYtelse = periode.periodeAarsaker.some((aarsaak) => aarsaak.kode === periodeAarsak.NATURALYTELSE_BORTFALT);
       headers.push(lagPeriodeHeader(periode.beregningsgrunnlagPeriodeFom, periode.beregningsgrunnlagPeriodeTom));
       bruttoRad.verdi = formatCurrencyNoKr(periode.bruttoInkludertBortfaltNaturalytelsePrAar);
@@ -541,12 +459,12 @@ export const createBeregningTableData = createSelector(
       if (dekningsgrad !== dekningsgradKode.HUNDRE) {
         redusertRad.verdi = formatCurrencyNoKr(periode.redusertPrAar);
       }
-      dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
+      dagsatserRad.verdi = formatCurrencyNoKr(periode.dagsats);
+      const rows = [];
       const rowsAndeler = [];
       const rowsForklaringer = [];
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
-      // const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
       switch (aktivitetStatusKodeKombo) {
         case 'AT_SN': {
           settVisningsRaderForATSN(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harAksjonspunkter);
@@ -565,43 +483,28 @@ export const createBeregningTableData = createSelector(
           break;
         }
         default: {
-          settVisningsRaderForDefault(periode, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse);
+          settVisningsRaderForDefault(periode, rows, rowsAndeler, rowsForklaringer, vilkarStatus, harBortfallNaturalYtelse);
         }
       }
-      const rows = [];
+
 
       const seksG = grunnbelop * 6;
       // Vis avkortet rad vis mindre en 6G
-      if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
-        rows.push(avkortetRad);
+      if (bruttoRad.verdi === avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
+        avkortetRad.verdi = null;
       }
-
+      dagsatserRad.grunnlag = periode.bruttoInkludertBortfaltNaturalytelsePrAar;
       // Vis avkortet rad vis mindre en 6G
-      if (rowsAndeler.length > 1) {
-        rows.unshift(bruttoRad);
+      if (rowsAndeler.length < 2) {
+        bruttoRad.verdi = null;
       }
-      if (redusertRad.verdi) {
-        rows.push(redusertRad);
-      }
-
-      /*
-      // Vis mer en en andel vis bruttorad
-      if (rowsAndeler.length > 1) {
-        rows.unshift(bruttoRad);
-        // legg til kun hvis redusert ikke er lik brutturad
-        if (redusertRad.verdi && bruttoRad.verdi !== redusertRad.verdi) {
-          rows.push(redusertRad);
-        }
-        // legg til kun hvis redusert ikke er lik andelrad
-      } else if (redusertRad.verdi && rowsAndeler[0] && rowsAndeler[0].verdi !== redusertRad.verdi) {
-        rows.push(redusertRad);
-      }
-       */
       periodeResultatTabeller.push(
         {
           headers,
-          rows,
           rowsAndeler,
+          avkortetRad,
+          redusertRad,
+          bruttoRad,
           dagsatser: dagsatserRad,
           rowsForklaringer,
         },
@@ -630,7 +533,7 @@ const BeregningsresultatTable2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders, intl, halvGVerdi))}
+      {periodeResultatTabeller.map((periodeData) => createPeriodeResultat(vilkaarBG, periodeData, skalLagePeriodeHeaders, intl, halvGVerdi))}
     </Panel>
   );
 };
