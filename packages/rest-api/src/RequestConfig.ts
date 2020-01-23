@@ -37,6 +37,8 @@ class RequestConfig {
 
     rel?: string;
 
+    requestPayload?: any;
+
     constructor(name: string, path?: string, config?: RequestAdditionalConfig) {
       this.name = name;
       this.path = path;
@@ -85,6 +87,11 @@ class RequestConfig {
 
     withRestMethod = (restMethod: string) => {
       this.restMethod = restMethod.toUpperCase();
+      return this;
+    }
+
+    withRequestPayload = (requestPayload?: any) => {
+      this.requestPayload = requestPayload;
       return this;
     }
 }

@@ -67,7 +67,7 @@ const DataFetcherBehandlingData: FunctionComponent<OwnProps> = ({
     };
 
     Promise.all(endpointsToFetchFrom.map((e) => {
-      const params = endpointParams ? endpointParams[e.endpoint.name] : {};
+      const params = endpointParams ? endpointParams[e.endpoint.name] : undefined;
       return dispatch(e.endpoint.makeRestApiRequest()(params, meta));
     })).then((data) => {
       setFetchingData({
