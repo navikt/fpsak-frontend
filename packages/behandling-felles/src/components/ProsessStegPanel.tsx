@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
+import { Dispatch } from 'redux';
 
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import FagsakInfo from '../types/fagsakInfoTsType';
 import Behandling from '../types/behandlingTsType';
@@ -26,11 +28,11 @@ interface OwnProps {
     isReadOnly: boolean;
     panelData: ProsessStegData[];
   };
-  apentFaktaPanelInfo: any;
-  oppdaterProsessStegOgFaktaPanelIUrl: () => void;
+  apentFaktaPanelInfo?: { urlCode: string; textCode: string};
+  oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
   lagringSideeffekterCallback: (aksjonspunktModeller: []) => any;
-  behandlingApi: {};
-  dispatch: (data: any) => void;
+  behandlingApi: {[name: string]: EndpointOperations};
+  dispatch: Dispatch;
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({

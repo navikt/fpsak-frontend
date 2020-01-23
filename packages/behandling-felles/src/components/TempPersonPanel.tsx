@@ -2,6 +2,7 @@ import React, { FunctionComponent, useCallback } from 'react';
 
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 
 import Aksjonspunkt from '../types/aksjonspunktTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
@@ -22,7 +23,7 @@ interface OwnProps {
   alleKodeverk: {[key: string]: Kodeverk[]};
   dispatch: (data: any) => Promise<any>;
   oppdaterProsessStegOgFaktaPanelIUrl: (prosessPanel?: string, faktanavn?: string) => void;
-  behandlingApi: {};
+  behandlingApi: {[name: string]: EndpointOperations};
 }
 
 const getBekreftAksjonspunktCallback = (dispatch, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, api) => (aksjonspunkter) => {
