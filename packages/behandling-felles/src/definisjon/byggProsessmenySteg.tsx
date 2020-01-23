@@ -65,7 +65,6 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
       const apForSteg = aksjonspunkter.filter((a) => steg.apCodes.includes(a.definisjon.kode));
       const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
       const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
-      const isOverrideReadOnly = readOnlyUtils.erOverrideReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 
       const erValgtSteg = indexTilValgtSteg === mapIndex;
@@ -78,7 +77,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
         aksjonspunkter: apForSteg,
         vilkar: vilkarForBp,
         isReadOnly,
-        isOverrideReadOnly,
+        isOverrideReadOnly: isReadOnly,
         isSubmittable,
         status: steg.status,
         erStegBehandlet: steg.status !== vilkarUtfallType.IKKE_VURDERT || harApentAp,

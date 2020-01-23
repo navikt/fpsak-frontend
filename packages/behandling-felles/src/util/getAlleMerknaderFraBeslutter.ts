@@ -1,6 +1,9 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-const getAlleMerknaderFraBeslutter = (behandling, aksjonspunkter) => {
+import Behandling from '../types/behandlingTsType';
+import Aksjonspunkt from '../types/aksjonspunktTsType';
+
+const getAlleMerknaderFraBeslutter = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[]) => {
   if (behandling.status.kode !== behandlingStatus.BEHANDLING_UTREDES) {
     return {};
   }

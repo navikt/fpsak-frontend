@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
@@ -24,7 +25,7 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
-  dispatch: (data: any) => Promise<any>;
+  dispatch: Dispatch;
 }
 
 const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -57,7 +58,7 @@ const SvangerskapspengerFakta: FunctionComponent<OwnProps & WrappedComponentProp
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, svpBehandlingApi, dispatch);
 
-  if (valgtPanel.urlCode) {
+  if (valgtPanel) {
     return (
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingDataV2

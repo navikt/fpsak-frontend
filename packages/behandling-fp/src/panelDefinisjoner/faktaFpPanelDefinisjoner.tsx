@@ -36,7 +36,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [fpBehandlingApi.VERGE],
   renderComponent: (props) => <VergeFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: () => {},
+  getData: () => ({}),
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
@@ -104,7 +104,7 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <OpptjeningFaktaIndex {...props} />,
   showComponent: ({ vilkar }) => vilkar.some((v) => v.vilkarType.kode === vilkarType.OPPTJENINGSVILKARET)
     && vilkar.some((v) => v.vilkarType.kode === vilkarType.MEDLEMSKAPSVILKARET && v.vilkarStatus.kode === vilkarUtfallType.OPPFYLT),
-  getData: () => {},
+  getData: () => ({}),
 }, {
   urlCode: faktaPanelCodes.BEREGNING,
   textCode: 'BeregningInfoPanel.Title',

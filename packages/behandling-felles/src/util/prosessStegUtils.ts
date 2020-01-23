@@ -141,8 +141,7 @@ export const utledProsessStegPaneler = (prosessStegPanelDefinisjoner, ekstraPane
         return panel.isOverridable ? {
           ...prosessStegPanel,
           komponentData: {
-            overrideReadOnly: readOnlyUtils.erOverrideReadOnly(behandling, aksjonspunkterForSteg, vilkarForSteg, navAnsatt, fagsak, hasFetchError)
-             || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpen),
+            overrideReadOnly: isReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpen),
             kanOverstyreAccess: rettigheter.kanOverstyreAccess,
             toggleOverstyring,
             ...komponentData,

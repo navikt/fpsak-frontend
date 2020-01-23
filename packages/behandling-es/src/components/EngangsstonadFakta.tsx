@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { injectIntl, WrappedComponentProps } from 'react-intl';
+import { Dispatch } from 'redux';
 
 import {
   FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaHooks,
@@ -23,7 +24,7 @@ interface OwnProps {
   valgtFaktaSteg?: string;
   valgtProsessSteg?: string;
   setApentFaktaPanel: (faktaPanelInfo: { urlCode: string; textCode: string}) => void;
-  dispatch: (data: any) => Promise<any>;
+  dispatch: Dispatch;
 }
 
 const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = ({
@@ -56,7 +57,7 @@ const EngangsstonadFakta: FunctionComponent<OwnProps & WrappedComponentProps> = 
   const [velgFaktaPanelCallback, bekreftAksjonspunktCallback] = faktaHooks
     .useCallbacks(faktaPaneler, fagsak, behandling, oppdaterProsessStegOgFaktaPanelIUrl, valgtProsessSteg, overstyringApCodes, esBehandlingApi, dispatch);
 
-  if (valgtPanel.urlCode) {
+  if (valgtPanel) {
     return (
       <FaktaPanel paneler={formaterteFaktaPaneler} onClick={velgFaktaPanelCallback}>
         <DataFetcherBehandlingDataV2

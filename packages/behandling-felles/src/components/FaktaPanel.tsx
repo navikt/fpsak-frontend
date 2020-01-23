@@ -5,19 +5,14 @@ import SideMenu from '@navikt/nap-side-menu';
 import {
   FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
-
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+
+import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
 import styles from './faktaPanel.less';
 
-interface PanelData {
-  tekst: string;
-  erAktiv: boolean;
-  harAksjonspunkt: boolean;
-}
-
 interface OwnProps {
-  paneler: PanelData[];
+  paneler: FaktaPanelFaktaPanelMenyRadMeny[];
   onClick?: (index: number) => void;
   children: ReactNode;
 }

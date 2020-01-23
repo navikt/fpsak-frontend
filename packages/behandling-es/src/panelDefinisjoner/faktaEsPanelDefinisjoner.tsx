@@ -29,7 +29,7 @@ const faktaPanelDefinisjoner = [{
   endpoints: [esBehandlingApi.VERGE],
   renderComponent: (props) => <VergeFaktaIndex {...props} />,
   showComponent: () => false,
-  getData: () => {},
+  getData: () => ({}),
 }, {
   urlCode: faktaPanelCodes.TILLEGGSOPPLYSNINGER,
   textCode: 'TilleggsopplysningerInfoPanel.Tilleggsopplysninger',
