@@ -796,7 +796,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
-      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
     />

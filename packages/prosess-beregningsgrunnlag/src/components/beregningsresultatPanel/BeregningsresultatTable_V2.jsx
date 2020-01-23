@@ -55,23 +55,21 @@ const lineRow = (key) => (
 );
 
 
-const createRowsRedusert = (listOfEntries, verdierLike) => {
-  if (!verdierLike) {
-    return (
-      listOfEntries.map((entry, index) => (
-        <Row key={`indexR${index + 1}`}>
-          <Column xs="9" key={`indexR2${index + 1}`}>
-            <Normaltekst>
-              {entry.ledetekst}
-            </Normaltekst>
-          </Column>
-          <Column xs="2" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-            <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-          </Column>
-        </Row>
-      ))
-    );
-  }
+const createRowsRedusert = (listOfEntries) => (
+  listOfEntries.map((entry, index) => (
+    <Row key={`indexR${index + 1}`}>
+      <Column xs="9" key={`indexR2${index + 1}`}>
+        <Normaltekst>
+          {entry.ledetekst}
+        </Normaltekst>
+      </Column>
+      <Column xs="2" key={`indexR2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
+        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
+      </Column>
+    </Row>
+  ))
+);
+/*
   const entry = listOfEntries[0];
   return (
     <Row>
@@ -85,7 +83,8 @@ const createRowsRedusert = (listOfEntries, verdierLike) => {
       </Column>
     </Row>
   );
-};
+ */
+
 const summaryRow = (listOfDagsatser, listOfEntries, ikkeVurdert) => {
   if (!listOfEntries || listOfEntries.length === 0) {
     return null;
@@ -195,7 +194,6 @@ const lagTabellRader = (listofAndeler, listOfEntries, listOfDagsatser, listOfFor
   if (!ikkeVurdert) {
     rows.push(createRowsRedusert(listOfEntries));
     if (listofAndeler.length > 0 || listOfEntries.length > 0) {
-      debugger;
       rows.push(lineRow('redusertLinje'));
       if (listOfEntries.length === 0) {
         rows.push(summaryRow(listOfDagsatser, listofAndeler, ikkeVurdert));
@@ -546,7 +544,6 @@ export const createBeregningTableData = createSelector(
       dagsatserRad.push(formatCurrencyNoKr(periode.dagsats));
       const rowsAndeler = [];
       const rowsForklaringer = [];
-      debugger;
       const sortedStatusList = aktivitetStatusList.sort((a, b) => ((a.kode > b.kode) ? 1 : -1)); // sorter alfabetisk
       const aktivitetStatusKodeKombo = sortedStatusList.map((andelKode) => andelKode.kode).join('_');
       // const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
@@ -578,6 +575,7 @@ export const createBeregningTableData = createSelector(
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
         rows.push(avkortetRad);
       }
+
       // Vis avkortet rad vis mindre en 6G
       if (rowsAndeler.length > 1) {
         rows.unshift(bruttoRad);
@@ -585,6 +583,20 @@ export const createBeregningTableData = createSelector(
       if (redusertRad.verdi) {
         rows.push(redusertRad);
       }
+
+      /*
+      // Vis mer en en andel vis bruttorad
+      if (rowsAndeler.length > 1) {
+        rows.unshift(bruttoRad);
+        // legg til kun hvis redusert ikke er lik brutturad
+        if (redusertRad.verdi && bruttoRad.verdi !== redusertRad.verdi) {
+          rows.push(redusertRad);
+        }
+        // legg til kun hvis redusert ikke er lik andelrad
+      } else if (redusertRad.verdi && rowsAndeler[0] && rowsAndeler[0].verdi !== redusertRad.verdi) {
+        rows.push(redusertRad);
+      }
+       */
       periodeResultatTabeller.push(
         {
           headers,
