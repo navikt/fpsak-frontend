@@ -8,8 +8,7 @@ import {
   FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, InputField } from '@fpsak-frontend/form';
-import { required } from '@fpsak-frontend/utils';
-
+import { required, hasValidOrgNumberOrFodselsnr } from '@fpsak-frontend/utils';
 import BehovForTilrettteleggingFieldArray from './BehovForTilrettteleggingFieldArray';
 
 const behovForTilretteleggingFieldArrayName = 'tilretteleggingArbeidsgiver';
@@ -41,7 +40,7 @@ const TilretteleggingForArbeidsgiverFieldArray = ({
             name={`${fieldId}.organisasjonsnummer`}
             label={{ id: 'TilretteleggingForArbeidsgiverFieldArray.OrgNr' }}
             bredde="XL"
-            validate={[required]}
+            validate={[required, hasValidOrgNumberOrFodselsnr]}
             maxLength={99}
           />
         </FlexColumn>
