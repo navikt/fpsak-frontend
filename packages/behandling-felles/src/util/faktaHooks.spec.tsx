@@ -14,7 +14,7 @@ import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 
 import faktaHooks from './faktaHooks';
-import { DEFAULT_FAKTA_KODE, DEFAULT_PROSESS_STEG_KODE } from './faktaUtils';
+import { DEFAULT_FAKTA_KODE } from './faktaUtils';
 
 const HookWrapper = ({ callback }) => <div {...callback()} />;
 
@@ -162,7 +162,7 @@ describe('<faktaHooks>', () => {
     expect(opppdaterKall).to.have.length(1);
     expect(opppdaterKall[0].args).to.have.length(2);
     expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_FAKTA_KODE);
-    expect(opppdaterKall[0].args[0]).to.eql(DEFAULT_PROSESS_STEG_KODE);
+    expect(opppdaterKall[0].args[1]).to.eql('arbeidsforhold');
 
     const aksjonspunkterSomSkalLagres = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,

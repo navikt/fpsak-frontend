@@ -9,7 +9,6 @@ export const SvpBehandlingApiKeys = {
   SAVE_OVERSTYRT_AKSJONSPUNKT: 'SAVE_OVERSTYRT_AKSJONSPUNKT',
   PREVIEW_MESSAGE: 'PREVIEW_MESSAGE',
   PREVIEW_TILBAKEKREVING_MESSAGE: 'PREVIEW_TILBAKEKREVING_MESSAGE',
-  STONADSKONTOER_GITT_UTTAKSPERIODER: 'STONADSKONTOER_GITT_UTTAKSPERIODER',
   AKSJONSPUNKTER: 'AKSJONSPUNKTER',
   VILKAR: 'VILKAR',
   PERSONOPPLYSNINGER: 'PERSONOPPLYSNINGER',
@@ -48,7 +47,6 @@ const endpoints = new RestApiConfigBuilder()
     storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
   })
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', SvpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
-  .withPost('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder', SvpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
 
   /* fptilbake/api/dokument */
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', SvpBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)

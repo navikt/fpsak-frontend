@@ -1,6 +1,7 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { setSubmitFailed } from 'redux-form';
 import { Dispatch } from 'redux';
 import ProcessMenu from '@navikt/nap-process-menu';
@@ -83,7 +84,8 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
+const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   data,
   fagsak,
   behandling,
@@ -110,7 +112,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, apentFaktaPanelInfo);
+    dataTilUtledingAvFpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -152,4 +154,4 @@ const EngangsstonadProsess: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default EngangsstonadProsess;
+export default injectIntl(EngangsstonadProsess);

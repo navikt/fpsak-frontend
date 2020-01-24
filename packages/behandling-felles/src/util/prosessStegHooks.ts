@@ -1,7 +1,6 @@
 import {
   useState, useMemo, useCallback, useEffect,
 } from 'react';
-import { useIntl } from 'react-intl';
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
@@ -28,9 +27,9 @@ const useProsessStegPaneler = (
   aksjonspunkter: Aksjonspunkt[],
   vilkar: Vilkar[],
   hasFetchError: boolean,
+  intl,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
 ): [ProsessStegData[], ProsessStegData, ProsessStegMenyRad[]] => {
-  const intl = useIntl();
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
   const ekstraPanelData = { ...panelData, overstyrteAksjonspunktKoder };
 

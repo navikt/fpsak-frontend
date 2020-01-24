@@ -21,9 +21,9 @@ export interface ProsessStegPanelData {
     aksjonspunkter: Aksjonspunkt[];
     vilkar: Vilkar[];
     isAksjonspunktOpen: boolean;
-    overrideReadOnly: boolean;
-    kanOverstyreAccess: boolean;
-    toggleOverstyring: () => void;
+    overrideReadOnly?: boolean;
+    kanOverstyreAccess?: boolean;
+    toggleOverstyring?: () => void;
   };
 }
 

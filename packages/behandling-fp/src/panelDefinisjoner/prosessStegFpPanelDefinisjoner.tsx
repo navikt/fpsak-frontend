@@ -24,7 +24,7 @@ import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import prt from '@fpsak-frontend/kodeverk/src/periodeResultatType';
 
-import findStatusForVedtak from './vedtakStatusUtleder';
+import findStatusForVedtak from './vedtakStatusUtlederFp';
 import api from '../data/fpBehandlingApi';
 
 const faktaUttakAp = [

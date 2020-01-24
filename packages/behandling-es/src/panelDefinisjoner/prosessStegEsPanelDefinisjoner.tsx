@@ -19,7 +19,7 @@ import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import findStatusForVedtak from './vedtakStatusUtleder';
+import findStatusForVedtak from './vedtakStatusUtlederEs';
 import api from '../data/esBehandlingApi';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {

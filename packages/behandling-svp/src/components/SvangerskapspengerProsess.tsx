@@ -1,7 +1,7 @@
 import React, {
   FunctionComponent, useState, useCallback, useMemo,
 } from 'react';
-import { setSubmitFailed } from 'redux-form';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import { Dispatch } from 'redux';
 import ProcessMenu from '@navikt/nap-process-menu';
 
@@ -30,7 +30,6 @@ interface OwnProps {
   hasFetchError: boolean;
   oppdaterBehandlingVersjon: (versjon: number) => void;
   oppdaterProsessStegOgFaktaPanelIUrl: (punktnavn?: string, faktanavn?: string) => void;
-  featureToggles: {};
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   dispatch: Dispatch;
@@ -84,7 +83,8 @@ const getLagringSideeffekter = (toggleIverksetterVedtakModal, toggleFatterVedtak
   };
 };
 
-const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
+const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
   data,
   fagsak,
   behandling,
@@ -95,7 +95,6 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   hasFetchError,
   oppdaterBehandlingVersjon,
   oppdaterProsessStegOgFaktaPanelIUrl,
-  featureToggles,
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
@@ -105,15 +104,11 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   const dataTilUtledingAvSvpPaneler = {
     previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
     previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
-    dispatchSubmitFailed: useCallback((formName) => dispatch(setSubmitFailed(formName)), []),
-    tempUpdateStonadskontoer: useCallback((params) => dispatch(svpBehandlingApi.STONADSKONTOER_GITT_UTTAKSPERIODER.makeRestApiRequest()(params)),
-      [behandling.versjon]),
     alleKodeverk,
-    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvSvpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, apentFaktaPanelInfo);
+    dataTilUtledingAvSvpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);
@@ -155,4 +150,4 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps> = ({
   );
 };
 
-export default SvangerskapspengerProsess;
+export default injectIntl(SvangerskapspengerProsess);

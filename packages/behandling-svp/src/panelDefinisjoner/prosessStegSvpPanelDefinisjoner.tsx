@@ -17,7 +17,7 @@ import vt from '@fpsak-frontend/kodeverk/src/vilkarType';
 import bt from '@fpsak-frontend/kodeverk/src/behandlingType';
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
-import findStatusForVedtak from './vedtakStatusUtleder';
+import findStatusForVedtak from './vedtakStatusUtlederSvp';
 import api from '../data/svpBehandlingApi';
 
 const harVilkarresultatMedOverstyring = (aksjonspunkterForSteg, aksjonspunktDefKoderForSteg) => {

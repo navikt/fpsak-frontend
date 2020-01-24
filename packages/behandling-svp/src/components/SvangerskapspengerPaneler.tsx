@@ -70,7 +70,6 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         oppdaterBehandlingVersjon={oppdaterBehandlingVersjon}
         opneSokeside={opneSokeside}
         hasFetchError={hasFetchError}
-        featureToggles={featureToggles}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
       />
