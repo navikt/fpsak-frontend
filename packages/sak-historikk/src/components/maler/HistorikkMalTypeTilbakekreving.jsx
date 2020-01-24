@@ -42,8 +42,9 @@ export const HistorikkMalTypeTilbakekreving = ({
         const periodeTom = opplysninger.find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.PERIODE_TOM.kode).tilVerdi;
         const begrunnelse = opplysninger
           .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode).tilVerdi;
-        const sarligGrunnerBegrunnelse = opplysninger
-          .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode).tilVerdi;
+        const sarligGrunnerBegrunnelseFelt = opplysninger
+          .find((o) => o.opplysningType.kode === historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode);
+        const sarligGrunnerBegrunnelse = sarligGrunnerBegrunnelseFelt !== undefined ? sarligGrunnerBegrunnelseFelt.tilVerdi : undefined;
 
         return (
           <div key={periodeFom + periodeTom}>
