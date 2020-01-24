@@ -1,215 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from 'nav-frontend-paneler';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import moment from 'moment';
+
 import { connect } from 'react-redux';
+import moment from 'moment';
 import { createSelector } from 'reselect';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
+
 import { DDMMYYYY_DATE_FORMAT, formatCurrencyNoKr, removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import dekningsgradKode from '@fpsak-frontend/kodeverk/src/dekningsgrad';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import avslaatIkonUrl from '@fpsak-frontend/assets/images/avslaatt_mini.svg';
-import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlagVilkarPropType';
-import styles from './beregningsresultatTable_V2.less';
 import { andelErIkkeTilkommetEllerLagtTilAvSBH } from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
+import BeregningsresutatPanel from './BeregningsResultatPanel';
 
 
-const createRowsAndeler = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
-  <Row key={`indeAx${index + 1}`}>
-    <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
-      <Normaltekst>
-        {entry.ledetekst}
-      </Normaltekst>
-    </Column>
-    {!ikkeVurdert && (
-      <Column xs="2" key={`indexAt2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-      </Column>
-    )}
-    {ikkeVurdert && entry.skalFastsetteGrunnlag === true && (
-      <Column xs="3" key={`indexAf2${index + 2}`} className={styles.maaFastsettes}>
-        <Normaltekst className={beregningStyles.redError}><FormattedMessage id="Beregningsgrunnlag.BeregningTable.MåFastsettes" /></Normaltekst>
-      </Column>
-    )}
-    {ikkeVurdert && !entry.skalFastsetteGrunnlag && (
-      <Column xs="3" key={`indexAf2${index + 2}`} className={beregningStyles.rightAlignElementNoWrap}>
-        <Normaltekst>{formatCurrencyNoKr(entry.verdi)}</Normaltekst>
-      </Column>
-    )}
-  </Row>
-))
-);
-
-
-const lagSpesialRaderRad = (visningsObjekt) => {
-  if (!visningsObjekt || !visningsObjekt.verdi) return null;
-  return (
-    <Row>
-      <Column xs="9">
-        <Normaltekst>
-          {visningsObjekt.ledetekst}
-        </Normaltekst>
-      </Column>
-      <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
-        <Normaltekst>{formatCurrencyNoKr(visningsObjekt.verdi)}</Normaltekst>
-      </Column>
-    </Row>
-
-  );
-};
-
-
-const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
-  if (!dagsatsRad.grunnlag) return null;
-  return (
-    <React.Fragment key="beregningOppsummeringWrapper">
-      <Row key="DagsatsSeparator">
-        <Column xs="11" className={beregningStyles.noPaddingRight}>
-          <div className={beregningStyles.colDevider} />
-        </Column>
-      </Row>
-      <Row key="beregningOppsummering">
-        <Column xs="8" key="beregningOppsummeringLedetekst">
-          <Normaltekst>
-            <span className={beregningStyles.semiBoldText}>
-              { !ikkeVurdert && (
-              <FormattedMessage
-                id="Beregningsgrunnlag.BeregningTable.DagsatsNy"
-                values={{ dagSats: dagsatsRad.grunnlag }}
-              />
-              )}
-              { ikkeVurdert && (
-              <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt" />
-              )}
-            </span>
-          </Normaltekst>
-        </Column>
-        <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{dagsatsRad.verdi ? dagsatsRad.verdi : '-'}</Normaltekst>
-        </Column>
-      </Row>
-    </React.Fragment>
-  );
-};
-const lineRad = (key) => (
-  <Row key={key || 'separator'}>
-    <Column xs="11" className={beregningStyles.noPaddingRight}>
-      <div className={beregningStyles.colDevider} />
-    </Column>
-  </Row>
-);
-const createRowsForklaringer = (forklaringsListe) => (
-  forklaringsListe.map((forklaring) => (
-    <>
-      <Row>
-        <Column xs="12">
-          <Normaltekst>
-            {forklaring}
-          </Normaltekst>
-        </Column>
-      </Row>
-      <VerticalSpacer twentyPx />
-    </>
-  ))
-);
-
-const lagTabellRader = (periodeData, ikkeVurdert) => {
-  const {
-    rowsAndeler,
-    avkortetRad,
-    redusertRad,
-    bruttoRad,
-    dagsatser,
-    rowsForklaringer,
-  } = periodeData;
-  const rows = [];
-  if (rowsForklaringer && rowsForklaringer.length > 0) {
-    rows.push(createRowsForklaringer(rowsForklaringer));
-  }
-
-  if (rowsAndeler && rowsAndeler.length > 0) {
-    rows.push(createRowsAndeler(rowsAndeler, ikkeVurdert));
-    if (rowsAndeler.length > 1) {
-      rows.push(lineRad('andelLinje'));
-      rows.push(lagSpesialRaderRad(bruttoRad));
-    }
-  }
-  if (!ikkeVurdert) {
-    rows.push(lagSpesialRaderRad(avkortetRad));
-    rows.push(lagSpesialRaderRad(redusertRad));
-    if (rowsAndeler.length > 0) {
-      // rows.push(lineRow('redusertLinje'));
-
-      rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
-    }
-  } else {
-    rows.push(lagDagsatsRad(dagsatser, ikkeVurdert));
-  }
-  return rows;
-};
-const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => {
-  console.log('props');
-  return (
-    <React.Fragment key={`IVR2${key}`}>
-      {createRowsAndeler(listofAndeler)}
-      <VerticalSpacer twentyPx />
-      <Normaltekst className={beregningStyles.redError}>
-        <Image
-          className={styles.avslaat_icon}
-          alt={intl.formatMessage({ id: 'Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2' })}
-          src={avslaatIkonUrl}
-        />
-        <FormattedMessage
-          id="Beregningsgrunnlag.BeregningTable.VilkarIkkeOppfylt2"
-          values={{ halvG: formatCurrencyNoKr(halvGVerdi) }}
-        />
-      </Normaltekst>
-    </React.Fragment>
-  );
-};
-const lagPeriodeOverskrift = (header) => (
-  <>
-    <VerticalSpacer twentyPx />
-    <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
-  </>
-);
-const lagKeyForPeriode = (dagsats, header) => {
-  if (dagsats) {
-    return dagsats;
-  }
-  if (header && header.key) {
-    return header.key;
-  }
-  return 'key';
-};
-const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi) => {
-  const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
-  const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
-  const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
-
-  return (
-    <React.Fragment key={`Wr${key}`}>
-      {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers)}
-      {!ikkeOppfylt && lagTabellRader(periodeData, ikkeVurdert)}
-      {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key)}
-    </React.Fragment>
-  );
-};
-
-const lagPeriodeHeader = (fom, tom) => (
-  <FormattedMessage
-    id="Beregningsgrunnlag.BeregningTable.Periode"
-    key={`fom-tom${fom}${tom}`}
-    values={{ fom: moment(fom).format(DDMMYYYY_DATE_FORMAT), tom: tom ? moment(tom).format(DDMMYYYY_DATE_FORMAT) : '' }}
-  />
-);
 const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   if (aarsaker.length < 1) {
     return true;
@@ -235,6 +42,14 @@ const hentAndelFraPeriode = (periode, andelType) => {
   }
   return periode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.aktivitetStatus.kode === andelType);
 };
+const lagPeriodeHeader = (fom, tom) => (
+  <FormattedMessage
+    id="Beregningsgrunnlag.BeregningTable.Periode"
+    key={`fom-tom${fom}${tom}`}
+    values={{ fom: moment(fom).format(DDMMYYYY_DATE_FORMAT), tom: tom ? moment(tom).format(DDMMYYYY_DATE_FORMAT) : '' }}
+  />
+);
+
 const opprettAndelElement = (periode, andelType, vilkarStatus) => {
   let inntekt;
   const andelElement = {};
@@ -415,6 +230,11 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
     aktivitetStatus.MILITAER_ELLER_SIVIL,
     vilkarStatus,
   );
+  const kyElement = opprettAndelElement(
+    periode,
+    aktivitetStatus.KUN_YTELSE,
+    vilkarStatus,
+  );
 
   if (baElement && baElement.verdi !== undefined) { rowsAndeler.push(baElement); }
   if (atElement && atElement.verdi !== undefined) { rowsAndeler.push(atElement); }
@@ -423,6 +243,7 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
   if (aapElement && aapElement.verdi !== undefined) { rowsAndeler.push(aapElement); }
   if (dpElement && dpElement.verdi !== undefined) { rowsAndeler.push(dpElement); }
   if (msElement && msElement.verdi !== undefined) { rowsAndeler.push(msElement); }
+  if (kyElement && kyElement.verdi !== undefined) { rowsAndeler.push(kyElement); }
 
   if (harBortfallNaturalYtelse) {
     const ntElement = {};
@@ -435,6 +256,13 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
     rowsAndeler.push(ntElement);
   }
 };
+const finnDagsatsGrunnlag = (bruttoRad, avkortetRad, redusertRad) => {
+  if (redusertRad.verdi) return redusertRad.verdi;
+  if (avkortetRad.verdi) return avkortetRad.verdi;
+  if (bruttoRad.verdi) return bruttoRad.verdi;
+  return null;
+};
+
 export const createBeregningTableData = createSelector(
   [(state, ownProps) => ownProps.beregningsgrunnlagPerioder,
     (state, ownProps) => ownProps.aktivitetStatusList,
@@ -445,6 +273,7 @@ export const createBeregningTableData = createSelector(
   (allePerioder, aktivitetStatusList, dekningsgrad, grunnbelop, harAksjonspunkter, vilkarStatus) => {
     const perioderSomSkalVises = allePerioder.filter((periode) => periodeHarAarsakSomTilsierVisning(periode.periodeAarsaker));
     const periodeResultatTabeller = [];
+    const seksG = grunnbelop * 6;
     perioderSomSkalVises.forEach((periode) => {
       const headers = [];
       const bruttoRad = { ledetekst: <FormattedMessage id="Beregningsgrunnlag.BeregningTable.BruttoTotalt" /> };
@@ -487,17 +316,20 @@ export const createBeregningTableData = createSelector(
         }
       }
 
-
-      const seksG = grunnbelop * 6;
-      // Vis avkortet rad vis mindre en 6G
-      if (bruttoRad.verdi === avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
-        avkortetRad.verdi = null;
+      // const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
+      // sjekk om spesialrader skul vises
+      // IKKE vis avkortet rad vis mindre en 6G
+      if (removeSpacesFromNumber(bruttoRad.verdi) < seksG) {
+        avkortetRad.display = false;
       }
-      dagsatserRad.grunnlag = periode.bruttoInkludertBortfaltNaturalytelsePrAar;
-      // Vis avkortet rad vis mindre en 6G
+      dagsatserRad.grunnlag = finnDagsatsGrunnlag(bruttoRad, avkortetRad, redusertRad);
       if (rowsAndeler.length < 2) {
-        bruttoRad.verdi = null;
+        bruttoRad.display = false;
       }
+      if (bruttoRad.display !== false && bruttoRad.verdi === redusertRad.verdi) {
+        redusertRad.display = false;
+      }
+
       periodeResultatTabeller.push(
         {
           headers,
@@ -526,17 +358,9 @@ const BeregningsresultatTable2 = ({
   vilkaarBG,
   periodeResultatTabeller,
   halvGVerdi,
-}) => {
-  const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
-  return (
-    <Panel className={beregningStyles.panelRight}>
-      <Element>
-        <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
-      </Element>
-      {periodeResultatTabeller.map((periodeData) => createPeriodeResultat(vilkaarBG, periodeData, skalLagePeriodeHeaders, intl, halvGVerdi))}
-    </Panel>
-  );
-};
+}) => (
+  <BeregningsresutatPanel intl={intl} halvGVerdi={halvGVerdi} periodeResultatTabeller={periodeResultatTabeller} vilkaarBG={vilkaarBG} />
+);
 
 BeregningsresultatTable2.propTypes = {
   intl: PropTypes.shape().isRequired,

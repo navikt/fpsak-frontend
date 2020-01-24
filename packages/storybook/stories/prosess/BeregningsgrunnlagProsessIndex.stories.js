@@ -624,9 +624,9 @@ export const selvstendigNæringsdrivende = () => {
 export const tidsbegrensetArbeidsforholdMedAvvik = () => {
   const andeler = [
     lagAndel('AT', 300000, undefined, false),
-    lagAndel('AT', 130250, undefined, true),
-    lagAndel('AT', 130250, undefined, true),
-    lagAndel('FL', 130250, undefined, undefined)];
+    lagAndel('AT', 132250, undefined, true),
+    lagAndel('AT', 140250, undefined, true),
+    lagAndel('FL', 133250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');
   andeler[1].arbeidsforhold = lagArbeidsforhold('Gardslien transport og Gardiner AS', '9478541223', 'sdefsef-swdefsdf-sdf-sdfdsf-98das', '2019-11-11');
   andeler[2].arbeidsforhold = lagArbeidsforhold('Svaneby sykehjem', '93178545', 'sdefsef-swdefsdf-sdf-sdfdsf-dfaf845');
@@ -687,10 +687,11 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
 };
 export const infoTrygdYtelse = () => {
   const andeler = [
-    lagAndel('KUN_YTELSE', 240000, undefined, undefined),
+    lagAndel('KUN_YTELSE', 360000, undefined, undefined),
   ];
   const statuser = [lagStatus('KUN_YTELSE')];
-  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 1215)];
+  perioder[0].redusertPrAar = 316000;
   const bg = lagBG(perioder, statuser);
   bg.dekningsgrad = 80;
   return (
@@ -785,6 +786,8 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
   andeler[2].pgiSnitt = 154985;
   const statuser = [lagStatus('FL_SN'), lagStatus('DP')];
   const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 596000;
   const bg = lagBG(perioder, statuser);
   bg.dekningsgrad = 80;
   return (
@@ -1026,6 +1029,36 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
+export const arbeidstakerIkkeOppfylt = () => {
+  const andeler = [
+    lagAndel('AT', 32232, undefined, undefined, false),
+  ];
+
+  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 450326;
+
+  const statuser = [lagStatus('AT')];
+
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, -42673, 26.2, -7131)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   bg.dekningsgrad = 100;
   return (
