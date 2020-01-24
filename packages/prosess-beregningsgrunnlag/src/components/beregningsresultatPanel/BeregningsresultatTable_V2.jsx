@@ -29,7 +29,7 @@ const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnla
   if (vilkarStatus && vilkarStatus.kode && vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
     return 'Omberegnet';
   }
-  if (typeof vilkarStatus === 'object' && vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+  if (typeof vilkarStatus === 'object' && vilkarStatus.kode && vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
     return 'Omberegnet';
   }
   return 'Fastsatt';
