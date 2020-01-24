@@ -1112,8 +1112,71 @@ export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
   );
 };
 
+export const arbeidstakerOgSelvstendigNæringsdrivendeTFP2426 = () => {
+  const andeler = [
+    lagAndel('SN', 21167, undefined, undefined, false),
+    lagAndel('AT', 72194, undefined, undefined),
+  ];
+  const pgi = [
+    {
+      beløp: 238029,
+      årstall: 2019,
+    },
+    {
+      beløp: 49051,
+      årstall: 2018,
+    },
+    {
+      beløp: 13606,
+      årstall: 2017,
+    },
+  ];
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 100229;
+  // const perioder = [lagStandardPeriode(andeler)];
+  const perioder = [lagPeriodeMedDagsats(andeler, 386)];
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 100229;
 
-export const tidsbegrensetArbeidsforholdMedAvvikORGdesign = () => {
+  const statuser = [lagStatus('AT_SN')];
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: false,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 21167,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'ANNEN', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
+  bg.dekningsgrad = 100;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+
+export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
   const andeler = [lagAndel('AT', 300000, undefined, false), lagAndel('AT', 130250, undefined, true),
     lagAndel('AT', 130250, undefined, true), lagAndel('FL', 130250, undefined, undefined)];
   andeler[0].arbeidsforhold = lagArbeidsforhold('Andeby bank', '987654321', 'sdefsef-swdefsdf-sdf-sdfdsf-ddsdf');

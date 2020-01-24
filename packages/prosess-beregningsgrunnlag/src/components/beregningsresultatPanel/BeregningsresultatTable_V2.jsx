@@ -257,9 +257,9 @@ const settVisningsRaderForDefault = (periode, rows, rowsAndeler, rowsForklaringe
   }
 };
 const finnDagsatsGrunnlag = (bruttoRad, avkortetRad, redusertRad) => {
-  if (redusertRad.verdi) return redusertRad.verdi;
-  if (avkortetRad.verdi) return avkortetRad.verdi;
-  if (bruttoRad.verdi) return bruttoRad.verdi;
+  if (redusertRad.verdi && redusertRad.display !== false) return redusertRad.verdi;
+  if (avkortetRad.verdi && avkortetRad.display !== false) return avkortetRad.verdi;
+  if (bruttoRad.verdi && bruttoRad.display !== false) return bruttoRad.verdi;
   return null;
 };
 
