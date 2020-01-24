@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Panel from 'nav-frontend-paneler';
-import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
+import {
+  Element, Normaltekst, Undertekst, EtikettLiten,
+} from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
@@ -12,7 +13,19 @@ import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import Lesmerpanel from 'nav-frontend-lesmerpanel';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
+import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
+const finnvirksomhetsTypeKode = (naring) => {
+  const { virksomhetType } = naring;
+  if (!virksomhetType) {
+    return 'UDEFINERT';
+  }
+  const { kode } = virksomhetType;
+  if (!kode) {
+    return 'UDEFINERT';
+  }
+  return kode;
+};
 const virksomhetsDatoer = (naringsAndel) => {
   const { oppstartsdato, opphoersdato } = naringsAndel;
   if (!oppstartsdato) {
@@ -38,8 +51,12 @@ const lagIntroTilEndringspanel = (naring) => {
   const {
     oppstartsdato, erVarigEndret, endringsdato,
   } = naring;
+
   const hendelseTekst = erVarigEndret ? 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VarigEndret' : 'Beregningsgrunnlag.NaeringsOpplysningsPanel.Nyoppstaret';
   const hendelseDato = erVarigEndret ? endringsdato : oppstartsdato;
+  if (!hendelseDato) {
+    return null;
+  }
   return (
     <>
       <FlexContainer>
@@ -93,41 +110,54 @@ export const NaeringsopplysningsPanel = ({
   intl,
 }) => {
   const snAndel = alleAndelerIForstePeriode.find((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   if (!snAndel.næringer) {
     return null;
   }
 
   return (
-    <Panel className={beregningStyles.panel}>
-      <Element className={beregningStyles.semiBoldText}>
-        <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
-      </Element>
-      <Row key="SNInntektIngress">
-        <Column xs="8" />
-        <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
-          <Undertekst>
-            <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
-          </Undertekst>
-        </Column>
-      </Row>
+    <>
+      <FlexRow key="SNNareingOverskrift">
+        <FlexColumn>
+          <Element className={beregningStyles.semiBoldText}>
+            <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
+          </Element>
+        </FlexColumn>
+        <FlexColumn>
+          {userIdent && (
+            <LinkTilEksterntSystem linkText="SØ" userIdent={userIdent} type="SØ" />
+          )}
+        </FlexColumn>
+      </FlexRow>
+
       <VerticalSpacer fourPx />
       {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
+          <Row key="SNInntektIngress">
+            <Column xs="9" />
+            <Column xs="3" className={beregningStyles.colAarText}>
+              {søkerHarOppgittInntekt(naring) && (
+                <Undertekst>
+                  <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.OppgittAar" />
+                </Undertekst>
+              )}
+            </Column>
+          </Row>
           <Row key={`NaringsNavn${naring.orgnr}`}>
             <Column xs="6">
-              <Normaltekst>
+              <Normaltekst className={beregningStyles.semiBoldText}>
                 {finnBedriftsnavn(naring)}
               </Normaltekst>
             </Column>
-            <Column xs="2">
-              <Normaltekst>
-                {naring.virksomhetType && naring.virksomhetType.kode ? naring.virksomhetType.kode : ''}
-              </Normaltekst>
+            <Column xs="4">
+              <EtikettLiten>
+                <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
+              </EtikettLiten>
             </Column>
-            <Column xs="3" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
               {søkerHarOppgittInntekt(naring)
                 && (
-                <Normaltekst>
+                <Normaltekst className={beregningStyles.semiBoldText}>
                   {formatCurrencyNoKr(naring.oppgittInntekt)}
                 </Normaltekst>
                 )}
@@ -139,12 +169,12 @@ export const NaeringsopplysningsPanel = ({
                 {naring && naring.orgnr ? naring.orgnr : ''}
               </Normaltekst>
             </Column>
-            <Column xs="2">
+            <Column xs="4">
               {virksomhetsDatoer(naring)
                 && (
-                <Normaltekst>
+                <Undertekst>
                   {virksomhetsDatoer(naring)}
-                </Normaltekst>
+                </Undertekst>
                 )}
             </Column>
           </Row>
@@ -163,9 +193,10 @@ export const NaeringsopplysningsPanel = ({
               {lagBeskrivelsePanel(naring, intl)}
             </Row>
             )}
+          <VerticalSpacer twentyPx />
         </React.Fragment>
       ))}
-    </Panel>
+    </>
   );
 };
 

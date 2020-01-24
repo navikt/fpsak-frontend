@@ -1,12 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
@@ -25,7 +25,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregnings
 import Beregningsgrunnlag2, { TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING } from '../beregningsgrunnlagPanel/Beregningsgrunnlag_V2';
 import AksjonspunktBehandler from '../fellesPaneler/AksjonspunktBehandler';
 import BeregningsresultatTable2 from '../beregningsresultatPanel/BeregningsresultatTable_V2';
-import AksjonspunktHelpTextV2 from '../redesign/AksjonspunktHelpText_V2';
+
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 
@@ -42,6 +42,7 @@ const {
   FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS,
   VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD,
+  FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE,
   FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
   VURDER_DEKNINGSGRAD,
 } = aksjonspunktCodes;
@@ -55,6 +56,31 @@ const gjelderBehandlingenBesteberegning = (faktaOmBeregning) => (faktaOmBeregnin
 
 const harPerioderMedAvsluttedeArbeidsforhold = (allePerioder) => allePerioder.some(({ periodeAarsaker }) => periodeAarsaker
   && periodeAarsaker.some(({ kode }) => kode === periodeAarsak.ARBEIDSFORHOLD_AVSLUTTET));
+
+const findAksjonspunktHelpTekst = (gjeldendeAksjonspunkt, erVarigEndring, erNyArbLivet, erNyoppstartet) => {
+  switch (gjeldendeAksjonspunkt.definisjon.kode) {
+    case FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS:
+      return 'Beregningsgrunnlag.Helptext.Arbeidstaker2';
+    case VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE:
+      if (erVarigEndring) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.VarigEndring';
+      }
+      if (erNyoppstartet) {
+        return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende.Nyoppstartet';
+      }
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
+    case FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD:
+      return 'Beregningsgrunnlag.Helptext.TidsbegrensetArbeidsforhold2';
+    case FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE:
+      return 'Beregningsgrunnlag.Helptext.SelvstendigNaeringsdrivende2';
+    case FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET:
+      return 'Beregningsgrunnlag.Helptext.NyIArbeidslivetSN2';
+    case VURDER_DEKNINGSGRAD:
+      return 'Beregningsgrunnlag.Helptext.BarnetHarDødDeFørsteSeksUkene';
+    default:
+      return 'Beregningsgrunnlag.Helptext.Ukjent';
+  }
+};
 
 const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode) => {
   if (gjeldendeAksjonspunkter === undefined || gjeldendeAksjonspunkter === null) {
@@ -71,13 +97,15 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextV2
-          apneAksjonspunkt={apneAksjonspunkt}
-          avvikProsent={avvikProsent}
-          erVarigEndring={erVarigEndring}
-          erNyArbLivet={erNyArbLivet}
-          erNyoppstartet={erNyoppstartet}
-        />
+        <AksjonspunktHelpTextHTML>
+          { apneAksjonspunkt.map((ap) => (
+            <FormattedHTMLMessage
+              key={ap.definisjon.kode}
+              id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+              values={{ verdi: avvikProsent }}
+            />
+          ))}
+        </AksjonspunktHelpTextHTML>
       )}
 
     </div>
@@ -162,13 +190,13 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
 };
 
 const getSammenligningsgrunnlagsPrStatus = (bg) => (bg.sammenligningsgrunnlagPrStatus ? bg.sammenligningsgrunnlagPrStatus : undefined);
-const getSammenligningsgrunnlagSum = (bg) => (bg.sammenligningsgrunnlag ? bg.sammenligningsgrunnlag.rapportertPrAar : undefined);
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
     return allePerioder[0].beregningsgrunnlagPrStatusOgAndel;
   }
   return undefined;
 };
+
 const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   if (!sammenligningsgrunnlagPrStatus) {
     return undefined;
@@ -176,13 +204,15 @@ const getAvviksprosent = (sammenligningsgrunnlagPrStatus) => {
   const avvikElem = sammenligningsgrunnlagPrStatus.find((status) => status.avvikProsent > 25);
   const avvikProsent = avvikElem && avvikElem.avvikProsent ? avvikElem.avvikProsent : 0;
   if (avvikProsent || avvikProsent === 0) {
-    return avvikProsent;
+    return Number((avvikProsent).toFixed(1));
   }
   return undefined;
 };
 
 const getStatusList = (beregningsgrunnlagPeriode) => {
-  const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel.map((statusAndel) => statusAndel.aktivitetStatus);
+  const statusList = beregningsgrunnlagPeriode[0].beregningsgrunnlagPrStatusOgAndel
+    .filter((statusAndel) => statusAndel.erTilkommetAndel !== true)
+    .map((statusAndel) => statusAndel.aktivitetStatus);
   return statusList;
 };
 
@@ -211,11 +241,9 @@ export const BeregningFormImpl2 = ({
   ...formProps
 }) => {
   const {
-    dekningsgrad, skjaeringstidspunktBeregning,
-    årsinntektVisningstall, beregningsgrunnlagPeriode, faktaOmBeregning,
+    dekningsgrad, skjaeringstidspunktBeregning, beregningsgrunnlagPeriode, faktaOmBeregning,
   } = beregningsgrunnlag;
   const gjelderBesteberegning = gjelderBehandlingenBesteberegning(faktaOmBeregning);
-  const sammenligningsgrunnlagSum = getSammenligningsgrunnlagSum(beregningsgrunnlag);
   const sammenligningsgrunnlagPrStatus = getSammenligningsgrunnlagsPrStatus(beregningsgrunnlag);
   const avvikProsent = getAvviksprosent(sammenligningsgrunnlagPrStatus);
   const aktivitetStatusList = getStatusList(beregningsgrunnlagPeriode);
@@ -260,6 +288,8 @@ export const BeregningFormImpl2 = ({
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
                 alleKodeverk={alleKodeverk}
+                sammenligningsGrunnlagInntekter={beregningsgrunnlag.sammenligningsgrunnlagInntekter}
+                skjeringstidspunktDato={skjaeringstidspunktBeregning}
               />
             </>
           )}
@@ -270,13 +300,11 @@ export const BeregningFormImpl2 = ({
           </Undertittel>
           <VerticalSpacer fourtyPx />
           <AvviksopplysningerPanel
-            beregnetAarsinntekt={årsinntektVisningstall}
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-            sammenligningsgrunnlag={sammenligningsgrunnlagSum}
-            avvik={avvikProsent}
             relevanteStatuser={relevanteStatuser}
             allePerioder={beregningsgrunnlagPeriode}
             harAksjonspunkter={harAksjonspunkter}
+            gjelderBesteberegning={gjelderBesteberegning}
           />
           {harAksjonspunkter
           && (
@@ -305,6 +333,7 @@ export const BeregningFormImpl2 = ({
               aksjonspunkter={gjeldendeAksjonspunkter}
               aktivitetStatusList={aktivitetStatusList}
               grunnbelop={beregningsgrunnlag.grunnbeløp}
+              halvGVerdi={beregningsgrunnlag.halvG}
               harAksjonspunkter={harAksjonspunkter}
             />
           </>

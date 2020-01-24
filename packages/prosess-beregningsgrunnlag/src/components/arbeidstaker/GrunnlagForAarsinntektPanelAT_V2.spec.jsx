@@ -41,9 +41,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       bruttoFastsattInntekt={0}
 
     />);
-
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     expect(rows).to.have.length(9);
   });
 
@@ -62,8 +60,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       getKodeverknavn={getKodeverknavn}
       bruttoFastsattInntekt={0}
     />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     expect(rows).to.have.length(4);
     let rowNr = 1;
     andeler.forEach((andel) => {
@@ -96,8 +93,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
       bruttoFastsattInntekt={0}
     />);
 
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
+    const rows = wrapper.find('Row');
     let rowNr = 1;
     andeler.forEach((andel) => {
       const teksterAndel = rows.at(rowNr).find('Normaltekst');
@@ -121,7 +117,7 @@ describe('<GrunnlagForAarsinntektPanelAT_V2>', () => {
     const aarSum = rows.at(rowNr).find('Element');
     const ledetextSum = rows.at(rowNr).find('FormattedMessage');
     const beregnetAarsinntekt = andeler.reduce((acc, andel) => acc + andel.beregnetPrAar, 0);
-    const beregnetMaanedsinntekt = andeler.reduce((acc, andel) => (acc + andel.beregnetPrAar) / 12, 0);
+    const beregnetMaanedsinntekt = beregnetAarsinntekt / 12;
     expect(ledetextSum.get(0).props.id).to.equal('Beregningsgrunnlag.AarsinntektPanel.TotaltArbeidsinntekt');
     expect(mndSum.childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetMaanedsinntekt));
     expect(aarSum.childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetAarsinntekt));

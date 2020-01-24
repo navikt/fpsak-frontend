@@ -41,70 +41,123 @@ const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) =
   }
   return null;
 };
+
+const lagRelevantePaneler = (
+  alleAndelerIForstePeriode,
+  relevanteStatuser,
+  allePerioder,
+  harAksjonspunkter,
+  sammenligningsgrunnlagPrStatus,
+  gjelderBesteberegning,
+) => {
+  if (gjelderBesteberegning) {
+    return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
+  }
+  return (
+    <>
+      {
+        relevanteStatuser.isArbeidstaker && (
+          <AvviksopplysningerAT
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
+        )
+      }
+      {
+        relevanteStatuser.isKombinasjonsstatus && (
+          <VerticalSpacer sixteenPx />
+        )
+      }
+      {
+        relevanteStatuser.isFrilanser && (
+          <AvviksopplysningerFL
+            beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+            relevanteStatuser={relevanteStatuser}
+          />
+        )
+      }
+      {
+        relevanteStatuser.isKombinasjonsstatus && (
+          <VerticalSpacer sixteenPx />
+        )
+      }
+      {
+        relevanteStatuser.isSelvstendigNaeringsdrivende && (
+          <AvviksopplysningerSN
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+            harAksjonspunkter={harAksjonspunkter}
+            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+          />
+        )
+      }
+      {
+        relevanteStatuser.isAAP && (
+          <Row>
+            <Column xs="12">
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
+              </Normaltekst>
+            </Column>
+          </Row>
+        )
+      }
+      {
+        relevanteStatuser.isDagpenger && (
+          <Row>
+            <Column xs="12">
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
+              </Normaltekst>
+            </Column>
+          </Row>
+        )
+      }
+      {
+        relevanteStatuser.isMilitaer && (
+          <Row>
+            <Column xs="12">
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
+              </Normaltekst>
+            </Column>
+          </Row>
+        )
+}
+    </>
+  );
+};
+
+
+const harRelevanteStatuserSatt = (relevanteStatuser) => {
+  const statuser = relevanteStatuser;
+  delete statuser.skalViseBeregningsgrunnlag;
+  const statusVerdier = Object.values(statuser);
+  return statusVerdier.some((verdi) => verdi === true);
+};
+
 const AvviksopplysningerPanel = ({
-  relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus,
+  relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus, gjelderBesteberegning,
 }) => {
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(allePerioder);
+
+  const skalViseAvviksPanel = harRelevanteStatuserSatt({ ...relevanteStatuser });
+  if (!skalViseAvviksPanel) {
+    return null;
+  }
+
   return (
     <Panel className={beregningStyles.panelRight}>
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
       </Element>
       <VerticalSpacer eightPx />
-      {relevanteStatuser.isArbeidstaker && (
-      <AvviksopplysningerAT
-        beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.ARBEIDSTAKER)}
-        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-        relevanteStatuser={relevanteStatuser}
-      />
-      )}
-      {relevanteStatuser.isKombinasjonsstatus && (
-      <VerticalSpacer sixteenPx />
-      )}
-      {relevanteStatuser.isFrilanser && (
-      <AvviksopplysningerFL
-        beregnetAarsinntekt={beregnAarsintektForAktivitetStatus(alleAndelerIForstePeriode, aktivitetStatus.FRILANSER)}
-        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-        relevanteStatuser={relevanteStatuser}
-      />
-      )}
-      {relevanteStatuser.isKombinasjonsstatus && (
-      <VerticalSpacer sixteenPx />
-      )}
-      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
-      <AvviksopplysningerSN
-        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-        harAksjonspunkter={harAksjonspunkter}
-        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-      />
-      )}
-      {relevanteStatuser.isAAP && (
-      <Row>
-        <Column xs="12">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AAP" />
-          </Normaltekst>
-        </Column>
-      </Row>
-      )}
-      {relevanteStatuser.isDagpenger && (
-      <Row>
-        <Column xs="12">
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Dagpenger" />
-          </Normaltekst>
-        </Column>
-      </Row>
-      )}
-      {relevanteStatuser.isMilitaer && (
-        <Row>
-          <Column xs="12">
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Miletar" />
-            </Normaltekst>
-          </Column>
-        </Row>
-      )}
+      {
+        lagRelevantePaneler(
+          alleAndelerIForstePeriode, relevanteStatuser, allePerioder, harAksjonspunkter, sammenligningsgrunnlagPrStatus, gjelderBesteberegning,
+        )
+      }
 
     </Panel>
   );
@@ -116,6 +169,7 @@ AvviksopplysningerPanel.propTypes = {
   allePerioder: PropTypes.arrayOf(PropTypes.shape()),
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()),
   harAksjonspunkter: PropTypes.bool,
+  gjelderBesteberegning: PropTypes.bool.isRequired,
 };
 
 AvviksopplysningerPanel.defaultProps = {

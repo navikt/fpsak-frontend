@@ -9,19 +9,18 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 
-import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
 
 const createHeaderRow = () => (
   <Row key="SNInntektHeader">
-    <Column xs="9">
+    <Column xs="10">
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AarHeader" />
       </EtikettLiten>
     </Column>
-    <Column xs="2" className={beregningStyles.rightAlignElement}>
+    <Column xs="2" className={beregningStyles.colAarText}>
 
       <EtikettLiten className={beregningStyles.etikettLiten}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.TotalPensjonsGivende" />
@@ -34,19 +33,19 @@ const createSumRow = (pgiSnitt, erNyIArbeidslivet) => (
     {pgiSnitt !== undefined && !erNyIArbeidslivet && (
       <>
         <Row key="grunnlagAarsinntektSNLine">
-          <Column xs="11">
-            <hr />
+          <Column xs="12" className={beregningStyles.noPaddingRight}>
+            <div className={beregningStyles.colDevider} />
           </Column>
         </Row>
         <Row key="grunnlagAarsinntektSN">
-          <Column xs="9" className={beregningStyles.rightAlignTextInDiv}>
+          <Column xs="10" className={beregningStyles.rightAlignTextInDiv}>
             <Element>
               <FormattedMessage
                 id="Beregningsgrunnlag.AarsinntektPanel.SnittPensjonsGivende"
               />
             </Element>
           </Column>
-          <Column xs="2" className={beregningStyles.rightAlignElement}>
+          <Column xs="2" className={beregningStyles.colAarText}>
             <Element>
               {formatCurrencyNoKr(pgiSnitt)}
             </Element>
@@ -65,7 +64,7 @@ const createInntektRows = (pgiVerdier) => (
             {element.årstall}
           </EtikettLiten>
         </Column>
-        <Column xs="4" className={beregningStyles.rightAlignElement}>
+        <Column xs="5" className={beregningStyles.colAarText}>
           <EtikettLiten>
             {formatCurrencyNoKr(element.beløp)}
           </EtikettLiten>
@@ -91,7 +90,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   }
   const { pgiVerdier, pgiSnitt, erNyIArbeidslivet } = snAndel;
   return (
-    <Panel className={beregningStyles.panel}>
+    <>
       <Element className={beregningStyles.semiBoldText}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
@@ -108,7 +107,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
       {createInntektRows(pgiVerdier)}
       {createSumRow(pgiSnitt, erNyIArbeidslivet)}
 
-    </Panel>
+    </>
   );
 };
 

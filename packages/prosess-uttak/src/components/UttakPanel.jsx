@@ -374,18 +374,21 @@ export const transformValues = (values, apCodes, aksjonspunkter) => {
   }));
 };
 
-const mapStateToPropsFactory = (_initialState, ownProps) => {
-  const { behandlingId, behandlingVersjon, aksjonspunkter } = ownProps;
+const mapStateToPropsFactory = (_initialState, initOwnProps) => {
+  const { behandlingId, behandlingVersjon, aksjonspunkter } = initOwnProps;
   const validate = (values) => validateUttakPanelForm(values);
-  const onSubmit = (values) => ownProps.submitCallback(transformValues(values, ownProps.apCodes, aksjonspunkter));
-  const initialValues = buildInitialValues(ownProps);
+  const onSubmit = (values) => initOwnProps.submitCallback(transformValues(values, initOwnProps.apCodes, aksjonspunkter));
 
-  return (state) => ({
-    validate,
-    onSubmit,
-    initialValues,
-    manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
-  });
+  return (state, ownProps) => {
+    const initialValues = buildInitialValues(ownProps);
+
+    return {
+      validate,
+      onSubmit,
+      initialValues,
+      manuellOverstyring: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'manuellOverstyring'),
+    };
+  };
 };
 
 const UttakPanel = connect(mapStateToPropsFactory)(injectIntl(behandlingForm({

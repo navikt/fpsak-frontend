@@ -685,6 +685,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'INNVILGET_AARSAK',
     verdiId: 'HistorikkEndretFeltVerdiType.OverforingOppfyltAleneomsorg',
   },
+  2037: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.InnvilgetFellesperiodeTilFar',
+  },
   2022: {
     kode: 'INNVILGET_AARSAK',
     verdiId: 'HistorikkEndretFeltVerdiType.OverforingOppfyltAnnenPartInnlagt',
