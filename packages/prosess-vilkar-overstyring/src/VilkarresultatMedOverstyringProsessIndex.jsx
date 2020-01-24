@@ -58,7 +58,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
 
 VilkarresultatMedOverstyringProsessIndex.propTypes = {
   behandling: vilkarOverstyringBehandlingPropType.isRequired,
-  medlemskap: vilkarOverstyringMedlemskapPropType.isRequired,
+  medlemskap: vilkarOverstyringMedlemskapPropType,
   aksjonspunkter: PropTypes.arrayOf(vilkarOverstyringAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   overrideReadOnly: PropTypes.bool.isRequired,
@@ -77,6 +77,7 @@ VilkarresultatMedOverstyringProsessIndex.propTypes = {
 
 VilkarresultatMedOverstyringProsessIndex.defaultProps = {
   lovReferanse: '',
+  medlemskap: {},
 };
 
 export default VilkarresultatMedOverstyringProsessIndex;

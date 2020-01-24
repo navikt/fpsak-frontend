@@ -11,6 +11,7 @@ import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus'
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
@@ -62,8 +63,32 @@ describe('<ProsessStegPanel>', () => {
     erAktivt: true,
   }];
 
+  const fellesProsessStegData = {
+    label: 'test',
+    isAksjonspunktOpen: true,
+    isReadOnly: false,
+    aksjonspunkter: [],
+    status: vilkarUtfallType.IKKE_OPPFYLT,
+    panelData: [{
+      aksjonspunkter: [],
+      isReadOnly: false,
+      status: vilkarUtfallType.IKKE_OPPFYLT,
+      komponentData: {
+        isReadOnly: false,
+        readOnlySubmitButton: false,
+        aksjonspunkter: [],
+        vilkar: [],
+        isAksjonspunktOpen: false,
+        overrideReadOnly: false,
+        kanOverstyreAccess: false,
+        toggleOverstyring: () => {},
+      },
+    }],
+  };
+
   it('skal vise panel for henlagt behandling når valgt panel er vedtakspanelet og behandling er henlagt', () => {
     const valgtPanel = {
+      ...fellesProsessStegData,
       urlCode: bpc.VEDTAK,
       erStegBehandlet: false,
       isReadOnly: false,
@@ -73,7 +98,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={{
           ...behandling,
@@ -94,6 +119,7 @@ describe('<ProsessStegPanel>', () => {
 
   it('skal vise panel for steg ikke behandlet når steget ikke er behandlet og saken ikke er henlagt', () => {
     const valgtPanel = {
+      ...fellesProsessStegData,
       urlCode: bpc.VEDTAK,
       erStegBehandlet: false,
       isReadOnly: false,
@@ -103,7 +129,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -121,21 +147,22 @@ describe('<ProsessStegPanel>', () => {
 
   it('skal vise panel for inngangsvilkår når det er data for flere panel', () => {
     const valgtPanel = {
+      ...fellesProsessStegData,
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
       panelData: [{
+        ...fellesProsessStegData.panelData[0],
         code: 'FODSEL',
         renderComponent: () => undefined,
         endpoints: [],
-        komponentData: {},
         isAksjonspunktOpen: true,
         aksjonspunktHelpTextCodes: [],
       }, {
+        ...fellesProsessStegData.panelData[0],
         code: 'MEDLEMSKAP',
         renderComponent: () => undefined,
         endpoints: [],
-        komponentData: {},
         isAksjonspunktOpen: true,
         aksjonspunktHelpTextCodes: [],
       }],
@@ -144,7 +171,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -165,14 +192,15 @@ describe('<ProsessStegPanel>', () => {
 
   it('skal vise kun vise ett panel', () => {
     const valgtPanel = {
+      ...fellesProsessStegData,
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
       panelData: [{
+        ...fellesProsessStegData.panelData[0],
         code: 'FODSEL',
         renderComponent: () => undefined,
         endpoints: [],
-        komponentData: {},
         isAksjonspunktOpen: true,
         aksjonspunktHelpTextCodes: [],
       }],
@@ -181,7 +209,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}
@@ -202,21 +230,22 @@ describe('<ProsessStegPanel>', () => {
 
   it('skal lagre aksjonspunkt', () => {
     const valgtPanel = {
+      ...fellesProsessStegData,
       urlCode: bpc.INNGANGSVILKAR,
       erStegBehandlet: true,
       isReadOnly: false,
       panelData: [{
+        ...fellesProsessStegData.panelData[0],
         code: 'FODSEL',
         renderComponent: () => undefined,
         endpoints: [],
-        komponentData: {},
         isAksjonspunktOpen: true,
         aksjonspunktHelpTextCodes: [],
       }, {
+        ...fellesProsessStegData.panelData[0],
         code: 'MEDLEMSKAP',
         renderComponent: () => undefined,
         endpoints: [],
-        komponentData: {},
         isAksjonspunktOpen: true,
         aksjonspunktHelpTextCodes: [],
       }],
@@ -234,7 +263,7 @@ describe('<ProsessStegPanel>', () => {
 
     const wrapper = shallow(
       <ProsessStegPanel
-        valgtPanel={valgtPanel}
+        valgtProsessSteg={valgtPanel}
         fagsak={fagsak}
         behandling={behandling}
         alleKodeverk={{}}

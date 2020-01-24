@@ -99,17 +99,33 @@ describe('<faktaPanelUtils>', () => {
     });
   });
 
+  const komponentData = {
+    aksjonspunkter: [],
+    readOnly: false,
+    submittable: true,
+    harApneAksjonspunkter: true,
+    alleMerknaderFraBeslutter: {
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: { notAccepted: undefined },
+    },
+    personopplysninger: {},
+    inntektArbeidYtelse: {},
+  };
+
   it('skal finne ut at valgt faktapanel er panelet med åpent aksjonspunkt', () => {
     const paneler = [{
       urlCode: 'arbeidsforhold',
       textCode: 'ArbeidsforholdInfoPanel.Title',
       endpoints: [],
+      renderComponent: () => undefined,
       harApneAksjonspunkter: false,
+      komponentData,
     }, {
       urlCode: 'test',
       textCode: 'Test.Title',
       endpoints: [],
+      renderComponent: () => undefined,
       harApneAksjonspunkter: true,
+      komponentData,
     }];
     const valgtFaktaPanelKode = DEFAULT_FAKTA_KODE;
 
@@ -124,11 +140,15 @@ describe('<faktaPanelUtils>', () => {
       textCode: 'ArbeidsforholdInfoPanel.Title',
       endpoints: [],
       harApneAksjonspunkter: false,
+      renderComponent: () => undefined,
+      komponentData,
     }, {
       urlCode: 'test',
       textCode: 'Test.Title',
       endpoints: [],
       harApneAksjonspunkter: false,
+      renderComponent: () => undefined,
+      komponentData,
     }];
     const valgtFaktaPanelKode = DEFAULT_FAKTA_KODE;
 
@@ -143,11 +163,15 @@ describe('<faktaPanelUtils>', () => {
       textCode: 'ArbeidsforholdInfoPanel.Title',
       endpoints: [],
       harApneAksjonspunkter: false,
+      renderComponent: () => undefined,
+      komponentData,
     }, {
       urlCode: 'test',
       textCode: 'Test.Title',
       endpoints: [],
       harApneAksjonspunkter: false,
+      renderComponent: () => undefined,
+      komponentData,
     }];
     const valgtFaktaPanelKode = paneler[1].urlCode;
 
@@ -161,10 +185,16 @@ describe('<faktaPanelUtils>', () => {
       urlCode: 'arbeidsforhold',
       textCode: 'ArbeidsforholdInfoPanel.Title',
       harApneAksjonspunkter: false,
+      endpoints: [],
+      renderComponent: () => undefined,
+      komponentData,
     }, {
       urlCode: 'test',
       textCode: 'Test.Title',
       harApneAksjonspunkter: true,
+      endpoints: [],
+      renderComponent: () => undefined,
+      komponentData,
     }];
     const intl = {
       formatMessage: (o) => o.id,

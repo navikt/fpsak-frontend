@@ -78,7 +78,6 @@ const filtrerAvslagsarsaker = (avslagsarsaker, vilkarTypeKode) => (vilkarTypeKod
   : avslagsarsaker[vilkarTypeKode]);
 
 const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
-  endpoints: [api.MEDLEMSKAP],
   showComponent: ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }) => vilkarForSteg.length > 0
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
   renderComponent: (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />,
@@ -180,6 +179,7 @@ const prosessStegPanelDefinisjoner = [{
     textCode: 'Inngangsvilkar.Medlemskapsvilkaret',
     aksjonspunkterCodes: [ac.OVERSTYR_MEDLEMSKAPSVILKAR],
     vilkarCodes: [vt.MEDLEMSKAPSVILKARET],
+    endpoints: [api.MEDLEMSKAP],
     ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
   }, {
     code: 'FORELDREANSVARSVILKARET',

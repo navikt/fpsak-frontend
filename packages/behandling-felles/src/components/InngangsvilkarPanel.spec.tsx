@@ -5,6 +5,7 @@ import sinon from 'sinon';
 import { FormattedMessage } from 'react-intl';
 import { Column } from 'nav-frontend-grid';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import { AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
@@ -29,26 +30,42 @@ describe('<InngangsvilkarPanel>', () => {
     links: [],
   };
 
+  const fellesProsessStegPanelData = {
+    aksjonspunkter: [],
+    isReadOnly: false,
+    status: vilkarUtfallType.IKKE_OPPFYLT,
+    komponentData: {
+      isReadOnly: false,
+      readOnlySubmitButton: false,
+      aksjonspunkter: [],
+      vilkar: [],
+      isAksjonspunktOpen: false,
+      overrideReadOnly: false,
+      kanOverstyreAccess: false,
+      toggleOverstyring: () => {},
+    },
+  };
+
   it('skal vise inngangsvilkår-panel med fødsel, medlemskap og opptjening', () => {
     const prosessStegData = [{
+      ...fellesProsessStegPanelData,
       code: 'FODSEL',
       renderComponent: () => undefined,
       endpoints: [],
-      komponentData: {},
       isAksjonspunktOpen: true,
       aksjonspunktHelpTextCodes: ['TEST'],
     }, {
+      ...fellesProsessStegPanelData,
       code: 'MEDLSEMSKAP',
       renderComponent: () => undefined,
       endpoints: [],
-      komponentData: {},
       isAksjonspunktOpen: false,
       aksjonspunktHelpTextCodes: [],
     }, {
+      ...fellesProsessStegPanelData,
       code: 'OPPTJENING',
       renderComponent: () => undefined,
       endpoints: [],
-      komponentData: {},
       isAksjonspunktOpen: false,
       aksjonspunktHelpTextCodes: [],
     }];
@@ -79,10 +96,10 @@ describe('<InngangsvilkarPanel>', () => {
 
   it('skal vise aksjonspunkt-hjelpetekst med lenke for avventing av fakta-aksjonspunkt', () => {
     const prosessStegData = [{
+      ...fellesProsessStegPanelData,
       code: 'FODSEL',
       renderComponent: () => undefined,
       endpoints: [],
-      komponentData: {},
       isAksjonspunktOpen: true,
       aksjonspunktHelpTextCodes: ['TEST'],
     }];

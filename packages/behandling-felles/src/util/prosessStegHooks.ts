@@ -61,16 +61,17 @@ const useProsessStegVelger = (
 }, [behandling.versjon, valgtProsessSteg, valgtFaktaSteg]);
 
 const useBekreftAksjonspunkt = (
-  valgtPanel: ProsessStegData,
   fagsak: FagsakInfo,
   behandling: Behandling,
   behandlingApi: {[name: string]: EndpointOperations},
   lagringSideEffectsCallback: (aksjonspunktModeller: {}) => () => void,
   dispatch: Dispatch,
+  valgtPanel?: ProsessStegData,
 ) => useCallback((
   aksjonspunktModels,
 ) => getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak,
-  behandling, valgtPanel.aksjonspunkter, behandlingApi)(aksjonspunktModels), [behandling.versjon, valgtPanel]);
+  behandling, valgtPanel ? valgtPanel.aksjonspunkter : [], behandlingApi)(aksjonspunktModels),
+[behandling.versjon, valgtPanel]);
 
 const useOppdateringAvBehandlingsversjon = (behandlingVersjon: number, oppdaterBehandlingVersjon: (versjon: number) => void) => {
   const [skalOppdatereFagsakKontekst, toggleSkalOppdatereFagsakContext] = useState(true);

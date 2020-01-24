@@ -237,7 +237,7 @@ const buildInitialValues = createSelector(
   },
 );
 
-const getCustomVilkarText = (erMedlemskapsPanel, medlemskapFom, behandlingType, erOppfylt) => {
+const getCustomVilkarText = (medlemskapFom, behandlingType, erOppfylt) => {
   const customVilkarText = {};
   const isBehandlingRevurderingFortsattMedlemskap = behandlingType.kode === BehandlingType.REVURDERING && !!medlemskapFom;
   if (isBehandlingRevurderingFortsattMedlemskap) {
@@ -248,12 +248,12 @@ const getCustomVilkarText = (erMedlemskapsPanel, medlemskapFom, behandlingType, 
 };
 
 const getCustomVilkarTextForOppfylt = createSelector(
-  [(ownProps) => ownProps.erMedlemskapsPanel, (ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
-  (erMedlemskapsPanel, medlemskapFom, behandlingType) => getCustomVilkarText(erMedlemskapsPanel, medlemskapFom, behandlingType, true),
+  [(ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
+  (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, true),
 );
 const getCustomVilkarTextForIkkeOppfylt = createSelector(
-  [(ownProps) => ownProps.erMedlemskapsPanel, (ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
-  (erMedlemskapsPanel, medlemskapFom, behandlingType) => getCustomVilkarText(erMedlemskapsPanel, medlemskapFom, behandlingType, false),
+  [(ownProps) => ownProps.medlemskapFom, (ownProps) => ownProps.behandlingType],
+  (medlemskapFom, behandlingType) => getCustomVilkarText(medlemskapFom, behandlingType, false),
 );
 
 const transformValues = (values, overstyringApKode) => ({

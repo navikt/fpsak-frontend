@@ -29,7 +29,7 @@ interface OwnProps {
 }
 
 const ProsessStegPanel: FunctionComponent<OwnProps> = ({
-  valgtProsessSteg = {},
+  valgtProsessSteg,
   fagsak,
   behandling,
   alleKodeverk,
@@ -40,11 +40,12 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
   dispatch,
 }) => {
   const erHenlagtOgVedtakStegValgt = behandling.behandlingHenlagt && valgtProsessSteg.urlCode === bpc.VEDTAK;
-  const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(valgtProsessSteg, fagsak, behandling, behandlingApi, lagringSideeffekterCallback,
-    dispatch);
+  const bekreftAksjonspunktCallback = prosessStegHooks.useBekreftAksjonspunkt(fagsak, behandling, behandlingApi, lagringSideeffekterCallback,
+    dispatch, valgtProsessSteg);
+
   return (
     <>
-      {valgtProsessSteg.erStegBehandlet && (
+      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtProsessSteg.aksjonspunkter}
@@ -82,7 +83,8 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
       {erHenlagtOgVedtakStegValgt && (
         <BehandlingHenlagtPanel />
       )}
-      {(valgtProsessSteg.urlCode && !valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
+      {(valgtProsessSteg && valgtProsessSteg.urlCode
+        && !valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt) && (
         <ProsessStegIkkeBehandletPanel />
       )}
     </>
