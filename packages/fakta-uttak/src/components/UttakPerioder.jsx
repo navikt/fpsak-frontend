@@ -141,7 +141,9 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
 const inneholderUgyldigeGraderinger = (faktaArbeidsforhold, perioder) => {
   const gradertePerioder = perioder.filter((p) => p.arbeidstidsprosent && p.arbeidstidsprosent > 0 && p.arbeidstidsprosent < 100);
   const arbeidsgiverIdentifikatorer = gradertePerioder.reduce((indentifikatorer, p) => {
-    indentifikatorer.push(p.arbeidsgiver.identifikator);
+    if (p.arbeidsgiver !== undefined) {
+      indentifikatorer.push(p.arbeidsgiver.identifikator);
+    }
     return indentifikatorer;
   }, []);
   const arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold = faktaArbeidsforhold
