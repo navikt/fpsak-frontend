@@ -26,10 +26,11 @@ const periodeHarAarsakSomTilsierVisning = (aarsaker) => {
   return aarsaker.filter((aarsak) => aarsakerSomTilsierMuligEndringIDagsats.indexOf(aarsak.kode) !== -1).length > 0;
 };
 const setTekstStrengKeyPavilkaarUtfallType = (vilkarStatus, skalFastsetteGrunnlag) => {
-  if (vilkarStatus && vilkarStatus.kode && vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
+  if (!vilkarStatus || !vilkarStatus.kode) return 'Fastsatt';
+  if (vilkarStatus.kode === vilkarUtfallType.OPPFYLT && !skalFastsetteGrunnlag) {
     return 'Omberegnet';
   }
-  if (typeof vilkarStatus === 'object' && vilkarStatus.kode && vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
+  if (vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT) {
     return 'Omberegnet';
   }
   return 'Fastsatt';
