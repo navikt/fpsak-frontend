@@ -17,6 +17,7 @@ import {
   invalidIntegerMessage,
   invalidNumberMessage,
   invalidOrgNumberMessage,
+  invalidOrgNumberOrFodselsnrMessage,
   invalidPeriodMessage,
   invalidPeriodRangeMessage,
   invalidSaksnummerOrFodselsnummerFormatMessage,
@@ -65,6 +66,8 @@ export const minValue = (length) => number => (number >= length ? null : minValu
 export const maxValue = (length) => number => (number <= length ? null : maxValueMessage(length));
 
 export const hasValidOrgNumber = number => (number.toString().trim().length === 9 ? null : invalidOrgNumberMessage());
+export const hasValidOrgNumberOrFodselsnr = number => (number.toString().trim().length === 9 || number.toString().trim().length === 11
+  ? null : invalidOrgNumberOrFodselsnrMessage());
 
 const hasValidNumber = (text) => (isEmpty(text) || numberRegex.test(text) ? null : invalidNumberMessage(text));
 const hasValidInt = (text) => (isEmpty(text) || integerRegex.test(text) ? null : invalidIntegerMessage(text));

@@ -22,7 +22,7 @@
   "MigreringFraInfotrygdPanel.Nei": "Nei",
   "MigreringFraInfotrygdPanel.ErDenneSakenMigrert": "Gjelder denne søknaden flytting av en sak fra Infotrygd?",
 
-  "TilretteleggingForArbeidsgiverFieldArray.OrgNr": "Arbeidsgivers org.nr.",
+  "TilretteleggingForArbeidsgiverFieldArray.OrgNr": "Arbeidsgivers orgnr/fnr",
   "TilretteleggingForArbeidsgiverFieldArray.LeggTilArbeidsgiver": "Legg til arbeidsgiver",
   "TerminFodselSvpPanel.TerminOgFodsel": "Opplysninger om termin og fødsel",
   "TerminFodselSvpPanel.Termindato": "Termindato",
@@ -201,6 +201,7 @@
   "ValidationMessage.MerEnNullUtaksprosent" : "Uttak av foreldrepenger i denne perioden er avslått, utbetalingsgrad kan ikke være større enn 0.",
   "ValidationMessage.MerEn100ProsentOgOgyldigUtsettlse" : "Samlet utbetalingsgrad og andel i arbeid bør ikke overskride 100%. Søker har ikke 100% stilling, vurder om perioden kan utsettes.",
   "ValidationMessage.InvalidOrganisasjonsnummer": "Ugyldig organisasjonsnummer.",
+  "ValidationMessage.InvalidOrganisasjonsnummerOrFodselsnr": "Ugyldig organisasjonsnummer eller fødselsnummer.",
 
   "Calendar.Day.0": "søndag",
   "Calendar.Day.1": "mandag",
