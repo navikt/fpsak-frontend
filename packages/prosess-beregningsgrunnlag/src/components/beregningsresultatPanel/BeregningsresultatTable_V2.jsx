@@ -48,7 +48,9 @@ const createRowsAndeler = (listofAndeler, erVurdert) => (listofAndeler.map((entr
 );
 const lineRow = (key) => (
   <Row key={key || 'separator'}>
-    <Column xs="11" className={styles.colLine} />
+    <Column xs="11" className={beregningStyles.noPaddingRight}>
+      <div className={beregningStyles.colDevider} />
+    </Column>
   </Row>
 );
 
@@ -185,16 +187,27 @@ const createPeriodeHeader = (header) => (
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
   </>
 );
-const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => (
-  <React.Fragment key={`Wr${tableData.dagsatser[0]}`}>
-    {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
+const lagKeyForPeriode = (dagsats, header) => {
+  if (dagsats) {
+    return dagsats;
+  }
+  if (header && header.key) {
+    return header.key;
+  }
+  return 'key';
+};
+const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, halvGVerdi) => {
+  const key = lagKeyForPeriode(tableData.dagsatser[0], tableData.headers[0]);
+  return (
+    <React.Fragment key={`Wr${key}`}>
+      {tableData && lagPeriodeHeaders && createPeriodeHeader(tableData.headers)}
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.OPPFYLT
   && createTableRows(tableData.rowsAndeler, tableData.rows, tableData.dagsatser, tableData.rowsForklaringer)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT
   && createTableRowsIkkeVurdert(tableData.rowsAndeler, tableData.rows, tableData.dagsatser)}
-    { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
+      { vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT
   && (
-    <React.Fragment key={`IVR2${tableData.dagsatser[0]}`}>
+    <React.Fragment key={`IVR2${key}`}>
       {createRowsAndeler(tableData.rowsAndeler)}
       <VerticalSpacer twentyPx />
       <Normaltekst className={beregningStyles.redError}>
@@ -210,8 +223,9 @@ const createPeriodeResultat = (vilkaarBG, tableData, lagPeriodeHeaders, intl, ha
       </Normaltekst>
     </React.Fragment>
   )}
-  </React.Fragment>
-);
+    </React.Fragment>
+  );
+};
 
 const constructPeriod = (fom, tom) => (
   <FormattedMessage
