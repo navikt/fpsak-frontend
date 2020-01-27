@@ -36,6 +36,9 @@ const getPreviewAutomatiskBrevCallback = (previewCallback, begrunnelse) => (e) =
   const data = {
     fritekst: begrunnelse,
     gjelderVedtak: true,
+    vedtaksbrev: {
+      kode: 'AUTOMATISK',
+    },
   };
   previewCallback(data);
   e.preventDefault();
