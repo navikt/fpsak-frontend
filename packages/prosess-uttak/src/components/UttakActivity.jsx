@@ -61,62 +61,7 @@ function sortAlphabetically(a, b) {
   return 0;
 }
 
-// const utsettelseArsakskoder = [
-//   '2010',
-//   '2011',
-//   '2012',
-//   '2013',
-//   '2014',
-//   '2015',
-//   '2016',
-//   '2017',
-//   '2018',
-//   '2019',
-// ];
-
-// const uttakArsakskoder = [
-//   '2001',
-//   '2002',
-//   '2003',
-//   '2004',
-//   '2005',
-//   '2006',
-//   '2007',
-//   '2008',
-//   '2009',
-//   '2020',
-//   '2021',
-//   '2022',
-//   '2023',
-//   '2030',
-//   '2031',
-//   '2032',
-//   '2033',
-//   '2034',
-//   '2035',
-//   '2036',
-//   '2037',
-//   '2038',
-// ];
-
-// const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType) => {
-//   kodeverk.sort(sortAlphabetically);
-//   const nyKodeArray = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
-//     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
-//   let filteredNyKodeArray = nyKodeArray.filter((item) => (item.kode < 4096 || item.kode > 4099));
-
-//   if (utsettelseType && utsettelseType.kode === utsettelseArsakCodes.UDEFINERT) {
-//     filteredNyKodeArray = filteredNyKodeArray.filter((item) => uttakArsakskoder.includes(item.kode));
-//   }
-//   if (utsettelseType && utsettelseType.kode !== utsettelseArsakCodes.UDEFINERT) {
-//     filteredNyKodeArray = filteredNyKodeArray.filter((item) => utsettelseArsakskoder.includes(item.kode));
-//   }
-
-//   return (filteredNyKodeArray
-//     .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
-// };
-
-const mapAarsakv2 = (kodeverk, starttidspunktForeldrepenger, utsettelseType, periodeType) => {
+const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType, periodeType) => {
   kodeverk.sort(sortAlphabetically);
   const nyKodeverkListe = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
@@ -210,7 +155,14 @@ export const UttakActivity = ({
                             {erOppfylt && (
                               <SelectField
                                 name="innvilgelseAarsak"
-                                selectValues={mapAarsakv2(innvilgelseAarsakKoder, starttidspunktForeldrepenger, selectedItemData.utsettelseType, selectedItemData.periodeType)}
+                                selectValues={
+                                  mapAarsak(
+                                    innvilgelseAarsakKoder,
+                                    starttidspunktForeldrepenger,
+                                    selectedItemData.utsettelseType,
+                                    selectedItemData.periodeType,
+                                  )
+                                }
                                 validate={[required, notDash]}
                                 label={{ id: 'UttakActivity.InnvilgelseAarsaker' }}
                                 readOnly={readOnly}
@@ -220,7 +172,14 @@ export const UttakActivity = ({
                             {!erOppfylt && (
                               <SelectField
                                 name="avslagAarsak"
-                                selectValues={mapAarsakv2(avslagAarsakKoder, starttidspunktForeldrepenger, selectedItemData.utsettelseType, selectedItemData.periodeType)}
+                                selectValues={
+                                  mapAarsak(
+                                    avslagAarsakKoder,
+                                    starttidspunktForeldrepenger,
+                                    selectedItemData.utsettelseType,
+                                    selectedItemData.periodeType,
+                                  )
+                                }
                                 validate={[required, notDash]}
                                 label={{ id: 'UttakActivity.AvslagAarsak' }}
                                 readOnly={readOnly}
