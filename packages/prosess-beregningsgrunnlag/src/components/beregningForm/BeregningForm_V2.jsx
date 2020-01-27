@@ -31,8 +31,6 @@ import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
-// TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
-
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
