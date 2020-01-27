@@ -58,9 +58,19 @@ export const settFastsattBelop = (fordeltPrAar,
   return '';
 };
 
+const finnArbeidsgiverId = (arbeidsforhold) => {
+  if (!arbeidsforhold) {
+    return '';
+  }
+  if (arbeidsforhold.aktørId) {
+    return arbeidsforhold.aktørId;
+  }
+  return arbeidsforhold.arbeidsgiverId ? arbeidsforhold.arbeidsgiverId : '';
+};
+
 export const setArbeidsforholdInitialValues = (andel) => ({
   arbeidsgiverNavn: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverNavn !== 0 ? andel.arbeidsforhold.arbeidsgiverNavn : '',
-  arbeidsgiverId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsgiverId !== 0 ? andel.arbeidsforhold.arbeidsgiverId : '',
+  arbeidsgiverId: finnArbeidsgiverId(andel.arbeidsforhold),
   arbeidsforholdId: andel.arbeidsforhold && andel.arbeidsforhold.arbeidsforholdId !== 0 ? andel.arbeidsforhold.arbeidsforholdId : '',
   arbeidsperiodeFom: andel.arbeidsforhold ? andel.arbeidsforhold.startdato : '',
   arbeidsperiodeTom: andel.arbeidsforhold && andel.arbeidsforhold.opphoersdato !== null
