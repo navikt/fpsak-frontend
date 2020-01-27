@@ -20,7 +20,6 @@ import {
 const useProsessStegPaneler = (
   prosessStegPanelDefinisjoner: ProsessStegDefinisjon[],
   panelData: {},
-  valgtProsessSteg: string,
   fagsak: FagsakInfo,
   navAnsatt: NavAnsatt,
   behandling: Behandling,
@@ -28,6 +27,7 @@ const useProsessStegPaneler = (
   vilkar: Vilkar[],
   hasFetchError: boolean,
   intl,
+  valgtProsessSteg?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
 ): [ProsessStegData[], ProsessStegData, ProsessStegMenyRad[]] => {
   const [overstyrteAksjonspunktKoder, toggleOverstyring] = useState<string[]>([]);
@@ -37,7 +37,7 @@ const useProsessStegPaneler = (
     overstyrteAksjonspunktKoder, fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError, intl),
   [behandling.versjon, overstyrteAksjonspunktKoder]);
 
-  const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, valgtProsessSteg, behandling.behandlingHenlagt, apentFaktaPanelInfo),
+  const valgtPanel = useMemo(() => finnValgtPanel(prosessStegPaneler, behandling.behandlingHenlagt, valgtProsessSteg, apentFaktaPanelInfo),
     [behandling.versjon, valgtProsessSteg, overstyrteAksjonspunktKoder, apentFaktaPanelInfo]);
 
   const urlCode = valgtPanel ? valgtPanel.urlCode : undefined;

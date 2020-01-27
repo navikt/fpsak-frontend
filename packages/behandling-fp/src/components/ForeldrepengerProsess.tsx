@@ -114,7 +114,7 @@ const ForeldrepengerProsess: FunctionComponent<OwnProps & WrappedComponentProps>
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvFpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, apentFaktaPanelInfo);
+    dataTilUtledingAvFpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);

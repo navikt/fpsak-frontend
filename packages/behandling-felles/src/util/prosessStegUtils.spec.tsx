@@ -200,7 +200,7 @@ describe('<prosessStegUtils>', () => {
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
 
-    const valgtPanel = finnValgtPanel(paneler, 'opplysningsplikt', erBehandlingHenlagt, apentFaktaPanelInfo);
+    const valgtPanel = finnValgtPanel(paneler, erBehandlingHenlagt, 'opplysningsplikt', apentFaktaPanelInfo);
 
     expect(valgtPanel).to.eql(paneler[1]);
   });
@@ -239,7 +239,7 @@ describe('<prosessStegUtils>', () => {
     const erBehandlingHenlagt = true;
     const apentFaktaPanelInfo = undefined;
 
-    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+    const valgtPanel = finnValgtPanel(paneler, erBehandlingHenlagt, 'default', apentFaktaPanelInfo);
 
     expect(valgtPanel).to.eql(paneler[1]);
   });
@@ -278,7 +278,7 @@ describe('<prosessStegUtils>', () => {
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = { urlCode: 'FODSEL', textCode: 'Fakta.Test' };
 
-    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+    const valgtPanel = finnValgtPanel(paneler, erBehandlingHenlagt, 'default', apentFaktaPanelInfo);
 
     expect(valgtPanel).is.undefined;
   });
@@ -317,7 +317,7 @@ describe('<prosessStegUtils>', () => {
     const erBehandlingHenlagt = false;
     const apentFaktaPanelInfo = undefined;
 
-    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+    const valgtPanel = finnValgtPanel(paneler, erBehandlingHenlagt, 'default', apentFaktaPanelInfo);
 
     expect(valgtPanel).is.eql(paneler[1]);
   });

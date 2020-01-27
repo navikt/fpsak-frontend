@@ -108,7 +108,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
-    dataTilUtledingAvSvpPaneler, valgtProsessSteg, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, apentFaktaPanelInfo);
+    dataTilUtledingAvSvpPaneler, fagsak, navAnsatt, behandling, data.aksjonspunkter, data.vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo);
 
   const [visIverksetterVedtakModal, toggleIverksetterVedtakModal] = useState(false);
   const [visFatterVedtakModal, toggleFatterVedtakModal] = useState(false);

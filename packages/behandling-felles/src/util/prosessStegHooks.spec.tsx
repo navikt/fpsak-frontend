@@ -103,8 +103,8 @@ describe('<prosessStegHooks>', () => {
 
     // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
-      prosessStegPanelDefinisjoner, ekstraPanelData, valgtProsessSteg, fagsak, navAnsatt, behandling,
-      aksjonspunkter, vilkar, hasFetchError, intl, apentFaktaPanelInfo,
+      prosessStegPanelDefinisjoner, ekstraPanelData, fagsak, navAnsatt, behandling,
+      aksjonspunkter, vilkar, hasFetchError, intl, valgtProsessSteg, apentFaktaPanelInfo,
     ));
     const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = Object.values(
       wrapper.find('div').prop('values'),

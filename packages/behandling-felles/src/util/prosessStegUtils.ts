@@ -201,8 +201,8 @@ export const utledProsessStegPaneler = (
 
 export const finnValgtPanel = (
   prosessStegPaneler: ProsessStegData[],
-  valgtProsessStegPanelKode: string,
   erBehandlingHenlagt: boolean,
+  valgtProsessStegPanelKode?: string,
   apentFaktaPanelInfo?: { urlCode: string; textCode: string},
 ) => {
   if (valgtProsessStegPanelKode === DEFAULT_PROSESS_STEG_KODE) {
@@ -235,7 +235,7 @@ const finnProsessmenyType = (
 
 export const formaterPanelerForProsessmeny = (
   prosessStegPaneler: ProsessStegData[],
-  valgtProsessStegPanelKode: string,
+  valgtProsessStegPanelKode?: string,
 ): ProsessStegMenyRad[] => prosessStegPaneler.map((panel) => {
   const type = finnProsessmenyType(panel.status, panel.isAksjonspunktOpen);
   return {
