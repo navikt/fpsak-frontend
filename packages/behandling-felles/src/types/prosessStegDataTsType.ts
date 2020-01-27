@@ -1,7 +1,7 @@
-import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { SetStateAction, ReactNode } from 'react';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-import { ReactNode } from 'react';
 
 import Aksjonspunkt from './aksjonspunktTsType';
 import Vilkar from './vilkarTsType';
@@ -22,8 +22,13 @@ export interface ProsessStegPanelData {
     vilkar: Vilkar[];
     isAksjonspunktOpen: boolean;
     overrideReadOnly?: boolean;
-    kanOverstyreAccess?: boolean;
-    toggleOverstyring?: () => void;
+    erOverstyrt?: boolean;
+    panelTittelKode?: string;
+    erMedlemskapsPanel?: boolean;
+    lovReferanse?: string;
+    overstyringApKode?: string;
+    kanOverstyreAccess?: {};
+    toggleOverstyring?: (overstyrtPanel: SetStateAction<string[]>) => void;
   };
 }
 
