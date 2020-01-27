@@ -142,7 +142,7 @@ export class ApprovalIndex extends Component {
       location, navAnsatt, ansvarligSaksbehandler, toTrinnsBehandling, skjemalenkeTyper,
       behandlingIdentifier, selectedBehandlingVersjon, alleKodeverk, erBehandlingEtterKlage,
       isForeldrepenger, disableGodkjennKnapp, fagsakYtelseType, erGodkjenningFerdig,
-      behandlingsresultat, behandlingId, behandlingTypeKode,
+      behandlingsresultat, behandlingId, behandlingTypeKode, erTilbakekreving,
     } = this.props;
     const { showBeslutterModal, allAksjonspunktApproved } = this.state;
     const { brukernavn, kanVeilede } = navAnsatt;
@@ -176,6 +176,7 @@ export class ApprovalIndex extends Component {
               behandlingKlageVurdering={props.totrinnsKlageVurdering}
               erBehandlingEtterKlage={erBehandlingEtterKlage}
               disableGodkjennKnapp={disableGodkjennKnapp}
+              erTilbakekreving={erTilbakekreving}
             />
             {showBeslutterModal && (
               <DataFetcher
