@@ -12,7 +12,7 @@ import ForeldreansvarVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-for
 import UttakProsessIndex from '@fpsak-frontend/prosess-uttak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
 import FodselVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-fodsel';
-import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
+import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import AdopsjonVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-adopsjon';
 import OmsorgVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-omsorg';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
@@ -227,13 +227,8 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
-    vilkarCodes: [vt.SOKNADFRISTVILKARET],
-    endpoints: [api.FAMILIEHENDELSE],
-    renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
-    overridePanel: {
-      aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
-      ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-    },
+    endpoints: [api.UTTAK_PERIODE_GRENSE],
+    renderComponent: (props) => <VurderSoknadsfristForeldrepengerIndex {...props} />,
     getData: ({ soknad }) => ({ soknad }),
   }],
 }, {

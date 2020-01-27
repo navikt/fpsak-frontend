@@ -7,7 +7,7 @@ import TilkjentYtelseProsessIndex from '@fpsak-frontend/prosess-tilkjent-ytelse'
 import VilkarresultatMedOverstyringProsessIndex from '@fpsak-frontend/prosess-vilkar-overstyring';
 import VedtakProsessIndex from '@fpsak-frontend/prosess-vedtak';
 import SokersOpplysningspliktVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-sokers-opplysningsplikt';
-import SoknadsfristVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-soknadsfrist';
+import VurderSoknadsfristForeldrepengerIndex from '@fpsak-frontend/prosess-soknadsfrist';
 import BeregningsgrunnlagProsessIndex from '@fpsak-frontend/prosess-beregningsgrunnlag';
 import SvangerskapVilkarProsessIndex from '@fpsak-frontend/prosess-vilkar-svangerskap';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -121,14 +121,8 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
-    vilkarCodes: [vt.SOKNADFRISTVILKARET],
-    endpoints: [api.FAMILIEHENDELSE],
-    renderComponent: (props) => <SoknadsfristVilkarProsessIndex {...props} />,
+    renderComponent: (props) => <VurderSoknadsfristForeldrepengerIndex {...props} />,
     getData: ({ soknad }) => ({ soknad }),
-    overridePanel: {
-      aksjonspunkterCodes: [ac.OVERSTYR_SOKNADSFRISTVILKAR],
-      ...DEFAULT_PROPS_FOR_OVERSTYRINGPANEL,
-    },
   }],
 }, {
   urlCode: bpc.FORTSATTMEDLEMSKAP,
