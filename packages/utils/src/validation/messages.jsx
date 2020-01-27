@@ -30,3 +30,4 @@ export const arbeidsprosentMåVare100VidUtsettelseAvArbeidMessage = () => ([{ id
 export const merEn100ProsentMessage = () => ([{ id: 'ValidationMessage.MerEn100Prosent' }]);
 export const dateRangesOverlappingBetweenPeriodTypesMessage = () => ([{ id: 'ValidationMessage.DateRangesOverlappingPeriodTypes' }]);
 export const invalidOrgNumberMessage = () => ([{ id: 'ValidationMessage.InvalidOrganisasjonsnummer' }]);
+export const invalidOrgNumberOrFodselsnrMessage = () => ([{ id: 'ValidationMessage.InvalidOrganisasjonsnummerOrFodselsnr' }]);

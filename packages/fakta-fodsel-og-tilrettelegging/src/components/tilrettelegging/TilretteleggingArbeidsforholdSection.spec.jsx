@@ -13,6 +13,7 @@ describe('<TilretteleggingArbeidsforholdSection>', () => {
       arbeidsforhold={{
         arbeidsgiverNavn: 'ARB_NAVN_1',
         arbeidsgiverIdent: '111222333',
+        arbeidsgiverIdentVisning: '111222333',
         eksternArbeidsforholdReferanse: 'ARB001-001',
       }}
       formSectionName="ARB_NAVN"
