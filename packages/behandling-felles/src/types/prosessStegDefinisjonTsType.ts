@@ -4,6 +4,8 @@ import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 export interface ProsessStegPanelDefinisjon {
+  textCode?: string;
+  code?: string;
   aksjonspunkterCodes: string[];
   vilkarCodes: string[];
   endpoints: EndpointOperations[];

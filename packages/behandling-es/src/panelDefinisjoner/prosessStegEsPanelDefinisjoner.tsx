@@ -33,15 +33,8 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
   showComponent: ({ vilkarForSteg, aksjonspunkterForSteg, aksjonspunktDefKoderForSteg }) => vilkarForSteg.length > 0
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
   renderComponent: (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />,
-  getData: ({
-    code, overstyrteAksjonspunktKoder, vilkarForSteg, labelCode, alleKodeverk, aksjonspunktDefKoderForSteg,
-  }) => ({
-    erOverstyrt: overstyrteAksjonspunktKoder.some((o) => aksjonspunktDefKoderForSteg.some((a) => a === o)),
-    panelTittelKode: labelCode,
+  getData: ({ vilkarForSteg, alleKodeverk }) => ({
     avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
-    lovReferanse: vilkarForSteg[0].lovReferanse,
-    overstyringApKode: aksjonspunktDefKoderForSteg[0],
-    erMedlemskapsPanel: code === 'MEDLEMSKAP',
   }),
   isOverridable: true,
   aksjonspunkterTextCodes: [],
