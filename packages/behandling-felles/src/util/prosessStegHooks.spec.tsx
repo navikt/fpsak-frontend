@@ -101,6 +101,7 @@ describe('<prosessStegHooks>', () => {
     const valgtProsessSteg = 'default';
     const intl = { formatMessage: (data) => data.id };
 
+    // ACT
     const wrapper = testHook(() => prosessStegHooks.useProsessStegPaneler(
       prosessStegPanelDefinisjoner, ekstraPanelData, valgtProsessSteg, fagsak, navAnsatt, behandling,
       aksjonspunkter, vilkar, hasFetchError, intl, apentFaktaPanelInfo,

@@ -339,7 +339,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
       featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
       saksnummer: fagsak.saksnummer,
-      isForeldrepenger: fagsak.ytelseType.kode === fagsakYtelseType.FORELDREPENGER,
+      isForeldrepenger: fagsak.fagsakYtelseType.kode === fagsakYtelseType.FORELDREPENGER,
       hasOpenTilbakekrevingsbehandling,
       sprakkode,
       simuleringResultat,
