@@ -68,11 +68,11 @@ const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType, perio
   let filteredNyKodeArray = nyKodeverkListe.filter((item) => (item.kode < 4096 || item.kode > 4099));
 
   if (utsettelseType && utsettelseType.kode !== utsettelseArsakCodes.UDEFINERT) {
-    filteredNyKodeArray = nyKodeverkListe.filter((kv) => kv.uttakTyper.includes('UTSETTELSE'));
+    filteredNyKodeArray = filteredNyKodeArray.filter((kv) => kv.uttakTyper.includes('UTSETTELSE'));
   }
 
-  if (periodeType) {
-    filteredNyKodeArray = nyKodeverkListe
+  if (periodeType && utsettelseType && utsettelseType.kode === utsettelseArsakCodes.UDEFINERT) {
+    filteredNyKodeArray = filteredNyKodeArray
       .filter((kv) => kv.uttakTyper.includes('UTTAK'))
       .filter((kv) => kv.valgbarForKonto.includes(periodeType.kode));
   }
