@@ -29,6 +29,7 @@ const TotrinnskontrollSakIndex = ({
   alleKodeverk,
   erBehandlingEtterKlage,
   disableGodkjennKnapp,
+  erTilbakekreving,
 }) => (
   <RawIntlProvider value={intl}>
     <ApprovalPanel
@@ -48,6 +49,7 @@ const TotrinnskontrollSakIndex = ({
       alleKodeverk={alleKodeverk}
       erBehandlingEtterKlage={erBehandlingEtterKlage}
       disableGodkjennKnapp={disableGodkjennKnapp}
+      erTilbakekreving={erTilbakekreving}
     />
   </RawIntlProvider>
 );
@@ -74,10 +76,12 @@ TotrinnskontrollSakIndex.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   forhandsvisVedtaksbrev: PropTypes.func.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  erTilbakekreving: PropTypes.bool,
 };
 
 TotrinnskontrollSakIndex.defaultProps = {
   behandlingKlageVurdering: undefined,
+  erTilbakekreving: false,
 };
 
 export default TotrinnskontrollSakIndex;
