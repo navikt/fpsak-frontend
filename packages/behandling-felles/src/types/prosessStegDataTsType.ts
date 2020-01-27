@@ -30,7 +30,7 @@ export interface ProsessStegPanelData {
 interface ProsessStegData {
   urlCode: string;
   erStegBehandlet: boolean;
-  label: string;
+  prosessStegTittelKode: string;
   isAksjonspunktOpen: boolean;
   isReadOnly: boolean;
   aksjonspunkter: Aksjonspunkt[];

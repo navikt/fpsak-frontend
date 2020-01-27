@@ -22,6 +22,14 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
+  "Inngangsvilkar.Adopsjonsvilkaret": "Adopsjon",
+  "Inngangsvilkar.Fodselsvilkaret": "Fødsel",
+  "Inngangsvilkar.Omsorgsvilkaret": "Omsorg",
+  "Inngangsvilkar.Foreldreansvar": "Foreldreansvar",
+  "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
+  "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
+  "Inngangsvilkar.Svangerskapsvilkaret": "Svangerskap",
+
   "VilkarBegrunnelse.BegrunnVurdering": "Begrunn vurderingen din",
   "VilkarResultPicker.VilkarDato": "Dato",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",

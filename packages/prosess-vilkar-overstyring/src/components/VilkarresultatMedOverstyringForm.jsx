@@ -40,7 +40,7 @@ const isHidden = (kanOverstyre, aksjonspunktCodes, aksjonspunktCode) => !isOverr
  * Resultatet kan overstyres av Nav-ansatt med overstyr-rettighet.
  */
 export const VilkarresultatMedOverstyringForm = ({
-  panelTittel,
+  panelTittelKode,
   erOverstyrt,
   isReadOnly,
   overstyringApKode,
@@ -75,7 +75,7 @@ export const VilkarresultatMedOverstyringForm = ({
           </FlexColumn>
           )}
           <FlexColumn>
-            <Undertittel>{panelTittel}</Undertittel>
+            <Undertittel><FormattedMessage id={panelTittelKode} /></Undertittel>
           </FlexColumn>
           {lovReferanse && (
             <FlexColumn>

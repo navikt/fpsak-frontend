@@ -28,7 +28,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   avslagsarsaker,
   status,
   erOverstyrt,
-  panelTittel,
+  panelTittelKode,
   overstyringApKode,
   lovReferanse,
   erMedlemskapsPanel,
@@ -48,7 +48,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
       avslagsarsaker={avslagsarsaker}
       status={status}
       erOverstyrt={erOverstyrt}
-      panelTittel={panelTittel}
+      panelTittelKode={panelTittelKode}
       overstyringApKode={overstyringApKode}
       lovReferanse={lovReferanse}
       erMedlemskapsPanel={erMedlemskapsPanel}
@@ -70,7 +70,7 @@ VilkarresultatMedOverstyringProsessIndex.propTypes = {
   status: PropTypes.string.isRequired,
   lovReferanse: PropTypes.string,
   erOverstyrt: PropTypes.bool.isRequired,
-  panelTittel: PropTypes.string.isRequired,
+  panelTittelKode: PropTypes.string.isRequired,
   overstyringApKode: PropTypes.string.isRequired,
   erMedlemskapsPanel: PropTypes.bool.isRequired,
 };

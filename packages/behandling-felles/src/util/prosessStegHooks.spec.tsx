@@ -115,7 +115,7 @@ describe('<prosessStegHooks>', () => {
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
       isReadOnly: true,
-      label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
       panelData: [{
         aksjonspunktHelpTextCodes: [
           'SokersOpplysningspliktForm.UtfyllendeOpplysninger',

@@ -32,10 +32,10 @@ const DEFAULT_PROPS_FOR_OVERSTYRINGPANEL = ({
     && harVilkarresultatMedOverstyring(aksjonspunkterForSteg, aksjonspunktDefKoderForSteg),
   renderComponent: (props) => <VilkarresultatMedOverstyringProsessIndex {...props} />,
   getData: ({
-    code, overstyrteAksjonspunktKoder, vilkarForSteg, label, alleKodeverk, aksjonspunktDefKoderForSteg,
+    code, overstyrteAksjonspunktKoder, vilkarForSteg, labelCode, alleKodeverk, aksjonspunktDefKoderForSteg,
   }) => ({
     erOverstyrt: overstyrteAksjonspunktKoder.some((o) => aksjonspunktDefKoderForSteg.some((a) => a === o)),
-    panelTittel: label,
+    panelTittelKode: labelCode,
     avslagsarsaker: alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarForSteg[0].vilkarType.kode],
     lovReferanse: vilkarForSteg[0].lovReferanse,
     overstyringApKode: aksjonspunktDefKoderForSteg[0],

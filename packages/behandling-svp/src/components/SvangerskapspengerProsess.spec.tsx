@@ -208,7 +208,7 @@ describe('<SvangerskapspengerProsess>', () => {
     const data = {
       urlCode: 'inngangsvilkar',
       erStegBehandlet: true,
-      label: 'Inngangsvilkår',
+      prosessStegTittelKode: 'Behandlingspunkt.Inngangsvilkar',
       isAksjonspunktOpen: true,
       isReadOnly: false,
       aksjonspunkter,

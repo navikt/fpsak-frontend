@@ -64,7 +64,7 @@ describe('<prosessStegUtils>', () => {
     erStegBehandlet: true,
     isAksjonspunktOpen: false,
     isReadOnly: true,
-    label: 'Behandlingspunkt.Test',
+    prosessStegTittelKode: 'Behandlingspunkt.Test',
     panelData: [{
       aksjonspunktHelpTextCodes: [],
       aksjonspunkter: [],
@@ -124,11 +124,10 @@ describe('<prosessStegUtils>', () => {
     const hasFetchError = false;
     const toggleOverstyring = () => undefined;
     const overstyrteAksjonspunktKoder = [];
-    const intl = { formatMessage: (data) => data.id };
 
     // ACT
     const prosessStegPaneler = utledProsessStegPaneler(prosessStegPanelDefinisjoner, ekstraPanelData, toggleOverstyring, overstyrteAksjonspunktKoder,
-      fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError, intl);
+      fagsak, navAnsatt, behandling, aksjonspunkter, vilkar, hasFetchError);
 
     expect(prosessStegPaneler).to.have.length(1);
     const paneler = [{
@@ -136,7 +135,7 @@ describe('<prosessStegUtils>', () => {
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
       isReadOnly: true,
-      label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
       panelData: [{
         aksjonspunktHelpTextCodes: [
           'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
@@ -328,7 +327,7 @@ describe('<prosessStegUtils>', () => {
       erStegBehandlet: true,
       isAksjonspunktOpen: true,
       isReadOnly: true,
-      label: 'Behandlingspunkt.Opplysningsplikt',
+      prosessStegTittelKode: 'Behandlingspunkt.Opplysningsplikt',
       panelData: [{
         aksjonspunktHelpTextCodes: [
           'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
@@ -353,7 +352,8 @@ describe('<prosessStegUtils>', () => {
       status: vilkarUtfallType.IKKE_VURDERT,
       urlCode: 'opplysningsplikt',
     }];
-    const formatertePaneler = formaterPanelerForProsessmeny(paneler, 'opplysningsplikt');
+    const intl = { formatMessage: (data) => data.id };
+    const formatertePaneler = formaterPanelerForProsessmeny(paneler, intl, 'opplysningsplikt');
     expect(formatertePaneler).to.eql([{
       isActive: false,
       isDisabled: false,

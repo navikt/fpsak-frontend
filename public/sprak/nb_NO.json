@@ -48,14 +48,6 @@
   "Behandlingspunkt.Foreldelse": "Foreldelse",
   "Behandlingspunkt.Tilbakekreving": "Tilbakekreving",
 
-  "Inngangsvilkar.Adopsjonsvilkaret": "Adopsjon",
-  "Inngangsvilkar.Fodselsvilkaret": "Fødsel",
-  "Inngangsvilkar.Omsorgsvilkaret": "Omsorg",
-  "Inngangsvilkar.Foreldreansvar": "Foreldreansvar",
-  "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
-  "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
-  "Inngangsvilkar.Svangerskapsvilkaret": "Svangerskap",
-
   "InngangsvilkarPanel.AvventerAvklaringAv": "Avventer avklaring av fakta om ",
   "OpptjeningVilkarView.VurderOmSøkerHarRett": "Vurder om søker har opptjent rett til foreldrepenger",
   "FodselVilkarForm.VurderGjelderSammeBarn": "Vurder om tidligere utbetalte foreldrepenger eller engangsstønad gjelder for samme barn. Dersom det gjelder for samme barn er dette vilkåret ikke oppfylt.",

@@ -1,7 +1,8 @@
 import React from 'react';
 import { expect } from 'chai';
-import { EtikettLiten, Undertittel } from 'nav-frontend-typografi';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import { shallow } from 'enzyme';
+import { FormattedMessage } from 'react-intl';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
@@ -27,13 +28,13 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       aksjonspunktCodes={[]}
       toggleOverstyring={() => undefined}
       erMedlemskapsPanel={false}
-      panelTittel="Fødsel"
+      panelTittelKode="Fødsel"
       erOverstyrt
     />);
 
-    const undertittel = wrapper.find(Undertittel);
-    expect(undertittel).to.have.length(1);
-    expect(undertittel.childAt(0).text()).to.eql('Fødsel');
+    const melding = wrapper.find(FormattedMessage);
+    expect(melding).to.have.length(5);
+    expect(melding.first().prop('id')).to.eql('Fødsel');
 
     const normaltekst = wrapper.find(EtikettLiten);
     expect(normaltekst).to.have.length(1);

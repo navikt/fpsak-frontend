@@ -81,7 +81,7 @@ const ProsessPanelTemplate = ({
         </FlexRow>
       </FlexContainer>
       <VerticalSpacer sixteenPx />
-      <AksjonspunktBox className={isAksjonspunktOpen ? styles.aksjonspunktMargin : undefined} erAksjonspunktApent={isAksjonspunktOpen}>
+      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
         {children}
         <BehandlingspunktSubmitButton
           formName={formProps.form}
