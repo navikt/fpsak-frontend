@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -14,7 +15,7 @@ import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import {
-  utledProsessStegPaneler, getBekreftAksjonspunktCallback,
+  utledProsessStegPaneler, getBekreftAksjonspunktCallback, formaterPanelerForProsessmeny, finnValgtPanel,
 } from './prosessStegUtils';
 
 describe('<prosessStegUtils>', () => {
@@ -49,6 +50,7 @@ describe('<prosessStegUtils>', () => {
     status: { kode: aksjonspunktStatus.OPPRETTET, kodeverk: 'BEHANDLING_STATUS' },
     kanLoses: true,
     erAktivt: true,
+    aksjonspunktType: { kode: aksjonspunktType.MANUELL, kodeverk: 'test' },
   }];
 
   const vilkar = [{
@@ -56,6 +58,35 @@ describe('<prosessStegUtils>', () => {
     vilkarStatus: { kode: vilkarUtfallType.IKKE_VURDERT, kodeverk: 'test' },
     overstyrbar: false,
   }];
+
+  const testPanelData = {
+    aksjonspunkter: [],
+    erStegBehandlet: true,
+    isAksjonspunktOpen: false,
+    isReadOnly: true,
+    label: 'Behandlingspunkt.Test',
+    panelData: [{
+      aksjonspunktHelpTextCodes: [],
+      aksjonspunkter: [],
+      code: 'test',
+      endpoints: [],
+      isAksjonspunktOpen: false,
+      isReadOnly: true,
+      komponentData: {
+        aksjonspunkter: [],
+        isAksjonspunktOpen: false,
+        isReadOnly: true,
+        readOnlySubmitButton: false,
+        status: vilkarUtfallType.OPPFYLT,
+        vilkar: [],
+      },
+      renderComponent: sinon.spy(),
+      status: vilkarUtfallType.OPPFYLT,
+    },
+    ],
+    status: vilkarUtfallType.OPPFYLT,
+    urlCode: 'test',
+  };
 
   it('skal utlede prosess-steg-paneler', () => {
     const prosessStegPanelDefinisjoner = [{
@@ -135,23 +166,228 @@ describe('<prosessStegUtils>', () => {
     expect(prosessStegPaneler).to.eql(paneler);
   });
 
-  it('skal lagre aksjonspunkt', async () => {
+  it('skal vise valgt panel', () => {
+    const paneler = [testPanelData, {
+      aksjonspunkter,
+      erStegBehandlet: true,
+      isAksjonspunktOpen: true,
+      isReadOnly: true,
+      label: 'Behandlingspunkt.Opplysningsplikt',
+      panelData: [{
+        aksjonspunktHelpTextCodes: [
+          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+        ],
+        aksjonspunkter,
+        code: 'opplysningsplikt',
+        endpoints: [],
+        isAksjonspunktOpen: true,
+        isReadOnly: true,
+        komponentData: {
+          aksjonspunkter,
+          isAksjonspunktOpen: true,
+          isReadOnly: true,
+          readOnlySubmitButton: false,
+          status: vilkarUtfallType.IKKE_VURDERT,
+          vilkar,
+        },
+        renderComponent: sinon.spy(),
+        status: vilkarUtfallType.IKKE_VURDERT,
+      },
+      ],
+      status: vilkarUtfallType.IKKE_VURDERT,
+      urlCode: 'opplysningsplikt',
+    }, testPanelData];
+    const erBehandlingHenlagt = false;
+    const apentFaktaPanelInfo = undefined;
+
+    const valgtPanel = finnValgtPanel(paneler, 'opplysningsplikt', erBehandlingHenlagt, apentFaktaPanelInfo);
+
+    expect(valgtPanel).to.eql(paneler[1]);
+  });
+
+  it('skal vise vedtakspanel når behandling er henlagt', () => {
+    const paneler = [testPanelData, {
+      aksjonspunkter,
+      erStegBehandlet: true,
+      isAksjonspunktOpen: true,
+      isReadOnly: true,
+      label: 'Behandlingspunkt.Vedtak',
+      panelData: [{
+        aksjonspunktHelpTextCodes: [
+          'vedtak.UtfyllendeOpplysninger',
+        ],
+        aksjonspunkter,
+        code: 'opplysningsplikt',
+        endpoints: [],
+        isAksjonspunktOpen: true,
+        isReadOnly: true,
+        komponentData: {
+          aksjonspunkter,
+          isAksjonspunktOpen: true,
+          isReadOnly: true,
+          readOnlySubmitButton: false,
+          status: vilkarUtfallType.IKKE_VURDERT,
+          vilkar,
+        },
+        renderComponent: sinon.spy(),
+        status: vilkarUtfallType.IKKE_VURDERT,
+      },
+      ],
+      status: vilkarUtfallType.IKKE_VURDERT,
+      urlCode: 'vedtak',
+    }];
+    const erBehandlingHenlagt = true;
+    const apentFaktaPanelInfo = undefined;
+
+    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+
+    expect(valgtPanel).to.eql(paneler[1]);
+  });
+
+  it('skal vise ikke vise prosess-steg panel når ingen er spesifikt valgt og en har åpent fakta-aksjonspunkt', () => {
+    const paneler = [testPanelData, {
+      aksjonspunkter,
+      erStegBehandlet: true,
+      isAksjonspunktOpen: true,
+      isReadOnly: true,
+      label: 'Behandlingspunkt.Vedtak',
+      panelData: [{
+        aksjonspunktHelpTextCodes: [
+          'vedtak.UtfyllendeOpplysninger',
+        ],
+        aksjonspunkter,
+        code: 'opplysningsplikt',
+        endpoints: [],
+        isAksjonspunktOpen: true,
+        isReadOnly: true,
+        komponentData: {
+          aksjonspunkter,
+          isAksjonspunktOpen: true,
+          isReadOnly: true,
+          readOnlySubmitButton: false,
+          status: vilkarUtfallType.IKKE_VURDERT,
+          vilkar,
+        },
+        renderComponent: sinon.spy(),
+        status: vilkarUtfallType.IKKE_VURDERT,
+      },
+      ],
+      status: vilkarUtfallType.IKKE_VURDERT,
+      urlCode: 'vedtak',
+    }];
+    const erBehandlingHenlagt = false;
+    const apentFaktaPanelInfo = { urlCode: 'FODSEL', textCode: 'Fakta.Test' };
+
+    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+
+    expect(valgtPanel).is.undefined;
+  });
+
+  it('skal vise panel som har åpent aksjonspunkt', () => {
+    const paneler = [testPanelData, {
+      aksjonspunkter,
+      erStegBehandlet: true,
+      isAksjonspunktOpen: true,
+      isReadOnly: true,
+      label: 'Behandlingspunkt.Vedtak',
+      panelData: [{
+        aksjonspunktHelpTextCodes: [
+          'vedtak.UtfyllendeOpplysninger',
+        ],
+        aksjonspunkter,
+        code: 'opplysningsplikt',
+        endpoints: [],
+        isAksjonspunktOpen: true,
+        isReadOnly: true,
+        komponentData: {
+          aksjonspunkter,
+          isAksjonspunktOpen: true,
+          isReadOnly: true,
+          readOnlySubmitButton: false,
+          status: vilkarUtfallType.IKKE_VURDERT,
+          vilkar,
+        },
+        renderComponent: sinon.spy(),
+        status: vilkarUtfallType.IKKE_VURDERT,
+      },
+      ],
+      status: vilkarUtfallType.IKKE_VURDERT,
+      urlCode: 'vedtak',
+    }];
+    const erBehandlingHenlagt = false;
+    const apentFaktaPanelInfo = undefined;
+
+    const valgtPanel = finnValgtPanel(paneler, 'default', erBehandlingHenlagt, apentFaktaPanelInfo);
+
+    expect(valgtPanel).is.eql(paneler[1]);
+  });
+
+  it('skal formatere paneler for prosessmeny', () => {
+    const paneler = [testPanelData, {
+      aksjonspunkter,
+      erStegBehandlet: true,
+      isAksjonspunktOpen: true,
+      isReadOnly: true,
+      label: 'Behandlingspunkt.Opplysningsplikt',
+      panelData: [{
+        aksjonspunktHelpTextCodes: [
+          'SokersOpplysningspliktForm.UtfyllendeOpplysninger',
+        ],
+        aksjonspunkter,
+        code: 'opplysningsplikt',
+        endpoints: [],
+        isAksjonspunktOpen: true,
+        isReadOnly: true,
+        komponentData: {
+          aksjonspunkter,
+          isAksjonspunktOpen: true,
+          isReadOnly: true,
+          readOnlySubmitButton: false,
+          status: vilkarUtfallType.IKKE_VURDERT,
+          vilkar,
+        },
+        renderComponent: sinon.spy(),
+        status: vilkarUtfallType.IKKE_VURDERT,
+      },
+      ],
+      status: vilkarUtfallType.IKKE_VURDERT,
+      urlCode: 'opplysningsplikt',
+    }];
+    const formatertePaneler = formaterPanelerForProsessmeny(paneler, 'opplysningsplikt');
+    expect(formatertePaneler).to.eql([{
+      isActive: false,
+      isDisabled: false,
+      isFinished: true,
+      label: 'Behandlingspunkt.Test',
+      type: 'success',
+    }, {
+      isActive: true,
+      isDisabled: false,
+      isFinished: false,
+      label: 'Behandlingspunkt.Opplysningsplikt',
+      type: 'warning',
+    }]);
+  });
+
+  it('skal lagre aksjonspunkt', () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
     const api = {
       SAVE_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
+      SAVE_OVERSTYRT_AKSJONSPUNKT: {
+        makeRestApiRequest: () => (data) => makeRestApiRequest(data),
+      },
     };
     const lagringSideEffectsCallback = sinon.spy();
 
     const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
-
     const aksjonspunktModeller = [{
-      kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      kode: aksjonspunkter[0].definisjon.kode,
     }];
 
-    await callback(aksjonspunktModeller);
+    callback(aksjonspunktModeller);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);
@@ -167,24 +403,26 @@ describe('<prosessStegUtils>', () => {
     });
   });
 
-  it('skal lagre overstyrt aksjonspunkt', async () => {
+  it('skal lagre overstyrt aksjonspunkt', () => {
     const dispatch = () => Promise.resolve();
     const makeRestApiRequest = sinon.spy();
     const api = {
+      SAVE_AKSJONSPUNKT: {
+        makeRestApiRequest: () => (data) => makeRestApiRequest(data),
+      },
       SAVE_OVERSTYRT_AKSJONSPUNKT: {
         makeRestApiRequest: () => (data) => makeRestApiRequest(data),
       },
     };
     const lagringSideEffectsCallback = sinon.spy();
 
-    // -------------------KVIFOR FUNKAR denne? er heilt lik den over
     const callback = getBekreftAksjonspunktCallback(dispatch, lagringSideEffectsCallback, fagsak, behandling, aksjonspunkter, api);
 
     const aksjonspunktModeller = [{
       kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
     }];
 
-    await callback(aksjonspunktModeller);
+    callback(aksjonspunktModeller);
 
     const requestKall = makeRestApiRequest.getCalls();
     expect(requestKall).to.have.length(1);
