@@ -51,7 +51,7 @@ const PANEL_ATTRIBUTTER = {
   vilkarCodes: [],
   endpoints: [],
   getData: () => {},
-  aksjonspunkterTextCodes: undefined,
+  aksjonspunkterTextCodes: [],
   showComponent: undefined,
   overrideStatus: undefined,
   isOverridable: false,
