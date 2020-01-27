@@ -18,7 +18,7 @@ import styles from './tilretteleggingArbeidsforholdSection.less';
 const utledArbeidsforholdTittel = (arbeidsforhold) => {
   let tittel = arbeidsforhold.arbeidsgiverNavn;
   if (arbeidsforhold.arbeidsgiverIdent) {
-    tittel += ` (${arbeidsforhold.arbeidsgiverIdent})`;
+    tittel += ` (${arbeidsforhold.arbeidsgiverIdentVisning})`;
   }
   if (arbeidsforhold.eksternArbeidsforholdReferanse) {
     let ref = arbeidsforhold.eksternArbeidsforholdReferanse;
