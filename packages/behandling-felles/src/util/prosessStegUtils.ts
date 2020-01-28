@@ -82,7 +82,7 @@ const brukOverstyringspanelOmApIkkeFinnes = (aksjonspunkter: Aksjonspunkt[]) => 
 };
 
 const lagPanelData = (
-  urlCode: string,
+  panelDefinisjon: ProsessStegDefinisjon,
   overstyrteAksjonspunktKoder: string[],
   harMinstEttPanelApentAksjonspunkt: boolean,
   toggleOverstyring: (overstyrtPanel: SetStateAction<string[]>) => void,
@@ -113,7 +113,7 @@ const lagPanelData = (
     overrideReadOnly: isReadOnly || (harMinstEttPanelApentAksjonspunkt && !erAksjonspunktOpen),
     erOverstyrt: overstyrteAksjonspunktKoder.some((o) => panel.aksjonspunkterCodes.some((a) => a === o)),
     overstyringApKode: panel.aksjonspunkterCodes[0],
-    panelTittelKode: panel.textCode,
+    panelTittelKode: panel.textCode ? panel.textCode : panelDefinisjon.textCode,
     erMedlemskapsPanel: panel.code === 'MEDLEMSKAP',
     lovReferanse: vilkarForSteg.length > 0 ? vilkarForSteg[0].lovReferanse : undefined,
     kanOverstyreAccess,
@@ -123,7 +123,7 @@ const lagPanelData = (
   return {
     status,
     isReadOnly,
-    code: panel.code ? panel.code : urlCode,
+    code: panel.code ? panel.code : panelDefinisjon.urlCode,
     endpoints: panel.endpoints,
     renderComponent: panel.renderComponent,
     aksjonspunkter: aksjonspunkterForSteg,
@@ -178,7 +178,7 @@ export const utledProsessStegPaneler = (
 
       const panelData = panelDefinisjon.panels
         .filter(skalVisePanel(behandling, aksjonspunkter, vilkar))
-        .map(lagPanelData(panelDefinisjon.urlCode, overstyrteAksjonspunktKoder, harMinstEttPanelApentAksjonspunkt, toggleOverstyring,
+        .map(lagPanelData(panelDefinisjon, overstyrteAksjonspunktKoder, harMinstEttPanelApentAksjonspunkt, toggleOverstyring,
           isReadOnlyCheck, rettigheter.kanOverstyreAccess, dataForUtleding));
 
       const harStatusIkkeVurdert = panelData.some((p) => p.status === vilkarUtfallType.IKKE_VURDERT);
