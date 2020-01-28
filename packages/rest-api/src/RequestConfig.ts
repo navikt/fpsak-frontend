@@ -12,17 +12,10 @@ export const RequestType = {
 
 /**
  * maxPollingLimit: Maksimum antall ganger en skal forsøke å polle når en venter på ressurs (long polling). Kun aktuell ved metodene som inkluderer "Async".
- * fetchLinkDataAutomatically: Når satt til true blir "links" i en respons utført automatisk og resultatene fra desse kallene blir aggregert til en respons.
- * linksToFetchAutomatically: Liste med rel's som skal hentes automatisk
- * addLinkDataToArray: Når satt til true blir data hentet fra "links" lagt til i samme array (i responsen). Er kun aktuell når
- *  fetchLinkDataAutomatically=true.
  * storeResultKey: Bruk denne når en utfører long-polling og resultatet skal lagres på en annen nøkkel en den som initierer kallet.
  */
 const defaultConfig = {
   maxPollingLimit: undefined,
-  fetchLinkDataAutomatically: true,
-  linksToFetchAutomatically: [],
-  addLinkDataToArray: false,
   storeResultKey: undefined,
 };
 const formatConfig = (config = {}) => ({
@@ -43,6 +36,8 @@ class RequestConfig {
     restMethod?: string = RequestType.GET;
 
     rel?: string;
+
+    requestPayload?: any;
 
     constructor(name: string, path?: string, config?: RequestAdditionalConfig) {
       this.name = name;
@@ -92,6 +87,11 @@ class RequestConfig {
 
     withRestMethod = (restMethod: string) => {
       this.restMethod = restMethod.toUpperCase();
+      return this;
+    }
+
+    withRequestPayload = (requestPayload?: any) => {
+      this.requestPayload = requestPayload;
       return this;
     }
 }

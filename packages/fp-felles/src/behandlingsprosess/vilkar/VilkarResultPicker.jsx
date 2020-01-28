@@ -1,15 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedHTMLMessage, injectIntl } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
+import { Normaltekst } from 'nav-frontend-typografi';
 
-import { ArrowBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, Image,
+} from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   DatepickerField, RadioGroupField, RadioOption, SelectField,
 } from '@fpsak-frontend/form';
+
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
 import styles from './vilkarResultPicker.less';
 
@@ -33,60 +38,74 @@ const VilkarResultPickerImpl = ({
   customVilkarOppfyltText,
   readOnly,
   erMedlemskapsPanel,
-  hasAksjonspunkt,
 }) => (
   <div className={styles.container}>
-    <RadioGroupField
-      name="erVilkarOk"
-      validate={[required]}
-      bredde="XXL"
-      readOnly={readOnly}
-      isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}
-    >
-      <RadioOption
-        label={(
-          <FormattedHTMLMessage
-            id={findRadioButtonTextCode(customVilkarOppfyltText, true)}
-            values={customVilkarOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
-          />
-        )}
-        value
-      />
-      <RadioOption
-        label={(
-          <FormattedHTMLMessage
-            id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)}
-            values={customVilkarIkkeOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
-          />
-        )}
-        value={false}
-      />
-    </RadioGroupField>
-    {(erVilkarOk === false && avslagsarsaker) && (
-      <Row>
-        <Column xs="6">
-          <ArrowBox alignOffset={166} hideBorder={readOnly}>
-            <VerticalSpacer eightPx />
-            <SelectField
-              name="avslagCode"
-              label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
-              placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
-              selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
-              bredde="xl"
-              readOnly={readOnly}
-            />
-            {erMedlemskapsPanel && (
-              <DatepickerField
-                name="avslagDato"
-                label={{ id: 'VilkarResultPicker.VilkarDato' }}
-                readOnly={readOnly}
-                validate={[required, hasValidDate]}
-              />
-            )}
-          </ArrowBox>
-        </Column>
-      </Row>
+    <VerticalSpacer sixteenPx />
+    {(readOnly && erVilkarOk !== undefined) && (
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <Image className={styles.image} src={erVilkarOk ? innvilgetImage : avslattImage} />
+          </FlexColumn>
+          <FlexColumn>
+            {erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarOppfyltText, true)} /></Normaltekst>}
+            {!erVilkarOk && <Normaltekst><FormattedHTMLMessage id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)} /></Normaltekst>}
+          </FlexColumn>
+        </FlexRow>
+        <VerticalSpacer eightPx />
+      </FlexContainer>
     )}
+    {(!readOnly || erVilkarOk === undefined) && (
+      <RadioGroupField
+        name="erVilkarOk"
+        validate={[required]}
+        bredde="XXL"
+        direction="vertical"
+        readOnly={readOnly}
+      >
+        <RadioOption
+          label={(
+            <FormattedHTMLMessage
+              id={findRadioButtonTextCode(customVilkarOppfyltText, true)}
+              values={customVilkarOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
+            />
+          )}
+          value
+        />
+        <RadioOption
+          label={(
+            <FormattedHTMLMessage
+              id={findRadioButtonTextCode(customVilkarIkkeOppfyltText, false)}
+              values={customVilkarIkkeOppfyltText ? customVilkarIkkeOppfyltText.values : {}}
+            />
+          )}
+          value={false}
+        />
+      </RadioGroupField>
+    )}
+    <>
+      {erVilkarOk !== undefined && !erVilkarOk && avslagsarsaker && (
+        <>
+          <VerticalSpacer eightPx />
+          <SelectField
+            name="avslagCode"
+            label={intl.formatMessage({ id: 'VilkarResultPicker.Arsak' })}
+            placeholder={intl.formatMessage({ id: 'VilkarResultPicker.SelectArsak' })}
+            selectValues={avslagsarsaker.map((aa) => <option key={aa.kode} value={aa.kode}>{aa.navn}</option>)}
+            bredde="xl"
+            readOnly={readOnly}
+          />
+          {erMedlemskapsPanel && (
+          <DatepickerField
+            name="avslagDato"
+            label={{ id: 'VilkarResultPicker.VilkarDato' }}
+            readOnly={readOnly}
+            validate={[required, hasValidDate]}
+          />
+          )}
+        </>
+      )}
+    </>
   </div>
 );
 
@@ -106,7 +125,6 @@ VilkarResultPickerImpl.propTypes = {
   }),
   erVilkarOk: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
-  hasAksjonspunkt: PropTypes.bool.isRequired,
   erMedlemskapsPanel: PropTypes.bool,
 };
 

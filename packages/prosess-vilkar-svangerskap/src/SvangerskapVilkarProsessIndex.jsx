@@ -20,7 +20,7 @@ const SvangerskapVilkarProsessIndex = ({
   status,
   vilkar,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   isAksjonspunktOpen,
   alleKodeverk,
@@ -34,9 +34,9 @@ const SvangerskapVilkarProsessIndex = ({
       status={status}
       vilkar={vilkar}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      isAksjonspunktOpen={isAksjonspunktOpen}
+      isApOpen={isAksjonspunktOpen}
       alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
@@ -48,7 +48,7 @@ SvangerskapVilkarProsessIndex.propTypes = {
   status: PropTypes.string.isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { FadingPanel } from '@fpsak-frontend/shared-components';
 
 import opptjeningVilkarAksjonspunkterPropType from '../propTypes/opptjeningVilkarAksjonspunkterPropType';
 import { fastsattOpptjeningPropType } from '../propTypes/opptjeningVilkarOpptjeningPropType';
@@ -31,7 +30,7 @@ const OpptjeningVilkarForm = ({
     return (
       <OpptjeningVilkarAksjonspunktPanel
         submitCallback={submitCallback}
-        isAksjonspunktOpen={isAksjonspunktOpen}
+        isApOpen={isAksjonspunktOpen}
         readOnly={readOnly}
         readOnlySubmitButton={readOnlySubmitButton}
         behandlingId={behandlingId}
@@ -45,15 +44,13 @@ const OpptjeningVilkarForm = ({
     );
   }
   return (
-    <FadingPanel withoutTopMargin>
-      <OpptjeningVilkarView
-        months={fastsattOpptjening.opptjeningperiode.måneder}
-        days={fastsattOpptjening.opptjeningperiode.dager}
-        fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
-        opptjeningFomDate={fastsattOpptjening.opptjeningFom}
-        opptjeningTomDate={fastsattOpptjening.opptjeningTom}
-      />
-    </FadingPanel>
+    <OpptjeningVilkarView
+      months={fastsattOpptjening.opptjeningperiode.måneder}
+      days={fastsattOpptjening.opptjeningperiode.dager}
+      fastsattOpptjeningActivities={fastsattOpptjening.fastsattOpptjeningAktivitetList}
+      opptjeningFomDate={fastsattOpptjening.opptjeningFom}
+      opptjeningTomDate={fastsattOpptjening.opptjeningTom}
+    />
   );
 };
 

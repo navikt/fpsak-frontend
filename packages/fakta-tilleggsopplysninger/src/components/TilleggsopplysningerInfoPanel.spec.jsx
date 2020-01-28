@@ -21,33 +21,10 @@ describe('<TilleggsopplysningerInfoPanel>', () => {
       behandlingVersjon={1}
     />);
 
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Tilleggsopplysninger');
-    expect(panel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql('tilleggsopplysninger');
-
     const form = wrapper.find(TilleggsopplysningerFaktaForm);
     expect(form).to.have.length(1);
     expect(form.prop('readOnly')).is.false;
     expect(form.prop('submitting')).is.false;
-  });
-
-  it('skal vise lukket faktapanel når panelet er markert lukket', () => {
-    const wrapper = shallowWithIntl(<TilleggsopplysningerInfoPanel
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      readOnly={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
-
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel.prop('isInfoPanelOpen')).is.false;
   });
 
   it('skal vise readonly form når ingen åpne aksjonspunkter', () => {

@@ -89,7 +89,7 @@ describe('<VedtakRevurderingForm>', () => {
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       readOnly={false}
-      ytelseType={{ kode: 'ES' }}
+      ytelseTypeKode="ES"
       isBehandlingReadOnly={false}
       resultatstruktur={resultatstruktur}
     />);
@@ -136,7 +136,7 @@ describe('<VedtakRevurderingForm>', () => {
       previewCallback={previewCallback}
       aksjonspunktKoder={[aksjonspunktCodes.FORESLA_VEDTAK]}
       readOnly={false}
-      ytelseType={{ kode: 'ES' }}
+      ytelseTypeKode="ES"
       isBehandlingReadOnly
       resultatstruktur={resultatstruktur}
     />);
@@ -167,7 +167,7 @@ describe('<VedtakRevurderingForm>', () => {
       aksjonspunkter={revurdering.aksjonspunkter}
       previewCallback={previewCallback}
       readOnly={false}
-      ytelseType={{ kode: 'ES' }}
+      ytelseTypeKode="ES"
       isBehandlingReadOnly
       resultatstruktur={resultatstruktur}
     />);
@@ -200,7 +200,7 @@ describe('<VedtakRevurderingForm>', () => {
       previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
-      ytelseType={{ kode: 'ES' }}
+      ytelseTypeKode="ES"
       isBehandlingReadOnly
       resultatstruktur={resultatstruktur}
     />);
@@ -226,7 +226,7 @@ describe('<VedtakRevurderingForm>', () => {
       previewCallback={previewCallback}
       haveSentVarsel
       readOnly={false}
-      ytelseType={{ kode: 'ES' }}
+      ytelseTypeKode="ES"
       isBehandlingReadOnly
       resultatstruktur={resultatstruktur}
     />);

@@ -26,7 +26,7 @@ describe('<AdopsjonVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk={false}
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);
@@ -50,7 +50,7 @@ describe('<AdopsjonVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk={undefined}
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);
@@ -77,7 +77,7 @@ describe('<AdopsjonVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);

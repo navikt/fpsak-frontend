@@ -14,10 +14,7 @@ describe('RestApiConfigBuilder', () => {
     expect(endpoints[0].path).is.eql('www.pjokken.com');
     expect(endpoints[0].restMethod).is.eql('GET');
     expect(endpoints[0].config).is.eql({
-      addLinkDataToArray: false,
-      fetchLinkDataAutomatically: true,
       maxPollingLimit: undefined,
-      linksToFetchAutomatically: [],
       storeResultKey: undefined,
     });
 
@@ -25,10 +22,7 @@ describe('RestApiConfigBuilder', () => {
     expect(endpoints[1].path).is.eql('www.espenutvikler.com');
     expect(endpoints[1].restMethod).is.eql('POST');
     expect(endpoints[1].config).is.eql({
-      addLinkDataToArray: false,
-      fetchLinkDataAutomatically: true,
       maxPollingLimit: undefined,
-      linksToFetchAutomatically: [],
       storeResultKey: undefined,
     });
   });

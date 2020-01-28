@@ -28,7 +28,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
   avslagsarsaker,
   status,
   erOverstyrt,
-  panelTittel,
+  panelTittelKode,
   overstyringApKode,
   lovReferanse,
   erMedlemskapsPanel,
@@ -48,7 +48,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
       avslagsarsaker={avslagsarsaker}
       status={status}
       erOverstyrt={erOverstyrt}
-      panelTittel={panelTittel}
+      panelTittelKode={panelTittelKode}
       overstyringApKode={overstyringApKode}
       lovReferanse={lovReferanse}
       erMedlemskapsPanel={erMedlemskapsPanel}
@@ -58,7 +58,7 @@ const VilkarresultatMedOverstyringProsessIndex = ({
 
 VilkarresultatMedOverstyringProsessIndex.propTypes = {
   behandling: vilkarOverstyringBehandlingPropType.isRequired,
-  medlemskap: vilkarOverstyringMedlemskapPropType.isRequired,
+  medlemskap: vilkarOverstyringMedlemskapPropType,
   aksjonspunkter: PropTypes.arrayOf(vilkarOverstyringAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   overrideReadOnly: PropTypes.bool.isRequired,
@@ -70,13 +70,14 @@ VilkarresultatMedOverstyringProsessIndex.propTypes = {
   status: PropTypes.string.isRequired,
   lovReferanse: PropTypes.string,
   erOverstyrt: PropTypes.bool.isRequired,
-  panelTittel: PropTypes.string.isRequired,
+  panelTittelKode: PropTypes.string.isRequired,
   overstyringApKode: PropTypes.string.isRequired,
   erMedlemskapsPanel: PropTypes.bool.isRequired,
 };
 
 VilkarresultatMedOverstyringProsessIndex.defaultProps = {
   lovReferanse: '',
+  medlemskap: {},
 };
 
 export default VilkarresultatMedOverstyringProsessIndex;

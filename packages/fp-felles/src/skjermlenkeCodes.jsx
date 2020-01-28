@@ -66,7 +66,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_FORELDREANSVAR: {
     kode: 'PUNKT_FOR_FORELDREANSVAR',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FORELDREANSVAR,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   KLAGE_BEH_NFP: {
     kode: 'KLAGE_BEH_NFP',
@@ -107,27 +107,27 @@ const skjermlenkeCodes = {
   PUNKT_FOR_ADOPSJON: {
     kode: 'PUNKT_FOR_ADOPSJON',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.ADOPSJON,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_FOEDSEL: {
     kode: 'PUNKT_FOR_FOEDSEL',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.FOEDSEL,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_MEDLEMSKAP: {
     kode: 'PUNKT_FOR_MEDLEMSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.MEDLEMSKAP,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_OMSORG: {
     kode: 'PUNKT_FOR_OMSORG',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.OMSORG,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   PUNKT_FOR_OPPTJENING: {
     kode: 'PUNKT_FOR_OPPTJENING',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.OPPTJENING,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   SOEKNADSFRIST: {
     kode: 'SOEKNADSFRIST',
@@ -193,7 +193,7 @@ const skjermlenkeCodes = {
   PUNKT_FOR_SVANGERSKAPSPENGER: {
     kode: 'SVANGERSKAP',
     faktaNavn: faktaPanelCodes.DEFAULT,
-    punktNavn: behandlingspunktCodes.SVANGERSKAP,
+    punktNavn: behandlingspunktCodes.INNGANGSVILKAR,
   },
   VURDER_FARESIGNALER: {
     kode: 'VURDER_FARESIGNALER',
