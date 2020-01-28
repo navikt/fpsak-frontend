@@ -12,6 +12,7 @@
   "VurderSoknadsfristForeldrepengerForm.IkkeGyldigGrunn": "Ingen gyldig grunn for sen fremsetting av søknaden",
   "VurderSoknadsfristForeldrepengerForm.NyMottattDato": "Dato for når søknaden kan anses som mottatt",
   
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequired": "Vurdering",
   "BehandlingspunktBegrunnelseTextField.ExplanationRequiredReadOnly": "Begrunnelse",

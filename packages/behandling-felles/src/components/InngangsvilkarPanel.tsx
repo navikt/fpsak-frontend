@@ -3,6 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 
 import Kodeverk from '../types/kodeverkTsType';
 import Behandling from '../types/behandlingTsType';
@@ -54,12 +55,14 @@ const InngangsvilkarPanel: FunctionComponent<OwnProps> = ({
     evt.preventDefault();
   }, [apentFaktaPanelInfo]);
 
+  const erIkkeFerdigbehandlet = useMemo(() => filteredPanels.some((p) => p.status === vilkarUtfallType.IKKE_VURDERT), [behandling.versjon]);
+
   return (
     <FadingPanel>
-      {(apentFaktaPanelInfo || aksjonspunktTekstKoder.length > 0) && (
+      {((apentFaktaPanelInfo && erIkkeFerdigbehandlet) || aksjonspunktTekstKoder.length > 0) && (
         <>
           <AksjonspunktHelpTextHTML>
-            {apentFaktaPanelInfo
+            {apentFaktaPanelInfo && erIkkeFerdigbehandlet
               ? [
                 <>
                   <FormattedMessage id="InngangsvilkarPanel.AvventerAvklaringAv" />

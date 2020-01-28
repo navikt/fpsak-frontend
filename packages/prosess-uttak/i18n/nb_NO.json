@@ -32,6 +32,7 @@
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
   "ValidationMessage.utbetalingsgradErMerSamtidigUttaksprosent": "Feltet kan ikke være høyere enn samtidig uttaksprosent",
   "ValidationMessage.trekkdagerErMerEnnNullUtsettelse": "Ingen trekkdager for utsettelse",
+  "ValidationMessage.utbetalingMerEnnNullUtsettelse": "Ingen utbetalingsgrad for utsettelse",
   "Uttak.Confirm": "Bekreft og fortsett",
   "Uttak.ManuellOverstyring": "Manuell overstyring",
   "Uttak.Overstyrt": "Kun overstyrer kan endre på periodene",

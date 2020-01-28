@@ -95,8 +95,12 @@ describe('<InngangsvilkarPanel>', () => {
   });
 
   it('skal vise aksjonspunkt-hjelpetekst med lenke for avventing av fakta-aksjonspunkt', () => {
-    const prosessStegData = [{
+    const prosessStegPanelData = {
       ...fellesProsessStegPanelData,
+      status: vilkarUtfallType.IKKE_VURDERT,
+    };
+    const prosessStegData = [{
+      ...prosessStegPanelData,
       code: 'FODSEL',
       renderComponent: () => undefined,
       endpoints: [],
