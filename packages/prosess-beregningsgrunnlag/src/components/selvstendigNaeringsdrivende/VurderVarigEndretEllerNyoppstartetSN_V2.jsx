@@ -59,7 +59,15 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
     radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />);
     radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />);
   }
-
+  const endretTekst = (endret) => {
+    if (!endret) return null;
+    return (
+      <FormattedMessage
+        id="Beregningsgrunnlag.Forms.EndretTekst"
+        values={{ endretAv: endret.endretAv, endretDato: dateFormat(endret.endretDato) }}
+      />
+    );
+  };
   return (
     <>
       {!readOnly && (
@@ -134,12 +142,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
             maxLength={1500}
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-            endretTekst={(
-              <FormattedMessage
-                id="Beregningsgrunnlag.Forms.EndretTekst"
-                values={{ endretAv: 'B100423', endretDato: dateFormat('2020-01-27') }}
-              />
-            )}
+            endretTekst={endretTekst({ endretAv: 'B123455', endretDato: '2020-01-27' })}
           />
         </Column>
       </Row>

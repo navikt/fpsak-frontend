@@ -534,6 +534,7 @@ const BeregningsresultatTable2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
+      <VerticalSpacer eightPx />
       {periodeResultatTabeller.map((tableData) => createPeriodeResultat(vilkaarBG, tableData, skalLagePeriodeHeaders, intl, halvGVerdi))}
     </Panel>
   );

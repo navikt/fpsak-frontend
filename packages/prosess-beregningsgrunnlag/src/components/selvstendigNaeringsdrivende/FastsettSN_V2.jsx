@@ -4,15 +4,23 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 
 import {
-  hasValidText, maxLength, minLength, parseCurrencyInput, removeSpacesFromNumber, required, formatCurrencyNoKr,
+  hasValidText,
+  maxLength,
+  minLength,
+  parseCurrencyInput,
+  removeSpacesFromNumber,
+  required,
+  formatCurrencyNoKr,
+  dateFormat,
 } from '@fpsak-frontend/utils';
 import {
-  TextAreaField, InputField,
+  InputField,
 } from '@fpsak-frontend/form';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import TextAreaField2 from '../redesign/TextAreaField_V2';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
@@ -46,47 +54,63 @@ const FastsettSN2 = ({
   const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
     ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
+  const endretTekst = (endret) => {
+    if (!endret) return null;
+    return (
+      <FormattedMessage
+        id="Beregningsgrunnlag.Forms.EndretTekst"
+        values={{ endretAv: endret.endretAv, endretDato: dateFormat(endret.endretDato) }}
+      />
+    );
+  };
   return (
     <>
       {erNyArbLivet && (
-        <Row className={styles.verticalAlignMiddle}>
-          <Column className={styles.dynamiskKolonne}>
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
-            </Normaltekst>
-          </Column>
-          <Column xs="5">
-            <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
-              <InputField
-                name={fastsettInntektFieldname}
-                bredde="XS"
-                validate={[required]}
-                parse={parseCurrencyInput}
-                className={styles['input--xs']}
-                readOnly={readOnly}
-              />
-            </div>
-          </Column>
-        </Row>
+        <>
+          <Row className={styles.verticalAlignMiddle}>
+            <Column className={styles.dynamiskKolonne}>
+              <Normaltekst>
+                <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
+              </Normaltekst>
+            </Column>
+            <Column xs="5">
+              <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
+                <InputField
+                  name={fastsettInntektFieldname}
+                  bredde="XS"
+                  validate={[required]}
+                  parse={parseCurrencyInput}
+                  className={styles['input--xs']}
+                  readOnly={readOnly}
+                />
+              </div>
+            </Column>
+          </Row>
+          <VerticalSpacer eightPx />
+        </>
       )}
-      <VerticalSpacer eightPx />
+
       {(harGammeltAPFastsettBrutto || harAPSNNyiArbLiv)
       && (
-      <Row>
-        <Column xs="12" className={styles.marginTop}>
-          <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapperHeigh}>
-            <TextAreaField
-              name={begrunnelseFieldname}
-              label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
-              validate={[required, maxLength1500, minLength3, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              isEdited={isAksjonspunktClosed}
-              placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-            />
-          </div>
-        </Column>
-      </Row>
+        <>
+          <VerticalSpacer sixteenPx />
+          <Row>
+            <Column xs="12" className={styles.marginTop}>
+              <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapperHeigh}>
+                <TextAreaField2
+                  name={begrunnelseFieldname}
+                  label={<FormattedMessage id="Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag" />}
+                  validate={[required, maxLength1500, minLength3, hasValidText]}
+                  maxLength={1500}
+                  readOnly={readOnly}
+                  isEdited={isAksjonspunktClosed}
+                  placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+                  endretTekst={endretTekst({ endretAv: 'B123455', endretDato: '2020-01-27' })}
+                />
+              </div>
+            </Column>
+          </Row>
+        </>
       )}
     </>
   );
