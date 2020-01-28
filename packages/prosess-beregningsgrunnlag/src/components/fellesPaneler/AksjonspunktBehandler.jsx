@@ -82,6 +82,8 @@ const AksjonspunktBehandler = ({
   }
   erVarigEndring = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erVarigEndret === true);
   erNyoppstartet = snAndel && snAndel.næringer && snAndel.næringer.some((naring) => naring.erNyoppstartet === true);
+  console.log('Aksjo0nspunktbehandler er varigendret', erVarigEndring);
+  console.log('Aksjo0nspunktbehandler er erNyoppstartet', erNyoppstartet);
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
