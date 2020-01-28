@@ -32,6 +32,7 @@ const AvviksopplysningerFL = ({
     return null;
   }
   const avvikFL = sammenligningsGrunnlagFL.avvikProsent !== undefined ? sammenligningsGrunnlagFL.avvikProsent : '';
+  const avvikRoundedFL = avvikFL ? parseFloat((avvikFL.toFixed(1))) : 0;
   const sammenligningsgrunnlagSumFL = sammenligningsGrunnlagFL.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagFL;
   return (
@@ -89,7 +90,7 @@ const AvviksopplysningerFL = ({
             <Column className={styles.colAvvik}>
 
               <Normaltekst className={`${avvikFL > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikFL }} />
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikRoundedFL }} />
               </Normaltekst>
             </Column>
           </Row>

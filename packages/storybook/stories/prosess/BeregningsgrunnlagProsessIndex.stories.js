@@ -489,8 +489,8 @@ export const arbeidstakerFrilansMedAvvik = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT'), lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, 46.2, 77000),
-    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.2, 11000),
+    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, undefined, 77000),
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.242342, 11000),
   ];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
@@ -595,7 +595,7 @@ export const selvstendigNæringsdrivende = () => {
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.21243, -177059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
 
   return (
@@ -996,6 +996,7 @@ export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
