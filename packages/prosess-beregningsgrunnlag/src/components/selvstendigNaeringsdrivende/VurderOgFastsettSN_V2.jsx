@@ -37,12 +37,15 @@ export const VurderOgFastsettSNImpl2 = ({
   erVarigEndring,
   gjeldendeAksjonspunkter,
 }) => {
+  console.log('VurderOgFastsettSNImpl2 er varigendret', erVarigEndring);
+  console.log('VurderOgFastsettSNImpl2 er erNyoppstartet', erNyoppstartet);
   if (erNyArbLivet) {
     return (
       <FastsettSN2
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        erNyArbLivet={erNyArbLivet}
       />
     );
   }
@@ -53,15 +56,16 @@ export const VurderOgFastsettSNImpl2 = ({
         isAksjonspunktClosed={isAksjonspunktClosed}
         erVarigEndring={erVarigEndring}
         erNyoppstartet={erNyoppstartet}
+        erVarigEndretNaering={erVarigEndretNaering}
       />
       {erVarigEndretNaering
-        && (
+      && (
         <FastsettSN2
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
         />
-        )}
+      )}
     </>
   );
 };
@@ -98,6 +102,7 @@ VurderOgFastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunk
 });
 
 const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkter) => {
+  debugger;
   // Utgått aksjonspunkt som må håndteres intill data er migrert
   if (hasAksjonspunkt(FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)) {
     const aksjonspunkter = [{
@@ -113,11 +118,12 @@ const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkt
   return [{
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
-    ...FastsettSN2.transformValuesUtenBegrunnelse(values),
+    ...VurderVarigEndretEllerNyoppstartetSN2.transformValuesUtenBegrunnelse(values),
   }];
 };
 
 VurderOgFastsettSN2.transformValues = (values, gjeldendeAksjonspunkter) => {
+  debugger;
   if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
     return [{
       kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,

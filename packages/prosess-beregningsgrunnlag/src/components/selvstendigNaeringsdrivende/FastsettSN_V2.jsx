@@ -38,6 +38,7 @@ const FastsettSN2 = ({
   isAksjonspunktClosed,
   intl,
   gjeldendeAksjonspunkter,
+  erNyArbLivet,
 }) => {
   const harGammeltAPFastsettBrutto = gjeldendeAksjonspunkter
     ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE)
@@ -48,25 +49,27 @@ const FastsettSN2 = ({
 
   return (
     <>
-      <Row className={styles.verticalAlignMiddle}>
-        <Column className={styles.dynamiskKolonne}>
-          <Normaltekst>
-            <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
-          </Normaltekst>
-        </Column>
-        <Column xs="5">
-          <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
-            <InputField
-              name={fastsettInntektFieldname}
-              bredde="XS"
-              validate={[required]}
-              parse={parseCurrencyInput}
-              className={styles['input--xs']}
-              readOnly={readOnly}
-            />
-          </div>
-        </Column>
-      </Row>
+      {erNyArbLivet && (
+        <Row className={styles.verticalAlignMiddle}>
+          <Column className={styles.dynamiskKolonne}>
+            <Normaltekst>
+              <FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.BruttoBerGr2" />
+            </Normaltekst>
+          </Column>
+          <Column xs="5">
+            <div id="readOnlyWrapper" className={readOnly ? styles.inputPadding : undefined}>
+              <InputField
+                name={fastsettInntektFieldname}
+                bredde="XS"
+                validate={[required]}
+                parse={parseCurrencyInput}
+                className={styles['input--xs']}
+                readOnly={readOnly}
+              />
+            </div>
+          </Column>
+        </Row>
+      )}
       <VerticalSpacer eightPx />
       {(harGammeltAPFastsettBrutto || harAPSNNyiArbLiv)
       && (
@@ -94,6 +97,7 @@ FastsettSN2.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
+  erNyArbLivet: PropTypes.bool.isRequired,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
 };
 

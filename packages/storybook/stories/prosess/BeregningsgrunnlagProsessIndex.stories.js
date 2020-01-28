@@ -1035,3 +1035,113 @@ export const tidsbegrensetArbeidsforholdMedAvvikORGdesign = () => {
     />
   );
 };
+
+export const arbeidstakerOgSelvstendigNæringsdrivende2457Nyoppstartet = () => {
+  const andeler = [
+    lagAndel('SN', 331000, 0, undefined),
+    lagAndel('AT', 945000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 757165;
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: true,
+    erVarigEndret: false,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 86399,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const statuser = [lagStatus('AT_SN')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  ap[0].status.kode = 'UTFO';
+  /*
+  ap[0].begrunnelse = 'Bruker opplyser at at .'
+    + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+    + 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    + 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+    + 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+  */
+  bg.dekningsgrad = 80;
+
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      aksjonspunkter={ap}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
+export const arbeidstakerOgSelvstendigNæringsdrivende2457VarigEndring = () => {
+  const andeler = [
+    lagAndel('SN', 331000, 0, undefined),
+    lagAndel('AT', 945000, undefined, undefined),
+  ];
+  const pgi = lagPGIVerdier();
+  andeler[0].pgiVerdier = pgi;
+  andeler[0].pgiSnitt = 757165;
+  const næringer = [{
+    begrunnelse: 'Endringsbeskrivelse',
+    endringsdato: '2019-11-22',
+    erNyIArbeidslivet: false,
+    erNyoppstartet: false,
+    erVarigEndret: true,
+    kanRegnskapsførerKontaktes: false,
+    oppgittInntekt: 86399,
+    oppstartsdato: null,
+    orgnr: '910909088',
+    regnskapsførerNavn: 'Regnar Regnskap',
+    regnskapsførerTlf: '99999999',
+    utenlandskvirksomhetsnavn: null,
+    virksomhetType: { kode: 'DAGMAMMA', kodeverk: 'VIRKSOMHET_TYPE' },
+    kode: 'ANNEN',
+    kodeverk: 'VIRKSOMHET_TYPE',
+  }];
+  andeler[0].næringer = næringer;
+  const statuser = [lagStatus('AT_SN')];
+  const perioder = [lagPeriodeMedDagsats(andeler, 923)];
+  const bg = lagBG(perioder, statuser);
+  const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  ap[0].status.kode = 'UTFO';
+  ap[0].begrunnelse = 'Bruker opplyser at at .'
+    + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
+    + 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+    + 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
+    + 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
+  bg.dekningsgrad = 80;
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      submitCallback={action('button-click')}
+      aksjonspunkter={ap}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      apCodes={[]}
+      isApOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesTrue}
+    />
+  );
+};
