@@ -40,7 +40,8 @@
   "AktsomhetGradUaktsomhetFormPanel.Nei": "Nei",
   "AktsomhetGradUaktsomhetFormPanel.Ja": "Ja",
   "AktsomhetGradUaktsomhetFormPanel.Tilbakekrev": "Totalbeløpet er under 4 rettsgebyr (6. ledd). Skal det tilbakekreves?",
-
+  "AktsomhetGradUaktsomhetFormPanel.SærligGrunner": "Særlige grunner 4. ledd",
+  "AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner": "Vurder særlige grunner du har vektlagt for resultatet**",
   "AktsomhetSarligeGrunnerFormPanel.GrunnerTilReduksjon":"Særlige grunner som er vektlagt (4.ledd)",
 
   "TilbakekrevingAktivitetTabell.Aktivitet": "Aktivitet",

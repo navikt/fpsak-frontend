@@ -182,6 +182,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: undefined,
       },
     });
   });
@@ -198,6 +199,7 @@ describe('<AktsomhetFormPanel>', () => {
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
         sarligGrunner: sarligGrunnTyper,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     };
     const initialValues = AktsomhetFormPanel.buildInitalValues(vilkarResultatInfo);
@@ -214,6 +216,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     });
   });
@@ -246,6 +249,7 @@ describe('<AktsomhetFormPanel>', () => {
         belopSomSkalTilbakekreves: 100,
         annetBegrunnelse: 'test',
         tilbakekrevSelvOmBeloepErUnder4Rettsgebyr: true,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
       },
     };
     const vurderingBegrunnelse = 'test';
@@ -257,6 +261,7 @@ describe('<AktsomhetFormPanel>', () => {
       aktsomhetInfo: {
         harGrunnerTilReduksjon: true,
         ileggRenter: undefined,
+        sarligGrunnerBegrunnelse: 'sarlig grunner begrunnelse',
         sarligGrunner: [sarligGrunn.HELT_ELLER_DELVIS_NAVS_FEIL],
         andelTilbakekreves: 70,
         tilbakekrevesBelop: 100,

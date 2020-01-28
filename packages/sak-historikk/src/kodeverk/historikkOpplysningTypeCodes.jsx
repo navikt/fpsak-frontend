@@ -27,6 +27,9 @@ const historikkOpplysningTypeCodes = {
   TILBAKEKREVING_OPPFYLT_BEGRUNNELSE: {
     kode: 'TILBAKEKREVING_OPPFYLT_BEGRUNNELSE',
   },
+  SÆRLIG_GRUNNER_BEGRUNNELSE: {
+    kode: 'SÆRLIG_GRUNNER_BEGRUNNELSE',
+  },
 };
 
 export default historikkOpplysningTypeCodes;
