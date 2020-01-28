@@ -13,7 +13,7 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const fagsak = {
   saksnummer: 123,
-  ytelseType: {
+  fagsakYtelseType: {
     kode: fagsakYtelseType.FORELDREPENGER,
   },
 };
