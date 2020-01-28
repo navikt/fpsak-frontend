@@ -1,13 +1,12 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
+import { FormattedMessage } from 'react-intl';
+
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
-import { FormattedMessage } from 'react-intl';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
+
 import OmsorgFaktaForm from './OmsorgFaktaForm';
 import { OmsorgInfoPanel } from './OmsorgInfoPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg';
@@ -76,8 +75,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[aleneomsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -89,12 +86,8 @@ describe('<OmsorgInfoPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       personopplysninger={personopplysning}
     />);
-    const panel = wrapper.find(FaktaEkspandertpanel);
+    const panel = wrapper.find(OmsorgFaktaForm);
     expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om omsorg');
-    expect(panel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql('omsorg');
   });
 
   it('skal vise helptext for omsorg og aleneomsorg aksjonspunkt', () => {
@@ -104,8 +97,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[aleneomsorgAp, omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -117,7 +108,7 @@ describe('<OmsorgInfoPanel>', () => {
       soknad={{}}
       alleMerknaderFraBeslutter={{}}
     />);
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(2);
@@ -132,8 +123,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -145,7 +134,7 @@ describe('<OmsorgInfoPanel>', () => {
       soknad={{}}
       alleMerknaderFraBeslutter={{}}
     />);
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     const helpTextMessage = wrapper.find(FormattedMessage);
     expect(helpTextMessage).has.length(1);
@@ -159,8 +148,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -184,8 +171,6 @@ describe('<OmsorgInfoPanel>', () => {
       omsorg={false}
       intl={intlMock}
       aksjonspunkter={[omsorgAp]}
-      openInfoPanels={['omsorg']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import VedtakPanels from './components/VedtakPanels';
@@ -31,53 +30,45 @@ const VedtakProsessIndex = ({
   simuleringResultat,
   vilkar,
   sendVarselOmRevurdering,
-  originalBehandling,
+  beregningsresultatOriginalBehandling,
   medlemskap,
   aksjonspunkter,
-  readOnly,
+  isReadOnly,
   previewCallback,
   submitCallback,
-  ytelseType,
+  ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
-}) => {
-  let resultatstrukturOriginalBehandling;
-  if (originalBehandling) {
-    resultatstrukturOriginalBehandling = ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-      ? originalBehandling['beregningsresultat-engangsstonad']
-      : originalBehandling['beregningsresultat-foreldrepenger'];
-  }
-  return (
-    <RawIntlProvider value={intl}>
-      <VedtakPanels
-        behandlingId={behandling.id}
-        behandlingVersjon={behandling.versjon}
-        behandlingTypeKode={behandling.type.kode}
-        behandlingStatus={behandling.status}
-        sprakkode={behandling.sprakkode}
-        behandlingresultat={behandling.behandlingsresultat}
-        behandlingPaaVent={behandling.behandlingPaaVent}
-        erBehandlingHenlagt={behandling.behandlingHenlagt}
-        behandlingArsaker={behandling.behandlingArsaker}
-        vilkar={vilkar}
-        tilbakekrevingvalg={tilbakekrevingvalg}
-        simuleringResultat={simuleringResultat}
-        resultatstruktur={ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD
-          ? beregningresultatEngangsstonad : beregningresultatForeldrepenger}
-        sendVarselOmRevurdering={sendVarselOmRevurdering}
-        resultatstrukturOriginalBehandling={resultatstrukturOriginalBehandling}
-        medlemskapFom={medlemskap ? medlemskap.fom : undefined}
-        aksjonspunkter={aksjonspunkter}
-        ytelseType={ytelseType}
-        employeeHasAccess={employeeHasAccess}
-        readOnly={readOnly}
-        previewCallback={previewCallback}
-        submitCallback={submitCallback}
-        alleKodeverk={alleKodeverk}
-      />
-    </RawIntlProvider>
-  );
-};
+}) => (
+  <RawIntlProvider value={intl}>
+    <VedtakPanels
+      behandlingId={behandling.id}
+      behandlingVersjon={behandling.versjon}
+      behandlingTypeKode={behandling.type.kode}
+      behandlingStatus={behandling.status}
+      sprakkode={behandling.sprakkode}
+      behandlingresultat={behandling.behandlingsresultat}
+      behandlingPaaVent={behandling.behandlingPaaVent}
+      erBehandlingHenlagt={behandling.behandlingHenlagt}
+      behandlingArsaker={behandling.behandlingArsaker}
+      vilkar={vilkar}
+      tilbakekrevingvalg={tilbakekrevingvalg}
+      simuleringResultat={simuleringResultat}
+      resultatstruktur={ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD
+        ? beregningresultatEngangsstonad : beregningresultatForeldrepenger}
+      sendVarselOmRevurdering={sendVarselOmRevurdering}
+      resultatstrukturOriginalBehandling={beregningsresultatOriginalBehandling}
+      medlemskapFom={medlemskap ? medlemskap.fom : undefined}
+      aksjonspunkter={aksjonspunkter}
+      ytelseTypeKode={ytelseTypeKode}
+      employeeHasAccess={employeeHasAccess}
+      readOnly={isReadOnly}
+      previewCallback={previewCallback}
+      submitCallback={submitCallback}
+      alleKodeverk={alleKodeverk}
+    />
+  </RawIntlProvider>
+);
 
 VedtakProsessIndex.propTypes = {
   behandling: vedtakBehandlingPropType.isRequired,
@@ -85,15 +76,15 @@ VedtakProsessIndex.propTypes = {
   beregningresultatEngangsstonad: vedtakBeregningsresultatPropType,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   sendVarselOmRevurdering: PropTypes.bool,
-  originalBehandling: vedtakOriginalBehandlingPropType,
+  beregningsresultatOriginalBehandling: vedtakOriginalBehandlingPropType,
   medlemskap: vedtakMedlemskapPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
   simuleringResultat: vedtakSimuleringResultatPropType,
   tilbakekrevingvalg: vedtakTilbakekrevingvalgPropType,
   submitCallback: PropTypes.func.isRequired,
   previewCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  ytelseType: kodeverkObjektPropType.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };
@@ -101,7 +92,7 @@ VedtakProsessIndex.propTypes = {
 VedtakProsessIndex.defaultProps = {
   beregningresultatForeldrepenger: undefined,
   beregningresultatEngangsstonad: undefined,
-  originalBehandling: undefined,
+  beregningsresultatOriginalBehandling: undefined,
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
   sendVarselOmRevurdering: false,

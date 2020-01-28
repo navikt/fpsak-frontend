@@ -25,12 +25,17 @@ import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  resetBehandlingMenuData, hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
 const menyDataBehandlingValgt = [fpsakApi.MENYHANDLING_RETTIGHETER];
 const menyData = [];
+
+const VERGE_MENYVALG = {
+  FJERN: 'FJERN',
+  OPPRETT: 'OPPRETT',
+};
 
 // TODO (TOR) Flytt rettigheter til server
 const getMenyRettigheter = createSelector([
@@ -64,11 +69,6 @@ class BehandlingMenuIndex extends Component {
     }
   }
 
-  componentWillUnmount() {
-    const { resetBehandlingMenuData: resetMenuData } = this.props;
-    resetMenuData();
-  }
-
   render() {
     const {
       behandlingData,
@@ -79,6 +79,7 @@ class BehandlingMenuIndex extends Component {
       ytelseType,
       behandlingStatus,
       erIInnhentSoknadopplysningerSteg,
+      vergeMenyvalg,
     } = this.props;
 
     return (
@@ -101,6 +102,13 @@ class BehandlingMenuIndex extends Component {
               harSoknad: dataProps.menyhandlingRettigheter ? dataProps.menyhandlingRettigheter.harSoknad : false,
               behandlingType: behandlingData.harValgtBehandling ? behandlingData.type : undefined,
             })}
+            shelveBehandling={shelveBehandling}
+            setBehandlingOnHold={setBehandlingOnHold}
+            resumeBehandling={resumeBehandling}
+            nyBehandlendeEnhet={nyBehandlendeEnhet}
+            openBehandlingForChanges={openBehandlingForChanges}
+            fjernVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? fjernVerge : undefined}
+            opprettVerge={vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? opprettVerge : undefined}
             {...this.props}
           />
         )}
@@ -111,7 +119,6 @@ class BehandlingMenuIndex extends Component {
 
 BehandlingMenuIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
-  resetBehandlingMenuData: PropTypes.func.isRequired,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   hentVergeMenyvalg: PropTypes.func,
   navAnsatt: PropTypes.shape().isRequired,
@@ -121,12 +128,14 @@ BehandlingMenuIndex.propTypes = {
   ytelseType: PropTypes.shape().isRequired,
   behandlingStatus: PropTypes.shape(),
   erIInnhentSoknadopplysningerSteg: PropTypes.bool.isRequired,
+  vergeMenyvalg: PropTypes.string,
 };
 
 BehandlingMenuIndex.defaultProps = {
   behandlingData: MenyBehandlingData.lagIngenValgtBehandling(),
   hentVergeMenyvalg: undefined,
   behandlingStatus: undefined,
+  vergeMenyvalg: undefined,
 };
 
 const getMenyKodeverk = createSelector([getBehandlingType, getAlleFpSakKodeverk, getAlleFpTilbakeKodeverk],
@@ -172,40 +181,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   previewHenleggBehandling: previewMessage,
-  resumeBehandling,
-  shelveBehandling,
-  nyBehandlendeEnhet,
   createNewBehandling,
-  setBehandlingOnHold,
-  openBehandlingForChanges,
-  resetBehandlingMenuData,
   hentVergeMenyvalg,
-  fjernVerge,
-  opprettVerge,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
 }, dispatch);
 
-
-const VERGE_MENYVALG = {
-  FJERN: 'FJERN',
-  OPPRETT: 'OPPRETT',
-};
-
-// Ignore own props and children
-const mergeProps = (stateProps, dispatchProps) => {
-  const { vergeMenyvalg } = stateProps;
-  const modifiserteDispatchProps = {
-    ...dispatchProps,
-    fjernVerge: vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.FJERN ? dispatchProps.fjernVerge : undefined,
-    opprettVerge: vergeMenyvalg && vergeMenyvalg === VERGE_MENYVALG.OPPRETT ? dispatchProps.opprettVerge : undefined,
-  };
-
-  return {
-    ...stateProps,
-    ...modifiserteDispatchProps,
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(BehandlingMenuIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(BehandlingMenuIndex);

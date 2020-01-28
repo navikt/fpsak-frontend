@@ -136,7 +136,7 @@ describe('<ShelveBehandlingMenuItem>', () => {
     wrapper.update();
 
     expect(shelveBehandlingCallback.called).is.true;
-    expect(shelveBehandlingCallback.getCalls()[0].args).has.length(3);
+    expect(shelveBehandlingCallback.getCalls()[0].args).has.length(1);
     expect(shelveBehandlingCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,

@@ -9,6 +9,8 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "nav-frontend-core": "4.0.11",
+    "nav-frontend-typografi": "2.0.16",
+    "nav-frontend-typografi-style": "1.0.17",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-intl": "^3.6.2",

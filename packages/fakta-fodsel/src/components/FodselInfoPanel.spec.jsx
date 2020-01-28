@@ -7,7 +7,6 @@ import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-samme
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 
 import { FodselInfoPanelImpl } from './FodselInfoPanel';
 import SjekkFodselDokForm from './SjekkFodselDokForm';
@@ -48,8 +47,6 @@ describe('<FodselInfoPanel>', () => {
     const wrapper = shallowWithIntl(<FodselInfoPanelImpl
       intl={intlMock}
       aksjonspunkter={[antallBarnAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -66,9 +63,6 @@ describe('<FodselInfoPanel>', () => {
       behandlingVersjon={1}
       personopplysninger={personopplysninger}
     />);
-
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
 
     expect(wrapper.find(SjekkFodselDokForm)).has.length(1);
   });
@@ -93,8 +87,6 @@ describe('<FodselInfoPanel>', () => {
     const wrapper = shallowWithIntl(<FodselInfoPanelImpl
       intl={intlMock}
       aksjonspunkter={[terminbekreftelseAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -112,9 +104,6 @@ describe('<FodselInfoPanel>', () => {
       personopplysninger={personopplysninger}
     />);
 
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om fødsel');
-
     expect(wrapper.find(TermindatoFaktaForm)).has.length(1);
   });
 
@@ -122,8 +111,6 @@ describe('<FodselInfoPanel>', () => {
     const wrapper = shallowWithIntl(<FodselInfoPanelImpl
       intl={intlMock}
       aksjonspunkter={[]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}

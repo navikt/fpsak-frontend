@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import {
-  behandlingForm, faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling,
-} from '@fpsak-frontend/fp-felles';
-import AksjonspunktHelpText from '@fpsak-frontend/shared-components/src/AksjonspunktHelpText';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { omit } from '@fpsak-frontend/utils';
 
 import BekreftOgForsettKnapp from './BekreftOgForsettKnapp';
@@ -20,7 +18,6 @@ import PersonArbeidsforholdPanel from './PersonArbeidsforholdPanel';
 // ----------------------------------------------------------------------------
 
 const formName = 'ArbeidsforholdInfoPanel';
-const relevanteAksjonspunkter = [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD];
 
 // ----------------------------------------------------------------------------
 // METHODS
@@ -45,8 +42,6 @@ const harAksjonspunkt = (aksjonspunktCode, aksjonspunkter) => aksjonspunkter.som
  * */
 export const ArbeidsforholdInfoPanelImpl = ({
   aksjonspunkter,
-  openInfoPanels,
-  toggleInfoPanelCallback,
   readOnly,
   hasOpenAksjonspunkter,
   skalKunneLeggeTilNyeArbeidsforhold,
@@ -57,54 +52,44 @@ export const ArbeidsforholdInfoPanelImpl = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <FaktaEkspandertpanel
-    title={<FormattedMessage id="ArbeidsforholdInfoPanel.Title" />}
-    hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-    isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.ARBEIDSFORHOLD)}
-    toggleInfoPanelCallback={toggleInfoPanelCallback}
-    faktaId={faktaPanelCodes.ARBEIDSFORHOLD}
-    readOnly={readOnly}
-  >
-    <div>
-      { aksjonspunkter.length > 0 && (
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
-          {[<FormattedMessage
-            key="ArbeidsforholdInfoPanelAksjonspunkt"
-            id={skalKunneLeggeTilNyeArbeidsforhold ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert' : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'}
-          />]}
-        </AksjonspunktHelpText>
+  <>
+    { aksjonspunkter.length > 0 && (
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter && !readOnly}>
+        {[<FormattedMessage
+          key="ArbeidsforholdInfoPanelAksjonspunkt"
+          id={skalKunneLeggeTilNyeArbeidsforhold ? 'ArbeidsforholdInfoPanel.IngenArbeidsforholdRegistrert' : 'ArbeidsforholdInfoPanel.AvklarArbeidsforhold'}
+        />]}
+      </AksjonspunktHelpTextTemp>
+    )}
+    <form onSubmit={formProps.handleSubmit}>
+      <PersonArbeidsforholdPanel
+        readOnly={readOnly}
+        hasAksjonspunkter={aksjonspunkter.length > 0}
+        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+        skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
+        skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        alleKodeverk={alleKodeverk}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      />
+      { harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
+      <BekreftOgForsettKnapp
+        readOnly={readOnly}
+        isSubmitting={formProps.submitting}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+      />
       )}
-      <form onSubmit={formProps.handleSubmit}>
-        <PersonArbeidsforholdPanel
-          readOnly={readOnly}
-          hasAksjonspunkter={aksjonspunkter.length > 0}
-          hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-          skalKunneLeggeTilNyeArbeidsforhold={skalKunneLeggeTilNyeArbeidsforhold}
-          skalKunneLageArbeidsforholdBasertPaInntektsmelding={skalKunneLageArbeidsforholdBasertPaInntektsmelding}
-          alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-          alleKodeverk={alleKodeverk}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-        />
-        { harAksjonspunkt(aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD, aksjonspunkter) && (
-          <BekreftOgForsettKnapp
-            readOnly={readOnly}
-            isSubmitting={formProps.submitting}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-          />
-        )}
-      </form>
-    </div>
-  </FaktaEkspandertpanel>
+    </form>
+  </>
+
 );
 
 ArbeidsforholdInfoPanelImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   aksjonspunkter: PropTypes.arrayOf(arbeidsforholdAksjonspunkterPropType.isRequired).isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   skalKunneLeggeTilNyeArbeidsforhold: PropTypes.bool.isRequired,
@@ -142,7 +127,4 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     onSubmit,
   });
 };
-const connectedComponent = connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));
-const ArbeidsforholdInfoPanel = withDefaultToggling(faktaPanelCodes.ARBEIDSFORHOLD, relevanteAksjonspunkter)(connectedComponent);
-
-export default ArbeidsforholdInfoPanel;
+export default connect(mapStateToPropsFactory)(behandlingForm({ form: formName })(ArbeidsforholdInfoPanelImpl));

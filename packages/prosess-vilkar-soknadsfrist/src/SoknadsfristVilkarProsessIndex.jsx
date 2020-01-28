@@ -25,7 +25,7 @@ const SoknadsfristVilkarProsessIndex = ({
   aksjonspunkter,
   status,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   alleKodeverk,
 }) => (
@@ -40,7 +40,7 @@ const SoknadsfristVilkarProsessIndex = ({
       aksjonspunkter={aksjonspunkter}
       status={status}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
       alleKodeverk={alleKodeverk}
     />
@@ -55,7 +55,7 @@ SoknadsfristVilkarProsessIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(soknadsfristVilkarAksjonspunkterPropType).isRequired,
   status: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
 };

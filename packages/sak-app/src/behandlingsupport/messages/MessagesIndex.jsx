@@ -124,8 +124,8 @@ export class MessagesIndex extends Component {
   }
 
   resetMessage() {
-    const { behandlingIdentifier, resetSubmitMessage: resetMessage } = this.props;
-    return resetMessage(behandlingIdentifier);
+    const { resetSubmitMessage: resetMessage } = this.props;
+    return resetMessage();
   }
 
   render() {

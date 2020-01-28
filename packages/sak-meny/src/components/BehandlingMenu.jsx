@@ -181,8 +181,6 @@ class BehandlingMenu extends Component {
                 behandlingVersjon={behandlingData.versjon}
                 resumeBehandling={resumeBehandling}
                 gjenopptaBehandlingEnabled={rettigheter.gjenopptaBehandlingAccess.isEnabled}
-                behandlingType={behandlingData.type}
-                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.isPauseBehandlingEnabled() && (
@@ -193,8 +191,6 @@ class BehandlingMenu extends Component {
                 setBehandlingOnHold={setBehandlingOnHold}
                 settBehandlingPaVentEnabled={rettigheter.settBehandlingPaVentAccess.isEnabled}
                 menyKodeverk={menyKodeverk}
-                behandlingType={behandlingData.type}
-                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.isShelveBehandlingEnebled() && (
@@ -210,7 +206,6 @@ class BehandlingMenu extends Component {
                 behandlingType={behandlingData.type}
                 behandlingUuid={behandlingData.uuid}
                 menyKodeverk={menyKodeverk}
-                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {this.hasEnabledOpenBehandlingForChangesAccess() && (
@@ -231,8 +226,6 @@ class BehandlingMenu extends Component {
                 behandlendeEnhetNavn={behandlingData.behandlendeEnhetNavn}
                 nyBehandlendeEnhet={nyBehandlendeEnhet}
                 byttBehandlendeEnhetEnabled={rettigheter.byttBehandlendeEnhetAccess.isEnabled}
-                behandlingType={behandlingData.type}
-                erPapirsoknad={behandlingData.erPapirsoknad}
               />
             )}
             {!this.isBehandlingQueued() && (

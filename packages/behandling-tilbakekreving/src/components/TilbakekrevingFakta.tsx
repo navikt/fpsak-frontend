@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandlingData, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, erReadOnly,
+  DataFetcherBehandlingData, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, readOnlyUtils,
   getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
@@ -63,7 +63,7 @@ const TilbakekrevingFakta: FunctionComponent<OwnProps> = ({
   const apForPanel = useMemo(() => aksjonspunkter.filter((ap) => ap.definisjon.kode === aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING),
     [aksjonspunkter]);
   const harApneAksjonspunkter = apForPanel.some((ap) => isAksjonspunktOpen(ap.status.kode) && ap.kanLoses);
-  const readOnly = erReadOnly(behandling, apForPanel, [], navAnsatt, fagsak, hasFetchError);
+  const readOnly = readOnlyUtils.erReadOnly(behandling, apForPanel, [], navAnsatt, fagsak, hasFetchError);
 
   const dispatch = useDispatch();
   const bekreftCallback = useCallback(getBekreftFaktaCallback(dispatch, fagsak, behandling, oppdaterProsessStegIUrl), [behandling.versjon]);

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { VurderSoknadsfristForeldrepengerFormImpl as UnwrappedForm } from './VurderSoknadsfristForeldrepengerForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-soknadsfrist';
 
@@ -24,7 +24,7 @@ describe('<VurderSoknadsfristForeldrepengerForm>', () => {
       behandlingVersjon={1}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText.childAt(0).prop('id')).to.eql('VurderSoknadsfristForeldrepengerForm.AksjonspunktHelpText');
     expect(helpText.childAt(0).prop('values')).to.eql({ numberOfDays: 9, soknadsfristdato: '30.09.2017' });
   });

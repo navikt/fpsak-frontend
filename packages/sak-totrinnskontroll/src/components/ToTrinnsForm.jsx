@@ -39,6 +39,7 @@ export const ToTrinnsFormImpl = ({
   isForeldrepengerFagsak,
   alleKodeverk,
   disableGodkjennKnapp,
+  erTilbakekreving,
   ...formProps
 }) => {
   if (formState.length !== totrinnskontrollContext.length) {
@@ -95,7 +96,7 @@ export const ToTrinnsFormImpl = ({
         >
           <FormattedMessage id="ToTrinnsForm.SendTilbake" />
         </Hovedknapp>
-        {!erKlage && !erBehandlingEtterKlage
+        {!erKlage && !erBehandlingEtterKlage && !erTilbakekreving
         && (
         <button
           type="button"
@@ -121,6 +122,7 @@ ToTrinnsFormImpl.propTypes = {
   erBehandlingEtterKlage: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
   disableGodkjennKnapp: PropTypes.bool.isRequired,
+  erTilbakekreving: PropTypes.bool,
 };
 
 ToTrinnsFormImpl.defaultProps = {
@@ -129,6 +131,7 @@ ToTrinnsFormImpl.defaultProps = {
   totrinnskontrollContext: [],
   formState: [{ aksjonspunkter: [] }],
   behandlingKlageVurdering: {},
+  erTilbakekreving: false,
 };
 
 const validate = (values) => {

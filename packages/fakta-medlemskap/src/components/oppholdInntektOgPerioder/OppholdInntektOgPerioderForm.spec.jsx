@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { OppholdInntektOgPerioderForm, transformValues } from './OppholdInntektOgPerioderForm';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
@@ -28,7 +28,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(wrapper.find(Hovedknapp).prop('disabled')).is.true;
   });
@@ -65,7 +65,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
     />);
 
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
     expect(helpText.childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.ErSokerBosattINorge');
@@ -104,7 +104,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.GyldigMedlemFolketrygden');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.GyldigMedlemFolketrygden');
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
@@ -140,7 +140,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.EOSBorgerMedOppholdsrett');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.EOSBorgerMedOppholdsrett');
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
@@ -176,7 +176,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.IkkeEOSBorgerMedLovligOpphold');
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });
@@ -213,7 +213,7 @@ describe('<OppholdInntektOgPerioderForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    expect(wrapper.find(AksjonspunktHelpText).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
+    expect(wrapper.find(AksjonspunktHelpTextTemp).childAt(0).prop('id')).is.eql('MedlemskapInfoPanel.HarFortsattMedlemskap');
 
     expect(wrapper.find(Hovedknapp)).has.length(1);
   });

@@ -12,7 +12,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { behandlingForm, behandlingFormValueSelector, SettBehandlingPaVentModal } from '@fpsak-frontend/fp-felles';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -21,7 +21,7 @@ import {
 } from '@fpsak-frontend/utils';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
-import revurderingOriginalBehandlingPropType from '../propTypes/revurderingOriginalBehandlingPropType';
+import revurderingFamilieHendelsePropType from '../propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from '../propTypes/revurderingSoknadPropType';
 
 import styles from './varselOmRevurderingForm.less';
@@ -111,7 +111,8 @@ export class VarselOmRevurderingFormImpl extends React.Component {
       behandlingTypeKode,
       soknad,
       termindato,
-      originalBehandling,
+      soknadOriginalBehandling,
+      familiehendelseOriginalBehandling,
       vedtaksDatoSomSvangerskapsuke,
       ...formProps
     } = this.props;
@@ -121,16 +122,15 @@ export class VarselOmRevurderingFormImpl extends React.Component {
     const fristHasChanged = hasValueChanged(originalFrist, frist);
 
     return (
-      <FadingPanel>
-        <form>
-          <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
-          <VerticalSpacer eightPx />
-          {(!readOnly && isAksjonspunktOpen(aksjonspunktStatus))
+      <form>
+        <Undertittel>{intl.formatMessage({ id: 'VarselOmRevurderingForm.VarselOmRevurdering' })}</Undertittel>
+        <VerticalSpacer eightPx />
+        {(!readOnly && isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
-              <AksjonspunktHelpText isAksjonspunktOpen>
+              <AksjonspunktHelpTextTemp isAksjonspunktOpen>
                 {[<FormattedMessage key="1" id="VarselOmRevurderingForm.VarselOmRevurderingVurder" />]}
-              </AksjonspunktHelpText>
+              </AksjonspunktHelpTextTemp>
               <VerticalSpacer twentyPx />
               { erAutomatiskRevurdering
               && (
@@ -141,7 +141,8 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                   termindato={termindato}
                   vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
                   soknad={soknad}
-                  originalBehandling={originalBehandling}
+                  soknadOriginalBehandling={soknadOriginalBehandling}
+                  familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
                 />
                 <VerticalSpacer sixteenPx />
               </div>
@@ -189,28 +190,27 @@ export class VarselOmRevurderingFormImpl extends React.Component {
               </div>
             </div>
             )}
-          {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
+        {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
             && (
             <div>
               <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
               <Normaltekst>{begrunnelse}</Normaltekst>
             </div>
             )}
-          <SettBehandlingPaVentModal
-            showModal={showSettPaVentModal}
-            aksjonspunktKode={aksjonspunktKode}
-            frist={frist}
-            cancelEvent={this.hideSettPaVentModal}
-            comment={<Normaltekst><FormattedMessage id="VarselOmRevurderingForm.BrevBlirBestilt" /></Normaltekst>}
-            venteArsakHasChanged={venteArsakHasChanged}
-            fristHasChanged={fristHasChanged}
-            showAvbryt
-            handleSubmit={this.handleSubmitFromModal}
-            hasManualPaVent
-            ventearsaker={ventearsaker}
-          />
-        </form>
-      </FadingPanel>
+        <SettBehandlingPaVentModal
+          showModal={showSettPaVentModal}
+          aksjonspunktKode={aksjonspunktKode}
+          frist={frist}
+          cancelEvent={this.hideSettPaVentModal}
+          comment={<Normaltekst><FormattedMessage id="VarselOmRevurderingForm.BrevBlirBestilt" /></Normaltekst>}
+          venteArsakHasChanged={venteArsakHasChanged}
+          fristHasChanged={fristHasChanged}
+          showAvbryt
+          handleSubmit={this.handleSubmitFromModal}
+          hasManualPaVent
+          ventearsaker={ventearsaker}
+        />
+      </form>
     );
   }
 }
@@ -238,7 +238,8 @@ VarselOmRevurderingFormImpl.propTypes = {
   behandlingTypeKode: PropTypes.string.isRequired,
   soknad: revurderingSoknadPropType.isRequired,
   termindato: PropTypes.string,
-  originalBehandling: revurderingOriginalBehandlingPropType.isRequired,
+  soknadOriginalBehandling: revurderingSoknadPropType.isRequired,
+  familiehendelseOriginalBehandling: revurderingFamilieHendelsePropType.isRequired,
   ...formPropTypes,
 };
 

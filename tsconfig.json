@@ -21,6 +21,9 @@
 		"packages/behandling-anke",
 		"packages/behandling-tilbakekreving",
 		"packages/behandling-papirsoknad",
+		"packages/behandling-fp",
+		"packages/behandling-svp",
+		"packages/behandling-es",
 		"@types"
 	],
 

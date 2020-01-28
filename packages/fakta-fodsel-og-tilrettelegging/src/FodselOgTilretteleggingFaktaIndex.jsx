@@ -19,11 +19,10 @@ const FodselOgTilretteleggingFaktaIndex = ({
   behandling,
   svangerskapspengerTilrettelegging,
   aksjonspunkter,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   submitCallback,
   readOnly,
+  harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <FodselOgTilretteleggingInfoPanel
@@ -31,11 +30,10 @@ const FodselOgTilretteleggingFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={aksjonspunkter}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       submitCallback={submitCallback}
       readOnly={readOnly}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -44,11 +42,10 @@ FodselOgTilretteleggingFaktaIndex.propTypes = {
   behandling: fodselOgTilretteleggingBehandlingPropType.isRequired,
   svangerskapspengerTilrettelegging: fodselOgTilretteleggingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fodselOgTilretteleggingAksjonspunkterPropType).isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default FodselOgTilretteleggingFaktaIndex;

@@ -12,7 +12,7 @@ import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
 
 import fodselSammenligningSoknadPropType from '../propTypes/fodselSammenligningSoknadPropType';
-import fodselSammenligningOriginalBehandlingPropType from '../propTypes/fodselSammenligningOriginalBehandlingPropType';
+import fodselSammenligningFamiliehendelsePropType from '../propTypes/fodselSammenligningFamiliehendelsePropType';
 import FodselSammenligningOtherPanel from './FodselSammenligningOtherPanel';
 import FodselSammenligningRevurderingPanel from './FodselSammenligningRevurderingPanel';
 
@@ -33,14 +33,20 @@ export const FodselSammenligningPanel = ({
   soknad,
   vedtaksDatoSomSvangerskapsuke,
   termindato,
-  originalBehandling,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
 }) => (
   <div className={styles.panelWrapper}>
     <Panel className={styles.panel}>
       {behandlingsTypeKode !== behandlingType.REVURDERING
         && <FodselSammenligningOtherPanel soknad={soknad} termindato={termindato} />}
-      {behandlingsTypeKode === behandlingType.REVURDERING
-        && <FodselSammenligningRevurderingPanel originalBehandling={originalBehandling} vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke} />}
+      {behandlingsTypeKode === behandlingType.REVURDERING && (
+        <FodselSammenligningRevurderingPanel
+          soknadOriginalBehandling={soknadOriginalBehandling}
+          familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
+          vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
+        />
+      )}
     </Panel>
     <Panel className={styles.panel} name="tpsFodseldato">
       <Row>
@@ -113,7 +119,8 @@ FodselSammenligningPanel.propTypes = {
   avklartBarn: PropTypes.arrayOf(PropTypes.shape()),
   nrOfDodfodteBarn: PropTypes.number.isRequired,
   soknad: fodselSammenligningSoknadPropType.isRequired,
-  originalBehandling: fodselSammenligningOriginalBehandlingPropType,
+  soknadOriginalBehandling: fodselSammenligningSoknadPropType,
+  familiehendelseOriginalBehandling: fodselSammenligningFamiliehendelsePropType,
   termindato: PropTypes.string,
   vedtaksDatoSomSvangerskapsuke: PropTypes.string,
 };
@@ -122,7 +129,8 @@ FodselSammenligningPanel.defaultProps = {
   avklartBarn: [],
   termindato: undefined,
   vedtaksDatoSomSvangerskapsuke: undefined,
-  originalBehandling: undefined,
+  soknadOriginalBehandling: undefined,
+  familiehendelseOriginalBehandling: undefined,
 };
 
 export default injectIntl(FodselSammenligningPanel);
