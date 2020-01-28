@@ -14,7 +14,7 @@ import {
 
 import { hasValidDate, isRequiredMessage, required } from '@fpsak-frontend/utils';
 import avslattImage from '@fpsak-frontend/assets/images/avslaatt.svg';
-import innvilgetImage from '@fpsak-frontend/assets/images/innvilget.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/check.svg';
 
 import styles from './vilkarResultPicker.less';
 
