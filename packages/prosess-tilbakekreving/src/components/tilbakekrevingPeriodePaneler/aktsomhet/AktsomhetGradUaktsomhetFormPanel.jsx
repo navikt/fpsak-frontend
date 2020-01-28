@@ -15,6 +15,22 @@ import AktsomhetSarligeGrunnerFormPanel from './AktsomhetSarligeGrunnerFormPanel
 const minLength3 = minLength(3);
 const maxLength1500 = maxLength(1500);
 
+const sarligGrunnerBegrunnelseDiv = (readOnly) => (
+  <div>
+    <Element>
+      <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.SærligGrunner" />
+    </Element>
+    <VerticalSpacer eightPx />
+    <TextAreaField
+      name="sarligGrunnerBegrunnelse"
+      label={{ id: 'AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner' }}
+      validate={[required, minLength3, maxLength1500, hasValidText]}
+      maxLength={1500}
+      readOnly={readOnly}
+    />
+    <VerticalSpacer twentyPx />
+  </div>
+);
 const AktsomhetGradUaktsomhetFormPanel = ({
   harGrunnerTilReduksjon,
   readOnly,
@@ -37,6 +53,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
           readOnly={readOnly}
         >
           <RadioOption label={<FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.Ja" />} value>
+            {sarligGrunnerBegrunnelseDiv(readOnly)}
             <AktsomhetSarligeGrunnerFormPanel
               harGrunnerTilReduksjon={harGrunnerTilReduksjon}
               erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
@@ -59,20 +76,7 @@ const AktsomhetGradUaktsomhetFormPanel = ({
     )}
     {(handletUaktsomhetGrad !== aktsomhet.SIMPEL_UAKTSOM || !erTotalBelopUnder4Rettsgebyr) && (
       <>
-        <div>
-          <Element>
-            <FormattedMessage id="AktsomhetGradUaktsomhetFormPanel.SærligGrunner" />
-          </Element>
-          <VerticalSpacer eightPx />
-          <TextAreaField
-            name="sarligGrunnerBegrunnelse"
-            label={{ id: 'AktsomhetGradUaktsomhetFormPanel.VurderSærligGrunner' }}
-            validate={[required, minLength3, maxLength1500, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-          <VerticalSpacer twentyPx />
-        </div>
+        {sarligGrunnerBegrunnelseDiv(readOnly)}
         <AktsomhetSarligeGrunnerFormPanel
           harGrunnerTilReduksjon={harGrunnerTilReduksjon}
           erSerligGrunnAnnetValgt={erSerligGrunnAnnetValgt}
