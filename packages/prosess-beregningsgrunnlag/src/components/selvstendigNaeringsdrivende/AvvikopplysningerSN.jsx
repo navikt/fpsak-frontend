@@ -20,10 +20,12 @@ const AvviksopplysningerSN = ({
       || status.sammenligningsgrunnlagType.kode === 'SAMMENLIGNING_ATFL_SN')
     : undefined;
   let avvikSN;
+  let avvikRoundedSN;
   let sammenligningsgrunnlagSumSN;
   let differanseBeregnet;
   if (sammenligningsGrunnlagSN) {
     avvikSN = sammenligningsGrunnlagSN.avvikProsent;
+    avvikRoundedSN = avvikSN ? parseFloat((avvikSN.toFixed(1))) : 0;
     sammenligningsgrunnlagSumSN = sammenligningsGrunnlagSN.rapportertPrAar;
     differanseBeregnet = sammenligningsGrunnlagSN.differanseBeregnet;
   }
@@ -110,7 +112,7 @@ const AvviksopplysningerSN = ({
             </Column>
             <Column className={styles.colAvvik}>
               <Normaltekst className={`${avvikSN > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikSN }} />
+                <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikRoundedSN }} />
               </Normaltekst>
             </Column>
           </Row>

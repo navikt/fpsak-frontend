@@ -7,7 +7,6 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 
-import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { Undertittel } from 'nav-frontend-typografi';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { Column, Row } from 'nav-frontend-grid';
@@ -48,8 +47,6 @@ describe('<AvregningPanelImpl>', () => {
       {...mockProps}
     />);
 
-    const fadingPanel = wrapper.find(FadingPanel);
-    expect(fadingPanel).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).to.have.length(2);
     expect(formattedMessage.first().prop('id')).is.eql('Avregning.Title');

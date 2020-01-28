@@ -1,7 +1,6 @@
 import { reducerRegistry } from '@fpsak-frontend/fp-felles';
 
-import behandlingUpdater from '../../behandling/BehandlingUpdater';
-import fpsakApi from '../../data/fpsakApi';
+import behandlingEventHandler from '../../behandling/BehandlingEventHandler';
 
 const reducerName = 'kontrollresultat';
 
@@ -17,21 +16,10 @@ export const setRiskPanelOpen = (isOpen) => ({
   data: isOpen,
 });
 
-const resolveAksjonspunktStarted = () => ({
-  type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED, // Bedre navn for denne?
-});
-
-const resolveAksjonspunktSuccess = (response, behandlingIdentifier) => (dispatch) => {
-  dispatch({
-    type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS,
-  });
-  return behandlingUpdater.updateBehandling(dispatch, behandlingIdentifier);
-};
-
-export const resolveAksjonspunkter = (params, behandlingIdentifier) => (dispatch) => {
-  dispatch(resolveAksjonspunktStarted());
-  return dispatch(fpsakApi.LAGRE_RISIKO_AKSJONSPUNKT.makeRestApiRequest()(params))
-    .then((response) => dispatch(resolveAksjonspunktSuccess(response, behandlingIdentifier)));
+export const resolveAksjonspunkter = (params) => (dispatch) => {
+  dispatch({ type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_STARTED });
+  return behandlingEventHandler.lagreRisikoklassifiseringAksjonspunkt(params)
+    .then(() => dispatch({ type: RESOLVE_KONTROLLRESULTAT_AKSJONSPUNKTER_SUCCESS }));
 };
 
 /* Reducer */

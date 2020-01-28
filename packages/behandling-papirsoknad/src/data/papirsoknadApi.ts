@@ -14,7 +14,7 @@ export const PapirsoknadApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fpsak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD)
   .withInjectedPath('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
   .withPost('/fpsak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)

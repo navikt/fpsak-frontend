@@ -3,56 +3,16 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
-import { MedlemskapInfoPanel } from './MedlemskapInfoPanel';
+import MedlemskapInfoPanel from './MedlemskapInfoPanel';
 import StartdatoForForeldrepengerperiodenForm from './startdatoForPeriode/StartdatoForForeldrepengerperiodenForm';
 import OppholdInntektOgPerioderForm from './oppholdInntektOgPerioder/OppholdInntektOgPerioderForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-medlemskap';
 
 describe('<MedlemskapInfoPanel>', () => {
-  it('skal vise ekspanderbart panel', () => {
-    const wrapper = shallowWithIntl(<MedlemskapInfoPanel
-      intl={intlMock}
-      aksjonspunkter={[]}
-      aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter={false}
-      submittable
-      readOnly
-      submitCallback={sinon.spy()}
-      alleMerknaderFraBeslutter={{}}
-      behandlingId={1}
-      behandlingVersjon={1}
-      behandlingType={{
-        kode: 'TEst',
-      }}
-      behandlingStatus={{
-        kode: behandlingStatus.BEHANDLING_UTREDES,
-      }}
-      soknad={{}}
-      inntektArbeidYtelse={{}}
-      alleKodeverk={{}}
-      medlemskap={{}}
-      medlemskapV2={{}}
-      fagsakPerson={{}}
-      behandlingPaaVent={false}
-      readOnlyBehandling={false}
-    />);
-
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel).has.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om medlemskap');
-    expect(panel.prop('hasOpenAksjonspunkter')).is.false;
-    expect(panel.prop('isInfoPanelOpen')).is.false;
-    expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.MEDLEMSKAPSVILKARET);
-    expect(panel.prop('readOnly')).is.true;
-  });
-
   it('skal vise form for startdato for foreldrepengerperioden når en har aksjonspunktet for dette', () => {
     const avklarStartdatoAksjonspunkt = {
       id: 1,
@@ -74,8 +34,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -124,8 +82,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -174,8 +130,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[avklarStartdatoAksjonspunkt]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly
@@ -208,8 +162,6 @@ describe('<MedlemskapInfoPanel>', () => {
       intl={intlMock}
       aksjonspunkter={[]}
       aksjonspunkterMinusAvklarStartDato={[]}
-      openInfoPanels={['medlemskapsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       submittable
       readOnly

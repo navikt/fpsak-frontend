@@ -33,7 +33,7 @@ const VedtakPanels = ({
   resultatstruktur,
   medlemskapFom,
   aksjonspunkter,
-  ytelseType,
+  ytelseTypeKode,
   employeeHasAccess,
   alleKodeverk,
   vilkar,
@@ -50,7 +50,7 @@ const VedtakPanels = ({
         behandlingVersjon={behandlingVersjon}
         behandlingresultat={behandlingresultat}
         behandlingStatusKode={behandlingStatus.kode}
-        ytelseType={ytelseType}
+        ytelseTypeKode={ytelseTypeKode}
         sprakkode={sprakkode}
         kanOverstyre={employeeHasAccess}
         alleKodeverk={alleKodeverk}
@@ -85,7 +85,7 @@ const VedtakPanels = ({
       resultatstruktur={resultatstruktur}
       behandlingArsaker={behandlingArsaker}
       aksjonspunkter={aksjonspunkter}
-      ytelseType={ytelseType}
+      ytelseTypeKode={ytelseTypeKode}
       kanOverstyre={employeeHasAccess}
       alleKodeverk={alleKodeverk}
       vilkar={vilkar}
@@ -107,7 +107,7 @@ VedtakPanels.propTypes = {
   resultatstruktur: vedtakBeregningsresultatPropType,
   medlemskapFom: PropTypes.string,
   aksjonspunkter: PropTypes.arrayOf(vedtakAksjonspunkterPropType).isRequired,
-  ytelseType: kodeverkObjektPropType.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),

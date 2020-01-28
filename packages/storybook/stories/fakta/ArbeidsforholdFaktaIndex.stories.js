@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
@@ -38,214 +37,184 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-arbeidsforhold',
   component: ArbeidsforholdFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForAvklaringAvArbeidsforhold = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ARBEIDSFORHOLD]);
-  return (
-    <ArbeidsforholdFaktaIndex
-      behandling={behandling}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', {
-        arbeidsforhold: [{
-          ...arbeidsforhold,
-          tilVurdering: true,
-          mottattDatoInntektsmelding: undefined,
+export const visAksjonspunktForAvklaringAvArbeidsforhold = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', {
+      arbeidsforhold: [{
+        ...arbeidsforhold,
+        tilVurdering: true,
+        mottattDatoInntektsmelding: undefined,
+      }, {
+        ...arbeidsforhold,
+        navn: 'NSB',
+        id: '2',
+        tilVurdering: true,
+        mottattDatoInntektsmelding: undefined,
+      }],
+      skalKunneLeggeTilNyeArbeidsforhold: false,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
+    })}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+  />
+);
+
+export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', {
+      arbeidsforhold: [],
+      skalKunneLeggeTilNyeArbeidsforhold: true,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
+    })}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    readOnly={boolean('readOnly', false)}
+  />
+);
+
+export const visPanelUtenAksjonspunkter = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', {
+      arbeidsforhold: [arbeidsforhold],
+      skalKunneLeggeTilNyeArbeidsforhold: false,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
+    })}
+    aksjonspunkter={[]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{}}
+    submitCallback={action('button-click')}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', false)}
+    readOnly={boolean('readOnly', false)}
+  />
+);
+
+export const visPanelForPermisjon = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', {
+      arbeidsforhold: [{
+        ...arbeidsforhold,
+        mottattDatoInntektsmelding: undefined,
+        tilVurdering: true,
+        permisjoner: [{
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2018-10-10',
+          permisjonTom: '2019-10-10',
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
+        }],
+      }],
+      skalKunneLeggeTilNyeArbeidsforhold: false,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
+    })}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+  />
+);
+
+export const visPanelForFlerePermisjoner = () => (
+  <ArbeidsforholdFaktaIndex
+    behandling={behandling}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', {
+      arbeidsforhold: [{
+        ...arbeidsforhold,
+        tilVurdering: true,
+        permisjoner: [{
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2015-01-01',
+          permisjonTom: undefined,
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
         }, {
-          ...arbeidsforhold,
-          navn: 'NSB',
-          id: '2',
-          tilVurdering: true,
-          mottattDatoInntektsmelding: undefined,
+          type: {
+            kode: 'PERMISJON',
+          },
+          permisjonFom: '2017-01-01',
+          permisjonTom: '2019-01-01',
+          permisjonsprosent: 100,
+          permisjonsÅrsak: 'aarsak',
         }],
-        skalKunneLeggeTilNyeArbeidsforhold: false,
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-      })}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
-
-export const visAksjonspunktForIngenArbeidsforholdRegistrert = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ARBEIDSFORHOLD]);
-  return (
-    <ArbeidsforholdFaktaIndex
-      behandling={behandling}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', {
-        arbeidsforhold: [],
-        skalKunneLeggeTilNyeArbeidsforhold: true,
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-      })}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
-
-export const visPanelUtenAksjonspunkter = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ARBEIDSFORHOLD]);
-  return (
-    <ArbeidsforholdFaktaIndex
-      behandling={behandling}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', {
-        arbeidsforhold: [arbeidsforhold],
-        skalKunneLeggeTilNyeArbeidsforhold: false,
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-      })}
-      aksjonspunkter={[]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{}}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
-
-export const visPanelForPermisjon = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ARBEIDSFORHOLD]);
-  return (
-    <ArbeidsforholdFaktaIndex
-      behandling={behandling}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', {
-        arbeidsforhold: [{
-          ...arbeidsforhold,
-          mottattDatoInntektsmelding: undefined,
-          tilVurdering: true,
-          permisjoner: [{
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2018-10-10',
-            permisjonTom: '2019-10-10',
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          }],
-        }],
-        skalKunneLeggeTilNyeArbeidsforhold: false,
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-      })}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
-
-export const visPanelForFlerePermisjoner = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.ARBEIDSFORHOLD]);
-  return (
-    <ArbeidsforholdFaktaIndex
-      behandling={behandling}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', {
-        arbeidsforhold: [{
-          ...arbeidsforhold,
-          tilVurdering: true,
-          permisjoner: [{
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2015-01-01',
-            permisjonTom: undefined,
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          }, {
-            type: {
-              kode: 'PERMISJON',
-            },
-            permisjonFom: '2017-01-01',
-            permisjonTom: '2019-01-01',
-            permisjonsprosent: 100,
-            permisjonsÅrsak: 'aarsak',
-          }],
-        }],
-        skalKunneLeggeTilNyeArbeidsforhold: false,
-        skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
-      })}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+      }],
+      skalKunneLeggeTilNyeArbeidsforhold: false,
+      skalKunneLageArbeidsforholdBasertPaInntektsmelding: false,
+    })}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+  />
+);

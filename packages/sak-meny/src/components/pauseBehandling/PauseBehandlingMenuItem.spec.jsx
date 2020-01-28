@@ -112,14 +112,13 @@ describe('<PauseBehandlingMenuItem>', () => {
     wrapper.update();
 
     expect(behandlingOnHoldCallback.called).is.true;
-    expect(behandlingOnHoldCallback.getCalls()[0].args).has.length(4);
+    expect(behandlingOnHoldCallback.getCalls()[0].args).has.length(1);
     expect(behandlingOnHoldCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,
       frist,
       ventearsak: undefined,
     });
-    expect(behandlingOnHoldCallback.getCalls()[0].args[1]).is.eql(behandlingIdentifier);
 
     expect(wrapper.state('showModal')).is.false;
     expect(wrapper.find('Connect(ReduxForm)')).has.length(0);

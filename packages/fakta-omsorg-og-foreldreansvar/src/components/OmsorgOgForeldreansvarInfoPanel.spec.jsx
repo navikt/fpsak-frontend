@@ -45,12 +45,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel).to.have.length(1);
-    expect(panel.prop('title')).to.eql('Fakta om omsorg og foreldreansvar');
-    expect(panel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql('omsorgsvilkaaret');
     const form = wrapper.find('Connect(injectIntl(OmsorgOgForeldreansvarFaktaFormImpl))');
     expect(form).to.have.length(1);
     expect(form.prop('readOnly')).is.false;
@@ -58,29 +52,6 @@ describe('<OmsorgOgForeldreansvarInfoPanel>', () => {
     const begrunnelseForm = wrapper.find(FaktaBegrunnelseTextField);
     expect(begrunnelseForm).to.have.length(1);
     expect(begrunnelseForm.prop('isReadOnly')).is.false;
-  });
-
-  it('skal vise lukket faktapanel når panelet er markert lukket', () => {
-    const wrapper = shallowWithIntl(<OmsorgOgForeldreansvarInfoPanelImpl
-      {...reduxFormPropsMock}
-      initialValues={{ begrunnelse: 'test' }}
-      intl={intlMock}
-      aksjonspunkt={aksjonspunkt}
-      erAksjonspunktForeldreansvar={false}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly={false}
-      vilkarTypes={[{ data: 'test' }]}
-      relatertYtelseTypes={[relatertYtelseType]}
-      behandlingId={1}
-      behandlingVersjon={1}
-      alleMerknaderFraBeslutter={{}}
-    />);
-
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel.prop('isInfoPanelOpen')).is.false;
   });
 
   it('skal vise readonly form', () => {

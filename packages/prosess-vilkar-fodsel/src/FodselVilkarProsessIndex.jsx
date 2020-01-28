@@ -21,7 +21,7 @@ const FodselVilkarProsessIndex = ({
   vilkar,
   ytelseTypeKode,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   isAksjonspunktOpen,
   alleKodeverk,
@@ -36,9 +36,9 @@ const FodselVilkarProsessIndex = ({
       vilkar={vilkar}
       ytelseTypeKode={ytelseTypeKode}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      isAksjonspunktOpen={isAksjonspunktOpen}
+      isApOpen={isAksjonspunktOpen}
       alleKodeverk={alleKodeverk}
     />
   </RawIntlProvider>
@@ -51,7 +51,7 @@ FodselVilkarProsessIndex.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,

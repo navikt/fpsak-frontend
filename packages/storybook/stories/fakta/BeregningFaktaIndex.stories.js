@@ -5,7 +5,6 @@ import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 import aktivitetStatuser from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
@@ -173,11 +172,6 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-beregning',
   component: BeregningFaktaIndex,
@@ -185,7 +179,6 @@ export default {
 };
 
 export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const aapAktivitet = {
     arbeidsforholdType: { kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
     fom: '01-01-2019',
@@ -223,18 +216,15 @@ export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
-
   const aapAktivitet = {
     arbeidsforholdType: { kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
     fom: '01-01-2019',
@@ -320,16 +310,14 @@ export const AvklartAktiviteterMedAksjonspunktIFaktaAvklaring = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
@@ -384,17 +372,15 @@ export const FrilansOgArbeidsforholdMedLønnendringOgNyoppstartet = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
@@ -445,17 +431,15 @@ export const DagpengerOgArbeidstakerMedVurderingAvBesteberegning = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
@@ -505,16 +489,14 @@ export const KunArbeidstakerMedVurderingAvBesteberegning = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
@@ -567,16 +549,14 @@ export const KunArbeidstakerMedVurderingSentRefusjonskrav = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: standardFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: standardFaktaArbeidstakerAndel.aktivitetStatus,
@@ -631,16 +611,14 @@ export const FrilansOgArbeidsforholdISammeOrganisasjon = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const VurderingAvMilitær = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerMilitærAndel = {
     andelsnr: standardFaktaMilitærAndel.andelsnr,
     aktivitetStatus: standardFaktaMilitærAndel.aktivitetStatus,
@@ -678,17 +656,15 @@ export const VurderingAvMilitær = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: tidsbegrensetFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: tidsbegrensetFaktaArbeidstakerAndel.aktivitetStatus,
@@ -744,17 +720,15 @@ export const FrilansOgTidsbegrensetArbeidsforholdISammeOrganisasjon = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const KunTidsbegrensetArbeidsforhold = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidstakerBeregningsgrunnlagAndel = {
     andelsnr: tidsbegrensetFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: tidsbegrensetFaktaArbeidstakerAndel.aktivitetStatus,
@@ -794,16 +768,14 @@ export const KunTidsbegrensetArbeidsforhold = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const VurderingAvEtterlønnSluttpakke = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const etterlønnSluttpakkeBeregningsgrunnlagAndel = {
     andelsnr: etterlønnSluttpakkeFaktaArbeidstakerAndel.andelsnr,
     aktivitetStatus: etterlønnSluttpakkeFaktaArbeidstakerAndel.aktivitetStatus,
@@ -842,16 +814,14 @@ export const VurderingAvEtterlønnSluttpakke = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const beregningsgrunnlagYtelseAndel = {
     andelsnr: standardFaktaYtelseAndel.andelsnr,
     aktivitetStatus: standardFaktaYtelseAndel.aktivitetStatus,
@@ -894,16 +864,14 @@ export const FastsettingAvBeregningsgrunnlagForKunYtelse = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const SelvstendigNæringNyIArbeidslivet = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const beregningsgrunnlagNæringAndel = {
     andelsnr: standardFaktaNæringAndel.andelsnr,
     aktivitetStatus: standardFaktaNæringAndel.aktivitetStatus,
@@ -941,17 +909,14 @@ export const SelvstendigNæringNyIArbeidslivet = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const KombinasjonstestForFaktapanel = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
-
   const aapAktivitet = {
     arbeidsforholdType: { kode: opptjeningAktivitetType.AAP, kodeverk: 'OPPTJENING_AKTIVITET_TYPE' },
     fom: '01-01-2019',
@@ -1143,17 +1108,15 @@ export const KombinasjonstestForFaktapanel = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 
 export const OverstyringAvInntekt = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const arbeidsAktivitet = {
     ...standardFaktaArbeidstakerAndel.arbeidsforhold,
     fom: '01-01-2019',
@@ -1224,16 +1187,14 @@ export const OverstyringAvInntekt = () => {
         [aksjonspunktCodes.OVERSTYRING_AV_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const VurderKunYtelseBesteberegning = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.BEREGNING]);
   const beregningsgrunnlagYtelseAndel = {
     andelsnr: standardFaktaYtelseAndel.andelsnr,
     aktivitetStatus: standardFaktaYtelseAndel.aktivitetStatus,
@@ -1276,10 +1237,9 @@ export const VurderKunYtelseBesteberegning = () => {
         [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };

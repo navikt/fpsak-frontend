@@ -415,10 +415,9 @@ export const arbeidstakerUtenAvvik = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -448,10 +447,9 @@ export const brukersAndelUtenAvvik = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -474,10 +472,9 @@ export const arbeidstakerMedAvvik = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -492,8 +489,8 @@ export const arbeidstakerFrilansMedAvvik = () => {
   const perioder = [lagStandardPeriode(andeler)];
   const statuser = [lagStatus('AT'), lagStatus('FL')];
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, 46.2, 77000),
-    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.2, 11000),
+    lagSammenligningsGrunnlag(sammenligningType.AT, 140000, undefined, 77000),
+    lagSammenligningsGrunnlag(sammenligningType.FL, 180000, 16.242342, 11000),
   ];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   return (
@@ -502,10 +499,9 @@ export const arbeidstakerFrilansMedAvvik = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -524,10 +520,9 @@ export const militær = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -548,10 +543,9 @@ export const arbeidstakerOgAAP = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -601,7 +595,7 @@ export const selvstendigNæringsdrivende = () => {
   ];
   andeler[0].næringer = næringer;
   const sammenligningsgrunnlagPrStatus = [
-    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -177059)];
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.21243, -177059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
 
   return (
@@ -610,10 +604,9 @@ export const selvstendigNæringsdrivende = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -645,10 +638,9 @@ export const tidsbegrensetArbeidsforholdMedAvvik = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -675,10 +667,9 @@ export const arbeidstakerFrilanserOgSelvstendigNæringsdrivende = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -699,11 +690,9 @@ export const infoTrygdYtelse = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
-      // vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -765,10 +754,9 @@ export const naturalYtelse = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -795,10 +783,9 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -849,10 +836,9 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -877,10 +863,9 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -929,10 +914,9 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -1036,10 +1020,9 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -1101,10 +1084,10 @@ export const arbeidstakerDagpengerMedBesteberegningUtenAksjonspunkt = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
-      readOnly={false}
+      aksjonspunkter={[]}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesTrue}
@@ -1131,10 +1114,9 @@ export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={lagAPMedKode(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_TIDSBEGRENSET_ARBEIDSFORHOLD)}
       submitCallback={action('button-click')}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen={false}
+      isAksjonspunktOpen={false}
       vilkar={vilkarMedUtfall(vilkarUtfallType.IKKE_VURDERT)}
       alleKodeverk={alleKodeverk}
       featureToggles={togglesFalse}

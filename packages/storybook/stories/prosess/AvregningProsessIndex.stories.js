@@ -13,7 +13,7 @@ import withReduxProvider from '../../decorators/withRedux';
 
 const fagsak = {
   saksnummer: 123,
-  ytelseType: {
+  fagsakYtelseType: {
     kode: fagsakYtelseType.FORELDREPENGER,
   },
 };
@@ -127,10 +127,9 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    isApOpen={boolean('isApOpen', true)}
+    isReadOnly={boolean('isReadOnly', false)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
-    apCodes={array('apCodes', [aksjonspunktCodes.VURDER_FEILUTBETALING])}
     featureToggles={toggles}
   />
 );
@@ -149,8 +148,8 @@ export const visSimuleringspanelUtenAksjonspunkt = () => (
     })}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    isApOpen={boolean('isApOpen', true)}
+    isReadOnly={boolean('isReadOnly', false)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     apCodes={array('apCodes', [])}
     featureToggles={toggles}

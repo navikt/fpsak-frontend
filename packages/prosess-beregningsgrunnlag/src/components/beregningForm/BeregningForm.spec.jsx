@@ -5,7 +5,7 @@ import { shallow } from 'enzyme/build';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import { BeregningFormImpl, transformValues } from './BeregningForm';
@@ -219,7 +219,7 @@ describe('<BeregningForm>', () => {
       readOnlySubmitButton
       {...reduxFormPropsMock}
     />);
-    const aksjonspunkter = wrapper.find(AksjonspunktHelpText);
+    const aksjonspunkter = wrapper.find(AksjonspunktHelpTextTemp);
     const aktiveAksjonspunkter = aksjonspunkter.get(0);
     const lukkedeAksjonspunkter = aksjonspunkter.get(1);
     expect(aksjonspunkter).to.have.lengthOf(2);

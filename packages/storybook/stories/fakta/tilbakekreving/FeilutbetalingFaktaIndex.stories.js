@@ -8,7 +8,6 @@ import konsekvensForYtelsen from '@fpsak-frontend/kodeverk/src/konsekvensForYtel
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import tilbakekrevingVidereBehandling from '@fpsak-frontend/kodeverk/src/tilbakekrevingVidereBehandling';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
@@ -123,44 +122,34 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/tilbakekreving/fakta-feilutbetaling',
   component: FeilutbetalingFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForFeilutbetaling = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FEILUTBETALING]);
-  return (
-    <FeilutbetalingFaktaIndex
-      behandling={behandling}
-      feilutbetalingFakta={object('feilutbetalingFakta', feilutbetalingFakta)}
-      feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForFeilutbetaling = () => (
+  <FeilutbetalingFaktaIndex
+    behandling={behandling}
+    feilutbetalingFakta={object('feilutbetalingFakta', feilutbetalingFakta)}
+    feilutbetalingAarsak={object('feilutbetalingAarsak', feilutbetalingAarsak)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodesTilbakekreving.AVKLAR_FAKTA_FOR_FEILUTBETALING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    hasOpenAksjonspunkter={boolean('hasOpenAksjonspunkter', true)}
+  />
+);

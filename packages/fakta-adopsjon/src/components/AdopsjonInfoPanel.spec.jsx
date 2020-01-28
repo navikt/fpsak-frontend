@@ -3,10 +3,10 @@ import { expect } from 'chai';
 import sinon from 'sinon';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { FaktaBegrunnelseTextField, FaktaEkspandertpanel, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
+import { FaktaBegrunnelseTextField, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 
 import { AdopsjonInfoPanelImpl } from './AdopsjonInfoPanel';
 import DokumentasjonFaktaForm from './DokumentasjonFaktaForm';
@@ -60,8 +60,6 @@ describe('<AdopsjonInfoPanel>', () => {
       initialValues={{ begrunnelse: 'test' }}
       intl={intlMock}
       aksjonspunkter={[adopsjonAksjonspunkt, ektefellesBarnAksjonspunkt]}
-      openInfoPanels={['adsopsjonsvilkaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -73,19 +71,16 @@ describe('<AdopsjonInfoPanel>', () => {
       behandlingVersjon={1}
     />);
 
-    const panel = wrapper.find('FaktaEkspandertpanel');
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
-
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(2);
     expect(helpText.childAt(0).prop('id')).is.eql('AdopsjonInfoPanel.KontrollerMotDok');
     expect(helpText.childAt(1).prop('id')).is.eql('AdopsjonInfoPanel.VurderOmEktefellesBarn');
 
-    expect(panel.find(DokumentasjonFaktaForm)).has.length(1);
-    expect(panel.find(EktefelleFaktaForm)).has.length(1);
-    expect(panel.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(panel.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(DokumentasjonFaktaForm)).has.length(1);
+    expect(wrapper.find(EktefelleFaktaForm)).has.length(1);
+    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
+    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
   });
 
   it('skal vise alle tre adopsjonsaksjonspunktene', () => {
@@ -110,8 +105,6 @@ describe('<AdopsjonInfoPanel>', () => {
       initialValues={{ [`punkt${aksjonspunktCodes.OM_SOKER_ER_MANN_SOM_ADOPTERER_ALENE}`]: 'test' }}
       intl={intlMock}
       aksjonspunkter={[adopsjonAksjonspunkt, ektefellesBarnAksjonspunkt, mannSokerAleneAksjonspunkt]}
-      openInfoPanels={['omsorgsvilkaaret']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -123,21 +116,18 @@ describe('<AdopsjonInfoPanel>', () => {
       behandlingVersjon={1}
     />);
 
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel.prop('title')).to.eql('Fakta om adopsjon');
-
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(3);
     expect(helpText.childAt(0).prop('id')).is.eql('AdopsjonInfoPanel.KontrollerMotDok');
     expect(helpText.childAt(1).prop('id')).is.eql('AdopsjonInfoPanel.VurderOmEktefellesBarn');
     expect(helpText.childAt(2).prop('id')).is.eql('AdopsjonInfoPanel.VurderOmMannAdoptererAlene');
 
-    expect(panel.find(DokumentasjonFaktaForm)).has.length(1);
-    expect(panel.find(EktefelleFaktaForm)).has.length(1);
-    expect(panel.find(MannAdoptererAleneFaktaForm)).has.length(1);
-    expect(panel.find(FaktaBegrunnelseTextField)).has.length(1);
-    expect(panel.find(FaktaSubmitButton)).has.length(1);
+    expect(wrapper.find(DokumentasjonFaktaForm)).has.length(1);
+    expect(wrapper.find(EktefelleFaktaForm)).has.length(1);
+    expect(wrapper.find(MannAdoptererAleneFaktaForm)).has.length(1);
+    expect(wrapper.find(FaktaBegrunnelseTextField)).has.length(1);
+    expect(wrapper.find(FaktaSubmitButton)).has.length(1);
   });
 
   it('skal ikke vise hjelpetekster når saken er lukket', () => {

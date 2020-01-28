@@ -109,9 +109,6 @@ describe('<MessagesIndex>', () => {
     wrapper.find(MessagesModalSakIndex).prop('closeEvent')();
 
     expect(resetSubmitMessageFunction).to.have.property('callCount', 1);
-    const { args } = resetSubmitMessageFunction.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(behandlingIdentifier);
 
     expect(wrapper.state().showMessagesModal).is.false;
   });

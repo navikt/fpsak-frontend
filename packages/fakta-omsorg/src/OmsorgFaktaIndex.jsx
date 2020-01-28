@@ -26,10 +26,9 @@ const OmsorgFaktaIndex = ({
   alleKodeverk,
   alleMerknaderFraBeslutter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <OmsorgInfoPanel
@@ -42,10 +41,9 @@ const OmsorgFaktaIndex = ({
       alleKodeverk={alleKodeverk}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -59,9 +57,8 @@ OmsorgFaktaIndex.propTypes = {
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
 };
 

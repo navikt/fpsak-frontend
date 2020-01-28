@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate } from '@fpsak-frontend/fp-felles';
+import { BehandlingspunktBegrunnelseTextField } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
@@ -216,49 +216,5 @@ describe('<ErForeldreansvarVilkaarOppfyltForm>', () => {
       avslagCode: behandlingsresultat.avslagsarsak.kode,
       begrunnelse: aksjonspunkter[0].begrunnelse,
     });
-  });
-
-  it('skal vise riktig hjelpetekst med fagsakYtelseType lik Foreldrepenger', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      isEngangsstonad={false}
-      avslagsarsaker={[{
-        kode: 'TEST_KODE',
-        navn: 'testnavn',
-      }]}
-      aksjonspunkter={aksjonspunkterList}
-      readOnly
-      readOnlySubmitButton
-      erVilkarOk={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
-
-    const template = wrapper.find(ProsessPanelTemplate);
-    expect(template).to.have.length(1);
-    expect(template.prop('aksjonspunktHelpTexts')).to.eql(['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafForeldrepenger']);
-  });
-
-  it('skal vise riktig hjelpetekst med fagsakYtelseType lik Engangsstønad', () => {
-    const wrapper = shallowWithIntl(<UnwrappedForm
-      {...reduxFormPropsMock}
-      intl={intlMock}
-      isEngangsstonad
-      avslagsarsaker={[{
-        kode: 'TEST_KODE',
-        navn: 'testnavn',
-      }]}
-      aksjonspunkter={aksjonspunkterList}
-      readOnly
-      readOnlySubmitButton
-      erVilkarOk={false}
-      behandlingId={1}
-      behandlingVersjon={1}
-    />);
-
-    const template = wrapper.find(ProsessPanelTemplate);
-    expect(template).to.have.length(1);
-    expect(template.prop('aksjonspunktHelpTexts')).to.eql(['ErForeldreansvarVilkaarOppfyltForm.2LeddParagrafEngangsStonad']);
   });
 });

@@ -23,8 +23,6 @@ const getActionTypes = (requestRunner: RequestRunner) => ({
   statusRequestStarted: () => createActionType(getName(requestRunner), 'STATUS_STARTED', getRestMethod(requestRunner), getPath(requestRunner)),
   statusRequestFinished: () => createActionType(getName(requestRunner), 'STATUS_FINISHED', getRestMethod(requestRunner), getPath(requestRunner)),
   pollingTimeout: () => createActionType(getName(requestRunner), 'POLLING_TIMEOUT', getRestMethod(requestRunner), getPath(requestRunner)),
-  copyDataStarted: () => createActionTypeWithoutPath(getName(requestRunner), 'COPY_DATA_STARTED'),
-  copyDataFinished: () => createActionTypeWithoutPath(getName(requestRunner), 'COPY_DATA_FINISHED'),
 });
 
 /**
