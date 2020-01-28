@@ -115,11 +115,11 @@ const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkt
     });
     return aksjonspunkter;
   }
-  return [{
+  const aksjonspunkter = [{
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
-    ...VurderVarigEndretEllerNyoppstartetSN2.transformValuesUtenBegrunnelse(values),
   }];
+  return aksjonspunkter;
 };
 
 VurderOgFastsettSN2.transformValues = (values, gjeldendeAksjonspunkter) => {

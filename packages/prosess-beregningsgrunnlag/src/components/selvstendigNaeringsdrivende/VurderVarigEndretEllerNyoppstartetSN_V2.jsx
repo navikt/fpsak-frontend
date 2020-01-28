@@ -25,13 +25,13 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import TextAreaField2 from '../redesign/TextAreaField_V2';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-import { fastsettInntektFieldname } from './FastsettSN_V2';
 
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 export const begrunnelseFieldname = 'varigEndringNyoppstartetBegrunnelse';
 export const varigEndringRadioname = 'erVarigEndretNaering';
+export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
 const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = aksjonspunktCodes;
 
 /**
@@ -161,6 +161,7 @@ VurderVarigEndretEllerNyoppstartetSN2.defaultProps = {
 };
 
 VurderVarigEndretEllerNyoppstartetSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
+  debugger;
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
   }
@@ -182,8 +183,6 @@ VurderVarigEndretEllerNyoppstartetSN2.transformValues = (values) => ({
   erVarigEndretNaering: values[varigEndringRadioname],
   bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
 });
-VurderVarigEndretEllerNyoppstartetSN2.transformValuesUtenBegrunnelse = (values) => ({
-  bruttoBeregningsgrunnlag: removeSpacesFromNumber(values[fastsettInntektFieldname]),
-});
+
 
 export default injectIntl(VurderVarigEndretEllerNyoppstartetSN2);
