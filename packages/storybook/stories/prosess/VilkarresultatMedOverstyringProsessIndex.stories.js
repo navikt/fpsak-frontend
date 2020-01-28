@@ -48,7 +48,7 @@ export const visOverstyringspanelForFødsel = () => {
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
       status={vilkarUtfallType.OPPFYLT}
-      panelTittel="Fødsel"
+      panelTittelKode="Inngangsvilkar.Fodselsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYR_FODSELSVILKAR}
       erMedlemskapsPanel={false}
@@ -80,7 +80,7 @@ export const visOverstyringspanelForMedlemskap = () => {
       erOverstyrt={erOverstyrt}
       avslagsarsaker={avslagsarsaker}
       status={vilkarUtfallType.OPPFYLT}
-      panelTittel="Medlemskap"
+      panelTittelKode="Inngangsvilkar.Medlemskapsvilkaret"
       lovReferanse="§§ Dette er en lovreferanse"
       overstyringApKode={aksjonspunktCode.OVERSTYR_MEDLEMSKAPSVILKAR}
       erMedlemskapsPanel
@@ -124,7 +124,7 @@ export const visOverstyrtAksjonspunktSomErBekreftet = () => (
     erOverstyrt={boolean('erOverstyrt', false)}
     avslagsarsaker={avslagsarsaker}
     status={vilkarUtfallType.IKKE_OPPFYLT}
-    panelTittel="Fødsel"
+    panelTittelKode="Inngangsvilkar.Fodselsvilkaret"
     lovReferanse="§§ Dette er en lovreferanse"
     overstyringApKode={aksjonspunktCode.OVERSTYR_FODSELSVILKAR}
     erMedlemskapsPanel={false}
