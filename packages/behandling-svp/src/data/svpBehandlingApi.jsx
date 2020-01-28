@@ -46,7 +46,9 @@ const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', SvpBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
     storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
   })
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', SvpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT)
+  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', SvpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
+    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
+  })
 
   /* fptilbake/api/dokument */
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', SvpBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)

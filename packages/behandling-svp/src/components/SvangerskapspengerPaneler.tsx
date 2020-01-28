@@ -72,6 +72,7 @@ const SvangerskapspengerPaneler: FunctionComponent<OwnProps> = ({
         hasFetchError={hasFetchError}
         apentFaktaPanelInfo={apentFaktaPanelInfo}
         dispatch={dispatch}
+        featureToggles={featureToggles}
       />
       <VerticalSpacer sixteenPx />
       <TempPersonPanel

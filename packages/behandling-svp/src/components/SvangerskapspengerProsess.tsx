@@ -33,6 +33,7 @@ interface OwnProps {
   opneSokeside: () => void;
   apentFaktaPanelInfo?: { urlCode: string; textCode: string};
   dispatch: Dispatch;
+  featureToggles: {};
 }
 
 const getForhandsvisCallback = (dispatch, behandling) => (data) => {
@@ -98,6 +99,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
   opneSokeside,
   apentFaktaPanelInfo,
   dispatch,
+  featureToggles,
 }) => {
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
@@ -105,6 +107,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
     previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
     previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     alleKodeverk,
+    featureToggles,
     ...data,
   };
   const [prosessStegPaneler, valgtPanel, formaterteProsessStegPaneler] = prosessStegHooks.useProsessStegPaneler(prosessStegPanelDefinisjoner,
