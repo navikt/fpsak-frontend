@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
-import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
@@ -108,9 +108,9 @@ export class VurderFaktaBeregningPanelImpl extends Component {
         {!(hasOpenAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter) || hasOpenAksjonspunkt(OVERSTYRING_AV_BEREGNINGSAKTIVITETER, aksjonspunkter)) && (
         <form onSubmit={formProps.handleSubmit}>
           {hasAksjonspunkt(VURDER_FAKTA_FOR_ATFL_SN, aksjonspunkter) && (
-            <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed(aksjonspunkter)}>
               {lagHelpTextsForFakta()}
-            </AksjonspunktHelpText>
+            </AksjonspunktHelpTextTemp>
           )}
           <VerticalSpacer twentyPx />
           <FaktaForATFLOgSNPanel

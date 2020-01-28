@@ -19,6 +19,9 @@ type Behandling = Readonly<{
     requestPayload?: any;
     type: string;
   }[];
+  taskStatus?: {
+    readOnly: boolean;
+  };
 }>
 
 export default Behandling;

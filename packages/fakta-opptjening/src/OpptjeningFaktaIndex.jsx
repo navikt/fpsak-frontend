@@ -21,9 +21,8 @@ const OpptjeningFaktaIndex = ({
   aksjonspunkter,
   alleMerknaderFraBeslutter,
   alleKodeverk,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
+  harApneAksjonspunkter,
+  submittable,
   submitCallback,
   readOnly,
 }) => (
@@ -34,13 +33,12 @@ const OpptjeningFaktaIndex = ({
       fastsattOpptjening={opptjening ? opptjening.fastsattOpptjening : undefined}
       opptjeningAktiviteter={opptjening ? opptjening.opptjeningAktivitetList : undefined}
       aksjonspunkter={aksjonspunkter}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       submitCallback={submitCallback}
       readOnly={readOnly}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -51,11 +49,10 @@ OpptjeningFaktaIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(opptjeningAksjonspunkterPropType).isRequired,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 OpptjeningFaktaIndex.defaultProps = {

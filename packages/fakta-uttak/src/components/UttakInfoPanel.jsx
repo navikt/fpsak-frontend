@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
 import moment from 'moment';
-import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { isVilkarForSykdomOppfylt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -10,15 +8,6 @@ import behandlingTyper from '@fpsak-frontend/kodeverk/src/behandlingType';
 import behandlingStatuser from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import AnnenForelderHarRettForm from './AnnenForelderHarRettForm';
 import UttakFaktaForm from './UttakFaktaForm';
-
-const uttakAksjonspunkter = [
-  aksjonspunktCodes.AVKLAR_UTTAK,
-  aksjonspunktCodes.AVKLAR_FØRSTE_UTTAKSDATO,
-  aksjonspunktCodes.ANNEN_FORELDER_IKKE_RETT_OG_LØPENDE_VEDTAK,
-  aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
-  aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
-  aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-];
 
 const getBehandlingArsakTyper = (behandlingArsaker) => {
   if (behandlingArsaker) {
@@ -34,12 +23,8 @@ const getErArsakTypeHendelseFodsel = (behandlingArsakTyper = []) => behandlingAr
 
 const sortUttaksperioder = (p1, p2) => moment(p1.tom).diff(moment(p2.tom));
 
-export const UttakInfoPanelImpl = ({
-  intl,
-  toggleInfoPanelCallback,
-  openInfoPanels,
+const UttakInfoPanel = ({
   readOnly,
-  hasOpenAksjonspunkter,
   aksjonspunkter,
   behandlingPaaVent,
   behandlingType,
@@ -68,69 +53,54 @@ export const UttakInfoPanelImpl = ({
   const isRevurdering = behandlingIsRevurdering && (erManueltOpprettet || erArsakTypeHendelseFodsel);
   const behandlingUtredes = behandlingStatus.kode === behandlingStatuser.BEHANDLING_UTREDES;
   const sortedUttakPerioder = [...uttakPerioder.sort(sortUttaksperioder)];
-  const endringsdato = ytelsefordeling && ytelsefordeling.endringsdato ? ytelsefordeling.endringsdato : undefined;
 
   return (
-    <FaktaEkspandertpanel
-      title={intl.formatMessage({ id: 'UttakInfoPanel.FaktaUttak' })}
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.UTTAK)}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId={faktaPanelCodes.UTTAK}
-      readOnly={readOnly}
-      disabledTextCode="UttakInfoPanel.Uttak"
-    >
+    <>
       {avklarAnnenForelderRettAp
-        && (
-          <>
-            <AnnenForelderHarRettForm
-              hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
-              hasOpenUttakAksjonspunkter={uttakApOpen}
-              readOnly={readOnly}
-              toggleInfoPanelCallback={toggleInfoPanelCallback}
-              aksjonspunkter={[avklarAnnenForelderRettAp]}
-              submitCallback={submitCallback}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              ytelsefordeling={ytelsefordeling}
-            />
-            <VerticalSpacer twentyPx />
-          </>
-        )}
-
-      {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
-        && (
-          <UttakFaktaForm
-            hasOpenAksjonspunkter={uttakApOpen}
-            readOnly={overrideReadOnly && (!isRevurdering || !behandlingUtredes || behandlingPaaVent)}
-            toggleInfoPanelCallback={toggleInfoPanelCallback}
-            aksjonspunkter={uttakAp}
+      && (
+        <>
+          <AnnenForelderHarRettForm
+            hasOpenAksjonspunkter={isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode)}
+            hasOpenUttakAksjonspunkter={uttakApOpen}
+            readOnly={readOnly}
+            aksjonspunkter={[avklarAnnenForelderRettAp]}
             submitCallback={submitCallback}
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
-            behandlingStatus={behandlingStatus}
             ytelsefordeling={ytelsefordeling}
-            uttakPerioder={sortedUttakPerioder}
-            alleKodeverk={alleKodeverk}
-            kanOverstyre={kanOverstyre && endringsdato !== undefined}
-            faktaArbeidsforhold={faktaArbeidsforhold}
-            personopplysninger={personopplysninger}
-            familiehendelse={familiehendelse}
-            vilkarForSykdomExists={vilkarForSykdomExists}
           />
-        )}
+          <VerticalSpacer twentyPx />
+        </>
+      )}
 
-    </FaktaEkspandertpanel>
+      {(!avklarAnnenForelderRettAp || !isAksjonspunktOpen(avklarAnnenForelderRettAp.status.kode))
+      && (
+      <UttakFaktaForm
+        hasOpenAksjonspunkter={uttakApOpen}
+        readOnly={overrideReadOnly && (!isRevurdering || !behandlingUtredes || behandlingPaaVent)}
+        aksjonspunkter={uttakAp}
+        submitCallback={submitCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        behandlingStatus={behandlingStatus}
+        ytelsefordeling={ytelsefordeling}
+        uttakPerioder={sortedUttakPerioder}
+        alleKodeverk={alleKodeverk}
+        kanOverstyre={kanOverstyre}
+        faktaArbeidsforhold={faktaArbeidsforhold}
+        personopplysninger={personopplysninger}
+        familiehendelse={familiehendelse}
+        vilkarForSykdomExists={vilkarForSykdomExists}
+      />
+      )}
+
+    </>
   );
 };
 
-UttakInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
+UttakInfoPanel.propTypes = {
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
   readOnly: PropTypes.bool.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   behandlingType: PropTypes.shape().isRequired,
   behandlingArsaker: PropTypes.arrayOf(PropTypes.shape()).isRequired,
@@ -147,10 +117,8 @@ UttakInfoPanelImpl.propTypes = {
   behandlingPaaVent: PropTypes.bool,
 };
 
-UttakInfoPanelImpl.defaultProps = {
+UttakInfoPanel.defaultProps = {
   behandlingPaaVent: false,
 };
-
-const UttakInfoPanel = withDefaultToggling(faktaPanelCodes.UTTAK, uttakAksjonspunkter)(injectIntl(UttakInfoPanelImpl));
 
 export default UttakInfoPanel;

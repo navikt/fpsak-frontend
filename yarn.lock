@@ -2551,18 +2551,20 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
-"@navikt/nap-process-menu@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@navikt/nap-process-menu/-/nap-process-menu-1.0.8.tgz#f5d490eb80445829a9ad39272275d348153b4afb"
+"@navikt/nap-process-menu@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
+  integrity sha512-vBrQMaiD61I27IH9CtJAZmPQZ+hV6BpLh9Y1Ej+aaTh0OBAWDhUciti4+pAK6uXNUS0LDtP0kp8xHQYyh7ZeTA==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
 
-"@navikt/nap-side-menu@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/@navikt/nap-side-menu/-/nap-side-menu-1.0.3.tgz#f12b504ef1917ff4b83b43a8d971dca5d7ec119f"
+"@navikt/nap-side-menu@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-side-menu/-/nap-side-menu-1.0.4.tgz#79207d85a38dc802b118887c4bf04ac025f8a096"
+  integrity sha512-Sw+ivnx17QEDPp9Apx/9o0NaAeksieMDKOmMxFS7kE4euCdelY6fldAyLCx+T9iD2HV12OoIcr3ZckAKZQBKFw==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
@@ -13471,7 +13473,7 @@ redux-thunk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/redux-thunk/-/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
 
-redux@^4.0.0, redux@^4.0.1, redux@^4.0.4:
+redux@^4.0.0, redux@^4.0.4:
   version "4.0.4"
   resolved "https://registry.npmjs.org/redux/-/redux-4.0.4.tgz#4ee1aeb164b63d6a1bcc57ae4aa0b6e6fa7a3796"
   dependencies:

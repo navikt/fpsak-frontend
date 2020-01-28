@@ -109,6 +109,7 @@ module.exports = async ({ config, mode }) => {
 
   config.plugins.push(new MiniCssExtractPlugin({
     filename: 'style.css',
+    ignoreOrder: true,
   }));
 
   // Return the altered config

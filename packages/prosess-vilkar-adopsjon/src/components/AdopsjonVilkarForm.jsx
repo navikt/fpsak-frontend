@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 import { createSelector } from 'reselect';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, BehandlingspunktBegrunnelseTextField, VilkarResultPicker, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  * AdopsjonVilkarForm
@@ -22,18 +25,17 @@ export const AdopsjonVilkarFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
+  originalErVilkarOk,
   hasAksjonspunkt,
   status,
-  isAksjonspunktOpen,
+  isApOpen,
   behandlingId,
   behandlingVersjon,
   ...formProps
 }) => (
   <ProsessPanelTemplate
-    handleSubmit={formProps.handleSubmit}
     titleCode="AdopsjonVilkarForm.Adopsjon"
-    isAksjonspunktOpen={isAksjonspunktOpen}
-    aksjonspunktHelpTexts={['AdopsjonVilkarForm.VurderGjelderSammeBarn']}
+    isAksjonspunktOpen={isApOpen}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
@@ -41,10 +43,18 @@ export const AdopsjonVilkarFormImpl = ({
     lovReferanse={lovReferanse}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    originalErVilkarOk={originalErVilkarOk}
   >
+    <Element><FormattedMessage id="AdopsjonVilkarForm.TidligereUtbetaltStonad" /></Element>
+    <VilkarResultPicker
+      avslagsarsaker={avslagsarsaker}
+      erVilkarOk={erVilkarOk}
+      readOnly={readOnly}
+      hasAksjonspunkt={hasAksjonspunkt}
+      customVilkarOppfyltText={{ id: 'AdopsjonVilkarForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'AdopsjonVilkarForm.IkkeOppfylt' }}
+    />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    <VerticalSpacer eightPx />
-    <VilkarResultPicker avslagsarsaker={avslagsarsaker} erVilkarOk={erVilkarOk} readOnly={readOnly} hasAksjonspunkt={hasAksjonspunkt} />
   </ProsessPanelTemplate>
 );
 
@@ -58,7 +68,7 @@ AdopsjonVilkarFormImpl.propTypes = {
   erVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
   status: PropTypes.string.isRequired,
-  isAksjonspunktOpen: PropTypes.bool.isRequired,
+  isApOpen: PropTypes.bool.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   ...formPropTypes,
@@ -90,12 +100,17 @@ const transformValues = (values, aksjonspunkter) => ({
 const formName = 'AdopsjonVilkarForm';
 
 const mapStateToPropsFactory = (initialState, staticOwnProps) => {
-  const { aksjonspunkter, alleKodeverk } = staticOwnProps;
+  const { aksjonspunkter, status, alleKodeverk } = staticOwnProps;
   const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.ADOPSJONSVILKARET];
   const onSubmit = (values) => staticOwnProps.submitCallback([transformValues(values, aksjonspunkter)]);
+
+  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
+
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, vilkar } = ownProps;
     return {
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
       lovReferanse: vilkar[0].lovReferanse,

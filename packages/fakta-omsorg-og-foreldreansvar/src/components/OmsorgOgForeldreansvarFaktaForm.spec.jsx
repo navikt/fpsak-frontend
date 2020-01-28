@@ -7,7 +7,7 @@ import relatertYtelseType from '@fpsak-frontend/kodeverk/src/relatertYtelseType'
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { SelectField } from '@fpsak-frontend/form';
 import OmsorgOgForeldreansvarFaktaForm from './OmsorgOgForeldreansvarFaktaForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-omsorg-og-foreldreansvar';
@@ -46,7 +46,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(2);
     expect(helpText.childAt(0).props().id).is.eql('OmsorgOgForeldreansvarFaktaForm.CheckInformation');
@@ -136,7 +136,7 @@ describe('<OmsorgOgForeldreansvarFaktaForm>', () => {
       alleMerknaderFraBeslutter={{}}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.children()).has.length(1);
     expect(helpText.childAt(0).props().id).is.eql('OmsorgOgForeldreansvarFaktaForm.CheckInformationForeldreansvar');

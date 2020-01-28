@@ -26,6 +26,7 @@ describe('<UttakFaktaIndex>', () => {
       kode: '1',
       kodeverk: '1',
     },
+    behandlingArsaker: [],
   };
 
   const aksjonspunkter = [{
@@ -46,9 +47,9 @@ describe('<UttakFaktaIndex>', () => {
       aksjonspunkter={aksjonspunkter}
       submitCallback={sinon.spy()}
       readOnly={false}
-      openInfoPanels={[]}
-      toggleInfoPanelCallback={sinon.spy()}
-      uttakKontrollerFaktaPerioder={{}}
+      uttakKontrollerFaktaPerioder={{
+        perioder: [],
+      }}
       shouldOpenDefaultInfoPanels
       kanOverstyre={false}
       faktaArbeidsforhold={[]}
@@ -56,6 +57,7 @@ describe('<UttakFaktaIndex>', () => {
       familiehendelse={{}}
       alleKodeverk={{}}
       ytelsefordeling={{}}
+      submittable
     />);
     expect(wrapper.find(UttakInfoPanel)).has.length(1);
   });

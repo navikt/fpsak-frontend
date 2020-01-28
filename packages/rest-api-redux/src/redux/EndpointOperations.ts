@@ -29,8 +29,6 @@ class EndpointOperations {
 
   resetRestApi = () => this.reduxApiCreator.makeResetActionCreator(this.name);
 
-  setDataRestApi = () => this.reduxApiCreator.setDataActionCreator(this.name);
-
   getRestApiState = (): any => this.reduxApiCreator.getEndpointState(this.name);
 
   getRestApiData = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.data);
@@ -38,6 +36,8 @@ class EndpointOperations {
   getRestApiMeta = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.meta);
 
   getRestApiCacheParams = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.cacheParams);
+
+  getRestApiPreviousData = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.previousData);
 
   getRestApiError = (): any => createSelector([this.getRestApiState()], (apiState: State) => apiState.error);
 

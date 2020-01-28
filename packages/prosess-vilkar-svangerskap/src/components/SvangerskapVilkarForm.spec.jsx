@@ -23,7 +23,7 @@ describe('<SvangerskapVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk={undefined}
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);

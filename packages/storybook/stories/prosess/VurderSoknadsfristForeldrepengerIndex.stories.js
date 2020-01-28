@@ -46,8 +46,8 @@ export const visPanelForSoknadsfrist = () => (
       begrunnelse: undefined,
     }]}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnly', true)}
-    isApOpen={boolean('isApOpen', true)}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
   />
 );

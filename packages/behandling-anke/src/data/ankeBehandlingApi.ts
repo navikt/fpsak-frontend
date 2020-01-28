@@ -19,7 +19,7 @@ export const AnkeBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fpsak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
   .withInjectedPath('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', AnkeBehandlingApiKeys.VILKAR)
   .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)

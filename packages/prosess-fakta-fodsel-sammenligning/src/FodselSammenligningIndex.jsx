@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import fodselSammenligningSoknadPropType from './propTypes/fodselSammenligningSoknadPropType';
-import fodselSammenligningOriginalBehandlingPropType from './propTypes/fodselSammenligningOriginalBehandlingPropType';
+import fodselSammenligningFamiliehendelsePropType from './propTypes/fodselSammenligningFamiliehendelsePropType';
 import FodselSammenligningPanel from './components/FodselSammenligningPanel';
 import messages from '../i18n/nb_NO';
 
@@ -22,7 +22,8 @@ const FodselSammenligningIndex = ({
   termindato,
   vedtaksDatoSomSvangerskapsuke,
   soknad,
-  originalBehandling,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
 }) => {
   const nrOfDodfodteBarn = avklartBarn.reduce((ab, barn) => ab + (barn.fnr && barn.fnr.endsWith(FNR_DODFODT_PART) ? 1 : 0), 0);
   return (
@@ -34,7 +35,8 @@ const FodselSammenligningIndex = ({
         nrOfDodfodteBarn={nrOfDodfodteBarn}
         behandlingsTypeKode={behandlingsTypeKode}
         soknad={soknad}
-        originalBehandling={originalBehandling}
+        soknadOriginalBehandling={soknadOriginalBehandling}
+        familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
       />
     </RawIntlProvider>
   );
@@ -46,13 +48,15 @@ FodselSammenligningIndex.propTypes = {
   termindato: PropTypes.string,
   vedtaksDatoSomSvangerskapsuke: PropTypes.string,
   soknad: fodselSammenligningSoknadPropType.isRequired,
-  originalBehandling: fodselSammenligningOriginalBehandlingPropType,
+  soknadOriginalBehandling: fodselSammenligningSoknadPropType,
+  familiehendelseOriginalBehandling: fodselSammenligningFamiliehendelsePropType,
 };
 
 FodselSammenligningIndex.defaultProps = {
   termindato: undefined,
   vedtaksDatoSomSvangerskapsuke: undefined,
-  originalBehandling: undefined,
+  soknadOriginalBehandling: undefined,
+  familiehendelseOriginalBehandling: undefined,
   avklartBarn: [],
 };
 

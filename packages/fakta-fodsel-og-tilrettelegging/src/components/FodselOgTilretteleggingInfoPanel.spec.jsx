@@ -4,9 +4,9 @@ import sinon from 'sinon';
 
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 
-import { FodselOgTilretteleggingInfoPanel } from './FodselOgTilretteleggingInfoPanel';
+import FodselOgTilretteleggingInfoPanel from './FodselOgTilretteleggingInfoPanel';
+import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-fodsel-og-tilrettelegging';
 
 const svangerskapspengerTilrettelegging = {
@@ -28,39 +28,13 @@ const svangerskapspengerTilrettelegging = {
 };
 
 describe('<FodselOgTilretteleggingInfoPanel>', () => {
-  it('skal vise gammelt panel med toggle disabled', () => {
+  it('skal vise panel', () => {
     const wrapper = shallowWithIntl(<FodselOgTilretteleggingInfoPanel
       intl={intlMock}
       behandlingId={1}
       behandlingVersjon={1}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={[]}
-      openInfoPanels={['fodseltilrettelegging']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter={false}
-      readOnly
-      submitCallback={sinon.spy()}
-      submittable
-      toggle={false}
-    />);
-
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    expect(faktaEkspandertpanel).to.have.length(1);
-    expect(faktaEkspandertpanel.prop('title')).to.eql('Fakta om fødsel og tilrettelegging');
-    expect(faktaEkspandertpanel.prop('faktaId')).to.eql(faktaPanelCodes.FODSELTILRETTELEGGING);
-
-    const faktaForm = faktaEkspandertpanel.find('Connect(Connect(ComponentWithRequiredProps(WithBehandlingForm)))');
-    expect(faktaForm).to.have.length(1);
-  });
-  it('skal vise nytt panel med toggle enabled', () => {
-    const wrapper = shallowWithIntl(<FodselOgTilretteleggingInfoPanel
-      intl={intlMock}
-      behandlingId={1}
-      behandlingVersjon={1}
-      svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
-      aksjonspunkter={[]}
-      openInfoPanels={['fodseltilrettelegging']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter={false}
       readOnly
       submitCallback={sinon.spy()}
@@ -68,12 +42,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       toggle
     />);
 
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    expect(faktaEkspandertpanel).to.have.length(1);
-    expect(faktaEkspandertpanel.prop('title')).to.eql('Fakta om fødsel og tilrettelegging');
-    expect(faktaEkspandertpanel.prop('faktaId')).to.eql(faktaPanelCodes.FODSELTILRETTELEGGING);
-
-    const faktaForm = faktaEkspandertpanel.find('Connect(Connect(ComponentWithRequiredProps(WithBehandlingForm)))');
+    const faktaForm = wrapper.find(FodselOgTilretteleggingFaktaForm);
     expect(faktaForm).to.have.length(1);
   });
 });

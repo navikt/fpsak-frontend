@@ -38,10 +38,9 @@ describe('<AvregningProsessIndex>', () => {
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
       submitCallback={sinon.spy()}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen
+      isAksjonspunktOpen
       previewCallback={sinon.spy()}
       featureToggles={{}}
     />);

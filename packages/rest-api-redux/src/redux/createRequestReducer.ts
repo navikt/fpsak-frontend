@@ -2,7 +2,9 @@ import { ActionTypes } from './ActionTypesTsType';
 
 const initialState = {
   data: undefined,
+  previousData: undefined,
   meta: undefined,
+  cacheParams: undefined,
   error: undefined,
   started: false,
   finished: false,
@@ -14,6 +16,7 @@ const initialState = {
 
 export interface State {
   data: any;
+  previousData: any;
   meta: any;
   cacheParams: any;
   error?: any;
@@ -52,15 +55,14 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
   }
   switch (action.type) {
     case actionTypes.requestStarted():
-    case actionTypes.copyDataStarted(): {
       return {
         ...initialState,
         data: action.meta && action.meta.options.keepData ? state.data : initialState.data,
         started: true,
         meta: action.payload,
         cacheParams: action.meta.options.cacheParams,
+        previousData: state.previousData,
       };
-    }
     case actionTypes.statusRequestStarted():
       return {
         ...state,
@@ -84,13 +86,13 @@ const createRequestReducer = (actionTypes: ActionTypes, name: string) => (state:
         statusRequestFinished: true,
       };
     case actionTypes.requestFinished():
-    case actionTypes.copyDataFinished():
       return {
         ...state,
         started: false,
         finished: true,
         data: action.payload,
         pollingMessage: undefined,
+        previousData: state.data,
       };
     case actionTypes.requestError():
       return {

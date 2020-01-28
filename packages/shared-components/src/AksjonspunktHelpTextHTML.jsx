@@ -32,7 +32,7 @@ const AksjonspunktHelpTextHTML = ({
           </FlexColumn>
 
           <FlexColumn className={styles.aksjonspunktText}>
-            {children.map((child) => (
+            {React.Children.map(children, (child) => (
               <div key={isObject(child) ? child.key : child} className={elementStyle}>
                 <Normaltekst className={styles.wordwrap}>{child}</Normaltekst>
               </div>
@@ -49,6 +49,7 @@ AksjonspunktHelpTextHTML.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.string.isRequired),
     PropTypes.arrayOf(PropTypes.element.isRequired),
+    PropTypes.element.isRequired,
   ]).isRequired,
 };
 

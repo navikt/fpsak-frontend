@@ -24,14 +24,13 @@ const MedlemskapFaktaIndex = ({
   medlemskap,
   medlemskapV2,
   aksjonspunkter,
+  harApneAksjonspunkter,
+  submittable,
   fagsakPerson,
   isForeldrepengerFagsak,
   alleMerknaderFraBeslutter,
   alleKodeverk,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
   readOnlyBehandling,
 }) => (
@@ -48,13 +47,12 @@ const MedlemskapFaktaIndex = ({
       medlemskapV2={medlemskapV2}
       fagsakPerson={fagsakPerson}
       aksjonspunkter={aksjonspunkter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
       isForeldrepenger={isForeldrepengerFagsak}
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       alleKodeverk={alleKodeverk}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
       readOnlyBehandling={readOnlyBehandling}
     />
@@ -75,11 +73,10 @@ MedlemskapFaktaIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
   isForeldrepengerFagsak: PropTypes.bool.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   readOnlyBehandling: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default MedlemskapFaktaIndex;

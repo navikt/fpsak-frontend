@@ -41,11 +41,7 @@ describe('<ResumeBehandlingMenuItem>', () => {
 
     wrapper.find('MenuButton').prop('onMouseDown')();
     expect(resumeBehandlingCallback.called).is.true;
-    expect(resumeBehandlingCallback.getCalls()[0].args).has.length(4);
-    expect(resumeBehandlingCallback.getCalls()[0].args[0]).is.eql(behandlingIdentifier);
-    expect(resumeBehandlingCallback.getCalls()[0].args[1]).is.eql({ behandlingId: 1, behandlingVersjon: 2 });
-    expect(resumeBehandlingCallback.getCalls()[0].args[2]).is.eql({
-      kode: behandlingType.FORSTEGANGSSOKNAD,
-    });
+    expect(resumeBehandlingCallback.getCalls()[0].args).has.length(1);
+    expect(resumeBehandlingCallback.getCalls()[0].args[0]).is.eql({ behandlingId: 1, behandlingVersjon: 2 });
   });
 });

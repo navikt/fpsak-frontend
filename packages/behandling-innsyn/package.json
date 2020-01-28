@@ -14,7 +14,7 @@
     "@fpsak-frontend/prosess-vedtak-innsyn": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
     "@fpsak-frontend/shared-components": "1.0.0",
-    "@navikt/nap-process-menu": "1.0.8",
+    "@navikt/nap-process-menu": "1.0.9",
     "nav-frontend-typografi": "2.0.16",
     "nav-frontend-typografi-style": "1.0.17",
     "react": "^16.12.0",

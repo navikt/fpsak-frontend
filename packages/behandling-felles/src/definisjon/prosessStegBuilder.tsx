@@ -4,6 +4,8 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 
 import Aksjonspunkt from '../types/aksjonspunktTsType';
 
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
+
 class ProsessStegProperties {
   code: string
 

@@ -16,7 +16,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, Image, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   getLanguageCodeFromSprakkode, hasValidText, maxLength, minLength, required,
@@ -126,7 +126,7 @@ export class AvregningPanelImpl extends Component {
     const simuleringResultatOption = getSimuleringResult(simuleringResultat, feilutbetaling);
 
     return (
-      <FadingPanel>
+      <>
         <Undertittel>
           <FormattedMessage id="Avregning.Title" />
         </Undertittel>
@@ -135,9 +135,9 @@ export class AvregningPanelImpl extends Component {
           <div>
             <Row>
               <Column xs="12">
-                <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
                   {[<FormattedMessage id="Avregning.AksjonspunktHelpText.5084" key="vurderFeilutbetaling" />]}
-                </AksjonspunktHelpText>
+                </AksjonspunktHelpTextTemp>
                 <VerticalSpacer twentyPx />
                 <AvregningSummary
                   fom={simuleringResultatOption.periodeFom}
@@ -267,7 +267,7 @@ export class AvregningPanelImpl extends Component {
             </Row>
           </div>
         )}
-      </FadingPanel>
+      </>
     );
   }
 }
@@ -339,7 +339,7 @@ const mapStateToPropsFactory = (initialState, ownPropsStatic) => {
       behandlingFormPrefix: getBehandlingFormPrefix(behandlingId, behandlingVersjon),
       featureVarseltekst: featureToggles[featureToggle.SIMULER_VARSELTEKST],
       saksnummer: fagsak.saksnummer,
-      isForeldrepenger: fagsak.ytelseType.kode === fagsakYtelseType.FORELDREPENGER,
+      isForeldrepenger: fagsak.fagsakYtelseType.kode === fagsakYtelseType.FORELDREPENGER,
       hasOpenTilbakekrevingsbehandling,
       sprakkode,
       simuleringResultat,

@@ -7,7 +7,7 @@ import { createSelector } from 'reselect';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { Undertittel } from 'nav-frontend-typografi';
-import { AksjonspunktHelpText, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
@@ -92,20 +92,20 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent) => {
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpText isAksjonspunktOpen>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen>
           { apneAksjonspunkt.map((ap) => (
             <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
           ))}
-        </AksjonspunktHelpText>
+        </AksjonspunktHelpTextTemp>
       )}
       { erDetMinstEttLukketAksjonspunkt && (
         <div>
           <VerticalSpacer sixteenPx />
-          <AksjonspunktHelpText isAksjonspunktOpen={false}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={false}>
             { lukkedeAksjonspunkt.map((ap) => (
               <FormattedMessage key={ap.definisjon.kode} id={findAksjonspunktHelpTekst(ap)} values={{ verdi: avvikProsent }} />
             ))}
-          </AksjonspunktHelpText>
+          </AksjonspunktHelpTextTemp>
         </div>
       )}
     </div>

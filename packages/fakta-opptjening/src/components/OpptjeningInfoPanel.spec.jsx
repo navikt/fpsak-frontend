@@ -1,8 +1,6 @@
 import React from 'react';
 import { expect } from 'chai';
-import sinon from 'sinon';
 
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { buildInitialValues, OpptjeningInfoPanel } from './OpptjeningInfoPanel';
@@ -14,8 +12,6 @@ describe('<OpptjeningInfoPanel>', () => {
     const wrapper = shallowWithIntl(<OpptjeningInfoPanel
       {...reduxFormPropsMock}
       intl={intlMock}
-      openInfoPanels={[faktaPanelCodes.OPPTJENINGSVILKARET]}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       readOnly={false}
       fastsattOpptjening={{
@@ -25,12 +21,6 @@ describe('<OpptjeningInfoPanel>', () => {
       alleMerknaderFraBeslutter={{}}
       alleKodeverk={{}}
     />);
-
-    const faktaPanel = wrapper.find(FaktaEkspandertpanel);
-    expect(faktaPanel).to.have.length(1);
-    expect(faktaPanel.prop('hasOpenAksjonspunkter')).is.true;
-    expect(faktaPanel.prop('isInfoPanelOpen')).is.true;
-    expect(faktaPanel.prop('readOnly')).is.false;
 
     const opptjeningForm = wrapper.find(OpptjeningFaktaForm);
     expect(opptjeningForm).to.have.length(1);

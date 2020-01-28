@@ -53,7 +53,8 @@ export const SjekkFodselDokForm = ({
   termindato,
   vedtaksDatoSomSvangerskapsuke,
   soknad,
-  originalBehandling,
+  soknadOriginalBehandling,
+  familiehendelseOriginalBehandling,
   alleMerknaderFraBeslutter,
 }) => (
   <ElementWrapper>
@@ -63,7 +64,8 @@ export const SjekkFodselDokForm = ({
       termindato={termindato}
       vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
       soknad={soknad}
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={soknadOriginalBehandling}
+      familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
     />
     <FaktaGruppe
       aksjonspunktCode={aksjonspunktCodes.SJEKK_MANGLENDE_FODSEL}

@@ -12,12 +12,6 @@ interface Options {
 }
 
 const getActionCreators = (actionTypes) => ({
-  copyDataStarted: (params: any, options: Options = {}) => ({
-    type: actionTypes.copyDataStarted(),
-    payload: { params, timestamp: moment().valueOf() },
-    meta: { options },
-  }),
-  copyDataFinished: (data: any) => ({ type: actionTypes.copyDataFinished(), payload: data }),
   reset: () => ({ type: actionTypes.reset() }),
   requestStarted: (params: any, options: Options = {}) => ({
     type: actionTypes.requestStarted(),
@@ -31,11 +25,6 @@ const getActionCreators = (actionTypes) => ({
   updatePollingMessage: (data: any) => ({ type: actionTypes.updatePollingMessage(), payload: data }),
   pollingTimeout: () => ({ type: actionTypes.pollingTimeout() }),
 });
-
-const createSetDataActionCreator = (actionCreators) => (data: any, params: any, options: Options = {}) => (dispatch: Dispatch) => {
-  dispatch(actionCreators.copyDataStarted(params, options));
-  return dispatch(actionCreators.copyDataFinished(data));
-};
 
 const createRequestThunk = (requestRunner, actionCreators, reduxEvents, resultKeyActionCreators) => (params: any,
   options: Options = {}) => (dispatch: Dispatch) => {
@@ -82,7 +71,6 @@ const createRequestActionCreators = (requestRunner: RequestRunner, actionTypes: 
   return {
     ...actionCreators,
     execRequest: createRequestThunk(requestRunner, actionCreators, reduxEvents, resultKeyActionCreators),
-    execSetData: createSetDataActionCreator(actionCreators),
   };
 };
 

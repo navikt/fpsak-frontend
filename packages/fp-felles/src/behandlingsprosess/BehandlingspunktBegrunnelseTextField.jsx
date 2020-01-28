@@ -25,8 +25,9 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
   intl,
   readOnly,
   textCode,
+  useAllWidth,
 }) => (
-  <div className={styles.begrunnelseTextField}>
+  <div className={!useAllWidth ? styles.begrunnelseTextField : ''}>
     <TextAreaField
       name="begrunnelse"
       label={intl.formatMessage({ id: textCode || getBegrunnelseTextCode(readOnly) })}
@@ -34,6 +35,7 @@ const BehandlingspunktBegrunnelseTextFieldImpl = ({
       textareaClass={styles.explanationTextarea}
       maxLength={1500}
       readOnly={readOnly}
+      placeholder={intl.formatMessage({ id: 'BehandlingspunktBegrunnelseTextField.BegrunnVurdering' })}
     />
   </div>
 );
@@ -42,10 +44,12 @@ BehandlingspunktBegrunnelseTextFieldImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
   readOnly: PropTypes.bool.isRequired,
   textCode: PropTypes.string,
+  useAllWidth: PropTypes.bool,
 };
 
 BehandlingspunktBegrunnelseTextFieldImpl.defaultProps = {
   textCode: undefined,
+  useAllWidth: false,
 };
 
 const BehandlingspunktBegrunnelseTextField = injectIntl(BehandlingspunktBegrunnelseTextFieldImpl);

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { VilkarBegrunnelse, VilkarResultPicker } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 /**
  * VIlkarresultatMedBegrunnelse
@@ -20,9 +21,6 @@ export const VilkarresultatMedBegrunnelse = ({
   customVilkarOppfyltText,
 }) => (
   <>
-    {skalViseBegrunnelse && (
-      <VilkarBegrunnelse isReadOnly={readOnly} />
-    )}
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       customVilkarIkkeOppfyltText={customVilkarIkkeOppfyltText}
@@ -32,6 +30,12 @@ export const VilkarresultatMedBegrunnelse = ({
       hasAksjonspunkt={hasAksjonspunkt}
       erMedlemskapsPanel={erMedlemskapsPanel}
     />
+    {skalViseBegrunnelse && (
+      <>
+        <VerticalSpacer eightPx />
+        <VilkarBegrunnelse isReadOnly={readOnly} />
+      </>
+    )}
   </>
 );
 

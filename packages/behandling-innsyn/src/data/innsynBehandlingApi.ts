@@ -18,7 +18,7 @@ export const InnsynBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  .withAsyncPost('/fpsak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING_INNSYN, { fetchLinkDataAutomatically: false })
+  .withAsyncPost('/fpsak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING_INNSYN)
   .withInjectedPath('aksjonspunkter', InnsynBehandlingApiKeys.AKSJONSPUNKTER)
   .withInjectedPath('vilkar', InnsynBehandlingApiKeys.VILKAR)
   .withInjectedPath('innsyn', InnsynBehandlingApiKeys.INNSYN)

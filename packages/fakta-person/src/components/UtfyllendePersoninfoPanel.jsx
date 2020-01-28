@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { formPropTypes } from 'redux-form';
 
-import {
-  behandlingForm, faktaPanelCodes, withDefaultToggling, getKodeverknavnFn,
-} from '@fpsak-frontend/fp-felles';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { behandlingForm, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -28,12 +27,12 @@ const getUtlandSakstype = (aksjonspunkter) => {
   return utlandSakstypeKode.NASJONAL;
 };
 
+const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
+
 /**
  * UtfyllendePersoninfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for Tilleggsopplysninger.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 export class UtfyllendePersoninfoPanel extends Component {
   constructor(props) {
@@ -46,25 +45,11 @@ export class UtfyllendePersoninfoPanel extends Component {
     this.getYtelser = this.getYtelser.bind(this);
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    const { openInfoPanels } = this.props;
-    const { selected } = this.state;
-    if (openInfoPanels !== nextProps.openInfoPanels) {
-      const pers = selected !== null ? selected : nextProps.personopplysninger;
-      this.setState({ selected: nextProps.openInfoPanels.includes(faktaPanelCodes.PERSON) ? pers : null });
-    }
-  }
-
   setSelected(parent) {
-    const { toggleInfoPanelCallback } = this.props;
     const { selected } = this.state;
     if (selected === parent) {
       this.setState({ selected: null });
-      toggleInfoPanelCallback(faktaPanelCodes.PERSON);
     } else {
-      if (selected === null) {
-        toggleInfoPanelCallback(faktaPanelCodes.PERSON);
-      }
       this.setState({ selected: parent });
     }
   }
@@ -83,9 +68,7 @@ export class UtfyllendePersoninfoPanel extends Component {
       behandlingVersjon,
       sprakkode,
       personopplysninger,
-      hasOpenAksjonspunkter,
       readOnly,
-      readOnlyOriginal,
       submitCallback,
       aksjonspunkter,
       featureToggleUtland,
@@ -93,6 +76,11 @@ export class UtfyllendePersoninfoPanel extends Component {
       familiehendelseRegister,
       ...formProps
     } = this.props;
+
+    const filteredAps = aksjonspunkter.filter((ap) => personAksjonspunkter.includes(ap.definisjon.kode));
+    const hasOpenAksjonspunkter = filteredAps.filter((ap) => isAksjonspunktOpen(ap.status.kode)).length > 0;
+    const readOnlyTweaked = readOnly || !filteredAps.some((a) => a.erAktivt);
+
 
     const sivilstandTypes = alleKodeverk[kodeverkTyper.SIVILSTAND_TYPE];
     const personstatusTypes = alleKodeverk[kodeverkTyper.PERSONSTATUS_TYPE];
@@ -110,7 +98,7 @@ export class UtfyllendePersoninfoPanel extends Component {
         primaryParent={personopplysninger}
         secondaryParent={personopplysninger.annenPart}
         hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        readOnly={readOnly}
+        readOnly={readOnlyTweaked}
         setSelected={this.setSelected}
         selected={selected}
       >
@@ -127,10 +115,10 @@ export class UtfyllendePersoninfoPanel extends Component {
             sprakkode={sprakkode}
             relatertYtelseTypes={relatertYtelseTypes}
             relatertYtelseStatus={relatertYtelseStatus}
-            hasAksjonspunkter={aksjonspunkter.length > 0}
+            hasAksjonspunkter={filteredAps.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             utlandSakstype={getUtlandSakstype(aksjonspunkter)}
-            readOnly={readOnlyOriginal}
+            readOnly={readOnly}
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}
             personstatusTypes={personstatusTypes}
@@ -150,11 +138,8 @@ UtfyllendePersoninfoPanel.propTypes = {
   personopplysninger: PropTypes.shape().isRequired,
   relatertTilgrensendeYtelserForSoker: PropTypes.arrayOf(PropTypes.shape()),
   relatertTilgrensendeYtelserForAnnenForelder: PropTypes.arrayOf(PropTypes.shape()),
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   sprakkode: PropTypes.shape().isRequired,
-  readOnlyOriginal: PropTypes.bool.isRequired,
+  readOnly: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func,
   aksjonspunkter: PropTypes.arrayOf(personAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
@@ -169,6 +154,4 @@ UtfyllendePersoninfoPanel.defaultProps = {
   submitCallback: undefined,
 };
 
-const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
-
-export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(behandlingForm({ form: 'PersonInfoPanel' })(UtfyllendePersoninfoPanel));
+export default behandlingForm({ form: 'PersonInfoPanel' })(UtfyllendePersoninfoPanel);

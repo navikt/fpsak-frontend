@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 
 import { FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { StartdatoForForeldrepengerperiodenForm } from './StartdatoForForeldrepengerperiodenForm';
 
 describe('<StartdatoForForeldrepengerperiodenForm>', () => {
@@ -22,7 +22,7 @@ describe('<StartdatoForForeldrepengerperiodenForm>', () => {
       behandlingVersjon={1}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).has.length(1);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
 

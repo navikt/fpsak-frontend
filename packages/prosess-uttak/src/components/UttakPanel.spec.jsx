@@ -4,7 +4,7 @@ import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { FormattedMessage } from 'react-intl';
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { buildInitialValues, transformValues, UttakPanelImpl as UttakPanel } from './UttakPanel';
 import Uttak from './Uttak';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-proses-uttak';
@@ -140,7 +140,7 @@ describe('<UttakPanel>', () => {
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).has.length(1);
-    const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
+    const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(aksjonspunktHelpText).has.length(0);
   });
 
@@ -188,7 +188,7 @@ describe('<UttakPanel>', () => {
     expect(uttak).has.length(1);
     const formattedMessage = wrapper.find(FormattedMessage);
     expect(formattedMessage).has.length(2);
-    const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpText);
+    const aksjonspunktHelpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(aksjonspunktHelpText).has.length(1);
 
     const form = wrapper.find('form');

@@ -45,7 +45,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       soknad={soknad}
       termindato="2019-01-01"
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={originalBehandling.soknad}
+      familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
       vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
     const fodselPanel = wrapper.find(FodselSammenligningIndex);
@@ -69,7 +70,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       soknad={soknad}
       termindato="2019-01-01"
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={originalBehandling.soknad}
+      familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
       vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
     const fodselPanel = wrapper.find(FodselSammenligningIndex);
@@ -98,7 +100,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       soknad={soknad}
       termindato="2019-01-01"
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={originalBehandling.soknad}
+      familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
       vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
 
@@ -126,7 +129,8 @@ describe('<VarselOmRevurderingFormImpl>', () => {
       behandlingTypeKode={behandlingType.FORSTEGANGSSOKNAD}
       soknad={soknad}
       termindato="2019-01-01"
-      originalBehandling={originalBehandling}
+      soknadOriginalBehandling={originalBehandling.soknad}
+      familiehendelseOriginalBehandling={originalBehandling.familiehendelse}
       vedtaksDatoSomSvangerskapsuke="2019-01-01"
     />);
 

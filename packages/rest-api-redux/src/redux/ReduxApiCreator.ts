@@ -35,9 +35,6 @@ class ReduxApiCreator {
 
   makeRequestActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.execRequest
 
-  // TODO (TOR) Bør fjerne denne og heller kunna konfigurera at ein legg data under anna state-nøkkel
-  setDataActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.execSetData
-
   makeResetActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.reset
 
   // TODO (TOR) Skriv om dette. Kanseller lenger ut. Og legg til actionreducer for bedre sporing

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 import { FieldArray, formPropTypes } from 'redux-form';
 
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { FaktaGruppe, FaktaSubmitButton, behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
   hasValidDate, hasValidText, maxLength, minLength, required,
@@ -43,12 +43,11 @@ export const StartdatoForForeldrepengerperiodenForm = ({
 }) => (
   <div className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.inactiveAksjonspunkt}>
     <form className={hasOpenAksjonspunkt || !hasOpenMedlemskapAksjonspunkter ? undefined : styles.container} onSubmit={formProps.handleSubmit}>
-      {hasAksjonspunkt
-        && (
-        <AksjonspunktHelpText isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
+      {hasAksjonspunkt && (
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={submittable && hasOpenAksjonspunkt}>
           {[<FormattedMessage key="PeriodenAvviker" id="StartdatoForForeldrepengerperiodenForm.PeriodenAvviker" />]}
-        </AksjonspunktHelpText>
-        )}
+        </AksjonspunktHelpTextTemp>
+      )}
       <FaktaGruppe
         aksjonspunktCode={aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN}
         titleCode="StartdatoForForeldrepengerperiodenForm.StartdatoForPerioden"

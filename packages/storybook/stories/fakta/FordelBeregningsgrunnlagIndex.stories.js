@@ -1,9 +1,8 @@
 import React from 'react';
 import { action } from '@storybook/addon-actions';
-import { withKnobs, object } from '@storybook/addon-knobs';
+import { withKnobs, object, boolean } from '@storybook/addon-knobs';
 
 import inntektskategorier from '@fpsak-frontend/kodeverk/src/inntektskategorier';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 
@@ -29,11 +28,6 @@ const behandling = {
 
 const merknaderFraBeslutter = {
   notAccepted: false,
-};
-
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
 };
 
 const fordelAP = ([{
@@ -291,7 +285,6 @@ const lagArbeidsforhold = (arbeidsgiverNavn, arbeidsgiverId, arbeidsforholdId, r
 });
 
 export const aapOgRefusjon = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
   const førstePeriode = lagFordelPeriode(førsteAndeler, '2019-08-05', '2019-11-26', false, false);
   const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 0, 0)];
@@ -315,18 +308,16 @@ export const aapOgRefusjon = () => {
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={false}
       beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const kanEndreRefusjonskrav = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const førsteAndeler = [lagFordelingsandel(1, 'AAP', 0, 0)];
   const førstePeriode = lagFordelPeriode(førsteAndeler, '2019-08-05', '2019-11-26', false, false);
   const andreAndeler = [lagFordelingsandel(2, 'AAP', 0, 0), lagFordelingsandel(1, 'AT', 300000, 0)];
@@ -350,18 +341,16 @@ export const kanEndreRefusjonskrav = () => {
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={false}
       beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };
 
 export const skalSlåSammenNaturalytelseperioder = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FORDELING]);
   const arbeidsforholdEn = lagArbeidsforhold('Slottet', '965847123', 'AD-ASD-ADF-SADGF-ASGASDF-ÅTYIUOH', 500000);
   const arbeidsforholdTo = lagArbeidsforhold('Bedrift', '999999999', 'AD-ASD-ADF-SADGF-ASGASDF-SDFASDF', 300000);
 
@@ -404,12 +393,11 @@ export const skalSlåSammenNaturalytelseperioder = () => {
         [aksjonspunktCodes.FORDEL_BEREGNINGSGRUNNLAG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
       }}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={false}
       beregningsgrunnlag={bg}
       aksjonspunkter={fordelAP}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
     />
   );
 };

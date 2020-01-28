@@ -105,7 +105,7 @@ describe('<ChangeBehandlendeEnhetMenuItem>', () => {
     wrapper.update();
 
     expect(nyBehandlendeEnhetCallback.called).is.true;
-    expect(nyBehandlendeEnhetCallback.getCalls()[0].args).has.length(4);
+    expect(nyBehandlendeEnhetCallback.getCalls()[0].args).has.length(1);
     expect(nyBehandlendeEnhetCallback.getCalls()[0].args[0]).is.eql({
       behandlingId: 1,
       behandlingVersjon: 2,

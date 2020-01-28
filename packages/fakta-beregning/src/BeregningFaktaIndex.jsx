@@ -22,10 +22,9 @@ const BeregningFaktaIndex = ({
   alleMerknaderFraBeslutter,
   aksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  harApneAksjonspunkter,
+  submittable,
   erOverstyrer,
 }) => (
   <RawIntlProvider value={intl}>
@@ -37,10 +36,9 @@ const BeregningFaktaIndex = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
       erOverstyrer={erOverstyrer}
     />
   </RawIntlProvider>
@@ -55,10 +53,9 @@ BeregningFaktaIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
   erOverstyrer: PropTypes.bool.isRequired,
 };
 

@@ -10,6 +10,8 @@ import BehandlingDataCache from './BehandlingDataCache';
 
 export const format = (name) => name.toLowerCase().replace(/_([a-z])/g, (m) => m.toUpperCase()).replace(/_/g, '');
 
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
+
 interface OwnProps {
   behandlingVersion: number;
   render: (data: {}) => any;

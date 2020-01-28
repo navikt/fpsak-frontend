@@ -1,18 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { FormattedMessage } from 'react-intl';
+import {
+  Undertittel, EtikettLiten, Element, Normaltekst,
+} from 'nav-frontend-typografi';
 
 import {
-  AksjonspunktHelpText, ElementWrapper, FadingPanel, VerticalSpacer,
+  VerticalSpacer, FlexContainer, FlexRow, FlexColumn, AksjonspunktBox, Image,
 } from '@fpsak-frontend/shared-components';
+import avslattImage from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
+import innvilgetImage from '@fpsak-frontend/assets/images/innvilget_hover.svg';
 
 import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty,
   isBehandlingFormSubmitting,
 } from '../../behandlingForm';
-import VilkarResultPanel from './VilkarResultPanel';
 import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
+
+import styles from './prosessPanelTemplate.less';
 
 /*
  * ProsessPanelTemplate
@@ -20,80 +25,107 @@ import BehandlingspunktSubmitButton from '../BehandlingspunktSubmitButton';
  * Presentasjonskomponent.
  */
 const ProsessPanelTemplate = ({
-  intl,
-  handleSubmit,
   behandlingId,
   behandlingVersjon,
   lovReferanse,
   titleCode,
+  originalErVilkarOk,
   isAksjonspunktOpen,
-  aksjonspunktHelpTexts,
   formProps,
   readOnlySubmitButton,
-  isDirty,
   readOnly,
-  bpStatus,
+  rendreFakta,
+  isDirty,
   children,
 }) => (
-  <FadingPanel>
-    <form onSubmit={handleSubmit}>
-      <Undertittel>{intl.formatMessage({ id: titleCode })}</Undertittel>
-      <VerticalSpacer eightPx />
-      {lovReferanse
-        && (
-        <ElementWrapper>
-          <Normaltekst>{lovReferanse}</Normaltekst>
-          <VerticalSpacer eightPx />
-        </ElementWrapper>
-        )}
-      {bpStatus && isAksjonspunktOpen
-        && (
-        <ElementWrapper>
-          <VilkarResultPanel status={bpStatus} />
-          <VerticalSpacer eightPx />
-        </ElementWrapper>
-        )}
-      <AksjonspunktHelpText isAksjonspunktOpen={isAksjonspunktOpen && !readOnly}>
-        {aksjonspunktHelpTexts.map((aht) => intl.formatMessage({ id: aht }))}
-      </AksjonspunktHelpText>
-      <VerticalSpacer twentyPx />
-      {children}
-      <BehandlingspunktSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton}
-        isDirty={isDirty}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
+  <>
+    <form onSubmit={formProps.handleSubmit}>
+      <FlexContainer>
+        <FlexRow>
+          {originalErVilkarOk !== undefined && (
+            <FlexColumn>
+              <Image className={styles.status} src={originalErVilkarOk ? innvilgetImage : avslattImage} />
+            </FlexColumn>
+          )}
+          <FlexColumn>
+            <Undertittel><FormattedMessage id={titleCode} /></Undertittel>
+          </FlexColumn>
+          {lovReferanse && (
+            <FlexColumn>
+              <EtikettLiten className={styles.vilkar}>{lovReferanse}</EtikettLiten>
+            </FlexColumn>
+          )}
+        </FlexRow>
+
+        <FlexRow>
+          <FlexColumn>
+            {originalErVilkarOk && (
+              <>
+                <VerticalSpacer eightPx />
+                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErOppfylt" /></Element>
+              </>
+            )}
+            {originalErVilkarOk === false && (
+              <>
+                <VerticalSpacer eightPx />
+                <Element><FormattedMessage id="VilkarresultatMedOverstyringForm.ErIkkeOppfylt" /></Element>
+              </>
+            )}
+            {(!isAksjonspunktOpen && originalErVilkarOk === undefined) && (
+              <>
+                <VerticalSpacer eightPx />
+                <Normaltekst><FormattedMessage id="VilkarresultatMedOverstyringForm.IkkeBehandlet" /></Normaltekst>
+              </>
+            )}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      {isAksjonspunktOpen && <VerticalSpacer eightPx />}
+      <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={isAksjonspunktOpen}>
+        {children}
+        <BehandlingspunktSubmitButton
+          formName={formProps.form}
+          behandlingId={behandlingId}
+          behandlingVersjon={behandlingVersjon}
+          isReadOnly={readOnly}
+          isSubmittable={!readOnlySubmitButton}
+          isDirty={isDirty}
+          isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+          isBehandlingFormDirty={isBehandlingFormDirty}
+          hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+        />
+
+      </AksjonspunktBox>
+      {rendreFakta && (
+        <>
+          <VerticalSpacer sixteenPx />
+          {rendreFakta()}
+        </>
+      )}
     </form>
-  </FadingPanel>
+  </>
 );
 
 ProsessPanelTemplate.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   titleCode: PropTypes.string.isRequired,
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   lovReferanse: PropTypes.string,
-  bpStatus: PropTypes.string,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
-  aksjonspunktHelpTexts: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   formProps: PropTypes.shape().isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  isDirty: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
+  rendreFakta: PropTypes.func,
   readOnly: PropTypes.bool.isRequired,
+  isDirty: PropTypes.bool,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
 
 ProsessPanelTemplate.defaultProps = {
   lovReferanse: undefined,
-  bpStatus: undefined,
+  originalErVilkarOk: undefined,
+  rendreFakta: undefined,
   isDirty: undefined,
 };
 
-export default injectIntl(ProsessPanelTemplate);
+export default ProsessPanelTemplate;

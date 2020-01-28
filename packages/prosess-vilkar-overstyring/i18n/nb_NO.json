@@ -1,11 +1,19 @@
 {
+  "VilkarresultatMedOverstyringForm.ErOppfylt": "Vilkåret er oppfylt",
+  "VilkarresultatMedOverstyringForm.ErIkkeOppfylt": "Vilkåret er avslått",
+  "VilkarresultatMedOverstyringForm.IkkeBehandlet": "Ikke behandlet",
+  "VilkarresultatMedOverstyringForm.Endret": "Endret av saksbehandler",
+  "VilkarresultatMedOverstyringForm.AutomatiskVurdering": "Manuell overstyring av automatisk vurdering",
+  "VilkarresultatMedOverstyringForm.Avbryt": "Avbryt",
+  "VilkarresultatMedOverstyringForm.Unntakstilfeller": "Overstyring skal kun gjøres i unntakstilfeller",
+
   "OverstyrVurderingVelger.OverstyrBeregning": "Overstyr beregning",
   "OverstyrVurderingVelger.OverstyrtBeregning": "Overstyrt beregning",
   "OverstyrVurderingVelger.OverstyrAutomatiskVurdering": "Overstyr automatisk vurdering",
   "OverstyrVurderingVelger.OverstyrtAutomatiskVurdering": "Overstyrt automatisk vurdering",
   "OverstyrBekreftKnappPanel.ConfirmInformation": "Bekreft overstyring",
   "VilkarBegrunnelse.Vilkar": "Vurdering",
-  "VilkarResultPicker.Arsak": "Angi avslagsårsak",
+  "VilkarResultPicker.Arsak": "Avslagsårsak",
   "VilkarResultPicker.SelectArsak": "Velg årsak",
   "VilkarResultPicker.VilkarOppfylt": "Vilkåret er oppfylt",
   "VilkarResultPicker.VilkarIkkeOppfylt": "Vilkåret er <b>ikke</b> oppfylt",
@@ -14,6 +22,16 @@
   "VilkarResultPicker.VilkarOppfyltRevurderingFom": "Vilkåret er  oppfylt f.o.m. {fom}",
   "VilkarResultPicker.VilkarIkkeOppfyltRevurderingFom": "Vilkåret er <b>ikke</b> oppfylt f.o.m. {fom}",
 
+  "Inngangsvilkar.Adopsjonsvilkaret": "Adopsjon",
+  "Inngangsvilkar.Fodselsvilkaret": "Fødsel",
+  "Inngangsvilkar.Omsorgsvilkaret": "Omsorg",
+  "Inngangsvilkar.Foreldreansvar": "Foreldreansvar",
+  "Inngangsvilkar.Opptjeningsvilkaret": "Opptjening",
+  "Inngangsvilkar.Medlemskapsvilkaret": "Medlemskap",
+  "Inngangsvilkar.Svangerskapsvilkaret": "Svangerskap",
+  "Behandlingspunkt.Soknadsfristvilkaret": "Søknadsfrist",
+
+  "VilkarBegrunnelse.BegrunnVurdering": "Begrunn vurderingen din",
   "VilkarResultPicker.VilkarDato": "Dato",
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
@@ -80,5 +98,6 @@
   "Calendar.Month.8": "September",
   "Calendar.Month.9": "Oktober",
   "Calendar.Month.10": "November",
-  "Calendar.Month.11": "Desember"
+  "Calendar.Month.11": "Desember",
+  "Behandling.EditedField": "Saksbehandler har endret feltets verdi"
 }

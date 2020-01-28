@@ -7,9 +7,7 @@ import { Hovedknapp } from 'nav-frontend-knapper';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { PersonIndex } from '@fpsak-frontend/person-info';
-import {
-  faktaPanelCodes, withDefaultToggling, behandlingForm,
-} from '@fpsak-frontend/fp-felles';
+import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
 
 import personAksjonspunkterPropType from '../propTypes/personAksjonspunkterPropType';
@@ -70,8 +68,6 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
   });
 };
 
-const ConnectedComponent = connect(mapStateToPropsFactory)(behandlingForm({
+export default connect(mapStateToPropsFactory)(behandlingForm({
   form: 'PersonIndexPanel',
 })(GrunnleggendePersoninfoPanel));
-
-export default withDefaultToggling(faktaPanelCodes.PERSON, personAksjonspunkter)(ConnectedComponent);

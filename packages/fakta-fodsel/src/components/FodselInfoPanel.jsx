@@ -5,14 +5,11 @@ import { submit as reduxSubmit } from 'redux-form';
 import { connect } from 'react-redux';
 
 import { aksjonspunktPropType, kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
-import {
-  faktaPanelCodes, getBehandlingFormPrefix, FaktaSubmitButton, FaktaEkspandertpanel, withDefaultToggling,
-} from '@fpsak-frontend/fp-felles';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { getBehandlingFormPrefix, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FodselSammenligningIndex from '@fpsak-frontend/prosess-fakta-fodsel-sammenligning';
 
-import fodselOriginalBehandlingPropType from '../propTypes/fodselOriginalBehandlingPropType';
 import fodselPersonopplysningerPropType from '../propTypes/fodselPersonopplysningerPropType';
 import fodselFamilieHendelsePropType from '../propTypes/fodselFamilieHendelsePropType';
 import fodselSoknadPropType from '../propTypes/fodselSoknadPropType';
@@ -23,7 +20,6 @@ import SykdomPanel, { sykdomPanelName } from './SykdomPanel';
 const {
   TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT,
 } = aksjonspunktCodes;
-const fodselAksjonspunkter = [TERMINBEKREFTELSE, SJEKK_MANGLENDE_FODSEL, VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT];
 
 const getHelpTexts = (aksjonspunkter) => {
   const helpTexts = [];
@@ -45,10 +41,7 @@ const formNames = [sykdomPanelName, termindatoFaktaFormName, sjekkFodselDokForm]
  * FodselInfoPanel
  *
  * Presentasjonskomponent. Har ansvar for å sette opp Redux Formen for faktapenelet til Fødselsvilkåret.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
-
 export class FodselInfoPanelImpl extends Component {
   constructor() {
     super();
@@ -81,10 +74,7 @@ export class FodselInfoPanelImpl extends Component {
 
   render() {
     const {
-      intl,
       aksjonspunkter,
-      openInfoPanels,
-      toggleInfoPanelCallback,
       hasOpenAksjonspunkter,
       submittable,
       formPrefix,
@@ -94,7 +84,8 @@ export class FodselInfoPanelImpl extends Component {
       termindato,
       vedtaksDatoSomSvangerskapsuke,
       soknad,
-      originalBehandling,
+      soknadOriginalBehandling,
+      familiehendelseOriginalBehandling,
       familiehendelse,
       alleMerknaderFraBeslutter,
       personopplysninger,
@@ -103,15 +94,8 @@ export class FodselInfoPanelImpl extends Component {
       behandlingType,
     } = this.props;
     return (
-      <FaktaEkspandertpanel
-        title={intl.formatMessage({ id: 'FodselInfoPanel.Fodsel' })}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FODSELSVILKARET)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        faktaId={faktaPanelCodes.FODSELSVILKARET}
-        readOnly={readOnly}
-      >
-        <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpText>
+      <>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>{getHelpTexts(aksjonspunkter)}</AksjonspunktHelpTextTemp>
         <form onSubmit={this.getSubmitFunction(dispatch, formPrefix)}>
           {hasAksjonspunkt(VURDER_OM_VILKAR_FOR_SYKDOM_ER_OPPFYLT, aksjonspunkter) && (
             <SykdomPanel
@@ -149,7 +133,8 @@ export class FodselInfoPanelImpl extends Component {
               submittable={submittable}
               isAksjonspunktOpen={hasOpenAksjonspunkter}
               submitHandler={this.submitHandler}
-              originalBehandling={originalBehandling}
+              soknadOriginalBehandling={soknadOriginalBehandling}
+              familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
               alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
               soknad={soknad}
               avklartBarn={avklartBarn}
@@ -178,23 +163,18 @@ export class FodselInfoPanelImpl extends Component {
               termindato={termindato}
               vedtaksDatoSomSvangerskapsuke={vedtaksDatoSomSvangerskapsuke}
               soknad={soknad}
-              originalBehandling={originalBehandling}
+              soknadOriginalBehandling={soknadOriginalBehandling}
+              familiehendelseOriginalBehandling={familiehendelseOriginalBehandling}
             />
           )}
         </form>
-      </FaktaEkspandertpanel>
+      </>
     );
   }
 }
 
 FodselInfoPanelImpl.propTypes = {
-  intl: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType.isRequired).isRequired,
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
@@ -205,7 +185,8 @@ FodselInfoPanelImpl.propTypes = {
   termindato: PropTypes.string,
   vedtaksDatoSomSvangerskapsuke: PropTypes.number,
   soknad: fodselSoknadPropType.isRequired,
-  originalBehandling: fodselOriginalBehandlingPropType,
+  soknadOriginalBehandling: fodselSoknadPropType,
+  familiehendelseOriginalBehandling: fodselFamilieHendelsePropType,
   alleMerknaderFraBeslutter: PropTypes.shape().isRequired,
   familiehendelse: fodselFamilieHendelsePropType.isRequired,
   behandlingId: PropTypes.number.isRequired,
@@ -215,7 +196,8 @@ FodselInfoPanelImpl.propTypes = {
 };
 
 FodselInfoPanelImpl.defaultProps = {
-  originalBehandling: undefined,
+  soknadOriginalBehandling: undefined,
+  familiehendelseOriginalBehandling: undefined,
   avklartBarn: [],
   termindato: undefined,
 };
@@ -229,7 +211,4 @@ const mapStateToProps = (state, ownProps) => ({
   vedtaksDatoSomSvangerskapsuke: nullSafe(ownProps.familiehendelse.gjeldende).vedtaksDatoSomSvangerskapsuke,
 });
 
-const ConnectedComponent = connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));
-const FodselInfoPanel = withDefaultToggling(faktaPanelCodes.FODSELSVILKARET, fodselAksjonspunkter)(ConnectedComponent);
-
-export default FodselInfoPanel;
+export default connect(mapStateToProps)(injectIntl(FodselInfoPanelImpl));

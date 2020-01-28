@@ -104,8 +104,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -133,8 +131,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -152,41 +148,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
     expect(panel.prop('primaryParent')).to.eql(personopplysninger);
     expect(panel.prop('secondaryParent')).to.eql(personopplysninger.annenPart);
     expect(wrapper.find(FullPersonInfo)).to.have.length(0);
-  });
-
-  it('skal vise søkerpanel automatisk når dette er markert i URL (openInfoPanels)', () => {
-    const wrapper = shallow(
-      <UtfyllendePersoninfoPanel
-        behandlingId={1}
-        behandlingVersjon={1}
-        personopplysninger={personopplysninger}
-        relatertTilgrensendeYtelserForSoker={[]}
-        relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={sinon.spy()}
-        hasOpenAksjonspunkter
-        sprakkode={{}}
-        barnFraTps={[]}
-        readOnly={false}
-        readOnlyOriginal={false}
-        isBekreftButtonReadOnly
-        alleKodeverk={alleKodeverk}
-        aksjonspunkter={[]}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.state('selected')).is.null;
-    wrapper.setProps({ openInfoPanels: [faktaPanelCodes.PERSON] });
-    expect(wrapper.state('selected')).is.eql(personopplysninger);
-
-    expect(wrapper.find(EkspanderbartPersonPanel)).to.have.length(1);
-    const infoPanel = wrapper.find(FullPersonInfo);
-    expect(infoPanel).to.have.length(1);
-    expect(infoPanel.prop('personopplysning')).to.eql(personopplysninger);
-    expect(infoPanel.prop('isPrimaryParent')).is.true;
-
-    expect(wrapper.find(Hovedknapp)).to.have.length(0);
   });
 
   it('skal ikke vise knapp for bekreftelse av aksjonspunkt når en har aksjonspunkt som ikke er AVKLAR_ARBEIDSFORHOLD', () => {
@@ -215,8 +176,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -260,8 +219,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={sinon.spy()}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -280,7 +237,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
   });
 
   it('skal velge hovedsøker og legge denne i url ved klikk på hovedsøker i panel-header ', () => {
-    const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
       <UtfyllendePersoninfoPanel
         behandlingId={1}
@@ -288,8 +244,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -308,11 +262,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
     panel.prop('setSelected')(personopplysninger);
 
     expect(wrapper.state('selected')).is.eql(personopplysninger);
-
-    expect(toggleInfoPanelCallback.calledOnce).to.be.true;
-    const { args } = toggleInfoPanelCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(faktaPanelCodes.PERSON);
   });
 
   it('skal ikke fjerna personmarkering i url ved bytte fra hovedsøker til annen part', () => {
@@ -351,7 +300,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
   });
 
   it('skal fjerne valgt hovedsøker ved nytt klikk på denne i panel-header ', () => {
-    const toggleInfoPanelCallback = sinon.spy();
     const wrapper = shallow(
       <UtfyllendePersoninfoPanel
         behandlingId={1}
@@ -359,8 +307,6 @@ describe('<UtfyllendePersoninfoPanel>', () => {
         personopplysninger={personopplysninger}
         relatertTilgrensendeYtelserForSoker={[]}
         relatertTilgrensendeYtelserForAnnenForelder={[]}
-        openInfoPanels={[]}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
         hasOpenAksjonspunkter
         sprakkode={{}}
         barnFraTps={[]}
@@ -381,10 +327,5 @@ describe('<UtfyllendePersoninfoPanel>', () => {
     panel.prop('setSelected')(personopplysninger);
 
     expect(wrapper.state('selected')).is.null;
-
-    expect(toggleInfoPanelCallback.calledOnce).to.be.true;
-    const { args } = toggleInfoPanelCallback.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(faktaPanelCodes.PERSON);
   });
 });

@@ -26,7 +26,7 @@ describe('<FodselVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk={false}
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);
@@ -49,7 +49,7 @@ describe('<FodselVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk={undefined}
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);
@@ -76,7 +76,7 @@ describe('<FodselVilkarForm>', () => {
       readOnlySubmitButton
       erVilkarOk
       status={vilkarUtfallType.OPPFYLT}
-      isAksjonspunktOpen
+      isApOpen
       behandlingId={1}
       behandlingVersjon={1}
     />);

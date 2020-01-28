@@ -36,6 +36,7 @@ const getAsyncDefaultProps = {
   statusRequestFinished: false,
   statusRequestStarted: false,
   cacheParams: undefined,
+  previousData: undefined,
 };
 
 const createStore = (): Store => mockStore();

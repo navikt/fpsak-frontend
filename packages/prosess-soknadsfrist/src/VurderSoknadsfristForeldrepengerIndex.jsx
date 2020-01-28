@@ -22,9 +22,9 @@ const VurderSoknadsfristForeldrepengerIndex = ({
   soknad,
   aksjonspunkter,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
-  isApOpen,
+  isAksjonspunktOpen,
 }) => (
   <RawIntlProvider value={intl}>
     <VurderSoknadsfristForeldrepengerForm
@@ -34,9 +34,9 @@ const VurderSoknadsfristForeldrepengerIndex = ({
       mottattDato={soknad.mottattDato}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      isApOpen={isApOpen}
+      isApOpen={isAksjonspunktOpen}
     />
   </RawIntlProvider>
 );
@@ -47,9 +47,9 @@ VurderSoknadsfristForeldrepengerIndex.propTypes = {
   soknad: soknadsfristSoknadPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(soknadsfristAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
 };
 
 export default VurderSoknadsfristForeldrepengerIndex;

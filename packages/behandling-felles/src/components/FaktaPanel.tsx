@@ -5,27 +5,22 @@ import SideMenu from '@navikt/nap-side-menu';
 import {
   FlexColumn, FlexContainer, FlexRow,
 } from '@fpsak-frontend/shared-components';
-
 import advarselIkonUrl from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+
+import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';
 
 import styles from './faktaPanel.less';
 
-interface PanelData {
-  tekst: string;
-  erAktiv: boolean;
-  harAksjonspunkt: boolean;
-}
-
 interface OwnProps {
-  paneler: PanelData[];
-  velgPanel?: (index: number) => number;
+  paneler: FaktaPanelFaktaPanelMenyRadMeny[];
+  onClick?: (index: number) => void;
   children: ReactNode;
 }
 
 const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
   paneler,
-  velgPanel,
+  onClick,
   children,
 }) => (
   <div className={styles.container}>
@@ -40,13 +35,11 @@ const FaktaPanel: FunctionComponent<OwnProps & WrappedComponentProps> = ({
               iconSrc: panel.harAksjonspunkt ? advarselIkonUrl : undefined,
               iconAltText: panel.harAksjonspunkt ? intl.formatMessage({ id: 'HelpText.Aksjonspunkt' }) : undefined,
             }))}
-            onClick={velgPanel}
+            onClick={onClick}
           />
         </FlexColumn>
-        <FlexColumn>
-          <div className={styles.content}>
-            {children}
-          </div>
+        <FlexColumn className={styles.content}>
+          {children}
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

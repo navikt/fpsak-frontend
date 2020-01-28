@@ -45,14 +45,14 @@ const soknad = {
   antallBarn: 1,
 };
 
-const originalBehandling = {
-  soknad,
-  familiehendelse: {
-    termindato: '2019-01-01',
-    fodselsdato: '2019-01-10',
-    antallBarnTermin: 1,
-    antallBarnFodsel: 1,
-  },
+const soknadOriginalBehandling = {
+  ...soknad,
+};
+const familiehendelseOriginalBehandling = {
+  termindato: '2019-01-01',
+  fodselsdato: '2019-01-10',
+  antallBarnTermin: 1,
+  antallBarnFodsel: 1,
 };
 
 const aksjonspunkter = [{
@@ -76,12 +76,13 @@ export const visForFørstegangsbehandling = () => (
     behandling={behandling}
     familiehendelse={object('familieHendelse', familieHendelse)}
     soknad={object('soknad', soknad)}
-    originalBehandling={object('originalBehandling', originalBehandling)}
+    soknadOriginalBehandling={object('soknadOriginalBehandling', soknadOriginalBehandling)}
+    familiehendelseOriginalBehandling={object('familiehendelseOriginalBehandling', familiehendelseOriginalBehandling)}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     dispatchSubmitFailed={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );
@@ -96,12 +97,13 @@ export const visForRevurdering = () => (
     }}
     familiehendelse={object('familieHendelse', familieHendelse)}
     soknad={object('soknad', soknad)}
-    originalBehandling={object('originalBehandling', originalBehandling)}
+    soknadOriginalBehandling={object('soknadOriginalBehandling', soknadOriginalBehandling)}
+    familiehendelseOriginalBehandling={object('familiehendelseOriginalBehandling', familiehendelseOriginalBehandling)}
     aksjonspunkter={aksjonspunkter}
     submitCallback={action('button-click')}
     previewCallback={action('button-click')}
     dispatchSubmitFailed={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     alleKodeverk={alleKodeverk}
   />
 );

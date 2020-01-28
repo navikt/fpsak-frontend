@@ -3,28 +3,18 @@ import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 import { formPropTypes } from 'redux-form';
 import { connect } from 'react-redux';
+import { FormattedMessage } from 'react-intl';
+import { Element } from 'nav-frontend-typografi';
 
+import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
   behandlingForm, behandlingFormValueSelector, VilkarResultPicker, BehandlingspunktBegrunnelseTextField, ProsessPanelTemplate,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 
 import omsorgVilkarAksjonspunkterPropType from '../propTypes/omsorgVilkarAksjonspunkterPropType';
-
-const createAksjonspunktHelptTexts = (aksjonspunkter) => {
-  const helpTexts = [];
-  const apCodes = aksjonspunkter.map((ap) => ap.definisjon.kode);
-  if (apCodes.includes(aksjonspunktCodes.MANUELL_VURDERING_AV_OMSORGSVILKARET)) {
-    helpTexts.push('ErOmsorgVilkaarOppfyltForm.Paragraf');
-  }
-  if (apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_GJELDER_SAMME_BARN)
-      || apCodes.includes(aksjonspunktCodes.AVKLAR_OM_STONAD_TIL_ANNEN_FORELDER_GJELDER_SAMME_BARN)) {
-    helpTexts.push('ErOmsorgVilkaarOppfyltForm.Vurder');
-  }
-  return helpTexts;
-};
 
 /**
  * ErOmsorgVilkaarOppfyltForm
@@ -36,6 +26,7 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
   readOnly,
   readOnlySubmitButton,
   erVilkarOk,
+  originalErVilkarOk,
   aksjonspunkter,
   behandlingId,
   behandlingVersjon,
@@ -45,20 +36,23 @@ export const ErOmsorgVilkaarOppfyltFormImpl = ({
     handleSubmit={formProps.handleSubmit}
     titleCode="ErOmsorgVilkaarOppfyltForm.Omsorg"
     isAksjonspunktOpen={!readOnlySubmitButton}
-    aksjonspunktHelpTexts={createAksjonspunktHelptTexts(aksjonspunkter)}
     formProps={formProps}
     readOnlySubmitButton={readOnlySubmitButton}
     readOnly={readOnly}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    originalErVilkarOk={originalErVilkarOk}
   >
-    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <Element><FormattedMessage id="ErOmsorgVilkaarOppfyltForm.VilkaretOppfylt" /></Element>
     <VilkarResultPicker
       avslagsarsaker={avslagsarsaker}
       erVilkarOk={erVilkarOk}
       readOnly={readOnly}
       hasAksjonspunkt={aksjonspunkter.length > 0}
+      customVilkarOppfyltText={{ id: 'ErOmsorgVilkaarOppfyltForm.Oppfylt' }}
+      customVilkarIkkeOppfyltText={{ id: 'ErOmsorgVilkaarOppfyltForm.IkkeOppfylt' }}
     />
+    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
   </ProsessPanelTemplate>
 );
 
@@ -101,15 +95,21 @@ const transformValues = (values, aksjonspunkter) => aksjonspunkter.map((ap) => (
 const formName = 'ErOmsorgVilkaarOppfyltForm';
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
-  const { alleKodeverk, submitCallback } = initialOwnProps;
+  const {
+    aksjonspunkter, status, alleKodeverk, submitCallback,
+  } = initialOwnProps;
   const onSubmit = (values) => submitCallback(transformValues(values, initialOwnProps.aksjonspunkter));
   const avslagsarsaker = alleKodeverk[kodeverkTyper.AVSLAGSARSAK][vilkarType.OMSORGSVILKARET];
+
+  const isOpenAksjonspunkt = aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === status;
 
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon } = ownProps;
     return {
       onSubmit,
       avslagsarsaker,
+      originalErVilkarOk: erVilkarOk,
       initialValues: buildInitialValues(state, ownProps),
       erVilkarOk: behandlingFormValueSelector(formName, behandlingId, behandlingVersjon)(state, 'erVilkarOk'),
     };

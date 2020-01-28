@@ -10,7 +10,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import {
   getBehandlingFormPrefix, FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';
@@ -176,7 +176,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
       && (
         <div>
           {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
-          && <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>}
+          && <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>}
           {erOverstyrt && (
           <Element>
             <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />

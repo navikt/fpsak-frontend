@@ -46,6 +46,7 @@ const TextAreaField = ({
     readOnly={readOnly}
     readOnlyHideEmpty
     autoComplete="off"
+    type="textarea"
   />
 );
 

@@ -19,7 +19,7 @@ describe('<FaktaPanel>', () => {
           erAktiv: true,
           harAksjonspunkt: true,
         }]}
-        velgPanel={velgPanelCallback}
+        onClick={velgPanelCallback}
       >
         <div>test</div>
       </FaktaPanel.WrappedComponent>,
@@ -46,7 +46,7 @@ describe('<FaktaPanel>', () => {
           erAktiv: true,
           harAksjonspunkt: false,
         }]}
-        velgPanel={velgPanelCallback}
+        onClick={velgPanelCallback}
       >
         <div>test</div>
       </FaktaPanel.WrappedComponent>,

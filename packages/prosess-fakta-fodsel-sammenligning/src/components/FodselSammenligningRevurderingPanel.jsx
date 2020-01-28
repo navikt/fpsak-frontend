@@ -57,14 +57,8 @@ FodselSammenligningRevurderingPanel.defaultProps = {
 
 const formatDate = (date) => (date ? moment(date, ISO_DATE_FORMAT).format(DDMMYYYY_DATE_FORMAT) : '-');
 
-const getSoknadFraOriginalBehandling = createSelector([(state, ownProps) => ownProps.originalBehandling],
-  (originalBehandling = {}) => originalBehandling.soknad);
-const getFamiliehendelseFraOriginalBehandling = createSelector(
-  [(state, ownProps) => ownProps.originalBehandling], (originalBehandling = {}) => originalBehandling.familiehendelse,
-);
-
 export const getIsTermin = createSelector(
-  [getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling],
+  [(ownProps) => ownProps.soknadOriginalBehandling, (ownProps) => ownProps.familiehendelseOriginalBehandling],
   (originalSoknad = {}, orginalFamiliehendelse = {}) => !!orginalFamiliehendelse.termindato
   || (!originalSoknad.fodselsdatoer || Object.keys(originalSoknad.fodselsdatoer).length === 0),
 );
@@ -74,7 +68,7 @@ const getTerminOrFodselLabel = createSelector(
 );
 
 export const getTerminDateOrFodselDate = createSelector(
-  [getIsTermin, getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling],
+  [getIsTermin, (ownProps) => ownProps.soknadOriginalBehandling, (ownProps) => ownProps.familiehendelseOriginalBehandling],
   (isTermin, originalSoknad, orginalFamiliehendelse) => {
     if (!originalSoknad && !orginalFamiliehendelse) {
       return '';
@@ -87,7 +81,7 @@ export const getTerminDateOrFodselDate = createSelector(
 );
 
 export const getAntallBarn = createSelector(
-  [getIsTermin, getSoknadFraOriginalBehandling, getFamiliehendelseFraOriginalBehandling],
+  [getIsTermin, (ownProps) => ownProps.soknadOriginalBehandling, (ownProps) => ownProps.familiehendelseOriginalBehandling],
   (isTermin, originalSoknad, orginalFamiliehendelse) => {
     if (!originalSoknad && !orginalFamiliehendelse) {
       return 0;
@@ -100,16 +94,16 @@ export const getAntallBarn = createSelector(
 );
 
 export const showVedtaksdatoAsSvangerskapsuke = createSelector(
-  [getFamiliehendelseFraOriginalBehandling, (state, ownProps) => ownProps.vedtaksDatoSomSvangerskapsuke],
+  [(ownProps) => ownProps.familiehendelseOriginalBehandling, (ownProps) => ownProps.vedtaksDatoSomSvangerskapsuke],
   (orginalFamiliehendelse, vedtaksDato) => (!orginalFamiliehendelse ? false : !orginalFamiliehendelse.fodselsdato && !!vedtaksDato),
 );
 
 // TODO Fjern mapStateToProps (ingenting blir henta fra state)
 const mapStateToProps = (state, ownProps) => ({
-  terminOrFodselLabel: getTerminOrFodselLabel(state, ownProps),
-  terminOrFodselDate: getTerminDateOrFodselDate(state, ownProps),
-  antallBarn: getAntallBarn(state, ownProps),
-  shouldShowVedtaksdatoAsSvangerskapsuke: showVedtaksdatoAsSvangerskapsuke(state, ownProps),
+  terminOrFodselLabel: getTerminOrFodselLabel(ownProps),
+  terminOrFodselDate: getTerminDateOrFodselDate(ownProps),
+  antallBarn: getAntallBarn(ownProps),
+  shouldShowVedtaksdatoAsSvangerskapsuke: showVedtaksdatoAsSvangerskapsuke(ownProps),
   vedtaksdato: ownProps.vedtaksDatoSomSvangerskapsuke,
 });
 

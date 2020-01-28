@@ -63,12 +63,12 @@ const isVilkarOppfyltDisabled = (hasSoknad, inntektsmeldingerSomIkkeKommer) => !
  */
 export const SokersOpplysningspliktFormImpl = ({
   intl,
-  handleSubmit,
   readOnly,
   readOnlySubmitButton,
   behandlingsresultat,
   hasSoknad,
   erVilkarOk,
+  originalErVilkarOk,
   hasAksjonspunkt,
   manglendeVedlegg,
   dokumentTypeIds,
@@ -79,19 +79,17 @@ export const SokersOpplysningspliktFormImpl = ({
   ...formProps
 }) => (
   <ProsessPanelTemplate
-    handleSubmit={handleSubmit}
     titleCode="SokersOpplysningspliktForm.SokersOpplysningsplikt"
     isAksjonspunktOpen={!readOnlySubmitButton}
-    aksjonspunktHelpTexts={['SokersOpplysningspliktForm.UtfyllendeOpplysninger']}
     formProps={formProps}
-    readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
     isDirty={hasAksjonspunkt ? formProps.dirty : erVilkarOk !== formProps.initialValues.erVilkarOk}
+    readOnlySubmitButton={hasSoknad ? readOnlySubmitButton : !formProps.dirty || readOnlySubmitButton}
     readOnly={readOnly}
     behandlingId={behandlingId}
     behandlingVersjon={behandlingVersjon}
+    originalErVilkarOk={originalErVilkarOk}
   >
-    {manglendeVedlegg.length > 0
-      && (
+    {manglendeVedlegg.length > 0 && (
       <ElementWrapper>
         <VerticalSpacer twentyPx />
         <Normaltekst><FormattedMessage id="SokersOpplysningspliktForm.ManglendeDokumentasjon" /></Normaltekst>
@@ -114,10 +112,9 @@ export const SokersOpplysningspliktFormImpl = ({
           </Column>
         </Row>
       </ElementWrapper>
-      )}
+    )}
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-    {!readOnly
-      && (
+    {!readOnly && (
       <Row>
         <Column xs="6">
           <RadioGroupField name="erVilkarOk" validate={[required]}>
@@ -126,7 +123,7 @@ export const SokersOpplysningspliktFormImpl = ({
                 <FormattedHTMLMessage
                   id={findRadioButtonTextCode(true)}
                 />
-)}
+              )}
               value
               disabled={isVilkarOppfyltDisabled(hasSoknad, inntektsmeldingerSomIkkeKommer)}
             />
@@ -134,9 +131,8 @@ export const SokersOpplysningspliktFormImpl = ({
           </RadioGroupField>
         </Column>
       </Row>
-      )}
-    {readOnly
-      && (
+    )}
+    {readOnly && (
       <ElementWrapper>
         <div className={styles.radioIE}>
           <RadioGroupField name="dummy" readOnly={readOnly} isEdited={hasAksjonspunkt && (erVilkarOk !== undefined)}>
@@ -146,13 +142,12 @@ export const SokersOpplysningspliktFormImpl = ({
         && <Normaltekst className={styles.radioIE}>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKERSOPPLYSNINGSPLIKT)}</Normaltekst>}
         </div>
       </ElementWrapper>
-      )}
+    )}
   </ProsessPanelTemplate>
 );
 
 SokersOpplysningspliktFormImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  handleSubmit: PropTypes.func.isRequired,
   /**
    * Skal input-felter vises eller ikke
    */
@@ -163,6 +158,7 @@ SokersOpplysningspliktFormImpl.propTypes = {
   readOnlySubmitButton: PropTypes.bool.isRequired,
   hasSoknad: PropTypes.bool,
   erVilkarOk: PropTypes.bool,
+  originalErVilkarOk: PropTypes.bool,
   hasAksjonspunkt: PropTypes.bool,
   behandlingsresultat: PropTypes.shape(),
   manglendeVedlegg: PropTypes.arrayOf(PropTypes.shape()),
@@ -176,6 +172,7 @@ SokersOpplysningspliktFormImpl.propTypes = {
 SokersOpplysningspliktFormImpl.defaultProps = {
   hasSoknad: undefined,
   erVilkarOk: undefined,
+  originalErVilkarOk: undefined,
   hasAksjonspunkt: false,
   behandlingsresultat: {},
   manglendeVedlegg: [],
@@ -245,12 +242,16 @@ const submitSelector = createSelector(
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const getKodeverknavn = getKodeverknavnFn(initialOwnProps.alleKodeverk, kodeverkTyper);
+  const isOpenAksjonspunkt = initialOwnProps.aksjonspunkter.some((ap) => isAksjonspunktOpen(ap.status.kode));
+  const erVilkarOk = isOpenAksjonspunkt ? undefined : vilkarUtfallType.OPPFYLT === initialOwnProps.status;
+
   return (state, ownProps) => {
     const { behandlingId, behandlingVersjon, alleKodeverk } = ownProps;
     return {
       getKodeverknavn,
       onSubmit: submitSelector(state, ownProps),
       hasSoknad: hasSoknad(state, ownProps),
+      originalErVilkarOk: erVilkarOk,
       dokumentTypeIds: alleKodeverk[kodeverkTyper.DOKUMENT_TYPE_ID],
       manglendeVedlegg: getSortedManglendeVedlegg(state, ownProps),
       initialValues: buildInitialValues(state, ownProps),

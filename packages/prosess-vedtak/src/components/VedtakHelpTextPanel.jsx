@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import styles from './vedtakForm.less';
@@ -33,9 +33,9 @@ export const VedtakHelpTextPanelImpl = ({
   if (!readOnly && helpTexts.length > 0) {
     return (
       <>
-        <AksjonspunktHelpText isAksjonspunktOpen={!readOnly}>
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnly}>
           {helpTexts}
-        </AksjonspunktHelpText>
+        </AksjonspunktHelpTextTemp>
         <VerticalSpacer eightPx />
         {aksjonspunktKoder && aksjonspunktKoder.includes(aksjonspunktCodes.KONTROLLER_REVURDERINGSBEHANDLING_VARSEL_VED_UGUNST)
         && (

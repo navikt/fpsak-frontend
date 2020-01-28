@@ -1,8 +1,10 @@
 export { default as AdvarselModal } from './src/AdvarselModal';
 export { default as AksjonspunktHelpTextHTML } from './src/AksjonspunktHelpTextHTML';
+export { default as AksjonspunktHelpTextTemp } from './src/AksjonspunktHelpTextTemp';
 export { default as AksjonspunktHelpText } from './src/AksjonspunktHelpText';
 export { default as ArrowBox } from './src/ArrowBox';
 export { default as BorderBox } from './src/BorderBox';
+export { default as AksjonspunktBox } from './src/AksjonspunktBox';
 export { default as DateLabel } from './src/DateLabel';
 export { default as Datepicker } from './src/datepicker/Datepicker';
 export { default as DateTimeLabel } from './src/DateTimeLabel';

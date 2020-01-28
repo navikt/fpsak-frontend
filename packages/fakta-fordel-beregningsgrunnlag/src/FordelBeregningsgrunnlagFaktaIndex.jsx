@@ -22,10 +22,9 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
   alleMerknaderFraBeslutter,
   aksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
+  harApneAksjonspunkter,
+  submittable,
 }) => (
   <RawIntlProvider value={intl}>
     <FordelBeregningsgrunnlagPanel
@@ -36,11 +35,10 @@ const FordelBeregningsgrunnlagFaktaIndex = ({
       alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
       beregningsgrunnlag={beregningsgrunnlag}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -54,10 +52,9 @@ FordelBeregningsgrunnlagFaktaIndex.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default FordelBeregningsgrunnlagFaktaIndex;

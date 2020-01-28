@@ -14,7 +14,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import { ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
-  DateLabel, ElementWrapper, FadingPanel, VerticalSpacer,
+  DateLabel, ElementWrapper, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -60,62 +60,61 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
   behandlingVersjon,
   ...formProps
 }) => (
-  <FadingPanel>
-    <form onSubmit={formProps.handleSubmit}>
-      <Undertittel>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Soknadsfrist' })}</Undertittel>
-      <span className="typo-normal">
-        <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart1" />
-        <span className={styles.days}>
-          <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2" values={{ numberOfDays: antallDagerSoknadLevertForSent }} />
-        </span>
-        <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3" />
+  <form onSubmit={formProps.handleSubmit}>
+    <Undertittel>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Soknadsfrist' })}</Undertittel>
+    <span className="typo-normal">
+      <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart1" />
+      <span className={styles.days}>
+        <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2" values={{ numberOfDays: antallDagerSoknadLevertForSent }} />
+      </span>
+      <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3" />
       (
-        {(soknad.mottattDato && antallDagerSoknadLevertForSent)
+      {(soknad.mottattDato && antallDagerSoknadLevertForSent)
         && <DateLabel dateString={findSoknadsfristDate(soknad.mottattDato, antallDagerSoknadLevertForSent)} />}
 )
-      </span>
-      <Row>
-        <Column xs="6">
-          <Panel className={styles.panel}>
-            <Fieldset legend={intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Consider' })}>
-              <ul className={styles.hyphen}>
-                <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question1" /></li>
-                <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question2" /></li>
-                <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question3" /></li>
-              </ul>
-            </Fieldset>
-          </Panel>
-        </Column>
-        <Column xs="6">
-          <Panel className={styles.panelDates}>
-            <Row>
-              <Column xs="6">
-                <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.MottattDato' })}</Undertekst>
-                <span className="typo-normal">
-                  {soknad.mottattDato && <DateLabel dateString={soknad.mottattDato} />}
-                </span>
-              </Column>
-              <Column xs="6">
-                {textCode && <Undertekst>{intl.formatMessage({ id: textCode })}</Undertekst>}
-                <span className="typo-normal">
-                  {dato && <DateLabel id="date-label" dateString={dato} />}
-                </span>
-              </Column>
-            </Row>
-            <VerticalSpacer twentyPx />
-            <Row>
-              <Column xs="11">
-                <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.ExplanationFromApplication' })}</Undertekst>
-                <span className="typo-normal">
-                  {soknad.begrunnelseForSenInnsending || '-'}
-                </span>
-              </Column>
-            </Row>
-          </Panel>
-        </Column>
-      </Row>
-      <VerticalSpacer sixteenPx />
-      {!readOnly
+    </span>
+    <Row>
+      <Column xs="6">
+        <Panel className={styles.panel}>
+          <Fieldset legend={intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Consider' })}>
+            <ul className={styles.hyphen}>
+              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question1" /></li>
+              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question2" /></li>
+              <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question3" /></li>
+            </ul>
+          </Fieldset>
+        </Panel>
+      </Column>
+      <Column xs="6">
+        <Panel className={styles.panelDates}>
+          <Row>
+            <Column xs="6">
+              <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.MottattDato' })}</Undertekst>
+              <span className="typo-normal">
+                {soknad.mottattDato && <DateLabel dateString={soknad.mottattDato} />}
+              </span>
+            </Column>
+            <Column xs="6">
+              {textCode && <Undertekst>{intl.formatMessage({ id: textCode })}</Undertekst>}
+              <span className="typo-normal">
+                {dato && <DateLabel id="date-label" dateString={dato} />}
+              </span>
+            </Column>
+          </Row>
+          <VerticalSpacer twentyPx />
+          <Row>
+            <Column xs="11">
+              <Undertekst>{intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.ExplanationFromApplication' })}</Undertekst>
+              <span className="typo-normal">
+                {soknad.begrunnelseForSenInnsending || '-'}
+              </span>
+            </Column>
+          </Row>
+        </Panel>
+      </Column>
+    </Row>
+    <VerticalSpacer sixteenPx />
+    {!readOnly
         && (
         <Row>
           <Column xs="6">
@@ -126,7 +125,7 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
           </Column>
         </Row>
         )}
-      {readOnly
+    {readOnly
         && (
         <ElementWrapper>
           <RadioGroupField name="dummy" className={styles.text} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, erVilkarOk)}>
@@ -136,19 +135,18 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
           && <Normaltekst>{getKodeverknavn(behandlingsresultat.avslagsarsak, vilkarType.SOKNADFRISTVILKARET)}</Normaltekst>}
         </ElementWrapper>
         )}
-      <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-      <BehandlingspunktSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
-    </form>
-  </FadingPanel>
+    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <BehandlingspunktSubmitButton
+      formName={formProps.form}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      isReadOnly={readOnly}
+      isSubmittable={!readOnlySubmitButton}
+      isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+      isBehandlingFormDirty={isBehandlingFormDirty}
+      hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+    />
+  </form>
 );
 
 ErSoknadsfristVilkaretOppfyltFormImpl.propTypes = {

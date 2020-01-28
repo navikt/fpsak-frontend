@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 import { Hovedknapp } from 'nav-frontend-knapper';
-
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 const OverstyrBekreftKnappPanel = ({
   submitting,
@@ -15,18 +12,13 @@ const OverstyrBekreftKnappPanel = ({
     return null;
   }
   return (
-    <Row>
-      <Column xs="12">
-        <VerticalSpacer twentyPx />
-        <Hovedknapp
-          mini
-          spinner={submitting}
-          disabled={submitting || pristine}
-        >
-          <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
-        </Hovedknapp>
-      </Column>
-    </Row>
+    <Hovedknapp
+      mini
+      spinner={submitting}
+      disabled={submitting || pristine}
+    >
+      <FormattedMessage id="OverstyrBekreftKnappPanel.ConfirmInformation" />
+    </Hovedknapp>
   );
 };
 

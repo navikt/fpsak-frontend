@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import opptjeningAktivitetType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import OpptjeningFaktaIndex from '@fpsak-frontend/fakta-opptjening';
@@ -122,61 +121,48 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-opptjening',
   component: OpptjeningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForOpptjeningsvilkåret = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OPPTJENINGSVILKARET]);
-  return (
-    <OpptjeningFaktaIndex
-      behandling={behandling}
-      opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForOpptjeningsvilkåret = () => (
+  <OpptjeningFaktaIndex
+    behandling={behandling}
+    opptjening={object('opptjening', opptjeningNårEnHarAksjonspunkt)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_PERIODER_MED_OPPTJENING]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
-export const visPanelUtenAksjonpunkt = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OPPTJENINGSVILKARET]);
-  return (
-    <OpptjeningFaktaIndex
-      behandling={behandling}
-      opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
-      aksjonspunkter={[]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{}}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visPanelUtenAksjonpunkt = () => (
+  <OpptjeningFaktaIndex
+    behandling={behandling}
+    opptjening={object('opptjening', opptjeningUtenAksjonspunkt)}
+    aksjonspunkter={[]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{}}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);

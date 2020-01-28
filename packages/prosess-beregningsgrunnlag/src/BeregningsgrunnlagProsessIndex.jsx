@@ -22,10 +22,9 @@ const BeregningsgrunnlagProsessIndex = ({
   beregningsgrunnlag,
   aksjonspunkter,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
-  apCodes,
-  isApOpen,
+  isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
   featureToggles,
@@ -39,10 +38,10 @@ const BeregningsgrunnlagProsessIndex = ({
           beregningsgrunnlag={beregningsgrunnlag}
           aksjonspunkter={aksjonspunkter}
           submitCallback={submitCallback}
-          readOnly={readOnly}
+          readOnly={isReadOnly}
           readOnlySubmitButton={readOnlySubmitButton}
-          apCodes={apCodes}
-          isApOpen={isApOpen}
+          apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+          isApOpen={isAksjonspunktOpen}
           vilkar={vilkar}
           alleKodeverk={alleKodeverk}
         />
@@ -56,10 +55,10 @@ const BeregningsgrunnlagProsessIndex = ({
         beregningsgrunnlag={beregningsgrunnlag}
         aksjonspunkter={aksjonspunkter}
         submitCallback={submitCallback}
-        readOnly={readOnly}
+        readOnly={isReadOnly}
         readOnlySubmitButton={readOnlySubmitButton}
-        apCodes={apCodes}
-        isApOpen={isApOpen}
+        apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+        isApOpen={isAksjonspunktOpen}
         vilkar={vilkar}
         alleKodeverk={alleKodeverk}
       />
@@ -71,10 +70,9 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   behandling: beregningsgrunnlagBehandlingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,

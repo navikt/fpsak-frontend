@@ -6,11 +6,11 @@ import { createSelector } from 'reselect';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
-  behandlingForm, FaktaBegrunnelseTextField, FaktaEkspandertpanel, withDefaultToggling, faktaPanelCodes, FaktaSubmitButton,
+  behandlingForm, FaktaBegrunnelseTextField, FaktaSubmitButton,
   behandlingFormValueSelector,
 } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import vergeAksjonspunkterPropType from '../propTypes/vergeAksjonspunkterPropType';
 import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
@@ -22,8 +22,6 @@ import RegistrereVergeFaktaForm from './RegistrereVergeFaktaForm';
  */
 export const RegistrereVergeInfoPanelImpl = ({
   intl,
-  openInfoPanels,
-  toggleInfoPanelCallback,
   hasOpenAksjonspunkter,
   submittable,
   readOnly,
@@ -40,17 +38,10 @@ export const RegistrereVergeInfoPanelImpl = ({
     return null;
   }
   return (
-    <FaktaEkspandertpanel
-      title={intl.formatMessage({ id: 'RegistrereVergeInfoPanel.Info' })}
-      hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-      isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.VERGE)}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      faktaId={faktaPanelCodes.VERGE}
-      readOnly={readOnly}
-    >
-      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+    <>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {[intl.formatMessage({ id: 'RegistrereVergeInfoPanel.CheckInformation' })]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <form onSubmit={formProps.handleSubmit}>
         <RegistrereVergeFaktaForm
           readOnly={readOnly}
@@ -72,14 +63,12 @@ export const RegistrereVergeInfoPanelImpl = ({
           doNotCheckForRequiredFields
         />
       </form>
-    </FaktaEkspandertpanel>
+    </>
   );
 };
 
 RegistrereVergeInfoPanelImpl.propTypes = {
   intl: PropTypes.shape().isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submittable: PropTypes.bool,
   readOnly: PropTypes.bool.isRequired,
@@ -128,10 +117,6 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   });
 };
 
-const vergeAksjonspunkter = [aksjonspunktCodes.AVKLAR_VERGE];
-
-export default withDefaultToggling(faktaPanelCodes.VERGE, vergeAksjonspunkter)(
-  connect(mapStateToPropsFactory)(behandlingForm({
-    form: FORM_NAVN,
-  })(injectIntl(RegistrereVergeInfoPanelImpl))),
-);
+export default connect(mapStateToPropsFactory)(behandlingForm({
+  form: FORM_NAVN,
+})(injectIntl(RegistrereVergeInfoPanelImpl)));

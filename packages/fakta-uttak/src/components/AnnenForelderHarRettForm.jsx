@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
-import { AksjonspunktHelpText, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
@@ -28,14 +28,14 @@ export const AnnenForelderHarRettForm = ({
   <div className={hasOpenAksjonspunkter || !hasOpenUttakAksjonspunkter ? styles.solvedAksjonspunkt : styles.inactiveAksjonspunkt}>
     <form onSubmit={formProps.handleSubmit}>
       {!readOnly && (
-      <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
         {aksjonspunkter.map((ap) => (
           <FormattedMessage
             key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
             id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}`}
           />
         ))}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       )}
       <VerticalSpacer twentyPx />
       <div className={styles.fauxColumn}>

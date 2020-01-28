@@ -29,11 +29,10 @@ const UttakProsessIndex = ({
   alleKodeverk,
   employeeHasAccess,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
   tempUpdateStonadskontoer,
-  apCodes,
-  isApOpen,
+  isAksjonspunktOpen,
 }) => (
   <RawIntlProvider value={intl}>
     <UttakPanel
@@ -56,10 +55,10 @@ const UttakProsessIndex = ({
       ytelsefordeling={ytelsefordeling}
       tempUpdateStonadskontoer={tempUpdateStonadskontoer}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={apCodes}
-      isApOpen={isApOpen}
+      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      isApOpen={isAksjonspunktOpen}
     />
   </RawIntlProvider>
 );
@@ -71,11 +70,10 @@ UttakProsessIndex.propTypes = {
   uttakStonadskontoer: PropTypes.shape().isRequired,
   soknad: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   uttaksresultatPerioder: PropTypes.shape().isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   familiehendelse: PropTypes.shape().isRequired,
   personopplysninger: PropTypes.shape().isRequired,
   uttakPeriodeGrense: PropTypes.shape().isRequired,

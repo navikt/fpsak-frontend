@@ -18,9 +18,6 @@ const UttakFaktaIndex = ({
   behandling,
   aksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   ytelsefordeling,
   uttakKontrollerFaktaPerioder,
   alleKodeverk,
@@ -28,6 +25,7 @@ const UttakFaktaIndex = ({
   personopplysninger,
   familiehendelse,
   readOnly,
+  submittable,
   kanOverstyre,
 }) => (
   <RawIntlProvider value={intl}>
@@ -44,13 +42,11 @@ const UttakFaktaIndex = ({
       faktaArbeidsforhold={faktaArbeidsforhold}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
       kanOverstyre={kanOverstyre}
       personopplysninger={personopplysninger}
       familiehendelse={familiehendelse}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );
@@ -59,17 +55,15 @@ UttakFaktaIndex.propTypes = {
   behandling: uttakBehandlingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(uttakAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
   ytelsefordeling: PropTypes.shape().isRequired,
   uttakKontrollerFaktaPerioder: PropTypes.shape().isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   familiehendelse: PropTypes.shape().isRequired,
   kanOverstyre: PropTypes.bool.isRequired,
   faktaArbeidsforhold: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   personopplysninger: PropTypes.shape().isRequired,
+  submittable: PropTypes.bool.isRequired,
 };
 
 export default UttakFaktaIndex;

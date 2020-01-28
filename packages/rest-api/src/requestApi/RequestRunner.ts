@@ -3,6 +3,7 @@ import NotificationMapper from './NotificationMapper';
 import RestApiRequestContext from './RestApiRequestContext';
 import RequestConfig, { RequestType } from '../RequestConfig';
 import { HttpClientApi } from '../HttpClientApiTsType';
+import { Link } from './LinkTsType';
 
 const getMethod = (httpClientApi: HttpClientApi, restMethod: string) => {
   if (restMethod === RequestType.GET) {
@@ -73,13 +74,13 @@ class RequestRunner {
       this.process.setNotificationEmitter(notificationMapper.getNotificationEmitter());
     }
 
-    return this.process.run(params);
+    return this.process.run(params || this.getConfig().requestPayload);
   }
 
-  injectLink = (rel: string, href: string, type: string) => {
+  injectLink = (link: Link) => {
     const contextConfig = this.context.getConfig();
-    const newConfig = new RequestConfig(contextConfig.name, href, contextConfig.config);
-    newConfig.withRestMethod(type).withRel(rel);
+    const newConfig = new RequestConfig(contextConfig.name, link.href, contextConfig.config);
+    newConfig.withRestMethod(link.type).withRel(link.rel).withRequestPayload(link.requestPayload);
     this.context = new RestApiRequestContext(this.context.getContextPath(), newConfig);
   }
 

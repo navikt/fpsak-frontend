@@ -66,7 +66,7 @@ export const visÅpentAksjonspunkt = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     status={vilkarUtfallType.IKKE_VURDERT}
   />
@@ -96,7 +96,7 @@ export const visOppfyltVilkår = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.OPPFYLT}
   />
@@ -130,7 +130,7 @@ export const visAvslåttVilkår = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     status={vilkarUtfallType.IKKE_OPPFYLT}
   />

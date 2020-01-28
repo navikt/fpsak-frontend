@@ -33,8 +33,6 @@ export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
  * FordelingForm
  *
  * Container komponent. Har ansvar for å sette opp Redux Formen for "avklar fakta om fordeling" panel.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
  */
 const FordelingFormImpl = ({
   readOnly,

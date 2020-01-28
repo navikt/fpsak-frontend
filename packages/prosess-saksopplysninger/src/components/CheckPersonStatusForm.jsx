@@ -13,7 +13,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
@@ -40,15 +40,14 @@ export const CheckPersonStatusFormImpl = ({
   gjeldeneFom,
   ...formProps
 }) => (
-  <FadingPanel>
-    <form onSubmit={formProps.handleSubmit}>
-      <Undertittel>{intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}</Undertittel>
-      <VerticalSpacer twentyPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
-        {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
-      </AksjonspunktHelpText>
-      <VerticalSpacer twentyPx />
-      { gjeldeneFom
+  <form onSubmit={formProps.handleSubmit}>
+    <Undertittel>{intl.formatMessage({ id: 'CheckPersonStatusForm.CheckInformation' })}</Undertittel>
+    <VerticalSpacer twentyPx />
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton && !readOnly}>
+      {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
+    </AksjonspunktHelpTextTemp>
+    <VerticalSpacer twentyPx />
+    { gjeldeneFom
         && (
         <Normaltekst>
           <FormattedMessage
@@ -57,17 +56,17 @@ export const CheckPersonStatusFormImpl = ({
           />
         </Normaltekst>
         )}
-      <VerticalSpacer twentyPx />
-      <div className={styles.radioGroup}>
-        <Row>
-          <Column xs="12">
-            <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
-              <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
-              <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
-            </RadioGroupField>
-          </Column>
-        </Row>
-        {(fortsettBehandling === true)
+    <VerticalSpacer twentyPx />
+    <div className={styles.radioGroup}>
+      <Row>
+        <Column xs="12">
+          <RadioGroupField name="fortsettBehandling" validate={[required]} readOnly={readOnly}>
+            <RadioOption label={{ id: 'CheckPersonStatusForm.HaltBehandling' }} value={false} />
+            <RadioOption label={{ id: 'CheckPersonStatusForm.ContinueBehandling' }} value />
+          </RadioGroupField>
+        </Column>
+      </Row>
+      {(fortsettBehandling === true)
           && (
           <ArrowBox alignOffset={readOnly ? 0 : 198}>
             <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
@@ -79,21 +78,20 @@ export const CheckPersonStatusFormImpl = ({
             </RadioGroupField>
           </ArrowBox>
           )}
-      </div>
-      <VerticalSpacer sixteenPx />
-      <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
-      <BehandlingspunktSubmitButton
-        formName={formProps.form}
-        behandlingId={behandlingId}
-        behandlingVersjon={behandlingVersjon}
-        isReadOnly={readOnly}
-        isSubmittable={!readOnlySubmitButton}
-        isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-        isBehandlingFormDirty={isBehandlingFormDirty}
-        hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-      />
-    </form>
-  </FadingPanel>
+    </div>
+    <VerticalSpacer sixteenPx />
+    <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <BehandlingspunktSubmitButton
+      formName={formProps.form}
+      behandlingId={behandlingId}
+      behandlingVersjon={behandlingVersjon}
+      isReadOnly={readOnly}
+      isSubmittable={!readOnlySubmitButton}
+      isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+      isBehandlingFormDirty={isBehandlingFormDirty}
+      hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+    />
+  </form>
 );
 
 CheckPersonStatusFormImpl.propTypes = {

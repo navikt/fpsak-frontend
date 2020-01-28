@@ -19,10 +19,8 @@ const TilleggsopplysningerFaktaIndex = ({
   behandling,
   soknad,
   aksjonspunkter,
+  harApneAksjonspunkter,
   submitCallback,
-  openInfoPanels,
-  toggleInfoPanelCallback,
-  shouldOpenDefaultInfoPanels,
   readOnly,
 }) => (
   <RawIntlProvider value={intl}>
@@ -31,10 +29,8 @@ const TilleggsopplysningerFaktaIndex = ({
       behandlingVersjon={behandling.versjon}
       tilleggsopplysninger={soknad.tilleggsopplysninger}
       aksjonspunkter={aksjonspunkter}
+      hasOpenAksjonspunkter={harApneAksjonspunkter}
       submitCallback={submitCallback}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
-      shouldOpenDefaultInfoPanels={shouldOpenDefaultInfoPanels}
       readOnly={readOnly}
     />
   </RawIntlProvider>
@@ -45,10 +41,8 @@ TilleggsopplysningerFaktaIndex.propTypes = {
   soknad: tilleggsopplysningerSoknadPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(tilleggsopplysningerAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  shouldOpenDefaultInfoPanels: PropTypes.bool.isRequired,
   readOnly: PropTypes.bool.isRequired,
+  harApneAksjonspunkter: PropTypes.bool.isRequired,
 };
 
 export default TilleggsopplysningerFaktaIndex;

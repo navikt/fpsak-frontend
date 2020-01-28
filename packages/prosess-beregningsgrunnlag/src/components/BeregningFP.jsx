@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Column, Row } from 'nav-frontend-grid';
 import { Undertittel } from 'nav-frontend-typografi';
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import aksjonspunktCodes, { isBeregningAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import {
@@ -25,7 +25,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgru
 import beregningsgrunnlagVilkarPropType from '../propTypes/beregningsgrunnlagVilkarPropType';
 
 const visningForManglendeBG = () => (
-  <FadingPanel>
+  <>
     <Undertittel>
       <FormattedMessage id="Beregningsgrunnlag.Title" />
     </Undertittel>
@@ -40,7 +40,7 @@ const visningForManglendeBG = () => (
         <FormattedMessage id="Beregningsgrunnlag.SakTilInfo" />
       </Column>
     </Row>
-  </FadingPanel>
+  </>
 );
 
 const getAksjonspunkterForBeregning = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.filter((ap) => isBeregningAksjonspunkt(ap.definisjon.kode)) : []);
@@ -103,7 +103,7 @@ const BeregningFP = ({
   const beregningErFastsatt = getErBeregningFastsatt(vilkar, beregningsgrunnlag);
   const sokerHarGraderingPaaAndelUtenBG = getAksjonspunktForGraderingPaaAndelUtenBG(aksjonspunkter);
   return (
-    <FadingPanel>
+    <>
       <BeregningForm
         readOnly={readOnly}
         beregningsgrunnlag={beregningsgrunnlag}
@@ -139,7 +139,7 @@ const BeregningFP = ({
             venteaarsakKode={behandling.venteArsakKode}
           />
           )}
-    </FadingPanel>
+    </>
   );
 };
 

@@ -187,8 +187,8 @@ export class UttakImpl extends Component {
     };
 
     updateKontoer(params).then((response) => {
-      this.setState({ stonadskonto: response });
-      formChange(`${behandlingFormPrefix}.${formName}`, STONADSKONTOER_TEMP, response);
+      this.setState({ stonadskonto: response.payload });
+      formChange(`${behandlingFormPrefix}.${formName}`, STONADSKONTOER_TEMP, response.payload);
     });
   }
 

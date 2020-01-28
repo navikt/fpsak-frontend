@@ -12,7 +12,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { behandlingFormValueSelector, getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import {
-  AksjonspunktHelpText, DateLabel, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, DateLabel, ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { TimeLineNavigation } from '@fpsak-frontend/tidslinje';
 
@@ -202,9 +202,9 @@ export class OpptjeningFaktaFormImpl extends Component {
         {hasAksjonspunkt
         && (
         <ElementWrapper>
-          <AksjonspunktHelpText isAksjonspunktOpen={hasOpenAksjonspunkter}>
+          <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
             {getAksjonspunktHelpTexts(opptjeningActivities)}
-          </AksjonspunktHelpText>
+          </AksjonspunktHelpTextTemp>
           <VerticalSpacer twentyPx />
         </ElementWrapper>
         )}

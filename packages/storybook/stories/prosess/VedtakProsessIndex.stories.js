@@ -85,7 +85,7 @@ export const visÅpentAksjonspunktOgInnvilgetForForeldrepenger = () => (
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -122,7 +122,7 @@ export const visAvslagForForeldrepenger = () => (
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -150,7 +150,7 @@ export const visÅpentAksjonspunktForSvangerskapspenger = () => (
     }]}
     ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -197,7 +197,7 @@ export const visModalForObligatoriskFritekstbrevForSvangerskapspenger = () => (
     }]}
     ytelseType={{ kode: fagsakYtelseType.SVANGERSKAPSPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -225,7 +225,7 @@ export const visÅpentAksjonspunktForEngangsstønad = () => (
     }]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -256,7 +256,7 @@ export const visAtBehandlingErHenlagt = () => (
     }]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -303,7 +303,7 @@ export const visInnvilgetForForeldrepengerRevurdering = () => (
     }}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -334,7 +334,7 @@ export const visOpphørtForForeldrepengerRevurdering = () => (
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.FORELDREPENGER }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -357,7 +357,7 @@ export const visInnvilgetForEngangsstønadRevurdering = () => (
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}
@@ -397,7 +397,7 @@ export const visAvslåttForEngangsstønadRevurdering = () => (
     aksjonspunkter={[]}
     ytelseType={{ kode: fagsakYtelseType.ENGANGSSTONAD }}
     employeeHasAccess={boolean('employeeHasAccess', false)}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     previewCallback={action('button-click')}
     submitCallback={action('button-click')}
     alleKodeverk={alleKodeverk}

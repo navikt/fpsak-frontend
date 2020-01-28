@@ -11,6 +11,8 @@
     "@fpsak-frontend/shared-components": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "moment": "^2.24.0",
+    "nav-frontend-knapper": "1.0.37",
+    "nav-frontend-knapper-style": "0.3.32",
     "nav-frontend-typografi": "2.0.16",
     "nav-frontend-typografi-style": "1.0.17",
     "prop-types": "^15.7.2",

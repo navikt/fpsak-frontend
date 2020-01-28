@@ -8,7 +8,7 @@ import { BehandlingspunktBegrunnelseTextField, BehandlingspunktSubmitButton } fr
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import { RadioOption } from '@fpsak-frontend/form';
 import { buildInitialValues, CheckPersonStatusFormImpl as UnwrappedForm } from './CheckPersonStatusForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-prosess-saksopplysninger';
@@ -41,7 +41,7 @@ describe('<CheckPersonStatusForm>', () => {
       behandlingVersjon={1}
     />);
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).to.have.length(1);
     expect(helpText.childAt(0).text())
       .is.eql('Søker har personstatus: Ukjent. Vurder om behandlingen skal henlegges eller kan fortsette med endret personstatus');

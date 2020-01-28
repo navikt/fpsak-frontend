@@ -8,7 +8,9 @@ import Aksjonspunkt from '../types/aksjonspunktTsType';
 import Vilkar from '../types/vilkarTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
 import NavAnsatt from '../types/navAnsattTsType';
-import erReadOnly from '../util/erReadOnly';
+import readOnlyUtils from '../util/readOnlyUtils';
+
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
 
 const SUCCESS = 'success';
 const WARNING = 'warning';
@@ -39,7 +41,6 @@ interface OwnProps {
   intl: {};
 }
 
-// TODO (TOR) skriv om denne
 const byggProsessmenySteg = createSelector<OwnProps, any, any>(
   [(ownProps) => ownProps.alleSteg,
     (ownProps) => ownProps.valgtProsessSteg,
@@ -63,7 +64,7 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
 
       const apForSteg = aksjonspunkter.filter((a) => steg.apCodes.includes(a.definisjon.kode));
       const vilkarForBp = vilkar.filter((v) => steg.vilkarene.includes(v));
-      const isReadOnly = erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
+      const isReadOnly = readOnlyUtils.erReadOnly(behandling, apForSteg, vilkarForBp, navAnsatt, fagsak, hasFetchError);
       const isSubmittable = apForSteg.some((ap) => ap.kanLoses) || vilkarUtfallType.OPPFYLT === steg.status;
 
       const erValgtSteg = indexTilValgtSteg === mapIndex;
@@ -74,8 +75,11 @@ const byggProsessmenySteg = createSelector<OwnProps, any, any>(
       return {
         kode: steg.code,
         aksjonspunkter: apForSteg,
+        vilkar: vilkarForBp,
         isReadOnly,
+        isOverrideReadOnly: isReadOnly,
         isSubmittable,
+        status: steg.status,
         erStegBehandlet: steg.status !== vilkarUtfallType.IKKE_VURDERT || harApentAp,
         prosessmenySteg: {
           label: intl.formatMessage({ id: steg.titleCode }),

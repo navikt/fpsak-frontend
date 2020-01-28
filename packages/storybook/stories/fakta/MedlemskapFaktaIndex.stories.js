@@ -3,7 +3,7 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
+import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
@@ -19,6 +19,7 @@ const behandling = {
     kode: behandlingType.FORSTEGANGSSOKNAD,
   },
   behandlingPaaVent: false,
+  status: behandlingStatus.OPPRETTET,
 };
 
 const soknad = {
@@ -226,118 +227,105 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-medlemskap',
   component: MedlemskapFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.MEDLEMSKAPSVILKARET]);
-  return (
-    <MedlemskapFaktaIndex
-      behandling={object('behandling', behandling)}
-      medlemskap={object('medlemskap', medlemskap)}
-      medlemskapV2={object('medlemskap', medlemskap)}
-      soknad={object('soknad', soknad)}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      fagsakPerson={object('fagsakPerson', fagsakPerson)}
-      isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-      readOnlyBehandling={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForAvklaringAvStartdatoForForeldrepengerperioden = () => (
+  <MedlemskapFaktaIndex
+    behandling={object('behandling', behandling)}
+    medlemskap={object('medlemskap', medlemskap)}
+    medlemskapV2={object('medlemskap', medlemskap)}
+    soknad={object('soknad', soknad)}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    fagsakPerson={object('fagsakPerson', fagsakPerson)}
+    isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_STARTDATO_FOR_FORELDREPENGERPERIODEN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    readOnlyBehandling={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
-export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.MEDLEMSKAPSVILKARET]);
-  return (
-    <MedlemskapFaktaIndex
-      behandling={object('behandling', behandling)}
-      medlemskap={object('medlemskap', medlemskap)}
-      medlemskapV2={object('medlemskap', medlemskap)}
-      soknad={object('soknad', soknad)}
-      inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }, {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }, {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }, {
-        definisjon: {
-          kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      fagsakPerson={object('fagsakPerson', fagsakPerson)}
-      isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-        [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-        [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-        [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-      readOnlyBehandling={boolean('readOnly', false)}
-    />
-  );
-};
+export const visAksjonspunktForAlleAndreMedlemskapsaksjonspunkter = () => (
+  <MedlemskapFaktaIndex
+    behandling={object('behandling', behandling)}
+    medlemskap={object('medlemskap', medlemskap)}
+    medlemskapV2={object('medlemskap', medlemskap)}
+    soknad={object('soknad', soknad)}
+    inntektArbeidYtelse={object('inntektArbeidYtelse', inntektArbeidYtelse)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }, {
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }, {
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }, {
+      definisjon: {
+        kode: aksjonspunktCodes.AVKLAR_OPPHOLDSRETT,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    fagsakPerson={object('fagsakPerson', fagsakPerson)}
+    isForeldrepengerFagsak={boolean('isForeldrepengerFagsak', true)}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.AVKLAR_OM_BRUKER_ER_BOSATT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      [aksjonspunktCodes.AVKLAR_FORTSATT_MEDLEMSKAP]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      [aksjonspunktCodes.AVKLAR_OM_BRUKER_HAR_GYLDIG_PERIODE]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+      [aksjonspunktCodes.AVKLAR_OPPHOLDSRETT]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    readOnlyBehandling={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);

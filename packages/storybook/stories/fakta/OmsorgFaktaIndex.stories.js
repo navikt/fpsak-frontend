@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
 import personstatusType from '@fpsak-frontend/kodeverk/src/personstatusType';
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import OmsorgFaktaIndex from '@fpsak-frontend/fakta-omsorg';
@@ -57,77 +56,64 @@ const merknaderFraBeslutter = {
   notAccepted: false,
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
-};
-
 export default {
   title: 'fakta/fakta-omsorg',
   component: OmsorgFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visÅpentAksjonspunktForKontrollAvOmBrukerHarAleneomsorg = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OMSORG]);
-  return (
-    <OmsorgFaktaIndex
-      behandling={behandling}
-      ytelsefordeling={ytelsefordeling}
-      soknad={object('soknad', soknad)}
-      personopplysninger={object('personopplysninger', personopplysninger)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visÅpentAksjonspunktForKontrollAvOmBrukerHarAleneomsorg = () => (
+  <OmsorgFaktaIndex
+    behandling={behandling}
+    ytelsefordeling={ytelsefordeling}
+    soknad={object('soknad', soknad)}
+    personopplysninger={object('personopplysninger', personopplysninger)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_ALENEOMSORG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
 
-export const visÅpentAksjonspunktForKontrollAvOmBrukerHarOmsorg = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.OMSORG]);
-  return (
-    <OmsorgFaktaIndex
-      behandling={behandling}
-      ytelsefordeling={ytelsefordeling}
-      soknad={object('soknad', soknad)}
-      personopplysninger={object('personopplysninger', personopplysninger)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      alleKodeverk={alleKodeverk}
-      alleMerknaderFraBeslutter={{
-        [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
-      }}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
-    />
-  );
-};
+export const visÅpentAksjonspunktForKontrollAvOmBrukerHarOmsorg = () => (
+  <OmsorgFaktaIndex
+    behandling={behandling}
+    ytelsefordeling={ytelsefordeling}
+    soknad={object('soknad', soknad)}
+    personopplysninger={object('personopplysninger', personopplysninger)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.MANUELL_KONTROLL_AV_OM_BRUKER_HAR_OMSORG]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
