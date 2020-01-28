@@ -46,7 +46,6 @@ const FastsettSN2 = ({
   const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
     ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
-  debugger;
   return (
     <>
       {erNyArbLivet && (

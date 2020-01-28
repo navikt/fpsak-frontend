@@ -16,7 +16,6 @@ const TextAreaWithBadgeV2 = ({
   intl,
   ...otherProps
 }) => {
-  console.log('props', otherProps);
   const { placeholder } = otherProps;
   return (
     <div className={badges ? styles.textAreaFieldWithBadges : null}>
