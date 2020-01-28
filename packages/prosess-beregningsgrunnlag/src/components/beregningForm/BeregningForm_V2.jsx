@@ -18,7 +18,6 @@ import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import AvviksopplysningerPanel from '../fellesPaneler/AvvikopplysningerPanel';
 import SkjeringspunktOgStatusPanel2, { RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN } from '../fellesPaneler/SkjeringspunktOgStatusPanel_V2';
 import VurderOgFastsettSN2 from '../selvstendigNaeringsdrivende/VurderOgFastsettSN_V2';
-import GrunnlagForAarsinntektPanelFL2 from '../frilanser/GrunnlagForAarsinntektPanelFL_V2';
 import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinntektPanelAT_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -125,14 +124,15 @@ export const buildInitialValues = createSelector(
     const arbeidstakerAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.ARBEIDSTAKER);
     const frilanserAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.FRILANSER);
     const selvstendigNaeringAndeler = alleAndelerIForstePeriode.filter((andel) => andel.aktivitetStatus.kode === aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE);
-    return {
+    const initialValues = {
       ...Beregningsgrunnlag2.buildInitialValues(gjeldendeAksjonspunkter),
       ...AksjonspunktBehandlerTB.buildInitialValues(allePerioder),
+      ...AksjonspunktBehandlerFL.buildInitialValues((frilanserAndeler)),
       ...VurderOgFastsettSN2.buildInitialValues(selvstendigNaeringAndeler, gjeldendeAksjonspunkter),
-      ...GrunnlagForAarsinntektPanelFL2.buildInitialValues(frilanserAndeler),
       ...GrunnlagForAarsinntektPanelAT2.buildInitialValues(arbeidstakerAndeler),
       ...SkjeringspunktOgStatusPanel2.buildInitialValues(gjeldendeDekningsgrad, gjeldendeAksjonspunkter),
     };
+    return initialValues;
   },
 );
 

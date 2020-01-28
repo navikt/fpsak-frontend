@@ -161,7 +161,6 @@ VurderVarigEndretEllerNyoppstartetSN2.defaultProps = {
 };
 
 VurderVarigEndretEllerNyoppstartetSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunkter) => {
-  debugger;
   if (relevanteAndeler.length === 0 || !gjeldendeAksjonspunkter || gjeldendeAksjonspunkter.length === 0) {
     return undefined;
   }

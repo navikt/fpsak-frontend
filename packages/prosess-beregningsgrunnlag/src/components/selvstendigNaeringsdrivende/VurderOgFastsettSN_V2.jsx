@@ -37,8 +37,6 @@ export const VurderOgFastsettSNImpl2 = ({
   erVarigEndring,
   gjeldendeAksjonspunkter,
 }) => {
-  console.log('VurderOgFastsettSNImpl2 er varigendret', erVarigEndring);
-  console.log('VurderOgFastsettSNImpl2 er erNyoppstartet', erNyoppstartet);
   if (erNyArbLivet) {
     return (
       <FastsettSN2
@@ -102,7 +100,6 @@ VurderOgFastsettSN2.buildInitialValues = (relevanteAndeler, gjeldendeAksjonspunk
 });
 
 const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkter) => {
-  debugger;
   // Utgått aksjonspunkt som må håndteres intill data er migrert
   if (hasAksjonspunkt(FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE, gjeldendeAksjonspunkter)) {
     const aksjonspunkter = [{
@@ -123,7 +120,6 @@ const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkt
 };
 
 VurderOgFastsettSN2.transformValues = (values, gjeldendeAksjonspunkter) => {
-  debugger;
   if (hasAksjonspunkt(FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, gjeldendeAksjonspunkter)) {
     return [{
       kode: FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET,
