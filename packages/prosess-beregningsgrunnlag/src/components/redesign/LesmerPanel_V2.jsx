@@ -4,7 +4,7 @@ import 'nav-frontend-lesmerpanel-style';
 import { UnmountClosed } from 'react-collapse';
 import { guid, omit } from 'nav-frontend-js-utils';
 import classNames from 'classnames';
-import LesmerpanelToggle from './LesmerpanelToggle';
+import LesmerpanelToggle from './LesMerToggle';
 import styles from './lesmerpanel_V2-style.less';
 
 const lesMerPanelCls = (props) => classNames(styles.lesMerPanel, props.className, props.border ? styles['lesMerPanel--border'] : '');
@@ -13,7 +13,7 @@ const lesMerPanelCls = (props) => classNames(styles.lesMerPanel, props.className
  * Lesmerpanel
  */
 
-class Lesmerpanel extends Component {
+class Lesmerpanel2 extends Component {
   constructor(props) {
     super(props);
     this.state = { erApen: props.defaultApen };
@@ -81,7 +81,7 @@ class Lesmerpanel extends Component {
   }
 }
 
-Lesmerpanel.propTypes = {
+Lesmerpanel2.propTypes = {
   /**
    * Hvorvidt panelet initielt er åpent
    */
@@ -123,9 +123,9 @@ Lesmerpanel.propTypes = {
    */
   border: Proptypes.bool,
 };
-Lesmerpanel.defaultProps = {
+Lesmerpanel2.defaultProps = {
   defaultApen: false,
   onClose: () => {},
   onOpen: () => {},
 };
-export default Lesmerpanel;
+export default Lesmerpanel2;
