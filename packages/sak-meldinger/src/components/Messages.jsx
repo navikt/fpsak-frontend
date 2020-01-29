@@ -65,7 +65,7 @@ export const MessagesImpl = ({
   const languageCode = getLanguageCodeFromSprakkode(sprakKode);
 
   return (
-    <form className={styles.container} onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <SelectField
         name="mottaker"
         label={intl.formatMessage({ id: 'Messages.Recipient' })}

@@ -10,7 +10,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 import AlertStripe from 'nav-frontend-alertstriper';
 
 import foreldelseVurderingType from '@fpsak-frontend/kodeverk/src/foreldelseVurderingType';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, getBehandlingFormValues, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe,
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting, BehandlingspunktSubmitButton,
@@ -205,9 +205,9 @@ export class TilbakekrevingFormImpl extends Component {
               <FormattedMessage id="Behandlingspunkt.Tilbakekreving" />
             </Undertittel>
             <VerticalSpacer twentyPx />
-            <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+            <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
               {[<FormattedMessage key="AksjonspunktHjelpetekst" id="TilbakekrevingForm.AksjonspunktHjelpetekst" />] }
-            </AksjonspunktHelpText>
+            </AksjonspunktHelpTextTemp>
             <VerticalSpacer twentyPx />
             {vilkarsVurdertePerioder && (
               <>

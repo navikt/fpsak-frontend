@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { NavLink } from 'react-router-dom';
 import { Element, Normaltekst, Systemtittel } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
+import {
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 
 import { EtikettInfo } from 'nav-frontend-etiketter';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
@@ -41,40 +43,45 @@ export const FagsakProfile = ({
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
-    <div>
-      <Row>
-        <Column xs="6">
-          <div className={styles.bottomMargin}>
+    <>
+      <FlexContainer>
+        <FlexRow wrap spaceBetween alignItemsToBaseline>
+          <FlexColumn>
             <Systemtittel>
               {getKodeverknavn(sakstype)}
             </Systemtittel>
-            {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
+          </FlexColumn>
+          {visSakDekningsgrad(sakstype.kode, dekningsgrad) && (
+            <FlexColumn>
               <EtikettInfo title={intl.formatMessage({ id: 'FagsakProfile.Dekningsgrad' }, { dekningsgrad })}>
                 {`${dekningsgrad}%`}
               </EtikettInfo>
-            )}
-          </div>
-          <Normaltekst>
-            {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
-          </Normaltekst>
-        </Column>
-        <Column xs="6">
-          <div className={styles.floatRight}>
+            </FlexColumn>
+          )}
+          <FlexColumn>
             {renderBehandlingMeny()}
-            {hasLink(annenPartLink) && (
-              <div className={styles.topMargin}>
-                <Element>
-                  <NavLink to={createLink(annenPartLink)} target="_blank" onClick={toggleShowAll}>
-                    <FormattedMessage id="FagsakProfile.AnnenPartSak" />
-                  </NavLink>
-                </Element>
-              </div>
-            )}
-          </div>
-        </Column>
-      </Row>
+          </FlexColumn>
+        </FlexRow>
+        <VerticalSpacer eightPx />
+        <FlexRow>
+          <FlexColumn>
+            <Normaltekst>
+              {`${saksnummer} - ${getKodeverknavn(fagsakStatus)}`}
+            </Normaltekst>
+          </FlexColumn>
+          {hasLink(annenPartLink) && (
+          <FlexColumn className={styles.pushRight}>
+            <Element>
+              <NavLink to={createLink(annenPartLink)} target="_blank" onClick={toggleShowAll}>
+                <FormattedMessage id="FagsakProfile.AnnenPartSak" />
+              </NavLink>
+            </Element>
+          </FlexColumn>
+          )}
+        </FlexRow>
+      </FlexContainer>
       {renderBehandlingVelger()}
-    </div>
+    </>
   );
 };
 
@@ -93,8 +100,8 @@ FagsakProfile.propTypes = {
 };
 
 FagsakProfile.defaultProps = {
-  annenPartLink: null,
-  dekningsgrad: null,
+  annenPartLink: undefined,
+  dekningsgrad: undefined,
 };
 
 export default injectIntl(FagsakProfile);

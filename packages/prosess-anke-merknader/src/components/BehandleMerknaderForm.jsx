@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { RadioGroupField, RadioOption, TextAreaField } from '@fpsak-frontend/form';
 import { required } from '@fpsak-frontend/utils';
 import {
@@ -31,9 +31,9 @@ const AnkeMerknader = ({
     <FadingPanel>
       <Undertittel><FormattedMessage id="Ankebehandling.Merknad.Title" /></Undertittel>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.Merknad.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">
