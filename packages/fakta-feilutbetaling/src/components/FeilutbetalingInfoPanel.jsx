@@ -11,7 +11,6 @@ import {
   Element, Normaltekst, Undertekst,
 } from 'nav-frontend-typografi';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import AlertStripe from 'nav-frontend-alertstriper';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
@@ -19,7 +18,7 @@ import { TextAreaField } from '@fpsak-frontend/form';
 import {
   behandlingForm, getKodeverknavnFn, getBehandlingFormPrefix, FaktaGruppe,
 } from '@fpsak-frontend/fp-felles';
-import { VerticalSpacer, AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import {
   DDMMYYYY_DATE_FORMAT, hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
@@ -66,16 +65,9 @@ export class FeilutbetalingInfoPanelImpl extends Component {
 
     return (
       <>
-        {hasOpenAksjonspunkter && (
-          <AlertStripe type="advarsel" className={styles.marginBottom}>
-            <FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />
-          </AlertStripe>
-        )}
-        {!hasOpenAksjonspunkter && (
-          <AksjonspunktHelpText isAksjonspunktOpen={false}>
-            {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
-          </AksjonspunktHelpText>
-        )}
+        <AksjonspunktHelpTextTemp isAksjonspunktOpen={hasOpenAksjonspunkter}>
+          {[<FormattedMessage key="1" id="FeilutbetalingInfoPanel.Aksjonspunkt" />]}
+        </AksjonspunktHelpTextTemp>
         <VerticalSpacer sixteenPx />
         <form onSubmit={formProps.handleSubmit}>
           <Row className={styles.smallMarginBottom}>
