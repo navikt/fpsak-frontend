@@ -8,7 +8,6 @@ import ProcessMenu from '@navikt/nap-process-menu';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   Kodeverk, NavAnsatt, Behandling, FagsakInfo, ProsessStegPanel, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
