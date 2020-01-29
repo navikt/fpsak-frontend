@@ -8,7 +8,6 @@ import {
   maxLength,
   minLength,
   required,
-  dateFormat,
   parseCurrencyInput,
   formatCurrencyNoKr,
   removeSpacesFromNumber,
@@ -26,13 +25,13 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import TextAreaField2 from '../redesign/TextAreaField_V2';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
 
-
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
 export const begrunnelseFieldname = 'varigEndringNyoppstartetBegrunnelse';
 export const varigEndringRadioname = 'erVarigEndretNaering';
 export const fastsettInntektFieldname = 'bruttoBeregningsgrunnlag';
 const { VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE } = aksjonspunktCodes;
+
 
 /**
  * VurderVarigEndretEllerNyoppstartetSN
@@ -48,6 +47,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
   erVarigEndring,
   erNyoppstartet,
   erVarigEndretNaering,
+  endretTekst,
 }) => {
   let radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IngenEndring" />);
   let radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.EndretNaering" />);
@@ -59,15 +59,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
     radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />);
     radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />);
   }
-  const endretTekst = (endret) => {
-    if (!endret) return null;
-    return (
-      <FormattedMessage
-        id="Beregningsgrunnlag.Forms.EndretTekst"
-        values={{ endretAv: endret.endretAv, endretDato: dateFormat(endret.endretDato) }}
-      />
-    );
-  };
+
   return (
     <>
       {!readOnly && (
@@ -142,7 +134,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
             maxLength={1500}
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-            endretTekst={endretTekst({ endretAv: 'B123455', endretDato: '2020-01-27' })}
+            endretTekst={endretTekst}
           />
         </Column>
       </Row>
@@ -152,6 +144,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
 
 VurderVarigEndretEllerNyoppstartetSN2.propTypes = {
   intl: PropTypes.shape().isRequired,
+  endretTekst: PropTypes.node,
   readOnly: PropTypes.bool.isRequired,
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,

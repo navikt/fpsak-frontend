@@ -11,7 +11,6 @@ import {
   removeSpacesFromNumber,
   required,
   formatCurrencyNoKr,
-  dateFormat,
 } from '@fpsak-frontend/utils';
 import {
   InputField,
@@ -23,6 +22,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TextAreaField2 from '../redesign/TextAreaField_V2';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
+// import lagEndretTekst from '../util/aksjonspunktEndretAvNaarHelper';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -47,6 +47,7 @@ const FastsettSN2 = ({
   intl,
   gjeldendeAksjonspunkter,
   erNyArbLivet,
+  endretTekst,
 }) => {
   const harGammeltAPFastsettBrutto = gjeldendeAksjonspunkter
     ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BRUTTO_BEREGNINGSGRUNNLAG_SELVSTENDIG_NAERINGSDRIVENDE)
@@ -54,15 +55,7 @@ const FastsettSN2 = ({
   const harAPSNNyiArbLiv = gjeldendeAksjonspunkter
     ? gjeldendeAksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
     : false;
-  const endretTekst = (endret) => {
-    if (!endret) return null;
-    return (
-      <FormattedMessage
-        id="Beregningsgrunnlag.Forms.EndretTekst"
-        values={{ endretAv: endret.endretAv, endretDato: dateFormat(endret.endretDato) }}
-      />
-    );
-  };
+
   return (
     <>
       {erNyArbLivet && (
@@ -105,7 +98,7 @@ const FastsettSN2 = ({
                   readOnly={readOnly}
                   isEdited={isAksjonspunktClosed}
                   placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-                  endretTekst={endretTekst({ endretAv: 'B123455', endretDato: '2020-01-27' })}
+                  endretTekst={endretTekst}
                 />
               </div>
             </Column>
@@ -118,6 +111,7 @@ const FastsettSN2 = ({
 
 FastsettSN2.propTypes = {
   intl: PropTypes.shape().isRequired,
+  endretTekst: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   isAksjonspunktClosed: PropTypes.bool.isRequired,
   erNyArbLivet: PropTypes.bool.isRequired,

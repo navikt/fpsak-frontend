@@ -36,6 +36,7 @@ export const VurderOgFastsettSNImpl2 = ({
   erNyoppstartet,
   erVarigEndring,
   gjeldendeAksjonspunkter,
+  endretTekst,
 }) => {
   if (erNyArbLivet) {
     return (
@@ -55,6 +56,8 @@ export const VurderOgFastsettSNImpl2 = ({
         erVarigEndring={erVarigEndring}
         erNyoppstartet={erNyoppstartet}
         erVarigEndretNaering={erVarigEndretNaering}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        endretTekst={endretTekst}
       />
       {erVarigEndretNaering
       && (
@@ -62,6 +65,8 @@ export const VurderOgFastsettSNImpl2 = ({
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+          erNyArbLivet={erNyArbLivet}
+          endretTekst={endretTekst}
         />
       )}
     </>
@@ -75,6 +80,7 @@ VurderOgFastsettSNImpl2.propTypes = {
   erNyArbLivet: PropTypes.bool.isRequired,
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,
+  endretTekst: PropTypes.node,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
 };
 
