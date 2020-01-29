@@ -36,8 +36,15 @@ export const resetBehandlingContext = () => ({
 
 
 /* Action creators */
-export const previewMessage = (erTilbakekreving, data) => (dispatch) => {
-  const api = erTilbakekreving ? fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING : fpsakApi.PREVIEW_MESSAGE_FORMIDLING;
+export const previewMessage = (erTilbakekreving, erHenleggelse, data) => (dispatch) => {
+  let api;
+  if (erTilbakekreving && erHenleggelse) {
+    api = fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE;
+  } else if (erTilbakekreving) {
+    api = fpsakApi.PREVIEW_MESSAGE_TILBAKEKREVING;
+  } else {
+    api = fpsakApi.PREVIEW_MESSAGE_FORMIDLING;
+  }
   return dispatch(api.makeRestApiRequest()(data));
 };
 

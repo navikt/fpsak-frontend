@@ -23,7 +23,7 @@ const maxLength1500 = maxLength(1500);
 
 // TODO (TOR) Skal bruka navn fra kodeverk i staden for oppslag klientside for "henleggArsaker"
 
-const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType) => (e) => {
+const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType, behandlingId) => (e) => {
   // TODO Hardkoda verdiar. Er dette eit kodeverk?
   const data = {
     behandlingUuid,
@@ -31,9 +31,10 @@ const previewHenleggBehandlingDoc = (behandlingTypeKode, previewHenleggBehandlin
     dokumentMal: 'HENLEG',
     fritekst: ' ',
     mottaker: 'Søker',
+    behandlingId,
   };
   previewHenleggBehandling(behandlingType.TILBAKEKREVING === behandlingTypeKode
-    || behandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode, data);
+    || behandlingType.TILBAKEKREVING_REVURDERING === behandlingTypeKode, true, data);
   e.preventDefault();
 };
 
@@ -56,6 +57,7 @@ export const ShelveBehandlingModalImpl = ({
   begrunnelse,
   showLink,
   behandlingTypeKode,
+  behandlingId,
 }) => (
   <Modal
     className={styles.modal}
@@ -115,8 +117,8 @@ export const ShelveBehandlingModalImpl = ({
                   <Undertekst>{intl.formatMessage({ id: 'ShelveBehandlingModal.SokerInformeres' })}</Undertekst>
                   <a
                     href=""
-                    onClick={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType)}
-                    onKeyDown={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType)}
+                    onClick={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType, behandlingId)}
+                    onKeyDown={previewHenleggBehandlingDoc(behandlingTypeKode, previewHenleggBehandling, behandlingUuid, ytelseType, behandlingId)}
                     className="lenke lenke--frittstaende"
                   >
                     {intl.formatMessage({ id: 'ShelveBehandlingModal.ForhandsvisBrev' })}
@@ -139,6 +141,7 @@ ShelveBehandlingModalImpl.propTypes = {
   previewHenleggBehandling: PropTypes.func.isRequired,
   behandlingUuid: PropTypes.string,
   ytelseType: kodeverkObjektPropType.isRequired,
+  behandlingId: PropTypes.number,
   showLink: PropTypes.bool.isRequired,
   henleggArsaker: PropTypes.arrayOf(kodeverkObjektPropType).isRequired,
   /**
@@ -153,6 +156,7 @@ ShelveBehandlingModalImpl.defaultProps = {
   årsakKode: null,
   begrunnelse: null,
   behandlingUuid: undefined,
+  behandlingId: undefined,
 };
 
 const henleggArsakerPerBehandlingType = {

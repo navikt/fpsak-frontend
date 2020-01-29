@@ -38,6 +38,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const modal = wrapper.find(Modal);
@@ -70,6 +71,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const modal = wrapper.find(Modal);
@@ -92,6 +94,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const selectField = wrapper.find('SelectField');
@@ -164,6 +167,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const button = wrapper.find('Hovedknapp');
@@ -187,6 +191,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const form = wrapper.find('form');
@@ -211,6 +216,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const avbrytKnapp = wrapper.find('Knapp');
@@ -239,6 +245,7 @@ describe('<ShelveBehandlingModal>', () => {
         kode: fagsakYtelseType.FORELDREPENGER,
       }}
       behandlingUuid="123"
+      behandlingId={123}
     />);
 
     const previewLink = wrapper.find('a');

@@ -113,7 +113,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(erTilbakekreving, data);
+    fetchPreview(erTilbakekreving, false, data);
   }
 
   afterSubmit() {
