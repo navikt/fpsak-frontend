@@ -9,7 +9,7 @@
   "FodselOgTilretteleggingFaktaForm.TermindatoForDato": "Termindato er før eller lik dato jordmor/lege oppgir at søker trenger tilrettelegging. Kontroller opplysningene i saken.",
 
   "TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
-  "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søkeren skal ha tilrettelegging i dette arbeidsforholdet",
+  "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søker har søkt svangerskapspenger for dette arbeidsforholdet",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger": "Arbeidsgiver oppgir nødvendig tilrettelegging",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger.Dato": "Dato",
 
