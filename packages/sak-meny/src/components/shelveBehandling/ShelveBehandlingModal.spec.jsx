@@ -3,6 +3,7 @@ import sinon from 'sinon';
 import { expect } from 'chai';
 import Modal from 'nav-frontend-modal';
 
+import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -33,6 +34,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink={false}
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -62,6 +67,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -81,6 +90,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -150,6 +163,10 @@ describe('<ShelveBehandlingModal>', () => {
       behandlingTypeKode="BT-002"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -170,6 +187,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -191,6 +212,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
@@ -216,6 +241,10 @@ describe('<ShelveBehandlingModal>', () => {
       begrunnelse="Dette er en begrunnelse"
       intl={intlMock}
       showLink
+      ytelseType={{
+        kode: fagsakYtelseType.FORELDREPENGER,
+      }}
+      behandlingUuid="123"
       behandlingId={123}
     />);
 
