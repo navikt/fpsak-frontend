@@ -124,7 +124,7 @@ export class ApprovalIndex extends Component {
     const {
       previewMessage: fetchPreview, fagsakYtelseType, behandlingUuid, erTilbakekreving,
     } = this.props;
-    fetchPreview(erTilbakekreving, {
+    fetchPreview(erTilbakekreving, false, {
       behandlingUuid,
       ytelseType: fagsakYtelseType,
       gjelderVedtak: true,
