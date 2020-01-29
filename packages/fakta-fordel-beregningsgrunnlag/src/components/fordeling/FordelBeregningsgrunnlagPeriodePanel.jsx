@@ -102,8 +102,8 @@ FordelBeregningsgrunnlagPeriodePanel.defaultProps = {
 };
 
 FordelBeregningsgrunnlagPeriodePanel.validate = (values, sumIPeriode, skalValidereMotRapportert,
-  getKodeverknavn, grunnbeløp) => RenderFordelBGFieldArray
-  .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn, grunnbeløp);
+  getKodeverknavn, grunnbeløp, periodeDato) => RenderFordelBGFieldArray
+  .validate(values, sumIPeriode, skalValidereMotRapportert, getKodeverknavn, grunnbeløp, periodeDato);
 
 const finnRiktigAndel = (andel, bgPeriode) => bgPeriode.beregningsgrunnlagPrStatusOgAndel.find((a) => a.andelsnr === andel.andelsnr);
 
