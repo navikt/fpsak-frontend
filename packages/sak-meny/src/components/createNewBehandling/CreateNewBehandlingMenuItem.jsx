@@ -37,6 +37,7 @@ class CreateNewBehandlingMenuItem extends Component {
     } = this.props;
     const data = {
       saksnummer: saksnummer.toString(),
+      behandlingId: behandlingIdentifier ? behandlingIdentifier.behandlingId : undefined,
       ...formValues,
     };
 
