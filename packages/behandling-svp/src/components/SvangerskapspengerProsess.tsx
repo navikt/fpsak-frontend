@@ -36,11 +36,11 @@ interface OwnProps {
   featureToggles: {};
 }
 
-const getForhandsvisCallback = (dispatch, behandling) => (data) => {
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => (data) => {
   const brevData = {
     ...data,
     behandlingUuid: behandling.uuid,
-    ytelseType: fagsakYtelseType.SVANGERSKAPSPENGER,
+    ytelseType: fagsak.fagsakYtelseType,
   };
   return dispatch(svpBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
@@ -104,7 +104,7 @@ const SvangerskapspengerProsess: FunctionComponent<OwnProps & WrappedComponentPr
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvSvpPaneler = {
-    previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
+    previewCallback: useCallback(getForhandsvisCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     alleKodeverk,
     featureToggles,
