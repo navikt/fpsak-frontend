@@ -14,8 +14,6 @@ import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 
-import styles from './historyIndex.less';
-
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
@@ -47,7 +45,7 @@ export const HistoryIndex = ({
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
 }) => (
-  <div className={styles.historyContainer}>
+  <div>
     <DataFetcher
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}

@@ -141,7 +141,7 @@ export class MessagesIndex extends Component {
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
     return (
-      <div>
+      <>
         {showMessagesModal && (
           <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={this.afterSubmit} />
         )}
@@ -178,7 +178,7 @@ export class MessagesIndex extends Component {
             ventearsaker={ventearsaker}
           />
         )}
-      </div>
+      </>
     );
   }
 }

@@ -11,7 +11,7 @@ import {
   hasBehandlingFormErrorsOfType, isBehandlingFormDirty, isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
 import { RadioGroupField, RadioOption, SelectField } from '@fpsak-frontend/form';
-import { AksjonspunktHelpText, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { DDMMYYYY_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
@@ -61,9 +61,9 @@ export const FormkravKlageForm = ({
       <VerticalSpacer fourPx />
       <Undertekst>{intl.formatMessage({ id: getLovHjemmeler(aksjonspunktCode) })}</Undertekst>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Klage.Formkrav.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="6">
