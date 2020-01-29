@@ -69,7 +69,6 @@ const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL
   if (!aksjonspunkt) return null;
   const { endretAv, endretTidspunkt } = aksjonspunkt;
   if (!endretTidspunkt) return null;
-  debugger;
   const godkjentEndretAv = /[a-zA-Z]{1}[0-9]{6}/.test(endretAv) || endretAv === 'saksbeh' ? endretAv : '';
   return (
     <FormattedMessage

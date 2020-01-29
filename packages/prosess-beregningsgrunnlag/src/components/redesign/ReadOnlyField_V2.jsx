@@ -45,7 +45,7 @@ ReadOnlyFieldV2.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
-  endretTekst: PropTypes.string,
+  endretTekst: PropTypes.node,
 };
 
 ReadOnlyFieldV2.defaultProps = {
