@@ -9,7 +9,6 @@ import ProcessMenu from '@navikt/nap-process-menu';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
-import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import {
   Kodeverk, NavAnsatt, FagsakInfo, Behandling, prosessStegHooks, IverksetterVedtakStatusModal, ProsessStegPanel, FatterVedtakStatusModal,
 } from '@fpsak-frontend/behandling-felles';
@@ -37,11 +36,11 @@ interface OwnProps {
   dispatch: Dispatch;
 }
 
-const getForhandsvisCallback = (dispatch, behandling) => (data) => {
+const getForhandsvisCallback = (dispatch, fagsak, behandling) => (data) => {
   const brevData = {
     ...data,
     behandlingUuid: behandling.uuid,
-    ytelseType: fagsakYtelseType.ENGANGSSTONAD,
+    ytelseType: fagsak.fagsakYtelseType,
   };
   return dispatch(esBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
 };
@@ -104,7 +103,7 @@ const EngangsstonadProsess: FunctionComponent<OwnProps & WrappedComponentProps> 
   const toggleSkalOppdatereFagsakContext = prosessStegHooks.useOppdateringAvBehandlingsversjon(behandling.versjon, oppdaterBehandlingVersjon);
 
   const dataTilUtledingAvFpPaneler = {
-    previewCallback: useCallback(getForhandsvisCallback(dispatch, behandling), [behandling.versjon]),
+    previewCallback: useCallback(getForhandsvisCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     previewFptilbakeCallback: useCallback(getForhandsvisFptilbakeCallback(dispatch, fagsak, behandling), [behandling.versjon]),
     dispatchSubmitFailed: useCallback((formName) => dispatch(setSubmitFailed(formName)), []),
     alleKodeverk,
