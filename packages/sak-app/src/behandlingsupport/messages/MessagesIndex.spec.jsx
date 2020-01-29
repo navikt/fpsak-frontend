@@ -81,7 +81,7 @@ describe('<MessagesIndex>', () => {
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
-    expect(fetchPreviewFunction.getCall(0).args[1].fritekst).to.equal(' ');
+    expect(fetchPreviewFunction.getCall(0).args[2].fritekst).to.equal(' ');
   });
 
   it('skal resette fritekst ved lukking av modal', () => {
