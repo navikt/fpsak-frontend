@@ -82,6 +82,34 @@ const svangerskapspengerTilretteleggingForFrilanser = {
   }],
 };
 
+const inntektArbeidYtelse = {
+  arbeidsforhold: [{
+    id: '555864629-null',
+    navn: 'WWW.EIENDOMSDRIFT.CC SA',
+    arbeidsgiverIdentifikator: '555864629',
+    arbeidsgiverIdentifiktorGUI: '555864629',
+    kilde: {
+      navn: 'AA-Registeret',
+    },
+    stillingsprosent: 100.00,
+    skjaeringstidspunkt: '2020-01-30',
+    mottattDatoInntektsmelding: '2020-01-28',
+    fomDato: '2016-01-28',
+    harErstattetEttEllerFlere: true,
+    ikkeRegistrertIAaRegister: false,
+    tilVurdering: false,
+    vurderOmSkalErstattes: false,
+    brukArbeidsforholdet: true,
+    fortsettBehandlingUtenInntektsmelding: false,
+    erNyttArbeidsforhold: false,
+    erEndret: false,
+    brukMedJustertPeriode: false,
+    lagtTilAvSaksbehandler: false,
+    basertPaInntektsmelding: false,
+    permisjoner: [],
+  }],
+};
+
 export default {
   title: 'fakta/fakta-fodsel-og-tilrettelegging',
   component: FodselOgTilretteleggingFaktaIndex,
@@ -107,6 +135,7 @@ export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => (
     readOnly={boolean('readOnly', false)}
     harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
+    inntektArbeidYtelse={inntektArbeidYtelse}
   />
 );
 
@@ -129,5 +158,41 @@ export const visAksjonspunktForFødselstilretteleggingForFrilanserOgSelvstendigN
     readOnly={boolean('readOnly', false)}
     harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
     submittable={boolean('submittable', true)}
+    inntektArbeidYtelse={inntektArbeidYtelse}
   />
 );
+
+export const visInfoDialogForVarIkkeAnsattDaBehovetForTilretteleggingOppstod = () => {
+  const inntektArbeidYtelseForAnnenArbeidsgiver = {
+    arbeidsforhold: [{
+      ...inntektArbeidYtelse.arbeidsforhold,
+      id: '1111111-null',
+      navn: 'STATOIL',
+      arbeidsgiverIdentifikator: '1111111',
+      arbeidsgiverIdentifiktorGUI: '1111111',
+    }],
+  };
+
+  return (
+    <FodselOgTilretteleggingFaktaIndex
+      behandling={behandling}
+      svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForArbeidsgiver)}
+      aksjonspunkter={[{
+        definisjon: {
+          kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+        },
+        status: {
+          kode: aksjonspunktStatus.OPPRETTET,
+        },
+        begrunnelse: undefined,
+        kanLoses: true,
+        erAktivt: true,
+      }]}
+      submitCallback={action('button-click')}
+      readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
+      inntektArbeidYtelse={inntektArbeidYtelseForAnnenArbeidsgiver}
+    />
+  );
+};
