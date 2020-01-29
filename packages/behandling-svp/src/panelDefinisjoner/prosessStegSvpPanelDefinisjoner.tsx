@@ -114,6 +114,7 @@ const prosessStegPanelDefinisjoner = [{
   textCode: 'Behandlingspunkt.Soknadsfristvilkaret',
   panels: [{
     aksjonspunkterCodes: [ac.VURDER_SOKNADSFRIST_FORELDREPENGER],
+    endpoints: [api.UTTAK_PERIODE_GRENSE],
     renderComponent: (props) => <VurderSoknadsfristForeldrepengerIndex {...props} />,
     getData: ({ soknad }) => ({ soknad }),
   }],

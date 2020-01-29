@@ -148,7 +148,7 @@ export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.uttakPeriodeGrense,
     (state, ownProps) => ownProps.mottattDato],
-  (aksjonspunkter, uttaksperiodegrense, mottattDato) => ({
+  (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),

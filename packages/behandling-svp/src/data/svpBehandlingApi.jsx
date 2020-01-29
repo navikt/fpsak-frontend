@@ -22,6 +22,7 @@ export const SvpBehandlingApiKeys = {
   BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING: 'BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING',
   MEDLEMSKAP: 'MEDLEMSKAP',
   MEDLEMSKAP_V2: 'MEDLEMSKAP_V2',
+  UTTAK_PERIODE_GRENSE: 'UTTAK_PERIODE_GRENSE',
   INNTEKT_ARBEID_YTELSE: 'INNTEKT_ARBEID_YTELSE',
   VERGE: 'VERGE',
   YTELSEFORDELING: 'YTELSEFORDELING',
@@ -69,6 +70,7 @@ const endpoints = new RestApiConfigBuilder()
   .withInjectedPath('beregningsresultat-engangsstonad-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
   .withInjectedPath('soeker-medlemskap', SvpBehandlingApiKeys.MEDLEMSKAP)
   .withInjectedPath('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withInjectedPath('uttak-periode-grense', SvpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
   .withInjectedPath('inntekt-arbeid-ytelse', SvpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
   .withInjectedPath('soeker-verge', SvpBehandlingApiKeys.VERGE)
   .withInjectedPath('ytelsefordeling', SvpBehandlingApiKeys.YTELSEFORDELING)
