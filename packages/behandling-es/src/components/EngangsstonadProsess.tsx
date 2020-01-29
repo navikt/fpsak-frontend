@@ -40,7 +40,7 @@ interface OwnProps {
 const getForhandsvisCallback = (dispatch, behandling) => (data) => {
   const brevData = {
     ...data,
-    behandling: behandling.uuid,
+    behandlingUuid: behandling.uuid,
     ytelseType: fagsakYtelseType.ENGANGSSTONAD,
   };
   return dispatch(esBehandlingApi.PREVIEW_MESSAGE.makeRestApiRequest()(brevData));
