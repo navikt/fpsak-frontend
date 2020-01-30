@@ -25,8 +25,7 @@ export const TilbakekrevingBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fptilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE)
-
-  .withRel('kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
+  .withGet('/fptilbake/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
 
   // behandlingsdata
   .withRel('aksjonspunkter', TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER)
