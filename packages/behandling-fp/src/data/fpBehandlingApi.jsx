@@ -75,7 +75,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('uttak-kontroller-fakta-perioder', FpBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
 
   // operasjoner
-  .withRel('stonadskontoer-gitt-uttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withRel('lagre-stonadskontoer-gitt-uttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
   .withRel('bytt-behandlende-enhet', FpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withRel('henlegg-behandling', FpBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withRel('gjenoppta-behandling', FpBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
