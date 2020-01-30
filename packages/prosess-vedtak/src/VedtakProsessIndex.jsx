@@ -49,7 +49,6 @@ const VedtakProsessIndex = ({
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPaaVent={behandling.behandlingPaaVent}
-      erBehandlingHenlagt={behandling.behandlingHenlagt}
       behandlingArsaker={behandling.behandlingArsaker}
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}

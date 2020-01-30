@@ -8,7 +8,7 @@ describe('ReduxRestApi', () => {
   it('skal bruke samme konfig som en annen request', () => {
     const configs = [
       new RequestConfig('BEHANDLING', '/api/behandling', { linksToFetchAutomatically: ['vedtak'] }),
-      new RequestConfig('LAGRE_AP', undefined, { storeResultKey: 'BEHANDLING' }),
+      new RequestConfig('LAGRE_AP', undefined, { saveResponseIn: 'BEHANDLING' }),
     ];
 
     const requestConfig = new ReduxRestApi(configs, 'reducerName', 'fpsak', new ReduxEvents());

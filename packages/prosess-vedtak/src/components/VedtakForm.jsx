@@ -117,7 +117,6 @@ export class VedtakForm extends Component {
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
       ytelseTypeKode,
-      erBehandlingHenlagt,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
@@ -142,7 +141,6 @@ export class VedtakForm extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           {visOverstyringKnapp && (
             <VedtakOverstyrendeKnapp
@@ -241,7 +239,6 @@ VedtakForm.propTypes = {
   sprakkode: kodeverkObjektPropType.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),

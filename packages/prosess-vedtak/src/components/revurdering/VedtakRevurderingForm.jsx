@@ -86,7 +86,6 @@ export class VedtakRevurderingFormImpl extends Component {
       brødtekst,
       overskrift,
       initialValues,
-      erBehandlingHenlagt,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
@@ -111,7 +110,6 @@ export class VedtakRevurderingFormImpl extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           <VerticalSpacer eightPx />
           <>
