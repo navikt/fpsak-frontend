@@ -1,33 +1,32 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-
 .linkText {
+  align-items: center;
+  background: url('@fpsak-frontend/assets/images/ekstern_link_pil.svg') no-repeat center right 3px;
+  background-color: transparent;
+  border: 1px solid @navBla;
+  border-radius: 3px;
   color: @navBla;
+  display: flex;
   font-size: 14px;
   font-weight: 600;
+  height: 20px;
   letter-spacing: 0.4px;
   line-height: 14px;
-  text-decoration: none;
-  border-radius: 3px;
-  display: flex;
-  height: 20px;
-  padding: 4px 3px 4px 3px;
-  white-space: nowrap;
-  -webkit-box-align: center;
-  align-items: center;
   min-width: 35px;
-  border: 1px solid @navBla;
-  background:url('@fpsak-frontend/assets/images/ekstern_link_pil.svg') no-repeat center right 3px;
+  padding: 4px 3px 4px 3px;
+  text-decoration: none;
+  white-space: nowrap;
 
   &:hover {
-    background-color: @navBla !important;
-    background:url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    background: url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    background-color: @navBla;
     color: white;
   }
-  &:active {
+
+  & active {
+    background: url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
     background-color: @navDypBla;
-    background:url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
     color: white;
   }
 }
-
