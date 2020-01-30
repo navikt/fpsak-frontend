@@ -45,9 +45,6 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('gjenoppta-behandling', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
   .withRel('sett-behandling-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
   .withRel('endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withRel('opne-for-endringer', TilbakekrevingBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
   .withRel('lagre-aksjonspunkter', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
 
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
