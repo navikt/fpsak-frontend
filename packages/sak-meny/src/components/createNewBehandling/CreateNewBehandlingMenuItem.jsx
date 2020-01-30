@@ -35,12 +35,14 @@ class CreateNewBehandlingMenuItem extends Component {
     const {
       saksnummer, behandlingIdentifier, submitNyBehandling, push,
     } = this.props;
+    const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
+    const tilbakekrevingBehandlingId = behandlingIdentifier && isTilbakekreving ? { behandlingId: behandlingIdentifier.behandlingId } : {};
     const data = {
       saksnummer: saksnummer.toString(),
+      ...tilbakekrevingBehandlingId,
       ...formValues,
     };
 
-    const isTilbakekreving = TILBAKEKREVING_BEHANDLINGSTYPER.includes(formValues.behandlingType);
     const erBehandlingValgt = behandlingIdentifier !== undefined && behandlingIdentifier.behandlingId;
     submitNyBehandling(push, saksnummer, erBehandlingValgt, isTilbakekreving, data);
     this.hideModal();
