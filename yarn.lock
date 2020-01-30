@@ -2566,36 +2566,10 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-"@navikt/nap-process-menu@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
-  integrity sha512-vBrQMaiD61I27IH9CtJAZmPQZ+hV6BpLh9Y1Ej+aaTh0OBAWDhUciti4+pAK6uXNUS0LDtP0kp8xHQYyh7ZeTA==
-=======
-"@navikt/nap-header@1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@navikt/nap-header/-/nap-header-1.0.4.tgz#8f22c0566e8eba9735c407a270cdf79a3a265544"
-=======
-"@navikt/nap-header@1.0.6":
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.6.tgz#34d9878e31431128c694cd9c2f9182d5a4eacffa"
-  integrity sha512-6aXAT1XAF642Bi1NRUDcXTLyAH0M69Qr92lqZhNxBgQ1ccr8DY+b1P/3o/+iwhrChiUbC6KMpHAQainwbChjHw==
->>>>>>> FIX div
-=======
-"@navikt/nap-header@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.7.tgz#a6d2d6d4873d81fdfed7c47817d223abc19de737"
-  integrity sha512-7RQcWxPn4/4m2EMmXhepq8aXpvJMyZD6S/o8g58AU6pDd+QvWTWDuSKmCi13Ii+QybS3YsMLeT8K+PBM6oIpIw==
->>>>>>> FIX div
-=======
 "@navikt/nap-header@1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.8.tgz#0c4bb958401f297a8b18973d86ecba91569e3d8b"
   integrity sha512-dAyM8Z+7qAJletXAfUC1YbNjGbKOboobzZue+hz+uqSB4Sm3AWC9mYcxgkwWzIG+sOJ0mj9RRBkb/d2aKsDOEA==
->>>>>>> FIX div
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     "@navikt/nap-popover" "1.0.3"
@@ -2621,17 +2595,10 @@
     prop-types "^15.7.2"
     react-popper "^1.3.7"
 
-<<<<<<< HEAD
-"@navikt/nap-process-menu@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.npmjs.org/@navikt/nap-process-menu/-/nap-process-menu-1.0.8.tgz#f5d490eb80445829a9ad39272275d348153b4afb"
->>>>>>> NOJIRA Ta i bruk ny header
-=======
 "@navikt/nap-process-menu@1.0.9":
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/@navikt/nap-process-menu/-/nap-process-menu-1.0.9.tgz#0f8dd811fdf25e6087dd2ea7c9dd5a1a08dff0c6"
   integrity sha512-vBrQMaiD61I27IH9CtJAZmPQZ+hV6BpLh9Y1Ej+aaTh0OBAWDhUciti4+pAK6uXNUS0LDtP0kp8xHQYyh7ZeTA==
->>>>>>> FIX div
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
