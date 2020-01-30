@@ -60,11 +60,6 @@ const finnGjeldeneAksjonsPunkt = (aksjonspunkter, erNyiArbeidslivet, readOnly, e
 
 const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
   if (!aksjonspunkter || !readOnly) return null;
-  /*
-  const aksjonspunkt = erNyiArbeidslivet
-    ? aksjonspunkter.find((ap) => ap.definisjon.kode === FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET)
-    : aksjonspunkter.find((ap) => ap.definisjon.kode === VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
-*/
   const aksjonspunkt = finnGjeldeneAksjonsPunkt(aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL);
   if (!aksjonspunkt) return null;
   const { endretAv, endretTidspunkt } = aksjonspunkt;

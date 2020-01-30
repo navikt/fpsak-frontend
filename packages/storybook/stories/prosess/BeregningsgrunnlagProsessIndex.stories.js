@@ -688,6 +688,7 @@ export const infoTrygdYtelse = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
@@ -752,6 +753,7 @@ export const naturalYtelse = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
@@ -780,6 +782,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -832,6 +835,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
@@ -910,6 +914,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
+      aksjonspunkter={[]}
       submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
@@ -962,6 +967,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -1083,7 +1089,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivende2457Nyoppstartet = () => {
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
       aksjonspunkter={ap}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}
@@ -1118,25 +1124,31 @@ export const arbeidstakerOgSelvstendigNæringsdrivende2457VarigEndring = () => {
     kode: 'ANNEN',
     kodeverk: 'VIRKSOMHET_TYPE',
   }];
+  const sammenligningsgrunnlagPrStatus = [
+    lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 1031399, 36.2, -274234)];
   andeler[0].næringer = næringer;
   const statuser = [lagStatus('AT_SN')];
   const perioder = [lagPeriodeMedDagsats(andeler, 923)];
-  const bg = lagBG(perioder, statuser);
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 945000;
+  perioder[0].avkortetPrAar = 599000;
+  const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
   const ap = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
   ap[0].status.kode = 'UTFO';
+  ap[0].endretTidspunkt = '2020-01-28T12:58:34.314';
+  ap[0].endretAv = 'saksbeh';
   ap[0].begrunnelse = 'Bruker opplyser at at .'
     + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. '
     + 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     + 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.'
     + 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum';
-  bg.dekningsgrad = 80;
+  bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
       aksjonspunkter={ap}
-      readOnly={false}
+      isReadOnly
       readOnlySubmitButton={false}
       apCodes={[]}
       isApOpen={false}

@@ -6,7 +6,7 @@ import { reducer as formReducer, reduxForm } from 'redux-form';
 import { mount } from 'enzyme';
 import { expect } from 'chai';
 import { messages } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import TextAreaField from './TextAreaField';
+import TextAreaField2 from './TextAreaField_V2';
 
 const MockForm = reduxForm({ form: 'mock' })(({ handleSubmit, children }) => <form onSubmit={handleSubmit}>{children}</form>);
 const mountFieldInForm = (field, initialValues) => mount(
@@ -19,18 +19,18 @@ const mountFieldInForm = (field, initialValues) => mount(
   </Provider>,
 );
 
-describe('<TextAreaField>', () => {
+describe('<TextAreaField2>', () => {
   it('Skal rendre TextAreaField', () => {
-    const wrapper = mountFieldInForm(<TextAreaField name="text" label="name" />);
+    const wrapper = mountFieldInForm(<TextAreaField2 name="text" label="name" />);
     expect(wrapper.find('textarea')).to.have.length(1);
   });
   it('Skal rendre TextAreaField som ren tekst hvis readonly', () => {
-    const wrapper = mountFieldInForm(<TextAreaField name="text" label="name" readOnly value="text" />, { text: 'tekst' });
+    const wrapper = mountFieldInForm(<TextAreaField2 name="text" label="name" readOnly value="text" />, { text: 'tekst' });
     expect(wrapper.find('textarea')).to.have.length(0);
     expect(wrapper.find('div')).to.have.length(1);
     expect(wrapper.find('Label')).to.have.length(1);
     expect(wrapper.find('Label').prop('input')).to.eql('name');
-    expect(wrapper.find('Normaltekst')).to.have.length(1);
-    expect(wrapper.find('Normaltekst').text()).to.eql('tekst');
+    expect(wrapper.find('Normaltekst')).to.have.length(2);
+    expect(wrapper.find('Normaltekst').at(1).text()).to.eql('tekst');
   });
 });

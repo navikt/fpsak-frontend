@@ -1,27 +1,33 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 
-.linkContainer {
-  background: @navLysGra;
-  border-radius: 3px;
-  display: inline;
-  height: 20px;
-  padding: 0 5px 0 5px;
-  white-space: nowrap;
-  width: 34px;
-}
 
 .linkText {
-  color: rgb(0, 103, 197);
+  color: @navBla;
   font-size: 14px;
   font-weight: 600;
-  height: 14px;
   letter-spacing: 0.4px;
   line-height: 14px;
   text-decoration: none;
-  width: 17px;
+  border-radius: 3px;
+  display: flex;
+  height: 20px;
+  padding: 4px 3px 4px 3px;
+  white-space: nowrap;
+  -webkit-box-align: center;
+  align-items: center;
+  min-width: 35px;
+  border: 1px solid @navBla;
+  background:url('@fpsak-frontend/assets/images/ekstern_link_pil.svg') no-repeat center right 3px;
+
+  &:hover {
+    background-color: @navBla !important;
+    background:url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    color: white;
+  }
+  &:active {
+    background-color: @navDypBla;
+    background:url('@fpsak-frontend/assets/images/ekstern_link_pil_hoover.svg') no-repeat center right 3px;
+    color: white;
+  }
 }
 
-.linkArrow {
-  line-height: 10px;
-  margin-left: 2px;
-}

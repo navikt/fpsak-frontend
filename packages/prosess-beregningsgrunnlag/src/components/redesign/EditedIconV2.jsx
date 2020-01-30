@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames/bind';
-import endretFelt from '@fpsak-frontend/assets/images/endret_felt.svg';
+import endretFelt from '@fpsak-frontend/assets/images/person-edit-2.svg';
 import { useIntl } from 'react-intl';
 import { Image } from '@fpsak-frontend/shared-components';
 

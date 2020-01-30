@@ -1,11 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
-
-import {
-  EditedIcon, FlexColumn, FlexContainer, FlexRow,
-} from '@fpsak-frontend/shared-components';
+import { FlexColumn, FlexContainer, FlexRow } from '@fpsak-frontend/shared-components';
 import Label, { labelPropType } from '@fpsak-frontend/form/src/Label';
+import EditedIcon2 from './EditedIconV2';
 import styles from './readOnlyField_V2.less';
 
 const hasValue = (value) => value !== undefined && value !== null && value !== '';
@@ -26,7 +24,7 @@ export const ReadOnlyFieldV2 = ({
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
-            <EditedIcon />
+            <EditedIcon2 />
           </FlexColumn>
           <FlexColumn className={styles.endretAvContent}>
             <Undertekst>

@@ -491,7 +491,6 @@ export const createBeregningTableData = createSelector(
         rows.push(msElement);
       }
       const seksG = grunnbelop * 6;
-
       if (bruttoRad.verdi !== avkortetRad.verdi && removeSpacesFromNumber(bruttoRad.verdi) > seksG) {
         rows.push(avkortetRad);
       }

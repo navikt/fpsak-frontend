@@ -4,7 +4,7 @@ import 'nav-frontend-lesmerpanel-style';
 import { UnmountClosed } from 'react-collapse';
 import { guid, omit } from 'nav-frontend-js-utils';
 import classNames from 'classnames';
-import LesmerpanelToggle from './LesMerToggle';
+import LesMerToggle2 from './LesMerToggle';
 import styles from './lesmerpanel_V2-style.less';
 
 const lesMerPanelCls = (props) => classNames(styles.lesMerPanel, props.className, props.border ? styles['lesMerPanel--border'] : '');
@@ -56,7 +56,7 @@ class Lesmerpanel2 extends Component {
             </div>
           )}
           {children && (
-          <LesmerpanelToggle
+          <LesMerToggle2
             aria-controls={id}
             apneTekst={apneTekst}
             lukkTekst={lukkTekst}
