@@ -39,7 +39,7 @@ class CreateNewBehandlingMenuItem extends Component {
     const tilbakekrevingBehandlingId = behandlingIdentifier && isTilbakekreving ? { behandlingId: behandlingIdentifier.behandlingId } : {};
     const data = {
       saksnummer: saksnummer.toString(),
-      tilbakekrevingBehandlingId,
+      ...tilbakekrevingBehandlingId,
       ...formValues,
     };
 
