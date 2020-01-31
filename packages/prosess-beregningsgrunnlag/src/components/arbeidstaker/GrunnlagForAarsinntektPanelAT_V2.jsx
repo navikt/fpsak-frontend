@@ -187,7 +187,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
 }) => {
   const relevanteAndeler = finnAndelerSomSkalVises(alleAndeler);
   if (!relevanteAndeler || relevanteAndeler.length === 0) return null;
-  const userIdent = '123'; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
+  const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
       <FlexRow>
