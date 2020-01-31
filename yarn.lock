@@ -2547,9 +2547,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@navikt/boxed-list-with-links@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@navikt/boxed-list-with-links/-/boxed-list-with-links-1.0.2.tgz#2fe2c0dcdc60b06ab295f21af1b18d2fb70a400b"
+"@navikt/boxed-list-with-selection@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-selection/-/boxed-list-with-selection-1.0.0.tgz#6e00b1f17c71dc00a3004406cb82643fb643d2ac"
+  integrity sha512-IWEQHphCFLZSrYnkIre8GRz12ZYwMBIhge0MTUcB/0eoL0nuO2cwVMg9EBO6YfS8HjUCvnJsYXXUSG6CCZcJDw==
   dependencies:
     "@navikt/boxed-list" "1.0.2"
     "@navikt/nap-bem-utils" "1.0.1"
@@ -2558,7 +2559,8 @@
 
 "@navikt/boxed-list@1.0.2":
   version "1.0.2"
-  resolved "https://registry.npmjs.org/@navikt/boxed-list/-/boxed-list-1.0.2.tgz#9b9d4142b13184bdc39d1ad99baa9a1ee04213ec"
+  resolved "https://registry.yarnpkg.com/@navikt/boxed-list/-/boxed-list-1.0.2.tgz#9b9d4142b13184bdc39d1ad99baa9a1ee04213ec"
+  integrity sha512-LcluBBXFPE2jo+xF/yjsTtZm7B1lYwpICtRth8coJ68gZ4hj9oe3QoWee8LI9uIzBkWL/BkSPTIfIDfnVNQhSA==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
 
@@ -2566,23 +2568,15 @@
   version "1.0.1"
   resolved "https://registry.npmjs.org/@navikt/nap-bem-utils/-/nap-bem-utils-1.0.1.tgz#dd7edcee164611c187e3f548ad0463c9c10da8c8"
 
-"@navikt/nap-header@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.8.tgz#0c4bb958401f297a8b18973d86ecba91569e3d8b"
-  integrity sha512-dAyM8Z+7qAJletXAfUC1YbNjGbKOboobzZue+hz+uqSB4Sm3AWC9mYcxgkwWzIG+sOJ0mj9RRBkb/d2aKsDOEA==
+"@navikt/nap-header@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-header/-/nap-header-1.0.9.tgz#d5f7d23679b56ce916a36e8e68d414c9f12f7a16"
+  integrity sha512-A+pN4uJ9yAlCdj2cAWam5p1ZEdtlq18fshomDcSWbgbcPl1Is7MGJIK5twMaruGHBYxSuK0Hxeq/kq/uYmR5Ag==
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
-    "@navikt/nap-popover" "1.0.3"
-    classnames "^2.2.6"
     lodash.throttle "^4.1.1"
-    nav-frontend-chevron "^1.0.10"
-    nav-frontend-chevron-style "^0.3.5"
     nav-frontend-core "^4.0.11"
-    nav-frontend-ikoner-assets "^1.0.3"
-    nav-frontend-ikonknapper "0.0.10"
     nav-frontend-js-utils "^1.0.8"
-    nav-frontend-knapper "^1.0.37"
-    nav-frontend-knapper-style "^0.3.32"
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
@@ -2612,6 +2606,34 @@
   dependencies:
     "@navikt/nap-bem-utils" "1.0.1"
     classnames "^2.2.6"
+    nav-frontend-typografi "^2.0.16"
+    nav-frontend-typografi-style "^1.0.17"
+
+"@navikt/nap-system-button@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-system-button/-/nap-system-button-1.0.0.tgz#dae30247d16600883f138b011762438786c04814"
+  integrity sha512-NA1NoIe1viyl2ss02wZcIebCBwY4i9uc58rVpx1u7BlPOuQv7Op5YxnwNvqTpk3kLH+uTJqW8ba7Azi9L7iEGg==
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    classnames "^2.2.6"
+    nav-frontend-core "^4.0.11"
+    nav-frontend-ikoner-assets "^1.0.3"
+    nav-frontend-ikonknapper "0.0.10"
+    nav-frontend-js-utils "^1.0.8"
+    nav-frontend-knapper "^1.0.37"
+    nav-frontend-knapper-style "^0.3.32"
+    nav-frontend-typografi "^2.0.16"
+    nav-frontend-typografi-style "^1.0.17"
+    prop-types "^15.7.2"
+
+"@navikt/nap-user-panel@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-user-panel/-/nap-user-panel-1.0.0.tgz#a4ac7ada637ea1dd0c378c8739b8ed93db4d428c"
+  integrity sha512-zXNplyKJ2Qj/9+dsrdDWQTqmYH6EiLh8ynYYVAu7vz8Df3ikViwjaslKdcHY9eJbogL2fIxhxRoCDtHDkAnwSA==
+  dependencies:
+    "@navikt/nap-bem-utils" "1.0.1"
+    nav-frontend-chevron "^1.0.10"
+    nav-frontend-chevron-style "^0.3.5"
     nav-frontend-typografi "^2.0.16"
     nav-frontend-typografi-style "^1.0.17"
 
@@ -10992,7 +11014,8 @@ nav-frontend-ikoner-assets@1.0.3, nav-frontend-ikoner-assets@^1.0.3:
 
 nav-frontend-ikonknapper@0.0.10:
   version "0.0.10"
-  resolved "https://registry.npmjs.org/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-0.0.10.tgz#8f304e0c11661b71eb5bc1a59cf33fe99e6588b0"
+  resolved "https://registry.yarnpkg.com/nav-frontend-ikonknapper/-/nav-frontend-ikonknapper-0.0.10.tgz#8f304e0c11661b71eb5bc1a59cf33fe99e6588b0"
+  integrity sha512-LxvNnIXwkYUxv/we8leTkeYK4a08fPjMT7/cSwR4h9Jfx2jqm283ktpLyJLH7eQotsUGa9sWYfmdSYPZQji/Vw==
 
 nav-frontend-js-utils@1.0.8, nav-frontend-js-utils@^1.0.8:
   version "1.0.8"
@@ -11003,16 +11026,18 @@ nav-frontend-knapper-style@0.3.32:
   resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.32.tgz#7f6b1bf1b413199e0518fd3682b38dbd41478598"
 
 nav-frontend-knapper-style@^0.3.32:
-  version "0.3.33"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.33.tgz#f3ad20b98dfe1c9e4d912ea63250fb7fb10ee400"
+  version "0.3.34"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper-style/-/nav-frontend-knapper-style-0.3.34.tgz#a25adfd375937cd751fd9ad73bba67258f5eaed3"
+  integrity sha512-J2mdeQyL8uRGLmT5+vbAtUDkeVX12w56+R1YN01CgDfiiY2bc08yE8yjV+JEdMdKYBLpTTpVomiPVUnibG487Q==
 
 nav-frontend-knapper@1.0.37:
   version "1.0.37"
   resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.37.tgz#79075100f757c0589f19632b47449d1aec242bab"
 
 nav-frontend-knapper@^1.0.37:
-  version "1.0.38"
-  resolved "https://registry.npmjs.org/nav-frontend-knapper/-/nav-frontend-knapper-1.0.38.tgz#782bc02bc4025e8bece1d8397b6353fab1adfbbc"
+  version "1.0.39"
+  resolved "https://registry.yarnpkg.com/nav-frontend-knapper/-/nav-frontend-knapper-1.0.39.tgz#d5ee321a573efa7f78b661200f69473485a4bacc"
+  integrity sha512-ls3Oic7mZhi6zebvzUZbZvKu/XwVUIjr1beQhisEb2wv/2yrI99/TRF0tR1+H0QmbSWmfJFrCmpqc5+ILFZY3w==
 
 nav-frontend-lenkepanel-style@^0.3.27:
   version "0.3.27"
@@ -11029,10 +11054,12 @@ nav-frontend-lenker-style@0.2.24:
 nav-frontend-lesmerpanel-style@0.0.27:
   version "0.0.27"
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel-style/-/nav-frontend-lesmerpanel-style-0.0.27.tgz#dbd22ee50a9a5feabe7cfcc70457b0d2e8505d78"
+  integrity sha512-YEcB5D2Hy8mZvfXq5olW+aCt0Q2mZ+o4CN8hFxQKNQcxfaSaiHvf1rxqqCVFLic7EPSTfDBrEGbAnfWSji7kPA==
 
 nav-frontend-lesmerpanel@0.0.32:
   version "0.0.32"
   resolved "https://registry.yarnpkg.com/nav-frontend-lesmerpanel/-/nav-frontend-lesmerpanel-0.0.32.tgz#c6ecfa7ea7217a301a5884a03c69a0ea3acba651"
+  integrity sha512-pvA13rTc+NDeixDrWJi+JrFR6n3zUdzN/vfU7sqH/Ewojs++fc/2sJ21RweJ22LYFdhayzl2drV9aJPs5xyWdg==
 
 nav-frontend-lukknapp-style@0.2.21:
   version "0.2.21"

@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import BoxedListWithLinks from '@navikt/boxed-list-with-links';
+import BoxedListWithSelection from '@navikt/boxed-list-with-selection';
 import Header from '@navikt/nap-header';
+import Popover from '@navikt/nap-popover';
+import SystemButton from '@navikt/nap-system-button';
+import UserPanel from '@navikt/nap-user-panel';
 
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import ErrorMessagePanel from './ErrorMessagePanel';
@@ -31,32 +34,61 @@ const HeaderWithErrorPanel = ({
   queryStrings,
   showDetailedErrorMessages,
   errorMessages,
-}) => (
-  <header className={styles.container}>
-    <RawIntlProvider value={intl}>
-      <Header
-        title={systemTittel}
-        titleHref="/"
-        userName={navAnsattName}
-        renderLinksPopoverContent={() => (
-          <BoxedListWithLinks
-            items={iconLinks.map((link) => ({
-              name: link.text,
-              href: link.url,
-              isExternal: true,
-            }))}
+}) => {
+  const [erLenkepanelApent, setLenkePanelApent] = useState(false);
+  const lenkerFormatertForBoxedList = useMemo(() => iconLinks.map((link) => ({
+    name: link.text,
+    href: link.url,
+    isExternal: true,
+  })), []);
+  const popperPropsChildren = useCallback(() => (
+    <BoxedListWithSelection
+      items={lenkerFormatertForBoxedList}
+      onClick={() => {
+        setLenkePanelApent(false);
+      }}
+    />
+  ), []);
+  const referencePropsChildren = useCallback(({ ref }) => (
+    <div ref={ref}>
+      <SystemButton
+        onClick={() => {
+          setLenkePanelApent(!erLenkepanelApent);
+        }}
+        isToggled={erLenkepanelApent}
+      />
+    </div>
+  ), [erLenkepanelApent]);
+
+  return (
+    <header className={styles.container}>
+      <RawIntlProvider value={intl}>
+        <Header title={systemTittel} titleHref="/">
+          <Popover
+            popperIsVisible={erLenkepanelApent}
+            renderArrowElement
+            customPopperStyles={{ top: '8px', zIndex: 1 }}
+            popperProps={{
+              children: popperPropsChildren,
+              placement: 'bottom-start',
+              positionFixed: true,
+            }}
+            referenceProps={{
+              children: referencePropsChildren,
+            }}
           />
-        )}
-      />
-      <ErrorMessagePanel
-        queryStrings={queryStrings}
-        removeErrorMessage={removeErrorMessage}
-        showDetailedErrorMessages={showDetailedErrorMessages}
-        errorMessages={errorMessages}
-      />
-    </RawIntlProvider>
-  </header>
-);
+          <UserPanel name={navAnsattName} />
+        </Header>
+        <ErrorMessagePanel
+          queryStrings={queryStrings}
+          removeErrorMessage={removeErrorMessage}
+          showDetailedErrorMessages={showDetailedErrorMessages}
+          errorMessages={errorMessages}
+        />
+      </RawIntlProvider>
+    </header>
+  );
+};
 
 HeaderWithErrorPanel.propTypes = {
   iconLinks: PropTypes.arrayOf(PropTypes.shape()).isRequired,
