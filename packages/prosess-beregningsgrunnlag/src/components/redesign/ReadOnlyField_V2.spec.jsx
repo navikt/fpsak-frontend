@@ -19,7 +19,7 @@ describe('ReadOnlyField2', () => {
   });
 
   it('skal vise feltverdi som editert med endret info', () => {
-    const wrapper = shallow(<ReadOnlyField2 label="Dette er en test" input={{ value: '123' }} endretTekst="EndretText" />);
+    const wrapper = shallow(<ReadOnlyField2 label="Dette er en test" input={{ value: '123' }} endrettekst="EndretText" />);
     const flexContainer = wrapper.find('FlexContainer');
     expect(flexContainer).to.have.length(1);
     expect(flexContainer.find('EditedIconV2')).to.have.length(1);
