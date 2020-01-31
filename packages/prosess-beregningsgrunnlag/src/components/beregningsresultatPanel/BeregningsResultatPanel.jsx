@@ -159,7 +159,7 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => (
 
 const lagPeriodeOverskrift = (header, periodeIndex) => (
   <>
-    {(periodeIndex && periodeIndex) > 0 && (
+    {(periodeIndex && periodeIndex > 0) && (
       <VerticalSpacer twentyPx />
     )}
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
