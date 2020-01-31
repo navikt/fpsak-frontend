@@ -165,9 +165,8 @@ const AksjonspunktBehandler = ({
               maxLength={1500}
               readOnly={readOnly}
               placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-              endretTekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
+              endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
             />
-
           </Column>
         </Row>
         <VerticalSpacer sixteenPx />

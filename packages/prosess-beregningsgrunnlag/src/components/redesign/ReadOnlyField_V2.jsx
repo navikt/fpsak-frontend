@@ -9,7 +9,7 @@ import styles from './readOnlyField_V2.less';
 const hasValue = (value) => value !== undefined && value !== null && value !== '';
 
 export const ReadOnlyFieldV2 = ({
-  label, input, endretTekst,
+  label, input, endrettekst,
 }) => {
   if (!hasValue(input.value)) {
     return null;
@@ -20,7 +20,7 @@ export const ReadOnlyFieldV2 = ({
       <Normaltekst className={styles.readOnlyContent}>
         {input.value}
       </Normaltekst>
-      {endretTekst && (
+      {endrettekst && (
       <FlexContainer>
         <FlexRow>
           <FlexColumn>
@@ -28,7 +28,7 @@ export const ReadOnlyFieldV2 = ({
           </FlexColumn>
           <FlexColumn className={styles.endretAvContent}>
             <Undertekst>
-              {endretTekst}
+              {endrettekst}
             </Undertekst>
           </FlexColumn>
         </FlexRow>
@@ -43,12 +43,12 @@ ReadOnlyFieldV2.propTypes = {
   input: PropTypes.shape({
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }).isRequired,
-  endretTekst: PropTypes.node,
+  endrettekst: PropTypes.node,
 };
 
 ReadOnlyFieldV2.defaultProps = {
   label: undefined,
-  endretTekst: undefined,
+  endrettekst: undefined,
 };
 
 export default ReadOnlyFieldV2;
