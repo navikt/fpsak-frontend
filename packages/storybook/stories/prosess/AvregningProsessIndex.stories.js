@@ -126,7 +126,7 @@ export const visAksjonspunktVurderFeilutbetaling = () => (
     }])}
     simuleringResultat={object('simuleringResultat', simuleringResultat)}
     submitCallback={action('button-click')}
-    previewCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
@@ -147,7 +147,7 @@ export const visSimuleringspanelUtenAksjonspunkt = () => (
       varseltekst: 'varsel-eksempel',
     })}
     submitCallback={action('button-click')}
-    previewCallback={action('button-click')}
+    previewFptilbakeCallback={action('button-click')}
     isReadOnly={boolean('isReadOnly', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}

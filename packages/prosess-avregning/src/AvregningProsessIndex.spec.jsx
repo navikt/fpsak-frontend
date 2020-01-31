@@ -41,7 +41,7 @@ describe('<AvregningProsessIndex>', () => {
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen
-      previewCallback={sinon.spy()}
+      previewFptilbakeCallback={sinon.spy()}
       featureToggles={{}}
     />);
     expect(wrapper.find(AvregningPanel)).has.length(1);
