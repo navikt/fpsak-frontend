@@ -238,6 +238,8 @@ InntektFieldArray.transformValues = (values) => (values
     nyAndel: fieldValue.nyAndel,
     lagtTilAvSaksbehandler: fieldValue.lagtTilAvSaksbehandler,
     aktivitetStatus: fieldValue.aktivitetStatus,
+    arbeidsforholdId: fieldValue.arbeidsforholdId,
+    arbeidsgiverId: fieldValue.arbeidsgiverId,
   })) : null
 );
 

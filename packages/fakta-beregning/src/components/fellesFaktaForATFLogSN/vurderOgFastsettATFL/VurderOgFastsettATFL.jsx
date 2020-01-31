@@ -12,7 +12,8 @@ import NyoppstartetFLForm, { erNyoppstartetFLField }
 import { harVurdertMottarYtelse } from './forms/VurderMottarYtelseUtils';
 import InntektstabellPanel from '../InntektstabellPanel';
 import { ATFLSammeOrgTekst, transformValuesForATFLISammeOrg } from './forms/ATFLSammeOrg';
-import { transformValuesKunstigArbeidsforhold, harKunstigArbeidsforhold } from './forms/KunstigArbeidsforhold';
+import { harKunstigArbeidsforhold } from './forms/KunstigArbeidsforhold';
+import transformValuesArbeidUtenInntektsmelding from './forms/ArbeidUtenInntektsmelding';
 import VurderMottarYtelseForm from './forms/VurderMottarYtelseForm';
 import { getFormValuesForBeregning } from '../../BeregningFormUtils';
 import {
@@ -240,9 +241,6 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
     // Besteberegning
     transformed = concatTilfeller(transformed, vurderBesteberegningTransform(faktaOmBeregning)(values, inntektVerdier));
     const allInntektErFastsatt = values[besteberegningField] === true;
-    // Kunstig arbeidsforhold
-    transformed = concatTilfeller(transformed, transformValuesKunstigArbeidsforhold(allInntektErFastsatt ? null : inntektVerdier,
-      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
     // Nyoppstartet FL
     transformed = concatTilfeller(transformed, NyoppstartetFLForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
@@ -250,14 +248,16 @@ const transformValuesForAksjonspunkt = (values, inntektVerdier, fastsatteAndelsn
     transformed = concatTilfeller(transformed, VurderEtterlonnSluttpakkeForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
     // Lønnsendring FL
-    transformed = concatTilfeller(transformed,
-      LonnsendringForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier, faktaOmBeregning, fastsatteAndelsnr));
+    transformed = concatTilfeller(transformed, LonnsendringForm.transformValues(values, faktaOmBeregning));
     // Mottar ytelse
     transformed = concatTilfeller(transformed, VurderMottarYtelseForm.transformValues(values, allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
     // ATFL i samme org
     transformed = concatTilfeller(transformed, transformValuesForATFLISammeOrg(allInntektErFastsatt ? null : inntektVerdier,
       faktaOmBeregning, fastsatteAndelsnr));
+    // Inntekt for arbeid uten inntektsmelding
+    transformed = concatTilfeller(transformed, transformValuesArbeidUtenInntektsmelding(values, allInntektErFastsatt ? null : inntektVerdier,
+      faktaOmBeregning, beregningsgrunnlag, fastsatteAndelsnr));
   }
   return transformed;
 };
