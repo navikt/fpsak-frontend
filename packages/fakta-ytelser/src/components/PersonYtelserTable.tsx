@@ -1,13 +1,26 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { injectIntl } from 'react-intl';
+import React, { FunctionComponent } from 'react';
+import { injectIntl, WrappedComponentProps } from 'react-intl';
 import moment from 'moment';
 import { Normaltekst } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
+import { InntektArbeidYtelse, Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './personYtelserTable.less';
+
+interface OwnProps {
+  inntektArbeidYtelse: InntektArbeidYtelse;
+  relatertYtelseTypes: Kodeverk[];
+  relatertYtelseStatus: Kodeverk[];
+}
+
+const HEADER_TEXT_CODES = [
+  'PersonYtelserTable.Ytelse',
+  'PersonYtelserTable.Periode',
+  'PersonYtelserTable.Status',
+  'PersonYtelserTable.Saksnummer',
+];
 
 const formatDateToDDMMYYYY = (date) => {
   const parsedDate = moment(date, ISO_DATE_FORMAT, true);
@@ -17,21 +30,18 @@ const formatDateToDDMMYYYY = (date) => {
 /**
  * PersonYtelserTable
  *
- * Presentasjonskomponent som viser tilgrensede ytelser for valgt person.
- *
+ * Viser tilgrensede ytelser.
  */
-export const PersonYtelserTable = ({
-  intl, ytelser, relatertYtelseTypes, relatertYtelseStatus,
+export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentProps> = ({
+  intl,
+  inntektArbeidYtelse,
+  relatertYtelseTyper,
+  relatertYtelseStatus,
 }) => {
-  const headerTextCodes = [
-    'PersonYtelserTable.Ytelse',
-    'PersonYtelserTable.Periode',
-    'PersonYtelserTable.Status',
-    'PersonYtelserTable.Saksnummer',
-  ];
+  const ytelser = inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker;
 
   const ytelseRows = ytelser && ytelser.map((ytelse) => {
-    const ytelseNavn = relatertYtelseTypes.filter((type) => type.kode === ytelse.relatertYtelseType)[0].navn;
+    const ytelseNavn = relatertYtelseTyper.filter((type) => type.kode === ytelse.relatertYtelseType)[0].navn;
     if (ytelse.tilgrensendeYtelserListe.length === 0) {
       return ({
         navn: ytelseNavn,
@@ -57,7 +67,7 @@ export const PersonYtelserTable = ({
   }).reduce((a, b) => a.concat(b), []);
 
   return (
-    <Table headerTextCodes={headerTextCodes} classNameTable={styles.tableStyle} noHover>
+    <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>
       {ytelseRows && ytelseRows.map((ytelse, index) => (
         <TableRow key={`index${index + 1}`}>
           <TableColumn><Normaltekst>{ytelse.navn}</Normaltekst></TableColumn>
@@ -69,13 +79,6 @@ export const PersonYtelserTable = ({
     </Table>
 
   );
-};
-
-PersonYtelserTable.propTypes = {
-  intl: PropTypes.shape().isRequired,
-  ytelser: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
 export default injectIntl(PersonYtelserTable);

@@ -1,9 +1,8 @@
 {
-  "TilleggsopplysningerFaktaForm.Confirmed": "Jeg har lest dette",
-
-  "Behandling.EditedField": "Saksbehandler har endret feltets verdi",
-  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
-  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
-  "HelpText.Aksjonspunkt": "Aksjonspunkt",
-  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: "
+  "PersonYtelserTable.Ytelser": "Ytelser",
+  "PersonYtelserTable.Ytelse": "Ytelse",
+  "PersonYtelserTable.Periode": "Periode",
+  "PersonYtelserTable.Status": "Status",
+  "PersonYtelserTable.Saksnummer": "Saksnr.",
+  "PersonYtelserTable.Ingen": "Ingen"
 }
