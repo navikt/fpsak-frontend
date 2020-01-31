@@ -37,7 +37,7 @@ const TilstotendeYtelser2 = ({
           <Element>
             <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.TittelNav" />
           </Element>
-          <VerticalSpacer fourPx />
+          <VerticalSpacer eightPx />
         </>
       )}
       <Row>
