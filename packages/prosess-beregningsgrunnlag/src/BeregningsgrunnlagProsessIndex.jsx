@@ -29,7 +29,7 @@ const BeregningsgrunnlagProsessIndex = ({
   alleKodeverk,
   featureToggles,
 }) => {
-  const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
+  const skalViseRedesignetGUI = true; // featureToggles[featureToggle.BG_REDESIGN];
   if (skalViseRedesignetGUI) {
     return (
       <RawIntlProvider value={intl}>
