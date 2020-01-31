@@ -38,7 +38,7 @@ const endpoints = new RestApiConfigBuilder()
   .withRel('vilkarvurdering', TilbakekrevingBehandlingApiKeys.VILKARVURDERING)
 
   // operasjoner
-  .withRel('beregne-belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
+  .withRel('beregne-feilutbetalt-belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
   .withRel('bytt-behandlende-enhet', TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
   .withRel('henlegg-behandling', TilbakekrevingBehandlingApiKeys.HENLEGG_BEHANDLING)
   .withRel('gjenoppta-behandling', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
