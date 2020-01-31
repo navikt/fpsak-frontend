@@ -5,12 +5,11 @@ import { connect } from 'react-redux';
 import { Column, Row } from 'nav-frontend-grid';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import VedtakFritekstPanel from './VedtakFritekstPanel';
-import { endringerIBeregningsgrunnlagGirFritekstfelt, findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
+import { findInnvilgetResultatText, findTilbakekrevingText } from './VedtakHelper';
 
 export const VedtakInnvilgetPanelImpl = ({
   intl,
@@ -18,11 +17,11 @@ export const VedtakInnvilgetPanelImpl = ({
   behandlingsresultat,
   antallBarn,
   ytelseTypeKode,
-  aksjonspunkter,
   sprakkode,
   readOnly,
   skalBrukeOverstyrendeFritekstBrev,
   tilbakekrevingText,
+  beregningErManueltFastsatt,
 }) => (
   <>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -33,7 +32,7 @@ export const VedtakInnvilgetPanelImpl = ({
       )}
     </Normaltekst>
     <VerticalSpacer eightPx />
-    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode) && !skalBrukeOverstyrendeFritekstBrev && (
+    {beregningErManueltFastsatt && !skalBrukeOverstyrendeFritekstBrev && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakkode}
@@ -66,17 +65,16 @@ VedtakInnvilgetPanelImpl.propTypes = {
   antallBarn: PropTypes.number,
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   sprakkode: PropTypes.shape(),
   readOnly: PropTypes.bool.isRequired,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool.isRequired,
   tilbakekrevingText: PropTypes.string,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakInnvilgetPanelImpl.defaultProps = {
   beregningResultat: {},
   antallBarn: undefined,
-  aksjonspunkter: undefined,
   sprakkode: undefined,
   tilbakekrevingText: null,
 };

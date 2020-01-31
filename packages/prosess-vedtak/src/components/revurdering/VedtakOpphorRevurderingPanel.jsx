@@ -7,11 +7,9 @@ import { createSelector } from 'reselect';
 import { Normaltekst, Undertekst } from 'nav-frontend-typografi';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import { DDMMYYYY_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
-import { endringerIBeregningsgrunnlagGirFritekstfelt } from '../VedtakHelper';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 
 export const VedtakOpphorRevurderingPanelImpl = ({
@@ -19,10 +17,10 @@ export const VedtakOpphorRevurderingPanelImpl = ({
   opphoersdato,
   revurderingsAarsakString,
   sprakKode,
-  aksjonspunkter,
   readOnly,
   behandlingsresultat,
   ytelseTypeKode,
+  beregningErManueltFastsatt,
 }) => (
   <div>
     <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -39,7 +37,7 @@ export const VedtakOpphorRevurderingPanelImpl = ({
         {revurderingsAarsakString}
       </Normaltekst>
     )}
-    {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode) && (
+    {beregningErManueltFastsatt && (
       <VedtakFritekstPanel
         readOnly={readOnly}
         sprakkode={sprakKode}
@@ -55,18 +53,16 @@ VedtakOpphorRevurderingPanelImpl.propTypes = {
   opphoersdato: PropTypes.string,
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakOpphorRevurderingPanelImpl.defaultProps = {
   opphoersdato: '',
   revurderingsAarsakString: undefined,
   sprakKode: undefined,
-  aksjonspunkter: undefined,
-
 };
 
 const getOpphorsdato = createSelector(

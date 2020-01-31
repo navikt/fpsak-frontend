@@ -8,12 +8,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyWithKr } from '@fpsak-frontend/utils';
-import { aksjonspunktPropType } from '@fpsak-frontend/prop-types';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import vedtakResultType from '../../kodeverk/vedtakResultType';
-import { endringerIBeregningsgrunnlagGirFritekstfelt, findTilbakekrevingText } from '../VedtakHelper';
+import { findTilbakekrevingText } from '../VedtakHelper';
 import VedtakFritekstPanel from '../VedtakFritekstPanel';
 
 const isNewBehandlingResult = (beregningResultat, originaltBeregningResultat) => {
@@ -53,11 +52,12 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
   konsekvenserForYtelsen,
   revurderingsAarsakString,
   sprakKode,
-  aksjonspunkter,
   readOnly,
   behandlingsresultat,
   tilbakekrevingText,
   alleKodeverk,
+  beregningErManueltFastsatt,
+
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -110,7 +110,7 @@ export const VedtakInnvilgetRevurderingPanelImpl = ({
               )}
             </Column>
           </Row>
-          {endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode) && (
+          {beregningErManueltFastsatt && (
             <VedtakFritekstPanel
               readOnly={readOnly}
               sprakkode={sprakKode}
@@ -133,11 +133,11 @@ VedtakInnvilgetRevurderingPanelImpl.propTypes = {
   konsekvenserForYtelsen: PropTypes.arrayOf(PropTypes.shape()),
   revurderingsAarsakString: PropTypes.string,
   sprakKode: PropTypes.shape(),
-  aksjonspunkter: PropTypes.arrayOf(aksjonspunktPropType),
   readOnly: PropTypes.bool.isRequired,
   behandlingsresultat: PropTypes.shape().isRequired,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
@@ -147,7 +147,6 @@ VedtakInnvilgetRevurderingPanelImpl.defaultProps = {
   konsekvenserForYtelsen: undefined,
   revurderingsAarsakString: undefined,
   sprakKode: undefined,
-  aksjonspunkter: undefined,
   tilbakekrevingText: null,
 };
 

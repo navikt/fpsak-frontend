@@ -92,10 +92,13 @@ export const shouldGiveBegrunnelse = (
   && (hasIkkeOppfyltSoknadsfristvilkar(vilkar)
     || hasKlageVurderingSomIkkeErAvvist(klageVurderingResultatNFP, klageVurderingResultatNK));
 
-export const endringerIBeregningsgrunnlagGirFritekstfelt = (aksjonspunkter, ytelseType) => {
-  if (ytelseType === fagsakYtelseType.ENGANGSSTONAD || aksjonspunkter === undefined || aksjonspunkter.length < 1) {
+export const skalSkriveFritekstGrunnetFastsettingAvBeregning = (beregningsgrunnlag, aksjonspunkter) => {
+  if (!beregningsgrunnlag || !aksjonspunkter) {
     return false;
   }
-  return aksjonspunkter.find((ap) => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
-    && ap.status.kode === aksjonspunktStatus.UTFORT) !== undefined;
+  const behandlingHarLøstBGAP = aksjonspunkter.find((ap) => isBGAksjonspunktSomGirFritekstfelt(ap.definisjon.kode)
+    && ap.status.kode === aksjonspunktStatus.UTFORT);
+  const førstePeriode = beregningsgrunnlag.beregningsgrunnlagPeriode[0];
+  const andelSomErManueltFastsatt = førstePeriode.beregningsgrunnlagPrStatusOgAndel.find((andel) => andel.overstyrtPrAar || andel.overstyrtPrAar === 0);
+  return (!!behandlingHarLøstBGAP || !!andelSomErManueltFastsatt);
 };

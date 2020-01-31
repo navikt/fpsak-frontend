@@ -43,6 +43,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
@@ -78,6 +79,7 @@ describe('<VedtakInnvilgetRevurderingPanel>', () => {
       behandlingsresultat={{}}
       hasOverstyrtVurderingAp={false}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find(Undertekst);
