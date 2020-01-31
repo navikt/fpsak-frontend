@@ -61,7 +61,7 @@ export const BehandlingSupportIndex = ({
           ))}
         </LinkRow>
       </div>
-      <div className={styles.container}>
+      <div className={(activeSupportPanel === supportPanels.HISTORY ? styles.containerHistorikk : styles.container)}>
         {renderSupportPanel(activeSupportPanel)}
       </div>
     </div>
