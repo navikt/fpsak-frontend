@@ -10,7 +10,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
-const createArbeidsforholdKey = (andel) => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdKey = (arbeidsforhold) => `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsgiverId}`;
 
 const findArbeidsforholdMedFrafaltYtelse = (periode) => periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.bortfaltNaturalytelse !== undefined
     && andel.bortfaltNaturalytelse !== null
@@ -28,6 +28,8 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, p
   let newMapValue = [];
   if (mapValue === undefined) {
     newMapValue = [andel.arbeidsforhold.arbeidsgiverNavn];
+  } else {
+    newMapValue = mapValue.slice();
   }
   const maaned = andel.bortfaltNaturalytelse ? andel.bortfaltNaturalytelse / 12 : 0;
   newMapValue.push({ periodeTekst, aar: andel.bortfaltNaturalytelse, maaned });
