@@ -172,17 +172,7 @@ VurderAktiviteterTabell.validate = (values, aktiviteter) => {
   if (harError) {
     return errors;
   }
-  const harAktiviteterSomSkalBrukes = aktiviteter
-    .filter((aktivitet) => {
-      const fieldId = lagAktivitetFieldId(aktivitet);
-      const { skalBrukes } = values[fieldId];
-      return skalBrukes;
-    })
-    .length > 0;
-  if (!harAktiviteterSomSkalBrukes) {
-    return { _error: 'VurderAktiviteterTabell.Validation.MåHaMinstEnAktivitet' };
-  }
-  return errors;
+  return null;
 };
 
 
