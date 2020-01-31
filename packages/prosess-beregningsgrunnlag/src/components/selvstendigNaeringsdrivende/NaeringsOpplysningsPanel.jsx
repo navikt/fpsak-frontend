@@ -129,8 +129,7 @@ export const NaeringsopplysningsPanel = ({
           )}
         </FlexColumn>
       </FlexRow>
-
-      <VerticalSpacer fourPx />
+      <VerticalSpacer eightPx />
       {snAndel.næringer.map((naring) => (
         <React.Fragment key={`NaringsWrapper${naring.orgnr}`}>
           <Row key="SNInntektIngress">

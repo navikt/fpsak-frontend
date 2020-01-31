@@ -1,21 +1,10 @@
-import React from 'react';
+
 import { expect } from 'chai';
-import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import BeregningsresultatTable2, { createBeregningTableData } from './BeregningsresultatTable_V2';
+import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import { createBeregningTableData } from './BeregningsresultatTable_V2';
 
-const tableData = {
-  rows: [
-    { ledetekst: 'Brutto beregningsgrunnlag', verdi: '900' },
-    { ledetekst: 'Avkortet beregningsgrunnlag (6G=599148)', verdi: '800' },
-    { ledetekst: 'Redusert beregningsgrunnlag (100%)', verdi: '400' },
-  ],
-  dagsatser: ['100'],
-  headers: ['Beregningsgrunnlag.AarsinntektPanel.TomString'],
-  rowsAndeler: [{ ledetekst: 'Beregningsgrunnlag - fastsatt årsinntekt', verdi: 130250, skalFastsetteGrunnlag: false }],
-  rowsForklaringer: [],
-};
 const vilkaarBG = {
   vilkarStatus: {
     kode: vilkarUtfallType.IKKE_VURDERT,
@@ -32,8 +21,8 @@ const mockPeriode = () => ([{
   beregnetPrAar: 360000,
   bruttoPrAar: 360000,
   bruttoInkludertBortfaltNaturalytelsePrAar: 360000,
-  avkortetPrAar: 360000,
-  redusertPrAar: 360000,
+  avkortetPrAar: 360000, // under 6G
+  redusertPrAar: 340000, // redusert ved dekningsgrad 80
   dagsats: 1385,
   beregningsgrunnlagPrStatusOgAndel: [{
     aktivitetStatus: {
@@ -51,111 +40,66 @@ const mockPeriode = () => ([{
   periodeAarsaker: [],
 
 }]);
+const flAndel = {
+  aktivitetStatus: {
+    kode: aktivitetStatus.FRILANSER,
+    kodeverk: 'AKTIVITET_STATUS',
+  },
+  avkortetPrAar: 140250,
+  bruttoPrAar: 140250,
+  redusertPrAar: 140250,
+};
+const grunnbelop = 99123;
+const seksG = grunnbelop * 6;
 describe('<BeregningsresultatTable2>', () => {
-  it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:IKKE VURDERT', () => {
-    tableData.rowsAndeler[0].skalFastsetteGrunnlag = true;
-    const wrapper = shallowWithIntl(<BeregningsresultatTable2.WrappedComponent
-      intl={intlMock}
-      periodeResultatTabeller={[tableData]}
-      vilkaarBG={vilkaarBG}
-      halvGVerdi={98866}
-    />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
-    expect(rows).to.have.length(3);
-    const andelRow = rows.first();
-    const andelText = andelRow.find('Normaltekst').first().childAt(0).text();
-    const andelVerdi = andelRow.find('FormattedMessage').props().id;
-    expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
-    expect(andelVerdi).to.equal('Beregningsgrunnlag.BeregningTable.MåFastsettes');
-    const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedMessage').props().id;
-    const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
-    expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.Dagsats.ikkeFastsatt');
-    expect(sumVerdi).to.equal('-');
-  });
-  it('Skal teste om tabellen får korrekt antall rader ved vilkarStatus:OPPFYLT', () => {
-    vilkaarBG.vilkarStatus.kode = vilkarUtfallType.OPPFYLT;
-    vilkaarBG.vilkarStatus.kodeverk = 'VILKAR_UTFALL_TYPE';
-    const wrapper = shallowWithIntl(<BeregningsresultatTable2.WrappedComponent
-      intl={intlMock}
-      periodeResultatTabeller={[tableData]}
-      vilkaarBG={vilkaarBG}
-      halvGVerdi={98866}
-    />);
-    const panel = wrapper.find('PanelBase');
-    const rows = panel.find('Row');
-    expect(rows).to.have.length(6);
-    const andelRow = rows.first();
-    const andelText = andelRow.find('Normaltekst').first().childAt(0).text();
-    const andelVerdi = andelRow.find('Normaltekst').at(1).childAt(0).text();
-    expect(andelText).to.equal(tableData.rowsAndeler[0].ledetekst);
-    expect(formatCurrencyNoKr(andelVerdi)).to.equal(formatCurrencyNoKr(tableData.rowsAndeler[0].verdi));
-    const sumRow = rows.last();
-    const sumText = sumRow.find('FormattedMessage').props().id;
-    const sumTextTall = sumRow.find('FormattedMessage').props().values.dagSats;
-    const sumVerdi = sumRow.find('Normaltekst').last().childAt(0).text();
-    expect(sumText).to.equal('Beregningsgrunnlag.BeregningTable.DagsatsNy');
-    expect(sumTextTall).to.equal(formatCurrencyNoKr(400));
-    expect(sumVerdi).to.equal(formatCurrencyNoKr(tableData.dagsatser[0]));
-  });
-  it('Skal teste at create table returnerer en at rad ved KUN AT', () => {
+  it('Skal teste at create table returnerer riktig data ved AT og dekningsgrad 80', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const grunnbelop = 99123;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }];
     const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, grunnbelop, vilkaarBG);
     selectorData.forEach((periode) => {
-      expect(periode.rows.length).to.equal(1);
-      const { rows, rowsAndeler, dagsatser } = periode;
-      expect(rows[0].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
-      expect(rows[0].ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(periode.rowsAndeler.length).to.equal(1);
+      const { rowsAndeler, dagsatser, redusertRad } = periode;
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       const andelLabel = rowsAndeler[0].ledetekst;
       expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
-      expect(dagsatser[0]).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
   it('Skal teste at create table returnerer en at rad ved Brukers Andel', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
-    const grunnbelop = 99123;
     const aktivitetStatusList = [{ kode: 'BA', kodeverk: 'AKTIVITET_STATUS' }];
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'BA';
     const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, grunnbelop, vilkaarBG);
     selectorData.forEach((periode) => {
-      expect(periode.rows.length).to.equal(1);
-      const { rows, rowsAndeler, dagsatser } = periode;
-      expect(rows[0].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
-      expect(rows[0].ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(periode.rowsAndeler.length).to.equal(1);
+      const { rowsAndeler, dagsatser, redusertRad } = periode;
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       const andelLabel = rowsAndeler[0].ledetekst;
       expect(andelLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.BA');
-      expect(dagsatser[0]).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
   it('Skal teste at create table returnerer returnerer riktig ved AT FL', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
     const aktivitetStatusList = [{ kode: 'AT', kodeverk: 'AKTIVITET_STATUS' }, { kode: 'FL', kodeverk: 'AKTIVITET_STATUS' }];
-    const flAndel = {
-      aktivitetStatus: {
-        kode: 'FL',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
-      avkortetPrAar: 360002,
-      bruttoPrAar: 300002,
-      redusertPrAar: 360002,
-    };
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(
       flAndel,
     );
     const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, vilkaarBG);
     selectorData.forEach((periode) => {
-      expect(periode.rows.length).to.equal(2);
-      const { rows, rowsAndeler, dagsatser } = periode;
-      expect(rows[0].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
-      expect(rows[0].verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar));
-      expect(rows[1].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
-      expect(rows[1].ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(periode.rowsAndeler.length).to.equal(2);
+      const {
+        rowsAndeler, dagsatser, bruttoRad, redusertRad,
+      } = periode;
+      expect(bruttoRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
+      expect(bruttoRad.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar));
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       expect(rowsAndeler.length).to.equal(2);
       const andelLabelAT = rowsAndeler[0].ledetekst;
       expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
@@ -164,26 +108,72 @@ describe('<BeregningsresultatTable2>', () => {
       expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
       expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
 
-      expect(dagsatser[0]).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
-  it('Skal teste at create table returnerer riktig data ved AT FL SN', () => {
+  it('Skal teste at create table returnerer riktig data ved AT FL SN med redusert og avkortet', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
     const aktivitetStatusList = [
-      { kode: 'AT', kodeverk: 'AKTIVITET_STATUS' },
+      { kode: aktivitetStatus.ARBEIDSTAKER, kodeverk: 'AKTIVITET_STATUS' },
+      { kode: aktivitetStatus.FRILANSER, kodeverk: 'AKTIVITET_STATUS' },
+      { kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE, kodeverk: 'AKTIVITET_STATUS' },
+    ];
+    const snAndel = {
+      aktivitetStatus: {
+        kode: aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE,
+        kodeverk: 'AKTIVITET_STATUS',
+      },
+      avkortetPrAar: 599985,
+      bruttoPrAar: 754985,
+      pgiSnitt: 754985,
+      redusertPrAar: 554985,
+    };
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(
+      flAndel,
+    );
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(
+      snAndel,
+    );
+    beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1330250;
+    beregningsgrunnlagPerioder[0].avkortetPrAar = seksG;
+    beregningsgrunnlagPerioder[0].redusertPrAar = 554985;
+    const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, vilkaarBG);
+
+    selectorData.forEach((periode) => {
+      const {
+        rowsAndeler, dagsatser, bruttoRad, redusertRad, avkortetRad,
+      } = periode;
+      expect(rowsAndeler.length).to.equal(3);
+      expect(bruttoRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
+      expect(bruttoRad.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar));
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(redusertRad.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].redusertPrAar));
+      expect(avkortetRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Avkortet6g');
+      expect(avkortetRad.verdi).to.equal(formatCurrencyNoKr(seksG));
+      const andelLabelAT = rowsAndeler[0].ledetekst;
+      expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
+      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
+      const andelLabelFL = rowsAndeler[1].ledetekst;
+      expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
+      expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
+      const andelLabelSN = rowsAndeler[2].ledetekst;
+      expect(andelLabelSN.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.SN');
+      expect(formatCurrencyNoKr(rowsAndeler[2].verdi)).to.equal(formatCurrencyNoKr(snAndel.bruttoPrAar));
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+    });
+  });
+
+  it('Skal teste at create table returnerer riktig data ved DP + FL > SN', () => {
+    const beregningsgrunnlagPerioder = mockPeriode();
+    const dekningsgrad = 80;
+    const aktivitetStatusList = [
+      { kode: 'DP', kodeverk: 'AKTIVITET_STATUS' },
       { kode: 'FL', kodeverk: 'AKTIVITET_STATUS' },
       { kode: 'SN', kodeverk: 'AKTIVITET_STATUS' },
     ];
-    const flAndel = {
-      aktivitetStatus: {
-        kode: 'FL',
-        kodeverk: 'AKTIVITET_STATUS',
-      },
-      avkortetPrAar: 360002,
-      bruttoPrAar: 300002,
-      redusertPrAar: 360002,
-    };
+
     const snAndel = {
       aktivitetStatus: {
         kode: 'SN',
@@ -200,25 +190,25 @@ describe('<BeregningsresultatTable2>', () => {
     beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel.push(
       snAndel,
     );
+    beregningsgrunnlagPerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = aktivitetStatus.DAGPENGER;
     const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, vilkaarBG);
-    selectorData.forEach((periode) => {
-      expect(periode.rows.length).to.equal(2);
-      const { rows, rowsAndeler, dagsatser } = periode;
-      expect(rows[0].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.BruttoTotalt');
-      expect(rows[0].verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].bruttoInkludertBortfaltNaturalytelsePrAar));
-      expect(rows[1].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
-      expect(rows[1].ledetekst.props.values.redusert).to.equal(dekningsgrad);
-      expect(rowsAndeler.length).to.equal(2);
-      const andelLabelAT = rowsAndeler[0].ledetekst;
-      expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
-      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
-      const andelLabelFL = rowsAndeler[1].ledetekst;
-      expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
-      expect(formatCurrencyNoKr(rowsAndeler[1].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
 
-      expect(dagsatser[0]).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+    selectorData.forEach((periode) => {
+      const {
+        rowsAndeler, dagsatser, redusertRad, rowsForklaringer,
+      } = periode;
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(rowsAndeler.length).to.equal(1);
+      const andelLabelFL = rowsAndeler[0].ledetekst;
+      expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
+      expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
+      const forklaringLabel = rowsForklaringer[0];
+      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FLoverstigerSN');
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
+
   it('Skal teste at create table returnerer riktig data ved AT + DP > SN', () => {
     const beregningsgrunnlagPerioder = mockPeriode();
     const dekningsgrad = 80;
@@ -254,19 +244,18 @@ describe('<BeregningsresultatTable2>', () => {
     );
     const selectorData = createBeregningTableData.resultFunc(beregningsgrunnlagPerioder, aktivitetStatusList, dekningsgrad, vilkaarBG);
     selectorData.forEach((periode) => {
-      expect(periode.rows.length).to.equal(1);
       const {
-        rows, rowsAndeler, rowsForklaringer, dagsatser,
+        rowsAndeler, dagsatser, redusertRad, rowsForklaringer,
       } = periode;
-      expect(rows[0].ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
-      expect(rows[0].ledetekst.props.values.redusert).to.equal(dekningsgrad);
+      expect(redusertRad.ledetekst.props.id).to.equal('Beregningsgrunnlag.BeregningTable.RedusertProsent');
+      expect(redusertRad.ledetekst.props.values.redusert).to.equal(dekningsgrad);
       expect(rowsAndeler.length).to.equal(1);
       const andelLabelAT = rowsAndeler[0].ledetekst;
       expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
       expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
       const forklaringLabel = rowsForklaringer[0];
-      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN');
-      expect(dagsatser[0]).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
+      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DPoverstigerSN');
+      expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
 });
