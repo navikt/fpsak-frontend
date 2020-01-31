@@ -45,28 +45,26 @@ export const HistoryIndex = ({
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
 }) => (
-  <div>
-    <DataFetcher
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      showLoadingIcon
-      behandlingNotRequired
-      endpointParams={{ saksnummer }}
-      keepDataWhenRefetching
-      endpoints={enabledContexts}
-      allowErrors
-      render={(props) => sortAndTagTilbakekreving(props)
-        .map((innslag) => (
-          <HistorikkSakIndex
-            key={innslag.opprettetTidspunkt + innslag.type.kode}
-            historieInnslag={innslag}
-            saksnummer={saksnummer}
-            location={location}
-            alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
-          />
-        ))}
-    />
-  </div>
+  <DataFetcher
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
+    showLoadingIcon
+    behandlingNotRequired
+    endpointParams={{ saksnummer }}
+    keepDataWhenRefetching
+    endpoints={enabledContexts}
+    allowErrors
+    render={(props) => sortAndTagTilbakekreving(props)
+      .map((innslag) => (
+        <HistorikkSakIndex
+          key={innslag.opprettetTidspunkt + innslag.type.kode}
+          historieInnslag={innslag}
+          saksnummer={saksnummer}
+          location={location}
+          alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
+        />
+      ))}
+  />
 );
 
 HistoryIndex.propTypes = {
