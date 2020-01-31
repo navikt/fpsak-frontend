@@ -10,7 +10,6 @@ import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 import { Utland } from './utland/Utland';
 import AdressePanel from './AdressePanel';
 import BarnePanel from './BarnePanel';
-import PersonYtelserTable from './PersonYtelserTable';
 
 const findPersonStatus = (personopplysning) => {
   if (personopplysning.avklartPersonstatus) {
@@ -79,15 +78,6 @@ export const FullPersonInfo = ({
       </AdressePanel>
       {harBarnITPSSjekk && (
         <BarnePanel barneListe={barnFraTPS} />
-      )}
-      {ytelser && ytelser.length > 0 && (
-        <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
-          <PersonYtelserTable
-            ytelser={ytelser}
-            relatertYtelseTypes={relatertYtelseTypes}
-            relatertYtelseStatus={relatertYtelseStatus}
-          />
-        </FaktaGruppe>
       )}
     </div>
   );
