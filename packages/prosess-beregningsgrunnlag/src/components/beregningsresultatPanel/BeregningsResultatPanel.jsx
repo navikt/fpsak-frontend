@@ -18,7 +18,7 @@ import beregningsgrunnlagVilkarPropType from '../../propTypes/beregningsgrunnlag
 const lagSpesialRaderRad = (visningsObjekt) => {
   if (!visningsObjekt || !visningsObjekt.verdi || visningsObjekt.display === false) return null;
   return (
-    <Row>
+    <Row key={`SpesialRad_${visningsObjekt.verdi}`}>
       <Column xs="9">
         <Normaltekst>
           {visningsObjekt.ledetekst}
@@ -57,7 +57,7 @@ const lagDagsatsRad = (dagsatsRad, ikkeVurdert) => {
           </Normaltekst>
         </Column>
         <Column xs="3" className={beregningStyles.rightAlignElement}>
-          <Normaltekst className={beregningStyles.semiBoldText}>{dagsatsRad.verdi ? dagsatsRad.verdi : '-'}</Normaltekst>
+          <Normaltekst className={beregningStyles.semiBoldText}>{dagsatsRad.verdi || dagsatsRad.verdi === 0 ? dagsatsRad.verdi : '-'}</Normaltekst>
         </Column>
       </Row>
     </React.Fragment>
@@ -71,8 +71,8 @@ const lineRad = (key) => (
   </Row>
 );
 const lagForklaringer = (forklaringsListe) => (
-  forklaringsListe.map((forklaring) => (
-    <>
+  forklaringsListe.map((forklaring, index) => (
+    <React.Fragment key={`Forklaring${index + 1}`}>
       <Row>
         <Column xs="12">
           <Normaltekst>
@@ -81,12 +81,11 @@ const lagForklaringer = (forklaringsListe) => (
         </Column>
       </Row>
       <VerticalSpacer twentyPx />
-    </>
+    </React.Fragment>
   ))
 );
 
 const lagAndelerRader = (listofAndeler, ikkeVurdert) => (listofAndeler.map((entry, index) => (
-
   <Row key={`indeAx${index + 1}`}>
     <Column xs={ikkeVurdert ? '8' : '9'} key={`indexAl2${index + 1}`}>
       <Normaltekst>
@@ -158,9 +157,11 @@ const lagTabellRaderIkkeOppfylt = (listofAndeler, intl, halvGVerdi, key) => (
 );
 
 
-const lagPeriodeOverskrift = (header) => (
+const lagPeriodeOverskrift = (header, periodeIndex) => (
   <>
-    <VerticalSpacer twentyPx />
+    {(periodeIndex && periodeIndex) > 0 && (
+      <VerticalSpacer twentyPx />
+    )}
     <Normaltekst className={beregningStyles.semiBoldText}>{header}</Normaltekst>
   </>
 );
@@ -175,14 +176,14 @@ const lagKeyForPeriode = (dagsats, header) => {
 };
 
 
-const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi) => {
+const createPeriodeResultat = (vilkaarBG, periodeData, lagPeriodeHeaders, intl, halvGVerdi, periodeIndex) => {
   const key = lagKeyForPeriode(periodeData.dagsatser[0], periodeData.headers[0]);
   const ikkeOppfylt = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_OPPFYLT);
   const ikkeVurdert = !!(vilkaarBG && vilkaarBG.vilkarStatus.kode === vilkarUtfallType.IKKE_VURDERT);
 
   return (
     <React.Fragment key={`Wr${key}`}>
-      {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers)}
+      {periodeData && lagPeriodeHeaders && lagPeriodeOverskrift(periodeData.headers, periodeIndex)}
       {!ikkeOppfylt && lagTabellRader(periodeData, ikkeVurdert)}
       {ikkeOppfylt && lagTabellRaderIkkeOppfylt(periodeData.rowsAndeler, intl, halvGVerdi, key)}
     </React.Fragment>
@@ -200,7 +201,8 @@ const BeregningsresutatPanel = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
-      {periodeResultatTabeller.map((periodeData) => createPeriodeResultat(vilkaarBG, periodeData, skalLagePeriodeHeaders, intl, halvGVerdi))}
+      <VerticalSpacer eightPx />
+      {periodeResultatTabeller.map((periodeData, index) => createPeriodeResultat(vilkaarBG, periodeData, skalLagePeriodeHeaders, intl, halvGVerdi, index))}
     </Panel>
   );
 };

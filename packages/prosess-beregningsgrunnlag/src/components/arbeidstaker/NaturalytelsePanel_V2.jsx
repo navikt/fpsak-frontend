@@ -138,6 +138,7 @@ const NaturalytelsePanel2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
       </Element>
+      <VerticalSpacer eightPx />
       <Row>
         <Column xs="7" key="ATempthy1" />
         <Column xs="2" className={beregningStyles.colMaanedText}>

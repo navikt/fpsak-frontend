@@ -64,7 +64,7 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       skalFastsetteGrunnlag = andel.some((atAndel) => atAndel.skalFastsetteGrunnlag === true);
       inntekt = andel && andel.length > 0 ? andel.reduce((a, b) => a + b.bruttoPrAar, 0) : undefined;
       break;
-    case 'SN':
+    case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
       inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
       break;
@@ -100,12 +100,12 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
   );
 
   // legg til regler for særtilfeller
-  if (((atElement && atElement.verdi) < (snElement && snElement.verdi)) && harAksjonspunkter) {
+  if (hentVerdiFraAndel(atElement) < (hentVerdiFraAndel(snElement) && harAksjonspunkter)) {
     rowsAndeler.push(snElement);
     return;
   }
-  if ((atElement && atElement.verdi) > (snElement && snElement.verdi)) {
-    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT>SN" />);
+  if (hentVerdiFraAndel(atElement) > hentVerdiFraAndel(snElement)) {
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN" />);
     rowsAndeler.push(atElement);
     return;
   }
@@ -130,7 +130,7 @@ const settVisningsRaderForATFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
   );
   if (!harAksjonspunkter) {
     if ((hentVerdiFraAndel(atElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-      rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FL>SN" />);
+      rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_FLoverstigerSN" />);
       rowsAndeler.push(atElement);
       rowsAndeler.push(flElement);
     } else {
@@ -165,7 +165,7 @@ const settVisningsRaderForDPFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     vilkarStatus,
   );
   if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(flElement)) > hentVerdiFraAndel(snElement)) {
-    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN" />);
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FLoverstigerSN" />);
     rowsAndeler.push(flElement);
   } else {
     // TODO: Avklar hva vi skal vise her min tolkning er kun snAndel
@@ -190,7 +190,7 @@ const settVisningsRaderForATDPSN = (periode, rowsAndeler, rowsForklaringer, vilk
   );
 
   if ((hentVerdiFraAndel(dpElement) + hentVerdiFraAndel(atElement)) > hentVerdiFraAndel(snElement)) {
-    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN" />);
+    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DPoverstigerSN" />);
     rowsAndeler.push(atElement);
   } else {
     rowsAndeler.push(atElement);

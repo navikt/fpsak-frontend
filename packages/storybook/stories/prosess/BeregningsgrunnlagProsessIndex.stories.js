@@ -690,6 +690,7 @@ export const infoTrygdYtelse = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -754,6 +755,7 @@ export const naturalYtelse = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -783,6 +785,7 @@ export const frilansDagpengerOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -836,6 +839,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -879,7 +883,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   ];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = 654985;
+  andeler[0].pgiSnitt = undefined;
   // const perioder = [lagStandardPeriode(andeler)];
   const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
   perioder[0].avkortetPrAar = 599148;
@@ -914,6 +918,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -1020,6 +1025,7 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivendeUtenAksjonspunkt 
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -1049,6 +1055,7 @@ export const arbeidstakerIkkeOppfylt = () => {
       behandling={behandling}
       beregningsgrunnlag={bg}
       submitCallback={action('button-click')}
+      aksjonspunkter={[]}
       readOnly={false}
       readOnlySubmitButton={false}
       apCodes={[]}

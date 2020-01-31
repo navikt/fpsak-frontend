@@ -204,7 +204,7 @@ describe('<BeregningsresultatTable2>', () => {
       expect(andelLabelFL.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.FL');
       expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(flAndel.bruttoPrAar));
       const forklaringLabel = rowsForklaringer[0];
-      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FL>SN');
+      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FLoverstigerSN');
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
@@ -254,7 +254,7 @@ describe('<BeregningsresultatTable2>', () => {
       expect(andelLabelAT.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Fastsatt.AT');
       expect(formatCurrencyNoKr(rowsAndeler[0].verdi)).to.equal(formatCurrencyNoKr(300001));
       const forklaringLabel = rowsForklaringer[0];
-      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DP>SN');
+      expect(forklaringLabel.props.id).to.equal('Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAT_DPoverstigerSN');
       expect(dagsatser.verdi).to.equal(formatCurrencyNoKr(beregningsgrunnlagPerioder[0].dagsats));
     });
   });
