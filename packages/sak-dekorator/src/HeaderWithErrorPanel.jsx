@@ -1,6 +1,8 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, {
+  useState, useMemo, useCallback, useEffect, useRef,
+} from 'react';
 import PropTypes from 'prop-types';
-import BoxedListWithSelection from '@navikt/boxed-list-with-selection';
+import BoxedListWithLinks from '@navikt/boxed-list-with-links';
 import Header from '@navikt/nap-header';
 import Popover from '@navikt/nap-popover';
 import SystemButton from '@navikt/nap-system-button';
@@ -19,6 +21,30 @@ const intl = createIntl({
   locale: 'nb-NO',
   messages,
 }, cache);
+
+
+const useOutsideClickEvent = (erLenkepanelApent, setLenkePanelApent) => {
+  const wrapperRef = useRef(null);
+  const handleClickOutside = useCallback((event) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setLenkePanelApent(false);
+    }
+  }, [wrapperRef.current]);
+
+  useEffect(() => {
+    if (erLenkepanelApent) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [erLenkepanelApent]);
+
+  return wrapperRef;
+};
+
 /**
  * HeaderWithErrorPanel
  *
@@ -36,24 +62,30 @@ const HeaderWithErrorPanel = ({
   errorMessages,
 }) => {
   const [erLenkepanelApent, setLenkePanelApent] = useState(false);
+  const wrapperRef = useOutsideClickEvent(erLenkepanelApent, setLenkePanelApent);
+
   const lenkerFormatertForBoxedList = useMemo(() => iconLinks.map((link) => ({
     name: link.text,
     href: link.url,
     isExternal: true,
   })), []);
   const popperPropsChildren = useCallback(() => (
-    <BoxedListWithSelection
-      items={lenkerFormatertForBoxedList}
-      onClick={() => {
-        setLenkePanelApent(false);
-      }}
-    />
+    <div ref={wrapperRef}>
+      <BoxedListWithLinks
+        items={lenkerFormatertForBoxedList}
+        onClick={() => {
+          setLenkePanelApent(false);
+        }}
+      />
+    </div>
   ), []);
   const referencePropsChildren = useCallback(({ ref }) => (
     <div ref={ref}>
       <SystemButton
         onClick={() => {
-          setLenkePanelApent(!erLenkepanelApent);
+          if (!erLenkepanelApent) {
+            setLenkePanelApent(!erLenkepanelApent);
+          }
         }}
         isToggled={erLenkepanelApent}
       />
@@ -67,7 +99,7 @@ const HeaderWithErrorPanel = ({
           <Popover
             popperIsVisible={erLenkepanelApent}
             renderArrowElement
-            customPopperStyles={{ top: '8px', zIndex: 1 }}
+            customPopperStyles={{ top: '11px', zIndex: 1 }}
             popperProps={{
               children: popperPropsChildren,
               placement: 'bottom-start',

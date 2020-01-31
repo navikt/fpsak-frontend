@@ -2547,10 +2547,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@navikt/boxed-list-with-selection@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-selection/-/boxed-list-with-selection-1.0.0.tgz#6e00b1f17c71dc00a3004406cb82643fb643d2ac"
-  integrity sha512-IWEQHphCFLZSrYnkIre8GRz12ZYwMBIhge0MTUcB/0eoL0nuO2cwVMg9EBO6YfS8HjUCvnJsYXXUSG6CCZcJDw==
+"@navikt/boxed-list-with-links@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-links/-/boxed-list-with-links-1.0.3.tgz#d3a94dcd2f7cff0cbb8149ac9c561f21972bfc82"
+  integrity sha512-0iU81T5mp3zTRgksA/IzPdk6UerxZC03jnfbF7FWyjD5Y1KB8NL8sVZs9KUng5Or/pRtQkAWE9VNEfdILGW5dw==
   dependencies:
     "@navikt/boxed-list" "1.0.2"
     "@navikt/nap-bem-utils" "1.0.1"
