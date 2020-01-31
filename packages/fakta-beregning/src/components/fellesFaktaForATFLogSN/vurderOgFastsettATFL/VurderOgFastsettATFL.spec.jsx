@@ -132,7 +132,7 @@ describe('<VurderOgFastsettATFL>', () => {
     const transformed = VurderOgFastsettATFL.transformValues(faktaOmBeregning, beregningsgrunnlag)(values).fakta;
     expect(transformed.fastsattUtenInntektsmelding.andelListe.length).to.equal(1);
     expect(transformed.fastsattUtenInntektsmelding.andelListe[0].andelsnr).to.equal(1);
-    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsatteVerdier.fastsattBeløp).to.equal(10000);
+    expect(transformed.fastsattUtenInntektsmelding.andelListe[0].fastsattBeløp).to.equal(10000);
     expect(transformed.fastsettMaanedsinntektFL.maanedsinntekt).to.equal(30000);
     expect(transformed.faktaOmBeregningTilfeller.length).to.equal(4);
     expect(transformed.faktaOmBeregningTilfeller.includes(VURDER_NYOPPSTARTET_FL)).to.equal(true);
