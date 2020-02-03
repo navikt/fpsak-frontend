@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  createIntl, createIntlCache, FormattedMessage, RawIntlProvider,
+  createIntl, createIntlCache, FormattedHTMLMessage, RawIntlProvider,
 } from 'react-intl';
 
 import { Innholdstittel } from 'nav-frontend-typografi';
@@ -25,7 +25,7 @@ const ErrorPageWrapper = ({ children, titleCode }) => (
   <RawIntlProvider value={intl}>
     <div className={pageContainer}>
       <Innholdstittel>
-        <FormattedMessage id={titleCode} />
+        <FormattedHTMLMessage id={titleCode} />
       </Innholdstittel>
       <br />
       {children}

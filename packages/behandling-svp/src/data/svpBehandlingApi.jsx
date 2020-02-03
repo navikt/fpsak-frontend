@@ -39,60 +39,47 @@ export const SvpBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  /* /api/behandlinger */
   .withAsyncPost('/fpsak/api/behandlinger', SvpBehandlingApiKeys.BEHANDLING_SVP)
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', SvpBehandlingApiKeys.UPDATE_ON_HOLD)
 
-  /* /api/behandling */
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', SvpBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', SvpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
+  // behandlingsdata
+  .withRel('aksjonspunkter', SvpBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', SvpBehandlingApiKeys.VILKAR)
+  .withRel('soeker-personopplysninger', SvpBehandlingApiKeys.PERSONOPPLYSNINGER)
+  .withRel('simuleringResultat', SvpBehandlingApiKeys.SIMULERING_RESULTAT)
+  .withRel('tilbakekrevingvalg', SvpBehandlingApiKeys.TILBAKEKREVINGVALG)
+  .withRel('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
+  .withRel('beregningsgrunnlag', SvpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT)
+  .withRel('familiehendelse-v2', SvpBehandlingApiKeys.FAMILIEHENDELSE)
+  .withRel('soknad', SvpBehandlingApiKeys.SOKNAD)
+  .withRel('beregningsresultat-engangsstonad-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
+  .withRel('soeker-medlemskap', SvpBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel('uttak-periode-grense', SvpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
+  .withRel('inntekt-arbeid-ytelse', SvpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('soeker-verge', SvpBehandlingApiKeys.VERGE)
+  .withRel('ytelsefordeling', SvpBehandlingApiKeys.YTELSEFORDELING)
+  .withRel('opptjening', SvpBehandlingApiKeys.OPPTJENING)
+  .withRel('sendt-varsel-om-revurdering', SvpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('svangerskapspenger-tilrettelegging', SvpBehandlingApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING)
 
-  /* fptilbake/api/dokument */
+  // operasjoner
+  .withRel('bytt-behandlende-enhet', SvpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', SvpBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', SvpBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+  .withRel('sett-behandling-pa-vent', SvpBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', SvpBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withRel('opne-for-endringer', SvpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+  .withRel('lagre-aksjonspunkter', SvpBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+  .withRel('lagre-overstyr-aksjonspunkter', SvpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+  .withRel('opprett-verge', SvpBehandlingApiKeys.VERGE_OPPRETT, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+  .withRel('fjern-verge', SvpBehandlingApiKeys.VERGE_FJERN, { saveResponseIn: SvpBehandlingApiKeys.BEHANDLING_SVP })
+
+  /* FPTILBAKE */
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', SvpBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
 
-  /* /api/brev */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', SvpBehandlingApiKeys.PREVIEW_MESSAGE)
-
-  .withInjectedPath('aksjonspunkter', SvpBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', SvpBehandlingApiKeys.VILKAR)
-  .withInjectedPath('soeker-personopplysninger', SvpBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withInjectedPath('simuleringResultat', SvpBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withInjectedPath('tilbakekrevingvalg', SvpBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withInjectedPath('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
-  .withInjectedPath('beregningsgrunnlag', SvpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withInjectedPath('beregningsresultat-foreldrepenger', SvpBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withInjectedPath('familiehendelse-v2', SvpBehandlingApiKeys.FAMILIEHENDELSE)
-  .withInjectedPath('soknad', SvpBehandlingApiKeys.SOKNAD)
-  .withInjectedPath('beregningsresultat-engangsstonad-original-behandling', SvpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withInjectedPath('soeker-medlemskap', SvpBehandlingApiKeys.MEDLEMSKAP)
-  .withInjectedPath('soeker-medlemskap-v2', SvpBehandlingApiKeys.MEDLEMSKAP_V2)
-  .withInjectedPath('uttak-periode-grense', SvpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
-  .withInjectedPath('inntekt-arbeid-ytelse', SvpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
-  .withInjectedPath('soeker-verge', SvpBehandlingApiKeys.VERGE)
-  .withInjectedPath('ytelsefordeling', SvpBehandlingApiKeys.YTELSEFORDELING)
-  .withInjectedPath('opptjening', SvpBehandlingApiKeys.OPPTJENING)
-  .withInjectedPath('sendt-varsel-om-revurdering', SvpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withInjectedPath('svangerskapspenger-tilrettelegging', SvpBehandlingApiKeys.SVANGERSKAPSPENGER_TILRETTELEGGING)
-
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', SvpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', SvpBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', SvpBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', SvpBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/fpsak/api/behandlinger/opne-for-endringer', SvpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
-  .withPost('/fpsak/api//verge/opprett', SvpBehandlingApiKeys.VERGE_OPPRETT, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
-  .withPost('/fpsak/api//verge/fjern', SvpBehandlingApiKeys.VERGE_FJERN, {
-    storeResultKey: SvpBehandlingApiKeys.BEHANDLING_SVP,
-  })
 
   .build();
 
