@@ -395,6 +395,7 @@
   "HistorikkEndretFeltVerdiType.GraderingFPAleneomsorg": "Gradering foreldrepenger ved aleneomsorg",
   "HistorikkEndretFeltVerdiType.GraderingFPKunFarRett": "Gradering foreldrepenger, kun far har rett",
   "HistorikkEndretFeltVerdiType.GraderingFPMorFarRett": "Gradering foreldrepenger, kun mor har rett",
+  "HistorikkEndretFeltVerdiType.KunFarHarRettOgMorErUfor": "Innvilget foreldrepenger, kun far har rett og mor er ufør",
   "HistorikkEndretFeltVerdiType.Avslått": "Ikke oppfylt",
   "HistorikkEndretFeltVerdiType.IkkeFastsatt": "ikke fastsatt",
   "HistorikkEndretFeltVerdiType.Modrekvote": "Mødrekvote",
