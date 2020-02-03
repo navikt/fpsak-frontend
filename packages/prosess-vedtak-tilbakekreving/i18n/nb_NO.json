@@ -14,9 +14,10 @@
   "TilbakekrevingVedtakPeriodeTabell.ForSkatt": "Beløp før skatt",
   "TilbakekrevingVedtakPeriodeTabell.BelopSomTilbakekreves": "Beløp etter skatt",
   "TilbakekrevingVedtakPeriodeTabell.Sum": "Sum",
-  
+
   "TilbakekrevingVedtakForm.TilGodkjenning": "Til godkjenning",
   "TilbakekrevingVedtakForm.ForhandvisBrev": "Forhåndsvis brev",
+  "TilbakekrevingVedtakForm.Infotekst.Klage": "Vedtaksbrev sendes ikke ut fra denne behandlingen, men må sendes av saksbehandler fra klagebehandlingen",
 
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",

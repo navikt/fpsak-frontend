@@ -20,29 +20,25 @@ export const AnkeBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandlinger', AnkeBehandlingApiKeys.BEHANDLING_ANKE)
-  .withInjectedPath('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', AnkeBehandlingApiKeys.VILKAR)
-  .withInjectedPath('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', AnkeBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  // behandlingsdata
+  .withRel('aksjonspunkter', AnkeBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', AnkeBehandlingApiKeys.VILKAR)
+  .withRel('anke-vurdering', AnkeBehandlingApiKeys.ANKE_VURDERING)
 
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
+  // operasjoner
+  .withRel('bytt-behandlende-enhet', AnkeBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', AnkeBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', AnkeBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE })
+  .withRel('sett-behandling-pa-vent', AnkeBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', AnkeBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withRel('lagre-aksjonspunkter', AnkeBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE })
+  .withRel('mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
+  .withRel('mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING, { saveResponseIn: AnkeBehandlingApiKeys.BEHANDLING_ANKE })
 
-  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-anke', AnkeBehandlingApiKeys.SAVE_ANKE_VURDERING)
-  .withAsyncPost('/fpsak/api/behandling/anke/mellomlagre-gjennapne-anke', AnkeBehandlingApiKeys.SAVE_REOPEN_ANKE_VURDERING, {
-    storeResultKey: AnkeBehandlingApiKeys.BEHANDLING_ANKE,
-  })
-
-  /* fpformidling */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', AnkeBehandlingApiKeys.PREVIEW_MESSAGE)
+
   .build();
 
 const reducerName = 'dataContextAnkeBehandling';

@@ -86,7 +86,6 @@ export class VedtakRevurderingFormImpl extends Component {
       brødtekst,
       overskrift,
       initialValues,
-      erBehandlingHenlagt,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
@@ -96,6 +95,7 @@ export class VedtakRevurderingFormImpl extends Component {
       resultatstrukturOriginalBehandling,
       behandlingArsaker,
       medlemskapFom,
+      beregningErManueltFastsatt,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
@@ -111,7 +111,6 @@ export class VedtakRevurderingFormImpl extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           <VerticalSpacer eightPx />
           <>
@@ -134,11 +133,11 @@ export class VedtakRevurderingFormImpl extends Component {
                 readOnly={readOnly}
                 beregningResultat={resultatstruktur}
                 sprakKode={sprakkode}
-                aksjonspunkter={aksjonspunkter}
                 tilbakekrevingvalg={tilbakekrevingvalg}
                 simuleringResultat={simuleringResultat}
                 alleKodeverk={alleKodeverk}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
+                beregningErManueltFastsatt={beregningErManueltFastsatt}
               />
             )}
             {isAvslag(behandlingresultat.type.kode) && (
@@ -158,7 +157,6 @@ export class VedtakRevurderingFormImpl extends Component {
             )}
             {isOpphor(behandlingresultat.type.kode) && (
               <VedtakOpphorRevurderingPanel
-                aksjonspunkter={aksjonspunkter}
                 revurderingsAarsakString={revurderingsAarsakString}
                 ytelseTypeKode={ytelseTypeKode}
                 readOnly={readOnly}
@@ -166,6 +164,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 sprakKode={sprakkode}
                 medlemskapFom={medlemskapFom}
                 resultatstruktur={resultatstruktur}
+                beregningErManueltFastsatt={beregningErManueltFastsatt}
               />
             )}
 
@@ -218,6 +217,7 @@ VedtakRevurderingFormImpl.propTypes = {
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 

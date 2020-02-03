@@ -94,7 +94,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
       <Element className={beregningStyles.semiBoldText}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
-      <VerticalSpacer fourPx />
+      <VerticalSpacer eightPx />
       <Row key="SNInntektIngress">
         <Column xs="8">
           <Normaltekst>
