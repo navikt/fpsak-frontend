@@ -140,6 +140,9 @@ const getInfoTextCode = createSelector(
     if (behandlingtypeKode === BehandlingType.TILBAKEKREVING) {
       return 'FatterVedtakApprovalModal.Tilbakekreving';
     }
+    if (behandlingtypeKode === BehandlingType.TILBAKEKREVING_REVURDERING) {
+      return 'FatterVedtakApprovalModal.TilbakekrevingRevurdering';
+    }
     if (behandlingtypeKode === BehandlingType.KLAGE) {
       if (erKlageWithKA) {
         return 'FatterVedtakApprovalModal.ModalDescriptionKlageKA';
