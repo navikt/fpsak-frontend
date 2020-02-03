@@ -146,6 +146,7 @@
   "FatterVedtakApprovalModal.ModalDescriptionKlage": "Resultatet av klagebehandlingen blir iverksatt",
   "FatterVedtakApprovalModal.ModalDescriptionKlageKA": "Returneres til saksbehandler for iverksettelse",
   "FatterVedtakApprovalModal.Tilbakekreving": "Tilbakekreving er vedtatt og iverksatt",
+  "FatterVedtakApprovalModal.TilbakekrevingRevurdering": "Tilbakekreving revurdering er vedtatt og iverksatt",
 
   "ValidationMessage.NotEmpty": "Feltet må fylles ut",
   "ValidationMessage.MinLength": "Du må skrive minst {length} tegn",
