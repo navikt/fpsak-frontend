@@ -12,7 +12,6 @@ import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import {
-  endringerIBeregningsgrunnlagGirFritekstfelt,
   findAvslagResultatText,
   findTilbakekrevingText,
   hasIkkeOppfyltSoknadsfristvilkar,
@@ -39,12 +38,12 @@ export const VedtakAvslagPanelImpl = ({
   ytelseTypeKode,
   tilbakekrevingText,
   alleKodeverk,
+  beregningErManueltFastsatt,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   const fritekstfeltForSoknadsfrist = behandlingStatusKode === behandlingStatus.BEHANDLING_UTREDES
     && hasIkkeOppfyltSoknadsfristvilkar(vilkar) && ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD;
-  const fritekstfeltForBeregningsgrunnlag = endringerIBeregningsgrunnlagGirFritekstfelt(aksjonspunkter, ytelseTypeKode);
-  const textCode = fritekstfeltForBeregningsgrunnlag ? 'VedtakForm.Fritekst.Beregningsgrunnlag' : 'VedtakForm.Fritekst';
+  const textCode = beregningErManueltFastsatt ? 'VedtakForm.Fritekst.Beregningsgrunnlag' : 'VedtakForm.Fritekst';
   return (
     <div>
       <Undertekst>{intl.formatMessage({ id: 'VedtakForm.Resultat' })}</Undertekst>
@@ -64,7 +63,7 @@ export const VedtakAvslagPanelImpl = ({
           <VerticalSpacer sixteenPx />
         </div>
       )}
-      {(fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || fritekstfeltForBeregningsgrunnlag) && (
+      {(fritekstfeltForSoknadsfrist || behandlingsresultat.avslagsarsakFritekst || beregningErManueltFastsatt) && (
         <VedtakFritekstPanel
           readOnly={readOnly}
           sprakkode={sprakkode}
@@ -87,6 +86,7 @@ VedtakAvslagPanelImpl.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   tilbakekrevingText: PropTypes.string,
   alleKodeverk: PropTypes.shape().isRequired,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
 };
 
 VedtakAvslagPanelImpl.defaultProps = {

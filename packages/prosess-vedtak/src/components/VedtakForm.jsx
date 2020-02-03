@@ -122,6 +122,7 @@ export class VedtakForm extends Component {
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
+      beregningErManueltFastsatt,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -165,6 +166,7 @@ export class VedtakForm extends Component {
               alleKodeverk={alleKodeverk}
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -180,6 +182,7 @@ export class VedtakForm extends Component {
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
               vilkar={vilkar}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -242,6 +245,7 @@ VedtakForm.propTypes = {
   alleKodeverk: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   ...formPropTypes,
 };
