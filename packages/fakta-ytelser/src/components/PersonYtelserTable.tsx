@@ -5,13 +5,21 @@ import { Normaltekst } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import { Table, TableColumn, TableRow } from '@fpsak-frontend/shared-components';
-import { InntektArbeidYtelse, Kodeverk } from '@fpsak-frontend/types';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './personYtelserTable.less';
 
 interface OwnProps {
-  inntektArbeidYtelse: InntektArbeidYtelse;
-  relatertYtelseTypes: Kodeverk[];
+  ytelser: {
+    relatertYtelseType: string;
+    tilgrensendeYtelserListe?: {
+      periodeTilDato: string;
+      periodeFraDato: string;
+      status: string;
+      saksNummer: string;
+    }[];
+  }[];
+  relatertYtelseTyper: Kodeverk[];
   relatertYtelseStatus: Kodeverk[];
 }
 
@@ -34,12 +42,10 @@ const formatDateToDDMMYYYY = (date) => {
  */
 export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  inntektArbeidYtelse,
+  ytelser,
   relatertYtelseTyper,
   relatertYtelseStatus,
 }) => {
-  const ytelser = inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker;
-
   const ytelseRows = ytelser && ytelser.map((ytelse) => {
     const ytelseNavn = relatertYtelseTyper.filter((type) => type.kode === ytelse.relatertYtelseType)[0].navn;
     if (ytelse.tilgrensendeYtelserListe.length === 0) {
@@ -67,17 +73,18 @@ export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentPr
   }).reduce((a, b) => a.concat(b), []);
 
   return (
-    <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>
-      {ytelseRows && ytelseRows.map((ytelse, index) => (
-        <TableRow key={`index${index + 1}`}>
-          <TableColumn><Normaltekst>{ytelse.navn}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.status}</Normaltekst></TableColumn>
-          <TableColumn><Normaltekst>{ytelse.saksnummer}</Normaltekst></TableColumn>
-        </TableRow>
-      ))}
-    </Table>
-
+    <div className={styles.container}>
+      <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>
+        {ytelseRows && ytelseRows.map((ytelse, index) => (
+          <TableRow key={`index${index + 1}`}>
+            <TableColumn>{ytelse.navn ? <Normaltekst>{ytelse.navn}</Normaltekst> : ''}</TableColumn>
+            <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
+            <TableColumn>{ytelse.status ? <Normaltekst>{ytelse.status}</Normaltekst> : ''}</TableColumn>
+            <TableColumn>{ytelse.saksnummer ? <Normaltekst>{ytelse.saksnummer}</Normaltekst> : ''}</TableColumn>
+          </TableRow>
+        ))}
+      </Table>
+    </div>
   );
 };
 

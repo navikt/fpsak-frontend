@@ -3,7 +3,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { InntektArbeidYtelse, Kodeverk } from '@fpsak-frontend/types';
-import PersonYtelserTable from './components/PersonYtelserTable';
+import YtelserFaktaPanel from './components/YtelserFaktaPanel';
 import messages from '../i18n/nb_NO';
 
 interface OwnProps {
@@ -23,7 +23,7 @@ const YtelserFaktaIndex: FunctionComponent<OwnProps> = ({
   alleKodeverk,
 }) => (
   <RawIntlProvider value={intl}>
-    <PersonYtelserTable
+    <YtelserFaktaPanel
       inntektArbeidYtelse={inntektArbeidYtelse}
       relatertYtelseTyper={alleKodeverk[kodeverkTyper.RELATERT_YTELSE_TYPE]}
       relatertYtelseStatus={[

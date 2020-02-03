@@ -4,5 +4,8 @@
   "PersonYtelserTable.Periode": "Periode",
   "PersonYtelserTable.Status": "Status",
   "PersonYtelserTable.Saksnummer": "Saksnr.",
-  "PersonYtelserTable.Ingen": "Ingen"
+  "PersonYtelserTable.Ingen": "Ingen",
+
+  "YtelserFaktaPanel.SokersYtelser": "Søkers ytelser",
+  "YtelserFaktaPanel.AnnenPartsYtelser": "Annen parts ytelser"
 }

@@ -21,5 +21,4 @@ export { default as faktaHooks } from './src/util/faktaHooks';
 export { default as prosessStegHooks } from './src/util/prosessStegHooks';
 
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
-export { default as KodeverkMedNavn } from './src/types/kodeverkMedNavnTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';

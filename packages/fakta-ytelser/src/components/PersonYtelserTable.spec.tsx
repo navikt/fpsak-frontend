@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { PersonYtelserTable } from './PersonYtelserTable';
-import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-person';
+import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-ytelser';
 
 describe('<PersonYtelserTable>', () => {
   const ytelser = [{
@@ -53,7 +53,7 @@ describe('<PersonYtelserTable>', () => {
     const wrapper = shallowWithIntl(<PersonYtelserTable
       intl={intlMock}
       ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
+      relatertYtelseTyper={relatertYtelseTypes}
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
@@ -64,7 +64,7 @@ describe('<PersonYtelserTable>', () => {
     const wrapper = shallowWithIntl(<PersonYtelserTable
       intl={intlMock}
       ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
+      relatertYtelseTyper={relatertYtelseTypes}
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
@@ -76,7 +76,7 @@ describe('<PersonYtelserTable>', () => {
     const wrapper = shallowWithIntl(<PersonYtelserTable
       intl={intlMock}
       ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
+      relatertYtelseTyper={relatertYtelseTypes}
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
@@ -90,7 +90,7 @@ describe('<PersonYtelserTable>', () => {
     const wrapper = shallowWithIntl(<PersonYtelserTable
       intl={intlMock}
       ytelser={ytelser}
-      relatertYtelseTypes={relatertYtelseTypes}
+      relatertYtelseTyper={relatertYtelseTypes}
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
