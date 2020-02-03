@@ -2,9 +2,7 @@ import { SetStateAction, ReactNode } from 'react';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
-
-import Aksjonspunkt from './aksjonspunktTsType';
-import Vilkar from './vilkarTsType';
+import { Aksjonspunkt, Vilkar } from '@fpsak-frontend/types';
 
 export interface ProsessStegPanelData {
   code: string;

@@ -1,7 +1,7 @@
 import {
   BeregningsresultatFp, Aksjonspunkt, Vilkar, Personopplysninger, Soknad, InntektArbeidYtelse,
   Beregningsgrunnlag, SimuleringResultat,
-} from '@fpsak-frontend/behandling-felles';
+} from '@fpsak-frontend/types';
 
 interface FetchedData {
   aksjonspunkter: Aksjonspunkt[];
