@@ -32,7 +32,8 @@ const faktaPanelDefinisjoner = [{
   aksjonspunkterCodes: [],
   endpoints: [],
   renderComponent: (props) => <YtelserFaktaIndex {...props} />,
-  showComponent: ({ inntektArbeidYtelse }) => !!inntektArbeidYtelse,
+  showComponent: ({ inntektArbeidYtelse }) => inntektArbeidYtelse
+    && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker.length > 0,
   getData: ({ inntektArbeidYtelse }) => ({ inntektArbeidYtelse }),
 }, {
   urlCode: faktaPanelCodes.VERGE,
