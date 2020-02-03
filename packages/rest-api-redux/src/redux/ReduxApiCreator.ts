@@ -16,8 +16,8 @@ class ReduxApiCreator {
     const endpointNames = requestApi.getEndpointNames();
     endpointNames.forEach((endpointName) => {
       const requestRunner = requestApi.getRequestRunner(endpointName);
-      const { storeResultKey } = requestRunner.getConfig().config;
-      const resultKeyActionCreators = storeResultKey ? this.getEndpoint(storeResultKey).actionCreators : undefined;
+      const { saveResponseIn } = requestRunner.getConfig().config;
+      const resultKeyActionCreators = saveResponseIn ? this.getEndpoint(saveResponseIn).actionCreators : undefined;
       this.ducks.push(new RestDuck(requestRunner, getRestApiState, reduxEvents, resultKeyActionCreators));
     });
   }

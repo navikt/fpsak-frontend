@@ -9,18 +9,18 @@ import ReduxEvents from './redux/ReduxEvents';
 const getDataContext = (reducerName: string) => (state: any) => state.default[reducerName];
 
 const replaceWithConfigFromAnotherKey = (configs: RequestConfig[]) => configs.map((c) => {
-  if (!c.config.storeResultKey) {
+  if (!c.config.saveResponseIn) {
     return c;
   }
 
-  const otherConfig = configs.find((c2) => c2.name === c.config.storeResultKey);
+  const otherConfig = configs.find((c2) => c2.name === c.config.saveResponseIn);
   if (!otherConfig) {
-    throw Error(`Could not find config for key ${c.config.storeResultKey}`);
+    throw Error(`Could not find config for key ${c.config.saveResponseIn}`);
   }
 
   const newConfig = {
     ...otherConfig.config,
-    storeResultKey: c.config.storeResultKey,
+    saveResponseIn: c.config.saveResponseIn,
   };
   return new RequestConfig(c.name, c.path, newConfig).withRel(c.rel).withRestMethod(c.restMethod);
 });

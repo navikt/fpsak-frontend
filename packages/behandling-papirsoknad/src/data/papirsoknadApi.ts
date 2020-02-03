@@ -15,17 +15,18 @@ export const PapirsoknadApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandlinger', PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD)
-  .withInjectedPath('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', PapirsoknadApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD,
-  })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
+  // behandlingsdata
+  .withRel('aksjonspunkter', PapirsoknadApiKeys.AKSJONSPUNKTER)
 
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
+  // operasjoner
+  .withRel('bytt-behandlende-enhet', PapirsoknadApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', PapirsoknadApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', PapirsoknadApiKeys.RESUME_BEHANDLING, { saveResponseIn: PapirsoknadApiKeys.BEHANDLING_PAPIRSOKNAD })
+  .withRel('sett-behandling-pa-vent', PapirsoknadApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', PapirsoknadApiKeys.UPDATE_ON_HOLD)
+  .withRel('lagre-aksjonspunkter', PapirsoknadApiKeys.SAVE_AKSJONSPUNKT)
+
   .build();
 
 const reducerName = 'dataContextPapirsoknad';

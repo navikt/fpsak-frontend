@@ -2,5 +2,5 @@
 // eslint-disable-next-line import/prefer-default-export
 export type RequestAdditionalConfig = Readonly<{
   maxPollingLimit?: number;
-  storeResultKey?: string;
+  saveResponseIn?: string;
 }>

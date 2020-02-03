@@ -143,7 +143,6 @@ describe('<FagsakProfile>', () => {
       intl={intlMock}
     />);
 
-    console.log(wrapper.debug()); // eslint-disable-line
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);
     expect(systemtittel.childAt(0).text()).is.eql('Foreldrepenger');
@@ -188,7 +187,6 @@ describe('<FagsakProfile>', () => {
       intl={intlMock}
     />);
 
-    console.log(wrapper.debug()); // eslint-disable-line
     const systemtittel = wrapper.find(Systemtittel);
     expect(systemtittel).to.have.length(1);
     expect(systemtittel.childAt(0).text()).is.eql('Foreldrepenger');
