@@ -761,6 +761,10 @@ const historikkEndretFeltVerdiTypeCodes = {
     kode: 'INNVILGET_AARSAK',
     verdiId: 'HistorikkEndretFeltVerdiType.GraderingFPMorFarRett',
   },
+  2036: {
+    kode: 'INNVILGET_AARSAK',
+    verdiId: 'HistorikkEndretFeltVerdiType.KunFarHarRettOgMorErUfor',
+  },
   VERGE: {
     kode: 'VERGE',
     verdiId: 'HistorikkEndretFeltVerdiType.VergeFullmektig',
