@@ -9,7 +9,7 @@ import { Undertittel } from 'nav-frontend-typografi';
 
 import { DDMMYYYY_DATE_FORMAT, omit } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpText, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
+  AksjonspunktHelpTextTemp, FadingPanel, FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, FaktaGruppe, BehandlingspunktSubmitButton,
@@ -192,9 +192,9 @@ export class ForeldelseForm extends Component {
             )}
             {foreldelsesresultatActivity && apCodes[0] && (
               <>
-                <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+                <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
                   { getApTekst(apCodes[0]) }
-                </AksjonspunktHelpText>
+                </AksjonspunktHelpTextTemp>
                 <VerticalSpacer twentyPx />
                 <TilbakekrevingTimelinePanel
                   perioder={perioderFormatertForTidslinje}

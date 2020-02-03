@@ -1,7 +1,9 @@
 import React from 'react';
 import beregningsgrunnlagAndeltyper from '@fpsak-frontend/kodeverk/src/beregningsgrunnlagAndeltyper';
 import AktivitetStatus, { aktivitetstatusTilAndeltypeMap } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
-import { formatCurrencyNoKr, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import {
+  dateIsAfter, formatCurrencyNoKr, removeSpacesFromNumber, required,
+} from '@fpsak-frontend/utils';
 import { erAAPEllerArbeidsgiverOgSkalFlytteMellomAAPOgArbeidsgiver, GRADERING_RANGE_DENOMINATOR, mapToBelop } from './BgFordelingUtils';
 import TotalbelopPrArbeidsgiverError, { lagTotalInntektArbeidsforholdList } from './TotalbelopPrArbeidsgiverError';
 import { createVisningsnavnForAktivitet } from './util/visningsnavnHelper';
@@ -162,8 +164,9 @@ export const validateRefusjonsbelop = (refusjonskrav, skalKunneEndreRefusjon) =>
   return refusjonskravError;
 };
 
-const validateFordelingForGradertAndel = (andel) => {
-  if (!andel.andelIArbeid) {
+const validateFordelingForGradertAndel = (andel, periodeDato) => {
+  const arbeidsforholdIkkeOpphørt = !andel.arbeidsperiodeTom || dateIsAfter(andel.arbeidsperiodeTom, periodeDato.fom);
+  if (!andel.andelIArbeid || !arbeidsforholdIkkeOpphørt) {
     return null;
   }
   if (!Number.isNaN(Number(andel.andelIArbeid))) {
@@ -210,7 +213,7 @@ export const validateAgainstBeregningsgrunnlag = (andelFieldValues, totalInntekt
 };
 
 export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar,
-  getKodeverknavn) => {
+  getKodeverknavn, periodeDato) => {
   let fastsattBelopError = required(andelFieldValues.fastsattBelop);
   if (!fastsattBelopError) {
     fastsattBelopError = validateAgainstBeregningsgrunnlag(
@@ -221,7 +224,7 @@ export const validateFastsattBelop = (andelFieldValues, totalInntektArbeidsforho
     );
   }
   if (!fastsattBelopError) {
-    fastsattBelopError = validateFordelingForGradertAndel(andelFieldValues);
+    fastsattBelopError = validateFordelingForGradertAndel(andelFieldValues, periodeDato);
   }
   return fastsattBelopError;
 };
@@ -230,21 +233,22 @@ export const hasFieldErrors = (fieldErrors) => (fieldErrors.refusjonskrav || fie
   || fieldErrors.fastsattBelop || fieldErrors.inntektskategori);
 
 
-export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+export const validateAndelFields = (andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato) => {
   const {
     refusjonskrav, skalKunneEndreRefusjon,
     andel, inntektskategori,
   } = andelFieldValues;
   const fieldErrors = {};
   fieldErrors.refusjonskrav = validateRefusjonsbelop(refusjonskrav, skalKunneEndreRefusjon);
-  fieldErrors.fastsattBelop = validateFastsattBelop(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+  fieldErrors.fastsattBelop = validateFastsattBelop(andelFieldValues, totalInntektArbeidsforholdList, skalValidereMotBeregningsgrunnlagPrAar,
+    getKodeverknavn, periodeDato);
   fieldErrors.andel = required(andel);
   fieldErrors.inntektskategori = required(inntektskategori);
   return hasFieldErrors(fieldErrors) ? fieldErrors : null;
 };
 
 
-export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn) => {
+export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato) => {
   if (!values) {
     return null;
   }
@@ -255,7 +259,7 @@ export const validateAndeler = (values, skalValidereMotBeregningsgrunnlagPrAar, 
     if (!andelFieldValues.harPeriodeAarsakGraderingEllerRefusjon) {
       return null;
     }
-    return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn);
+    return validateAndelFields(andelFieldValues, totalInntektPrArbeidsforhold, skalValidereMotBeregningsgrunnlagPrAar, getKodeverknavn, periodeDato);
   });
   if (arrayErrors.some((errors) => errors !== null)) {
     if (arrayErrors.some((errors) => errors && errors.fastsattBelop && errors.fastsattBelop[0].id === tomErrorMessage()[0].id)) {

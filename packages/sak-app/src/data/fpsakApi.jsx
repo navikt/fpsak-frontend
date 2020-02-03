@@ -32,6 +32,7 @@ export const FpsakApiKeys = {
   SUBMIT_MESSAGE: 'SUBMIT_MESSAGE',
   PREVIEW_MESSAGE_TILBAKEKREVING: 'PREVIEW_MESSAGE_TILBAKEKREVING',
   PREVIEW_MESSAGE_FORMIDLING: 'PREVIEW_MESSAGE_FORMIDLING',
+  PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE: 'PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE',
   KAN_TILBAKEKREVING_OPPRETTES: 'KAN_TILBAKEKREVING_OPPRETTES',
   KAN_TILBAKEKREVING_REVURDERING_OPPRETTES: 'KAN_TILBAKEKREVING_REVURDERING_OPPRETTES',
   VERGE_MENYVALG: 'VERGE_MENYVALG',
@@ -52,8 +53,8 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fpsak/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPSAK)
   .withAsyncPut('/fpsak/api/behandlinger', FpsakApiKeys.NEW_BEHANDLING_FPSAK)
   .withGet('/fpsak/api/behandlinger/annen-part-behandling', FpsakApiKeys.ANNEN_PART_BEHANDLING)
-  .withInjectedPath('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
-  .withInjectedPath('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
+  .withRel('finn-menyvalg-for-verge', FpsakApiKeys.VERGE_MENYVALG)
+  .withRel('handling-rettigheter', FpsakApiKeys.MENYHANDLING_RETTIGHETER)
 
   /* /fptilbake/api/behandlinger */
   .withAsyncPost('/fptilbake/api/behandlinger/opprett', FpsakApiKeys.NEW_BEHANDLING_FPTILBAKE)
@@ -62,22 +63,22 @@ const endpoints = new RestApiConfigBuilder()
   .withGet('/fptilbake/api/behandlinger/alle', FpsakApiKeys.BEHANDLINGER_FPTILBAKE)
 
   /* /api/behandling/beregningsresultat */
-  .withInjectedPath('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
+  .withRel('har-samme-resultat', FpsakApiKeys.HAR_REVURDERING_SAMME_RESULTAT)
 
   /* Totrinnskontroll */
-  .withInjectedPath('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
-  .withInjectedPath('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
-  .withInjectedPath('totrinnskontroll-arsaker-readOnly', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
-  .withInjectedPath('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
+  .withRel('totrinnskontroll-arsaker', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER)
+  .withRel('bekreft-totrinnsaksjonspunkt', FpsakApiKeys.SAVE_TOTRINNSAKSJONSPUNKT)
+  .withRel('totrinnskontroll-arsaker-readOnly', FpsakApiKeys.TOTRINNSAKSJONSPUNKT_ARSAKER_READONLY)
+  .withRel('klage-vurdering', FpsakApiKeys.TOTRINNS_KLAGE_VURDERING)
 
   /* Brev */
-  .withInjectedPath('brev-maler', FpsakApiKeys.BREVMALER)
-  .withInjectedPath('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
-  .withInjectedPath('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
+  .withRel('brev-maler', FpsakApiKeys.BREVMALER)
+  .withRel('brev-bestill', FpsakApiKeys.SUBMIT_MESSAGE)
+  .withRel('har-apent-kontroller-revurdering-aksjonspunkt', FpsakApiKeys.HAR_APENT_KONTROLLER_REVURDERING_AP)
 
   /* Kontrollresultat */
-  .withInjectedPath('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
-  .withInjectedPath('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
+  .withRel('kontrollresultat', FpsakApiKeys.KONTROLLRESULTAT)
+  .withRel('risikoklassifisering-aksjonspunkt', FpsakApiKeys.RISIKO_AKSJONSPUNKT)
 
   /* /api/dokument */
   .withGet('/fpsak/api/dokument/hent-dokumentliste', FpsakApiKeys.ALL_DOCUMENTS)
@@ -106,6 +107,7 @@ const endpoints = new RestApiConfigBuilder()
   /* fpformidling/api/brev */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpsakApiKeys.PREVIEW_MESSAGE_FORMIDLING)
   .withPostAndOpenBlob('/fptilbake/api/brev/forhandsvis', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING)
+  .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-henleggelsesbrev', FpsakApiKeys.PREVIEW_MESSAGE_TILBAKEKREVING_HENLEGGELSE)
 
   /* /sprak */
   .withGet('/fpsak/public/sprak/nb_NO.json', FpsakApiKeys.LANGUAGE_FILE)

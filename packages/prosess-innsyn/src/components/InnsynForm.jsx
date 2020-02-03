@@ -12,7 +12,7 @@ import kommunikasjonsretning from '@fpsak-frontend/kodeverk/src/kommunikasjonsre
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { hasValidDate, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
@@ -50,9 +50,9 @@ export const InnsynFormImpl = ({
     <form onSubmit={formProps.handleSubmit}>
       <Undertittel><FormattedMessage id="InnsynForm.Innsynsbehandling" /></Undertittel>
       <VerticalSpacer twentyPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
         {[<FormattedMessage id="InnsynForm.VurderKravetOmInnsyn" key="1" />]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <VerticalSpacer twentyPx />
       <DatepickerField
         name="mottattDato"

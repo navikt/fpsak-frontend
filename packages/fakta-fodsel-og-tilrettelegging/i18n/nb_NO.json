@@ -10,7 +10,7 @@
   "FodselOgTilretteleggingFaktaForm.UndersokNarmere": "Det er søkt for et org.nr. eller fødselsnummer der søker ikke var ansatt da behovet for tilrettelegging oppsto. Undersøk dette nærmere, f.eks. ved å kontakte arbeidsgiver.",
 
   "TilretteleggingArbeidsforholdSection.DatepickerField.TilretteleggingFra": "Jordmor/lege oppgir at tilrettelegging er nødvendig fra og med",
-  "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søkeren skal ha tilrettelegging i dette arbeidsforholdet",
+  "TilretteleggingArbeidsforholdSection.Checkbox.SoekerSkalhaTilrettelegging": "Søker har søkt svangerskapspenger for dette arbeidsforholdet",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger": "Arbeidsgiver oppgir nødvendig tilrettelegging",
   "TilretteleggingArbeidsforholdSection.OppgitteNoedvendigeTilrettelegginger.Dato": "Dato",
 

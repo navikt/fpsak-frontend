@@ -189,6 +189,13 @@ const manuelleRevurderingsArsakerSVP = [
   behandlingArsakType.INNTEKT,
 ];
 
+const tilbakekrevingRevurderingArsaker = [
+  behandlingArsakType.RE_KLAGE_KA,
+  behandlingArsakType.RE_KLAGE_NFP,
+  behandlingArsakType.RE_VILKÅR,
+  behandlingArsakType.RE_FORELDELSE,
+];
+
 export const getBehandlingAarsaker = createSelector([
   (state, ownProps) => ownProps.ytelseType,
   (state, ownProps) => ownProps.menyKodeverk,
@@ -196,8 +203,8 @@ export const getBehandlingAarsaker = createSelector([
 (ytelseType, menyKodeverk, valgtBehandlingType) => {
   if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
     return menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
-      .filter((ba) => ba.kode !== behandlingArsakType.RE_KLAGE_KA && ba.kode !== behandlingArsakType.RE_KLAGE_NFP)
-      .sort((ba1, ba2) => ba2.navn.localeCompare(ba1.navn.length));
+      .filter((ba) => tilbakekrevingRevurderingArsaker.includes(ba.kode))
+      .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
   }
 
   if (valgtBehandlingType === bType.REVURDERING) {

@@ -19,7 +19,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 import { DDMMYYYY_DATE_FORMAT, ISO_DATE_FORMAT, required } from '@fpsak-frontend/utils';
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, FadingPanel, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import ankeVurderingOmgjoer from '@fpsak-frontend/kodeverk/src/ankeVurderingOmgjoer';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
@@ -136,9 +136,9 @@ const BehandleAnkeFormImpl = ({
     <FadingPanel>
       <Undertittel><FormattedMessage id="Ankebehandling.Title" /></Undertittel>
       <VerticalSpacer fourPx />
-      <AksjonspunktHelpText isAksjonspunktOpen={!readOnlySubmitButton}>
+      <AksjonspunktHelpTextTemp isAksjonspunktOpen={!readOnlySubmitButton}>
         {[<FormattedMessage id="Ankebehandling.HelpText" key={aksjonspunktCode} />]}
-      </AksjonspunktHelpText>
+      </AksjonspunktHelpTextTemp>
       <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="7">

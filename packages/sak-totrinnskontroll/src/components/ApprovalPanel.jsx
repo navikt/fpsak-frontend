@@ -94,7 +94,7 @@ export class ApprovalPanel extends Component {
     const { approvals } = this.state;
 
     return (
-      <div className={styles.approvalContainer}>
+      <>
         {approvals && approvals.length > 0
           ? (
             <div>
@@ -144,7 +144,7 @@ export class ApprovalPanel extends Component {
             </div>
           )
           : null}
-      </div>
+      </>
     );
   }
 }
