@@ -1,5 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
+import { Normaltekst } from 'nav-frontend-typografi';
+
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 
 import { PersonYtelserTable } from './PersonYtelserTable';
@@ -80,10 +82,15 @@ describe('<PersonYtelserTable>', () => {
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
-    expect(rows.find('Normaltekst').at(8).childAt(0).text()).to.equal('Sykepenger');
-    expect(rows.find('Normaltekst').at(9).childAt(0).text()).to.equal('27.05.2018 - ');
-    expect(rows.find('Normaltekst').at(10).childAt(0).text()).to.equal('Løpende vedtak');
-    expect(rows.find('Normaltekst').at(11).childAt(0).text()).to.equal('1312880731100');
+    expect(rows.length).to.equal(4);
+    expect(rows.at(2).find(Normaltekst).at(0).childAt(0)
+      .text()).to.equal('Sykepenger');
+    expect(rows.at(2).find(Normaltekst).at(1).childAt(0)
+      .text()).to.equal('27.05.2018 - ');
+    expect(rows.at(2).find(Normaltekst).at(2).childAt(0)
+      .text()).to.equal('Løpende vedtak');
+    expect(rows.at(2).find(Normaltekst).at(3).childAt(0)
+      .text()).to.equal('1312880731100');
   });
 
   it('skal sjekke at ytelse navn ikke vises hvis det ligger mer enn en ytelse av samme type', () => {
@@ -94,9 +101,12 @@ describe('<PersonYtelserTable>', () => {
       relatertYtelseStatus={relatertYtelseStatus}
     />);
     const rows = wrapper.find('TableRow');
-    expect(rows.find('Normaltekst').at(12).childAt(0)).is.empty;
-    expect(rows.find('Normaltekst').at(13).childAt(0).text()).to.equal('27.12.2017 - 27.09.2017');
-    expect(rows.find('Normaltekst').at(14).childAt(0).text()).to.equal('Lukket sak');
-    expect(rows.find('Normaltekst').at(15).childAt(0).text()).to.equal('1312880731101');
+    expect(rows.length).to.equal(4);
+    expect(rows.at(3).find(Normaltekst).at(0).childAt(0)
+      .text()).to.equal('27.12.2017 - 27.09.2017');
+    expect(rows.at(3).find(Normaltekst).at(1).childAt(0)
+      .text()).to.equal('Lukket sak');
+    expect(rows.at(3).find(Normaltekst).at(2).childAt(0)
+      .text()).to.equal('1312880731101');
   });
 });
