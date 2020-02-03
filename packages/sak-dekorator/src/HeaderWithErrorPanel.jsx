@@ -70,22 +70,18 @@ const HeaderWithErrorPanel = ({
     isExternal: true,
   })), []);
   const popperPropsChildren = useCallback(() => (
-    <div ref={wrapperRef}>
-      <BoxedListWithLinks
-        items={lenkerFormatertForBoxedList}
-        onClick={() => {
-          setLenkePanelApent(false);
-        }}
-      />
-    </div>
+    <BoxedListWithLinks
+      items={lenkerFormatertForBoxedList}
+      onClick={() => {
+        setLenkePanelApent(false);
+      }}
+    />
   ), []);
   const referencePropsChildren = useCallback(({ ref }) => (
     <div ref={ref}>
       <SystemButton
         onClick={() => {
-          if (!erLenkepanelApent) {
-            setLenkePanelApent(!erLenkepanelApent);
-          }
+          setLenkePanelApent(!erLenkepanelApent);
         }}
         isToggled={erLenkepanelApent}
       />
@@ -95,22 +91,24 @@ const HeaderWithErrorPanel = ({
   return (
     <header className={styles.container}>
       <RawIntlProvider value={intl}>
-        <Header title={systemTittel} titleHref="/">
-          <Popover
-            popperIsVisible={erLenkepanelApent}
-            renderArrowElement
-            customPopperStyles={{ top: '11px', zIndex: 1 }}
-            popperProps={{
-              children: popperPropsChildren,
-              placement: 'bottom-start',
-              positionFixed: true,
-            }}
-            referenceProps={{
-              children: referencePropsChildren,
-            }}
-          />
-          <UserPanel name={navAnsattName} />
-        </Header>
+        <div ref={wrapperRef}>
+          <Header title={systemTittel} titleHref="/">
+            <Popover
+              popperIsVisible={erLenkepanelApent}
+              renderArrowElement
+              customPopperStyles={{ top: '11px', zIndex: 1 }}
+              popperProps={{
+                children: popperPropsChildren,
+                placement: 'bottom-start',
+                positionFixed: true,
+              }}
+              referenceProps={{
+                children: referencePropsChildren,
+              }}
+            />
+            <UserPanel name={navAnsattName} />
+          </Header>
+        </div>
         <ErrorMessagePanel
           queryStrings={queryStrings}
           removeErrorMessage={removeErrorMessage}
