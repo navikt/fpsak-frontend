@@ -4,12 +4,11 @@ import {
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import {
+  Behandling, NavAnsatt, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 
-import Behandling from '../types/behandlingTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 import ProsessStegDefinisjon from '../types/prosessStegDefinisjonTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';

@@ -4,11 +4,10 @@ import { Dispatch } from 'redux';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import { FadingPanel } from '@fpsak-frontend/shared-components';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
 import ProsessStegData from '../types/prosessStegDataTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import Behandling from '../types/behandlingTsType';
-import Kodeverk from '../types/kodeverkTsType';
 import MargMarkering from './MargMarkering';
 import InngangsvilkarPanel from './InngangsvilkarPanel';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';

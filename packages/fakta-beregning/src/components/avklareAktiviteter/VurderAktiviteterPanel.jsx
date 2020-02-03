@@ -69,7 +69,7 @@ VurderAktiviteterPanel.validate = (values, aktiviteterTomDatoMapping) => {
     return {};
   }
   const harAktiviteterINesteSkjæringstidspunkt = listerSomVurderes.length > 1
-    && aktiviteterTomDatoMapping[1].aktiviteter.length > 0;
+    && listerSomVurderes[1].aktiviteter.length > 0;
   if (!harAktiviteterINesteSkjæringstidspunkt) {
     return { _error: 'VurderAktiviteterTabell.Validation.MåHaMinstEnAktivitet' };
   }

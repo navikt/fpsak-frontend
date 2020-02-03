@@ -4,6 +4,7 @@ import VergeFaktaIndex from '@fpsak-frontend/fakta-verge';
 import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import vilkarType from '@fpsak-frontend/kodeverk/src/vilkarType';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import ArbeidsforholdFaktaIndex from '@fpsak-frontend/fakta-arbeidsforhold';
@@ -25,6 +26,15 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <ArbeidsforholdFaktaIndex {...props} />,
   showComponent: ({ personopplysninger }) => personopplysninger,
   getData: ({ inntektArbeidYtelse, personopplysninger }) => ({ inntektArbeidYtelse, personopplysninger }),
+}, {
+  urlCode: faktaPanelCodes.YTELSER,
+  textCode: 'YtelserFaktaIndex.Ytelser',
+  aksjonspunkterCodes: [],
+  endpoints: [],
+  renderComponent: (props) => <YtelserFaktaIndex {...props} />,
+  showComponent: ({ inntektArbeidYtelse }) => inntektArbeidYtelse
+    && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker.length > 0,
+  getData: ({ inntektArbeidYtelse }) => ({ inntektArbeidYtelse }),
 }, {
   urlCode: faktaPanelCodes.VERGE,
   textCode: 'RegistrereVergeInfoPanel.Info',
