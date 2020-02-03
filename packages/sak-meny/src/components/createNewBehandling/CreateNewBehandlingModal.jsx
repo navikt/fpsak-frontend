@@ -203,7 +203,7 @@ export const getBehandlingAarsaker = createSelector([
 (ytelseType, menyKodeverk, valgtBehandlingType) => {
   if (valgtBehandlingType === bType.TILBAKEKREVING_REVURDERING) {
     return menyKodeverk.getKodeverkForBehandlingstype(bType.TILBAKEKREVING_REVURDERING, kodeverkTyper.BEHANDLING_AARSAK)
-      .filter((ba) => tilbakekrevingRevurderingArsaker.indexOf(ba.kode) > -1)
+      .filter((ba) => tilbakekrevingRevurderingArsaker.includes(ba.kode))
       .sort((ba1, ba2) => ba1.navn.localeCompare(ba2.navn));
   }
 

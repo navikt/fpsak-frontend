@@ -23,6 +23,7 @@ const TilbakekrevingVedtak = ({
   avsnittsliste,
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
+  erRevurderingTilbakekrevingKlage,
 }) => {
   const getKodeverknavn = getKodeverknavnFn(alleKodeverk, kodeverkTyper);
   return (
@@ -48,6 +49,7 @@ const TilbakekrevingVedtak = ({
         avsnittsliste={avsnittsliste}
         fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
         aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
+        erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
       />
     </FadingPanel>
   );
@@ -64,6 +66,7 @@ TilbakekrevingVedtak.propTypes = {
   avsnittsliste: PropTypes.arrayOf(vedtaksbrevAvsnittPropType).isRequired,
   fetchPreviewVedtaksbrev: PropTypes.func.isRequired,
   aksjonspunktKodeForeslaVedtak: PropTypes.string.isRequired,
+  erRevurderingTilbakekrevingKlage: PropTypes.bool,
 };
 
 export default TilbakekrevingVedtak;

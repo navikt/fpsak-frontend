@@ -7,13 +7,14 @@ import { createSelector } from 'reselect';
 
 import { omit } from '@fpsak-frontend/utils';
 import {
-  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   behandlingForm, isBehandlingFormSubmitting, isBehandlingFormDirty, hasBehandlingFormErrorsOfType,
   BehandlingspunktSubmitButton, getBehandlingFormValues,
 } from '@fpsak-frontend/fp-felles';
 
+import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
 import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
@@ -60,6 +61,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   behandlingId,
   behandlingVersjon,
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
+  erRevurderingTilbakekrevingKlage,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -102,6 +104,18 @@ export const TilbakekrevingVedtakFormImpl = ({
             </div>
           </FlexColumn>
         )}
+        { erRevurderingTilbakekrevingKlage && (
+          <FlexColumn className={classNames(styles.infoTextContainer)}>
+            <FlexRow>
+              <FlexColumn className={classNames(styles.padding, styles.infoTextIconColumn)}>
+                <Image className={styles.infoTextIcon} src={advarselIcon} />
+              </FlexColumn>
+              <FlexColumn className={classNames(styles.infotextColumn)}>
+                <FormattedMessage id="TilbakekrevingVedtakForm.Infotekst.Klage" />
+              </FlexColumn>
+            </FlexRow>
+          </FlexColumn>
+        )}
       </FlexRow>
     </FlexContainer>
   </form>
@@ -115,6 +129,7 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
+  erRevurderingTilbakekrevingKlage: PropTypes.bool,
 };
 
 const transformValues = (values, apKode) => [{

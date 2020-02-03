@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
 import vedtaksbrevPropType from './propTypes/vedtaksbrevPropType';
 import vedtakTilbakekrevingBehandlingPropType from './propTypes/vedtakTilbakekrevingBehandlingPropType';
@@ -15,6 +16,13 @@ const intl = createIntl({
   messages,
 }, cache);
 
+const tilbakekrevingÅrsakTyperKlage = [
+  behandlingArsakType.RE_KLAGE_KA,
+  behandlingArsakType.RE_KLAGE_NFP,
+];
+
+const erTilbakekrevingÅrsakKlage = (årsak) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+
 const VedtakTilbakekrevingProsessIndex = ({
   behandling,
   beregningsresultat,
@@ -25,23 +33,27 @@ const VedtakTilbakekrevingProsessIndex = ({
   alleKodeverk,
   fetchPreviewVedtaksbrev,
   aksjonspunktKodeForeslaVedtak,
-}) => (
-  <RawIntlProvider value={intl}>
-    <TilbakekrevingVedtak
-      behandlingId={behandling.id}
-      behandlingVersjon={behandling.versjon}
-      perioder={beregningsresultat.beregningResultatPerioder}
-      resultat={beregningsresultat.vedtakResultatType}
-      avsnittsliste={vedtaksbrev.avsnittsliste}
-      submitCallback={submitCallback}
-      readOnly={readOnly}
-      isBehandlingHenlagt={isBehandlingHenlagt}
-      alleKodeverk={alleKodeverk}
-      fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
-      aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
-    />
-  </RawIntlProvider>
-);
+}) => {
+  const erRevurderingTilbakekrevingKlage = behandling.førsteÅrsak && erTilbakekrevingÅrsakKlage(behandling.førsteÅrsak.behandlingArsakType);
+  return (
+    <RawIntlProvider value={intl}>
+      <TilbakekrevingVedtak
+        behandlingId={behandling.id}
+        behandlingVersjon={behandling.versjon}
+        perioder={beregningsresultat.beregningResultatPerioder}
+        resultat={beregningsresultat.vedtakResultatType}
+        avsnittsliste={vedtaksbrev.avsnittsliste}
+        submitCallback={submitCallback}
+        readOnly={readOnly}
+        isBehandlingHenlagt={isBehandlingHenlagt}
+        alleKodeverk={alleKodeverk}
+        fetchPreviewVedtaksbrev={fetchPreviewVedtaksbrev}
+        aksjonspunktKodeForeslaVedtak={aksjonspunktKodeForeslaVedtak}
+        erRevurderingTilbakekrevingKlage={erRevurderingTilbakekrevingKlage}
+      />
+    </RawIntlProvider>
+  );
+};
 
 VedtakTilbakekrevingProsessIndex.propTypes = {
   behandling: vedtakTilbakekrevingBehandlingPropType.isRequired,

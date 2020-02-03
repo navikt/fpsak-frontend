@@ -9,6 +9,7 @@ import {
   BorderBox, DateLabel, TimeLabel, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import behandlingType from '@fpsak-frontend/kodeverk/src/behandlingType';
+import behandlingArsakType from '@fpsak-frontend/kodeverk/src/behandlingArsakType';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 
 import chevronUp from '@fpsak-frontend/assets/images/pil_opp.svg';
@@ -83,6 +84,13 @@ const getÅrsak = (årsak) => {
   }
 };
 
+const tilbakekrevingÅrsakTyperKlage = [
+  behandlingArsakType.RE_KLAGE_KA,
+  behandlingArsakType.RE_KLAGE_NFP,
+];
+
+const erTilbakekrevingÅrsakKlage = (årsak) => årsak && tilbakekrevingÅrsakTyperKlage.includes(årsak.kode);
+
 const renderChevron = (chevron, messageId) => (
   <FormattedMessage id={messageId}>
     {(altText) => <Image src={chevron} alt={altText} />}
@@ -122,6 +130,16 @@ const BehandlingPickerItemContent = ({
             <FlexColumn>
               <Normaltekst>
                 <FormattedMessage id={getÅrsak(førsteÅrsak)} />
+              </Normaltekst>
+            </FlexColumn>
+          </>
+        )}
+        {behandlingTypeKode === behandlingType.TILBAKEKREVING_REVURDERING && erTilbakekrevingÅrsakKlage(førsteÅrsak.behandlingArsakType) && (
+          <>
+            <FlexColumn className={styles.arsakPadding}>-</FlexColumn>
+            <FlexColumn>
+              <Normaltekst>
+                <FormattedMessage id="Behandlingspunkt.Årsak.Klage" />
               </Normaltekst>
             </FlexColumn>
           </>
