@@ -2547,10 +2547,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@navikt/boxed-list-with-links@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-links/-/boxed-list-with-links-1.0.3.tgz#d3a94dcd2f7cff0cbb8149ac9c561f21972bfc82"
-  integrity sha512-0iU81T5mp3zTRgksA/IzPdk6UerxZC03jnfbF7FWyjD5Y1KB8NL8sVZs9KUng5Or/pRtQkAWE9VNEfdILGW5dw==
+"@navikt/boxed-list-with-links@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@navikt/boxed-list-with-links/-/boxed-list-with-links-1.0.4.tgz#e0550bd66b921ad3ed1e9367980e04c8e1001a60"
+  integrity sha512-yXZ5jg2By7QC/I4qssY40eyUuO1fuYpI7dM/LmFSh5gg4JFjPkdgZqdQ1HtxqD9Ku+GicTTXrh9/3Y/GPqBJTw==
   dependencies:
     "@navikt/boxed-list" "1.0.2"
     "@navikt/nap-bem-utils" "1.0.1"
@@ -2581,10 +2581,10 @@
     nav-frontend-typografi-style "^1.0.17"
     prop-types "^15.7.2"
 
-"@navikt/nap-popover@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@navikt/nap-popover/-/nap-popover-1.0.3.tgz#474638aa770e83c31d5758da50d76e984569d6ba"
-  integrity sha512-ptC5z98vGacwpMPPqhTwmJK+4AuYLgPfXLEcOuxP1h/BWPAuTVMQIbLzIc+9OXdj6d8I0kIK7DydJcg/JosW9A==
+"@navikt/nap-popover@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@navikt/nap-popover/-/nap-popover-1.0.4.tgz#329cfe1f334f24fe98ed88c78bc8f10639dab669"
+  integrity sha512-mKeuMUvusA2MlE5MbFsGaEMY17Xv2age76+MJlBOwqX2RaYNAEmrVzYGg8EHcAE0BLDoaXmhQEa0V+YCv1cGlg==
   dependencies:
     prop-types "^15.7.2"
     react-popper "^1.3.7"
