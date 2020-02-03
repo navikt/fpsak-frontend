@@ -7,6 +7,7 @@ import { AksjonspunktHelpTextTemp, VerticalSpacer } from '@fpsak-frontend/shared
 import fodselOgTilretteleggingAksjonspunkterPropType from '../propTypes/fodselOgTilretteleggingAksjonspunkterPropType';
 import fodselOgTilretteleggingPropType from '../propTypes/fodselOgTilretteleggingPropType';
 import FodselOgTilretteleggingFaktaForm from './FodselOgTilretteleggingFaktaForm';
+import iayArbeidsforholdPropType from '../propTypes/iayArbeidsforholdPropType';
 
 /**
  * Svangerskapspenger
@@ -17,6 +18,7 @@ const FodselOgTilretteleggingInfoPanel = ({
   behandlingVersjon,
   svangerskapspengerTilrettelegging,
   aksjonspunkter,
+  iayArbeidsforhold,
   readOnly,
   hasOpenAksjonspunkter,
   submitCallback,
@@ -32,6 +34,7 @@ const FodselOgTilretteleggingInfoPanel = ({
       behandlingVersjon={behandlingVersjon}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={aksjonspunkter}
+      iayArbeidsforhold={iayArbeidsforhold}
       submitCallback={submitCallback}
       readOnly={readOnly}
       hasOpenAksjonspunkter={hasOpenAksjonspunkter}
@@ -45,6 +48,7 @@ FodselOgTilretteleggingInfoPanel.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   svangerskapspengerTilrettelegging: fodselOgTilretteleggingPropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fodselOgTilretteleggingAksjonspunkterPropType).isRequired,
+  iayArbeidsforhold: PropTypes.arrayOf(iayArbeidsforholdPropType).isRequired,
   readOnly: PropTypes.bool.isRequired,
   hasOpenAksjonspunkter: PropTypes.bool.isRequired,
   submitCallback: PropTypes.func.isRequired,

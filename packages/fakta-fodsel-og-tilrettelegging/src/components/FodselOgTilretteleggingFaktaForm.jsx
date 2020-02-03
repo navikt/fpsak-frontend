@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import { FormattedMessage } from 'react-intl';
 import { createSelector } from 'reselect';
 import { Normaltekst } from 'nav-frontend-typografi';
-import AlertStripe from 'nav-frontend-alertstriper';
+import { AlertStripeInfo, AlertStripeFeil } from 'nav-frontend-alertstriper';
 
 import {
   ElementWrapper, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
@@ -19,6 +19,7 @@ import { behandlingForm, FaktaSubmitButton } from '@fpsak-frontend/fp-felles';
 
 import TilretteleggingArbeidsforholdSection from './tilrettelegging/TilretteleggingArbeidsforholdSection';
 import arbeidsforholdPropType from '../propTypes/arbeidsforholdPropType';
+import iayArbeidsforholdPropType from '../propTypes/iayArbeidsforholdPropType';
 
 import styles from './fodselOgTilretteleggingFaktaForm.less';
 
@@ -38,6 +39,16 @@ const utledFormSectionName = (arbeidsforhold) => {
   return navn;
 };
 
+const erInnenforIntervall = (tilretteleggingBehovFom, fomDato, tomDato) => {
+  const dato = moment(tilretteleggingBehovFom);
+  return !(dato.isBefore(moment(fomDato)) || dato.isAfter(moment(tomDato)));
+};
+
+const skalViseInfoAlert = (iayArbeidsforhold, tilretteleggingArbeidsforhold) => !tilretteleggingArbeidsforhold
+  .filter((ta) => ta.arbeidsgiverIdent)
+  .every((ta) => iayArbeidsforhold.some((ia) => ta.arbeidsgiverIdent === ia.arbeidsgiverIdentifikator
+    && erInnenforIntervall(ta.tilretteleggingBehovFom, ia.fomDato, ia.tomDato)));
+
 /**
  * Svangerskapspenger
  * Presentasjonskomponent - viser tillrettlegging før svangerskapspenger
@@ -50,20 +61,24 @@ export const FodselOgTilretteleggingFaktaForm = ({
   fødselsdato,
   submittable,
   arbeidsforhold,
+  iayArbeidsforhold,
   ...formProps
-}) => (
-  <form onSubmit={formProps.handleSubmit}>
-    <FlexContainer fluid wrap>
-      <FlexRow>
-        <FlexColumn>
-          <DatepickerField
-            name="termindato"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
-            validate={[required, hasValidDate]}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-        { fødselsdato && (
+}) => {
+  const visInfoAlert = useMemo(() => skalViseInfoAlert(iayArbeidsforhold, arbeidsforhold), [behandlingVersjon]);
+
+  return (
+    <form onSubmit={formProps.handleSubmit}>
+      <FlexContainer fluid wrap>
+        <FlexRow>
+          <FlexColumn>
+            <DatepickerField
+              name="termindato"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.Termindato' }}
+              validate={[required, hasValidDate]}
+              readOnly={readOnly}
+            />
+          </FlexColumn>
+          { fødselsdato && (
           <FlexColumn>
             <DatepickerField
               name="fødselsdato"
@@ -72,78 +87,89 @@ export const FodselOgTilretteleggingFaktaForm = ({
               readOnly={readOnly}
             />
           </FlexColumn>
-        )}
-      </FlexRow>
-    </FlexContainer>
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn>
-          <VerticalSpacer eightPx />
-          <Normaltekst className={styles.arbeidsforholdTittel}>
-            <FormattedMessage id="FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor" />
-          </Normaltekst>
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn className={styles.fullBredde}>
-          {formProps.error && (
-            <>
-              <VerticalSpacer sixteenPx />
-              <AlertStripe type="feil">
-                <FormattedMessage id={formProps.error} />
-              </AlertStripe>
-            </>
           )}
-        </FlexColumn>
-      </FlexRow>
-      <FlexRow>
-        <FlexColumn className={styles.fullBredde}>
-          { arbeidsforhold.map((a) => (
-            <TilretteleggingArbeidsforholdSection
-              key={utledFormSectionName(a)}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
+        </FlexRow>
+      </FlexContainer>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn>
+            <VerticalSpacer eightPx />
+            <Normaltekst className={styles.arbeidsforholdTittel}>
+              <FormattedMessage id="FodselOgTilretteleggingFaktaForm.ArbeidsforholdDetErSoktTilretteleggingFor" />
+            </Normaltekst>
+          </FlexColumn>
+        </FlexRow>
+        {visInfoAlert && (
+          <FlexRow>
+            <FlexColumn className={styles.fullBredde}>
+              <VerticalSpacer eightPx />
+              <AlertStripeInfo className={styles.info}>
+                <FormattedMessage id="FodselOgTilretteleggingFaktaForm.UndersokNarmere" />
+              </AlertStripeInfo>
+            </FlexColumn>
+          </FlexRow>
+        )}
+        <FlexRow>
+          <FlexColumn className={styles.fullBredde}>
+            {formProps.error && (
+              <>
+                <VerticalSpacer sixteenPx />
+                <AlertStripeFeil>
+                  <FormattedMessage id={formProps.error} />
+                </AlertStripeFeil>
+              </>
+            )}
+          </FlexColumn>
+        </FlexRow>
+        <FlexRow>
+          <FlexColumn className={styles.fullBredde}>
+            { arbeidsforhold.map((a) => (
+              <TilretteleggingArbeidsforholdSection
+                key={utledFormSectionName(a)}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                readOnly={readOnly}
+                arbeidsforhold={a}
+                formSectionName={utledFormSectionName(a)}
+              />
+            ))}
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <FlexContainer>
+        <FlexRow>
+          <FlexColumn className={styles.halvBredde}>
+            <VerticalSpacer eightPx />
+            <TextAreaField
+              name="begrunnelse"
+              label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
+              validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
+              maxLength={1500}
               readOnly={readOnly}
-              arbeidsforhold={a}
-              formSectionName={utledFormSectionName(a)}
             />
-          ))}
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    <FlexContainer>
-      <FlexRow>
-        <FlexColumn className={styles.halvBredde}>
-          <VerticalSpacer eightPx />
-          <TextAreaField
-            name="begrunnelse"
-            label={{ id: 'FodselOgTilretteleggingFaktaForm.BegrunnEndringene' }}
-            validate={[requiredIfNotPristine, maxLength1500, hasValidText]}
-            maxLength={1500}
-            readOnly={readOnly}
-          />
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-    <FlexContainer fluid wrap>
-      <FlexRow>
-        <FlexColumn>
-          <ElementWrapper>
-            <VerticalSpacer twentyPx />
-            <FaktaSubmitButton
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              formName={FODSEL_TILRETTELEGGING_FORM}
-              isSubmittable={submittable && !formProps.error}
-              isReadOnly={readOnly}
-              hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-            />
-          </ElementWrapper>
-        </FlexColumn>
-      </FlexRow>
-    </FlexContainer>
-  </form>
-);
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+      <FlexContainer fluid wrap>
+        <FlexRow>
+          <FlexColumn>
+            <ElementWrapper>
+              <VerticalSpacer twentyPx />
+              <FaktaSubmitButton
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                formName={FODSEL_TILRETTELEGGING_FORM}
+                isSubmittable={submittable && !formProps.error}
+                isReadOnly={readOnly}
+                hasOpenAksjonspunkter={hasOpenAksjonspunkter}
+              />
+            </ElementWrapper>
+          </FlexColumn>
+        </FlexRow>
+      </FlexContainer>
+    </form>
+  );
+};
 
 FodselOgTilretteleggingFaktaForm.propTypes = {
   behandlingId: PropTypes.number.isRequired,
@@ -153,6 +179,7 @@ FodselOgTilretteleggingFaktaForm.propTypes = {
   fødselsdato: PropTypes.string,
   submittable: PropTypes.bool.isRequired,
   arbeidsforhold: PropTypes.arrayOf(arbeidsforholdPropType).isRequired,
+  iayArbeidsforhold: PropTypes.arrayOf(iayArbeidsforholdPropType).isRequired,
 };
 
 FodselOgTilretteleggingFaktaForm.defaultProps = {

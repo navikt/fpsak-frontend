@@ -35,6 +35,7 @@ describe('<FodselOgTilretteleggingInfoPanel>', () => {
       behandlingVersjon={1}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
       aksjonspunkter={[]}
+      iayArbeidsforhold={[]}
       hasOpenAksjonspunkter={false}
       readOnly
       submitCallback={sinon.spy()}
