@@ -44,7 +44,7 @@ const ProsessStegPanel: FunctionComponent<OwnProps> = ({
 
   return (
     <>
-      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && (
+      {valgtProsessSteg && valgtProsessSteg.erStegBehandlet && !erHenlagtOgVedtakStegValgt && (
         <MargMarkering
           behandlingStatus={behandling.status}
           aksjonspunkter={valgtProsessSteg.aksjonspunkter}

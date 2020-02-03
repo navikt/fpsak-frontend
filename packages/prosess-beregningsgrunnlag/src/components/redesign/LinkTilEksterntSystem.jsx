@@ -10,7 +10,7 @@ const LinkTilEksterntSystem = ({
 }) => {
   let link;
   if (!userIdent) { return null; }
-  // TODO: Det mangler linker til IM og SØ de bruker det samm som AI må endres når vi får data fra backend
+  // TODO: Det mangler linker til Aa, IM og SØ
   switch (type) {
     case 'AI': {
       link = `https://modapp.adeo.no/a-inntekt/person/${userIdent}?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell`;

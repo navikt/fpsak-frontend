@@ -126,6 +126,7 @@ describe('<VedtakAvslagPanel>', () => {
       behandlinger={[behandling]}
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -151,6 +152,7 @@ describe('<VedtakAvslagPanel>', () => {
       behandlinger={[behandling]}
       ytelseTypeKode={engangsstonad}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -176,6 +178,7 @@ describe('<VedtakAvslagPanel>', () => {
       behandlinger={[behandling]}
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -201,6 +204,7 @@ describe('<VedtakAvslagPanel>', () => {
       behandlinger={[behandling]}
       ytelseTypeKode={foreldrepenger}
       alleKodeverk={{}}
+      beregningErManueltFastsatt
     />);
 
     const undertekstFields = wrapper.find('Undertekst');

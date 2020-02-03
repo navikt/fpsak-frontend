@@ -117,12 +117,12 @@ export class VedtakForm extends Component {
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
       ytelseTypeKode,
-      erBehandlingHenlagt,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
+      beregningErManueltFastsatt,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -142,7 +142,6 @@ export class VedtakForm extends Component {
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           {visOverstyringKnapp && (
             <VedtakOverstyrendeKnapp
@@ -167,6 +166,7 @@ export class VedtakForm extends Component {
               alleKodeverk={alleKodeverk}
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -182,6 +182,7 @@ export class VedtakForm extends Component {
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
               vilkar={vilkar}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -241,10 +242,10 @@ VedtakForm.propTypes = {
   sprakkode: kodeverkObjektPropType.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
   ytelseTypeKode: PropTypes.string.isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   ...formPropTypes,
 };

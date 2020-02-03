@@ -25,29 +25,29 @@ export const TilbakekrevingBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fptilbake/api/behandlinger', TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE)
-  .withInjectedPath('aksjonspunkter', TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vedtaksbrev', TilbakekrevingBehandlingApiKeys.VEDTAKSBREV)
-  .withInjectedPath('beregningsresultat', TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT)
-  .withInjectedPath('feilutbetalingFakta', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA)
-  .withInjectedPath('feilutbetalingAarsak', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK)
-  .withInjectedPath('perioderForeldelse', TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE)
-  .withInjectedPath('vilkarvurderingsperioder', TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER)
-  .withInjectedPath('vilkarvurdering', TilbakekrevingBehandlingApiKeys.VILKARVURDERING)
-
-  .withPost('/fptilbake/api/behandlinger/bytt-enhet', TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fptilbake/api/behandlinger/henlegg', TilbakekrevingBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fptilbake/api/behandlinger/gjenoppta', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
-  .withPost('/fptilbake/api/behandlinger/sett-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
-
-  .withPost('/fptilbake/api/behandlinger/endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/fptilbake/api/behandling/aksjonspunkt', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE,
-  })
-  .withPost('/fptilbake/api/foreldelse/belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
   .withGet('/fptilbake/api/kodeverk', TilbakekrevingBehandlingApiKeys.TILBAKE_KODEVERK)
+
+  // behandlingsdata
+  .withRel('aksjonspunkter', TilbakekrevingBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vedtaksbrev', TilbakekrevingBehandlingApiKeys.VEDTAKSBREV)
+  .withRel('beregningsresultat', TilbakekrevingBehandlingApiKeys.BEREGNINGSRESULTAT)
+  .withRel('feilutbetalingFakta', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_FAKTA)
+  .withRel('feilutbetalingAarsak', TilbakekrevingBehandlingApiKeys.FEILUTBETALING_AARSAK)
+  .withRel('perioderForeldelse', TilbakekrevingBehandlingApiKeys.PERIODER_FORELDELSE)
+  .withRel('vilkarvurderingsperioder', TilbakekrevingBehandlingApiKeys.VILKARVURDERINGSPERIODER)
+  .withRel('vilkarvurdering', TilbakekrevingBehandlingApiKeys.VILKARVURDERING)
+
+  // operasjoner
+  .withRel('beregne-feilutbetalt-belop', TilbakekrevingBehandlingApiKeys.BEREGNE_BELØP)
+  .withRel('bytt-behandlende-enhet', TilbakekrevingBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', TilbakekrevingBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', TilbakekrevingBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
+  .withRel('sett-behandling-pa-vent', TilbakekrevingBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', TilbakekrevingBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withRel('lagre-aksjonspunkter', TilbakekrevingBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: TilbakekrevingBehandlingApiKeys.BEHANDLING_TILBAKE })
+
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-vedtaksbrev', TilbakekrevingBehandlingApiKeys.PREVIEW_VEDTAKSBREV)
+
   .build();
 
 const reducerName = 'dataContextTilbakekrevingBehandling';

@@ -137,9 +137,11 @@ const createArbeidsIntektRows = (relevanteAndeler, getKodeverknavn, userIdent) =
           </Column>
         )}
       </Row>
-      <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
-        <VerticalSpacer eightPx />
-      </Row>
+      {(index < relevanteAndeler.length) && (
+        <Row key={`indexSp${andel.arbeidsforhold.arbeidsgiverId}`}>
+          <VerticalSpacer eightPx />
+        </Row>
+      )}
     </React.Fragment>
   ));
   if (relevanteAndeler.length > 1) {
@@ -202,6 +204,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
           )}
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer eightPx />
       <Row key="Header">
         <Column xs="7" key="ATempthy1" />
         <Column key="ATMndHead" className={beregningStyles.colMaanedText} xs="2">
