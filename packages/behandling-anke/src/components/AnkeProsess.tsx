@@ -12,9 +12,11 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel, BehandlingHenlagtPanel,
+  FagsakInfo, MargMarkering, byggProsessmenySteg, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel, BehandlingHenlagtPanel,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Behandling, Kodeverk, NavAnsatt, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 
 import ankeApi from '../data/ankeBehandlingApi';
 import finnAnkeSteg from '../definition/ankeStegDefinition';

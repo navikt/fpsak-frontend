@@ -7,9 +7,11 @@ import { useDispatch } from 'react-redux';
 import aksjonspunktCodesTilbakekreving from '@fpsak-frontend/kodeverk/src/aksjonspunktCodesTilbakekreving';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import {
-  DataFetcherBehandlingData, FagsakInfo, Behandling, Aksjonspunkt, FaktaPanel, readOnlyUtils,
-  getAlleMerknaderFraBeslutter, Kodeverk, NavAnsatt, BehandlingDataCache,
+  DataFetcherBehandlingData, FagsakInfo, FaktaPanel, readOnlyUtils, getAlleMerknaderFraBeslutter, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
+} from '@fpsak-frontend/types';
 import FeilutbetalingFaktaIndex from '@fpsak-frontend/fakta-feilutbetaling';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';

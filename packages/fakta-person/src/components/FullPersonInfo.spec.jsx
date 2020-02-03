@@ -15,7 +15,6 @@ import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdress
 import { FullPersonInfo } from './FullPersonInfo';
 import AdressePanel from './AdressePanel';
 import BarnePanel from './BarnePanel';
-import PersonYtelserTable from './PersonYtelserTable';
 
 const barnITPS = {
   navn: 'Barn 1',
@@ -244,56 +243,5 @@ describe('<FullPersonInfo>', () => {
     );
 
     expect(wrapper.find(AksjonspunktHelpText)).has.length(0);
-  });
-
-  it('Skal vise ytelsepanel når en har ytelser', () => {
-    const wrapper = shallow(
-      <FullPersonInfo
-        behandlingId={1}
-        behandlingVersjon={1}
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        ytelser={ytelser}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter
-        readOnly={false}
-        hasAksjonspunkter
-        utlandSakstype=""
-        isPrimaryParent={false}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        getKodeverknavn={getKodeverknavn}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.find(PersonYtelserTable)).has.length(1);
-  });
-
-  it('Skal ikke vise ytelsepanel når en ikke har ytelser', () => {
-    const wrapper = shallow(
-      <FullPersonInfo
-        behandlingId={1}
-        behandlingVersjon={1}
-        sprakkode={sprakkode}
-        personopplysning={personopplysning}
-        relatertYtelseTypes={relatertYtelseTypes}
-        relatertYtelseStatus={relatertYtelseStatus}
-        personstatusTypes={personstatusTypes}
-        sivilstandTypes={sivilstandTypes}
-        hasOpenAksjonspunkter
-        readOnly={false}
-        hasAksjonspunkter
-        utlandSakstype=""
-        isPrimaryParent={false}
-        skalKunneLeggeTilNyeArbeidsforhold={false}
-        getKodeverknavn={getKodeverknavn}
-        {...reduxFormPropsMock}
-      />,
-    );
-
-    expect(wrapper.find(PersonYtelserTable)).has.length(0);
   });
 });

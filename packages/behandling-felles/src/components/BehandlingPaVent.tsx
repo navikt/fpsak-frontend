@@ -6,11 +6,9 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { BehandlingErPaVentModal } from '@fpsak-frontend/fp-felles';
+import { Behandling, Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
 
-import Behandling from '../types/behandlingTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
 import SettPaVentParams from '../types/settPaVentParamsTsType';
-import Kodeverk from '../types/kodeverkTsType';
 
 interface BehandlingPaVentProps {
   behandling: Behandling;

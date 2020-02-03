@@ -20,22 +20,5 @@ export { default as getAlleMerknaderFraBeslutter } from './src/util/getAlleMerkn
 export { default as faktaHooks } from './src/util/faktaHooks';
 export { default as prosessStegHooks } from './src/util/prosessStegHooks';
 
-export { default as Aksjonspunkt } from './src/types/aksjonspunktTsType';
-export { default as Behandling } from './src/types/behandlingTsType';
-export { default as Dokument } from './src/types/dokumentTsType';
 export { default as FagsakInfo } from './src/types/fagsakInfoTsType';
-export { default as Kodeverk } from './src/types/kodeverkTsType';
-export { default as KodeverkMedNavn } from './src/types/kodeverkMedNavnTsType';
-export { default as NavAnsatt } from './src/types/navAnsattTsType';
-export { default as Personopplysninger } from './src/types/personopplysningerTsType';
-export { default as Vilkar } from './src/types/vilkarTsType';
 export { default as SettPaVentParams } from './src/types/settPaVentParamsTsType';
-export { default as Soknad } from './src/types/soknadTsType';
-export { default as InntektArbeidYtelse } from './src/types/inntektArbeidYtelseTsType';
-export { default as SimuleringResultat } from './src/types/simuleringResultatTsType';
-export { default as BeregningsresultatEs } from './src/types/beregningsresultatEsTsType';
-export { default as BeregningsresultatFp } from './src/types/beregningsresultatFpTsType';
-export { default as Beregningsgrunnlag } from './src/types/beregningsgrunnlagTsType';
-export { default as Ytelsefordeling } from './src/types/ytelsefordelingTsType';
-export { default as UttakStonadskontoer } from './src/types/uttakStonadskontoerTsType';
-export { default as UttaksresultatPeriode } from './src/types/uttaksresultatPeriodeTsType';

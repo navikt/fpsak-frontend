@@ -4,9 +4,12 @@ import { useDispatch } from 'react-redux';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, BehandlingPaVent, SettPaVentParams, TempPersonPanel,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams, TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
+import {
+  Kodeverk, NavAnsatt, Behandling,
+} from '@fpsak-frontend/types';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import ForeldrepengerProsess from './ForeldrepengerProsess';

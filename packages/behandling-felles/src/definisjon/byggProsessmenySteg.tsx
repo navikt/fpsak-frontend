@@ -2,12 +2,11 @@ import { createSelector } from 'reselect';
 
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import {
+  Behandling, Aksjonspunkt, Vilkar, NavAnsatt,
+} from '@fpsak-frontend/types';
 
-import Behandling from '../types/behandlingTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
 import readOnlyUtils from '../util/readOnlyUtils';
 
 // TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om

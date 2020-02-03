@@ -3,9 +3,7 @@ import classnames from 'classnames/bind';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BehandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
-
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Kodeverk from '../types/kodeverkTsType';
+import { Aksjonspunkt, Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './margMarkering.less';
 

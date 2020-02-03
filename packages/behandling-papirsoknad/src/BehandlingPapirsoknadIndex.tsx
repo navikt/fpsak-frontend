@@ -6,9 +6,11 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix, ErrorTypes } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData,
-  BehandlingDataCache,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner, DataFetcherBehandlingData, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Kodeverk, NavAnsatt, Aksjonspunkt, Behandling,
+} from '@fpsak-frontend/types';
 
 import papirsoknadApi, { reduxRestApi, PapirsoknadApiKeys } from './data/papirsoknadApi';
 import RegistrerPapirsoknad from './components/RegistrerPapirsoknad';

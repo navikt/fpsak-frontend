@@ -13,10 +13,12 @@ import VedtakKlageProsessIndex from '@fpsak-frontend/prosess-vedtak-klage';
 import KlagevurderingProsessIndex from '@fpsak-frontend/prosess-klagevurdering';
 import FormkravProsessIndex from '@fpsak-frontend/prosess-formkrav';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
+  FagsakInfo, MargMarkering, byggProsessmenySteg, FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
 import klageVurderingKodeverk from '@fpsak-frontend/kodeverk/src/klageVurdering';
+import {
+  Behandling, Kodeverk, NavAnsatt, Vilkar, Aksjonspunkt,
+} from '@fpsak-frontend/types';
 
 import klageApi from '../data/klageBehandlingApi';
 import finnKlageSteg from '../definition/klageStegDefinition';

@@ -1,8 +1,11 @@
 import { createSelector } from 'reselect';
 
 import {
-  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
+  ProsessStegProperties,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Behandling, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 

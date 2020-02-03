@@ -2,14 +2,12 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { Dispatch } from 'redux';
 
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import { Behandling, NavAnsatt, Aksjonspunkt } from '@fpsak-frontend/types';
 
 import {
   utledFaktaPaneler, finnValgtPanel, formaterPanelerForSidemeny, getBekreftAksjonspunktCallback,
 } from './faktaUtils';
-import Behandling from '../types/behandlingTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
 import FaktaPanelDefinisjon from '../types/faktaPanelDefinisjonTsType';
 import FaktaPanelUtledet from '../types/faktaPanelUtledetTsType';
 import FaktaPanelFaktaPanelMenyRadMeny from '../types/faktaPanelMenyRadTsType';

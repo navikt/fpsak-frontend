@@ -3,9 +3,12 @@ import { useDispatch } from 'react-redux';
 
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, BehandlingPaVent, SettPaVentParams, Behandling, TempPersonPanel,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams, TempPersonPanel,
 } from '@fpsak-frontend/behandling-felles';
 import { featureToggle as FeatureToggle } from '@fpsak-frontend/fp-felles';
+import {
+  Kodeverk, NavAnsatt, Behandling,
+} from '@fpsak-frontend/types';
 
 import SvangerskapspengerProsess from './SvangerskapspengerProsess';
 import SvangerskapspengerFakta from './SvangerskapspengerFakta';

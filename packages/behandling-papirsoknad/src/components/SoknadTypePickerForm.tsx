@@ -16,7 +16,7 @@ import { BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 import familieHendelseType from '@fpsak-frontend/kodeverk/src/familieHendelseType';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
-import { KodeverkMedNavn } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './soknadTypePickerForm.less';
 
@@ -27,9 +27,9 @@ export const soeknadsTyper = [
   familieHendelseType.FODSEL];
 
 interface OwnProps {
-  fagsakYtelseTyper: KodeverkMedNavn[];
-  familieHendelseTyper: KodeverkMedNavn[];
-  foreldreTyper: KodeverkMedNavn[];
+  fagsakYtelseTyper: Kodeverk[];
+  familieHendelseTyper: Kodeverk[];
+  foreldreTyper: Kodeverk[];
   handleSubmit: () => undefined;
   selectedFagsakYtelseType?: string;
   ytelseErSatt: boolean;

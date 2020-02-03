@@ -13,9 +13,12 @@ import ForeldelseProsessIndex from '@fpsak-frontend/prosess-foreldelse';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData,
-  FatterVedtakStatusModal, BehandlingHenlagtPanel, ProsessStegIkkeBehandletPanel, getAlleMerknaderFraBeslutter, BehandlingDataCache,
+  FagsakInfo, MargMarkering, byggProsessmenySteg, DataFetcherBehandlingData, FatterVedtakStatusModal, BehandlingHenlagtPanel,
+  ProsessStegIkkeBehandletPanel, getAlleMerknaderFraBeslutter, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
+} from '@fpsak-frontend/types';
 
 import tilbakekrevingApi from '../data/tilbakekrevingBehandlingApi';
 import finnTilbakekrevingSteg from '../definition/tilbakekrevingStegDefinition';

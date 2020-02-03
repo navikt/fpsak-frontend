@@ -10,8 +10,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, Behandling, FatterVedtakStatusModal, ProsessStegPanel,
+  FagsakInfo, prosessStegHooks, IverksetterVedtakStatusModal, FatterVedtakStatusModal, ProsessStegPanel,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Kodeverk, NavAnsatt, Behandling,
+} from '@fpsak-frontend/types';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 import prosessStegPanelDefinisjoner from '../panelDefinisjoner/prosessStegFpPanelDefinisjoner';

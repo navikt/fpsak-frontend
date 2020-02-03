@@ -9,9 +9,12 @@ import VedtakInnsynProsessIndex from '@fpsak-frontend/prosess-vedtak-innsyn';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import InnsynProsessIndex from '@fpsak-frontend/prosess-innsyn';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Vilkar, Aksjonspunkt, MargMarkering, byggProsessmenySteg,
-  BehandlingHenlagtPanel, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
+  FagsakInfo, MargMarkering, byggProsessmenySteg, BehandlingHenlagtPanel, IverksetterVedtakStatusModal, ProsessStegIkkeBehandletPanel,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Kodeverk, Dokument, NavAnsatt, Behandling, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
+
 import innsynApi from '../data/innsynBehandlingApi';
 import finnInnsynSteg from '../definition/innsynStegDefinition';
 import Innsyn from '../types/innsynTsType';

@@ -5,12 +5,10 @@ import { getAddresses } from '@fpsak-frontend/utils';
 import opplysningAdresseType from '@fpsak-frontend/kodeverk/src/opplysningAdresseType';
 import { kodeverkPropType } from '@fpsak-frontend/prop-types';
 import opplysningsKilde from '@fpsak-frontend/kodeverk/src/opplysningsKilde';
-import { FaktaGruppe } from '@fpsak-frontend/fp-felles';
 
 import { Utland } from './utland/Utland';
 import AdressePanel from './AdressePanel';
 import BarnePanel from './BarnePanel';
-import PersonYtelserTable from './PersonYtelserTable';
 
 const findPersonStatus = (personopplysning) => {
   if (personopplysning.avklartPersonstatus) {
@@ -31,9 +29,6 @@ export const getBarnFraTPS = (barneListe = []) => barneListe.filter((barn) => ba
 export const FullPersonInfo = ({
   sprakkode,
   personopplysning,
-  ytelser,
-  relatertYtelseTypes,
-  relatertYtelseStatus,
   utlandSakstype,
   submitCallback,
   isPrimaryParent,
@@ -80,15 +75,6 @@ export const FullPersonInfo = ({
       {harBarnITPSSjekk && (
         <BarnePanel barneListe={barnFraTPS} />
       )}
-      {ytelser && ytelser.length > 0 && (
-        <FaktaGruppe titleCode="PersonYtelserTable.Ytelser">
-          <PersonYtelserTable
-            ytelser={ytelser}
-            relatertYtelseTypes={relatertYtelseTypes}
-            relatertYtelseStatus={relatertYtelseStatus}
-          />
-        </FaktaGruppe>
-      )}
     </div>
   );
 };
@@ -101,9 +87,6 @@ FullPersonInfo.propTypes = {
     sivilstand: PropTypes.shape({}),
     region: PropTypes.shape({}),
   }).isRequired,
-  ytelser: PropTypes.arrayOf(PropTypes.shape({})),
-  relatertYtelseTypes: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  relatertYtelseStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func,
   utlandSakstype: PropTypes.string.isRequired,
   isPrimaryParent: PropTypes.bool.isRequired,
@@ -116,7 +99,6 @@ FullPersonInfo.propTypes = {
 };
 
 FullPersonInfo.defaultProps = {
-  ytelser: undefined,
   submitCallback: undefined,
 };
 

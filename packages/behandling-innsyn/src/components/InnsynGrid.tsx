@@ -3,8 +3,11 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, Dokument, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, Vilkar, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Kodeverk, Dokument, NavAnsatt, Behandling, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 
 import InnsynProsess from './InnsynProsess';
 import Innsyn from '../types/innsynTsType';

@@ -4,9 +4,8 @@ import { Column, Row } from 'nav-frontend-grid';
 
 import { FadingPanel, VerticalSpacer, AksjonspunktHelpTextHTML } from '@fpsak-frontend/shared-components';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
+import { Behandling, Kodeverk } from '@fpsak-frontend/types';
 
-import Kodeverk from '../types/kodeverkTsType';
-import Behandling from '../types/behandlingTsType';
 import { ProsessStegPanelData } from '../types/prosessStegDataTsType';
 import DataFetcherBehandlingDataV2 from '../DataFetcherBehandlingDataV2';
 
