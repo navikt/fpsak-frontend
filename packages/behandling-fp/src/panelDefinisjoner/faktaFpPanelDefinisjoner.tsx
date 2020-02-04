@@ -7,6 +7,7 @@ import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
+import SakenFaktaIndex from '@fpsak-frontend/fakta-saken';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -22,8 +23,15 @@ import { readOnlyUtils } from '@fpsak-frontend/behandling-felles';
 
 import fpBehandlingApi from '../data/fpBehandlingApi';
 
-const faktaPanelDefinisjoner = [
-  {
+const faktaPanelDefinisjoner = [{
+  urlCode: faktaPanelCodes.SAKEN,
+  textCode: 'SakenFaktaPanel.Title',
+  aksjonspunkterCodes: [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunktCodes.MANUELL_MARKERING_AV_UTLAND_SAKSTYPE],
+  endpoints: [],
+  renderComponent: (props) => <SakenFaktaIndex {...props} />,
+  showComponent: () => true,
+  getData: () => {},
+}, {
     urlCode: faktaPanelCodes.ARBEIDSFORHOLD,
     textCode: 'ArbeidsforholdInfoPanel.Title',
     aksjonspunkterCodes: [aksjonspunktCodes.AVKLAR_ARBEIDSFORHOLD],
@@ -212,7 +220,6 @@ const faktaPanelDefinisjoner = [
       ytelsefordeling,
       personopplysninger,
     }),
-  },
-];
+  }];
 
 export default faktaPanelDefinisjoner;

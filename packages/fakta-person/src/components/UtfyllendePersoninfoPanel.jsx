@@ -6,26 +6,15 @@ import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktSta
 import { behandlingForm, getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
 import personAksjonspunkterPropType from '../propTypes/personAksjonspunkterPropType';
 import EkspanderbartPersonPanel from './EkspanderbartPersonPanel';
 import FullPersonInfo from './FullPersonInfo';
-import utlandSakstypeKode from './utland/utlandSakstypeKode';
 
 const {
   AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE,
 } = aksjonspunktCodes;
-
-const getUtlandSakstype = (aksjonspunkter) => {
-  if (hasAksjonspunkt(AUTOMATISK_MARKERING_AV_UTENLANDSSAK, aksjonspunkter)) {
-    return utlandSakstypeKode.EØS_BOSATT_NORGE;
-  }
-  if (hasAksjonspunkt(MANUELL_MARKERING_AV_UTLAND_SAKSTYPE, aksjonspunkter)) {
-    return aksjonspunkter.find((ap) => ap.definisjon.kode === MANUELL_MARKERING_AV_UTLAND_SAKSTYPE).begrunnelse;
-  }
-  return utlandSakstypeKode.NASJONAL;
-};
 
 const personAksjonspunkter = [AUTOMATISK_MARKERING_AV_UTENLANDSSAK, MANUELL_MARKERING_AV_UTLAND_SAKSTYPE];
 
@@ -100,7 +89,6 @@ export class UtfyllendePersoninfoPanel extends Component {
             sprakkode={sprakkode}
             hasAksjonspunkter={filteredAps.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-            utlandSakstype={getUtlandSakstype(aksjonspunkter)}
             readOnly={readOnly}
             submitCallback={submitCallback}
             sivilstandTypes={sivilstandTypes}

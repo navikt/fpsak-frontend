@@ -1,33 +1,33 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl } from 'react-intl';
-import PropTypes from 'prop-types';
+import React, { FunctionComponent } from 'react';
+import { FormattedMessage, injectIntl, WrappedComponentProps } from 'react-intl';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { Normaltekst } from 'nav-frontend-typografi';
 import Modal from 'nav-frontend-modal';
 
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-import { behandlingForm } from '@fpsak-frontend/fp-felles';
 import {
   FlexColumn, FlexContainer, FlexRow, Image, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 
 import styles from './utlandEndretModal.less';
 
-export const UtlandEndretModalImpl = ({
-  showModal,
-  closeEvent,
+interface OwnProps {
+  visModal: boolean;
+  lagreOgLukk: (data?: {}) => void;
+}
+
+const UtlandEndretModal: FunctionComponent<OwnProps & WrappedComponentProps> = ({
   intl,
-  ...formProps
+  visModal,
+  lagreOgLukk,
 }) => (
   <Modal
     className={styles.modal}
-    isOpen={showModal}
-    contentLabel="Utland endret"
-    onRequestClose={closeEvent}
+    isOpen={visModal}
+    contentLabel={intl.formatMessage({ id: 'UtlandEndretModal.UtlandetEndret' })}
+    onRequestClose={lagreOgLukk}
     closeButton={false}
     shouldCloseOnOverlayClick={false}
-    ariaHideApp={false}
   >
     <FlexContainer wrap>
       <FlexRow>
@@ -36,9 +36,7 @@ export const UtlandEndretModalImpl = ({
         </FlexColumn>
         <FlexColumn className={styles.fullWidth}>
           <Normaltekst className={styles.modalLabel}>
-            <FormattedMessage
-              id="PersonInfoPanel.UtlandEndret"
-            />
+            <FormattedMessage id="UtlandEndretModal.UtlandEndret" />
           </Normaltekst>
         </FlexColumn>
         <FlexColumn className={styles.right}>
@@ -46,9 +44,9 @@ export const UtlandEndretModalImpl = ({
           <Hovedknapp
             mini
             className={styles.button}
-            onClick={formProps.handleSubmit}
+            onClick={lagreOgLukk}
           >
-            {intl.formatMessage({ id: 'UtlandEndretModal.Ok' })}
+            <FormattedMessage id="UtlandEndretModal.Ok" />
           </Hovedknapp>
         </FlexColumn>
       </FlexRow>
@@ -56,23 +54,4 @@ export const UtlandEndretModalImpl = ({
   </Modal>
 );
 
-UtlandEndretModalImpl.propTypes = {
-  showModal: PropTypes.bool,
-  closeEvent: PropTypes.func.isRequired,
-  intl: PropTypes.shape().isRequired,
-};
-
-UtlandEndretModalImpl.defaultProps = {
-  showModal: false,
-};
-
-const mapStateToPropsFactory = (initialState, ownProps) => {
-  const onSubmit = (values) => ownProps.closeEvent(values);
-  return () => ({
-    onSubmit,
-  });
-};
-
-export const UtlandEndretModal = connect(mapStateToPropsFactory)(behandlingForm({
-  enableReinitialize: true,
-})(injectIntl(UtlandEndretModalImpl)));
+export default injectIntl(UtlandEndretModal);

@@ -1,0 +1,14 @@
+{
+  "UtlandPanel.utland": "Utland",
+  "UtlandPanel.SakenSattTil": "Saken er satt til",
+  "UtlandPanel.lagre": "Lagre",
+  "UtlandPanel.avbryt": "Avbryt",
+  "UtlandPanel.Nasjonal": "Nasjonal",
+  "UtlandPanel.EøsBosattNorge": "EØS bosatt Norge",
+  "UtlandPanel.BosattUtland": "Bosatt utland",
+  "UtlandPanel.EndrePerioden": "Endre perioden",
+
+  "UtlandEndretModal.Ok": "OK",
+  "UtlandEndretModal.UtlandetEndret": "Utland endres",
+  "UtlandEndretModal.UtlandEndret": "Utland endres, ved behov flytt saken til riktig enhet."
+}

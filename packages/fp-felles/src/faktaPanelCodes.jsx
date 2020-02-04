@@ -13,6 +13,7 @@ const faktaPanelCodes = {
   OMSORGSVILKARET: 'omsorgsvilkaaret',
   OPPTJENINGSVILKARET: 'opptjeningsvilkaaret',
   PERSON: 'person',
+  SAKEN: 'saken',
   TILLEGGSOPPLYSNINGER: 'tilleggsopplysninger',
   UTTAK: 'uttak',
   VERGE: 'verge',

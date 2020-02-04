@@ -25,6 +25,8 @@
 		"packages/behandling-svp",
 		"packages/behandling-es",
 		"packages/fakta-ytelser",
+		"packages/fakta-saken",
+		"packages/types",
 		"@types"
 	],
 

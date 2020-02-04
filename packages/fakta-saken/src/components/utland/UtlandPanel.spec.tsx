@@ -4,8 +4,8 @@ import { expect } from 'chai';
 import { Hovedknapp } from 'nav-frontend-knapper';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import utlandSakstypeKode from './utlandSakstypeKode';
-import { UtlandImpl as Utland } from './Utland';
-import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-person';
+import { UtlandImpl as Utland } from './UtlandPanel';
+import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-fakta-saken';
 
 
 describe('<Utland>', () => {
