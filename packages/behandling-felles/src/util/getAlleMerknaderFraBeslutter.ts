@@ -1,8 +1,9 @@
 import behandlingStatus from '@fpsak-frontend/kodeverk/src/behandlingStatus';
+import { Behandling, Aksjonspunkt } from '@fpsak-frontend/types';
 
-const getAlleMerknaderFraBeslutter = (behandling, aksjonspunkter) => {
+const getAlleMerknaderFraBeslutter = (behandling: Behandling, aksjonspunkter: Aksjonspunkt[]) => {
   if (behandling.status.kode !== behandlingStatus.BEHANDLING_UTREDES) {
-    return [];
+    return {};
   }
   return aksjonspunkter.reduce((obj, ap) => ({
     ...obj,

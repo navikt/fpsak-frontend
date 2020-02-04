@@ -22,7 +22,7 @@ const OpptjeningVilkarProsessIndex = ({
   status,
   lovReferanse,
   submitCallback,
-  readOnly,
+  isReadOnly,
   isAksjonspunktOpen,
   readOnlySubmitButton,
 }) => (
@@ -36,7 +36,7 @@ const OpptjeningVilkarProsessIndex = ({
       lovReferanse={lovReferanse}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       isAksjonspunktOpen={isAksjonspunktOpen}
       readOnlySubmitButton={readOnlySubmitButton}
     />
@@ -50,7 +50,7 @@ OpptjeningVilkarProsessIndex.propTypes = {
   status: PropTypes.string.isRequired,
   lovReferanse: PropTypes.string,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
 };

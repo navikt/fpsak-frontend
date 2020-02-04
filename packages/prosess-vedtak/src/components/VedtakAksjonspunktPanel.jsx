@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Systemtittel, Undertittel } from 'nav-frontend-typografi';
+import { Undertittel } from 'nav-frontend-typografi';
 
-import { FadingPanel, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import behandlingStatusCode from '@fpsak-frontend/kodeverk/src/behandlingStatus';
 
 import VedtakHelpTextPanel from './VedtakHelpTextPanel';
@@ -15,27 +15,16 @@ export const VedtakAksjonspunktPanelImpl = ({
   intl,
   children,
   behandlingStatusKode,
-  erBehandlingHenlagt,
   aksjonspunktKoder,
   readOnly,
-}) => {
-  if (erBehandlingHenlagt) {
-    return (
-      <FadingPanel>
-        <Systemtittel>{intl.formatMessage({ id: 'VedtakForm.BehandlingHenlagt' })}</Systemtittel>
-      </FadingPanel>
-    );
-  }
-
-  return (
-    <FadingPanel>
-      <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
-      <VerticalSpacer twentyPx />
-      <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
-      {children}
-    </FadingPanel>
-  );
-};
+}) => (
+  <>
+    <Undertittel>{intl.formatMessage({ id: getTextCode(behandlingStatusKode) })}</Undertittel>
+    <VerticalSpacer twentyPx />
+    <VedtakHelpTextPanel aksjonspunktKoder={aksjonspunktKoder} readOnly={readOnly} />
+    {children}
+  </>
+);
 
 
 VedtakAksjonspunktPanelImpl.propTypes = {
@@ -44,7 +33,6 @@ VedtakAksjonspunktPanelImpl.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunktKoder: PropTypes.arrayOf(PropTypes.string).isRequired,
   behandlingStatusKode: PropTypes.string.isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
 };
 
 VedtakAksjonspunktPanelImpl.defaultProps = {

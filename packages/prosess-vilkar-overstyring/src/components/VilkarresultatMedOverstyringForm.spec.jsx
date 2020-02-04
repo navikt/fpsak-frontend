@@ -1,10 +1,10 @@
 import React from 'react';
 import { expect } from 'chai';
-import { Normaltekst, Undertittel } from 'nav-frontend-typografi';
+import { EtikettLiten } from 'nav-frontend-typografi';
 import { shallow } from 'enzyme';
+import { FormattedMessage } from 'react-intl';
 
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { OverstyrVurderingVelger } from '@fpsak-frontend/fp-felles';
 
 import VilkarresultatMedBegrunnelse from './VilkarresultatMedBegrunnelse';
 import { VilkarresultatMedOverstyringForm } from './VilkarresultatMedOverstyringForm';
@@ -14,7 +14,6 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
     const wrapper = shallow(<VilkarresultatMedOverstyringForm
       {...reduxFormPropsMock}
       behandlingspunktTitleCode="Behandlingspunkt.Fodselsvilkaret"
-      isOverstyrt
       erVilkarOk
       isReadOnly
       overstyringApKode="5011"
@@ -29,20 +28,17 @@ describe('<VilkarresultatMedOverstyringForm>', () => {
       aksjonspunktCodes={[]}
       toggleOverstyring={() => undefined}
       erMedlemskapsPanel={false}
-      panelTittel="Fødsel"
+      panelTittelKode="Fødsel"
+      erOverstyrt
     />);
 
-    const undertittel = wrapper.find(Undertittel);
-    expect(undertittel).to.have.length(1);
-    expect(undertittel.childAt(0).text()).to.eql('Fødsel');
+    const melding = wrapper.find(FormattedMessage);
+    expect(melding).to.have.length(5);
+    expect(melding.first().prop('id')).to.eql('Fødsel');
 
-    const normaltekst = wrapper.find(Normaltekst);
+    const normaltekst = wrapper.find(EtikettLiten);
     expect(normaltekst).to.have.length(1);
     expect(normaltekst.childAt(0).text()).to.eql('§23');
-
-    const checker = wrapper.find(OverstyrVurderingVelger);
-    expect(checker).to.have.length(1);
-    expect(checker.prop('aksjonspunktCode')).is.eql('5011');
 
     const vilkarResultatMedBegrunnelse = wrapper.find(VilkarresultatMedBegrunnelse);
     expect(vilkarResultatMedBegrunnelse).to.have.length(1);

@@ -23,7 +23,7 @@ const CheckPersonStatusIndex = ({
   aksjonspunkter,
   alleKodeverk,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
 }) => (
   <RawIntlProvider value={intl}>
@@ -36,7 +36,7 @@ const CheckPersonStatusIndex = ({
       alleKodeverk={alleKodeverk}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
     />
   </RawIntlProvider>
@@ -49,7 +49,7 @@ CheckPersonStatusIndex.propTypes = {
   aksjonspunkter: PropTypes.arrayOf(saksopplysningAksjonspunkterPropType).isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   submitCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
 };
 

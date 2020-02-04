@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
 
 import { TextAreaField } from '@fpsak-frontend/form';
 import {
@@ -23,18 +22,15 @@ const VilkarBegrunnelseImpl = ({
   isReadOnly,
   begrunnelseLabel,
 }) => (
-  <Row className={isReadOnly ? styles.margin : ''}>
-    <Column xs="8">
-      <TextAreaField
-        name="begrunnelse"
-        label={intl.formatMessage({ id: begrunnelseLabel })}
-        validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
-        textareaClass={styles.explanationTextarea}
-        maxLength={1500}
-        readOnly={isReadOnly}
-      />
-    </Column>
-  </Row>
+  <TextAreaField
+    name="begrunnelse"
+    label={intl.formatMessage({ id: begrunnelseLabel })}
+    validate={[requiredIfNotPristine, minLength3, maxLength1500, hasValidText]}
+    textareaClass={styles.explanationTextarea}
+    maxLength={1500}
+    readOnly={isReadOnly}
+    placeholder={intl.formatMessage({ id: 'VilkarBegrunnelse.BegrunnVurdering' })}
+  />
 );
 
 VilkarBegrunnelseImpl.propTypes = {

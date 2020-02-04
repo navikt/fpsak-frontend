@@ -2,9 +2,9 @@ import React from 'react';
 import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
-import { FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
-import { UttakInfoPanelImpl } from './UttakInfoPanel';
+
 import UttakFaktaForm from './UttakFaktaForm';
+import UttakInfoPanel from './UttakInfoPanel';
 import AnnenForelderHarRettForm from './AnnenForelderHarRettForm';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-uttak';
 
@@ -38,13 +38,9 @@ const avklarAnnenforelderHarRettAp = [{
 
 describe('<UttakInfoPanel>', () => {
   it('skal vise UttakInfoPanel', () => {
-    const toggleInfoPanelCallback = sinon.spy();
-
-    const wrapper = shallowWithIntl(<UttakInfoPanelImpl
+    const wrapper = shallowWithIntl(<UttakInfoPanel
       intl={intlMock}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
       submitCallback={sinon.spy()}
-      openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
       aksjonspunkter={[]}
@@ -62,20 +58,14 @@ describe('<UttakInfoPanel>', () => {
       familiehendelse={{}}
     />);
 
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    const uttakFaktaForm = faktaEkspandertpanel.find(UttakFaktaForm);
-    expect(faktaEkspandertpanel).to.have.length(1);
+    const uttakFaktaForm = wrapper.find(UttakFaktaForm);
     expect(uttakFaktaForm).to.have.length(1);
   });
 
   it('skal vise Avklar annen forelder har rett ', () => {
-    const toggleInfoPanelCallback = sinon.spy();
-
-    const wrapper = shallowWithIntl(<UttakInfoPanelImpl
+    const wrapper = shallowWithIntl(<UttakInfoPanel
       intl={intlMock}
-      toggleInfoPanelCallback={toggleInfoPanelCallback}
       submitCallback={sinon.spy()}
-      openInfoPanels={[]}
       readOnly
       hasOpenAksjonspunkter
       aksjonspunkter={avklarAnnenforelderHarRettAp}
@@ -93,9 +83,7 @@ describe('<UttakInfoPanel>', () => {
       familiehendelse={{}}
     />);
 
-    const faktaEkspandertpanel = wrapper.find(FaktaEkspandertpanel);
-    const annenForelderHarRettForm = faktaEkspandertpanel.find(AnnenForelderHarRettForm);
-    expect(faktaEkspandertpanel).to.have.length(1);
+    const annenForelderHarRettForm = wrapper.find(AnnenForelderHarRettForm);
     expect(annenForelderHarRettForm).to.have.length(1);
   });
 });

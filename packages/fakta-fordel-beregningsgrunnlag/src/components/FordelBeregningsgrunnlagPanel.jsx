@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { FormattedMessage } from 'react-intl';
-import { faktaPanelCodes, FaktaEkspandertpanel, withDefaultToggling } from '@fpsak-frontend/fp-felles';
 import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
-import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelingForm from './FordelingForm';
 import fordelBeregningsgrunnlagAksjonspunkterPropType from '../propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 
 const {
   FORDEL_BEREGNINGSGRUNNLAG,
 } = aksjonspunktCodes;
-
-const faktaOmFordelingAksjonspunkter = [FORDEL_BEREGNINGSGRUNNLAG];
 
 export const BEGRUNNELSE_FORDELING_NAME = 'begrunnelseFordeling';
 
@@ -22,14 +18,13 @@ const harIkkeFordelInfo = (bg) => {
   return bg.faktaOmFordeling ? !bg.faktaOmFordeling.fordelBeregningsgrunnlag : true;
 };
 const getFordelAksjonspunkt = (aksjonspunkter) => (aksjonspunkter ? aksjonspunkter.find((ap) => ap.definisjon.kode === FORDEL_BEREGNINGSGRUNNLAG) : undefined);
+
 /**
  * FordelBeregningsgrunnlagPanel
  *
- * Container komponent. Har ansvar for å sette opp Redux Formen for "avklar fakta om fordeling" panel.
- * Denne brukes også funksjonen withDefaultToggling for å håndtere automatisk åpning av panelet
- * når det finnes åpne aksjonspunkter.
+ * Har ansvar for å sette opp Redux Formen for "avklar fakta om fordeling" panel.
  */
-export class FordelBeregningsgrunnlagPanelImpl extends Component {
+export class FordelBeregningsgrunnlagPanel extends Component {
   constructor() {
     super();
     this.state = {
@@ -49,9 +44,6 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
   render() {
     const {
       props: {
-        openInfoPanels,
-        toggleInfoPanelCallback,
-        hasOpenAksjonspunkter,
         readOnly,
         aksjonspunkter,
         submitCallback,
@@ -72,42 +64,24 @@ export class FordelBeregningsgrunnlagPanelImpl extends Component {
       return null;
     }
     return (
-      <FaktaEkspandertpanel
-        title={<FormattedMessage id="FordelBeregningsgrunnlag.Title" />}
-        hasOpenAksjonspunkter={hasOpenAksjonspunkter}
-        isInfoPanelOpen={openInfoPanels.includes(faktaPanelCodes.FORDELING)}
-        toggleInfoPanelCallback={toggleInfoPanelCallback}
-        faktaId={faktaPanelCodes.FORDELING}
+      <FordelingForm
+        submitEnabled={submitEnabled}
+        submittable={submittable}
         readOnly={readOnly}
-      >
-        {hasAksjonspunkt(FORDEL_BEREGNINGSGRUNNLAG, aksjonspunkter)
-          && (
-          <FordelingForm
-            submitEnabled={submitEnabled}
-            submittable={submittable}
-            readOnly={readOnly}
-            submitCallback={submitCallback}
-            behandlingId={behandlingId}
-            behandlingVersjon={behandlingVersjon}
-            alleKodeverk={alleKodeverk}
-            alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
-            beregningsgrunnlag={beregningsgrunnlag}
-            behandlingType={behandlingType}
-            aksjonspunkter={aksjonspunkter}
-          />
-          )}
-      </FaktaEkspandertpanel>
+        submitCallback={submitCallback}
+        behandlingId={behandlingId}
+        behandlingVersjon={behandlingVersjon}
+        alleKodeverk={alleKodeverk}
+        alleMerknaderFraBeslutter={alleMerknaderFraBeslutter}
+        beregningsgrunnlag={beregningsgrunnlag}
+        behandlingType={behandlingType}
+        aksjonspunkter={aksjonspunkter}
+      />
     );
   }
 }
 
-FordelBeregningsgrunnlagPanelImpl.propTypes = {
-  /**
-   * Oversikt over hvilke faktapaneler som er åpne
-   */
-  openInfoPanels: PropTypes.arrayOf(PropTypes.string).isRequired,
-  toggleInfoPanelCallback: PropTypes.func.isRequired,
-  hasOpenAksjonspunkter: PropTypes.bool.isRequired,
+FordelBeregningsgrunnlagPanel.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fordelBeregningsgrunnlagAksjonspunkterPropType.isRequired).isRequired,
   submitCallback: PropTypes.func.isRequired,
@@ -121,8 +95,5 @@ FordelBeregningsgrunnlagPanelImpl.propTypes = {
   }).isRequired,
   behandlingType: kodeverkObjektPropType.isRequired,
 };
-
-const FordelBeregningsgrunnlagPanel = withDefaultToggling(faktaPanelCodes.FORDELING,
-  faktaOmFordelingAksjonspunkter)(FordelBeregningsgrunnlagPanelImpl);
 
 export default FordelBeregningsgrunnlagPanel;

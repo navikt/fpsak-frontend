@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Undertittel } from 'nav-frontend-typografi';
 
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
-import { FadingPanel } from '@fpsak-frontend/shared-components';
 import soknadType from '@fpsak-frontend/kodeverk/src/soknadType';
 import { ISO_DATE_FORMAT } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
@@ -46,7 +45,7 @@ export const TilkjentYtelsePanelImpl = ({
   behandlingId,
   behandlingVersjon,
 }) => (
-  <FadingPanel>
+  <>
     <Undertittel>
       <FormattedMessage id="TilkjentYtelse.Title" />
     </Undertittel>
@@ -75,7 +74,7 @@ export const TilkjentYtelsePanelImpl = ({
       beregningsresultat={beregningsresultatMedUttaksplan}
     />
     )}
-  </FadingPanel>
+  </>
 );
 
 TilkjentYtelsePanelImpl.propTypes = {

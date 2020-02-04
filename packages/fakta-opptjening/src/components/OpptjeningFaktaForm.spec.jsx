@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
-import { AksjonspunktHelpText } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp } from '@fpsak-frontend/shared-components';
 import OAType from '@fpsak-frontend/kodeverk/src/opptjeningAktivitetType';
 import { OpptjeningFaktaFormImpl as OpptjeningFaktaForm } from './OpptjeningFaktaForm';
 import ActivityPanel from './activity/ActivityPanel';
@@ -68,7 +68,7 @@ describe('<OpptjeningFaktaForm>', () => {
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
 
-    const helpText = wrapper.find(AksjonspunktHelpText);
+    const helpText = wrapper.find(AksjonspunktHelpTextTemp);
     expect(helpText).to.have.length(1);
     expect(helpText.prop('isAksjonspunktOpen')).is.true;
     expect(helpText.childAt(0)).to.have.length(1);
@@ -107,7 +107,7 @@ describe('<OpptjeningFaktaForm>', () => {
 
     wrapper.setState({ selectedOpptjeningActivity: opptjeningActivities[0] });
 
-    expect(wrapper.find(AksjonspunktHelpText)).to.have.length(0);
+    expect(wrapper.find(AksjonspunktHelpTextTemp)).to.have.length(0);
     expect(wrapper.find(Hovedknapp)).to.have.length(0);
     expect(wrapper.find(Knapp)).to.have.length(0);
   });

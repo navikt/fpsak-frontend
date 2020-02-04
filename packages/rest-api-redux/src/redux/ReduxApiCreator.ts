@@ -16,8 +16,8 @@ class ReduxApiCreator {
     const endpointNames = requestApi.getEndpointNames();
     endpointNames.forEach((endpointName) => {
       const requestRunner = requestApi.getRequestRunner(endpointName);
-      const { storeResultKey } = requestRunner.getConfig().config;
-      const resultKeyActionCreators = storeResultKey ? this.getEndpoint(storeResultKey).actionCreators : undefined;
+      const { saveResponseIn } = requestRunner.getConfig().config;
+      const resultKeyActionCreators = saveResponseIn ? this.getEndpoint(saveResponseIn).actionCreators : undefined;
       this.ducks.push(new RestDuck(requestRunner, getRestApiState, reduxEvents, resultKeyActionCreators));
     });
   }
@@ -34,9 +34,6 @@ class ReduxApiCreator {
   isEndpointEnabled = (endpointName: string): boolean => !!this.getEndpoint(endpointName).requestRunner.getPath();
 
   makeRequestActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.execRequest
-
-  // TODO (TOR) Bør fjerne denne og heller kunna konfigurera at ein legg data under anna state-nøkkel
-  setDataActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.execSetData
 
   makeResetActionCreator = (endpointName: string) => this.getEndpoint(endpointName).actionCreators.reset
 

@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 import { bindActionCreators } from 'redux';
 import { injectIntl } from 'react-intl';
 
-import { kodeverkObjektPropType } from '@fpsak-frontend/prop-types';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import {
   behandlingForm, behandlingFormValueSelector, getBehandlingFormPrefix, getKodeverknavnFn,
@@ -79,7 +78,7 @@ export class VedtakRevurderingFormImpl extends Component {
       begrunnelse,
       aksjonspunktKoder,
       antallBarn,
-      ytelseType,
+      ytelseTypeKode,
       revurderingsAarsakString,
       kanOverstyre,
       sprakkode,
@@ -87,7 +86,6 @@ export class VedtakRevurderingFormImpl extends Component {
       brødtekst,
       overskrift,
       initialValues,
-      erBehandlingHenlagt,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
@@ -97,6 +95,7 @@ export class VedtakRevurderingFormImpl extends Component {
       resultatstrukturOriginalBehandling,
       behandlingArsaker,
       medlemskapFom,
+      beregningErManueltFastsatt,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(previewCallback, begrunnelse);
@@ -106,13 +105,12 @@ export class VedtakRevurderingFormImpl extends Component {
         <VedtakFritekstbrevModal
           readOnly={readOnly}
           behandlingsresultat={behandlingresultat}
-          erSVP={ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER}
+          erSVP={ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER}
         />
         <VedtakAksjonspunktPanel
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           <VerticalSpacer eightPx />
           <>
@@ -128,18 +126,18 @@ export class VedtakRevurderingFormImpl extends Component {
             {isInnvilget(behandlingresultat.type.kode) && (
               <VedtakInnvilgetRevurderingPanel
                 antallBarn={antallBarn}
-                ytelseTypeKode={ytelseType.kode}
+                ytelseTypeKode={ytelseTypeKode}
                 aksjonspunktKoder={aksjonspunktKoder}
                 revurderingsAarsakString={revurderingsAarsakString}
                 behandlingsresultat={behandlingresultat}
                 readOnly={readOnly}
                 beregningResultat={resultatstruktur}
                 sprakKode={sprakkode}
-                aksjonspunkter={aksjonspunkter}
                 tilbakekrevingvalg={tilbakekrevingvalg}
                 simuleringResultat={simuleringResultat}
                 alleKodeverk={alleKodeverk}
                 originaltBeregningResultat={resultatstrukturOriginalBehandling}
+                beregningErManueltFastsatt={beregningErManueltFastsatt}
               />
             )}
             {isAvslag(behandlingresultat.type.kode) && (
@@ -159,18 +157,18 @@ export class VedtakRevurderingFormImpl extends Component {
             )}
             {isOpphor(behandlingresultat.type.kode) && (
               <VedtakOpphorRevurderingPanel
-                aksjonspunkter={aksjonspunkter}
                 revurderingsAarsakString={revurderingsAarsakString}
-                ytelseTypeKode={ytelseType.kode}
+                ytelseTypeKode={ytelseTypeKode}
                 readOnly={readOnly}
                 behandlingsresultat={behandlingresultat}
                 sprakKode={sprakkode}
                 medlemskapFom={medlemskapFom}
                 resultatstruktur={resultatstruktur}
+                beregningErManueltFastsatt={beregningErManueltFastsatt}
               />
             )}
 
-            {skalBrukeOverstyrendeFritekstBrev && ytelseType.kode !== ytelseType.ENGANGSSTONAD && (
+            {skalBrukeOverstyrendeFritekstBrev && ytelseTypeKode !== fagsakYtelseType.ENGANGSSTONAD && (
               <FritekstBrevPanel
                 intl={intl}
                 readOnly={readOnly}
@@ -186,7 +184,7 @@ export class VedtakRevurderingFormImpl extends Component {
                 previewCallback={previewCallback}
                 formProps={formProps}
                 readOnly={readOnly}
-                ytelseTypeKode={ytelseType.kode}
+                ytelseTypeKode={ytelseTypeKode}
                 skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
                 beregningResultat={resultatstruktur}
                 haveSentVarsel={sendVarselOmRevurdering}
@@ -214,11 +212,12 @@ VedtakRevurderingFormImpl.propTypes = {
   behandlingStatusKode: PropTypes.string.isRequired,
   behandlingresultat: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-  ytelseType: kodeverkObjektPropType.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   resultatstruktur: vedtakBeregningsresultatPropType,
   revurderingsAarsakString: PropTypes.string,
   kanOverstyre: PropTypes.bool,
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   ...formPropTypes,
 };
 
@@ -237,16 +236,16 @@ const buildInitialValues = createSelector(
   [(ownProps) => ownProps.resultatstruktur,
     (ownProps) => ownProps.behandlingStatusKode,
     (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.ytelseType,
+    (ownProps) => ownProps.ytelseTypeKode,
     (ownProps) => ownProps.behandlingresultat,
     (ownProps) => ownProps.sprakkode],
-  (beregningResultat, behandlingstatusKode, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => {
+  (beregningResultat, behandlingstatusKode, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode) => {
     const aksjonspunktKoder = aksjonspunkter
       .filter((ap) => ap.erAktivt)
       .filter((ap) => ap.kanLoses)
       .map((ap) => ap.definisjon.kode);
 
-    if (ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD) {
+    if (ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD) {
       if (beregningResultat) {
         return {
           antallBarn: beregningResultat.antallBarn,

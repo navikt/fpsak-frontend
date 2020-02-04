@@ -81,7 +81,7 @@ describe('<MessagesIndex>', () => {
     previewCallback({ mottaker: 'Søker', brevmalkode: 'Mal1' });
 
     expect(fetchPreviewFunction).to.have.property('callCount', 1);
-    expect(fetchPreviewFunction.getCall(0).args[1].fritekst).to.equal(' ');
+    expect(fetchPreviewFunction.getCall(0).args[2].fritekst).to.equal(' ');
   });
 
   it('skal resette fritekst ved lukking av modal', () => {
@@ -109,9 +109,6 @@ describe('<MessagesIndex>', () => {
     wrapper.find(MessagesModalSakIndex).prop('closeEvent')();
 
     expect(resetSubmitMessageFunction).to.have.property('callCount', 1);
-    const { args } = resetSubmitMessageFunction.getCalls()[0];
-    expect(args).to.have.length(1);
-    expect(args[0]).to.eql(behandlingIdentifier);
 
     expect(wrapper.state().showMessagesModal).is.false;
   });

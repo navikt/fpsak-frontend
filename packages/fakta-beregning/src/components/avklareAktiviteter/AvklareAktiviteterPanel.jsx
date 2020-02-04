@@ -10,7 +10,7 @@ import AlertStripe from 'nav-frontend-alertstriper';
 import {
   getBehandlingFormPrefix, FaktaBegrunnelseTextField, behandlingForm, FaktaSubmitButton,
 } from '@fpsak-frontend/fp-felles';
-import { AksjonspunktHelpText, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextTemp, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes, { hasAksjonspunkt } from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import { CheckboxField } from '@fpsak-frontend/form';
@@ -145,6 +145,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
         alleKodeverk,
         behandlingId,
         behandlingVersjon,
+        formValues,
         ...formProps
       },
       state: {
@@ -176,7 +177,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
       && (
         <div>
           {hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)
-          && <AksjonspunktHelpText isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpText>}
+          && <AksjonspunktHelpTextTemp isAksjonspunktOpen={!isAksjonspunktClosed}>{helpText}</AksjonspunktHelpTextTemp>}
           {erOverstyrt && (
           <Element>
             <FormattedMessage id="AvklareAktiviteter.OverstyrerAktivitetAdvarsel" />
@@ -202,6 +203,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
               isAksjonspunktClosed={isAksjonspunktClosed}
               erOverstyrt={erOverstyrt}
               alleKodeverk={alleKodeverk}
+              values={formValues}
               harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
             />
           )}
@@ -272,7 +274,12 @@ AvklareAktiviteterPanelImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  formValues: PropTypes.shape(),
   ...formPropTypes,
+};
+
+AvklareAktiviteterPanelImpl.defaultProps = {
+  formValues: undefined,
 };
 
 const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOverstyre || hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
@@ -320,9 +327,9 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     const initialValues = buildInitialValuesAvklarAktiviteter(ownProps);
     return ({
       initialValues,
-      values,
       onSubmit,
       validate,
+      formValues: values,
       kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.aksjonspunkter),
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),

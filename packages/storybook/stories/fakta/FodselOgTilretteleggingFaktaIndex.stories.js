@@ -2,7 +2,6 @@ import React from 'react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, boolean, object } from '@storybook/addon-knobs';
 
-import { faktaPanelCodes } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import tilretteleggingType from '@fpsak-frontend/kodeverk/src/tilretteleggingType';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -83,9 +82,32 @@ const svangerskapspengerTilretteleggingForFrilanser = {
   }],
 };
 
-const toggle = (openInfoPanels, togglePanel) => (value) => {
-  const exists = openInfoPanels.some((op) => op === value);
-  return togglePanel(exists ? [] : [value]);
+const inntektArbeidYtelse = {
+  arbeidsforhold: [{
+    id: '555864629-null',
+    navn: 'WWW.EIENDOMSDRIFT.CC SA',
+    arbeidsgiverIdentifikator: '555864629',
+    arbeidsgiverIdentifiktorGUI: '555864629',
+    kilde: {
+      navn: 'AA-Registeret',
+    },
+    stillingsprosent: 100.00,
+    skjaeringstidspunkt: '2020-01-30',
+    mottattDatoInntektsmelding: '2020-01-28',
+    fomDato: '2016-01-28',
+    harErstattetEttEllerFlere: true,
+    ikkeRegistrertIAaRegister: false,
+    tilVurdering: false,
+    vurderOmSkalErstattes: false,
+    brukArbeidsforholdet: true,
+    fortsettBehandlingUtenInntektsmelding: false,
+    erNyttArbeidsforhold: false,
+    erEndret: false,
+    brukMedJustertPeriode: false,
+    lagtTilAvSaksbehandler: false,
+    basertPaInntektsmelding: false,
+    permisjoner: [],
+  }],
 };
 
 export default {
@@ -94,8 +116,63 @@ export default {
   decorators: [withKnobs, withReduxProvider],
 };
 
-export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELTILRETTELEGGING]);
+export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => (
+  <FodselOgTilretteleggingFaktaIndex
+    behandling={behandling}
+    svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForArbeidsgiver)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+    inntektArbeidYtelse={inntektArbeidYtelse}
+  />
+);
+
+export const visAksjonspunktForFødselstilretteleggingForFrilanserOgSelvstendigNæringsdrivende = () => (
+  <FodselOgTilretteleggingFaktaIndex
+    behandling={behandling}
+    svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForFrilanser)}
+    aksjonspunkter={[{
+      definisjon: {
+        kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
+      },
+      status: {
+        kode: aksjonspunktStatus.OPPRETTET,
+      },
+      begrunnelse: undefined,
+      kanLoses: true,
+      erAktivt: true,
+    }]}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+    inntektArbeidYtelse={inntektArbeidYtelse}
+  />
+);
+
+export const visInfoDialogForVarIkkeAnsattDaBehovetForTilretteleggingOppstod = () => {
+  const inntektArbeidYtelseForAnnenArbeidsgiver = {
+    arbeidsforhold: [{
+      ...inntektArbeidYtelse.arbeidsforhold,
+      id: '1111111-null',
+      navn: 'STATOIL',
+      arbeidsgiverIdentifikator: '1111111',
+      arbeidsgiverIdentifiktorGUI: '1111111',
+    }],
+  };
+
   return (
     <FodselOgTilretteleggingFaktaIndex
       behandling={behandling}
@@ -112,36 +189,10 @@ export const visAksjonspunktForFødselstilretteleggingForArbeidsgiver = () => {
         erAktivt: true,
       }]}
       submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
       readOnly={boolean('readOnly', false)}
-    />
-  );
-};
-
-export const visAksjonspunktForFødselstilretteleggingForFrilanserOgSelvstendigNæringsdrivende = () => {
-  const [openInfoPanels, togglePanel] = React.useState([faktaPanelCodes.FODSELTILRETTELEGGING]);
-  return (
-    <FodselOgTilretteleggingFaktaIndex
-      behandling={behandling}
-      svangerskapspengerTilrettelegging={object('Tilrettelegging', svangerskapspengerTilretteleggingForFrilanser)}
-      aksjonspunkter={[{
-        definisjon: {
-          kode: aksjonspunktCodes.FODSELTILRETTELEGGING,
-        },
-        status: {
-          kode: aksjonspunktStatus.OPPRETTET,
-        },
-        begrunnelse: undefined,
-        kanLoses: true,
-        erAktivt: true,
-      }]}
-      submitCallback={action('button-click')}
-      openInfoPanels={openInfoPanels}
-      toggleInfoPanelCallback={toggle(openInfoPanels, togglePanel)}
-      shouldOpenDefaultInfoPanels={false}
-      readOnly={boolean('readOnly', false)}
+      harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+      submittable={boolean('submittable', true)}
+      inntektArbeidYtelse={inntektArbeidYtelseForAnnenArbeidsgiver}
     />
   );
 };

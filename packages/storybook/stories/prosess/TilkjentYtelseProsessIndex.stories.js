@@ -18,7 +18,7 @@ import withReduxProvider from '../../decorators/withRedux';
 import alleKodeverk from '../mocks/alleKodeverk.json';
 
 const fagsak = {
-  ytelseType: {
+  fagsakYtelseType: {
     kode: fagsakYtelseType.FORELDREPENGER,
   },
 };
@@ -94,7 +94,7 @@ export const visUtenAksjonspunkt = () => (
     fagsak={fagsak}
     aksjonspunkter={[]}
     alleKodeverk={alleKodeverk}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
   />
@@ -117,7 +117,7 @@ export const visÅpentAksjonspunkt = () => (
       },
     }]}
     alleKodeverk={alleKodeverk}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     submitCallback={action('button-click')}
     readOnlySubmitButton={boolean('readOnly', true)}
   />

@@ -22,7 +22,7 @@ const AvviksopplysningerAT = ({
     return null;
   }
   const avvikAT = sammenligningsGrunnlagAT.avvikProsent;
-  const avvikATRounded = parseFloat((sammenligningsGrunnlagAT.avvikProsent.toFixed(1)));
+  const avvikATRounded = avvikAT ? parseFloat((avvikAT.toFixed(1))) : 0;
   const sammenligningsgrunnlagSumAT = sammenligningsGrunnlagAT.rapportertPrAar;
   const { differanseBeregnet } = sammenligningsGrunnlagAT;
   const kombinasjonsstatusATSN = relevanteStatuser.isKombinasjonsstatus
@@ -40,10 +40,10 @@ const AvviksopplysningerAT = ({
         <Column xs="12">
           <Normaltekst>
             {kombinasjonsstatusATSN && (
-              <Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" /></Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN" />
             )}
             {kombinasjonsstatusATFLSN && (
-              <Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" /></Normaltekst>
+            <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN" />
             )}
           </Normaltekst>
         </Column>

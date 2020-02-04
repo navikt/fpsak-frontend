@@ -38,11 +38,10 @@ describe('<AvregningProsessIndex>', () => {
       behandling={behandling}
       aksjonspunkter={aksjonspunkter}
       submitCallback={sinon.spy()}
-      readOnly={false}
+      isReadOnly={false}
       readOnlySubmitButton={false}
-      apCodes={[]}
-      isApOpen
-      previewCallback={sinon.spy()}
+      isAksjonspunktOpen
+      previewFptilbakeCallback={sinon.spy()}
       featureToggles={{}}
     />);
     expect(wrapper.find(AvregningPanel)).has.length(1);

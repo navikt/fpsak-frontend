@@ -23,11 +23,10 @@ const AvregningProsessIndex = ({
   simuleringResultat,
   tilbakekrevingvalg,
   submitCallback,
-  readOnly,
+  isReadOnly,
   readOnlySubmitButton,
-  apCodes,
-  isApOpen,
-  previewCallback,
+  isAksjonspunktOpen,
+  previewFptilbakeCallback,
   featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
@@ -41,11 +40,11 @@ const AvregningProsessIndex = ({
       tilbakekrevingvalg={tilbakekrevingvalg}
       featureToggles={featureToggles}
       submitCallback={submitCallback}
-      readOnly={readOnly}
+      readOnly={isReadOnly}
       readOnlySubmitButton={readOnlySubmitButton}
-      apCodes={apCodes}
-      isApOpen={isApOpen}
-      previewCallback={previewCallback}
+      apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
+      isApOpen={isAksjonspunktOpen}
+      previewCallback={previewFptilbakeCallback}
     />
   </RawIntlProvider>
 );
@@ -57,11 +56,10 @@ AvregningProsessIndex.propTypes = {
   simuleringResultat: avregningSimuleringResultatPropType,
   tilbakekrevingvalg: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
-  readOnly: PropTypes.bool.isRequired,
-  isApOpen: PropTypes.bool.isRequired,
+  previewFptilbakeCallback: PropTypes.func.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
+  isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,
-  apCodes: PropTypes.arrayOf(PropTypes.string).isRequired,
   featureToggles: PropTypes.shape().isRequired,
 };
 

@@ -1,8 +1,9 @@
 import vut from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { notNull } from '@fpsak-frontend/utils';
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { Aksjonspunkt } from '@fpsak-frontend/types';
 
-import Aksjonspunkt from '../types/aksjonspunktTsType';
+// TODO (TOR) Fjern denne når Klage, Innsyn og Tilbakekreving er skrive om
 
 class ProsessStegProperties {
   code: string

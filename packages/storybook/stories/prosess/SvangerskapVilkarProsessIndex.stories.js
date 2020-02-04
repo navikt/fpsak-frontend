@@ -35,7 +35,7 @@ export const visÅpentAksjonspunkt = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
+    isReadOnly={boolean('isReadOnly', false)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
     status={vilkarUtfallType.IKKE_VURDERT}
@@ -63,7 +63,7 @@ export const visOppfyltVilkår = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
     status={vilkarUtfallType.OPPFYLT}
@@ -95,7 +95,7 @@ export const visAvslåttVilkår = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', true)}
     readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     isAksjonspunktOpen={boolean('isAksjonspunktOpen', false)}
     status={vilkarUtfallType.IKKE_OPPFYLT}

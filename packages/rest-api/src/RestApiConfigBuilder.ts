@@ -46,7 +46,7 @@ class RestApiConfigBuilder {
     return this;
   }
 
-  withInjectedPath(rel: string, name: string, config?: RequestAdditionalConfig) {
+  withRel(rel: string, name: string, config?: RequestAdditionalConfig) {
     this.endpoints.push(createConfigWithPathAndConfig(name, undefined, config).withRel(rel));
     return this;
   }

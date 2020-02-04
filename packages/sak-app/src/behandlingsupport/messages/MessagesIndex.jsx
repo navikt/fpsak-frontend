@@ -113,7 +113,7 @@ export class MessagesIndex extends Component {
       mottaker,
       dokumentMal,
     };
-    fetchPreview(erTilbakekreving, data);
+    fetchPreview(erTilbakekreving, false, data);
   }
 
   afterSubmit() {
@@ -124,8 +124,11 @@ export class MessagesIndex extends Component {
   }
 
   resetMessage() {
-    const { behandlingIdentifier, resetSubmitMessage: resetMessage } = this.props;
-    return resetMessage(behandlingIdentifier);
+    const { resetSubmitMessage: resetMessage } = this.props;
+    resetMessage();
+
+    // FIXME temp fiks for å unngå prod-feil (her skjer det ein oppdatering av behandling, så må oppdatera)
+    window.location.reload();
   }
 
   render() {
@@ -141,7 +144,7 @@ export class MessagesIndex extends Component {
     const { showMessagesModal, showSettPaVentModal, submitCounter } = this.state;
 
     return (
-      <div>
+      <>
         {showMessagesModal && (
           <MessagesModalSakIndex showModal={submitFinished && showMessagesModal} closeEvent={this.afterSubmit} />
         )}
@@ -178,7 +181,7 @@ export class MessagesIndex extends Component {
             ventearsaker={ventearsaker}
           />
         )}
-      </div>
+      </>
     );
   }
 }

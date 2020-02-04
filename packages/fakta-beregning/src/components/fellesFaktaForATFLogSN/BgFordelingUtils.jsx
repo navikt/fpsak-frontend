@@ -8,6 +8,7 @@ import { createSelector } from 'reselect';
 import { lonnsendringField } from './vurderOgFastsettATFL/forms/LonnsendringForm';
 import { erNyoppstartetFLField } from './vurderOgFastsettATFL/forms/NyoppstartetFLForm';
 import { harEtterlonnSluttpakkeField } from './vurderOgFastsettATFL/forms/VurderEtterlonnSluttpakkeForm';
+import erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse from './vurderOgFastsettATFL/forms/AvsluttetArbeidsforhold';
 import { andelsnrMottarYtelseMap } from './vurderOgFastsettATFL/forms/VurderMottarYtelseUtils';
 import { getFormValuesForBeregning } from '../BeregningFormUtils';
 import { besteberegningField } from './besteberegningFodendeKvinne/VurderBesteberegningForm';
@@ -88,7 +89,6 @@ const andelErStatusATUtenInntektsmeldingOgHarFLISammeOrg = (field, faktaOmBeregn
 && erArbeidstaker(field) && erArbeidstakerUtenInntektsmeldingOgFrilansISammeOrganisasjon(field, faktaOmBeregning);
 
 // Søker mottar ytelse
-
 const sokerMottarYtelseForAndel = (values, field, faktaOmBeregning, beregningsgrunnlag) => {
   const mottarYtelseMap = andelsnrMottarYtelseMap(values, faktaOmBeregning.vurderMottarYtelse, beregningsgrunnlag);
   return mottarYtelseMap[field.andelsnr] || mottarYtelseMap[field.andelsnrRef];
@@ -133,6 +133,9 @@ const skalKunneOverstigeRapportertInntektOgTotaltBeregningsgrunnlag = (values, f
     return true;
   }
   if (erAndelKunstigArbeidsforhold(andel, beregningsgrunnlag)) {
+    return true;
+  }
+  if (erAndelUtenReferanseOgGrunnlagHarAndelForSammeArbeidsgiverMedReferanse(andel, beregningsgrunnlag)) {
     return true;
   }
   if (andelErEtterlønnSluttpakkeOgSkalFastsettes(andel, values)) {

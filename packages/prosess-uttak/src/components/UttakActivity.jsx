@@ -61,11 +61,22 @@ function sortAlphabetically(a, b) {
   return 0;
 }
 
-const mapAarsak = (kodeverk, starttidspunktForeldrepenger) => {
+const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType, periodeType) => {
   kodeverk.sort(sortAlphabetically);
-  const nyKodeArray = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
+  const nyKodeverkListe = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
-  const filteredNyKodeArray = nyKodeArray.filter((item) => (item.kode < 4096 || item.kode > 4099));
+  let filteredNyKodeArray = nyKodeverkListe.filter((item) => (item.kode < 4096 || item.kode > 4099));
+
+  if (utsettelseType && utsettelseType.kode !== utsettelseArsakCodes.UDEFINERT) {
+    filteredNyKodeArray = filteredNyKodeArray.filter((kv) => kv.uttakTyper.includes('UTSETTELSE'));
+  }
+
+  if (periodeType && utsettelseType && utsettelseType.kode === utsettelseArsakCodes.UDEFINERT) {
+    filteredNyKodeArray = filteredNyKodeArray
+      .filter((kv) => kv.uttakTyper.includes('UTTAK'))
+      .filter((kv) => kv.valgbarForKonto.includes(periodeType.kode));
+  }
+
   return (filteredNyKodeArray
     .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
 };
@@ -144,7 +155,14 @@ export const UttakActivity = ({
                             {erOppfylt && (
                               <SelectField
                                 name="innvilgelseAarsak"
-                                selectValues={mapAarsak(innvilgelseAarsakKoder, starttidspunktForeldrepenger)}
+                                selectValues={
+                                  mapAarsak(
+                                    innvilgelseAarsakKoder,
+                                    starttidspunktForeldrepenger,
+                                    selectedItemData.utsettelseType,
+                                    selectedItemData.periodeType,
+                                  )
+                                }
                                 validate={[required, notDash]}
                                 label={{ id: 'UttakActivity.InnvilgelseAarsaker' }}
                                 readOnly={readOnly}
@@ -154,7 +172,14 @@ export const UttakActivity = ({
                             {!erOppfylt && (
                               <SelectField
                                 name="avslagAarsak"
-                                selectValues={mapAarsak(avslagAarsakKoder, starttidspunktForeldrepenger)}
+                                selectValues={
+                                  mapAarsak(
+                                    avslagAarsakKoder,
+                                    starttidspunktForeldrepenger,
+                                    selectedItemData.utsettelseType,
+                                    selectedItemData.periodeType,
+                                  )
+                                }
                                 validate={[required, notDash]}
                                 label={{ id: 'UttakActivity.AvslagAarsak' }}
                                 readOnly={readOnly}
@@ -495,6 +520,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
     const erOppfylt = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'erOppfylt');
     const begrunnelse = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'begrunnelse');
     const arsak = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
+    const uttakFieldArray = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'UttakFieldArray');
     const hasValidationError = erOppfylt === undefined || !begrunnelse || !arsak;
     return {
       hasValidationError,
@@ -506,6 +532,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       oppholdArsakTyper,
       graderingAvslagAarsakKoder,
       utsettelseAarsak,
+      uttakFieldArray,
       erOppfylt,
       initialValues: buildInitialValues(ownProps),
       avslagAarsakKoder: avslagAarsaker,

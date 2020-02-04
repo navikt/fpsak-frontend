@@ -62,8 +62,8 @@ export const visÅpentAksjonspunkt = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
-    readOnlySubmitButton={boolean('readOnly', true)}
+    isReadOnly={boolean('isReadOnly', false)}
+    readOnlySubmitButton={boolean('readOnlySubmitButton', false)}
   />
 );
 
@@ -83,7 +83,7 @@ export const visUtførtAksjonspunkt = () => (
     }]}
     alleKodeverk={alleKodeverk}
     submitCallback={action('button-click')}
-    readOnly
+    isReadOnly
     readOnlySubmitButton
   />
 );

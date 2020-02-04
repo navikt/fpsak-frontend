@@ -116,13 +116,13 @@ export class VedtakForm extends Component {
       erBehandlingEtterKlage,
       skalBrukeOverstyrendeFritekstBrev,
       initialValues,
-      ytelseType,
-      erBehandlingHenlagt,
+      ytelseTypeKode,
       resultatstruktur,
       alleKodeverk,
       tilbakekrevingvalg,
       simuleringResultat,
       vilkar,
+      beregningErManueltFastsatt,
       ...formProps
     } = this.props;
     const previewAutomatiskBrev = getPreviewAutomatiskBrevCallback(begrunnelse, previewCallback);
@@ -136,13 +136,12 @@ export class VedtakForm extends Component {
         <VedtakFritekstbrevModal
           readOnly={readOnly}
           behandlingsresultat={behandlingresultat}
-          erSVP={ytelseType.kode === fagsakYtelseType.SVANGERSKAPSPENGER}
+          erSVP={ytelseTypeKode === fagsakYtelseType.SVANGERSKAPSPENGER}
         />
         <VedtakAksjonspunktPanel
           behandlingStatusKode={behandlingStatusKode}
           aksjonspunktKoder={aksjonspunktKoder}
           readOnly={readOnly}
-          erBehandlingHenlagt={erBehandlingHenlagt}
         >
           {visOverstyringKnapp && (
             <VedtakOverstyrendeKnapp
@@ -160,13 +159,14 @@ export class VedtakForm extends Component {
               behandlingsresultat={behandlingresultat}
               readOnly={readOnly}
               skalBrukeOverstyrendeFritekstBrev={skalBrukeOverstyrendeFritekstBrev}
-              ytelseTypeKode={ytelseType.kode}
+              ytelseTypeKode={ytelseTypeKode}
               aksjonspunkter={aksjonspunkter}
               sprakkode={sprakkode}
               beregningResultat={resultatstruktur}
               alleKodeverk={alleKodeverk}
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -176,12 +176,13 @@ export class VedtakForm extends Component {
               aksjonspunkter={aksjonspunkter}
               behandlingsresultat={behandlingresultat}
               readOnly={readOnly}
-              ytelseTypeKode={ytelseType.kode}
+              ytelseTypeKode={ytelseTypeKode}
               sprakkode={sprakkode}
               alleKodeverk={alleKodeverk}
               tilbakekrevingvalg={tilbakekrevingvalg}
               simuleringResultat={simuleringResultat}
               vilkar={vilkar}
+              beregningErManueltFastsatt={beregningErManueltFastsatt}
             />
           )}
 
@@ -240,11 +241,11 @@ VedtakForm.propTypes = {
   skalBrukeOverstyrendeFritekstBrev: PropTypes.bool,
   sprakkode: kodeverkObjektPropType.isRequired,
   erBehandlingEtterKlage: PropTypes.bool.isRequired,
-  ytelseType: kodeverkObjektPropType.isRequired,
-  erBehandlingHenlagt: PropTypes.bool.isRequired,
+  ytelseTypeKode: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
   tilbakekrevingvalg: PropTypes.shape(),
   simuleringResultat: PropTypes.shape(),
+  beregningErManueltFastsatt: PropTypes.bool.isRequired,
   vilkar: PropTypes.arrayOf(vedtakVilkarPropType.isRequired),
   ...formPropTypes,
 };
@@ -263,12 +264,12 @@ export const buildInitialValues = createSelector(
   [(ownProps) => ownProps.behandlingStatus,
     (ownProps) => ownProps.resultatstruktur,
     (ownProps) => ownProps.aksjonspunkter,
-    (ownProps) => ownProps.ytelseType,
+    (ownProps) => ownProps.ytelseTypeKode,
     (ownProps) => ownProps.behandlingresultat,
     (ownProps) => ownProps.sprakkode],
-  (status, beregningResultat, aksjonspunkter, ytelseType, behandlingresultat, sprakkode) => ({
+  (status, beregningResultat, aksjonspunkter, ytelseTypeKode, behandlingresultat, sprakkode) => ({
     sprakkode,
-    isEngangsstonad: beregningResultat && ytelseType ? ytelseType.kode === fagsakYtelseType.ENGANGSSTONAD : false,
+    isEngangsstonad: beregningResultat && ytelseTypeKode ? ytelseTypeKode === fagsakYtelseType.ENGANGSSTONAD : false,
     antallBarn: beregningResultat ? beregningResultat.antallBarn : undefined,
     aksjonspunktKoder: aksjonspunkter.filter((ap) => ap.kanLoses)
       .map((ap) => ap.definisjon.kode),

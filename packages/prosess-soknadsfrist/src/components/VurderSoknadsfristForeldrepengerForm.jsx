@@ -12,7 +12,7 @@ import {
 import Panel from 'nav-frontend-paneler';
 
 import {
-  AksjonspunktHelpText, ArrowBox, FadingPanel, VerticalSpacer,
+  AksjonspunktHelpTextTemp, ArrowBox, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { DatepickerField, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import {
@@ -48,10 +48,10 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
   isApOpen,
   ...formProps
 }) => (
-  <FadingPanel>
+  <>
     <Undertittel><FormattedMessage id="VurderSoknadsfristForeldrepengerForm.Soknadsfrist" /></Undertittel>
     <VerticalSpacer twentyPx />
-    <AksjonspunktHelpText isAksjonspunktOpen={isApOpen}>
+    <AksjonspunktHelpTextTemp isAksjonspunktOpen={isApOpen}>
       {[<FormattedMessage
         key="VurderSoknadsfristForeldrepengerForm"
         id="VurderSoknadsfristForeldrepengerForm.AksjonspunktHelpText"
@@ -60,7 +60,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
           soknadsfristdato: moment(soknadsfristdato).format(DDMMYYYY_DATE_FORMAT),
         }}
       />]}
-    </AksjonspunktHelpText>
+    </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
     <Row>
       <Column xs="6">
@@ -126,7 +126,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
         />
       </div>
     </form>
-  </FadingPanel>
+  </>
 );
 
 VurderSoknadsfristForeldrepengerFormImpl.propTypes = {
@@ -148,7 +148,7 @@ export const buildInitialValues = createSelector(
   [(state, ownProps) => ownProps.aksjonspunkter,
     (state, ownProps) => ownProps.uttakPeriodeGrense,
     (state, ownProps) => ownProps.mottattDato],
-  (aksjonspunkter, uttaksperiodegrense, mottattDato) => ({
+  (aksjonspunkter, uttaksperiodegrense = {}, mottattDato) => ({
     gyldigSenFremsetting: isAksjonspunktOpen(aksjonspunkter[0].status.kode) ? undefined : uttaksperiodegrense.mottattDato !== mottattDato,
     ansesMottatt: uttaksperiodegrense.mottattDato,
     ...BehandlingspunktBegrunnelseTextField.buildInitialValues(aksjonspunkter),

@@ -12,7 +12,7 @@ import {
   OverstyrVurderingVelger,
 } from '@fpsak-frontend/fp-felles';
 import {
-  FadingPanel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import {
   formatCurrencyWithKr, hasValidInteger, maxValue, minValue, required,
@@ -42,31 +42,30 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
   toggleOverstyring,
   ...formProps
 }) => (
-  <FadingPanel>
-    <form onSubmit={formProps.handleSubmit}>
-      <Row>
-        <Column xs="9">
-          <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
-        </Column>
-        <Column xs="3">
-          <OverstyrVurderingVelger
-            isBeregningOverstyrer
-            aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
-            resetValues={formProps.reset}
-            overrideReadOnly={overrideReadOnly}
-            kanOverstyreAccess={kanOverstyreAccess}
-            aksjonspunktCodes={aksjonspunktCodes}
-            toggleOverstyring={toggleOverstyring}
-          />
-        </Column>
-      </Row>
-      <VerticalSpacer eightPx />
-      <Row>
-        <Column xs="3">
-          <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.BeregnetEngangsstonad' })}</Undertekst>
-          {(!isOverstyrt || isReadOnly)
+  <form onSubmit={formProps.handleSubmit}>
+    <Row>
+      <Column xs="9">
+        <Undertittel>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Beregning' })}</Undertittel>
+      </Column>
+      <Column xs="3">
+        <OverstyrVurderingVelger
+          isBeregningOverstyrer
+          aksjonspunktCode={aksjonspunktCode.OVERSTYR_BEREGNING}
+          resetValues={formProps.reset}
+          overrideReadOnly={overrideReadOnly}
+          kanOverstyreAccess={kanOverstyreAccess}
+          aksjonspunktCodes={aksjonspunktCodes}
+          toggleOverstyring={toggleOverstyring}
+        />
+      </Column>
+    </Row>
+    <VerticalSpacer eightPx />
+    <Row>
+      <Column xs="3">
+        <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.BeregnetEngangsstonad' })}</Undertekst>
+        {(!isOverstyrt || isReadOnly)
           && <Normaltekst>{formatCurrencyWithKr(beregningResultat.beregnetTilkjentYtelse)}</Normaltekst>}
-          {isOverstyrt && !isReadOnly
+        {isOverstyrt && !isReadOnly
           && (
           <FlexContainer fluid>
             <FlexRow>
@@ -87,17 +86,17 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
             </FlexRow>
           </FlexContainer>
           )}
-        </Column>
-        <Column xs="2">
-          <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.AntallBarn' })}</Undertekst>
-          <Normaltekst className={isOverstyrt && !isReadOnly ? styles.editAdjuster : ''}>{beregningResultat.antallBarn}</Normaltekst>
-        </Column>
-        <Column xs="2">
-          <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Sats' })}</Undertekst>
-          <Normaltekst className={isOverstyrt && !isReadOnly ? styles.editAdjuster : ''}>{formatCurrencyWithKr(beregningResultat.satsVerdi)}</Normaltekst>
-        </Column>
-      </Row>
-      {isOverstyrt
+      </Column>
+      <Column xs="2">
+        <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.AntallBarn' })}</Undertekst>
+        <Normaltekst className={isOverstyrt && !isReadOnly ? styles.editAdjuster : ''}>{beregningResultat.antallBarn}</Normaltekst>
+      </Column>
+      <Column xs="2">
+        <Undertekst>{intl.formatMessage({ id: 'BeregningEngangsstonadForm.Sats' })}</Undertekst>
+        <Normaltekst className={isOverstyrt && !isReadOnly ? styles.editAdjuster : ''}>{formatCurrencyWithKr(beregningResultat.satsVerdi)}</Normaltekst>
+      </Column>
+    </Row>
+    {isOverstyrt
       && (
       <div>
         <OverstyrBegrunnelsePanel isBeregningConfirmation overrideReadOnly={overrideReadOnly} />
@@ -108,8 +107,7 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
         />
       </div>
       )}
-    </form>
-  </FadingPanel>
+  </form>
 );
 
 BeregningsresultatEngangsstonadFormImpl.propTypes = {

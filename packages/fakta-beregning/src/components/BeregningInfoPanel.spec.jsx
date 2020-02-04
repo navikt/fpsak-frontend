@@ -3,10 +3,9 @@ import { expect } from 'chai';
 import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import sinon from 'sinon';
 
-import { faktaPanelCodes, FaktaEkspandertpanel } from '@fpsak-frontend/fp-felles';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
-import { BeregningInfoPanelImpl } from './BeregningInfoPanel';
+import BeregningInfoPanel from './BeregningInfoPanel';
 import VurderFaktaBeregningPanel from './fellesFaktaForATFLogSN/VurderFaktaBeregningPanel';
 import AvklareAktiviteterPanel from './avklareAktiviteter/AvklareAktiviteterPanel';
 import shallowWithIntl from '../../i18n/intl-enzyme-test-helper-fakta-beregning';
@@ -32,28 +31,6 @@ const beregningsgrunnlag = {
 };
 
 describe('<BeregningInfoPanel>', () => {
-  it('skal vise ekspanderbart panel', () => {
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
-      intl={intlMock}
-      aksjonspunkter={[]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
-      hasOpenAksjonspunkter
-      submittable
-      readOnly
-      submitCallback={sinon.spy()}
-      alleKodeverk={alleKodeverk}
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      beregningsgrunnlag={beregningsgrunnlag}
-      erOverstyrer={false}
-    />);
-    const panel = wrapper.find(FaktaEkspandertpanel);
-    expect(panel).has.length(1);
-    expect(panel.prop('isInfoPanelOpen')).is.true;
-    expect(panel.prop('faktaId')).to.eql(faktaPanelCodes.BEREGNING);
-    expect(panel.prop('readOnly')).is.true;
-  });
   it('skal vise VurderFaktaBeregning panel', () => {
     const tidsbegrensetAP = {
       id: 1,
@@ -67,11 +44,9 @@ describe('<BeregningInfoPanel>', () => {
       },
     };
 
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+    const wrapper = shallowWithIntl(<BeregningInfoPanel
       intl={intlMock}
       aksjonspunkter={[tidsbegrensetAP]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly
@@ -98,11 +73,9 @@ describe('<BeregningInfoPanel>', () => {
         navn: 's1',
       },
     };
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+    const wrapper = shallowWithIntl(<BeregningInfoPanel
       intl={intlMock}
       aksjonspunkter={[overstyringAP]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -130,11 +103,9 @@ describe('<BeregningInfoPanel>', () => {
         navn: 's1',
       },
     };
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+    const wrapper = shallowWithIntl(<BeregningInfoPanel
       intl={intlMock}
       aksjonspunkter={[overstyringAP]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly={false}
@@ -162,11 +133,9 @@ describe('<BeregningInfoPanel>', () => {
         navn: 's1',
       },
     };
-    const wrapper = shallowWithIntl(<BeregningInfoPanelImpl
+    const wrapper = shallowWithIntl(<BeregningInfoPanel
       intl={intlMock}
       aksjonspunkter={[tidsbegrensetAP]}
-      openInfoPanels={['beregning']}
-      toggleInfoPanelCallback={sinon.spy()}
       hasOpenAksjonspunkter
       submittable
       readOnly

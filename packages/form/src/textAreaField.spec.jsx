@@ -27,7 +27,7 @@ describe('<TextAreaField>', () => {
   it('Skal rendre TextAreaField som ren tekst hvis readonly', () => {
     const wrapper = mountFieldInForm(<TextAreaField name="text" label="name" readOnly value="text" />, { text: 'tekst' });
     expect(wrapper.find('textarea')).to.have.length(0);
-    expect(wrapper.find('div')).to.have.length(1);
+    expect(wrapper.find('div')).to.have.length(2);
     expect(wrapper.find('Label')).to.have.length(1);
     expect(wrapper.find('Label').prop('input')).to.eql('name');
     expect(wrapper.find('Normaltekst')).to.have.length(1);

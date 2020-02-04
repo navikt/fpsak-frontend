@@ -50,11 +50,12 @@ FagsakProfilSakIndex.propTypes = {
   createLink: PropTypes.func.isRequired,
   renderBehandlingMeny: PropTypes.func.isRequired,
   renderBehandlingVelger: PropTypes.func.isRequired,
-  dekningsgrad: PropTypes.number.isRequired,
+  dekningsgrad: PropTypes.number,
 };
 
 FagsakProfilSakIndex.defaultProps = {
-  annenPartLink: null,
+  annenPartLink: undefined,
+  dekningsgrad: undefined,
 };
 
 export default FagsakProfilSakIndex;

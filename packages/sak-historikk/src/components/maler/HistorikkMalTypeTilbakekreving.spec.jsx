@@ -40,6 +40,12 @@ describe('HistorikkMalTypeTilbakekreving', () => {
           kode: historikkOpplysningTypeCodes.TILBAKEKREVING_OPPFYLT_BEGRUNNELSE.kode,
           tilVerdi: 'test',
         },
+      },
+      {
+        opplysningType: {
+          kode: historikkOpplysningTypeCodes.SÆRLIG_GRUNNER_BEGRUNNELSE.kode,
+          tilVerdi: 'test',
+        },
       }],
     }];
 

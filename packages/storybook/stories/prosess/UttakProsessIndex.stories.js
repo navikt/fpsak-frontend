@@ -44,8 +44,6 @@ const fagsak = {
   saksnummer: 1,
 };
 
-const apCodes = ['5071'];
-
 const familiehendelse = {
   gjeldende: {
     skjaringstidspunkt: '2019-11-04',
@@ -538,21 +536,20 @@ export const visProsessUttak = () => (
   <UttakProsessIndex
     fagsak={fagsak}
     behandling={behandling}
-    aksjonspunkter={aksjonspunkter}
-    uttakStonadskontoer={uttakStonadskontoer}
-    soknad={soknad}
-    submitCallback={action('button-click')}
-    readOnly={boolean('readOnly', false)}
     uttaksresultatPerioder={uttaksresultatPerioder}
-    isApOpen={boolean('isApOpen', true)}
-    readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
-    apCodes={apCodes}
+    uttakStonadskontoer={uttakStonadskontoer}
+    aksjonspunkter={aksjonspunkter}
     familiehendelse={familiehendelse}
+    soknad={soknad}
     personopplysninger={personopplysninger}
     uttakPeriodeGrense={uttakPeriodeGrense}
     ytelsefordeling={ytelsefordeling}
     alleKodeverk={alleKodeverk}
     employeeHasAccess={boolean('employeeHasAccess', true)}
+    submitCallback={action('button-click')}
+    isReadOnly={boolean('isReadOnly', false)}
+    readOnlySubmitButton={boolean('readOnlySubmitButton', true)}
     tempUpdateStonadskontoer={action('button-click')}
+    isAksjonspunktOpen={boolean('isAksjonspunktOpen', true)}
   />
 );

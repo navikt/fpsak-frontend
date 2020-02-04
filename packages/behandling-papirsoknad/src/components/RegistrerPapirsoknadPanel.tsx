@@ -11,7 +11,8 @@ import EngangsstonadPapirsoknadIndex from '@fpsak-frontend/papirsoknad-es';
 import ForeldrepengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-fp';
 import SvangerskapspengerPapirsoknadIndex from '@fpsak-frontend/papirsoknad-svp';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
-import { Kodeverk, FagsakInfo } from '@fpsak-frontend/behandling-felles';
+import { FagsakInfo } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import SoknadTypePickerForm from './SoknadTypePickerForm';
 

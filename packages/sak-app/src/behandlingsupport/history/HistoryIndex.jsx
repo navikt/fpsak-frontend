@@ -14,8 +14,6 @@ import fpsakApi from '../../data/fpsakApi';
 import { getSelectedSaksnummer } from '../../fagsak/fagsakSelectors';
 import { getSelectedBehandlingId, getBehandlingVersjon } from '../../behandling/duck';
 
-import styles from './historyIndex.less';
-
 const historyRestApis = {
   [ApplicationContextPath.FPSAK]: fpsakApi.HISTORY_FPSAK,
   [ApplicationContextPath.FPTILBAKE]: fpsakApi.HISTORY_FPTILBAKE,
@@ -47,28 +45,26 @@ export const HistoryIndex = ({
   alleKodeverkFpsak,
   alleKodeverkFptilbake,
 }) => (
-  <div className={styles.historyContainer}>
-    <DataFetcher
-      behandlingId={behandlingId}
-      behandlingVersjon={behandlingVersjon}
-      showLoadingIcon
-      behandlingNotRequired
-      endpointParams={{ saksnummer }}
-      keepDataWhenRefetching
-      endpoints={enabledContexts}
-      allowErrors
-      render={(props) => sortAndTagTilbakekreving(props)
-        .map((innslag) => (
-          <HistorikkSakIndex
-            key={innslag.opprettetTidspunkt + innslag.type.kode}
-            historieInnslag={innslag}
-            saksnummer={saksnummer}
-            location={location}
-            alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
-          />
-        ))}
-    />
-  </div>
+  <DataFetcher
+    behandlingId={behandlingId}
+    behandlingVersjon={behandlingVersjon}
+    showLoadingIcon
+    behandlingNotRequired
+    endpointParams={{ saksnummer }}
+    keepDataWhenRefetching
+    endpoints={enabledContexts}
+    allowErrors
+    render={(props) => sortAndTagTilbakekreving(props)
+      .map((innslag) => (
+        <HistorikkSakIndex
+          key={innslag.opprettetTidspunkt + innslag.type.kode}
+          historieInnslag={innslag}
+          saksnummer={saksnummer}
+          location={location}
+          alleKodeverk={innslag.erTilbakekreving ? alleKodeverkFptilbake : alleKodeverkFpsak}
+        />
+      ))}
+  />
 );
 
 HistoryIndex.propTypes = {
