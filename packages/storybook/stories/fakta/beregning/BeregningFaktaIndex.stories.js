@@ -9,10 +9,11 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import BeregningFaktaIndex from '@fpsak-frontend/fakta-beregning';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
+import { beregningsgrunnlag as bgMedArbeidOgDagpenger, aksjonspunkt as aksjonspunktArbeidOgDagpenger } from './scenario/ArbeidMedDagpengerIOpptjeningsperioden';
 
-import withReduxProvider from '../../decorators/withRedux';
+import withReduxProvider from '../../../decorators/withRedux';
 
-import alleKodeverk from '../mocks/alleKodeverk.json';
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 const behandling = {
   id: 1,
@@ -177,6 +178,24 @@ export default {
   component: BeregningFaktaIndex,
   decorators: [withKnobs, withReduxProvider],
 };
+
+export const ArbeidOgDagpenger = () => (
+  <BeregningFaktaIndex
+    behandling={behandling}
+    beregningsgrunnlag={object('beregningsgrunnlag', bgMedArbeidOgDagpenger)}
+    aksjonspunkter={aksjonspunktArbeidOgDagpenger}
+    erOverstyrer
+    alleKodeverk={alleKodeverk}
+    alleMerknaderFraBeslutter={{
+      [aksjonspunktCodes.VURDER_FAKTA_FOR_ATFL_SN]: object('merknaderFraBeslutter', merknaderFraBeslutter),
+    }}
+    submitCallback={action('button-click')}
+    readOnly={boolean('readOnly', false)}
+    harApneAksjonspunkter={boolean('harApneAksjonspunkter', true)}
+    submittable={boolean('submittable', true)}
+  />
+);
+
 
 export const AvklarAktiviteterFullAAPOgAndreAktiviteter = () => {
   const aapAktivitet = {

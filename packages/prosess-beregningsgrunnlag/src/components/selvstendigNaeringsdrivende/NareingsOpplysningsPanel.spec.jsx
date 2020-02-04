@@ -1,10 +1,9 @@
 import React from 'react';
 import { expect } from 'chai';
-import { shallow } from 'enzyme';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import { intlMock } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
+import { intlMock, shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import NaeringsopplysningsPanel from './NaeringsOpplysningsPanel';
 
 
@@ -39,7 +38,7 @@ const andelerForstePeriode = {
 
 describe('NaeringsopplysningsPanel', () => {
   it('Skal teste at komponenten renderer riktige verdier', () => {
-    const wrapper = shallow(<NaeringsopplysningsPanel.WrappedComponent
+    const wrapper = shallowWithIntl(<NaeringsopplysningsPanel.WrappedComponent
       alleAndelerIForstePeriode={[andelerForstePeriode]}
       intl={intlMock}
     />);
@@ -53,7 +52,7 @@ describe('NaeringsopplysningsPanel', () => {
     expect(messages).to.be.lengthOf(5);
     expect(messages.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(andelerForstePeriode.næringer[0].oppgittInntekt));
     expect(messages.at(2).childAt(0).text()).to.equal(andelerForstePeriode.næringer[0].orgnr);
-    const lesMer = wrapper.find('Lesmerpanel');
+    const lesMer = wrapper.find('Lesmerpanel2');
     expect(lesMer.length).to.equal(1);
   });
 });

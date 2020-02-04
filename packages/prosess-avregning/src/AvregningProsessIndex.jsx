@@ -26,7 +26,7 @@ const AvregningProsessIndex = ({
   isReadOnly,
   readOnlySubmitButton,
   isAksjonspunktOpen,
-  previewCallback,
+  previewFptilbakeCallback,
   featureToggles,
 }) => (
   <RawIntlProvider value={intl}>
@@ -44,7 +44,7 @@ const AvregningProsessIndex = ({
       readOnlySubmitButton={readOnlySubmitButton}
       apCodes={aksjonspunkter.map((a) => a.definisjon.kode)}
       isApOpen={isAksjonspunktOpen}
-      previewCallback={previewCallback}
+      previewCallback={previewFptilbakeCallback}
     />
   </RawIntlProvider>
 );
@@ -56,7 +56,7 @@ AvregningProsessIndex.propTypes = {
   simuleringResultat: avregningSimuleringResultatPropType,
   tilbakekrevingvalg: PropTypes.shape(),
   submitCallback: PropTypes.func.isRequired,
-  previewCallback: PropTypes.func.isRequired,
+  previewFptilbakeCallback: PropTypes.func.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   isAksjonspunktOpen: PropTypes.bool.isRequired,
   readOnlySubmitButton: PropTypes.bool.isRequired,

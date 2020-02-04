@@ -1,0 +1,7 @@
+{
+  "name": "@fpsak-frontend/types",
+  "version": "1.0.0",
+  "module": "index.jsx",
+  "license": "MIT",
+  "private": true
+}

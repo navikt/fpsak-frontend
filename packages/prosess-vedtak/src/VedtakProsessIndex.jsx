@@ -14,6 +14,7 @@ import vedtakMedlemskapPropType from './propTypes/vedtakMedlemskapPropType';
 import vedtakVilkarPropType from './propTypes/vedtakVilkarPropType';
 import vedtakTilbakekrevingvalgPropType from './propTypes/vedtakTilbakekrevingvalgPropType';
 import vedtakOriginalBehandlingPropType from './propTypes/vedtakOriginalBehandlingPropType';
+import vedtakBeregningsgrunnlagPropType from './propTypes/vedtakBeregningsgrunnlagPropType';
 
 const cache = createIntlCache();
 
@@ -28,6 +29,7 @@ const VedtakProsessIndex = ({
   beregningresultatEngangsstonad,
   tilbakekrevingvalg,
   simuleringResultat,
+  beregningsgrunnlag,
   vilkar,
   sendVarselOmRevurdering,
   beregningsresultatOriginalBehandling,
@@ -49,8 +51,8 @@ const VedtakProsessIndex = ({
       sprakkode={behandling.sprakkode}
       behandlingresultat={behandling.behandlingsresultat}
       behandlingPaaVent={behandling.behandlingPaaVent}
-      erBehandlingHenlagt={behandling.behandlingHenlagt}
       behandlingArsaker={behandling.behandlingArsaker}
+      beregningsgrunnlag={beregningsgrunnlag}
       vilkar={vilkar}
       tilbakekrevingvalg={tilbakekrevingvalg}
       simuleringResultat={simuleringResultat}
@@ -87,6 +89,7 @@ VedtakProsessIndex.propTypes = {
   ytelseTypeKode: PropTypes.string.isRequired,
   employeeHasAccess: PropTypes.bool.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  beregningsgrunnlag: vedtakBeregningsgrunnlagPropType,
 };
 
 VedtakProsessIndex.defaultProps = {
@@ -96,6 +99,7 @@ VedtakProsessIndex.defaultProps = {
   simuleringResultat: undefined,
   tilbakekrevingvalg: undefined,
   sendVarselOmRevurdering: false,
+  beregningsgrunnlag: undefined,
 };
 
 export default VedtakProsessIndex;

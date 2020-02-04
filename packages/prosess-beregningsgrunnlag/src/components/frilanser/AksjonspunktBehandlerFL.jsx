@@ -4,10 +4,11 @@ import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
 import { InputField } from '@fpsak-frontend/form';
-import { parseCurrencyInput, removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
+import {
+  formatCurrencyNoKr, parseCurrencyInput, removeSpacesFromNumber, required,
+} from '@fpsak-frontend/utils';
 
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-
 
 const AksjonspunktBehandlerFL = ({
   readOnly,
@@ -35,6 +36,14 @@ AksjonspunktBehandlerFL.propTypes = {
   readOnly: PropTypes.bool.isRequired,
 };
 
-AksjonspunktBehandlerFL.transformValuesForFL = (values) => removeSpacesFromNumber(values.inntektFrilanser);
+AksjonspunktBehandlerFL.transformValuesForFL = (values) => (values.inntektFrilanser !== undefined ? removeSpacesFromNumber(values.inntektFrilanser) : null);
+AksjonspunktBehandlerFL.buildInitialValues = (relevanteAndeler) => {
+  if (relevanteAndeler.length === 0) {
+    return undefined;
+  }
+  return {
+    inntektFrilanser: relevanteAndeler[0].overstyrtPrAar !== undefined ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
+  };
+};
 
 export default AksjonspunktBehandlerFL;

@@ -30,6 +30,7 @@ describe('<VedtakInnvilgetPanel>', () => {
       behandlingsresultat={behandlingsresultat}
       skalBrukeOverstyrendeFritekstBrev
       readOnly
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');
@@ -62,6 +63,7 @@ describe('<VedtakInnvilgetPanel>', () => {
       behandlingsresultat={behandlingsresultat}
       skalBrukeOverstyrendeFritekstBrev
       readOnly
+      beregningErManueltFastsatt={false}
     />);
 
     const undertekstFields = wrapper.find('Undertekst');

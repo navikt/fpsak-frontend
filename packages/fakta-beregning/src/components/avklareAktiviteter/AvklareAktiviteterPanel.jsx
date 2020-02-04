@@ -145,6 +145,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
         alleKodeverk,
         behandlingId,
         behandlingVersjon,
+        formValues,
         ...formProps
       },
       state: {
@@ -202,6 +203,7 @@ export class AvklareAktiviteterPanelImpl extends Component {
               isAksjonspunktClosed={isAksjonspunktClosed}
               erOverstyrt={erOverstyrt}
               alleKodeverk={alleKodeverk}
+              values={formValues}
               harAksjonspunkt={hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter)}
             />
           )}
@@ -272,7 +274,12 @@ AvklareAktiviteterPanelImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   beregningsgrunnlag: PropTypes.shape().isRequired,
   aksjonspunkter: PropTypes.arrayOf(beregningAksjonspunkterPropType).isRequired,
+  formValues: PropTypes.shape(),
   ...formPropTypes,
+};
+
+AvklareAktiviteterPanelImpl.defaultProps = {
+  formValues: undefined,
 };
 
 const skalKunneLoseAksjonspunkt = (skalOverstyre, aksjonspunkter) => skalOverstyre || hasAksjonspunkt(AVKLAR_AKTIVITETER, aksjonspunkter);
@@ -320,9 +327,9 @@ const mapStateToPropsFactory = (initialState, initialProps) => {
     const initialValues = buildInitialValuesAvklarAktiviteter(ownProps);
     return ({
       initialValues,
-      values,
       onSubmit,
       validate,
+      formValues: values,
       kanOverstyre: skalKunneOverstyre(ownProps.erOverstyrer, ownProps.aksjonspunkter),
       helpText: getHelpTextsAvklarAktiviteter(ownProps),
       behandlingFormPrefix: getBehandlingFormPrefix(ownProps.behandlingId, ownProps.behandlingVersjon),

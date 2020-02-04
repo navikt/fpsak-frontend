@@ -10,7 +10,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 
-const createArbeidsforholdKey = (andel) => `${andel.arbeidsgiverNavn}${andel.arbeidsforholdId}`;
+const createArbeidsforholdKey = (arbeidsforhold) => `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsgiverId}`;
 
 const findArbeidsforholdMedFrafaltYtelse = (periode) => periode.beregningsgrunnlagPrStatusOgAndel.filter((andel) => andel.bortfaltNaturalytelse !== undefined
     && andel.bortfaltNaturalytelse !== null
@@ -28,6 +28,8 @@ const createOrEditMapValue = (andel, mapValue, antallPerioderMedFrafaltYtelse, p
   let newMapValue = [];
   if (mapValue === undefined) {
     newMapValue = [andel.arbeidsforhold.arbeidsgiverNavn];
+  } else {
+    newMapValue = mapValue.slice();
   }
   const maaned = andel.bortfaltNaturalytelse ? andel.bortfaltNaturalytelse / 12 : 0;
   newMapValue.push({ periodeTekst, aar: andel.bortfaltNaturalytelse, maaned });
@@ -89,7 +91,7 @@ const createNaturalYtelseRows = (tableData) => {
       if (valueKey === 1) {
         return (
           <Row key={`naturalytelse_firma_rad_${val}_{valueKey}`}>
-            <Column xs="11" className={beregningStyles.noPaddingRight} ey={`naturalytelse_firma_col_${val}_{valueKey}`}>
+            <Column xs="11" className={beregningStyles.noPaddingRight} key={`naturalytelse_firma_col_${val}_{valueKey}`}>
               <Element>{element}</Element>
             </Column>
             <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
@@ -138,6 +140,7 @@ const NaturalytelsePanel2 = ({
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
       </Element>
+      <VerticalSpacer eightPx />
       <Row>
         <Column xs="7" key="ATempthy1" />
         <Column xs="2" className={beregningStyles.colMaanedText}>

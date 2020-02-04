@@ -1,10 +1,9 @@
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
+import {
+  Behandling, NavAnsatt, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 
-import Behandling from '../types/behandlingTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 
 const getRettigheter = (navAnsatt: NavAnsatt, fagsak: FagsakInfo, behandling: Behandling) => allAccessRights(
   navAnsatt, fagsak.fagsakStatus, behandling.status, behandling.type,

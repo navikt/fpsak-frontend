@@ -19,30 +19,22 @@ export const InnsynBehandlingApiKeys = {
 
 const endpoints = new RestApiConfigBuilder()
   .withAsyncPost('/fpsak/api/behandlinger', InnsynBehandlingApiKeys.BEHANDLING_INNSYN)
-  .withInjectedPath('aksjonspunkter', InnsynBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', InnsynBehandlingApiKeys.VILKAR)
-  .withInjectedPath('innsyn', InnsynBehandlingApiKeys.INNSYN)
 
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', InnsynBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
-  })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withGet('/fpsak/api/dokument/hent-dokumentliste', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
+  // behandlingsdata
+  .withRel('aksjonspunkter', InnsynBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', InnsynBehandlingApiKeys.VILKAR)
+  .withRel('innsyn', InnsynBehandlingApiKeys.INNSYN)
+  .withRel('dokumenter', InnsynBehandlingApiKeys.INNSYN_DOKUMENTER)
 
-/*
-  .withInjectedPath('bytt-behandlende-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withInjectedPath('henlegg-behandling', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withInjectedPath('gjenoppta-behandling', InnsynBehandlingApiKeys.RESUME_BEHANDLING)
-  .withInjectedPath('sett-behandling-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  */
+  // operasjoner
+  .withRel('bytt-behandlende-enhet', InnsynBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', InnsynBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', InnsynBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: InnsynBehandlingApiKeys.BEHANDLING_INNSYN })
+  .withRel('sett-behandling-pa-vent', InnsynBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withRel('lagre-aksjonspunkter', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: InnsynBehandlingApiKeys.BEHANDLING_INNSYN })
 
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', InnsynBehandlingApiKeys.UPDATE_ON_HOLD)
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', InnsynBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: InnsynBehandlingApiKeys.BEHANDLING_INNSYN,
-  })
-  // TODO (TOR) Bør få lenke fra backend og så åpne blob (Flytt open blob ut av rest-apis)
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', InnsynBehandlingApiKeys.PREVIEW_MESSAGE)
   .build();
 

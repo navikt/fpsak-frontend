@@ -8,15 +8,20 @@
 }
 
 .beregningForm {
+  background-color: #fff;
   padding: 20px 0 20px 0;
 }
 
 .panelLeft {
-  padding: 0 20px 0 20px;
+  padding: 0 40px 0 20px;
 }
 
 .panelRight {
-  padding: 0 20px 0 20px;
+  padding: 0 20px 0 40px;
+
+  @media (max-width: 992px) {
+    padding: 0 40px 0 20px;
+  }
 }
 
 .semiBoldText {
@@ -77,6 +82,7 @@
   padding-right: 0;
   position: relative;
   text-align: right;
+  white-space: nowrap;
 }
 
 .colDevider {

@@ -6,6 +6,7 @@ import FodselOgTilretteleggingInfoPanel from './components/FodselOgTilretteleggi
 import fodselOgTilretteleggingAksjonspunkterPropType from './propTypes/fodselOgTilretteleggingAksjonspunkterPropType';
 import fodselOgTilretteleggingBehandlingPropType from './propTypes/fodselOgTilretteleggingBehandlingPropType';
 import fodselOgTilretteleggingPropType from './propTypes/fodselOgTilretteleggingPropType';
+import fodselOgTilretteleggingInntektArbeidYtelsePropType from './propTypes/fodselOgTilretteleggingInntektArbeidYtelsePropType';
 import messages from '../i18n/nb_NO';
 
 const cache = createIntlCache();
@@ -18,6 +19,7 @@ const intl = createIntl({
 const FodselOgTilretteleggingFaktaIndex = ({
   behandling,
   svangerskapspengerTilrettelegging,
+  inntektArbeidYtelse,
   aksjonspunkter,
   submitCallback,
   readOnly,
@@ -29,6 +31,7 @@ const FodselOgTilretteleggingFaktaIndex = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       svangerskapspengerTilrettelegging={svangerskapspengerTilrettelegging}
+      iayArbeidsforhold={inntektArbeidYtelse.arbeidsforhold}
       aksjonspunkter={aksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}
@@ -41,6 +44,7 @@ const FodselOgTilretteleggingFaktaIndex = ({
 FodselOgTilretteleggingFaktaIndex.propTypes = {
   behandling: fodselOgTilretteleggingBehandlingPropType.isRequired,
   svangerskapspengerTilrettelegging: fodselOgTilretteleggingPropType.isRequired,
+  inntektArbeidYtelse: fodselOgTilretteleggingInntektArbeidYtelsePropType.isRequired,
   aksjonspunkter: PropTypes.arrayOf(fodselOgTilretteleggingAksjonspunkterPropType).isRequired,
   submitCallback: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
