@@ -33,13 +33,6 @@
   "Person.UkjentNavn": "Ukjent navn på forelder",
   "Person.HarIkkeNorskFnrEllerDnr": "Har ikke norsk f.nr. eller d-nr.",
 
-  "PersonYtelserTable.Ytelser": "Ytelser",
-  "PersonYtelserTable.Ytelse": "Ytelse",
-  "PersonYtelserTable.Periode": "Periode",
-  "PersonYtelserTable.Status": "Status",
-  "PersonYtelserTable.Saksnummer": "Saksnr.",
-  "PersonYtelserTable.Ingen": "Ingen",
-
   "Barnepanel.DodsDato" : "Barnets dødsdato",
   "Barnepanel.Adresse1": "Adresse 1",
   "Barnepanel.BarnFraSoknad": "Barn fra søknad",

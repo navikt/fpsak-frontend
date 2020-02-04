@@ -6,6 +6,7 @@ import MedlemskapFaktaIndex from '@fpsak-frontend/fakta-medlemskap';
 import FodselFaktaIndex from '@fpsak-frontend/fakta-fodsel';
 import vilkarType, { fodselsvilkarene, adopsjonsvilkarene } from '@fpsak-frontend/kodeverk/src/vilkarType';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
+import YtelserFaktaIndex from '@fpsak-frontend/fakta-ytelser';
 import UttakFaktaIndex from '@fpsak-frontend/fakta-uttak';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
@@ -29,6 +30,15 @@ const faktaPanelDefinisjoner = [{
   renderComponent: (props) => <ArbeidsforholdFaktaIndex {...props} />,
   showComponent: ({ personopplysninger }) => personopplysninger,
   getData: ({ personopplysninger, inntektArbeidYtelse }) => ({ personopplysninger, inntektArbeidYtelse }),
+}, {
+  urlCode: faktaPanelCodes.YTELSER,
+  textCode: 'YtelserFaktaIndex.Ytelser',
+  aksjonspunkterCodes: [],
+  endpoints: [],
+  renderComponent: (props) => <YtelserFaktaIndex {...props} />,
+  showComponent: ({ inntektArbeidYtelse }) => inntektArbeidYtelse
+    && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker && inntektArbeidYtelse.relatertTilgrensendeYtelserForSoker.length > 0,
+  getData: ({ inntektArbeidYtelse }) => ({ inntektArbeidYtelse }),
 }, {
   urlCode: faktaPanelCodes.VERGE,
   textCode: 'RegistrereVergeInfoPanel.Info',
