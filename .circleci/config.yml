@@ -64,9 +64,7 @@ jobs:
       - run:
           name: Determin release version
           command: |
-            export GIT_COMMIT_HASH=$(git rev-parse --short HEAD)
-            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y%m%d%H%M%S')
-            export VERSION=${GIT_COMMIT_DATE}_${GIT_COMMIT_HASH}
+            export VERSION=$(git rev-parse --short HEAD)
             echo $VERSION > ./VERSION.txt
             echo "export VERSION=$VERSION" >> $BASH_ENV
       - persist_to_workspace:
