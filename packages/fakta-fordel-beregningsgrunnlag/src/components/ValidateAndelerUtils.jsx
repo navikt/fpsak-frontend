@@ -22,24 +22,24 @@ export const compareAndeler = (andel1, andel2) => {
 
 const mapAndelToSortedObject = (value, andelList) => {
   const {
-    nyAndel, andel, inntektskategori, aktivitetStatus,
+    nyAndel, andel, inntektskategori, aktivitetStatus, arbeidsforholdId,
   } = value;
   if (nyAndel) {
     if (!Number.isNaN(Number(andel))) {
       const matchendeAndelFraListe = andelList.filter((andelValue) => andelValue.andelsnr === parseFloat(andel));
       if (matchendeAndelFraListe.length > 0) {
-        return { andelsinfo: matchendeAndelFraListe[0].andel, inntektskategori };
+        return { andelsinfo: matchendeAndelFraListe[0].andel + arbeidsforholdId, inntektskategori };
       }
     }
     if (beregningsgrunnlagAndeltyper[andel]) {
       return { andelsinfo: andel, inntektskategori };
     }
-    return { andelsinfo: andel, inntektskategori };
+    return { andelsinfo: andel + arbeidsforholdId, inntektskategori };
   }
   if (aktivitetstatusTilAndeltypeMap[aktivitetStatus]) {
     return { andelsinfo: aktivitetstatusTilAndeltypeMap[aktivitetStatus], inntektskategori };
   }
-  return { andelsinfo: andel, inntektskategori };
+  return { andelsinfo: andel + arbeidsforholdId, inntektskategori };
 };
 
 export const ulikeAndelerErrorMessage = () => ([{ id: 'BeregningInfoPanel.FordelBG.Validation.UlikeAndeler' }]);
