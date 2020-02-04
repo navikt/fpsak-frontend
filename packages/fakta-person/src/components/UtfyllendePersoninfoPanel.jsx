@@ -42,7 +42,6 @@ export class UtfyllendePersoninfoPanel extends Component {
       selected: null,
     };
     this.setSelected = this.setSelected.bind(this);
-    this.getYtelser = this.getYtelser.bind(this);
   }
 
   setSelected(parent) {
@@ -52,14 +51,6 @@ export class UtfyllendePersoninfoPanel extends Component {
     } else {
       this.setState({ selected: parent });
     }
-  }
-
-  getYtelser(primaryParent) {
-    const { relatertTilgrensendeYtelserForSoker, relatertTilgrensendeYtelserForAnnenForelder } = this.props;
-    const { selected } = this.state;
-    return selected.aktoerId === primaryParent.aktoerId
-      ? relatertTilgrensendeYtelserForSoker
-      : relatertTilgrensendeYtelserForAnnenForelder;
   }
 
   render() {
@@ -84,11 +75,6 @@ export class UtfyllendePersoninfoPanel extends Component {
 
     const sivilstandTypes = alleKodeverk[kodeverkTyper.SIVILSTAND_TYPE];
     const personstatusTypes = alleKodeverk[kodeverkTyper.PERSONSTATUS_TYPE];
-    const relatertYtelseTypes = alleKodeverk[kodeverkTyper.RELATERT_YTELSE_TYPE];
-    const relatertYtelseStatus = [
-      ...alleKodeverk[kodeverkTyper.FAGSAK_STATUS],
-      ...alleKodeverk[kodeverkTyper.RELATERT_YTELSE_TILSTAND],
-    ];
 
     const { selected } = this.state;
     const { barn } = personopplysninger.barn;
@@ -111,10 +97,7 @@ export class UtfyllendePersoninfoPanel extends Component {
             personopplysning={selected}
             familiehendelseRegister={familiehendelseRegister}
             isPrimaryParent={isPrimaryParent}
-            ytelser={this.getYtelser(personopplysninger)}
             sprakkode={sprakkode}
-            relatertYtelseTypes={relatertYtelseTypes}
-            relatertYtelseStatus={relatertYtelseStatus}
             hasAksjonspunkter={filteredAps.length > 0}
             hasOpenAksjonspunkter={hasOpenAksjonspunkter}
             utlandSakstype={getUtlandSakstype(aksjonspunkter)}

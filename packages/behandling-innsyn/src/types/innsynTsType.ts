@@ -1,4 +1,4 @@
-import { Kodeverk } from '@fpsak-frontend/behandling-felles';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 type Innsyn = Readonly<{
   dokumenter: {

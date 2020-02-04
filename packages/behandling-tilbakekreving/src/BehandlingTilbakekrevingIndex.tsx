@@ -6,9 +6,12 @@ import { destroy } from 'redux-form';
 import { getBehandlingFormPrefix } from '@fpsak-frontend/fp-felles';
 import { LoadingPanel } from '@fpsak-frontend/shared-components';
 import {
-  Kodeverk, NavAnsatt, Behandling, FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
-  DataFetcherBehandlingData, BehandlingDataCache, Aksjonspunkt,
+  FagsakInfo, SettPaVentParams, ReduxFormStateCleaner,
+  DataFetcherBehandlingData, BehandlingDataCache,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Kodeverk, NavAnsatt, Behandling, Aksjonspunkt,
+} from '@fpsak-frontend/types';
 
 import tilbakekrevingApi, { reduxRestApi, TilbakekrevingBehandlingApiKeys } from './data/tilbakekrevingBehandlingApi';
 import TilbakekrevingGrid from './components/TilbakekrevingGrid';

@@ -24,6 +24,7 @@
 		"packages/behandling-fp",
 		"packages/behandling-svp",
 		"packages/behandling-es",
+		"packages/fakta-ytelser",
 		"@types"
 	],
 
