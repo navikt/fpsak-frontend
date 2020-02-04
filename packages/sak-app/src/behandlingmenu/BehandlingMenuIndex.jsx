@@ -25,7 +25,7 @@ import ApplicationContextPath from '../behandling/ApplicationContextPath';
 import { allMenuAccessRights } from './accessMenu';
 import {
   nyBehandlendeEnhet, resumeBehandling, shelveBehandling, createNewBehandling, setBehandlingOnHold, openBehandlingForChanges,
-  hentVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
+  hentVergeMenyvalg, resetVergeMenyvalg, fjernVerge, opprettVerge, sjekkOmTilbakekrevingKanOpprettes, sjekkOmTilbakekrevingRevurderingKanOpprettes,
 } from './duck';
 
 const YTELSE_BEHANDLINGTYPER = [BehandlingType.FORSTEGANGSSOKNAD, BehandlingType.REVURDERING];
@@ -54,13 +54,31 @@ const getMenyRettigheter = createSelector([
   sakstype, behandlingStatus, harSoknad, erIInnhentSoknadopplysningerSteg, behandlingType)));
 
 class BehandlingMenuIndex extends Component {
-  componentDidUpdate = (prevProps) => {
+  componentDidMount = () => {
     const {
       saksnummer, behandlingData, hentVergeMenyvalg: hentMenyvalg,
     } = this.props;
 
+    if (behandlingData.harValgtBehandling && YTELSE_BEHANDLINGTYPER.includes(behandlingData.type.kode)) {
+      const params = new BehandlingIdentifier(saksnummer, behandlingData.id).toJson();
+      hentMenyvalg(params);
+    }
+  }
+
+  componentWillUnmount = () => {
+    const {
+      resetVergeMenyvalg: resetMenyvalg,
+    } = this.props;
+    resetMenyvalg();
+  }
+
+  componentDidUpdate = (prevProps) => {
+    const {
+      saksnummer, behandlingData, behandlingId, hentVergeMenyvalg: hentMenyvalg,
+    } = this.props;
+
     if (behandlingData.harValgtBehandling) {
-      const erBehandlingEndret = behandlingData.id !== prevProps.behandlingData.id || behandlingData.versjon !== prevProps.behandlingData.versjon;
+      const erBehandlingEndret = behandlingId !== prevProps.behandlingId || behandlingData.versjon !== prevProps.behandlingData.versjon;
       const erYtelseBehandlingstype = YTELSE_BEHANDLINGTYPER.includes(behandlingData.type.kode);
       if (erBehandlingEndret && erYtelseBehandlingstype) {
         const params = new BehandlingIdentifier(saksnummer, behandlingData.id).toJson();
@@ -119,8 +137,10 @@ class BehandlingMenuIndex extends Component {
 
 BehandlingMenuIndex.propTypes = {
   saksnummer: PropTypes.number.isRequired,
+  behandlingId: PropTypes.number,
   behandlingData: PropTypes.instanceOf(MenyBehandlingData),
   hentVergeMenyvalg: PropTypes.func,
+  resetVergeMenyvalg: PropTypes.func,
   navAnsatt: PropTypes.shape().isRequired,
   fagsakStatus: PropTypes.shape().isRequired,
   kanRevurderingOpprettes: PropTypes.bool.isRequired,
@@ -132,8 +152,10 @@ BehandlingMenuIndex.propTypes = {
 };
 
 BehandlingMenuIndex.defaultProps = {
+  behandlingId: undefined,
   behandlingData: MenyBehandlingData.lagIngenValgtBehandling(),
   hentVergeMenyvalg: undefined,
+  resetVergeMenyvalg: undefined,
   behandlingStatus: undefined,
   vergeMenyvalg: undefined,
 };
@@ -162,6 +184,7 @@ const mapStateToProps = (state) => {
   const vergeMenyvalg = fpsakApi.VERGE_MENYVALG.getRestApiData()(state);
   return {
     saksnummer: getSelectedSaksnummer(state),
+    behandlingId: getSelectedBehandlingId(state),
     behandlingData: getMenyBehandlingData(state),
     ytelseType: getFagsakYtelseType(state),
     behandlendeEnheter: fpsakApi.BEHANDLENDE_ENHETER.getRestApiData()(state),
@@ -183,6 +206,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   previewHenleggBehandling: previewMessage,
   createNewBehandling,
   hentVergeMenyvalg,
+  resetVergeMenyvalg,
   sjekkOmTilbakekrevingKanOpprettes,
   sjekkOmTilbakekrevingRevurderingKanOpprettes,
   push,
