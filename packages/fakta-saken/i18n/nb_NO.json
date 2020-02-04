@@ -8,7 +8,19 @@
   "UtlandPanel.BosattUtland": "Bosatt utland",
   "UtlandPanel.EndrePerioden": "Endre perioden",
 
+  "SakenFaktaPanel.OpptjeningUtland": "Søker har oppgitt informasjon om opptjening i utlandet. Innhent dokumentasjon fra utenlandsk trygdemyndighet ved behov.",
+
   "UtlandEndretModal.Ok": "OK",
   "UtlandEndretModal.UtlandetEndret": "Utland endres",
-  "UtlandEndretModal.UtlandEndret": "Utland endres, ved behov flytt saken til riktig enhet."
+  "UtlandEndretModal.UtlandEndret": "Utland endres, ved behov flytt saken til riktig enhet.",
+
+  "InnhentDokOpptjeningUtlandPanel.OpptjeningUtland": "Opptjening utland",
+  "InnhentDokOpptjeningUtlandPanel.InnhentelseDok": "Innhentelse av dokumentasjon",
+  "InnhentDokOpptjeningUtlandPanel.Innhentes": "Dokumentasjon vil bli innhentet",
+  "InnhentDokOpptjeningUtlandPanel.InnhentesIkke": "Dokumentasjon vil <b>ikke</b> bli innhentet",
+  
+  "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
+  "SubmitButton.ConfirmInformation": "Bekreft og fortsett",
+  "HelpText.Aksjonspunkt": "Aksjonspunkt",
+  "HelpText.Aksjonspunkt.BehandletAksjonspunkt": "Behandlet aksjonspunkt: "
 }

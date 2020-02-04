@@ -23,6 +23,8 @@ const SakenFaktaIndex: FunctionComponent<OwnProps> = ({
   behandling,
   aksjonspunkter,
   submitCallback,
+  submittable,
+  harApneAksjonspunkter,
   readOnly,
 }) => (
   <RawIntlProvider value={intl}>
@@ -30,8 +32,10 @@ const SakenFaktaIndex: FunctionComponent<OwnProps> = ({
       behandlingId={behandling.id}
       behandlingVersjon={behandling.versjon}
       aksjonspunkter={aksjonspunkter}
+      harApneAksjonspunkter={harApneAksjonspunkter}
       submitCallback={submitCallback}
       readOnly={readOnly}
+      submittable={submittable}
     />
   </RawIntlProvider>
 );

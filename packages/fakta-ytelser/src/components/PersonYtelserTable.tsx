@@ -73,18 +73,16 @@ export const PersonYtelserTable: FunctionComponent<OwnProps & WrappedComponentPr
   }).reduce((a, b) => a.concat(b), []);
 
   return (
-    <div className={styles.container}>
-      <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>
-        {ytelseRows && ytelseRows.map((ytelse, index) => (
-          <TableRow key={`index${index + 1}`}>
-            <TableColumn>{ytelse.navn ? <Normaltekst>{ytelse.navn}</Normaltekst> : ''}</TableColumn>
-            <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
-            <TableColumn>{ytelse.status ? <Normaltekst>{ytelse.status}</Normaltekst> : ''}</TableColumn>
-            <TableColumn>{ytelse.saksnummer ? <Normaltekst>{ytelse.saksnummer}</Normaltekst> : ''}</TableColumn>
-          </TableRow>
-        ))}
-      </Table>
-    </div>
+    <Table headerTextCodes={HEADER_TEXT_CODES} classNameTable={styles.tableStyle} noHover>
+      {ytelseRows && ytelseRows.map((ytelse, index) => (
+        <TableRow key={`index${index + 1}`}>
+          <TableColumn>{ytelse.navn ? <Normaltekst>{ytelse.navn}</Normaltekst> : ''}</TableColumn>
+          <TableColumn><Normaltekst>{ytelse.periode}</Normaltekst></TableColumn>
+          <TableColumn>{ytelse.status ? <Normaltekst>{ytelse.status}</Normaltekst> : ''}</TableColumn>
+          <TableColumn>{ytelse.saksnummer ? <Normaltekst>{ytelse.saksnummer}</Normaltekst> : ''}</TableColumn>
+        </TableRow>
+      ))}
+    </Table>
   );
 };
 
