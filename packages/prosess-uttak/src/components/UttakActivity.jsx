@@ -260,7 +260,7 @@ UttakActivity.propTypes = {
   graderingAvslagAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   starttidspunktForeldrepenger: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
-  currentlySelectedStønadskonto: PropTypes.shape().isRequired,
+  currentlySelectedStønadskonto: PropTypes.shape(),
   ...formPropTypes,
 };
 
