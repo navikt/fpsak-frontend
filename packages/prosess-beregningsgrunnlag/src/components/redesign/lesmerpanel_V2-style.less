@@ -1,0 +1,79 @@
+@import (reference) '~nav-frontend-core/less/_variabler';
+@import (reference) '~nav-frontend-paneler-style/src/mixins';
+
+.lesMerPanel {
+  .panel-mixin();
+
+  &--border {
+    .panel-border-mixin();
+  }
+}
+
+.lesMerPanel__toggle {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+.lesMerPanel__toggleTekst {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+
+.lesMerPanel__introWrapper {
+  display: flex;
+}
+
+.lesMerPanel__intro {
+  font-family: 'Source Sans Pro', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+}
+
+.lesMerPanel__togglelink {
+  background: transparent;
+  border: 0;
+  color: @navBla;
+  cursor: pointer;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.lesMerPanel__toggleChevron {
+  align-self: center;
+}
+
+.lesMerPanel__togglelink--erApen {
+  flex-direction: column;
+  padding-bottom: 0;
+
+  .lesMerPanel__toggleChevron {
+    margin-top: 0;
+  }
+}
+
+.lesMerPanel__merContainer:focus {
+  outline: none;
+}
+
+.lesMerPanel__mer {
+  padding-top: 1rem;
+
+  .lesMerPanel__merTekst {
+    border-left: 4px solid @navGra20;
+    padding-left: 14px;
+  }
+}
+
+.lesMerPanel__mer:focus {
+  outline: none;
+}
+
+.lesMerPanel__mer:empty {
+  padding: 0;
+}

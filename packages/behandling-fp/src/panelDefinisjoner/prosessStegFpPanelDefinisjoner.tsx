@@ -36,8 +36,16 @@ const faktaUttakAp = [
   ac.OVERSTYR_AVKLAR_FAKTA_UTTAK,
 ];
 
+const harPeriodeMedUtbetaling = (perioder) => {
+  const periode = perioder.find((p) => p.dagsats > 0);
+  return !!periode;
+};
+
 const getStatusFromResultatstruktur = (resultatstruktur, uttaksresultat) => {
   if (resultatstruktur && resultatstruktur.perioder.length > 0) {
+    if (!harPeriodeMedUtbetaling(resultatstruktur.perioder)) {
+      return vut.IKKE_VURDERT;
+    }
     if (uttaksresultat && uttaksresultat.perioderSøker.length > 0) {
       const oppfylt = uttaksresultat.perioderSøker.some((p) => (
         p.periodeResultatType.kode !== prt.AVSLATT
