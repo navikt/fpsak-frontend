@@ -409,4 +409,15 @@ describe('<Beregningsgrunnlag2>', () => {
     expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
     expect(transformedValues.frilansInntekt).to.equal(100);
   });
+  it('Skal teste at transformValues gir forventet resultat med inntekt undefined ', () => {
+    const values = {
+      ATFLVurdering: 'aaa',
+      inntektFrilanser: null,
+    };
+    const transformedValues = Beregningsgrunnlag2.transformValues(values, []);
+    expect(transformedValues.kode).to.equal('5047');
+    expect(transformedValues.begrunnelse).to.equal('aaa');
+    expect(transformedValues.fastsatteTidsbegrensedePerioder).to.lengthOf(0);
+    expect(transformedValues.frilansInntekt).to.equal(null);
+  });
 });

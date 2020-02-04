@@ -22,7 +22,6 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import TextAreaField2 from '../redesign/TextAreaField_V2';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import styles from '../fellesPaneler/aksjonspunktBehandler.less';
-// import lagEndretTekst from '../util/aksjonspunktEndretAvNaarHelper';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);

@@ -64,7 +64,7 @@ const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL
   if (!aksjonspunkt) return null;
   const { endretAv, endretTidspunkt } = aksjonspunkt;
   if (!endretTidspunkt) return null;
-  const godkjentEndretAv = /[a-zA-Z]{1}[0-9]{6}/.test(endretAv) || endretAv === 'saksbeh' ? endretAv : '';
+  const godkjentEndretAv = /[a-zA-Z]{1}[0-9]{6}/.test(endretAv) ? endretAv : '';
   return (
     <FormattedMessage
       id="Beregningsgrunnlag.Forms.EndretTekst"

@@ -32,13 +32,11 @@ const LesMerToggle2 = (props) => {
 
 LesMerToggle2.propTypes = {
   erApen: Proptypes.bool,
-  onClick: Proptypes.func,
+  onClick: Proptypes.func.isRequired,
   lukkTekst: Proptypes.node,
   apneTekst: Proptypes.node,
   other: Proptypes.shape(),
 };
-LesMerToggle2.defaultProps = {
-  onClick: () => {},
-};
+
 
 export default LesMerToggle2;

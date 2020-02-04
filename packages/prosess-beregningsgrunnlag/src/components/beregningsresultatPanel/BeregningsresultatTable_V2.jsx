@@ -320,8 +320,6 @@ export const createBeregningTableData = createSelector(
         }
       }
 
-
-      // const isMS = sortedStatusList.some((andelKode) => andelKode.kode === aktivitetStatus.MILITAER_ELLER_SIVIL);
       // sjekk om spesialrader skul vises
       // IKKE vis avkortet rad vis mindre en 6G
       if (removeSpacesFromNumber(bruttoRad.verdi) < seksG) {

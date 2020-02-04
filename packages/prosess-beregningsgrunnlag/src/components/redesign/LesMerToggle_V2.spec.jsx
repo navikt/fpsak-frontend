@@ -1,7 +1,7 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow } from 'enzyme';
-import LesMerToggle from './LesMerToggle';
+import LesMerToggle from './LesMerToggle_V2';
 
 
 describe('LesMerToggle', () => {
