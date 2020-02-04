@@ -286,7 +286,7 @@ export const transformValues = (
 export const setInntektValues = (aktivePaneler, fatsettKunYtelseTransform,
   vurderOgFastsettATFLTransform, erOverstyrt) => (values) => {
   if (aktivePaneler.includes(faktaOmBeregningTilfelle.FASTSETT_BG_KUN_YTELSE)) {
-    return { fakta: fatsettKunYtelseTransform(values) };
+    return { fakta: fatsettKunYtelseTransform(values), overstyrteAndeler: [] };
   }
   return { ...vurderOgFastsettATFLTransform(values, erOverstyrt) };
 };
