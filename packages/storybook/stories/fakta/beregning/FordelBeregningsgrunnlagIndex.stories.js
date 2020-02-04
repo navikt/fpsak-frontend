@@ -7,9 +7,9 @@ import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import FordelBeregningsgrunnlagFaktaIndex from '@fpsak-frontend/fakta-fordel-beregningsgrunnlag';
 
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
-import withReduxProvider from '../../decorators/withRedux';
+import withReduxProvider from '../../../decorators/withRedux';
 
-import alleKodeverk from '../mocks/alleKodeverk.json';
+import alleKodeverk from '../../mocks/alleKodeverk.json';
 
 export default {
   title: 'fakta/fakta-fordel-beregningsgrunnlag',
