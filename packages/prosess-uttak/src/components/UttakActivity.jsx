@@ -61,11 +61,16 @@ function sortAlphabetically(a, b) {
   return 0;
 }
 
-const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType, periodeType) => {
+const mapAarsak = (kodeverk, starttidspunktForeldrepenger, utsettelseType, periodeType, skalFiltrere) => {
   kodeverk.sort(sortAlphabetically);
   const nyKodeverkListe = kodeverk.filter((kodeItem) => kodeItem.gyldigTom >= starttidspunktForeldrepenger
     && kodeItem.gyldigFom <= starttidspunktForeldrepenger);
   let filteredNyKodeArray = nyKodeverkListe.filter((item) => (item.kode < 4096 || item.kode > 4099));
+
+  if (!skalFiltrere) {
+    return (filteredNyKodeArray
+      .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>));
+  }
 
   if (utsettelseType && utsettelseType.kode !== utsettelseArsakCodes.UDEFINERT) {
     filteredNyKodeArray = filteredNyKodeArray.filter((kv) => kv.uttakTyper.includes('UTSETTELSE'));
@@ -99,6 +104,7 @@ export const UttakActivity = ({
   harSoktOmFlerbarnsdager,
   alleKodeverk,
   hasValidationError,
+  currentlySelectedStønadskonto,
   ...formProps
 }) => (
   <div>
@@ -160,7 +166,8 @@ export const UttakActivity = ({
                                     innvilgelseAarsakKoder,
                                     starttidspunktForeldrepenger,
                                     selectedItemData.utsettelseType,
-                                    selectedItemData.periodeType,
+                                    currentlySelectedStønadskonto || selectedItemData.periodeType,
+                                    selectedItemData.aktiviteter.length === 1,
                                   )
                                 }
                                 validate={[required, notDash]}
@@ -177,7 +184,8 @@ export const UttakActivity = ({
                                     avslagAarsakKoder,
                                     starttidspunktForeldrepenger,
                                     selectedItemData.utsettelseType,
-                                    selectedItemData.periodeType,
+                                    currentlySelectedStønadskonto || selectedItemData.periodeType,
+                                    selectedItemData.aktiviteter.length === 1,
                                   )
                                 }
                                 validate={[required, notDash]}
@@ -252,6 +260,7 @@ UttakActivity.propTypes = {
   graderingAvslagAarsakKoder: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   starttidspunktForeldrepenger: PropTypes.string.isRequired,
   alleKodeverk: PropTypes.shape().isRequired,
+  currentlySelectedStønadskonto: PropTypes.shape(),
   ...formPropTypes,
 };
 
@@ -522,6 +531,9 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
     const arsak = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, erOppfylt ? 'innvilgelseAarsak' : 'avslagAarsak');
     const uttakFieldArray = behandlingFormValueSelector(uttakActivityForm, behandlingId, behandlingVersjon)(state, 'UttakFieldArray');
     const hasValidationError = erOppfylt === undefined || !begrunnelse || !arsak;
+    const currentlySelectedActivity = uttakFieldArray && uttakFieldArray.length > 0 ? uttakFieldArray[0] : undefined;
+    const currentlySelectedStønadskonto = currentlySelectedActivity ? currentlySelectedActivity.stønadskontoType : undefined;
+
     return {
       hasValidationError,
       validate,
@@ -534,6 +546,7 @@ const mapStateToPropsFactory = (_initialState, initialOwnProps) => {
       utsettelseAarsak,
       uttakFieldArray,
       erOppfylt,
+      currentlySelectedStønadskonto,
       initialValues: buildInitialValues(ownProps),
       avslagAarsakKoder: avslagAarsaker,
       innvilgelseAarsakKoder: innvilgelseAarsaker,
