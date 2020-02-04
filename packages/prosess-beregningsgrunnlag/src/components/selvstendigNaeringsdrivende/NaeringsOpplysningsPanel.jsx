@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import {
   Element, Normaltekst, Undertekst, EtikettLiten,
 } from 'nav-frontend-typografi';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, FormattedHTMLMessage, injectIntl } from 'react-intl';
 import {
-  DateLabel, FlexColumn, FlexContainer, FlexRow, VerticalSpacer,
+  FlexColumn, FlexRow, VerticalSpacer,
 } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { dateFormat, formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import Lesmerpanel from 'nav-frontend-lesmerpanel';
+import Lesmerpanel2 from '../redesign/LesmerPanel_V2';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from './naeringsOpplysningsPanel.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
@@ -58,25 +58,9 @@ const lagIntroTilEndringspanel = (naring) => {
     return null;
   }
   return (
-    <>
-      <FlexContainer>
-        <FlexRow>
-          <FlexColumn>
-            <Normaltekst>
-              <FormattedMessage id={hendelseTekst} />
-            </Normaltekst>
-          </FlexColumn>
-          <FlexColumn>
-            {hendelseDato
-            && (
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              <DateLabel dateString={hendelseDato} />
-            </Normaltekst>
-            )}
-          </FlexColumn>
-        </FlexRow>
-      </FlexContainer>
-    </>
+    <span>
+      <FormattedHTMLMessage id={hendelseTekst} values={{ dato: dateFormat(hendelseDato) }} />
+    </span>
   );
 };
 
@@ -89,19 +73,23 @@ const erNæringNyoppstartetEllerVarigEndret = (naring) => {
 
 const lagBeskrivelsePanel = (naringsAndel, intl) => (
   <>
-    <Lesmerpanel
+    <VerticalSpacer fourPx />
+    <Lesmerpanel2
       className={styles.lesMer}
       intro={lagIntroTilEndringspanel(naringsAndel)}
       lukkTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.SkjulBegrunnelse' })}
       apneTekst={intl.formatMessage({ id: 'Beregningsgrunnlag.NaeringsOpplysningsPanel.VisBegrunnelse' })}
       defaultApen
     >
-      <Normaltekst className={styles.beskrivelse}>
+      {naringsAndel.begrunnelse && naringsAndel.begrunnelse !== '' && (
+      <Normaltekst>
         {naringsAndel.begrunnelse}
       </Normaltekst>
-    </Lesmerpanel>
+      )}
+    </Lesmerpanel2>
   </>
 );
+
 
 const søkerHarOppgittInntekt = (naring) => naring.oppgittInntekt || naring.oppgittInntekt === 0;
 

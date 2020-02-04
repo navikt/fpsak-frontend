@@ -23,6 +23,7 @@ const AksjonspunktBehandlerSN = ({
   erNyArbLivet,
   erVarigEndring,
   erNyoppstartet,
+  endretTekst,
 }) => (
   <>
     { skalFastsetteSN(aksjonspunkter)
@@ -35,6 +36,7 @@ const AksjonspunktBehandlerSN = ({
           erNyArbLivet={erNyArbLivet}
           erVarigEndring={erVarigEndring}
           erNyoppstartet={erNyoppstartet}
+          endretTekst={endretTekst}
         />
       )}
   </>
@@ -48,6 +50,7 @@ AksjonspunktBehandlerSN.propTypes = {
   erNyArbLivet: PropTypes.bool,
   erVarigEndring: PropTypes.bool,
   erNyoppstartet: PropTypes.bool,
+  endretTekst: PropTypes.node,
 
 };
 AksjonspunktBehandlerSN.defaultProps = {

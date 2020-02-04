@@ -27,7 +27,7 @@ const mockAksjonspunktMedKodeOgStatus = (apKode, begrunnelse, status) => ({
   erAktivt: true,
 });
 
-describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
+describe('<VurderOgFastsettSN2>', () => {
   it('Skal vise korrekte komponenter når det er aksjonspunkt for å fastsette inntekt for bruker ny i arbeidslivet', () => {
     const wrapper = shallowWithIntl(<VurderOgFastsettSNImpl2
       readOnly={false}
@@ -113,6 +113,7 @@ describe('<VurderVarigEndretEllerNyoppstartetSN2>', () => {
       kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
       begrunnelse: 'Ok.',
       erVarigEndretNaering: false,
+      [fastsettInntektFieldname]: undefined,
     };
     expect(transformedValues).to.deep.equal([expectedTransformedValues]);
   });

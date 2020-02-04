@@ -4,8 +4,9 @@ import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { TextAreaField } from '@fpsak-frontend/form';
+
 import {
+  dateFormat,
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -15,8 +16,9 @@ import {
   isBehandlingFormSubmitting,
 } from '@fpsak-frontend/fp-felles';
 
-
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import TextAreaField2 from '../redesign/TextAreaField_V2';
 import styles from './aksjonspunktBehandler.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -42,7 +44,30 @@ const finnATFLVurderingLabel = (gjeldendeAksjonspunkter) => {
   }
   return <FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />;
 };
+const finnGjeldeneAksjonsPunkt = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
+  if (erSNellerFL) {
+    return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_ARBEIDSTAKER_FRILANS);
+  }
+  if (erNyiArbeidslivet) {
+    return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET);
+  }
+  return aksjonspunkter.find((ap) => ap.definisjon.kode === aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+};
 
+const lagEndretTekst = (aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL) => {
+  if (!aksjonspunkter || !readOnly) return null;
+  const aksjonspunkt = finnGjeldeneAksjonsPunkt(aksjonspunkter, erNyiArbeidslivet, readOnly, erSNellerFL);
+  if (!aksjonspunkt) return null;
+  const { endretAv, endretTidspunkt } = aksjonspunkt;
+  if (!endretTidspunkt) return null;
+  const godkjentEndretAv = /[a-zA-Z]{1}[0-9]{6}/.test(endretAv) ? endretAv : '';
+  return (
+    <FormattedMessage
+      id="Beregningsgrunnlag.Forms.EndretTekst"
+      values={{ endretAv: godkjentEndretAv, endretDato: dateFormat(endretTidspunkt) }}
+    />
+  );
+};
 const AksjonspunktBehandler = ({
   intl,
   readOnly,
@@ -85,6 +110,7 @@ const AksjonspunktBehandler = ({
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
+
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
       <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
@@ -127,16 +153,16 @@ const AksjonspunktBehandler = ({
         <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="12">
-            <div id="readOnlyWrapper" className={readOnly ? styles.verticalLine : styles.textAreaWrapperHeigh}>
-              <TextAreaField
-                name="ATFLVurdering"
-                label={finnATFLVurderingLabel(aksjonspunkter)}
-                validate={[required, maxLength1500, minLength3, hasValidText]}
-                maxLength={1500}
-                readOnly={readOnly}
-                placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-              />
-            </div>
+
+            <TextAreaField2
+              name="ATFLVurdering"
+              label={finnATFLVurderingLabel(aksjonspunkter)}
+              validate={[required, maxLength1500, minLength3, hasValidText]}
+              maxLength={1500}
+              readOnly={readOnly}
+              placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+              endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
+            />
           </Column>
         </Row>
         <VerticalSpacer sixteenPx />
@@ -188,6 +214,7 @@ const AksjonspunktBehandler = ({
           erNyArbLivet={erNyArbLivet}
           erVarigEndring={erVarigEndring}
           erNyoppstartet={erNyoppstartet}
+          endretTekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, false)}
         />
         <VerticalSpacer sixteenPx />
         <Row>

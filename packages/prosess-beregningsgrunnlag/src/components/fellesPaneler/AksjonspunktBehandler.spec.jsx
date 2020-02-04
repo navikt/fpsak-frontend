@@ -44,6 +44,7 @@ describe('<AksjonspunktBehandler>', () => {
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
     const readOnly = true;
     const wrapper = shallowWithIntl(<AksjonspunktBehandler.WrappedComponent
+      intl={intlMock}
       readOnly={readOnly}
       aksjonspunkter={aksjonspunkter}
       formName={formName}
@@ -54,12 +55,11 @@ describe('<AksjonspunktBehandler>', () => {
       alleKodeverk={alleKodeverk}
       relevanteStatuser={relevanteStatuser}
       tidsBegrensetInntekt={false}
-      intl={intlMock}
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -71,6 +71,7 @@ describe('<AksjonspunktBehandler>', () => {
     expect(aksjonspunktBehandlerSN).to.have.length(0);
     expect(wrapper.find('BehandlingspunktSubmitButton')).to.have.length(0);
   });
+
   it('Skal teste at submitButton blir rendret riktig når readOnly=false', () => {
     relevanteStatuser.isFrilanser = true;
     allePerioder[0].beregningsgrunnlagPrStatusOgAndel[0].aktivitetStatus.kode = 'FL';
@@ -90,8 +91,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -124,8 +125,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find('AksjonspunktBehandlerTB');
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');
@@ -158,8 +159,8 @@ describe('<AksjonspunktBehandler>', () => {
     />);
     const rows = wrapper.find('Row');
     expect(rows.first().find('FormattedMessage').first().props().id).to.equal('Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler');
-    expect(rows.at(1).find('TextAreaField').first().props().name).to.equal('ATFLVurdering');
-    expect(rows.at(1).find('TextAreaField').first().props().readOnly).to.equal(readOnly);
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().name).to.equal('ATFLVurdering');
+    expect(rows.at(1).find('TextAreaFieldV2').first().props().readOnly).to.equal(readOnly);
     const aksjonspunktBehandlerAT = wrapper.find('AksjonspunktBehandlerAT');
     const aksjonspunktBehandlerTB = wrapper.find(AksjonspunktBehandlerTB);
     const aksjonspunktBehandlerFL = wrapper.find('AksjonspunktBehandlerFL');

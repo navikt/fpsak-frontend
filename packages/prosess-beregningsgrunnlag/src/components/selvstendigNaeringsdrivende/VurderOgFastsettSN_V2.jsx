@@ -36,6 +36,7 @@ export const VurderOgFastsettSNImpl2 = ({
   erNyoppstartet,
   erVarigEndring,
   gjeldendeAksjonspunkter,
+  endretTekst,
 }) => {
   if (erNyArbLivet) {
     return (
@@ -43,6 +44,7 @@ export const VurderOgFastsettSNImpl2 = ({
         readOnly={readOnly}
         isAksjonspunktClosed={isAksjonspunktClosed}
         gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        erNyArbLivet={erNyArbLivet}
       />
     );
   }
@@ -53,15 +55,20 @@ export const VurderOgFastsettSNImpl2 = ({
         isAksjonspunktClosed={isAksjonspunktClosed}
         erVarigEndring={erVarigEndring}
         erNyoppstartet={erNyoppstartet}
+        erVarigEndretNaering={erVarigEndretNaering}
+        gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+        endretTekst={endretTekst}
       />
       {erVarigEndretNaering
-        && (
+      && (
         <FastsettSN2
           readOnly={readOnly}
           isAksjonspunktClosed={isAksjonspunktClosed}
           gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
+          erNyArbLivet={erNyArbLivet}
+          endretTekst={endretTekst}
         />
-        )}
+      )}
     </>
   );
 };
@@ -73,6 +80,7 @@ VurderOgFastsettSNImpl2.propTypes = {
   erNyArbLivet: PropTypes.bool.isRequired,
   erVarigEndring: PropTypes.bool.isRequired,
   erNyoppstartet: PropTypes.bool.isRequired,
+  endretTekst: PropTypes.node,
   gjeldendeAksjonspunkter: PropTypes.arrayOf(beregningsgrunnlagAksjonspunkterPropType).isRequired,
 };
 
@@ -113,7 +121,6 @@ const transformValuesMedVarigEndretNyoppstartet = (values, gjeldendeAksjonspunkt
   return [{
     kode: VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE,
     ...VurderVarigEndretEllerNyoppstartetSN2.transformValues(values),
-    ...FastsettSN2.transformValuesUtenBegrunnelse(values),
   }];
 };
 

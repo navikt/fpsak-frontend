@@ -689,8 +689,8 @@ export const infoTrygdYtelse = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      submitCallback={action('button-click')}
       aksjonspunkter={[]}
+      submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -754,8 +754,8 @@ export const naturalYtelse = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      submitCallback={action('button-click')}
       aksjonspunkter={[]}
+      submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -838,8 +838,8 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      submitCallback={action('button-click')}
       aksjonspunkter={[]}
+      submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -917,8 +917,8 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}
       beregningsgrunnlag={bg}
-      submitCallback={action('button-click')}
       aksjonspunkter={[]}
+      submitCallback={action('button-click')}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}

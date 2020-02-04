@@ -57,7 +57,6 @@ describe('<FastsettSN2>', () => {
     const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus(aksjonspunktCodes.FASTSETT_BEREGNINGSGRUNNLAG_SN_NY_I_ARBEIDSLIVET, null)];
 
     const actualValues = FastsettSN2.buildInitialValues(andeler, aksjonspunkter);
-
     const expectedValues = {
       [fastsettInntektFieldname]: undefined,
       [begrunnelseFieldname]: '',

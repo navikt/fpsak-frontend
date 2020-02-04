@@ -1,5 +1,4 @@
 import React from 'react';
-import linkArrow from '@fpsak-frontend/assets/images/ekstern_link_pil.svg';
 import PropTypes from 'prop-types';
 import styles from './linkTilEksternSystem.less';
 
@@ -25,21 +24,18 @@ const LinkTilEksterntSystem = ({
     return null;
   }
   return (
-    <span className={styles.linkContainer}>
-      <a
-        href={link}
-        className={styles.linkText}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        {`${linkText}`}
-        <img
-          className={styles.linkArrow}
-          src={linkArrow}
-          alt={`Ekster link til ${linkText}`}
-        />
-      </a>
-    </span>
+
+    <a
+      href={link}
+      className={styles.linkText}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {`${linkText}`}
+
+    </a>
+
+
   );
 };
 LinkTilEksterntSystem.propTypes = {

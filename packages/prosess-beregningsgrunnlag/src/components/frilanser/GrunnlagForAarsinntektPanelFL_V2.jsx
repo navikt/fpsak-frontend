@@ -89,17 +89,4 @@ GrunnlagForAarsinntektPanelFL2.propTypes = {
   isKombinasjonsstatus: PropTypes.bool.isRequired,
 };
 
-GrunnlagForAarsinntektPanelFL2.defaultProps = {
-
-};
-
-GrunnlagForAarsinntektPanelFL2.buildInitialValues = (relevanteAndeler) => {
-  if (relevanteAndeler.length === 0) {
-    return undefined;
-  }
-  return {
-    inntektFrilanser: relevanteAndeler[0].overstyrtPrAar ? formatCurrencyNoKr(relevanteAndeler[0].overstyrtPrAar) : '',
-  };
-};
-
 export default GrunnlagForAarsinntektPanelFL2;
