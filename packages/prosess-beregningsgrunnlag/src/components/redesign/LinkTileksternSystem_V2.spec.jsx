@@ -14,7 +14,7 @@ describe('<LinkTilEksterntSystem>', () => {
     const elements = wrapper.find('Element');
     expect(elements).to.have.length(0);
   });
-  it('skal teste at linkhandler ikke rendrer riktig men userIdent', () => {
+  it('skal teste at linkhandler rendrer riktig men en userIdent', () => {
     const wrapper = shallowWithIntl(<LinkTilEksterntSystem
       linkText="AI"
       userIdent="userident"
@@ -24,6 +24,5 @@ describe('<LinkTilEksterntSystem>', () => {
     expect(link).to.have.length(1);
     expect(link.prop('href')).to
       .equal('https://modapp.adeo.no/a-inntekt/person/userident?1&soekekontekst=PERSON&modia.global.hent.person.begrunnet=false#!PersonInntektLamell');
-    expect(link.find(('img'))).to.have.length(1);
   });
 });
