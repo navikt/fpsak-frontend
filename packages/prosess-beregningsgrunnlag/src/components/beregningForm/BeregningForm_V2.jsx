@@ -96,15 +96,18 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextHTML>
-          { apneAksjonspunkt.map((ap) => (
-            <FormattedHTMLMessage
-              key={ap.definisjon.kode}
-              id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
-              values={{ verdi: avvikProsent }}
-            />
-          ))}
-        </AksjonspunktHelpTextHTML>
+        <>
+          <AksjonspunktHelpTextHTML>
+            { apneAksjonspunkt.map((ap) => (
+              <FormattedHTMLMessage
+                key={ap.definisjon.kode}
+                id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+                values={{ verdi: avvikProsent }}
+              />
+            ))}
+          </AksjonspunktHelpTextHTML>
+          <VerticalSpacer thirtyTwoPx />
+        </>
       )}
 
     </div>
