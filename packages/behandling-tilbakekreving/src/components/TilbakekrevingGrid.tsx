@@ -3,8 +3,11 @@ import React, { FunctionComponent } from 'react';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { PersonIndex } from '@fpsak-frontend/person-info';
 import {
-  Kodeverk, NavAnsatt, FagsakInfo, Behandling, Aksjonspunkt, BehandlingPaVent, SettPaVentParams,
+  FagsakInfo, BehandlingPaVent, SettPaVentParams,
 } from '@fpsak-frontend/behandling-felles';
+import {
+  Behandling, Aksjonspunkt, Kodeverk, NavAnsatt,
+} from '@fpsak-frontend/types';
 
 import TilbakekrevingProsess from './TilbakekrevingProsess';
 import TilbakekrevingFakta from './TilbakekrevingFakta';

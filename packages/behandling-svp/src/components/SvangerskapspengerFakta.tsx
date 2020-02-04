@@ -3,9 +3,12 @@ import { Dispatch } from 'redux';
 
 import { injectIntl, WrappedComponentProps } from 'react-intl';
 import {
-  FagsakInfo, Behandling, FaktaPanel, Kodeverk, NavAnsatt, DataFetcherBehandlingDataV2, faktaHooks,
+  FagsakInfo, FaktaPanel, DataFetcherBehandlingDataV2, faktaHooks,
 } from '@fpsak-frontend/behandling-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
+import {
+  Kodeverk, NavAnsatt, Behandling,
+} from '@fpsak-frontend/types';
 
 import svpBehandlingApi from '../data/svpBehandlingApi';
 import faktaPanelDefinisjoner from '../panelDefinisjoner/faktaSvpPanelDefinisjoner';
