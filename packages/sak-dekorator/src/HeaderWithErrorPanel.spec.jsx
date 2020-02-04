@@ -1,12 +1,13 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { expect } from 'chai';
+import Header from '@navikt/nap-header';
 
-import Header from './Header';
+import HeaderWithErrorPanel from './HeaderWithErrorPanel';
 
-describe('<Header>', () => {
+describe('<HeaderWithErrorPanel>', () => {
   it('skal sjekke at navn blir vist', () => {
-    const wrapper = shallow(<Header
+    const wrapper = shallow(<HeaderWithErrorPanel
       iconLinks={[]}
       navAnsattName="Per"
       systemTittel="My System"
@@ -14,7 +15,7 @@ describe('<Header>', () => {
       queryStrings={{}}
       showDetailedErrorMessages={false}
     />);
-    const lastDiv = wrapper.find('span').last();
-    expect(lastDiv.text()).to.eq('Per');
+    const header = wrapper.find(Header);
+    expect(header.prop('title')).to.eq('My System');
   });
 });

@@ -1,19 +1,14 @@
+import React, { useMemo } from 'react';
 import { injectIntl } from 'react-intl';
 import PropTypes from 'prop-types';
-import React from 'react';
-import { createSelector } from 'reselect';
 
-import { Header } from '@fpsak-frontend/sak-dekorator';
+import HeaderWithErrorPanel from '@fpsak-frontend/sak-dekorator';
 import { RETTSKILDE_URL, SYSTEMRUTINE_URL } from '@fpsak-frontend/fp-felles';
 import rettskildeneIkonUrl from '@fpsak-frontend/assets/images/rettskildene.svg';
 import systemrutineIkonUrl from '@fpsak-frontend/assets/images/rutine.svg';
 import { decodeHtmlEntity } from '@fpsak-frontend/utils';
 
-const errorMessagesSelector = createSelector([
-  (s) => s.intl,
-  (s) => s.errorMessages,
-  (s) => s.queryStrings,
-], (intl, errorMessages, queryStrings) => {
+const lagFeilmeldinger = (intl, errorMessages, queryStrings) => {
   const resolvedErrorMessages = [];
   if (queryStrings.errorcode) {
     resolvedErrorMessages.push({ message: intl.formatMessage({ id: queryStrings.errorcode }) });
@@ -32,29 +27,30 @@ const errorMessagesSelector = createSelector([
     resolvedErrorMessages.push(msg);
   });
   return resolvedErrorMessages;
-});
+};
+
 const Dekorator = ({
-  intl, errorMessages, navAnsattName, queryStrings, removeErrorMessage: removeErrorMsg, showDetailedErrorMessages, hideErrorMessages,
+  intl,
+  errorMessages,
+  navAnsattName,
+  queryStrings,
+  removeErrorMessage: removeErrorMsg,
+  showDetailedErrorMessages, hideErrorMessages,
 }) => {
-  const resolvedErrorMessages = errorMessagesSelector({
-    intl,
-    errorMessages,
-    queryStrings,
-  });
-  const iconLinks = [
-    {
-      url: RETTSKILDE_URL,
-      icon: rettskildeneIkonUrl,
-      text: intl.formatMessage({ id: 'Header.Rettskilde' }),
-    },
-    {
-      url: SYSTEMRUTINE_URL,
-      icon: systemrutineIkonUrl,
-      text: intl.formatMessage({ id: 'Header.Systemrutine' }),
-    },
-  ];
+  const resolvedErrorMessages = useMemo(() => lagFeilmeldinger(intl, errorMessages, queryStrings), [errorMessages, queryStrings]);
+
+  const iconLinks = useMemo(() => [{
+    url: RETTSKILDE_URL,
+    icon: rettskildeneIkonUrl,
+    text: intl.formatMessage({ id: 'Header.Rettskilde' }),
+  }, {
+    url: SYSTEMRUTINE_URL,
+    icon: systemrutineIkonUrl,
+    text: intl.formatMessage({ id: 'Header.Systemrutine' }),
+  }], []);
+
   return (
-    <Header
+    <HeaderWithErrorPanel
       systemTittel={intl.formatMessage({ id: 'Header.Foreldrepenger' })}
       iconLinks={iconLinks}
       queryStrings={queryStrings}
