@@ -15,7 +15,7 @@ describe('RestApiConfigBuilder', () => {
     expect(endpoints[0].restMethod).is.eql('GET');
     expect(endpoints[0].config).is.eql({
       maxPollingLimit: undefined,
-      storeResultKey: undefined,
+      saveResponseIn: undefined,
     });
 
     expect(endpoints[1].name).is.eql('ESPENUTVIKLER');
@@ -23,7 +23,7 @@ describe('RestApiConfigBuilder', () => {
     expect(endpoints[1].restMethod).is.eql('POST');
     expect(endpoints[1].config).is.eql({
       maxPollingLimit: undefined,
-      storeResultKey: undefined,
+      saveResponseIn: undefined,
     });
   });
 });

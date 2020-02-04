@@ -45,66 +45,53 @@ export const FpBehandlingApiKeys = {
 };
 
 const endpoints = new RestApiConfigBuilder()
-  /* /api/behandlinger */
   .withAsyncPost('/fpsak/api/behandlinger', FpBehandlingApiKeys.BEHANDLING_FP)
-  .withPost('/fpsak/api/behandlinger/endre-pa-vent', FpBehandlingApiKeys.UPDATE_ON_HOLD)
 
-  /* /api/behandling */
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt', FpBehandlingApiKeys.SAVE_AKSJONSPUNKT, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withAsyncPost('/fpsak/api/behandling/aksjonspunkt/overstyr', FpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/fpsak/api/behandling/uttak/stonadskontoerGittUttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  // behandlingsdata
+  .withRel('aksjonspunkter', FpBehandlingApiKeys.AKSJONSPUNKTER)
+  .withRel('vilkar', FpBehandlingApiKeys.VILKAR)
+  .withRel('soeker-personopplysninger', FpBehandlingApiKeys.PERSONOPPLYSNINGER)
+  .withRel('simuleringResultat', FpBehandlingApiKeys.SIMULERING_RESULTAT)
+  .withRel('tilbakekrevingvalg', FpBehandlingApiKeys.TILBAKEKREVINGVALG)
+  .withRel('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
+  .withRel('beregningsgrunnlag', FpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
+  .withRel('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT)
+  .withRel('familiehendelse-v2', FpBehandlingApiKeys.FAMILIEHENDELSE)
+  .withRel('soknad', FpBehandlingApiKeys.SOKNAD)
+  .withRel('soknad-original-behandling', FpBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
+  .withRel('familiehendelse-original-behandling', FpBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
+  .withRel('beregningsresultat-engangsstonad-original-behandling', FpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
+  .withRel('soeker-medlemskap', FpBehandlingApiKeys.MEDLEMSKAP)
+  .withRel('soeker-medlemskap-v2', FpBehandlingApiKeys.MEDLEMSKAP_V2)
+  .withRel('uttak-periode-grense', FpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
+  .withRel('inntekt-arbeid-ytelse', FpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
+  .withRel('soeker-verge', FpBehandlingApiKeys.VERGE)
+  .withRel('ytelsefordeling', FpBehandlingApiKeys.YTELSEFORDELING)
+  .withRel('opptjening', FpBehandlingApiKeys.OPPTJENING)
+  .withRel('sendt-varsel-om-revurdering', FpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
+  .withRel('fakta-arbeidsforhold', FpBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
+  .withRel('uttaksresultat-perioder', FpBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
+  .withRel('uttak-stonadskontoer', FpBehandlingApiKeys.UTTAK_STONADSKONTOER)
+  .withRel('uttak-kontroller-fakta-perioder', FpBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
 
-  /* fptilbake/api/dokument */
+  // operasjoner
+  .withRel('lagre-stonadskontoer-gitt-uttaksperioder', FpBehandlingApiKeys.STONADSKONTOER_GITT_UTTAKSPERIODER)
+  .withRel('bytt-behandlende-enhet', FpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
+  .withRel('henlegg-behandling', FpBehandlingApiKeys.HENLEGG_BEHANDLING)
+  .withRel('gjenoppta-behandling', FpBehandlingApiKeys.RESUME_BEHANDLING, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+  .withRel('sett-behandling-pa-vent', FpBehandlingApiKeys.BEHANDLING_ON_HOLD)
+  .withRel('endre-pa-vent', FpBehandlingApiKeys.UPDATE_ON_HOLD)
+  .withRel('opne-for-endringer', FpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+  .withRel('lagre-aksjonspunkter', FpBehandlingApiKeys.SAVE_AKSJONSPUNKT, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+  .withRel('lagre-overstyr-aksjonspunkter', FpBehandlingApiKeys.SAVE_OVERSTYRT_AKSJONSPUNKT, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+  .withRel('opprett-verge', FpBehandlingApiKeys.VERGE_OPPRETT, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+  .withRel('fjern-verge', FpBehandlingApiKeys.VERGE_FJERN, { saveResponseIn: FpBehandlingApiKeys.BEHANDLING_FP })
+
+  /* FPTILBAKE */
   .withPostAndOpenBlob('/fptilbake/api/dokument/forhandsvis-varselbrev', FpBehandlingApiKeys.PREVIEW_TILBAKEKREVING_MESSAGE)
 
-  /* /api/brev */
+  /* FPFORMIDLING */
   .withPostAndOpenBlob('/fpformidling/api/brev/forhaandsvis', FpBehandlingApiKeys.PREVIEW_MESSAGE)
-
-  .withInjectedPath('aksjonspunkter', FpBehandlingApiKeys.AKSJONSPUNKTER)
-  .withInjectedPath('vilkar', FpBehandlingApiKeys.VILKAR)
-  .withInjectedPath('soeker-personopplysninger', FpBehandlingApiKeys.PERSONOPPLYSNINGER)
-  .withInjectedPath('simuleringResultat', FpBehandlingApiKeys.SIMULERING_RESULTAT)
-  .withInjectedPath('tilbakekrevingvalg', FpBehandlingApiKeys.TILBAKEKREVINGVALG)
-  .withInjectedPath('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT_FORELDREPENGER)
-  .withInjectedPath('beregningsgrunnlag', FpBehandlingApiKeys.BEREGNINGSGRUNNLAG)
-  .withInjectedPath('beregningsresultat-foreldrepenger', FpBehandlingApiKeys.BEREGNINGRESULTAT)
-  .withInjectedPath('familiehendelse-v2', FpBehandlingApiKeys.FAMILIEHENDELSE)
-  .withInjectedPath('soknad', FpBehandlingApiKeys.SOKNAD)
-  .withInjectedPath('soknad-original-behandling', FpBehandlingApiKeys.SOKNAD_ORIGINAL_BEHANDLING)
-  .withInjectedPath('familiehendelse-original-behandling', FpBehandlingApiKeys.FAMILIEHENDELSE_ORIGINAL_BEHANDLING)
-  .withInjectedPath('beregningsresultat-engangsstonad-original-behandling', FpBehandlingApiKeys.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING)
-  .withInjectedPath('soeker-medlemskap', FpBehandlingApiKeys.MEDLEMSKAP)
-  .withInjectedPath('soeker-medlemskap-v2', FpBehandlingApiKeys.MEDLEMSKAP_V2)
-  .withInjectedPath('uttak-periode-grense', FpBehandlingApiKeys.UTTAK_PERIODE_GRENSE)
-  .withInjectedPath('inntekt-arbeid-ytelse', FpBehandlingApiKeys.INNTEKT_ARBEID_YTELSE)
-  .withInjectedPath('soeker-verge', FpBehandlingApiKeys.VERGE)
-  .withInjectedPath('ytelsefordeling', FpBehandlingApiKeys.YTELSEFORDELING)
-  .withInjectedPath('opptjening', FpBehandlingApiKeys.OPPTJENING)
-  .withInjectedPath('sendt-varsel-om-revurdering', FpBehandlingApiKeys.SEND_VARSEL_OM_REVURDERING)
-  .withInjectedPath('fakta-arbeidsforhold', FpBehandlingApiKeys.FAKTA_ARBEIDSFORHOLD)
-  .withInjectedPath('uttaksresultat-perioder', FpBehandlingApiKeys.UTTAKSRESULTAT_PERIODER)
-  .withInjectedPath('uttak-stonadskontoer', FpBehandlingApiKeys.UTTAK_STONADSKONTOER)
-  .withInjectedPath('uttak-kontroller-fakta-perioder', FpBehandlingApiKeys.UTTAK_KONTROLLER_FAKTA_PERIODER)
-
-  .withPost('/fpsak/api/behandlinger/bytt-enhet', FpBehandlingApiKeys.BEHANDLING_NY_BEHANDLENDE_ENHET)
-  .withPost('/fpsak/api/behandlinger/henlegg', FpBehandlingApiKeys.HENLEGG_BEHANDLING)
-  .withAsyncPost('/fpsak/api/behandlinger/gjenoppta', FpBehandlingApiKeys.RESUME_BEHANDLING, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/fpsak/api/behandlinger/sett-pa-vent', FpBehandlingApiKeys.BEHANDLING_ON_HOLD)
-  .withPost('/fpsak/api/behandlinger/opne-for-endringer', FpBehandlingApiKeys.OPEN_BEHANDLING_FOR_CHANGES, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/fpsak/api/verge/opprett', FpBehandlingApiKeys.VERGE_OPPRETT, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
-  .withPost('/fpsak/api/verge/fjern', FpBehandlingApiKeys.VERGE_FJERN, {
-    storeResultKey: FpBehandlingApiKeys.BEHANDLING_FP,
-  })
 
   .build();
 

@@ -1,9 +1,10 @@
 import { createSelector } from 'reselect';
 
 import aksjonspunktStatus from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
+import { ProsessStegProperties } from '@fpsak-frontend/behandling-felles';
 import {
-  ProsessStegProperties, Behandling, Aksjonspunkt, Vilkar,
-} from '@fpsak-frontend/behandling-felles';
+  Behandling, Vilkar, Aksjonspunkt,
+} from '@fpsak-frontend/types';
 import { behandlingspunktCodes as bpc } from '@fpsak-frontend/fp-felles';
 import ac from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';

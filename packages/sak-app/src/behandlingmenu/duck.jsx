@@ -37,6 +37,7 @@ export const sjekkOmTilbakekrevingRevurderingKanOpprettes = (params) => (dispatc
 );
 
 export const hentVergeMenyvalg = (params) => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.makeRestApiRequest()(params));
+export const resetVergeMenyvalg = () => (dispatch) => dispatch(fpsakApi.VERGE_MENYVALG.resetRestApi()());
 
 export const shelveBehandling = (params) => behandlingEventHandler.henleggBehandling(params);
 

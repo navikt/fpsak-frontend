@@ -7,14 +7,13 @@ import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk
 import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import { allAccessRights } from '@fpsak-frontend/fp-felles';
 import aksjonspunktType from '@fpsak-frontend/kodeverk/src/aksjonspunktType';
+import {
+  Behandling, NavAnsatt, Aksjonspunkt, Vilkar,
+} from '@fpsak-frontend/types';
 
 import ProsessStegDefinisjon, { ProsessStegPanelDefinisjon } from '../types/prosessStegDefinisjonTsType';
 import readOnlyUtils from './readOnlyUtils';
-import Behandling from '../types/behandlingTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import NavAnsatt from '../types/navAnsattTsType';
-import Aksjonspunkt from '../types/aksjonspunktTsType';
-import Vilkar from '../types/vilkarTsType';
 import ProsessStegData from '../types/prosessStegDataTsType';
 import ProsessStegMenyRad from '../types/prosessStegMenyRadTsType';
 
