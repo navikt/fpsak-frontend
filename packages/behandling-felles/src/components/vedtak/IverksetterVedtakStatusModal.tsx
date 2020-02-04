@@ -8,8 +8,7 @@ import Modal from 'nav-frontend-modal';
 import behandlingResultatType from '@fpsak-frontend/kodeverk/src/behandlingResultatType';
 import { Image } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
-
-import Kodeverk from '../../types/kodeverkTsType';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 import styles from './iverksetterVedtakStatusModal.less';
 

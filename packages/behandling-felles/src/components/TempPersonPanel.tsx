@@ -3,13 +3,11 @@ import React, { FunctionComponent, useCallback } from 'react';
 import PersonFaktaIndex from '@fpsak-frontend/fakta-person';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { EndpointOperations } from '@fpsak-frontend/rest-api-redux';
+import {
+  Behandling, Aksjonspunkt, Kodeverk, InntektArbeidYtelse, Personopplysninger,
+} from '@fpsak-frontend/types';
 
-import Aksjonspunkt from '../types/aksjonspunktTsType';
 import FagsakInfo from '../types/fagsakInfoTsType';
-import Kodeverk from '../types/kodeverkTsType';
-import InntektArbeidYtelse from '../types/inntektArbeidYtelseTsType';
-import Personopplysninger from '../types/personopplysningerTsType';
-import Behandling from '../types/behandlingTsType';
 
 // TODO (TOR) Fjern denne når nytt visittkort er på plass
 

@@ -1,4 +1,4 @@
-import Kodeverk from './kodeverkTsType';
+import { Kodeverk } from '@fpsak-frontend/types';
 
 type FagsakPerson = Readonly<{
   alder: number;
