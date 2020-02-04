@@ -691,7 +691,6 @@ export const infoTrygdYtelse = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -757,7 +756,6 @@ export const naturalYtelse = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -842,7 +840,6 @@ export const arbeidstakerDagpengerOgSelvstendigNæringsdrivende = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
@@ -922,7 +919,6 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
       beregningsgrunnlag={bg}
       aksjonspunkter={[]}
       submitCallback={action('button-click')}
-      aksjonspunkter={[]}
       isReadOnly={false}
       readOnlySubmitButton={false}
       isAksjonspunktOpen={false}
