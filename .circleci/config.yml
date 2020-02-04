@@ -188,6 +188,7 @@ jobs:
             export VERSION=$(cat /tmp/workspace/VERSION.txt)
             echo "$GITHUB_PASSWORD" | docker login docker.pkg.github.com -u "$GITHUB_USERNAME" --password-stdin
             docker tag $CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$VERSION docker.pkg.github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION
+            echo docker.pkg.github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION
             docker push docker.pkg.github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_PROJECT_REPONAME:$VERSION
 
   deploy:
