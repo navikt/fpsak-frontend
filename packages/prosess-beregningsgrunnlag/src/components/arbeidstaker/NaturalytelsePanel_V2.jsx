@@ -9,6 +9,7 @@ import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const createArbeidsforholdKey = (arbeidsforhold) => `${arbeidsforhold.arbeidsgiverNavn}${arbeidsforhold.arbeidsgiverId}`;
 
@@ -96,7 +97,7 @@ const createNaturalYtelseRows = (tableData) => {
             </Column>
             <Column xs="1" className={beregningStyles.colLink} key={`naturalytelse_link_${valueKey}`}>
               {userIdent && (
-                <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
+              <LinkTilEksterntSystem linkText="IM" userIdent={userIdent} type="IM" />
               )}
             </Column>
           </Row>
@@ -136,7 +137,7 @@ const NaturalytelsePanel2 = ({
   }
   return (
     <>
-      <VerticalSpacer fourtyPx />
+      <AvsnittSkiller luftOver luftUnder />
       <Element>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
       </Element>

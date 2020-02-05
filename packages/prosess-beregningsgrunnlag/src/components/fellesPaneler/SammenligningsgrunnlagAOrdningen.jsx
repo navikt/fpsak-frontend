@@ -16,6 +16,7 @@ import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const grafFargeAT = '#99bdcd';
 const grafFargeFL = '#c1b5d0';
@@ -182,6 +183,7 @@ const SammenligningsgrunnlagAOrdningen = ({
   const userIdent = null; // TODO denne må hentes fra brukerID enten fra brukerObjectet eller på beregningsgrunnlag må avklares
   return (
     <>
+      <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SamenenligningsGrunnlagOverskrift">
         <FlexColumn>
           <Element className={beregningStyles.semiBoldText}>

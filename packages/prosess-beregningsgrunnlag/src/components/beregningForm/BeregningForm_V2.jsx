@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 
 import { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { AksjonspunktHelpTextHTML, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { behandlingForm } from '@fpsak-frontend/fp-felles';
@@ -27,6 +27,7 @@ import BeregningsresultatTable2 from '../beregningsresultatPanel/Beregningsresul
 
 import AksjonspunktBehandlerAT from '../arbeidstaker/AksjonspunktBehandlerAT';
 import AksjonspunktBehandlerFL from '../frilanser/AksjonspunktBehandlerFL';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
@@ -96,15 +97,18 @@ const lagAksjonspunktViser = (gjeldendeAksjonspunkter, avvikProsent, alleAndeler
   return (
     <div>
       { erDetMinstEttApentAksjonspunkt && (
-        <AksjonspunktHelpTextHTML>
-          { apneAksjonspunkt.map((ap) => (
-            <FormattedHTMLMessage
-              key={ap.definisjon.kode}
-              id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
-              values={{ verdi: avvikProsent }}
-            />
-          ))}
-        </AksjonspunktHelpTextHTML>
+        <>
+          <AksjonspunktHelpTextHTML>
+            { apneAksjonspunkt.map((ap) => (
+              <FormattedHTMLMessage
+                key={ap.definisjon.kode}
+                id={findAksjonspunktHelpTekst(ap, erVarigEndring, erNyArbLivet, erNyoppstartet)}
+                values={{ verdi: avvikProsent }}
+              />
+            ))}
+          </AksjonspunktHelpTextHTML>
+          <VerticalSpacer thirtyTwoPx />
+        </>
       )}
 
     </div>
@@ -254,17 +258,17 @@ export const BeregningFormImpl2 = ({
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
-        <ElementWrapper>
+        <div className={beregningStyles.aksjonsPunktHjelpeTekst}>
           <VerticalSpacer eightPx />
           { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
-        </ElementWrapper>
+        </div>
         )}
       <Row>
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-          <VerticalSpacer thirtyTwoPx />
+          <AvsnittSkiller luftOver luftUnder leftPanel />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -275,7 +279,6 @@ export const BeregningFormImpl2 = ({
           />
           { relevanteStatuser.skalViseBeregningsgrunnlag && (
             <>
-              <VerticalSpacer fourtyPx />
               <Beregningsgrunnlag2
                 relevanteStatuser={relevanteStatuser}
                 readOnly={readOnly}
@@ -298,7 +301,7 @@ export const BeregningFormImpl2 = ({
           <Undertittel className={beregningStyles.panelRight}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
           </Undertittel>
-          <VerticalSpacer thirtyTwoPx />
+          <AvsnittSkiller luftOver luftUnder rightPanel />
           <AvviksopplysningerPanel
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             relevanteStatuser={relevanteStatuser}
@@ -309,7 +312,7 @@ export const BeregningFormImpl2 = ({
           {harAksjonspunkter
           && (
             <>
-              <VerticalSpacer fourtyPx />
+              <AvsnittSkiller luftOver luftUnder rightPanel />
               <AksjonspunktBehandler
                 readOnly={readOnly}
                 readOnlySubmitButton={readOnlySubmitButton}
@@ -325,7 +328,7 @@ export const BeregningFormImpl2 = ({
             </>
           )}
           <>
-            <VerticalSpacer fourtyPx />
+            <AvsnittSkiller luftOver luftUnder rightPanel />
             <BeregningsresultatTable2
               beregningsgrunnlagPerioder={beregningsgrunnlag.beregningsgrunnlagPeriode}
               dekningsgrad={dekningsgrad}

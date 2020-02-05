@@ -8,6 +8,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import aktivitetStatus, { isStatusDagpengerOrAAP } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 
 export const getTekstForAndelBruktIBeregning = (andel) => {
@@ -34,6 +35,7 @@ const TilstotendeYtelser2 = ({
       {relevanteStatuser.isKombinasjonsstatus
       && (
         <>
+          <AvsnittSkiller luftOver luftUnder />
           <Element>
             <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.TittelNav" />
           </Element>

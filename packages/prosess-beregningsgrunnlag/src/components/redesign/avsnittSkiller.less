@@ -1,0 +1,20 @@
+@import '@{coreModulePath}nav-frontend-core/less/_variabler';
+
+.divider {
+  background-image: linear-gradient(to right, @navMorkGra 10%, rgba(255, 255, 255, 0) 0%);
+  background-position: top;
+  background-size: 10px 1px;
+  background-repeat: repeat-x;
+padding: 1px 1px;
+}
+.leftPanel {
+  padding: 0 40px 0 20px;
+}
+
+.rightPanel {
+  padding: 0 20px 0 40px;
+
+  @media (max-width: 992px) {
+    padding: 0 40px 0 20px;
+  }
+}

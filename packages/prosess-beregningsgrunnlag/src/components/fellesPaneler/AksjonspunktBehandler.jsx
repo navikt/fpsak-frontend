@@ -113,125 +113,129 @@ const AksjonspunktBehandler = ({
 
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
-        <Row>
-          <Column xs="12">
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
-            </Normaltekst>
-          </Column>
-        </Row>
-        <VerticalSpacer eightPx />
-        {tidsBegrensetInntekt && (
-        <AksjonspunktBehandlerTB
-          readOnly={readOnly}
-          readOnlySubmitButton={readOnlySubmitButton}
-          formName={formName}
-          allePerioder={allePerioder}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          alleKodeverk={alleKodeverk}
-          aksjonspunkter={aksjonspunkter}
-        />
-        )}
-        {!tidsBegrensetInntekt && visAT && (
-        <AksjonspunktBehandlerAT
-          readOnly={readOnly}
-          allePerioder={allePerioder}
-          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-          alleKodeverk={alleKodeverk}
-        />
-        )}
-        {visFL && (
-        <AksjonspunktBehandlerFL
-          readOnly={readOnly}
-          allePerioder={allePerioder}
-          alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-        />
-        )}
+      <div className={styles.aksjonspunktBehandlerContainer}>
+        <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
+          <Row>
+            <Column xs="12">
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
+              </Normaltekst>
+            </Column>
+          </Row>
+          <VerticalSpacer eightPx />
+          {tidsBegrensetInntekt && (
+          <AksjonspunktBehandlerTB
+            readOnly={readOnly}
+            readOnlySubmitButton={readOnlySubmitButton}
+            formName={formName}
+            allePerioder={allePerioder}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            alleKodeverk={alleKodeverk}
+            aksjonspunkter={aksjonspunkter}
+          />
+          )}
+          {!tidsBegrensetInntekt && visAT && (
+          <AksjonspunktBehandlerAT
+            readOnly={readOnly}
+            allePerioder={allePerioder}
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+            alleKodeverk={alleKodeverk}
+          />
+          )}
+          {visFL && (
+          <AksjonspunktBehandlerFL
+            readOnly={readOnly}
+            allePerioder={allePerioder}
+            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+          />
+          )}
 
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="12">
+          <VerticalSpacer sixteenPx />
+          <Row>
+            <Column xs="12">
 
-            <TextAreaField2
-              name="ATFLVurdering"
-              label={finnATFLVurderingLabel(aksjonspunkter)}
-              validate={[required, maxLength1500, minLength3, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
-              placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-              endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
-            />
-          </Column>
-        </Row>
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="12">
-            <BehandlingspunktSubmitButton
-              formName={formName}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnlySubmitButton}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </Column>
-        </Row>
-        <VerticalSpacer sixteenPx />
-      </Panel>
+              <TextAreaField2
+                name="ATFLVurdering"
+                label={finnATFLVurderingLabel(aksjonspunkter)}
+                validate={[required, maxLength1500, minLength3, hasValidText]}
+                maxLength={1500}
+                readOnly={readOnly}
+                placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
+                endrettekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, true)}
+              />
+            </Column>
+          </Row>
+          <VerticalSpacer sixteenPx />
+          <Row>
+            <Column xs="12">
+              <BehandlingspunktSubmitButton
+                formName={formName}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                isReadOnly={readOnly}
+                isSubmittable={!readOnlySubmitButton}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+            </Column>
+          </Row>
+          <VerticalSpacer sixteenPx />
+        </Panel>
+      </div>
     );
   }
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
-        <Row>
-          <Column xs="12">
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              {erNyArbLivet && (
-                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet" />
-              )}
-              {erNyoppstartet && !erVarigEndring && (
-                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.Nyoppstartet" />
-              )}
-              {!erNyArbLivet && !erNyoppstartet && erVarigEndring && (
-                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.VarigEndring" />
-              )}
-              {!erNyArbLivet && erNyoppstartet && erVarigEndring && (
-                <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
-              )}
-            </Normaltekst>
-          </Column>
-        </Row>
-        <VerticalSpacer eightPx />
-        <AksjonspunktBehandlerSN
-          readOnly={readOnly}
-          aksjonspunkter={aksjonspunkter}
-          behandlingId={behandlingId}
-          behandlingVersjon={behandlingVersjon}
-          erNyArbLivet={erNyArbLivet}
-          erVarigEndring={erVarigEndring}
-          erNyoppstartet={erNyoppstartet}
-          endretTekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, false)}
-        />
-        <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="12">
-            <BehandlingspunktSubmitButton
-              formName={formName}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnlySubmitButton}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
-            />
-          </Column>
-        </Row>
-      </Panel>
+      <div className={styles.aksjonspunktBehandlerContainer}>
+        <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
+          <Row>
+            <Column xs="12">
+              <Normaltekst className={beregningStyles.semiBoldText}>
+                {erNyArbLivet && (
+                  <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet" />
+                )}
+                {erNyoppstartet && !erVarigEndring && (
+                  <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.Nyoppstartet" />
+                )}
+                {!erNyArbLivet && !erNyoppstartet && erVarigEndring && (
+                  <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.VarigEndring" />
+                )}
+                {!erNyArbLivet && erNyoppstartet && erVarigEndring && (
+                  <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
+                )}
+              </Normaltekst>
+            </Column>
+          </Row>
+          <VerticalSpacer eightPx />
+          <AksjonspunktBehandlerSN
+            readOnly={readOnly}
+            aksjonspunkter={aksjonspunkter}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            erNyArbLivet={erNyArbLivet}
+            erVarigEndring={erVarigEndring}
+            erNyoppstartet={erNyoppstartet}
+            endretTekst={lagEndretTekst(aksjonspunkter, erNyArbLivet, readOnly, false)}
+          />
+          <VerticalSpacer sixteenPx />
+          <Row>
+            <Column xs="12">
+              <BehandlingspunktSubmitButton
+                formName={formName}
+                behandlingId={behandlingId}
+                behandlingVersjon={behandlingVersjon}
+                isReadOnly={readOnly}
+                isSubmittable={!readOnlySubmitButton}
+                isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+                isBehandlingFormDirty={isBehandlingFormDirty}
+                hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+              />
+            </Column>
+          </Row>
+        </Panel>
+      </div>
     );
   }
   return null;

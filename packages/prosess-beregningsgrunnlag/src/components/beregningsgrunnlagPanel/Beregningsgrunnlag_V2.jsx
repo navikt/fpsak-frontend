@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import periodeAarsak from '@fpsak-frontend/kodeverk/src/periodeAarsak';
 import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 
@@ -19,6 +18,7 @@ import GrunnlagForAarsinntektPanelAT2 from '../arbeidstaker/GrunnlagForAarsinnte
 
 import NaeringsopplysningsPanel from '../selvstendigNaeringsdrivende/NaeringsOpplysningsPanel';
 import beregningStyles from './beregningsgrunnlag_V2.less';
+
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -84,7 +84,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer fourtyPx />
             </>
           )}
           { harPerioderMedAvsluttedeArbeidsforhold(allePerioder)
@@ -100,7 +99,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
                 behandlingId={behandlingId}
                 behandlingVersjon={behandlingVersjon}
               />
-              <VerticalSpacer fourtyPx />
             </>
           )}
         </>
@@ -114,7 +112,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           readOnly={readOnly}
           isKombinasjonsstatus={relevanteStatuser.isKombinasjonsstatus}
         />
-        <VerticalSpacer fourtyPx />
       </>
     )}
 
@@ -126,7 +123,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
             relevanteStatuser={relevanteStatuser}
             gjelderBesteberegning={gjelderBesteberegning}
           />
-          <VerticalSpacer fourtyPx />
         </div>
       )}
       {(relevanteStatuser.isMilitaer)
@@ -135,7 +131,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <MilitaerPanel2
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
       {(relevanteStatuser.harAndreTilstotendeYtelser)
@@ -144,7 +139,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <YtelserFraInfotrygd2
             bruttoPrAar={allePerioder[0].bruttoPrAar}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
       { relevanteStatuser.isSelvstendigNaeringsdrivende
@@ -153,7 +147,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           <GrunnlagForAarsinntektPanelSN2
             alleAndeler={alleAndelerIForstePeriode}
           />
-          <VerticalSpacer fourtyPx />
           <NaeringsopplysningsPanel
             alleAndelerIForstePeriode={alleAndelerIForstePeriode}
           />
@@ -170,7 +163,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
             relevanteStatuser={relevanteStatuser}
             skjeringstidspunktDato={skjeringstidspunktDato}
           />
-          <VerticalSpacer fourtyPx />
         </>
       )}
 

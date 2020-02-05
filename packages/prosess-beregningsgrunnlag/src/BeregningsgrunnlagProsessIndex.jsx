@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-import { featureToggle } from '@fpsak-frontend/fp-felles';
+// import { featureToggle } from '@fpsak-frontend/fp-felles';
 
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -27,9 +27,9 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
-  featureToggles,
+  // featureToggles,
 }) => {
-  const skalViseRedesignetGUI = featureToggles[featureToggle.BG_REDESIGN];
+  const skalViseRedesignetGUI = true; // featureToggles[featureToggle.BG_REDESIGN];
   if (skalViseRedesignetGUI) {
     return (
       <RawIntlProvider value={intl}>
@@ -76,7 +76,7 @@ BeregningsgrunnlagProsessIndex.propTypes = {
   vilkar: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregningsgrunnlag: PropTypes.shape(),
   alleKodeverk: PropTypes.shape().isRequired,
-  featureToggles: PropTypes.shape().isRequired,
+  // featureToggles: PropTypes.shape().isRequired,
 };
 
 BeregningsgrunnlagProsessIndex.defaultProps = {
