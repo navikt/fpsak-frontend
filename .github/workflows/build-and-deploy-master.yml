@@ -38,9 +38,8 @@ jobs:
         run: yarn build
 
       - name: Bygg, tag og push Docker image
-        env:
-          IMAGE: ${{ IMAGE_BASE }}:${{ TAG }}
         run: |
+          echo "::set-env name=IMAGE::$IMAGE_BASE:$TAG"
           docker build  --tag $IMAGE .
           echo  $GITHUB_TOKEN | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
           docker push $IMAGE_BASE
