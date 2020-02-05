@@ -40,7 +40,8 @@ jobs:
           yarn build
 
       - name: Bygg, tag og push Docker image
-        run: |          
+        run: |
+          docker -v
           docker build . --pull -t $IMAGE
           echo  $GITHUB_TOKEN | docker login docker.pkg.github.com -u ${GITHUB_REPOSITORY} --password-stdin
           docker push $IMAGE_BASE
