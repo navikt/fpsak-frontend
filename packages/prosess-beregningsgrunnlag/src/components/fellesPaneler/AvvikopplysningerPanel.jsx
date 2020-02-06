@@ -11,6 +11,7 @@ import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/Avvikopplysning
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
+import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -150,7 +151,8 @@ const AvviksopplysningerPanel = ({
 
   return (
     <Panel className={beregningStyles.panelRight}>
-      <Element>
+      <AvsnittSkiller luftUnder />
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.ApplicationInformation" />
       </Element>
       <VerticalSpacer eightPx />

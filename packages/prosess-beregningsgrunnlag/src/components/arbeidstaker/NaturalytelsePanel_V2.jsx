@@ -138,7 +138,7 @@ const NaturalytelsePanel2 = ({
   return (
     <>
       <AvsnittSkiller luftOver luftUnder />
-      <Element>
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Naturalytelse2" />
       </Element>
       <VerticalSpacer eightPx />

@@ -196,7 +196,7 @@ export const GrunnlagForAarsinntektPanelATImpl2 = ({
       <AvsnittSkiller luftOver luftUnder />
       <FlexRow>
         <FlexColumn>
-          <Element>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Arbeidsinntekt" />
           </Element>
         </FlexColumn>

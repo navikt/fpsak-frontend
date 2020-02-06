@@ -44,7 +44,7 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.NyIArbeidslivet');
@@ -58,7 +58,7 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter={false}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IkkeVarigEndring');
@@ -72,7 +72,7 @@ describe('<AvviksopplysningerSN>', () => {
       alleAndelerIForstePeriode={forstePeriode}
       harAksjonspunkter={false}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.SN.IngenEndring');
@@ -86,7 +86,7 @@ describe('<AvviksopplysningerSN>', () => {
       harAksjonspunkter
     />);
 
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(4);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.PensjonsgivendeInntekt');

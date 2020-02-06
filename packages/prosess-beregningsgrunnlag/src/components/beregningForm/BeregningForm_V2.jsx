@@ -268,6 +268,7 @@ export const BeregningFormImpl2 = ({
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
+          <VerticalSpacer twentyPx />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -303,7 +304,8 @@ export const BeregningFormImpl2 = ({
           <Undertittel className={beregningStyles.panelRight}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
           </Undertittel>
-          <AvsnittSkiller luftOver luftUnder rightPanel />
+          <VerticalSpacer twentyPx />
+
           <AvviksopplysningerPanel
             sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
             relevanteStatuser={relevanteStatuser}

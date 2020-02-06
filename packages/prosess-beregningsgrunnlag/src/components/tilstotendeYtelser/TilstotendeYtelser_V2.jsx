@@ -36,7 +36,7 @@ const TilstotendeYtelser2 = ({
       && (
         <>
           <AvsnittSkiller luftOver luftUnder />
-          <Element>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.TilstottendeYtelse.TittelNav" />
           </Element>
           <VerticalSpacer eightPx />

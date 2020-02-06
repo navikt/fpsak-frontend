@@ -28,7 +28,7 @@ describe('<AvviksopplysningerAT>', () => {
       beregnetAarsinntekt={beregnetAarsinntekt}
       aktivitetStatusKode={aktivitetStatus.ARBEIDSTAKER}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(4);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
     expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid');
@@ -58,7 +58,7 @@ describe('<AvviksopplysningerAT>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const infoText = rows.first().find('FormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATSN');
@@ -72,7 +72,7 @@ describe('<AvviksopplysningerAT>', () => {
         isKombinasjonsstatus: true, isArbeidstaker: true, isSelvstendigNaeringsdrivende: true, isFrilanser: true,
       }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows).to.have.length(1);
     const infoText = rows.first().find('FormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN');
@@ -84,7 +84,7 @@ describe('<AvviksopplysningerAT>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       beregnetAarsinntekt={beregnetAarsinntekt}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
 
     expect(rows).to.have.length(4);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
@@ -114,7 +114,7 @@ describe('<AvviksopplysningerAT>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false, isFrilanser: true }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });
 });

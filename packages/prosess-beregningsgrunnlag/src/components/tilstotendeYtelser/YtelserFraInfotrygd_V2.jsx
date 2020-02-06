@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Element, Normaltekst, Undertekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
@@ -20,11 +21,12 @@ const YtelserFraInfotrygd2 = ({
     <AvsnittSkiller luftOver luftUnder />
     <Row>
       <Column xs="12">
-        <Element>
+        <Element className={beregningStyles.avsnittOverskrift}>
           <FormattedMessage
             id="Beregningsgrunnlag.YtelserFraInfotrygd.Ytelse2"
           />
         </Element>
+        <VerticalSpacer eightPx />
       </Column>
     </Row>
     <Row>

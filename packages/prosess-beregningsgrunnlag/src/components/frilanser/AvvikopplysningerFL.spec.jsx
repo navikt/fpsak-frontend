@@ -26,7 +26,7 @@ describe('<AvviksopplysningerFL>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
 
     expect(rows).to.have.length(4);
     const omregnetAarsinntektText = rows.first().find('FormattedMessage');
@@ -55,7 +55,7 @@ describe('<AvviksopplysningerFL>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });
   it('Skal teste tabellen IKKE rendres med feil status:SAMMENLIGNING_AT', () => {
@@ -65,7 +65,7 @@ describe('<AvviksopplysningerFL>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const rows = wrapper.find('Row');
+    const rows = wrapper.find('FlexRow');
     expect(rows.length).to.be.equal(0);
   });
 });

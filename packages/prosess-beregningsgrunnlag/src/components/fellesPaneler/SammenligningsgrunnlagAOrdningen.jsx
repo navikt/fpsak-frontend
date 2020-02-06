@@ -13,6 +13,7 @@ import {
 } from '@fpsak-frontend/shared-components';
 import moment from 'moment';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
+
 import LinkTilEksterntSystem from '../redesign/LinkTilEksterntSystem';
 import styles from './sammenligningsgrunnlagAOrdningen.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
@@ -186,7 +187,7 @@ const SammenligningsgrunnlagAOrdningen = ({
       <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SamenenligningsGrunnlagOverskrift">
         <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.SammenligningsGrunnlaAOrdningen.Tittel" />
           </Element>
         </FlexColumn>
@@ -194,6 +195,7 @@ const SammenligningsgrunnlagAOrdningen = ({
           <LinkTilEksterntSystem linkText="" userIdent={userIdent} type="AI" />
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer eightPx />
       <FlexRow>
         <FlexColumn>
           <Normaltekst>

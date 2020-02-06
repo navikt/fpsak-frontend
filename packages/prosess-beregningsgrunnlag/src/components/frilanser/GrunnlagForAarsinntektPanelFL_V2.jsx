@@ -29,7 +29,7 @@ export const GrunnlagForAarsinntektPanelFL2 = ({
     <>
       <>
         <AvsnittSkiller luftOver luftUnder />
-        <Element>
+        <Element className={beregningStyles.avsnittOverskrift}>
           <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Frilansinntekt" />
         </Element>
         <VerticalSpacer eightPx />

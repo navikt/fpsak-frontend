@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
-import { Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import {
@@ -117,9 +117,9 @@ const AksjonspunktBehandler = ({
         <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
           <Row>
             <Column xs="12">
-              <Normaltekst className={beregningStyles.semiBoldText}>
+              <Element className={beregningStyles.avsnittOverskrift}>
                 <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
-              </Normaltekst>
+              </Element>
             </Column>
           </Row>
           <VerticalSpacer eightPx />
@@ -192,7 +192,7 @@ const AksjonspunktBehandler = ({
         <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
           <Row>
             <Column xs="12">
-              <Normaltekst className={beregningStyles.semiBoldText}>
+              <Element className={beregningStyles.avsnittOverskrift}>
                 {erNyArbLivet && (
                   <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler.NyIArbeidslivet" />
                 )}
@@ -205,7 +205,7 @@ const AksjonspunktBehandler = ({
                 {!erNyArbLivet && erNyoppstartet && erVarigEndring && (
                   <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.AksjonspunktBehandler" />
                 )}
-              </Normaltekst>
+              </Element>
             </Column>
           </Row>
           <VerticalSpacer eightPx />

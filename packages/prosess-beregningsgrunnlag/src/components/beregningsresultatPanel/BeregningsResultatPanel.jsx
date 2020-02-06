@@ -198,7 +198,7 @@ const BeregningsresutatPanel = ({
   const skalLagePeriodeHeaders = periodeResultatTabeller.length > 1;
   return (
     <Panel className={beregningStyles.panelRight}>
-      <Element>
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.BeregningTable.Tittel" />
       </Element>
       <VerticalSpacer eightPx />

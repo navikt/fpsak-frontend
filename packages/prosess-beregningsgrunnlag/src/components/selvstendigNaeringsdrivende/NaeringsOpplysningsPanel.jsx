@@ -109,7 +109,7 @@ export const NaeringsopplysningsPanel = ({
       <AvsnittSkiller luftOver luftUnder />
       <FlexRow key="SNNareingOverskrift">
         <FlexColumn>
-          <Element className={beregningStyles.semiBoldText}>
+          <Element className={beregningStyles.avsnittOverskrift}>
             <FormattedMessage id="Beregningsgrunnlag.NaeringsOpplysningsPanel.Overskrift" />
           </Element>
         </FlexColumn>

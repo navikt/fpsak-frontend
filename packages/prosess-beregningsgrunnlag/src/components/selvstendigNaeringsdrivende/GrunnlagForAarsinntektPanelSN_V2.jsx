@@ -93,7 +93,7 @@ export const GrunnlagForAarsinntektPanelSN2 = ({
   return (
     <>
       <AvsnittSkiller luftOver luftUnder />
-      <Element className={beregningStyles.semiBoldText}>
+      <Element className={beregningStyles.avsnittOverskrift}>
         <FormattedMessage id="Beregningsgrunnlag.AarsinntektPanel.Pensjonsgivendeinntekt" />
       </Element>
       <VerticalSpacer eightPx />
