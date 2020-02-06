@@ -8,6 +8,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 import vedtaksbrevAvsnittPropType from '../../propTypes/vedtaksbrevAvsnittPropType';
+import underavsnittType from '../../kodeverk/avsnittType';
 
 import styles from './tilbakekrevingEditerVedtaksbrevPanel.less';
 
@@ -30,7 +31,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
       const underavsnitter = avsnitt.underavsnittsliste;
       const periode = `${avsnitt.fom}_${avsnitt.tom}`;
       const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some((p) => p === periode);
-      const visApen = avsnitt.avsnittstype === 'OPPSUMMERING' && fritekstOppsummeringPakrevdMenIkkeUtfylt;
+      const visApen = avsnitt.avsnittstype === underavsnittType.OPPSUMMERING && fritekstOppsummeringPakrevdMenIkkeUtfylt;
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
@@ -83,6 +84,10 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
   fritekstOppsummeringPakrevdMenIkkeUtfylt: PropTypes.bool,
+};
+
+TilbakekrevingEditerVedtaksbrevPanel.defaultProps = {
+  fritekstOppsummeringPakrevdMenIkkeUtfylt: false,
 };
 
 TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt

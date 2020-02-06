@@ -15,6 +15,7 @@ import {
 } from '@fpsak-frontend/fp-felles';
 
 import advarselIcon from '@fpsak-frontend/assets/images/advarsel_ny.svg';
+import underavsnittType from '../kodeverk/avsnittType';
 import vedtaksbrevAvsnittPropType from '../propTypes/vedtaksbrevAvsnittPropType';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 
@@ -22,25 +23,17 @@ import styles from './tilbakekrevingVedtakForm.less';
 
 const formName = 'TilbakekrevingVedtakForm';
 
-const UNDERAVSNITT_TYPE = {
-  OPPSUMMERING: 'OPPSUMMERING',
-  FAKTA: 'FAKTA',
-  VILKAR: 'VILKÅR',
-  SARLIGEGRUNNER: 'SÆRLIGEGRUNNER',
-  SARLIGEGRUNNER_ANNET: 'SÆRLIGEGRUNNER_ANNET',
-};
-
 const formatVedtakData = (values) => {
-  const perioder = omit(values, UNDERAVSNITT_TYPE.OPPSUMMERING);
+  const perioder = omit(values, underavsnittType.OPPSUMMERING);
   return {
-    oppsummeringstekst: values[UNDERAVSNITT_TYPE.OPPSUMMERING],
+    oppsummeringstekst: values[underavsnittType.OPPSUMMERING],
     perioderMedTekst: Object.keys(perioder).map((key) => ({
       fom: key.split('_')[0],
       tom: key.split('_')[1],
-      faktaAvsnitt: perioder[key][UNDERAVSNITT_TYPE.FAKTA],
-      vilkaarAvsnitt: perioder[key][UNDERAVSNITT_TYPE.VILKAR],
-      saerligeGrunnerAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER],
-      saerligeGrunnerAnnetAvsnitt: perioder[key][UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET],
+      faktaAvsnitt: perioder[key][underavsnittType.FAKTA],
+      vilkaarAvsnitt: perioder[key][underavsnittType.VILKAR],
+      saerligeGrunnerAvsnitt: perioder[key][underavsnittType.SARLIGEGRUNNER],
+      saerligeGrunnerAnnetAvsnitt: perioder[key][underavsnittType.SARLIGEGRUNNER_ANNET],
     })),
   };
 };
@@ -145,37 +138,22 @@ const finnPerioderSomIkkeHarVerdiForObligatoriskFelt = createSelector([
   const periode = `${va.fom}_${va.tom}`;
   const friteksterForPeriode = formVerdier[periode];
 
-  const harObligatoriskFaktaTekst = va.underavsnittsliste.some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.FAKTA);
-  if (harObligatoriskFaktaTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.FAKTA])) {
+  const harObligatoriskFaktaTekst = va.underavsnittsliste.some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === underavsnittType.FAKTA);
+  if (harObligatoriskFaktaTekst && (!friteksterForPeriode || !friteksterForPeriode[underavsnittType.FAKTA])) {
     return acc.concat(periode);
   }
 
   const harObligatoriskSarligeGrunnerAnnetTekst = va.underavsnittsliste
-    .some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET);
-  if (harObligatoriskSarligeGrunnerAnnetTekst && (!friteksterForPeriode || !friteksterForPeriode[UNDERAVSNITT_TYPE.SARLIGEGRUNNER_ANNET])) {
+    .some((ua) => ua.fritekstPåkrevet && ua.underavsnittstype === underavsnittType.SARLIGEGRUNNER_ANNET);
+  if (harObligatoriskSarligeGrunnerAnnetTekst && (!friteksterForPeriode || !friteksterForPeriode[underavsnittType.SARLIGEGRUNNER_ANNET])) {
     return acc.concat(periode);
   }
   return acc;
 }, []));
 
-const harFritekstOppsummeringPakrevdMenIkkeUtfylt = (vedtaksbrevAvsnitt) => {
-  let avsnitt;
-  for (let k = 0; k < vedtaksbrevAvsnitt.length; k += 1) {
-    avsnitt = vedtaksbrevAvsnitt[k];
-
-    if (avsnitt.avsnittstype === UNDERAVSNITT_TYPE.OPPSUMMERING) {
-      let underAvsnitt;
-      const { underavsnittsliste } = avsnitt;
-      for (let i = 0; i < underavsnittsliste.length; i += 1) {
-        underAvsnitt = underavsnittsliste[i];
-        if (underAvsnitt.fritekstPåkrevet && !underAvsnitt.fritekst) {
-          return true;
-        }
-      }
-    }
-  }
-  return false;
-};
+const harFritekstOppsummeringPakrevdMenIkkeUtfylt = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt
+  .filter((avsnitt) => avsnitt.avsnittstype === underavsnittType.OPPSUMMERING)
+  .some((avsnitt) => avsnitt.underavsnittsliste.some((underAvsnitt) => underAvsnitt.fritekstPåkrevet && !underAvsnitt.fritekst));
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunktKodeForeslaVedtak));
