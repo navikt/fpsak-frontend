@@ -78,9 +78,6 @@ const LeggTilArbeidsforholdFelter = ({
             }}
           />
         </FlexColumn>
-        <FlexColumn className={styles.suffix}>
-          %
-        </FlexColumn>
       </FlexRow>
     </FlexContainer>
   </BehandlingFormFieldCleaner>
