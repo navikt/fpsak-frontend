@@ -1129,3 +1129,502 @@ export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
     />
   );
 };
+
+export const testTFP2426 = () => {
+  const bg = {
+    skjaeringstidspunktBeregning: '2019-12-17',
+    skjæringstidspunkt: '2019-12-17',
+    aktivitetStatus: [
+      {
+        kode: 'AT_SN',
+        kodeverk: 'AKTIVITET_STATUS',
+      },
+    ],
+    beregningsgrunnlagPeriode: [
+      {
+        beregningsgrunnlagPeriodeFom: '2019-12-17',
+        beregningsgrunnlagPeriodeTom: null,
+        beregnetPrAar: 388669.2,
+        bruttoPrAar: 409836.2,
+        bruttoInkludertBortfaltNaturalytelsePrAar: 409836.2,
+        avkortetPrAar: 409836.2,
+        redusertPrAar: 409836.2,
+        periodeAarsaker: [],
+        dagsats: 1576,
+        beregningsgrunnlagPrStatusOgAndel: [
+          {
+            beregningsgrunnlagFom: '2019-09-01',
+            beregningsgrunnlagTom: '2019-11-30',
+            aktivitetStatus: {
+              kode: 'AT',
+              kodeverk: 'AKTIVITET_STATUS',
+            },
+            beregningsperiodeFom: '2019-09-01',
+            beregningsperiodeTom: '2019-11-30',
+            beregnetPrAar: 388669.2,
+            fastsattForrigePrAar: null,
+            overstyrtPrAar: null,
+            bruttoPrAar: 388669.2,
+            avkortetPrAar: 388669.2,
+            redusertPrAar: 388669.2,
+            erTidsbegrensetArbeidsforhold: null,
+            erNyIArbeidslivet: null,
+            lonnsendringIBeregningsperioden: null,
+            andelsnr: 1,
+            besteberegningPrAar: null,
+            inntektskategori: {
+              kode: 'ARBEIDSTAKER',
+              kodeverk: 'INNTEKTSKATEGORI',
+            },
+            arbeidsforhold: {
+              arbeidsgiverNavn: 'NORD-ODAL SYKEHJEM',
+              arbeidsgiverId: '974604914',
+              startdato: '2018-05-01',
+              opphoersdato: null,
+              arbeidsforholdId: null,
+              eksternArbeidsforholdId: null,
+              arbeidsforholdType: {
+                kode: 'ARBEID',
+                kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+              },
+              aktørId: null,
+              refusjonPrAar: 0,
+              belopFraInntektsmeldingPrMnd: 32389.1,
+              organisasjonstype: {
+                kode: 'VIRKSOMHET',
+                kodeverk: 'ORGANISASJONSTYPE',
+              },
+              naturalytelseBortfaltPrÅr: null,
+              naturalytelseTilkommetPrÅr: null,
+            },
+            fastsattAvSaksbehandler: false,
+            lagtTilAvSaksbehandler: false,
+            belopPrMndEtterAOrdningen: 26659.6566666667,
+            belopPrAarEtterAOrdningen: 319915.88,
+            dagsats: 1495,
+            originalDagsatsFraTilstøtendeYtelse: null,
+            fordeltPrAar: null,
+            erTilkommetAndel: false,
+            skalFastsetteGrunnlag: false,
+          },
+          {
+            beregningsgrunnlagFom: '2016-01-01',
+            beregningsgrunnlagTom: '2018-12-31',
+            aktivitetStatus: {
+              kode: 'SN',
+              kodeverk: 'AKTIVITET_STATUS',
+            },
+            beregningsperiodeFom: '2016-01-01',
+            beregningsperiodeTom: '2018-12-31',
+            beregnetPrAar: 0,
+            fastsattForrigePrAar: null,
+            overstyrtPrAar: 21167,
+            bruttoPrAar: 21167,
+            avkortetPrAar: 21167,
+            redusertPrAar: 21167,
+            erTidsbegrensetArbeidsforhold: null,
+            erNyIArbeidslivet: false,
+            lonnsendringIBeregningsperioden: null,
+            andelsnr: 2,
+            besteberegningPrAar: null,
+            inntektskategori: {
+              kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+              kodeverk: 'INNTEKTSKATEGORI',
+            },
+            arbeidsforhold: {
+              arbeidsgiverNavn: null,
+              arbeidsgiverId: null,
+              startdato: null,
+              opphoersdato: null,
+              arbeidsforholdId: null,
+              eksternArbeidsforholdId: null,
+              arbeidsforholdType: {
+                kode: 'NÆRING',
+                kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+              },
+              aktørId: null,
+              refusjonPrAar: null,
+              belopFraInntektsmeldingPrMnd: null,
+              organisasjonstype: null,
+              naturalytelseBortfaltPrÅr: null,
+              naturalytelseTilkommetPrÅr: null,
+            },
+            fastsattAvSaksbehandler: false,
+            lagtTilAvSaksbehandler: false,
+            belopPrMndEtterAOrdningen: null,
+            belopPrAarEtterAOrdningen: null,
+            dagsats: 81,
+            originalDagsatsFraTilstøtendeYtelse: null,
+            fordeltPrAar: null,
+            erTilkommetAndel: false,
+            skalFastsetteGrunnlag: true,
+            pgiSnitt: 100229,
+            pgiVerdier: [
+              {
+                beløp: 238029,
+                årstall: 2018,
+              },
+              {
+                beløp: 49051,
+                årstall: 2017,
+              },
+              {
+                beløp: 13606,
+                årstall: 2016,
+              },
+            ],
+            næringer: [
+              {
+                utenlandskvirksomhetsnavn: null,
+                orgnr: '918985301',
+                erVarigEndret: false,
+                erNyoppstartet: true,
+                virksomhetType: {
+                  kode: 'ANNEN',
+                  kodeverk: 'VIRKSOMHET_TYPE',
+                },
+                begrunnelse: null,
+                endringsdato: null,
+                oppstartsdato: null,
+                regnskapsførerNavn: null,
+                regnskapsførerTlf: null,
+                kanRegnskapsførerKontaktes: false,
+                erNyIArbeidslivet: true,
+                oppgittInntekt: 21167,
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    sammenligningsgrunnlag: {
+      sammenligningsgrunnlagFom: '2017-05-01',
+      sammenligningsgrunnlagTom: '2017-05-31',
+      rapportertPrAar: 409836.2,
+      avvikPromille: 3089,
+      avvikProsent: 308.9,
+      sammenligningsgrunnlagType: {
+        kode: 'SAMMENLIGNING_ATFL_SN',
+        kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
+      },
+      differanseBeregnet: -309607.2,
+    },
+    sammenligningsgrunnlagPrStatus: [
+      {
+        sammenligningsgrunnlagFom: '2017-05-01',
+        sammenligningsgrunnlagTom: '2017-05-31',
+        rapportertPrAar: 409836.2,
+        avvikPromille: 3089,
+        avvikProsent: 308.9,
+        sammenligningsgrunnlagType: {
+          kode: 'SAMMENLIGNING_ATFL_SN',
+          kodeverk: 'SAMMENLIGNINGSGRUNNLAG_TYPE',
+        },
+        differanseBeregnet: -309607.2,
+      },
+    ],
+    ledetekstBrutto: 'Brutto beregningsgrunnlag',
+    ledetekstAvkortet: 'Avkortet beregningsgrunnlag (6G=599148)',
+    ledetekstRedusert: 'Redusert beregningsgrunnlag (100%)',
+    halvG: 49929,
+    grunnbeløp: 99858,
+    faktaOmBeregning: {
+      kortvarigeArbeidsforhold: null,
+      frilansAndel: null,
+      kunYtelse: null,
+      faktaOmBeregningTilfeller: [
+        {
+          kode: 'VURDER_SN_NY_I_ARBEIDSLIVET',
+          kodeverk: 'FAKTA_OM_BEREGNING_TILFELLE',
+        },
+      ],
+      arbeidstakerOgFrilanserISammeOrganisasjonListe: null,
+      arbeidsforholdMedLønnsendringUtenIM: null,
+      besteberegningAndeler: null,
+      vurderMottarYtelse: null,
+      avklarAktiviteter: {
+        aktiviteterTomDatoMapping: [
+          {
+            tom: '2019-12-17',
+            aktiviteter: [
+              {
+                arbeidsgiverNavn: null,
+                arbeidsgiverId: null,
+                eksternArbeidsforholdId: null,
+                fom: '2017-05-11',
+                tom: '9999-12-31',
+                arbeidsforholdId: null,
+                arbeidsforholdType: {
+                  kode: 'NÆRING',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                aktørIdString: null,
+                skalBrukes: null,
+              },
+              {
+                arbeidsgiverNavn: 'NORD-ODAL SYKEHJEM',
+                arbeidsgiverId: '974604914',
+                eksternArbeidsforholdId: null,
+                fom: '2018-05-01',
+                tom: '9999-12-31',
+                arbeidsforholdId: null,
+                arbeidsforholdType: {
+                  kode: 'ARBEID',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                aktørIdString: null,
+                skalBrukes: null,
+              },
+              {
+                arbeidsgiverNavn: null,
+                arbeidsgiverId: null,
+                eksternArbeidsforholdId: null,
+                fom: '2019-11-04',
+                tom: '2019-12-16',
+                arbeidsforholdId: null,
+                arbeidsforholdType: {
+                  kode: 'SYKEPENGER',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                aktørIdString: null,
+                skalBrukes: null,
+              },
+            ],
+          },
+          {
+            tom: '2019-12-02',
+            aktiviteter: [
+              {
+                arbeidsgiverNavn: 'LIA BARNEHAGE SA',
+                arbeidsgiverId: '972228311',
+                eksternArbeidsforholdId: null,
+                fom: '2017-11-01',
+                tom: '2019-12-01',
+                arbeidsforholdId: null,
+                arbeidsforholdType: {
+                  kode: 'ARBEID',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                aktørIdString: null,
+                skalBrukes: null,
+              },
+            ],
+          },
+        ],
+      },
+      vurderBesteberegning: null,
+      andelerForFaktaOmBeregning: [
+        {
+          belopReadOnly: 32389.1,
+          fastsattBelop: null,
+          inntektskategori: {
+            kode: 'ARBEIDSTAKER',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
+          aktivitetStatus: {
+            kode: 'AT',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          refusjonskrav: 0,
+          visningsnavn: 'NORD-ODAL SYKEHJEM (974604914)',
+          arbeidsforhold: {
+            arbeidsgiverNavn: 'NORD-ODAL SYKEHJEM',
+            arbeidsgiverId: '974604914',
+            startdato: '2018-05-01',
+            opphoersdato: null,
+            arbeidsforholdId: null,
+            eksternArbeidsforholdId: null,
+            arbeidsforholdType: {
+              kode: 'ARBEID',
+              kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+            },
+            aktørId: null,
+            refusjonPrAar: null,
+            belopFraInntektsmeldingPrMnd: 32389.1,
+            organisasjonstype: {
+              kode: 'VIRKSOMHET',
+              kodeverk: 'ORGANISASJONSTYPE',
+            },
+            naturalytelseBortfaltPrÅr: null,
+            naturalytelseTilkommetPrÅr: null,
+          },
+          andelsnr: 1,
+          skalKunneEndreAktivitet: false,
+          lagtTilAvSaksbehandler: false,
+        },
+        {
+          belopReadOnly: null,
+          fastsattBelop: null,
+          inntektskategori: {
+            kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+            kodeverk: 'INNTEKTSKATEGORI',
+          },
+          aktivitetStatus: {
+            kode: 'SN',
+            kodeverk: 'AKTIVITET_STATUS',
+          },
+          refusjonskrav: null,
+          visningsnavn: 'Næring',
+          arbeidsforhold: {
+            arbeidsgiverNavn: null,
+            arbeidsgiverId: null,
+            startdato: null,
+            opphoersdato: null,
+            arbeidsforholdId: null,
+            eksternArbeidsforholdId: null,
+            arbeidsforholdType: {
+              kode: 'NÆRING',
+              kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+            },
+            aktørId: null,
+            refusjonPrAar: null,
+            belopFraInntektsmeldingPrMnd: null,
+            organisasjonstype: null,
+            naturalytelseBortfaltPrÅr: null,
+            naturalytelseTilkommetPrÅr: null,
+          },
+          andelsnr: 2,
+          skalKunneEndreAktivitet: false,
+          lagtTilAvSaksbehandler: false,
+        },
+      ],
+      vurderMilitaer: {
+        harMilitaer: false,
+      },
+      refusjonskravSomKommerForSentListe: null,
+    },
+    andelerMedGraderingUtenBG: null,
+    hjemmel: {
+      kode: 'F_14_7_8_41',
+      kodeverk: 'BG_HJEMMEL',
+    },
+    faktaOmFordeling: {
+      fordelBeregningsgrunnlag: {
+        fordelBeregningsgrunnlagPerioder: [
+          {
+            fom: '2019-12-17',
+            tom: null,
+            fordelBeregningsgrunnlagAndeler: [
+              {
+                fordelingForrigeBehandlingPrAar: 72192,
+                refusjonskravPrAar: 0,
+                fordeltPrAar: null,
+                belopFraInntektsmeldingPrAar: 388669,
+                refusjonskravFraInntektsmeldingPrAar: 0,
+                nyttArbeidsforhold: false,
+                arbeidsforholdType: {
+                  kode: 'ARBEID',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                andelsnr: 1,
+                arbeidsforhold: {
+                  arbeidsgiverNavn: 'NORD-ODAL SYKEHJEM',
+                  arbeidsgiverId: '974604914',
+                  startdato: '2018-05-01',
+                  opphoersdato: null,
+                  arbeidsforholdId: null,
+                  eksternArbeidsforholdId: null,
+                  arbeidsforholdType: {
+                    kode: 'ARBEID',
+                    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                  },
+                  aktørId: null,
+                  refusjonPrAar: 0,
+                  belopFraInntektsmeldingPrMnd: null,
+                  organisasjonstype: {
+                    kode: 'VIRKSOMHET',
+                    kodeverk: 'ORGANISASJONSTYPE',
+                  },
+                  naturalytelseBortfaltPrÅr: null,
+                  naturalytelseTilkommetPrÅr: null,
+                },
+                inntektskategori: {
+                  kode: 'ARBEIDSTAKER',
+                  kodeverk: 'INNTEKTSKATEGORI',
+                },
+                aktivitetStatus: {
+                  kode: 'AT',
+                  kodeverk: 'AKTIVITET_STATUS',
+                },
+                lagtTilAvSaksbehandler: false,
+                fastsattAvSaksbehandler: false,
+                andelIArbeid: [
+                  0,
+                ],
+              },
+              {
+                fordelingForrigeBehandlingPrAar: 28032,
+                refusjonskravPrAar: 0,
+                fordeltPrAar: null,
+                belopFraInntektsmeldingPrAar: null,
+                refusjonskravFraInntektsmeldingPrAar: null,
+                nyttArbeidsforhold: false,
+                arbeidsforholdType: {
+                  kode: 'NÆRING',
+                  kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                },
+                andelsnr: 2,
+                arbeidsforhold: {
+                  arbeidsgiverNavn: null,
+                  arbeidsgiverId: null,
+                  startdato: null,
+                  opphoersdato: null,
+                  arbeidsforholdId: null,
+                  eksternArbeidsforholdId: null,
+                  arbeidsforholdType: {
+                    kode: 'NÆRING',
+                    kodeverk: 'OPPTJENING_AKTIVITET_TYPE',
+                  },
+                  aktørId: null,
+                  refusjonPrAar: null,
+                  belopFraInntektsmeldingPrMnd: null,
+                  organisasjonstype: null,
+                  naturalytelseBortfaltPrÅr: null,
+                  naturalytelseTilkommetPrÅr: null,
+                },
+                inntektskategori: {
+                  kode: 'SELVSTENDIG_NÆRINGSDRIVENDE',
+                  kodeverk: 'INNTEKTSKATEGORI',
+                },
+                aktivitetStatus: {
+                  kode: 'SN',
+                  kodeverk: 'AKTIVITET_STATUS',
+                },
+                lagtTilAvSaksbehandler: false,
+                fastsattAvSaksbehandler: false,
+                andelIArbeid: [
+                  0,
+                ],
+              },
+            ],
+            harPeriodeAarsakGraderingEllerRefusjon: false,
+            skalKunneEndreRefusjon: false,
+          },
+        ],
+        arbeidsforholdTilFordeling: [],
+      },
+    },
+    årsinntektVisningstall: 100229,
+    dekningsgrad: 100,
+  };
+
+  const aksjonspunkt = lagAPMedKode(aksjonspunktCodes.VURDER_VARIG_ENDRET_ELLER_NYOPPSTARTET_NAERING_SELVSTENDIG_NAERINGSDRIVENDE);
+  aksjonspunkt[0].status.kode = 'UTFO';
+  aksjonspunkt[0].endretAv = 'B123456';
+  aksjonspunkt[0].endretTidspunkt = '2020-02-05';
+  aksjonspunkt[0].begrunnelse = 'Denne endret jeg gitt';
+  return (
+    <BeregningsgrunnlagProsessIndex
+      behandling={behandling}
+      beregningsgrunnlag={bg}
+      aksjonspunkter={aksjonspunkt}
+      submitCallback={action('button-click')}
+      isReadOnly
+      readOnlySubmitButton={false}
+      isAksjonspunktOpen={false}
+      vilkar={vilkarMedUtfall(vilkarUtfallType.OPPFYLT)}
+      alleKodeverk={alleKodeverk}
+      featureToggles={togglesFalse}
+    />
+  );
+};

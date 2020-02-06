@@ -59,7 +59,6 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
     radioLabel1 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.IkkeVarigEndring" />);
     radioLabel2 = (<FormattedMessage id="Beregningsgrunnlag.FastsettSelvstendigNaeringForm.VarigEndring" />);
   }
-
   return (
     <>
       {!readOnly && (
@@ -134,7 +133,7 @@ export const VurderVarigEndretEllerNyoppstartetSN2 = ({
             maxLength={1500}
             readOnly={readOnly}
             placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-            endretTekst={endretTekst}
+            endrettekst={endretTekst}
           />
         </Column>
       </Row>

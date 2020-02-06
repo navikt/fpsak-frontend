@@ -66,10 +66,12 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
-      if (skalFastsetteGrunnlag) {
-        inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
+      // inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
+
+      if (skalFastsetteGrunnlag && (andel.overstyrtPrAar && andel.overstyrtPrAar !== undefined)) {
+        inntekt = andel && (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) ? andel.overstyrtPrAar : undefined;
       } else {
-        inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
+        inntekt = andel && (andel.bruttoPrAar || andel.bruttoPrAar === 0) ? andel.bruttoPrAar : undefined;
       }
       break;
     default:
@@ -108,10 +110,14 @@ const settVisningsRaderForATSN = (periode, rowsAndeler, rowsForklaringer, vilkar
     rowsAndeler.push(snElement);
     return;
   }
-  if (hentVerdiFraAndel(atElement) > hentVerdiFraAndel(snElement)) {
-    rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN" />);
-    rowsAndeler.push(atElement);
-    return;
+  if (!harAksjonspunkter) {
+    if (hentVerdiFraAndel(atElement) > hentVerdiFraAndel(snElement)) {
+      rowsForklaringer.push(<FormattedMessage
+        id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringAToverstigerSN"
+      />);
+      rowsAndeler.push(atElement);
+      return;
+    }
   }
   rowsAndeler.push(atElement);
   rowsAndeler.push(snElement);
