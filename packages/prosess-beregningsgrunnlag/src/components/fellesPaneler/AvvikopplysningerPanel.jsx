@@ -66,11 +66,9 @@ const lagRelevantePaneler = (
           />
         )
       }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
+      {relevanteStatuser.isFrilanser && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isFrilanser && (
           <AvviksopplysningerFL
@@ -80,20 +78,19 @@ const lagRelevantePaneler = (
           />
         )
       }
-      {
-        relevanteStatuser.isKombinasjonsstatus && (
-          <VerticalSpacer sixteenPx />
-        )
-      }
-      {
-        relevanteStatuser.isSelvstendigNaeringsdrivende && (
-          <AvviksopplysningerSN
-            alleAndelerIForstePeriode={alleAndelerIForstePeriode}
-            harAksjonspunkter={harAksjonspunkter}
-            sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
-          />
-        )
-      }
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && relevanteStatuser.isKombinasjonsstatus && (
+      <VerticalSpacer sixteenPx />
+      )}
+      {relevanteStatuser.isSelvstendigNaeringsdrivende && (
+      <AvviksopplysningerSN
+        alleAndelerIForstePeriode={alleAndelerIForstePeriode}
+        harAksjonspunkter={harAksjonspunkter}
+        sammenligningsgrunnlagPrStatus={sammenligningsgrunnlagPrStatus}
+      />
+      )}
+      {relevanteStatuser.isAAP && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isAAP && (
           <Row>
@@ -105,6 +102,9 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
+      {relevanteStatuser.isDagpenger && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isDagpenger && (
           <Row>
@@ -116,6 +116,9 @@ const lagRelevantePaneler = (
           </Row>
         )
       }
+      {relevanteStatuser.isMilitaer && relevanteStatuser.isKombinasjonsstatus && (
+        <VerticalSpacer sixteenPx />
+      )}
       {
         relevanteStatuser.isMilitaer && (
           <Row>
