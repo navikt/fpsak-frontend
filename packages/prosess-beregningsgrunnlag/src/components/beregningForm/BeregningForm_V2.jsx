@@ -258,17 +258,16 @@ export const BeregningFormImpl2 = ({
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
         && (
-        <div className={beregningStyles.aksjonsPunktHjelpeTekst}>
-          <VerticalSpacer eightPx />
-          { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
-        </div>
+          <>
+            <VerticalSpacer eightPx />
+            { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
+          </>
         )}
       <Row>
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Beregning" />
           </Undertittel>
-          <AvsnittSkiller luftOver luftUnder leftPanel />
           <SkjeringspunktOgStatusPanel2
             readOnly={readOnly}
             gjeldendeAksjonspunkter={gjeldendeAksjonspunkter}
@@ -298,6 +297,9 @@ export const BeregningFormImpl2 = ({
           )}
         </Column>
         <Column xs="12" md="6">
+          <div className={beregningStyles.paragrafSkiller}>
+            <AvsnittSkiller luftOver luftUnder dividerParagraf />
+          </div>
           <Undertittel className={beregningStyles.panelRight}>
             <FormattedMessage id="Beregningsgrunnlag.Title.Fastsettelse" />
           </Undertittel>

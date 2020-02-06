@@ -110,10 +110,10 @@ const AksjonspunktBehandler = ({
   if (!aksjonspunkter || aksjonspunkter.length === 0) {
     return null;
   }
-
+  // TODO skill ut submitknappen siden den brukes likt begge steder
   if (!relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <div className={styles.aksjonspunktBehandlerContainer}>
+      <div className={readOnly ? '' : styles.aksjonspunktBehandlerContainer}>
         <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
           <Row>
             <Column xs="12">
@@ -188,7 +188,7 @@ const AksjonspunktBehandler = ({
   }
   if (relevanteStatuser.isSelvstendigNaeringsdrivende) {
     return (
-      <div className={styles.aksjonspunktBehandlerContainer}>
+      <div className={readOnly ? '' : styles.aksjonspunktBehandlerContainer}>
         <Panel className={readOnly ? beregningStyles.panelRight : styles.aksjonspunktBehandlerBorder}>
           <Row>
             <Column xs="12">

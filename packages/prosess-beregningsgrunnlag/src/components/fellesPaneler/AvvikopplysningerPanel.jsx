@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexContainer } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerSN from '../selvstendigNaeringsdrivende/AvvikopplysningerSN';
 import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
@@ -54,7 +55,7 @@ const lagRelevantePaneler = (
     return (<Normaltekst><FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.Besteberegning" /></Normaltekst>);
   }
   return (
-    <>
+    <FlexContainer>
       {
         relevanteStatuser.isArbeidstaker && (
           <AvviksopplysningerAT
@@ -125,7 +126,7 @@ const lagRelevantePaneler = (
           </Row>
         )
 }
-    </>
+    </FlexContainer>
   );
 };
 

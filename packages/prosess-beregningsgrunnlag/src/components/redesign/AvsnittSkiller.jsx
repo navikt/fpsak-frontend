@@ -12,6 +12,7 @@ const AvsnittSkiller = ({
   luftOver,
   leftPanel,
   rightPanel,
+  dividerParagraf,
 }) => (
   <>
     {luftOver && (
@@ -26,7 +27,7 @@ const AvsnittSkiller = ({
           },
         )}
         >
-          <div className={styles.divider} />
+          <div className={dividerParagraf ? styles.dividerParagraf : styles.divider} />
         </div>
       </Column>
     </Row>
@@ -40,6 +41,7 @@ AvsnittSkiller.propTypes = {
   luftOver: PropTypes.bool,
   leftPanel: PropTypes.bool,
   rightPanel: PropTypes.bool,
+  dividerParagraf: PropTypes.bool,
 
 };
 AvsnittSkiller.defaultProps = {
@@ -47,5 +49,6 @@ AvsnittSkiller.defaultProps = {
   luftOver: false,
   leftPanel: false,
   rightPanel: false,
+  dividerParagraf: false,
 };
 export default AvsnittSkiller;

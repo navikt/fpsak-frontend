@@ -9,7 +9,6 @@
 
 .beregningForm {
   background-color: #fff;
-  padding: 20px 0 20px 0;
 }
 
 .aksjonsPunktHjelpeTekst {
@@ -18,13 +17,17 @@
 
 .panelLeft {
   padding: 0 40px 0 0px;
+
+  @media (max-width: 992px) {
+    padding: 0;
+  }
 }
 
 .panelRight {
   padding: 0 0px 0 40px;
 
   @media (max-width: 992px) {
-    padding: 0 40px 0 20px;
+    padding: 0;
   }
 }
 
@@ -33,7 +36,7 @@
 }
 
 .rightAlignElement {
-  padding-right: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -45,7 +48,7 @@
 }
 
 .rightAlignElementNoWrap {
-  padding: 0;
+  padding-left: 0;
 
   && p {
     text-align: right;
@@ -115,4 +118,10 @@
 
 .noPaddingRight {
   padding-right: 0;
+}
+.paragrafSkiller {
+  display: none;
+  @media (max-width: 990px) {
+    display: inherit;
+  }
 }

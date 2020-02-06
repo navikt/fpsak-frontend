@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { Column, Row } from 'nav-frontend-grid';
+import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-
+import { Column } from 'nav-frontend-grid';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
@@ -36,7 +36,7 @@ const AvviksopplysningerAT = ({
 
   if (kombinasjonsstatusATSN || kombinasjonsstatusATFLSN) {
     return (
-      <Row>
+      <FlexRow>
         <Column xs="12">
           <Normaltekst>
             {kombinasjonsstatusATSN && (
@@ -47,7 +47,7 @@ const AvviksopplysningerAT = ({
             )}
           </Normaltekst>
         </Column>
-      </Row>
+      </FlexRow>
     );
   }
 
@@ -55,38 +55,40 @@ const AvviksopplysningerAT = ({
   if (sammenligningsgrunnlagSumAT) {
     return (
       <>
-        <Row>
-          <Column className={styles.colLable}>
+        <FlexRow>
+          <FlexColumn className={styles.colLable}>
             <Normaltekst>
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
             </Normaltekst>
-          </Column>
+          </FlexColumn>
 
-          <Column className={styles.colValue}>
+          <FlexColumn className={styles.colValue}>
             <Normaltekst>
               {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
             </Normaltekst>
-          </Column>
-        </Row>
+          </FlexColumn>
+          <FlexColumn className={styles.colAvvik} />
+        </FlexRow>
 
-        <Row>
-          <Column className={styles.colLable}>
+        <FlexRow>
+          <FlexColumn className={styles.colLable}>
             <Normaltekst>
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
             </Normaltekst>
-          </Column>
+          </FlexColumn>
 
-          <Column className={styles.colValue}>
+          <FlexColumn className={styles.colValue}>
             <Normaltekst>
               {formatCurrencyNoKr(sammenligningsgrunnlagSumAT)}
             </Normaltekst>
-          </Column>
-        </Row>
-        <Row>
-          <Column className={styles.colLine} />
-        </Row>
-        <Row>
-          <Column className={styles.colLable}>
+          </FlexColumn>
+          <FlexColumn className={styles.colAvvik} />
+        </FlexRow>
+        <FlexRow className={styles.avvikLinjeRad}>
+          <FlexColumn className={`${styles.colLine} ${styles.colBorderTop}`} />
+        </FlexRow>
+        <FlexRow>
+          <FlexColumn className={styles.colLable}>
             <Normaltekst className={beregningStyles.semiBoldText}>
               {!relevanteStatuser.isKombinasjonsstatus && (
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
@@ -95,19 +97,19 @@ const AvviksopplysningerAT = ({
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
               )}
             </Normaltekst>
-          </Column>
-          <Column className={styles.colValue}>
+          </FlexColumn>
+          <FlexColumn className={styles.colValue}>
             <Normaltekst>
               {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
                 : differanseBeregnet)}
             </Normaltekst>
-          </Column>
-          <Column className={styles.colAvvik}>
+          </FlexColumn>
+          <FlexColumn className={styles.colAvvik}>
             <Normaltekst className={`${avvikAT > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
               <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikATRounded }} />
             </Normaltekst>
-          </Column>
-        </Row>
+          </FlexColumn>
+        </FlexRow>
       </>
     );
   }

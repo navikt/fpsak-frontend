@@ -106,7 +106,7 @@ const lagRad = (relevanteStatuser, atAndel, flAndel, maksVerdi, aarMaaned) => {
   return (
     <React.Fragment key={`${dato}wrapper`}>
       { maaned === '01' && (
-        <Row>
+        <Row className={styles.aarDeviderRow}>
           <Column xs={relevanteStatuser.isArbeidstaker && relevanteStatuser.isFrilanser ? '12' : '10'} className={styles.aarDevider} />
         </Row>
       )}

@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
-import { Column, Row } from 'nav-frontend-grid';
+import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { Column } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
 
@@ -16,13 +17,13 @@ const AvviksopplysningerFL = ({
     && relevanteStatuser.isFrilanser;
   if (kombinasjonsstatusFNSN) {
     return (
-      <Row>
+      <FlexRow>
         <Column xs="12">
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.FL.KobinasjonsStatusFLSN" />
           </Normaltekst>
         </Column>
-      </Row>
+      </FlexRow>
     );
   }
   const sammenligningsGrunnlagFL = sammenligningsgrunnlagPrStatus
@@ -37,41 +38,41 @@ const AvviksopplysningerFL = ({
   const { differanseBeregnet } = sammenligningsGrunnlagFL;
   return (
     <>
-      <Row>
-        <Column className={styles.colLable}>
+      <FlexRow>
+        <FlexColumn className={styles.colLable}>
           <Normaltekst>
             <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Frilans" />
           </Normaltekst>
-        </Column>
+        </FlexColumn>
 
-        <Column className={styles.colValue}>
+        <FlexColumn className={styles.colValue}>
           <Normaltekst>
             {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
           </Normaltekst>
-        </Column>
-      </Row>
+        </FlexColumn>
+        <FlexColumn className={styles.colAvvik} />
+      </FlexRow>
       {sammenligningsgrunnlagSumFL && (
         <>
-          <Row>
-            <Column className={styles.colLable}>
+          <FlexRow>
+            <FlexColumn className={styles.colLable}>
               <Normaltekst>
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Frilans" />
               </Normaltekst>
-            </Column>
+            </FlexColumn>
 
-            <Column className={styles.colValue}>
+            <FlexColumn className={styles.colValue}>
               <Normaltekst>
                 {formatCurrencyNoKr(sammenligningsgrunnlagSumFL)}
               </Normaltekst>
-            </Column>
-            <Column xs="5" />
-
-          </Row>
-          <Row>
-            <Column xs="7" className={styles.colLine} />
-          </Row>
-          <Row>
-            <Column className={styles.colLable}>
+            </FlexColumn>
+            <FlexColumn className={styles.colAvvik} />
+          </FlexRow>
+          <FlexRow className={styles.avvikLinjeRad}>
+            <FlexColumn className={`${styles.colLine} ${styles.colBorderTop}`} />
+          </FlexRow>
+          <FlexRow>
+            <FlexColumn className={styles.colLable}>
               <Normaltekst className={beregningStyles.semiBoldText}>
                 {!relevanteStatuser.isKombinasjonsstatus && (
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
@@ -80,20 +81,20 @@ const AvviksopplysningerFL = ({
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.FL" />
                 )}
               </Normaltekst>
-            </Column>
-            <Column className={styles.colValue}>
+            </FlexColumn>
+            <FlexColumn className={styles.colValue}>
               <Normaltekst>
                 {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
                   : differanseBeregnet)}
               </Normaltekst>
-            </Column>
-            <Column className={styles.colAvvik}>
+            </FlexColumn>
+            <FlexColumn className={styles.colAvvik}>
 
               <Normaltekst className={`${avvikFL > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
                 <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikRoundedFL }} />
               </Normaltekst>
-            </Column>
-          </Row>
+            </FlexColumn>
+          </FlexRow>
         </>
       )}
     </>

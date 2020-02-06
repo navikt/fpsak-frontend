@@ -1,26 +1,33 @@
 @import '@{coreModulePath}nav-frontend-core/less/_variabler';
 // dette stylsheetet brukes også av AvvikopplysningerAT, AvvikopplysningerTB ,AvvikopplysningerFL, AvvikopplysningerSN
 .colLable {
-  float: left;
   min-height: 1px;
   padding-left: 8px;
   padding-right: 8px;
   position: relative;
   width: 15em;
+}
 
-  @media (min-width: 992px) and (max-width: 1450px) {
-    width: 13em;
-  }
+.colBeregnetAvvikTekst {
+  min-height: 1px;
+  padding-left: 0px;
+  padding-right: 8px;
+  position: relative;
+  min-width: 30ch;
+
 }
 
 .colValue {
-  float: left;
   min-height: 1px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-left: 0px;
+  padding-right: 0px;
   position: relative;
   text-align: right;
-  width: 5em;
+  width: 9ch;
+}
+
+.colLine {
+  width: 19em;
 }
 
 .colAvvik {
@@ -28,19 +35,37 @@
   min-height: 1px;
   padding-left: 0;
   padding-right: 0;
+  margin-left: 25px;
   position: relative;
+  width: 6ch;
 }
 
-.colLine {
+.colBorderTopLeft {
   border-top: 1px inset @navGra40;
-  float: left;
   margin-left: 8px;
-  margin-right: 8px;
   margin-top: 4px;
   min-height: 8px;
-  width: 19em;
 
-  @media (min-width: 992px) and (max-width: 1450px) {
-    width: 17em;
-  }
+}
+.colBorderTop {
+  border-top: 1px inset @navGra40;
+  margin-left: 0;
+  margin-top: 4px;
+  min-height: 8px;
+  margin-right: 0;
+
+}
+.colNoBorderTop {
+
+  margin-top: 4px;
+
+
+}
+
+.beregnetLuftOver {
+  padding-top: 4px;
+}
+.avvikLinjeRad {
+  margin-left:0px;
+  margin-right:8px
 }
