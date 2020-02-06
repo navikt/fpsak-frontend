@@ -1129,4 +1129,3 @@ export const tidsbegrensetArbeidsforholdMedAvvikOrgDesign = () => {
     />
   );
 };
-
