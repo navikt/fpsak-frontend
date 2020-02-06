@@ -123,9 +123,6 @@ const transformValuesArbeidstakerUtenIM = (values, inntektVerdier, faktaOmBeregn
         if (inntektUtenFormat || inntektUtenFormat === 0) {
           listeMedFastsatteMaanedsinntekter.push({
             andelsnr: andel.andelsnr,
-            fastsatteVerdier: {
-              fastsattBeløp: removeSpacesFromNumber(inntektUtenFormat),
-            },
             fastsattBeløp: removeSpacesFromNumber(inntektUtenFormat),
           });
           fastsatteAndelsnr.push(andel.andelsnr);
