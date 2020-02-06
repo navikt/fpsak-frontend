@@ -18,6 +18,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
   behandlingId,
   behandlingVersjon,
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt,
 }) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
@@ -29,13 +30,14 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
       const underavsnitter = avsnitt.underavsnittsliste;
       const periode = `${avsnitt.fom}_${avsnitt.tom}`;
       const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some((p) => p === periode);
+      const visApen = avsnitt.avsnittstype === 'OPPSUMMERING' && fritekstOppsummeringPakrevdMenIkkeUtfylt;
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
             className={harPeriodeSomManglerObligatoriskVerdi ? styles.panelMedGulmarkering : styles.panel}
             tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
             tag="h2"
-            apen={harPeriodeSomManglerObligatoriskVerdi}
+            apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
             {underavsnitter.map((underavsnitt) => (
               <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
@@ -80,6 +82,7 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt: PropTypes.bool,
 };
 
 TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt

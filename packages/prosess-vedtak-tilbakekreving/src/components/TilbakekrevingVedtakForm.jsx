@@ -62,6 +62,7 @@ export const TilbakekrevingVedtakFormImpl = ({
   behandlingVersjon,
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
   erRevurderingTilbakekrevingKlage,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt,
   ...formProps
 }) => (
   <form onSubmit={formProps.handleSubmit}>
@@ -73,6 +74,7 @@ export const TilbakekrevingVedtakFormImpl = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
       perioderSomIkkeHarUtfyltObligatoriskVerdi={perioderSomIkkeHarUtfyltObligatoriskVerdi}
+      fritekstOppsummeringPakrevdMenIkkeUtfylt={fritekstOppsummeringPakrevdMenIkkeUtfylt}
     />
     <VerticalSpacer twentyPx />
     <FlexContainer fluid>
@@ -84,7 +86,7 @@ export const TilbakekrevingVedtakFormImpl = ({
             behandlingId={behandlingId}
             behandlingVersjon={behandlingVersjon}
             isReadOnly={readOnly}
-            isSubmittable={perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0}
+            isSubmittable={perioderSomIkkeHarUtfyltObligatoriskVerdi.length === 0 && !fritekstOppsummeringPakrevdMenIkkeUtfylt}
             isBehandlingFormSubmitting={isBehandlingFormSubmitting}
             isBehandlingFormDirty={isBehandlingFormDirty}
             hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
@@ -130,6 +132,7 @@ TilbakekrevingVedtakFormImpl.propTypes = {
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
   erRevurderingTilbakekrevingKlage: PropTypes.bool,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt: PropTypes.bool,
 };
 
 const transformValues = (values, apKode) => [{
@@ -155,6 +158,23 @@ const finnPerioderSomIkkeHarVerdiForObligatoriskFelt = createSelector([
   return acc;
 }, []));
 
+const harFritekstOppsummeringPakrevdMenIkkeUtfylt = (vedtaksbrevAvsnitt) => {
+  let avsnitt;
+  for (let k = 0; k < vedtaksbrevAvsnitt.length; k += 1) {
+    avsnitt = vedtaksbrevAvsnitt[k];
+    if (avsnitt.avsnittstype === UNDERAVSNITT_TYPE.OPPSUMMERING) {
+      let underAvsnitt;
+      const { underavsnittsliste } = avsnitt;
+      for (let i = 0; i < underavsnittsliste.length; i += 1) {
+        underAvsnitt = underavsnittsliste[i];
+        if (underAvsnitt.fritekstPåkrevet && !underAvsnitt.fritekst) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+};
 
 const mapStateToPropsFactory = (initialState, initialOwnProps) => {
   const submitCallback = (values) => initialOwnProps.submitCallback(transformValues(values, initialOwnProps.aksjonspunktKodeForeslaVedtak));
@@ -162,12 +182,14 @@ const mapStateToPropsFactory = (initialState, initialOwnProps) => {
     const vedtaksbrevAvsnitt = ownProps.avsnittsliste;
     const initialValues = TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues(vedtaksbrevAvsnitt);
     const formVerdier = getBehandlingFormValues(formName, ownProps.behandlingId, ownProps.behandlingVersjon)(state) || {};
+    const fritekstOppsummeringPakrevdMenIkkeUtfylt = harFritekstOppsummeringPakrevdMenIkkeUtfylt(vedtaksbrevAvsnitt);
     return {
       initialValues,
       formVerdier,
       vedtaksbrevAvsnitt,
       onSubmit: submitCallback,
       perioderSomIkkeHarUtfyltObligatoriskVerdi: finnPerioderSomIkkeHarVerdiForObligatoriskFelt({ vedtaksbrevAvsnitt, formVerdier }),
+      fritekstOppsummeringPakrevdMenIkkeUtfylt,
     };
   };
 };
