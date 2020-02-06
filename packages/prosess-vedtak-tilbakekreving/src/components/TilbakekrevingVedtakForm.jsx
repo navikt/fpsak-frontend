@@ -162,6 +162,7 @@ const harFritekstOppsummeringPakrevdMenIkkeUtfylt = (vedtaksbrevAvsnitt) => {
   let avsnitt;
   for (let k = 0; k < vedtaksbrevAvsnitt.length; k += 1) {
     avsnitt = vedtaksbrevAvsnitt[k];
+
     if (avsnitt.avsnittstype === UNDERAVSNITT_TYPE.OPPSUMMERING) {
       let underAvsnitt;
       const { underavsnittsliste } = avsnitt;
