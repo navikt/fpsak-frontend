@@ -66,8 +66,6 @@ const opprettAndelElement = (periode, andelType, vilkarStatus) => {
       break;
     case aktivitetStatus.SELVSTENDIG_NAERINGSDRIVENDE:
       skalFastsetteGrunnlag = andel.skalFastsetteGrunnlag;
-      // inntekt = andel && (andel.pgiSnitt || andel.pgiSnitt === 0) ? andel.pgiSnitt : undefined;
-
       if (skalFastsetteGrunnlag && (andel.overstyrtPrAar && andel.overstyrtPrAar !== undefined)) {
         inntekt = andel && (andel.overstyrtPrAar || andel.overstyrtPrAar === 0) ? andel.overstyrtPrAar : undefined;
       } else {
