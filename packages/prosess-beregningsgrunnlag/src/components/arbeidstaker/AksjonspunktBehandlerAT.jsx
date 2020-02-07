@@ -76,6 +76,7 @@ AksjonspunktBehandlerAT.propTypes = {
 };
 
 AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndelerIForstePeriode) => {
+  debugger;
   let inntektPrAndelList = null;
   let frilansInntekt = null;
   if (relevanteStatuser.isArbeidstaker) {
@@ -100,6 +101,7 @@ AksjonspunktBehandlerAT.transformValues = (values, relevanteStatuser, alleAndele
 };
 
 AksjonspunktBehandlerAT.transformValuesForAT = (values, alleAndelerIForstePeriode) => {
+  debugger;
   let inntektPrAndelList = null;
   inntektPrAndelList = finnAndelerSomSkalVisesAT(alleAndelerIForstePeriode)
     .map(({ andelsnr }, index) => {

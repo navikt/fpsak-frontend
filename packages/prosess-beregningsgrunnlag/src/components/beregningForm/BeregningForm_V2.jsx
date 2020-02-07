@@ -167,6 +167,7 @@ export const transformValues = (values, relevanteStatuser, alleAndelerIForstePer
     begrunnelse: values[TEKSTFELTNAVN_BEGRUNN_DEKNINGSGRAD_ENDRING],
     dekningsgrad: values[RADIO_GROUP_FIELD_DEKNINGSGRAD_NAVN],
   };
+  debugger;
   if (harAksjonspunkt(VURDER_DEKNINGSGRAD, gjeldendeAksjonspunkter)) {
     aksjonspunkter.push(vurderDekningsgradAksjonspunkt);
   }

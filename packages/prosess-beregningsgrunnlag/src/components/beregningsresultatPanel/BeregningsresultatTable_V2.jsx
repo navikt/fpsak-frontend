@@ -168,7 +168,6 @@ const settVisningsRaderForDPFLSN = (periode, rowsAndeler, rowsForklaringer, vilk
     rowsForklaringer.push(<FormattedMessage id="Beregningsgrunnlag.BeregningTable.Omberegnet.ForklaringDP_FLoverstigerSN" />);
     rowsAndeler.push(flElement);
   } else {
-    // TODO: Avklar hva vi skal vise her min tolkning er kun snAndel
     rowsAndeler.push(snElement);
   }
 };
