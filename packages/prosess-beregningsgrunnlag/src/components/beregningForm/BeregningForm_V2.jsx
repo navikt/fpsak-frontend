@@ -31,8 +31,6 @@ import AvsnittSkiller from '../redesign/AvsnittSkiller';
 
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 
-// TODO Denne klassen bør refaktoreres, gjøres i https://jira.adeo.no/browse/TFP-1313
-
 // ------------------------------------------------------------------------------------------ //
 // Variables
 // ------------------------------------------------------------------------------------------ //
@@ -254,6 +252,7 @@ export const BeregningFormImpl2 = ({
   const tidsBegrensetInntekt = harPerioderMedAvsluttedeArbeidsforhold(beregningsgrunnlagPeriode);
   const harAksjonspunkter = gjeldendeAksjonspunkter && gjeldendeAksjonspunkter.length > 0;
   const alleAndelerIForstePeriode = finnAlleAndelerIFørstePeriode(beregningsgrunnlagPeriode);
+
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
       { gjeldendeAksjonspunkter
@@ -262,6 +261,7 @@ export const BeregningFormImpl2 = ({
             <VerticalSpacer eightPx />
             { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
           </>
+
         )}
       <Row>
         <Column xs="12" md="6">

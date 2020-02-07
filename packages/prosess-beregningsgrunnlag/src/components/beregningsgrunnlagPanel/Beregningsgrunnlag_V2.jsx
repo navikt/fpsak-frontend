@@ -9,6 +9,7 @@ import { removeSpacesFromNumber } from '@fpsak-frontend/utils';
 import YtelserFraInfotrygd2 from '../tilstotendeYtelser/YtelserFraInfotrygd_V2';
 import GrunnlagForAarsinntektPanelSN2 from '../selvstendigNaeringsdrivende/GrunnlagForAarsinntektPanelSN_V2';
 import TilstotendeYtelser2 from '../tilstotendeYtelser/TilstotendeYtelser_V2';
+
 import MilitaerPanel2 from '../militær/MilitaerPanel_V2';
 import AksjonspunktBehandlerTB from '../arbeidstaker/AksjonspunktBehandlerTB';
 import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -55,6 +56,7 @@ const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   return undefined;
 };
 
+
 const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjeldendeAksjonspunkter,
   relevanteStatuser,
@@ -63,7 +65,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
   gjelderBesteberegning,
   behandlingId,
   behandlingVersjon,
-
   alleKodeverk,
   sammenligningsGrunnlagInntekter,
   skjeringstidspunktDato) => (
@@ -114,7 +115,6 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
         />
       </>
     )}
-
       {(relevanteStatuser.harDagpengerEllerAAP)
       && (
         <div>
@@ -141,6 +141,7 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
+
       { relevanteStatuser.isSelvstendigNaeringsdrivende
       && (
         <>
@@ -165,9 +166,9 @@ const createRelevantePaneler = (alleAndelerIForstePeriode,
           />
         </>
       )}
-
     </div>
 );
+
 
 // ------------------------------------------------------------------------------------------ //
 // Component : BeregningsgrunnlagImpl
@@ -206,8 +207,6 @@ export const BeregningsgrunnlagImpl2 = ({
       sammenligningsGrunnlagInntekter,
       skjeringstidspunktDato,
     )
-
-
   );
 };
 
