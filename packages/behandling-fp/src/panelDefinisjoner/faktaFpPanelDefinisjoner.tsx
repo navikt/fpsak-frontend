@@ -194,7 +194,8 @@ const faktaPanelDefinisjoner = [
       aksjonspunktCodes.AVKLAR_ANNEN_FORELDER_RETT,
       aksjonspunktCodes.MANUELL_AVKLAR_FAKTA_UTTAK,
       aksjonspunktCodes.OVERSTYR_AVKLAR_FAKTA_UTTAK,
-      aksjonspunktCodes.GRADERING_PERIODE_UTEN_INNTEKT,
+      aksjonspunktCodes.AVKLAR_FAKTA_UTTAK_GRADERING_UKJENT_AKTIVITET,
+      aksjonspunktCodes.AVKLAR_FAKTA_UTTAK_GRADERING_AKTIVITET_UTEN_BEREGNINGSGRUNNLAG,
     ],
     endpoints: [
       fpBehandlingApi.UTTAK_KONTROLLER_FAKTA_PERIODER,
