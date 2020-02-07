@@ -143,7 +143,7 @@ export const NaeringsopplysningsPanel = ({
                 <FormattedMessage id={`Beregningsgrunnlag.NaeringsOpplysningsPanel.VirksomhetsType.${finnvirksomhetsTypeKode(naring)}`} />
               </EtikettLiten>
             </Column>
-            <Column xs="2" className={beregningStyles.rightAlignElementNoWrap}>
+            <Column xs="2" className={beregningStyles.colAarText}>
               {søkerHarOppgittInntekt(naring)
                 && (
                 <Normaltekst className={beregningStyles.semiBoldText}>
