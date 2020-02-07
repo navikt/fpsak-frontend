@@ -138,20 +138,6 @@ const findRelevantInntektsmeldingInfo = (inntektsmeldinger, soknadsPeriode) => {
   return relevant;
 };
 
-const inneholderUgyldigeGraderinger = (faktaArbeidsforhold, perioder) => {
-  const gradertePerioder = perioder.filter((p) => p.arbeidstidsprosent && p.arbeidstidsprosent > 0 && p.arbeidstidsprosent < 100);
-  const arbeidsgiverIdentifikatorer = gradertePerioder.reduce((indentifikatorer, p) => {
-    if (p.arbeidsgiver) {
-      indentifikatorer.push(p.arbeidsgiver.identifikator);
-    }
-    return indentifikatorer;
-  }, []);
-  const arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold = faktaArbeidsforhold
-    .filter((arb) => arb.arbeidsgiver && arbeidsgiverIdentifikatorer.includes(arb.arbeidsgiver.identifikator));
-
-  return arbeidsforholdIPlanSomIkkeFinnesIFaktaArbeidsforhold.length === 0 && gradertePerioder.length > 0;
-};
-
 export const findFamiliehendelseDato = (gjeldendeFamiliehendelse) => {
   const { termindato, avklartBarn } = gjeldendeFamiliehendelse;
 
@@ -466,15 +452,6 @@ export class UttakPerioder extends PureComponent {
               const førsteUttak = {
                 value: moment(førsteUttaksdato).format(DDMMYYYY_DATE_FORMAT),
               };
-
-              if (inneholderUgyldigeGraderinger(faktaArbeidsforhold, perioder) && ap.definisjon.kode === '5070') {
-                return (
-                  <FormattedMessage
-                    key={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}.ugyldigGradering`}
-                    id={`UttakInfoPanel.Aksjonspunkt.${ap.definisjon.kode}.ugyldigGradering`}
-                  />
-                );
-              }
 
               return (
                 <FormattedMessage
