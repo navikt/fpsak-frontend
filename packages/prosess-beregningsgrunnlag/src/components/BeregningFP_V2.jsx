@@ -17,7 +17,7 @@ import aktivitetStatus, {
 } from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 
 import BeregningForm2 from './beregningForm/BeregningForm_V2';
-import GraderingUtenBG from './gradering/GraderingUtenBG';
+import GraderingUtenBG2 from './gradering/GraderingUtenBG_V2';
 import beregningsgrunnlagBehandlingPropType from '../propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagPropType from '../propTypes/beregningsgrunnlagPropType';
 import beregningsgrunnlagAksjonspunkterPropType from '../propTypes/beregningsgrunnlagAksjonspunkterPropType';
@@ -104,7 +104,7 @@ const BeregningFP2 = ({
 
       {sokerHarGraderingPaaAndelUtenBG
           && (
-          <GraderingUtenBG
+          <GraderingUtenBG2
             submitCallback={submitCallback}
             readOnly={readOnly}
             behandlingId={behandling.id}
