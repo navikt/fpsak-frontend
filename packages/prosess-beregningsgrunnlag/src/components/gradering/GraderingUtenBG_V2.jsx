@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { FormattedHTMLMessage, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 import {
   BehandlingspunktSubmitButton,
@@ -19,9 +19,11 @@ import {
   hasValidText, maxLength, minLength, required,
 } from '@fpsak-frontend/utils';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
-import { BorderBox, Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextHTML, ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
-import behandleImageURL from '@fpsak-frontend/assets/images/advarsel.svg';
+
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
 import aksjonspunktStatus, { isAksjonspunktOpen } from '@fpsak-frontend/kodeverk/src/aksjonspunktStatus';
@@ -29,7 +31,7 @@ import beregningsgrunnlagAksjonspunkterPropType from '../../propTypes/beregnings
 
 
 import { createVisningsnavnForAktivitet } from '../util/visningsnavnHelper';
-import styles from './graderingUtenBG.less';
+import styles from './graderingUtenBG_V2.less';
 
 const maxLength1500 = maxLength(1500);
 const minLength3 = minLength(3);
@@ -59,7 +61,22 @@ const lagArbeidsgiverString = (andelerMedGraderingUtenBG, getKodeverknavn) => {
   return `${tekst} og ${sisteNavn}`;
 };
 
-export const GraderingUtenBG = ({
+const lagAksjonspunktViser = (aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn) => {
+  if (aksjonspunktTekstId === undefined || aksjonspunktTekstId === null) {
+    return undefined;
+  }
+  return (
+    <AksjonspunktHelpTextHTML>
+      <FormattedHTMLMessage
+        key="GradringAksjonspunktHP"
+        id={aksjonspunktTekstId}
+        values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG, getKodeverknavn) }}
+      />
+    </AksjonspunktHelpTextHTML>
+  );
+};
+
+export const GraderingUtenBG2 = ({
   andelerMedGraderingUtenBG,
   readOnly,
   aksjonspunkter,
@@ -79,79 +96,66 @@ export const GraderingUtenBG = ({
     : 'Beregningsgrunnlag.Gradering.AksjonspunkttekstEtForhold';
 
   return (
-    <BorderBox>
-      <form onSubmit={formProps.handleSubmit}>
-        <Element>
-          <FormattedMessage id="Beregningsgrunnlag.Gradering.Tittel" />
-        </Element>
+    <form onSubmit={formProps.handleSubmit} className={styles.graderingForm}>
+      <ElementWrapper>
+        { lagAksjonspunktViser(aksjonspunktTekstId, andelerMedGraderingUtenBG, getKodeverknavn)}
         <VerticalSpacer sixteenPx />
-        <Row>
-          <Column xs="1">
-            <Image className={styles.image} src={behandleImageURL} />
-            <div className={styles.divider} />
-          </Column>
-          <Column xs="11">
-            <Normaltekst>
-              <FormattedMessage
-                id={aksjonspunktTekstId}
-                values={{ arbeidsforholdTekst: lagArbeidsgiverString(andelerMedGraderingUtenBG, getKodeverknavn) }}
-              />
-            </Normaltekst>
-          </Column>
-        </Row>
-        <VerticalSpacer twentyPx />
-        <Row>
-          <Column xs="9">
-            <RadioGroupField
-              name={radioFieldName}
-              validate={[required]}
-              direction="vertical"
-              readOnly={readOnly}
-              isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
-            >
-              <RadioOption
-                label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingErRiktig" />}
-                value={false}
-              />
-              <RadioOption
-                label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingMåVurderes" />}
-                value
-              />
-            </RadioGroupField>
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="6">
-            <TextAreaField
-              name={begrunnelseFieldName}
-              label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
-              validate={[required, maxLength1500, minLength3, hasValidText]}
-              maxLength={1500}
-              readOnly={readOnly}
+      </ElementWrapper>
+      <Element>
+        <FormattedMessage id="Beregningsgrunnlag.Gradering.Tittel" />
+      </Element>
+      <VerticalSpacer sixteenPx />
+      <Row>
+        <Column xs="9">
+          <RadioGroupField
+            name={radioFieldName}
+            validate={[required]}
+            direction="vertical"
+            readOnly={readOnly}
+            isEdited={!isAksjonspunktOpen(aksjonspunkt.status.kode)}
+          >
+            <RadioOption
+              label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingErRiktig" />}
+              value={false}
             />
-          </Column>
-        </Row>
-        <Row>
-          <Column xs="1">
-            <VerticalSpacer eightPx />
-            <BehandlingspunktSubmitButton
-              formName={formProps.form}
-              isReadOnly={readOnly}
-              isSubmittable={!readOnly}
-              behandlingId={behandlingId}
-              behandlingVersjon={behandlingVersjon}
-              isBehandlingFormSubmitting={isBehandlingFormSubmitting}
-              isBehandlingFormDirty={isBehandlingFormDirty}
-              hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+            <RadioOption
+              label={<FormattedMessage id="Beregningsgrunnlag.Gradering.FordelingMåVurderes" />}
+              value
             />
-          </Column>
-        </Row>
-      </form>
-    </BorderBox>
+          </RadioGroupField>
+        </Column>
+      </Row>
+      <Row>
+        <Column xs="6">
+          <TextAreaField
+            name={begrunnelseFieldName}
+            label={<FormattedMessage id="Beregningsgrunnlag.Forms.Vurdering" />}
+            validate={[required, maxLength1500, minLength3, hasValidText]}
+            maxLength={1500}
+            readOnly={readOnly}
+          />
+        </Column>
+      </Row>
+      <Row>
+        <Column xs="1">
+          <VerticalSpacer eightPx />
+          <BehandlingspunktSubmitButton
+            formName={formProps.form}
+            isReadOnly={readOnly}
+            isSubmittable={!readOnly}
+            behandlingId={behandlingId}
+            behandlingVersjon={behandlingVersjon}
+            isBehandlingFormSubmitting={isBehandlingFormSubmitting}
+            isBehandlingFormDirty={isBehandlingFormDirty}
+            hasBehandlingFormErrorsOfType={hasBehandlingFormErrorsOfType}
+          />
+        </Column>
+      </Row>
+    </form>
   );
 };
 
-GraderingUtenBG.propTypes = {
+GraderingUtenBG2.propTypes = {
   readOnly: PropTypes.bool.isRequired,
   andelerMedGraderingUtenBG: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   submitCallback: PropTypes.func.isRequired,
@@ -224,4 +228,4 @@ const mapStateToPropsFactory = (initialState, ownProps) => {
 export default connect(mapStateToPropsFactory)(behandlingForm({
   form: formName,
   enableReinitialize: true,
-})(GraderingUtenBG));
+})(GraderingUtenBG2));

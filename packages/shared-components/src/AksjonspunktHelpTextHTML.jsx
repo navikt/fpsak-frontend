@@ -22,7 +22,7 @@ const AksjonspunktHelpTextHTML = ({
   if (!children || children.length === 0) {
     return null;
   }
-  const elementStyle = children.length === 1 ? styles.oneElement : styles.severalElements;
+  const elementStyle = children.length > 1 ? styles.severalElements : styles.oneElement;
   return (
     <div className={styles.container}>
       <FlexContainer>

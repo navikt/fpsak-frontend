@@ -8,7 +8,7 @@ import vilkarUtfallType from '@fpsak-frontend/kodeverk/src/vilkarUtfallType';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import BeregningFP2 from './BeregningFP_V2';
 import BeregningForm2 from './beregningForm/BeregningForm_V2';
-import GraderingUtenBG from './gradering/GraderingUtenBG';
+import GraderingUtenBG2 from './gradering/GraderingUtenBG_V2';
 
 
 const lagBeregningsgrunnlag = (ferdigstilt, beregnetPrAar, sammenligningSum, avvikPromille, gradering) => {
@@ -165,7 +165,7 @@ describe('<BeregningFP2>', () => {
       alleKodeverk={alleKodeverk}
       readOnlySubmitButton
     />);
-    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
     expect(graderingUtenBG).to.be.lengthOf(1);
   });
   it('skal teste at GraderingUtenBG ikke vises når sokerHarGraderingPaaAndelUtenBG er false', () => {
@@ -179,7 +179,7 @@ describe('<BeregningFP2>', () => {
       alleKodeverk={alleKodeverk}
       readOnlySubmitButton
     />);
-    const graderingUtenBG = wrapper.find(GraderingUtenBG);
+    const graderingUtenBG = wrapper.find(GraderingUtenBG2);
     expect(graderingUtenBG).to.be.lengthOf(0);
   });
 });

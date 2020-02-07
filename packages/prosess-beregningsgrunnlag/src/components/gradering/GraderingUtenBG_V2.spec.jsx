@@ -2,13 +2,12 @@ import React from 'react';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { reduxFormPropsMock } from '@fpsak-frontend/utils-test/src/redux-form-test-helper';
-import { FormattedMessage } from 'react-intl';
 import { RadioOption, TextAreaField } from '@fpsak-frontend/form';
-import { Element, Normaltekst } from 'nav-frontend-typografi';
+import { Element } from 'nav-frontend-typografi';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 import venteArsakType from '@fpsak-frontend/kodeverk/src/venteArsakType';
-import { buildInitialValues, GraderingUtenBG as UnwrappedForm } from './GraderingUtenBG';
+import { buildInitialValues, GraderingUtenBG2 as UnwrappedForm } from './GraderingUtenBG_V2';
 import shallowWithIntl from '../../../i18n/intl-enzyme-test-helper-prosess-beregningsgrunnlag';
 
 const mockAksjonspunktMedKodeOgStatus = (apKode, status) => ({
@@ -72,7 +71,7 @@ const getKodeverknavn = (kodeverk) => {
   return '';
 };
 
-describe('<GraderingUtenBG>', () => {
+describe('<GraderingUtenBG2>', () => {
   it('skal teste at komponent vises riktig gitt en liste arbeidsforhold', () => {
     const wrapper = shallowWithIntl(<UnwrappedForm
       readOnly={false}
@@ -90,11 +89,10 @@ describe('<GraderingUtenBG>', () => {
     expect(textfield).to.have.length(1);
     const button = wrapper.find(BehandlingspunktSubmitButton);
     expect(button).to.have.length(1);
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).to.have.length(1);
-    const formattedmsg = wrapper.find(FormattedMessage);
-    expect(formattedmsg).to.have.length(2);
-    expect(wrapper.find(FormattedMessage).at(1).prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123) og arbeidsgiver (456)' });
+    const hjelpetekst = wrapper.find('FormattedHTMLMessage');
+    const formattedMessages = wrapper.find('FormattedMessage');
+    expect(formattedMessages.prop('id')).to.eql('Beregningsgrunnlag.Gradering.Tittel');
+    expect(hjelpetekst.prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123) og arbeidsgiver (456)' });
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);
   });
@@ -116,11 +114,10 @@ describe('<GraderingUtenBG>', () => {
     expect(textfield).to.have.length(1);
     const button = wrapper.find(BehandlingspunktSubmitButton);
     expect(button).to.have.length(1);
-    const normaltekst = wrapper.find(Normaltekst);
-    expect(normaltekst).to.have.length(1);
-    const formattedmsg = wrapper.find(FormattedMessage);
-    expect(formattedmsg).to.have.length(2);
-    expect(wrapper.find(FormattedMessage).at(1).prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser' });
+    const hjelpetekst = wrapper.find('FormattedHTMLMessage');
+    const formattedMessages = wrapper.find('FormattedMessage');
+    expect(formattedMessages.prop('id')).to.eql('Beregningsgrunnlag.Gradering.Tittel');
+    expect(hjelpetekst.prop('values')).to.eql({ arbeidsforholdTekst: 'arbeidsgiver (123), selvstendig næringsdrivende og frilanser' });
     const element = wrapper.find(Element);
     expect(element).to.have.length(1);
   });
@@ -158,6 +155,17 @@ describe('<GraderingUtenBG>', () => {
     };
 
     const actualInitialValues = buildInitialValues.resultFunc(undefined, [mockAksjonspunktMedKodeOgStatus('5050', 'UTFO')]);
+    expect(actualInitialValues).is.deep.equal(expectedInitialValues);
+  });
+
+  it('skal teste at komponent bygger korrekte initial values dersom behandling er på vent mrd ventekode', () => {
+    const expectedInitialValues = {
+      graderingUtenBGSettPaaVent: true,
+      begrunnelse: 'begrunnelse',
+    };
+    const aksjonspunkter = [mockAksjonspunktMedKodeOgStatus('5050', 'UTFO'), mockAksjonspunktMedKodeOgStatus('7019', 'OPPR')];
+
+    const actualInitialValues = buildInitialValues.resultFunc(venteArsakType.VENT_GRADERING_UTEN_BEREGNINGSGRUNNLAG, aksjonspunkter);
     expect(actualInitialValues).is.deep.equal(expectedInitialValues);
   });
 });
