@@ -7,7 +7,13 @@ import { Element, Undertekst } from 'nav-frontend-typografi';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 
 import {
-  CheckboxField, DecimalField, PeriodpickerField, RadioGroupField, RadioOption, SelectField, TextAreaField,
+  CheckboxField,
+  DecimalField,
+  PeriodpickerField,
+  RadioGroupField,
+  RadioOption,
+  SelectField,
+  TextAreaField,
 } from '@fpsak-frontend/form';
 import {
   calcDaysAndWeeks,
@@ -31,11 +37,8 @@ import {
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 import navBrukerKjonn from '@fpsak-frontend/kodeverk/src/navBrukerKjonn';
 import uttakPeriodeType from '@fpsak-frontend/kodeverk/src/uttakPeriodeType';
-import utsettelseArsakCodes from '@fpsak-frontend/kodeverk/src/utsettelseArsakCodes';
 import overforingArsak from '@fpsak-frontend/kodeverk/src/overforingArsak';
-import {
-  lagVisningsNavn, behandlingForm, behandlingFormValueSelector,
-} from '@fpsak-frontend/fp-felles';
+import { lagVisningsNavn, behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
 
 import styles from './uttakNyPeriode.less';
 
@@ -48,7 +51,8 @@ const gyldigeUttakperioder = [
   uttakPeriodeType.FEDREKVOTE,
   uttakPeriodeType.FORELDREPENGER_FOR_FODSEL,
   uttakPeriodeType.FORELDREPENGER,
-  uttakPeriodeType.MODREKVOTE];
+  uttakPeriodeType.MODREKVOTE,
+];
 
 const gyldigeOverføringÅrsaker = [
   overforingArsak.INSTITUSJONSOPPHOLD_ANNEN_FORELDER,
@@ -59,14 +63,25 @@ const gyldigeOverføringÅrsaker = [
 
 const mapPeriodeTyper = (typer) => typer
   .filter(({ kode }) => gyldigeUttakperioder.includes(kode))
-  .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+  .map(({ kode, navn }) => (
+    <option value={kode} key={kode}>
+      {navn}
+    </option>
+  ));
 
 const mapOverføringÅrsaker = (typer) => typer
   .filter(({ kode }) => gyldigeOverføringÅrsaker.includes(kode))
-  .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+  .map(({ kode, navn }) => (
+    <option value={kode} key={kode}>
+      {navn}
+    </option>
+  ));
 
-const mapUtsettelseÅrsaker = (typer) => typer
-  .map(({ kode, navn }) => <option value={kode} key={kode}>{navn}</option>);
+const mapUtsettelseÅrsaker = (typer) => typer.map(({ kode, navn }) => (
+  <option value={kode} key={kode}>
+    {navn}
+  </option>
+));
 
 const mapArbeidsforhold = (andeler, getKodeverknavn) => andeler.map((andel) => {
   const { arbeidType, arbeidsgiver } = andel;
@@ -84,14 +99,14 @@ const mapArbeidsforhold = (andeler, getKodeverknavn) => andeler.map((andel) => {
   const virksomhet = (arbeidsgiver || []).virksomhet || '-';
 
   return (
-    <option value={`${identifikator}|${navn}|${fixedAktørId}|${virksomhet}|${arbeidType.kode}`} key={guid()}>{periodeArbeidsforhold}</option>
+    <option value={`${identifikator}|${navn}|${fixedAktørId}|${virksomhet}|${arbeidType.kode}`} key={guid()}>
+      {periodeArbeidsforhold}
+    </option>
   );
 });
 
-const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (
-  (sokerKjonn === navBrukerKjonn.MANN && periodeType === uttakPeriodeType.MODREKVOTE)
-  || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === uttakPeriodeType.FEDREKVOTE)
-);
+const periodeTypeTrengerArsak = (sokerKjonn, periodeType) => (sokerKjonn === navBrukerKjonn.MANN && periodeType === uttakPeriodeType.MODREKVOTE)
+  || (sokerKjonn === navBrukerKjonn.KVINNE && periodeType === uttakPeriodeType.FEDREKVOTE);
 
 export const UttakNyPeriode = ({
   newPeriodeResetCallback,
@@ -111,7 +126,9 @@ export const UttakNyPeriode = ({
     <div className={styles.periodeContainer}>
       <div className={styles.periodeType}>
         <div className={styles.headerWrapper}>
-          <Element><FormattedMessage id="UttakInfoPanel.NyPeriode" /></Element>
+          <Element>
+            <FormattedMessage id="UttakInfoPanel.NyPeriode" />
+          </Element>
         </div>
       </div>
       <div className={styles.periodeInnhold}>
@@ -130,16 +147,15 @@ export const UttakNyPeriode = ({
                 </FlexColumn>
                 <FlexColumn className={styles.suffix}>
                   <div id="antallDager">
-                    {nyPeriode.fom
-                          && (
-                          <FormattedMessage
-                            id={numberOfDaysAndWeeks.id.toString()}
-                            values={{
-                              weeks: numberOfDaysAndWeeks.weeks.toString(),
-                              days: numberOfDaysAndWeeks.days.toString(),
-                            }}
-                          />
-                          )}
+                    {nyPeriode.fom && (
+                      <FormattedMessage
+                        id={numberOfDaysAndWeeks.id.toString()}
+                        values={{
+                          weeks: numberOfDaysAndWeeks.weeks.toString(),
+                          days: numberOfDaysAndWeeks.days.toString(),
+                        }}
+                      />
+                    )}
                   </div>
                 </FlexColumn>
               </FlexRow>
@@ -167,37 +183,37 @@ export const UttakNyPeriode = ({
                       label={<FormattedMessage id="UttakInfoPanel.SamtidigUttak" />}
                     />
                     {nyPeriode.samtidigUttakNyPeriode && (
-                    <FlexColumn>
-                      <FlexRow>
-                        <FlexColumn>
-                          <DecimalField
-                            className={styles.fieldHorizontal}
-                            name="samtidigUttaksprosentNyPeriode"
-                            bredde="XS"
-                            label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
-                            validate={[required, maxValue100, hasValidDecimal]}
-                            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                            inputClassName={styles.textAlignRight}
-                          />
-                        </FlexColumn>
-                        <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
-                      </FlexRow>
-                    </FlexColumn>
+                      <FlexColumn>
+                        <FlexRow>
+                          <FlexColumn>
+                            <DecimalField
+                              className={styles.fieldHorizontal}
+                              name="samtidigUttaksprosentNyPeriode"
+                              bredde="XS"
+                              label={{ id: 'UttakInfoPanel.SamtidigUttakProsentandel' }}
+                              validate={[required, maxValue100, hasValidDecimal]}
+                              normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                              inputClassName={styles.textAlignRight}
+                            />
+                          </FlexColumn>
+                          <FlexColumn className={styles.suffixAligAuto}>%</FlexColumn>
+                        </FlexRow>
+                      </FlexColumn>
                     )}
                   </FlexColumn>
                 </FlexRow>
               </FlexColumn>
               <FlexColumn>
                 {periodeTypeTrengerArsak(sokerKjonn, nyPeriode.periodeType) && (
-                <FlexRow>
-                  <SelectField
-                    label={{ id: 'UttakInfoPanel.AngiArsakforOverforing' }}
-                    bredde="m"
-                    name="periodeOverforingArsak"
-                    selectValues={mapOverføringÅrsaker(overføringÅrsaker)}
-                    validate={[required]}
-                  />
-                </FlexRow>
+                  <FlexRow>
+                    <SelectField
+                      label={{ id: 'UttakInfoPanel.AngiArsakforOverforing' }}
+                      bredde="m"
+                      name="periodeOverforingArsak"
+                      selectValues={mapOverføringÅrsaker(overføringÅrsaker)}
+                      validate={[required]}
+                    />
+                  </FlexRow>
                 )}
               </FlexColumn>
             </FlexColumn>
@@ -205,7 +221,9 @@ export const UttakNyPeriode = ({
           <FlexRow wrap className={styles.typeUttakStyle}>
             <FlexColumn>
               <div>
-                <Undertekst><FormattedMessage id="UttakInfoPanel.TypeUttak" /></Undertekst>
+                <Undertekst>
+                  <FormattedMessage id="UttakInfoPanel.TypeUttak" />
+                </Undertekst>
                 <VerticalSpacer eightPx />
               </div>
               <div>
@@ -217,52 +235,50 @@ export const UttakNyPeriode = ({
               </div>
             </FlexColumn>
             <FlexColumn>
-              {nyPeriode.typeUttak !== null
-                      && nyPeriode.typeUttak !== 'fullt'
-                      && (
-                      <ArrowBox
-                        alignLeft
-                        marginTop={nyPeriode.typeUttak === 'utsettelse' ? 80 : 0}
-                        alignOffset={nyPeriode.typeUttak === 'utsettelse' ? 52 : 92}
-                      >
-                        {nyPeriode.typeUttak === 'gradert' && (
-                        <div>
-                          <div>
-                            <SelectField
-                              label={{ id: 'UttakInfoPanel.Aktivitet' }}
-                              bredde="xl"
-                              name="arbeidsForhold"
-                              validate={[requiredIfNotPristine, required]}
-                              selectValues={mapArbeidsforhold(andeler, getKodeverknavn)}
-                            />
-                          </div>
-                          <FlexRow>
-                            <FlexColumn>
-                              <DecimalField
-                                name="arbeidstidprosent"
-                                label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
-                                bredde="XS"
-                                validate={[required, maxValue100, hasValidDecimal]}
-                                normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
-                                inputClassName={styles.textAlignRight}
-                              />
-                            </FlexColumn>
-                            <FlexColumn className={styles.suffix}>%</FlexColumn>
-                          </FlexRow>
-                        </div>
-                        )}
-
-                        {nyPeriode.typeUttak === 'utsettelse' && (
+              {nyPeriode.typeUttak !== null && nyPeriode.typeUttak !== 'fullt' && (
+                <ArrowBox
+                  alignLeft
+                  marginTop={nyPeriode.typeUttak === 'utsettelse' ? 80 : 0}
+                  alignOffset={nyPeriode.typeUttak === 'utsettelse' ? 52 : 92}
+                >
+                  {nyPeriode.typeUttak === 'gradert' && (
+                    <div>
+                      <div>
                         <SelectField
-                          label={{ id: 'UttakInfoPanel.ArsakUtsettelse' }}
+                          label={{ id: 'UttakInfoPanel.Aktivitet' }}
                           bredde="xl"
-                          name="periodeArsak"
-                          selectValues={mapUtsettelseÅrsaker(utsettelseÅrsaker)}
-                          validate={[required]}
+                          name="arbeidsForhold"
+                          validate={[requiredIfNotPristine, required]}
+                          selectValues={mapArbeidsforhold(andeler, getKodeverknavn)}
                         />
-                        )}
-                      </ArrowBox>
-                      )}
+                      </div>
+                      <FlexRow>
+                        <FlexColumn>
+                          <DecimalField
+                            name="arbeidstidprosent"
+                            label={{ id: 'UttakInfoPanel.AndelIArbeid' }}
+                            bredde="XS"
+                            validate={[required, maxValue100, hasValidDecimal]}
+                            normalizeOnBlur={(value) => (Number.isNaN(value) ? value : parseFloat(value).toFixed(2))}
+                            inputClassName={styles.textAlignRight}
+                          />
+                        </FlexColumn>
+                        <FlexColumn className={styles.suffix}>%</FlexColumn>
+                      </FlexRow>
+                    </div>
+                  )}
+
+                  {nyPeriode.typeUttak === 'utsettelse' && (
+                    <SelectField
+                      label={{ id: 'UttakInfoPanel.ArsakUtsettelse' }}
+                      bredde="xl"
+                      name="periodeArsak"
+                      selectValues={mapUtsettelseÅrsaker(utsettelseÅrsaker)}
+                      validate={[required]}
+                    />
+                  )}
+                </ArrowBox>
+              )}
             </FlexColumn>
           </FlexRow>
           <FlexRow>
@@ -288,11 +304,7 @@ export const UttakNyPeriode = ({
         >
           <FormattedMessage id="UttakInfoPanel.Oppdater" />
         </Hovedknapp>
-        <Knapp
-          htmlType="button"
-          mini
-          onClick={newPeriodeResetCallback}
-        >
+        <Knapp htmlType="button" mini onClick={newPeriodeResetCallback}>
           <FormattedMessage id="UttakInfoPanel.Avbryt" />
         </Knapp>
       </div>
@@ -317,49 +329,54 @@ UttakNyPeriode.defaultProps = {
   periodeTyper: null,
 };
 
-const getPeriodeData = (periode, periodeArray) => periodeArray
-  .filter(({ kode }) => kode === periode);
+const getPeriodeData = (periode, periodeArray) => periodeArray.filter(({ kode }) => kode === periode);
 
-const getResultat = (utsettelseÅrsak, uttakPeriodeVurderingTyper) => {
-  if (utsettelseÅrsak && [utsettelseArsakCodes.INSTITUSJONSOPPHOLD_SØKER, utsettelseArsakCodes.INSTITUSJONSOPPHOLD_BARNET, utsettelseArsakCodes.SYKDOM]
-    .some((årsak) => årsak === utsettelseÅrsak.kode)) {
-    return uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_OK);
-  }
-  return uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_IKKE_VURDERT);
-};
-
-
-const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn) => {
+const transformValues = (
+  values,
+  periodeTyper,
+  utsettelseÅrsaker,
+  overføringÅrsaker,
+  uttakPeriodeVurderingTyper,
+  getKodeverknavn,
+) => {
   const periodeObjekt = getPeriodeData(values.periodeType, periodeTyper)[0] || null;
   const utsettelseÅrsakObjekt = getPeriodeData(values.periodeArsak, utsettelseÅrsaker)[0];
   const overføringÅrsakObjekt = getPeriodeData(values.periodeOverforingArsak, overføringÅrsaker)[0];
 
-  const utsettelseÅrsak = utsettelseÅrsakObjekt !== undefined ? {
-    kode: utsettelseÅrsakObjekt.kode,
-    kodeverk: utsettelseÅrsakObjekt.kodeverk,
-    navn: getKodeverknavn(utsettelseÅrsakObjekt),
-  } : undefined;
-  const overføringÅrsak = overføringÅrsakObjekt !== undefined ? {
-    kode: overføringÅrsakObjekt.kode,
-    kodeverk: overføringÅrsakObjekt.kodeverk,
-    navn: getKodeverknavn(overføringÅrsakObjekt),
-  } : undefined;
+  const utsettelseÅrsak = utsettelseÅrsakObjekt !== undefined
+    ? {
+      kode: utsettelseÅrsakObjekt.kode,
+      kodeverk: utsettelseÅrsakObjekt.kodeverk,
+      navn: getKodeverknavn(utsettelseÅrsakObjekt),
+    }
+    : undefined;
+  const overføringÅrsak = overføringÅrsakObjekt !== undefined
+    ? {
+      kode: overføringÅrsakObjekt.kode,
+      kodeverk: overføringÅrsakObjekt.kodeverk,
+      navn: getKodeverknavn(overføringÅrsakObjekt),
+    }
+    : undefined;
 
-  const resultat = getResultat(utsettelseÅrsak, uttakPeriodeVurderingTyper);
+  const resultat = uttakPeriodeVurderingTyper.find((type) => type.kode === uttakPeriodeVurdering.PERIODE_OK);
   const arbeidsForhold = values.arbeidsForhold ? values.arbeidsForhold.split('|') : null;
 
-  const arbeidsgiver = arbeidsForhold && (arbeidsForhold[0] !== '-' || arbeidsForhold[2] !== '-') ? {
-    identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
-    navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
-    aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
-    virksomhet: arbeidsForhold[3] !== '-',
-    arbeidType: arbeidsForhold[4],
-  } : null;
+  const arbeidsgiver = arbeidsForhold && (arbeidsForhold[0] !== '-' || arbeidsForhold[2] !== '-')
+    ? {
+      identifikator: arbeidsForhold[0] !== '-' ? arbeidsForhold[0] : undefined,
+      navn: arbeidsForhold[1] ? arbeidsForhold[1] : undefined,
+      aktørId: arbeidsForhold[2] !== '-' ? arbeidsForhold[2] : undefined,
+      virksomhet: arbeidsForhold[3] !== '-',
+      arbeidType: arbeidsForhold[4],
+    }
+    : null;
 
-  const dokumentertePerioder = [{
-    fom: values.fom,
-    tom: values.tom,
-  }];
+  const dokumentertePerioder = [
+    {
+      fom: values.fom,
+      tom: values.tom,
+    },
+  ];
 
   return {
     id: guid(),
@@ -373,17 +390,20 @@ const transformValues = (values, periodeTyper, utsettelseÅrsaker, overføringÅ
     erArbeidstaker: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.ORDINÆRT_ARBEID,
     erFrilanser: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.FRILANS,
     erSelvstendig: arbeidsForhold && arbeidsForhold[4] === uttakArbeidType.SELVSTENDIG_NÆRINGSDRIVENDE,
-    dokumentertePerioder: resultat && resultat.kode !== uttakPeriodeVurdering.PERIODE_IKKE_VURDERT ? dokumentertePerioder : null,
+    dokumentertePerioder:
+      resultat && resultat.kode !== uttakPeriodeVurdering.PERIODE_IKKE_VURDERT ? dokumentertePerioder : null,
     fom: values.fom,
     tom: values.tom,
     isFromSøknad: false,
     begrunnelse: values.begrunnelse,
     saksebehandlersBegrunnelse: values.begrunnelse,
-    uttakPeriodeType: periodeObjekt ? {
-      kode: periodeObjekt.kode,
-      kodeverk: periodeObjekt.kodeverk,
-      navn: getKodeverknavn(periodeObjekt),
-    } : { kode: '-' },
+    uttakPeriodeType: periodeObjekt
+      ? {
+        kode: periodeObjekt.kode,
+        kodeverk: periodeObjekt.kodeverk,
+        navn: getKodeverknavn(periodeObjekt),
+      }
+      : { kode: '-' },
     arbeidsgiver,
     utsettelseÅrsak,
     overføringÅrsak,
@@ -424,7 +444,14 @@ const mapStateToPropsFactory = (_initialState, ownProps) => {
   const utsettelseÅrsaker = alleKodeverk[kodeverkTyper.UTSETTELSE_AARSAK_TYPE];
   const overføringÅrsaker = alleKodeverk[kodeverkTyper.OVERFOERING_AARSAK_TYPE];
   const onSubmit = (values) => newPeriodeCallback(
-    transformValues(values, periodeTyper, utsettelseÅrsaker, overføringÅrsaker, uttakPeriodeVurderingTyper, getKodeverknavn),
+    transformValues(
+      values,
+      periodeTyper,
+      utsettelseÅrsaker,
+      overføringÅrsaker,
+      uttakPeriodeVurderingTyper,
+      getKodeverknavn,
+    ),
   );
 
   return (state) => {
@@ -466,8 +493,10 @@ const mapStateToPropsFactory = (_initialState, ownProps) => {
   };
 };
 
-export default connect(mapStateToPropsFactory)(behandlingForm({
-  form: 'nyPeriodeForm',
-  validate: (values) => validateNyPeriodeForm(values),
-  enableReinitialize: true,
-})(UttakNyPeriode));
+export default connect(mapStateToPropsFactory)(
+  behandlingForm({
+    form: 'nyPeriodeForm',
+    validate: (values) => validateNyPeriodeForm(values),
+    enableReinitialize: true,
+  })(UttakNyPeriode),
+);
