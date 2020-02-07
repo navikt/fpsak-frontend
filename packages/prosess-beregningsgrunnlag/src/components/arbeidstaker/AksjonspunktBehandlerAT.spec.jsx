@@ -87,4 +87,22 @@ describe('<AksjonspunktBehandlerAT>', () => {
     const transformedValues = AksjonspunktBehandlerAT.transformValues(values, relevanteStatuser, andeler);
     expect(transformedValues).is.deep.equal(expectedInitialValues);
   });
+  it('Skal teste transformValuesATFlhver for seg metode', () => {
+    const andeler = [
+      mockAndel('Arbeidsgiver 1', 100, 200000, false),
+    ];
+    const values = {
+      ATFLVurdering: 'Vurdering',
+      begrunnDekningsgradEndring: '',
+      inntekt0: '242 000',
+      dekningsgrad: undefined,
+    };
+    values;
+    const expectedInitialValues = [{
+      andelsnr: undefined,
+      inntekt: 242000,
+    }];
+    const transformedValues = AksjonspunktBehandlerAT.transformValuesForAT(values, andeler);
+    expect(transformedValues).is.deep.equal(expectedInitialValues);
+  });
 });

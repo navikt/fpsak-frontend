@@ -40,7 +40,7 @@ const {
  * Presentasjonskomponent. Setter opp inputfelt som lar saksbehandler fastsette
  * næringsinntekt for selvstendig næringsdrivende. Opprettes enten hvis det er varig endret / nyoppstartet næring eller søker er ny i arbeidslivet.
  */
-const FastsettSN2 = ({
+export const FastsettSN2 = ({
   readOnly,
   isAksjonspunktClosed,
   intl,
