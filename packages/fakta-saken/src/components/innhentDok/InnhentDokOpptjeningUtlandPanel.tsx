@@ -11,7 +11,14 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import styles from './innhentDokOpptjeningUtlandPanel.less';
 
 interface OwnProps {
+  behandlingId: number;
+  behandlingVersjon: number;
   readOnly: boolean;
+  harApneAksjonspunkter: boolean;
+  dirty: boolean;
+  submittable: boolean;
+  initialValues: { begrunnelse?: string };
+  form: string;
 }
 
 const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
@@ -28,13 +35,13 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
     <Undertittel>
       <FormattedMessage id="InnhentDokOpptjeningUtlandPanel.OpptjeningUtland" />
     </Undertittel>
-    <VerticalSpacer sixteenPx />
-    <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={!harApneAksjonspunkter}>
+    {harApneAksjonspunkter && <VerticalSpacer sixteenPx />}
+    <AksjonspunktBox className={styles.aksjonspunktMargin} erAksjonspunktApent={harApneAksjonspunkter}>
       <Element>
         <FormattedMessage id="InnhentDokOpptjeningUtlandPanel.InnhentelseDok" />
       </Element>
       <VerticalSpacer sixteenPx />
-      <RadioGroupField name="skalInnhenteDokumentasjon" validate={[required]} direction="vertical">
+      <RadioGroupField name="skalInnhenteDokumentasjon" validate={[required]} direction="vertical" readOnly={readOnly}>
         <RadioOption label={<FormattedMessage id="InnhentDokOpptjeningUtlandPanel.Innhentes" />} value />
         <RadioOption label={<FormattedHTMLMessage id="InnhentDokOpptjeningUtlandPanel.InnhentesIkke" />} value={false} />
       </RadioGroupField>
@@ -43,6 +50,7 @@ const InnhentDokOpptjeningUtlandPanel: FunctionComponent<OwnProps> = ({
         isSubmittable={submittable}
         isReadOnly={readOnly}
         hasBegrunnelse={!!initialValues.begrunnelse}
+        labelCode="InnhentDokOpptjeningUtlandPanel.Begrunnelse"
       />
       <FaktaSubmitButton
         formName={form}

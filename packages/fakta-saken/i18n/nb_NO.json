@@ -18,6 +18,7 @@
   "InnhentDokOpptjeningUtlandPanel.InnhentelseDok": "Innhentelse av dokumentasjon",
   "InnhentDokOpptjeningUtlandPanel.Innhentes": "Dokumentasjon vil bli innhentet",
   "InnhentDokOpptjeningUtlandPanel.InnhentesIkke": "Dokumentasjon vil <b>ikke</b> bli innhentet",
+  "InnhentDokOpptjeningUtlandPanel.Begrunnelse": "Begrunnelse",
   
   "FaktaBegrunnelseTextField.BegrunnEndringene": "Begrunn endringene",
   "SubmitButton.ConfirmInformation": "Bekreft og fortsett",

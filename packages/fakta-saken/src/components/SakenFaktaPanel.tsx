@@ -13,8 +13,10 @@ interface OwnProps {
   behandlingId: number;
   behandlingVersjon: number;
   aksjonspunkter: Aksjonspunkt[];
+  harApneAksjonspunkter: boolean;
   submitCallback: (data: {}) => void;
   readOnly: boolean;
+  submittable: boolean;
 }
 
 const personAksjonspunkter = [aksjonspunktCodes.AUTOMATISK_MARKERING_AV_UTENLANDSSAK];
