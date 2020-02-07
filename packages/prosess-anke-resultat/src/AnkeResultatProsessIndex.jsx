@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandleResultatForm from './components/BehandleResultatForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import ankeResultatBehandlingPropType from './propTypes/ankeResultatBehandlingPropType';
 import ankeResultatAksjonspunkterPropType from './propTypes/ankeResultatAksjonspunkterPropType';
 import ankeVurderingPropType from './propTypes/ankeVurderingPropType';

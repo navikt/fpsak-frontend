@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import { SoknadData } from '@fpsak-frontend/papirsoknad-felles';
 
 import EngangsstonadForm from './components/EngangsstonadForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

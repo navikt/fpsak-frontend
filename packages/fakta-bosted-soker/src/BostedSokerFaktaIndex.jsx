@@ -6,7 +6,7 @@ import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
 
 import BostedSokerView from './components/BostedSokerView';
 import bostedSokerPersonopplysningerPropType from './propTypes/bostedSokerPersonopplysningerPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

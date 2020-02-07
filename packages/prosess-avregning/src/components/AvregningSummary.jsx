@@ -46,7 +46,7 @@ const AvregningSummary = ({
               <Column xs="3">
                 <Normaltekst className={styles.resultName}>
                   <FormattedMessage id="Avregning.etterbetaling" />
-                      :
+                  :
                 </Normaltekst>
               </Column>
               <Column xs="2">
@@ -57,7 +57,7 @@ const AvregningSummary = ({
               <Column xs="3">
                 <Normaltekst className={styles.resultName}>
                   <FormattedMessage id="Avregning.tilbakekreving" />
-                      :
+                  :
                 </Normaltekst>
               </Column>
               <Column xs="2">

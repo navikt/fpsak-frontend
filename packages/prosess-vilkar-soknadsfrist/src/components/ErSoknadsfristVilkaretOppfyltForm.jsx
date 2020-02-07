@@ -68,10 +68,9 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2" values={{ numberOfDays: antallDagerSoknadLevertForSent }} />
       </span>
       <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3" />
-      (
-      {(soknad.mottattDato && antallDagerSoknadLevertForSent)
-        && <DateLabel dateString={findSoknadsfristDate(soknad.mottattDato, antallDagerSoknadLevertForSent)} />}
-)
+      {soknad.mottattDato && antallDagerSoknadLevertForSent && (
+        <DateLabel dateString={findSoknadsfristDate(soknad.mottattDato, antallDagerSoknadLevertForSent)} />
+      )}
     </span>
     <Row>
       <Column xs="6">

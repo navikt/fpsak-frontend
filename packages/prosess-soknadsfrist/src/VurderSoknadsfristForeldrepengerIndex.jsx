@@ -7,7 +7,7 @@ import soknadsfristBehandlingPropType from './propTypes/soknadsfristBehandlingPr
 import soknadsfristUttakPeriodeGrensePropType from './propTypes/soknadsfristUttakPeriodeGrensePropType';
 import soknadsfristSoknadPropType from './propTypes/soknadsfristSoknadPropType';
 import VurderSoknadsfristForeldrepengerForm from './components/VurderSoknadsfristForeldrepengerForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
