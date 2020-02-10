@@ -33,10 +33,6 @@ export class RisikoklassifiseringIndexImpl extends Component {
     this.apnePanelVedAksjonspunkt();
   }
 
-  componentDidUpdate = () => {
-    this.apnePanelVedAksjonspunkt();
-  }
-
   apnePanelVedAksjonspunkt = () => {
     const { risikoAksjonspunkt, isPanelOpen } = this.props;
     if (risikoAksjonspunkt && risikoAksjonspunkt.status.kode === aksjonspunktStatus.OPPRETTET) {
@@ -67,11 +63,9 @@ export class RisikoklassifiseringIndexImpl extends Component {
 
   toggleRiskPanel = () => {
     const {
-      push: pushLocation, location, isPanelOpen, setRiskPanelOpen: setOpen,
+      push: pushLocation, location, isPanelOpen,
     } = this.props;
     pushLocation(getRiskPanelLocationCreator(location)(!isPanelOpen));
-    // TODO (TOR) Dette trur eg ikkje skal vera naudsynt. Bør automatisk synce url til store
-    setOpen(!isPanelOpen);
   }
 
   render() {
@@ -104,7 +98,6 @@ RisikoklassifiseringIndexImpl.propTypes = {
   push: PropTypes.func.isRequired,
   location: PropTypes.shape().isRequired,
   isPanelOpen: PropTypes.bool,
-  setRiskPanelOpen: PropTypes.func.isRequired,
   readOnly: PropTypes.bool.isRequired,
   behandlingIdentifier: PropTypes.shape(),
   behandlingVersjon: PropTypes.number,

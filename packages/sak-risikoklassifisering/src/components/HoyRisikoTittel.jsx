@@ -27,6 +27,7 @@ const HoyRisikoTittel = ({
   behandlingVersjon,
 }) => (
   <EkspanderbartpanelBase
+    key={isRiskPanelOpen}
     className={styles.hoyRisikoPanelTittel}
     apen={isRiskPanelOpen}
     onClick={toggleRiskPanel}
