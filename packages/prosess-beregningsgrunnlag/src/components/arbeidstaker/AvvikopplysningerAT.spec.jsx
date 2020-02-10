@@ -2,8 +2,6 @@ import React from 'react';
 import { expect } from 'chai';
 
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import AvviksopplysningerAT from './AvvikopplysningerAT';
 
 const beregnetAarsinntekt = 360000;
@@ -20,37 +18,6 @@ const sammenligningsgrunnlag = (kode) => ({
 });
 
 describe('<AvviksopplysningerAT>', () => {
-  it('Skal teste tabellen får korrekte rader med innhold med status:SAMMENLIGNING_ATFL_SN', () => {
-    const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(<AvviksopplysningerAT
-      relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true }}
-      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
-      beregnetAarsinntekt={beregnetAarsinntekt}
-      aktivitetStatusKode={aktivitetStatus.ARBEIDSTAKER}
-    />);
-    const rows = wrapper.find('FlexRow');
-    expect(rows).to.have.length(4);
-    const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid');
-    const omregnetAarsinntektVerdi = rows.first().find('Normaltekst');
-    expect(omregnetAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetAarsinntekt));
-
-    const rapportertAarsinntektText = rows.at(1).find('FormattedMessage');
-    expect(rapportertAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid');
-    const rapportertAarsinntektVerdi = rows.at(1).find('Normaltekst');
-    expect(rapportertAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(sammenligningsgrunnlagPrStatus.rapportertPrAar));
-
-    const avvikText = rows.at(3).find('FormattedMessage');
-    expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT');
-    const avvikVerdi = rows.at(3).find('Normaltekst');
-    expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((sammenligningsgrunnlagPrStatus.differanseBeregnet)));
-
-    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
-    const avvikProsentValue = avvikProsentText.first().prop('values');
-    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
-    expect(avvikProsentValue.avvik).to.eql(sammenligningsgrunnlagPrStatus.avvikProsent);
-  });
-
   it('Skal teste tabellen får korrekte rader med innhold når kombinasjonsstatus=KOMBINERT_AT_SN', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
@@ -77,36 +44,26 @@ describe('<AvviksopplysningerAT>', () => {
     const infoText = rows.first().find('FormattedMessage');
     expect(infoText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AT.KobinasjonsStatusATFLSN');
   });
-  it('Skal teste tabellen får korrekte rader med innhold med status:SAMMENLIGNING_AT', () => {
+  it('Skal teste at avvikoplysningerATFL rendres', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_AT');
     const wrapper = shallowWithIntl(<AvviksopplysningerAT
-      relevanteStatuser={{ isKombinasjonsstatus: true, isArbeidstaker: true }}
-      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       beregnetAarsinntekt={beregnetAarsinntekt}
+      sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
+      relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const rows = wrapper.find('FlexRow');
-
-    expect(rows).to.have.length(4);
-    const omregnetAarsinntektText = rows.first().find('FormattedMessage');
-    expect(omregnetAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid');
-    const omregnetAarsinntektVerdi = rows.first().find('Normaltekst');
-    expect(omregnetAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(beregnetAarsinntekt));
-
-    const rapportertAarsinntektText = rows.at(1).find('FormattedMessage');
-    expect(rapportertAarsinntektText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid');
-    const rapportertAarsinntektVerdi = rows.at(1).find('Normaltekst');
-    expect(rapportertAarsinntektVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr(sammenligningsgrunnlagPrStatus.rapportertPrAar));
-
-    const avvikText = rows.at(3).find('FormattedMessage');
-    expect(avvikText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT');
-    const avvikVerdi = rows.at(3).find('Normaltekst');
-    expect(avvikVerdi.at(1).childAt(0).text()).to.equal(formatCurrencyNoKr((sammenligningsgrunnlagPrStatus.differanseBeregnet)));
-
-    const avvikProsentText = rows.at(3).find('FormattedMessage').at(1);
-    const avvikProsentValue = avvikProsentText.first().prop('values');
-    expect(avvikProsentText.first().prop('id')).to.eql('Beregningsgrunnlag.Avikssopplysninger.AvvikProsent');
-    expect(avvikProsentValue.avvik).to.eql(sammenligningsgrunnlagPrStatus.avvikProsent);
+    const panel = wrapper.find('AvviksOpplysningerATFL');
+    expect(panel.length).to.be.equal(1);
+    const expectedProps = {
+      beregnetAarsinntekt,
+      avvikProsentAvrundet: 27.5,
+      differanseBeregnet: 12100,
+      relevanteStatuser: { isKombinasjonsstatus: false },
+      visPanel: { visAT: true, visFL: false, visSN: false },
+      sammenligningsgrunnlagSum: 330000,
+    };
+    expect(panel.props()).to.deep.equal(expectedProps);
   });
+
   it('Skal teste tabellen rendres med feil status:SAMMENLIGNING_FL', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_FL');
     const wrapper = shallowWithIntl(<AvviksopplysningerAT

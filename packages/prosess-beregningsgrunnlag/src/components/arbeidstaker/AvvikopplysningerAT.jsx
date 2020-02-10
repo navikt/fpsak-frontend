@@ -2,15 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { FlexColumn, FlexRow } from '@fpsak-frontend/shared-components';
-import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
+import { FlexRow } from '@fpsak-frontend/shared-components';
+
 import { Column } from 'nav-frontend-grid';
 import sammenligningType from '@fpsak-frontend/kodeverk/src/sammenligningType';
-import styles from '../fellesPaneler/avvikopplysningerPanel.less';
-import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
-import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
-import { avvikProsentKolonne } from '../fellesPaneler/AvvikopplysningerPanel';
 
+import AvviksOpplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerAT = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
@@ -34,7 +31,11 @@ const AvviksopplysningerAT = ({
     && relevanteStatuser.isArbeidstaker
     && relevanteStatuser.isSelvstendigNaeringsdrivende
     && relevanteStatuser.isFrilanser;
-
+  const visPaneler = {
+    visAT: true,
+    visFL: false,
+    visSN: false,
+  };
   if (kombinasjonsstatusATSN || kombinasjonsstatusATFLSN) {
     return (
       <FlexRow>
@@ -55,63 +56,14 @@ const AvviksopplysningerAT = ({
 
   if (sammenligningsgrunnlagSumAT) {
     return (
-      <>
-        <FlexRow>
-          <FlexColumn className={styles.colLable}>
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.OmregnetAarsinntekt.Arbeid" />
-            </Normaltekst>
-          </FlexColumn>
-
-          <FlexColumn className={styles.colValue}>
-            <Normaltekst>
-              {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
-            </Normaltekst>
-          </FlexColumn>
-          {avvikProsentKolonne()}
-        </FlexRow>
-
-        <FlexRow>
-          <FlexColumn className={styles.colLable}>
-            <Normaltekst>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.RapportertAarsinntekt.Arbeid" />
-            </Normaltekst>
-          </FlexColumn>
-
-          <FlexColumn className={styles.colValue}>
-            <Normaltekst>
-              {formatCurrencyNoKr(sammenligningsgrunnlagSumAT)}
-            </Normaltekst>
-          </FlexColumn>
-          {avvikProsentKolonne()}
-        </FlexRow>
-        <FlexRow className={styles.avvikLinjeRad}>
-          <FlexColumn className={`${styles.colLine} ${styles.colBorderTop}`} />
-        </FlexRow>
-        <FlexRow>
-          <FlexColumn className={styles.colLable}>
-            <Normaltekst className={beregningStyles.semiBoldText}>
-              {!relevanteStatuser.isKombinasjonsstatus && (
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik" />
-              )}
-              {relevanteStatuser.isKombinasjonsstatus && (
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.BeregnetAvvik.AT" />
-              )}
-            </Normaltekst>
-          </FlexColumn>
-          <FlexColumn className={styles.colValue}>
-            <Normaltekst>
-              {formatCurrencyNoKr(differanseBeregnet === undefined ? 0
-                : differanseBeregnet)}
-            </Normaltekst>
-          </FlexColumn>
-          <FlexColumn className={styles.colAvvik}>
-            <Normaltekst className={`${avvikAT > 25 ? beregningStyles.redError : ''} ${beregningStyles.semiBoldText}`}>
-              <FormattedMessage id="Beregningsgrunnlag.Avikssopplysninger.AvvikProsent" values={{ avvik: avvikATRounded }} />
-            </Normaltekst>
-          </FlexColumn>
-        </FlexRow>
-      </>
+      <AvviksOpplysningerATFL
+        beregnetAarsinntekt={beregnetAarsinntekt}
+        avvikProsentAvrundet={avvikATRounded}
+        differanseBeregnet={differanseBeregnet}
+        relevanteStatuser={relevanteStatuser}
+        visPanel={visPaneler}
+        sammenligningsgrunnlagSum={sammenligningsgrunnlagSumAT}
+      />
     );
   }
   return null;
@@ -123,7 +75,7 @@ AvviksopplysningerAT.propTypes = {
   sammenligningsgrunnlagPrStatus: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   beregnetAarsinntekt: PropTypes.number,
 };
-AvviksopplysningerFL.defaultProps = {
+AvviksopplysningerAT.defaultProps = {
   beregnetAarsinntekt: undefined,
 };
 
