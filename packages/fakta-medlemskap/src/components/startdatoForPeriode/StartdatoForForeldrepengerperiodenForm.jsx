@@ -62,6 +62,7 @@ export const StartdatoForForeldrepengerperiodenForm = ({
             readOnly={readOnly && overstyringDisabled}
           />
         </div>
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="4">
             <DatepickerField

@@ -68,6 +68,7 @@ export const BehandleKlageFormNfpImpl = ({
           readOnly={readOnly}
           intl={intl}
         />
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
             <BehandlingspunktSubmitButton

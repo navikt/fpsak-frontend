@@ -15,7 +15,7 @@ const renderNavField = (WrappedNavFieldComponent) => {
     formatError(submitFailed, error) {
       const { intl } = this.props;
       if (submitFailed && error) {
-        return { feilmelding: intl.formatMessage(...error) };
+        return intl.formatMessage(...error);
       }
       return undefined;
     }

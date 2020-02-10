@@ -9,20 +9,20 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/utils": "1.0.0",
     "nav-frontend-core": "4.0.11",
-    "nav-frontend-typografi": "2.0.16",
-    "nav-frontend-typografi-style": "1.0.17",
+    "nav-frontend-typografi": "2.0.17",
+    "nav-frontend-typografi-style": "1.0.18",
     "prop-types": "^15.7.2",
     "react": "^16.12.0",
-    "react-intl": "^3.6.2",
+    "react-intl": "^3.12.0",
     "react-redux": "^7.1.3",
-    "redux": "^4.0.4",
-    "redux-form": "^8.2.6",
+    "redux": "^4.0.5",
+    "redux-form": "^8.3.0",
     "reselect": "^4.0.0"
   },
   "devDependencies": {
     "@fpsak-frontend/utils-test": "1.0.0",
     "chai": "^4.2.0",
-    "enzyme": "^3.10.0",
-    "sinon": "^7.3.2"
+    "enzyme": "^3.11.0",
+    "sinon": "^8.1.1"
   }
 }
