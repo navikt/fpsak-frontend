@@ -914,17 +914,16 @@ export const graderingPåBeregningsgrunnlagUtenPenger = () => {
 };
 export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const andeler = [
-    lagAndel('SN', 331000, undefined, undefined, true),
-    lagAndel('AT', 1355000, undefined, undefined),
+    lagAndel('SN', 331000, undefined, undefined, false),
+    lagAndel('AT', 72194, undefined, undefined),
   ];
   const pgi = lagPGIVerdier();
   andeler[0].pgiVerdier = pgi;
-  andeler[0].pgiSnitt = undefined;
+  andeler[0].pgiSnitt = 100299;
   // const perioder = [lagStandardPeriode(andeler)];
-  const perioder = [lagPeriodeMedDagsats(andeler, 1844)];
-  perioder[0].avkortetPrAar = 599148;
-  perioder[0].redusertPrAar = 379318;
-  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 1347316;
+  const perioder = [lagPeriodeMedDagsats(andeler, 286)];
+
+  perioder[0].bruttoInkludertBortfaltNaturalytelsePrAar = 72194;
 
   const statuser = [lagStatus('AT_SN')];
   const næringer = [{
@@ -948,7 +947,7 @@ export const arbeidstakerOgSelvstendigNæringsdrivendeUtenAkjsonspunkt = () => {
   const sammenligningsgrunnlagPrStatus = [
     lagSammenligningsGrunnlag(sammenligningType.ATFLSN, 474257, 26.2, -77059)];
   const bg = lagBG(perioder, statuser, sammenligningsgrunnlagPrStatus);
-  bg.dekningsgrad = 80;
+  bg.dekningsgrad = 100;
   return (
     <BeregningsgrunnlagProsessIndex
       behandling={behandling}

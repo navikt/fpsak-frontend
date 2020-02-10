@@ -97,7 +97,7 @@ const FastsettSN2 = ({
                   readOnly={readOnly}
                   isEdited={isAksjonspunktClosed}
                   placeholder={intl.formatMessage({ id: 'Beregningsgrunnlag.Forms.VurderingAvFastsattBeregningsgrunnlag.Placeholder' })}
-                  endretTekst={endretTekst}
+                  endrettekst={endretTekst}
                 />
               </div>
             </Column>
