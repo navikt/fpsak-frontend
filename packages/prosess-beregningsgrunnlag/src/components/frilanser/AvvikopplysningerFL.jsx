@@ -7,6 +7,7 @@ import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
 import { Column } from 'nav-frontend-grid';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import styles from '../fellesPaneler/avvikopplysningerPanel.less';
+import { avvikProsentKolonne } from '../fellesPaneler/AvvikopplysningerPanel';
 
 const AvviksopplysningerFL = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
@@ -50,7 +51,7 @@ const AvviksopplysningerFL = ({
             {beregnetAarsinntekt || beregnetAarsinntekt === 0 ? formatCurrencyNoKr(beregnetAarsinntekt) : '-'}
           </Normaltekst>
         </FlexColumn>
-        <FlexColumn className={styles.colAvvik} />
+        {avvikProsentKolonne()}
       </FlexRow>
       {sammenligningsgrunnlagSumFL && (
         <>
@@ -66,7 +67,7 @@ const AvviksopplysningerFL = ({
                 {formatCurrencyNoKr(sammenligningsgrunnlagSumFL)}
               </Normaltekst>
             </FlexColumn>
-            <FlexColumn className={styles.colAvvik} />
+            {avvikProsentKolonne()}
           </FlexRow>
           <FlexRow className={styles.avvikLinjeRad}>
             <FlexColumn className={`${styles.colLine} ${styles.colBorderTop}`} />

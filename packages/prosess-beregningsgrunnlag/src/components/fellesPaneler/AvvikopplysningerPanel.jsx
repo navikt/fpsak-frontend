@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Panel from 'nav-frontend-paneler';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { FormattedMessage } from 'react-intl';
-import { VerticalSpacer, FlexContainer } from '@fpsak-frontend/shared-components';
+import { VerticalSpacer, FlexContainer, FlexColumn } from '@fpsak-frontend/shared-components';
 import { Column, Row } from 'nav-frontend-grid';
 
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
@@ -12,6 +12,7 @@ import AvviksopplysningerAT from '../arbeidstaker/AvvikopplysningerAT';
 import AvviksopplysningerFL from '../frilanser/AvvikopplysningerFL';
 import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.less';
 import AvsnittSkiller from '../redesign/AvsnittSkiller';
+import styles from './avvikopplysningerPanel.less';
 
 const finnAlleAndelerIFørstePeriode = (allePerioder) => {
   if (allePerioder && allePerioder.length > 0) {
@@ -43,7 +44,9 @@ const beregnAarsintektForAktivitetStatus = (alleAndelerIForstePeriode, status) =
   }
   return null;
 };
-
+export const avvikProsentKolonne = () => (
+  <FlexColumn className={styles.colAvvik} />
+);
 const lagRelevantePaneler = (
   alleAndelerIForstePeriode,
   relevanteStatuser,
