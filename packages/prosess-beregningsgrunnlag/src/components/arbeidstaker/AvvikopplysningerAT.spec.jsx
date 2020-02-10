@@ -51,7 +51,7 @@ describe('<AvviksopplysningerAT>', () => {
       sammenligningsgrunnlagPrStatus={[sammenligningsgrunnlagPrStatus]}
       relevanteStatuser={{ isKombinasjonsstatus: false }}
     />);
-    const panel = wrapper.find('AvviksOpplysningerATFL');
+    const panel = wrapper.find('AvvikopplysningerATFL');
     expect(panel.length).to.be.equal(1);
     const expectedProps = {
       beregnetAarsinntekt,
