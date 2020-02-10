@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
 import { FormattedMessage } from 'react-intl';
+import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
+
 import uttakPeriodeVurdering from '@fpsak-frontend/kodeverk/src/uttakPeriodeVurdering';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
+
 import styles from './periodeTyper.less';
 
 export const PerioderKnapper = ({
@@ -10,6 +13,7 @@ export const PerioderKnapper = ({
 }) => (
   !readOnly && (
   <div>
+    <VerticalSpacer sixteenPx />
     <Hovedknapp
       className={styles.oppdaterMargin}
       htmlType="button"

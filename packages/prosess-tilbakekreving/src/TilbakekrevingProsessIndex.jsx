@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import TilbakekrevingForm from './components/TilbakekrevingForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import perioderForeldelsePropType from './propTypes/perioderForeldelsePropType';
 import vilkarvurderingsperioderPropType from './propTypes/vilkarvurderingsperioderPropType';
 import tilbakekrevingBehandlingPropType from './propTypes/tilbakekrevingBehandlingPropType';

@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fagsakYtelseType from '@fpsak-frontend/kodeverk/src/fagsakYtelseType';
 
 import VedtakPanels from './components/VedtakPanels';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import vedtakBehandlingPropType from './propTypes/vedtakBehandlingPropType';
 import vedtakBeregningsresultatPropType from './propTypes/vedtakBeregningsresultatPropType';
 import vedtakAksjonspunkterPropType from './propTypes/vedtakAksjonspunkterPropType';

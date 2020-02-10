@@ -6,7 +6,7 @@ import OpptjeningInfoPanel from './components/OpptjeningInfoPanel';
 import opptjeningAksjonspunkterPropType from './propTypes/opptjeningAksjonspunkterPropType';
 import opptjeningPropType from './propTypes/opptjeningPropType';
 import opptjeningBehandlingPropType from './propTypes/opptjeningBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

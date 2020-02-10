@@ -106,6 +106,7 @@ const VilkarResultPickerImpl = ({
         </>
       )}
     </>
+    <VerticalSpacer eightPx />
   </div>
 );
 

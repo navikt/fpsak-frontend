@@ -8,7 +8,7 @@ import omsorgPersonopplysningerPropType from './propTypes/omsorgPersonopplysning
 import omsorgYtelsefordelingPropType from './propTypes/omsorgYtelsefordelingPropType';
 import omsorgBehandlingPropType from './propTypes/omsorgBehandlingPropType';
 import omsorgSoknadPropType from './propTypes/omsorgSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

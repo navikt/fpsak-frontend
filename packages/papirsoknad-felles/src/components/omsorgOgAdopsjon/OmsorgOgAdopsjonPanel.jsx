@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { FieldArray, formValueSelector } from 'redux-form';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Column, Container, Row } from 'nav-frontend-grid';
 import { Undertekst } from 'nav-frontend-typografi';
 
@@ -91,7 +91,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
   const { formatMessage } = intl;
   return (
     <BorderBox>
-      <Fieldset legend={formatMessage({
+      <SkjemaGruppe legend={formatMessage({
         id: familieHendelseType === fht.ADOPSJON ? 'Registrering.Adopsjon.Title' : 'Registrering.Adopsjon.OmsorgTitle',
       })}
       >
@@ -166,7 +166,7 @@ export const OmsorgOgAdopsjonPanelImpl = ({
             antallBarn={antallBarn}
           />
         </Container>
-      </Fieldset>
+      </SkjemaGruppe>
     </BorderBox>
   );
 };

@@ -8,7 +8,7 @@ import fodselPersonopplysningerPropType from './propTypes/fodselPersonopplysning
 import fodselFamilieHendelsePropType from './propTypes/fodselFamilieHendelsePropType';
 import fodselBehandlingPropType from './propTypes/fodselBehandlingPropType';
 import fodselSoknadPropType from './propTypes/fodselSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

@@ -7,7 +7,7 @@ import feilutbetalingAksjonspunkterPropType from './propTypes/feilutbetalingAksj
 import feilutbetalingFaktaPropType from './propTypes/feilutbetalingFaktaPropType';
 import feilutbetalingBehandlingPropType from './propTypes/feilutbetalingBehandlingPropType';
 import feilutbetalingAarsakPropType from './propTypes/feilutbetalingAarsakPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

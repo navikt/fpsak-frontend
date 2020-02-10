@@ -254,13 +254,11 @@ export const BeregningFormImpl2 = ({
 
   return (
     <form onSubmit={formProps.handleSubmit} className={beregningStyles.beregningForm}>
-      { gjeldendeAksjonspunkter
-        && (
-        <div className={beregningStyles.aksjonsPunktHjelpeTekst}>
-          <VerticalSpacer eightPx />
+      { gjeldendeAksjonspunkter && (
+        <div className={beregningStyles.aksjonspunkt}>
           { lagAksjonspunktViser(gjeldendeAksjonspunkter, avvikProsent, alleAndelerIForstePeriode)}
         </div>
-        )}
+      )}
       <Row>
         <Column xs="12" md="6">
           <Undertittel className={beregningStyles.panelLeft}>

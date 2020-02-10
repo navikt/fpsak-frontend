@@ -8,19 +8,22 @@ import historikkinnslagDelPropType from '../../propTypes/historikkinnslagDelProp
 
 import styles from './historikkMalType.less';
 
-const HistorikkMalType6 = ({ historikkinnslagDeler, intl, getKodeverknavn }) => {
+const HistorikkMalType6 = ({
+  historikkinnslagDeler,
+  intl,
+  getKodeverknavn,
+}) => {
   const { formatMessage } = intl;
 
   const formaterOpplysning = (opplysning, index) => (
     <div key={`opplysning${index}`}>
       <Normaltekst className={styles.keyValuePair}>
         {formatMessage({ id: getKodeverknavn(opplysning.opplysningType) })}
-:
+        :
       </Normaltekst>
-        &ensp;
+      &ensp;
       <Element className={styles.keyValuePair}>{opplysning.tilVerdi}</Element>
     </div>
-
   );
 
   return (

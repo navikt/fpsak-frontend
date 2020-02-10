@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import BehandleKlageFormKa from './components/ka/BehandleKlageFormKa';
 import BehandleKlageFormNfp from './components/nfp/BehandleKlageFormNfp';
 import klageVurderingPropType from './propTypes/klageVurderingPropType';

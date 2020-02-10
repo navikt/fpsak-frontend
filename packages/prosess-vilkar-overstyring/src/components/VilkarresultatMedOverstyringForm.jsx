@@ -137,6 +137,7 @@ export const VilkarresultatMedOverstyringForm = ({
           hasAksjonspunkt={hasAksjonspunkt}
           avslagsarsaker={avslagsarsaker}
         />
+        <VerticalSpacer sixteenPx />
         {!erOverstyrt && (erVilkarOk !== undefined) && (
           <>
             <VerticalSpacer fourPx />

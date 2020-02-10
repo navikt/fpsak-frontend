@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BorderBox } from '@fpsak-frontend/shared-components';
@@ -17,7 +17,7 @@ const MigreringFraInfotrygdPanel = ({
   intl,
 }) => (
   <BorderBox>
-    <Fieldset legend={intl.formatMessage({ id: 'MigreringFraInfotrygdPanel.Migrering' })}>
+    <SkjemaGruppe legend={intl.formatMessage({ id: 'MigreringFraInfotrygdPanel.Migrering' })}>
       <RadioGroupField
         name="migrertFraInfotrygd"
         label={intl.formatMessage({ id: 'MigreringFraInfotrygdPanel.ErDenneSakenMigrert' })}
@@ -27,7 +27,7 @@ const MigreringFraInfotrygdPanel = ({
         <RadioOption value label={{ id: 'MigreringFraInfotrygdPanel.Ja' }} />
         <RadioOption value={false} label={{ id: 'MigreringFraInfotrygdPanel.Nei' }} />
       </RadioGroupField>
-    </Fieldset>
+    </SkjemaGruppe>
   </BorderBox>
 );
 

@@ -47,15 +47,14 @@ export const CheckPersonStatusFormImpl = ({
       {[intl.formatMessage({ id: 'CheckPersonStatusForm.PersonStatus' }, { status: originalPersonstatusName })]}
     </AksjonspunktHelpTextTemp>
     <VerticalSpacer twentyPx />
-    { gjeldeneFom
-        && (
-        <Normaltekst>
-          <FormattedMessage
-            id="CheckPersonStatusForm.GjeldendeFom"
-            values={{ dato: moment(gjeldeneFom).format(DDMMYYYY_DATE_FORMAT) }}
-          />
-        </Normaltekst>
-        )}
+    { gjeldeneFom && (
+      <Normaltekst>
+        <FormattedMessage
+          id="CheckPersonStatusForm.GjeldendeFom"
+          values={{ dato: moment(gjeldeneFom).format(DDMMYYYY_DATE_FORMAT) }}
+        />
+      </Normaltekst>
+    )}
     <VerticalSpacer twentyPx />
     <div className={styles.radioGroup}>
       <Row>
@@ -66,21 +65,21 @@ export const CheckPersonStatusFormImpl = ({
           </RadioGroupField>
         </Column>
       </Row>
-      {(fortsettBehandling === true)
-          && (
-          <ArrowBox alignOffset={readOnly ? 0 : 198}>
-            <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
-            <VerticalSpacer eightPx />
-            <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
-              {personStatuser.map((d) => (
-                <RadioOption key={d.kode} value={d.kode} label={d.navn} />
-              ))}
-            </RadioGroupField>
-          </ArrowBox>
-          )}
+      {(fortsettBehandling === true) && (
+        <ArrowBox alignOffset={readOnly ? 0 : 198}>
+          <Undertekst>{intl.formatMessage({ id: 'CheckPersonStatusForm.SetPersonStatus' })}</Undertekst>
+          <VerticalSpacer eightPx />
+          <RadioGroupField name="personstatus" validate={[required]} readOnly={readOnly}>
+            {personStatuser.map((d) => (
+              <RadioOption key={d.kode} value={d.kode} label={d.navn} />
+            ))}
+          </RadioGroupField>
+        </ArrowBox>
+      )}
     </div>
     <VerticalSpacer sixteenPx />
     <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+    <VerticalSpacer sixteenPx />
     <BehandlingspunktSubmitButton
       formName={formProps.form}
       behandlingId={behandlingId}

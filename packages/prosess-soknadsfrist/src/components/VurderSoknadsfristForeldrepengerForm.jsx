@@ -92,6 +92,7 @@ export const VurderSoknadsfristForeldrepengerFormImpl = ({
     <form className={styles.marginTop} onSubmit={formProps.handleSubmit}>
       <div>
         <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+        <VerticalSpacer sixteenPx />
         <div>
           <RadioGroupField name="gyldigSenFremsetting" validate={[required]} readOnly={readOnly} isEdited={isEdited(hasAksjonspunkt, gyldigSenFremsetting)}>
             <RadioOption value label={<FormattedMessage id="VurderSoknadsfristForeldrepengerForm.GyldigGrunn" />} />

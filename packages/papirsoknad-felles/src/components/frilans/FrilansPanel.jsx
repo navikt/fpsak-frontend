@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { FieldArray, FormSection } from 'redux-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Undertekst } from 'nav-frontend-typografi';
 
 import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
@@ -26,7 +26,7 @@ const FrilansPanelImpl = ({
 }) => (
   <FormSection name={FRILANS_FORM_NAME_PREFIX}>
     <BorderBox>
-      <Fieldset legend={intl.formatMessage({ id: 'Registrering.Frilans.Title' })}>
+      <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.Frilans.Title' })}>
         <Undertekst><FormattedMessage id="Registrering.Frilans.HarFrilansvirksomhet" /></Undertekst>
         <VerticalSpacer eightPx />
         <RadioGroupField
@@ -63,7 +63,7 @@ const FrilansPanelImpl = ({
             </ArrowBox>
           </RadioOption>
         </RadioGroupField>
-      </Fieldset>
+      </SkjemaGruppe>
     </BorderBox>
   </FormSection>
 );

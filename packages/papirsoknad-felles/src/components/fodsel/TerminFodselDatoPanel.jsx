@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { ArrowBox, BorderBox, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import {
@@ -39,7 +39,7 @@ export const TerminFodselDatoPanelImpl = ({
   <BorderBox>
     <div className={styles.flexContainer}>
       <NavFieldGroup errorMessageName="terminEllerFoedsel">
-        <Fieldset legend={intl.formatMessage({ id: 'Registrering.TerminOgFodsel' })}>
+        <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.TerminOgFodsel' })}>
           <Undertekst><FormattedMessage id="Registrering.Termin.Fodt" /></Undertekst>
           <VerticalSpacer eightPx />
           <RadioGroupField name="erBarnetFodt" readOnly={readOnly} validate={[required]}>
@@ -94,7 +94,7 @@ export const TerminFodselDatoPanelImpl = ({
               />
             </ArrowBox>
           )}
-        </Fieldset>
+        </SkjemaGruppe>
       </NavFieldGroup>
     </div>
   </BorderBox>

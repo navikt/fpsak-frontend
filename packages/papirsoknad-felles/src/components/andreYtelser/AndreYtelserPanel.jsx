@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Column, Row } from 'nav-frontend-grid';
 
 import { CheckboxField } from '@fpsak-frontend/form';
@@ -67,9 +67,9 @@ export const AndreYtelserPanelImpl = ({
     <ElementWrapper>
       <FormSection name={ANDRE_YTELSER_FORM_NAME_PREFIX}>
         <BorderBox>
-          <Fieldset className={styles.fullWidth} legend={intl.formatMessage({ id: 'Registrering.AndreYtelser.Title' })}>
+          <SkjemaGruppe className={styles.fullWidth} legend={intl.formatMessage({ id: 'Registrering.AndreYtelser.Title' })}>
             {checkboxFields}
-          </Fieldset>
+          </SkjemaGruppe>
         </BorderBox>
       </FormSection>
     </ElementWrapper>

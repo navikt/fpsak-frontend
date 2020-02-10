@@ -30,6 +30,6 @@ describe('renderNavField', () => {
     const mockField = wrapper.find(MockField);
 
     expect(mockField).to.have.length(1);
-    expect(mockField.at(0).props().feil).to.eql({ feilmelding: FORMATTED_MESSAGE });
+    expect(mockField.at(0).props().feil).to.eql(FORMATTED_MESSAGE);
   });
 });

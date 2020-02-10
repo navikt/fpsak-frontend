@@ -81,6 +81,7 @@ export const FormkravKlageForm = ({
             selectValues={klageBareVedtakOptions}
             bredde="l"
           />
+          <VerticalSpacer sixteenPx />
           <Row>
             <Column xs="4">
               <Undertekst>

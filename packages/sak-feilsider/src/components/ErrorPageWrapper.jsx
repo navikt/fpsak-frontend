@@ -6,7 +6,7 @@ import {
 
 import { Innholdstittel } from 'nav-frontend-typografi';
 import { pageContainer } from './errorPageWrapper.less';
-import messages from '../../i18n/nb_NO';
+import messages from '../../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

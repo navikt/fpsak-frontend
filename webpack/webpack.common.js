@@ -5,7 +5,7 @@ const APP_DIR = path.join(PACKAGES_DIR, 'sak-app/src');
 
 const config = {
   resolve: {
-    extensions: ['.json', '.js', '.jsx', '.ts', '.tsx', '.less'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.less'],
   },
 
   externals: {

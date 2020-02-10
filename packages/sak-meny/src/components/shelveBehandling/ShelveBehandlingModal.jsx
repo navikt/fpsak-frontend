@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { formValueSelector, reduxForm } from 'redux-form';
 import { Column, Row } from 'nav-frontend-grid';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { injectIntl } from 'react-intl';
 import Modal from 'nav-frontend-modal';
 import { Hovedknapp, Knapp } from 'nav-frontend-knapper';
@@ -70,7 +70,7 @@ export const ShelveBehandlingModalImpl = ({
   >
     <form onSubmit={handleSubmit}>
       <div>
-        <Fieldset legend={intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandling' })}>
+        <SkjemaGruppe legend={intl.formatMessage({ id: 'ShelveBehandlingModal.HenleggBehandling' })}>
           <Row>
             <Column xs="5">
               <SelectField
@@ -127,7 +127,7 @@ export const ShelveBehandlingModalImpl = ({
               )}
             </Column>
           </Row>
-        </Fieldset>
+        </SkjemaGruppe>
       </div>
     </form>
   </Modal>

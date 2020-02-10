@@ -31,12 +31,15 @@ const AktsomhetSarligeGrunnerFormPanel = ({
     </Undertekst>
     <VerticalSpacer eightPx />
     {sarligGrunnTyper.map((sgt) => (
-      <CheckboxField
-        key={sgt.kode}
-        name={sgt.kode}
-        label={sgt.navn}
-        readOnly={readOnly}
-      />
+      <>
+        <CheckboxField
+          key={sgt.kode}
+          name={sgt.kode}
+          label={sgt.navn}
+          readOnly={readOnly}
+        />
+        <VerticalSpacer eightPx />
+      </>
     ))}
     {erSerligGrunnAnnetValgt && (
       <Row>

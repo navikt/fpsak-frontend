@@ -178,25 +178,25 @@ export class VarselOmRevurderingFormImpl extends React.Component {
                   label={intl.formatMessage({ id: 'VarselOmRevurderingForm.BegrunnelseForSvar' })}
                   validate={[required, minLength3, hasValidText]}
                 />
-                <Hovedknapp
-                  mini
-                  htmlType="button"
-                  onClick={this.bekreftOgFortsettClicked}
-                  spinner={formProps.submitting}
-                  disabled={formProps.submitting}
-                >
-                  <FormattedMessage id="VarselOmRevurderingForm.Bekreft" />
-                </Hovedknapp>
               </div>
+              <VerticalSpacer sixteenPx />
+              <Hovedknapp
+                mini
+                htmlType="button"
+                onClick={this.bekreftOgFortsettClicked}
+                spinner={formProps.submitting}
+                disabled={formProps.submitting}
+              >
+                <FormattedMessage id="VarselOmRevurderingForm.Bekreft" />
+              </Hovedknapp>
             </div>
             )}
-        {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus))
-            && (
-            <div>
-              <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
-              <Normaltekst>{begrunnelse}</Normaltekst>
-            </div>
-            )}
+        {(readOnly || !isAksjonspunktOpen(aksjonspunktStatus)) && (
+          <div>
+            <Undertekst>{intl.formatMessage({ id: 'VarselOmRevurderingForm.Begrunnelse' })}</Undertekst>
+            <Normaltekst>{begrunnelse}</Normaltekst>
+          </div>
+        )}
         <SettBehandlingPaVentModal
           showModal={showSettPaVentModal}
           aksjonspunktKode={aksjonspunktKode}

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Column, Row } from 'nav-frontend-grid';
 import { injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { BorderBox } from '@fpsak-frontend/shared-components';
 import { DatepickerField } from '@fpsak-frontend/form';
@@ -22,7 +22,7 @@ const TerminFodselSvpPanel = ({
   intl,
 }) => (
   <BorderBox>
-    <Fieldset legend={intl.formatMessage({ id: 'TerminFodselSvpPanel.TerminOgFodsel' })}>
+    <SkjemaGruppe legend={intl.formatMessage({ id: 'TerminFodselSvpPanel.TerminOgFodsel' })}>
       <Row>
         <Column xs="2">
           <DatepickerField
@@ -41,7 +41,7 @@ const TerminFodselSvpPanel = ({
           />
         </Column>
       </Row>
-    </Fieldset>
+    </SkjemaGruppe>
   </BorderBox>
 );
 

@@ -7,7 +7,7 @@ import { getKodeverknavnFn } from '@fpsak-frontend/fp-felles';
 
 import History from './components/History';
 import historikkinnslagPropType from './propTypes/historikkinnslagPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

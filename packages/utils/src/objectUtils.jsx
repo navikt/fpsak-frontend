@@ -4,7 +4,7 @@ const throwError = (message) => {
 
 export const notNull = (value) => (value === undefined || value === null ? throwError(`Value is ${value}`) : value);
 
-export const isObjectEmpty = object => Object.keys(object).length === 0;
+export const isObjectEmpty = (object) => Object.keys(object).length === 0;
 
 export const isEqual = (obj1, obj2) => JSON.stringify(obj1) === JSON.stringify(obj2);
 

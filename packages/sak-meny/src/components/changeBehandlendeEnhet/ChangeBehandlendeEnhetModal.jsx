@@ -10,7 +10,7 @@ import Modal from 'nav-frontend-modal';
 
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { hasValidText, maxLength, required } from '@fpsak-frontend/utils';
-import { Image } from '@fpsak-frontend/shared-components';
+import { Image, VerticalSpacer } from '@fpsak-frontend/shared-components';
 import innvilgetImageUrl from '@fpsak-frontend/assets/images/innvilget_valgt.svg';
 
 import styles from './changeBehandlendeEnhetModal.less';
@@ -80,6 +80,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
           <Row>
             <Column xs="1" />
             <Column xs="8">
+              <VerticalSpacer eightPx />
               <TextAreaField
                 name="begrunnelse"
                 label={intl.formatMessage({ id: 'ChangeBehandlendeEnhetModal.BegrunnelseField' })}
@@ -91,6 +92,7 @@ export const ChangeBehandlendeEnhetModalImpl = ({
           <Row>
             <Column xs="1" />
             <Column xs="8">
+              <VerticalSpacer sixteenPx />
               <div className={styles.floatButtons}>
                 <Hovedknapp
                   mini

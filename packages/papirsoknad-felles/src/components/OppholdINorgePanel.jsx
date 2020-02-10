@@ -4,7 +4,7 @@ import { formValueSelector } from 'redux-form';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { Undertekst } from 'nav-frontend-typografi';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { NavFieldGroup, RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { isRequiredMessage } from '@fpsak-frontend/utils';
@@ -33,7 +33,7 @@ export const OppholdINorgePanelImpl = ({
 
   return (
     <BorderBox>
-      <Fieldset className={styles.fullWidth} legend={formatMessage({ id: 'Registrering.Opphold' })}>
+      <SkjemaGruppe className={styles.fullWidth} legend={formatMessage({ id: 'Registrering.Opphold' })}>
         <NavFieldGroup>
           {soknadData.getFamilieHendelseType() === familieHendelseType.ADOPSJON
           && (
@@ -95,7 +95,7 @@ export const OppholdINorgePanelImpl = ({
             )
             : null}
         </NavFieldGroup>
-      </Fieldset>
+      </SkjemaGruppe>
     </BorderBox>
   );
 };

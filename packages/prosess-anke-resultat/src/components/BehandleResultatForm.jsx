@@ -65,6 +65,7 @@ const ResultatAvvise = (resultat) => (
         ? 'Ankebehandling.Realitetsbehandles.Ja' : 'Ankebehandling.Realitetsbehandles.Nei'}
       />
     </Undertekst>
+    <VerticalSpacer sixteenPx />
     <Undertekst><FormattedMessage id="Ankebehandling.Resultat.Innstilling.Begrunnelse" /></Undertekst>
     <Undertekst>{resultat.ankevurderingresultat.begrunnelse}</Undertekst>
   </>

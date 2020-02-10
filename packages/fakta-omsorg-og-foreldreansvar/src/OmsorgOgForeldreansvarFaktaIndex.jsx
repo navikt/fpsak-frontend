@@ -9,7 +9,7 @@ import omsorgOgForeldrePersonopplysningerPropType from './propTypes/omsorgOgFore
 import omsorgOgForeldreFamilieHendelsePropType from './propTypes/omsorgOgForeldreFamilieHendelsePropType';
 import omsorgOgForeldreBehandlingPropType from './propTypes/omsorgOgForeldreBehandlingPropType';
 import omsorgOgForeldreSoknadPropType from './propTypes/omsorgOgForeldreSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

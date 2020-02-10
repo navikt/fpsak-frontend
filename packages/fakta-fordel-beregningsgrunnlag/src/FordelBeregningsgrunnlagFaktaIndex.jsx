@@ -6,7 +6,7 @@ import FordelBeregningsgrunnlagPanel from './components/FordelBeregningsgrunnlag
 import fordelBeregningsgrunnlagAksjonspunkterPropType from './propTypes/fordelBeregningsgrunnlagAksjonspunkterPropType';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import fordelBeregningsgrunnlagBehandlingPropType from './propTypes/fordelBeregningsgrunnlagBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

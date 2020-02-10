@@ -7,7 +7,7 @@ import TilbakekrevingVedtak from './components/TilbakekrevingVedtak';
 import vedtaksbrevPropType from './propTypes/vedtaksbrevPropType';
 import vedtakTilbakekrevingBehandlingPropType from './propTypes/vedtakTilbakekrevingBehandlingPropType';
 import vedtakTilbakekrevingBeregningsresultatPropType from './propTypes/vedtakTilbakekrevingBeregningsresultatPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

@@ -56,6 +56,7 @@ const AnkeMerknader = ({
           <TextAreaField readOnly={readOnly} readOnlyHideEmpty={false} label={{ id: 'Ankebehandling.Merknad.Merknader.Kommentarer' }} name="merknadKommentar" />
         </Column>
       </Row>
+      <VerticalSpacer sixteenPx />
       <Row>
         <Column xs="8">
           <BehandlingspunktSubmitButton

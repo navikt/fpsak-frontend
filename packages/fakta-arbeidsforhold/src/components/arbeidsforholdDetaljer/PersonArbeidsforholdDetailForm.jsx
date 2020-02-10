@@ -101,6 +101,7 @@ export const PersonArbeidsforholdDetailForm = ({
           behandlingId={behandlingId}
           behandlingVersjon={behandlingVersjon}
         />
+        <VerticalSpacer sixteenPx />
         { (formProps.initialValues.tilVurdering || formProps.initialValues.erEndret) && (
           <FlexContainer fluid>
             <FlexRow>

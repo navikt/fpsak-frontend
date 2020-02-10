@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import {
   BorderBox, FlexColumn, FlexContainer, FlexRow,
@@ -33,7 +33,7 @@ export const TilleggsopplysningerPanel = ({
     <FlexContainer>
       <FlexRow>
         <FlexColumn className={styles.halfWidth}>
-          <Fieldset legend={intl.formatMessage({ id: 'Registrering.SokerensTilleggsopplysninger' })}>
+          <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.SokerensTilleggsopplysninger' })}>
             <TextAreaField
               name="tilleggsopplysninger"
               label=""
@@ -41,10 +41,10 @@ export const TilleggsopplysningerPanel = ({
               validate={validate}
               readOnly={readOnly}
             />
-          </Fieldset>
+          </SkjemaGruppe>
         </FlexColumn>
         <FlexColumn>
-          <Fieldset legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
+          <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.Sprak' })}>
             <RadioGroupField
               name="språkkode"
               direction="vertical"
@@ -64,7 +64,7 @@ export const TilleggsopplysningerPanel = ({
                 value={sprakvalg.ENGELSK}
               />
             </RadioGroupField>
-          </Fieldset>
+          </SkjemaGruppe>
         </FlexColumn>
       </FlexRow>
     </FlexContainer>

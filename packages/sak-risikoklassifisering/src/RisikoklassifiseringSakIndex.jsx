@@ -8,7 +8,7 @@ import risikoklassifiseringPropType from './propTypes/risikoklassifiseringPropTy
 import ManglendeKlassifiseringPanel from './components/ManglendeKlassifiseringPanel';
 import IngenRisikoPanel from './components/IngenRisikoPanel';
 import HoyRisikoTittel from './components/HoyRisikoTittel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

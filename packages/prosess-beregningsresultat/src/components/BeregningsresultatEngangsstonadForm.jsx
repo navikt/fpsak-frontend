@@ -99,7 +99,9 @@ export const BeregningsresultatEngangsstonadFormImpl = ({
     {isOverstyrt
       && (
       <div>
+        <VerticalSpacer eightPx />
         <OverstyrBegrunnelsePanel isBeregningConfirmation overrideReadOnly={overrideReadOnly} />
+        <VerticalSpacer sixteenPx />
         <OverstyrBekreftKnappPanel
           submitting={formProps.submitting}
           pristine={formProps.pristine}

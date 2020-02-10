@@ -6,7 +6,7 @@ import sokersOpplysningspliktAksjonspunkterPropType from './propTypes/sokersOppl
 import sokersOpplysningspliktSoknadPropType from './propTypes/sokersOpplysningspliktSoknadPropType';
 import sokersOpplysningspliltBehandlingPropType from './propTypes/sokersOpplysningspliltBehandlingPropType';
 import SokersOpplysningspliktForm from './components/SokersOpplysningspliktForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

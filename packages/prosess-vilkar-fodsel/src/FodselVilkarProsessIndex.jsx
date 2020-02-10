@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import fodselVilkarAksjonspunkterPropType from './propTypes/fodselVilkarAksjonspunkterPropType';
 import fodselVilkarBehandlingPropType from './propTypes/fodselVilkarBehandlingPropType';
 import FodselVilkarForm from './components/FodselVilkarForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

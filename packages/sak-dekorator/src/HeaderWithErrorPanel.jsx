@@ -11,7 +11,7 @@ import UserPanel from '@navikt/nap-user-panel';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import ErrorMessagePanel from './ErrorMessagePanel';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 import styles from './headerWithErrorPanel.less';
 
