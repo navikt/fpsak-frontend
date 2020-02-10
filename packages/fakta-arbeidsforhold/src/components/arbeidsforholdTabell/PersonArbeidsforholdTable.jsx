@@ -34,6 +34,13 @@ const utledNavn = (arbeidsforhold) => {
     : `${arbeidsforhold.navn}(${arbeidsforhold.arbeidsgiverIdentifiktorGUI})`;
 };
 
+export const utledNøkkel = (arbeidsforhold) => {
+  if (arbeidsforhold.lagtTilAvSaksbehandler) {
+    return arbeidsforhold.navn;
+  }
+  return `${arbeidsforhold.eksternArbeidsforholdId}${arbeidsforhold.arbeidsforholdId}${arbeidsforhold.arbeidsgiverIdentifiktorGUI}`;
+};
+
 const PersonArbeidsforholdTable = ({
   alleArbeidsforhold,
   selectedId,
@@ -54,7 +61,7 @@ const PersonArbeidsforholdTable = ({
         const navn = utledNavn(a);
         return (
           <TableRow
-            key={navn}
+            key={utledNøkkel(a)}
             model={a}
             onMouseDown={selectArbeidsforholdCallback}
             onKeyDown={selectArbeidsforholdCallback}

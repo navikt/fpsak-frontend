@@ -5,7 +5,7 @@ import sinon from 'sinon';
 import {
   DateLabel, Image, PeriodLabel, Table, TableColumn, TableRow,
 } from '@fpsak-frontend/shared-components';
-import PersonArbeidsforholdTable from './PersonArbeidsforholdTable';
+import PersonArbeidsforholdTable, { utledNøkkel } from './PersonArbeidsforholdTable';
 import IngenArbeidsforholdRegistrert from './IngenArbeidsforholdRegistrert';
 import { mountWithIntl } from '../../../i18n/intl-enzyme-test-helper-fakta-arbeidsforhold';
 
@@ -214,5 +214,18 @@ describe('<PersonArbeidsforholdTable>', () => {
     />);
     const periodeLabel = wrapper.find(PeriodLabel);
     expect(periodeLabel.props().dateStringTom).to.eql('2018-10-10');
+  });
+  it('arbeidsforhold med samme navn og orgnr, en med arbeidsforholdId og en uten, skal få ulik nøkkel', () => {
+    const arbfor1 = { ...arbeidsforhold };
+    arbfor1.arbeidsforholdId = '123';
+    arbfor1.eksternArbeidsforholdId = null;
+
+    const arbfor2 = { ...arbeidsforhold };
+    arbfor2.arbeidsforholdId = null;
+    arbfor2.eksternArbeidsforholdId = null;
+
+    const nøkkel1 = utledNøkkel(arbfor1);
+    const nøkkel2 = utledNøkkel(arbfor2);
+    expect(nøkkel1).to.not.eql(nøkkel2);
   });
 });
