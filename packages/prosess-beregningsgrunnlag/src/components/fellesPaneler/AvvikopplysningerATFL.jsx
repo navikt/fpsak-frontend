@@ -8,7 +8,7 @@ import beregningStyles from '../beregningsgrunnlagPanel/beregningsgrunnlag_V2.le
 import styles from './avvikopplysningerPanel.less';
 
 
-const AvviksOpplysningerATFL = ({
+const AvvikopplysningerATFL = ({
   relevanteStatuser,
   beregnetAarsinntekt,
   sammenligningsgrunnlagSum,
@@ -96,7 +96,7 @@ const AvviksOpplysningerATFL = ({
     </FlexRow>
   </>
 );
-AvviksOpplysningerATFL.propTypes = {
+AvvikopplysningerATFL.propTypes = {
   beregnetAarsinntekt: PropTypes.number,
   relevanteStatuser: PropTypes.shape().isRequired,
   differanseBeregnet: PropTypes.number.isRequired,
@@ -105,7 +105,7 @@ AvviksOpplysningerATFL.propTypes = {
   visPanel: PropTypes.shape().isRequired,
 };
 
-AvviksOpplysningerATFL.defaultProps = {
+AvvikopplysningerATFL.defaultProps = {
   beregnetAarsinntekt: undefined,
 };
-export default AvviksOpplysningerATFL;
+export default AvvikopplysningerATFL;

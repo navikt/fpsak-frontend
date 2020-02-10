@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { Normaltekst } from 'nav-frontend-typografi';
 import { FlexRow } from '@fpsak-frontend/shared-components';
 import { Column } from 'nav-frontend-grid';
-import AvviksOpplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
+import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerFL = ({
   relevanteStatuser, sammenligningsgrunnlagPrStatus, beregnetAarsinntekt,
@@ -42,7 +42,7 @@ const AvviksopplysningerFL = ({
 
   if (sammenligningsgrunnlagSumFL) {
     return (
-      <AvviksOpplysningerATFL
+      <AvvikopplysningerATFL
         beregnetAarsinntekt={beregnetAarsinntekt}
         avvikProsentAvrundet={avvikRoundedFL}
         differanseBeregnet={differanseBeregnet}

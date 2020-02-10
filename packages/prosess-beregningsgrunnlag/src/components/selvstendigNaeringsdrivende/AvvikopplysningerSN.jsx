@@ -6,7 +6,7 @@ import { Column } from 'nav-frontend-grid';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { FlexRow } from '@fpsak-frontend/shared-components';
 
-import AvviksOpplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
+import AvvikopplysningerATFL from '../fellesPaneler/AvvikopplysningerATFL';
 
 const AvviksopplysningerSN = ({
   sammenligningsgrunnlagPrStatus, alleAndelerIForstePeriode, harAksjonspunkter,
@@ -69,7 +69,7 @@ const AvviksopplysningerSN = ({
   }
   if (sammenligningsgrunnlagSumSN) {
     return (
-      <AvviksOpplysningerATFL
+      <AvvikopplysningerATFL
         beregnetAarsinntekt={pgiSnitt}
         avvikProsentAvrundet={avvikRoundedSN}
         differanseBeregnet={differanseBeregnet}

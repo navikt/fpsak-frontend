@@ -2,7 +2,7 @@ import React from 'react';
 import { shallowWithIntl } from '@fpsak-frontend/utils-test/src/intl-enzyme-test-helper';
 import { expect } from 'chai';
 import { formatCurrencyNoKr } from '@fpsak-frontend/utils';
-import AvviksOpplysningerATFL from './AvvikopplysningerATFL';
+import AvvikopplysningerATFL from './AvvikopplysningerATFL';
 
 const beregnetAarsinntekt = 360000;
 const sammenligningsgrunnlag = (kode) => ({
@@ -26,7 +26,7 @@ const sammenligningsgrunnlagSum = 23466;
 describe('<AvviksOpplysningerATFL>', () => {
   it('Skal teste tabellen får korrekte rader med innhold med status:SAMMENLIGNING_FL', () => {
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_FL');
-    const wrapper = shallowWithIntl(<AvviksOpplysningerATFL
+    const wrapper = shallowWithIntl(<AvvikopplysningerATFL
       beregnetAarsinntekt={beregnetAarsinntekt}
       avvikProsentAvrundet={avvikRounded}
       differanseBeregnet={12100}
@@ -62,7 +62,7 @@ describe('<AvviksOpplysningerATFL>', () => {
     visPaneler.visAT = true;
     visPaneler.visFL = false;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_ATFL_SN');
-    const wrapper = shallowWithIntl(<AvviksOpplysningerATFL
+    const wrapper = shallowWithIntl(<AvvikopplysningerATFL
       beregnetAarsinntekt={beregnetAarsinntekt}
       avvikProsentAvrundet={avvikRounded}
       differanseBeregnet={12100}
@@ -98,7 +98,7 @@ describe('<AvviksOpplysningerATFL>', () => {
     visPaneler.visFL = false;
     visPaneler.visSN = true;
     const sammenligningsgrunnlagPrStatus = sammenligningsgrunnlag('SAMMENLIGNING_SN');
-    const wrapper = shallowWithIntl(<AvviksOpplysningerATFL
+    const wrapper = shallowWithIntl(<AvvikopplysningerATFL
       beregnetAarsinntekt={beregnetAarsinntekt}
       avvikProsentAvrundet={avvikRounded}
       differanseBeregnet={12100}
