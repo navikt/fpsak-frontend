@@ -4,7 +4,7 @@ import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Hovedknapp } from 'nav-frontend-knapper';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { ariaCheck, hasValidText, maxLength } from '@fpsak-frontend/utils';
 import {
@@ -50,7 +50,7 @@ export class LagreSoknadPanel extends Component {
         <FlexContainer fluid>
           <FlexRow>
             <FlexColumn className={styles.fullWidth}>
-              <Fieldset legend={intl.formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
+              <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.SaveApplication.Title' })}>
                 <FlexRow>
                   <FlexColumn className={styles.halfWidth}>
                     <TextAreaField
@@ -101,7 +101,7 @@ export class LagreSoknadPanel extends Component {
                     </Hovedknapp>
                   </FlexColumn>
                 </FlexRow>
-              </Fieldset>
+              </SkjemaGruppe>
               <LukkPapirsoknadModal
                 handleSubmit={onSubmitUfullstendigsoknad}
                 showModal={showLukkSoknadModal}

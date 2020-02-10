@@ -53,6 +53,7 @@ export const AnnenForelderHarRettForm = ({
             maxLength={4000}
           />
         </div>
+        <VerticalSpacer sixteenPx />
         <FaktaSubmitButton
           formName={formProps.form}
           isSubmittable={!readOnly}

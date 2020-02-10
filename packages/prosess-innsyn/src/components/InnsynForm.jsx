@@ -66,6 +66,7 @@ export const InnsynFormImpl = ({
       <VerticalSpacer twentyPx />
       <DocumentListInnsyn saksNr={saksNr} documents={documents} readOnly={readOnly} />
       <BehandlingspunktBegrunnelseTextField readOnly={readOnly} />
+      <VerticalSpacer sixteenPx />
       <RadioGroupField
         name="innsynResultatType"
         validate={[required]}

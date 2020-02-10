@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
-
 import beregningsgrunnlagBehandlingPropType from './propTypes/beregningsgrunnlagBehandlingPropType';
 import beregningsgrunnlagAksjonspunkterPropType from './propTypes/beregningsgrunnlagAksjonspunkterPropType';
 import BeregningFP2 from './components/BeregningFP_V2';
 
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
@@ -25,6 +24,7 @@ const BeregningsgrunnlagProsessIndex = ({
   isAksjonspunktOpen,
   vilkar,
   alleKodeverk,
+
 }) => (
   <RawIntlProvider value={intl}>
     <BeregningFP2

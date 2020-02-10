@@ -8,7 +8,7 @@ import BehandlingMenu from './components/BehandlingMenu';
 import MenyKodeverk from './MenyKodeverk';
 import MenyBehandlingData from './MenyBehandlingData';
 import MenyRettigheter from './MenyRettigheter';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

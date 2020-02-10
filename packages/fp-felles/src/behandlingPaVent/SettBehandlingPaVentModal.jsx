@@ -114,7 +114,7 @@ export const SettBehandlingPaVentModal = ({
         </Row>
         <VerticalSpacer eightPx />
         <Row>
-          <Column xs="7" />
+          <Column xs="6" />
           <Column>
             <Hovedknapp
               mini

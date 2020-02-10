@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import { Element, Normaltekst } from 'nav-frontend-typografi';
 import { Column, Row } from 'nav-frontend-grid';
 
-import { AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper } from '@fpsak-frontend/shared-components';
+import {
+  AksjonspunktHelpTextTemp, EditedIcon, ElementWrapper, VerticalSpacer,
+} from '@fpsak-frontend/shared-components';
 import aksjonspunktCodes from '@fpsak-frontend/kodeverk/src/aksjonspunktCodes';
 import { SelectField } from '@fpsak-frontend/form';
 import { hasValidInteger, isObjectEmpty, required } from '@fpsak-frontend/utils';
@@ -133,6 +135,7 @@ const OmsorgOgForeldreansvarFaktaFormImpl = ({
               && <EditedIcon />}
           </div>
           )}
+        <VerticalSpacer eightPx />
         <Normaltekst>
           {getDescriptionText(vilkarType)}
         </Normaltekst>

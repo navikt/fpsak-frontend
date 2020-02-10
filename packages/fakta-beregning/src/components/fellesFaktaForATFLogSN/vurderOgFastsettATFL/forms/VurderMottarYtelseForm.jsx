@@ -9,7 +9,6 @@ import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { removeSpacesFromNumber, required } from '@fpsak-frontend/utils';
 import aktivitetStatus from '@fpsak-frontend/kodeverk/src/aktivitetStatus';
 import { VerticalSpacer } from '@fpsak-frontend/shared-components';
-import { createVisningsnavnForAktivitet } from '@fpsak-frontend/fp-felles';
 import faktaOmBeregningTilfelle from '@fpsak-frontend/kodeverk/src/faktaOmBeregningTilfelle';
 import {
   andelsnrMottarYtelseMap,
@@ -18,6 +17,7 @@ import {
   skalFastsetteInntektATUtenInntektsmelding,
   utledArbeidsforholdFieldName,
 } from './VurderMottarYtelseUtils';
+import { createVisningsnavnForAktivitet } from '../../../ArbeidsforholdHelper';
 
 
 const andreFrilansTilfeller = [faktaOmBeregningTilfelle.VURDER_NYOPPSTARTET_FL, faktaOmBeregningTilfelle.VURDER_AT_OG_FL_I_SAMME_ORGANISASJON];

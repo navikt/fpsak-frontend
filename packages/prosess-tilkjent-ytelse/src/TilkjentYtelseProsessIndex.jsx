@@ -10,7 +10,7 @@ import tilkjentYtelseFamilieHendelsePropType from './propTypes/tilkjentYtelseFam
 import tilkjentYtelsePersonopplysningerPropType from './propTypes/tilkjentYtelsePersonopplysningerPropType';
 import tilkjentYtelseSoknadPropType from './propTypes/tilkjentYtelseSoknadPropType';
 import TilkjentYtelsePanel from './components/TilkjentYtelsePanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
