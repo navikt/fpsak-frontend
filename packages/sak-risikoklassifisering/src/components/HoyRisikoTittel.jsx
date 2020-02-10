@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { EkspanderbartpanelBase } from 'nav-frontend-ekspanderbartpanel';
+import { EkspanderbartpanelBasePure } from 'nav-frontend-ekspanderbartpanel';
 
 import risikoIkon from '@fpsak-frontend/assets/images/avslaatt_hover.svg';
 
@@ -26,8 +26,7 @@ const HoyRisikoTittel = ({
   behandlingId,
   behandlingVersjon,
 }) => (
-  <EkspanderbartpanelBase
-    key={isRiskPanelOpen}
+  <EkspanderbartpanelBasePure
     className={styles.hoyRisikoPanelTittel}
     apen={isRiskPanelOpen}
     onClick={toggleRiskPanel}
@@ -47,7 +46,7 @@ const HoyRisikoTittel = ({
       behandlingId={behandlingId}
       behandlingVersjon={behandlingVersjon}
     />
-  </EkspanderbartpanelBase>
+  </EkspanderbartpanelBasePure>
 );
 HoyRisikoTittel.propTypes = {
   risikoklassifisering: risikoklassifiseringPropType.isRequired,
