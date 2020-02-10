@@ -8,6 +8,7 @@ import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import TilbakekrevingVedtakUtdypendeTekstPanel from './TilbakekrevingVedtakUtdypendeTekstPanel';
 import vedtaksbrevAvsnittPropType from '../../propTypes/vedtaksbrevAvsnittPropType';
+import underavsnittType from '../../kodeverk/avsnittType';
 
 import styles from './tilbakekrevingEditerVedtaksbrevPanel.less';
 
@@ -18,6 +19,7 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
   behandlingId,
   behandlingVersjon,
   perioderSomIkkeHarUtfyltObligatoriskVerdi,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt,
 }) => (
   <div className={styles.container}>
     <VerticalSpacer twentyPx />
@@ -29,13 +31,14 @@ const TilbakekrevingEditerVedtaksbrevPanel = ({
       const underavsnitter = avsnitt.underavsnittsliste;
       const periode = `${avsnitt.fom}_${avsnitt.tom}`;
       const harPeriodeSomManglerObligatoriskVerdi = perioderSomIkkeHarUtfyltObligatoriskVerdi.some((p) => p === periode);
+      const visApen = avsnitt.avsnittstype === underavsnittType.OPPSUMMERING && fritekstOppsummeringPakrevdMenIkkeUtfylt;
       return (
         <React.Fragment key={avsnitt.avsnittstype + avsnitt.fom}>
           <Ekspanderbartpanel
             className={harPeriodeSomManglerObligatoriskVerdi ? styles.panelMedGulmarkering : styles.panel}
             tittel={avsnitt.overskrift ? avsnitt.overskrift : ''}
             tag="h2"
-            apen={harPeriodeSomManglerObligatoriskVerdi}
+            apen={harPeriodeSomManglerObligatoriskVerdi || visApen}
           >
             {underavsnitter.map((underavsnitt) => (
               <React.Fragment key={underavsnitt.underavsnittstype + underavsnitt.overskrift + underavsnitt.brødtekst}>
@@ -80,6 +83,11 @@ TilbakekrevingEditerVedtaksbrevPanel.propTypes = {
   behandlingId: PropTypes.number.isRequired,
   behandlingVersjon: PropTypes.number.isRequired,
   perioderSomIkkeHarUtfyltObligatoriskVerdi: PropTypes.arrayOf(PropTypes.string).isRequired,
+  fritekstOppsummeringPakrevdMenIkkeUtfylt: PropTypes.bool,
+};
+
+TilbakekrevingEditerVedtaksbrevPanel.defaultProps = {
+  fritekstOppsummeringPakrevdMenIkkeUtfylt: false,
 };
 
 TilbakekrevingEditerVedtaksbrevPanel.buildInitialValues = (vedtaksbrevAvsnitt) => vedtaksbrevAvsnitt

@@ -5,8 +5,10 @@ import sinon from 'sinon';
 
 import { BehandlingIdentifier, BehandlingspunktSubmitButton } from '@fpsak-frontend/fp-felles';
 
+import { FlexColumn } from '@fpsak-frontend/shared-components';
 import TilbakekrevingEditerVedtaksbrevPanel from './brev/TilbakekrevingEditerVedtaksbrevPanel';
 import { TilbakekrevingVedtakFormImpl as TilbakekrevingVedtakForm } from './TilbakekrevingVedtakForm';
+import underavsnittType from '../kodeverk/avsnittType';
 
 describe('<TilbakekrevingVedtakForm>', () => {
   it('skal vise tekstfelt for begrunnelse og godkjenningsknapp', () => {
@@ -106,5 +108,42 @@ describe('<TilbakekrevingVedtakForm>', () => {
     expect(knapp).to.have.length(1);
     expect(knapp.prop('isSubmittable')).is.false;
     expect(wrapper.find('a')).to.have.length(0);
+  });
+
+  it('skal ikke vise trykkbar godkjenningsknapp og forhåndsvisningslenke når obligatorisk oppsummering for revurdering tilbakekreving ikke er utfylt', () => {
+    const wrapper = shallow(<TilbakekrevingVedtakForm
+      submitCallback={sinon.spy()}
+      readOnly={false}
+      readOnlySubmitButton={false}
+      fetchPreviewVedtaksbrev={sinon.spy()}
+      behandlingIdentifier={new BehandlingIdentifier(1, 2)}
+      formVerdier={{}}
+      vedtaksbrevAvsnitt={[{
+        avsnittstype: 'test',
+        overskrift: 'Dette er en overskrift',
+        underavsnittsliste: [{
+          fritekstTillatt: false,
+        }],
+      }, {
+        avsnittstype: underavsnittType.OPPSUMMERING,
+        overskrift: 'Dette er en overskrift',
+        underavsnittsliste: [{
+          fritekstTillatt: false,
+          fritekstPåkrevet: true,
+        }],
+      }]}
+      behandlingId={1}
+      behandlingVersjon={1}
+      perioderSomIkkeHarUtfyltObligatoriskVerdi={[]}
+      erRevurderingTilbakekrevingKlage
+      fritekstOppsummeringPakrevdMenIkkeUtfylt
+    />);
+
+    const knapp = wrapper.find(BehandlingspunktSubmitButton);
+    expect(knapp).to.have.length(1);
+    expect(knapp.prop('isSubmittable')).is.false;
+    expect(wrapper.find('a')).to.have.length(1);
+    const flexColumns = wrapper.find(FlexColumn);
+    expect(flexColumns).to.have.length(5);
   });
 });
