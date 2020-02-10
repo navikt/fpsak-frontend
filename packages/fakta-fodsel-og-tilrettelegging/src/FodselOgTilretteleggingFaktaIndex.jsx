@@ -7,7 +7,7 @@ import fodselOgTilretteleggingAksjonspunkterPropType from './propTypes/fodselOgT
 import fodselOgTilretteleggingBehandlingPropType from './propTypes/fodselOgTilretteleggingBehandlingPropType';
 import fodselOgTilretteleggingPropType from './propTypes/fodselOgTilretteleggingPropType';
 import fodselOgTilretteleggingInntektArbeidYtelsePropType from './propTypes/fodselOgTilretteleggingInntektArbeidYtelsePropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

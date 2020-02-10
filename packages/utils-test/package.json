@@ -9,9 +9,9 @@
     "@fpsak-frontend/kodeverk": "1.0.0",
     "@fpsak-frontend/rest-api": "1.0.0",
     "@fpsak-frontend/rest-api-redux": "1.0.0",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.12.0",
-    "react-intl": "^3.6.2"
+    "react-intl": "^3.12.0"
   }
 }

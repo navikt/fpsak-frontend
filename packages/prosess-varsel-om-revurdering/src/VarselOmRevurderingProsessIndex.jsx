@@ -7,7 +7,7 @@ import revurderingAksjonspunkterPropType from './propTypes/revurderingAksjonspun
 import revurderingFamilieHendelsePropType from './propTypes/revurderingFamilieHendelsePropType';
 import revurderingSoknadPropType from './propTypes/revurderingSoknadPropType';
 import VarselOmRevurderingForm from './components/VarselOmRevurderingForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

@@ -6,7 +6,7 @@ import RegistrereVergeInfoPanel from './components/RegistrereVergeInfoPanel';
 import vergeAksjonspunkterPropType from './propTypes/vergeAksjonspunkterPropType';
 import vergeVergePropType from './propTypes/vergeVergePropType';
 import vergeBehandlingPropType from './propTypes/vergeBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
