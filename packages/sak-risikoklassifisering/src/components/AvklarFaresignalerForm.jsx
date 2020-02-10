@@ -52,6 +52,7 @@ export const AvklarFaresignalerForm = ({
           />
         </FlexColumn>
       </FlexRow>
+      <VerticalSpacer sixteenPx />
       <FlexRow>
         <FlexColumn>
           <Normaltekst><FormattedMessage id="Risikopanel.Form.Resultat" /></Normaltekst>

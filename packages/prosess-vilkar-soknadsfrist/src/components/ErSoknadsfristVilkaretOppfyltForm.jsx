@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Panel from 'nav-frontend-paneler';
 import { Column, Row } from 'nav-frontend-grid';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 import { Normaltekst, Undertekst, Undertittel } from 'nav-frontend-typografi';
 
 import kodeverkTyper from '@fpsak-frontend/kodeverk/src/kodeverkTyper';
@@ -68,21 +68,20 @@ export const ErSoknadsfristVilkaretOppfyltFormImpl = ({
         <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart2" values={{ numberOfDays: antallDagerSoknadLevertForSent }} />
       </span>
       <FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.ApplicationReceivedPart3" />
-      (
-      {(soknad.mottattDato && antallDagerSoknadLevertForSent)
-        && <DateLabel dateString={findSoknadsfristDate(soknad.mottattDato, antallDagerSoknadLevertForSent)} />}
-)
+      {soknad.mottattDato && antallDagerSoknadLevertForSent && (
+        <DateLabel dateString={findSoknadsfristDate(soknad.mottattDato, antallDagerSoknadLevertForSent)} />
+      )}
     </span>
     <Row>
       <Column xs="6">
         <Panel className={styles.panel}>
-          <Fieldset legend={intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Consider' })}>
+          <SkjemaGruppe legend={intl.formatMessage({ id: 'ErSoknadsfristVilkaretOppfyltForm.Consider' })}>
             <ul className={styles.hyphen}>
               <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question1" /></li>
               <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question2" /></li>
               <li><FormattedMessage id="ErSoknadsfristVilkaretOppfyltForm.Question3" /></li>
             </ul>
-          </Fieldset>
+          </SkjemaGruppe>
         </Panel>
       </Column>
       <Column xs="6">
