@@ -102,6 +102,7 @@ module.exports = async ({ config, mode }) => {
     test: /\.(jpg|png|svg)$/,
     loader: 'file-loader',
     options: {
+      esModule: false,
       name: '[name]_[hash].[ext]',
     },
     include: [IMAGE_DIR],

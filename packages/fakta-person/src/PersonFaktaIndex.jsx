@@ -9,7 +9,7 @@ import personInntektArbeidYtelsePropType from './propTypes/personInntektArbeidYt
 import personFagsakPersonPropType from './propTypes/personFagsakPersonPropType';
 import personPersonopplysningerPropType from './propTypes/personPersonopplysningerPropType';
 import personBehandlingPropType from './propTypes/personBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

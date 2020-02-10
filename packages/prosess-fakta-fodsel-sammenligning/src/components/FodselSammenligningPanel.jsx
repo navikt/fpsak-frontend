@@ -103,7 +103,7 @@ export const FodselSammenligningPanel = ({
       <Row>
         <Column xs="12" className={styles.noChildrenInTps}>
           <Normaltekst>
-          -
+            -
           </Normaltekst>
         </Column>
       </Row>

@@ -6,7 +6,7 @@ import BeregningInfoPanel from './components/BeregningInfoPanel';
 import beregningsgrunnlagPropType from './propTypes/beregningsgrunnlagPropType';
 import beregningAksjonspunkterPropType from './propTypes/beregningAksjonspunkterPropType';
 import beregningBehandlingPropType from './propTypes/beregningBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

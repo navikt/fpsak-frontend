@@ -6,7 +6,7 @@ import TilleggsopplysningerInfoPanel from './components/TilleggsopplysningerInfo
 import tilleggsopplysningerAksjonspunkterPropType from './propTypes/tilleggsopplysningerAksjonspunkterPropType';
 import tilleggsopplysningerBehandlingPropType from './propTypes/tilleggsopplysningerBehandlingPropType';
 import tilleggsopplysningerSoknadPropType from './propTypes/tilleggsopplysningerSoknadPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

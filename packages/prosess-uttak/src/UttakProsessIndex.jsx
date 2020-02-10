@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import UttakPanel from './components/UttakPanel';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 import uttakFagsakPropType from './propTypes/uttakFagsakPropType';
 import uttakBehandlingPropType from './propTypes/uttakBehandlingPropType';
 import uttakAksjonspunkterPropType from './propTypes/uttakAksjonspunkterPropType';

@@ -7,7 +7,7 @@ import { FieldArray, FormSection, formValueSelector } from 'redux-form';
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BorderBox, ElementWrapper } from '@fpsak-frontend/shared-components';
 import { arrayMinLength, required } from '@fpsak-frontend/utils';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import RegistrerVirksomhetPanel from './RegistrerVirksomhetPanel';
 
@@ -36,7 +36,7 @@ export const EgenVirksomhetPanel = ({
 }) => (
   <FormSection name={EGEN_VIRKSOMHET_FORM_NAME_PREFIX}>
     <BorderBox>
-      <Fieldset legend={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Title' })}>
+      <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.Title' })}>
         <div className={styles.flexContainer}>
           <RadioGroupField name={harArbeidetIEgenVirksomhetName} validate={[required]} direction="vertical" readOnly={readOnly}>
             <RadioOption label={intl.formatMessage({ id: 'Registrering.EgenVirksomhet.No' })} value={false} />
@@ -58,7 +58,7 @@ export const EgenVirksomhetPanel = ({
         />
         )}
         </ElementWrapper>
-      </Fieldset>
+      </SkjemaGruppe>
     </BorderBox>
   </FormSection>
 );

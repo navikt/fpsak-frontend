@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import BehandlingPicker from './components/BehandlingPicker';
 import behandlingVelgerBehandlingPropType from './propTypes/behandlingVelgerBehandlingPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

@@ -133,6 +133,7 @@ const lagRelevantePaneler = (
 const harRelevanteStatuserSatt = (relevanteStatuser) => {
   const statuser = relevanteStatuser;
   delete statuser.skalViseBeregningsgrunnlag;
+  delete statuser.harAndreTilstotendeYtelser;
   const statusVerdier = Object.values(statuser);
   return statusVerdier.some((verdi) => verdi === true);
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption } from '@fpsak-frontend/form';
 import { BorderBox } from '@fpsak-frontend/shared-components';
@@ -31,7 +31,7 @@ export const RettigheterPanel = ({
   soknadData,
 }) => (
   <BorderBox>
-    <Fieldset legend={intl.formatMessage({ id: 'Registrering.Rettigheter.Title' })}>
+    <SkjemaGruppe legend={intl.formatMessage({ id: 'Registrering.Rettigheter.Title' })}>
       <RadioGroupField name="rettigheter" direction="vertical" readOnly={readOnly}>
         <RadioOption
           className={styles.breakLabelText}
@@ -57,7 +57,7 @@ export const RettigheterPanel = ({
           value={rettighet.IKKE_RELEVANT}
         />
       </RadioGroupField>
-    </Fieldset>
+    </SkjemaGruppe>
   </BorderBox>
 );
 

@@ -14,6 +14,7 @@ import {
 import ugunstAarsakTyper from '@fpsak-frontend/kodeverk/src/ugunstAarsakTyper';
 import { SelectField, TextAreaField } from '@fpsak-frontend/form';
 import { behandlingForm, behandlingFormValueSelector } from '@fpsak-frontend/fp-felles';
+import { VerticalSpacer } from '@fpsak-frontend/shared-components';
 
 import styles from './messages.less';
 
@@ -74,6 +75,7 @@ export const MessagesImpl = ({
         selectValues={recipients.map((recipient) => <option key={recipient} value={recipient}>{recipient}</option>)}
         bredde="xxl"
       />
+      <VerticalSpacer eightPx />
       <SelectField
         name="brevmalkode"
         label={intl.formatMessage({ id: 'Messages.Template' })}
@@ -82,28 +84,32 @@ export const MessagesImpl = ({
         selectValues={templates.map((template) => <option key={template.kode} value={template.kode} disabled={!template.tilgjengelig}>{template.navn}</option>)}
         bredde="xxl"
       />
-      {brevmalkode === dokumentMalType.REVURDERING_DOK
-      && (
-      <SelectField
-        name="arsakskode"
-        label={intl.formatMessage({ id: 'Messages.Årsak' })}
-        validate={[required]}
-        placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
-        selectValues={causes.map((cause) => <option key={cause.kode} value={cause.kode}>{cause.navn}</option>)}
-        bredde="xxl"
-      />
+      {brevmalkode === dokumentMalType.REVURDERING_DOK && (
+        <>
+          <VerticalSpacer eightPx />
+          <SelectField
+            name="arsakskode"
+            label={intl.formatMessage({ id: 'Messages.Årsak' })}
+            validate={[required]}
+            placeholder={intl.formatMessage({ id: 'Messages.VelgÅrsak' })}
+            selectValues={causes.map((cause) => <option key={cause.kode} value={cause.kode}>{cause.navn}</option>)}
+            bredde="xxl"
+          />
+        </>
       )}
-      {showFritekst(brevmalkode, arsakskode)
-      && (
-      <div className="input--xxl">
-        <TextAreaField
-          name="fritekst"
-          label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
-          validate={[required, maxLength4000, minLength3, hasValidText]}
-          maxLength={4000}
-          badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
-        />
-      </div>
+      {showFritekst(brevmalkode, arsakskode) && (
+        <>
+          <VerticalSpacer eightPx />
+          <div className="input--xxl">
+            <TextAreaField
+              name="fritekst"
+              label={intl.formatMessage({ id: getFritekstMessage(brevmalkode) })}
+              validate={[required, maxLength4000, minLength3, hasValidText]}
+              maxLength={4000}
+              badges={[{ type: 'fokus', textId: languageCode, title: 'Messages.Beskrivelse' }]}
+            />
+          </div>
+        </>
       )}
       <div className={styles.buttonRow}>
         <Hovedknapp mini spinner={formProps.submitting} disabled={formProps.submitting} onClick={ariaCheck}>

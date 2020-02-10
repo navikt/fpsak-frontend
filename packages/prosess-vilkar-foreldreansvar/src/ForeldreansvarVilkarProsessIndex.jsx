@@ -5,7 +5,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 import foreldreansvarVilkarAksjonspunkterPropType from './propTypes/foreldreansvarVilkarAksjonspunkterPropType';
 import foreldreansvarVilkarBehandlingPropType from './propTypes/foreldreansvarVilkarBehandlingPropType';
 import ErForeldreansvarVilkaarOppfyltForm from './components/ErForeldreansvarVilkaarOppfyltForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 
