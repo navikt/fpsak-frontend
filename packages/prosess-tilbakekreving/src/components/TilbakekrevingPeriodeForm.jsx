@@ -223,6 +223,7 @@ export class TilbakekrevingPeriodeFormImpl extends Component {
                       maxLength={1500}
                       readOnly={readOnly}
                     />
+                    <VerticalSpacer eightPx />
                     <FormSection name={valgtVilkarResultatType}>
                       {valgtVilkarResultatType === VilkarResultat.GOD_TRO && (
                         <BelopetMottattIGodTroFormPanel readOnly={readOnly} erBelopetIBehold={erBelopetIBehold} />

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { injectIntl } from 'react-intl';
 import { formValueSelector, FieldArray } from 'redux-form';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import { RadioGroupField, RadioOption, DatepickerField } from '@fpsak-frontend/form';
 import { BorderBox, ArrowBox } from '@fpsak-frontend/shared-components';
@@ -29,7 +29,7 @@ export const BehovForTilretteleggingPanelImpl = ({
   intl,
 }) => (
   <BorderBox>
-    <Fieldset legend={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.BehovForTilrettelegging' })}>
+    <SkjemaGruppe legend={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.BehovForTilrettelegging' })}>
       <RadioGroupField
         name="sokForSelvstendigNaringsdrivende"
         label={intl.formatMessage({ id: 'BehovForTilretteleggingPanel.SokForSelvstendigNaringsdrivende' })}
@@ -96,7 +96,7 @@ export const BehovForTilretteleggingPanelImpl = ({
           />
         </ArrowBox>
       )}
-    </Fieldset>
+    </SkjemaGruppe>
   </BorderBox>
 );
 

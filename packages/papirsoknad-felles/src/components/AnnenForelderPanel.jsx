@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { FormSection, formValueSelector } from 'redux-form';
-import { Fieldset } from 'nav-frontend-skjema';
+import { SkjemaGruppe } from 'nav-frontend-skjema';
 
 import kanIkkeOppgiAnnenForelderArsaker from '@fpsak-frontend/kodeverk/src/kanIkkeOppgiAnnenForelderArsak';
 import {
@@ -80,7 +80,7 @@ export const AnnenForelderPanelImpl = ({
   const sortedCountriesByName = countryCodes.slice().sort((a, b) => a.navn.localeCompare(b.navn));
   return (
     <BorderBox>
-      <Fieldset legend={formatMessage({ id: 'Registrering.TheOtherParent.Title' })}>
+      <SkjemaGruppe legend={formatMessage({ id: 'Registrering.TheOtherParent.Title' })}>
         <InputField
           name="foedselsnummer"
           label={formatMessage({ id: 'Registrering.TheOtherParent.Fodselsnummer' })}
@@ -108,7 +108,7 @@ export const AnnenForelderPanelImpl = ({
           </ArrowBox>
         )}
         {permisjonRettigheterPanel}
-      </Fieldset>
+      </SkjemaGruppe>
     </BorderBox>
   );
 };

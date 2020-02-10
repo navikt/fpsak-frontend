@@ -4,7 +4,7 @@ import { createIntl, createIntlCache, RawIntlProvider } from 'react-intl';
 
 import FagsakSearch from './components/FagsakSearch';
 import sakSokFagsakPropType from './propTypes/sakSokFagsakPropType';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

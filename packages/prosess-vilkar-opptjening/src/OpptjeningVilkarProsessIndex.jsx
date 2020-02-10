@@ -6,7 +6,7 @@ import opptjeningVilkarAksjonspunkterPropType from './propTypes/opptjeningVilkar
 import opptjeningVilkarBehandlingPropType from './propTypes/opptjeningVilkarBehandlingPropType';
 import opptjeningVilkarOpptjeningPropType from './propTypes/opptjeningVilkarOpptjeningPropType';
 import OpptjeningVilkarForm from './components/OpptjeningVilkarForm';
-import messages from '../i18n/nb_NO';
+import messages from '../i18n/nb_NO.json';
 
 const cache = createIntlCache();
 

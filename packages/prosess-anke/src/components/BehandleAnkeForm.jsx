@@ -153,6 +153,7 @@ const BehandleAnkeFormImpl = ({
           />
         </Column>
       </Row>
+
       <Normaltekst><FormattedMessage id="Ankebehandling.Resultat" /></Normaltekst>
       <Row>
         <Column xs="4">
@@ -247,6 +248,7 @@ const BehandleAnkeFormImpl = ({
           readOnly={readOnly}
           intl={intl}
         />
+        <VerticalSpacer sixteenPx />
         <Row>
           <Column xs="8">
             <BehandlingspunktSubmitButton

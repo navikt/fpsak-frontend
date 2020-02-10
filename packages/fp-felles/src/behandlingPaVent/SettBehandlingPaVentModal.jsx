@@ -98,7 +98,8 @@ export const SettBehandlingPaVentModal = ({
               label={intl.formatMessage({ id: 'SettBehandlingPaVentModal.Arsak' })}
               placeholder={intl.formatMessage({ id: 'SettBehandlingPaVentModal.SelectPlaceholder' })}
               validate={[required]}
-              selectValues={ventearsaker.map((ventearsak) => <option key={ventearsak.kode} value={ventearsak.kode}>{ventearsak.navn}</option>)}
+              selectValues={ventearsaker.sort((v1, v2) => v1.navn.localeCompare(v2.navn))
+                .map((ventearsak) => <option key={ventearsak.kode} value={ventearsak.kode}>{ventearsak.navn}</option>)}
               bredde="xxl"
               readOnly={!hasManualPaVent}
             />
@@ -113,7 +114,7 @@ export const SettBehandlingPaVentModal = ({
         </Row>
         <VerticalSpacer eightPx />
         <Row>
-          <Column xs="7" />
+          <Column xs="6" />
           <Column>
             <Hovedknapp
               mini
