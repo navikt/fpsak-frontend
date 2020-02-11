@@ -305,13 +305,14 @@ const prosessStegPanelDefinisjoner = [{
     endpoints: [api.TILBAKEKREVINGVALG, api.SEND_VARSEL_OM_REVURDERING, api.BEREGNINGSRESULTAT_ORIGINAL_BEHANDLING, api.MEDLEMSKAP],
     renderComponent: (props) => <VedtakProsessIndex {...props} />,
     getData: ({
-      previewCallback, rettigheter, aksjonspunkter, vilkar, beregningresultatForeldrepenger, simuleringResultat,
+      previewCallback, rettigheter, aksjonspunkter, vilkar, beregningresultatForeldrepenger, simuleringResultat, beregningsgrunnlag,
     }) => ({
       previewCallback,
       aksjonspunkter,
       vilkar,
       beregningresultatForeldrepenger,
       simuleringResultat,
+      beregningsgrunnlag,
       ytelseTypeKode: fagsakYtelseType.FORELDREPENGER,
       employeeHasAccess: rettigheter.kanOverstyreAccess.isEnabled,
     }),
